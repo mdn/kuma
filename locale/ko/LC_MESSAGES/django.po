@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-08-27 06:52+0000\n"
+"PO-Revision-Date: 2016-08-27 08:39+0000\n"
 "Last-Translator: pillarlee16 <pillarlee16@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -105,7 +105,7 @@ msgstr "Mozilla 개발자 네트워크"
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
+msgstr "Persona로 로그인되어 있습니다. <a href=\"%(persona_info)s\">Persona는 곧 지원 종료됩니다. 더 자세히 알아보기.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
@@ -427,9 +427,8 @@ msgid "Dutch"
 msgstr "네델란드어"
 
 #: jinja2/includes/translate_locales.html:17
-#, fuzzy
 msgid "English (US)"
-msgstr "영문 태그"
+msgstr "영어 (미국)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
@@ -520,14 +519,12 @@ msgid "Malayalam"
 msgstr "말라야람어"
 
 #: jinja2/includes/translate_locales.html:40
-#, fuzzy
 msgid "Persian"
-msgstr "Persona"
+msgstr "페르시아어"
 
 #: jinja2/includes/translate_locales.html:41
-#, fuzzy
 msgid "Polish"
-msgstr "게시"
+msgstr "폴란드어"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
@@ -591,23 +588,23 @@ msgstr "우크라이나어"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Vietnamese"
-msgstr ""
+msgstr "베트남어"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Wolof"
-msgstr ""
+msgstr "세네갈어"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Xhosa"
-msgstr ""
+msgstr "코사어"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Yoruba"
-msgstr ""
+msgstr "요루바어"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Zulu"
-msgstr ""
+msgstr "줄루어"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -683,15 +680,13 @@ msgstr "첨부파일을 제공할 때 MIME 타입이 사용됩니다. 업로드�
 
 # 100%
 #: kuma/attachments/models.py:140
-#, fuzzy
 msgid "attachment revision"
-msgstr "첨부파일 미리보기"
+msgstr "첨부파일 리비전"
 
 # 100%
 #: kuma/attachments/models.py:141
-#, fuzzy
 msgid "attachment revisions"
-msgstr "첨부파일 미리보기"
+msgstr "첨부파일 리비전"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -1643,9 +1638,8 @@ msgid "Docs"
 msgstr "기술 문서"
 
 #: kuma/search/jinja2/search/results.html:183
-#, fuzzy
 msgid "All Topics"
-msgstr "주제"
+msgstr "모든 주제"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
@@ -1991,16 +1985,15 @@ msgstr "로그인 하기"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "MDN에 있는 모든 콘텐츠는 무료이며 로그인 하지 않아도 사용 가능합니다."
 
 #: kuma/users/jinja2/account/login.html:19
-#, fuzzy
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr "공헌하기 위해서는, MDN에 로그인이 필요합니다. 아래 서비스 중 하나를 사용하여 로그인할 수 있습니다. MDN 계정이 아직 없다면 생성됩니다."
+msgstr "공헌하기 위해서는, MDN에 로그인이 필요합니다. Github를 사용하여 로그인 할 수 있으며 아직 없다면 MDN 프로필이 생성됩니다."
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "만약 MDN 프로필을 가지고 있다면:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2018,9 +2011,8 @@ msgid "Password Reset"
 msgstr "비밀번호 재설정"
 
 #: kuma/users/jinja2/account/password_reset.html:13
-#, fuzzy
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr "암호를 분실하셨습니까? 아래에 이메일 주소를 입력하시면 재설정 방법을 알려드립니다."
+msgstr "비밀번호를 분실하셨습니까? 아래에 이메일 주소를 입력하시면, 재설정 할 수 있는 이메일을 보내드립니다."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
@@ -2031,9 +2023,8 @@ msgid "Please contact us if you have any trouble resetting your password."
 msgstr "암호 재설정에 문제가 있으시면 알려주시기 바랍니다."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
-#, fuzzy
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr "이메일을 전송하였습니다. 메일을 못 받으시면 우리에게 알려주십시오."
+msgstr "이메일을 전송하였습니다. 몇 분 내로 이메일을 받지 못한다면, 알려주십시오."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
@@ -2065,7 +2056,7 @@ msgid "Sign Up"
 msgstr "회원 가입"
 
 #: kuma/users/jinja2/account/signup.html:10
-#, fuzzy, python-format
+#, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr "이미 계정이 있습니까? 그러면 <a href=\"%(login_url)s\">로그인</a>하세요."
 
@@ -2076,28 +2067,24 @@ msgstr "프로필 생성 불가능"
 #: kuma/users/jinja2/account/signup_closed.html:5
 #, python-format
 msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr ""
+msgstr "죄송하지만, Persona로 프로필을 생성할 수 없습니다. <a href=\"%(url)s\">Github 계정으로 다시 시도해보세요</a>."
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
-#, fuzzy
 msgid "Confirm Your Email Address"
 msgstr "이메일 주소 확인하기"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
-#, fuzzy
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
 msgstr "확인을 위해 이메일을 보냈습니다. 회원 가입 절차를 완료하려면 아래 링크를 클릭하세요. 만약 받지 못했다면 알려주시기 바랍니다."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
-#, fuzzy
 msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
 msgstr "현재 부분은 문제점을 알려주기 위한 절차입니다. 먼저 이메일 주소 소유자임을 확인해 주십시오."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
-#, fuzzy
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
-msgstr "확인을 위해 이메일을 보냈습니다. 회원 가입 절차를 완료하려면 아래 링크를 클릭하세요. 만약 받지 못했다면 알려주시기 바랍니다."
+msgstr "확인을 위해 이메일을 보냈습니다. 메일 안에 있는 링크를 클릭해주세요. 만약 받지 못했다면 알려주시기 바랍니다."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -2184,9 +2171,8 @@ msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more st
 msgstr "%(provider_name)s로 MDN에 로그인해주셔서 감사합니다. MDN에 참여하려면 한 단계가 더 있습니다: <strong>MDN 프로필을 만드세요</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:54
-#, fuzzy
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
-msgstr "귀하는 계정 없이도 MDN 웹사이트의 모든 것에 접근할 수 있습니다만, 회원으로 가입을 하신다면 문서를 수정하고, 데모를 제출하고 귀하 자신의 프로필 페이지를 가질 수 있습니다."
+msgstr "귀하는 계정 없이도 MDN 웹사이트의 모든 것에 접근할 수 있습니다. 하지만, 회원으로 가입을 하신다면 문서를 수정하고, 자신의 프로필 페이지를 가질 수 있습니다."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
@@ -2258,9 +2244,8 @@ msgid "Connect with GitHub"
 msgstr "Github 연결"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
-#, fuzzy
 msgid "Create MDN profile with GitHub"
-msgstr "계속하려면 MDN 프로필을 만드세요"
+msgstr "Github으로 MDN 프로필 만들기"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
 msgid "Sign in with GitHub"
@@ -2289,9 +2274,9 @@ msgid "Ban user"
 msgstr "사용자 차단"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
-msgstr "개정판 %(id)s 작성자 <a href=\"%(user_profile_url)s\">%(user)s</a> 작성일 %(date)s"
+msgstr "<a href=\"%(url)s\">%(user)s</a> 는 자주 스팸을 제출하나요?"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
@@ -2301,88 +2286,75 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> 차단되었습니다."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr ""
+msgstr "%(user)s 는 이미 금지되어 있습니다. 아래 리비전을 살펴보고 복구 할 수 있습니다."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "자기 자신을 스팸으로 금지할 수 없습니다."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
-#, fuzzy
 msgid "Submit Spam"
-msgstr "제출:"
+msgstr "스팸 제출"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
-#, fuzzy
 msgid "Ban User for Spam"
-msgstr "차단된 사용자"
+msgstr "스팸으로 금지된 사용자"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
-#, fuzzy
 msgid "Ban User for Spam & Submit Spam"
-msgstr "차단된 사용자"
+msgstr "스팸 & 스팸 제출로 금지된 사용자"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "다른 이유로 사용자 금지하기."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
-#, fuzzy
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "현재 개발자가 만든 데모 아님"
+msgstr "지난 3일 동안 되돌릴 수 있는 새로운 리비전을 만들지 않았습니다, 그리고 이 사용자는 이미 금지되었습니다."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
-#, fuzzy
 msgid "Summary"
-msgstr "요약 편집"
+msgstr "요약"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
-#, fuzzy
 msgid "Actions Taken"
-msgstr "실행하기"
+msgstr "수행한 동작"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
-#, fuzzy
 msgid "Banned:"
-msgstr "금지됨"
+msgstr "금지됨:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
-#, fuzzy
 msgid "Submitted to Akismet as spam:"
-msgstr "제출일"
+msgstr "Akismet에 스팸으로 제출:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
-#, fuzzy
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "현재 개발자가 만든 데모 아님"
+msgstr "이 사용자는 스팸으로 신고된 리비전을 가지고 있지 않습니다."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
-#, fuzzy
 msgid "Deleted:"
-msgstr "삭제"
+msgstr "삭제됨:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
-#, fuzzy
 msgid "The user did not have any revisions that were deleted."
-msgstr "현재 개발자가 만든 데모 아님"
+msgstr "이 사용자는 삭제된 리비전을 가지고 있지 않습니다."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
-#, fuzzy
 msgid "Reverted:"
-msgstr "복원"
+msgstr "복원됨:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
-#, fuzzy
 msgid "The user did not have any revisions that were reverted."
-msgstr "현재 개발자가 만든 데모 아님"
+msgstr "이 사용자는 복구된 리비전을 가지고 있지 않습니다."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
-msgstr ""
+msgstr "후속 작업 필요"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
-msgstr ""
+msgstr "사용자 새로운 행동:"
 
 # 100%
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
@@ -2393,39 +2365,35 @@ msgstr "없음."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "새로운 스팸이 아닌 리비전 때문에 건너뛴 리비전:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
-#, fuzzy
 msgid "Could not submit to Akismet:"
-msgstr "제출일"
+msgstr "Akismet에 제출할 수 없음:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
-#, fuzzy
 msgid "Could not delete:"
-msgstr "문서 삭제"
+msgstr "삭제할 수 없음:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
-msgstr ""
+msgstr "되돌릴 수 없음:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
-#, fuzzy
 msgid "No actions taken"
-msgstr "활성 키"
+msgstr "수행한 동작 없음"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "스팸이 아닌 최신 리비전:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "스팸으로 확인됨:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
-#, fuzzy
 msgid "Identified as not spam:"
-msgstr "스팸으로 확인"
+msgstr "스팸이 아닌 것으로 확인됨:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2551,9 +2519,9 @@ msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Develop
 msgstr "<a href=\"%(mdn_link)s\">Mozilla 개발자 네트워크(MDN)</a> 프로필을 만든 것에 감사드립니다 - Mozilla 개발자 네트워크는 여러분과 같은 개발자를 위한 문서를 만드는 커뮤니티입니다."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
-#, fuzzy, python-format
+#, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr "계정 만들기를 통해 <a href=\"%(started_link)s\">MDN 시작</a>해 보세요."
+msgstr "프로필을 만들었으며 <a href=\"%(started_link)s\">MDN 시작하기</a>의 첫 단계를 완료했습니다."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
@@ -2579,13 +2547,13 @@ msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about wh
 msgstr "메일링리스트: MDN에 관심사나 사이트 요청은 <a href=\"%(list_link)s\">구독</a> 후 메일을 보내 주세요. 한국어 사용자는 <a href=\"https://groups.google.com/forum/#!forum/mozillakorea\">한국어 모임</a>에 참여하세요."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"실시간 채팅: irc.mozilla.org의 <a href=\"%(irc_link)s\">#mdn</a> 채널에서 하실 수 있습니다. (<a href=\"%(irc_link)s\">IRC</a> 정보 참조). MDN 문서 작성 관리자인  Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg "
-"(wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) 및 커뮤니티 매니저인 Janet Swisher (jms)에게 질문 하실 수 있습니다."
+"실시간 채팅: <a href=\"%(channel_link)s\">#mdn 채널 irc.mozilla.org</a>. (<a href=\"%(irc_link)s\">IRC</a>에 대한 자세한 정보 알아보기.) MDN 문서 작성 관리자들은 다음과 같습니다: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), "
+"Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), 그리고 MDN 커뮤니티 매니저 Janet Swisher (jms)."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -2605,17 +2573,15 @@ msgstr "%(username)s님 안녕하세요"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
-#, fuzzy
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
-msgstr "Mozilla 개발자 네트워크(MDN)에 계정을 만들어 주셔서 감사합니다. 여러분과 같은 개발자를 위한 커뮤니티입니다."
+msgstr "Mozilla 개발자 네트워크(MDN)에 계정을 만들어 주셔서 감사합니다 -- 여러분과 같은 개발자를 위한 자료를 만드는 커뮤니티입니다."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
-#, fuzzy
 msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
-msgstr "MDN에 계정을 만듦으로서 첫 시작을 하셨습니다. 이제 MDN의 다양한 작업 및 공헌도 하실 수 있습니다. 관심사에 따라 함께 참여해 주세요."
+msgstr "프로필을 만들었으며 MDN의 첫 단계를 완료하였습니다. 이제, MDN의 다양한 작업들을 선택하여 공헌 할 수 있습니다! 관심사에 따라 시작할 수 있는 다양한 작업들이 있습니다."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2645,9 +2611,8 @@ msgstr "메일링 리스트: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
-#, fuzzy
 msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr "메일링리스트: MDN에 관심사나 사이트 요청은 <a href=\"%(list_link)s\">구독</a> 후 메일을 보내 주세요. 한국어 사용자는 <a href=\"https://groups.google.com/forum/#!forum/mozillakorea\">한국어 모임</a>에 참여하세요."
+msgstr "MDN에 관심사를 구독하시고, 사이트에 대해 질문하세요."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
@@ -2662,13 +2627,10 @@ msgstr "IRC에 관한 더 많은 정보는 %(irc_link)s를 보세요."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
-#, fuzzy
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
-msgstr ""
-"실시간 채팅: irc.mozilla.org의 <a href=\"%(irc_link)s\">#mdn</a> 채널에서 하실 수 있습니다. (<a href=\"%(irc_link)s\">IRC</a> 정보 참조). MDN 문서 작성 관리자인  Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg "
-"(wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) 및 커뮤니티 매니저인 Janet Swisher (jms)에게 질문 하실 수 있습니다."
+msgstr "MDN 문서 작성 관리자들에게 질문할 수 있습니다: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) 및 커뮤니티 매니저 Janet Swisher (jms)."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2678,12 +2640,11 @@ msgstr "블로그: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "스팸으로 신고됨."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
-#, fuzzy
 msgid "This user has not created any revisions in the past three days."
-msgstr "현재 개발자가 만든 데모 아님"
+msgstr "이 사용자는 지난 3일간 어떤 리비전도 만들지 않았습니다."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
@@ -2720,9 +2681,8 @@ msgid "Banned"
 msgstr "금지됨"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
-#, fuzzy
 msgid "Clean Up Revisions"
-msgstr "개정판 변경"
+msgstr "리비전 초기화"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
@@ -2730,7 +2690,7 @@ msgstr "차단된 사용자"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "사용자 금지 & 초기화"
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
@@ -3066,9 +3026,8 @@ msgid "HTTP Referrer"
 msgstr "HTTP 레퍼러"
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
-#, fuzzy
 msgid "Data submitted to Akismet"
-msgstr "제출일"
+msgstr "Akismet에 제출된 데이터"
 
 # DevDerby 부메뉴
 #: kuma/wiki/models.py:1870
@@ -3221,9 +3180,8 @@ msgid "You are about to revert the document to this revision. Click \"revert\" t
 msgstr "현재 리비전으로 문서를 복원하려고 합니다. 진행하려면 \"복원\"을 누르십시오. "
 
 #: kuma/wiki/jinja2/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "새 템플릿 작성"
+msgstr "새 템플릿 만들기"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
 msgid "Create a New Article"
@@ -3452,7 +3410,7 @@ msgstr "문서를 분류하세요. 사람들이 좀 더 찾기 쉽게 검색 엔
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "부모 %(locale)s 보기"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
@@ -3506,7 +3464,6 @@ msgid "New Slug:"
 msgstr "새로운 짧은 URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
-#, fuzzy
 msgid "Look up by Document Title"
 msgstr "문서명으로 찾기"
 
@@ -3631,9 +3588,9 @@ msgid "Translate Content"
 msgstr "내용 번역"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version:"
-msgstr "승인된 %(locale)s 버전"
+msgstr "승인된 %(locale)s 버전:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
@@ -3944,9 +3901,8 @@ msgid "Publish and Keep Editing"
 msgstr "게시하고 계속 편집"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-#, fuzzy
 msgid "Discard"
-msgstr "데모 파기"
+msgstr "버리기"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -3972,9 +3928,9 @@ msgid ""
 msgstr "당신 게시글이 MDN에 맞지 않을 수도 있는 내용을 포함합니다. 부적절한 소재를 여러 번 게시하는 경우 계정이 비활성화될 수 있습니다. 적절한 소재 구성에 대한 자세한 내용은 “<a href=\"%(does_this_belong_url)s\">이게 MDN과 맞나요?</a>” 안내서를 참조하세요."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "실수로 이 메시지를 받았다고 믿는다면, <a href=\"%(admin_email)s\">사이트 관리자에게 연락</a>해 주세요."
+msgstr "실수로 이 메시지를 받았다고 믿는다면, 작업중인 내용을 저장한 다음, <a href=\"%(admin_email)s\">사이트 관리자에게 연락</a>해 주세요."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
@@ -4006,9 +3962,9 @@ msgid_plural "Found %(num)s documents"
 msgstr[0] "%(num)s개 문서를 찾았습니다"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr "문서 태그: {tag}"
+msgstr "문서 태그: %(tag)s"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
@@ -4046,18 +4002,18 @@ msgid "There are no articles."
 msgstr "문서가 없습니다."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Documents for %(tag)s review"
-msgstr "{tag} 검토용 문서"
+msgstr "%(tag)s 검토용 문서"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
 msgstr "검토용 문서"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr "검토 필요한 태그된 문서: {tag}"
+msgstr "검토 필요로 태그된 문서: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
@@ -4074,7 +4030,7 @@ msgid "Please review these articles for technical accuracy and completeness, and
 msgstr "이 글의 기술상 정확성 및 완전성을 검토하고 나서 기술 검토 표시를 지워 주세요. <a href=\"%(url)s\">더 자세한 지침을 참조하세요</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s documents."
 msgstr "%(count)s개 문서를 찾았습니다."
 
@@ -4113,9 +4069,9 @@ msgid "There are no tags."
 msgstr "태그가 없습니다."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr "번역 문서 태그: {tag}"
+msgstr "번역 문서 태그: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
@@ -4173,15 +4129,15 @@ msgstr "로드"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr ""
+msgstr "Akismet 상세 제출"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr ""
+msgstr "Akismet으로 의견을 전송하기 위해, 아래 양식을 저장해주세요."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
-msgstr ""
+msgstr "더 자세한 내용에 대한 Akismet 제출 선택"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
