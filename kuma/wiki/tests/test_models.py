@@ -1,6 +1,5 @@
 import json
 import time
-from cStringIO import StringIO
 from datetime import date, datetime, timedelta
 from xml.sax.saxutils import escape
 
@@ -678,107 +677,6 @@ class GetCurrentOrLatestRevisionTests(UserTestCase):
                       created=datetime.now() - timedelta(days=1))
         r2 = revision(is_approved=False, save=True, document=r1.document)
         eq_(r2, r1.document.current_or_latest_revision())
-
-
-class DumpAndLoadJsonTests(UserTestCase):
-
-    def test_roundtrip(self):
-        # Create some documents and revisions here, rather than use a fixture
-        r1 = revision(is_approved=True, save=True, content='Doc 1')
-        r2 = revision(is_approved=True, save=True, content='Doc 2')
-        r3 = revision(is_approved=True, save=True, content='Doc 3')
-        r4 = revision(is_approved=True, save=True, content='Doc 4')
-        r5 = revision(is_approved=True, save=True, content='Doc 5')
-
-        # Since this happens in dev sometimes, break a doc by deleting its
-        # current revision and leaving it with none.
-        r5.document.current_revision = None
-        r5.document.save()
-        r5.delete()
-
-        # The same creator will be used for all the revs, so let's also get a
-        # non-creator user for the upload.
-        creator = r1.creator
-        uploader = self.user_model.objects.exclude(pk=creator.id).all()[0]
-
-        # Count docs (with revisions) and revisions in DB
-        doc_cnt_db = (Document.objects
-                      .filter(current_revision__isnull=False)
-                      .count())
-        rev_cnt_db = (Revision.objects.count())
-
-        # Do the dump, capture it, parse the JSON
-        fin = StringIO()
-        Document.objects.dump_json(Document.objects.all(), fin)
-        data_json = fin.getvalue()
-        data = json.loads(data_json)
-
-        # No objects should come with non-null primary keys
-        for x in data:
-            ok_(not x['pk'])
-
-        # Count the documents in JSON vs the DB
-        doc_cnt_json = len([x for x in data if x['model'] == 'wiki.document'])
-        eq_(doc_cnt_db, doc_cnt_json,
-            "DB and JSON document counts should match")
-
-        # Count the revisions in JSON vs the DB
-        rev_cnt_json = len([x for x in data if x['model'] == 'wiki.revision'])
-        eq_(rev_cnt_db, rev_cnt_json,
-            "DB and JSON revision counts should match")
-
-        # For good measure, ensure no documents missing revisions in the dump.
-        doc_no_rev = (Document.objects
-                      .filter(current_revision__isnull=True))[0]
-        no_rev_cnt = len([x for x in data
-                          if x['model'] == 'wiki.document' and
-                          x['fields']['slug'] == doc_no_rev.slug and
-                          x['fields']['locale'] == doc_no_rev.locale])
-        eq_(0, no_rev_cnt,
-            "There should be no document exported without revision")
-
-        # Upload the data as JSON, assert that all objects were loaded
-        loaded_cnt = Document.objects.load_json(uploader, StringIO(data_json))
-        eq_(len(data), loaded_cnt)
-
-        # Ensure the current revisions of the documents have changed, and that
-        # the creator matches the uploader.
-        for d_orig in (r1.document, r2.document, r3.document, r4.document):
-            d_curr = Document.objects.get(pk=d_orig.pk)
-            eq_(2, d_curr.revisions.count())
-            ok_(d_orig.current_revision.id != d_curr.current_revision.id)
-            ok_(d_orig.current_revision.creator_id !=
-                d_curr.current_revision.creator_id)
-            eq_(uploader.id, d_curr.current_revision.creator_id)
-
-        # Everyone out of the pool!
-        Document.objects.all().delete()
-        Revision.objects.all().delete()
-
-        # Try reloading the data on an empty DB
-        loaded_cnt = Document.objects.load_json(uploader, StringIO(data_json))
-        eq_(len(data), loaded_cnt)
-
-        # Count docs (with revisions) and revisions in DB. The imported objects
-        # should have beeen doc/rev pairs.
-        eq_(loaded_cnt / 2, Document.objects.count())
-        eq_(loaded_cnt / 2, Revision.objects.count())
-
-        # The originals should be gone, now.
-        for d_orig in (r1.document, r2.document, r3.document, r4.document):
-
-            # The original primary key should have gone away.
-            try:
-                d_curr = Document.objects.get(pk=d_orig.pk)
-                self.fail("This should have been an error")
-            except Document.DoesNotExist:
-                pass
-
-            # Should be able to fetch document with the original natural key
-            key = d_orig.natural_key()
-            d_curr = Document.objects.get_by_natural_key(*key)
-            eq_(1, d_curr.revisions.count())
-            eq_(uploader.id, d_curr.current_revision.creator_id)
 
 
 @override_config(

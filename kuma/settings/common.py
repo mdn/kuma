@@ -500,7 +500,6 @@ INSTALLED_APPS = (
     'pipeline',
     'product_details',
     'puente',
-    'smuggler',
     'constance.backends.database',
     'constance',
     'waffle',
