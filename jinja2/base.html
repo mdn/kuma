@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {{ get_webfont_attributes(request) }} >
-<head prefix="og: http://ogp.me/ns#">
+<head {%- if not is_sphinx %} prefix="og: http://ogp.me/ns#"{% endif %}>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
@@ -13,8 +13,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
-  <link rel="home" href="{{ url('home') }}">
-  <link rel="copyright" href="#copyright">
+  {%- if not is_sphinx %}
+    <link rel="home" href="{{ url('home') }}">
+    <link rel="copyright" href="#copyright">
+  {% endif %}
 
   {% block site_css %}
     {% stylesheet 'mdn' %}
@@ -24,17 +26,18 @@
     {% endfor %}
   {% endblock %}
 
-  <!-- common social tags -->
-  {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="{{ social_logo }}">
-  <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:image" content="{{ social_logo }}">
-  <meta name="twitter:site" content="@MozDevNet">
-  <meta name="twitter:creator" content="@MozDevNet">
-
-  <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
+  {%- if not is_sphinx %}
+    <!-- common social tags -->
+    {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ social_logo }}">
+    <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="{{ social_logo }}">
+    <meta name="twitter:site" content="@MozDevNet">
+    <meta name="twitter:creator" content="@MozDevNet">
+    <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
+  {% endif %}
 
   <!-- third-generation iPad with high-resolution Retina display: -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static('img/favicon144.png') }}">
@@ -81,10 +84,10 @@
 
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
+    {%- if not is_sphinx %}
     <li><a id="skip-language" href="#language">{{ _('Select language') }}</a></li>
-    {% if not is_sphinx %}
-      <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
-    {% endif %}
+    <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
+    {%- endif %}
   </ul>
 
   <!-- Header -->
@@ -233,11 +236,11 @@
 
     {{ providers_media_js() }}
     {% javascript 'main' %}
-
+    {% if not is_sphinx %}
       <script>
         if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
       </script>
-
+    {% endif %}
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
