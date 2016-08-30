@@ -1,8 +1,10 @@
+import datetime
+
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.shortcuts import render
-from django.test import RequestFactory
-from django.utils.translation import ugettext
+from django.test import RequestFactory, override_settings
+
 from html5lib import constants as html5lib_constants
 
 from kuma.wiki.content import parse
@@ -25,11 +27,18 @@ class Command(NoArgsCommand):
         # Create a mock request for the sake of rendering the template
         request = RequestFactory().get('/')
         request.LANGUAGE_CODE = settings.LANGUAGE_CODE
-        request.META['SERVER_NAME'] = 'developer.mozilla.org'
-
+        host = 'developer.mozilla.org'
+        request.META['SERVER_NAME'] = host
+        this_year = datetime.date.today().year
         # Load the page with sphinx template
-        content = render(request, 'wiki/sphinx.html',
-                         {'is_sphinx': True, 'gettext': ugettext}).content
+        with override_settings(
+                ALLOWED_HOSTS=[host],
+                SITE_URL=settings.PRODUCTION_URL,
+                DEBUG=False):
+            content = render(request, 'wiki/sphinx.html',
+                             {'is_sphinx': True,
+                              'LANG': settings.LANGUAGE_CODE,
+                              'this_year': this_year}).content
 
         # Use a filter to make links absolute
         tool = parse(content, is_full_document=True)
@@ -42,6 +51,10 @@ class Command(NoArgsCommand):
                 'link': 'href',
                 'script': 'src'
             }).serialize()
+
+        # Make in-comment script src absolute for IE
+        content = content.replace('src="/static/',
+                                  'src="%s/static/' % settings.PRODUCTION_URL)
 
         # Output the response
         print content.encode('utf8')

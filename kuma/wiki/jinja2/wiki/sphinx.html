@@ -1,59 +1,51 @@
 {% extends "base.html" %}
 
-{% block title %}{{ '{{ docstitle|e }} &mdash; MDN' }}{% endblock %}
+{% block title %}{{ '{{ docstitle }} - MDN' }}{% endblock %}
 
 {% block content %}
-
-    <!-- left crumb navigation -->
-    <nav class="crumbs" role="navigation"><ol><li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li><li class="crumb">{{ '{{ title }}' }}</li></ol></nav>
-
-  <div id="wiki-column-container">
-    <div class="column-container column-container-reverse">
-      <div class="column-strip wiki-column" id="wiki-right">
-        <!-- table of contents -->
-        <div id="toc" class="toc toggleable">
-          <a href="#toc" class="title toggler">Table of Contents<i></i></a>
-          <ol class="toggle-container">
-            {{ '{{ toctree(collapse=False) }}' }}
-          </ol>
+  <!-- left crumb navigation -->
+  <nav class="crumbs" role="navigation">
+    <ol>
+      <li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li>
+      <li class="crumb">{{ '{{ title }}' }}</li>
+    </ol>
+  </nav>
+  <div class="page-buttons hidden"></div>{# Give wiki.js a button div to move #}
+  <div class="wiki-main-content"><div class="center">
+    <div id="wiki-column-container">
+      <div class="column-container column-container-reverse">
+        <div class="column-strip wiki-column" id="wiki-right">
+          <div id="toc" class="toc toggleable">{# table of contents #}
+            <a href="#toc" class="title toggler">Table of Contents<i></i></a>
+            <ol class="toggle-container">
+              {{ '{{ toctree(collapse=False) }}' }}
+            </ol>
+          </div>
+        </div>
+        <div id="wiki-content" class="column-main wiki-column text-content">
+          {{ '{% block body %}{% endblock %}' }}
         </div>
       </div>
-      <div id="wiki-content" class="column-main wiki-column">
-        {# <h1 class="page-title">{{ title }}</h1> #}
-        {{ '{% block body %}{% endblock %}' }}
-      </div>
     </div>
-  </div>
-
-{% endblock %}
-
-{% block footer_copyright %}
-    <p>
-      {% trans copyright_url=wiki_url('Project:Copyrights'), about_url=wiki_url('Project:About') %}
-      Content is available under a license specific to this project.
-      &middot; <a href="{{ about_url }}">About MDN</a>
-      &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a>
-      &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
-      {% endtrans %}
-    </p>
+  </div></div>
 {% endblock %}
 
 {% block footer_copyright_redesign %}
-    <p>
-      {% trans copyright_url=wiki_url('Project:Copyrights'), about_url=wiki_url('Project:About') %}
-      &copy; 2005-2015 Mozilla Developer Network and individual contributors<br />
+  <p>
+    {% trans this_year=this_year, about_url=wiki_url('Project:About') %}
+      &copy; 2005-{{ this_year }} Mozilla Developer Network and individual contributors<br />
       Content is available under a license specific to this project.
       &middot; <a href="{{ about_url }}">About MDN</a>
       &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a>
       &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
-      {% endtrans %}
-    </p>
+    {% endtrans %}
+  </p>
 {% endblock %}
 
 {% block js %}
-    {% javascript 'wiki' %}
+  {%- javascript 'wiki' %}
 {% endblock %}
 
 {% block extrahead %}
-  {% stylesheet 'sphinx' %}
+  {%- stylesheet 'sphinx' %}
 {% endblock %}
