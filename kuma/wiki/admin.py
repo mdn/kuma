@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from string import ascii_lowercase
 import json
 
@@ -8,7 +7,7 @@ from django.contrib import admin
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.template.defaultfilters import truncatechars
 from django.utils import timezone
@@ -28,16 +27,6 @@ from .forms import RevisionAkismetSubmissionAdminForm
 from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
                      DocumentTag, DocumentZone, EditorToolbar, Revision,
                      RevisionAkismetSubmission, RevisionIP)
-
-
-def dump_selected_documents(self, request, queryset):
-    filename = "documents_%s.json" % (datetime.now().isoformat(),)
-    response = HttpResponse(content_type="text/plain")
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
-    Document.objects.dump_json(queryset, response)
-    return response
-
-dump_selected_documents.short_description = "Dump selected documents as JSON"
 
 
 def repair_breadcrumbs(self, request, queryset):
@@ -290,15 +279,13 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         js = ('js/wiki-admin.js',)
 
     list_per_page = 25
-    actions = (dump_selected_documents,
-               resave_current_revision,
+    actions = (resave_current_revision,
                force_render_documents,
                enable_deferred_rendering_for_documents,
                disable_deferred_rendering_for_documents,
                repair_breadcrumbs,
                purge_documents,
                restore_documents)
-    change_list_template = 'admin/wiki/document/change_list.html'
     fieldsets = (
         (None, {
             'fields': ('locale', 'title')

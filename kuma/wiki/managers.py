@@ -1,6 +1,5 @@
 from datetime import date, datetime, timedelta
 
-from django.core import serializers
 from django.db import models
 
 import bleach
@@ -120,83 +119,6 @@ class BaseDocumentManager(models.Manager):
         if locale:
             query['locale'] = locale
         return self.filter(**query).distinct()
-
-    def dump_json(self, queryset, stream):
-        """Export a stream of JSON-serialized Documents and Revisions
-
-        This is inspired by smuggler.views.dump_data with customizations for
-        Document specifics, per bug 747137
-        """
-        objects = []
-        for doc in queryset.all():
-            rev = doc.current_or_latest_revision()
-            if not rev:
-                # Skip this doc if, for some reason, there's no revision.
-                continue
-
-            # Drop the pk and circular reference to rev.
-            doc.pk = None
-            doc.current_revision = None
-            objects.append(doc)
-
-            # Drop the rev pk
-            rev.pk = None
-            objects.append(rev)
-
-        # HACK: This is kind of awkward, but the serializer only accepts a flat
-        # list of field names across all model classes that get handled. So,
-        # this is a mashup whitelist of Document and Revision fields.
-        fields = (
-            # TODO: Maybe make this an *exclusion* list by getting the list of
-            # fields from Document and Revision models and knocking out what we
-            # don't want? Serializer doesn't support exclusion list directly.
-            'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
-            'parent', 'parent_topic', 'document', 'is_redirect', 'summary',
-            'content', 'comment', 'keywords', 'tags', 'toc_depth',
-            'is_approved',
-            'creator',  # HACK: Replaced on import, but deserialize needs it
-            'is_mindtouch_migration',
-        )
-        serializers.serialize('json', objects, indent=2, stream=stream,
-                              fields=fields, use_natural_keys=True)
-
-    def load_json(self, creator, stream):
-        """Import a stream of JSON-serialized Documents and Revisions
-
-        This is inspired by smuggler.views.load_data with customizations for
-        Document specifics, per bug 747137
-        """
-        counter = 0
-        objects = serializers.deserialize('json', stream)
-        for obj in objects:
-
-            # HACK: Dig up the deserializer wrapped model object & manager,
-            # because the deserializer wrapper bypasses some things we need to
-            # un-bypass here
-            actual = obj.object
-            mgr = actual._default_manager
-
-            actual.pk = None
-            if hasattr(mgr, 'get_by_natural_key'):
-                # If the model uses natural keys, attempt to find the pk of an
-                # existing record to overwrite.
-                try:
-                    nk = actual.natural_key()
-                    existing = mgr.get_by_natural_key(*nk)
-                    actual.pk = existing.pk
-                except actual.DoesNotExist:
-                    pass
-
-            # Tweak a few fields on the way through for Revisions.
-            # Don't do a type check here since that would require importing
-            if actual._meta.object_name == 'Revision':
-                actual.creator = creator
-                actual.created = datetime.now()
-
-            actual.save()
-            counter += 1
-
-        return counter
 
 
 class DocumentManager(BaseDocumentManager):

@@ -26,7 +26,6 @@ urlpatterns = [
     url(r'^admin/wiki/document/purge/',
         purge_view,
         name='wiki.admin_bulk_purge'),
-    url(r'^admin/', include('smuggler.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^search', include('kuma.search.urls')),

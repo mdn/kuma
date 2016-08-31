@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
-from django.contrib import messages
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.views.decorators.http import require_GET
-from smuggler.forms import ImportForm
 
-from kuma.core.decorators import block_user_agents, superuser_required
+from kuma.core.decorators import block_user_agents
 
 from ..constants import ALLOWED_TAGS, REDIRECT_CONTENT
 from ..decorators import allow_CORS_GET
@@ -78,38 +75,3 @@ def autosuggest_documents(request):
         docs_list.append(data)
 
     return JsonResponse(docs_list, safe=False)
-
-
-@block_user_agents
-@superuser_required
-def load_documents(request):
-    """
-    Load documents from uploaded file.
-    """
-    form = ImportForm()
-    if request.method == 'POST':
-
-        # Accept the uploaded document data.
-        file_data = None
-        form = ImportForm(request.POST, request.FILES)
-        if form.is_valid():
-            uploaded_file = request.FILES['uploads']
-            if uploaded_file.multiple_chunks():
-                file_data = open(uploaded_file.temporary_file_path(), 'r')
-            else:
-                file_data = uploaded_file.read()
-
-        if file_data:
-            # Try to import the data, but report any error that occurs.
-            try:
-                counter = Document.objects.load_json(request.user, file_data)
-                user_msg = (ugettext('%(obj_count)d object(s) loaded.') %
-                            {'obj_count': counter, })
-                messages.add_message(request, messages.INFO, user_msg)
-            except Exception as e:
-                err_msg = (ugettext('Failed to import data: %(error)s') %
-                           {'error': '%s' % e, })
-                messages.add_message(request, messages.ERROR, err_msg)
-
-    context = {'import_file_form': form}
-    return render(request, 'admin/wiki/document/load_data_form.html', context)
