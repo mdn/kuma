@@ -3,14 +3,6 @@
 
 -c constraints.txt
 
-# TODO: Remove, use pyquery instead
-BeautifulSoup==3.2.1 \
-    --hash=sha256:6a8cb4401111e011b579c8c52a51cdab970041cc543814bbd9577a4529fe1cdb
-
-# TODO: Remove, unused
-bitly-api==0.3 \
-    --hash=sha256:54d0803082ccf32a90f41e43c6110dc4b868689bac7be95ab8f2e680490990b3
-
 # Sanitize HTML with a whitelist
 bleach==1.4.2 \
     --hash=sha256:58a2c153c0b5450695c34ce2eddc23fb3ee476b31a878e6a5c24c75fd1ed4d89 \
