@@ -93,7 +93,7 @@ def compare(request, document_slug, document_locale):
     from_id = smart_int(request.GET.get('from'))
     to_id = smart_int(request.GET.get('to'))
 
-    revisions = Revision.objects.prefetch_related('document')
+    revisions = Revision.objects.select_related('document')
     revision_from = get_object_or_404(revisions, id=from_id, document=doc)
     revision_to = get_object_or_404(revisions, id=to_id, document=doc)
 
