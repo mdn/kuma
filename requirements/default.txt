@@ -76,8 +76,8 @@ django-honeypot==0.5.0 \
     --hash=sha256:962304f21055f05c73c41f2506f5a94f5b941e831a203b68e54cb5016bdb8d5e
 
 # Use Jinja2 as the template engine in Django
-django-jinja==1.4.1 \
-    --hash=sha256:6f4c2e8c5ada17039ff1c1e38bc51bea9317af3676e28466148c8df5fc78f132
+django-jinja==2.2.1 \
+    --hash=sha256:04c53ba90cbede97e6543b98291f1eec259e57dfa4e014a5fbf0291afcdae6a9
 
 # Download media from production when developing locally
 django-localdevstorage==0.5 \
@@ -196,8 +196,9 @@ importlib==1.0.3 \
     --hash=sha256:65f342a604a2e1028707c5e055266ab2431c26e20fe10780b423320870884dac
 
 # Improved template engine
-Jinja2==2.7.3 \
-    --hash=sha256:2e24ac5d004db5714976a04ac0e80c6df6e47e98c354cb2c0d82f8879d4f8fdb
+Jinja2==2.8 \
+    --hash=sha256:1cc03ef32b64be19e0a5b54578dd790906a34943fe9102cfdae0d4495bd536b4 \
+    --hash=sha256:bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d47269201bf4
 
 # Serialize pickleable objects to JSON, used in feed processing
 jsonpickle==0.9.2 \
