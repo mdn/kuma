@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-05 20:18+0000\n"
+"PO-Revision-Date: 2016-09-05 21:10+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -105,7 +105,7 @@ msgstr ""
 
 #: jinja2/base.html:84
 msgid "Select language"
-msgstr ""
+msgstr "Fren tutlayt"
 
 #: jinja2/base.html:86
 msgid "Skip to search"
@@ -113,23 +113,23 @@ msgstr ""
 
 #: jinja2/base.html:107 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr ""
+msgstr "Ifecka"
 
 #: jinja2/base.html:111
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "Ttekki ɣer MDN"
 
 #: jinja2/base.html:113
 msgid "Get started"
-msgstr ""
+msgstr "Bdu"
 
 #: jinja2/base.html:114
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Seɣti neɣ sideg tasemlit"
 
 #: jinja2/base.html:117
 msgid "Site Tools"
-msgstr ""
+msgstr "Ifecka n usmel"
 
 #: jinja2/base.html:119
 msgid "Revision dashboard"
@@ -145,35 +145,35 @@ msgstr ""
 
 #: jinja2/base.html:133
 msgid "Technologies"
-msgstr ""
+msgstr "Titiknulujiyin"
 
 #: jinja2/base.html:135 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: jinja2/base.html:137 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: jinja2/base.html:138
 msgid "Graphics"
-msgstr ""
+msgstr "Idlifen"
 
 #: jinja2/base.html:139
 msgid "APIs / DOM"
-msgstr ""
+msgstr "APIs / DOM"
 
 #: jinja2/base.html:140 kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "Isnasen"
 
 #: jinja2/base.html:141 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:144
 msgid "References & Guides"
@@ -181,7 +181,7 @@ msgstr ""
 
 #: jinja2/base.html:146
 msgid "Learn the Web"
-msgstr ""
+msgstr "Issin Web"
 
 #: jinja2/base.html:147
 msgid "Tutorials"
@@ -189,7 +189,7 @@ msgstr ""
 
 #: jinja2/base.html:148
 msgid "References"
-msgstr ""
+msgstr "Timsisɣal"
 
 #: jinja2/base.html:149
 msgid "Developer Guides"
@@ -209,19 +209,19 @@ msgstr ""
 
 #: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
-msgstr ""
+msgstr "Izegrar"
 
 #: jinja2/base.html:161 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Firefox"
-msgstr ""
+msgstr "Firefox"
 
 #: jinja2/base.html:162 kuma/landing/jinja2/landing/homepage.html:86
 msgid "Firefox Marketplace"
-msgstr ""
+msgstr "Firefox Marketplace"
 
 #: jinja2/base.html:163 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
 msgid "B2G OS"
-msgstr ""
+msgstr "Anagraw n wammud B2G"
 
 #: jinja2/base.html:164
 msgid "Persona"
@@ -1848,11 +1848,11 @@ msgstr ""
 
 #: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
-msgstr ""
+msgstr "Wayeḍ:"
 
 #: kuma/users/views.py:508
 msgid "Email:"
-msgstr ""
+msgstr "Imayl:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
