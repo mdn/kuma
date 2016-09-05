@@ -204,11 +204,11 @@ class DocumentTests(UserTestCase):
                                     .order_by('locale')
                                     .values_list('pk', flat=True))
         eq_(list(children),
-            list(parent.other_translations.values_list('pk', flat=True)))
+            [trans.pk for trans in parent.other_translations])
 
-        enfant_translation_pks = (enfant.other_translations
-                                        .values_list('pk', flat=True))
-        ok_(parent.pk in enfant_translation_pks)
+        # Check the parent document is in the first index of the list
+        eq_(parent.pk, enfant.other_translations[0].pk)
+        enfant_translation_pks = [trans.pk for trans in enfant.other_translations]
         ok_(bambino.pk in enfant_translation_pks)
         eq_(False, enfant.pk in enfant_translation_pks)
 

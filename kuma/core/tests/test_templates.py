@@ -8,7 +8,7 @@ from django.test import RequestFactory
 from django.utils import translation
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import KumaTestCase, eq_
+from kuma.core.tests import KumaTestCase, eq_, ok_
 
 
 class MockRequestTests(KumaTestCase):
@@ -42,6 +42,14 @@ class BaseTemplateTests(MockRequestTests):
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
         eq_('rtl', dir_attr)
+
+    def test_lang_switcher(self):
+        translation.activate("bn-BD")
+        html = render_to_string(self.template, request=self.request)
+        doc = pq(html)
+        # Check default locale is in the first choice field
+        first_field = doc("#language.autosubmit option")[0].text_content()
+        ok_(settings.LANGUAGE_CODE in first_field)
 
 
 class ErrorListTests(MockRequestTests):

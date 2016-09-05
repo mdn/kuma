@@ -1413,13 +1413,13 @@ Full traceback:
         Return a list of Documents - other translations of this Document
         """
         if self.parent is None:
-            return self.translations.all().order_by('locale')
+            return list(self.translations.all().order_by('locale'))
         else:
-            translations = (self.parent.translations.all()
+            translations = list(self.parent.translations
                                 .exclude(id=self.id)
                                 .order_by('locale'))
-            pks = list(translations.values_list('pk', flat=True))
-            return Document.objects.filter(pk__in=[self.parent.pk] + pks)
+            # The parent doc should be at first
+            return [self.parent] + translations
 
     @property
     def parents(self):
