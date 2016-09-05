@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-05 20:07+0000\n"
+"PO-Revision-Date: 2016-09-05 20:31+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -29,11 +29,11 @@ msgstr "MDN d tabwat n ifecka n uneflay web i tsemlit, imedyaten d wayen nniḍe
 
 #: promote-mdn.php:248
 msgid "MDN is the best online resource - for web developers, by web developers."
-msgstr ""
+msgstr "MDN d taɣbalut ifazen s srid - seg ineflayen, i yineflayen."
 
 #: promote-mdn.php:249
 msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
-msgstr ""
+msgstr "Senṭeḍ s wudem awurman awalen n tsura akked tefyar n yeznan inek akked isebtar di tansiwin URL n MDN."
 
 #: promote-mdn.php:256
 msgid "Settings"
@@ -41,39 +41,39 @@ msgstr "Iɣewwaṛen"
 
 #: promote-mdn.php:257
 msgid "Load keywords from URL"
-msgstr ""
+msgstr "Sali-d awalen n tsura si tensa URL"
 
 #: promote-mdn.php:257
 msgid "Preview"
-msgstr ""
+msgstr "Taskant"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr ""
+msgstr "Seqdec awalen n tsura akked iseɣwan labaɛda i %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr ""
+msgstr "Sali-d tikelt nniḍen awalen n tsura seld (tasinin):"
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "Sali-d tikelt nniḍen tura"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "Rnu iseɣwan ɣer usuddem RSS"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "Ldi iseɣwan ɣef usfaylu amaynut"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
-msgstr ""
+msgstr "Tisuraf"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr ""
+msgstr "Ur rennu ara tibzimin n iqeṛṛa (h1,h2,h3,h4,h5,h6)."
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
@@ -85,7 +85,7 @@ msgstr ""
 
 #: promote-mdn.php:274
 msgid "Limits"
-msgstr ""
+msgstr "Tilisa"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
-msgstr ""
+msgstr "Awalen n tsura udmawanen"
 
 #: promote-mdn.php:281
 msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr ""
+msgstr "Leqqem iɣewwaṛen"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
@@ -131,7 +131,7 @@ msgstr ""
 
 #: promote-mdn.php:352
 msgid "hide"
-msgstr ""
+msgstr "ffer"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
