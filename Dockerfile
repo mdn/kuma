@@ -3,29 +3,7 @@
 # The preferred way to set up development is still using Vagrant as documented here:
 # https://kuma.readthedocs.io/en/latest/installation.html
 
-FROM python:2.7
-
-RUN apt-get update && \
-  apt-get install -y \
-    nodejs \
-    nodejs-legacy \
-    npm \
-    libtidy-0.99-0 \
-    libtidy-dev \
-    gettext \
-    mysql-client  # Only for local dev.
-
-WORKDIR /app
+FROM quay.io/mozmar/kuma_base:latest
 COPY . /app
-
-RUN pip install -U pip supervisor
-RUN pip install --build ./build --cache-dir ./cache --no-deps \
-    -r requirements/local.txt && rm -r build cache
-
-RUN npm install -g \
-    fibers@1.0.1 \
-    clean-css@2.2.16 \
-    csslint@0.10.0 \
-    jshint@2.7.0 \
-    stylus@0.49.2 \
-    uglify-js@2.4.13
+RUN ./manage.py update_product_details
+RUN make build-static && rm -rf build

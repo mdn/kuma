@@ -936,9 +936,36 @@ PIPELINE = {
     'STYLESHEETS': PIPELINE_CSS,
     'JAVASCRIPT': PIPELINE_JS,
     'DISABLE_WRAPPER': True,
-    'CSS_COMPRESSOR': 'kuma.core.pipeline.cleancss.CleanCSSCompressor',
-    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'CSS_COMPRESSOR': config('PIPELINE_CSS_COMPRESSOR',
+                             default='kuma.core.pipeline.cleancss.CleanCSSCompressor'),
+    'JS_COMPRESSOR': config('PIPELINE_JS_COMPRESSOR',
+                            default='pipeline.compressors.uglifyjs.UglifyJSCompressor'),
+    'PIPELINE_ENABLED': config('PIPELINE_ENABLED', not DEBUG, cast=bool),
+    'PIPELINE_COLLECTOR_ENABLED': config('PIPELINE_COLLECTOR_ENABLED', not DEBUG, cast=bool),
 }
+# Pipeline compressor overrides
+# For example, PIPELINE_YUGLIFY_BINARY will set YUGLIFY_BINARY
+# https://django-pipeline.readthedocs.io/en/latest/compressors.html
+pipeline_overrides = (
+    'YUGLIFY_BINARY',
+    'YUGLIFY_CSS_ARGUMENTS'
+    'YUGLIFY_JS_ARGUMENTS',
+    'YUI_BINARY',
+    'YUI_CSS_ARGUMENTS',
+    'YUI_JS_ARGUMENTS',
+    'CLOSURE_BINARY',
+    'CLOSURE_ARGUMENTS',
+    'UGLIFYJS_BINARY',
+    'UGLIFYJS_ARGUMENTS',
+    'CSSTIDY_BINARY',
+    'CSSTIDY_ARGUMENTS',
+    'CSSMIN_BINARY',
+    'CSSMIN_ARGUMENTS',
+)
+for override in pipeline_overrides:
+    env_value = config('PIPELINE_' + override, default=None)
+    if env_value is not None:
+        PIPELINE[override] = env_value
 
 #
 # Session cookies
