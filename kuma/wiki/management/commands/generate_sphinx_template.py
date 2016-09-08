@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.shortcuts import render
 from django.test import RequestFactory, override_settings
+from django.utils import translation
 
 from html5lib import constants as html5lib_constants
 
@@ -14,7 +15,7 @@ class Command(NoArgsCommand):
 
     def handle(self, *args, **options):
 
-        # Not ideal, but we need to temporarily remove inline elemnents as a
+        # Not ideal, but we need to temporarily remove inline elements as a
         # void/ignored element
         # TO DO:  Can this clone code be shortened?
         new_void_set = set()
@@ -26,7 +27,8 @@ class Command(NoArgsCommand):
 
         # Create a mock request for the sake of rendering the template
         request = RequestFactory().get('/')
-        request.LANGUAGE_CODE = settings.LANGUAGE_CODE
+        request.LANGUAGE_CODE = settings.LANGUAGE_CODE  # for Jinja2
+        translation.activate(settings.LANGUAGE_CODE)  # for context var LANG
         host = 'developer.mozilla.org'
         request.META['SERVER_NAME'] = host
         this_year = datetime.date.today().year
@@ -35,10 +37,10 @@ class Command(NoArgsCommand):
                 ALLOWED_HOSTS=[host],
                 SITE_URL=settings.PRODUCTION_URL,
                 DEBUG=False):
-            content = render(request, 'wiki/sphinx.html',
-                             {'is_sphinx': True,
-                              'LANG': settings.LANGUAGE_CODE,
-                              'this_year': this_year}).content
+            response = render(request, 'wiki/sphinx.html',
+                              {'is_sphinx': True,
+                               'this_year': this_year})
+        content = response.content
 
         # Use a filter to make links absolute
         tool = parse(content, is_full_document=True)
