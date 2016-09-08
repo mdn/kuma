@@ -7,7 +7,9 @@ Generating Documentation
 This documentation is generated and published at
 `Read the Docs`_ whenever the master branch is updated.
 
-To generate locally, install the packages in ``requirements/docs.txt``, and run::
+To generate locally, install the packages in ``requirements/docs.txt``
+(inside the development VM or in a new `virtualenv`_ on the host system),
+and run::
 
     cd docs
     make html
@@ -41,3 +43,4 @@ To use the new theme in the public documentation,
 
 .. _`Read the Docs`: https://kuma.readthedocs.io/en/latest/
 .. _PyPI: https://pypi.python.org/pypi/mdn-sphinx-theme
+.. _virtualenv: https://virtualenv.pypa.io/en/stable/
