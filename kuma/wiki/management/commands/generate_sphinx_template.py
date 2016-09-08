@@ -58,5 +58,9 @@ class Command(NoArgsCommand):
         content = content.replace('src="/static/',
                                   'src="%s/static/' % settings.PRODUCTION_URL)
 
+        # Fix missing DOCTYPE
+        assert content.startswith("<html")
+        content = u"<!DOCTYPE html>\n" + content
+
         # Output the response
         print content.encode('utf8')
