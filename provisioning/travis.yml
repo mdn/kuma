@@ -3,6 +3,7 @@
   sudo: true
   vars_files:
     - vars/mysql.yml
+    - vars/node.yml
   pre_tasks:
     - name: Get MySQL GPG key
       apt_key:

@@ -13,7 +13,8 @@
 
 - name: Import the NodeSource GPG key into apt
   apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    id: "68576280"
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
     state: present
 
 - name: Add NodeSource deb repository
