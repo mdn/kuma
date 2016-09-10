@@ -220,14 +220,21 @@ def move_page(locale, slug, new_slug, email):
 
     full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
 
+    other_locale_urls = [settings.SITE_URL + translation.get_absolute_url()
+                         for translation in doc.translations.all().order_by('locale')]
+
     message = """
         Page move completed.
 
         The move requested for the document with slug %(slug)s in locale
         %(locale)s, and all its children, has been completed.
 
+        But following localized articles should be moved also:
+        %(locale_urls)s
+
         You can now view this document at its new location: %(full_url)s.
-    """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
+    """ % {'slug': slug, 'locale': locale, 'full_url': full_url,
+           'locale_urls': '\n'.join(other_locale_urls)}
 
     send_mail(subject,
               textwrap.dedent(message),
