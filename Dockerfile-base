@@ -11,7 +11,7 @@ EXPOSE 8000
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends python2.7 libpython2.7 python-dev \
-    python-pip python-setuptools gettext build-essential \
+    python-pip gettext build-essential \
     nodejs npm \
     libtidy-0.99-0 libtidy-dev \
     libxml2-dev libxslt1.1 libxslt1-dev \
@@ -20,6 +20,10 @@ RUN apt-get update && \
     libmagic-dev \
     libmysqlclient-dev \
     mysql-client  # Only for local dev.
+
+# bug 1301116
+RUN pip install setuptools==26.1.1
+
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 
 RUN npm install -g \
