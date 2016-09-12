@@ -110,8 +110,10 @@
             var newTab = (event.metaKey || event.ctrlKey || event.type == 'contextmenu');
             // is a same page anchor
             var isAnchor = (url.indexOf("#") == 0);
+            // isBlank
+            var isBlank = $(event.target).attr('target') === '_blank';
 
-            if(newTab || isAnchor) {
+            if(newTab || isAnchor || isBlank) {
                 mdn.analytics.trackEvent(data);
             }
             else {

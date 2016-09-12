@@ -29,6 +29,7 @@
     - vars/elasticsearch.yml
     - vars/mysql.yml
     - vars/rabbitmq.yml
+    - vars/node.yml
   roles:
     - geerlingguy.memcached
     - geerlingguy.mysql

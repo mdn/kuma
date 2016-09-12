@@ -1,4 +1,10 @@
+
+====
+Kuma
+====
+
 .. include:: ../README.rst
+    :start-after: .. Omit badges from docs
 
 Contents:
 
@@ -18,3 +24,4 @@ Contents:
    elasticsearch
    localization
    ckeditor
+   documentation
