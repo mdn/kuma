@@ -54,7 +54,7 @@ class GenerationKeyJobTest(KumaTestCase):
         mock_rando.return_value = 'abc123'
         assert self.job.fetch() == 'abc123'
 
-    @mock.patch('cacheback.base.tasks.refresh_cache.apply_async')
+    @mock.patch('cacheback.tasks.refresh_cache.apply_async')
     def test_refresh(self, mock_async):
         self.job.async_refresh()
         refresh_kwargs = {
