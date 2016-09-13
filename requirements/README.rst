@@ -7,7 +7,8 @@ Kuma.  The files are:
 * ``constraints.txt`` - Requirements for our requirements
 * ``default.txt`` - Requirements for production and deployment
 * ``docs.txt`` - Requirements for building docs in `Read the Docs`_
-* ``local.txt`` - Requirements for local development and tests
+* ``dev.txt`` - Requirements for Docker or native development
+* ``local.txt`` - Requirements for local development with Vagrant
 * ``travis.txt`` - Requirements for testing in TravisCI
 
 Hash-Checking Mode
@@ -86,10 +87,6 @@ Future
 * Requirements files may be further split into roles, so that there are minimal
   requirements installed for running the web service, the async task workers,
   building static files in a deployment, etc.
-* Alternatively, switching to Docker may mean a union of all requirements are
-  installed in a base image.
-* As pip 8.x is more widely supported by default, switch other requirements
-  files to use hashes.
 
 .. _Read the Docs: https://readthedocs.org
 .. _Hash-Checking mode: http://pip.readthedocs.io/en/stable/reference/pip_install/#hash-checking-mode
