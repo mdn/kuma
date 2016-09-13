@@ -82,12 +82,47 @@ Visit the Homepage
 ==================
 Open the homepage at http://localhost:8000 . You've installed Kuma!
 
+Create an admin user
+====================
+Many Kuma settings require access to the Django admin, including
+configuring social login.  It is useful to create an admin account with
+password access for local development.
+
+If you want to create a new admin account, use ``createsuperuser``::
+
+    docker exec -it kuma_web_1 ./manage.py createsuperuser
+
+This will prompt you for a username, email address (a fake address like
+``admin@example.com`` will work), and a password.
+
+If your database has an existing account that you want to use, use the Django
+shell, similar to this::
+
+    docker exec -it kuma_web_1 ./manage.py shell_plus
+    >>> me = User.objects.get(username='admin_username')
+    >>> me.set_password('mypassword')
+    >>> me.is_superuser = True
+    >>> me.is_staff = True
+    >>> me.save()
+    >>> exit()
+
+With a password-enabled admin account, you can log into Django admin at
+http://localhost:8000/admin/login/
+
+When social accounts are enabled, the password can be disabled with the Django
+shell::
+
+    docker exec -it kuma_web_1 ./manage.py shell_plus
+    >>> me = User.objects.get(username='admin_username')
+    >>> me.set_unusable_password()
+    >>> me.save()
+    >>> exit()
+
 Coming Soon
 ===========
 Docker support is experimental, so the full features of the Vagrant install are
 not supported.  The next steps are enabling and documenting how to:
 
-- Create an admin user
 - Enable the wiki
 - Enable KumaScript
 - Enable GitHub Auth
