@@ -131,12 +131,6 @@ RTL_LANGUAGES = (
     'he'
 )
 
-DEV_POOTLE_PRODUCT_DETAILS_MAP = {
-    'pt': 'pt-PT',
-    'fy': 'fy-NL',
-    'xx-testing': 'x-testing',
-}
-
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale; values are the delivered locale.
 LOCALE_ALIASES = {
