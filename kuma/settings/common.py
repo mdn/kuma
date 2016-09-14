@@ -117,10 +117,6 @@ PLATFORM_NAME = platform.node()
 # system time zone.
 TIME_ZONE = 'US/Pacific'
 
-# Directory for product-details files.
-PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
-                          default=path('..', 'product_details_json'))
-
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-US'
@@ -401,7 +397,6 @@ INSTALLED_APPS = (
     # util
     'django_jinja',
     'pipeline',
-    'product_details',
     'puente',
     'constance.backends.database',
     'constance',
