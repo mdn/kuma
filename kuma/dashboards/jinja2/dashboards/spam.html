@@ -14,18 +14,23 @@
                  ('true_negative_rate', 'True Negative Rate', 'rate')) %}
 {% block content %}
 <h1>{{ title }}</h1>
-{% if improperly_configured %}
-  <p>{{ improperly_configured }}</p>
-{% endif %}
-{% if processing %}
-  <p>The report is being processed. Please reload in a minute.</p>
-{% else %}
+
+<div class="wiki-column text-content">
+
+    {% if improperly_configured %}
+      <div class="notification error" data-level="error">{{ improperly_configured }}</div>
+    {% endif %}
+    {% if processing %}
+      <div class="notification warning" data-level="warning">The report is being processed. Please reload in a minute.</div>
+    {% else %}
+
+  <div class="notification info" data-level="info">Recent event data generated at {{ events_generated }}</div>
 
   <table class="spam-trends-table">
     <caption>{{ _('Trends Over Time, Ending %(date)s', date=end_date ) }}</caption>
     <thead>
       <tr>
-        <th class="stat-header">Period</th>
+        <th>Period</th>
         <th class="stat-header">Start</th>
         {% for stat, stat_name, stat_class in stat_ids -%}
         <th class="stat-header">{{ stat_name }}</th>
@@ -36,7 +41,7 @@
       {% for period in trends -%}
       <tr>
         <th scope="row">{{ period.name }}</th>
-        <th scope="row">{{ period.start }}</th>
+        <th scope="row" class="data">{{ period.start }}</th>
         {%- for stat, stat_name, stat_class in stat_ids %}
         {%- if stat_class == 'rate' %}
         <td class="{{ stat_class }}">{{ "%0.1f%%" | format(100 * period.stats.get(stat, 0.0)) }}</td>
@@ -55,7 +60,7 @@
   <table class="spam-events-table">
     <caption>Published Spam</caption>
     <colgroup>
-      <col span="1" class="data" />
+      <col span="1" />
       <col span="1" class="data" />
       <col span="1" class="data" />
       <col span="1" class="data" />
@@ -64,10 +69,10 @@
     </colgroup>
     <thead>
       <tr>
-        <th class="data">Date</th>
-        <th class="data">Time Active (seconds)</th>
-        <th class="data">Estimated Viewers</th>
-        <th class="data">Revision</th>
+        <th class="stat-header">Date</th>
+        <th class="stat-header">Time Active (seconds)</th>
+        <th class="stat-header">Estimated Viewers</th>
+        <th class="stat-header">Revision</th>
         <th class="name">Change Type</th>
         <th class="path">Path</th>
       </tr>
@@ -88,8 +93,6 @@
   {% else %}
   <p>No recent published spam.</p>
   {% endif %}{# recent spam #}
-  <ul>
-    <li>Recent event data generated at {{ events_generated }}</li>
-  </ul>
+</div>
 {% endif %}{# processing #}
 {% endblock %}
