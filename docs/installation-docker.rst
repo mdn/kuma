@@ -10,70 +10,119 @@ Vagrant set up.
 Docker setup
 ============
 
-#. Ensure you have cloned the kuma Git repository and it is your current
-   working directory::
+#. Install the `Docker platform`_, following Docker's instructions for your
+   operating system.
+
+   .. _Docker platform: https://www.docker.com/products/overview
+
+#. Clone the kuma Git repository, if you haven't already::
 
         git clone git@github.com:mozilla/kuma.git
+
+#. Ensure you are in the existing or newly cloned kuma working copy::
+
         cd kuma
 
-#. Install the `Docker Toolbox`_. This will install the Docker engine,
-   along with Docker Compose and Docker Machine.
-
-   .. _Docker Toolbox: https://www.docker.com/products/docker-toolbox
-
-#. Create the virtual machine that Docker will run within::
-
-        docker-machine create --driver virtualbox --virtualbox-memory 4096 --virtualbox-disk-size 50000 kuma
-
-#. Configure the environment variables::
-
-        eval "$(docker-machine env kuma)"
-
-#. Add the Docker VM to your hosts::
-
-        sudo sh -c "echo $(docker-machine ip kuma 2>/dev/null)  kuma.dev >> /etc/hosts"
-
-#. Pull and build the containers::
+#. Pull the Docker images and build the containers::
 
         docker-compose pull
         docker-compose build
 
-#. Start the containers::
+#. Start the containers in the background::
 
         docker-compose up -d
 
-At this point everything is running but we haven't set up the database
-yet. You either need to import a data dump or run the Django migrations to
-create the database and tables.
+Install Product Details
+=======================
+The `product details JSON`_ includes common data for Mozilla products,
+including the list of supported languages. It needs to be installed once,
+with::
 
-If you have a data dump you can connect to the "web" container and import
-the data dump::
+    docker exec -it kuma_web_1 ./manage.py update_product_details -f
+    docker restart kuma_web_1
 
-    mysql --default-character-set=utf8 -h mysql -ukuma -pkuma kuma < kuma.sql
+.. _product details JSON: https://github.com/mozilla/product-details-json
 
-Or run the migrations::
+Provision the database
+======================
+There are two options for provisioning the database.  One option is to
+initialize a new, empty database, and another is to restore an existing
+database from a data dump.
 
-    docker exec -ti kuma_web_1 /bin/bash
-    ./manage.py migrate
+Initialize a new database
+-------------------------
+To initialize a fresh database, run the migrations::
 
+    docker exec -it kuma_web_1 ./manage.py migrate
 
-Interacting with the containers
-===============================
+It will run the standard Django migrations::
 
-You can connect to a running container to run commands if need be. For
-example, you can connect to the "web" container::
+    Operations to perform:
+      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, product_details, honeypot, constance
+      Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
+    Synchronizing apps without migrations:
+      Creating tables...
+    ... output truncated ...
 
-        docker exec -ti kuma_web_1 /bin/bash
+The database will be populated with empty tables.
 
-Once connected you can run the tests or interact with the database.
+Restore an existing database
+----------------------------
+To restore a gzipped-database dump ``kuma.sql.gz``::
 
-Stopping the containers and shutting down the VM
-================================================
+    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < kuma.sql.gz
+
+There will be no output until the database is loaded, which may take several
+minutes depending on the size of the data dump.
+
+This command can be adjusted to restore from an uncompressed database, or
+directly from a ``mysqldump`` command.
+
+Visit the Homepage
+==================
+Open the homepage at http://localhost:8000 . You've installed Kuma!
+
+Coming Soon
+===========
+Docker support is experimental, so the full features of the Vagrant install are
+not supported.  The next steps are enabling and documenting how to:
+
+- Create an admin user
+- Enable the wiki
+- Enable KumaScript
+- Enable GitHub Auth
+- Troubleshoot install errors
+- All the rest of the development and maintenance tasks
+
+Interact with the Docker containers
+===================================
+The current directory is mounted as the ``/app`` folder in the web and worker
+containers (``kuma_web_1`` and ``kuma_worker_1``).  Changes made to your local
+directory are usually reflected in the running containers. To force the issue,
+the container can be restarted::
+
+    docker restart kuma_web_1 kuma_worker_1
+
+You can connect to a running container to run commands. For example, you can
+open an interactive shell in the web container::
+
+    docker exec -it kuma_web_1 /bin/bash
+
+To view the logs generated by a container::
+
+    docker logs kuma_web_1
+
+Or continuously view logs from all containers::
+
+    docker-compose logs -f
 
 To stop the containers::
 
-        docker-compose stop
+    docker-compose stop
 
-To shut down the VM::
+For further information, see the Docker documentation, such as the
+`Docker Overview`_ and the documentation for your operating system.
+You can try Docker's guided tutorials, and apply what you've learned on the
+Kuma Docker environment.
 
-        docker-machine stop kuma
+.. _`Docker Overview`: https://docs.docker.com/engine/understanding-docker/

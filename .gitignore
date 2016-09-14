@@ -41,3 +41,4 @@ uploads/
 webroot/.htaccess
 wheelhouse
 xfers/*
+product_details_json/
