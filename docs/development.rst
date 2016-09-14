@@ -276,17 +276,6 @@ assets locally, follow these steps:
 #. Stop ``foreman`` if it's already running
 #. Run ``foreman start``
 
-Mozilla Product Details
-~~~~~~~~~~~~~~~~~~~~~~~
-
-One of the packages Kuma uses, Django Mozilla Product Details, needs to
-fetch JSON files containing historical Firefox version data and write them
-to disk. To set this up, just run::
-
-    ./manage.py update_product_details
-
-...to do the initial fetch or run it again to update it.
-
 Secure Cookies
 ~~~~~~~~~~~~~~
 
