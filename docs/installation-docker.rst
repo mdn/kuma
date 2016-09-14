@@ -51,17 +51,6 @@ Docker setup
 
         docker-compose up -d
 
-Install Product Details
-=======================
-The `product details JSON`_ includes common data for Mozilla products,
-including the list of supported languages. It needs to be installed once,
-with::
-
-    docker exec -it kuma_web_1 ./manage.py update_product_details -f
-    docker restart kuma_web_1
-
-.. _product details JSON: https://github.com/mozilla/product-details-json
-
 Provision the database
 ======================
 There are two options for provisioning the database.  One option is to
@@ -77,7 +66,7 @@ To initialize a fresh database, run the migrations::
 It will run the standard Django migrations, with output similar to::
 
     Operations to perform:
-      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, product_details, honeypot, constance
+      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
       Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
     Synchronizing apps without migrations:
       Creating tables...

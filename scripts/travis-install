@@ -10,9 +10,6 @@ then
     sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
 
-    # product details
-    tar -C .. -zxf etc/data/product_details_json.tar.gz
-
     # completely and utterly remove Travis' MySQL and let the Ansible role install it
     sudo apt-get remove --purge 'mysql*'
     sudo apt-get autoremove
