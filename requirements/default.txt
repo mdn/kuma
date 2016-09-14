@@ -116,12 +116,6 @@ djangorestframework==3.3.2 \
     --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b \
     --hash=sha256:4962418a57804f8323282728a4f9b9496e78caec1adda352170697752eff01bf
 
-# Bulk download and upload of data with Django admin
-# TODO: remove
-django-smuggler==0.6.1 \
-    --hash=sha256:d062d3e8215b946679cfb893d8e8af7341ce2745ebe85077a49297418025f289 \
-    --hash=sha256:b3719c999a3c121006f5eb1d737be0c90d68a11a243a95f93341b366f049da10
-
 # Add site-wide announcements in the database
 django-soapbox==1.3 \
     --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
