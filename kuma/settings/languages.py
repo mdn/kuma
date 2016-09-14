@@ -4,8 +4,9 @@ import json
 import os
 
 from decouple import config
+from django.utils.translation import ugettext_lazy as _
 
-_Language = namedtuple(u'Language', u'english native iso639_1')
+_Language = namedtuple(u'Language', u'english native translation')
 
 ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 
@@ -106,7 +107,7 @@ def _get_languages_and_locales():
     for locale, meta in json_locales.items():
         locales[locale] = _Language(meta['English'],
                                     meta['native'],
-                                    locale)
+                                    _(meta['English']))
     languages = sorted(tuple([(i, locales[i].native) for i in MDN_LANGUAGES]),
                        key=lambda lang: lang[0])
 
