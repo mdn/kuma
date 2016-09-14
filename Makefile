@@ -56,6 +56,9 @@ clean:
 	mkdir -p build/assets
 	mkdir -p build/locale
 
+languages-refresh:
+	python manage.py generate_languages_settings
+
 locale:
 	# For generating a new file to let locales name localizable
 	python manage.py translate_locales_name

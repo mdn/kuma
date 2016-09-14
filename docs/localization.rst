@@ -65,7 +65,15 @@ code of the language you are adding.
 #. Update the Localizations as above, so that your commit will be limited to
    the new locale.
 
-#. Add the locale to ``MDN_LANGUAGES`` in ``kuma/settings/common.py``
+#. Download the latest ``languages.json`` from
+   https://product-details.mozilla.org/1.0/languages.json
+   and place it at ``kuma/settings/languages.json``.
+
+#. Add the locale to the list in ``kuma/settings/mdn_languages.txt``
+
+#. Regenerate ``kuma/settings/languages.py`` by running::
+
+        make languages-refresh
 
 #. Add the locale to the ``locale/`` folder::
 
@@ -79,15 +87,9 @@ code of the language you are adding.
    errors by visiting the locale's home page, for example
    https://developer-local.allizom.org/bg/
 
-#. Update the ``product_details_json.tar.gz`` files used by
-   `our Travis install script`_::
-
-        python manage.py update_product_details
-        tar -czf etc/data/product_details_json.tar.gz ../product_details_json/
-
-#. Commit the changes to ``locale/bg``, ``kuma/settings/common.py`` and
-   ``etc/data/product_details_json.tar.gz``. Verify that the other locales are
-   just timestamp updates before reverting them.
+#. Commit the changes to ``locale/bg`` and ``kuma/settings``.
+   Verify that the other locales are just timestamp updates before reverting
+   them.
 
 #. BONUS: Use the  `debug translation feature`_ of ``dennis-cmd`` to test a
    fake translation of the locale::
