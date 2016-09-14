@@ -1,21 +1,16 @@
+# -*- coding: utf-8 -*-
+# This file was generated with the command:
+#   ./manage.py generate_languages_settings
+# The source files are:
+#   kuma/settings/mdn_languages.txt
+#   kuma/settings/languages.json
+# See the documentation for more information:
+#   https://kuma.readthedocs.io/en/latest/localization.html
+
+from __future__ import unicode_literals
 from collections import namedtuple
-from os.path import dirname
-import json
-import os
 
-from decouple import config
 from django.utils.translation import ugettext_lazy as _
-
-_Language = namedtuple(u'Language', u'english native translation')
-
-ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
-
-def path(*parts):
-    return os.path.join(ROOT, *parts)
-
-# Directory for product-details files.
-PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
-                          default=path('..', 'product_details_json'))
 
 # Accepted locales
 MDN_LANGUAGES = (
@@ -78,40 +73,250 @@ MDN_LANGUAGES = (
     'yo',
     'zh-CN',
     'zh-TW',
-    'zu',
+    'zu'
 )
 
-def _get_languages_and_locales():
-    """Generates LANGUAGES and LOCALES data
-
-    .. Note::
-
-       This requires product-details data. If product-details data hasn't been
-       retrieved, then this prints a warning and then returns empty values. We
-       do this because in the case of pristine dev environments, you can't
-       update product-details because product-details isn't there, yet.
-
-    """
-    languages = []
-    locales = {}
-    lang_file = os.path.join(PROD_DETAILS_DIR, 'languages.json')
-    try:
-        json_locales = json.load(open(lang_file, 'r'))
-    except IOError as ioe:
-        print('Warning: Cannot open %s because it does not exist. LANGUAGES '
-              'and LOCALES will be empty. Please run "./manage.py '
-              'update_product_details".' % lang_file)
-        print(ioe)
-        return [], {}
-
-    for locale, meta in json_locales.items():
-        locales[locale] = _Language(meta['English'],
-                                    meta['native'],
-                                    _(meta['English']))
-    languages = sorted(tuple([(i, locales[i].native) for i in MDN_LANGUAGES]),
-                       key=lambda lang: lang[0])
-
-    return languages, locales
-
-
-LANGUAGES, LOCALES = _get_languages_and_locales()
+# Mozilla's language data for MDN_LANGUAGES
+_Language = namedtuple(u'Language', u'english native translation')
+LOCALES = {
+    'en-US': _Language(
+        'English (US)',
+        'English (US)',
+        _('English (US)')),
+    'af': _Language(
+        'Afrikaans',
+        'Afrikaans',
+        _('Afrikaans')),
+    'ar': _Language(
+        'Arabic',
+        'عربي',
+        _('Arabic')),
+    'az': _Language(
+        'Azerbaijani',
+        'Azərbaycanca',
+        _('Azerbaijani')),
+    'bm': _Language(
+        'Bambara',
+        'Bamanankan',
+        _('Bambara')),
+    'bn-BD': _Language(
+        'Bengali (Bangladesh)',
+        'বাংলা (বাংলাদেশ)',
+        _('Bengali (Bangladesh)')),
+    'bn-IN': _Language(
+        'Bengali (India)',
+        'বাংলা (ভারত)',
+        _('Bengali (India)')),
+    'ca': _Language(
+        'Catalan',
+        'Català',
+        _('Catalan')),
+    'cs': _Language(
+        'Czech',
+        'Čeština',
+        _('Czech')),
+    'de': _Language(
+        'German',
+        'Deutsch',
+        _('German')),
+    'ee': _Language(
+        'Ewe',
+        'Eʋe',
+        _('Ewe')),
+    'el': _Language(
+        'Greek',
+        'Ελληνικά',
+        _('Greek')),
+    'es': _Language(
+        'Spanish',
+        'Español',
+        _('Spanish')),
+    'fa': _Language(
+        'Persian',
+        'فارسی',
+        _('Persian')),
+    'ff': _Language(
+        'Fulah',
+        'Pulaar-Fulfulde',
+        _('Fulah')),
+    'fi': _Language(
+        'Finnish',
+        'suomi',
+        _('Finnish')),
+    'fr': _Language(
+        'French',
+        'Français',
+        _('French')),
+    'fy-NL': _Language(
+        'Frisian',
+        'Frysk',
+        _('Frisian')),
+    'ga-IE': _Language(
+        'Irish',
+        'Gaeilge',
+        _('Irish')),
+    'ha': _Language(
+        'Hausa',
+        'Hausa',
+        _('Hausa')),
+    'he': _Language(
+        'Hebrew',
+        'עברית',
+        _('Hebrew')),
+    'hi-IN': _Language(
+        'Hindi (India)',
+        'हिन्दी (भारत)',
+        _('Hindi (India)')),
+    'hr': _Language(
+        'Croatian',
+        'Hrvatski',
+        _('Croatian')),
+    'hu': _Language(
+        'Hungarian',
+        'magyar',
+        _('Hungarian')),
+    'id': _Language(
+        'Indonesian',
+        'Bahasa Indonesia',
+        _('Indonesian')),
+    'ig': _Language(
+        'Igbo',
+        'Igbo',
+        _('Igbo')),
+    'it': _Language(
+        'Italian',
+        'Italiano',
+        _('Italian')),
+    'ja': _Language(
+        'Japanese',
+        '日本語',
+        _('Japanese')),
+    'ka': _Language(
+        'Georgian',
+        'ქართული',
+        _('Georgian')),
+    'ko': _Language(
+        'Korean',
+        '한국어',
+        _('Korean')),
+    'ln': _Language(
+        'Lingala',
+        'Lingála',
+        _('Lingala')),
+    'mg': _Language(
+        'Malagasy',
+        'Malagasy',
+        _('Malagasy')),
+    'ml': _Language(
+        'Malayalam',
+        'മലയാളം',
+        _('Malayalam')),
+    'ms': _Language(
+        'Malay',
+        'Melayu',
+        _('Malay')),
+    'my': _Language(
+        'Burmese',
+        'မြန်မာဘာသာ',
+        _('Burmese')),
+    'nl': _Language(
+        'Dutch',
+        'Nederlands',
+        _('Dutch')),
+    'pl': _Language(
+        'Polish',
+        'Polski',
+        _('Polish')),
+    'pt-BR': _Language(
+        'Portuguese (Brazilian)',
+        'Português (do Brasil)',
+        _('Portuguese (Brazilian)')),
+    'pt-PT': _Language(
+        'Portuguese (Portugal)',
+        'Português (Europeu)',
+        _('Portuguese (Portugal)')),
+    'ro': _Language(
+        'Romanian',
+        'Română',
+        _('Romanian')),
+    'ru': _Language(
+        'Russian',
+        'Русский',
+        _('Russian')),
+    'son': _Language(
+        'Songhai',
+        'Soŋay',
+        _('Songhai')),
+    'sq': _Language(
+        'Albanian',
+        'Shqip',
+        _('Albanian')),
+    'sr': _Language(
+        'Serbian',
+        'Српски',
+        _('Serbian')),
+    'sr-Latn': _Language(
+        'Serbian',
+        'Srpski',
+        _('Serbian')),
+    'sv-SE': _Language(
+        'Swedish',
+        'Svenska',
+        _('Swedish')),
+    'sw': _Language(
+        'Swahili',
+        'Kiswahili',
+        _('Swahili')),
+    'ta': _Language(
+        'Tamil',
+        'தமிழ்',
+        _('Tamil')),
+    'th': _Language(
+        'Thai',
+        'ไทย',
+        _('Thai')),
+    'tl': _Language(
+        'Tagalog',
+        'Tagalog',
+        _('Tagalog')),
+    'tn': _Language(
+        'Tswana',
+        'Setswana',
+        _('Tswana')),
+    'tr': _Language(
+        'Turkish',
+        'Türkçe',
+        _('Turkish')),
+    'uk': _Language(
+        'Ukrainian',
+        'Українська',
+        _('Ukrainian')),
+    'vi': _Language(
+        'Vietnamese',
+        'Tiếng Việt',
+        _('Vietnamese')),
+    'wo': _Language(
+        'Wolof',
+        'Wolof',
+        _('Wolof')),
+    'xh': _Language(
+        'Xhosa',
+        'isiXhosa',
+        _('Xhosa')),
+    'yo': _Language(
+        'Yoruba',
+        'Yorùbá',
+        _('Yoruba')),
+    'zh-CN': _Language(
+        'Chinese (Simplified)',
+        '中文 (简体)',
+        _('Chinese (Simplified)')),
+    'zh-TW': _Language(
+        'Chinese (Traditional)',
+        '正體中文 (繁體)',
+        _('Chinese (Traditional)')),
+    'zu': _Language(
+        'Zulu',
+        'isiZulu',
+        _('Zulu'))
+}
