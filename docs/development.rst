@@ -313,16 +313,6 @@ assets locally (*Vagrant only*):
 #. Run ``make compilejsi18n collectstatic`` in the VM or container
 #. Restart the web process by retarting ``foreman``
 
-Mozilla Product Details
-~~~~~~~~~~~~~~~~~~~~~~~
-One of the packages Kuma uses, Django Mozilla Product Details, needs to
-fetch JSON files containing historical Firefox version data and write them
-to disk. To set this up, just run::
-
-    ./manage.py update_product_details
-
-...to do the initial fetch or run it again to update it.
-
 Secure Cookies
 ~~~~~~~~~~~~~~
 To prevent error messages like "``Forbidden (CSRF cookie not set.):``", set the
