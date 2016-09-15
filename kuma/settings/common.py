@@ -1372,7 +1372,8 @@ LOGIN_REDIRECT_URL = reverse_lazy('home')
 
 # django-allauth configuration
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = config('ACCOUNT_DEFAULT_HTTP_PROTOCOL',
+                                       default='https')
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True

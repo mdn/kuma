@@ -12,6 +12,7 @@ worker: &worker
     - redis
   environment:
     # Django settings overrides:
+    - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
     - ALLOWED_HOSTS=localhost,localhost:8000
     - BROKER_URL=redis://redis:6379/0
     - CELERY_ALWAYS_EAGER=False
@@ -24,6 +25,7 @@ worker: &worker
     - PROD_DETAILS_DIR=/app/product_details_json
     - PROTOCOL=http://
     - SESSION_COOKIE_SECURE=False
+    - SITE_URL=http://localhost:8000
     # Celery environment overrides:
     - C_FORCE_ROOT=1  # TODO: switch to non-root user
     # Other environment overrides
