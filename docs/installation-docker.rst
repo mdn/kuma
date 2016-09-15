@@ -118,6 +118,29 @@ shell::
     >>> me.save()
     >>> exit()
 
+Enable the wiki
+===============
+By default, the wiki is disabled with a
+:doc:`feature toggle <feature-toggles>`.  To enable editing:
+
+#. Log in as an admin user.
+#. Open the `Waffle / Flags`_ section of the admin site.
+#. Click "`ADD FLAG`_", above the Filter section.
+#. Enter "kumaediting" for the Name.
+#. Set "Everyone" to "Yes".
+#. Click "SAVE" at the bottom of the page.
+
+If you are using a populated database, the "kumaediting" flag may already
+exist.
+
+You can now visit http://localhost:8000/docs/new to create new wiki pages.
+
+Many contributors use a a personal page as a testing sandbox, with a title
+such as "User:myusername".
+
+.. _Waffle / Flags: http://localhost:8000/admin/waffle/flag/
+.. _ADD FLAG: http://localhost:8000/admin/waffle/flag/add/
+
 Coming Soon
 ===========
 Docker support is experimental, so the full features of the Vagrant install are
