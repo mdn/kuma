@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-15 10:26+0000\n"
+"PO-Revision-Date: 2016-09-15 11:00+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -276,185 +276,185 @@ msgstr "Tiwtilin"
 
 #: jinja2/base.html:212
 msgid "Privacy"
-msgstr ""
+msgstr "Tabaḍnit"
 
 #: jinja2/base.html:213
 msgid "Cookies"
-msgstr ""
+msgstr "Inagan n tuqqna"
 
 #: jinja2/base.html:214
 msgid "Contribute to the code"
-msgstr ""
+msgstr "Ttekki di tengalt"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">Ffeɣ</a> u ɛreḍ tikelt nniḍen.</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Nadi tallalt n Firefox"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr ""
+msgstr "Ansuf, <span class=\"user\">%(user)s</span>."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Amaɣnu"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr ""
+msgstr "Ffeɣ"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "Tebɣiḍ ad tettekkiḍ?<br /> <a href=\"%(login_url)s\">Kcem</a>"
 
 #: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:86
 msgid "Other languages:"
-msgstr ""
+msgstr "Tutlayin nniḍen:"
 
 #: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:97
 msgid "Go"
-msgstr ""
+msgstr "Bdu"
 
 #: jinja2/includes/login.html:6
 msgid "Sign out"
-msgstr ""
+msgstr "Ffeɣ"
 
 #: jinja2/includes/login.html:17
 msgid "Sign in"
-msgstr ""
+msgstr "Kcem"
 
 #: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:81 kuma/users/jinja2/users/includes/user_title_info.html:85
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: jinja2/includes/login.html:24
 msgid "Sign in or create an account:"
-msgstr ""
+msgstr "Kcem neɣ rnu amiḍan:"
 
 #: jinja2/includes/login.html:28
 msgid "Sign in:"
-msgstr ""
+msgstr "Kcem:"
 
 #: jinja2/includes/login.html:28
 msgid "Why is Persona sign in only?"
-msgstr ""
+msgstr "Acuɣeṛ Persona yettwaseqdac kan i tuqqna?"
 
 #: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:8
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "Suref-aɣ, imi timerna n umaɣnu ur tetwarmed ara yakan."
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
-msgstr ""
+msgstr "Ɣeṛ deffir"
 
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
-msgstr ""
+msgstr "Ɣer zdat"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "Tafrikant"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
-msgstr ""
+msgstr "Talbanit"
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr ""
+msgstr "Taɛrabt"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Tazerbiǧanit"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "Tabumbrit"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "Tebengalit (Bengladic)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
-msgstr ""
+msgstr "Tabengalit (Hend)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "Tabiṛmanit"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "Tkaṭalant"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Tacinit (taḥerfit)"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Tacinit (tamensayt)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
-msgstr ""
+msgstr "Takarwaṣit"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
-msgstr ""
+msgstr "Tačikit"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
-msgstr ""
+msgstr "Tahulandit"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "English (US)"
-msgstr ""
+msgstr "Taglizit (Marikan)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr ""
+msgstr "Tiwit"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
-msgstr ""
+msgstr "Tafinit"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "Tafransist"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr ""
+msgstr "Tafrizunt"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
-msgstr ""
+msgstr "Tafulaht"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr ""
+msgstr "Tajyuṛjit"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "Talmanit"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
-msgstr ""
+msgstr "Tagrigit"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
-msgstr ""
+msgstr "Tahawsit"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
-msgstr ""
+msgstr "Taɛebrit"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
