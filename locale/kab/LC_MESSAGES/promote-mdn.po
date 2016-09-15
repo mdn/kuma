@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-15 11:16+0000\n"
+"PO-Revision-Date: 2016-09-15 20:54+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -106,10 +106,12 @@ msgstr "Awalen n tsura udmawanen"
 #: promote-mdn.php:281
 msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
 msgstr ""
+"Awalen n tsura nniḍen ara ttwacudden s wudem awurman.  Bḍu awalen n tsura s ticcar sakin rnu tansa asaḍas ɣer tagara. Seqdec izirig amaynut akken ad tessekcmeḍ tansa akked tagrumma n wawalen n "
+"tsura, am umedya ,"
 
 #: promote-mdn.php:288
 msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
-msgstr ""
+msgstr "Tamawt: Awalen agi n tsura ad izwiren wid i d-yulin si tensa URL. Ma tessekcmeḍ aṭas n wawalen n tsura udmawanen, yezmer d akken iseɣwan ɣer MDN ur teddun ara."
 
 #: promote-mdn.php:289
 msgid "Update options"
@@ -117,17 +119,17 @@ msgstr "Leqqem iɣewwaṛen"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
-msgstr ""
+msgstr "Tanemmirt ɣef usebded! Ddu ɣer usebtar n <a href=\"%s\">iɣewwaṛen </a> i twila."
 
 #: promote-mdn.php:313
 msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
-msgstr ""
+msgstr "Tasuqilt s tefṛansist, <a href=\"%s\">widget</a> amaynut n ugalis adisan, <a href=\"%s\">iɣewwaṛen</a> i tensa URL n tutlayt i wawalen n tsura."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "Mmeslay ɣef MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
@@ -135,11 +137,11 @@ msgstr "ffer"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr ""
+msgstr "Tugna deg ugalis adisan akked iseɣwan ɣer MDN."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr ""
+msgstr "Mmeslay ɣef MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
@@ -147,16 +149,16 @@ msgstr "Awi-d azegrir WordPress"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/groovecoder/wp-promote-mdn"
-msgstr ""
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr ""
+msgstr "Promote MDN ad yernu s wudem awurman aseɣwen gar wawalen n tsura akked tsemlit ɣer MDN"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
-msgstr ""
+msgstr "Luke Crouch"
 
 #. Author URI of the plugin/theme
 msgid "http://groovecoder.com"
-msgstr ""
+msgstr "http://groovecoder.com"
