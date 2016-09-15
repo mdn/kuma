@@ -125,7 +125,7 @@ By default, the wiki is disabled with a
 
 #. Log in as an admin user.
 #. Open the `Waffle / Flags`_ section of the admin site.
-#. Click "`ADD FLAG`_", above the Filter section.
+#. Click "`ADD FLAG`_", above the Filter sidebar.
 #. Enter "kumaediting" for the Name.
 #. Set "Everyone" to "Yes".
 #. Click "SAVE" at the bottom of the page.
@@ -141,13 +141,30 @@ such as "User:myusername".
 .. _Waffle / Flags: http://localhost:8000/admin/waffle/flag/
 .. _ADD FLAG: http://localhost:8000/admin/waffle/flag/add/
 
+Enable KumaScript
+=================
+By default, `KumaScript`_ is disabled by the default timeout of `0.0` seconds.
+To enable KumaScript:
+
+#. Log in as the admin user.
+#. Open the `Constance / Config`_ section of the admin site.
+#. Change ``KUMASCRIPT_TIMEOUT`` to 600.
+#. Click "SAVE" at the bottom of the page.
+#. Import the `KumaScript auto-loaded modules`_:
+
+::
+
+   docker exec -it kuma_web_1 ./manage.py import_kumascript_modules
+
+.. _KumaScript: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/KumaScript
+.. _Constance / Config: http://localhost:8000/admin/constance/config/
+.. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
+
 Coming Soon
 ===========
 Docker support is experimental, so the full features of the Vagrant install are
 not supported.  The next steps are enabling and documenting how to:
 
-- Enable the wiki
-- Enable KumaScript
 - Enable GitHub Auth
 - Troubleshoot install errors
 - All the rest of the development and maintenance tasks
