@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-15 09:12+0000\n"
+"PO-Revision-Date: 2016-09-15 10:26+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -197,15 +197,15 @@ msgstr "Imniren n uneflay"
 
 #: jinja2/base.html:150
 msgid "Accessibility"
-msgstr ""
+msgstr "Tuffart"
 
 #: jinja2/base.html:151
 msgid "...more docs"
-msgstr ""
+msgstr "...ugar n isemliyen"
 
 #: jinja2/base.html:155
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Tasemlit n Mozilla"
 
 #: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
@@ -225,54 +225,54 @@ msgstr "Anagraw n wammud B2G"
 
 #: jinja2/base.html:164
 msgid "Persona"
-msgstr ""
+msgstr "Persona"
 
 #: jinja2/base.html:168
 msgid "Developer Tools"
-msgstr ""
+msgstr "Ifecka n tneflit"
 
 #: jinja2/base.html:168
 msgid "Feedback"
-msgstr ""
+msgstr "Tikti"
 
 #: jinja2/base.html:173
 msgid "Get Firefox help"
-msgstr ""
+msgstr "Awi-d tallalt n Firefox"
 
 #: jinja2/base.html:174
 msgid "Get web development help"
-msgstr ""
+msgstr "Awi-d tallalt n tneflit web"
 
 #: jinja2/base.html:177
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Ddu ɣer tmezdagnut MDN"
 
 #: jinja2/base.html:178
 msgid "Report a content problem"
-msgstr ""
+msgstr "Azen ugur n ugbur"
 
 #: jinja2/base.html:179
 msgid "Report a bug"
-msgstr ""
+msgstr "Azen abug"
 
 #: jinja2/base.html:186 jinja2/base.html:187 jinja2/base.html:189 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr ""
+msgstr "Nadi"
 
 #: jinja2/base.html:205
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr ""
+msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network akked ittekkiyen iman-nsen.</p> <p>Akk igburen llan daw  <a href=\"%(copyright_url)s\">n tugarin agi</a>.</p>"
 
 #: jinja2/base.html:210
 msgid "About MDN"
-msgstr ""
+msgstr "Ɣef MDN"
 
 #: jinja2/base.html:211
 msgid "Terms"
-msgstr ""
+msgstr "Tiwtilin"
 
 #: jinja2/base.html:212
 msgid "Privacy"
