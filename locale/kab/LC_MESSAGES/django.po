@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-05 21:10+0000\n"
+"PO-Revision-Date: 2016-09-15 09:12+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -84,7 +84,7 @@ msgstr "Ma tḍefreḍ-d aseɣwen si tsemlit, tzemred ad teqqneḍ u ad ternud a
 #: jinja2/404.html:36
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
-msgstr ""
+msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> Sɣuṛ Matthew Inman, win i d-yesnulfan <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
@@ -97,11 +97,11 @@ msgstr "Aẓeṭṭa n ineflayen n Mozilla"
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
+msgstr "Tesseqdaceḍ Persona akken ad teqqneḍ. <a href=\"%(persona_info)s\">Persona ad yettwakkes ɣer zdat. Issin ugar.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
-msgstr ""
+msgstr "Ddu ɣer ugbur agejdan"
 
 #: jinja2/base.html:84
 msgid "Select language"
@@ -109,7 +109,7 @@ msgstr "Fren tutlayt"
 
 #: jinja2/base.html:86
 msgid "Skip to search"
-msgstr ""
+msgstr "Ddu ɣer unadi"
 
 #: jinja2/base.html:107 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -133,15 +133,15 @@ msgstr "Ifecka n usmel"
 
 #: jinja2/base.html:119
 msgid "Revision dashboard"
-msgstr ""
+msgstr "Tafelwit n usenqed n uɛawed n tmuɣli"
 
 #: jinja2/base.html:120
 msgid "Documentation status"
-msgstr ""
+msgstr "Addad n tsemlit"
 
 #: jinja2/base.html:129
 msgid "Web Platform"
-msgstr ""
+msgstr "Talɣubliṭ Web"
 
 #: jinja2/base.html:133
 msgid "Technologies"
@@ -177,7 +177,7 @@ msgstr "MathML"
 
 #: jinja2/base.html:144
 msgid "References & Guides"
-msgstr ""
+msgstr "Timsisɣal & Imniren"
 
 #: jinja2/base.html:146
 msgid "Learn the Web"
@@ -185,7 +185,7 @@ msgstr "Issin Web"
 
 #: jinja2/base.html:147
 msgid "Tutorials"
-msgstr ""
+msgstr "Atuṭuṛyel"
 
 #: jinja2/base.html:148
 msgid "References"
@@ -193,7 +193,7 @@ msgstr "Timsisɣal"
 
 #: jinja2/base.html:149
 msgid "Developer Guides"
-msgstr ""
+msgstr "Imniren n uneflay"
 
 #: jinja2/base.html:150
 msgid "Accessibility"
