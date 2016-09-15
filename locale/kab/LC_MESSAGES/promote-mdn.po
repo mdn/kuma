@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-05 21:03+0000\n"
+"PO-Revision-Date: 2016-09-15 11:16+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -77,11 +77,11 @@ msgstr "Ur rennu ara tibzimin n iqeṛṛa (h1,h2,h3,h4,h5,h6)."
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
-msgstr ""
+msgstr "Ur rennu ara iseɣwan deg imagraden akked isebtar agi (asulay, slug akked yesmawen ttwabḍan s ticcert):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"
-msgstr ""
+msgstr "Ur rennu ara iseɣwan ɣer tefyar agi (ttwabḍant s ticcert):"
 
 #: promote-mdn.php:274
 msgid "Limits"
@@ -89,15 +89,15 @@ msgstr "Tilisa"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
-msgstr ""
+msgstr "Amḍan afellay n iseɣwan ara yernun di yal amagrad:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr ""
+msgstr "Amḍan afellay n iseɣwan ara yernun di yal awal n tsarutt /phrase:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr ""
+msgstr "Amḍan afellay n iseɣwan ara yernun di yal tansa URL:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"

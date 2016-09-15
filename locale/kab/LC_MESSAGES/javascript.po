@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-05 20:18+0000\n"
+"PO-Revision-Date: 2016-09-15 11:17+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -82,11 +82,11 @@ msgstr "Fren yiwen..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "Alḥif . D acu izemren ad isnerni ayagi?"
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "Tanemmirt! Ad nseggem ayagi."
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
@@ -94,11 +94,11 @@ msgstr "Ulac afran"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "Yettwafren: "
 
 #: kuma/static/js/users.js:108
 msgid "New interest..."
-msgstr ""
+msgstr "Amaynut n wayen tḥemleḍ..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"

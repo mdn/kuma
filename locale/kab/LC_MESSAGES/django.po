@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-15 11:00+0000\n"
+"PO-Revision-Date: 2016-09-15 11:06+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -458,160 +458,160 @@ msgstr "Taɛebrit"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
-msgstr ""
+msgstr "Tahendit (Hend)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "Tahungaṛit"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
-msgstr ""
+msgstr "Tigbut"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "Tandunizit"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
-msgstr ""
+msgstr "Tirlandit"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "Taṭeyanit"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
-msgstr ""
+msgstr "Tajapunit"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Korean"
-msgstr ""
+msgstr "Takurit"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Lingala"
-msgstr ""
+msgstr "Talingalat"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Malagasy"
-msgstr ""
+msgstr "Tamalgact"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Malay"
-msgstr ""
+msgstr "Tamalizit"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malayalam"
-msgstr ""
+msgstr "Tamalayalamit"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Persian"
-msgstr ""
+msgstr "Tafarsit"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Polish"
-msgstr ""
+msgstr "Tapulunit"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "Tapuṛtugit (Brizil)"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "Tapuṛtugit(Puṛtugal)"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Romanian"
-msgstr ""
+msgstr "Taṛumanit"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Russian"
-msgstr ""
+msgstr "Tarusit"
 
 #: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
 msgid "Serbian"
-msgstr ""
+msgstr "Taṣirbit"
 
 #: jinja2/includes/translate_locales.html:48
 msgid "Songhai"
-msgstr ""
+msgstr "Taṣungayt"
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Spanish"
-msgstr ""
+msgstr "Taspanit"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Swahili"
-msgstr ""
+msgstr "Taswayilit"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swedish"
-msgstr ""
+msgstr "Taswidit"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalugt"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tamil"
-msgstr ""
+msgstr "Taṭamilit"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Thai"
-msgstr ""
+msgstr "Taṭaylant"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tswana"
-msgstr ""
+msgstr "Taţwanit"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Turkish"
-msgstr ""
+msgstr "Taṭurkit"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Ukrainian"
-msgstr ""
+msgstr "Takrinit"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Vietnamese"
-msgstr ""
+msgstr "Tavyiṭnamit"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Wolof"
-msgstr ""
+msgstr "Tawuluft"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Xhosa"
-msgstr ""
+msgstr "Taksuzit"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Yoruba"
-msgstr ""
+msgstr "Tayurubit"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Zulu"
-msgstr ""
+msgstr "Tazulut"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "Ffeɣ seg ujerred n yimaylen agi:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Ffeɣ seg ujerred"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Tebɣiḍ ad teffreḍ seg ujerred?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
-msgstr ""
+msgstr "Sefsex"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr ""
+msgstr "Tuccḍa n tuffɣa seg ujerred"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
