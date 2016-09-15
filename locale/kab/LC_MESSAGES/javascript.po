@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-15 21:00+0000\n"
+"PO-Revision-Date: 2016-09-15 21:01+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -138,7 +138,7 @@ msgstr "Yettwazen. Tanemmirt!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Sken tafelwit taqbuṛt."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
