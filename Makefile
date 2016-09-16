@@ -117,5 +117,14 @@ push-latest: push tag-latest
 	docker push ${BASE_IMAGE_LATEST}
 	docker push ${KUMA_IMAGE_LATEST}
 
+up:
+	docker-compose up -d
+
+bash: up
+	docker exec -it kuma_web_1 bash
+
+shell_plus: up
+	docker exec -it kuma_web_1 ./manage.py shell_plus
+
 # Those tasks don't have file targets
 .PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic localetest localeextract localecompile localerefresh
