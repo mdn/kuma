@@ -12,17 +12,16 @@ Vagrant set up.
 * These instructions work. Or worked at least once.
 * Some ``kuma_base`` images are published to `quay.io`_.  They are tagged with
   the short commit hash of the kuma repository at check-in.  For example, the
-  image tagged "609f6e5" is based on kuma at `commit 609f6e5`_. Creating a new
-  image is still a manual process, so there isn't one for each push to master
-  (and we may not want that for each translation).
-* The Docker development environment does not include parts needed for all
+  image tagged "609f6e5" is based on kuma at `commit 609f6e5`_. Automatic
+  creation of images is a work in progress.
+* The Docker development environment may not include parts needed for all
   development tasks. For example, ``kuma_base:609f6e5`` does not have the
   requirements to run tests, and does not include ElasticSearch.
 * Most instructions are still written for Vagrant. Some Vagrant-specific
   instructions may work when run against Docker, others will fail.
-* Docker is in active development, and you should expect to have to remove
-  your containers with each change. Vagrant is the stable development
-  environment.
+* The Docker development environment is evolving rapidly. You should expect to
+  have to remove and rebuild your containers with each change. Vagrant is the
+  stable development environment.
 
 .. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
 .. _`commit 609f6e5`: https://github.com/mozilla/kuma/commits/609f6e5 .
@@ -75,14 +74,16 @@ To initialize a fresh database, run the migrations::
 
     docker exec -it kuma_web_1 ./manage.py migrate
 
-It will run the standard Django migrations::
+It will run the standard Django migrations, with output similar to::
 
     Operations to perform:
       Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, product_details, honeypot, constance
       Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
     Synchronizing apps without migrations:
       Creating tables...
-    ... output truncated ...
+    ...
+      Applying wiki.0030_add_page_creators_group... OK
+      Applying wiki.0031_add_data_to_revisionip... OK
 
 The database will be populated with empty tables.
 
@@ -97,6 +98,52 @@ minutes depending on the size of the data dump.
 
 This command can be adjusted to restore from an uncompressed database, or
 directly from a ``mysqldump`` command.
+
+Compile locales
+---------------
+Localized string databases are included in their source form, and need to be
+compiled to their binary form::
+
+    docker exec -i kuma_web_1 make localecompile
+
+Dozens of lines of warnings will be printed::
+
+    cd locale; ./compile-mo.sh . ; cd --
+    ./af/LC_MESSAGES/django.po:2: warning: header field 'PO-Revision-Date' still has the initial default value
+    ./af/LC_MESSAGES/django.po:2: warning: header field 'Last-Translator' still has the initial default value
+    ...
+    ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'PO-Revision-Date' still has the initial default value
+    ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'Last-Translator' still has the initial default value
+
+Warnings are OK, and will be fixed as translators update the strings on
+Pontoon_.  If there is an error, the output will end with the error, such as::
+
+    ./az/LC_MESSAGES/django.po:263: 'msgid' and 'msgstr' entries do not both end with '\n'
+    msgfmt: found 1 fatal error
+
+These need to be fixed by a Kuma developer. Notify then in the #mdndev IRC
+channel or open a bug. You can continue with installation, but non-English
+locales will not be localized.
+
+.. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
+
+Generate static assets
+----------------------
+Static assets such as CSS and JS are included in source form, and need to be
+compiled to their final form::
+
+    docker exec -i kuma_web_1 make build-static
+
+A few thousand lines will be printed, like::
+
+    ## Compiling Stylus files to CSS ##
+    compiled build/assets/css/dashboards.css
+    generated build/assets/css/dashboards.css.map
+    ...
+    Post-processed 'css/zones.css' as 'css/zones.718d56a0cdc0.css'
+    Post-processed 'css/zones.css.map' as 'css/zones.css.6be0969a4847.map'
+
+    1717 static files copied to '/app/static', 1799 post-processed.
 
 Visit the Homepage
 ==================
