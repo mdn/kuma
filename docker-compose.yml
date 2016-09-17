@@ -6,7 +6,7 @@ worker: &worker
   links:
     - memcached
     - mysql
-    #- elasticsearch
+    - elasticsearch
     - redis
   environment:
     # Django settings overrides:
@@ -20,7 +20,7 @@ worker: &worker
     - CELERY_ALWAYS_EAGER=false
     # TODO: switch to non-root user
     - C_FORCE_ROOT=1
-    #- ES_URLS=elasticsearch:9200
+    - ES_URLS=elasticsearch:9200
     # Other environment variables:
     - PYTHONDONTWRITEBYTECODE=1
     - PROD_DETAILS_DIR=/app/product_details_json
@@ -59,8 +59,8 @@ mysql:
   volumes_from:
     - mysql-data
 
-#elasticsearch:
-#  image: elasticsearch:1.7
+elasticsearch:
+  image: elasticsearch:1.7
 
 redis:
   image: redis
