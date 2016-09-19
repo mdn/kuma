@@ -1,3 +1,5 @@
+# Configuration for multi-container development environment
+
 worker: &worker
   image: quay.io/mozmar/kuma_base
   command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
@@ -10,20 +12,24 @@ worker: &worker
     - redis
   environment:
     # Django settings overrides:
-    #- DEBUG=True
-    - PROTOCOL=http://
-    - DOMAIN=localhost
-    - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
-    - MEMCACHE_SERVERS=memcached:11211
+    - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
     - ALLOWED_HOSTS=localhost,localhost:8000
     - BROKER_URL=redis://redis:6379/0
-    - CELERY_ALWAYS_EAGER=false
-    # TODO: switch to non-root user
-    - C_FORCE_ROOT=1
+    - CELERY_ALWAYS_EAGER=False
+    - CSRF_COOKIE_SECURE=False
+    - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
+    - DEBUG=True
+    - DOMAIN=localhost
     #- ES_URLS=elasticsearch:9200
-    # Other environment variables:
-    - PYTHONDONTWRITEBYTECODE=1
+    - MEMCACHE_SERVERS=memcached:11211
     - PROD_DETAILS_DIR=/app/product_details_json
+    - PROTOCOL=http://
+    - SESSION_COOKIE_SECURE=False
+    - SITE_URL=http://localhost:8000
+    # Celery environment overrides:
+    - C_FORCE_ROOT=1  # TODO: switch to non-root user
+    # Other environment overrides
+    - PYTHONDONTWRITEBYTECODE=1
 
 # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
 web:
@@ -52,6 +58,10 @@ mysql-data:
 
 mysql:
   build: ./docker/images/mysql
+  entrypoint:
+    - docker-entrypoint.sh
+    - --character-set-server=utf8
+    - --collation-server=utf8_general_ci
   environment:
     - MYSQL_USER=kuma
     - MYSQL_PASSWORD=kuma
