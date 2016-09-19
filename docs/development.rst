@@ -2,11 +2,28 @@
 Development
 ===========
 
-First, make sure you are running the :doc:`Vagrant-managed VM <installation>`.
+Pick an Environment
+===================
+There are two development environments, and you need to install at
+least one of them first.
 
-Developing with Vagrant
-=======================
+* The :doc:`Vagrant-managed VM <installation>` is the mature development
+  environment, but we are experimenting with other options. It can be tricky to
+  provision. The "all-in-one" VM style can sometimes be a poor model for the
+  multi-machine production environment. During the transition, some
+  documentation will assume it is the only environment.
+* The :doc:`Docker containerized environment <installation-docker>` is the new
+  development environment. The Docker images are already provisioned, so setup
+  is faster. It is a better model for the production environment, and after the
+  planned rehost will be almost exactly the same. It does not yet have all of
+  the features of the Vagrant environment, and it is currently slower for many
+  development tasks.
 
+Vagrant and Docker can be used at the same time on the same "host" machine (your
+laptop or desktop computer).
+
+Basic Vagrant Usage
+-------------------
 Edit files as usual on your host machine; the current directory is
 mounted via NFS at ``/home/vagrant/src`` within the VM. Updates should be
 reflected without any action on your part. Useful vagrant sub-commands::
@@ -17,268 +34,293 @@ reflected without any action on your part. Useful vagrant sub-commands::
     vagrant up      # Boot up the VM
     vagrant destroy # Destroy the VM
 
-Run all commands in this doc on the vm after ``vagrant ssh``.
+Run all commands in this doc on the VM after ``vagrant ssh``.
+
+Basic Docker Usage
+------------------
+Edit files as usual on your host machine; the current directory is mounted
+via Docker host mounting at ``/app`` within the ``kuma_web_1`` and
+other containers. Useful docker sub-commands::
+
+    docker exec -it kuma_web_1 bash  # Start an interactive shell
+    docker logs kuma_web_1           # View logs from the web container
+    docker-compose logs -f           # Continuously view logs from all containers
+    docker restart kuma_web_1        # Force a container to reload
+    docker-compose stop              # Shutdown the containers
+    docker-compose up -d             # Start the containers
+    docker-compose rm                # Destroy the containers
+
+Run all commands in this doc in the ``kuma_web_1`` container after ``docker
+exec -it kuma_web_1 bash``.
 
 Running Kuma
 ============
-
-You can start all Kuma servers and services on the vm with::
+The Vagrant environment runs everything in a single VM. It runs MySQL,
+ElasticSearch, Apache, and other "backend" services whenever the VM is running.
+There are additional Kuma-specific services that are configured in
+``Procfile``, and are run with::
 
     foreman start
 
+The development instance is then available at https://developer-local.allizom.org.
+
+When the Docker container environment is started with ``docker-compose up``,
+all of the services (backend and Kuma-specific) are started. The development
+instance is available at http://localhost:8000.
+
 Running the Tests
 =================
-
 A great way to check that everything really is working is to run the test
 suite.
 
 Django tests
 ------------
-
-Running the kuma Django test suite is easy::
+Run the Django test suite::
 
     make test
+
+In the Vagrant VM, all the tests should pass.  In the Docker container, search
+tests will fail, because ElasticSearch is not installed.
 
 For more information, see the :doc:`test documentation <tests>`.
 
 Front-end tests
 ---------------
-
 To run the front-end (selenium) tests, see :doc:`Client-side Testing with
 Intern <tests-ui>`.
 
 Kumascript tests
 ----------------
-
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript
 
 Compiling Stylus Files
 ======================
+Stylus files need to be compiled for changes to take effect.
 
-Stylus files need to be compiled for changes to take effect. Vagrant will
-automatically compile Stylus files when they change, but compilation can also be
-run manually::
+In the Vagrant environment, the ``foreman`` task ``stylus`` will automatically
+compile Stylus files when they change, placing the generated CSS files at
+``build/assets/css``.
 
-    compile-stylesheets
+In either environment, compilation can be run manually::
 
-The relevant CSS files will be generated and placed within the
-`build/assets/css` directory. You can add a ``-w`` flag to that call to compile
-stylesheets upon save.
+    scripts/compile-stylesheets
+
+To watch for changes to the files and recompile::
+
+    scripts/compile-stylesheets -w
+
+Watching for file changes performs well in the Vagrant environment, but can be
+slow with the host-mounted files in the Docker container.
 
 Database Migrations
 ===================
+Apps are migrated using Django's migration system. To run the migrations::
 
-Basically all apps are migrated using Django's migration system.
+    manage.py migrate
 
-See the Django documentation for the
-`migration workflow <https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow>`_.
+If your changes include schema modifications, see the Django documentation for
+the `migration workflow`_.
 
-How to run the migrations
--------------------------
-
-Run the migrations via the Django management command::
-
-    python manage.py migrate
+.. _migration workflow: https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow
 
 Coding Conventions
 ==================
+See CONTRIBUTING.md_ for details of the coding style on Kuma.
 
-Tests
------
+If you're expecting ``reverse`` to return locales in the URL
+(``/en-US/docs/Mozilla`` versus ``/docs/Mozilla``), use ``LocalizingClient``
+instead of the default client for the ``TestCase`` class.
 
-* If you're expecting ``reverse`` to return locales in the URL, use
-  ``LocalizingClient`` instead of the default client for the ``TestCase``
-  class.
+.. _CONTRIBUTING.md: https://github.com/mozilla/kuma/blob/master/CONTRIBUTING.md
 
-(Advanced) Managing Dependencies
-================================
+Managing Dependencies
+=====================
 
 Python dependencies
 -------------------
+Kuma tracks its Python dependencies with pip_.  See the
+`README in the requirements folder`_ for details.
 
-Kuma tracks its Python dependencies with pip_.
-
-The ``requirements`` directory contains the plaintext requirements files
-that are used in the Vagrant VM, during automatic tests with Travis-CI
-and during deployment to stage and prod.
-
-Here's what that folder contains:
-
-- ``default.txt`` - contains the default dependencies that are used in
-  production and local environments
-
-- ``docs.txt`` - contains dependencies that are required to build the docs
-
-- ``local.txt`` - contains dependencies needed for local development and
-  testing
-
-- ``travis.txt`` - a file used by the ``.travis.yml`` config file when
-  running automatic testing
-
-Adding a requirement
-~~~~~~~~~~~~~~~~~~~~
-
-To add a dependency you have to add it to the appropriate requirement file
-in the ``requirements`` folder. To do that we'll use pip_ to get the hash
-of the distribution file you'd like to install.
-
-First SSH into the Vagrant VM::
-
-    vagrant ssh
-
-Add the requirement with the exact version specifier to the requirements
-file most appropriate to the use of the dependency, e.g.
-``requirements/default.txt``::
-
-    django-pipeline==1.6.0
-
-Then download a distribution file from PyPI_ or whatever source you deem
-safe of the dependency you added above, e.g.::
-
-
-    pip download django-pipeline==1.6.0
-
-Check if the file you downloaded contains what you expect and then use pip
-to calculate a hash of the file you downloaded::
-
-    pip hash django_pipeline-1.6.4-py2.py3-none-any.whl
-
-This will print out a hash in the form of::
-
-    django_pipeline-1.6.4-py2.py3-none-any.whl:
-    --hash=sha256:c66745f4a5f71cea3a42d63172b20b73ec791aeeeb4ac5483d7931fefef25157
-
-Add this string above the line of the requirement string in the requirements
-file, e.g.::
-
-    django-pipeline==1.6.0 --hash=sha256:c66745f4a5f71cea3a42d63172b20b73ec791aeeeb4ac5483d7931fefef25157
-
-Then verify if the hash still matches and install the new dependency in the VM::
-
-    pip install -r requirements/default.txt
-
-Updating a requirement
-~~~~~~~~~~~~~~~~~~~~~~
-
-Follow the same steps as when adding a requirement but replace the old pip
-hash in the requirements file. Don't forget to run afterwards::
-
-    pip install -r requirements/default.txt
+.. _pip: https://pip.pypa.io/
+.. _README in the requirements folder: https://github.com/mozilla/kuma/tree/master/requirements
 
 Front-end dependencies
 ----------------------
-
-Front-end dependencies are managed by Bower and checked into the repository.
-
+Front-end dependencies are managed by Bower_ and checked into the repository.
 Follow these steps to add or upgrade a dependency:
 
-#. Update *bower.json*
-#. Enter the virtual machine (``vagrant ssh``)
-#. Install the dependency (``bower-installer``)
-#. Exit the virtual machine (``exit``)
-#. Prepare the dependency to be committed (``git add path/to/dependency``)
+#. On the host, update ``bower.json``
+#. (*Docker only*) In the container, install ``git`` (``apt-get install -y git``)
+#. (*Docker only*) In the container, install ``bower-installer`` (``npm install -g bower-installer``)
+#. In the VM or container, install the dependency (``bower-installer``)
+#. On the host, prepare the dependency to be committed (``git add path/to/dependency``)
 
 Front-end dependencies that are not already managed by Bower should begin using
 this approach the next time they're upgraded.
 
-(Advanced) Configuration
-========================
+.. _Bower: http://bower.io
+
+Advanced Configuration
+======================
+`Environment variables`_ are used to change the way different components works.
+There are a few ways to change an environment variables:
+
+* Exporting in the shell, such as::
+
+    export DEBUG=True;
+    ./manage.py runserver
+
+* A one-time override, such as::
+
+    DEBUG=True ./manage.py runserver
+
+* Changing the ``environment`` list in ``docker-compose.yml``.
+* Creating a ``.env`` file in the repository root directory.
+
+.. _Environment variables: http://12factor.net/config
 
 .. _vagrant-config:
 
-Vagrant
--------
+Configuring Vagrant
+-------------------
+It is easiest to configure Vagrant with a ``.env`` file, so that overrides are used
+when ``vagrant up`` is called.  A sample ``.env`` could contain::
 
-If you'd like to change the way Vagrant works, we've added a few
-configuration values that may be worthwhile to look at. In case something
-doesn't suffice for your machine, please let us know!
+    VAGRANT_MEMORY_SIZE=4096
+    VAGRANT_CPU_CORES=4
+    # Comments are OK, for documentation and to disable settings
+    # VAGRANT_ANSIBLE_VERBOSE=true
 
-To change the config values, simply create a dotenv_ file (``.env``) in the
-repository root directory--this is also ``/home/vagrant/src/.env`` in the
-Vagrant VM.
-
-Write ``<KEY>=<VALUE>`` for each configuration variable you'd like to set.
-
-Here's the configuration variables that are available for Vagrant:
+Configuration variables that are available for Vagrant:
 
 - ``VAGRANT_NFS``
 
-  Default: true (Windows: false)
+  Default: ``true`` (Windows: ``false``)
   Whether or not to use NFS for the synced folder.
 
 - ``VAGRANT_MEMORY_SIZE``
 
-  The size of the Virtualbox VM memory in MB. Default: 2048
+  The size of the Virtualbox VM memory in MB. Default: ``2048``
 
 - ``VAGRANT_CPU_CORES``
 
-  The number of virtual CPU core the Virtualbox VM should have. Default: 2
+  The number of virtual CPU core the Virtualbox VM should have. Default: ``2``
 
 - ``VAGRANT_IP``
 
-  The static IP the Virtualbox VM should be assigned to. Default: 192.168.10.55
+  The static IP the Virtualbox VM should be assigned to. Default: ``192.168.10.55``
 
 - ``VAGRANT_GUI``
 
-  Whether the Virtualbox VM should boot with a GUI. Default: false
+  Whether the Virtualbox VM should boot with a GUI. Default: ``false``
 
 - ``VAGRANT_ANSIBLE_VERBOSE``
 
-  Whether the Ansible provisioner should print verbose output. Default: false
+  Whether the Ansible provisioner should print verbose output. Default: ``false``
 
-A possible ``/home/vagrant/src/.env`` file could look like this for example::
+- ``VAGRANT_CACHIER``
 
-    VAGRANT_MEMORY_SIZE=4096
-    VAGRANT_CPU_CORES=4
-    VAGRANT_ANSIBLE_VERBOSE=true
+  Whether to use the ``vagrant-cachier`` plugin to cache system packages
+  between installs. Default: ``true``
 
-.. _dotenv: http://12factor.net/config
+Docker
+~~~~~~
+Running docker-compose_ will create and run several containers, and each
+container's environment and settings are configured in ``docker-compose.yml``.
+The settings are "baked" into the containers created by ``docker-compose up``,
+
+To override a container's settings for development, use a local override file.
+For example, the ``web`` service runs in container ``kuma_web_1`` with the
+default command 
+"``gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application``".
+A useful alternative for debugging is to run a single-threaded process that
+loads the Werkzeug debugger on exceptions (see docs for runserver_plus_), and
+that allows for stepping through the code with a debugger.
+To use this alternative, create an override file ``docker-compose.dev.yml``::
+
+    web:
+        command: ./manage.py runserver_plus 0.0.0.0:8000
+        stdin_open: true
+        tty: true
+
+
+This is similar to "``docker run -it <image> ./manage.py runserver_plus``",
+using all the other configuration items in ``docker-compose.yml``.
+Apply the custom setting with::
+
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+You can then add ``pdb`` breakpoints to the code
+(``import pdb; pdb.set_trace``) and connect to the debugger with::
+
+    docker attach kuma_web_1
+
+To always include the override compose file, add it to your ``.env`` file::
+
+    COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+
+A similar method can be used to override environment variables in containers,
+run additional services, or make other changes.  See the docker-compose_
+documentation for more ideas on customizing the Docker environment.
+
+.. _docker-compose: https://docs.docker.com/compose/overview/
+.. _pdb: https://docs.python.org/2/library/pdb.html
+.. _runserver_plus: http://django-extensions.readthedocs.io/en/latest/runserver_plus.html
 
 Database
 ~~~~~~~~
+The database connection is defined by the environment variable
+``DATABASE_URL``, with these defaults::
 
-At a minimum, you will need to define a database connection. The default
-database configuration is::
+    DATABASE_URL=mysql://kuma:kuma@localhost:3306/kuma              # Vagrant
+    DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org # Docker
 
-    DATABASE_URL = 'mysql://kuma:kuma@localhost:3306/kuma'
+The format is defined by the dj-database-url_ project::
 
-In other words, it uses MySQL default, the username and password of 'kuma'
-when trying to access the database 'kuma'. We automatically use MySQL's InnoDB
-storage engine if configured.
+    DATABASE_URL=mysql://user:password@host:port/database
 
-Once you've set up the database, you can generate the schema with Django's
-``migrate`` command::
+If you configure a new database, override ``DATABASE_URL`` to connect to it. To
+add an empty schema to a freshly created database::
 
     ./manage.py migrate
 
-This will generate an empty database, which will get you started!
+To connect to the database specified in ``DATABASE_URL``, use::
+
+    ./manage.py dbshell
+
+.. _dj-database-url: https://github.com/kennethreitz/dj-database-url
 
 Assets
 ~~~~~~
-
 Kuma will automatically run in debug mode, with the ``DEBUG`` setting
 turned to ``True``. That will make it serve images and have the pages
 formatted with CSS automatically.
 
-Setting ``DEBUG = false`` in your ``.env`` file will put the installation
-in production mode and ask for minified assets.
+Vagrant requires additional settings in a ``.env`` file, until
+`PR 3972`_ is merged::
+
+    PIPELINE_ENABLED=false
+    PIPELINE_COLLECTOR_ENABLED=false
+
+Setting ``DEBUG=false`` file will put the installation in production mode and
+ask for minified assets.  This only works in the Vagrant environment, which
+uses Apache to serve the static files.  In Docker, static files will not be
+served and the site will be unstyled.
+
+.. _PR 3972: https://github.com/mozilla/kuma/pull/3972
 
 Production assets
 *****************
-
 Assets are compressed on production. To emulate production and test compressed
-assets locally, follow these steps:
+assets locally (*Vagrant only*):
 
-#. In .env, set ``DEBUG = false``
-#. Run ``vagrant ssh`` to enter the virtual machine
-#. Run ``make compilejsi18n collectstatic``
-#. Stop ``foreman`` if it's already running
-#. Run ``foreman start``
+#. Set the environment variables ``DEBUG=false``
+#. Run ``make compilejsi18n collectstatic`` in the VM or container
+#. Restart the web process by retarting ``foreman``
 
 Mozilla Product Details
 ~~~~~~~~~~~~~~~~~~~~~~~
-
 One of the packages Kuma uses, Django Mozilla Product Details, needs to
 fetch JSON files containing historical Firefox version data and write them
 to disk. To set this up, just run::
@@ -289,11 +331,10 @@ to disk. To set this up, just run::
 
 Secure Cookies
 ~~~~~~~~~~~~~~
-
-To prevent error messages like ``Forbidden (CSRF cookie not set.):``, you need to
-set your ``.env`` with the following::
+To prevent error messages like "``Forbidden (CSRF cookie not set.):``", set the
+environment variable::
 
     CSRF_COOKIE_SECURE = false
 
-.. _pip: https://pip.pypa.io/
-.. _PyPI: https://pypi.python.org/pypi/
+This is the default in Docker, which does not support local development with
+HTTPS.
