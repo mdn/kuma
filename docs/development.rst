@@ -50,8 +50,13 @@ other containers. Useful docker sub-commands::
     docker-compose up -d             # Start the containers
     docker-compose rm                # Destroy the containers
 
-Run all commands in this doc in the ``kuma_web_1`` container after ``docker
-exec -it kuma_web_1 bash``.
+There are ``make`` shortcuts on the host for frequent commands, such as::
+
+    make up         # docker-compose up -d
+    make bash       # docker exec -it kuma_web_1 bash
+    make shell_plus # docker exec -it kuma_web_1 ./manage.py shell_plus
+
+Run all commands in this doc in the ``kuma_web_1`` container after ``make bash``
 
 Running Kuma
 ============
@@ -64,9 +69,9 @@ There are additional Kuma-specific services that are configured in
 
 The development instance is then available at https://developer-local.allizom.org.
 
-When the Docker container environment is started with ``docker-compose up``,
-all of the services (backend and Kuma-specific) are started. The development
-instance is available at http://localhost:8000.
+When the Docker container environment is started (``make up`` or similar), all
+of the services are also started. The development instance is available at
+http://localhost:8000.
 
 Running the Tests
 =================
