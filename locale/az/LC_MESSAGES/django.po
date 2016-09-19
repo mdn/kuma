@@ -261,9 +261,7 @@ msgstr "Axtar"
 #: jinja2/base.html:205
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr ""
-"<p>&copy; 2005-%(thisyear)s Mozilla Tərtibatçı Şəbəkəsi və fərdi könüllülər.</p> <p>Məzmun <a href=\"%(copyright_url)s\">bu lisenziyalar</a> ilə mövcuddur.</p>\n"
-"\n"
+msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Tərtibatçı Şəbəkəsi və fərdi könüllülər.</p> <p>Məzmun <a href=\"%(copyright_url)s\">bu lisenziyalar</a> ilə mövcuddur.</p>"
 
 #: jinja2/base.html:210
 msgid "About MDN"
