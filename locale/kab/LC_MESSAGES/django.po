@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-19 16:08+0000\n"
+"PO-Revision-Date: 2016-09-19 20:51+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -726,21 +726,21 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "Afaylu"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
 msgid "Title"
-msgstr ""
+msgstr "Azwel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Aglam"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "Iwenniten"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
@@ -752,7 +752,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "Teɣzi"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 msgid "Last modified"
@@ -825,7 +825,7 @@ msgstr ""
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
 msgid "History (%(count)s)"
-msgstr ""
+msgstr "Amazray (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
@@ -840,7 +840,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
-msgstr ""
+msgstr "Rnu"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:20
 #, python-format
@@ -873,15 +873,15 @@ msgstr ""
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr ""
+msgstr "Aziraz"
 
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
@@ -890,19 +890,19 @@ msgstr ""
 #: kuma/core/utils.py:430
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Ass-a di %s"
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "Yes"
-msgstr ""
+msgstr "Ih"
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "No"
-msgstr ""
+msgstr "Ala"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "Izegrar & isiɣzaf"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
@@ -982,7 +982,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr ""
+msgstr "Isental"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
@@ -1204,19 +1204,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "API Web akked DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:75
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
 #: kuma/landing/jinja2/landing/homepage.html:76
 msgid "CSS3"
-msgstr ""
+msgstr "CSS3"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "ugar..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Mozilla<br> Docs"
@@ -1248,7 +1248,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Connect"
-msgstr ""
+msgstr "Qqen"
 
 #: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
@@ -1256,7 +1256,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
-msgstr ""
+msgstr "Issin ugar udiɣ kcem!"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
@@ -1834,17 +1834,17 @@ msgstr ""
 
 #: kuma/users/views.py:454
 msgid "Email address"
-msgstr ""
+msgstr "Tansa imayl"
 
 #: kuma/users/views.py:499
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Yettwasenqed</b>"
 
 #: kuma/users/views.py:502
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Ur yettwasenqed ara"
 
 #: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
@@ -1864,7 +1864,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Email addresses"
-msgstr ""
+msgstr "Tansiwin imayl"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
