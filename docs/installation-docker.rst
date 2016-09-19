@@ -51,6 +51,14 @@ Docker setup
 
         docker-compose up -d
 
+The following instructions assume that you are running from a folder named
+``kuma``, so that the containers created are named ``kuma_web_1``,
+``kuma_worker_1``, etc.  If you run from another folder, like ``mdn``, the
+containers will be named ``mdn_web_1``, ``mdn_worker_1``, etc. Adjust the
+command accordingly, or force the ``kuma`` name with::
+
+        docker-compose up -d -p kuma
+
 Install Product Details
 =======================
 The `product details JSON`_ includes common data for Mozilla products,
