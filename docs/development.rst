@@ -84,9 +84,6 @@ Run the Django test suite::
 
     make test
 
-In the Vagrant VM, all the tests should pass.  In the Docker container, search
-tests will fail, because ElasticSearch is not installed.
-
 For more information, see the :doc:`test documentation <tests>`.
 
 Front-end tests
