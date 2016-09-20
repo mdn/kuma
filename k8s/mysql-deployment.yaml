@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        provider: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: quay.io/mozmar/mdn-mysql
+        env:
+        #for ephemeral demos only-- see http://kubernetes.io/docs/user-guide/secrets/
+        - name: MYSQL_ROOT_PASSWORD
+          value: kuma
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: kuma
+        - name: MYSQL_DATABASE
+          value: developer_mozilla_org
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-data
+          emptyDir: {} # for demos only-- deleted when pod removed from node
+          #awsElasticBlockStore:
+          #  volumeID: vol-abcd1234
+          #  fsType: ext4

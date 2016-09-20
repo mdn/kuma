@@ -680,6 +680,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
 
+    @pytest.mark.xfail(reason='Requires migrations')
     @pytest.mark.tags
     def test_tag_list_duplicates(self):
         """

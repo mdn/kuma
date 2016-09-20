@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: elasticsearch
+  labels:
+    provider: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    provider: elasticsearch
+  template:
+    metadata:
+      name: elasticsearch
+      labels:
+        provider: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:1.7
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        volumeMounts:
+        - name: elasticsearch-data
+          mountPath: /usr/share/elasticsearch/data
+      volumes:
+        - name: elasticsearch-data
+          emptyDir: {} # for demos only-- deleted when pod removed from node
+          #awsElasticBlockStore:
+          #  volumeID: vol-abcd1234
+          #  fsType: ext4

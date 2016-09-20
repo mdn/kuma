@@ -5,8 +5,15 @@ REGISTRY ?= quay.io/
 IMAGE_PREFIX ?= mozmar
 BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
 BASE_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
+IMAGE ?= $(BASE_IMAGE_LATEST)
 KUMA_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
 KUMA_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
+TEST ?= test #other options in docker-compose.test.yml
+DEIS_PROFILE ?= dev-usw
+DEIS_APP ?= mdn-dev
+DEIS_BIN ?= deis
+WORKERS ?= 1
+DB_PASS ?= kuma # default for ephemeral demo DBs
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -109,6 +116,25 @@ push-kuma:
 
 push: push-base push-kuma
 
+deis-create:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} create ${DEIS_APP} --no-remote && \
+	sleep 5 && ${DEIS_BIN} config:push -p .env-dist -a ${DEIS_APP} || \
+	${DEIS_BIN} apps | grep -q ${DEIS_APP}
+
+deis-pull:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} pull ${KUMA_IMAGE} -a ${DEIS_APP}
+
+deis-scale-worker:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} ps:scale worker=${WORKERS} -a ${DEIS_APP}
+
+k8s-migrate:
+	kubectl --namespace ${DEIS_APP} exec \
+	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \
+	python manage.py migrate
+
+deis-migrate:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} run -a ${DEIS_APP} python manage.py migrate
+
 tag-latest:
 	docker tag ${BASE_IMAGE} ${BASE_IMAGE_LATEST}
 	docker tag ${KUMA_IMAGE} ${KUMA_IMAGE_LATEST}
@@ -125,6 +151,10 @@ bash: up
 
 shell_plus: up
 	docker exec -it kuma_web_1 ./manage.py shell_plus
+
+compose-test:
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml run $(TEST)
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop
 
 # Those tasks don't have file targets
 .PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic localetest localeextract localecompile localerefresh
