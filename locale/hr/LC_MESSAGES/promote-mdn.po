@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-20 10:00+0000\n"
+"PO-Revision-Date: 2016-09-20 10:14+0000\n"
 "Last-Translator: Stjepan Treger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian https://pontoon.mozilla.org/hr/\n"
 "Language: hr\n"
@@ -93,70 +93,70 @@ msgstr "Maksimalan broj poveznica generiranih po objavi:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr ""
+msgstr "Maksimalan broj poveznica generiranih za jednu ključnu riječ/izraz:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr ""
+msgstr "Maksimalan broj poveznica generiranih za jedinstveni URL:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
-msgstr ""
+msgstr "Prilagođene ključne riječi"
 
 #: promote-mdn.php:281
 msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
-msgstr ""
+msgstr "Dodatne ključne riječi za automatsko povezivanje. Koristite zarez kako bi odvojili ključne riječi i dodajte ciljni URL na kraju. Koristite novi red za novi URL i set ključnih riječi. npr."
 
 #: promote-mdn.php:288
 msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
-msgstr ""
+msgstr "Ove ključne riječi će preuzeti prioritet preko onih pokrenutih u URL-u. Ako imate previše prilagođenih ključnih riječi ovdje, uopće ne možete povezivati na MDN."
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr ""
+msgstr "Postavke ažuriranja"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
-msgstr ""
+msgstr "Hvala Vam na instaliranju! Idite na stranicu <a href=\"%s\">postavki</a> za namještanje."
 
 #: promote-mdn.php:313
 msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
-msgstr ""
+msgstr "fr_FR prijevod, nova traka sa strane <a href=\"%s\">dodatak</a>, <a href=\"%s\">postavka</a> za specifični jezik URL-a za ključne riječi."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "Promoviraj MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
-msgstr ""
+msgstr "sakrij"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr ""
+msgstr "Slike sa strane i poveznice na MDN."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr ""
+msgstr "Pomozi promovirati MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
-msgstr ""
+msgstr "Nabavi WordPress priključak"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/groovecoder/wp-promote-mdn"
-msgstr ""
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr ""
+msgstr "Promoviraj MDN automatski povezuje ključne riječi i izraze sa MDN dokumentacijom"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
-msgstr ""
+msgstr "Luke Crouch"
 
 #. Author URI of the plugin/theme
 msgid "http://groovecoder.com"
-msgstr ""
+msgstr "http://groovecoder.com"

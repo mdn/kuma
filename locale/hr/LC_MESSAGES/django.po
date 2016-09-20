@@ -1,39 +1,39 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2013-03-09 15:44+0000\n"
-"Last-Translator: niko.visnjic <nvisnjic.fer@gmail.com>\n"
+"PO-Revision-Date: 2016-09-20 10:14+0000\n"
+"Last-Translator: Stjepan Treger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian https://pontoon.mozilla.org/hr/\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1362843877.0\n"
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
-#, fuzzy
 msgid "Permission Denied"
-msgstr "pristup nije dozvoljen"
+msgstr "Pristup odbijen"
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
-msgstr ""
+msgstr "Wiki je u načinu pregledavanja."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "Vašem profilu je zabranjeno raditi izmjene."
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Ovaj korisnički profil je izbačen."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "Morate se prijaviti kako bi vidjeli svu povijest"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
@@ -856,8 +856,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -1214,8 +1214,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1381,8 +1381,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1693,8 +1693,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -2175,8 +2175,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -2222,8 +2222,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
@@ -3101,8 +3101,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3271,15 +3271,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:266
@@ -3949,8 +3949,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
@@ -4240,22 +4240,18 @@ msgstr ""
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Share:"
 #~ msgstr "Podijeli"
 
-#, fuzzy
 #~ msgid "Resubmit"
 #~ msgstr "Rezultati pretraživanja"
 
-#, fuzzy
 #~ msgid "About me"
 #~ msgstr "O MDNu"
 
 #~ msgid "Discard Changes"
 #~ msgstr "Odbaci izmjene"
 
-#, fuzzy
 #~ msgid "Send me the newsletter"
 #~ msgstr "Pogledajte sljedeću sliku"
 
@@ -4301,7 +4297,6 @@ msgstr ""
 #~ msgstr[1] "prije %(number)d sekunde"
 #~ msgstr[2] "prije %(number)d sekundi"
 
-# 100%
 #~ msgid "Demos"
 #~ msgstr "Demoi"
 
@@ -4320,11 +4315,9 @@ msgstr ""
 #~ msgid "The author is fake"
 #~ msgstr "Autor je varalica"
 
-# 100%
 #~ msgid "Flagged"
 #~ msgstr "Označeno"
 
-# 100%
 #~ msgid "Flag rejected by moderator"
 #~ msgstr "Oznaka odbijena od strane moderatora"
 
@@ -4337,11 +4330,9 @@ msgstr ""
 #~ msgid "Content deleted by moderator"
 #~ msgstr "Sadržaj izbrisan od strane moderatora"
 
-# 100%
 #~ msgid "current status of flag review"
 #~ msgstr "trenutni status zastavice pregleda"
 
-# 100%
 #~ msgid "reason for flagging the content"
 #~ msgstr "razlog za označavanje sadržaja"
 
@@ -4360,7 +4351,6 @@ msgstr ""
 #~ msgid "Drag and Drop"
 #~ msgstr "Prevuci i ispusti"
 
-# 100%
 #~ msgid "Multi-touch"
 #~ msgstr "Multi-touch"
 
@@ -4379,22 +4369,19 @@ msgstr ""
 #~ msgid "W3C Spec"
 #~ msgstr "W3C Specifikacije"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
 #~ msgid "http://en.wikipedia.org/wiki/Canvas_element"
 #~ msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 #~ msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
 
 #~ msgid ""
 #~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
 #~ msgstr ""
-#~ "Cascading Style Sheets level 3 (CSS3) pruža nekoliko novih značajki i svojstava da bi poboljšao formatiranje i izgled dokumenata napisanih u različitim vrstama markup jezika kao što su HTML ili "
-#~ "XML."
+#~ "Cascading Style Sheets level 3 (CSS3) pruža nekoliko novih značajki i svojstava da bi poboljšao formatiranje i izgled dokumenata napisanih u različitim vrstama markup jezika kao što su HTML ili XML."
 
 #~ msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
 #~ msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
@@ -4501,7 +4488,6 @@ msgstr ""
 #~ msgid "http://en.wikipedia.org/wiki/HTML5_video"
 #~ msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
@@ -4568,57 +4554,45 @@ msgstr ""
 #~ msgid "http://www.apache.org/licenses/"
 #~ msgstr "http://www.apache.org/licenses/"
 
-# 100%
 #~ msgid "Public Domain (where applicable by law)"
 #~ msgstr "Javna Domena (gdje je dozvoljeno zakonom)"
 
 #~ msgid "http://creativecommons.org/publicdomain/zero/1.0/"
 #~ msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
 
-# 100%
 #~ msgid "MDN demos"
 #~ msgstr "MDN demoi"
 
-# 100%
 #~ msgid "Demos submitted by MDN users"
 #~ msgstr "Demoi poslani od strane MDN korisnika"
 
-# 100%
 #~ msgid "MDN recent demos"
 #~ msgstr "Najnoviji MDN demoi"
 
-# 100%
 #~ msgid "Demos recently submitted to MDN"
 #~ msgstr "Demoi nedavno poslani na MDN"
 
-# 100%
 #~ msgid "MDN featured demos"
 #~ msgstr "MDN istaknuti demoi"
 
-# 100%
 #~ msgid "Demos featured on MDN"
 #~ msgstr "Demoi istaknuti na MDN"
 
-# 100%
 #~ msgid "MDN demos tagged %s"
 #~ msgstr "MDN demoi označeni s %s"
 
-# 100%
 #~ msgid "MDN demos tagged \"%s\""
 #~ msgstr "MDN demoi s ključnom riječi \"%s\""
 
-# 100%
 #~ msgid "%s's MDN demos"
 #~ msgstr "%s MDN demoi"
 
 #~ msgid "MDN demo search for \"%s\""
 #~ msgstr "MDN pretraga demo za \"%s\""
 
-# 100%
 #~ msgid "Search results for demo submissions matching \"%s\""
 #~ msgstr "Rezultati potrage za poslane demoe koji odgovaraju \"%s\""
 
-#, fuzzy
 #~ msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 #~ msgstr "Molimo zadržite veličinu datoteke ispod %s. Trenutna veličina datoteke je %s"
 
@@ -4637,39 +4611,30 @@ msgstr ""
 #~ msgid "describe your demo in more detail (optional)"
 #~ msgstr "opišite vaš demo detaljnije (opcionalno)"
 
-# 100%
 #~ msgid "control how your demo is launched"
 #~ msgstr "kontrolirajte pokretanje svojeg demo-a"
 
-# 100%
 #~ msgid "Disable navigation bar, launch demo in a new window"
 #~ msgstr "Onemogući navigacijsku traku, pokreni demo u novom prozoru"
 
-# 100%
 #~ msgid "Use navigation bar, display demo in <iframe>"
 #~ msgstr "Koristi navigacijsku traku, prikaži demo u <iframe>"
 
-# 100%
 #~ msgid "Screenshot #1"
 #~ msgstr "Snimak ekrana #1"
 
-# 100%
 #~ msgid "Screenshot #2"
 #~ msgstr "Snimak ekrana #2"
 
-# 100%
 #~ msgid "Screenshot #3"
 #~ msgstr "Snimak ekrana #3"
 
-# 100%
 #~ msgid "Screenshot #4"
 #~ msgstr "Snimak ekrana #4"
 
-# 100%
 #~ msgid "Screenshot #5"
 #~ msgstr "Snimak ekrana #5"
 
-# 100%
 #~ msgid "have a video of your demo in action? (optional)"
 #~ msgstr "imate video svog demo-a u akciji? (neobavezno)"
 
@@ -4685,19 +4650,15 @@ msgstr ""
 #~ msgid "date created"
 #~ msgstr "datum kreiranja"
 
-# 100%
 #~ msgid "ZIP file contains no acceptable files"
 #~ msgstr "ZIP datoteka ne sadrži prihvatljive datoteke"
 
-# 100%
 #~ msgid "ZIP file corrupted"
 #~ msgstr "ZIP datoteka pokvarena"
 
-# 100%
 #~ msgid "ZIP file contains a file that is too large: %(filename)s"
 #~ msgstr "ZIP datoteka sadrži datoteku koja je prevelika: %(filename)s"
 
-# 100%
 #~ msgid "ZIP file contains an unacceptable file: %(filename)s"
 #~ msgstr "ZIP datoteka sadrži neprihvatljivu datoteku: %(filename)s"
 
@@ -4707,8 +4668,6 @@ msgstr ""
 #~ msgid "access denied"
 #~ msgstr "pristup nije dozvoljen"
 
-# 100%
-#, fuzzy
 #~ msgid "%(subtitle)s | Demo Studio"
 #~ msgstr "{subtitle} | Demo Studio"
 
@@ -4730,14 +4689,12 @@ msgstr ""
 #~ msgid "Learn More"
 #~ msgstr "Saznajte više"
 
-#, fuzzy
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "Idi na prethodni demo, {demo_title}"
 
 #~ msgid "Prev"
 #~ msgstr "Pret"
 
-#, fuzzy
 #~ msgid "Go to the next demo, %(demo_title)s"
 #~ msgstr "Idi na sljedeći demo, {demo_title}"
 
@@ -4750,11 +4707,9 @@ msgstr ""
 #~ msgid "Launch Demo"
 #~ msgstr "Pokreni demo"
 
-# 100%
 #~ msgid "You like this demo. Undo?"
 #~ msgstr "Sviđa vam se demo. Poništi?"
 
-# 100%
 #~ msgid "You Like"
 #~ msgstr "Sviđa vam se"
 
@@ -4779,21 +4734,15 @@ msgstr ""
 #~ msgid "Built using"
 #~ msgstr "Kreiran upotrebom"
 
-# 100%
-#, fuzzy
 #~ msgid "See more demos made with %(tag_title)s"
 #~ msgstr "Pogledaj više demoa napravljenih s {tag_title}"
 
-# 100%
-#, fuzzy
 #~ msgid "This demo has been viewed %(num)s time"
 #~ msgid_plural "This demo has been viewed %(num)s times"
 #~ msgstr[0] "Ovaj demo je pogledan {count} put"
 #~ msgstr[1] "Ovaj demo je pogledan {count} puta"
 #~ msgstr[2] "Ovaj demo je pogledan {count} puta"
 
-# 100%
-#, fuzzy
 #~ msgid "%(num)s person liked this demo"
 #~ msgid_plural "%(num)s people liked this demo"
 #~ msgstr[0] "{count} osobi se svidio ovaj demo"
@@ -4815,7 +4764,6 @@ msgstr ""
 #~ msgid "More About This Demo From The Author"
 #~ msgstr "Više o ovom demo od autora"
 
-#, fuzzy
 #~ msgid "About this Demo"
 #~ msgstr "Ukloni ovaj demo?"
 
@@ -4834,13 +4782,9 @@ msgstr ""
 #~ msgid "Demo is not by this author"
 #~ msgstr "Demo nije od ovog autora"
 
-# 100%
-#, fuzzy
 #~ msgid "Demos tagged %(tag)s"
 #~ msgstr "Demoi s ključnom riječi {tag}"
 
-# 100%
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(tag_title)s demos"
 #~ msgstr "Pretplatite se na tok {tag_title} demoa"
 
@@ -4850,28 +4794,21 @@ msgstr ""
 #~ msgid "Tagged as:"
 #~ msgstr "Označen kao:"
 
-# 100%
 #~ msgid "Flag this demo?"
 #~ msgstr "Označiti ovaj demo?"
 
-# 100%
 #~ msgid "Recent demos"
 #~ msgstr "Nedavni demoi"
 
-# 100%
 #~ msgid "Featured demos"
 #~ msgstr "Istaknuti demoi"
 
-# 100%
 #~ msgid "Featured Demos"
 #~ msgstr "Istaknuti demoi"
 
-#, fuzzy
 #~ msgid "Launch"
 #~ msgstr "Pokreni demo"
 
-# 79%
-#, fuzzy
 #~ msgid "Search demos"
 #~ msgstr "Pretraži demo za \"{q}\""
 
@@ -4890,38 +4827,27 @@ msgstr ""
 #~ msgid "Remove toolbar"
 #~ msgstr "Uklonite alatnu traku"
 
-# 100%
 #~ msgid "Browse all demos"
 #~ msgstr "Pregledaj sve demoe"
 
-# 100%
 #~ msgid "Subscribe to a feed of all demos"
 #~ msgstr "Pretplati se na tok svih demoa"
 
-#, fuzzy
 #~ msgid "Search for \"%(query)s\""
 #~ msgstr "Traži za \"{q}\""
 
-#, fuzzy
 #~ msgid "Search results for \"%(query)s\""
 #~ msgstr "Rezultati pretraživanja za \"{q}\""
 
-# 79%
-#, fuzzy
 #~ msgid "Search demos for \"%(query)s\""
 #~ msgstr "Pretraži demo za \"{q}\""
 
-# 100%
-#, fuzzy
 #~ msgid "Subscribe to a feed of search results for \"%(query)s\""
 #~ msgstr "Pretplati se na tok rezultata pretrage za \"{q}\""
 
-# 100%
-#, fuzzy
 #~ msgid "%(tag_title)s Demos"
 #~ msgstr "{tag_title} Demoi"
 
-#, fuzzy
 #~ msgid "Edit %(demo_title)s"
 #~ msgstr "Uredi {demo_title}"
 
@@ -4934,11 +4860,9 @@ msgstr ""
 #~ msgid "Select up to five technologies used in your demo."
 #~ msgstr "Odaberite do pet tehnologija korištenih u vašem demu."
 
-# 100%
 #~ msgid "Show Off Your Demo"
 #~ msgstr "Pohvalite se svojim demom"
 
-# 100%
 #~ msgid "Provide at least one screenshot of your demo in action"
 #~ msgstr "Priložite barem jedan snimak zaslona Vašeg demoa u akciji"
 
@@ -4951,7 +4875,6 @@ msgstr ""
 #~ msgid "Preparing Your Demo"
 #~ msgstr "Priprema vašeg demo"
 
-# 100%
 #~ msgid "Provide the Source Code"
 #~ msgstr "Priložite izvorni kod"
 
@@ -4964,64 +4887,51 @@ msgstr ""
 #~ msgid "Before You Begin"
 #~ msgstr "Prije nego što počnete"
 
-#, fuzzy
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Da biste podnijeli vaš demo, potreban vam je <strong><a href=\"%(signup_url)s\">MDN račun</a></strong>.</p>"
 
-#, fuzzy
 #~ msgid "Log In to Profile"
 #~ msgstr "Prijavite se u račun"
 
 #~ msgid "Terms for Contributors"
 #~ msgstr "Uvjeti za suradnike"
 
-#, fuzzy
 #~ msgid "Demo Studio: Terms for Contributors"
 #~ msgstr "Uvjeti za suradnike"
 
-# 100%
 #~ msgid "Rights Representation Details"
 #~ msgstr "Detalji reprezantacije prava"
 
 #~ msgid "Search the Demo Studio"
 #~ msgstr "Pretraži Demo Studio"
 
-#, fuzzy
 #~ msgid "See %(display_name)s's profile"
 #~ msgstr "Pogledajte profil od {display_name}'s"
 
-# 100%
 #~ msgid "Up and Coming"
 #~ msgstr "Nadolazeći"
 
-# 100%
 #~ msgid "Sort demos by most views"
 #~ msgstr "Sortiraj demoe po pogledima"
 
-# 100%
 #~ msgid "You are viewing demos by most views"
 #~ msgstr "Gledate demoe po najnovijim pogledima"
 
 #~ msgid "Most Viewed"
 #~ msgstr "Najgledanije"
 
-# 100%
 #~ msgid "Sort demos by most likes"
 #~ msgstr "Sortiraj demoe po broju lajkova"
 
-# 100%
 #~ msgid "You are viewing demos by most likes"
 #~ msgstr "Gledate demoe sa najviše lajkova"
 
-# 100%
 #~ msgid "Most Liked"
 #~ msgstr "Najlajkaniji"
 
-# 100%
 #~ msgid "Sort demos by most recently submitted"
 #~ msgstr "Sortiraj demoe po najnovije dodanima"
 
-# 100%
 #~ msgid "You are viewing demos by most recently submitted"
 #~ msgstr "Gledate demoe po najnovije dodanima"
 
@@ -5073,8 +4983,6 @@ msgstr ""
 #~ msgid "%(number)d %(type)s"
 #~ msgstr "%(number)d %(type)s"
 
-# 100%
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(display_name)s's demos"
 #~ msgstr "Pretplati se na tok demoa od {display_name}"
 
@@ -5084,8 +4992,6 @@ msgstr ""
 #~ msgstr[1] "{count} pregleda"
 #~ msgstr[2] "{count} pregleda"
 
-# 75%
-# 100%
 #~ msgid "{count} like"
 #~ msgid_plural "{count} likes"
 #~ msgstr[0] "{count} lajk"
@@ -5095,7 +5001,6 @@ msgstr ""
 #~ msgid "See {display_name}'s profile"
 #~ msgstr "Pogledajte profil od {display_name}'s"
 
-# 100%
 #~ msgid "{count} Demo"
 #~ msgid_plural "{count} Demos"
 #~ msgstr[0] "{count} Demo"
@@ -5105,7 +5010,6 @@ msgstr ""
 #~ msgid "{start}&ndash;{end} of {total}"
 #~ msgstr "{start}&ndash;{end} od {total}"
 
-#, fuzzy
 #~ msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
 #~ msgstr "Omiljeni članci vezani za <span class=\"mobile\">mobitele</span>"
 
@@ -5145,7 +5049,6 @@ msgstr ""
 #~ msgid "{display_name}"
 #~ msgstr "{display_name}"
 
-# 100%
 #~ msgid "Demos for {display_name}"
 #~ msgstr "Demoi za {display_name}"
 
@@ -5156,11 +5059,11 @@ msgstr ""
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> napisao je,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
-#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
+#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Objavljeno <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
-#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Objavljeno <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
+#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Odgovorite na ovaj komentar od {full_name}"
@@ -5330,358 +5233,270 @@ msgstr ""
 #~ msgid "Search MDN"
 #~ msgstr "Pretraži MDN"
 
-#, fuzzy
 #~ msgid "Learn CSS"
 #~ msgstr "Saznajte više"
 
-# 100%
 #~ msgid "Back to Home"
 #~ msgstr "Natrag na početnu stranicu"
 
-# 100%
 #~ msgid "Introductory Level"
 #~ msgstr "Uvodna razina"
 
-#, fuzzy
 #~ msgid "CSS Basics"
 #~ msgstr "CSS gradijenti"
 
-# 100%
 #~ msgid "CSS Selector Classes"
 #~ msgstr "CSS Selektor klase"
 
-# 100%
 #~ msgid "What are classes in CSS?"
 #~ msgstr "Što su klase u CSS-u?"
 
-# 100%
 #~ msgid "External CSS"
 #~ msgstr "Vanjski CSS"
 
-# 100%
 #~ msgid "Using CSS from an external style sheet."
 #~ msgstr "Korištenje CSS-a iz vanjske stilske stranice."
 
-# 100%
 #~ msgid "Adding a Touch of Style"
 #~ msgstr "Dodavanje daška stila"
 
-# 100%
 #~ msgid "A brief beginner's guide to styling web pages with CSS."
 #~ msgstr "Kratki početnički vodič kroz stilsko oblikovanje Web stranica sa CSS-om."
 
-# 100%
 #~ msgid "CSS From the Ground Up"
 #~ msgstr "CSS iz temelja prema vrhu"
 
-# 100%
 #~ msgid "Video tutorial on styling pages with CSS."
 #~ msgstr "Video tutorial o stilskom oblikovanju stranica sa CSS-om."
 
-# 100%
 #~ msgid "Common CSS Questions"
 #~ msgstr "Česta pitanja uz CSS"
 
-# 100%
 #~ msgid "Common questions and answers for beginners."
 #~ msgstr "Česta pitanja i odgovori za početnike."
 
 #~ msgid "CSS Reference"
 #~ msgstr "CSS Reference"
 
-#, fuzzy
 #~ msgid "CSS Challenges"
 #~ msgstr "Spremi izmjene"
 
-# 100%
 #~ msgid "Flex your CSS skills, and see where you need more practice."
 #~ msgstr "Testirajte svoje CSS vještine kako biste vidjeli gdje Vam treba više vježbe."
 
-# 100%
 #~ msgid "Intermediate CSS Concepts"
 #~ msgstr "CSS koncepti srednje težine"
 
-# 100%
 #~ msgid "Grouping, pseudo-classes, and more."
 #~ msgstr "Grupiranje, pseudo-klase i više."
 
-# 100%
 #~ msgid "CSS Positioning 101"
 #~ msgstr "Osnove CSS pozicioniranja"
 
-# 100%
 #~ msgid "Using positioning for standards-compliant, table-free layout."
 #~ msgstr "Korištenje pozicioniranja za razmještaj bez tablica koji je u skladu sa standardima."
 
-# 100%
 #~ msgid "Progressive Enhancement with CSS"
 #~ msgstr "Napredna poboljšanja sa CSS-om"
 
-# 100%
 #~ msgid "Integrate progressive enhancement into your web pages with CSS."
 #~ msgstr "Integrirajte napredna poboljšanja u Vaše Web stranice sa CSS-om."
 
-# 100%
 #~ msgid "Fluid Grids"
 #~ msgstr "Fluidne mreže"
 
-# 100%
 #~ msgid "CSS3 in Under 5 Minutes"
 #~ msgstr "CSS3 u manje od 5 minuta"
 
-# 100%
 #~ msgid "This site features CSS3"
 #~ msgstr "Ova stranica prikazuje CSS3"
 
-# 100%
 #~ msgid "A quick introduction to some of the core features introduced in CSS3."
 #~ msgstr "Brzi uvod u neke od osnovnih značajki uvedenih u CSS3."
 
-#, fuzzy
 #~ msgid "Using CSS Transforms"
 #~ msgstr "CSS transforme"
 
-# 100%
 #~ msgid "Apply rotation, skewing, scaling, and translation using CSS."
 #~ msgstr "Primijenite rotaciju, iskrivljavanje, skaliranje i translaciju korištenjem CSS-a."
 
-# 100%
 #~ msgid "Understanding CSS3 Transitions"
 #~ msgstr "Razumijevanje CSS3 Tranzicija"
 
-# 100%
 #~ msgid "Quick Guide to Implement Web Fonts with @font-face"
 #~ msgstr "Brzi vodič za implementiranje Web fontova s @font-face"
 
-#, fuzzy
 #~ msgid "Learn HTML"
 #~ msgstr "Saznajte više"
 
-# 100%
 #~ msgid "The Basics of HTML"
 #~ msgstr "Osnove HTML-a"
 
-# 100%
 #~ msgid "Basic Structure of a Web Page"
 #~ msgstr "Osnovna struktura Web stranice"
 
-# 100%
 #~ msgid "Learn how HTML elements fit together into the bigger picture."
 #~ msgstr "Naučite kako se HTML elementi uklapaju u veću cjelinu."
 
-# 100%
 #~ msgid "Fundamental HTML Elements"
 #~ msgstr "Osnovni HTML elementi"
 
-# 100%
 #~ msgid "HTML Beginner Tutorial"
 #~ msgstr "HTML tutorial za početnike"
 
-# 100%
 #~ msgid "A tutorial and exercises that take you through the basics."
 #~ msgstr "Tutorial i vježbe koje Vas vode kroz osnove."
 
-# 100%
 #~ msgid "HTML From the Ground Up"
 #~ msgstr "HTML iz temelja do vrha"
 
-# 100%
 #~ msgid "Google Code University"
 #~ msgstr "Google Code University"
 
-# 100%
 #~ msgid "HTML Challenges"
 #~ msgstr "HTML Izazovi"
 
-# 100%
 #~ msgid "Tips for Authoring Fast-loading HTML Pages"
 #~ msgstr "Savjeti za stvaranje HTML stranica koje se brzo učitavaju"
 
-# 100%
 #~ msgid "Dive into HTML5"
 #~ msgstr "Zaronite u HTML5"
 
-# 100%
 #~ msgid "This site features HTML5"
 #~ msgstr "Ova stranica predstavlja HTML5"
 
-# 100%
 #~ msgid "From Mark Pilgrim"
 #~ msgstr "Od Marka Pilgrima"
 
-# 100%
 #~ msgid "Get Ready for HTML5"
 #~ msgstr "Pripremite se za HTML5"
 
-# 100%
 #~ msgid "A List Apart"
 #~ msgstr "Pored liste"
 
-# 100%
 #~ msgid "Some suggestions to help you get on board with HTML5."
 #~ msgstr "Neki prijedlozi kako bi Vam pomogli u snalaženju s HTML5."
 
-#, fuzzy
 #~ msgid "HTML5 Rocks"
 #~ msgstr "HTML5"
 
-# 100%
 #~ msgid "Take a guided tour through code that uses HTML5 features."
 #~ msgstr "Krenite na vođeni put kroz kod koji koristi HTML5 mogućnosti."
 
-# 100%
 #~ msgid "Semantics in HTML5"
 #~ msgstr "Semantika u HTML5"
 
-# 100%
 #~ msgid "Canvas Tutorial"
 #~ msgstr "Canvas Tutorial"
 
-# 100%
 #~ msgid "HTML5 Doctor"
 #~ msgstr "HTML5 Doktor"
 
-# 100%
 #~ msgid "Articles about using HTML5 right now."
 #~ msgstr "Članci o korištenju HTML5 odmah danas."
 
-# 100%
 #~ msgid "The Joy of HTML5 Audio"
 #~ msgstr "Užitak HTML5 audia"
 
-# 100%
 #~ msgid "HTML5 Examples"
 #~ msgstr "HTML5 primjeri"
 
-#, fuzzy
 #~ msgid "Web o' Wonder"
 #~ msgstr "Web Workers"
 
-# 100%
 #~ msgid "Demos from Mozilla developers and evangelists."
 #~ msgstr "Demoi Mozillinih programera i evanđelista."
 
-#, fuzzy
 #~ msgid "MDN Demo Studio"
 #~ msgstr "Demo Studio"
 
-# 100%
 #~ msgid "HTML5 Demos and Examples"
 #~ msgstr "HTML5 demoi i primjeri"
 
-# 100%
 #~ msgid "Remy Sharp"
 #~ msgstr "Remy Sharp"
 
-# 100%
 #~ msgid "Demos that you can filter by technology or browser support."
 #~ msgstr "Demoi koje možete filtrirati po tehnologiji ili podržanim preglednicima."
 
-# 100%
 #~ msgid "HTML5 Gallery"
 #~ msgstr "HTML5 galerija"
 
-# 100%
 #~ msgid "Richard Clark"
 #~ msgstr "Richard Clark"
 
-#, fuzzy
 #~ msgid "Learn JavaScript"
 #~ msgstr "/en/JavaScript"
 
-# 100%
 #~ msgid "Getting Started with JavaScript"
 #~ msgstr "Započnite s JavaScriptom"
 
-# 100%
 #~ msgid "What is JavaScript and how can it help you?"
 #~ msgstr "Što je JavaScript i kako Vam može pomoći?"
 
-# 100%
 #~ msgid "JavaScript From the Ground Up"
 #~ msgstr "JavaScript od temelja prema vrhu"
 
-# 100%
 #~ msgid "Video tutorial on making pages interactive with JavaScript"
 #~ msgstr "Video tutorial za dodavanje interaktivnosti u web stranicu pomoću JavaScripta"
 
-# 100%
 #~ msgid "JavaScript Best Practices"
 #~ msgstr "JavaScript najbolje prakse"
 
-# 100%
 #~ msgid "A Re-introduction to JavaScript"
 #~ msgstr "Ponovni uvod u JavaScript"
 
-#, fuzzy
 #~ msgid "Eloquent JavaScript"
 #~ msgstr "/en/JavaScript"
 
-# 100%
 #~ msgid "Essential JavaScript Design Patterns"
 #~ msgstr "Najvažniji JavaScript oblikovni obrasci"
 
-# 100%
 #~ msgid "An introduction to essential JavaScript design patterns."
 #~ msgstr "Uvod u najvažnije JavaScript oblikovne obrasce."
 
-# 100%
 #~ msgid "The JavaScript Programming Language"
 #~ msgstr "JavaScript programski jezik"
 
-# 100%
 #~ msgid "Introduction to Object-oriented JavaScript"
 #~ msgstr "Uvod u objektno orijentiran JavaScript"
 
-# 100%
 #~ msgid "Learn about the JavaScript object model."
 #~ msgstr "Učite o JavaScript objektnom modelu."
 
-# 100%
 #~ msgid "Learning Advanced JavaScript"
 #~ msgstr "Učenje naprednog JavaScripta"
 
-# 100%
 #~ msgid "John Resig's guide to advanced JavaScript."
 #~ msgstr "Vodič Johna Resiga kroz napredni JavaScript."
 
-# 100%
 #~ msgid "Introducing the JavaScript DOM"
 #~ msgstr "Uvod u JavaScript DOM"
 
-# 100%
 #~ msgid "An Inconvenient API: The Theory of the DOM"
 #~ msgstr "Nepraktičan API: teorija DOM-a"
 
-# 100%
 #~ msgid "Douglas Crockford explains the Document Object Model."
 #~ msgstr "Douglas Crockford objašnjava Dokumentni Objektni Model."
 
-#, fuzzy
 #~ msgid "Advanced JavaScript"
 #~ msgstr "JavaScript"
 
-#, fuzzy
 #~ msgid "JavaScript Garden"
 #~ msgstr "JavaScript"
 
-# 100%
 #~ msgid "Documentation of the most quirky parts of JavaScript."
 #~ msgstr "Dokumentacija najčudnijih dijelova JavaScripta."
 
-# 100%
 #~ msgid "Which JavaScript Framework?"
 #~ msgstr "Koji JavaScript radni okvir?"
 
-# 100%
 #~ msgid "Advice on choosing a JavaScript framework."
 #~ msgstr "Savjeti za odabir JavaScript radnog okvira."
 
-# 100%
 #~ msgid "Non-blocking JavaScript Downloads"
 #~ msgstr "Neblokirajuće JavaScript preuzimanje"
 
-#, fuzzy
 #~ msgid "JavaScript Guide"
 #~ msgstr "JavaScript"
 
@@ -5704,9 +5519,8 @@ msgstr ""
 #~ "Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
 #~ "helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
 #~ msgstr ""
-#~ "Firefox je prvi svjetski web preglednik koji podržava dodatke za mobitele. Saznajte više o <a href=\"%(basics_url)s\">osnovama proširenja</a>, <a href=\"%(best_practices_url)s\">najboljim "
-#~ "primjenama proširenja</a>, korisnim <a href=\"%(snippets_url)s\">komadićima koda</a> i više te na taj način možete stvarati inovativne dodatke za Firefox na Androidu i Firefox na Nokijinom Meego "
-#~ "platformi."
+#~ "Firefox je prvi svjetski web preglednik koji podržava dodatke za mobitele. Saznajte više o <a href=\"%(basics_url)s\">osnovama proširenja</a>, <a href=\"%(best_practices_url)s\">najboljim primjenama"
+#~ " proširenja</a>, korisnim <a href=\"%(snippets_url)s\">komadićima koda</a> i više te na taj način možete stvarati inovativne dodatke za Firefox na Androidu i Firefox na Nokijinom Meego platformi."
 
 #~ msgid "Location-Aware Applications"
 #~ msgstr "Lokacija-Svjestan Aplikacije"
@@ -5715,8 +5529,8 @@ msgstr ""
 #~ "Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
 #~ "innovative apps that delight your audience."
 #~ msgstr ""
-#~ "Saznajte kako koristiti <a href=\"%(geo_url)s\">API geolokacije</a> i uputiti ljude na pravi put. Kada niste pored računala i koristite mobilni uređaj potreban je preglednik koji može utvrditi "
-#~ "vašu lokaciju. Naučite kako napraviti inovativne aplikacije koje će oduševiti vaše korisnike."
+#~ "Saznajte kako koristiti <a href=\"%(geo_url)s\">API geolokacije</a> i uputiti ljude na pravi put. Kada niste pored računala i koristite mobilni uređaj potreban je preglednik koji može utvrditi vašu "
+#~ "lokaciju. Naučite kako napraviti inovativne aplikacije koje će oduševiti vaše korisnike."
 
 #~ msgid "Help build Firefox for Mobile"
 #~ msgstr "Pomozite u izgradnji Firefoxa za mobilne uređaje"
@@ -5750,8 +5564,8 @@ msgstr ""
 #~ msgstr "Firefox za mobitele: Što je sljdeće"
 
 #~ msgid ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
-#~ "world's best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
+#~ "best mobile Web browser."
 #~ msgstr ""
 #~ "Projekti i planiranje nikad se ne zaustavljaju. Spremamo neke nove izvrsne značajke i poboljšanja za naše sljedeće glavno izdanje. Isprobajte i pogledajte kako vi možete nam pomoći u stvaranju "
 #~ "svjetskog najboljeg preglednika za mobitele."
@@ -5763,11 +5577,11 @@ msgstr ""
 #~ msgstr "Saznajte od drugih programera o prednostima HTML5 i razvoja za mobilni web u ovom članku iz ReadWriteWeb:"
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
-#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
+#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "\"'Uz nevjerojatnu lakoću, razvojni alat za HTML / JS rok zvijezde je 10 puta veći [i] nema slabljenja preuzimanja. Jednostavno uputite ljude na URL i - instalirano je.' Činjenica da aplikacije "
-#~ "mogu izravno biti instalirane s URL umjesto čekanja na App Store preuzimanje znači da programeri mogu smanjiti prepreke mogućnostima širenja.\""
+#~ "\"'Uz nevjerojatnu lakoću, razvojni alat za HTML / JS rok zvijezde je 10 puta veći [i] nema slabljenja preuzimanja. Jednostavno uputite ljude na URL i - instalirano je.' Činjenica da aplikacije mogu"
+#~ " izravno biti instalirane s URL umjesto čekanja na App Store preuzimanje znači da programeri mogu smanjiti prepreke mogućnostima širenja.\""
 
 #~ msgid "Android APIs"
 #~ msgstr "API za Android"
@@ -5803,8 +5617,8 @@ msgstr ""
 #~ "Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
 #~ "applications/extensions localizable."
 #~ msgstr ""
-#~ "Lokalizacija (L10n) je proces prevođenja korisničkog sučelja programa s jednog jezika na druge i prilagođavanje istog da ispuni potrebe stranih kultura. Ovi resursi su o stvaranju Mozilla-"
-#~ "baziranih aplikacija/proširenja prevodivim."
+#~ "Lokalizacija (L10n) je proces prevođenja korisničkog sučelja programa s jednog jezika na druge i prilagođavanje istog da ispuni potrebe stranih kultura. Ovi resursi su o stvaranju Mozilla-baziranih "
+#~ "aplikacija/proširenja prevodivim."
 
 #~ msgid "All applications development documentation"
 #~ msgstr "Sva dokumentacija o razvoju aplikacija"
@@ -5830,7 +5644,6 @@ msgstr ""
 #~ msgid "Develop for an open and participatory Web."
 #~ msgstr "Razvijajte za otvoreni i participativni web."
 
-#, fuzzy
 #~ msgid "Hacks Blog"
 #~ msgstr "Demo prikazi hakiranja"
 
@@ -5891,11 +5704,9 @@ msgstr ""
 #~ msgid "%(authorlink)s wrote %(summary)s"
 #~ msgstr "%(authorlink)s je napisao %(summary)s"
 
-#, fuzzy
 #~ msgid "/En/CSS/Using_CSS_transforms"
 #~ msgstr "/en/CSS/Using_CSS_transforms"
 
-#, fuzzy
 #~ msgid "/HTML/Element"
 #~ msgstr "/en/HTML/Element/canvas"
 
@@ -5905,7 +5716,6 @@ msgstr ""
 #~ msgid "/en/CSS"
 #~ msgstr "/en/CSS"
 
-#, fuzzy
 #~ msgid "/en/CSS/CSS_transitions"
 #~ msgstr "/en/CSS/Using_CSS_transforms"
 
@@ -5915,7 +5725,6 @@ msgstr ""
 #~ msgid "/en/CSS/Using_CSS_transforms"
 #~ msgstr "/en/CSS/Using_CSS_transforms"
 
-#, fuzzy
 #~ msgid "/en/CSS_Reference"
 #~ msgstr "CSS Reference"
 
@@ -5925,7 +5734,6 @@ msgstr ""
 #~ msgid "/en/DOM"
 #~ msgstr "/en/DOM"
 
-#, fuzzy
 #~ msgid "/en/DOM/Storage"
 #~ msgstr "/en/Storage"
 
@@ -5962,11 +5770,9 @@ msgstr ""
 #~ msgid "/en/JavaScript"
 #~ msgstr "/en/JavaScript"
 
-#, fuzzy
 #~ msgid "/en/JavaScript/Getting_Started"
 #~ msgstr "/en/JavaScript"
 
-#, fuzzy
 #~ msgid "/en/JavaScript/Guide"
 #~ msgstr "/en/JavaScript"
 
@@ -6143,16 +5949,16 @@ msgstr ""
 
 #~ msgid ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
-#~ "build careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
+#~ "careers on open web technology."
 #~ msgstr ""
 #~ "Mozilla i <a href=\"%(p2pu)s\">P2PU</a> kreiraju <a href=\"%(p2pu_drumbeat)s\">Školu web zanata</a>, snažan novi način podučavanja i učenja web programiranja. Razredi su dostupni globalno, 100%% "
-#~ "besplatni, vođeni učenicima, mentorima i suradnicima kao što ste vi. Naš cilj: vitalni, peer-vođen sistem koji pomaže ljudima diljem svijeta u jednostavnom pristupu i gradnji karijera na "
-#~ "tehnologiji otvorenog weba."
+#~ "besplatni, vođeni učenicima, mentorima i suradnicima kao što ste vi. Naš cilj: vitalni, peer-vođen sistem koji pomaže ljudima diljem svijeta u jednostavnom pristupu i gradnji karijera na tehnologiji"
+#~ " otvorenog weba."
 
 #~ msgid ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
-#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
+#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 #~ msgstr ""
 #~ "Mozilla nastavlja vodstvo u naporima usvajanja HTML5 i ostalih razvijajućih tehnologija otvorenog weba. Saznajte više o <a href=\"%(devmo_html5)s\">HTML5 specifikacijama</a> i najnovijim "
 #~ "poboljšanjima u HTML5, CSS3 i ostalim <a href=\"%(devmo_fx4dev)s\">značajkama za programere u Firefoxu 4</a>."
@@ -6197,9 +6003,7 @@ msgstr ""
 #~ msgstr "Škola web zanata"
 
 #~ msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
-#~ msgstr ""
-#~ "Pogledajte kako vi možete <a href=\"%(devmo_participate)s\">sudjelovati</a> u <a href=\"%(devmo_l10n)s\">prijevodu</a>, <a href=\"%(devmo_qa)s\">osiguranju kvalitete</a> i ostalim Mozilla "
-#~ "projektima."
+#~ msgstr "Pogledajte kako vi možete <a href=\"%(devmo_participate)s\">sudjelovati</a> u <a href=\"%(devmo_l10n)s\">prijevodu</a>, <a href=\"%(devmo_qa)s\">osiguranju kvalitete</a> i ostalim Mozilla projektima."
 
 #~ msgid "See more about {title} by {author}"
 #~ msgstr "Pogledajte više o {title} od {author}"
@@ -6208,31 +6012,33 @@ msgstr ""
 #~ msgstr "Pogledajte što je novo za web programere u najnovijoj verziji Firefoxa"
 
 #~ msgid ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
-#~ "\">big chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
+#~ "chart full of check marks</a> to prove it."
 #~ msgstr ""
-#~ "Isprobajte <a href=\"%(fx4_features)s\">narednu verziju Firefoxa</a> i pomozite nam da najbolji preglednik na svijetu napravimo još boljim. Firefox 4 unapređuje moderni web a mi imamo <a href="
-#~ "\"%(fx4_tech)s\">veliki popis pun upitnika</a> da dokažemo to."
+#~ "Isprobajte <a href=\"%(fx4_features)s\">narednu verziju Firefoxa</a> i pomozite nam da najbolji preglednik na svijetu napravimo još boljim. Firefox 4 unapređuje moderni web a mi imamo <a "
+#~ "href=\"%(fx4_tech)s\">veliki popis pun upitnika</a> da dokažemo to."
 
 #~ msgid "The Document Object Model describes the layout and content of web pages."
 #~ msgstr "Document Object Model opisuje izgled i sadržaj web stranica."
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
-#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
+#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
+#~ "download links provided."
 #~ msgstr ""
-#~ "Za ovaj video je potreban preglednik koji podržava otvoreni video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ili noviji</li> <li><a href=\"http://www.apple.com/safari/"
-#~ "\">Safari</a> 3.1 ili noviji</li> </ul> ili <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternativno, možete koristiti pružene linkove za preuzimanje videa."
+#~ "Za ovaj video je potreban preglednik koji podržava otvoreni video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ili noviji</li> <li><a "
+#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 ili noviji</li> </ul> ili <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternativno, možete koristiti pružene "
+#~ "linkove za preuzimanje videa."
 
 #~ msgid "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
 #~ msgstr "Koristite graditelja dodataka da biste brzo i jednostavno napravili proširenje za Firefox upotrebom standardnih web tehnologija."
 
 #~ msgid ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
-#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
+#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 #~ msgstr ""
-#~ "Korsitite graditelja dodataka da brzo i jednostavno napravite proširenje za Firefox upotrebom standardnih web tehnologija. Postoji <a href=\"%(tutorial)s\">vodič</a> za početak i <a href="
-#~ "\"%(api)s\">raznovrsni API u osnovnoj biblioteci</a> da bi dodali funkcionalnost u Firefoxu."
+#~ "Korsitite graditelja dodataka da brzo i jednostavno napravite proširenje za Firefox upotrebom standardnih web tehnologija. Postoji <a href=\"%(tutorial)s\">vodič</a> za početak i <a "
+#~ "href=\"%(api)s\">raznovrsni API u osnovnoj biblioteci</a> da bi dodali funkcionalnost u Firefoxu."
 
 #~ msgid "Want to help make our network even better?"
 #~ msgstr "Želite pomoći da napravimo našu mrežu još boljom?"
@@ -6240,7 +6046,6 @@ msgstr ""
 #~ msgid "Watch <span class=\"mobile\">Mobile</span> Videos"
 #~ msgstr "Pogledajte videa vezana za <span class=\"mobile\">mobitele</span>"
 
-#, fuzzy
 #~ msgid "Web O' Wonder"
 #~ msgstr "Web Workers"
 
@@ -6341,11 +6146,11 @@ msgstr ""
 #~ msgstr "Možete li biti veliki pobjednik?"
 
 #~ msgid ""
-#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until "
-#~ "<strong>January 7, 2011</strong>. Good luck!"
+#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until <strong>January 7,"
+#~ " 2011</strong>. Good luck!"
 #~ msgstr ""
-#~ "Napravite fenomenalni dodatak za Firefox za mobitele i osigurajte si mogućnost da osvojite putovanje u Barcelonu, novčanu nagradu i tone neprocjenjivog izlaganja! <a href=\"%(cup_enter)s"
-#~ "\">Prijavite se sad</a> do <strong>07. siječnja 2011</strong>. Sretno!"
+#~ "Napravite fenomenalni dodatak za Firefox za mobitele i osigurajte si mogućnost da osvojite putovanje u Barcelonu, novčanu nagradu i tone neprocjenjivog izlaganja! <a href=\"%(cup_enter)s\">Prijavite"
+#~ " se sad</a> do <strong>07. siječnja 2011</strong>. Sretno!"
 
 #~ msgid "Filetype not supported."
 #~ msgstr "Vrsta datoteke nije podržana."
@@ -6359,6 +6164,5 @@ msgstr ""
 #~ msgid "Mobile Add-ons Cup"
 #~ msgstr "Kup dodataka za mobitele"
 
-#, fuzzy
 #~ msgid "Web o’ Wonder"
 #~ msgstr "Web Workers"
