@@ -299,18 +299,10 @@ Kuma will automatically run in debug mode, with the ``DEBUG`` setting
 turned to ``True``. That will make it serve images and have the pages
 formatted with CSS automatically.
 
-Vagrant requires additional settings in a ``.env`` file, until
-`PR 3972`_ is merged::
-
-    PIPELINE_ENABLED=false
-    PIPELINE_COLLECTOR_ENABLED=false
-
 Setting ``DEBUG=false`` file will put the installation in production mode and
 ask for minified assets.  This only works in the Vagrant environment, which
 uses Apache to serve the static files.  In Docker, static files will not be
 served and the site will be unstyled.
-
-.. _PR 3972: https://github.com/mozilla/kuma/pull/3972
 
 Production assets
 *****************
