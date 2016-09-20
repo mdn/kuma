@@ -43,5 +43,3 @@ RUN pip install --no-cache-dir -r requirements/dev.txt
 
 ENV WEB_CONCURRENCY=4
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout=120", "kuma.wsgi:application"]
-
-ENV PROD_DETAILS_DIR=/app/product_details_json

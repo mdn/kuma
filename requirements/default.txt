@@ -81,10 +81,6 @@ django-memcached-hashring==0.1.2 \
     --hash=sha256:f71f99d60e704cc239bddbbe336dcdc5bb8a487b65a1b0b6c7ce0f4af5848442 \
     --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25daca72bba8f37b159d552fed4ab6337
 
-# Information about Mozilla products and supported locales
-django-mozilla-product-details==0.7.1 \
-    --hash=sha256:c50bffb9828a9139156904a11c508732d13dbf57ac25625ebc5edaa3ed312840
-
 # Allow Django to use MySQL-specific features
 django-mysql==1.0.4 \
     --hash=sha256:a90eaaff1b9cfca374e565a873ba98b20209753e774ee136c526d1c4dd641561 \

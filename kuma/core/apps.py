@@ -17,6 +17,5 @@ class CoreConfig(AppConfig):
         """
         a static mapping of lower case language names and their native names
         """
-        from product_details import product_details
-        return dict([(lang.lower(), product_details.languages[lang]['native'])
+        return dict([(lang.lower(), settings.LOCALES[lang].native)
                      for lang in settings.MDN_LANGUAGES])
