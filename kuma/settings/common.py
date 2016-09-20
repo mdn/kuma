@@ -13,7 +13,7 @@ import dj_email_url
 
 from django.core.urlresolvers import reverse_lazy
 
-_Language = namedtuple(u'Language', u'english native iso639_1')
+_Language = namedtuple(u'Language', u'english native')
 
 # Set up django-celery
 djcelery.setup_loader()
@@ -255,7 +255,7 @@ def _get_locales():
 
     locales = {}
     for locale, meta in json_locales.items():
-        locales[locale] = _Language(meta['English'], meta['native'], locale)
+        locales[locale] = _Language(meta['English'], meta['native'])
     return locales
 
 LOCALES = _get_locales()
