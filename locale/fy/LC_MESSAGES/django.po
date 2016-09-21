@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-21 14:08+0000\n"
+"PO-Revision-Date: 2016-09-21 15:07+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2270,7 +2270,7 @@ msgstr "%(user)s is al blokkearre. Jo kinne syn/har revyzjes hjirûnder beoardie
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr "Jo kinne josels net blokkearje fanwege spam."
+msgstr "Jo kinne josels net blokkearje fanwegen spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
@@ -2282,7 +2282,7 @@ msgstr "Brûker blokkearje foar spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 msgid "Ban User for Spam & Submit Spam"
-msgstr "Brûker blokkearje fanwege spam & spam yntsjinje"
+msgstr "Brûker blokkearje fanwegen spam & spam yntsjinje"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
@@ -2344,7 +2344,7 @@ msgstr "Gjin."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr "Oerslagen revyzjes fanwege nijere net-spamrevyzje:"
+msgstr "Oerslaggen refyzjes fanwegen nijere net-spamrefyzje:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 msgid "Could not submit to Akismet:"
@@ -3419,7 +3419,7 @@ msgstr "Lit in neifolgjende slash fuort (dizze wurdt foar jo fuortsmiten as jo h
 
 #: kuma/wiki/jinja2/wiki/move.html:31
 msgid "Your requested move cannot be completed due to the following slug conflicts:"
-msgstr "Jo frege ferpleatsing kin net foltôge wurde fanwege de folgjende slug-konflikten:"
+msgstr "Jo frege ferpleatsing kin net foltôge wurde fanwegen de folgjende slug-konflikten:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
