@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-07-04 10:58+0000\n"
-"Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
+"PO-Revision-Date: 2016-09-21 09:34+0000\n"
+"Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "Nee"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
-msgstr "Noait mear freegje"
+msgstr "Nea mear freegje"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
