@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-21 09:34+0000\n"
+"PO-Revision-Date: 2016-09-21 09:48+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -156,7 +156,7 @@ msgstr "Jo hawwe in konsept fan:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr "De konseptynhâld werstelle"
+msgstr "De konseptynhâld werom bringe"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
@@ -164,7 +164,7 @@ msgstr "It konsept fuortsmite"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr "wersteld"
+msgstr "werom brocht"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
