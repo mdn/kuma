@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-21 15:07+0000\n"
+"PO-Revision-Date: 2016-09-22 07:54+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -131,7 +131,7 @@ msgstr "Website-helpmiddelen"
 
 #: jinja2/base.html:119
 msgid "Revision dashboard"
-msgstr "Revyzjedashboerd"
+msgstr "Refyzjedashboerd"
 
 #: jinja2/base.html:120
 msgid "Documentation status"
@@ -652,7 +652,7 @@ msgstr "Resinte MDN-bestânswizigingen"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr "Resinte revyzjes fan MDN-bestânsbylagen"
+msgstr "Resinte refyzjes fan MDN-bestânsbylagen"
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
@@ -664,11 +664,11 @@ msgstr "It MIME-type wurdt by it oanbieden fan de bylage brûkt. Dit wurdt autom
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
-msgstr "revyzje fan bylage"
+msgstr "refyzje fan bylage"
 
 #: kuma/attachments/models.py:141
 msgid "attachment revisions"
-msgstr "revyzjes fan bylage"
+msgstr "refyzjes fan bylage"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -684,7 +684,7 @@ msgstr "De brûkersnamme fan de brûker dy't de bylage fuortsmiten hat"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
-msgstr "Of dizze bylage de aktuele revyzje fan de bylage wie ten tide fan it fuortsmiten"
+msgstr "Of dizze bylage de aktuele refyzje fan de bylage wie yn de tiid fan it fuortsmiten"
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
@@ -1058,7 +1058,7 @@ msgstr "Auteurs"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr "Revyzjedashboerd"
+msgstr "Refyzjedashboerd"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
@@ -1090,7 +1090,7 @@ msgstr "Skiednis"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
-msgstr "Revyzje"
+msgstr "Refyzje"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
@@ -1154,31 +1154,31 @@ msgstr "spam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
-msgstr "Der binne gjin revyzjes dy't oan dizze filterset foldogge."
+msgstr "Der binne gjin refyzjes dy't oan dizze filterset foldogge."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr "Gjin e-mail mear ûntfange as Ingelske revyzjes goedkard wurde"
+msgstr "Gjin e-mail mear ûntfange as Ingelske refyzjes goedkard wurde"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr "E-mail ûntfange as Ingelske revyzjes goedkard wurde"
+msgstr "E-mail ûntfange as Ingelske refyzjes goedkard wurde"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr "Gjin e-mail mear ûntfange as Ingelske revyzjes wachtsje"
+msgstr "Gjin e-mail mear ûntfange as Ingelske refyzjes wachtsje"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr "E-mail ûntfange as Ingelske revyzjes wachtsje"
+msgstr "E-mail ûntfange as Ingelske refyzjes wachtsje"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -2266,7 +2266,7 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> is blokkearre."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr "%(user)s is al blokkearre. Jo kinne syn/har revyzjes hjirûnder beoardiele en ûngedien meitsje."
+msgstr "%(user)s is al blokkearre. Jo kinne syn/har refyzjes hjirûnder beoardiele en ûngedien meitsje."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
@@ -2290,7 +2290,7 @@ msgstr "Brûker blokkearje om oare redenen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "Brûker hat de ôfrûne trije dagen gjin revyzjes oanlevere om ûngedien makke te wurden, en dizze brûker wie al blokkearre."
+msgstr "Brûker hat de ôfrûne trije dagen gjin refyzjes oanlevere om ûngedien makke te wurden, en dizze brûker wie al blokkearre."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2310,7 +2310,7 @@ msgstr "By Akismet yntsjinne as spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "De brûker hie gjin revyzjes dy't as spam meld binne."
+msgstr "De brûker hie gjin refyzjes dy't as spam meld binne."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
@@ -2318,7 +2318,7 @@ msgstr "Fuortsmiten:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
-msgstr "De brûker hie gjin revyzjes dy't fuortsmiten binne."
+msgstr "De brûker hie gjin refyzjes dy't fuortsmiten binne."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
@@ -2326,7 +2326,7 @@ msgstr "Weromset:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 msgid "The user did not have any revisions that were reverted."
-msgstr "De brûker hie gjin revyzjes dy't weromset binne."
+msgstr "De brûker hie gjin refyzjes dy't weromset binne."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
@@ -2364,7 +2364,7 @@ msgstr "Gjin aksjes ûndernommen"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
-msgstr "Lêste revyzje is gjin spam:"
+msgstr "Lêste refyzje is gjin spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
@@ -2629,7 +2629,7 @@ msgstr "Al rapportearre as spam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
-msgstr "Brûker hat yn de lêste 3 dagen gjin revyzjes makke."
+msgstr "Brûker hat yn de lêste 3 dagen gjin refyzjes makke."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
@@ -2667,7 +2667,7 @@ msgstr "Blokkearre"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Clean Up Revisions"
-msgstr "Revyzjes opskjinje"
+msgstr "Refyzjes opskjinje"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
@@ -2755,11 +2755,11 @@ msgstr "‘%s’-oersettingen yn MDN dy't bywurke wurde moatte"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr "Resinte MDN-revyzjes"
+msgstr "Resinte MDN-refyzjes"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr "Resinte revyzjes fan MDN-dokuminten"
+msgstr "Resinte refyzjes fan MDN-dokuminten"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -2902,11 +2902,11 @@ msgstr "Reaksje:"
 
 #: kuma/wiki/forms.py:472
 msgid "Tag this revision for review?"
-msgstr "Dizze revyzje labelje foar beoardieling?"
+msgstr "Dizze refyzje labelje foar beoardieling?"
 
 #: kuma/wiki/forms.py:479
 msgid "Tag this revision for localization?"
-msgstr "Dizze revyzje labelje foar oersetting?"
+msgstr "Dizze refyzje labelje foar oersetting?"
 
 #: kuma/wiki/forms.py:878
 msgid "New slug:"
@@ -2981,7 +2981,7 @@ msgstr "H4 en heger"
 #: kuma/wiki/models.py:1691
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
-msgstr "In revyzje moat op in revyzje fan it %(locale)s-dokumint basearre wêze. Revyzje-ID %(id)s foldocht net oan dy kritearia."
+msgstr "In refyzje moat op in refyzje fan it %(locale)s-dokumint basearre wêze. Refyzje-ID %(id)s foldocht net oan dy kritearia."
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
@@ -3078,11 +3078,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr "Revyzjes fergelykje | %(document)s"
+msgstr "Refyzjes fergelykje | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr "Revyzjes fergelykje"
+msgstr "Refyzjes fergelykje"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
@@ -3115,7 +3115,7 @@ msgstr "Datum fan lêste wiziging"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
-msgstr "Jo geane dit dokumint en alle revyzjes derfan fuortsmite. Lit ús witte wêrom't dizze side fuortsmiten wurde moatte soe."
+msgstr "Jo geane dit dokumint en alle refyzjes derfan fuortsmite. Lit ús witte wêrom't dizze side fuortsmiten wurde moatte soe."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
@@ -3124,11 +3124,11 @@ msgstr "Binne jo wis dat jo trochgean wolle?"
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr "Revyzje weromsette | %(document)s"
+msgstr "Refyzje weromsette | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr "Binne jo wis dat jo dizze revyzje weromsette wolle?"
+msgstr "Binne jo wis dat jo dizze refyzje weromsette wolle?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
@@ -3140,11 +3140,11 @@ msgstr "Ynhâld"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
-msgstr "Wêrom sette jo dizze revyzje werom?"
+msgstr "Wêrom sette jo dizze refyzje werom?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
-msgstr "Jo geane it dokumint nei dizze revyzje weromsette. Klik op ‘Weromsette’ om de ynhâld&nbsp;hjirboppe werom te setten."
+msgstr "Jo geane it dokumint nei dizze refyzje weromsette. Klik op ‘Weromsette’ om de ynhâld&nbsp;hjirboppe werom te setten."
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
@@ -3313,11 +3313,11 @@ msgstr "Jo wizigingen"
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr "Revyzje %(id)s troch <a href=\"%(user_profile_url)s\">%(user)s</a> op %(date)s"
+msgstr "Refyzje %(id)s troch <a href=\"%(user_profile_url)s\">%(user)s</a> op %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
-msgstr "Aktuele revyzje:"
+msgstr "Aktuele refyzje:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
@@ -3477,23 +3477,23 @@ msgstr "Dit is in foarbyld fan in net-bewarre dokumint."
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr "Revyzje %(id)s | %(title)s"
+msgstr "Refyzje %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr "Revyzje-ynformaasje"
+msgstr "Refyzje-ynformaasje"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr "Revyzje-identificator:"
+msgstr "Refyzje-identifikator:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr "Revyzjetitel:"
+msgstr "Refyzjetitel:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
-msgstr "Revyzje-id:"
+msgstr "Refyzje-id:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:29
 msgid "Created:"
@@ -3505,19 +3505,19 @@ msgstr "Auteur:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
-msgstr "Is aktuele revyzje?"
+msgstr "Is aktuele refyzje?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr "Ynhâld fan revyzje"
+msgstr "Ynhâld fan refyzje"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr "Boarne fan revyzje"
+msgstr "Boarne fan refyzje"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr "Dizze revyzje weromsette"
+msgstr "Dizze refyzje weromsette"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
@@ -3715,12 +3715,12 @@ msgstr "Sjoch ek"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr "Revyzjes wizigje"
+msgstr "Refyzjes wizigje"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr "Revyzje %(num)s:"
+msgstr "Refyzje %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -3880,11 +3880,11 @@ msgstr "Beoardieling nedich?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr "Revyzjeopmerking"
+msgstr "Refyzjeopmerking"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr "Lês hoe't jo revyzjeopmerkingen brûke"
+msgstr "Lês hoe't jo refyzjeopmerkingen brûke"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
@@ -4012,7 +4012,7 @@ msgstr "%(count)s dokuminten fûn."
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr "Revyzjeskiednis | %(document)s"
+msgstr "Refyzjeskiednis | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
@@ -4020,7 +4020,7 @@ msgstr "Skiednis fan"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr "Revyzjeskiednis foar:"
+msgstr "Refyzjeskiednis foar:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
@@ -4028,11 +4028,11 @@ msgstr "Selektearre oersettingen fergelykje"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr "Selektearre revyzjes fergelykje"
+msgstr "Selektearre refyzjes fergelykje"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr "Dit dokumint hat gjin revyzjes."
+msgstr "Dit dokumint hat gjin refyzjes."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
@@ -4117,7 +4117,7 @@ msgstr "Selektearje in Akismet-ynstjoering foar mear details"
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
-msgstr "Revyzje %s"
+msgstr "Refyzje %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
