@@ -1,10 +1,4 @@
 ---
-- name: Update product details
-  command: /home/vagrant/env/bin/python manage.py update_product_details -f
-  args:
-    chdir: /home/vagrant/src
-    creates: /home/vagrant/product_details_json/firefox_versions.json
-
 - name: Run Django database migrations
   command: /home/vagrant/env/bin/python manage.py migrate --noinput
   args:

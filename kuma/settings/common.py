@@ -13,7 +13,7 @@ import dj_email_url
 
 from django.core.urlresolvers import reverse_lazy
 
-_Language = namedtuple(u'Language', u'english native iso639_1')
+_Language = namedtuple(u'Language', u'english native')
 
 # Set up django-celery
 djcelery.setup_loader()
@@ -119,10 +119,6 @@ PLATFORM_NAME = platform.node()
 # system time zone.
 TIME_ZONE = 'US/Pacific'
 
-# Directory for product-details files.
-PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
-                          default=path('..', 'product_details_json'))
-
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-US'
@@ -198,12 +194,6 @@ RTL_LANGUAGES = (
     'he'
 )
 
-DEV_POOTLE_PRODUCT_DETAILS_MAP = {
-    'pt': 'pt-PT',
-    'fy': 'fy-NL',
-    'xx-testing': 'x-testing',
-}
-
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale; values are the delivered locale.
 LOCALE_ALIASES = {
@@ -242,39 +232,24 @@ for requested_lang, delivered_lang in LOCALE_ALIASES.items():
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
-def _get_languages_and_locales():
-    """Generates LANGUAGES and LOCALES data
-
-    .. Note::
-
-       This requires product-details data. If product-details data hasn't been
-       retrieved, then this prints a warning and then returns empty values. We
-       do this because in the case of pristine dev environments, you can't
-       update product-details because product-details isn't there, yet.
-
+def _get_locales():
     """
-    languages = []
+    Load LOCALES data from languages.json
+
+    languages.json is from the product-details project:
+    https://product-details.mozilla.org/1.0/languages.json
+    """
+    lang_path = path('kuma', 'settings', 'languages.json')
+    with open(lang_path, 'r') as lang_file:
+        json_locales = json.load(lang_file)
+
     locales = {}
-    lang_file = os.path.join(PROD_DETAILS_DIR, 'languages.json')
-    try:
-        json_locales = json.load(open(lang_file, 'r'))
-    except IOError as ioe:
-        print('Warning: Cannot open %s because it does not exist. LANGUAGES '
-              'and LOCALES will be empty. Please run "./manage.py '
-              'update_product_details".' % lang_file)
-        print(ioe)
-        return [], {}
-
     for locale, meta in json_locales.items():
-        locales[locale] = _Language(meta['English'],
-                                    meta['native'],
-                                    locale)
-    languages = sorted(tuple([(i, locales[i].native) for i in MDN_LANGUAGES]),
-                       key=lambda lang: lang[0])
+        locales[locale] = _Language(meta['English'], meta['native'])
+    return locales
 
-    return languages, locales
-
-LANGUAGES, LOCALES = _get_languages_and_locales()
+LOCALES = _get_locales()
+LANGUAGES = [(locale, LOCALES[locale].native) for locale in MDN_LANGUAGES]
 
 # List of MindTouch locales mapped to Kuma locales.
 #
@@ -498,7 +473,6 @@ INSTALLED_APPS = (
     # util
     'django_jinja',
     'pipeline',
-    'product_details',
     'puente',
     'constance.backends.database',
     'constance',
