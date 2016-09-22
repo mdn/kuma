@@ -1250,7 +1250,8 @@ CONSTANCE_CONFIG = dict(
     ),
 )
 
-KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
+KUMASCRIPT_URL_TEMPLATE = config('KUMASCRIPT_URL_TEMPLATE',
+                                 default='http://localhost:9080/docs/{path}')
 
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 1
