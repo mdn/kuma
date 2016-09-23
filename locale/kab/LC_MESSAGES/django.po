@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-19 20:51+0000\n"
+"PO-Revision-Date: 2016-09-23 19:51+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -760,7 +760,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
-msgstr ""
+msgstr "Yessuli-t"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
@@ -773,7 +773,7 @@ msgstr ""
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s ibiten"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
@@ -793,12 +793,12 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "Yettwarna"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
-msgstr ""
+msgstr "Kkes"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
@@ -812,11 +812,11 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "Rnu tasarutt tamaynut"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr ""
+msgstr "Ulac ɣur-k tisura API yakan."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
-msgstr ""
+msgstr "Asulay n tsarutt"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
@@ -1142,7 +1142,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
-msgstr ""
+msgstr "aspam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
@@ -1192,15 +1192,15 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "Wali isental"
 
 #: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr ""
+msgstr "Titiknulujiyin Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Platform"
-msgstr ""
+msgstr "Talɣubliṭ <br /> Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -1220,7 +1220,7 @@ msgstr "ugar..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Mozilla<br> Docs"
-msgstr ""
+msgstr "Tasemlit <br> Mozilla"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "App Center"
@@ -1228,23 +1228,23 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Ifecka n <br /> tneflit"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
-msgstr ""
+msgstr "Amaswaḍ n usebter"
 
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
-msgstr ""
+msgstr "Tadiwent web"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "Tamseɣtayt n JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
-msgstr ""
+msgstr "Ifecka n tmellit"
 
 #: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Connect"
@@ -1280,7 +1280,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
-msgstr ""
+msgstr "Ttekki"
 
 #: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
@@ -1288,10 +1288,12 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">Ddu ɣer<span class=\"number\">%(contributors)s</span> imttekkiyen</span> <span class=\"row2\">n<span class=\"number\">%(locales)s</span> tutlayin akked "
+"temnadin</span> <span class=\"row3\"> deg umaḍal imaṛṛa.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Mudd afus i tneflit n MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
