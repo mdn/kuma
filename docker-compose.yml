@@ -67,12 +67,6 @@ services:
   memcached:
     image: memcached
 
-  # TODO: determine if this data container is actually useful
-  mysql-data:
-    build: ./docker/images/mysql-data
-    volumes:
-      - /var/lib/mysql
-
   mysql:
     build: ./docker/images/mysql
     entrypoint:
@@ -83,8 +77,8 @@ services:
       - MYSQL_USER=kuma
       - MYSQL_PASSWORD=kuma
       - MYSQL_DATABASE=developer_mozilla_org
-    volumes_from:
-        - mysql-data
+    volumes:
+      - mysqlvolume:/var/lib/mysql
 
   elasticsearch:
     image: elasticsearch:1.7
@@ -116,3 +110,5 @@ services:
       - "9080:9080"
     volumes:
       - ./kumascript:/app
+volumes:
+    mysqlvolume:
