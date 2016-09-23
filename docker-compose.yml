@@ -7,7 +7,7 @@ services:
     command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
     volumes:
       - ./:/app
-    links:
+    depends_on:
       - memcached
       - mysql
       - elasticsearch
@@ -46,7 +46,7 @@ services:
   api:
     <<: *worker
     command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
-    links:
+    depends_on:
       - memcached
       - mysql
       - elasticsearch
@@ -61,7 +61,7 @@ services:
   #    - ./static:/app/static
   #  ports:
   #    - "80:80"
-  #  links:
+  #  depends_on:
   #    - web
 
   memcached:
@@ -95,7 +95,7 @@ services:
   kumascript:
     image: quay.io/mozmar/kumascript
     command: node run.js
-    links:
+    depends_on:
       - api
       - memcached
     environment:
