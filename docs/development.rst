@@ -241,7 +241,9 @@ loads the Werkzeug debugger on exceptions (see docs for runserver_plus_), and
 that allows for stepping through the code with a debugger.
 To use this alternative, create an override file ``docker-compose.dev.yml``::
 
-    web:
+    version: "2"
+    services:
+      web:
         command: ./manage.py runserver_plus 0.0.0.0:8000
         stdin_open: true
         tty: true
