@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-22 18:08+0000\n"
+"PO-Revision-Date: 2016-09-23 12:27+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -20,7 +20,7 @@ msgstr "Gjin tastimming"
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
-msgstr "De wiki is yn allinnich-lêzemoadus."
+msgstr "De wiki is yn allinnich-lêzemodus."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
