@@ -69,6 +69,9 @@ Misc - needs sorting
 @require 'structure/feature-test-element';
 @require 'structure/pagination';
 
+#wikiArticle > p:first-child:empty {
+    display: none; /* bug 1305178: hide empty first paragraph */
+}
 
 p.field-explanation {
     margin-bottom: 0;
