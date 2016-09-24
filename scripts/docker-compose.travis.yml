@@ -8,3 +8,6 @@ worker: &worker
 
 web:
   <<: *worker
+
+api:
+  <<: *worker
