@@ -226,6 +226,8 @@ Configuration variables that are available for Vagrant:
   Whether to use the ``vagrant-cachier`` plugin to cache system packages
   between installs. Default: ``true``
 
+.. _advanced_config_docker:
+
 The Docker Environment
 ----------------------
 Running docker-compose_ will create and run several containers, and each
