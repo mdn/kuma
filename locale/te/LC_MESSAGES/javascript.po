@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-25 10:38+0000\n"
+"PO-Revision-Date: 2016-09-25 10:59+0000\n"
 "Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -109,7 +109,7 @@ msgstr "తెరువు"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
-msgstr ""
+msgstr "అనుగుణ్యత పట్టికకు తిరిగి వెల్లుము."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
