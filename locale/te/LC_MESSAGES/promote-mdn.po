@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-25 09:38+0000\n"
+"PO-Revision-Date: 2016-09-25 09:56+0000\n"
 "Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -41,31 +41,31 @@ msgstr "అమరికలు"
 
 #: promote-mdn.php:257
 msgid "Load keywords from URL"
-msgstr ""
+msgstr "URL నుండి కీలక పదాలు లోడ్ చేయండి"
 
 #: promote-mdn.php:257
 msgid "Preview"
-msgstr ""
+msgstr "ఉపదర్శనం"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr ""
+msgstr "కీలక పదాలు మరియు లింకులు ప్రత్యేకంగా %s కి వాడండి"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr ""
+msgstr "కీలకపదాలు (సెకండ్స్)తరువాత రీలోడ్ చేయండి:"
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "ఇప్పుడు రీలోడ్ చేయండి"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "లింక్స్ ని RSS కి ఫీడ్స్ అమర్చండి"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "లింక్స్ కోత్త విండోలో తెరవండి"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
@@ -73,11 +73,11 @@ msgstr "మినహాయింపులు"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr ""
+msgstr "టాగ్లు (h1,h2,h3,h4,h5,h6)శీర్షక లింకులకి జోడించకడి."
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
-msgstr ""
+msgstr "లింకులని కింది పోస్ట్లు లేదా పేజీలకు జోడించకండి (కామాతో-వేరుచేసిన ఇడి, స్లగ్, పేరు):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"
