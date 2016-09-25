@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-25 09:14+0000\n"
+"PO-Revision-Date: 2016-09-25 09:38+0000\n"
 "Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -106,10 +106,11 @@ msgstr ""
 #: promote-mdn.php:281
 msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
 msgstr ""
+"అదనపు కీలక పదాలు అటొమ్యాటికల్లి లింకు చెయ్యబడును. కీలక పదాలని వేరు చెయ్యడానికి కామా వాడండి మరియు లక్ష్యం url ని చివరిలొ జోడించడానికి. కొత్త Url కి కొత్త లైన్ వాడండి మరియు కీలక పదాల సెట్. ఉద.,"
 
 #: promote-mdn.php:288
 msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
-msgstr ""
+msgstr "గమనిక: URL లొ లోడ్ అయిన వాటిని బట్టి ఈ కీలకపదాలు ప్రాధాన్యత తీసుకుంటాయ్. ఒకవేల మీకు కస్టమ్ కీలక పదాలు ఎక్కువ వుంటే వాటిని MDN కి అస్సలు లింక్ చెయ్యలేరు."
 
 #: promote-mdn.php:289
 msgid "Update options"
