@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-13 11:23+0000\n"
-"Last-Translator: వీవెన్ <veeven@gmail.com>\n"
+"PO-Revision-Date: 2016-09-25 07:29+0000\n"
+"Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
-msgstr ""
+msgstr "విలువలు URL నుంచి రీలోడ్ చెయ్యబడినవి."
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
-msgstr "ప్లగ్ఇన్ అమర్పులు సెవ్చెయ్యబడినది."
+msgstr "ప్లగ్ఇన్ అమర్పులు సేవ్ చెయ్యబడినది."
 
 #: promote-mdn.php:245
 msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
