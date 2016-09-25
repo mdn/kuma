@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-25 10:59+0000\n"
+"PO-Revision-Date: 2016-09-25 11:17+0000\n"
 "Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -117,7 +117,7 @@ msgstr "మూత"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "కొత్త అనుగుణ్యత పట్తికలు బీటలొ వున్నవి"
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
@@ -129,7 +129,7 @@ msgstr "సర్వే తీసుకోండి"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "లొపాన్ని నివెదించండి."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
@@ -145,7 +145,7 @@ msgstr "డ్రాఫ్ట్ గా సేవ్ చేయి"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "ఆటోసేవ్ ప్రారంభించు."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -153,11 +153,11 @@ msgstr "తెలియని తేదీ"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
-msgstr ""
+msgstr "మీకు ఒక డ్రాఫ్ట్ వచ్చినది:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr ""
+msgstr "డ్రాఫ్ట్ నుండి సమాచరాన్ని పునరుద్ధరించు"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
@@ -173,32 +173,32 @@ msgstr "ప్రతి"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
-msgstr ""
+msgstr "భద్రపరచబడింది"
 
 #: kuma/static/js/wiki-edit.js:609
 msgid "autosaved"
-msgstr ""
+msgstr "స్వయంగా భద్రపరచబడింది"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "ప్రచురించబడింది"
 
 #: kuma/static/js/wiki-edit.js:622
 msgid "discarded"
-msgstr ""
+msgstr "విస్మరించు"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "ఆటోసేవ్ ఎనేబుల్ అయినది."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "ఆటోసేవ్ ఎనేబుల్ లొ లేదు."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
-msgstr ""
+msgstr "తెరువుము %(site)s లొ"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -210,11 +210,11 @@ msgstr "CSS సింటాక్స్ని చదవడం ఎలా."
 
 #: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "స్టాక్ ఫ్లోని వెతుకుము"
 
 #: kuma/static/js/wiki.js:677
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
+msgstr "మీ బ్రౌసెర్ MathML కి మద్దతు ఇవ్వదు. దానికి బదులుగా CSS ని వాడారు."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -234,11 +234,11 @@ msgstr "జోడింపులు"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:87
 msgid "Article Title Lookup / Link Text"
-msgstr ""
+msgstr "వ్యాసం శీర్షిక శోధన / లింక్ టెక్స్ట్"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-launch/plugin.js:12
 msgid "Launch"
-msgstr ""
+msgstr "ప్రారంభించు"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/plugin.js:17
 msgid "Create a Redirect"
