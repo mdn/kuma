@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-25 06:37+0000\n"
-"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
+"PO-Revision-Date: 2016-09-25 10:38+0000\n"
+"Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -69,19 +69,19 @@ msgstr "ఉదాహరణలను చేర్చండి లేదా మె
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
-msgstr ""
+msgstr "నా శోధన వేరే వ్యాసానికి దారితీసింది వుండాలి"
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr ""
+msgstr "వేరేది ఏదైనా"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
-msgstr ""
+msgstr "ఒకదాన్ని ఎంచుకోండి..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "uh oh. ఏమి దీనిని బాగుపరుచును?"
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
@@ -89,23 +89,23 @@ msgstr "కృతజ్ఞతలు! దీన్ని మేం సరిద�
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "ఎటువంటి ఎంపిక లెదు"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "ఎంపికైంది:"
 
 #: kuma/static/js/users.js:108
 msgid "New interest..."
-msgstr ""
+msgstr "కొత్త ఆసక్తి..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "అమలు పరుచు పత్రాలు తెరువుము"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "తెరువు"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
@@ -113,7 +113,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "మూత"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
@@ -125,7 +125,7 @@ msgstr "బీటా గురించి మరింత."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "సర్వే తీసుకోండి"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
@@ -141,7 +141,7 @@ msgstr "పాత పట్టికను చూపించు."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "డ్రాఫ్ట్ గా సేవ్ చేయి"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
@@ -161,11 +161,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "డ్రాఫ్ట్ ని విస్మరించు"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "తిరిగివుంచుము"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
@@ -202,11 +202,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "కొత్త ట్యాగ్..."
 
 #: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "CSS సింటాక్స్ని చదవడం ఎలా."
 
 #: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:65
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
@@ -326,7 +326,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "కారక నిష్పత్తి"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
