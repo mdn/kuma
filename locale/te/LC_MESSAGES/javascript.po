@@ -1,68 +1,71 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-09-25 06:37+0000\n"
+"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.2.0\n"
+"X-Generator: Pontoon\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "ఉప మెనుని మూసివేయండి"
 
 #: kuma/static/js/components.js:542
 msgid "Close notification"
-msgstr ""
+msgstr "ఈ గమనింపుని మూసివేయండి"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
-msgstr ""
+msgstr "ఈ పేజీ మీకు ఉపయోగపడిందా?"
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr ""
+msgstr "అవును"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
-msgstr ""
+msgstr "కాదు"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
-msgstr ""
+msgstr "మళ్ళీ నన్ను అడుగవద్దు"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "మీ ప్రతిస్పందనకు కృతజ్ఞతలు!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "మిమ్మల్ని మళ్ళీ అడగము."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr ""
+msgstr "దీన్ని నా భాషలోకి అనువదించండి"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "వివరణను మరింత స్పష్టం చేయండి"
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr ""
+msgstr "మరిన్ని వివరాలను చేర్చండి"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "తప్పుడు సమాచారాన్ని సరిచేయండి"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr ""
+msgstr "ఉదాహరణలను చేర్చండి లేదా మెరుగుపరచండి"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
@@ -82,7 +85,7 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "కృతజ్ఞతలు! దీన్ని మేం సరిదిద్దుతాం."
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
@@ -118,7 +121,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "బీటా గురించి మరింత."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
@@ -130,11 +133,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "నివేదించబడింది. కృతజ్ఞతలు!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "పాత పట్టికను చూపించు."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
@@ -146,7 +149,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
-msgstr ""
+msgstr "తెలియని తేదీ"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
@@ -166,7 +169,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "ప్రతి"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
@@ -215,19 +218,19 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
-msgstr ""
+msgstr "వివరాలు"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "ఒక జోడింపును ఎంచుకోండి"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "జోడింపులేమీ అందుబాటులో లేవు"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
-msgstr ""
+msgstr "జోడింపులు"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:87
 msgid "Article Title Lookup / Link Text"
@@ -271,7 +274,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
-msgstr ""
+msgstr "నమూనా శీర్షిక ఏమి ఉండాలి?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
@@ -335,4 +338,4 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "అప్రమేయం"
