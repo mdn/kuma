@@ -1,116 +1,114 @@
 # Configuration for multi-container development environment
 
-worker: &worker
-  image: quay.io/mozmar/kuma_base
-  command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
-  volumes:
-    - ./:/app
-  links:
-    - memcached
-    - mysql
-    - elasticsearch
-    - redis
-    - kumascript
-  environment:
-    # Django settings overrides:
-    - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-    - ALLOWED_HOSTS=localhost,localhost:8000
-    - BROKER_URL=redis://redis:6379/0
-    - CELERY_ALWAYS_EAGER=False
-    - CSRF_COOKIE_SECURE=False
-    - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
-    - DEBUG=True
-    - DOMAIN=localhost
-    - ES_URLS=elasticsearch:9200
-    - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
-    - MEMCACHE_SERVERS=memcached:11211
-    - PROD_DETAILS_DIR=/app/product_details_json
-    - PROTOCOL=http://
-    - SESSION_COOKIE_SECURE=False
-    - SITE_URL=http://localhost:8000
-    # Celery environment overrides:
-    - C_FORCE_ROOT=1  # TODO: switch to non-root user
-    # Other environment overrides
-    - PYTHONDONTWRITEBYTECODE=1
+version: '2'
+services:
+  worker: &worker
+    image: quay.io/mozmar/kuma_base
+    command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
+    volumes:
+      - ./:/app
+    depends_on:
+      - memcached
+      - mysql
+      - elasticsearch
+      - redis
+      - kumascript
+    environment:
+      # Django settings overrides:
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
+      - ALLOWED_HOSTS=localhost,localhost:8000
+      - BROKER_URL=redis://redis:6379/0
+      - CELERY_ALWAYS_EAGER=False
+      - CSRF_COOKIE_SECURE=False
+      - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
+      - DEBUG=True
+      - DOMAIN=localhost
+      - ES_URLS=elasticsearch:9200
+      - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
+      - MEMCACHE_SERVERS=memcached:11211
+      - PROD_DETAILS_DIR=/app/product_details_json
+      - PROTOCOL=http://
+      - SESSION_COOKIE_SECURE=False
+      - SITE_URL=http://localhost:8000
+      # Celery environment overrides:
+      - C_FORCE_ROOT=1  # TODO: switch to non-root user
+      # Other environment overrides
+      - PYTHONDONTWRITEBYTECODE=1
 
-# Web is based on worker b/c you cannot clear the "ports" with docker-compose.
-web:
-  <<: *worker
-  command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
-  ports:
-    - "8000:8000"
+  # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
+  web:
+    <<: *worker
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
+    ports:
+      - "8000:8000"
 
-# API is used by KumaScript for content and metadata
-api:
-  <<: *worker
-  command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
-  links:
-    - memcached
-    - mysql
-    - elasticsearch
-    - redis
-    # Drop kumascript link
-  ports:
-    - "8001:8000"
+  # API is used by KumaScript for content and metadata
+  api:
+    <<: *worker
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
+    depends_on:
+      - memcached
+      - mysql
+      - elasticsearch
+      - redis
+      # Drop kumascript link
+    ports:
+      - "8001:8000"
 
-#nginx:
-#  build: ./docker/images/nginx
-#  volumes:
-#    - ./static:/app/static
-#  ports:
-#    - "80:80"
-#  links:
-#    - web
+  #nginx:
+  #  build: ./docker/images/nginx
+  #  volumes:
+  #    - ./static:/app/static
+  #  ports:
+  #    - "80:80"
+  #  depends_on:
+  #    - web
 
-memcached:
-  image: memcached
+  memcached:
+    image: memcached
 
-# TODO: determine if this data container is actually useful
-mysql-data:
-  build: ./docker/images/mysql-data
-  volumes:
-    - /var/lib/mysql
+  mysql:
+    build: ./docker/images/mysql
+    entrypoint:
+      - docker-entrypoint.sh
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    environment:
+      - MYSQL_USER=kuma
+      - MYSQL_PASSWORD=kuma
+      - MYSQL_DATABASE=developer_mozilla_org
+    volumes:
+      - mysqlvolume:/var/lib/mysql
 
-mysql:
-  build: ./docker/images/mysql
-  entrypoint:
-    - docker-entrypoint.sh
-    - --character-set-server=utf8
-    - --collation-server=utf8_general_ci
-  environment:
-    - MYSQL_USER=kuma
-    - MYSQL_PASSWORD=kuma
-    - MYSQL_DATABASE=developer_mozilla_org
-  volumes_from:
-    - mysql-data
+  elasticsearch:
+    image: elasticsearch:1.7
 
-elasticsearch:
-  image: elasticsearch:1.7
+  redis:
+    image: redis
 
-redis:
-  image: redis
-
-kumascript:
-  image: quay.io/mozmar/kumascript
-  command: node run.js
-  links:
-    - api
-    - memcached
-  environment:
-    - log__console=true
-    - log__file=
-    - server__document_url_template=http://api:8000/en-US/docs/{path}?raw=1
-    - server__template_url_template=http://api:8000/en-US/docs/Template:{name}?raw=1
-    - server__memcache__server=memcached:11211
-    - server__template_class=EJSTemplate
-    - server__autorequire__mdn=MDN:Common
-    - server__autorequire__Date=DekiScript:Date
-    - server__autorequire__Page=DekiScript:Page
-    - server__autorequire__String=DekiScript:String
-    - server__autorequire__Uri=DekiScript:Uri
-    - server__autorequire__Web=DekiScript:Web
-    - server__autorequire__Wiki=DekiScript:Wiki
-  ports:
-    - "9080:9080"
-  volumes:
-    - ./kumascript:/app
+  kumascript:
+    image: quay.io/mozmar/kumascript
+    command: node run.js
+    depends_on:
+      - api
+      - memcached
+    environment:
+      - log__console=true
+      - log__file=
+      - server__document_url_template=http://api:8000/en-US/docs/{path}?raw=1
+      - server__template_url_template=http://api:8000/en-US/docs/Template:{name}?raw=1
+      - server__memcache__server=memcached:11211
+      - server__template_class=EJSTemplate
+      - server__autorequire__mdn=MDN:Common
+      - server__autorequire__Date=DekiScript:Date
+      - server__autorequire__Page=DekiScript:Page
+      - server__autorequire__String=DekiScript:String
+      - server__autorequire__Uri=DekiScript:Uri
+      - server__autorequire__Web=DekiScript:Web
+      - server__autorequire__Wiki=DekiScript:Wiki
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./kumascript:/app
+volumes:
+    mysqlvolume:
