@@ -113,10 +113,7 @@ java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ckeditor $target \
 
 
 echo "Removing added plugins..."
-cd ckeditor
-git clean -d -f -f
-cd ..
-
+rm -rf ckeditor/
 
 echo ""
 echo "Build created into the \"$target\" directory."
