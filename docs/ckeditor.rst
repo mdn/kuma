@@ -9,10 +9,15 @@ document details how to update CKEditor within the MDN codebase.
 
 Building CKEditor
 -----------------
-To rebuild CKEditor::
+To rebuild CKEditor from a ``vagrant ssh`` shell (or locally if you have java installed)::
 
     cd kuma/static/js/libs/ckeditor/source/ # Go to the working directory for CKEditor source
     ./build.sh                              # Run the build script to build served CKEditor files
+
+To rebuild CKEditor in a docker container::
+
+    cd kuma/static/js/libs/ckeditor/
+    ./docker-build.sh
 
 Portions of the build process will take a few minutes so don't expect an
 immediate result.
