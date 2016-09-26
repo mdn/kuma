@@ -2,44 +2,78 @@
 
 Troubleshooting
 ===============
-
 Kuma has many components. Even core developers need reminders of how to keep
 them all working together. This doc outlines some problems and potential
 solutions running Kuma.
 
+Fixing Docker Issues
+********************
+The Docker development environment is evolving rapidly. You may need to reset
+your containers with each change. As we gain experience with Docker, we'll
+have more and targetted advice for issues with this development environment.
+
 Kuma "Reset"
 ------------
+These commands will reset your environment to a "fresh" version, while
+retaining the database::
 
-We have a script that attempts to fix some of the most common problems with
-Kuma that are described below::
+  cd /path/to/kuma
+  docker-compose stop
+  docker-compose rm
+  make clean
+  git submodule sync --recursive && git submodule update --init --recursive
+  docker-compose pull
+  docker-compose build --pull
+  docker-compose up
 
-  pushd .
+
+Run alternate services
+----------------------
+Docker services run as containers. To change the commands or environments of
+services, it is easiest to add an override configuration file, as documented in
+:ref:`advanced_config_docker`.
+
+Fixing Vagrant Issues
+*********************
+
+Kuma "Reset"
+------------
+These commands will attempt to fix the most common problems in a Vagrant
+development environment::
+
   cd /path/to/kuma
   vagrant halt
   make clean
   git submodule sync --recursive && git submodule update --init --recursive
   vagrant up && vagrant provision
-  popd
 
 .. _Running individual processes:
 
 Running individual processes
 ----------------------------
-
 It is usually easier to see and debug problems if you run MDN processes
 individually, instead of running them via ``foreman``. You can run each process
 exactly as it is listed in ``Procfile``
 
--  ``gunicorn`` - runs the Django development server
-
--  ``celery worker`` - runs the celery worker process for tasks
-
--  ``celerycam`` - stores a snapshot of celery tasks to display in admin site
-
+-  ``web`` - runs the Django development server
+-  ``worker`` - runs the celery worker process for tasks
+-  ``camera`` - stores a snapshot of celery tasks to display in admin site
 -  ``kumascript`` - runs the node.js process for KumaScript macros
-
 -  ``stylus`` - runs a process to compile all ``.styl`` changes into ``.css``
 
+An alternative is to run most processes via ``foreman``, and override one or
+more with a custom command.  Open two sessions with ``vagrant ssh``. In the
+first session, run all but the target process (such as ``web``)::
+
+    foreman run all=1,web=0
+
+Then you can run your own alternate for ``web``, or the default, in the second
+session::
+
+    gunicorn kuma.wsgi -w 2 -b 0.0.0.0:8000
+    ./manange.py runserver_plus 0.0.0.0:8000
+    ./manange.py runserver_plus --print-sql 0.0.0.0:8000
+    ./manange.py runserver_plus --threaded 0.0.0.0:8000
 
 Errors after switching branches
 -------------------------------
@@ -73,7 +107,6 @@ Errors after switching branches
 
 Errors with KumaScript
 ----------------------
-
 KumaScript is a very intensive process. If you are only working on python code
 or front-end code that doesn't affect live site content, you can usually avoid
 running it. (See `Running individual processes`_.)
@@ -96,7 +129,7 @@ running it. (See `Running individual processes`_.)
 .. _more-help:
 
 Getting more help
------------------
+*****************
 
 If you have more problems running Kuma, please:
 
@@ -104,6 +137,6 @@ If you have more problems running Kuma, please:
 #. email the `dev-mdn`_ list
 #. After you email dev-mdn, you can also ask in `IRC`_
 
-.. _pastebin: http://pastebin.mozilla.org/
-.. _dev-mdn: mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue
+.. _pastebin: https://pastebin.mozilla.org/
+.. _dev-mdn: https://lists.mozilla.org/listinfo/dev-mdn
 .. _IRC: irc://irc.mozilla.org:6697/#mdndev
