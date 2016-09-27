@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 13:40+0000\n"
+"PO-Revision-Date: 2016-09-27 13:59+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -616,40 +616,42 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
+"Kami tidak dapat mencari langganan anda. Sama ada sudah telah dibatalkan, atau ada kesilapan pada pautan nyahlanggan. Sila pastikan seluruh pautan daripada e-mel dihantar ke pelayar. Jika bahagian "
+"akhir pautan merangkumi garisan kedua dalam e-mel tersebut, cuba salin dan tampal pautan ke dalam pelayar."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Nyahlanggan"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "Anda telah nyahlanggan."
 
 #: kuma/attachments/admin.py:60
 #, python-format
 msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
-msgstr ""
+msgstr "Fai lampiran berikut telah dialih ke sampah: %(filenames)s. Anda mungkin mahu semak semula sebelum dihapuskan secara automatik selepas %(days)s hari dalam storan fail."
 
 #: kuma/attachments/admin.py:64
 msgid "and"
-msgstr ""
+msgstr "dan"
 
 #: kuma/attachments/admin.py:127
 #, python-format
 msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
-msgstr ""
+msgstr "Fai lampiran \"%(filename)s\" telah dialih ke sampah. Anda mungkin mahu semak semula fail sebelum dihapuskan secara automatik selepas %(days)s hari dalam sistem storan fail."
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
-msgstr ""
+msgstr "Lampiran"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "Perubahan fail terkini MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr ""
+msgstr "Semakan terkini lampiran fail MDN"
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
@@ -661,11 +663,11 @@ msgstr ""
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
-msgstr ""
+msgstr "semakan lampiran"
 
 #: kuma/attachments/models.py:141
 msgid "attachment revisions"
-msgstr ""
+msgstr "semakan lampiran"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -681,7 +683,7 @@ msgstr ""
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
-msgstr ""
+msgstr "Samada lampiran ini adalah semakan lampiran semasa ketika membuang sampah."
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
@@ -1048,7 +1050,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr ""
+msgstr "Papan Pemuka semakan"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
@@ -1080,7 +1082,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
-msgstr ""
+msgstr "Semakan"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
@@ -1144,19 +1146,19 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Tiada semakan yang sepadan set penapis ini."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Hentikan e-mel apabila semakan Bahasa Malaysia diluluskan"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Dapatkan e-mel apabila semakan Bahasa Malaysia diluluskan"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
