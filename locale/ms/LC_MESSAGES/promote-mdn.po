@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-27 10:19+0000\n"
+"PO-Revision-Date: 2016-09-27 10:28+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -33,7 +33,7 @@ msgstr "MDN ialah sumber terbuka terbaik - untuk pembangun web, oleh pembangun w
 
 #: promote-mdn.php:249
 msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
-msgstr ""
+msgstr "Promosi MDN secara automatik membuat pautan kata kunci dan frasa dalam post dan halaman anda ke MDN URLs."
 
 #: promote-mdn.php:256
 msgid "Settings"
@@ -132,32 +132,32 @@ msgstr "Promosi MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
-msgstr ""
+msgstr "sorok"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr ""
+msgstr "Bar sisi imej dan pautan ke MDN."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr ""
+msgstr "Bantu Promosi MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
-msgstr ""
+msgstr "Dapatkan plugin WordPress"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/groovecoder/wp-promote-mdn"
-msgstr ""
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr ""
+msgstr "Promosi MDN secara automatik membuat pautan frasa kata kunci ke dokumen MDN"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
-msgstr ""
+msgstr "Luke Crouch"
 
 #. Author URI of the plugin/theme
 msgid "http://groovecoder.com"
-msgstr ""
+msgstr "http://groovecoder.com"

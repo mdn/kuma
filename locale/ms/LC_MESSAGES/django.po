@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 10:17+0000\n"
+"PO-Revision-Date: 2016-09-27 10:36+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -135,71 +135,71 @@ msgstr "Papan pemuka semakan"
 
 #: jinja2/base.html:120
 msgid "Documentation status"
-msgstr ""
+msgstr "Status dokumentasi"
 
 #: jinja2/base.html:129
 msgid "Web Platform"
-msgstr ""
+msgstr "Platform Web"
 
 #: jinja2/base.html:133
 msgid "Technologies"
-msgstr ""
+msgstr "Teknologi"
 
 #: jinja2/base.html:135 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: jinja2/base.html:137 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: jinja2/base.html:138
 msgid "Graphics"
-msgstr ""
+msgstr "Grafik"
 
 #: jinja2/base.html:139
 msgid "APIs / DOM"
-msgstr ""
+msgstr "APIs / DOM"
 
 #: jinja2/base.html:140 kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "App"
 
 #: jinja2/base.html:141 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:144
 msgid "References & Guides"
-msgstr ""
+msgstr "Panduan & Rujukan"
 
 #: jinja2/base.html:146
 msgid "Learn the Web"
-msgstr ""
+msgstr "Pelajari Web"
 
 #: jinja2/base.html:147
 msgid "Tutorials"
-msgstr ""
+msgstr "Tutorial"
 
 #: jinja2/base.html:148
 msgid "References"
-msgstr ""
+msgstr "Rujukan"
 
 #: jinja2/base.html:149
 msgid "Developer Guides"
-msgstr ""
+msgstr "Panduan Pembangun"
 
 #: jinja2/base.html:150
 msgid "Accessibility"
-msgstr ""
+msgstr "Aksesibiliti"
 
 #: jinja2/base.html:151
 msgid "...more docs"
-msgstr ""
+msgstr "...dokumen selanjutnya"
 
 #: jinja2/base.html:155
 msgid "Mozilla Docs"
@@ -207,23 +207,23 @@ msgstr ""
 
 #: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
-msgstr ""
+msgstr "Add-ons"
 
 #: jinja2/base.html:161 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Firefox"
-msgstr ""
+msgstr "Firefox"
 
 #: jinja2/base.html:162 kuma/landing/jinja2/landing/homepage.html:86
 msgid "Firefox Marketplace"
-msgstr ""
+msgstr "Firefox Marketplace"
 
 #: jinja2/base.html:163 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
 msgid "B2G OS"
-msgstr ""
+msgstr "B2G OS"
 
 #: jinja2/base.html:164
 msgid "Persona"
-msgstr ""
+msgstr "Persona"
 
 #: jinja2/base.html:168
 msgid "Developer Tools"

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-27 10:17+0000\n"
+"PO-Revision-Date: 2016-09-27 10:35+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -124,88 +124,88 @@ msgstr "Selanjutnya perihal beta."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Sertai kaji selidik"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "Laporkan ralat."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "Dilaporkan. Terima kasih!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Papar jadual lama."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Simpan Draf"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Dayakan autosimpan."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
-msgstr ""
+msgstr "tarikh yang tidak diketahui"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
-msgstr ""
+msgstr "Anda ada draf dari:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Kembalikan semula kandungan draf"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "Buang draf"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "dikembalikan semula"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Draf"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
-msgstr ""
+msgstr "disimpan"
 
 #: kuma/static/js/wiki-edit.js:609
 msgid "autosaved"
-msgstr ""
+msgstr "autosimpan"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "diterbitkan"
 
 #: kuma/static/js/wiki-edit.js:622
 msgid "discarded"
-msgstr ""
+msgstr "dibuang"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Autosimpan didayakan."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Autosimpan dinyahdayakan."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
-msgstr ""
+msgstr "Buka di %(site)s"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "Tag baru..."
 
 #: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "Cara membaca sintaks CSS."
 
 #: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
