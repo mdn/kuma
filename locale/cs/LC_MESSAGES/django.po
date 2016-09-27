@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 08:57+0000\n"
+"PO-Revision-Date: 2016-09-27 09:09+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -1269,7 +1269,7 @@ msgstr "Zjistěte více a přihlaste se!"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "Otevřený web a mobilní technologie"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
@@ -1351,6 +1351,9 @@ msgid ""
 "source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
 " bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
+"<ol> <li><strong>Získání tlačítka:</strong> Pomocí našeho formuláře umístěného níže vytvořte tlačítko a získejte zdrojový kód, se kterým můžete podpořit MDN na vašem webu nebo blogu.</li> "
+"<li><strong>Vložení tlačítka:</strong> Zkopírujte zdrojový kód tlačítka a vložte ho kamkoli na váš web nebo blog, čímž podpoříte MDN.</li> <li><strong>Dobrý pocit:</strong> Buďte na sebe pyšní, že "
+"děláte ostatní vývojáře o trošku štastnější a sdílíte MDN se světem.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
@@ -1513,7 +1516,7 @@ msgstr "Vyhledávání je dočasně nedostupné. Zkuste to prosím znovu za něk
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr ""
+msgstr "Vyhledávání se nezdařilo. Zkuste to prosím znovu za několik minut."
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -1544,7 +1547,7 @@ msgstr "přeloženo z jazyka <a href=\"%(parent_url)s\" title=\"%(parent_title)s
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr ""
+msgstr "Vyhledávání na MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
@@ -1646,7 +1649,7 @@ msgstr "Není spam"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "odesláno"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1992,11 +1995,11 @@ msgstr "Obnovit mé heslo"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "Máte-li jakýkoliv problém s obnovením hesla, neváhejte nás kontaktovat."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Poslali jsme vám e-mail. Pokud vám během několika minut nebude doručen, kontaktujte nás prosím."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
@@ -2021,7 +2024,7 @@ msgstr "Nastavit heslo"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Přihlášení"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
@@ -2039,7 +2042,7 @@ msgstr "Vytváření profilů je zakázáno"
 #: kuma/users/jinja2/account/signup_closed.html:5
 #, python-format
 msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr ""
+msgstr "Omlouváme se, ale nelze vytvořit profil pomocí Persony. <a href=\"%(url)s\">Zkuste to prosím znovu s GitHub účtem</a>."
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2124,7 +2127,7 @@ msgstr "Pro pokračování si založte profil na MDN"
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr ""
+msgstr "Profil s touto e-mailovou adresu již existuje. Pro propojení Persony s vaším MDN profilem <a href=\"%(connections_url)s\">je třeba se přihlásit a navštívit nastavení propojení účtů.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
@@ -2155,11 +2158,11 @@ msgstr "K obsahu na MDN můžete přistupovat i bez MDN účtu. Když se však n
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "Pro registraci MDN profilu si prosím <strong>zvolte uživatelské jméno</strong>. Vaše uživatelské jméno bude zobrazeno u každého vašeho příspěvku."
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "Pro registraci MDN profilu si prosím <strong>zvolte uživatelské jméno a e-mailovou adresu</strong>. Vaše uživatelské jméno bude zobrazeno u každého vašeho příspěvku."
 
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
@@ -2248,7 +2251,7 @@ msgstr "Vyberte důvod"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "nebo uveďte důvod v textovém poli níže"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
@@ -2257,7 +2260,7 @@ msgstr "Zablokovat uživatele"
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
 #, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
-msgstr ""
+msgstr "Označit uživatele <a href=\"%(url)s\">%(user)s</a> jako spamera?"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
@@ -2365,15 +2368,15 @@ msgstr "Nebyla přijata žádná opatření"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "Poslední revize není spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Již identifikováno jako spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
-msgstr ""
+msgstr "Neidentifikováno jako spam:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2601,7 +2604,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "Pro více informací o IRC se podívejte na %(irc_link)s."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
@@ -2618,7 +2621,7 @@ msgstr "Blog: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "Již nahlášeno jako spam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
@@ -2705,7 +2708,7 @@ msgstr "MDN dokumenty"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr ""
+msgstr "Dokumenty vytvořené uživateli MDN"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
@@ -2744,7 +2747,7 @@ msgstr "Dokumenty MDN ke kontrole"
 #: kuma/wiki/feeds.py:223
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr ""
+msgstr "'%s' MDN překladů potřebuje aktualizaci"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
@@ -2829,11 +2832,11 @@ msgstr "Maximální délka komentáře může být %(limit_value)s znaků. Aktu�
 
 #: kuma/wiki/forms.py:64
 msgid "Another document with this slug already exists."
-msgstr ""
+msgstr "Jiný dokument s tímto URL již existuje."
 
 #: kuma/wiki/forms.py:65
 msgid "Another document with this metadata already exists."
-msgstr ""
+msgstr "Jiný dokument s těmito metadaty již existuje"
 
 #: kuma/wiki/forms.py:67
 msgid "This document was modified while you were editing it."
@@ -2912,7 +2915,7 @@ msgstr "Nová URL adresa článku"
 #: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
-msgstr ""
+msgstr "Nadřazený %s neexistuje."
 
 #: kuma/wiki/models.py:120
 msgid "Document Tag"
@@ -3362,7 +3365,7 @@ msgstr "Kategorizujte článek. Díky tomu bude nalezitelný se správnými filt
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "Zobrazit nadřazený dokument v jazyce %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
@@ -3421,7 +3424,7 @@ msgstr "Vyhledat podle nadpisu dokumentu"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Nadpis nadřazeného dokumentu"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
@@ -3938,7 +3941,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Dokumenty bez nadřazených"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
