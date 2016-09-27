@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 13:59+0000\n"
+"PO-Revision-Date: 2016-09-27 14:21+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -24,11 +24,11 @@ msgstr "Wiki dalam mod baca-sahaja."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
-msgstr "Profil anda telah dihalang daripada membuat edit."
+msgstr "Profil anda telah disekat daripada mengedit."
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr "Profil pengguna ini telah dihalang."
+msgstr "Profil pengguna ini telah disekat."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
@@ -1124,7 +1124,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr ""
+msgstr "disekat %(ban_date)s oleh %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
 #, python-format
@@ -1724,7 +1724,7 @@ msgstr ""
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s disekat oleh %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -2229,12 +2229,12 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(user)s</a> telah disekat."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr ""
+msgstr "%(user)s telah disekat. Anda boleh semak dan pinda semakan mereka di bawah."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
@@ -2258,7 +2258,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr ""
+msgstr "Pengguna masih tiada membuat semakan untuk dipinda sejak tiga hari lalu, dan pengguna ini telah disekat."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2270,7 +2270,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
-msgstr ""
+msgstr "Disekat:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 msgid "Submitted to Akismet as spam:"
@@ -2278,7 +2278,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 msgid "The user did not have any revisions that were reported as spam."
-msgstr ""
+msgstr "Pengguna ini tiada membuat semakan yang dilaporkan sebagai spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
@@ -2286,7 +2286,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
-msgstr ""
+msgstr "Pengguna ini tiada membuat semakan yang dihapuskan."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
@@ -2294,7 +2294,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 msgid "The user did not have any revisions that were reverted."
-msgstr ""
+msgstr "Pengguna ini tiada membuat semakan yang dipinda."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
@@ -2312,7 +2312,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "Semakan dilangkau kerana semakan non-spam yang lebih baru:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 msgid "Could not submit to Akismet:"
@@ -2332,7 +2332,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "Semakan terakhir adalah non-spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
@@ -2344,11 +2344,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr ""
+msgstr "Anda Telah Disekat"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "Anda telah disekat berdasarkan alasan berikut:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
@@ -2587,7 +2587,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
-msgstr ""
+msgstr "Pengguna ini tidak membuat semakan sejak tiga hari lalu."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
@@ -2617,15 +2617,15 @@ msgstr ""
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr ""
+msgstr "Disekat pada %(ban_date)s oleh %(ban_admin)s."
 
 #: kuma/users/templatetags/jinja_helpers.py:44
 msgid "Banned"
-msgstr ""
+msgstr "Disekat"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Clean Up Revisions"
-msgstr ""
+msgstr "Bersihkan Semakan"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
@@ -2713,11 +2713,11 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr ""
+msgstr "Semakan terkini MDN"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr ""
+msgstr "Semakan terkini dokumen MDN"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -2860,11 +2860,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:472
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Tag semakan ini untuk disemak?"
 
 #: kuma/wiki/forms.py:479
 msgid "Tag this revision for localization?"
-msgstr ""
+msgstr "Tag semakan ini untuk lokalisasi?"
 
 #: kuma/wiki/forms.py:878
 msgid "New slug:"
@@ -2939,7 +2939,7 @@ msgstr ""
 #: kuma/wiki/models.py:1691
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
-msgstr ""
+msgstr "Semakan mestilah berdasarkan semakan dokumen %(locale)s. ID semakan %(id)s tidak memenuhi kriteria tersebut."
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
@@ -3031,11 +3031,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "Bandingkan Semakan | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "Bandingkan Semakan"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
@@ -3068,7 +3068,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
-msgstr ""
+msgstr "Anda akan hapuskan dokumen ini dan semua semakannya. Maklumkan kepada kami alasan untuk halaman ini perlu dihapuskan."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
@@ -3077,11 +3077,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "Pinda Semakan | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr ""
+msgstr "Anda pasti mahu pinda semakan ini?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
