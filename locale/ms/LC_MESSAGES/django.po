@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 10:36+0000\n"
+"PO-Revision-Date: 2016-09-27 13:19+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -231,33 +231,33 @@ msgstr ""
 
 #: jinja2/base.html:168
 msgid "Feedback"
-msgstr ""
+msgstr "Maklum balas"
 
 #: jinja2/base.html:173
 msgid "Get Firefox help"
-msgstr ""
+msgstr "Dapatkan bantuan Firefox"
 
 #: jinja2/base.html:174
 msgid "Get web development help"
-msgstr ""
+msgstr "Dapatkan bantuan pembangunan web"
 
 #: jinja2/base.html:177
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Sertai komuniti MDN"
 
 #: jinja2/base.html:178
 msgid "Report a content problem"
-msgstr ""
+msgstr "Laporkan masalah kandungan"
 
 #: jinja2/base.html:179
 msgid "Report a bug"
-msgstr ""
+msgstr "Laporkan pepijat"
 
 #: jinja2/base.html:186 jinja2/base.html:187 jinja2/base.html:189 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr ""
+msgstr "Cari"
 
 #: jinja2/base.html:205
 #, python-format
@@ -266,27 +266,27 @@ msgstr ""
 
 #: jinja2/base.html:210
 msgid "About MDN"
-msgstr ""
+msgstr "Perihal MDN"
 
 #: jinja2/base.html:211
 msgid "Terms"
-msgstr ""
+msgstr "Terma"
 
 #: jinja2/base.html:212
 msgid "Privacy"
-msgstr ""
+msgstr "Privasi"
 
 #: jinja2/base.html:213
 msgid "Cookies"
-msgstr ""
+msgstr "Kuki"
 
 #: jinja2/base.html:214
 msgid "Contribute to the code"
-msgstr ""
+msgstr "Beri sumbangan kod"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">Log keluar</a> untuk cuba lagi.</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
@@ -295,7 +295,7 @@ msgstr ""
 #: jinja2/includes/common_macros.html:36
 #, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr ""
+msgstr "Selamat datang, <span class=\"user\">%(user)s</span>."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
