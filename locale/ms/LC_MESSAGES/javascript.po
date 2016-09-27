@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-27 09:19+0000\n"
+"PO-Revision-Date: 2016-09-27 09:34+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -44,35 +44,35 @@ msgstr "Terima kasih atas maklum balas anda!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "Kami tidak akan ganggu anda lagi."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr ""
+msgstr "Terjemah ke bahasa saya"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "Penerangan lebih jelas"
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr ""
+msgstr "Tambah butiran lanjut"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "Betulkan maklumat salah"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr ""
+msgstr "Tambah atau perbaiki sampel"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
-msgstr ""
+msgstr "Carian saya sepatutnya diarah ke artikel lain"
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr ""
+msgstr "Sesuatu yang lain"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."

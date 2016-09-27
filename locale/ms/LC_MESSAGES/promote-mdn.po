@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-27 09:19+0000\n"
+"PO-Revision-Date: 2016-09-27 09:34+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -49,31 +49,31 @@ msgstr "Previu"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr ""
+msgstr "Guna kata kunci dan pautan khusus untuk %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr ""
+msgstr "Muat semula kata kunci selepas (saat):"
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "Muat semula sekarang"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "Tambah pautan ke suapan RSS"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "Buka pautan dalam tetingkap baru"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
-msgstr ""
+msgstr "Pengecualian"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr ""
+msgstr "Jangan tambah pautan dalam tajuk tag (h1,h2,h3,h4,h5,h6)."
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
