@@ -28,10 +28,16 @@ Getting the Localizations
 
 Localizations are found in this repository under the ``locale`` folder.
 
+Unless otherwise noted, run all the commands in this document inside the
+environment. For Vagrant, enter the environment with ``vagrant ssh``.
+For Docker, enter the environment with 
+``docker-compose run --rm --user $(id -u) web bash``
+
 The gettext portable object (.po) files need to be compiled into the gettext
-machine object (.mo) files before translations will appear. This is performed
-during vagrant provisioning but if you need to update them at any time you can
-compile the files via the following command within the vagrant environment::
+machine object (.mo) files before translations will appear. Though its not
+performed automatically in docker environment, it is performed during vagrant
+provisioning. If you need to update them at any time you can compile the files
+via the following command inside the environment::
 
     make localecompile
 
@@ -48,7 +54,7 @@ folder. To collect these files for serving you must run the
 
 Updating the Localizations
 ==========================
-#.  Run the following in the virtual machine (see :doc:`installation`)::
+#.  Run the following in the environment (see :doc:`installation`)::
 
         make localerefresh
 
@@ -81,7 +87,8 @@ code of the language you are adding.
 
 #. Restart the web server and verify that Django loads the new locale without
    errors by visiting the locale's home page, for example
-   https://developer-local.allizom.org/bg/
+   http://127.0.0.1:8000/bg/ (https://developer-local.allizom.org/bg/
+   if you are using vagrant)
 
 #. Commit the changes to ``locale/bg`` and ``kuma/settings``.
    Verify that the other locales are just timestamp updates before reverting
