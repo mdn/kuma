@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-27 10:00+0000\n"
+"PO-Revision-Date: 2016-09-27 10:19+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: promote-mdn.php:248
 msgid "MDN is the best online resource - for web developers, by web developers."
-msgstr ""
+msgstr "MDN ialah sumber terbuka terbaik - untuk pembangun web, oleh pembangun web."
 
 #: promote-mdn.php:249
 msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
@@ -114,21 +114,21 @@ msgstr "Nota: Kata kunci ini akan didahulukan berbanding kata kunci yang dimuat 
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr ""
+msgstr "Pilihan kemas kini"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
-msgstr ""
+msgstr "Terima kasih kerana memasang! Pergi ke halaman <a href=\"%s\">tetapan</a> untuk mengkonfigurasi."
 
 #: promote-mdn.php:313
 msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
-msgstr ""
+msgstr "fr_FR terjemahan, bar sisi baru <a href=\"%s\">widget</a>, <a href=\"%s\">tetapan</a> untuk spesifik-locale URL kata kunci."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "Promosi MDN"
 
 #: promote-mdn.php:352
 msgid "hide"

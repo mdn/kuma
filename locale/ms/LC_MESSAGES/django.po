@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 09:57+0000\n"
+"PO-Revision-Date: 2016-09-27 10:17+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -119,19 +119,19 @@ msgstr "Sumbangan ke MDN"
 
 #: jinja2/base.html:113
 msgid "Get started"
-msgstr ""
+msgstr "Mulakan"
 
 #: jinja2/base.html:114
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Semak atau terjemah dokumen"
 
 #: jinja2/base.html:117
 msgid "Site Tools"
-msgstr ""
+msgstr "Alatan Laman"
 
 #: jinja2/base.html:119
 msgid "Revision dashboard"
-msgstr ""
+msgstr "Papan pemuka semakan"
 
 #: jinja2/base.html:120
 msgid "Documentation status"
