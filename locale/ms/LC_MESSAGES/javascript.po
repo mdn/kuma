@@ -1,44 +1,46 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-09-27 09:19+0000\n"
+"Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pontoon\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "Tutup submenu"
 
 #: kuma/static/js/components.js:542
 msgid "Close notification"
-msgstr ""
+msgstr "Tutup notifikasi"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
-msgstr ""
+msgstr "Adakah kandungan halaman ini membantu anda?"
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr ""
+msgstr "Ya"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
-msgstr ""
+msgstr "Tidak"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
-msgstr ""
+msgstr "Jangan sesekali tanya saya lagi"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "Terima kasih atas maklum balas anda!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
