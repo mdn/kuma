@@ -80,6 +80,26 @@ The purpose of the comment is:
 
 Within a requirements file, requirements should be alphabetical.
 
+Testing New Requirements in Docker
+----------------------------------
+
+The python dependencies are installed in a "base" image, and to test new requirements
+locally use the following command to build a new base image with the "latest" tag, for
+use with the existing docker-compose files::
+
+    make build-base VERSION=latest
+
+To start using this image::
+
+    docker-compose stop    # if necessary
+    docker-compose up -d
+
+To update your local base image with the latest version built from the master
+branch, run::
+
+    docker-compose pull web
+
+
 Future
 ------
 * Remove unused requirements, and refactor code to eliminate unmaintained
