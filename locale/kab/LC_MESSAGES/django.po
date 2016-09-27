@@ -641,7 +641,7 @@ msgstr "akked"
 #: kuma/attachments/admin.py:127
 #, python-format
 msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
-msgstr "Ifuyla agi i d-yeddan uɣalen ɣer tqecwalt n iḍuman \"%(filenames)s\". Tzemreḍ ad ten-twaliḍ send ad ttwakksen s wudem awurman seg unagraw inek kra n %(days)s n wussan."
+msgstr "Ifuyla agi i d-yeddan uɣalen ɣer tqecwalt n iḍuman \"%(filename)s\". Tzemreḍ ad ten-twaliḍ send ad ttwakksen s wudem awurman seg unagraw inek kra n %(days)s n wussan."
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
