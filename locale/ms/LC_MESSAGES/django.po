@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 14:21+0000\n"
+"PO-Revision-Date: 2016-09-27 14:38+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -655,7 +655,7 @@ msgstr "Semakan terkini lampiran fail MDN"
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
-msgstr ""
+msgstr "Fail jenis ini tidak dibenarkan."
 
 #: kuma/attachments/models.py:112
 msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
@@ -671,15 +671,15 @@ msgstr "semakan lampiran"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "Fail lampiran yang telah dibuang"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "Tarikh dan masa lampiran dibuang"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "Nama pengguna yang membuang lampiran"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -687,97 +687,97 @@ msgstr "Samada lampiran ini adalah semakan lampiran semasa ketika membuang sampa
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr ""
+msgstr "Buang lampiran"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr ""
+msgstr "Buang lampiran"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
 #, python-format
 msgid "Attachments | %(title)s"
-msgstr ""
+msgstr "Lampiran | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "Muat naik fail ke artikel %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
 msgid "Upload files"
-msgstr ""
+msgstr "Muat naik fail"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "Ketahui cara menggunakan Lampiran"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
-msgstr ""
+msgstr "Muat naik Fail"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
-msgstr ""
+msgstr "Dokumen ini tiada lampiran."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
+msgstr "Imej boleh dilampirkan, dan kemudian dipautkan ke artikel."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "Fail"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
 msgid "Title"
-msgstr ""
+msgstr "Tajuk"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Keterangan"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "Komen"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
-msgstr ""
+msgstr "Lampirkan ke artikel ini"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr ""
+msgstr "Lampirkan ke artikel lain"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "Saiz"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 msgid "Last modified"
-msgstr ""
+msgstr "Ubah suai terakhir"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
-msgstr ""
+msgstr "Dimuat naik oleh"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
-msgstr ""
+msgstr "Dipautkan dalam artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
-msgstr ""
+msgstr "Artikel dilampirkan ke"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "bait %(bytes)s"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -793,12 +793,12 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "Dicipta"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
@@ -3093,11 +3093,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
-msgstr ""
+msgstr "Kenapa anda pinda semakan ini?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
-msgstr ""
+msgstr "Anda akan pinda dokumen ini kepada semakan ini. Klik \"pinda\" untuk meminda kandungan &nbsp; di atas."
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
@@ -3260,11 +3260,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr ""
+msgstr "Semakan %(id)s oleh <a href=\"%(user_profile_url)s\">%(user)s</a> pada %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
-msgstr ""
+msgstr "Semakan Semasa:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
@@ -3422,23 +3422,23 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr ""
+msgstr "Semakan %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "Maklumat Semakan"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr ""
+msgstr "Slug semakan:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr ""
+msgstr "Tajuk semakan:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
-msgstr ""
+msgstr "ID semakan:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:29
 msgid "Created:"
@@ -3450,19 +3450,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
-msgstr ""
+msgstr "Adakah semakan semasa?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr ""
+msgstr "Kandungan Semakan"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr ""
+msgstr "Sumber Semakan"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Pinda ke semakan ini"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
@@ -3656,12 +3656,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr ""
+msgstr "Tukar Semakan"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr ""
+msgstr "Semakan %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -3817,11 +3817,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Komen Semakan"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Ketahui cara menggunakan Komen Semakan"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
@@ -3943,7 +3943,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr ""
+msgstr "Sejarah Semakan | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
@@ -3951,7 +3951,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr ""
+msgstr "Sejarah semakan untuk:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
@@ -3959,11 +3959,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Bandingkan Semakan Dipilih"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr ""
+msgstr "Dokumen ini tiada semakan."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
@@ -4044,7 +4044,7 @@ msgstr ""
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
-msgstr ""
+msgstr "Semakan %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
