@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-27 09:34+0000\n"
+"PO-Revision-Date: 2016-09-27 10:00+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -77,39 +77,40 @@ msgstr "Jangan tambah pautan dalam tajuk tag (h1,h2,h3,h4,h5,h6)."
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
-msgstr ""
+msgstr "Jangan tambah pautan ke post atau halaman berikut (id dipisahkan-koma slug, nama):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"
-msgstr ""
+msgstr "Jangan tambah pautan ke frasa berikut (dipisahkan-koma):"
 
 #: promote-mdn.php:274
 msgid "Limits"
-msgstr ""
+msgstr "Had"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
-msgstr ""
+msgstr "Pautan maksimum untuk dijana setiap post:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr ""
+msgstr "Pautan maksimum untuk dijana bagi setiap kata kunci/phrase:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr ""
+msgstr "Pautan maksimum untuk dijana setiap URL:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
-msgstr ""
+msgstr "Kata kunci Disesuaikan"
 
 #: promote-mdn.php:281
 msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
 msgstr ""
+"Kata kunci tambahan untuk pautan secara automatik. Guna tanda koma untuk memisahkan kata kunci dan tambah url sasaran di penghujung. Guna baris baru untuk url baru dan set kata kunci, contohnya,"
 
 #: promote-mdn.php:288
 msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
-msgstr ""
+msgstr "Nota: Kata kunci ini akan didahulukan berbanding kata kunci yang dimuat di URL. Jika anda ada terlalu banyak kata kunci yang disesuaikan di sini, anda mungkin tidak dipaut ke MDN langsung."
 
 #: promote-mdn.php:289
 msgid "Update options"

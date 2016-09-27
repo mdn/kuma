@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 09:34+0000\n"
+"PO-Revision-Date: 2016-09-27 09:57+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -86,7 +86,7 @@ msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew 
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Ralat Pelayan Dalaman"
 
 #: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:100 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
@@ -95,27 +95,27 @@ msgstr ""
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
+msgstr "Anda mendaftar masuk dengan Persona. <a href=\"%(persona_info)s\">Persona sedang dinyahaktifkan. Ketahui selanjutnya.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
-msgstr ""
+msgstr "Langkau ke kandungan utama"
 
 #: jinja2/base.html:84
 msgid "Select language"
-msgstr ""
+msgstr "Pilih bahasa"
 
 #: jinja2/base.html:86
 msgid "Skip to search"
-msgstr ""
+msgstr "Langkau ke carian"
 
 #: jinja2/base.html:107 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr ""
+msgstr "Alatan"
 
 #: jinja2/base.html:111
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "Sumbangan ke MDN"
 
 #: jinja2/base.html:113
 msgid "Get started"
