@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-23 19:45+0000\n"
+"PO-Revision-Date: 2016-09-27 13:49+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -102,7 +102,7 @@ msgstr "Amaynut n wayen tḥemleḍ..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Ldi-d tizmilin n bennu"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
@@ -110,7 +110,7 @@ msgstr "Ldi"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
-msgstr ""
+msgstr "Uɣal ɣer tfelwit n umṣada."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
@@ -118,7 +118,7 @@ msgstr "Mdel"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "Tifelwiyin timaynutin n umṣada llant s lqem beta "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
@@ -126,7 +126,7 @@ msgstr "Ugar ɣef beta."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Err i uḥedqis"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
@@ -154,19 +154,19 @@ msgstr "azemz arussin"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
-msgstr ""
+msgstr "Ɣur-k arewway yettwasekles si:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Snes agbur n urewway"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "Kkes arewway"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "yuɣal-d"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
@@ -182,11 +182,11 @@ msgstr "yattwasekles s wudem awurman"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "yeffeɣ-d"
 
 #: kuma/static/js/wiki-edit.js:622
 msgid "discarded"
-msgstr ""
+msgstr "yettwakkes"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
