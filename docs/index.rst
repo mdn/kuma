@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    installation
-   installation-docker
+   installation-vagrant
    development
    feature-toggles
    tests
