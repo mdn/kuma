@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 08:36+0000\n"
+"PO-Revision-Date: 2016-09-27 08:57+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -412,9 +412,8 @@ msgid "Dutch"
 msgstr "Holandština"
 
 #: jinja2/includes/translate_locales.html:17
-#, fuzzy
 msgid "English (US)"
-msgstr "Anglické štítky"
+msgstr "Angličtina (USA)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
@@ -505,9 +504,8 @@ msgid "Malayalam"
 msgstr "Malajálamština"
 
 #: jinja2/includes/translate_locales.html:40
-#, fuzzy
 msgid "Persian"
-msgstr "Persona"
+msgstr "Perština"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Polish"
@@ -1464,50 +1462,50 @@ msgstr "MDN je váš nástroj, kde naleznete dokumentaci pro HTML, CSS, JavaScri
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Nelze použít více než jeden index najednou."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Použit index pro vyhledávání %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Použít vybraný index pro vyhledávání místo současného indexu"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Nelze najednou snížit úroveň více než jednoho indexu."
 
 #: kuma/search/admin.py:24
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
-msgstr ""
+msgstr "Nelze snížit úroveň více indexů, pokud je dostupný jen jeden. Nejdříve vytvořte a použijte nový."
 
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Hledání v indexu %s se sníženou úrovní."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
-msgstr ""
+msgstr "Snížit úroveň vybraného indexu pro hledání (automaticky použít předchozí index, bude-li třeba)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Nelze najednou neplnit více než jeden index."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr ""
+msgstr "Naplnit vybraný index pro vyhledávání z fronty Celery"
 
 #: kuma/search/admin.py:57
 msgid "Is current index?"
-msgstr ""
+msgstr "Je současný index?"
 
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Již je k dispozici náhrada současného indexu %s"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
@@ -1542,7 +1540,7 @@ msgstr "Výsledky vyhledávání pro \"%(query)s\""
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr ""
+msgstr "přeloženo z jazyka <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
@@ -1556,17 +1554,17 @@ msgstr "Výsledky"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(count)s dokument nalezen pro \"%(query)s\" v jazyce %(locale_native)s."
+msgstr[1] "%(count)s dokumenty nalezeny pro \"%(query)s\" v jazyce %(locale_native)s."
+msgstr[2] "%(count)s dokumentů nalezeno pro \"%(query)s\" v jazyce %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(count)s dokument nalezen pro \"%(query)s\" v jazycích %(locale_native)s a %(default_locale_native)s."
+msgstr[1] "%(count)s dokumenty nalezeny pro \"%(query)s\" v jazycích %(locale_native)s a %(default_locale_native)s."
+msgstr[2] "%(count)s dokumentů nalezeno pro \"%(query)s\" v jazycích %(locale_native)s a %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
@@ -1607,21 +1605,20 @@ msgstr "Zobrazeny všechny výsledky."
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Zobrazení výsledků od %(start)s do %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Hledat znovu pouze v jazyce % (default_locale_native)"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
 msgstr "Dokumenty"
 
 #: kuma/search/jinja2/search/results.html:183
-#, fuzzy
 msgid "All Topics"
-msgstr "Témata"
+msgstr "Všechna témata"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
@@ -1677,7 +1674,7 @@ msgstr "Uživatel"
 #: kuma/users/apps.py:69
 #, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
-msgstr ""
+msgstr "Dokončili jste první krok <a href=\"%s\">začínáme s MDN</a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
@@ -1737,7 +1734,7 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:136
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Odborné znalosti musí být podmnožinou zájmů"
 
 #: kuma/users/forms.py:145
 msgid "This field cannot be blank."
@@ -1864,16 +1861,15 @@ msgstr "%(email)s <b>ověřeno</b>"
 #: kuma/users/views.py:502
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Neověřen"
 
 #: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "Ostatní:"
 
 #: kuma/users/views.py:508
-#, fuzzy
 msgid "Email:"
-msgstr "Přidat e-mail"
+msgstr "E-mail:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
@@ -2082,7 +2078,7 @@ msgstr "OpenID Přihlášení"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Chyba při přihlašování"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -2090,15 +2086,15 @@ msgstr "Při pokusu o přihlášení s vaším účtem nastala chyba."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Propojené účty"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Account connections"
-msgstr ""
+msgstr "Propojené účty"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Ke svému profilu se můžete přihlásit kterýmkoliv z následujících účtů:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
@@ -2106,20 +2102,20 @@ msgstr "Odpojit"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr ""
+msgstr "Nemáte žádné propojené účty."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr ""
+msgstr "Propojit nový účet"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Přihlášení zrušeno"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Rozhodli jste se zrušit přihlašování na naší stránce pomocí některého z vašich existujících účtů. Pokud myslíte, že jde o omyl, <a href=\"%(login_url)s\">přihlaste se prosím</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
@@ -2206,7 +2202,7 @@ msgstr "s <a href=\"%(terms_url)s\">podmínkami</a> a <a href=\"%(privacy_url)s\
 
 #: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Vytvořit profil na MDN"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
@@ -2318,9 +2314,8 @@ msgid "The user did not have any revisions that were reported as spam."
 msgstr "Uživatel nemá žádné revize označené jako spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
-#, fuzzy
 msgid "Deleted:"
-msgstr "Smazat"
+msgstr "Smazáno:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
@@ -2336,7 +2331,7 @@ msgstr "Uživatel nemá žádné vrácené revize."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
-msgstr ""
+msgstr "Je potřeba vyřídit"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
@@ -2357,9 +2352,8 @@ msgid "Could not submit to Akismet:"
 msgstr "Nelze odeslat do Akismetu:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
-#, fuzzy
 msgid "Could not delete:"
-msgstr "Dokument smazán"
+msgstr "Nelze smazat:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
@@ -2399,7 +2393,7 @@ msgstr "Nedávná aktivita v dokumentech"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
-msgstr ""
+msgstr "Zobrazit kompletní seznam aktivit"
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
@@ -2415,11 +2409,11 @@ msgstr "Upravit stránku"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
-msgstr ""
+msgstr "Zobrazit kompletní diff"
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
 msgid "View page history"
-msgstr ""
+msgstr "Zobrazit historii stránky"
 
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
@@ -2428,7 +2422,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr ""
+msgstr "Tento uživatel nemá žádné záznamy o aktivitě."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
@@ -2436,7 +2430,7 @@ msgstr "Upravit váš profil"
 
 #: kuma/users/jinja2/users/user_edit.html:36
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Nastavte svůj avatar na"
 
 #: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
@@ -2470,7 +2464,7 @@ msgstr "Jednotlivé štítky oddělujte čárkami nebo mezerami. Víceslovné š
 
 #: kuma/users/jinja2/users/user_edit.html:82
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Odborné znalosti"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Add your interests first, then declare yourself an expert in selected topics."
@@ -2648,12 +2642,12 @@ msgstr "API klíče"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:65
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Odborné znalosti"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:107
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Členem od %(date_joined)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
@@ -2678,11 +2672,11 @@ msgstr "Zablokovat uživatele & Pročistit"
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
-msgstr ""
+msgstr "Správa"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -2707,7 +2701,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
-msgstr ""
+msgstr "MDN dokumenty"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
@@ -2719,33 +2713,33 @@ msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "Nedávné změny dokumentů MDN"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Nedávné změny dokumentů MDN"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr ""
+msgstr "Nedávné změny dokumentů MDN označených %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Dokumenty MDN vyžadující kontrolu"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "Nedávné změny dokumentů MDN, které potřebují zkontrolovat"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr ""
+msgstr "Dokumenty MDN ke kontrole - %s"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr ""
+msgstr "Dokumenty MDN ke kontrole"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
@@ -2754,84 +2748,84 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr ""
+msgstr "Nedávné revize"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr ""
+msgstr "Nedávné revize dokumentů MDN"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "Zobrazit srovnání"
 
 #: kuma/wiki/forms.py:35
 msgid "Please provide a title."
-msgstr ""
+msgstr "Zadejte prosím nadpis."
 
 #: kuma/wiki/forms.py:36
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Nadpis je příliš krátký (%(show_value)s znaků). Počet znaků musí být nejméně %(limit_value)s."
 
 #: kuma/wiki/forms.py:38
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Maximální délka nadpisu smí být %(limit_value)s znaků. Aktuálně má délku %(show_value)s znaků."
 
 #: kuma/wiki/forms.py:41
 msgid "Name Your Article"
-msgstr ""
+msgstr "Název vašeho článku"
 
 #: kuma/wiki/forms.py:42
 msgid "Please provide a slug."
-msgstr ""
+msgstr "Zadejte prosím URL."
 
 #: kuma/wiki/forms.py:43
 msgid "The slug provided is not valid."
-msgstr ""
+msgstr "Zadané URL není platné."
 
 #: kuma/wiki/forms.py:44
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "URL je příliš krátké (%(show_value)s znaků). Počet znaků musí být nejméně %(limit_value)s."
 
 #: kuma/wiki/forms.py:46
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Maximální délka URL může být %(limit_value)s znaků. Aktuálně má délku %(show_value)s znaků."
 
 #: kuma/wiki/forms.py:49
 msgid "Please provide a summary."
-msgstr ""
+msgstr "Zadejte prosím souhrn."
 
 #: kuma/wiki/forms.py:50
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Souhrn je příliš krátký (%(show_value)s znaků). Počet znaků musí být nejméně %(limit_value)s."
 
 #: kuma/wiki/forms.py:52
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Maximální délka souhrnu může být %(limit_value)s znaků. Aktuálně má délku %(show_value)s znaků."
 
 #: kuma/wiki/forms.py:55
 msgid "Please provide content."
-msgstr ""
+msgstr "Vložte prosím obsah."
 
 #: kuma/wiki/forms.py:56
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Obsah je příliš krátký (%(show_value)s znaků). Musí mít nejméně %(limit_value)s znaků."
 
 #: kuma/wiki/forms.py:58
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Maximální délka obsahu může být %(limit_value)s znaků. Aktuálně má délku %(show_value)s znaků."
 
 #: kuma/wiki/forms.py:61
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Maximální délka komentáře může být %(limit_value)s znaků. Aktuálně má délku %(show_value)s znaků."
 
 #: kuma/wiki/forms.py:64
 msgid "Another document with this slug already exists."
@@ -2852,24 +2846,24 @@ msgstr ""
 #: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Nadpis:"
 
 #: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:872
 msgid "Title of article"
-msgstr ""
+msgstr "Nadpis článku"
 
 #: kuma/wiki/forms.py:344 kuma/wiki/forms.py:419 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "URL:"
 
 #: kuma/wiki/forms.py:345 kuma/wiki/forms.py:420
 msgid "Article URL"
-msgstr ""
+msgstr "URL článku"
 
 #: kuma/wiki/forms.py:352 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Nadřazený:"
 
 #: kuma/wiki/forms.py:430 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
@@ -2877,43 +2871,43 @@ msgstr "Štítky:"
 
 #: kuma/wiki/forms.py:435 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "Klíčová slova:"
 
 #: kuma/wiki/forms.py:436
 msgid "Affects search results"
-msgstr ""
+msgstr "Ovlivní výsledky vyhledávání"
 
 #: kuma/wiki/forms.py:444
 msgid "Search result summary:"
-msgstr ""
+msgstr "Souhrn výsledků vyhledávání:"
 
 #: kuma/wiki/forms.py:445
 msgid "Only displayed on search results page"
-msgstr ""
+msgstr "Zobrazeno pouze na stránce výsledků vyhledávání"
 
 #: kuma/wiki/forms.py:456 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
-msgstr ""
+msgstr "Obsah:"
 
 #: kuma/wiki/forms.py:468
 msgid "Comment:"
-msgstr ""
+msgstr "Komentář:"
 
 #: kuma/wiki/forms.py:472
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Označit tuto revizi ke kontrole?"
 
 #: kuma/wiki/forms.py:479
 msgid "Tag this revision for localization?"
-msgstr ""
+msgstr "Označit tuto revizi pro překlad?"
 
 #: kuma/wiki/forms.py:878
 msgid "New slug:"
-msgstr ""
+msgstr "Nová URL:"
 
 #: kuma/wiki/forms.py:879
 msgid "New article URL"
-msgstr ""
+msgstr "Nová URL adresa článku"
 
 #: kuma/wiki/models.py:112
 #, python-format
@@ -2922,7 +2916,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:120
 msgid "Document Tag"
-msgstr ""
+msgstr "Štítek dokumentu"
 
 #: kuma/wiki/models.py:121
 msgid "Document Tags"
@@ -2930,7 +2924,7 @@ msgstr "Štítky dokumentu"
 
 #: kuma/wiki/models.py:173
 msgid "uploaded to the document"
-msgstr ""
+msgstr "nahráno do dokumentu"
 
 #: kuma/wiki/models.py:179
 msgid "linked in the document content"
@@ -2943,11 +2937,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1542
 msgid "Review Tag"
-msgstr ""
+msgstr "Označení ke kontrole"
 
 #: kuma/wiki/models.py:1543
 msgid "Review Tags"
-msgstr ""
+msgstr "Označení ke kontrole"
 
 #: kuma/wiki/models.py:1549
 msgid "Localization Tag"
@@ -2959,40 +2953,40 @@ msgstr ""
 
 #: kuma/wiki/models.py:1583
 msgid "No table of contents"
-msgstr ""
+msgstr "Žádný obsah"
 
 #: kuma/wiki/models.py:1584
 msgid "All levels"
-msgstr ""
+msgstr "Všechny úrovně"
 
 #: kuma/wiki/models.py:1585
 msgid "H2 and higher"
-msgstr ""
+msgstr "H2 a vyšší"
 
 #: kuma/wiki/models.py:1586
 msgid "H3 and higher"
-msgstr ""
+msgstr "H3 a vyšší"
 
 #: kuma/wiki/models.py:1587
 msgid "H4 and higher"
-msgstr ""
+msgstr "H4 a vyšší"
 
 #: kuma/wiki/models.py:1691
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
-msgstr ""
+msgstr "Revize musí být založena na dokumentu v jazyce %(locale)s. Revize s ID %(id)s toto kritérium nesplňuje."
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
-msgstr ""
+msgstr "IP adresa"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
-msgstr ""
+msgstr "User-Agent"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "HTTP Referrer"
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
 msgid "Data submitted to Akismet"
@@ -3008,11 +3002,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1915
 msgid "Slug"
-msgstr ""
+msgstr "URL"
 
 #: kuma/wiki/models.py:1923
 msgid "Document (optional)"
-msgstr ""
+msgstr "Dokument (volitelné)"
 
 #: kuma/wiki/models.py:1933
 msgid "reviewed"
@@ -3020,15 +3014,15 @@ msgstr "zkontrolováno"
 
 #: kuma/wiki/models.py:1944
 msgid "Needs Review"
-msgstr ""
+msgstr "Potřebuje kontrolu"
 
 #: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "Ham / False Positive"
 
 #: kuma/wiki/models.py:1946
 msgid "Confirmed as Spam"
-msgstr ""
+msgstr "Potvrzený spam"
 
 #: kuma/wiki/models.py:1947
 msgid "Review Unavailable"
@@ -3036,7 +3030,7 @@ msgstr "Kontrola není dostupná"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
-msgstr ""
+msgstr "Chyba Akismetu"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
@@ -3044,12 +3038,12 @@ msgstr ""
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
-msgstr ""
+msgstr "Redaktor"
 
 #: kuma/wiki/search.py:310
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
-msgstr ""
+msgstr "Indexování %(total)d dokumentů do %(total_chunks)d částí o velikosti %(size)d do indexu %(index)s.total"
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
@@ -3072,20 +3066,20 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "Porovnání revizí | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "Porovnání revizí"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr ""
+msgstr "Zpět na historii"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
 msgid "Delete Document | %(document)s"
-msgstr ""
+msgstr "Smazání dokumentu | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3093,19 +3087,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
-msgstr ""
+msgstr "Autor"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
 msgid "Creation Date"
-msgstr ""
+msgstr "Datum vytvoření"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
-msgstr ""
+msgstr "Naposledy změnil(a)"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "Poslední změna"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
@@ -3113,16 +3107,16 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Opravdu chcete pokračovat?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "Smazat revizi | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr ""
+msgstr "Opravdu chcete smazat tuto revizi?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
@@ -3150,7 +3144,7 @@ msgstr "Vytvořit nový článek"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "Create a"
-msgstr ""
+msgstr "Vytvořit"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
@@ -3158,7 +3152,7 @@ msgstr "Nový dokument"
 
 #: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
-msgstr ""
+msgstr "Část URL adresy, která identifikuje stránku"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2 kuma/wiki/jinja2/wiki/deletion_log.html:7
 msgid "Document Deleted"
@@ -3175,7 +3169,7 @@ msgstr "Důvod smazání"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
-msgstr ""
+msgstr "Obnovit tento dokument"
 
 #: kuma/wiki/jinja2/wiki/document.html:166
 msgid "Previous Search Result"
@@ -3183,11 +3177,11 @@ msgstr "Předchozí výsledek hledání"
 
 #: kuma/wiki/jinja2/wiki/document.html:166 kuma/wiki/jinja2/wiki/document.html:176
 msgid "No Previous Search Result"
-msgstr ""
+msgstr "Žádné předchozí výsledky vyhledávání"
 
 #: kuma/wiki/jinja2/wiki/document.html:172
 msgid "Your Search Results"
-msgstr ""
+msgstr "Vaše výsledky vyhledávání"
 
 #: kuma/wiki/jinja2/wiki/document.html:176
 msgid "Next Search Result"
@@ -3204,7 +3198,7 @@ msgstr "skrýt přispěvatele"
 #: kuma/wiki/jinja2/wiki/document.html:184
 #, python-format
 msgid "View profile: %(username)s"
-msgstr ""
+msgstr "Zobrazit profil: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:209
 msgid "In This Article"
@@ -3246,7 +3240,7 @@ msgstr "Tento překlad není kompletní. Prosím pomozte <a href=\"%(translate_u
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Probíhá překlad."
 
 #: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
@@ -3255,20 +3249,20 @@ msgstr "Naši dobrovolníci ještě tento článek do jazyka <bdi>%(locale)s</bd
 
 #: kuma/wiki/jinja2/wiki/document.html:306
 msgid "This article doesn't have any content yet."
-msgstr ""
+msgstr "Tento článek dosud nemá žádný obsah."
 
 #: kuma/wiki/jinja2/wiki/document.html:309
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr ""
+msgstr "Vyhledat <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">stránky, které obsahují %(title)s</a>, jako příklad použití a počtu stránek s tímto makrem."
 
 #: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
-msgstr ""
+msgstr "Tento článek dosud neobsahuje schválený obsah."
 
 #: kuma/wiki/jinja2/wiki/document.html:330
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "Štítky a přispěvatelé do dokumentace"
 
 #: kuma/wiki/jinja2/wiki/document.html:336
 msgid "Contributors to this page:"
@@ -3276,7 +3270,7 @@ msgstr "Přispěvatelé této stránky:"
 
 #: kuma/wiki/jinja2/wiki/document.html:342
 msgid "Last updated by:"
-msgstr ""
+msgstr "Poslední aktualizace od:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
@@ -3296,20 +3290,20 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "Vaše změny"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr ""
+msgstr "Revize %(id)s od <a href=\"%(user_profile_url)s\">%(user)s</a> z %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
-msgstr ""
+msgstr "Aktuální revize:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
-msgstr ""
+msgstr "Souhrn výsledků vyhledávání:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
@@ -3337,11 +3331,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Vyhledání:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Děkujeme za váš čas a pomoc s MDN!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
@@ -3373,17 +3367,17 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
 msgid "last modified at %(modified)s"
-msgstr ""
+msgstr "naposledy změněno %(modified)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "Upravit překlad do jazyka %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "Přesunout článek | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -3415,7 +3409,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "URL náhledu:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
@@ -3423,7 +3417,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "Vyhledat podle nadpisu dokumentu"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
@@ -3432,11 +3426,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
 msgid "Move %(count)s Pages"
-msgstr ""
+msgstr "Přesun %(count)s stránek"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Přesunout stránku"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
@@ -3445,7 +3439,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
-msgstr ""
+msgstr "Žádné další dokumenty nebudou touto změnou ovlivněny."
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
@@ -3458,7 +3452,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "Toto je náhled neuloženého dokumentu."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
@@ -3467,11 +3461,11 @@ msgstr "Revize %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "Informace o revizi"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr ""
+msgstr "URL revize:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
@@ -3495,24 +3489,24 @@ msgstr "Aktuální revize?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr ""
+msgstr "Obsah revize"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr ""
+msgstr "Zdroj revize"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Návrat k této revizi"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
 msgid "Select language | %(document)s"
-msgstr ""
+msgstr "Volba jazyka | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
-msgstr ""
+msgstr "Volba jazyka, do kterého chcete překládat:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:32
 #, python-format
@@ -3533,16 +3527,16 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
-msgstr ""
+msgstr "Překlad článku | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
-msgstr ""
+msgstr "Překlad článku do jazyka %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Překlad obsahu"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
@@ -3555,22 +3549,22 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Zobrazit zdrojový kód"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
-msgstr ""
+msgstr "Zobrazit jazyk %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
-msgstr ""
+msgstr "Skrýt jazyk %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
-msgstr ""
+msgstr "Překlad do jazyka %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
@@ -3591,7 +3585,7 @@ msgstr "%(locale)s štítky"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
-msgstr ""
+msgstr "Poznámky k verzi"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
@@ -3600,28 +3594,28 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "Uživatel %(creator)s změnil dokument %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "Zobrazit uživatelský profil:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Porovnat na MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Zobrazit článek:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Upravit článek:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Historie článku:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
@@ -3643,23 +3637,23 @@ msgstr "Uložit"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "Jazyky"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
-msgstr ""
+msgstr "Pro tento článek neexistuje žádný překlad."
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "Add a translation"
-msgstr ""
+msgstr "Přidat překlad"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Watch"
-msgstr ""
+msgstr "Sledovat"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
-msgstr ""
+msgstr "Nový pod-článek"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
@@ -3667,15 +3661,15 @@ msgstr "Klonovat tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
-msgstr ""
+msgstr "Přesunout tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
-msgstr ""
+msgstr "Zobrazit v administraci"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
 msgid "Delete this article"
-msgstr ""
+msgstr "Smazat tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -3687,7 +3681,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
-msgstr ""
+msgstr "Vytisknout tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3699,7 +3693,7 @@ msgstr "Vizte také"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr ""
+msgstr "Změna revizí"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
@@ -3774,11 +3768,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "Vygenerovat obsah"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr ""
+msgstr "Obsah:"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
@@ -3801,7 +3795,7 @@ msgstr[2] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "Skrýt informace o chybě"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
@@ -3816,39 +3810,39 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr ""
+msgstr "Typ chyby:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr ""
+msgstr "V makru:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "Vytvořit šablonu"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr ""
+msgstr "Upravit šablonu"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Při parsování makra:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr ""
+msgstr "Upravit dokument"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr ""
+msgstr "Celý text chyby:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "Nová stránka"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Zahodit změny a vytvořit nový dokument?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
 msgid "Publish and Keep Editing"
@@ -3860,15 +3854,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Je vyžadována kontrola?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Komentář k revizi"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Zjistěte jak okomentovat revizi"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
@@ -3893,17 +3887,17 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Překlad popisu"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Nadpis v jazyce %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "URL pro jazyk %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
@@ -3913,9 +3907,9 @@ msgstr ""
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Nalezen jeden dokument."
+msgstr[1] "Nalezeny %(num)s dokumenty"
+msgstr[2] "Nalezeno %(num)s dokumentů"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
@@ -3924,19 +3918,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "Všechny šablony"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Nalezena jedna šablona."
+msgstr[1] "Nalezeny %(num)s šablony"
+msgstr[2] "Nalezeno %(num)s šablon"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "Dokumenty s chybami"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
@@ -3948,7 +3942,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "Všechny dokumenty"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
@@ -3956,16 +3950,16 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Nejsou zde žádné články."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr ""
+msgstr "Dokumenty ke kontrole - %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Dokumenty ke kontrole"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
@@ -3989,32 +3983,32 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
 msgid "Found %(count)s documents."
-msgstr ""
+msgstr "Nalezeno %(count)s dokumentů."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr ""
+msgstr "Historie revizí | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "Historie"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr ""
+msgstr "Historie revizí pro jazyk:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr ""
+msgstr "Porovnání zvolených překladů"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Porovnání zvolených revizí"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr ""
+msgstr "Tento dokument nemá žádné revize."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
@@ -4037,9 +4031,9 @@ msgstr "Články s jakýmikoli lokalizačními štítky"
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Nalezen jeden dokument."
+msgstr[1] "Nalezeny %(count)s dokumenty."
+msgstr[2] "Nalezeno %(count)s dokumentů."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
@@ -4063,16 +4057,16 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
-msgstr ""
+msgstr "\"Načíst dokumenty\""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "Přidat %(name)s"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
-msgstr ""
+msgstr "Načíst dokumenty"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
@@ -4110,22 +4104,22 @@ msgstr ""
 #: kuma/wiki/views/document.py:607
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr ""
+msgstr "Přesměrováno z %(url)s"
 
 #: kuma/wiki/views/document.py:655
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Na MDN jsem se dozvěděl o %(title)s."
 
 #: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr ""
+msgstr "Nepodporovaný typ obsahu: %s"
 
 #: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Chyba při parsování požadavku: %s"
 
 #: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
@@ -4137,17 +4131,17 @@ msgstr ""
 
 #: kuma/wiki/views/misc.py:53
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
-msgstr ""
+msgstr "Automatické návrhy vyžadují částečný nadpis. Pro kompletní index dokumentů navštivte hlavní stránku."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr ""
+msgstr "Načteno %(obj_count)d objektů."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr ""
+msgstr "Chyba při importu dat: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
@@ -4160,7 +4154,7 @@ msgstr "Tento dokument nemůžete přeložit."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Elasticsearch server: %(backend)s"
 
 #~ msgid "Revert Revisions"
 #~ msgstr "Revize"
