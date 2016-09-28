@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-27 14:38+0000\n"
+"PO-Revision-Date: 2016-09-28 02:16+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -781,15 +781,15 @@ msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Kunci carian"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
-msgstr ""
+msgstr "Rahsia hash"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "Keterangan tujuan pengunaan"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
@@ -802,35 +802,37 @@ msgstr "Hapus"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr ""
+msgstr "Kunci ini masih belum digunakan lagi."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
+"Ini ialah kunci API anda. Kunci ini berguna untuk anda membina aplikasi yang melaksanakan tugasan di MDN bagi pihak anda. Jika anda berhenti menggunakannya, atau anda syak akaun anda telah terdedah "
+"kepada pihak yang anda tidak percaya, hapuskan kunci ini. Mudah sahaja untuk mencipta kunci gantian pada bila-bila masa."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "Cipta kunci baru"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr ""
+msgstr "Anda masih belum ada kunci API lagi."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
-msgstr ""
+msgstr "Papar sejarah penggunaan kunci"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
 msgid "History (%(count)s)"
-msgstr ""
+msgstr "Sejarah (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
 msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
-msgstr ""
+msgstr "Anda perlukan izin khas untuk menggunakan kunci API. Anda boleh meminta izin dengan <a href=\"%(bugzilla_url)s\">failkan pepijat</a>."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
