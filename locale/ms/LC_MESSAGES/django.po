@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 02:59+0000\n"
+"PO-Revision-Date: 2016-09-28 03:20+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -992,7 +992,7 @@ msgstr "Topik"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
-msgstr "Semua Locales"
+msgstr "Semua Locale"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
@@ -1294,10 +1294,12 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">Sertai <span class=\"number\">%(contributors)s</span> penyumbang</span> <span class=\"row2\">dalam <span class=\"number\">%(locales)s</span> bahasa dan "
+"locale</span> <span class=\"row3\">di serata dunia.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Bantu meningkatkan MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
@@ -1317,15 +1319,15 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
-msgstr ""
+msgstr "Menterjemah"
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
-msgstr ""
+msgstr "Mempromosi MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
-msgstr ""
+msgstr "Menyumbang ke pangkalan kod MDN"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -1334,7 +1336,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "Promosi MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
@@ -1349,7 +1351,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
-msgstr ""
+msgstr "Previu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1373,35 +1375,35 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Pilih warna"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Kelabu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Oren"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Merah"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Ganti &lt;FOO&gt; dengan"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Tambah butang tersuai anda ke laman web anda"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Kod sumber anda:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Butang anda akan membawa pengguna ke:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
@@ -1549,25 +1551,25 @@ msgstr ""
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(count)s dokumen ditemui untuk \"%(query)s\" dalam %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(count)s dokumen ditemui untuk \"%(query)s\" dalam %(locale_native)s dan %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(count)s dokumen ditemui dalam %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(count)s dokumen ditemui dalam %(locale_native)s dan %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
@@ -1593,7 +1595,7 @@ msgstr ""
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Cari lagi hanya dalam %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
@@ -1689,15 +1691,15 @@ msgstr ""
 
 #: kuma/users/forms.py:46
 msgid "Expertise"
-msgstr ""
+msgstr "Kepakaran"
 
 #: kuma/users/forms.py:52
 msgid "Username"
-msgstr ""
+msgstr "Nama pengguna"
 
 #: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:76
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
 msgid "Stack Overflow"
@@ -1705,7 +1707,7 @@ msgstr ""
 
 #: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:94
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:98
 msgid "Mozillians"
@@ -1713,7 +1715,7 @@ msgstr ""
 
 #: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:136
 msgid "Areas of expertise must be a subset of interests"
@@ -1725,7 +1727,7 @@ msgstr ""
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
-msgstr ""
+msgstr "Nama pengguna sedang digunakan."
 
 #: kuma/users/models.py:29
 #, python-format
@@ -1735,15 +1737,15 @@ msgstr "%(banned_user)s disekat oleh %(banned_by)s"
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (tidak lagi aktif)"
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "Bahasa"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "Halaman utama"
 
 #: kuma/users/models.py:60
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1751,11 +1753,11 @@ msgstr ""
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Organisasi"
 
 #: kuma/users/models.py:80
 msgid "Location"
@@ -3216,7 +3218,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr ""
+msgstr "Sukarelawan kami masih belum menterjemah artikel ini ke <bdi>%(locale)s</bdi> lagi. <a href=\"%(help_link)s\">Sertai kami dan bantu melaksanakannya!</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:306
 msgid "This article doesn't have any content yet."
@@ -3343,7 +3345,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "Edit terjemahan %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
@@ -3501,7 +3503,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
-msgstr ""
+msgstr "Menterjemah artikel ke %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
@@ -3510,7 +3512,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
-msgstr ""
+msgstr "Versi %(locale)s diluluskan:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
@@ -3523,17 +3525,17 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
-msgstr ""
+msgstr "Papar %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
-msgstr ""
+msgstr "Sorok %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
-msgstr ""
+msgstr "Terjemahan %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
@@ -3550,7 +3552,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "Tag %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
@@ -3857,12 +3859,12 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Tajuk dalam %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "Slug dalam %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
