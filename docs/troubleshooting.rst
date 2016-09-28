@@ -33,6 +33,25 @@ Docker services run as containers. To change the commands or environments of
 services, it is easiest to add an override configuration file, as documented in
 :ref:`advanced_config_docker`.
 
+Linux file permissions
+----------------------
+On Linux, it is common that files created inside a Docker container are owned
+by the root user on the host system.  This can cause problems when trying to
+work with them after creation. We are investigating solutions to create files
+as the developer's user.
+
+In some cases, you can specify the host user ID when running commands::
+
+    docker-compose run --rm --user $(id -u) web ./manage.py collectstatic
+
+In other cases, the command requires root permissions inside the container, and
+this trick can't be used.
+
+Another option is to allow the files to be created as root, and then change
+them to your user on the host system::
+
+    find . -user root -exec sudo chown $(id -u):$(id -g) \{\} \;
+
 Fixing Vagrant Issues
 *********************
 

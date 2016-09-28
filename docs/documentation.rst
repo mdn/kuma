@@ -38,9 +38,9 @@ Then switch to the ``docs`` folder to use the ``Makefile``::
 
 To generate the documentation with Docker::
 
-    docker-compose run --rm web sh -c "\
-      virtualenv /root/.venvs/docs && \
-      . /root/.venvs/docs/bin/activate && \
+    docker-compose run --rm --user $(id -u) web sh -c "\
+      virtualenv /tmp/.venvs/docs && \
+      . /tmp/.venvs/docs/bin/activate && \
       pip install -r /app/requirements/docs.txt && \
       cd /app/docs && \
       make html"
@@ -75,9 +75,9 @@ This will make the sphinx-theme available in Docker at the path
 ``/app/sphinx-theme``. When generating documentation, adjust the command to install
 the theme from the working copy::
 
-    docker-compose run --rm web sh -c "\
-      virtualenv /root/.venvs/docs && \
-      . /root/.venvs/docs/bin/activate && \
+    docker-compose run --rm --user $(id -u) web sh -c "\
+      virtualenv /tmp/.venvs/docs && \
+      . /tmp/.venvs/docs/bin/activate && \
       pip install -r /app/requirements/docs.txt && \
       pip install -e /app/sphinx-theme && \
       cd /app/docs && \
