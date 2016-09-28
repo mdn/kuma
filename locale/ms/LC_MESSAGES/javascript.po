@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-09-28 13:05+0000\n"
+"PO-Revision-Date: 2016-09-28 14:29+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -209,7 +209,7 @@ msgstr "Cara membaca sintaks CSS."
 
 #: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "Cari Limpahan Tindanan"
 
 #: kuma/static/js/wiki.js:677
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."

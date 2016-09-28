@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 14:17+0000\n"
+"PO-Revision-Date: 2016-09-28 14:38+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1645,14 +1645,16 @@ msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
 "rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"Maaf, anda perlu ada sekurang-kurangnya satu akaun yang dihubungkan supaya anda boleh mendaftar masuk. Untuk memutuskan hubungan akaun ini, hubungkan dengan akaun lain terlebih dahulu. Untuk "
+"menghapus profil MDN sila <a href=\"%(bug_form_url)s\" rel=\"nofollow\">failkan pepijat</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "Alamat e-mel tidak boleh digunakan sebagai nama pengguna."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Nama pengguna yang anda masukkan telah wujud."
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -1661,7 +1663,7 @@ msgstr "Pengguna"
 #: kuma/users/apps.py:69
 #, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
-msgstr ""
+msgstr "Anda telah lengkapkan langkah pertama <a href=\"%s\">mulakan MDN</a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
@@ -1669,11 +1671,11 @@ msgstr "algoritma"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "salt"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
@@ -1685,11 +1687,11 @@ msgstr "Zon masa"
 
 #: kuma/users/forms.py:36
 msgid "Beta tester"
-msgstr ""
+msgstr "Penguji Beta"
 
 #: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:52
 msgid "Interests"
-msgstr ""
+msgstr "Minat"
 
 #: kuma/users/forms.py:46
 msgid "Expertise"
@@ -1705,7 +1707,7 @@ msgstr "Twitter"
 
 #: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Limpahan Tindanan"
 
 #: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:94
 msgid "LinkedIn"
@@ -1713,7 +1715,7 @@ msgstr "LinkedIn"
 
 #: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:98
 msgid "Mozillians"
-msgstr ""
+msgstr "Anggota Mozilla"
 
 #: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
 msgid "Facebook"
@@ -1721,7 +1723,7 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:136
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Bidang kepakaran mestilah subset minat"
 
 #: kuma/users/forms.py:145
 msgid "This field cannot be blank."
@@ -1780,31 +1782,31 @@ msgstr "Tag"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Masukkan URL laman web yang sah."
 
 #: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Masukkan URL Twitter yang sah."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Masukkan URL GitHub yang sah."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Masukkan URL Limpahan Tindanan yang sah."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Masukkan URL LinkedIn yang sah."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Masukkan URL Anggota Mozilla yang sah."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Masukkan URL Facebook yang sah."
 
 #: kuma/users/models.py:136
 msgid "Website"
@@ -1987,51 +1989,51 @@ msgstr "Kami telah menghantar kepada anda e-mel. Sila hubungi kami jika anda tid
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Token Lapuk"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
+msgstr "Pautan set semula kata laluan tidak sah, mungkin kerana telah digunakan.  Sila minta satu <a href=\"%(passwd_reset_url)s\">set semula kata laluan baru</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Tukar kata laluan"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Kata laluan anda kini telah ditukar."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "Set Kata laluan"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Daftar"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "Daftar"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Sudah ada profil? Sila <a href=\"%(login_url)s\">daftar masuk</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Mencipta Profil Dinyahdaya"
 
 #: kuma/users/jinja2/account/signup_closed.html:5
 #, python-format
 msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr ""
+msgstr "Kami minta maaf, kerna anda tidak boleh cipta profil dengan Persona. <a href=\"%(url)s\">Sila cuba sekali lagi dengan akaun GitHub</a>."
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Sahkan Alamat E-mel Anda"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
