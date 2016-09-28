@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 03:27+0000\n"
+"PO-Revision-Date: 2016-09-28 04:20+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1619,23 +1619,23 @@ msgstr "Data yang diserah mengandungi kandungan tidak sah. Sila cuba lagi."
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "dicipta"
 
 #: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "Ham"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "dihantar pada"
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "jenis"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1654,7 +1654,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1663,7 +1663,7 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "algoritma"
 
 #: kuma/users/backends.py:33
 msgid "salt"
@@ -1675,11 +1675,11 @@ msgstr ""
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr ""
+msgstr "Nama pengguna hanya boleh mengandungi huruf, nombor, dan aksara berikut: . - _ +"
 
 #: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
-msgstr ""
+msgstr "Zon masa"
 
 #: kuma/users/forms.py:36
 msgid "Beta tester"
@@ -1723,7 +1723,7 @@ msgstr ""
 
 #: kuma/users/forms.py:145
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Medan ini tidak boleh kosong."
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
@@ -1749,7 +1749,7 @@ msgstr "Halaman utama"
 
 #: kuma/users/models.py:60
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
-msgstr ""
+msgstr "URL ini mempunyai format yang tidak sah. URL yang sah seperti ini http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
@@ -1761,20 +1761,20 @@ msgstr "Organisasi"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr ""
+msgstr "Lokasi"
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "Perihal Diri Saya"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "nama samaran IRC"
 
 #: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "Tag"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
@@ -1806,29 +1806,29 @@ msgstr ""
 
 #: kuma/users/models.py:136
 msgid "Website"
-msgstr ""
+msgstr "Laman web"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "Nama pengguna diperlukan."
 
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Nama pengguna terlalu pendek (%(show_value)s characters). Sekurang-kurangnya mesti ada %(limit_value)s aksara."
 
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr ""
+msgstr "Nama pengguna terlalu panjang (%(show_value)s characters). Mesti ada %(limit_value)s aksara atau kurang."
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Anda mesti bersetuju dengan terma penggunaan."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "Saya setuju"
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
