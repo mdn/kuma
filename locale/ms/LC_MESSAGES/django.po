@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 13:20+0000\n"
+"PO-Revision-Date: 2016-09-28 13:40+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1240,23 +1240,23 @@ msgstr "Alatan<br />Pembangun"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
-msgstr ""
+msgstr "Pemeriksa Halaman"
 
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
-msgstr ""
+msgstr "Konsol Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "Penyahpepijat JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
-msgstr ""
+msgstr "Alatan Prestasi"
 
 #: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Connect"
-msgstr ""
+msgstr "Sambung"
 
 #: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
@@ -1305,19 +1305,19 @@ msgstr "Bantu meningkatkan MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr ""
+msgstr "Semua bahagian MDN (dokumen dan laman web itu sendiri) dicipta oleh komuniti terbuka pembangun. Sila sertai kami! Pilih salah satu cara berikut yang anda boleh bantu:"
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
-msgstr ""
+msgstr "Mulakan"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr ""
+msgstr "Semakan Editorial"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
-msgstr ""
+msgstr "Semakan Teknikal"
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
@@ -1334,7 +1334,7 @@ msgstr "Menyumbang ke pangkalan kod MDN"
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr ""
+msgstr "Post %(entrydate)s oleh %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
@@ -1342,7 +1342,7 @@ msgstr "Promosi MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
-msgstr ""
+msgstr "Kongsi minat pembangun."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
@@ -1357,23 +1357,23 @@ msgstr "Previu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr ""
+msgstr "Pilih gaya butang"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "Dokumen Diperbaiki"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr ""
+msgstr "Pembangun Dipacu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "Untuk Pembangun, Oleh Pembangun"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Kotak Alatan Pembangun Web"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -1409,51 +1409,51 @@ msgstr "Butang anda akan membawa pengguna ke:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen CSS diperbaiki untuk Web lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163 kuma/landing/jinja2/landing/promote_buttons.html:167 kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen HTML diperbaiki untuk Web lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164 kuma/landing/jinja2/landing/promote_buttons.html:168 kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen JavaScript diperbaiki untuk Web lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen Web diperbaiki untuk Web lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr ""
+msgstr "MDN ialah Pembangun Dipacu untuk dokumen CSS dan banyak lagi."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr ""
+msgstr "MDN ialah Pembangun Dipacu untuk dokumen HTML dan banyak lagi."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr ""
+msgstr "MDN ialah Pembangun Dipacu untuk dokumen JavaScript dan banyak lagi."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr ""
+msgstr "MDN ialah Pembangun Dipacu untuk dokumen Web dan banyak lagi."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen CSS oleh pembangun, untuk pembangun di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187 kuma/landing/jinja2/landing/promote_buttons.html:191 kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen HTML oleh pembangun, untuk pembangun di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188 kuma/landing/jinja2/landing/promote_buttons.html:192 kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen JavaScript oleh pembangun, untuk pembangun di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen Web oleh pembangun, untuk pembangun di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
