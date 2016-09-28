@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 13:40+0000\n"
+"PO-Revision-Date: 2016-09-28 13:58+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1457,58 +1457,58 @@ msgstr "Dokumen Web oleh pembangun, untuk pembangun di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr ""
+msgstr "MDN ialah Kotak alatan Pembangun Web anda untuk dokumen, dan pelbagai lagi dalam HTML, CSS, JavaScript serta standard Web dan teknologi terbuka lain."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Tidak boleh promosi lebih daripada satu indeks pada satu-satu masa."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Indeks carian dipromosi %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Promosi indeks carian dipilih ke indeks semasa"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Tidak boleh demot lebih daripada satu indeks pada satu-satu masa."
 
 #: kuma/search/admin.py:24
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
-msgstr ""
+msgstr "Tidak boleh demot jika hanya ada satu indeks. Cipta dan isi yang baru dahulu."
 
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Indeks caria demot %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
-msgstr ""
+msgstr "Demot indeks carian dipilih (gantian automatik ke indeks sebelumnya)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Tidak boleh isi lebih daripada satu indeks pada satu-satu masa."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr ""
+msgstr "Isi Indeks carian dipilih via Celery"
 
 #: kuma/search/admin.py:57
 msgid "Is current index?"
-msgstr ""
+msgstr "Ini indeks semasa?"
 
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Sudah ada pengganti untuk indeks semasa %s"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr ""
+msgstr "Carian tidak tersedia buat sementara waktu. Sila cuba lagi dalam beberapa minit."
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
