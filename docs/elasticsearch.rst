@@ -1,67 +1,52 @@
 ======
 Search
 ======
+Kuma uses Elasticsearch_ to power its on-site search.
 
-Kuma uses `Elasticsearch <http://www.elasticsearch.org>`_ to power its
-on-site search facility.
+.. _Elasticsearch: https://www.elastic.co/products/elasticsearch
 
-Elasticsearch search gives us a number of advantages over MySQL's full-text
-search or Google's site search.
+Installed Version
+=================
+Elasticsearch `releases new versions often`_, and Kuma is slow to upgrade.  The
+Vagrant and Docker environments use 1.7, but production is older.
 
-* Much faster than MySQL.
-  * And reduces load on MySQL.
-* We have total control over what results look like.
-* We can adjust searches with non-visible content.
-* We don't rely on Google reindexing the site.
-* We can fine-tune the algorithm ourselves.
+The Kuma search tests use the configured Elasticsearch, and can be run inside
+the Vagrant VM or the ``web`` Docker container to confirm the engine works::
 
-Installing Elasticsearch Search
-===============================
+    py.test kuma/search/
 
-We currently require **Elasticsearch 1.3.x** and automatically install it
-as part of the :doc:`Vagrant provisioning <installation>`.
+.. _releases new versions often: https://en.wikipedia.org/wiki/Elasticsearch#History
 
-Then run the Kuma search tests::
+Indexing Documents
+==================
+To see search results, you will need to index the documents.
 
-    $ py.test kuma/search/
+Using the Admin
+---------------
+This process works both in a development environment and in production:
 
-If the tests pass, everything is set up correctly!
-
-Using Elasticsearch
-===================
-
-Having Elasticsearch installed will allow the search tests to run, which may be
-enough. But you want to work on or test the search app, you will probably need
-to actually see search results!
-
-The Elaborate, Kinda Proper Way
--------------------------------
-
-Assuming you're running the full stack with ``foreman start`` (or any other
-way that makes sure the :doc:`Celery <celery>` workers run) there is a better
-way:
-
-- Open the Django admin UI under
-  https://developer-local.allizom.org/admin/search/index/.
+- Open the Django admin search index list view
+  (on Docker, http://localhost:8000/admin/search/index/,
+  and on Vagrant, https://developer-local.allizom.org/admin/search/index/).
 
 - Add a search index by clicking on the "Add index" button in the top right
-  corner, safe it by clicking on the same button in the lower right corner to
-  safe it to the database.
+  corner. Optionally name it, or leave it blank to generate a valid name based
+  on the time. Click the "SAVE" button in the lower right corner.
 
-- On the search index list view again, select the just created index (the top
-  most) and select "Populate search index with Celery task" from the actions
-  dropdown below.
+- On the search index list, select the checkbox next to the newly created index
+  (the top most) and select "Populate selected search index via Celery" from
+  the Action dropdown menu. Click "Go" to start indexing asynchronously.
 
-- Once the population is ready the "populated" field with show up as a green
-  checkbox image. You'll also get an email (probably via the console if you're
-  developing kuma locally) notifying you of the completion.
+- Refresh the search index list until the "populated" field changes to a green
+  checkbox image.  You will also get an email, if the environment is set up for
+  it (the default Docker environment is not), notifying you of the completion.
 
-- To actually enable that newly created search index you have to promote it
-  now. On the search index list view again, select the just created index (the top
-  most) and select "Promote search index" from the actions dropdown below.
+- Select the checkbox next to the populated index, then choose "Promote
+  selected search index to current index" in the actions dropdox. Click "Go"
+  to promote the index.
 
-- Once the search index is promoted the "promoted" and the "is current index"
-  field will show up as a green checkbox image. The index is now live.
+- All three fields will be green checkboxes (promoted, populates, and "is current index?").
+  The index is live, and will be used for site search.
 
 Similarly you can also demote a search index and it will automatically fall
 back to the previously created index (by created date). That helps to figure
@@ -72,19 +57,14 @@ case.
 If no index is created in the admin UI the fallback "main_index" index will be
 used instead.
 
-.. warning::
+When you delete a search index in the admin interface, it is deleted on
+Elasticsearch as well.
 
-   If you delete any of the search indexes in the admin interface they will be
-   deleted on Elasticsearch as well.
+Using the shell
+---------------
+Inside the Vagrant VM or ``web`` Docker container::
 
-The Easy, Sort of Wrong Way
----------------------------
+    ./manage.py reindex
 
-From the Kuma source code path::
-
-    $ ./manage.py reindex
-
-If you need to update the search indexes run the command again.
-
-While this method is very easy, you will need to reindex after any time you run
-the search tests, as they will overwrite the data files Elasticsearch uses.
+This will populate and activate the fallback index "main_index".  It will be
+overwritten when the search tests run.
