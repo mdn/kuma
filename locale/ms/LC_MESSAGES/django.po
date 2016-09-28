@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 14:38+0000\n"
+"PO-Revision-Date: 2016-09-28 15:00+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2038,77 +2038,79 @@ msgstr "Sahkan Alamat E-mel Anda"
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
 msgstr ""
+"Kami telah menghantar e-mel kepada anda untuk pengesahan. Ikuti pautan yang disediakan untuk menyiapkan proses mendaftar. Sila hubungi kami jika anda tidak menerimanya dalam tempoh beberapa mini."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
-msgstr ""
+msgstr "Bahagian laman ini perlukan kami untuk mengesahkan bahawa anda adalah diri anda. Bagi tujuan ini, kami minta anda mengesahkan pemilikan alamat e-mel anda."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Kami telah menghantar e-mel kepada anda untuk pengesahan. Sila klik pautan dalam e-mel ini. Sila hubungi kami jika anda tidak menerimanya dalam tempoh beberapa mini."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
-msgstr ""
+msgstr "<strong>Nota:</strong> anda masih boleh <a href=\"%(email_url)s\">tukar alamat e-mel anda</a>."
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "anda telah log masuk sebagai %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "Daftar masuk OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Gagal Daftar masuk Akaun"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "Ada ralat semasa cuba mendaftar masuk dengan akaun anda."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Sambungan Akaun"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Account connections"
-msgstr ""
+msgstr "Sambungan akaun"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Anda boleh daftar masuk ke profil anda menggunakan mana-mana cara yang berikut:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr ""
+msgstr "Nyahsambung"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr ""
+msgstr "Anda tiada akaun yang disambung."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr ""
+msgstr "Sambung ke akaun baru"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Log masuk Dibatalkan"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Anda membuat keputusan untuk batalkan log masuk ke laman kami menggunakan salah satu akaun sdia ada anda. Jika ini adalah satu kesilapan, sila teruskan ke <a href=\"%(login_url)s\">daftar masuk</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Cipta profil MDN anda untuk meneruskan"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
