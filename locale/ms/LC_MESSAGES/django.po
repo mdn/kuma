@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 04:23+0000\n"
+"PO-Revision-Date: 2016-09-28 04:59+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1866,83 +1866,83 @@ msgstr "Profil ini tidak aktif."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Email addresses"
-msgstr ""
+msgstr "Alamat e-mel"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s adalah alamat e-mel <em>utama</em> anda"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "Anda juga menambah alamat e-mel berikut:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Jadikan E-mel Utama"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "Hantar semula Pengesahan"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "Alih keluar"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
-msgstr ""
+msgstr "<strong>Amaran:</strong>\"Anda tidak masukkan e-mel dalam profil ini. Tanpanya, anda tidak akan menerima notifikasi."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Tambah alamat e-mel"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Tambah E-mel"
 
 #: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
-msgstr ""
+msgstr "Edit profil"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "Anda pasti mahu alih keluar alamat e-mel yang dipilih?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "Sahkan Alamat E-mel"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "Sila sahkan bahawa <a href=\"mailto:%(email)s\">%(email)s</a> adalah alamat e-mel bagi pengguna %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "Sahkan"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
 msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
-msgstr ""
+msgstr "Pautan pengesahan e-mel ini sudah tamat tempoh atau tidak sah. Sila <a href=\"%(email_url)s\">minta pengesahan e-mel yang baru</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "Anda telah sahkkan bahawa <a href=\"mailto:%(email)s\">%(email)s</a> adalah alamat e-mel bagi pengguna %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "Daftar masuk"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"
-msgstr ""
+msgstr "Sila daftar masuk"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Semua kandungan di MDN adalah percuma dan tersedia tanpa mendaftar masuk."
 
 #: kuma/users/jinja2/account/login.html:19
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
