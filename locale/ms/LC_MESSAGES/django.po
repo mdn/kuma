@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 15:00+0000\n"
+"PO-Revision-Date: 2016-09-28 15:03+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2115,7 +2115,7 @@ msgstr "Cipta profil MDN anda untuk meneruskan"
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr ""
+msgstr "Ada profil wujud dengan alamat e-mel ini. Untuk sambungkan Persona ke profil MDN anda, <a href=\"%(connections_url)s\">anda perlu daftar masuk dan lawati sambungan akaun sosial anda.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
