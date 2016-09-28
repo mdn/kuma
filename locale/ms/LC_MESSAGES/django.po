@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 04:59+0000\n"
+"PO-Revision-Date: 2016-09-28 05:05+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1946,42 +1946,42 @@ msgstr "Semua kandungan di MDN adalah percuma dan tersedia tanpa mendaftar masuk
 
 #: kuma/users/jinja2/account/login.html:19
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr ""
+msgstr "Untuk membuat sumbangan, anda perlu daftar masuk ke MDN. Anda boleh daftar masuk menggunakan GitHub dan profil MDN akan dicipta untuk anda sekiranya anda masih belum ada profil."
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "Jika anda sudah ada profil MDN, daftar masuk:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Anda pasti mahu daftar keluar?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "Tukar Kata laluan"
 
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "Set semula Kata laluan"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr ""
+msgstr "Lupa kata laluan anda? Masukkan alamat e-mel anda di bawah, dan kami akan hantar e-mel yang membolehkan anda set semula kata laluan."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Set Semula Kata Laluan Saya"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "Sila hubungi kami jika anda mempunyai masalah mengeset semula kata laluan anda."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Kami telah menghantar kepada anda e-mel. Sila hubungi kami jika anda tidak menerimanya dalam tempoh beberapa minit lagi."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
