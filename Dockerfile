@@ -5,4 +5,5 @@
 
 FROM quay.io/mozmar/kuma_base:latest
 COPY . /app
+RUN make localecompile
 RUN make build-static && rm -rf build
