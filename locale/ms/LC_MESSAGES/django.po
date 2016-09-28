@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 04:20+0000\n"
+"PO-Revision-Date: 2016-09-28 04:23+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1832,37 +1832,37 @@ msgstr "Saya setuju"
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Teruskan langkah berikut untuk libatkan diri dengan MDN!"
 
 #: kuma/users/views.py:454
 msgid "Email address"
-msgstr ""
+msgstr "Alamat e-mel"
 
 #: kuma/users/views.py:499
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Disahkan</b>"
 
 #: kuma/users/views.py:502
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Tidak disahkan"
 
 #: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
-msgstr ""
+msgstr "Lain:"
 
 #: kuma/users/views.py:508
 msgid "Email:"
-msgstr ""
+msgstr "E-mel:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Profil Tidak Aktif"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "Profil ini tidak aktif."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Email addresses"
