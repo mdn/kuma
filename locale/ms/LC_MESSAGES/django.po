@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 03:20+0000\n"
+"PO-Revision-Date: 2016-09-28 03:27+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1514,15 +1514,15 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "nama"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "nama kumpulan"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Carian Tidak Disediakan"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
@@ -1603,19 +1603,19 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
-msgstr ""
+msgstr "Semua Topik"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "Tapis mengikut"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Data yang diserah mengandungi kandungan tidak sah."
 
 #: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
-msgstr ""
+msgstr "Data yang diserah mengandungi kandungan tidak sah. Sila cuba lagi."
 
 #: kuma/spam/models.py:10
 msgid "created"
