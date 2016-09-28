@@ -110,8 +110,8 @@ push-kuma:
 push: push-base push-kuma
 
 tag-latest:
-	docker tag -f ${BASE_IMAGE} ${BASE_IMAGE_LATEST}
-	docker tag -f ${KUMA_IMAGE} ${KUMA_IMAGE_LATEST}
+	docker tag ${BASE_IMAGE} ${BASE_IMAGE_LATEST}
+	docker tag ${KUMA_IMAGE} ${KUMA_IMAGE_LATEST}
 
 push-latest: push tag-latest
 	docker push ${BASE_IMAGE_LATEST}
