@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 02:40+0000\n"
+"PO-Revision-Date: 2016-09-28 02:59+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1117,15 +1117,15 @@ msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Sekat IP daripada Mengedit"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "User agent:"
-msgstr ""
+msgstr "Ejen pengguna:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "Referrer:"
-msgstr ""
+msgstr "Perujuk:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
 #, python-format
@@ -1135,20 +1135,20 @@ msgstr "disekat %(ban_date)s oleh %(user)s"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Diserahkan sebagai %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s oleh %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
 msgid "Submit as:"
-msgstr ""
+msgstr "Serah sebagai:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
-msgstr ""
+msgstr "spam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
@@ -1170,13 +1170,13 @@ msgstr "Dapatkan e-mel apabila semakan Bahasa Malaysia diluluskan"
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "Hentikan e-mel apabila sedang menunggu semakan Bahasa Malaysia"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Dapatkan e-mel apabila sedang menunggu semakan Bahasa Malaysia"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -1194,47 +1194,47 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "Cari dalam dokumen"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "Papar topik"
 
 #: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr ""
+msgstr "Teknologi Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Platform"
-msgstr ""
+msgstr "Platform<br />Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Web APIs &amp; DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:75
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
 #: kuma/landing/jinja2/landing/homepage.html:76
 msgid "CSS3"
-msgstr ""
+msgstr "CSS3"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "selanjutnya..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Mozilla<br> Docs"
-msgstr ""
+msgstr "Dokumen<br> Mozilla"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "App Center"
-msgstr ""
+msgstr "Pusat App"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Alatan<br />Pembangun"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
@@ -1258,35 +1258,35 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
-msgstr ""
+msgstr "Dapatkan berita teknologi Web dari Mozilla, dapatkan bantuan daripada pembangun lain, dan banyak lagi!"
 
 #: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
-msgstr ""
+msgstr "Ketahui selanjutnya dan daftar!"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "Web Terbuka dan Mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Belajar Pembangunan Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Dapatkan Pelayar Untuk Pembangun Seperti Anda"
 
 #: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
-msgstr ""
+msgstr "Bina Apps Web Terbuka"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
-msgstr ""
+msgstr "<a href=\"http://hacks.mozilla.org\">baca selanjutnya di hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
-msgstr ""
+msgstr "Sertainya"
 
 #: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
