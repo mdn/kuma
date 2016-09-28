@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 15:03+0000\n"
+"PO-Revision-Date: 2016-09-28 15:20+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2126,6 +2126,8 @@ msgid_plural ""
 "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
 "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
+"Ada profil wujud dengan salah satu alamat e-mel dibawah. Anda sudah ada profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ya, sambung ke"
+" profil MDN saya</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
