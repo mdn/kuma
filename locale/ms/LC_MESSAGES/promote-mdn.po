@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-27 10:28+0000\n"
+"PO-Revision-Date: 2016-09-28 13:00+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -25,7 +25,7 @@ msgstr "Tetapan plugin disimpan."
 
 #: promote-mdn.php:245
 msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr ""
+msgstr "MDN ialah Kotak alatan Pembangun Web anda untuk dokumen, demo dan pelbagai lagi dalam HTML, CSS, JavaScript serta standard Web dan teknologi terbuka lain."
 
 #: promote-mdn.php:248
 msgid "MDN is the best online resource - for web developers, by web developers."
