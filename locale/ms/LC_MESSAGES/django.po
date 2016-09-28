@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 13:58+0000\n"
+"PO-Revision-Date: 2016-09-28 14:17+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1512,7 +1512,7 @@ msgstr "Carian tidak tersedia buat sementara waktu. Sila cuba lagi dalam beberap
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr ""
+msgstr "Ada kesilapan dengan pertanyaan carian. Sila cuba lagi dalam beberapa minit."
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -1529,25 +1529,25 @@ msgstr "Carian Tidak Disediakan"
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Cari dokumentasi Rangkaian Pembangun Mozilla"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr ""
+msgstr "Hasil Carian untuk \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr ""
+msgstr "diterjemah dari <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr ""
+msgstr "Carian Laman MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Hasil"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1577,22 +1577,22 @@ msgstr[0] "%(count)s dokumen ditemui dalam %(locale_native)s dan %(default_local
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
+msgstr[0] "%(count)s dokumen ditemui untuk \"%(query)s\"."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
+msgstr[0] "%(count)s dokumen ditemui."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Paparan semua hasil."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Paparan hasil %(start)s ke %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
@@ -1601,7 +1601,7 @@ msgstr "Cari lagi hanya dalam %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Dokumen"
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
@@ -2130,7 +2130,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
-msgstr ""
+msgstr "Anda boleh akses semua perkara dalam laman web MDN walaupun tanpa profil MDN. Walau bagaimanapun, dengan menyertai MDN, anda akan dapat edit dokumen dan memiliki halaman profil anda sendiri."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
@@ -2366,7 +2366,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Aktiviti Dokumen Terkini"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
@@ -2395,7 +2395,7 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
-msgstr ""
+msgstr "<p class=\"none\">Anda belum membuat sumbangan untuk apa-apa dokumen MDN. <a href=\"%(docs_url)s\">Sertainya!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
@@ -3368,7 +3368,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Masukkan hanya bahagian URL diikuti \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
@@ -3775,7 +3775,7 @@ msgstr[0] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr ""
+msgstr "Sesiapa yang ada profil MDN boleh edit dan membaiki ralat. Guna <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript panduan pencarisilapan</a> sebagai permulaan."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
