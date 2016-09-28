@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 13:00+0000\n"
+"PO-Revision-Date: 2016-09-28 13:20+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -203,7 +203,7 @@ msgstr "...dokumen selanjutnya"
 
 #: jinja2/base.html:155
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Dokumen Mozilla"
 
 #: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
@@ -262,7 +262,7 @@ msgstr "Cari"
 #: jinja2/base.html:205
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr ""
+msgstr "<p>&copy; 2005-%(thisyear)s Rangkaian Pembangun Mozilla dan penyumbang individu.</p> <p>Kandungan tersedia di bawah <a href=\"%(copyright_url)s\">lesen beriku</a>.</p>"
 
 #: jinja2/base.html:210
 msgid "About MDN"
@@ -659,7 +659,7 @@ msgstr "Fail jenis ini tidak dibenarkan."
 
 #: kuma/attachments/models.py:112
 msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
-msgstr ""
+msgstr "Jenis MIME digunakan apabila menyediakan lampiran. Diisi secara automatik oleh pemeriksaan fail semasa dimuat naik. Sila langkau jika perlu."
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
@@ -891,7 +891,7 @@ msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/utils.py:430
 #, python-format
@@ -1016,15 +1016,15 @@ msgstr "30 hari"
 
 #: kuma/dashboards/forms.py:23
 msgid "All Authors"
-msgstr ""
+msgstr "Semua Pengarang"
 
 #: kuma/dashboards/forms.py:24
 msgid "Known Authors"
-msgstr ""
+msgstr "Pengarang Ternama"
 
 #: kuma/dashboards/forms.py:25
 msgid "Unknown Authors"
-msgstr ""
+msgstr "Pengarang Tidak Diketahui"
 
 #: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
@@ -1048,11 +1048,11 @@ msgstr "Tarikh Tamat:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Tempoh Duluan:"
 
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
-msgstr ""
+msgstr "Pengarang"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1060,7 +1060,7 @@ msgstr "Papan Pemuka semakan"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
-msgstr ""
+msgstr "Pengarang:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
@@ -1097,7 +1097,7 @@ msgstr "Komen"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Author"
-msgstr ""
+msgstr "Pengarang"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
@@ -1180,17 +1180,19 @@ msgstr "Dapatkan e-mel apabila sedang menunggu semakan Bahasa Malaysia"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr ""
+msgstr "Program Fellowship rangkaian pembangun Mozilla (MDN) menjemput pembangun web bertaraf dunia untuk hadir mengubah dunia bersama Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
 " OS."
 msgstr ""
+"Rangkaian pembangun Mozilla (MDN) menyediakan maklumat perihal teknologi Web terbuka termasuk HTML, CSS dan APIs bagi kedua-dua Laman Web dan aplikasi HTML5. Juga dokumen produk Mozilla, seperti "
+"Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "Berkongsi pengetahuan <span>untuk Web Terbuka</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
