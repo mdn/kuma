@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-29 11:00+0000\n"
+"PO-Revision-Date: 2016-09-29 11:10+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -3257,25 +3257,25 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:330
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "Tag Dokumen dan Penyumbang"
 
 #: kuma/wiki/jinja2/wiki/document.html:336
 msgid "Contributors to this page:"
-msgstr ""
+msgstr "Penyumbang untuk halaman ini:"
 
 #: kuma/wiki/jinja2/wiki/document.html:342
 msgid "Last updated by:"
-msgstr ""
+msgstr "Terakhir dikemas kini oleh:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
 msgid "%(title)s | Edit Template"
-msgstr ""
+msgstr "%(title)s | Edit Templat"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
 #, python-format
 msgid "%(title)s | Edit Article"
-msgstr ""
+msgstr "%(title)s | Edit Artikel"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
@@ -3310,15 +3310,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
-msgstr ""
+msgstr "Hari"
 
 #: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
-msgstr ""
+msgstr "Jam"
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "Minit"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
@@ -3326,11 +3326,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Carian:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Terima kasih kerana meluangkan masa untuk memperbaiki MDN!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
@@ -3347,7 +3347,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "Belacar cara untuk tag artikel"
 
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
@@ -3472,11 +3472,11 @@ msgstr "ID semakan:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:29
 msgid "Created:"
-msgstr ""
+msgstr "Dicipta:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:33
 msgid "Creator:"
-msgstr ""
+msgstr "Pencipta:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
@@ -3497,11 +3497,11 @@ msgstr "Pinda ke semakan ini"
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
 msgid "Select language | %(document)s"
-msgstr ""
+msgstr "Pilih bahasa | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
-msgstr ""
+msgstr "Pilih bahasa untuk diterjemah ke:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:32
 #, python-format
@@ -3520,7 +3520,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
-msgstr ""
+msgstr "Terjemah Artikel | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
@@ -3529,7 +3529,7 @@ msgstr "Menterjemah artikel ke %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Terjemah Kandungan"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
@@ -3542,7 +3542,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Papar Sumber"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
@@ -3561,15 +3561,15 @@ msgstr "Terjemahan %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
-msgstr ""
+msgstr "Tag Terjemahan"
 
 #: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
-msgstr ""
+msgstr "Tag Bahasa Inggeris"
 
 #: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
-msgstr ""
+msgstr "Dokumen ini tiada tag."
 
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
@@ -3578,7 +3578,7 @@ msgstr "Tag %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
-msgstr ""
+msgstr "Nota Versi"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
@@ -3592,23 +3592,23 @@ msgstr ""
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "Papar Profil Pengguna:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Banding di MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Papar Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Edit Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Sejarah Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
@@ -3626,19 +3626,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "Bahasa"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
-msgstr ""
+msgstr "Tiada terjemahan wujud untuk artikel ini."
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "Add a translation"
-msgstr ""
+msgstr "Tambah terjemahan"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Watch"
@@ -3646,23 +3646,23 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
-msgstr ""
+msgstr "Sub-artikel baru"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
-msgstr ""
+msgstr "Klon artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
-msgstr ""
+msgstr "Pindah artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
-msgstr ""
+msgstr "Papar sebagai pentadbir"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
 msgid "Delete this article"
-msgstr ""
+msgstr "Hapus artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -3765,7 +3765,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr ""
+msgstr "TOC:"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
