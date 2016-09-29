@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-29 09:00+0000\n"
+"PO-Revision-Date: 2016-09-29 09:19+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2132,7 +2132,7 @@ msgstr[0] ""
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
-msgstr ""
+msgstr "Terima kasih kerana mendaftar masuk ke MDN dengan %(provider_name)s. Anda ada satu lagi langkah untuk sertai MDN: <strong>cipta profil MDN anda</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
@@ -2140,11 +2140,11 @@ msgstr "Anda boleh akses semua perkara dalam laman web MDN walaupun tanpa profil
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "Untuk tatacara profil MDN anda, sila <strong>pilih nama pengguna</strong>. Nama pengguna anda akan dipapar di MDN untuk mengenal pasti  sumbangan yang anda buat."
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "Untuk tatacara profil MDN anda, sila <strong>pilih nama pengguna dan alamat -emel</strong>. Nama pengguna anda akan dipapar di MDN untuk mengenal pasti  sumbangan yang anda buat."
 
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
@@ -2258,15 +2258,15 @@ msgstr "Anda tidak boleh sekat diri sendiri kerana spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
-msgstr ""
+msgstr "Serah Spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
-msgstr ""
+msgstr "Sekat Pengguna kerana Spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 msgid "Ban User for Spam & Submit Spam"
-msgstr ""
+msgstr "Sekat Pengguna kerana Spam & Serah Spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
@@ -2290,7 +2290,7 @@ msgstr "Disekat:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 msgid "Submitted to Akismet as spam:"
-msgstr ""
+msgstr "Diserah ke Akismet sebagai spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 msgid "The user did not have any revisions that were reported as spam."
@@ -2332,7 +2332,7 @@ msgstr "Semakan dilangkau kerana semakan non-spam yang lebih baru:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 msgid "Could not submit to Akismet:"
-msgstr ""
+msgstr "Tidak dapat diserah ke Akismet:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 msgid "Could not delete:"
@@ -2971,7 +2971,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
 msgid "Data submitted to Akismet"
-msgstr ""
+msgstr "Data diserah ke Akismet"
 
 #: kuma/wiki/models.py:1870
 msgid "Akismet submission"
@@ -3849,6 +3849,8 @@ msgid ""
 "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
 "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Serahan anda ada kandungan yang mungkin tidak sesuai untuk MDN. Percubaan berulang kali untuk serah bahan yang tidak sesuai boleh menyebabkan akaun anda dinyahaktifkan. Rujuk panduan kami \"<a "
+"href=\"%(does_this_belong_url)s\">Adakah ini terkandung dalam MDN?</a>\" untuk butiran mengenai bahan yang dianggap sesuai."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -3858,7 +3860,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
-msgstr ""
+msgstr "Jika anda seorang moderator spam, anda boleh <a href=\"%(akismet_submission_url)s\" target=\"_blank\">tanda serahan ini sebagai ham</a> dan cuba serahkannya sekali lagi."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
