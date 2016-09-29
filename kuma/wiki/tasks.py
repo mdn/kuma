@@ -220,17 +220,32 @@ def move_page(locale, slug, new_slug, email):
 
     full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
 
-    message = """
+    # Get the parent document, if parent doc is None, it means its the parent document
+    parent_doc = doc.parent or doc
+
+    other_locale_urls = [settings.SITE_URL + translation.get_absolute_url()
+                         for translation in parent_doc.translations.exclude(locale=doc.locale)
+                                                                   .order_by('locale')]
+
+    # If the document is a translation we should include the parent document url to the list
+    if doc.parent:
+        other_locale_urls = [settings.SITE_URL + doc.parent.get_absolute_url()] + other_locale_urls
+
+    message = textwrap.dedent("""
         Page move completed.
 
         The move requested for the document with slug %(slug)s in locale
         %(locale)s, and all its children, has been completed.
 
+        The following localized articles may need to be moved also:
+        %(locale_urls)s
+
         You can now view this document at its new location: %(full_url)s.
-    """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
+    """) % {'slug': slug, 'locale': locale, 'full_url': full_url,
+            'locale_urls': '\n'.join(other_locale_urls)}
 
     send_mail(subject,
-              textwrap.dedent(message),
+              message,
               settings.DEFAULT_FROM_EMAIL,
               [user.email])
 
