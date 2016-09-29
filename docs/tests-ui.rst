@@ -1,7 +1,17 @@
 Client-side Testing with Intern
 ===============================
+From 2014 to 2016, we used Intern_ for client-side testing. It uses Selenium
+WebDriver API which lets us write automated testing via JavaScript. Intern is
+an open source project created and maintained by SitePen_.
 
-We use `Intern <https://theintern.github.io/>`_ for client-side testing. It uses Selenium WebDriver API which lets us write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
+In 2016, we started to convert our client-side tests to Python, to standardize
+on common Mozilla QA processes, and as part of an effort to add client-side
+tests to the development pipline.  The Intern tests described here are no
+longer run for development and deployment, and have not been updated for the
+Docker development environment.
+
+.. _SitePen: http://sitepen.com
+.. _Intern: https://theintern.github.io/
 
 Installing Dependencies
 -----------------------

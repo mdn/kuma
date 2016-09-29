@@ -54,22 +54,23 @@ Celery processes tasks with one or more workers. In Kuma, the workers and web
 processes share a code base, so that Django models, functions, and settings are
 available to async tasks, and web code can easily schedule async tasks.
 
-In Vagrant, the worker process is started with the ``foreman`` command.  In
-Docker, the worker process runs in the ``worker`` service / container.
+In Docker, the worker process runs in the ``worker`` service / container.
+
+In Vagrant, the worker process is started with the ``foreman`` command.
 
 Broker
 ------
 Celery requires a `message broker`_ for task communication. There are two stable,
 production-ready alternatives:
 
-* RabbitMQ_ is an AMQP_ message broker written in Erlang_. The Celery team has
-  recommended it for a long time, and the docs describe it as
-  "feature-complete, stable, durable and easy to install". It is used in the
-  Vagrant and production environments.
 * Redis_ is an in-memory data structure store, used as database, cache and
   message broker.  Many projects use it for multiple roles in the same
   deployment. With Celery 3.1, it is now recommended as a `stable broker`_,
   with some caveats_. It is used in the Docker environment.
+* RabbitMQ_ is an AMQP_ message broker written in Erlang_. The Celery team has
+  recommended it for a long time, and the docs describe it as
+  "feature-complete, stable, durable and easy to install". It is used in the
+  Vagrant and production environments.
 
 .. _AMQP: https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
 .. _Celery: http://celeryproject.org/
@@ -117,11 +118,13 @@ Celery task workers generate events to communicate task and worker health.  The
 captures these events and stores them in the database.  Switching to a
 supported project, like Flower_, is tracked in bug 1268281.
 
-In the Vagrant environment, ``celerycam`` is started with other Kuma services
-with ``foreman``.  It is not part of the default Docker services, but can be
-started inside the ``worker`` service container with::
+It is not part of the default Docker services, but can be started inside the
+``worker`` service container with::
 
     ./manage.py celerycam --freq=2.0
+
+In the Vagrant environment, ``celerycam`` is started with other Kuma services
+with ``foreman``.
 
 For more options, see the `Monitoring and Management Guide`_ in the Celery
 documentation.

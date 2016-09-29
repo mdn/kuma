@@ -10,7 +10,7 @@ Fixing Docker Issues
 ********************
 The Docker development environment is evolving rapidly. You may need to reset
 your containers with each change. As we gain experience with Docker, we'll
-have more and targetted advice for issues with this development environment.
+have more and targeted advice for issues with this development environment.
 
 Kuma "Reset"
 ------------

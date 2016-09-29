@@ -8,10 +8,10 @@ Kuma uses Elasticsearch_ to power its on-site search.
 Installed Version
 =================
 Elasticsearch `releases new versions often`_, and Kuma is slow to upgrade.  The
-Vagrant and Docker environments use 1.7, but production is older.
+Docker and Vagrant environments use 1.7, but production is older.
 
 The Kuma search tests use the configured Elasticsearch, and can be run inside
-the Vagrant VM or the ``web`` Docker container to confirm the engine works::
+the ``web`` Docker container or the Vagrant VM to confirm the engine works::
 
     py.test kuma/search/
 
@@ -62,7 +62,7 @@ Elasticsearch as well.
 
 Using the shell
 ---------------
-Inside the Vagrant VM or ``web`` Docker container::
+Inside the ``web`` Docker container or Vagrant VM::
 
     ./manage.py reindex
 
