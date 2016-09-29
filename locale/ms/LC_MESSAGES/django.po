@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-29 09:19+0000\n"
+"PO-Revision-Date: 2016-09-29 09:40+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2149,16 +2149,16 @@ msgstr "Untuk tatacara profil MDN anda, sila <strong>pilih nama pengguna dan ala
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
-msgstr ""
+msgstr "Jika anda <strong>menghadapi masalah</strong> mendaftar masuk atau mencipta profil MDN, <strong><a href=\"%(bug_href)s\" rel=\"external\">maklumkan kepada kami</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "Nama pengguna GitHub anda %(username)s sudah digunakan. Sila pilih nama lain."
 
 #: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
-msgstr ""
+msgstr "Sila masukkan nama yang anda mahu paparkan kepada pengguna lain untuk mengenal pasti sumbangan anda."
 
 #: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
@@ -2166,6 +2166,8 @@ msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
 msgstr ""
+"Satu profile telah wujud dengan alamat e-mel yang dipilih. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Sambungkan ke akaun %(provider_name)s "
+"anda itu.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
@@ -2173,6 +2175,8 @@ msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
 "href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
+"Apa alamat e-mel yang perlu kami guna untuk menghantar mesej dan notifikasi berkaitan MDN? Alamat ini akan <strong>not</strong> dipapar di MDN dan akan digunakan mengikut <a "
+"href=\"%(privacy_url)s\">polisi privasi</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
@@ -2270,7 +2274,7 @@ msgstr "Sekat Pengguna kerana Spam & Serah Spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "Pengguna disekat kerana alasan lain."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
@@ -2278,11 +2282,11 @@ msgstr "Pengguna masih tiada membuat semakan untuk dipinda sejak tiga hari lalu,
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "Ringkasan"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
-msgstr ""
+msgstr "Tindakan Diambil"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
@@ -2298,7 +2302,7 @@ msgstr "Pengguna ini tiada membuat semakan yang dilaporkan sebagai spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
-msgstr ""
+msgstr "Dihapuskan:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
@@ -2306,7 +2310,7 @@ msgstr "Pengguna ini tiada membuat semakan yang dihapuskan."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
-msgstr ""
+msgstr "Dipinda:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 msgid "The user did not have any revisions that were reverted."
@@ -2314,17 +2318,17 @@ msgstr "Pengguna ini tiada membuat semakan yang dipinda."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
-msgstr ""
+msgstr "Perlu susulan"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
-msgstr ""
+msgstr "Tindakan baru oleh pengguna:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
 msgid "None."
-msgstr ""
+msgstr "Tiada."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
@@ -2336,15 +2340,15 @@ msgstr "Tidak dapat diserah ke Akismet:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 msgid "Could not delete:"
-msgstr ""
+msgstr "Tidak boleh hapus:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
-msgstr ""
+msgstr "Tidak boleh pinda:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 msgid "No actions taken"
-msgstr ""
+msgstr "Tiada tindakan diambil"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
@@ -3325,7 +3329,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:167
 msgid "Don't be afraid to break something, you can always revert your changes."
-msgstr ""
+msgstr "Jangan takut tersilap, anda boleh pinda perubahan yang anda buat."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
@@ -4070,7 +4074,7 @@ msgstr ""
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr ""
+msgstr "Dokumen sudah wujud. Nota: Anda tidak boleh pinda dokumen yang telah dialih sehingga anda hapus hala semula."
 
 #: kuma/wiki/views/document.py:607
 #, python-format
