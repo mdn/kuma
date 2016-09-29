@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-29 09:40+0000\n"
+"PO-Revision-Date: 2016-09-29 10:00+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2356,11 +2356,11 @@ msgstr "Semakan terakhir adalah non-spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Telah dikenal pasti sebagai spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
-msgstr ""
+msgstr "Dikenal pasti sebagai bukan spam:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2372,7 +2372,7 @@ msgstr "Anda telah disekat berdasarkan alasan berikut:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
-msgstr ""
+msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik sini here</a> untuk merayu sekatan ini.</p>"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2380,27 +2380,27 @@ msgstr "Aktiviti Dokumen Terkini"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
-msgstr ""
+msgstr "Papar semua aktiviti"
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
-msgstr ""
+msgstr "Halaman"
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Tarikh"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
 msgid "Edit page"
-msgstr ""
+msgstr "Edit halaman"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
-msgstr ""
+msgstr "Papar perbezaan lengkap"
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
 msgid "View page history"
-msgstr ""
+msgstr "Papar sejarah halaman"
 
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
@@ -2409,86 +2409,88 @@ msgstr "<p class=\"none\">Anda belum membuat sumbangan untuk apa-apa dokumen MDN
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr ""
+msgstr "Pengguna ini tiada aktiviti."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Edit Profil Anda"
 
 #: kuma/users/jinja2/users/user_edit.html:36
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Tukar avatar anda di"
 
 #: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
-msgstr ""
+msgstr "Papar profil"
 
 #: kuma/users/jinja2/users/user_edit.html:48
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Anda sedang mengedit profil lain yang bukan milik anda. Sila berhati-hati!"
 
 #: kuma/users/jinja2/users/user_edit.html:59
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
+"Kami suka apabila dapat maklum balas mengenai perubahan laman! Penguji Beta boleh mengakses ciri-ciri baru terlebih dahulu dan kami akan hantar e-mel berkala untuk meminta bantuan mereka menguji "
+"perkara tertentu."
 
 #: kuma/users/jinja2/users/user_edit.html:62
 msgid "Primary Email"
-msgstr ""
+msgstr "E-mel Utama"
 
 #: kuma/users/jinja2/users/user_edit.html:63
 msgid "Edit email"
-msgstr ""
+msgstr "Edit e-mel"
 
 #: kuma/users/jinja2/users/user_edit.html:75
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Minat (tag)"
 
 #: kuma/users/jinja2/users/user_edit.html:76
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
-msgstr ""
+msgstr "Asingkan tag dengan tanda koma atau ruang. Sertai tag berbilang-perkataan dengan petikan berganda, contoh \"standard web\"."
 
 #: kuma/users/jinja2/users/user_edit.html:82
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Bidang kepakaran"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Add your interests first, then declare yourself an expert in selected topics."
-msgstr ""
+msgstr "Tambah minat anda terlebih dahulu, kemudian perkenalkan diri anda sebagai pakar dalam topik yang dipilih."
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid "My Profiles"
-msgstr ""
+msgstr "Profil Saya"
 
 #: kuma/users/jinja2/users/user_edit.html:94 kuma/users/jinja2/users/user_edit.html:111
 msgid "Change"
-msgstr ""
+msgstr "Tukar"
 
 #: kuma/users/jinja2/users/user_edit.html:101
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "Guna akaun Persona anda untuk mendaftar masuk."
 
 #: kuma/users/jinja2/users/user_edit.html:118
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Guna akaun GitHub anda untuk mendaftar masuk."
 
 #: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Publish"
-msgstr ""
+msgstr "Terbitkan"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Hai %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr ""
+msgstr "Terima kasih kerana mencipta profil <a href=\"%(mdn_link)s\">Rangkaian pembangun Mozilla (MDN)</a> - sebuah komuniti yang menghasilkan sumber hebat untuk pembangun seperti anda."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr ""
+msgstr "Anda telah lengkapkan langkah pertama <a href=\"%(started_link)s\">Mulakan MDN</a> dengan mencipta profil."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
