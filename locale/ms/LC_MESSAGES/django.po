@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-29 10:19+0000\n"
+"PO-Revision-Date: 2016-09-29 10:40+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2602,16 +2602,18 @@ msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
 msgstr ""
+"Anda boleh cari pentadbir kakitangan bahagian penulisan MDN di sana: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), "
+"dan saya (jms), pengurus komuniti MDN."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "Blog: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "Telah dilaporkan sebagai spam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
@@ -2619,28 +2621,28 @@ msgstr "Pengguna ini tidak membuat semakan sejak tiga hari lalu."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
-msgstr ""
+msgstr "Edit"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
-msgstr ""
+msgstr "Lanjutan"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:28
 msgid "Manage"
-msgstr ""
+msgstr "Urus"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:31
 msgid "API keys"
-msgstr ""
+msgstr "Kekunci API"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:65
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Bidang Kepakaran"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:107
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Menjadi anggota sejak %(date_joined)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
@@ -2657,87 +2659,87 @@ msgstr "Bersihkan Semakan"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
-msgstr ""
+msgstr "Sekat Pengguna"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "Sekat Pengguna & Bersihkan"
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
-msgstr ""
+msgstr "Pentadbir"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Teknikal - sampel kod, APIs atau teknologi"
 
 #: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Editorial - prosa, tatabahasa atau kandungan"
 
 #: kuma/wiki/constants.py:215
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Lokalisasi sedang berjalan - belum diterjemahkan sepenuhnya lagi."
 
 #: kuma/wiki/content.py:720
 msgid "Edit section"
-msgstr ""
+msgstr "Edit bahagian"
 
 #: kuma/wiki/events.py:72
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr ""
+msgstr "[MDN] Halaman \"%(document_title)s\" diubah oleh %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
-msgstr ""
+msgstr "Dokumen MDN"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr ""
+msgstr "Dokumen dikarang oleh pengguna MDN"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "Perubahan dokumen terkini MDN"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Perubahan terkini dokumen MDN"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr ""
+msgstr "Perubahan terkini dokumen MDN tag %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Dokumen MDN perlu semakan"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "Perubahan terkini dokumen MDN yang perlu disemak"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr ""
+msgstr "Dokumen MDN untuk semakan %s"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr ""
+msgstr "Dokumen MDN untuk semakan"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr ""
+msgstr "Terjemahan MDN '%s' perlu dikemas kini"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
@@ -2749,66 +2751,66 @@ msgstr "Semakan terkini dokumen MDN"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "Papar perbandingan"
 
 #: kuma/wiki/forms.py:35
 msgid "Please provide a title."
-msgstr ""
+msgstr "Sila beri tajuk."
 
 #: kuma/wiki/forms.py:36
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Tajuk terlalu pendek (%(show_value)s aksara). Sekurang-kurangnya mesti ada %(limit_value)s aksara."
 
 #: kuma/wiki/forms.py:38
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Sila pastikan panjang tajuk hanya %(limit_value)s aksara atau kurang. Sekarang %(show_value)s aksara."
 
 #: kuma/wiki/forms.py:41
 msgid "Name Your Article"
-msgstr ""
+msgstr "Nama Artikel Anda"
 
 #: kuma/wiki/forms.py:42
 msgid "Please provide a slug."
-msgstr ""
+msgstr "Sila sediakan slug."
 
 #: kuma/wiki/forms.py:43
 msgid "The slug provided is not valid."
-msgstr ""
+msgstr "Slug yang disediakan tidak sah."
 
 #: kuma/wiki/forms.py:44
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Slug terlalu pendek (%(show_value)s aksara). Sekurang-kurangnya mesti ada %(limit_value)s aksara."
 
 #: kuma/wiki/forms.py:46
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Sila pastikan panjang slug hanya %(limit_value)s aksara atau kurang. Sekarang %(show_value)s aksara."
 
 #: kuma/wiki/forms.py:49
 msgid "Please provide a summary."
-msgstr ""
+msgstr "Sila beri ringkasan."
 
 #: kuma/wiki/forms.py:50
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Ringkasan terlalu pendek (%(show_value)s aksara). Sekurang-kurangnya mesti ada %(limit_value)s aksara."
 
 #: kuma/wiki/forms.py:52
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Sila pastikan panjang ringkasan hanya %(limit_value)s aksara atau kurang. Sekarang %(show_value)s aksara."
 
 #: kuma/wiki/forms.py:55
 msgid "Please provide content."
-msgstr ""
+msgstr "Sila beri kandungan."
 
 #: kuma/wiki/forms.py:56
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Kandungan terlalu pendek (%(show_value)s aksara). Sekurang-kurangnya mesti ada %(limit_value)s aksara."
 
 #: kuma/wiki/forms.py:58
 #, python-format
