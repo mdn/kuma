@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-30 02:01+0000\n"
+"PO-Revision-Date: 2016-09-30 02:20+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -3235,11 +3235,11 @@ msgstr "Artikel ini perlu semakan editorial. <a href=\"%(url)s\">Cara untuk anda
 #: kuma/wiki/jinja2/wiki/document.html:283
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr ""
+msgstr "Terjemahan ini belum lengkap. Sila bantu <a href=\"%(translate_url)s\">terjemahkan artikel ini</a> daripada Bahasa Inggeris."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Terjemahan ini sedang dijalankan."
 
 #: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
@@ -3253,11 +3253,11 @@ msgstr "Artikel ini masih belum ada kandungan lagi."
 #: kuma/wiki/jinja2/wiki/document.html:309
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr ""
+msgstr "Cari <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">halaman yang menggunakan %(title)s</a> untuk melihat contoh pengunaan huruf dan bilangan halaman yang menggunakan mikro ini."
 
 #: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
-msgstr ""
+msgstr "Artikel ini masih belum ada kandungan yang diluluskan lagi."
 
 #: kuma/wiki/jinja2/wiki/document.html:330
 msgid "Document Tags and Contributors"
@@ -3286,10 +3286,12 @@ msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
+"Sila semak perbezaan antara perubahan yang anda buat dengan perubahan yang disimpan bermula sejak anda mengedit. Anda boleh simpan lagi, tetapi cuba pinda dahulu apa jua konflik secara manual supaya"
+" perubahan yang anda buat sejak mula tadi tidak hilang."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "Anda Mengubah"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
@@ -3302,15 +3304,15 @@ msgstr "Semakan Semasa:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
-msgstr ""
+msgstr "Ringkasan hasil carian:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
-msgstr ""
+msgstr "Edit Tajuk Halaman dan Keterangan"
 
 #: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Nyatakan tempoh maksimum:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
@@ -3326,7 +3328,7 @@ msgstr "Minit"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
-msgstr ""
+msgstr "Cari sumber terjemahan dengan carian di bawah dan kemudian klik \"Terbit.\""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
@@ -3339,7 +3341,7 @@ msgstr "Terima kasih kerana meluangkan masa untuk memperbaiki MDN!"
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
-msgstr ""
+msgstr "Ini sumbangan anda yang pertama di MDN. Anda boleh cari jawapan untuk persoalan mengedit yang lazim dalam <a target=\"_blank\" href=\"%(url)s\">Panduan Editor</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:167
 msgid "Don't be afraid to break something, you can always revert your changes."
@@ -3347,7 +3349,7 @@ msgstr "Jangan takut tersilap, anda boleh pinda perubahan yang anda buat."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Bergembiralah dan bangga dengan sumbangan anda!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
