@@ -12,16 +12,17 @@ Contents:
    :maxdepth: 2
 
    installation
-   installation-docker
    development
-   feature-toggles
-   tests
-   tests-ui
-   tests-performance
    troubleshooting
+   tests
+   feature-toggles
 
    celery
    elasticsearch
    localization
    ckeditor
    documentation
+
+   installation-vagrant
+   tests-ui
+   tests-performance

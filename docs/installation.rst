@@ -1,276 +1,296 @@
+=======================
+Installation via Docker
+=======================
+Starting in 2016, we support using `Docker`_ for local development, and we are
+transitioning to Docker for integration testing and deployment as well.
+
+.. _Docker: https://www.docker.com/
+
+**Current Status**:
+
+* Kuma developers are using Docker for daily development and maintenance tasks.
+  Staff developers primarily use `Docker for Mac`_.  Other staff
+  members and contributors use `Docker's Ubuntu packages`_.
+* When the master branch is updated, the ``kuma_base`` image is refreshed and
+  published to `quay.io`_.  This image contains system packages and
+  third-party libraries.
+* The Docker development environment is evolving rapidly, to address issues
+  found during development and to move toward a containerized design. You may
+  need to regularly reset your environment to get the current changes.
+* The Docker environment doesn't yet support everything from the Vagrant
+  environment, such as local SSL development and automatic asset compiling.
+* We are documenting tips and tricks on the 
+  :doc:`Troubleshooting page <troubleshooting>`.
+
+.. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
+.. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
+.. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
+
+Docker setup
 ============
-Installation
-============
 
-Core developers run Kuma in a `Vagrant`_-managed virtual machine so we can run
-the entire MDN stack. (Django, KumaScript, Search, Celery, etc.)
-If you're on Mac OS X or Linux and looking for a quick way to get started, you
-should try these instructions.
+#. Install the `Docker platform`_, following Docker's instructions for your
+   operating system (`Docker for Mac`_ for MacOS,
+   `Docker's Ubuntu packages`_ etc.).
 
-We are moving to a Docker-based deployment, in both development and production.
-This work is still in progress.
-If you are more familiar with Docker view the :doc:`Docker setup instructions <installation-docker>`.
+   .. _Docker platform: https://www.docker.com/products/overview
 
-.. note:: **If you have problems getting vagrant up**, check Errors_ below.
+#. Clone the kuma Git repository, if you haven't already::
 
-.. _vagrant: http://vagrantup.com/
-.. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
+        git clone --recursive git@github.com:mozilla/kuma.git
 
-Install and run everything
-==========================
+#. Ensure you are in the existing or newly cloned kuma working copy::
 
-#. Install VirtualBox >= 5.0.x from http://www.virtualbox.org/
+        cd kuma
 
-   .. note:: (Windows) After installing VirtualBox you need to set
-              ``PATH=C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe;``
+#. Pull the Docker images and build the containers::
 
-#. Install Vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
+        docker-compose pull
+        docker-compose build
 
-#. Install `Ansible <http://docs.ansible.com/>`_ >= 1.9.x on your machine so that
-   Vagrant is able to set up the VM the way we need it.
+#. Start the containers in the background::
 
-   See the `Ansible Installation docs <http://docs.ansible.com/intro_installation.html>`_
-   for which way to use on your computer's platform.
+        docker-compose up -d
 
-   The most common platforms:
+The following instructions assume that you are running from a folder named
+``kuma``, so that the containers created are named ``kuma_web_1``,
+``kuma_worker_1``, etc.  If you run from another folder, like ``mdn``, the
+containers will be named ``mdn_web_1``, ``mdn_worker_1``, etc. Adjust the
+command accordingly, or force the ``kuma`` name with::
 
-   Mac OS X::
+        docker-compose up -d -p kuma
 
-       brew install ansible
+Provision the database
+======================
+There are two options for provisioning the database.  One option is to
+initialize a new, empty database, and another is to restore an existing
+database from a data dump.
 
-   or if you have a globally installed pip::
+Initialize a new database
+-------------------------
+To initialize a fresh database, run the migrations::
 
-       sudo pip install ansible
+    docker exec -it kuma_web_1 ./manage.py migrate
 
-   Ubuntu::
+It will run the standard Django migrations, with output similar to::
 
-       $ sudo apt-get install software-properties-common
-       $ sudo apt-add-repository ppa:ansible/ansible
-       $ sudo apt-get update
-       $ sudo apt-get install ansible
+    Operations to perform:
+      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
+      Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
+    Synchronizing apps without migrations:
+      Creating tables...
+    ...
+      Applying wiki.0030_add_page_creators_group... OK
+      Applying wiki.0031_add_data_to_revisionip... OK
 
-   Fedora / RPM-based distribution::
+The database will be populated with empty tables.
 
-       $ sudo dnf install ansible.noarch
+Restore an existing database
+----------------------------
+To restore a gzipped-database dump ``kuma.sql.gz``::
 
-   For previous versions based on yum, use::
+    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < kuma.sql.gz
 
-       $ sudo yum install ansible.noarch
+There will be no output until the database is loaded, which may take several
+minutes depending on the size of the data dump.
 
-   Windows:
+This command can be adjusted to restore from an uncompressed database, or
+directly from a ``mysqldump`` command.
 
-   Installation on Windows is complicated but we strive to make it easier
-   in the future. Until then see this blog post for how to
-   `Run Vagrant with Ansible Provisioning on Windows <http://www.azavea.com/blogs/labs/2014/10/running-vagrant-with-ansible-provisioning-on-windows/>`_
+Compile locales
+===============
+Localized string databases are included in their source form, and need to be
+compiled to their binary form::
 
-#. Fork the project. (See `GitHub <https://help.github.com/articles/fork-a-repo#step-1-fork-the-spoon-knife-repository>`_)
+    docker exec -i kuma_web_1 make localecompile
 
-#. Clone your fork of Kuma and update submodules::
+Dozens of lines of warnings will be printed::
 
-       git clone git@github.com:<your_username>/kuma.git
-       cd kuma
-       git submodule update --init --recursive
+    cd locale; ./compile-mo.sh . ; cd --
+    ./af/LC_MESSAGES/django.po:2: warning: header field 'PO-Revision-Date' still has the initial default value
+    ./af/LC_MESSAGES/django.po:2: warning: header field 'Last-Translator' still has the initial default value
+    ...
+    ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'PO-Revision-Date' still has the initial default value
+    ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'Last-Translator' still has the initial default value
 
-#. Start the VM and install everything. (approx. 15 minutes on a fast net connection).::
+Warnings are OK, and will be fixed as translators update the strings on
+Pontoon_.  If there is an error, the output will end with the error, such as::
 
-      vagrant up
+    ./az/LC_MESSAGES/django.po:263: 'msgid' and 'msgstr' entries do not both end with '\n'
+    msgfmt: found 1 fatal error
 
-   .. note::
+These need to be fixed by a Kuma developer. Notify then in the #mdndev IRC
+channel or open a bug. You can continue with installation, but non-English
+locales will not be localized.
 
-    VirtualBox creates VMs in your system drive. Kuma's VM is
-    approx. 2GB. If it won't fit on your system drive, you will need
-    to `change that directory to another drive <http://emptysquare.net/blog/moving-virtualbox-and-vagrant-to-an-external-drive/>`_.
+.. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 
-   At the end, you should see something like::
+Generate static assets
+======================
+Static assets such as CSS and JS are included in source form, and need to be
+compiled to their final form::
 
-      PLAY RECAP ********************************************************************
-      developer-local            : ok=147  changed=90   unreachable=0    failed=0
+    docker exec -i kuma_web_1 make build-static
 
-      ==> developer-local: Configuring cache buckets...
+A few thousand lines will be printed, like::
 
-   If the above process fails with an error, check `Errors`_.
+    ## Compiling Stylus files to CSS ##
+    compiled build/assets/css/dashboards.css
+    generated build/assets/css/dashboards.css.map
+    ...
+    Post-processed 'css/zones.css' as 'css/zones.718d56a0cdc0.css'
+    Post-processed 'css/zones.css.map' as 'css/zones.css.6be0969a4847.map'
 
-#. Log into the VM with ssh::
+    1717 static files copied to '/app/static', 1799 post-processed.
 
-       vagrant ssh
-
-#. Use ``foreman`` inside the VM to start all site services::
-
-       foreman start
-
-   You should see output like::
-
-       20:32:59 web.1        | started with pid 2244
-       20:32:59 celery.1     | started with pid 2245
-       20:32:59 kumascript.1 | started with pid 2246
-       20:32:59 stylus.1     | started with pid 2247
-       ...
-
-#. Visit https://mdn-local.mozillademos.org/ and add an exception for the security certificate if prompted.
-
-#. Visit the homepage at https://developer-local.allizom.org
-
-#. You've installed Kuma!
-
-   Continue reading to create an admin user and enable the wiki.
-
-.. _create a user:
+Visit the Homepage
+==================
+Open the homepage at http://localhost:8000 . You've installed Kuma!
 
 Create an admin user
 ====================
+Many Kuma settings require access to the Django admin, including
+configuring social login.  It is useful to create an admin account with
+password access for local development.
 
-You will want to make yourself an admin user to enable important site features.
+If you want to create a new admin account, use ``createsuperuser``::
 
-#. Sign up/in with Persona
+    docker exec -it kuma_web_1 ./manage.py createsuperuser
 
-#. After you sign in, SSH into the VM and make yourself an admin (exchange
-   ``<< YOUR_USERNAME >>`` with the username you used when signing up for
-   Persona)::
+This will prompt you for a username, email address (a fake address like
+``admin@example.com`` will work), and a password.
 
-      vagrant ssh
-      python manage.py ihavepower "<< YOUR_USERNAME >>"
+If your database has an existing account that you want to use, use the Django
+shell, similar to this::
 
-   You should see::
+    docker exec -it kuma_web_1 ./manage.py shell_plus
+    >>> me = User.objects.get(username='admin_username')
+    >>> me.set_password('mypassword')
+    >>> me.is_superuser = True
+    >>> me.is_staff = True
+    >>> me.save()
+    >>> exit()
 
-      Done!
+With a password-enabled admin account, you can log into Django admin at
+http://localhost:8000/admin/login/
+
+.. _Disable your admin password:
+
+When social accounts are enabled, the password can be disabled with the Django
+shell::
+
+    docker exec -it kuma_web_1 ./manage.py shell_plus
+    >>> me = User.objects.get(username='admin_username')
+    >>> me.set_unusable_password()
+    >>> me.save()
+    >>> exit()
 
 Enable the wiki
 ===============
+By default, the wiki is disabled with a
+:doc:`feature toggle <feature-toggles>`.  To enable editing:
 
-By default, the wiki is disabled with a :doc:`feature toggle <feature-toggles>`.
-So, you need to create an admin user, sign in, and then use
-`the Django admin site`_ to enable the wiki so you can create pages.
-
-#. As the admin user you just created, visit the `waffle section`_ of the admin
-   site.
-
-#. Click "`Add flag`_".
-
+#. Log in as an admin user.
+#. Open the `Waffle / Flags`_ section of the admin site.
+#. Click "`ADD FLAG`_", above the Filter sidebar.
 #. Enter "kumaediting" for the Name.
+#. Set "Everyone" to "Yes".
+#. Click "SAVE" at the bottom of the page.
 
-#. Set "Everyone" to "Yes"
+If you are using a populated database, the "kumaediting" flag may already
+exist.
 
-#. Click "Save".
+You can now visit http://localhost:8000/docs/new to create new wiki pages.
 
-.. _the Django admin site: https://developer-local.allizom.org/admin/
-.. _waffle section: https://developer-local.allizom.org/admin/waffle/
-.. _Add flag: https://developer-local.allizom.org/admin/waffle/flag/add/
+Many contributors use a a personal page as a testing sandbox, with a title
+such as "User:myusername".
 
-You can now visit `https://developer-local.allizom.org/docs/new
-<https://developer-local.allizom.org/docs/new>`_ to create new wiki pages as
-needed.
+.. _Waffle / Flags: http://localhost:8000/admin/waffle/flag/
+.. _ADD FLAG: http://localhost:8000/admin/waffle/flag/add/
 
-Many core MDN contributors create a personal ``User:<username>`` page as a
-testing sandbox.
-
-.. _enable KumaScript:
-
-(Advanced) Enable KumaScript
-============================
-
-By default, `KumaScript`_ is also disabled with a :doc:`feature toggle <feature-toggles>`.
+Enable KumaScript
+=================
+By default, `KumaScript`_ is disabled by the default timeout of `0.0` seconds.
 To enable KumaScript:
 
-#. Sign in as the admin user
-#. Visit the `constance config admin panel`_
-#. Change ``KUMASCRIPT_TIMEOUT`` to 600
-#. Click "Save" at the bottom
-#. Import the `KumaScript auto-loaded modules`_::
+#. Log in as the admin user.
+#. Open the `Constance / Config`_ section of the admin site.
+#. Change ``KUMASCRIPT_TIMEOUT`` to 600.
+#. Click "SAVE" at the bottom of the page.
+#. Import the `KumaScript auto-loaded modules`_:
 
-    vagrant ssh
-    python manage.py import_kumascript_modules
+::
 
-.. note:: You must `create a user`_ to import kumascript modules.
+   docker exec -it kuma_web_1 ./manage.py import_kumascript_modules
 
 .. _KumaScript: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/KumaScript
-.. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
+.. _Constance / Config: http://localhost:8000/admin/constance/config/
 .. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
 
-.. _GitHub Auth:
 
-(Advanced) Enable GitHub Auth
-=============================
+Enable GitHub Auth
+==================
+To enable GitHub authentication, you'll need to
+`register an OAuth application on GitHub`_, with settings like:
 
-To enable GitHub authentication ...
-
-`Register your own OAuth application on GitHub`_:
-
-* Application name: MDN (<username>)
-* Homepage url: https://developer-local.allizom.org/docs/MDN/Contribute/Howto/Create_an_MDN_account
+* Application name: MDN Development for (<username>)
+* Homepage URL: http://localhost:8000/
 * Application description: My own GitHub app for MDN!
-* Authorization callback URL: https://developer-local.allizom.org/users/github/login/callback/
+* Authorization callback URL: http://localhost:8000/users/github/login/callback/
 
-As the admin user, `add a django-allauth social app`_ for GitHub:
+As an admin user, `add a django-allauth social app`_ for GitHub:
 
 * Provider: GitHub
-* Name: developer-local.allizom.org
-* Client id: <your GitHub App Client ID>
-* Secret key: <your GitHub App Client Secret>
-* Sites: example.com -> Chosen sites
+* Name: MDN Development
+* Client id: <*your GitHub App Client ID*>
+* Secret key: <*your GitHub App Client Secret*>
+* Sites: Move ``example.com`` from "Available sites" to "Chosen sites"
 
-Now you can sign in with GitHub at https://developer-local.allizom.org/
+Now you can sign in with GitHub.
 
-.. _add a django-allauth social app: https://developer-local.allizom.org/admin/socialaccount/socialapp/add/
-.. _Register your own OAuth application on GitHub: https://github.com/settings/applications/new
+To associate your password-only admin account with GitHub:
 
+#. Login with your password at http://localhost:8000/admin/login/
+#. Go to Account Connections at http://localhost:8000/en-US/users/account/connections
+#. Click "Connect with GitHub"
+#. (*Optional*) `Disable your admin password`_.
 
-.. _Errors:
+To create a new account with GitHub, use the regular "Sign in" widget at the
+top of any page.
 
-Errors during Installation
-==========================
+.. _register an OAuth application on GitHub: https://github.com/settings/applications/new
+.. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
 
-``vagrant up`` starts the virtual machine. The first time you run
-``vagrant up`` it also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_
-the VM - i.e., it automatically installs and configures Kuma software in the
-VM. We provision the VM with `Ansible`_ roles in the `provisioning directory
-<https://github.com/mozilla/kuma/tree/master/provisioning>`_.
+Interact with the Docker containers
+===================================
+The current directory is mounted as the ``/app`` folder in the web and worker
+containers (``kuma_web_1`` and ``kuma_worker_1``).  Changes made to your local
+directory are usually reflected in the running containers. To force the issue,
+the container can be restarted::
 
-Sometimes we put Ansible roles in the wrong order. Which means some
-errors can be fixed by simply provisioning the VM again::
+    docker restart kuma_web_1 kuma_worker_1
 
-    vagrant provision
+You can connect to a running container to run commands. For example, you can
+open an interactive shell in the web container::
 
-In some rare occasions you might need to run this multiple times. If you find an
-error that is fixed by running ``vagrant provision`` again, please email us the
-error at dev-mdn@lists.mozilla.org and we'll see if we can fix it.
+    docker exec -it kuma_web_1 /bin/bash
+    make bash  # Same command, less typing
 
-If you see the same error over and over, please ask for :ref:`more help <more-help>`.
+To view the logs generated by a container::
 
-.. _Ansible: http://docs.ansible.com/
+    docker logs kuma_web_1
 
-Django database migrations
---------------------------
+To continuously view logs from all containers::
 
-If you see errors that have "Django database migrations" in their
-title try to manually run them in the VM to see more about them.
-To do so::
+    docker-compose logs -f
 
-    vagrant ssh
-    python manage.py migrate
+To stop the containers::
 
-If you get an error, please ask for :ref:`more help <more-help>`.
+    docker-compose stop
 
-Ubuntu
-------
+For further information, see the Docker documentation, such as the
+`Docker Overview`_ and the documentation for your operating system.
+You can try Docker's guided tutorials, and apply what you've learned on the
+Kuma Docker environment.
 
-On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
-folders. First, make sure you have the nfs-common and nfs-server packages
-installed and also note that you can't export anything via NFS inside an
-encrypted volume or home dir. On Windows NFS won't be used ever by the way.
-
-If ``vagrant up`` works but you get the error ``IOError: [Errno 37] No locks
-available``, that indicates that the host machine isn't running rpc.statd or
-statd. This has been seen to affect Ubuntu >= 15.04 (running systemd). To enable
-it, run the following commands::
-
-       vagrant halt
-       sudo systemctl start rpc-statd.service
-       sudo systemctl enable rpc-statd.service
-       vagrant up
-
-If that doesn't help you can disable NFS by setting the ``VAGRANT_NFS``
-configuration value in a ``.env`` file. See the :ref:`Vagrant configuration
-<vagrant-config>` options for more info.
-
-If you have other problems during ``vagrant up``, please check
-:doc:`Troubleshooting <troubleshooting>`.
+.. _`Docker Overview`: https://docs.docker.com/engine/understanding-docker/

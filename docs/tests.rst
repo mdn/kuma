@@ -3,19 +3,21 @@ The Kuma Test Suite
 ======================
 
 Kuma has a fairly comprehensive Python test suite. Changes should not break
-tests--only change a test if there is a good reason to change the expected
-behavior--and new code should come with tests.
+tests. Only change a test if there is a good reason to change the expected
+behavior. New code should come with tests.
+
+Commands should be run inside the development environment, after ``make bash``
+with Docker, or ``vagrant ssh`` with Vagrant.
 
 Setup
 =====
 
-Before you run the tests, you have to run the::
+Before you run the tests, you have to build assets::
 
     make compilejsi18n collectstatic
 
 Running the Test Suite
 ======================
-
 If you followed the steps in :doc:`the installation docs <installation>`,
 then all you should need to do to run the test suite is::
 
@@ -47,7 +49,6 @@ See ``py.test --help`` for more arguments.
 
 Running subsets of tests and specific tests
 -------------------------------------------
-
 There are a bunch of ways to specify a subset of tests to run:
 
 * only tests marked with the 'spam' marker::
@@ -82,15 +83,17 @@ See http://pytest.org/latest/usage.html for more examples.
 
 Showing test coverage
 ---------------------
-
 While running the tests you can record which part of the code base is covered
 by test cases. To show the results at the end of the test run use this command::
 
     make coveragetest
 
+To generate an HTML coverage report, use::
+
+    make coveragetesthtml
+
 The Test Database
 -----------------
-
 The test suite will create a new database named ``test_%s`` where ``%s`` is
 whatever value you have for ``settings.DATABASES['default']['NAME']``. Make
 sure the user has ``ALL`` on the test database as well.
@@ -98,7 +101,6 @@ sure the user has ``ALL`` on the test database as well.
 
 Markers
 =======
-
 See::
 
     py.test --markers
@@ -124,7 +126,6 @@ To use a marker, add a decorator to the class or function. Examples::
 
 Adding Tests
 ============
-
 Code should be written so it can be tested, and then there should be tests for
 it.
 
@@ -133,10 +134,12 @@ new functionality. All apps have a ``tests`` module where tests should go. They
 will be discovered automatically by the test runner as long as the look like a
 test.
 
+If you're expecting ``reverse`` to return locales in the URL
+(``/en-US/docs/Mozilla`` versus ``/docs/Mozilla``), use ``LocalizingClient``
+instead of the default client for the ``TestCase`` class.
 
 Changing Tests
 ==============
-
 Unless the current behavior, and thus the test that verifies that behavior is
 correct, is demonstrably wrong, don't change tests. Tests may be refactored as
 long as its clear that the result is the same.
@@ -144,7 +147,6 @@ long as its clear that the result is the same.
 
 Removing Tests
 ==============
-
 On those rare, wonderful occasions when we get to remove code, we should remove
 the tests for it, as well.
 

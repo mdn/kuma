@@ -20,55 +20,69 @@ Pontoon.
 See the `Django documentation on Translations`_ for how to make strings
 marked for translation in Python and templates.
 
+Unless otherwise noted, run all the commands in this document inside the
+development environment.
+
+For Docker, enter the environment with
+``docker-compose run --rm --user $(id -u) web bash``, to ensure that created
+files are owned by your development user.
+
+For Vagrant, enter the environment with ``vagrant ssh``.
+
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _Django documentation on Translations: https://docs.djangoproject.com/en/dev/topics/i18n/translation/
 
 Getting the Localizations
 =========================
-
 Localizations are found in this repository under the ``locale`` folder.
 
-Unless otherwise noted, run all the commands in this document inside the
-environment. For Vagrant, enter the environment with ``vagrant ssh``.
-For Docker, enter the environment with 
-``docker-compose run --rm --user $(id -u) web bash``
+The gettext portable object (``.po``) files need to be compiled into the
+gettext machine object (``.mo``) files before translations will appear.  This
+is done once during initial setup and provisioning, but will be out of date
+when the Kuma locales are updated.
 
-The gettext portable object (.po) files need to be compiled into the gettext
-machine object (.mo) files before translations will appear. Though its not
-performed automatically in docker environment, it is performed during vagrant
-provisioning. If you need to update them at any time you can compile the files
-via the following command inside the environment::
+To refresh the translations, enter the development environment, then:
+
+#. Compile the ``.po`` files::
 
     make localecompile
 
-To update the static JavaScript translation catalogs, run the following django
-management command::
+#. Update the static JavaScript translation catalogs::
 
     make compilejsi18n
 
-The above command will build the JavaScript l10n files in the ``build/locale/``
-folder. To collect these files for serving you must run the
-``collectstatic`` command::
+#. Collect the built files so they are served with requests::
 
     make collectstatic
 
+.. _Update the Localizations:
+
 Updating the Localizations
 ==========================
-#.  Run the following in the environment (see :doc:`installation`)::
+When localizable strings are added, changed, or removed in the code, they need
+to be gathered into ``.po`` files for translation.
 
-        make localerefresh
+To update the localizations:
 
-#.  Commit the files::
+#. Inside the development environment, extract and rebuild the translations::
 
-        git add --all locale
-        git commit -m "MDN string update YYYY-MM-DD"
+    make localerefresh
+
+#. On the host system, review the changes to source English strings::
+
+    git diff locale/templates/LC_MESSAGES
+
+#. Finally, commit the files::
+
+    git add --all locale
+    git commit -m "MDN string update YYYY-MM-DD"
 
 Adding a new Locale
 ===================
-The examples shows adding a Bulgarian (bg) locale. Change ``bg`` to the locale
+This example shows adding a Bulgarian (bg) locale. Change ``bg`` to the locale
 code of the language you are adding.
 
-#. Update the Localizations as above, so that your commit will be limited to
+#. `Update the Localizations`_ as above, so that your commit will be limited to
    the new locale.
 
 #. Add the locale to ``MDN_LANGUAGES`` in ``kuma/settings/common.py``
@@ -79,16 +93,16 @@ code of the language you are adding.
 
 #. Add the locale to the ``locale/`` folder::
 
-        make locale LOCALE=bg
+    make locale LOCALE=bg
 
 #. Generate the compiled filed for all the locales, including the new one::
 
-        make localerefresh
+    make localerefresh
 
 #. Restart the web server and verify that Django loads the new locale without
    errors by visiting the locale's home page, for example
-   http://127.0.0.1:8000/bg/ (https://developer-local.allizom.org/bg/
-   if you are using vagrant)
+   http://localhost:8000/bg/ (https://developer-local.allizom.org/bg/
+   if you are using Vagrant)
 
 #. Commit the changes to ``locale/bg`` and ``kuma/settings``.
    Verify that the other locales are just timestamp updates before reverting

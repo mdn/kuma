@@ -59,7 +59,7 @@ other advanced criteria.
   due to detected spam or Akismet errors.
 
 Constance Features
-------------------
+==================
 
 Constance configs let us set operational *values* for certain features in the
 database - so we can control them without changing code. They are all listed
@@ -67,9 +67,9 @@ and documented in the admin site's `constance section`_.
 
 .. _feature toggles: https://en.wikipedia.org/wiki/Feature_toggle
 .. _django-waffle: https://waffle.readthedocs.io/en/latest/
-.. _waffle section: https://developer-local.allizom.org/admin/waffle/
+.. _waffle section: http://localhost:8000/admin/waffle/
 .. _constance: https://github.com/comoga/django-constance
-.. _constance section: https://developer-local.allizom.org/admin/constance/config/
+.. _constance section: http://localhost:8000/admin/constance/config/
 .. _Waffle switches: https://waffle.readthedocs.io/en/latest/types/switch.html
 .. _Waffle flags: https://waffle.readthedocs.io/en/latest/types/flag.html
 .. _PR 3331: https://github.com/mozilla/kuma/pull/3331
