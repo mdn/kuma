@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-29 11:10+0000\n"
+"PO-Revision-Date: 2016-09-30 02:01+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -3074,7 +3074,7 @@ msgstr "Kembali ke Sejarah"
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
 msgid "Delete Document | %(document)s"
-msgstr ""
+msgstr "Hapus Dokumen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3210,6 +3210,8 @@ msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
 "page</a> in a few minutes."
 msgstr ""
+"Kemas kini dokumen ini <abbr title=\"%(started_at)s\">sedang dijalankan</abbr>. Jika kandungan di bawah nampak seperti maklumat lama atau jika ada kehilangan beberapa maklumat, sila <a "
+"href=\"%(url)s\">muat semula halaman ini</a> dalam tempoh beberapa minit."
 
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
@@ -3217,16 +3219,18 @@ msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
 " a few minutes."
 msgstr ""
+"Kemas kini dokumen ini <abbr title=\"%(scheduled_at)s\">sedang dijadualkan</abbr>. Jika kandungan di bawah nampak seperti maklumat lama atau jika ada kehilangan beberapa maklumat, sila <a "
+"href=\"%(url)s\">muat semula halaman ini</a> dalam tempoh beberapa minit."
 
 #: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Artikel ini perlu semakan teknikal. <a href=\"%(url)s\">Cara untuk anda membantu.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:275
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Artikel ini perlu semakan editorial. <a href=\"%(url)s\">Cara untuk anda membantu.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:283
 #, python-format
