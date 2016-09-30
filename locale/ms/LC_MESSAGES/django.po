@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-30 03:57+0000\n"
+"PO-Revision-Date: 2016-09-30 04:15+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2839,7 +2839,7 @@ msgstr "Dokumen ini telah diubah suai semasa anda mengeditnya."
 
 #: kuma/wiki/forms.py:69
 msgid "Changing this document's slug requires moving it and its children."
-msgstr ""
+msgstr "Mengalih slug halaman ini perlu pengalihan dokumen serta anak dokumen."
 
 #: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
@@ -2861,7 +2861,7 @@ msgstr "URL artikel"
 
 #: kuma/wiki/forms.py:352 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Induk:"
 
 #: kuma/wiki/forms.py:430 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
@@ -2910,7 +2910,7 @@ msgstr "URL Artikel baru"
 #: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
-msgstr ""
+msgstr "%s induk tidak wujud."
 
 #: kuma/wiki/models.py:120
 msgid "Document Tag"
@@ -3036,7 +3036,7 @@ msgstr "Semakan klasifikasi Akismet sebagai spam"
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
-msgstr ""
+msgstr "Kakitangan penyemak"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3062,6 +3062,9 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
+"<p>Anda lebih berpeluang diberi izin untuk mencipta halaman baru jika anda :</p> <ul> <li>Beritahu kami kata pengguna MDN anda.</li> <li>Beritahu kami kenapa anda mahu mencipta halaman baru (Adakah "
+"anda mendokumentasikan ciri baru? Ciri apa? Ada terma glosari yang mahu anda tambah? Terma apa?).</li> <li>Perbaiki edit untuk halaman sedia ada.</li> <li>Sudah pernah memberikan sumbangan ke laman "
+"dalam tempoh terdekat.</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3083,7 +3086,7 @@ msgstr "Hapus Dokumen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
-msgstr ""
+msgstr "Tidak dapat menghapus halaman dengan anak dokumen sehingga kami memperbaiki pepijat ini:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
@@ -3368,7 +3371,7 @@ msgstr "Beri artikel ini pengkhususan. Ini akan memudahkan artikel tersebut dite
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "Papar induk %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
@@ -3427,7 +3430,7 @@ msgstr "Cari mengikut Tajuk Dokumen"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Tajuk Induk"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
@@ -3555,7 +3558,7 @@ msgstr "Versi %(locale)s diluluskan:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Papar Penghuraian"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
@@ -3599,7 +3602,7 @@ msgstr "Nota Versi"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
-msgstr ""
+msgstr "Bendera lokalisasi"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
@@ -3659,7 +3662,7 @@ msgstr "Tambah terjemahan"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Watch"
-msgstr ""
+msgstr "Perhati"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
@@ -3794,7 +3797,7 @@ msgstr "Panduan Editor"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
-msgstr ""
+msgstr "Panduan Gaya"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
@@ -3942,7 +3945,7 @@ msgstr "Dokumen tahap atas"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Dokumen tanpa induk"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
