@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-30 03:40+0000\n"
+"PO-Revision-Date: 2016-09-30 03:57+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -1350,6 +1350,9 @@ msgid ""
 "source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
 " bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
+"<ol> <li><strong>Dapatkan Butang:</strong> Guna borang mudah yang kami sediakan di bawah untuk mencipta butang tersuai dan sumber kod untuk mempromosi MDN ke laman web atau blog anda.</li> "
+"<li><strong>Post Butang:</strong> Salin kod sumber dan tampal di mana-mana sahaja dalam laman web atau blog anda supaya pengguna dapat klik ke MDN.</li> <li><strong>Rasa Gembira:</strong> Rasa "
+"bangga kerana anda tahu anda memudahkan lagi kehidupan pembangun kerana berkongsi MDN dengan dunia.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
@@ -2870,7 +2873,7 @@ msgstr "Kata kunci:"
 
 #: kuma/wiki/forms.py:436
 msgid "Affects search results"
-msgstr ""
+msgstr "Menjejaskan hasil carian"
 
 #: kuma/wiki/forms.py:444
 msgid "Search result summary:"
@@ -2898,7 +2901,7 @@ msgstr "Tag semakan ini untuk lokalisasi?"
 
 #: kuma/wiki/forms.py:878
 msgid "New slug:"
-msgstr ""
+msgstr "Slug baru:"
 
 #: kuma/wiki/forms.py:879
 msgid "New article URL"
@@ -3013,7 +3016,7 @@ msgstr "Perlu Semakan"
 
 #: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "Ham / Palsu Positif"
 
 #: kuma/wiki/models.py:1946
 msgid "Confirmed as Spam"
@@ -3029,7 +3032,7 @@ msgstr "Ralat Akismet"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
-msgstr ""
+msgstr "Semakan klasifikasi Akismet sebagai spam"
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
@@ -3038,7 +3041,7 @@ msgstr ""
 #: kuma/wiki/search.py:310
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
-msgstr ""
+msgstr "Mengindeks %(total)d dokumen ke %(total_chunks)d saiz ketulan %(size)d menjadi jumlah indeks %(index)s."
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
@@ -3050,6 +3053,8 @@ msgid ""
 "Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
 "href=\"%(email_link)s\">contact us</a>."
 msgstr ""
+"Mencipta halaman baru adalah tindakah terhad. Untuk memiminta halaman baru, sila <a href=\"%(request_page_url)s\">failkan pepijat</a>. Jika anda perlukan izin untuk mencipta halaman baru, sila <a "
+"href=\"%(email_link)s\">hubungi kami</a>."
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -4154,4 +4159,4 @@ msgstr "Anda tidak boleh terjemahkan dokumen ini."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Pelayan Elasticsearch: %(backend)s"
