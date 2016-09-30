@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: kumascript
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: kumascript
+        provider: kumascript
+    spec:
+      containers:
+      - name: kumascript
+        image: quay.io/mozmar/kumascript
+        #TODO: update kumasript img
+        # CMD added to kumascript Dockerfile in master
+        command: ["node"]
+        args: ["run.js"]
+        env:
+        - name: log__console
+          value: "true"
+        - name: server__document_url_template
+          value: http://api:8000/en-US/docs/{path}?raw=1
+          #TODO: API backend
+        - name: server__template_url_template
+          value: http://api:8000/en-US/docs/Template:{name}?raw=1
+        - name: server__memcache__server
+          value: memcached:11211
+        - name: server__template_class
+          value: EJSTemplate
+        - name: server__autorequire__mdn
+          value: MDN:Common
+        - name: server__autorequire__Date
+          value: DekiScript:Date
+        - name: server__autorequire__Page
+          value: DekiScript:Page
+        - name: server__autorequire__String
+          value: DekiScript:String
+        - name: server__autorequire__Uri
+          value: DekiScript:Uri
+        - name: server__autorequire__Web
+          value: DekiScript:Web
+        - name: server__autorequire__Wiki
+          value: DekiScript:Wiki
+        ports:
+        - containerPort: 9080
