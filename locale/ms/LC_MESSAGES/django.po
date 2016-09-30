@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-30 02:20+0000\n"
+"PO-Revision-Date: 2016-09-30 02:39+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -3358,7 +3358,7 @@ msgstr "Belacar cara untuk tag artikel"
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr ""
+msgstr "Beri artikel ini pengkhususan. Ini akan memudahkan artikel tersebut ditemui mengikut tapisan yang betul dalam enjin carian. <a target=\"_blank\" href=\"%(url)s\">Baca Panduan Tag</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3368,7 +3368,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
 msgid "last modified at %(modified)s"
-msgstr ""
+msgstr "terakhir diubah suai %(modified)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
@@ -3378,19 +3378,19 @@ msgstr "Edit terjemahan %(locale)s"
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "Pindah Artikel | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
-msgstr ""
+msgstr "Sila tentukan lokasi baru untuk halaman ini dengan mengisi medan di bawah. Pastikan lokasi baru itu mengikut peraturan ini:"
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
-msgstr ""
+msgstr "Pastikan lokasi yang anda tentukan itu terletak betul-betul di bawah halaman sedia ada."
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Jangan sertakan skema URL (\"https://\")."
 
 #: kuma/wiki/jinja2/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
@@ -3398,27 +3398,27 @@ msgstr "Masukkan hanya bahagian URL diikuti \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
-msgstr ""
+msgstr "Jangan sertakan tanda garis miring (akan dialih keluar jika anda sertakannya, tetapi lebih baik anda tidak melakukannya)."
 
 #: kuma/wiki/jinja2/wiki/move.html:31
 msgid "Your requested move cannot be completed due to the following slug conflicts:"
-msgstr ""
+msgstr "Permintaan anda untuk mengalih tidak dapat diselesaikan kerana ada konflik slug berikut:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "Slug Semasa:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "Previu URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "Slug Baru:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "Cari mengikut Tajuk Dokumen"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
@@ -3427,33 +3427,35 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
 msgid "Move %(count)s Pages"
-msgstr ""
+msgstr "Alih %(count)s Halaman"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Alih Halaman"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr ""
+msgstr "%(count)s sub-halaman berikut akan terjejas oleh pengalihan ini:"
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
-msgstr ""
+msgstr "Tiada dokumen lain akan terjejas oleh perubahan ini."
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Minta alih halaman"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
 msgstr ""
+"<h1>Jadual Alih Halaman</h1> <p>Mengalih %(old_slug)s ke <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> Anda akan memerima e-mel apabila pengalihan sudah selesai, atau jika ada ralat semasa "
+"mengalihkannya.</p>"
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "Ini ialah previu dokumen yang masih belum disimpan."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
