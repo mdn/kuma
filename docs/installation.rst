@@ -160,16 +160,12 @@ If you want to create a new admin account, use ``createsuperuser``::
 This will prompt you for a username, email address (a fake address like
 ``admin@example.com`` will work), and a password.
 
-If your database has an existing account that you want to use, use the Django
-shell, similar to this::
+If your database has an existing account that you want to use, run the
+management command. Replace ``YOUR_USERNAME`` with your username and
+``YOUR_PASSWORD`` with your password::
 
-    docker exec -it kuma_web_1 ./manage.py shell_plus
-    >>> me = User.objects.get(username='admin_username')
-    >>> me.set_password('mypassword')
-    >>> me.is_superuser = True
-    >>> me.is_staff = True
-    >>> me.save()
-    >>> exit()
+    docker-compose run --rm web ./manage.py ihavepower YOUR_USERNAME \
+    --password YOUR_PASSWORD
 
 With a password-enabled admin account, you can log into Django admin at
 http://localhost:8000/admin/login/
