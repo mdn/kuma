@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-09-27 14:36+0000\n"
+"PO-Revision-Date: 2016-10-03 21:17+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -681,50 +681,50 @@ msgstr "Azemz akked wakud anida afaylu yeddan yuɣal ɣer tqecwalt n iḍumman"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "Isem n useqdac i yerran afaylu yeddan ɣer tqecwalt niduman"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
-msgstr ""
+msgstr "Yemmal-d ma yella afaylu yeddan d aɛiwed n tmuɣli tamirant n umedday maken yettwazen ɣer tqecwalt n iḍuman."
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr ""
+msgstr "Amedday yuɣal ɣer tqecwalt n iḍuman"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr ""
+msgstr "Imeddayen uɣalen ɣer tqecwalt n iḍuman"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
 #, python-format
 msgid "Attachments | %(title)s"
-msgstr ""
+msgstr "Imeddayen | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "Sali afaylu ɣer umagrad %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
 msgid "Upload files"
-msgstr ""
+msgstr "Sali ifuyla"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "Issin amek ara tesqedceḍ imeddayen"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
-msgstr ""
+msgstr "Sali ifuyla"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
-msgstr ""
+msgstr "Asemli agi ur igbir ara imeddayen."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
+msgstr "Tugniwin zemrent ad ddun-t, udiɣ ad neṭḍen-t ɣer umagrad."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
@@ -746,11 +746,11 @@ msgstr "Iwenniten"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
-msgstr ""
+msgstr "Yedda ɣer umagrad agi"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr ""
+msgstr "Yedda ɣer umagrad nniḍen"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
@@ -758,7 +758,7 @@ msgstr "Teɣzi"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 msgid "Last modified"
-msgstr ""
+msgstr "Asnifel aneggaru"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
@@ -766,11 +766,11 @@ msgstr "Yessuli-t"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
-msgstr ""
+msgstr "Aseɣwen seg umagrad"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
-msgstr ""
+msgstr "Afaylu yeddan ɣer"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
@@ -779,11 +779,11 @@ msgstr "%(bytes)s ibiten"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Tasarutt n unadi"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
@@ -804,7 +804,7 @@ msgstr "Kkes"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr ""
+msgstr "Tasarutt ur tettwaseqdec ara yakan."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
@@ -822,7 +822,7 @@ msgstr "Ulac ɣur-k tisura API yakan."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
-msgstr ""
+msgstr "Wali amazray n useqdec n tsarutt"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
@@ -988,7 +988,7 @@ msgstr "Isental"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
-msgstr ""
+msgstr "Akk tutlayin"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
@@ -1262,11 +1262,11 @@ msgstr "Issin ugar udiɣ kcem!"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "Web aziraz yeldin"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Issin taneflit Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
@@ -1303,7 +1303,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
-msgstr ""
+msgstr "Bdu"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
@@ -1315,11 +1315,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
-msgstr ""
+msgstr "Suqel"
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
-msgstr ""
+msgstr "Mmeslay ɣef MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
@@ -1328,11 +1328,11 @@ msgstr ""
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr ""
+msgstr "Yettwazen %(entrydate)s sɣuṛ %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "Mmeslay ɣef MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
@@ -1351,7 +1351,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr ""
+msgstr "Fren aɣanib n tqeffalt"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
@@ -1363,39 +1363,39 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "I yineflayen, sɣur ineflayen"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Ifecka n uneflay Web"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Fren ini"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Amumad"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Ačini"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Azeggaɣ"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Semselsi &lt;FOO&gt; s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Rnu taqeffalt inek tudmawant ɣer usmel inek Web"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Tangalt inek aɣbalu:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
