@@ -1613,7 +1613,7 @@ msgstr "Zobrazení výsledků od %(start)s do %(end)s."
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr "Hledat znovu pouze v jazyce % (default_locale_native)"
+msgstr "Hledat znovu pouze v jazyce %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
