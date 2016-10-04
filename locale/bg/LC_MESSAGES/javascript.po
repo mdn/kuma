@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-08-09 14:34+0000\n"
-"Last-Translator: stoyan <stoyan@gmx.com>\n"
+"PO-Revision-Date: 2016-10-03 14:36+0000\n"
+"Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "Затваряне на подменюто"
 
 #: kuma/static/js/components.js:542
 msgid "Close notification"
@@ -105,7 +105,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "Отваряне"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
@@ -210,7 +210,7 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "Търсене в Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
@@ -218,7 +218,7 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
-msgstr ""
+msgstr "Подробности"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
@@ -230,7 +230,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
-msgstr ""
+msgstr "Прикачени файлове"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:87
 msgid "Article Title Lookup / Link Text"
@@ -310,15 +310,15 @@ msgstr "Синтактично открояване"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:30
 msgid "No Highlight"
-msgstr ""
+msgstr "Без открояване"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr ""
+msgstr "Вмъкване на видео от YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
-msgstr ""
+msgstr "Намиране на видео в YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
