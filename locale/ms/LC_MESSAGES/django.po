@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-30 04:15+0000\n"
+"PO-Revision-Date: 2016-10-04 08:11+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2742,7 +2742,7 @@ msgstr "Dokumen MDN untuk semakan"
 #: kuma/wiki/feeds.py:223
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr "Terjemahan MDN '%s' perlu dikemas kini"
+msgstr "Terjemahan MDN '%s' perlu dikemaskini"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
@@ -3218,7 +3218,7 @@ msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
 "page</a> in a few minutes."
 msgstr ""
-"Kemas kini dokumen ini <abbr title=\"%(started_at)s\">sedang dijalankan</abbr>. Jika kandungan di bawah nampak seperti maklumat lama atau jika ada kehilangan beberapa maklumat, sila <a "
+"Kemaskini dokumen ini <abbr title=\"%(started_at)s\">sedang dijalankan</abbr>. Jika kandungan di bawah nampak seperti maklumat lama atau jika ada kehilangan beberapa maklumat, sila <a "
 "href=\"%(url)s\">muat semula halaman ini</a> dalam tempoh beberapa minit."
 
 #: kuma/wiki/jinja2/wiki/document.html:248
@@ -3227,7 +3227,7 @@ msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
 " a few minutes."
 msgstr ""
-"Kemas kini dokumen ini <abbr title=\"%(scheduled_at)s\">sedang dijadualkan</abbr>. Jika kandungan di bawah nampak seperti maklumat lama atau jika ada kehilangan beberapa maklumat, sila <a "
+"Kemaskini dokumen ini <abbr title=\"%(scheduled_at)s\">sedang dijadualkan</abbr>. Jika kandungan di bawah nampak seperti maklumat lama atau jika ada kehilangan beberapa maklumat, sila <a "
 "href=\"%(url)s\">muat semula halaman ini</a> dalam tempoh beberapa minit."
 
 #: kuma/wiki/jinja2/wiki/document.html:266
@@ -3277,7 +3277,7 @@ msgstr "Penyumbang untuk halaman ini:"
 
 #: kuma/wiki/jinja2/wiki/document.html:342
 msgid "Last updated by:"
-msgstr "Terakhir dikemas kini oleh:"
+msgstr "Terakhir dikemaskini oleh:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
@@ -3953,7 +3953,7 @@ msgstr "Semua dokumen"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr "Perlu kemas kini terjemahan"
+msgstr "Terjemahan perlu dikemaskini"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."

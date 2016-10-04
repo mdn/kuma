@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-09-28 13:00+0000\n"
+"PO-Revision-Date: 2016-10-04 08:10+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -114,7 +114,7 @@ msgstr "Nota: Kata kunci ini akan didahulukan berbanding kata kunci yang dimuat 
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr "Pilihan kemas kini"
+msgstr "Pilihan kemaskini"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
