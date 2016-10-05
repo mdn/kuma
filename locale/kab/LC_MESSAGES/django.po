@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 10:01+0000\n"
+"PO-Revision-Date: 2016-10-05 19:20+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2434,7 +2434,7 @@ msgstr "Snifel imayl"
 
 #: kuma/users/jinja2/users/user_edit.html:75
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Innekniyen (tibzimin)"
 
 #: kuma/users/jinja2/users/user_edit.html:76
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
@@ -2442,11 +2442,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:82
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Tiɣula n tmusni leqqayen"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Add your interests first, then declare yourself an expert in selected topics."
-msgstr ""
+msgstr "Rnu innekniyen inek di tazwara, sakin ini-d d akken kečč d amusnaw s telqayt deg isentalen yettwafernen."
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid "My Profiles"
@@ -2458,30 +2458,30 @@ msgstr "Snifel"
 
 #: kuma/users/jinja2/users/user_edit.html:101
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "Seqdec amiḍan inek Persona akken ad tkecmeḍ."
 
 #: kuma/users/jinja2/users/user_edit.html:118
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Seqdec amiḍan inek GitHub akken ad tkecmeḍ."
 
 #: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Publish"
-msgstr ""
+msgstr "Suffeɣ-d"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Azul %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr ""
+msgstr "Tanemmirt ɣef tmerna n umaɣnu deg <a href=\"%(mdn_link)s\"> Uẓeṭṭa n ineflayen Mozilla (MDN)</a> - tamezdagnut yettheggin tiɣbula meqqren i yineflayen am kečč."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr ""
+msgstr "Tfuked amecwaṛ amezwaru n umnir n <a href=\"%(started_link)s\"> Bdu di MDN </a> s tmerna n umaɣnu."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
