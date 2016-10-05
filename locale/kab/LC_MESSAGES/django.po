@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 09:20+0000\n"
+"PO-Revision-Date: 2016-10-05 09:33+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2650,11 +2650,11 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
-msgstr ""
+msgstr "Anebdal"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -2670,16 +2670,16 @@ msgstr ""
 
 #: kuma/wiki/content.py:720
 msgid "Edit section"
-msgstr ""
+msgstr "Ẓreg tigezmi"
 
 #: kuma/wiki/events.py:72
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr ""
+msgstr "[MDN] Asebter \"%(document_title)s\" yesnifel-it %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
-msgstr ""
+msgstr "Tasemlit MDN"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
@@ -2687,7 +2687,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
@@ -2824,32 +2824,32 @@ msgstr ""
 #: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Azwel:"
 
 #: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:872
 msgid "Title of article"
-msgstr ""
+msgstr "Azwel n umagrad"
 
 #: kuma/wiki/forms.py:344 kuma/wiki/forms.py:419 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "Asulay n tensa URL :"
 
 #: kuma/wiki/forms.py:345 kuma/wiki/forms.py:420
 msgid "Article URL"
-msgstr ""
+msgstr "Tansa URL n umagrad"
 
 #: kuma/wiki/forms.py:352 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Asaraw:"
 
 #: kuma/wiki/forms.py:430 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "Tibzimin:"
 
 #: kuma/wiki/forms.py:435 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "Awalen n tsura:"
 
 #: kuma/wiki/forms.py:436
 msgid "Affects search results"
@@ -2865,11 +2865,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:456 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
-msgstr ""
+msgstr "Agbur:"
 
 #: kuma/wiki/forms.py:468
 msgid "Comment:"
-msgstr ""
+msgstr "Awennit:"
 
 #: kuma/wiki/forms.py:472
 msgid "Tag this revision for review?"
@@ -2881,24 +2881,24 @@ msgstr ""
 
 #: kuma/wiki/forms.py:878
 msgid "New slug:"
-msgstr ""
+msgstr "Anugzum amaynut:"
 
 #: kuma/wiki/forms.py:879
 msgid "New article URL"
-msgstr ""
+msgstr "Tansa URL tamaynut n umagrad"
 
 #: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
-msgstr ""
+msgstr "Asaraw %s ulac-it."
 
 #: kuma/wiki/models.py:120
 msgid "Document Tag"
-msgstr ""
+msgstr "Tabzimt n isemli"
 
 #: kuma/wiki/models.py:121
 msgid "Document Tags"
-msgstr ""
+msgstr "Tibzimin n isemli"
 
 #: kuma/wiki/models.py:173
 msgid "uploaded to the document"
@@ -2939,15 +2939,15 @@ msgstr ""
 
 #: kuma/wiki/models.py:1585
 msgid "H2 and higher"
-msgstr ""
+msgstr "H2 neɣ ugar"
 
 #: kuma/wiki/models.py:1586
 msgid "H3 and higher"
-msgstr ""
+msgstr "H3 neɣ ugar"
 
 #: kuma/wiki/models.py:1587
 msgid "H4 and higher"
-msgstr ""
+msgstr "H4 neɣ ugar"
 
 #: kuma/wiki/models.py:1691
 #, python-format
@@ -2956,11 +2956,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
-msgstr ""
+msgstr "Tansa IP"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
-msgstr ""
+msgstr "Aseqdac-Ameggi"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
@@ -2980,7 +2980,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1915
 msgid "Slug"
-msgstr ""
+msgstr "Asulay n tensa URL"
 
 #: kuma/wiki/models.py:1923
 msgid "Document (optional)"
@@ -3098,11 +3098,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
-msgstr ""
+msgstr "Isemli"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
 msgid "Content"
-msgstr ""
+msgstr "Agbur"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
@@ -3114,19 +3114,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
-msgstr ""
+msgstr "Rnu taneɣruft tamaynut"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
 msgid "Create a New Article"
-msgstr ""
+msgstr "Rnu amagrad amaynut"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "Create a"
-msgstr ""
+msgstr "Rnu"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
-msgstr ""
+msgstr "Isemli amaynut"
 
 #: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
@@ -3143,11 +3143,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
-msgstr ""
+msgstr "Acuɣer tukksa"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
-msgstr ""
+msgstr "Err-d isemli agi"
 
 #: kuma/wiki/jinja2/wiki/document.html:166
 msgid "Previous Search Result"
@@ -3180,7 +3180,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:209
 msgid "In This Article"
-msgstr ""
+msgstr "Deg umagrad agi"
 
 #: kuma/wiki/jinja2/wiki/document.html:231
 #, python-format
@@ -3293,15 +3293,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
-msgstr ""
+msgstr "Ussan"
 
 #: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
-msgstr ""
+msgstr "Isragen"
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "Tisdatin"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
@@ -3350,12 +3350,12 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "Ẓreg tasuqilt %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "Senkez amagrad | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -3399,7 +3399,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Azwel asaraw"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
@@ -3408,7 +3408,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Senkez asebter"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
@@ -3455,11 +3455,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:29
 msgid "Created:"
-msgstr ""
+msgstr "Yettwarna:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:33
 msgid "Creator:"
-msgstr ""
+msgstr "Ameslal:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
@@ -3480,7 +3480,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
 msgid "Select language | %(document)s"
-msgstr ""
+msgstr "Fren tutlayt | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -3503,16 +3503,16 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
-msgstr ""
+msgstr "Suqel amagrad | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
-msgstr ""
+msgstr "Tasuqilt n umagrad ɣer %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Suqel agbur"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
