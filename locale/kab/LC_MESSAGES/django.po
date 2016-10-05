@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 08:39+0000\n"
+"PO-Revision-Date: 2016-10-05 09:01+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1347,7 +1347,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
-msgstr ""
+msgstr "Taskant"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1355,11 +1355,11 @@ msgstr "Fren aɣanib n tqeffalt"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "Tasemlit tufrint"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr ""
+msgstr "Seg ineflayen"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
@@ -1399,7 +1399,7 @@ msgstr "Tangalt inek aɣbalu:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Taqeffalt inek ad tawi imdanen ar:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
@@ -1447,7 +1447,7 @@ msgstr "Tasemlit JavaScript sɣur ineflayen, i yineflayen di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Tasemlit Web s ɣur ineflayen, i yineflayen di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
@@ -1679,147 +1679,147 @@ msgstr ""
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr ""
+msgstr "Isem n useqdac yezmer kan ad yegber isekkilen, imḍanen, akked isekkilen: . - _ +"
 
 #: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
-msgstr ""
+msgstr "Izḍi usrig"
 
 #: kuma/users/forms.py:36
 msgid "Beta tester"
-msgstr ""
+msgstr "Amsekyad Beta"
 
 #: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:52
 msgid "Interests"
-msgstr ""
+msgstr "Innekniyen"
 
 #: kuma/users/forms.py:46
 msgid "Expertise"
-msgstr ""
+msgstr "Tamusni leqqayen"
 
 #: kuma/users/forms.py:52
 msgid "Username"
-msgstr ""
+msgstr "Isem n useqdac"
 
 #: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:76
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:94
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:98
 msgid "Mozillians"
-msgstr ""
+msgstr "Imuẓillyanen"
 
 #: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:136
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Yessefk tiɣula n tmusni leqqayen ad ilint d tagruma tasnawant n innekniyen"
 
 #: kuma/users/forms.py:145
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Urti agi ur yettili ara d ilem."
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
-msgstr ""
+msgstr "Isem n useqdac yettuseqdac yakan."
 
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s igdel-it %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (ur yezgi yermed)"
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "Tutlayt"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "Asebter agejdan"
 
 #: kuma/users/models.py:60
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
-msgstr ""
+msgstr "Tansa agi URL ɣur-s amasal mačči d ameɣtu. Tansiwin URLs timeɣta gant am http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Isem"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Tuddsa"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr ""
+msgstr "Adig"
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "Fell-i"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "Meffer isem IRC"
 
 #: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "Tibzimin"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut n usmel."
 
 #: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut n Twitter."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut GitHub."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut Stack Overflow."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut LinkedIn."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut Mozillians."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Sekcem tansa URL tameɣtut Facebook."
 
 #: kuma/users/models.py:136
 msgid "Website"
-msgstr ""
+msgstr "Asmel Web"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "Isem n useqdac yettwasra."
 
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Isem n useqdac wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣum %(limit_value)s isekkilen."
 
 #: kuma/users/signup.py:12
 #, python-format
