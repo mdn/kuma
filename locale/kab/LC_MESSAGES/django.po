@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 20:41+0000\n"
+"PO-Revision-Date: 2016-10-05 20:59+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -834,13 +834,15 @@ msgstr "Amazray (%(count)s)"
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
 msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
-msgstr ""
+msgstr "Teriḍ tasiregt timeẓlit akken ad tesqedceḍ tisura API. Tzemreḍ ad tessutreḍ tasiregt agi s <a href=\"%(bugzilla_url)s\">tulya n ubug</a>."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
 "<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
 " as you can.</p>"
 msgstr ""
+"<p>Mudd-d aglam daw-a aseqdec iheggan i tsarutt agi. <p><strong>Tazmilt :</strong> D wagi kan i d allal n usulu n tsarutt agi ɣer zdat, akked wazemz d wakud n tmerna yines. Ihi ili-k zeddigeḍ akken "
+"tzemreḍ.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -852,6 +854,8 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
+"<p>Tasarutt inek tamaynut tettwarna. Ma ulac aɣilif aru talqayt agi daw-a (amedya. s unɣal ɣer iɣewwaṛen n usnas inek). Talɣut agi ur d-ttwaskan ara tikelt nniḍen, ihi ur tezmireḍ ara ad tt-id-erreḍ"
+" ma yella tṛuḥ.</p> <p><strong> Tazmilt;</strong> ticki tfukeḍ, <a class=\"button\" href=\"%(list_url)s\">uɣal ɣer tebdart n tsura</a>. Asali tikelt nniḍen n usebter ad yernu tasarutt nniḍen.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -863,17 +867,17 @@ msgstr "Ufur"
 
 #: kuma/core/apps.py:13
 msgid "Core"
-msgstr ""
+msgstr "Iɣes"
 
 #: kuma/core/form_fields.py:57
 #, python-format
 msgid "Ensure this value has at least %(limit_value)s characters (it has %(show_value)s)."
-msgstr ""
+msgstr "Yessefk azal ad yili ɣarṣum %(limit_value)s n isekkilen  (tura yakan ɣur-s  %(show_value)s n isekkilen)."
 
 #: kuma/core/form_fields.py:62
 #, python-format
 msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
-msgstr ""
+msgstr "Yessefk azal ad yili ma aṭas %(limit_value)s n isekkilen  (tura yakan ɣur-s  %(show_value)s n isekkilen)."
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
@@ -954,11 +958,11 @@ msgstr "Amek & ituṭuṛyalen"
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
-msgstr ""
+msgstr "Agaran"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
-msgstr ""
+msgstr "Marketplace"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
@@ -982,7 +986,7 @@ msgstr "Anaw n isemli"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
-msgstr ""
+msgstr "Aswir n tewzut"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
@@ -1046,7 +1050,7 @@ msgstr "Azemz n tagara:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Tallust yezrin:"
 
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
@@ -1099,7 +1103,7 @@ msgstr "Ameskar"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "Rmed/Kkes armad IPs"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
@@ -1115,7 +1119,7 @@ msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Gdel taẓrigt seg tensa agi IP"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "User agent:"
@@ -1123,7 +1127,7 @@ msgstr "Ameggi aseqdac:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "Referrer:"
-msgstr ""
+msgstr "Referrer:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
 #, python-format
@@ -1133,7 +1137,7 @@ msgstr "yettwadel di %(ban_date)s sɣuṛ %(user)s"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Yettwasekles am %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
@@ -1142,7 +1146,7 @@ msgstr "%(sent_date)s sɣur %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
 msgid "Submit as:"
-msgstr ""
+msgstr "Azen am:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
@@ -1150,7 +1154,7 @@ msgstr "aspam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Ula d yiwen n uɛiwed n tmuɣli ur imeɣra ar tegrumma agi n imzizdigen."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -1178,13 +1182,15 @@ msgstr "Rmes imaylen ticki aɛiwed n tmuɣli s taqbaylit yettraǧu"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr ""
+msgstr "Ahil Mozilla Developer Network (MDN) Fellowship yettaɛṛad-d ineflayen web yettwasnen deg umaḍal akked ad d-mudden tiktiwin n umaḍal akked Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
 " OS."
 msgstr ""
+"Mozilla Developer Network (MDN) yettmuddu-d talɣut ɣef titiknulujiyin Web yeldin am HTML, CSS akked APIs yettuseqdacen deg ismal web akked isnasen HTML5. Ad naf daɣen tasemlit ɣef ifarisen Mozilla "
+"am Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
