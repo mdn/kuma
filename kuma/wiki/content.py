@@ -4,6 +4,7 @@ import urllib
 from collections import defaultdict
 from urllib import urlencode
 from urlparse import urlparse
+from xml.sax.saxutils import quoteattr
 
 import html5lib
 import newrelic.agent
@@ -140,7 +141,7 @@ class Extractor(object):
             sample = pq('<section>%s</section>' % section)
         else:
             # If no section, fall back to plain old ID lookup
-            sample = pq(src).find('[id="%s"]' % name)
+            sample = pq(src).find('[id=%s]' % quoteattr(name))
 
         selector_templates = (
             '.%s',

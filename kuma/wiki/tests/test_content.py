@@ -1137,6 +1137,21 @@ class ExtractorTests(UserTestCase):
         result = rev.document.extract.code_sample('sample')
         eq_(expected, result)
 
+    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
+    def test_code_samples_with_problematic_sample_name(self):
+        rev = revision(is_approved=True, save=True, content="""
+            <div id="sample" class="code-sample">
+                <pre class="brush: html">Some HTML</pre>
+                <pre class="brush: css">.some-css { color: red; }</pre>
+                <pre class="brush: js">window.alert("HI THERE")</pre>
+            </div>
+            {{ LinkCodeSample('sample1') }}
+        """)
+        # The real test here is to ensure that no exception is raised, but
+        # might as well also check that the sample section was not found.
+        result = rev.document.extract.code_sample("""sam<'&">ple""")
+        eq_(dict(html=None, css=None, js=None), result)
+
 
 class GetSEODescriptionTests(KumaTestCase):
 
