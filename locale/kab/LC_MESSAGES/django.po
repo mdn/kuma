@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 08:07+0000\n"
+"PO-Revision-Date: 2016-10-05 08:39+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1403,47 +1403,47 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Tasemlit tufrint CSS i Web ufrin di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163 kuma/landing/jinja2/landing/promote_buttons.html:167 kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Tasemlit tufrint HTML i Web ufrin di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164 kuma/landing/jinja2/landing/promote_buttons.html:168 kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Tasemlit tufrint JavaScript i Web ufrin di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Tasemlit tufrint Web i Web ufrin di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr ""
+msgstr "MDN yettwafṣel i yineflayen, s tsemlit CSS d wayen nniḍen."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr ""
+msgstr "MDN yettwafṣel i yineflayen, s tsemlit HTML d wayen nniḍen."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr ""
+msgstr "MDN yettwafṣel i yineflayen, s tsemlit JavaScritp d wayen nniḍen."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr ""
+msgstr "MDN yettwafṣel i yineflayen, s tsemlit ɣef Web d wayen nniḍen."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Tasemlit CSS sɣur ineflayen, i yineflayen di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187 kuma/landing/jinja2/landing/promote_buttons.html:191 kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Tasemlit HTML sɣur ineflayen, i yineflayen di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188 kuma/landing/jinja2/landing/promote_buttons.html:192 kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Tasemlit JavaScript sɣur ineflayen, i yineflayen di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
@@ -1645,14 +1645,16 @@ msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
 "rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"Suref-aɣ, acku yessefk ad tesɛuḍ ɣarsum yiwen n umiḍan yeqqnen akked ad tesulud iman-ik. Qqen di tazwara s umiḍan akken ad tekksed wagi. Akken ad tekkseḍ amaɣnu yinek MDN, ma ulac aɣilif <a "
+"href=\"%(bug_form_url)s\" rel=\"nofollow\">azen-d abug</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "Tansa imayl ur tettwaseqdac ara deg umḍiq n yisem n useqdac."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Isem n useqdac i teskecmeḍ yella yakan."
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -1661,11 +1663,11 @@ msgstr "Aseqdac"
 #: kuma/users/apps.py:69
 #, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
-msgstr ""
+msgstr "Tfuked amecwaṛ amezwaru n umnir n <a href=\"%s\"> Bdu di MDN </a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "alguritm"
 
 #: kuma/users/backends.py:33
 msgid "salt"
