@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 06:58+0000\n"
+"PO-Revision-Date: 2016-10-05 07:11+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -857,7 +857,7 @@ msgstr "Asulay n tsarutt"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "Ufur"
 
 #: kuma/core/apps.py:13
 msgid "Core"
@@ -1154,25 +1154,25 @@ msgstr ""
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Ur d-remmes ara imaylen ticki aɛiwed n tmuɣli s taqbaylit ur yettwaqbel ara"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Rmes imaylen ticki aɛiwed n tmuɣli s teqbaylit n umagrad yettwaqbel"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "Ur d-remmes ara imaylen ticki aɛiwed n tmuɣli s taqbaylit yettraǧu"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Rmes imaylen ticki aɛiwed n tmuɣli s taqbaylit yettraǧu"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -1190,7 +1190,7 @@ msgstr "Tamusni yettwabḍan <span>di Web yeldin</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "Nadi di tsemlit"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
@@ -1226,7 +1226,7 @@ msgstr "Tasemlit <br> Mozilla"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "App Center"
-msgstr ""
+msgstr "Isnasen"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
