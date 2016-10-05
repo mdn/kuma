@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 09:01+0000\n"
+"PO-Revision-Date: 2016-10-05 09:20+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -887,7 +887,7 @@ msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/utils.py:430
 #, python-format
@@ -908,7 +908,7 @@ msgstr "Izegrar & isiɣzaf"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "Nek d amusnaw s telqayt"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
@@ -928,7 +928,7 @@ msgstr "Taneɣruft"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "Imedyaten n tengalt"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
@@ -1278,7 +1278,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
-msgstr ""
+msgstr "<a href=\"http://hacks.mozilla.org\">ɣeṛ ugar di hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
@@ -1824,15 +1824,15 @@ msgstr "Isem n useqdac wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr ""
+msgstr "Isem n useqdac ɣezzif aṭas (%(show_value)s isekkilen). Yessefk ad yili %(limit_value)s isekkilen neɣ daw."
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Yessefk ad tqebleḍ tiwtilin n useqdec."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "Qqebleɣ"
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -2075,7 +2075,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Tuqqniwin n umiḍan"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Account connections"
@@ -2087,15 +2087,15 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr ""
+msgstr "Ffeɣ"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr ""
+msgstr "Ulac ɣur-k imiḍanen yeqqnen."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr ""
+msgstr "Qqen amiḍan nniḍen"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
@@ -2108,7 +2108,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Rnu amaqnu inek MDN akken ad tkemled"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
@@ -2182,67 +2182,67 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Rnu amaqnu yinu MDN"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
-msgstr ""
+msgstr "Yeqqen s Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "Yeqqen s GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
-msgstr ""
+msgstr "Qqen s Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
-msgstr ""
+msgstr "Qqen s Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "Qqen s GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
 msgid "Create MDN profile with GitHub"
-msgstr ""
+msgstr "Rnu amaɣnu yinek MDN s GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "Qqen s GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
 msgid "Ban %(user)s"
-msgstr ""
+msgstr "Gdel %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr ""
+msgstr "Acuɣer tgedleḍ %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
-msgstr ""
+msgstr "Fren tazɣint"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "neɣ sekcem tazɣint di wurti agi n uḍris daw-a"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
-msgstr ""
+msgstr "Gdel aseqdac"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
 #, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
-msgstr ""
+msgstr "Sulu <a href=\"%(url)s\">%(user)s</a> amzun d aspamay?"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(user)s</a> yettwagdel."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
@@ -2255,11 +2255,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
-msgstr ""
+msgstr "Azen aspam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
-msgstr ""
+msgstr "Gdel aseqdec seg uspami"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 msgid "Ban User for Spam & Submit Spam"
@@ -2275,7 +2275,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "Agzul"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
@@ -2377,15 +2377,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
-msgstr ""
+msgstr "Asebter"
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Azemz"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
 msgid "Edit page"
-msgstr ""
+msgstr "Ẓreg asebter"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
@@ -2393,7 +2393,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
 msgid "View page history"
-msgstr ""
+msgstr "Wali amazray n usebter"
 
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
@@ -2406,15 +2406,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Ẓreg amaɣnu yinek"
 
 #: kuma/users/jinja2/users/user_edit.html:36
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Snifel avaṭaṛ inek di"
 
 #: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
-msgstr ""
+msgstr "Sken amaɣnu"
 
 #: kuma/users/jinja2/users/user_edit.html:48
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2426,11 +2426,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:62
 msgid "Primary Email"
-msgstr ""
+msgstr "Imayl amezwaru"
 
 #: kuma/users/jinja2/users/user_edit.html:63
 msgid "Edit email"
-msgstr ""
+msgstr "Snifel imayl"
 
 #: kuma/users/jinja2/users/user_edit.html:75
 msgid "Interests (tags)"
@@ -2450,11 +2450,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid "My Profiles"
-msgstr ""
+msgstr "Imeɣna yinu"
 
 #: kuma/users/jinja2/users/user_edit.html:94 kuma/users/jinja2/users/user_edit.html:111
 msgid "Change"
-msgstr ""
+msgstr "Snifel"
 
 #: kuma/users/jinja2/users/user_edit.html:101
 msgid "Use your Persona account to sign in."
@@ -2592,11 +2592,11 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "Ablug: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "Yettwassen yakan d aspam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
@@ -2604,37 +2604,37 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
-msgstr ""
+msgstr "Ẓreg"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
-msgstr ""
+msgstr "Talqayt"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:28
 msgid "Manage"
-msgstr ""
+msgstr "Sefrek"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:31
 msgid "API keys"
-msgstr ""
+msgstr "Tisura API"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:65
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Tiɣula n tmusni leqqayen"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:107
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "D imttekki si %(date_joined)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr ""
+msgstr "Yettwadel di %(ban_date)s sɣuṛ %(ban_admin)s."
 
 #: kuma/users/templatetags/jinja_helpers.py:44
 msgid "Banned"
-msgstr ""
+msgstr "Yettwagdel"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Clean Up Revisions"
@@ -2642,7 +2642,7 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
-msgstr ""
+msgstr "Gdel aseqdac"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
