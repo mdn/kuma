@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 19:40+0000\n"
+"PO-Revision-Date: 2016-10-05 20:01+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1254,7 +1254,7 @@ msgstr "Qqen"
 
 #: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
-msgstr ""
+msgstr "Faṛeṣ tagnitt seg isallen Mozilla ɣef titiknulujiyin Web, si tallalt n ineflayen nniḍend wayen nniḍen!"
 
 #: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
@@ -1307,11 +1307,11 @@ msgstr "Bdu"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr ""
+msgstr "Taɣuṛi tis snat n tira"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli tatiknikant"
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
@@ -1323,7 +1323,7 @@ msgstr "Mmeslay ɣef MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
-msgstr ""
+msgstr "Ttekki di tengalt n MDN"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -2079,7 +2079,7 @@ msgstr "Tuqqniwin n umiḍan"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Account connections"
-msgstr ""
+msgstr "Tuqqniwin n umiḍan"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
