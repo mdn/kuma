@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 08:01+0000\n"
+"PO-Revision-Date: 2016-10-05 08:07+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1547,36 +1547,36 @@ msgstr "Igmaḍ"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s n isemli yettwafen i \"%(query)s\" di %(locale_native)s."
+msgstr[1] "%(count)s n isemliyen yettwafen i \"%(query)s\" di %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s isemli yettwafen i \"%(query)s\" di %(locale_native)s akked %(default_locale_native)s."
+msgstr[1] "%(count)s n isemliyen yettwafen i \"%(query)s\" di %(locale_native)s akked %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s isemli yettwafen di %(locale_native)s."
+msgstr[1] "%(count)s isemliyen yettwafen di %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s isemli yettwafen di %(locale_native)s akked %(default_locale_native)s."
+msgstr[1] "%(count)s isemliyen yettwafen di %(locale_native)s akked %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s isemli yettwafen i \"%(query)s\"."
+msgstr[1] "%(count)s isemliyen yettwafen i \"%(query)s\"."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
@@ -1609,35 +1609,35 @@ msgstr "Akk isental"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "Yettuzizdeg s"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Isefka yettwaznen gebren agbur mačči d ameɣtu."
 
 #: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
-msgstr ""
+msgstr "Isefka yettwaznen gebren agbur mačči d ameɣtu. Ma ulac aɣilif ɛreḍ tikelt nniḍen."
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "yettwarna"
 
 #: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
-msgstr ""
+msgstr "Aspam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "Agbur yelha"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "yettwazen di"
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "anaw"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1656,7 +1656,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Aseqdac"
 
 #: kuma/users/apps.py:69
 #, python-format
