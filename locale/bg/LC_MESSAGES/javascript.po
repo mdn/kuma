@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-10-03 14:36+0000\n"
+"PO-Revision-Date: 2016-10-05 08:15+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -17,15 +17,15 @@ msgstr ""
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr "Затваряне на подменюто"
+msgstr "Затваряне на подменю"
 
 #: kuma/static/js/components.js:542
 msgid "Close notification"
-msgstr ""
+msgstr "Затваряне на съобщението"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
-msgstr "Беше ли ви от помощ тази страница?"
+msgstr "Помогна ли ви тази страница?"
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
@@ -41,11 +41,11 @@ msgstr "Изключване на този въпрос"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "Благодарим ви за отзива!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "Няма да ви притесняваме отново."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
