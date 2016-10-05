@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 07:11+0000\n"
+"PO-Revision-Date: 2016-10-05 08:01+0000\n"
 "Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1510,38 +1510,38 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "isem"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "isem n ugraw"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Anadi ulac-it"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Nadi tasemlit n uẓeṭṭa n uneflay Mozilla"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr ""
+msgstr "Igmaḍ n unadi n \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr ""
+msgstr "suqel si <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr ""
+msgstr "Anadi deg usmel MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Igmaḍ"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1582,30 +1582,30 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s n usemli yettwafen."
+msgstr[1] "%(count)s n isemliyen yettwafen."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Sken akk igmaḍ."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Sken igmaḍ si %(start)s ar %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Nadi kan tikelt nniḍen %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Tasemlit"
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
-msgstr ""
+msgstr "Akk isental"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
@@ -1889,7 +1889,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "Kkes"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
@@ -1897,11 +1897,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Rnu tansa imayl"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Rnu imayl"
 
 #: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
@@ -1913,7 +1913,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "Sentem tansa imayl"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
