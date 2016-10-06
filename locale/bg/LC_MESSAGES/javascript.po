@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-10-06 13:00+0000\n"
+"PO-Revision-Date: 2016-10-06 13:11+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -73,27 +73,27 @@ msgstr "Търсенето трябваше да ме отведе до друг
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr "Затваряне"
+msgstr "Нещо друго"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
-msgstr ""
+msgstr "Единичен избор..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "Олеле. Как може да се подобри?"
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "Благодарим! Ние ще го поправим."
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "Без избор"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "Избрано: "
 
 #: kuma/static/js/users.js:108
 msgid "New interest..."
@@ -129,23 +129,23 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "Съобщаване за грешка."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "Докладвано. Благодарим!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Показване на старата таблица."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr "Запазване на чернова"
+msgstr "Запис на чернова"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr "Включване на автоматичното запазване."
+msgstr "Включване на автоматичния запис."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
