@@ -260,12 +260,26 @@ SUBMISSION_NOT_AVAILABLE = mark_safe(
 
 
 def akismet_data_as_dl(akismet_data):
+    """Format Akismet data as a definition list."""
+    favorites = (
+        'comment_content',
+        'permalink',
+        'comment_author',
+        'comment_author_email')
+
+    def moderator_sort(key):
+        """Sort data by 1) favorites, 2) data values, 3) headers"""
+        try:
+            fav_order = favorites.index(key)
+        except ValueError:
+            fav_order = len(favorites)
+        is_data = key and key[0] in ascii_lowercase
+        return (fav_order, not is_data, key)
+
     if not akismet_data:
         return SUBMISSION_NOT_AVAILABLE
     data = json.loads(akismet_data)
-    raw_keys = [key for key in sorted(data.keys()) if key]
-    keys = ([key for key in raw_keys if key[0] in ascii_lowercase] +
-            [key for key in raw_keys if key[0] not in ascii_lowercase])
+    keys = sorted(data.keys(), key=moderator_sort)
     out = format_html(u'<dl>\n  {}\n</dl>',
                       format_html_join(u'\n  ', u'<dt>{}</dt><dd>{}</dd>',
                                        ((key, data[key]) for key in keys)))
