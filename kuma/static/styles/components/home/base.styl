@@ -63,38 +63,6 @@ Override MDN standard styles
         }
     }
 
-    h3 {
-        clearfix();
-        text-transform: uppercase;
-
-        {$selector-icon} {
-            width: 42px;
-            height: 39px;
-            background-position: 0 -147px;
-            background-size: 134px auto;
-            color: #0095dd;
-            bidi-value(float, left, right);
-            bidi-value(margin-right, $icon-margin, 0);
-            bidi-value(margin-left, 0, $icon-margin);
-
-            &:before {
-                margin: 11px 0 0 0;
-                display: block;
-                text-align: center;
-            }
-        }
-
-        &.connect {
-            span {
-                padding-top: 10px;
-            }
-        }
-
-        span {
-            bidi-value(float, left, right);
-        }
-    }
-
     .entry-meta {
         set-smaller-font-size();
         font-style: italic;
