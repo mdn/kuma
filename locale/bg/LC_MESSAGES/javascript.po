@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:21-0700\n"
-"PO-Revision-Date: 2016-10-05 08:15+0000\n"
+"PO-Revision-Date: 2016-10-06 13:00+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -53,23 +53,23 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "Да се направят обясненията по-ясни"
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr ""
+msgstr "Добавяне на повече подробности"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "Поправяне на невярна информация"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr ""
+msgstr "Добавяне или подобряване на примери"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
-msgstr ""
+msgstr "Търсенето трябваше да ме отведе до друга статия"
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
