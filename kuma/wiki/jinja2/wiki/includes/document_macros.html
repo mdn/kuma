@@ -77,6 +77,12 @@
         <dd class="rev-to"> {{ ', '.join(revision_to.tags.split(',')) }}</dd>
         {% endif %}
 
+        {% if revision_from.comment or revision_to.comment %}
+        <dt>{{ _('Comment:') }}</dt>
+        <dd class="rev-from"> {{ revision_from.comment }}</dd>
+        <dd class="rev-to"> {{ revision_to.comment }}</dd>
+        {% endif %}
+
         <dt>{{ _('Content:') }}</dt>
         {% if revision_from.get_tidied_content(allow_none=True) == None or revision_to.get_tidied_content(allow_none=True) == None %}
         <dd id="doc-rendering-scheduled" class="warning">{% trans %}The server is rendering the content comparison. Please refresh this page in a few minutes.{% endtrans %}</dd>
