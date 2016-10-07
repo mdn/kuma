@@ -1,4 +1,4 @@
-!/static/fonts/.htaccess
+!static/fonts/.htaccess
 !build/assets/css/README.md
 *.pyc
 *.pyo
@@ -13,8 +13,8 @@
 .noserc
 .tox
 .vagrant
-/bower_components
-/static/*/*
+bower_components
+static/*/*
 build.py
 build/assets/css/*
 build/locale/
