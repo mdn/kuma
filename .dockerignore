@@ -1,6 +1,4 @@
 # From kuma .gitignore
-!static/fonts/.htaccess
-!build/assets/css/README.md
 *.pyc
 *.pyo
 *.sw?
