@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-05 20:59+0000\n"
-"Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2016-10-07 20:20+0000\n"
+"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -1895,7 +1895,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "Azen tikelt nniḍen asentem"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
@@ -2041,7 +2041,7 @@ msgstr ""
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Sentem tansa inek imayl"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
@@ -2075,11 +2075,11 @@ msgstr "Tuqqna s OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Tuqqna n umiḍan ur teddi ara"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "Tedra-d tuccḍa deg uɛraḍ n tuqqna ɣer umiḍan inek."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
@@ -2091,7 +2091,7 @@ msgstr "Tuqqniwin n umiḍan"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Tzemred ad tkecmed ɣer umaɣnu yinek s useqdec n yiwen seg imeẓla agi:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
@@ -2107,7 +2107,7 @@ msgstr "Qqen amiḍan nniḍen"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Tuqqna tettwasefsex"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2159,11 +2159,11 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "Aseqdac inek %(username)s di GitHub bbwint yakan. Fren wayeḍ ma ulac aɣilif."
 
 #: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
-msgstr ""
+msgstr "Ma ulac aɣilif sekcem isem i tebɣiḍ ad sekneḍ i yiseqdacen nniḍen akken ad tesulud attekki yinek."
 
 #: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
@@ -2259,7 +2259,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "Ur tezmired ara ad teḥwi iman-ik seg uspam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
@@ -2271,11 +2271,11 @@ msgstr "Gdel aseqdec seg uspami"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 msgid "Ban User for Spam & Submit Spam"
-msgstr ""
+msgstr "Gdel aseqdac seg uspam & Mmel asnifel ticki d aspam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "Gdel aseqdac ɣef ayen nniḍen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
@@ -2337,7 +2337,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 msgid "Could not submit to Akismet:"
-msgstr ""
+msgstr "Ur izmir ara ad yazen i Akismet:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 msgid "Could not delete:"
@@ -2345,11 +2345,11 @@ msgstr "Ur yezmir ara ad yekkes:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
-msgstr ""
+msgstr "Ur izmir ara ad isefsex:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 msgid "No actions taken"
-msgstr ""
+msgstr "Ulac tigawt yettwagen"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
@@ -2357,7 +2357,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Yettwammel yakan d aspam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
