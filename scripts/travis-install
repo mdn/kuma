@@ -15,10 +15,20 @@ then
     sudo apt-get autoremove
     sudo apt-get autoclean
     sudo rm -rf /var/lib/mysql
-    sudo truncate -s 0 /var/log/mysql/error.log
 
+    # Install Elasticsearch
+    wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
+    sudo dpkg -i elasticsearch-1.7.2.deb
+    
     # limit elasticsearch / java memory usage to avoid OOM Killer
     sudo service elasticsearch stop;
     echo "ES_HEAP_SIZE=256m" | sudo tee --append /etc/default/elasticsearch
     sudo service elasticsearch start;
+fi
+
+if [ "$TOXENV" == "docker" ]
+then
+    curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    chmod +x docker-compose
+    sudo mv docker-compose /usr/local/bin
 fi

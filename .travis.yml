@@ -10,14 +10,15 @@ language: python
 python:
     - "2.7"
 services:
+    - docker
     - memcached
-    - elasticsearch
 env:
     matrix:
         - TOXENV=py27
         - TOXENV=flake8
         - TOXENV=docs
         - TOXENV=dennis
+        - TOXENV=docker DOCKER_COMPOSE_VERSION=1.8.0
     global:
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DEBIAN_FRONTEND=noninteractive
@@ -26,6 +27,7 @@ env:
 matrix:
     allow_failures:
         - env: TOXENV=dennis
+        - env: TOXENV=docker DOCKER_COMPOSE_VERSION=1.8.0
 before_install:
     - scripts/travis-install
     - pip install -U pip
