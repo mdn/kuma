@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 11:25+0000\n"
+"PO-Revision-Date: 2016-10-08 12:38+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1922,7 +1922,7 @@ msgstr "Ẓreg amaɣnu"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "Tabɣiḍ ad tekkseḍ tansa imayl yettwafernen?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
@@ -1931,7 +1931,7 @@ msgstr "Sentem tansa imayl"
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "Sentem ma ulac aɣilif ma yella <a href=\"mailto:%(email)s\">%(email)s</a> d tansa imayl n useqdac %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1940,12 +1940,12 @@ msgstr "Sentem"
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
 msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
-msgstr ""
+msgstr "Aseɣwen yettusqedcen deg usentem n tansa imayl yezri neɣ amčči d ameɣtu. Ma ulac aɣilif, <a href=\"%(email_url)s\">suter tikelt nniḍen aseɣwen n usentem</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "Tenssentmeḍ <a href=\"mailto:%(email)s\">%(email)s</a> d akken d tansa imayl n useqdac %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -1957,19 +1957,19 @@ msgstr "Ma ulac aɣilif, Kcem"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Akk agbur n MDN yella baṭen war ma tesriḍ tuqqna."
 
 #: kuma/users/jinja2/account/login.html:19
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr ""
+msgstr "Akken ad tettekkiḍ, tesriḍ ad teqqneḍ ɣer MDN. Tzemreḍ ad teqqneḍ s useqdec n GitHub udiɣ amaɣnu MDN ad yettwarnu ma yella ur ɣur-k ara yiwen."
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "MA ɣur-k amaɣnu MDN, qqen:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Tebɣiḍ ad teffɣeḍ?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
@@ -1984,7 +1984,7 @@ msgstr "Awal uffir yettuwennez"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr ""
+msgstr "Tettuḍ awal inek uffir? Sekcem tansa yinek imayldaw-a akken ak-d-nazen izen n uwennez ines."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
@@ -1992,20 +1992,20 @@ msgstr "Wennez awal uffir"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "Ma ulac aɣilif, nermes-aɣ-d ma ɣur-k uguren deg uwennez n wawal inek uffir."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Nezen-ak-d imayl. Ma ulac aɣilif, nermes-aɣ-d ma yella ur d-rmiseḍ ara izen kra n tesdatin kan."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Ajiṭun mačči d ameɣtu"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
+msgstr "Aseɣwen n uwennez n wawal uffir mačči d ameɣtu, ahat yettwaseqdec yakan. Ma ulac aɣilif suter tikelt nniḍen <a href=\"%(passwd_reset_url)s\">awennez n wawal uffir</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -2013,7 +2013,7 @@ msgstr "Snifel awal uffir"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Awal inek uffir yettusnifel tura."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
@@ -2030,11 +2030,11 @@ msgstr "Jerred"
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Ɣur-k ayak amaɣnu? Ihi ma ulac aɣilif <a href=\"%(login_url)s\">kcem</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Tettwakkes tmerna n umaɣnu"
 
 #: kuma/users/jinja2/account/signup_closed.html:5
 #, python-format
@@ -2070,7 +2070,7 @@ msgstr "Tazmilt"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "teqqned yakan s %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -2290,7 +2290,7 @@ msgstr "Agzul"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
-msgstr ""
+msgstr "Tigawin yettwagen"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
@@ -2380,11 +2380,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Armud n tsemlit n melmi kan"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
-msgstr ""
+msgstr "Sken akk armud"
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
@@ -2413,7 +2413,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr ""
+msgstr "Aseqdac agi ulac ɣur-s armud."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
@@ -2503,7 +2503,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Mmeslay-aɣ-d!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
@@ -2536,7 +2536,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
 #, python-format
 msgid "Hi %(username)s"
-msgstr ""
+msgstr "Azul %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2590,7 +2590,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "Wali %(irc_link)s i ugar n telɣut ɣef IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
