@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 11:19+0000\n"
+"PO-Revision-Date: 2016-10-08 11:25+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1509,15 +1509,15 @@ msgstr "D amatar amiran?"
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Yella yakan umatar ameḍfaṛ i umatar amiran %s"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr ""
+msgstr "Anadi yeḥbes aka tura. Ɛreḍ tikelt nniden di kra n tesdatin."
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr ""
+msgstr "Teḍra-d tuccḍa deg unadi. Ɛreḍ tikelt nniḍen akka kra n tesdatin."
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -1682,11 +1682,11 @@ msgstr "alguritm"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "salt"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
@@ -1873,7 +1873,7 @@ msgstr "Imayl:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Amaɣnu ur yermid ara"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
@@ -1890,11 +1890,11 @@ msgstr "%(email)s d <em>tansa yinu </em>imayl tamezwarut"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "Ternid daɣen tansiwin agi imayl:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Err tansa agi d tamezwarut"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -1906,7 +1906,7 @@ msgstr "Kkes"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
-msgstr ""
+msgstr "<strong>Ɣur-k:</strong> \"Ur terniḍ ara tansa imayl ɣer umaɣnu. S war tansa imayl, ur tettizmired ara ad d-remseḍ ilɣulten."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
