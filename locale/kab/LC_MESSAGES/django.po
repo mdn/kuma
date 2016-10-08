@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 10:40+0000\n"
+"PO-Revision-Date: 2016-10-08 11:19+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1462,49 +1462,49 @@ msgstr "Tasemlit Web s ɣur ineflayen, i yineflayen di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr ""
+msgstr "MDN s tidett d tabwaṭ n ifecka i uneflay web akked isemliyen ɣef HTML, CSS, JavaScript d tizaɣin nniden akked titiknulujiyin nniḍe yeldin i Web."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Ur nezmir ara ad nesmel ugar n yiwen n umar degi iwet n tikelt."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Amatar n unadi %s yermed."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Rmed amatar n unadi yettwafernen deg umḍiq n umatar amiran"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Ur izmir ara ad yekkes armad n wugar n yiwen n umatar deg iwet n tikelt."
 
 #: kuma/search/admin.py:24
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
-msgstr ""
+msgstr "Ur izmir ara ad yekkes armad n umatar ma yella ala yiwen i yella. Rnu di tazwara amatar nniḍen sakin ččaṛ-it."
 
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Yettwakke urmad n umatar n unadi %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
-msgstr ""
+msgstr "Kkes armad n umatar n unadi yettwafernen (tuɣalin tawurmant ɣer umatar n weqbel)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Ur izmir ara ad yeččaṛ ugar n yiwen n umatar di iwet n tikelt."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr ""
+msgstr "Ččaṛ amatar n unadi yettwafernen s Celery"
 
 #: kuma/search/admin.py:57
 msgid "Is current index?"
-msgstr ""
+msgstr "D amatar amiran?"
 
 #: kuma/search/forms.py:17
 #, python-format
