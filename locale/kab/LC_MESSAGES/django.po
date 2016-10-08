@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 15:17+0000\n"
+"PO-Revision-Date: 2016-10-08 18:59+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3196,7 +3196,7 @@ msgstr "Deg umagrad agi"
 #: kuma/wiki/jinja2/wiki/document.html:231
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr ""
+msgstr "Isemli agi yerna-t unagraw i tikelt tamezwarut. Ma ulac aɣilif <a href=\"%(url)s\">smiren asebter agi</a> akka kra n tesdatin akken ad twaliḍ agbur ummid."
 
 #: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
@@ -3204,6 +3204,8 @@ msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
 "page</a> in a few minutes."
 msgstr ""
+"Aleqqem n isemli agi <abbr title=\"%(started_at)s\">iteddu akka tura</abbr>. Ma yella agbur n daw-a yettban ur yemmid ara neɣ yella wayen ixuṣṣen, ma ulac aɣilif <a href=\"%(url)s\">smiren asebter "
+"agi</a> di kra n tesdatin."
 
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
