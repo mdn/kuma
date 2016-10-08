@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 19:25+0000\n"
+"PO-Revision-Date: 2016-10-08 20:00+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2136,6 +2136,8 @@ msgid_plural ""
 "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] "Amaɣnu yella yakan s yimayl agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu yinu MDN</a>"
 msgstr[1] ""
+"Amaɣnu yella yakan s yiwen seg imaylen agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu yinu "
+"MDN</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
@@ -3588,7 +3590,7 @@ msgstr ""
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "Wali amaɣnu n useqdac:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
@@ -3596,15 +3598,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Wali amagrad:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Ẓreg amagrad:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Amazray n umagrad:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
@@ -3622,7 +3624,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "Sekles"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
@@ -3630,19 +3632,19 @@ msgstr "Tutlayin"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
-msgstr ""
+msgstr "Ulac tisuqilin ɣef umagrad agi."
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "Add a translation"
-msgstr ""
+msgstr "Rnu tasuqilt"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Watch"
-msgstr ""
+msgstr "Ɛass"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
-msgstr ""
+msgstr "Imagraden isnawanen imaynuten"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
@@ -3650,7 +3652,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
-msgstr ""
+msgstr "Senkez amagrad agi"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
@@ -3658,7 +3660,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
 msgid "Delete this article"
-msgstr ""
+msgstr "Kkes amagrad agi"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -3670,7 +3672,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
-msgstr ""
+msgstr "Siggez amagrad agi"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3678,7 +3680,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "Wali daɣen"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
@@ -3738,12 +3740,12 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Jerred ɣer lqem s <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:134
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Ffeɣ seg ujerred n lqem s <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, python-format
@@ -3761,19 +3763,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr ""
+msgstr "TOC:"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
-msgstr ""
+msgstr "Tesriḍ tallalt?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
 msgid "Editor Guide"
-msgstr ""
+msgstr "Amnir n umaẓrag"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
-msgstr ""
+msgstr "Amnir n uɣanib"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
@@ -3783,13 +3785,13 @@ msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "Ffer talɣut n tuccḍa"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ugar n telɣut ɣef tuccda agi"
+msgstr[1] "Ugar n telɣut ɣef tuccḍiwin agi"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
@@ -3797,7 +3799,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr ""
+msgstr "Anaw n tuccḍa:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
@@ -3805,11 +3807,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "Rnu taneɣruft"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr ""
+msgstr "Ẓreg taneɣruft"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
@@ -3817,7 +3819,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr ""
+msgstr "Ẓreg isemli"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
@@ -3825,7 +3827,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "Rnu asebter"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
@@ -3874,12 +3876,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Aglam n tsuqilt"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Azwen s %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
@@ -3904,18 +3906,18 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "Akk tineɣrufin"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tettwaf %(num)s n tneɣruft."
+msgstr[1] "Ttwafent %(num)s n tneɣrufin"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "Isemliyen s tuccḍiwin"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
@@ -3923,19 +3925,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Isemliyen s war asaraw"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "Akk isemliyen"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Ileqman n tsuqilt ttwasran"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Ulac imagraden."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
@@ -4093,12 +4095,12 @@ msgstr ""
 #: kuma/wiki/views/document.py:655
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Lemdeɣ ɣef %(title)s di MDN."
 
 #: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr ""
+msgstr "Anaw n ugbur ur yettusefrak ara: %s"
 
 #: kuma/wiki/views/document.py:733
 #, python-format
@@ -4125,7 +4127,7 @@ msgstr ""
 #: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr ""
+msgstr "Akter n isefka ur yeddi ara: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
@@ -4133,7 +4135,7 @@ msgstr ""
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
-msgstr ""
+msgstr "Ur tezmireḍ ara ad tessuqleḍ isemli agi."
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
