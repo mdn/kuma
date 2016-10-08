@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 18:59+0000\n"
+"PO-Revision-Date: 2016-10-08 19:25+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2061,7 +2061,7 @@ msgstr "Nuzen izen n usentem. Sit ɣef useɣwen yettznen ɣer yimayl. Ma ulac a�
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
-msgstr ""
+msgstr "<strong>Tazmilt:</strong> tzemreḍ yal ass <a href=\"%(email_url)s\">ad tesnifleḍ tansa yinek imayl</a>."
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
