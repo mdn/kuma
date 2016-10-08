@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 14:52+0000\n"
+"PO-Revision-Date: 2016-10-08 15:17+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2056,7 +2056,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Nuzen izen n usentem. Sit ɣef useɣwen yettznen ɣer yimayl. Ma ulac aɣilif, nermes-aɣ-d ma yella ur k-id-yebbwid ara yizen di kra ntesdatin."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -2124,7 +2124,7 @@ msgstr "Rnu amaqnu inek MDN akken ad tkemled"
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr ""
+msgstr "Amaɣnu yella yakan s yimayl agi. Akken ad teqqneḍ Persona ɣer umaɣnu MDN, <a href=\"%(connections_url)s\">tesriḍ ad tkecmeḍ sakin ad terzuḍ ɣer tuqqniwin n umiḍan inek.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
@@ -2134,7 +2134,7 @@ msgid ""
 msgid_plural ""
 "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
 "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
-msgstr[0] ""
+msgstr[0] "Amaɣnu yella yakan s yimayl agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu yinu MDN</a>"
 msgstr[1] ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:48
@@ -2702,7 +2702,7 @@ msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "Isnifal n isemli MDN n melmi kan"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
@@ -2934,19 +2934,19 @@ msgstr ""
 
 #: kuma/wiki/models.py:1549
 msgid "Localization Tag"
-msgstr ""
+msgstr "Tabzimt n usideg"
 
 #: kuma/wiki/models.py:1550
 msgid "Localization Tags"
-msgstr ""
+msgstr "Tibzimin n usideg"
 
 #: kuma/wiki/models.py:1583
 msgid "No table of contents"
-msgstr ""
+msgstr "Ulac tafelwit n ugbur"
 
 #: kuma/wiki/models.py:1584
 msgid "All levels"
-msgstr ""
+msgstr "Akk iswiren"
 
 #: kuma/wiki/models.py:1585
 msgid "H2 and higher"
@@ -3063,12 +3063,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr ""
+msgstr "Uɣal ɣer umazray"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
 msgid "Delete Document | %(document)s"
-msgstr ""
+msgstr "Kkes isemliyen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3084,7 +3084,7 @@ msgstr "Azemz n tmerna"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
-msgstr ""
+msgstr "Asnifel aneggaru s ɣur"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
@@ -3170,24 +3170,24 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:172
 msgid "Your Search Results"
-msgstr ""
+msgstr "Igmaḍ n unadi yinek"
 
 #: kuma/wiki/jinja2/wiki/document.html:176
 msgid "Next Search Result"
-msgstr ""
+msgstr "Igmaḍ n unadi d-iteddun"
 
 #: kuma/wiki/jinja2/wiki/document.html:180
 msgid "see all contributors"
-msgstr ""
+msgstr "wali akk imttekkiyen"
 
 #: kuma/wiki/jinja2/wiki/document.html:180
 msgid "hide contributors"
-msgstr ""
+msgstr "ffer imttekkiyen"
 
 #: kuma/wiki/jinja2/wiki/document.html:184
 #, python-format
 msgid "View profile: %(username)s"
-msgstr ""
+msgstr "Sken amaɣnu: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:209
 msgid "In This Article"
@@ -3229,7 +3229,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Tasuqilt agi tetteddu."
 
 #: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
@@ -3238,7 +3238,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:306
 msgid "This article doesn't have any content yet."
-msgstr ""
+msgstr "Amargad agi ur ɣur-s ara yakan agbur."
 
 #: kuma/wiki/jinja2/wiki/document.html:309
 #, python-format
