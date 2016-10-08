@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 20:00+0000\n"
+"PO-Revision-Date: 2016-10-08 20:03+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3720,22 +3720,22 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:118
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr ""
+msgstr "Jerred ɣer %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:119
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr ""
+msgstr "Ffeɣ seg ujerred n %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr ""
+msgstr "Tettwajerdeḍ akka tura ɣer %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr ""
+msgstr "Teffɣeḍ seg ujettwajerd akka tura n %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 #, python-format
@@ -3750,16 +3750,16 @@ msgstr "Ffeɣ seg ujerred n lqem s <bdi>%(language)s</bdi>"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr ""
+msgstr "Tettwajerded akka tura ɣer lqem %(language)s n umagrad agi."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr ""
+msgstr "Teffɣeḍ akka tura seg ujerred n lqem %(language)s n umagrad agi."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "Sirew tafelwit n ugbur"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
