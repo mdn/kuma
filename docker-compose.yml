@@ -35,6 +35,7 @@ services:
       - C_FORCE_ROOT=1  # TODO: switch to non-root user
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=True
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
