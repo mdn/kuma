@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 20:03+0000\n"
+"PO-Revision-Date: 2016-10-08 21:00+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2052,7 +2052,7 @@ msgstr "Nuzen izen n usentem. Sit ɣef useɣwen yettwarnan akken ad tfakeḍ aka
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
-msgstr ""
+msgstr "Akken ad tedduḍ ɣer temnaṭ agi n usmel, yessefk ad tessentmeḍ tamagit inek. Ɣef aya, ak-d-bessuter asentem ma yella tansa yagi imay yinek."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
@@ -2115,7 +2115,7 @@ msgstr "Tuqqna tettwasefsex"
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Yessefk ad tferneḍ asefsex n tuqqna ɣer usmel nneɣ s useqdec n yiwen seg imiḍanen inek. MA yella ur tenqiḍ ara,  <a href=\"%(login_url)s\">Qqen</a> ma ulac aɣilif."
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
@@ -2142,24 +2142,24 @@ msgstr[1] ""
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
-msgstr ""
+msgstr "Tanemmirt ɣef ujerred inek di MDN s %(provider_name)s. Yeqqim-d kan yiwen n umecwaṛ akken ad tedduḍ ɣer MDN: <strong>rnu amaɣnu MDN</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
-msgstr ""
+msgstr "Tzemred ad tkecmeḍ ɣer yal asmel MDN ɣas akken ur ɣur-k ara amiḍan. Acukan, ma terniḍ amiḍan MDN, ad tizmmireḍ ad tesnifleḍ isemliyen udiq ad tesɛuḍ asebter i umaɣnu yinek."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "Akken ad tesbeddeḍ amaɣnu yinek MDN, fren ma ulac aɣilif <strong>isem n useqdac</strong>. isem inek n useqdac ad yettwasken di MDN akken ad nzeṛ attekki yinek."
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "Akken ad tesbeddeḍ amaɣnu yinek MDN, fren ma ulac aɣilif <strong>isem n useqdac akken tensa imayl</strong>. isem inek n useqdac ad yettwasken di MDN akken ad nzeṛ attekki yinek."
 
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
-msgstr ""
+msgstr "Ma yella <strong>temmuggreḍ-d uguren</strong> di tuqqna yinek neɣ di tmerna n umaɣnu yinek MDN, <strong><a href=\"%(bug_href)s\" rel=\"external\">nermes-aɣ-d</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
@@ -2176,6 +2176,8 @@ msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
 msgstr ""
+"Yella yakan umaɣnu s tansa agi imayl yettwafernen. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Qqen amiḍan inek %(provider_name)s ɣer umaɣnu "
+"agi.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
@@ -2183,6 +2185,8 @@ msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
 "href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
+"Anta tansa imayl i tebɣiḍ ad tesqedceḍ akken ad d-remseḍ iznan akked ilɣa n MDN? tansa agi imayl ur <strong>pas</strong> d-ttwaskan ara di MDN udiɣ ad tettwasefrek akken tella <a "
+"href=\"%(privacy_url)s\">tasertit-nneɣ n tbaḍnit</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
