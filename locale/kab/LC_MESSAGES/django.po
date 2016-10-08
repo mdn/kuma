@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 21:00+0000\n"
+"PO-Revision-Date: 2016-10-08 21:18+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2195,7 +2195,7 @@ msgstr "Tiwtilin akked tbaḍnit"
 #: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
-msgstr ""
+msgstr "ar <a href=\"%(terms_url)s\">Tewtilin n useqdec</a> akked <a href=\"%(privacy_url)s\">tsertit n tbaḍnit</a> n Mozilla."
 
 #: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
@@ -2264,7 +2264,7 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> yettwagdel."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr ""
+msgstr "%(user)s yettwagdel yakan , tzemreḍ ad waliḍ aɛiwed n tmuɣli udiɣ ad tesfesxeḍ ma yella tesriḍ."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
@@ -2288,7 +2288,7 @@ msgstr "Gdel aseqdac ɣef ayen nniḍen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr ""
+msgstr "Aseqdac agi ur d-igir ara aɛiwed n tmuɣli yettwasfesxen di kraḍ n wussan ineggura udiɣ aseqdac yettwagdel."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2304,11 +2304,11 @@ msgstr "Yettwagdel:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 msgid "Submitted to Akismet as spam:"
-msgstr ""
+msgstr "Yettwazen i Akismet am upam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 msgid "The user did not have any revisions that were reported as spam."
-msgstr ""
+msgstr "Ula d yiwen uɛiwed n tmuɣli n useqdac agi ur d-yettwammel am uspam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
@@ -2316,23 +2316,23 @@ msgstr "Yattwakkes:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
-msgstr ""
+msgstr "Aseqdac agi ur ɣur-s ara aɛiwed n tmuɣli yettwakksen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
-msgstr ""
+msgstr "Yettwasefsex:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 msgid "The user did not have any revisions that were reverted."
-msgstr ""
+msgstr "Aseqdac agi ur ɣur-s ara aɛiwed n tmuɣli yettwasfesxen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
-msgstr ""
+msgstr "Yesra aḍfaṛ"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
-msgstr ""
+msgstr "Tigawt tamaynut yega useqdac:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2342,7 +2342,7 @@ msgstr "Ula yiwen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "Aɛiwed n muɣli yettwazgel acku aneggaru deg-sen ur yelli ara d aspam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 msgid "Could not submit to Akismet:"
@@ -2362,7 +2362,7 @@ msgstr "Ulac tigawt yettwagen"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli aneggaru mačči d aspam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
@@ -2370,7 +2370,7 @@ msgstr "Yettwammel yakan d aspam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
-msgstr ""
+msgstr "Yettwammel mačči d aspam:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2378,11 +2378,11 @@ msgstr "Tettwagedleḍ"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "Tettwagedleḍ ɣef aya:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
-msgstr ""
+msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Sit dagii</a> akken ad berriḍ ɣef ugdel agi.</p>"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2406,7 +2406,7 @@ msgstr "Ẓreg asebter"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
-msgstr ""
+msgstr "Wali akk amgired"
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
 msgid "View page history"
@@ -2415,7 +2415,7 @@ msgstr "Wali amazray n usebter"
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
-msgstr ""
+msgstr "<p class=\"none\">Ur tettekkaḍ ula deg iwen n isemli n MDN. <a href=\"%(docs_url)s\">Aya tura bdu !</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
@@ -2435,11 +2435,13 @@ msgstr "Sken amaɣnu"
 
 #: kuma/users/jinja2/users/user_edit.html:48
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Aqlak tesnifleḍ amaɣnu mačči yinek. Ɛur-k!"
 
 #: kuma/users/jinja2/users/user_edit.html:59
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
+"Nebɣa ad nẓeṛ tikti yinek ɣef usnifel deg usmel ! Imsekyaden beta aemren ad kecmen ɣer tmahilin timaynutin send ad d-ffɣent udiɣ ad d-remsen si sya ɣer da iznan yessuturen tallalt nneɣ deg usekyed n"
+" kra n tɣawsiwin."
 
 #: kuma/users/jinja2/users/user_edit.html:62
 msgid "Primary Email"
