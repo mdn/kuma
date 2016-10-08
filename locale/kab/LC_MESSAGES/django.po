@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-07 20:20+0000\n"
+"PO-Revision-Date: 2016-10-08 10:40+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -1307,7 +1307,7 @@ msgstr "Mudd afus i tneflit n MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr ""
+msgstr "Akk tigezmiyin n MDN (tasemlit akked usmel iman-is) rnan-ten tmezdagnut yeldin n ineflayen akked imyura. Ddu-d ɣer-neɣ! Wali amek tzemreḍ aɣ-d-muddeḍ tallalt:"
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
@@ -1344,7 +1344,7 @@ msgstr "Mmeslay ɣef MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
-msgstr ""
+msgstr "Suffeɣ awal ɣef tayri n uneflay."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
@@ -1352,6 +1352,9 @@ msgid ""
 "source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
 " bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
+"<ol><li><strong>Awi-d tiqeffalin:</strong> seqdec tiferkit-nneɣn daw-a akken ad ternuḍ taqeffalt tudmawant akked tengalt ibes aɣbalu i usnerni n  MDN ɣef ublug neɣ asmel "
+"inek?</li><li><strong>Suffeɣ-d tiqeffalin :</strong> Nɣel tangalt aɣbalu sakin senṭeḍ-it ɣe usmel neɣ ablug inek akken ad tmuddeḍ afus i yemdanen ad ddun ɣerr MDN.</li><li><strong>Ḥemmel :</strong> "
+"Zux imi tesneḍ ad tmuddeḍ tudert i yineflayen s cwit akked beṭṭu n MDN d umaḍal imeṛṛa.</li></ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
