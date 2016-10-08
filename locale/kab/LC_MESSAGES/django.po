@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 12:38+0000\n"
+"PO-Revision-Date: 2016-10-08 14:52+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2039,7 +2039,7 @@ msgstr "Tettwakkes tmerna n umaɣnu"
 #: kuma/users/jinja2/account/signup_closed.html:5
 #, python-format
 msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr ""
+msgstr "Suref-aɣ acku ur tezmireḍ ara ad ternuḍ amiḍan s Persona. <a href=\"%(url)s\">Ɛreḍ tikelt nniḍen s umiḍan GitHub</a>."
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2048,7 +2048,7 @@ msgstr "Sentem tansa inek imayl"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Nuzen izen n usentem. Sit ɣef useɣwen yettwarnan akken ad tfakeḍ akala n ujerred. Ma ulac aɣilif, nermes-aɣ-d ma yella ur k-id-yebbwid ara yizen di kra ntesdatin."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
