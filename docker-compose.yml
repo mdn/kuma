@@ -15,20 +15,19 @@ services:
       - kumascript
     environment:
       # Django settings overrides:
-      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=https
       - ALLOWED_HOSTS=localhost,localhost:8000
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
-      - CSRF_COOKIE_SECURE=False
+      - CSRF_COOKIE_SECURE=True
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - DEBUG=True
       - DOMAIN=localhost
       - ES_URLS=elasticsearch:9200
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - MEMCACHE_SERVERS=memcached:11211
-      - PROD_DETAILS_DIR=/app/product_details_json
-      - PROTOCOL=http://
-      - SESSION_COOKIE_SECURE=False
+      - PROTOCOL=https://
+      - SESSION_COOKIE_SECURE=True
       - SITE_URL=https://localhost:8000
       # Celery environment overrides:
       - C_FORCE_ROOT=1  # TODO: switch to non-root user
