@@ -29,7 +29,7 @@ services:
       - PROD_DETAILS_DIR=/app/product_details_json
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
-      - SITE_URL=http://localhost:8000
+      - SITE_URL=https://localhost:8000
       # Celery environment overrides:
       - C_FORCE_ROOT=1  # TODO: switch to non-root user
       # Other environment overrides
