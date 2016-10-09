@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-09 20:14+0000\n"
+"PO-Revision-Date: 2016-10-09 20:40+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2531,16 +2531,18 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"Asqerdec s srid deg <a href=\"%(channel_link)s\">ubadu #mdn n irc.mozilla.org</a>. (Ugar n telɣut di <a href=\"%(irc_link)s\">IRC</a>.) Deg ubadu agi, tzemreḍ ad tafeḍ inedbalenakked imyura "
+"itilnikiyen n MDN : Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), akked nekk (jms), iqedcen di tmezdagnut MDN."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
 msgid "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
-msgstr ""
+msgstr "Ablug : Deg ublug <a href=\"%(blog_link)s\">about:community</a>, imagraden yettwacerḍen <a href=\"%(tagged_link)s\">Developer Engagement</a> yezmer ad ten-tḥemleḍ."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:60 kuma/users/jinja2/users/email/welcome/plain.ltxt:51
 msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
-msgstr ""
+msgstr "Ur tt-ṣeḍḥi ara, ma yella tcukeḍ kra, llan wuguren neɣ isteqsiyen : nemes-aɣ-d! Aqlaɣ dagi akken ak-d-nmudd afus."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
@@ -2551,7 +2553,7 @@ msgstr "Azul %(username)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
-msgstr ""
+msgstr "Tanemmirt ɣef tmerna n umaɣnu deg Uẓeṭṭa n ineflayen Mozilla (MDN) - tamezdagnut yettheggin tiɣbula meqqren i yineflayen am kečč."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
