@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-08 21:18+0000\n"
+"PO-Revision-Date: 2016-10-09 20:14+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2457,7 +2457,7 @@ msgstr "Innekniyen (tibzimin)"
 
 #: kuma/users/jinja2/users/user_edit.html:76
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
-msgstr ""
+msgstr "Frez gar tecraḍ inek s tuccar neɣ isekkilen imellalen.  Err ticraḍ igebren ugar n yiwen n wawal gar snat n tuccar am \"tizaɣin n web\"."
 
 #: kuma/users/jinja2/users/user_edit.html:82
 msgid "Areas of expertise"
@@ -2508,6 +2508,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
+"Tzemreḍ tura ad tferneḍ ayen ara txedmeḍ di MDN, akken ad tettekkiḍ! Ɣur-neɣ deqs n twuriwin i tzemred ad tebɣuḍ akken ad tebduḍ, ma <a href=\"%(words_link)s\">tḥemleḍ ad teɣreḍ, ad taruḍ</a>, <a "
+"href=\"%(code_link)s\">ad tessihleḍ</a>, <a href=\"%(both_link)s\">ad tessihleḍ acukan ad tarud daɣen</a>, neɣ ma tḥemleḍ <a href=\"%(translate_link)s\">akken MDN ad yili s tutlayt inek</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2516,12 +2518,12 @@ msgstr "Mmeslay-aɣ-d!"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
 msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
-msgstr ""
+msgstr "Tebɣiḍ ad tmeslayeḍ ɣef MDN akked walbaɛḍ? Hat-nan ifecka i waya:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
 msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr ""
+msgstr "Tabdart n usqerdec : <a href=\"%(list_link)s\">Jerred iman-ik</a> akken aɣ-d-iniḍ acuɣer tḥemled MDN neɣ akken ad testeqsiḍ deg usmel."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
 #, python-format
