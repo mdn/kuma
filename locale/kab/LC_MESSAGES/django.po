@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 05:07+0000\n"
+"PO-Revision-Date: 2016-10-10 11:40+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2611,6 +2611,8 @@ msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
 msgstr ""
+"Tzemreḍ ad tefeḍ din inedbalen akked imyura itiknikanen n MDN : Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), akked "
+"d nek (jms), i d-yelhan akked tmezdagnut MDN."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2707,7 +2709,7 @@ msgstr "Tasemlit MDN"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr ""
+msgstr "Isemliyen uran useqdacen MDN"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
@@ -2719,20 +2721,20 @@ msgstr "Isnifal n isemli MDN n melmi kan"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Isnifal ineggura deg isemlyen MDN"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr ""
+msgstr "Isnifal ineggura deg isemliyen MDN s tebzimt %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Iemliyen MDN yettṛaǧun taɣuri/awali nniḍen"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "Isnifal ineggura n isemliyen MDN i yessefk ad ttwaɣṛen/ad ttuwalin tikelt nniḍen"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
@@ -2758,7 +2760,7 @@ msgstr "Aɛiwed n tmuɣli n melmi kan n isemliyen n MDN"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "Sken takanit"
 
 #: kuma/wiki/forms.py:35
 msgid "Please provide a title."
@@ -2839,11 +2841,11 @@ msgstr "Isemli nniḍen s yiɣef-isefka agi yella yakan."
 
 #: kuma/wiki/forms.py:67
 msgid "This document was modified while you were editing it."
-msgstr ""
+msgstr "Isemli agi yettusnifel makken telliḍ ad txeddmed fell-as."
 
 #: kuma/wiki/forms.py:69
 msgid "Changing this document's slug requires moving it and its children."
-msgstr ""
+msgstr "Asnifel n unegzum n isemli agi yesra ad yettwasenkez netta akked isemliyen ines isnawanen."
 
 #: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
