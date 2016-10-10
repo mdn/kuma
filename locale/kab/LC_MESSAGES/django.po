@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 19:11+0000\n"
+"PO-Revision-Date: 2016-10-10 19:31+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3397,15 +3397,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
-msgstr ""
+msgstr "Wali ma yella adig i d-yettwammlen yezga-d deg usebter yellan yakan."
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Ur sedday ar azenziɣ n tensa URL (\"https://\")."
 
 #: kuma/wiki/jinja2/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Mmel kan aḥric n tensa URL yeṭṭafaṛen \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
@@ -3417,7 +3417,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "Asulay n tensa URL amiran:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
@@ -3526,6 +3526,8 @@ msgid ""
 "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"Agbur yella daw n turagt n usenfaṛ. &middot; <a href=\"%(about_url)s\">Ɣef MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Ttekki di tengalt</a> &middot; <a href=\"//www.mozilla.org/en-"
+"US/privacy\">Tasertit n uqadeṛ n tudert tusligt</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
@@ -3533,6 +3535,8 @@ msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"&copy; 2005-2015 Mozilla Developer Network akken imttekkiyen <br /> Agbur yettunef-d s turagt n usenfaṛ agi. &middot; <a href=\"%(about_url)s\">Ɣef MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Ttekki di tengalt</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Tasertit n tbaḍnit</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3630,16 +3634,16 @@ msgstr "Amazray n umagrad:"
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr ""
+msgstr "Tjerrded akka tura ɣer teẓrigt di %(title)s akked imagraden imeṛṛa icudden ɣur-s."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Tettwajerdeḍ akka tura ɣer teẓrigt n %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
-msgstr ""
+msgstr "Amagrad agi yesra aɛided agi n tmuɣli:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
