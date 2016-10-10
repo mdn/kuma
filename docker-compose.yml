@@ -37,7 +37,7 @@ services:
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
-    command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 --access-logfile=- kuma.wsgi:application
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
     ports:
       - "8000:8000"
 
