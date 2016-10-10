@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 12:59+0000\n"
+"PO-Revision-Date: 2016-10-10 13:11+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3260,15 +3260,15 @@ msgstr "Amargad agi ur ɣur-s ara yakan agbur."
 #: kuma/wiki/jinja2/wiki/document.html:309
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr ""
+msgstr "Nadi <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">isebtar iseqdacen %(title)s</a> i yimedyaten n usemres akken umḍan n isebtar yedduyen amakṛu agi."
 
 #: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
-msgstr ""
+msgstr "Amagrad agi ur igbir ara yakan agbur yettwasentmen."
 
 #: kuma/wiki/jinja2/wiki/document.html:330
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "Tibzimin akked imttekkiyen icuddden ɣer isemli"
 
 #: kuma/wiki/jinja2/wiki/document.html:336
 msgid "Contributors to this page:"
