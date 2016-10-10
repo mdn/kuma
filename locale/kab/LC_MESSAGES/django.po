@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 11:40+0000\n"
+"PO-Revision-Date: 2016-10-10 11:53+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2887,7 +2887,7 @@ msgstr "Agzul n igmaḍ n unadi:"
 
 #: kuma/wiki/forms.py:445
 msgid "Only displayed on search results page"
-msgstr ""
+msgstr "Yettwaskan kan ɣef usebter n igmaḍ n unadi"
 
 #: kuma/wiki/forms.py:456 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
@@ -2899,11 +2899,11 @@ msgstr "Awennit:"
 
 #: kuma/wiki/forms.py:472
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Creḍ aɛiwed agi n tmuɣli i tɣuṛi nniḍen?"
 
 #: kuma/wiki/forms.py:479
 msgid "Tag this revision for localization?"
-msgstr ""
+msgstr "Creḍ aɛiwed agi n tmuɣli i tsuqilt?"
 
 #: kuma/wiki/forms.py:878
 msgid "New slug:"
@@ -2928,24 +2928,24 @@ msgstr "Tibzimin n isemli"
 
 #: kuma/wiki/models.py:173
 msgid "uploaded to the document"
-msgstr ""
+msgstr "yuli-d seg isemli"
 
 #: kuma/wiki/models.py:179
 msgid "linked in the document content"
-msgstr ""
+msgstr "yettucudd deg ugbur n isemli"
 
 #: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
-msgstr ""
+msgstr "Ur tezmireḍ ara ad tessedduḍ %(attachment_id)s deqs n tikal ɣer isemli %(document_id)s"
 
 #: kuma/wiki/models.py:1542
 msgid "Review Tag"
-msgstr ""
+msgstr "Tabzimt n tɣuṛi/awali tikelt nniḍen"
 
 #: kuma/wiki/models.py:1543
 msgid "Review Tags"
-msgstr ""
+msgstr "Tibzimin n tɣuṛi/awali tikelt nniḍen"
 
 #: kuma/wiki/models.py:1549
 msgid "Localization Tag"
@@ -2978,7 +2978,7 @@ msgstr "H4 neɣ ugar"
 #: kuma/wiki/models.py:1691
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
-msgstr ""
+msgstr "Yessefk aɛiwed n tmuɣli ad yebnu ɣef uɛid n tmuɣli n isemli %(locale)s. Asulay ID n uɛiwed n tmuɣli %(id)s ur imeɣri  ara akked usebdad agi."
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
@@ -2990,19 +2990,19 @@ msgstr "Aseqdac-Ameggi"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "HTTP Referrer"
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
 msgid "Data submitted to Akismet"
-msgstr ""
+msgstr "Isefka ttwaznen i Akismet"
 
 #: kuma/wiki/models.py:1870
 msgid "Akismet submission"
-msgstr ""
+msgstr "Anekcum Akismet"
 
 #: kuma/wiki/models.py:1871
 msgid "Akismet submissions"
-msgstr ""
+msgstr "Inekcumen Akismet"
 
 #: kuma/wiki/models.py:1915
 msgid "Slug"
@@ -3010,27 +3010,27 @@ msgstr "Asulay n tensa URL"
 
 #: kuma/wiki/models.py:1923
 msgid "Document (optional)"
-msgstr ""
+msgstr "Isemli (afrayan)"
 
 #: kuma/wiki/models.py:1933
 msgid "reviewed"
-msgstr ""
+msgstr "yettuwal/yettwaɣṛa tikelt nniḍen"
 
 #: kuma/wiki/models.py:1944
 msgid "Needs Review"
-msgstr ""
+msgstr "Yesra awal/taɣuri tikelt nniḍen"
 
 #: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "Agbur ameɣtu / Mačči d ummid"
 
 #: kuma/wiki/models.py:1946
 msgid "Confirmed as Spam"
-msgstr ""
+msgstr "Yettwasentem d aspam"
 
 #: kuma/wiki/models.py:1947
 msgid "Review Unavailable"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli ulac-it"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
@@ -3107,7 +3107,7 @@ msgstr "Azem n usnifel aneggaru"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
-msgstr ""
+msgstr "Ad tetteddud ad tekkseḍ isemli agi akked uɛiwed n tmuɣli yines imeṛṛa. Mmel-aɣ-d acuɣeṛ ara yettwakkes usebter agi."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
@@ -3116,11 +3116,11 @@ msgstr "Tebɣiḍ ad tkemmleḍ?"
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "Sefsex aɛiwed n tmuɣli | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr ""
+msgstr "Tebɣid ad tuɣaleḍ ɣer uɛiwed agi n muɣli?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
@@ -3132,7 +3132,7 @@ msgstr "Agbur"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
-msgstr ""
+msgstr "Acuɣer tebɣid awennez n isemli ɣer uɛiwed agi n tmuɣli?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
