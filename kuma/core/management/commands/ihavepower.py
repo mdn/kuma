@@ -23,7 +23,7 @@ class Command(BaseCommand):
         except User.DoesNotExist:
             raise CommandError('User %s does not exist.' % username)
 
-        if user.is_superuser and user.is_staff:
+        if user.is_superuser and user.is_staff and not password:
             raise CommandError('User already has the power!')
 
         if password:
