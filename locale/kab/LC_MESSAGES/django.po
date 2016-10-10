@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 05:01+0000\n"
+"PO-Revision-Date: 2016-10-10 05:07+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2767,12 +2767,12 @@ msgstr "Ma ulac aɣilif, mudd-d azwel."
 #: kuma/wiki/forms.py:36
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Azwel wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣum %(limit_value)s isekkilen."
 
 #: kuma/wiki/forms.py:38
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Senɣeṣ ma ulac aɣilif teɣzi n uḍris ma aṭaṣ ɣer %(limit_value)s n isekkilen. Teɣzi n tura %(show_value)s n isekkilen."
 
 #: kuma/wiki/forms.py:41
 msgid "Name Your Article"
@@ -2789,12 +2789,12 @@ msgstr "Asulay mačči d ameɣtu."
 #: kuma/wiki/forms.py:44
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Asulay wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣum %(limit_value)s isekkilen."
 
 #: kuma/wiki/forms.py:46
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Senɣeṣ ma ulac aɣilif teɣzi n uḍris ma aṭaṣ ɣer %(limit_value)s n isekkilen. Teɣzi n tura %(show_value)s n isekkilen."
 
 #: kuma/wiki/forms.py:49
 msgid "Please provide a summary."
@@ -2808,7 +2808,7 @@ msgstr "Agzul wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣu
 #: kuma/wiki/forms.py:52
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Senɣeṣ ma ulac aɣilif teɣzi n uḍris ma aṭaṣ ɣer %(limit_value)s n isekkilen. Teɣzi n tura %(show_value)s n isekkilen."
 
 #: kuma/wiki/forms.py:55
 msgid "Please provide content."
@@ -2822,12 +2822,12 @@ msgstr "Agbur wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣu
 #: kuma/wiki/forms.py:58
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Senɣeṣ ma ulac aɣilif teɣzi n uḍris ma aṭaṣ ɣer %(limit_value)s n isekkilen. Teɣzi n tura %(show_value)s n isekkilen."
 
 #: kuma/wiki/forms.py:61
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
+msgstr "Senɣeṣ ma ulac aɣilif teɣzi n uḍris ma aṭaṣ ɣer %(limit_value)s n isekkilen. Teɣzi n tura %(show_value)s n isekkilen."
 
 #: kuma/wiki/forms.py:64
 msgid "Another document with this slug already exists."
@@ -3339,7 +3339,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Tanemmirt imi d-muḍḍed afus deg usnerni n MDN!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
@@ -3583,11 +3583,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "Tibzimin %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
-msgstr ""
+msgstr "Tizmilin n lqem"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
@@ -3596,7 +3596,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "%(creator)s yesnifel %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
