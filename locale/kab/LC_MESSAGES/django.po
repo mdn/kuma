@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-09 20:57+0000\n"
+"PO-Revision-Date: 2016-10-10 04:15+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2592,12 +2592,12 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
 msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr ""
+msgstr "Jerred akken ad tiniḍ acuɛer tḥemleḍ MDN udiɣ akken ad d-serseḍ isteqsiyen inek ɣef usmel."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Tirawt s srid: #mdn channel di irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
@@ -2624,7 +2624,7 @@ msgstr "Yettwassen yakan d aspam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
-msgstr ""
+msgstr "Aseqdac agi ur d-imudd ara aɛiwed n tmuɣli di kraḍ agi n wussan yezrin."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
@@ -2662,7 +2662,7 @@ msgstr "Yettwagdel"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Clean Up Revisions"
-msgstr ""
+msgstr "Sfeḍ aɛiwed n tmuɣli"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
@@ -2670,7 +2670,7 @@ msgstr "Gdel aseqdac"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "Gdel aseqdac agi & sfeḍ"
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
@@ -2682,7 +2682,7 @@ msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Atiknikan - imedyaten n tengalt, API neɣ tatiknulujit"
 
 #: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
@@ -2690,7 +2690,7 @@ msgstr ""
 
 #: kuma/wiki/constants.py:215
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Tasuqilt tetteddu - ur yettwasuqel ara yakan imeṛṛa."
 
 #: kuma/wiki/content.py:720
 msgid "Edit section"
@@ -2831,11 +2831,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:64
 msgid "Another document with this slug already exists."
-msgstr ""
+msgstr "Isemli nniḍen s usulay agi URL yella yakan."
 
 #: kuma/wiki/forms.py:65
 msgid "Another document with this metadata already exists."
-msgstr ""
+msgstr "Isemli nniḍen s yiɣef-isefka agi yella yakan."
 
 #: kuma/wiki/forms.py:67
 msgid "This document was modified while you were editing it."
@@ -2877,7 +2877,7 @@ msgstr "Awalen n tsura:"
 
 #: kuma/wiki/forms.py:436
 msgid "Affects search results"
-msgstr ""
+msgstr "Ad iḥaz akk igmaḍ n unadi"
 
 #: kuma/wiki/forms.py:444
 msgid "Search result summary:"
@@ -4010,16 +4010,16 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "Akk tibzimin"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr ""
+msgstr "Ulac ula d yiwet n tebzimt."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Imagraden yettwasuqlen s tebzimt: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
@@ -4029,7 +4029,7 @@ msgstr ""
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
+msgstr[0] "%(count)s n isemli yettwafen."
 msgstr[1] ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
@@ -4054,7 +4054,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
-msgstr ""
+msgstr "\"Sali-d isemliyen\""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -4067,11 +4067,11 @@ msgstr "Sali-d isemliyen"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Ma ulac aɣilif, seɣti tuccḍa n daw-a."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "Sali"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
@@ -4088,7 +4088,7 @@ msgstr ""
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
