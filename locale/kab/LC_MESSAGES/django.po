@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 04:15+0000\n"
+"PO-Revision-Date: 2016-10-10 05:01+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -2587,7 +2587,7 @@ msgstr "Tebɣiḍ tasuqilt n MDN qer tutlayt ik?"
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "Tabdart n tnezwit : %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
@@ -2803,7 +2803,7 @@ msgstr "Ma ulac aɣilif, mudd-d azwel."
 #: kuma/wiki/forms.py:50
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Agzul wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣum %(limit_value)s isekkilen."
 
 #: kuma/wiki/forms.py:52
 #, python-format
@@ -2817,7 +2817,7 @@ msgstr "Ma ulac aɣilif, mudd-d agbur."
 #: kuma/wiki/forms.py:56
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Agbur wezzil aṭas (%(show_value)s isekkilen). Yessefk ad yili ɣarṣum %(limit_value)s isekkilen."
 
 #: kuma/wiki/forms.py:58
 #, python-format
