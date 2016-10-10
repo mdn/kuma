@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 13:11+0000\n"
+"PO-Revision-Date: 2016-10-10 13:29+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3293,6 +3293,8 @@ msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
+"Ma ulac aɣilif senqed amgired gar isnifal inek akked wid yettwakelsen seg asmi tebdiḍ asnifel. Tzemreḍ ad sekkelseḍ tikelt nniḍen, acukan ɛreḍ ad tefruḍ akk tilla s ufus-ik akken isnifal yettwagen "
+"gar-asenur ttṛuhun ara."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3301,11 +3303,11 @@ msgstr "Isnifal inek"
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli %(id)s sɣuṛ <a href=\"%(user_profile_url)s\">%(user)s</a> di %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli amiran:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
@@ -3317,7 +3319,7 @@ msgstr "Ẓreg azwel akked uglam n usebter"
 
 #: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Talast n uwtay i tririt ɣer tuffirt:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
@@ -3333,7 +3335,7 @@ msgstr "Tisdatin"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
-msgstr ""
+msgstr "Nadi aɣbalu n tsuqilt s unadi daw-a sakin sit ɣef \"Suffeɣ-d.\""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
