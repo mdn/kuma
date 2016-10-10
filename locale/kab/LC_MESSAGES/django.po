@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 11:53+0000\n"
+"PO-Revision-Date: 2016-10-10 12:59+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3337,7 +3337,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Nadi:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
