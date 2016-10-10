@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 18:10+0000\n"
+"PO-Revision-Date: 2016-10-10 19:11+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3068,6 +3068,8 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
+"<p>Akken ad tesɣuḍ tasiregt n tmerna n isebtar imaynuten, ma ulac aɣilif </p> <ul> <li>Mudd-d isem inek n useqdac MDN. </li> <li>Ini-d acuɣer tebɣid ad ternuḍ isebtar imaynuten (tira ɣef tmahilin, "
+"anta? timerna n wawal ɣef umawal? anwa?). </li> <li> Tegiḍ yakan kra n usnifel yelhan deg isebtar yella. </li> <li>Tettekkaḍ deg usmel acḥal aya.</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3244,7 +3246,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:283
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr ""
+msgstr "Tasuqilt agi ur temmid ara. Ma ulac aɣilif, mudd afus di <a href=\"%(translate_url)s\">tsuqilt n umagrad agi</a> si teglizit."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 msgid "This translation is in progress."
@@ -3253,7 +3255,7 @@ msgstr "Tasuqilt agi tetteddu."
 #: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr ""
+msgstr "Iwiziwen nneɣ ur suqqlen ara ayakan margard agi <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Mudd-aɣ-d afus akken ad t-nessuqel! </a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:306
 msgid "This article doesn't have any content yet."
@@ -3350,15 +3352,15 @@ msgstr "Tanemmirt imi d-muḍḍed afus deg usnerni n MDN!"
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
-msgstr ""
+msgstr "Yettban d akken d attekki yinek amezwaru di MDN. Ad tafeḍ tiririt i kra n isteqsiyen imuta ɣef teẓrigt di <a target=\"_blank\" href=\"%(url)s\">Amnir n umaẓrag</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:167
 msgid "Don't be afraid to break something, you can always revert your changes."
-msgstr ""
+msgstr "Ur ttaggad ara ad tessexsreḍ kra, tzemreḍ yal tikelt ad tesfesxed asnifel inek."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Zhu udiɣ zux s uttekki yinek!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
