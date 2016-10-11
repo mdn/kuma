@@ -504,7 +504,12 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
         expected_to = [config.EMAIL_LIST_SPAM_WATCH]
-        expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
+        expected_subject = (
+            u'[MDN] [%(loc)s] %(user)s made their first edit, to: %(title)s' %
+            {'loc': self.d.locale,
+             'user': new_rev.creator.username,
+             'title': self.d.title}
+        )
         eq_(expected_subject, first_edit_email.subject)
         eq_(expected_to, first_edit_email.to)
 
