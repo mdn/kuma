@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-11 10:19+0000\n"
+"PO-Revision-Date: 2016-10-11 13:16+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3181,7 +3181,7 @@ msgstr "Err-d isemli agi"
 
 #: kuma/wiki/jinja2/wiki/document.html:166
 msgid "Previous Search Result"
-msgstr ""
+msgstr "Agmuḍ n unadi iɛeddan"
 
 #: kuma/wiki/jinja2/wiki/document.html:166 kuma/wiki/jinja2/wiki/document.html:176
 msgid "No Previous Search Result"
@@ -4046,7 +4046,7 @@ msgstr ""
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
 msgstr[0] "%(count)s n isemli yettwafen."
-msgstr[1] ""
+msgstr[1] "%(count)s n isemliyen yettwafen."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
@@ -4116,7 +4116,7 @@ msgstr "Teḍra-d tuccḍa deg usirew n ugbur."
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr ""
+msgstr "Isemli agi yella yakan. Tamawt : ur tezmireḍ ara ad terreḍ lqem n isemli yettwasemselsin skud ur tekkiseḍ ara awelleh ines."
 
 #: kuma/wiki/views/document.py:607
 #, python-format
