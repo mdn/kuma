@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-11 04:52+0000\n"
+"PO-Revision-Date: 2016-10-11 08:39+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3846,7 +3846,7 @@ msgstr "Ẓreg isemli"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr ""
+msgstr "Aglam ummid n tuccḍa:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
@@ -3854,15 +3854,15 @@ msgstr "Rnu asebter"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Sefsex asnifal sakin rnu isemli amaynut?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
 msgid "Publish and Keep Editing"
-msgstr ""
+msgstr "Suffeɣ-d u kemmel taẓrigt"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
 msgid "Discard"
-msgstr ""
+msgstr "Kkes"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -4047,7 +4047,7 @@ msgstr[1] ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
 msgid "Purge documents"
-msgstr ""
+msgstr "Asfaḍ n isemliyen"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
