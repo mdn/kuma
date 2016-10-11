@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-11 10:00+0000\n"
+"PO-Revision-Date: 2016-10-11 10:19+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3469,11 +3469,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr ""
+msgstr "Taɣuri/Awali nniḍen %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "Talɣut ɣef tɣuri/awali nniḍen"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
@@ -3803,8 +3803,8 @@ msgstr "Amnir n uɣanib"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
 msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Teḍra-d tuccḍa n uskript ɣef usebter agi. S leɛḍil akken ad ttusesfersɣurṛ imaẓragen n usmel, tzemreḍ ad twalid kra seg ugbur daw-a."
+msgstr[1] "Teḍra-d teccḍiwin n uskript ɣef usebter agi. S leɛḍil akken ad ttusesferent sɣurṛ imaẓragen n usmel, tzemreḍ ad twalid kra seg ugbur daw-a."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -3819,6 +3819,8 @@ msgstr[1] "Ugar n telɣut ɣef tuccḍiwin agi"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
+"Yal yiwen yesɛan amaɣnu MDN yezmer ad isnifel isemli akken ad iseɣti tuccḍa. <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">Amnir n usellek n KumaScript</a> yezmer ad yettwaseqdecdi "
+"tazwara."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -3886,6 +3888,8 @@ msgid ""
 "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
 "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Ayen i d-izneḍ yegber ayen ur nlaq ara i MDN. Ma tuzned-d deqs n tikal ayen ur n laq ara, amiḍan inek ad s-yettwakkses urmad. Ma ulac aɣilif, wali amnir nneɣ “<a "
+"href=\"%(does_this_belong_url)s\">Wagi yezmer ad d-yeffeq di MDN?</a>” akken ad tegzuḍ s telqayt ayen ilaqen i MDN."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -3913,19 +3917,19 @@ msgstr "Aḥric si URL s %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr ""
+msgstr "Nadi aḍris aneẓli n tsuqilt s usewdec n wurti daw-a, sakin sit ɣef \"Sekles\"."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
 msgstr[0] "%(num)s n isemli yettwafen."
-msgstr[1] ""
+msgstr[1] "%(num)s n isemliyen yettwafen."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr ""
+msgstr "Imagraden s tebzim: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
@@ -3944,7 +3948,7 @@ msgstr "Isemliyen s tuccḍiwin"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "Isemliyen n uswir amenzu"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
@@ -3965,20 +3969,20 @@ msgstr "Ulac imagraden."
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr ""
+msgstr "Isemliyen i tɣuri/awali nniḍen %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Isemliyen yesran taɣuri nniḍen"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Imagraden yettṛaǧun taɣuri/Awali nniḍen s tebzimt : %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Akk imagraden ttṛaǧun taɣuri/awali nniḍen"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
