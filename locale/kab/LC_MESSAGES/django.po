@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-11 13:16+0000\n"
+"PO-Revision-Date: 2016-10-11 13:24+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3687,11 +3687,11 @@ msgstr "Kkes amagrad agi"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
-msgstr ""
+msgstr "Sefrek tmanaṭ n ugbur"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Selket ɣer temnaṭ n ugbur"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
@@ -4010,7 +4010,7 @@ msgstr "Amazray n"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr ""
+msgstr "Amazray n uɛiwed n tɣuri/awali i:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
@@ -4022,7 +4022,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr ""
+msgstr "Isemli agi ur ɣer-s ara taɣuri/awali yettraǧun."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
