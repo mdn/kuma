@@ -32,8 +32,8 @@
         // open notification
         var notification = mdn.Notifier.growl(ask, {closable: true, duration: 0}).question();
 
-        // don't ask task completion again for 30 days
-        localStorage.setItem('taskTracker', Date.now() + (1000*60*60*24)*30);
+        // don't ask task completion again for 32 days (waffle flags last 31)
+        localStorage.setItem('taskTracker', Date.now() + (1000*60*60*24)*32);
 
         // get ga to append the clientId once it has initialized
         ga(function(tracker) {
