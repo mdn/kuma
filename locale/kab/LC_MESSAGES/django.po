@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-10 19:31+0000\n"
-"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2016-10-11 02:22+0000\n"
+"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -3993,7 +3993,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
 msgid "Found %(count)s documents."
-msgstr "%(num)s n isemliyen yettwafen."
+msgstr "%(count)s n isemliyen yettwafen."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
