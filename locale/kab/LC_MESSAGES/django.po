@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-11 02:22+0000\n"
-"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
+"PO-Revision-Date: 2016-10-11 04:52+0000\n"
+"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -3042,7 +3042,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
-msgstr ""
+msgstr "Amseɣtay n terbaɛt"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3866,19 +3866,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Aɛiwed n tmuɣli yettwasra?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Awennit n uɛiwed n tmuɣli"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Issin amek ara tesqedceḍ iwenniten n uɛiwed n tmuɣli"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
-msgstr ""
+msgstr "Ini yaɣ-d acuɣer tesnifleḍ asebter. D afrayan, acukan aɣ-yeǧǧ ad nẓeṛ amazray n ileqman akken iwata."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
@@ -3909,7 +3909,7 @@ msgstr "Azwen s %(locale)s:"
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "Aḥric si URL s %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
@@ -4095,7 +4095,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
-msgstr ""
+msgstr "Fren anekcum Akismet i wugar n telqayt"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
@@ -4104,7 +4104,7 @@ msgstr "Aɛiwed n tmuɣli %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
-msgstr ""
+msgstr "Teḍra-d tuccḍa deg usirew n ugbur."
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
@@ -4113,7 +4113,7 @@ msgstr ""
 #: kuma/wiki/views/document.py:607
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr ""
+msgstr "Yettweleh-d si %(url)s"
 
 #: kuma/wiki/views/document.py:655
 #, python-format
@@ -4128,24 +4128,24 @@ msgstr "Anaw n ugbur ur yettusefrak ara: %s"
 #: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Tuccḍa n tesleṭ n tuttra: %s"
 
 #: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
-msgstr ""
+msgstr "Tawtilt tuzwirt ETag ur teddi ara"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "Tigezmiyin ur ttwwaẓragen s wudem anmeggag."
 
 #: kuma/wiki/views/misc.py:53
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
-msgstr ""
+msgstr "Asumer awurman yessutur aḥric seg uzwel. i umatar n yesemliyen imeṛṛa, wali ma ulac aɣilif asebter agejdan."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr ""
+msgstr "%(obj_count)d , tɣawsiwin ulint-d."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
@@ -4154,7 +4154,7 @@ msgstr "Akter n isefka ur yeddi ara: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "Isemli yettwaẓreg: ma ulac aɣilif wali-t tikelt nniḍen."
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
@@ -4163,4 +4163,4 @@ msgstr "Ur tezmireḍ ara ad tessuqleḍ isemli agi."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Aqeddac Elasticsearch : %(backend)s"
