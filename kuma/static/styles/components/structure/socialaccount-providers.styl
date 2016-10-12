@@ -12,7 +12,7 @@ a call to action to "Sign up with..." or "Connect account..."
     }
 }
 
-a.persona-button, a.github-button {
+a.github-button {
     border-radius: 3px;
     z-index: 2;
     display: inline-block;
@@ -46,7 +46,7 @@ a.persona-button, a.github-button {
             border-radius: 0 3px 0 50px;
         }
 
-        &.persona-icon, &.github-icon {
+        &.github-icon {
             padding-left: 3px;
             border-radius: 3px 0 0 3px;
             create-gradient(#43a6e2, #287cc2);
@@ -80,13 +80,6 @@ a.persona-button, a.github-button {
                 create-gradient(#56565a, #3a3a3a);
             }
         }
-    }
-}
-
-a.persona-button {
-    i {
-        background: url($path-to-embedded-images + 'persona-icon.png') 0 0 no-repeat;
-        background-size: cover;
     }
 }
 

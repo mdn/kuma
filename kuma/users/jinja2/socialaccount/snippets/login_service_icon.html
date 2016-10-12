@@ -1,5 +1,3 @@
-{% if request.session.sociallogin_provider == 'persona' %}
-    <i aria-hidden="true" class="icon-user" title="{{ _('Signed in with Persona') }}"></i>
-{% elif request.session.sociallogin_provider == 'github' %}
+{% if request.session.sociallogin_provider == 'github' %}
     <i aria-hidden="true" class="icon-github" title="{{ _('Signed in with GitHub') }}"></i>
 {% endif %}

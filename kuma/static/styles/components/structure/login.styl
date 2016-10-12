@@ -1,0 +1,35 @@
+@require '../../includes/vars.styl';
+
+/*
+Header login link
+====================================================================== */
+
+.login {
+    position: relative;
+    border-radius: 8px;
+    padding: $content-vertical-spacing $content-horizontal-spacing;
+    background: rgba-fallback(rgba(0, 0, 0, 0.1));
+
+    {$selector-icon} {
+        set-font-size($small-bump-font-size + 20%);
+        /* Keep the line height equal to make the icon appear as though it is on
+           the same line. */
+        line-height: 20px;
+        vertical-align: top; /* needed on mobile */
+    }
+
+    > a:nth-child(n+2) {
+        bidi-style(border-left, 1px solid #bbb, border-right, 0);
+        bidi-style(padding-left, 6px, padding-right, 0);
+        bidi-style(margin-left, 2px, margin-right, 0);
+    }
+}
+
+.login-link {
+    display: inline-block;
+    min-width: 150px;
+
+    {$selector-icon} {
+        bidi-value(float, right, left);
+    }
+}

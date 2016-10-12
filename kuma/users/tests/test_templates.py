@@ -30,17 +30,6 @@ class SignupTests(UserTestCase, SocialTestMixin):
         'Terms',
         'Privacy Notice')
 
-    def test_signup_page_persona(self):
-        response = self.persona_login()
-        self.assertNotContains(response, 'Sign In Failure')
-        self.assertContains(response, 'Profile Creation Disabled')
-        self.assertContains(response,
-                            'We are sorry, but you can not create a profile'
-                            ' with Persona.')
-        session = response.context['request'].session
-        self.assertNotIn('socialaccount_sociallogin', session)
-        self.assertNotIn('sociallogin_provider', session)
-
     def test_signup_page_github(self):
         response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
@@ -129,115 +118,6 @@ class SocialAccountConnectionsTests(UserTestCase):
             self.assertContains(response, test_string)
 
 
-class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
-    existing_persona_email = 'testuser@test.com'
-    existing_persona_username = 'testuser'
-    localizing_client = False
-
-    def test_persona_auth_failure_copy(self):
-        """
-        The explanatory page for failed Persona auth contains the
-        failure copy, and does not contain success messages or a form
-        to choose a username.
-        """
-        data = {
-            'status': 'failure',
-            'reason': 'this email address has been naughty'
-        }
-        response = self.persona_login(verifier_data=data)
-        for expected_string in ('Account Sign In Failure',
-                                'An error occurred while attempting to sign '
-                                'in with your account.'):
-            self.assertContains(response, expected_string)
-
-        for unexpected_string in (
-            'Thanks for signing in to MDN with Persona.',
-            ('<form class="submission readable-line-length" method="post" '
-             'action="/en-US/users/account/signup">'),
-            ('<input name="username" maxlength="30" type="text"'
-             ' autofocus="autofocus" required="required" '
-             'placeholder="Username" id="id_username" />'),
-            '<input type="hidden" name="email" value="',
-                '" id="id_email" />'):
-            self.assertNotContains(response, unexpected_string)
-
-    def test_persona_signin_copy(self):
-        """
-        After an existing user successfully authenticates with
-        Persona, their username, an indication that Persona was used
-        to log in, and a logout link appear in the auth tools section
-        of the page.
-        """
-        data = self.persona_verifier_data.copy()
-        data['email'] = self.existing_persona_email
-        response = self.persona_login(verifier_data=data)
-        eq_(response.status_code, 200)
-
-        user_url = reverse(
-            'users.user_detail',
-            kwargs={
-                'username': self.existing_persona_username
-            },
-            locale=settings.WIKI_DEFAULT_LANGUAGE)
-        signout_url = urlparams(
-            reverse('account_logout',
-                    locale=settings.WIKI_DEFAULT_LANGUAGE),
-            next=reverse('home',
-                         locale=settings.WIKI_DEFAULT_LANGUAGE))
-        parsed = pq(response.content)
-
-        login_info = parsed.find('.oauth-logged-in')
-        ok_(len(login_info.children()))
-
-        signed_in_message = login_info.children()[0]
-        ok_('title' in signed_in_message.attrib)
-        eq_('Signed in with Persona',
-            signed_in_message.attrib['title'])
-
-        auth_links = login_info.children()[1].getchildren()
-        ok_(len(auth_links))
-
-        user_link = auth_links[0].getchildren()[0]
-        ok_('href' in user_link.attrib)
-        eq_(user_url, user_link.attrib['href'])
-
-        signout_link = auth_links[1].getchildren()[0]
-        ok_('href' in signout_link.attrib)
-        eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
-            signout_link.attrib['href'])
-
-    def test_persona_form_present(self):
-        """
-        When not authenticated, the Persona authentication components,
-        with correct data attributes, are present in page contents,
-        and the 'next' parameter is filled in.
-        """
-        all_docs_url = reverse('wiki.all_documents',
-                               locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(all_docs_url, follow=True)
-        parsed = pq(response.content)
-        request_info = '{"siteName": "%(siteName)s", "siteLogo": "%(siteLogo)s"}' % \
-                       settings.SOCIALACCOUNT_PROVIDERS['persona']['REQUEST_PARAMETERS']
-        stub_attrs = (
-            ('data-csrf-token-url', reverse('persona_csrf_token')),
-            ('data-request', request_info),
-        )
-        auth_attrs = (
-            ('data-service', 'Persona'),
-            ('data-next', all_docs_url),
-        )
-        stub_persona_form = parsed.find('#_persona_login')
-        ok_(len(stub_persona_form) > 0)
-        for stub_attr in stub_attrs:
-            ok_(stub_persona_form.attr(stub_attr[0]))
-            eq_(stub_attr[1], stub_persona_form.attr(stub_attr[0]))
-        auth_persona_form = parsed.find('.launch-persona-login')
-        ok_(len(auth_persona_form) > 0)
-        for auth_attr in auth_attrs:
-            ok_(auth_persona_form.attr(auth_attr[0]))
-            eq_(auth_attr[1], auth_persona_form.attr(auth_attr[0]))
-
-
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
     existing_email = 'testuser@test.com'
     existing_username = 'testuser'
@@ -294,21 +174,10 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         signout_url = urlparams(logout_url, next=home_url)
         parsed = pq(response.content)
 
-        login_info = parsed.find('.oauth-logged-in')
-        assert len(login_info.children())
-
-        signed_in_message = login_info.children()[0]
-        assert 'title' in signed_in_message.attrib
-        assert signed_in_message.attrib['title'] == 'Signed in with GitHub'
-
-        auth_links = login_info.children()[1].getchildren()
-        assert len(auth_links)
-
-        user_link = auth_links[0].getchildren()[0]
+        login_info = parsed.find('.login')
+        user_link, signout_link = login_info.children()
         assert user_link.attrib['href'] == user_url
-
-        signout_link = auth_links[1].getchildren()[0]
-        expected = signout_url.replace('%2F', '/')  # urlparams() encodes slashes
+        expected = signout_url.replace('%2F', '/')  # decode slashes
         assert signout_link.attrib['href'] == expected
 
     def test_signin_form_present(self):
@@ -351,19 +220,9 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         signout_url = urlparams(logout_url, next=home_url)
         parsed = pq(response.content)
 
-        login_info = parsed.find('.oauth-logged-in')
-        assert len(login_info.children())
-
-        signed_in_message = login_info.children()[0]
-        assert signed_in_message.attrib['title'] == 'Signed in with GitHub'
-
-        auth_links = login_info.children()[1].getchildren()
-        assert len(auth_links)
-
-        user_link = auth_links[0].getchildren()[0]
+        login_info = parsed.find('.login')
+        user_link, signout_link = login_info.children()
         assert user_link.attrib['href'] == user_url
-
-        signout_link = auth_links[1].getchildren()[0]
         expected = signout_url.replace('%2F', '/')
         assert signout_link.attrib['href'] == expected
 

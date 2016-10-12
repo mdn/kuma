@@ -32,13 +32,13 @@
 
             {% if matching_accounts.exists() and provider.id == 'github' %}
 
-            <div class="notification warning">
-              {% trans count=matching_accounts.count(), persona_login_url=persona_login_url, persona_next_url=persona_next_url %}
+            <div class="notification warning" level="warning">
+              {% trans count=matching_accounts.count(), persona_login_url=persona_login_url %}
                   A profile already exists with an email address below. Do you already have an MDN profile?
-                  <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Yes, connect with my MDN profile</a>
+                  <a href="{{ persona_login_url }}">Yes, email me a link so I can use GitHub to sign in</a>
                   {% pluralize %}
                   A profile already exists with one of these email addresses below. Do you already have an MDN profile?
-                  <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Yes, connect with my MDN profile</a>
+                  <a href="{{ persona_login_url }}">Yes, email me a link so I can use GitHub to sign in</a>
               {% endtrans %}</div>
             {% endif %}
 

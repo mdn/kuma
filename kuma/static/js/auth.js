@@ -2,82 +2,16 @@
     'use strict';
 
     var $doc = $(doc);
-    var $loginForm = $('#_persona_login');
 
     /*
-        Async loading of the persona resource
+        Auth Header widget and standard login buttons
     */
     (function() {
-        var scriptUrl = $loginForm.data('persona-script');
-        var personaElements = $('.wait-for-persona');
-
-        if(personaElements.length && scriptUrl) {
-            $.getScript(scriptUrl).done(function() {
-                personaElements.removeClass('disabled');
-            });
-        }
-    })();
-
-    /*
-        Persona Login via Django AllAuth
-    */
-    function initPersonaLogin(nextUrl, process) {
-        // The actual form HTML code is within auth.html in the users app
-        // The form must be populated with information provided gathered from
-        // The link which triggered the login process
-        $('#_persona_next_url').val(nextUrl || '');
-        $('#_persona_process').val(process);
-
-        // Start the Persona watcher
-        navigator.id.watch({
-            onlogin: function(assertion) {
-                // TODO: Inject CSRF during normal page load
-                $.get($loginForm.data('csrf-token-url')).then(function(token) {
-                    $('#_persona_csrf_token').val(token);
-                    $('#_persona_assertion').val(assertion);
-                    $loginForm.trigger('submit');
-                });
-            }
-        });
-
-        // Launch Persona login window with the logo, return URL, etc.
-        try {
-            navigator.id.request($loginForm.data('request'));
-        }
-        catch(ex) { }
-    }
-
-    /*
-        Open Auth Login Heading widget and standard login buttons
-    */
-    (function() {
-        var $container = $('.oauth-login-container');
-        var $options = $container.find('.oauth-login-options');
-        var $picker = $container.find('.oauth-login-picker');
-        var activeClass = 'active';
-        var fadeSpeed = 300;
-
-        $options.mozMenu({
-            submenu: $picker,
-            fadeInSpeed: fadeSpeed,
-            fadeOutSpeed: fadeSpeed,
-            onOpen: function() {
-                $options.addClass(activeClass);
-                $container.find('.submenu-close').attr('tabIndex', -1).appendTo($options);
-
-            },
-            onClose: function() {
-                $container.find('.submenu-close').removeAttr('tabIndex').appendTo($container.find('.oauth-login-picker'));
-
-                $options.removeClass(activeClass);
-            }
-        });
-        $picker.find('ul').mozKeyboardNav();
 
         // Service click callback
         var trackingCallback = function() {
             // Track event of which was clicked
-            var serviceUsed = $(this).data('service').toLowerCase(); // "Persona" or "GitHub"
+            var serviceUsed = $(this).data('service').toLowerCase(); // "GitHub"
             mdn.analytics.trackEvent({
                 category: 'Authentication',
                 action: 'Started sign-in',
@@ -91,22 +25,7 @@
         };
 
         // Track clicks on all login launching links
-        $('.login-link').on('click', trackingCallback);
-
-        // Ensure the login widget GitHub icon as clickable elements
-        $container.find('.oauth-github').on('click', function(e) {
-            e.stopPropagation();
-            trackingCallback.apply(this, arguments);
-            win.location = $(this).data('href');
-        });
-
-        // Ensure "launch-persona-login" elements launch the Persona window
-        // Used for both login and connecting accounts, so don't assume login
-        $(doc.body).on('click', '.launch-persona-login', function(e) {
-            e.preventDefault();
-            var $this = $(this);
-            initPersonaLogin($this.data('next'), $this.data('process') || 'login');
-        });
+        $('.js-login-link').on('click', trackingCallback);
     })();
 
     // Track users successfully logging in

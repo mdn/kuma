@@ -23,16 +23,6 @@
       {% endtrans %}</p>
 
       {% if socialaccount_providers  %}
-          {% with process="create" %}
-            {% include "socialaccount/snippets/provider_list.html" %}
-          {% endwith %}
-      {% endif %}
-
-      <p>{% trans %}
-      If you already have a MDN profile sign in:
-      {% endtrans %}</p>
-
-      {% if socialaccount_providers  %}
           {% with process="login" %}
             {% include "socialaccount/snippets/provider_list.html" %}
           {% endwith %}

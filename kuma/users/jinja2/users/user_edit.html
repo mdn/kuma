@@ -47,7 +47,7 @@
       {% endif %}
 
       <div id="user-edit" class="column-half">
-        <h1 class="user-title">{% include 'socialaccount/snippets/login_service_icon.html' %}{{ edit_user.username }}</h1>
+        <h1 class="user-title">{{ edit_user.username }}</h1>
             <form class="submission" method="post" action="">
               {% csrf_token %}
               <fieldset class="section notitle" id="personal">
@@ -57,8 +57,8 @@
                     <p class="field-note">{{ _("We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things.") }}</p>
                   </li>
                   <li id="field_email" class="field type_email required">
-                    <label>{{ _('Primary Email') }}</label>
-                    {{ edit_user.email }} <a href="{{ url('account_email') }}">{{ _('Edit email') }}</a>
+                    <label>{{ _('Primary Email') }} <a class="field-management" href="{{ url('account_email') }}">{{ _('Edit email') }}</a></label>
+                    {{ edit_user.email }}
                   </li>
                   {{ li_field(user_form, 'username') }}
                   {{ li_field(user_form, 'fullname') }}
@@ -88,25 +88,10 @@
               <fieldset class="section" id="users">
                 <legend><b>{{ _('My Profiles') }}</b></legend>
                 <ul>
-                  <li id="field_persona_url" class="field site persona">
-                    <label><i class="icon-user" aria-hidden="true"></i>Persona <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a></label>
-                    {% if accounts.persona %}
-                    <div class="field-account">
-                      {% for persona_account in accounts.persona %}{{ persona_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
-                    </div>
-                    {% else %}
-                    <a href="{{ url('account_login') }}" class="field-management launch-persona-login wait-for-persona disabled" data-next="{{ next_url }}" data-service="Persona" data-process="connect">
-                      {{ _('Use your Persona account to sign in.') }}
-                    </a>
-                    <div class="field-account"></div>
-                    {% endif %}
-                  </li>
-
-                   {{ li_field(user_form, 'twitter_url', classes='site twitter') }}
 
                   <li id="field_github_url" class="field site github">
                   {% if accounts.github %}
-                    <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a></label>
+                    <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
                     <div class="field-account">
                       {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
                     </div>
@@ -119,6 +104,8 @@
                       {{ user_form.github_url }}
                   {% endif %}
                   </li>
+
+                  {{ li_field(user_form, 'twitter_url', classes='site twitter') }}
 
                   {{ li_field(user_form, 'stackoverflow_url', classes='site stackoverflow') }}
 

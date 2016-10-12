@@ -5,9 +5,6 @@
     {% if detail_user.fullname %}
         <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
     {% endif %}
-    {% if user.is_authenticated() and is_me %}
-        {% include 'socialaccount/snippets/login_service_icon.html' %}
-    {% endif %}
 </h1>
 
 <div class="user-buttons">

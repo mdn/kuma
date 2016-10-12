@@ -1,38 +1,12 @@
-{% if user.is_authenticated() %}
-    <div class="oauth-logged-in">
-        {% include 'socialaccount/snippets/login_service_icon.html' %}
-        <ul>
-            <li><a href="{{ user.get_absolute_url() }}" class="oauth-logged-in-user">{{ user_display(user) }}</a></li>
-            <li><a href="{{ url('account_logout') }}?next={{ next_url }}" class="oauth-logged-in-signout">{{ _('Sign out') }}</a></li>
-        </ul>
-    </div>
-{% else %}
-
-    {% set github_url = provider_login_url('github', next=next_url) %}
-
-    <form>
-      <div class="oauth-login-container">
-          <div class="oauth-login-options" tabIndex="0">
-              <span class="oauth-login-options-text">
-                {{ _('Sign in') }}
-              </span>
-              <span class="oauth-icon oauth-github" data-service="GitHub" data-href="{{ github_url }}" title="{{ _('GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
-          </div>
-          <div class="oauth-login-picker" aria-hidden="true">
-              <ul>
-                  <li>
-                    {{ _('Sign in or create an account:') }}<br>
-                    <a href="{{ github_url }}" class="login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a>
-                  </li>
-                  <li class="wait-for-persona disabled">
-                      {{ _('Sign in:') }} <a href="/docs/MDN/Contribute/Persona_Sign_In_on_MDN"><i aria-hidden="true" title="{{ _('Why is Persona sign in only?') }}" class="icon-question-sign"></i></a><br>
-                      <a href="{{ url('account_login') }}" class="login-link launch-persona-login" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a>
-                  </li>
-              </ul>
-              {% if waffle.flag('registration_disabled') %}
-                <div class="notification error">{{ _("We are sorry, but profile creation is currently disabled.") }}</div>
-              {% endif %}
-          </div>
-      </div>
-    </form>
-{% endif %}
+<div class="login">
+    {% if user.is_authenticated() %}
+        <a href="{{ user.get_absolute_url() }}">{{ user_display(user) }}</a>
+        <a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a>
+    {% else %}
+      {% set github_url = provider_login_url('github', next=next_url) %}
+       <a href="{{ github_url }}" class="login-link js-login-link" data-service="GitHub">
+        {{ _('Sign in') }}
+        <i class="icon-github" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+</div>
