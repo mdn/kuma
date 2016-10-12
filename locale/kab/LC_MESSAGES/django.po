@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-11 13:24+0000\n"
+"PO-Revision-Date: 2016-10-12 10:58+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3232,16 +3232,18 @@ msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
 " a few minutes."
 msgstr ""
+"Asnifel n isemli agi <abbr title=\"%(scheduled_at)s\">ihegga yakan</abbr>. Ma yella gbur daw-a ur yemmid aneɣ yella wayen ixuṣṣen,  <a href=\"%(url)s\">smiren asebter agi</a> ma ulac aɣilif akka kra"
+" n tesdatin."
 
 #: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Amagrad agi yesra taɣuṛi nniḍen tatiknikant. <a href=\"%(url)s\">Hata wamek tzemreḍ ad muddeḍ tallelt.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:275
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Amagrad agi yesra taɣuṛi nniḍen. <a href=\"%(url)s\">Hata wamek tzemreḍ ad muddeḍ tallelt.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:283
 #, python-format
@@ -3477,15 +3479,15 @@ msgstr "Talɣut ɣef tɣuri/awali nniḍen"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr ""
+msgstr "Anegzum n tɣuri/awal nniḍen:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr ""
+msgstr "Azwel n tɣuri/awal nniḍen:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
-msgstr ""
+msgstr "Asulay n tɣuri/awal nniḍen:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:29
 msgid "Created:"
@@ -3497,19 +3499,19 @@ msgstr "Ameslal:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
-msgstr ""
+msgstr "D taɣuṛi/Awali nniden amiran?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr ""
+msgstr "Agbur n tɣuṛi/awali nniḍen"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr ""
+msgstr "Aɣbalu n tɣrui/awali nniḍen"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Uɣal ɣer tɣuri/Awali agi"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
@@ -3721,20 +3723,20 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:102
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Jerred ɣer %(title)s akked akk imagraden icudded ɣur-s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:103
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Ffe seg ujerred n %(title)s akked akk imagraden icudded ɣur-s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr ""
+msgstr "Tettwajerdeḍ ɣer umagrad agi akked imagraden meṛṛa icudden ɣur-s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr ""
+msgstr "Teffɣed seg ujerred n umagrad agi akked imagraden meṛṛa icudden ɣur-s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
 msgid "Updating subscription status"
