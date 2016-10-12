@@ -15,17 +15,9 @@
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
-      <article id="browser_register" {% if matching_accounts.exists() and provider.id != 'persona' %}data-account-match-for="{{ provider.name }}"{% endif %}>
+      <article id="browser_register">
           <h1>{{ _('Create your MDN profile to continue') }}</h1>
-          {% if matching_accounts.exists() and provider.id == 'persona' %}
-            {% set connections_url = provider_login_url('github', process='login', next=url('socialaccount_connections')) %}
-            <div class="notification warning">
-              {% trans %}
-              A profile already exists with this email address. To connect Persona to your MDN profile, <a href="{{ connections_url }}">you need to sign in and visit your social account connections.</a>
-              {% endtrans %}
-            </div>
-
-          {% else %}
+          {% if matching_accounts.exists() %}
             {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
             {% set persona_login_url = url('account_login') %}
             {% set persona_next_url = github_connect_url %}

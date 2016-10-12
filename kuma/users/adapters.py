@@ -25,7 +25,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
 
     def is_open_for_signup(self, request):
         """
-        We disable the signup with regular accounts as we require Persona
+        We disable the signup with regular accounts as we require GitHub
         (for now)
         """
         return False
@@ -67,12 +67,13 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             level = messages.SUCCESS
 
             # when a next URL is set because of a multi step sign-in
-            # (e.g. sign-in with github, verified mail is found in Persona
-            # social accounts, agree to first log in with Persona to connect
+            # (e.g. sign-in with github, verified mail is found in other
+            # social accounts, agree to first log in with other to connect
             # instead) and the next URL is not the edit profile page (which
             # would indicate the start of the sign-in process from the edit
             # profile page) we ignore the message "account connected" message
             # as it would be misleading
+            # Bug 1229906#c2 - need from "create new account" page
             user_url = reverse('users.user_edit',
                                kwargs={'username': request.user.username},
                                locale=request.LANGUAGE_CODE)
@@ -105,9 +106,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         allowed = True
         if flag_is_active(request, 'registration_disabled'):
             allowed = False
-        elif sociallogin.account.provider == 'persona':
-            allowed = False
-            request.used_persona = True
 
         # bug 1291892: Don't confuse next login with connecting accounts
         if not allowed:

@@ -68,16 +68,16 @@
     {
         "fields": {
             "user": 7,
-            "uid": "testuser@test.com",
-            "provider": "persona",
+            "uid": "7",
+            "provider": "github",
             "last_login": "2011-06-03 16:12:08",
             "date_joined": "2011-06-03 16:12:08",
-            "extra_data": {"status": "okay",
-                            "audience": "https://developer-local.allizom.org",
-                            "expires": 1408466018450,
-                            "email": "testuser@test.com",
-                            "issuer": "gmail.login.persona.org"}
-
+            "extra_data": {
+                "login": "testuser7",
+                "id": 7,
+                "email": "testuser@test.com",
+                "html_url": "https://github.com/testuser7"
+            }
         },
         "model": "socialaccount.socialaccount",
         "pk": 7
@@ -121,16 +121,16 @@
     {
         "fields": {
             "user": 8,
-            "uid": "testuser2@test.com",
-            "provider": "persona",
+            "uid": "8",
+            "provider": "github",
             "last_login": "2011-06-03 16:12:08",
             "date_joined": "2011-06-03 16:12:08",
-            "extra_data": {"status": "okay",
-                            "audience": "https://developer-local.allizom.org",
-                            "expires": 1408466018450,
-                            "email": "testuser2@test.com",
-                            "issuer": "gmail.login.persona.org"}
-
+            "extra_data": {
+                "login": "testuser8",
+                "id": 8,
+                "email": "testuser2@test.com",
+                "html_url": "https://github.com/testuser8"
+            }
         },
         "model": "socialaccount.socialaccount",
         "pk": 8
@@ -223,5 +223,16 @@
         },
         "model": "users.user",
         "pk": 10
+    },
+    {
+        "fields": {
+            "provider": "github",
+            "name": "GitHub",
+            "client_id": "fake_github_id",
+            "secret": "fake_secret_key",
+            "sites": [1]
+        },
+        "model": "socialaccount.socialapp",
+        "pk": 1
     }
 ]

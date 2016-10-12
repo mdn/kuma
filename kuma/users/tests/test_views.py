@@ -886,7 +886,6 @@ class UserViewsTest(UserTestCase):
 
         test_sites = {
             'twitter': 'http://twitter.com/lmorchard',
-            'github': 'http://github.com/lmorchard',
             'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
             'linkedin': 'https://www.linkedin.com/in/testuser',
             'mozillians': 'https://mozillians.org/u/testuser',
@@ -917,6 +916,11 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
         for k, v in test_sites.items():
             eq_(v, doc.find('#user-edit *[name="user-%s_url"]' % k).val())
+
+        # Github is not an editable field
+        github_div = doc.find("#field_github_url div.field-account")
+        github_acct = testuser.socialaccount_set.get()
+        assert github_div.html().strip() == github_acct.get_profile_url()
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
@@ -1049,76 +1053,6 @@ class Test404Case(UserTestCase):
         eq_(len(login_block), 0)
         eq_(404, response.status_code)
         self.client.logout()
-
-
-class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
-    """
-    Test sign-up/in flow with Persona.
-    """
-    existing_persona_email = 'testuser@test.com'
-    existing_persona_username = 'testuser'
-    localizing_client = False
-
-    def test_persona_auth_failure(self):
-        """
-        Failed Persona auth does not crash or otherwise error, but
-        correctly redirects to an explanatory page.
-        """
-        data = {
-            'status': 'failure',
-            'reason': 'this email address has been naughty'
-        }
-        response = self.persona_login(verifier_data=data)
-        eq_(200, response.status_code)
-        eq_(response.redirect_chain,
-            [('http://testserver/users/persona/complete?process=&next=',
-              302)])
-
-    def test_persona_auth_success(self):
-        """
-        Successful Persona auth of a new (i.e., no connected social
-        account with that email) user redirects to the signup
-        completion page.
-        """
-        response = self.persona_login()
-        eq_(response.status_code, 200)
-        expected_redirects = [
-            ('http://testserver/users/persona/complete?process=&next=', 302),
-            ('http://testserver/users/account/signup', 302),
-        ]
-        for red in expected_redirects:
-            ok_(red in response.redirect_chain)
-
-    def test_persona_signin(self):
-        """
-        When an existing user signs in with Persona, using the email
-        address associated with their account, authentication is
-        successful and redirects to the home page when no explicit
-        'next' is provided.
-        """
-        data = self.persona_verifier_data.copy()
-        data['email'] = self.existing_persona_email
-        response = self.persona_login(verifier_data=data)
-        eq_(response.status_code, 200)
-        expected_redirects = [
-            ('http://testserver/users/persona/complete?process=&next=', 302),
-            ('http://testserver/en-US/', 301)
-        ]
-        for red in expected_redirects:
-            ok_(red in response.redirect_chain)
-
-    def test_persona_signin_next(self):
-        """
-        When an existing user successfully authenticates with Persona,
-        from a page which supplied a 'next' parameter, they are
-        redirected back to that page following authentication.
-        """
-        data = self.persona_verifier_data.copy()
-        data['email'] = self.existing_persona_email
-        doc_url = reverse('wiki.document', args=['article-title'],
-                          locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.persona_login(verifier_data=data, next_url=doc_url)
-        ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
 
 
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
@@ -1264,6 +1198,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                                                       provider='persona',
                                                       user=octocat3)
         response = self.client.get(self.signup_url)
+        # TODO: what is new path here?
         self.assertEqual(list(response.context['matching_accounts']),
                          [social_account])
 

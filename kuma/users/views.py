@@ -551,6 +551,7 @@ class SignupView(BaseSignupView):
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
         or_query = []
+        # TODO: what is new process for this?
         # For GitHub users, find matching Persona social accounts by emails
         assert self.sociallogin.account.provider == 'github'
         for email_address in self.email_addresses.values():

@@ -29,7 +29,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         session.save()
         request.session = session
 
-        # Set up a Persona SocialLogin
+        # Set up an alternate SocialLogin
         account = SocialAccount.objects.get(user__username='testuser')
         sociallogin = SocialLogin(account=account)
 
@@ -56,14 +56,14 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         request.session = session
         messages = self.get_messages(request)
 
-        # Set up an un-matching Persona SocialLogin for request
-        persona_account = SocialAccount(user=self.user_model(),
-                                        provider='persona',
-                                        uid='noone@inexistant.com')
-        persona_login = SocialLogin(account=persona_account)
+        # Set up an un-matching alternate SocialLogin for request
+        other_account = SocialAccount(user=self.user_model(),
+                                      provider='other',
+                                      uid='noone@inexistant.com')
+        other_login = SocialLogin(account=other_account)
 
         self.assertRaises(ImmediateHttpResponse,
-                          self.adapter.pre_social_login, request, persona_login)
+                          self.adapter.pre_social_login, request, other_login)
         queued_messages = list(messages)
         eq_(len(queued_messages), 1)
         eq_(django_messages.ERROR, queued_messages[0].level)
@@ -73,8 +73,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         https://bugzil.la/1063830, happy path
 
         A user tries to sign in with GitHub, but their GitHub email matches
-        an existing Persona-backed MDN account. They follow the prompt to login
-        with Persona, and the accounts are connected.
+        an existing MDN account. They are prompted to TODO
         """
 
         # Set up a GitHub SocialLogin in the session
@@ -89,18 +88,18 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         session.save()
         request.session = session
 
-        # Set up an matching Persona SocialLogin for request
-        persona_account = SocialAccount.objects.create(
+        # Set up an matching other SocialLogin for request
+        other_account = SocialAccount.objects.create(
             user=github_account.user,
-            provider='persona',
+            provider='other',
             uid=github_account.user.email)
-        persona_login = SocialLogin(account=persona_account)
+        other_login = SocialLogin(account=other_account)
 
         # Verify the social_login receiver over-writes the provider
         # stored in the session
-        self.adapter.pre_social_login(request, persona_login)
+        self.adapter.pre_social_login(request, other_login)
         session = request.session
-        eq_(session['sociallogin_provider'], 'persona')
+        eq_(session['sociallogin_provider'], 'other')
 
     def test_pre_social_login_same_provider(self):
         """
