@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-10-12 20:03+0000\n"
+"PO-Revision-Date: 2016-10-12 20:05+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -412,9 +412,8 @@ msgid "Dutch"
 msgstr "Holenderski"
 
 #: jinja2/includes/translate_locales.html:17
-#, fuzzy
 msgid "English (US)"
-msgstr "Angielskie słowa kluczowe"
+msgstr "Angielski (US)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
@@ -505,14 +504,12 @@ msgid "Malayalam"
 msgstr "Malajalam"
 
 #: jinja2/includes/translate_locales.html:40
-#, fuzzy
 msgid "Persian"
-msgstr "Minimotywy"
+msgstr "Perski"
 
 #: jinja2/includes/translate_locales.html:41
-#, fuzzy
 msgid "Polish"
-msgstr "Opublikuj"
+msgstr "Polski"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
@@ -580,19 +577,19 @@ msgstr "Wietnamski"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Wolof"
-msgstr ""
+msgstr "Wolof"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Xhosa"
-msgstr ""
+msgstr "Xhosa"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Yoruba"
-msgstr ""
+msgstr "Joruba"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Zulu"
-msgstr ""
+msgstr "Zulu"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
