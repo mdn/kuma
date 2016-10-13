@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-13 13:39+0000\n"
+"PO-Revision-Date: 2016-10-13 13:42+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3901,7 +3901,7 @@ msgstr "Ma tɣileḍ d akken armas n yizen agi d tuccḍa, sekles ma ulac aɣili
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
-msgstr ""
+msgstr "Ma tettekkad akked terbaɛt n inerdalen, tzemreḍ <a href=\"%(akismet_submission_url)s\" target=\"_blank\">ad tesuluḍ attekki agi am ugbur yettwaqeblen</a> sakin azen-it-id tikelt nniḍen."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4004,7 +4004,7 @@ msgstr "%(count)s n isemliyen yettwafen."
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr ""
+msgstr "Amazray n tɣri/awali nniḍen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
