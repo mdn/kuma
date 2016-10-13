@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-12 10:58+0000\n"
+"PO-Revision-Date: 2016-10-13 11:58+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3038,7 +3038,7 @@ msgstr "Tuucḍa Akismet"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
-msgstr ""
+msgstr "Taɣuṛi nniḍen n usmizzwer s uspam sɣuṛ Akismet"
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
@@ -3091,7 +3091,7 @@ msgstr "Kkes isemliyen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
-msgstr ""
+msgstr "Ur yezmir ara ad yekkes isebtar igebren isebtar isnawanen ara yefra ubug agi:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
@@ -3140,7 +3140,7 @@ msgstr "Acuɣer tebɣid awennez n isemli ɣer uɛiwed agi n tmuɣli?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
-msgstr ""
+msgstr "Aqlak tettedduḍ ad tuɣal€d ɣer lqem agi n isemli. Sit ɣef \"Wennez tikelt nniḍen\" akken ad tuɣaleḍ ɣer ugbur daw-a."
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
