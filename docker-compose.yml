@@ -69,10 +69,6 @@ services:
 
   mysql:
     build: ./docker/images/mysql
-    entrypoint:
-      - docker-entrypoint.sh
-      - --character-set-server=utf8
-      - --collation-server=utf8_general_ci
     environment:
       - MYSQL_USER=kuma
       - MYSQL_PASSWORD=kuma
