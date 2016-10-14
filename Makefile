@@ -82,6 +82,18 @@ localecompile:
 
 localerefresh: localeextract localetest localecompile compilejsi18n collectstatic
 
+generate-cert:
+	@mkdir -p ssl && \
+	openssl req \
+	    -x509 \
+			-sha256 \
+			-nodes \
+			-newkey rsa\:2048 \
+			-days 365 \
+	    -keyout ssl/server.key \
+			-out ssl/server.crt \
+			-subj '/CN=localhost'
+
 pull-base:
 	docker pull ${BASE_IMAGE}
 
