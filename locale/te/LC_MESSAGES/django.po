@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-09-28 09:36+0000\n"
+"PO-Revision-Date: 2016-10-14 15:00+0000\n"
 "Last-Translator: వీవెన్ <veeven@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -29,7 +29,7 @@ msgstr "మీ ప్రొఫైల్ నున్డి మార్పు
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "ఈ వాడుకరి ప్రొఫైలు నిషేధించబడింది."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
@@ -38,7 +38,7 @@ msgstr "చరిత్రనంతా చూడడానికి మీరు 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>క్షమించండి %(name)s, మేము అలా చేయలేము.</p>"
 
 #: jinja2/403.html:43 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
@@ -134,11 +134,11 @@ msgstr "రివిషన్ డ్యాష్బోర్డ్"
 
 #: jinja2/base.html:120
 msgid "Documentation status"
-msgstr ""
+msgstr "డాక్యుమెంటేషన్ స్థితి"
 
 #: jinja2/base.html:129
 msgid "Web Platform"
-msgstr ""
+msgstr "జాల వేదిక"
 
 #: jinja2/base.html:133
 msgid "Technologies"
@@ -331,7 +331,7 @@ msgstr "గిట్ హబ్"
 
 #: jinja2/includes/login.html:24
 msgid "Sign in or create an account:"
-msgstr ""
+msgstr "సైన్ ఇన్ అవండి లేదా ఖాతాను సృష్టించుకోండి:"
 
 #: jinja2/includes/login.html:28
 msgid "Sign in:"
