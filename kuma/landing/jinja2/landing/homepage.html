@@ -65,10 +65,10 @@
         </form>
     {% endif %}
 
-  <div class="home-features">
+  <div class="home-features {% if waffle.switch('newsletter') %}home-features-newsletter{% endif %}">
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
     <div class="column-container">
-      <div class="column-home-features">
+      <div class="column-feature">
         <h3><i aria-hidden="true" class="icon-file-text"></i><span>{{ _('Web<br />Technologies') }}</span></h3>
         <ul>
           <li><a href="{{ wiki_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
@@ -78,7 +78,7 @@
           <li><a href="{{ wiki_url('Web') }}">{{ _('more...') }}</a></li>
         </ul>
       </div>
-      <div class="column-home-features">
+      <div class="column-feature">
         <h3><i aria-hidden="true" class="icon-graduation-cap"></i><span>{{ _('Learning') }}</span></h3>
         <ul>
           <li><a href="{{ wiki_url('Learn') }}">{{ _('Learning web development') }}</a></li>
@@ -88,17 +88,22 @@
           <li><a href="{{ wiki_url('Learn/JavaScript/') }}">{{ _('Learn JavaScript') }}</a></li>
         </ul>
       </div>
-      <div class="column-home-features">
+      <div class="column-feature">
         <h3><i aria-hidden="true" class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
         <ul>
-        <li><a href="{{ wiki_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
-        <li><a href="{{ wiki_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
-        <li><a href="{{ wiki_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
-        <li><a href="{{ wiki_url('Tools/Performance') }}">{{ _('Performance Tools') }}</a></li>
-        <li><a href="{{ wiki_url('Tools') }}">{{ _('more...') }}</a></li>
+          <li><a href="{{ wiki_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
+          <li><a href="{{ wiki_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
+          <li><a href="{{ wiki_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
+          <li><a href="{{ wiki_url('Tools/Performance') }}">{{ _('Performance Tools') }}</a></li>
+          <li><a href="{{ wiki_url('Tools') }}">{{ _('more...') }}</a></li>
         </ul>
       </div>
     </div>
+    {% if waffle.switch('newsletter') %}
+      <div class="feature-newsletter">
+        {% include "includes/newsletter.html" %}
+      </div>
+    {% endif %}
   </div>
 
 </div></div>
@@ -188,5 +193,8 @@
     <script>
         jQuery('#home-search-form').searchSuggestions();
     </script>
+  {% endif %}
+  {% if waffle.switch('newsletter') %}
+    {% javascript 'newsletter' %}
   {% endif %}
 {% endblock %}

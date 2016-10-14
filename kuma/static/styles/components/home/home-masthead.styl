@@ -2,6 +2,7 @@
 homepage masthead (search, feature callouts)
 ====================================================================== */
 .home-masthead {
+    clearfix();
     padding: $first-content-top-padding 0;
 
     h1 {
@@ -30,8 +31,8 @@ homepage masthead (search, feature callouts)
     }
 
     .search-icon {
-    		position: absolute;
-    		top: ($grid-spacing * 2 + 7);
+		position: absolute;
+		top: ($grid-spacing * 2 + 7);
     }
 
     input#home-q {
@@ -43,31 +44,31 @@ homepage masthead (search, feature callouts)
     }
 }
 
-
-
 @media $media-query-tablet {
 
     .home-masthead {
-        h1, input {
+        h1 {
             width: 90%;
+            text-align: center;
+
+            span {
+                display: inline;
+                bidi-style(padding-left, 0, padding-right, 0);
+            }
         }
     }
 }
 
 @media $media-query-mobile {
-
-    .home-masthead {
-        h1, input {
-            width: 90%;
-
-            span {
-                padding-left: 0;
-            }
-        }
+    h1 {
+        set-font-size(34px);
     }
+    .search-form {
+        width: 100%;
+        padding-top: $grid-spacing;
 
-    .home-masthead h1,
-    .home-search-form {
-        display: none;
+        .search-icon {
+           top: ($grid-spacing + 7);
+        }
     }
 }

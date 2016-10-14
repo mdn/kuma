@@ -30,6 +30,10 @@ Switches
 * ``wiki_force_immediate_rendering`` - force wiki pages to render immediately
   in the same http request in which they are saved (not in a background
   process)
+* ``newsletter`` - show newsletter sign-up site wide
+* ``newsletter_article`` - show newsletter sign-up in article footer (must be
+  used in combination with ``newsletter``)
+
 
 Flags
 -----

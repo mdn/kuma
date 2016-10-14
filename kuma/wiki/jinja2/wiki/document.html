@@ -356,6 +356,14 @@
                   {% endif %}
                 </div>
               {% endif %}
+
+              {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') %}
+                <div class="wiki-block wiki-block-newsletter">
+                  <div class="newsletter-box">
+                    {% include "includes/newsletter.html" %}
+                  </div>
+                </div>
+              {% endif %}
             </div>
 
             {% if show_left %}
@@ -430,6 +438,10 @@
 
   {% if waffle.flag('sg_task_completion') %}
     {% javascript 'task-completion' %}
+  {% endif %}
+
+  {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') %}
+    {% javascript 'newsletter' %}
   {% endif %}
 
 {% endblock %}

@@ -860,6 +860,15 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'newsletter': {
+        'source_filenames': (
+            'js/newsletter.js',
+        ),
+        'output_filename': 'build/js/newsletter.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
     'fellowship': {
         'source_filenames': (
             'js/fellowship.js',
