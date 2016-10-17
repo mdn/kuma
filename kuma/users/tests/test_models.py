@@ -79,6 +79,19 @@ class TestUser(UserTestCase):
         rev = revision(save=True, is_approved=True)
         ok_(rev.pk in user.wiki_revisions().values_list('pk', flat=True))
 
+    def test_recovery_email(self):
+        user = self.user_model.objects.get(username='testuser')
+        user.set_unusable_password()
+        user.save()
+        url = user.get_recovery_url()
+        assert url
+        assert user.has_usable_password()
+
+        # The same URL is returned on second call
+        user.refresh_from_db()
+        url2 = user.get_recovery_url()
+        assert url == url2
+
 
 class BanTestCase(UserTestCase):
 

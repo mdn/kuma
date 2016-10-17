@@ -4,14 +4,30 @@ from waffle.models import Switch
 from django.conf import settings
 from django.contrib import messages as django_messages
 from django.core import mail
-from django.test import RequestFactory
+from django.test import RequestFactory, TestCase
 
 from allauth.account.models import EmailAddress
 from allauth.account.signals import user_signed_up
 
-from kuma.users.tasks import send_welcome_email
+from kuma.users.tasks import send_recovery_email, send_welcome_email
 
 from . import UserTestCase, user
+
+
+class SendRecoveryEmailTests(TestCase):
+    def test_send_email(self):
+        testuser = user(username='legacy', email='legacy@example.com')
+        testuser.set_unusable_password()
+        testuser.save()
+        send_recovery_email(testuser.pk)
+        testuser.refresh_from_db()
+        assert testuser.has_usable_password()
+        recovery_url = testuser.get_recovery_url()
+        assert len(mail.outbox) == 1
+        recovery_email = mail.outbox[0]
+        assert recovery_email.to == [testuser.email]
+        assert recovery_url in recovery_email.body
+        assert testuser.username in recovery_email.subject
 
 
 class TestWelcomeEmails(UserTestCase):

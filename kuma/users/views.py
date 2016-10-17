@@ -1,19 +1,22 @@
 import collections
 import json
 import operator
+import uuid
 from datetime import datetime, timedelta
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
 from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
 from django import forms
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
+from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.db import IntegrityError, transaction
 from django.db.models import Q
@@ -21,15 +24,18 @@ from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
+from django.views.generic import TemplateView
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django.utils.http import urlsafe_base64_decode
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
-from kuma.core.decorators import login_required
+from kuma.core.decorators import login_required, never_cache
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import Document, DocumentDeletionLog, Revision, RevisionAkismetSubmission
 
-from .forms import UserBanForm, UserEditForm
+from .forms import UserBanForm, UserEditForm, UserRecoveryEmailForm
 from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -589,3 +595,50 @@ class SignupView(BaseSignupView):
 
 
 signup = SignupView.as_view()
+
+
+@require_POST
+def send_recovery_email(request):
+    """
+    Send a recovery email to a user.
+    """
+    form = UserRecoveryEmailForm(data=request.POST)
+    if form.is_valid():
+        form.save(request=request)
+        return redirect('users.recovery_email_sent')
+    else:
+        return HttpResponseBadRequest('Invalid request.')
+
+
+def recover(request, uidb64=None, token=None):
+    """
+    Login via an account recovery link.
+
+    Modeled on django.contrib.auth.views.password_reset_confirm, but resets
+    the password to an unusable password instead of prompting for a new
+    password.
+    """
+    UserModel = get_user_model()
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = UserModel._default_manager.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+        user = None
+    if user and default_token_generator.check_token(user, token):
+        temp_pwd = uuid.uuid4().hex
+        user.set_password(temp_pwd)
+        user.save()
+        user = authenticate(username=user.username, password=temp_pwd)
+        user.set_unusable_password()
+        user.save()
+        login(request, user)
+        return redirect('users.recover_done')
+    return render(request, 'users/recover_failed.html')
+
+
+recovery_email_sent = TemplateView.as_view(
+    template_name='users/recovery_email_sent.html')
+
+
+recover_done = login_required(never_cache(ConnectionsView.as_view(
+    template_name='users/recover_done.html')))

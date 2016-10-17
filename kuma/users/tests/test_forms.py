@@ -1,11 +1,14 @@
 from django import forms
+from django.test import RequestFactory
+import mock
 
 from kuma.core.tests import KumaTestCase, eq_, ok_
 
 from . import user
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
                         USERNAME_EMAIL)
-from ..forms import UserEditForm
+from ..forms import UserEditForm, UserRecoveryEmailForm
+from ..models import User
 
 
 class TestUserEditForm(KumaTestCase):
@@ -137,3 +140,30 @@ class AllauthUsernameTests(KumaTestCase):
                                  USERNAME_CHARACTERS,
                                  adapter.clean_username,
                                  'dolla$dolla$bill')
+
+
+@mock.patch('kuma.users.forms.send_recovery_email')
+class UserRecoveryEmailFormTests(KumaTestCase):
+
+    factory = RequestFactory()
+
+    def test_send_no_emails(self, mock_send_email):
+        email = 'no-one@example.com'
+        assert not User.objects.filter(email=email).exists()
+        form = UserRecoveryEmailForm(data={'email': email})
+        request = self.factory.post('/en-US/account/recover/send')
+        assert form.is_valid()
+        form.save(request)
+        mock_send_email.assert_not_called()
+
+    def test_send_two_emails(self, mock_send_email):
+        email = 'two@example.com'
+        user1 = User.objects.create(username='user1', email=email)
+        user2 = User.objects.create(username='user2', email=email)
+        form = UserRecoveryEmailForm(data={'email': email})
+        request = self.factory.post('/en-US/account/recover/send')
+        request.LANGUAGE_CODE = 'en-US'
+        assert form.is_valid()
+        form.save(request)
+        expected = [mock.call(user1.pk, 'en-US'), mock.call(user2.pk, 'en-US')]
+        mock_send_email.assert_has_calls(expected, any_order=True)

@@ -1,15 +1,20 @@
 import datetime
+import uuid
 
 from constance import config
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.db import models
+from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
+from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
 from sundial.zones import COMMON_GROUPED_CHOICES
 
 from kuma.core.managers import NamespacedTaggableManager
+from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_REGEX
 
@@ -194,3 +199,21 @@ class User(AbstractUser):
 
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk
+
+    def get_recovery_url(self):
+        """
+        Creates a recovery URL for the user.
+
+        The recovery URL uses the password reset workflow, which requires the
+        user has a password on their account.  Users without a password get a
+        randomly generated password.
+        """
+        if not self.has_usable_password():
+            self.set_password(uuid.uuid4().hex)
+            self.save()
+        uidb64 = urlsafe_base64_encode(force_bytes(self.pk))
+        token = default_token_generator.make_token(self)
+        link = reverse('users.recover',
+                       kwargs={'token': token, 'uidb64': uidb64},
+                       force_locale=True)
+        return link

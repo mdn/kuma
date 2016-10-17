@@ -17,7 +17,7 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag
 from pytz import timezone, utc
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_, ok_, KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
@@ -27,7 +27,7 @@ from kuma.wiki.tests import document as create_document
 
 
 from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, email, user
-from ..models import UserBan
+from ..models import User, UserBan
 from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
@@ -1251,3 +1251,69 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         social_token = sa.socialtoken_set.get()
         self.assertEqual(token, social_token.token)
         self.assertEqual(refresh_token, social_token.token_secret)
+
+
+class UserDeleteTests(KumaTestCase):
+    def test_missing_user_is_missing(self):
+        assert not User.objects.filter(username='missing').exists()
+        url = reverse('users.user_delete', kwargs={'username': 'missing'})
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 404
+
+    def test_wrong_user_is_forbidden(self):
+        assert user(username='right', save=True)
+        assert user(username='wrong', password='wrong', save=True)
+        self.client.login(username='wrong', password='wrong')
+        url = reverse('users.user_delete', kwargs={'username': 'right'})
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 403
+
+    def test_right_user_is_ok(self):
+        assert user(username='user', password='password', save=True)
+        self.client.login(username='user', password='password')
+        url = reverse('users.user_delete', kwargs={'username': 'user'})
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 200
+
+
+class SendRecoveryEmailTests(KumaTestCase):
+    def test_send_email(self):
+        url = reverse('users.send_recovery_email', force_locale=True)
+        response = self.client.post(url, {'email': 'test@example.com'},
+                                    follow=True)
+        next_url = reverse('users.recovery_email_sent', force_locale=True)
+        self.assertRedirects(response, next_url)
+
+    def test_bad_email(self):
+        url = reverse('users.send_recovery_email', force_locale=True)
+        response = self.client.post(url, {'email': 'not an email'})
+        assert response.status_code == 400
+
+
+class RecoverTests(KumaTestCase):
+
+    def setUp(self):
+        self.user = user(username='legacy', password='password', save=True)
+
+    def test_recover_valid(self):
+        recover_url = self.user.get_recovery_url()
+        response = self.client.get(recover_url, follow=True)
+        next_url = reverse('users.recover_done', force_locale=True)
+        self.assertRedirects(response, next_url)
+        self.user.refresh_from_db()
+        assert not self.user.has_usable_password()
+
+    def test_invalid_token_fails(self):
+        recover_url = self.user.get_recovery_url()
+        last_char = recover_url[-1]
+        bad_last_char = '2' if last_char == '3' else '3'
+        bad_recover_url = recover_url[:-1] + bad_last_char
+        response = self.client.get(bad_recover_url)
+        assert 'This link is no longer valid.' in response.content
+
+    def test_invalid_uid_fails(self):
+        assert not User.objects.filter(id=666).exists()
+        self.user.id = 666
+        bad_recover_url = self.user.get_recovery_url()
+        response = self.client.get(bad_recover_url)
+        assert 'This link is no longer valid.' in response.content

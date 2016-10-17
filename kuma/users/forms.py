@@ -9,6 +9,7 @@ from taggit.utils import parse_tags
 from .constants import (USERNAME_CHARACTERS, USERNAME_LEGACY_REGEX,
                         USERNAME_REGEX)
 from .models import User
+from .tasks import send_recovery_email
 
 
 class UserBanForm(forms.Form):
@@ -150,3 +151,21 @@ class UserEditForm(forms.ModelForm):
                             .exists()):
             raise forms.ValidationError(_('Username already in use.'))
         return new_username
+
+
+class UserRecoveryEmailForm(forms.Form):
+    """
+    Send email(s) with an account recovery link.
+
+    Modeled after django.contrib.auth.forms.PasswordResetForm
+    """
+    email = forms.EmailField(label=_("Email"), max_length=254)
+
+    def save(self, request):
+        """
+        Send email(s) with an account recovery link.
+        """
+        email = self.cleaned_data["email"]
+        users = User.objects.filter(email__iexact=email, is_active=True)
+        for user in users:
+            send_recovery_email(user.pk, request.LANGUAGE_CODE)
