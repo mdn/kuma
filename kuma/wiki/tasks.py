@@ -302,8 +302,8 @@ def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
     user, doc = revision.creator, revision.document
-    subject = (u"[MDN] %(user)s made their first edit, to: %(doc)s" %
-               {'user': user.username, 'doc': doc.title})
+    subject = (u"[MDN] [%(loc)s] %(user)s made their first edit, to: %(doc)s" %
+               {'loc': doc.locale, 'user': user.username, 'doc': doc.title})
     message = render_to_string('wiki/email/edited.ltxt',
                                context_dict(revision))
     doc_url = absolutify(doc.get_absolute_url())
