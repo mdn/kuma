@@ -33,23 +33,20 @@
               {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
           </figcaption>
         </figure>
-        <ul>
-            <li><a href="{{ edit_user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
-          {# TODO: Implement account deletion #}
-          {# <li class="delete"><a href="#">{{ _('Delete my profile') }}</a></li> #}
-        </ul>
       </div>
-
-      {% if not is_me %}
-      <div class="notification warning">
-      {% trans %}You're editing a different profile than your own. Please take care!{% endtrans %}
-      </div>
-      {% endif %}
 
       <div id="user-edit" class="column-half">
-        <h1 class="user-title">{{ edit_user.username }}</h1>
+        <h1 class="user-title">{{ edit_user.username }} <a class="user-title-profile" href="{{ edit_user.get_absolute_url() }}">{{ _('View profile') }}</a></h1>
+
+              {% if not is_me %}
+              <div class="notification warning">
+              {% trans %}You're editing a different profile than your own. Please take care!{% endtrans %}
+              </div>
+              {% endif %}
+
             <form class="submission" method="post" action="">
               {% csrf_token %}
+
               <fieldset class="section notitle" id="personal">
                 <ul>
                   <li id="field-beta" class="field">
@@ -127,6 +124,11 @@
           </div>
           <h3>Unsubscribe</h3>
           <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
+        {% endif %}
+      </div>
+      <div class="column-4">
+        {% if is_me %}
+        <a href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
         {% endif %}
       </div>
     </div>

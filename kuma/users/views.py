@@ -436,6 +436,16 @@ def user_edit(request, username):
     return render(request, 'users/user_edit.html', context)
 
 
+def user_delete(request, username):
+
+    edit_user = get_object_or_404(User, username=username)
+
+    if not edit_user.allows_editing_by(request.user):
+        return HttpResponseForbidden()
+
+    return render(request, 'users/user_delete.html')
+
+
 class SignupView(BaseSignupView):
     """
     The default signup view from the allauth account app.
