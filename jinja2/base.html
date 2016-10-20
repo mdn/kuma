@@ -74,10 +74,10 @@
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
   {% if user.is_authenticated() and request.session.sociallogin_provider == 'persona' %}
-      <div class="notification warning" data-level="warning">
-          {% trans persona_info='/docs/MDN/Contribute/Persona_sign-in' %}
-            You signed in with Persona.
-            <a href="{{ persona_info }}">Persona is being turned off. Read more.</a>
+      <div class="notification error" data-level="error">
+          {% trans persona_info='/docs/MDN/Contribute/Howto/Link_a_GitHub_account' %}
+            You signed in with Persona. On November 1st you will no loner be able to sign in to MDN this way.<br>
+            Please <a href="{{ persona_info }}">link your GitHub account to your MDN profile now</a> so you can continue to sign in to MDN.
           {% endtrans %}
       </div>
   {% endif %}
