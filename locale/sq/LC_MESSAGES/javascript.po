@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-08-08 13:21-0700\n"
+"POT-Creation-Date: 2016-10-20 12:46-0700\n"
 "PO-Revision-Date: 2016-07-08 11:16+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -168,31 +168,43 @@ msgstr "Hidhe tej skicën"
 msgid "restored"
 msgstr "e rikthyer"
 
-#: kuma/static/js/wiki-edit.js:571
+#: kuma/static/js/wiki-edit.js:530
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:533
+msgid "Changes saved."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:561
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
 msgstr "Skicë"
 
-#: kuma/static/js/wiki-edit.js:590
+#: kuma/static/js/wiki-edit.js:626
 msgid "saved"
 msgstr "u ruajt"
 
-#: kuma/static/js/wiki-edit.js:609
+#: kuma/static/js/wiki-edit.js:645
 msgid "autosaved"
 msgstr "u vetëruajt"
 
-#: kuma/static/js/wiki-edit.js:618
+#: kuma/static/js/wiki-edit.js:654
 msgid "published"
 msgstr "e botuar"
 
-#: kuma/static/js/wiki-edit.js:622
+#: kuma/static/js/wiki-edit.js:658
 msgid "discarded"
 msgstr "hedhur tej"
 
-#: kuma/static/js/wiki-edit.js:660
+#: kuma/static/js/wiki-edit.js:696
 msgid "Autosave enabled."
 msgstr "Vetëruajtjet u aktivizuan."
 
-#: kuma/static/js/wiki-edit.js:667
+#: kuma/static/js/wiki-edit.js:703
 msgid "Autosave disabled."
 msgstr "Vetëruajtjet u çaktivizuan."
 
@@ -205,19 +217,19 @@ msgstr "Hape në %(site)s"
 msgid "New tag..."
 msgstr "Etiketë e re..."
 
-#: kuma/static/js/wiki.js:200
+#: kuma/static/js/wiki.js:218
 msgid "How to read CSS syntax."
 msgstr "Si të lexohet sintaksa CSS."
 
-#: kuma/static/js/wiki.js:570
+#: kuma/static/js/wiki.js:588
 msgid "Search Stack Overflow"
 msgstr "Kërkoni te Stack Overflow"
 
-#: kuma/static/js/wiki.js:677
+#: kuma/static/js/wiki.js:695
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Shfletuesi juaj nuk mbulon MathML. Në vend të tij është përdorur CSS."
 
-#: kuma/static/js/wiki.js:892
+#: kuma/static/js/wiki.js:910
 msgid "Details"
 msgstr "Hollësi"
 
@@ -301,7 +313,11 @@ msgstr "Lëndë JavaScript"
 msgid "Sample JavaScript Content"
 msgstr "Shembull Lënde JavaScript"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
+msgid "Result"
+msgstr ""
+
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
 msgstr "Futni Gjedhe Shembull Kodi"
 

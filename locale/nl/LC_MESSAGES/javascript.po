@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-08-08 13:21-0700\n"
+"POT-Creation-Date: 2016-10-20 12:46-0700\n"
 "PO-Revision-Date: 2016-06-27 23:46+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
@@ -168,31 +168,43 @@ msgstr "Het concept verwijderen"
 msgid "restored"
 msgstr "hersteld"
 
-#: kuma/static/js/wiki-edit.js:571
+#: kuma/static/js/wiki-edit.js:530
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:533
+msgid "Changes saved."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:561
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
 msgstr "Concept"
 
-#: kuma/static/js/wiki-edit.js:590
+#: kuma/static/js/wiki-edit.js:626
 msgid "saved"
 msgstr "opgeslagen"
 
-#: kuma/static/js/wiki-edit.js:609
+#: kuma/static/js/wiki-edit.js:645
 msgid "autosaved"
 msgstr "automatisch opgeslagen"
 
-#: kuma/static/js/wiki-edit.js:618
+#: kuma/static/js/wiki-edit.js:654
 msgid "published"
 msgstr "gepubliceerd"
 
-#: kuma/static/js/wiki-edit.js:622
+#: kuma/static/js/wiki-edit.js:658
 msgid "discarded"
 msgstr "verworpen"
 
-#: kuma/static/js/wiki-edit.js:660
+#: kuma/static/js/wiki-edit.js:696
 msgid "Autosave enabled."
 msgstr "Automatisch opslaan ingeschakeld."
 
-#: kuma/static/js/wiki-edit.js:667
+#: kuma/static/js/wiki-edit.js:703
 msgid "Autosave disabled."
 msgstr "Automatisch opslaan uitgeschakeld."
 
@@ -205,19 +217,19 @@ msgstr "Openen in %(site)s"
 msgid "New tag..."
 msgstr "Nieuw label…"
 
-#: kuma/static/js/wiki.js:200
+#: kuma/static/js/wiki.js:218
 msgid "How to read CSS syntax."
 msgstr "CSS-syntaxis lezen."
 
-#: kuma/static/js/wiki.js:570
+#: kuma/static/js/wiki.js:588
 msgid "Search Stack Overflow"
 msgstr "Zoeken bij Stack Overflow"
 
-#: kuma/static/js/wiki.js:677
+#: kuma/static/js/wiki.js:695
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Uw browser ondersteunt geen MathML. Daarom is een CSS-terugvalversie gebruikt."
 
-#: kuma/static/js/wiki.js:892
+#: kuma/static/js/wiki.js:910
 msgid "Details"
 msgstr "Details"
 
@@ -301,7 +313,11 @@ msgstr "JavaScript-inhoud"
 msgid "Sample JavaScript Content"
 msgstr "Voorbeeld van JavaScript-inhoud"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
+msgid "Result"
+msgstr ""
+
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
 msgstr "Codevoorbeeldsjabloon invoegen"
 

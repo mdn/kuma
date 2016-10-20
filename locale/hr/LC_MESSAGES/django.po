@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-08-15 09:57-0700\n"
+"POT-Creation-Date: 2016-10-20 12:47-0700\n"
 "PO-Revision-Date: 2016-09-20 10:14+0000\n"
 "Last-Translator: Stjepan Treger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian https://pontoon.mozilla.org/hr/\n"
@@ -89,211 +89,211 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "Interna pogreška poslužitelja"
 
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:100 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:103 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
-#: jinja2/base.html:75
+#: jinja2/base.html:78
 #, python-format
-msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
-
-#: jinja2/base.html:83
-msgid "Skip to main content"
-msgstr ""
-
-#: jinja2/base.html:84
-msgid "Select language"
+msgid ""
+"You signed in with Persona. On November 1st you will no loner be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you "
+"can continue to sign in to MDN."
 msgstr ""
 
 #: jinja2/base.html:86
+msgid "Skip to main content"
+msgstr ""
+
+#: jinja2/base.html:88
+msgid "Select language"
+msgstr ""
+
+#: jinja2/base.html:89
 msgid "Skip to search"
 msgstr ""
 
-#: jinja2/base.html:107 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:110 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr ""
 
-#: jinja2/base.html:111
+#: jinja2/base.html:114
 msgid "Contribute to MDN"
 msgstr ""
 
-#: jinja2/base.html:113
+#: jinja2/base.html:116
 #, fuzzy
 msgid "Get started"
 msgstr "Započnite još danas!"
 
-#: jinja2/base.html:114
-msgid "Review or localize docs"
-msgstr ""
-
 #: jinja2/base.html:117
-#, fuzzy
-msgid "Site Tools"
-msgstr "/en/Tools"
-
-#: jinja2/base.html:119
-msgid "Revision dashboard"
+msgid "Review or localize docs"
 msgstr ""
 
 #: jinja2/base.html:120
 #, fuzzy
+msgid "Site Tools"
+msgstr "/en/Tools"
+
+#: jinja2/base.html:122
+msgid "Revision dashboard"
+msgstr ""
+
+#: jinja2/base.html:123
+#, fuzzy
 msgid "Documentation status"
 msgstr "MDN Dokumentacija"
 
-#: jinja2/base.html:129
-msgid "Web Platform"
-msgstr ""
+#: jinja2/base.html:132 kuma/landing/jinja2/landing/homepage.html:69
+#, fuzzy
+msgid "Web Technologies"
+msgstr "Pretražite po tehnologiji"
 
-#: jinja2/base.html:133
+#: jinja2/base.html:136
 msgid "Technologies"
 msgstr ""
 
-#: jinja2/base.html:135 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:138 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:136 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:139 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:137 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:140 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:138
+#: jinja2/base.html:141
 msgid "Graphics"
 msgstr ""
 
-#: jinja2/base.html:139
+#: jinja2/base.html:142
+msgid "HTTP"
+msgstr ""
+
+#: jinja2/base.html:143
 msgid "APIs / DOM"
 msgstr ""
 
-#: jinja2/base.html:140 kuma/core/sections.py:20
-msgid "Apps"
-msgstr ""
+#: jinja2/base.html:144
+#, fuzzy
+msgid "WebExtensions"
+msgstr "/en/Extensions"
 
-#: jinja2/base.html:141 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:145 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr ""
 
-#: jinja2/base.html:144
+#: jinja2/base.html:148
 msgid "References & Guides"
 msgstr ""
 
-# 100%
-#: jinja2/base.html:146
+#: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
 #, fuzzy
-msgid "Learn the Web"
-msgstr "Naučite kako raditi Web stranice"
+msgid "Learning web development"
+msgstr "/en/Web_Development"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:151
 msgid "Tutorials"
 msgstr ""
 
-#: jinja2/base.html:148
+#: jinja2/base.html:152
 msgid "References"
 msgstr ""
 
-#: jinja2/base.html:149
+#: jinja2/base.html:153
 msgid "Developer Guides"
 msgstr ""
 
-#: jinja2/base.html:150
+#: jinja2/base.html:154
 msgid "Accessibility"
-msgstr ""
-
-#: jinja2/base.html:151
-msgid "...more docs"
 msgstr ""
 
 #: jinja2/base.html:155
 #, fuzzy
+msgid "Game development"
+msgstr "/en/Web_Development"
+
+#: jinja2/base.html:156
+msgid "...more docs"
+msgstr ""
+
+#: jinja2/base.html:160
+#, fuzzy
 msgid "Mozilla Docs"
 msgstr "Mozilla"
 
-#: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
+#: jinja2/base.html:165 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Dodaci"
 
-#: jinja2/base.html:161 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:166 kuma/core/translations/search/filter/firefox/name.py:4
 #, fuzzy
 msgid "Firefox"
 msgstr "Firefox 4 Beta"
 
-#: jinja2/base.html:162 kuma/landing/jinja2/landing/homepage.html:86
-msgid "Firefox Marketplace"
-msgstr ""
-
-#: jinja2/base.html:163 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
-msgid "B2G OS"
-msgstr ""
-
-#: jinja2/base.html:164
-msgid "Persona"
-msgstr ""
-
-#: jinja2/base.html:168
+#: jinja2/base.html:170
 msgid "Developer Tools"
 msgstr ""
 
-#: jinja2/base.html:168
+#: jinja2/base.html:170
 #, fuzzy
 msgid "Feedback"
 msgstr "Kanal"
 
-#: jinja2/base.html:173
+#: jinja2/base.html:175
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Firefox 4 Beta"
 
-#: jinja2/base.html:174
+#: jinja2/base.html:176
 #, fuzzy
 msgid "Get web development help"
 msgstr "Svi alati za web razvoj"
 
-#: jinja2/base.html:177
+#: jinja2/base.html:179
 msgid "Join the MDN community"
 msgstr ""
 
-#: jinja2/base.html:178
+#: jinja2/base.html:180
 #, fuzzy
 msgid "Report a content problem"
 msgstr "Prijavite ovaj komentar"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:181
 #, fuzzy
 msgid "Report a bug"
 msgstr "Prijavi"
 
-#: jinja2/base.html:186 jinja2/base.html:187 jinja2/base.html:189 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:188 jinja2/base.html:189 jinja2/base.html:191 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Traži"
 
-#: jinja2/base.html:205
+#: jinja2/base.html:207
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "Sadržaj je dostupan pod <a href=\"%(copyright_url)s\">ovim licencama</a>"
 
-#: jinja2/base.html:210
+#: jinja2/base.html:212
 msgid "About MDN"
 msgstr "O MDNu"
 
-#: jinja2/base.html:211
+#: jinja2/base.html:213
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:212
+#: jinja2/base.html:214
 msgid "Privacy"
 msgstr ""
 
-#: jinja2/base.html:213
+#: jinja2/base.html:215
 msgid "Cookies"
 msgstr ""
 
-#: jinja2/base.html:214
+#: jinja2/base.html:216
 msgid "Contribute to the code"
 msgstr ""
 
@@ -324,11 +324,11 @@ msgstr ""
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
 msgstr ""
 
-#: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:86
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
 msgstr "Ostali jezici:"
 
-#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:97
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
 msgid "Go"
 msgstr "Idi"
 
@@ -340,7 +340,7 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:81 kuma/users/jinja2/users/includes/user_title_info.html:85
+#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:83 kuma/users/jinja2/users/includes/user_title_info.html:87
 msgid "GitHub"
 msgstr ""
 
@@ -856,8 +856,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -898,6 +898,10 @@ msgstr ""
 msgid "Mozilla"
 msgstr "Mozilla"
 
+#: kuma/core/sections.py:20
+msgid "Apps"
+msgstr ""
+
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
 msgstr "Mobilni"
@@ -910,7 +914,7 @@ msgstr "Web"
 msgid "Moz Hacks"
 msgstr ""
 
-#: kuma/core/utils.py:430
+#: kuma/core/utils.py:425
 #, python-format
 msgid "Today at %s"
 msgstr "Danas u %s"
@@ -938,6 +942,10 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
+msgstr ""
+
+#: kuma/core/translations/search/filter/b2g-os/name.py:4
+msgid "B2G OS"
 msgstr ""
 
 # 100%
@@ -1114,6 +1122,11 @@ msgstr ""
 msgid "History"
 msgstr ""
 
+#: kuma/dashboards/jinja2/dashboards/spam.html:30
+#, python-format
+msgid "Trends Over Time, Ending %(date)s"
+msgstr ""
+
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
 msgstr ""
@@ -1214,8 +1227,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1231,39 +1244,41 @@ msgstr ""
 msgid "Show topics"
 msgstr "Prikaži demo"
 
-#: kuma/landing/jinja2/landing/homepage.html:69
-#, fuzzy
-msgid "Web Technologies"
-msgstr "Pretražite po tehnologiji"
-
 #: kuma/landing/jinja2/landing/homepage.html:72
-msgid "Web<br />Platform"
-msgstr ""
+#, fuzzy
+msgid "Web<br />Technologies"
+msgstr "Pretražite po tehnologiji"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:75
-msgid "HTML5"
-msgstr "HTML5"
-
-#: kuma/landing/jinja2/landing/homepage.html:76
-msgid "CSS3"
-msgstr "CSS3"
-
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
 msgstr ""
 
+# 100%
 #: kuma/landing/jinja2/landing/homepage.html:82
 #, fuzzy
-msgid "Mozilla<br> Docs"
-msgstr "Popularni dokumenti"
+msgid "Learning"
+msgstr "Učenje"
+
+#: kuma/landing/jinja2/landing/homepage.html:85
+#, fuzzy
+msgid "Getting started with the Web"
+msgstr "Započnite s JavaScriptom"
+
+#: kuma/landing/jinja2/landing/homepage.html:86
+msgid "Learn HTML"
+msgstr "Saznajte više"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
-msgid "App Center"
-msgstr ""
+msgid "Learn CSS"
+msgstr "Saznajte više"
+
+#: kuma/landing/jinja2/landing/homepage.html:88
+msgid "Learn JavaScript"
+msgstr "/en/JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -1285,83 +1300,70 @@ msgstr ""
 msgid "Performance Tools"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:102
-#, fuzzy
-msgid "Connect"
-msgstr "Fennec"
-
-#: kuma/landing/jinja2/landing/homepage.html:103
-msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:104
-msgid "Learn more and sign up!"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:108
 msgid "Open Web and Mobile"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:116
+#: kuma/landing/jinja2/landing/homepage.html:111
 #, fuzzy
 msgid "Learn Web Development"
 msgstr "/en/Web_Development"
 
-#: kuma/landing/jinja2/landing/homepage.html:119
+#: kuma/landing/jinja2/landing/homepage.html:114
 msgid "Get The Browser For Developers Like You"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:122
+#: kuma/landing/jinja2/landing/homepage.html:117
 msgid "Build Open Web Apps"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:125
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Get Involved"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:137
+#: kuma/landing/jinja2/landing/homepage.html:132
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
+#: kuma/landing/jinja2/landing/homepage.html:139 kuma/landing/jinja2/landing/homepage.html:146
 msgid "Help improve MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:155
+#: kuma/landing/jinja2/landing/homepage.html:150
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
 # 100%
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:156
 #, fuzzy
 msgid "Getting started"
 msgstr "Početak rada s CSS-om"
 
-#: kuma/landing/jinja2/landing/homepage.html:162
+#: kuma/landing/jinja2/landing/homepage.html:157
 msgid "Editorial review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:163
+#: kuma/landing/jinja2/landing/homepage.html:158
 msgid "Technical review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:163
 #, fuzzy
 msgid "Translating"
 msgstr "CSS transforme"
 
-#: kuma/landing/jinja2/landing/homepage.html:169
+#: kuma/landing/jinja2/landing/homepage.html:164
 msgid "Promoting MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:170
+#: kuma/landing/jinja2/landing/homepage.html:165
 msgid "Contributing to the MDN codebase"
 msgstr ""
 
@@ -1381,11 +1383,11 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
+#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
 msgstr ""
 
@@ -1693,8 +1695,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1738,7 +1740,7 @@ msgstr ""
 msgid "Beta tester"
 msgstr ""
 
-#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:52
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:54
 msgid "Interests"
 msgstr ""
 
@@ -1750,23 +1752,23 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:76
+#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:78
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
+#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:94
+#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:98
+#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
+#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:104
 msgid "Facebook"
 msgstr ""
 
@@ -1918,7 +1920,7 @@ msgstr ""
 msgid "This profile is inactive."
 msgstr ""
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:34
 msgid "Email addresses"
 msgstr ""
 
@@ -2130,7 +2132,7 @@ msgstr ""
 msgid "Account Connections"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Account connections"
 msgstr ""
 
@@ -2175,8 +2177,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -2222,8 +2224,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
@@ -2446,7 +2448,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:392
 msgid "Edit page"
 msgstr ""
 
@@ -2454,7 +2456,7 @@ msgstr ""
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:393
 msgid "View page history"
 msgstr ""
 
@@ -2529,7 +2531,7 @@ msgstr ""
 msgid "Use your GitHub account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr ""
 
@@ -2668,29 +2670,29 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "Autor nije kreirao ovo"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/content.py:740 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
 msgstr "Uredi"
 
 # 100%
-#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:26 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 #, fuzzy
 msgid "Advanced"
 msgstr "Napredna razina"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:28
+#: kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Manage"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:31
+#: kuma/users/jinja2/users/includes/user_title_info.html:33
 msgid "API keys"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:65
+#: kuma/users/jinja2/users/includes/user_title_info.html:67
 msgid "Areas of Expertise"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:107
+#: kuma/users/jinja2/users/includes/user_title_info.html:109
 #, python-format
 msgid "Member since %(date_joined)s"
 msgstr ""
@@ -2736,7 +2738,7 @@ msgstr ""
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
-#: kuma/wiki/content.py:720
+#: kuma/wiki/content.py:721
 msgid "Edit section"
 msgstr ""
 
@@ -2804,154 +2806,157 @@ msgstr ""
 msgid "Show comparison"
 msgstr ""
 
-#: kuma/wiki/forms.py:35
+#: kuma/wiki/forms.py:36
 msgid "Please provide a title."
 msgstr ""
 
-#: kuma/wiki/forms.py:36
+#: kuma/wiki/forms.py:37
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:39
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:41
+#: kuma/wiki/forms.py:42
 msgid "Name Your Article"
 msgstr ""
 
-#: kuma/wiki/forms.py:42
+#: kuma/wiki/forms.py:43
 msgid "Please provide a slug."
 msgstr ""
 
-#: kuma/wiki/forms.py:43
+#: kuma/wiki/forms.py:44
 msgid "The slug provided is not valid."
 msgstr ""
 
-#: kuma/wiki/forms.py:44
+#: kuma/wiki/forms.py:45
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:46
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:49
+#: kuma/wiki/forms.py:50
 msgid "Please provide a summary."
 msgstr ""
 
-#: kuma/wiki/forms.py:50
+#: kuma/wiki/forms.py:51
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:52
+#: kuma/wiki/forms.py:53
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:55
+#: kuma/wiki/forms.py:56
 msgid "Please provide content."
 msgstr ""
 
-#: kuma/wiki/forms.py:56
+#: kuma/wiki/forms.py:57
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:58
+#: kuma/wiki/forms.py:59
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:61
+#: kuma/wiki/forms.py:62
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:64
+#: kuma/wiki/forms.py:65
 msgid "Another document with this slug already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:65
+#: kuma/wiki/forms.py:66
 msgid "Another document with this metadata already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:67
-msgid "This document was modified while you were editing it."
+#: kuma/wiki/forms.py:68
+#, python-format
+msgid ""
+"Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
+"making further edits."
 msgstr ""
 
-#: kuma/wiki/forms.py:69
+#: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:872
+#: kuma/wiki/forms.py:339 kuma/wiki/forms.py:409 kuma/wiki/forms.py:883
 msgid "Title of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:344 kuma/wiki/forms.py:419 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:347 kuma/wiki/forms.py:422 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:345 kuma/wiki/forms.py:420
+#: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
 msgid "Article URL"
 msgstr ""
 
-#: kuma/wiki/forms.py:352 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:430 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr ""
 
-#: kuma/wiki/forms.py:435 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr ""
 
-#: kuma/wiki/forms.py:436
+#: kuma/wiki/forms.py:439
 msgid "Affects search results"
 msgstr ""
 
-#: kuma/wiki/forms.py:444
+#: kuma/wiki/forms.py:447
 msgid "Search result summary:"
 msgstr ""
 
-#: kuma/wiki/forms.py:445
+#: kuma/wiki/forms.py:448
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:456 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:459 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
 msgstr ""
 
-#: kuma/wiki/forms.py:468
+#: kuma/wiki/forms.py:471 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
 msgstr ""
 
-#: kuma/wiki/forms.py:472
+#: kuma/wiki/forms.py:475
 msgid "Tag this revision for review?"
 msgstr ""
 
-#: kuma/wiki/forms.py:479
+#: kuma/wiki/forms.py:482
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:878
+#: kuma/wiki/forms.py:889
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:879
+#: kuma/wiki/forms.py:890
 msgid "New article URL"
 msgstr ""
 
@@ -3101,8 +3106,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3224,112 +3229,112 @@ msgstr ""
 msgid "Restore this document"
 msgstr "Prijavite ovaj komentar"
 
-#: kuma/wiki/jinja2/wiki/document.html:166
+#: kuma/wiki/jinja2/wiki/document.html:176
 #, fuzzy
 msgid "Previous Search Result"
 msgstr "Rezultati pretraživanja"
 
-#: kuma/wiki/jinja2/wiki/document.html:166 kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
 #, fuzzy
 msgid "No Previous Search Result"
 msgstr "Rezultati pretraživanja"
 
-#: kuma/wiki/jinja2/wiki/document.html:172
+#: kuma/wiki/jinja2/wiki/document.html:182
 #, fuzzy
 msgid "Your Search Results"
 msgstr "Rezultati pretraživanja"
 
-#: kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:186
 #, fuzzy
 msgid "Next Search Result"
 msgstr "Rezultati pretraživanja"
 
-#: kuma/wiki/jinja2/wiki/document.html:180
+#: kuma/wiki/jinja2/wiki/document.html:190
 #, fuzzy
 msgid "see all contributors"
 msgstr "Uvjeti za suradnike"
 
-#: kuma/wiki/jinja2/wiki/document.html:180
+#: kuma/wiki/jinja2/wiki/document.html:190
 #, fuzzy
 msgid "hide contributors"
 msgstr "Uvjeti za suradnike"
 
-#: kuma/wiki/jinja2/wiki/document.html:184
+#: kuma/wiki/jinja2/wiki/document.html:194
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:209
+#: kuma/wiki/jinja2/wiki/document.html:219
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:231
+#: kuma/wiki/jinja2/wiki/document.html:241
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:239
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:266
+#: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:275
+#: kuma/wiki/jinja2/wiki/document.html:285
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:283
+#: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:288
+#: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:295
+#: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:306
+#: kuma/wiki/jinja2/wiki/document.html:316
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:309
+#: kuma/wiki/jinja2/wiki/document.html:319
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:332
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:330
+#: kuma/wiki/jinja2/wiki/document.html:340
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Uvjeti za suradnike"
 
-#: kuma/wiki/jinja2/wiki/document.html:336
+#: kuma/wiki/jinja2/wiki/document.html:346
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Idi na prvu stranicu"
 
-#: kuma/wiki/jinja2/wiki/document.html:342
+#: kuma/wiki/jinja2/wiki/document.html:352
 msgid "Last updated by:"
 msgstr ""
 
@@ -3570,18 +3575,11 @@ msgstr "Obriši komentar"
 msgid "Select a language to translate to:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/sphinx.html:32
+#: kuma/wiki/jinja2/wiki/sphinx.html:35
 #, python-format
 msgid ""
-"Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/sphinx.html:43
-#, python-format
-msgid ""
-"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
-"<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
+"&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
@@ -3768,73 +3766,73 @@ msgstr ""
 msgid "Revision %(num)s:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:102
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:103
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
 msgstr ""
 
 # 100%
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:118
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, fuzzy, python-format
 msgid "Subscribe to %(title)s"
 msgstr "Pretplatite se na tok {tag_title} demoa"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:119
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, fuzzy, python-format
 msgid "Unsubscribe from %(title)s"
 msgstr "Pretplatite se"
 
 # 100%
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "Pretplatite se na tok {tag_title} demoa"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "Pretplatite se"
 
 # 100%
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, fuzzy, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
 msgstr "Pretplati se na tok demoa od {display_name}"
 
 # 100%
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:134
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, fuzzy, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
 msgstr "Pretplati se na tok demoa od {display_name}"
 
 # 100%
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, fuzzy, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "Pretplatite se na tok {tag_title} demoa"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr ""
@@ -3919,11 +3917,11 @@ msgstr ""
 msgid "Discard changes and create a new document?"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:24
 msgid "Publish and Keep Editing"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
 #, fuzzy
 msgid "Discard"
 msgstr "Odbaci demo"
@@ -3949,8 +3947,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
@@ -4137,16 +4135,6 @@ msgid ""
 "        "
 msgstr ""
 
-#: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
-msgid "\"Load documents\""
-msgstr "Uredi komentar"
-
-#: kuma/wiki/templates/admin/wiki/document/change_list.html:12
-#, python-format
-msgid "Add %(name)s"
-msgstr ""
-
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 #, fuzzy
 msgid "Load documents"
@@ -4213,25 +4201,15 @@ msgstr ""
 msgid "Sections may only be edited inline."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:53
+#: kuma/wiki/views/misc.py:50
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
-msgstr ""
-
-#: kuma/wiki/views/misc.py:106
-#, python-format
-msgid "%(obj_count)d object(s) loaded."
-msgstr ""
-
-#: kuma/wiki/views/misc.py:110
-#, python-format
-msgid "Failed to import data: %(error)s"
 msgstr ""
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
 msgstr ""
 
-#: kuma/wiki/views/translate.py:72
+#: kuma/wiki/views/translate.py:74
 msgid "You cannot translate this document."
 msgstr ""
 
@@ -4239,6 +4217,29 @@ msgstr ""
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+# 100%
+#, fuzzy
+#~ msgid "Learn the Web"
+#~ msgstr "Naučite kako raditi Web stranice"
+
+#~ msgid "HTML5"
+#~ msgstr "HTML5"
+
+#~ msgid "CSS3"
+#~ msgstr "CSS3"
+
+#, fuzzy
+#~ msgid "Mozilla<br> Docs"
+#~ msgstr "Popularni dokumenti"
+
+#, fuzzy
+#~ msgid "Connect"
+#~ msgstr "Fennec"
+
+#, fuzzy
+#~ msgid "\"Load documents\""
+#~ msgstr "Uredi komentar"
 
 #~ msgid "Share:"
 #~ msgstr "Podijeli"
@@ -4381,7 +4382,8 @@ msgstr ""
 #~ msgid ""
 #~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
 #~ msgstr ""
-#~ "Cascading Style Sheets level 3 (CSS3) pruža nekoliko novih značajki i svojstava da bi poboljšao formatiranje i izgled dokumenata napisanih u različitim vrstama markup jezika kao što su HTML ili XML."
+#~ "Cascading Style Sheets level 3 (CSS3) pruža nekoliko novih značajki i svojstava da bi poboljšao formatiranje i izgled dokumenata napisanih u različitim vrstama markup jezika kao što su HTML ili "
+#~ "XML."
 
 #~ msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
 #~ msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
@@ -5059,11 +5061,11 @@ msgstr ""
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> napisao je,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Objavljeno <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Objavljeno <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Odgovorite na ovaj komentar od {full_name}"
@@ -5233,9 +5235,6 @@ msgstr ""
 #~ msgid "Search MDN"
 #~ msgstr "Pretraži MDN"
 
-#~ msgid "Learn CSS"
-#~ msgstr "Saznajte više"
-
 #~ msgid "Back to Home"
 #~ msgstr "Natrag na početnu stranicu"
 
@@ -5325,9 +5324,6 @@ msgstr ""
 
 #~ msgid "Quick Guide to Implement Web Fonts with @font-face"
 #~ msgstr "Brzi vodič za implementiranje Web fontova s @font-face"
-
-#~ msgid "Learn HTML"
-#~ msgstr "Saznajte više"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "Osnove HTML-a"
@@ -5425,12 +5421,6 @@ msgstr ""
 #~ msgid "Richard Clark"
 #~ msgstr "Richard Clark"
 
-#~ msgid "Learn JavaScript"
-#~ msgstr "/en/JavaScript"
-
-#~ msgid "Getting Started with JavaScript"
-#~ msgstr "Započnite s JavaScriptom"
-
 #~ msgid "What is JavaScript and how can it help you?"
 #~ msgstr "Što je JavaScript i kako Vam može pomoći?"
 
@@ -5519,8 +5509,9 @@ msgstr ""
 #~ "Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
 #~ "helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
 #~ msgstr ""
-#~ "Firefox je prvi svjetski web preglednik koji podržava dodatke za mobitele. Saznajte više o <a href=\"%(basics_url)s\">osnovama proširenja</a>, <a href=\"%(best_practices_url)s\">najboljim primjenama"
-#~ " proširenja</a>, korisnim <a href=\"%(snippets_url)s\">komadićima koda</a> i više te na taj način možete stvarati inovativne dodatke za Firefox na Androidu i Firefox na Nokijinom Meego platformi."
+#~ "Firefox je prvi svjetski web preglednik koji podržava dodatke za mobitele. Saznajte više o <a href=\"%(basics_url)s\">osnovama proširenja</a>, <a href=\"%(best_practices_url)s\">najboljim "
+#~ "primjenama proširenja</a>, korisnim <a href=\"%(snippets_url)s\">komadićima koda</a> i više te na taj način možete stvarati inovativne dodatke za Firefox na Androidu i Firefox na Nokijinom Meego "
+#~ "platformi."
 
 #~ msgid "Location-Aware Applications"
 #~ msgstr "Lokacija-Svjestan Aplikacije"
@@ -5529,8 +5520,8 @@ msgstr ""
 #~ "Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
 #~ "innovative apps that delight your audience."
 #~ msgstr ""
-#~ "Saznajte kako koristiti <a href=\"%(geo_url)s\">API geolokacije</a> i uputiti ljude na pravi put. Kada niste pored računala i koristite mobilni uređaj potreban je preglednik koji može utvrditi vašu "
-#~ "lokaciju. Naučite kako napraviti inovativne aplikacije koje će oduševiti vaše korisnike."
+#~ "Saznajte kako koristiti <a href=\"%(geo_url)s\">API geolokacije</a> i uputiti ljude na pravi put. Kada niste pored računala i koristite mobilni uređaj potreban je preglednik koji može utvrditi "
+#~ "vašu lokaciju. Naučite kako napraviti inovativne aplikacije koje će oduševiti vaše korisnike."
 
 #~ msgid "Help build Firefox for Mobile"
 #~ msgstr "Pomozite u izgradnji Firefoxa za mobilne uređaje"
@@ -5564,8 +5555,8 @@ msgstr ""
 #~ msgstr "Firefox za mobitele: Što je sljdeće"
 
 #~ msgid ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
-#~ "best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
+#~ "world's best mobile Web browser."
 #~ msgstr ""
 #~ "Projekti i planiranje nikad se ne zaustavljaju. Spremamo neke nove izvrsne značajke i poboljšanja za naše sljedeće glavno izdanje. Isprobajte i pogledajte kako vi možete nam pomoći u stvaranju "
 #~ "svjetskog najboljeg preglednika za mobitele."
@@ -5577,11 +5568,11 @@ msgstr ""
 #~ msgstr "Saznajte od drugih programera o prednostima HTML5 i razvoja za mobilni web u ovom članku iz ReadWriteWeb:"
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "\"'Uz nevjerojatnu lakoću, razvojni alat za HTML / JS rok zvijezde je 10 puta veći [i] nema slabljenja preuzimanja. Jednostavno uputite ljude na URL i - instalirano je.' Činjenica da aplikacije mogu"
-#~ " izravno biti instalirane s URL umjesto čekanja na App Store preuzimanje znači da programeri mogu smanjiti prepreke mogućnostima širenja.\""
+#~ "\"'Uz nevjerojatnu lakoću, razvojni alat za HTML / JS rok zvijezde je 10 puta veći [i] nema slabljenja preuzimanja. Jednostavno uputite ljude na URL i - instalirano je.' Činjenica da aplikacije "
+#~ "mogu izravno biti instalirane s URL umjesto čekanja na App Store preuzimanje znači da programeri mogu smanjiti prepreke mogućnostima širenja.\""
 
 #~ msgid "Android APIs"
 #~ msgstr "API za Android"
@@ -5617,8 +5608,8 @@ msgstr ""
 #~ "Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
 #~ "applications/extensions localizable."
 #~ msgstr ""
-#~ "Lokalizacija (L10n) je proces prevođenja korisničkog sučelja programa s jednog jezika na druge i prilagođavanje istog da ispuni potrebe stranih kultura. Ovi resursi su o stvaranju Mozilla-baziranih "
-#~ "aplikacija/proširenja prevodivim."
+#~ "Lokalizacija (L10n) je proces prevođenja korisničkog sučelja programa s jednog jezika na druge i prilagođavanje istog da ispuni potrebe stranih kultura. Ovi resursi su o stvaranju Mozilla-"
+#~ "baziranih aplikacija/proširenja prevodivim."
 
 #~ msgid "All applications development documentation"
 #~ msgstr "Sva dokumentacija o razvoju aplikacija"
@@ -5748,9 +5739,6 @@ msgstr ""
 
 #~ msgid "/en/DragDrop/Drag_and_Drop"
 #~ msgstr "/en/DragDrop/Drag_and_Drop"
-
-#~ msgid "/en/Extensions"
-#~ msgstr "/en/Extensions"
 
 #~ msgid "/en/Firefox_4_for_developers"
 #~ msgstr "/en/Firefox_4_for_developers"
@@ -5949,16 +5937,16 @@ msgstr ""
 
 #~ msgid ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
-#~ "careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
+#~ "build careers on open web technology."
 #~ msgstr ""
 #~ "Mozilla i <a href=\"%(p2pu)s\">P2PU</a> kreiraju <a href=\"%(p2pu_drumbeat)s\">Školu web zanata</a>, snažan novi način podučavanja i učenja web programiranja. Razredi su dostupni globalno, 100%% "
-#~ "besplatni, vođeni učenicima, mentorima i suradnicima kao što ste vi. Naš cilj: vitalni, peer-vođen sistem koji pomaže ljudima diljem svijeta u jednostavnom pristupu i gradnji karijera na tehnologiji"
-#~ " otvorenog weba."
+#~ "besplatni, vođeni učenicima, mentorima i suradnicima kao što ste vi. Naš cilj: vitalni, peer-vođen sistem koji pomaže ljudima diljem svijeta u jednostavnom pristupu i gradnji karijera na "
+#~ "tehnologiji otvorenog weba."
 
 #~ msgid ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
-#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 #~ msgstr ""
 #~ "Mozilla nastavlja vodstvo u naporima usvajanja HTML5 i ostalih razvijajućih tehnologija otvorenog weba. Saznajte više o <a href=\"%(devmo_html5)s\">HTML5 specifikacijama</a> i najnovijim "
 #~ "poboljšanjima u HTML5, CSS3 i ostalim <a href=\"%(devmo_fx4dev)s\">značajkama za programere u Firefoxu 4</a>."
@@ -6003,7 +5991,9 @@ msgstr ""
 #~ msgstr "Škola web zanata"
 
 #~ msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
-#~ msgstr "Pogledajte kako vi možete <a href=\"%(devmo_participate)s\">sudjelovati</a> u <a href=\"%(devmo_l10n)s\">prijevodu</a>, <a href=\"%(devmo_qa)s\">osiguranju kvalitete</a> i ostalim Mozilla projektima."
+#~ msgstr ""
+#~ "Pogledajte kako vi možete <a href=\"%(devmo_participate)s\">sudjelovati</a> u <a href=\"%(devmo_l10n)s\">prijevodu</a>, <a href=\"%(devmo_qa)s\">osiguranju kvalitete</a> i ostalim Mozilla "
+#~ "projektima."
 
 #~ msgid "See more about {title} by {author}"
 #~ msgstr "Pogledajte više o {title} od {author}"
@@ -6012,33 +6002,31 @@ msgstr ""
 #~ msgstr "Pogledajte što je novo za web programere u najnovijoj verziji Firefoxa"
 
 #~ msgid ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
-#~ "chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
+#~ "\">big chart full of check marks</a> to prove it."
 #~ msgstr ""
-#~ "Isprobajte <a href=\"%(fx4_features)s\">narednu verziju Firefoxa</a> i pomozite nam da najbolji preglednik na svijetu napravimo još boljim. Firefox 4 unapređuje moderni web a mi imamo <a "
-#~ "href=\"%(fx4_tech)s\">veliki popis pun upitnika</a> da dokažemo to."
+#~ "Isprobajte <a href=\"%(fx4_features)s\">narednu verziju Firefoxa</a> i pomozite nam da najbolji preglednik na svijetu napravimo još boljim. Firefox 4 unapređuje moderni web a mi imamo <a href="
+#~ "\"%(fx4_tech)s\">veliki popis pun upitnika</a> da dokažemo to."
 
 #~ msgid "The Document Object Model describes the layout and content of web pages."
 #~ msgstr "Document Object Model opisuje izgled i sadržaj web stranica."
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
-#~ "download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
+#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
 #~ msgstr ""
-#~ "Za ovaj video je potreban preglednik koji podržava otvoreni video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ili noviji</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 ili noviji</li> </ul> ili <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternativno, možete koristiti pružene "
-#~ "linkove za preuzimanje videa."
+#~ "Za ovaj video je potreban preglednik koji podržava otvoreni video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ili noviji</li> <li><a href=\"http://www.apple.com/safari/"
+#~ "\">Safari</a> 3.1 ili noviji</li> </ul> ili <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternativno, možete koristiti pružene linkove za preuzimanje videa."
 
 #~ msgid "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
 #~ msgstr "Koristite graditelja dodataka da biste brzo i jednostavno napravili proširenje za Firefox upotrebom standardnih web tehnologija."
 
 #~ msgid ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
-#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
+#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 #~ msgstr ""
-#~ "Korsitite graditelja dodataka da brzo i jednostavno napravite proširenje za Firefox upotrebom standardnih web tehnologija. Postoji <a href=\"%(tutorial)s\">vodič</a> za početak i <a "
-#~ "href=\"%(api)s\">raznovrsni API u osnovnoj biblioteci</a> da bi dodali funkcionalnost u Firefoxu."
+#~ "Korsitite graditelja dodataka da brzo i jednostavno napravite proširenje za Firefox upotrebom standardnih web tehnologija. Postoji <a href=\"%(tutorial)s\">vodič</a> za početak i <a href="
+#~ "\"%(api)s\">raznovrsni API u osnovnoj biblioteci</a> da bi dodali funkcionalnost u Firefoxu."
 
 #~ msgid "Want to help make our network even better?"
 #~ msgstr "Želite pomoći da napravimo našu mrežu još boljom?"
@@ -6146,11 +6134,11 @@ msgstr ""
 #~ msgstr "Možete li biti veliki pobjednik?"
 
 #~ msgid ""
-#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until <strong>January 7,"
-#~ " 2011</strong>. Good luck!"
+#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until "
+#~ "<strong>January 7, 2011</strong>. Good luck!"
 #~ msgstr ""
-#~ "Napravite fenomenalni dodatak za Firefox za mobitele i osigurajte si mogućnost da osvojite putovanje u Barcelonu, novčanu nagradu i tone neprocjenjivog izlaganja! <a href=\"%(cup_enter)s\">Prijavite"
-#~ " se sad</a> do <strong>07. siječnja 2011</strong>. Sretno!"
+#~ "Napravite fenomenalni dodatak za Firefox za mobitele i osigurajte si mogućnost da osvojite putovanje u Barcelonu, novčanu nagradu i tone neprocjenjivog izlaganja! <a href=\"%(cup_enter)s"
+#~ "\">Prijavite se sad</a> do <strong>07. siječnja 2011</strong>. Sretno!"
 
 #~ msgid "Filetype not supported."
 #~ msgstr "Vrsta datoteke nije podržana."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-08-15 09:57-0700\n"
+"POT-Creation-Date: 2016-10-20 12:47-0700\n"
 "PO-Revision-Date: 2011-02-15 04:09+0200\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish https://pontoon.mozilla.org/ga_IE/\n"
@@ -86,213 +86,213 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "Earráid Inmheánach leis an bhFreastalaí"
 
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:100 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:103 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Líonra Forbróirí Mozilla"
 
-#: jinja2/base.html:75
+#: jinja2/base.html:78
 #, python-format
-msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
+msgid ""
+"You signed in with Persona. On November 1st you will no loner be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you "
+"can continue to sign in to MDN."
 msgstr ""
 
-#: jinja2/base.html:83
+#: jinja2/base.html:86
 msgid "Skip to main content"
 msgstr "Léim go dtí an príomhábhar"
 
-#: jinja2/base.html:84
+#: jinja2/base.html:88
 msgid "Select language"
 msgstr "Roghnaigh teanga"
 
-#: jinja2/base.html:86
+#: jinja2/base.html:89
 msgid "Skip to search"
 msgstr "Léim go dtí an bosca cuardaigh"
 
-#: jinja2/base.html:107 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:110 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Uirlisí"
 
-#: jinja2/base.html:111
+#: jinja2/base.html:114
 msgid "Contribute to MDN"
 msgstr ""
 
-#: jinja2/base.html:113
+#: jinja2/base.html:116
 #, fuzzy
 msgid "Get started"
 msgstr "Tús Maith"
 
-#: jinja2/base.html:114
+#: jinja2/base.html:117
 msgid "Review or localize docs"
 msgstr ""
 
-#: jinja2/base.html:117
+#: jinja2/base.html:120
 #, fuzzy
 msgid "Site Tools"
 msgstr "Uirlisí Cuardaigh"
 
-#: jinja2/base.html:119
+#: jinja2/base.html:122
 #, fuzzy
 msgid "Revision dashboard"
 msgstr "Aitheantas an leagain:"
 
-#: jinja2/base.html:120
+#: jinja2/base.html:123
 #, fuzzy
 msgid "Documentation status"
 msgstr "Doiciméadú MDN"
 
-#: jinja2/base.html:129
-msgid "Web Platform"
-msgstr "An tArdán Gréasáin"
+#: jinja2/base.html:132 kuma/landing/jinja2/landing/homepage.html:69
+#, fuzzy
+msgid "Web Technologies"
+msgstr "Teicneolaíochtaí"
 
-#: jinja2/base.html:133
+#: jinja2/base.html:136
 msgid "Technologies"
 msgstr "Teicneolaíochtaí"
 
-#: jinja2/base.html:135 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:138 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:136 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:139 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:137 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:140 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:138
+#: jinja2/base.html:141
 msgid "Graphics"
 msgstr "Grafaic"
 
-#: jinja2/base.html:139
+#: jinja2/base.html:142
+msgid "HTTP"
+msgstr ""
+
+#: jinja2/base.html:143
 msgid "APIs / DOM"
 msgstr "APIanna / DOM"
 
-#: jinja2/base.html:140 kuma/core/sections.py:20
-msgid "Apps"
-msgstr "Feidhmchláir"
+#: jinja2/base.html:144
+#, fuzzy
+msgid "WebExtensions"
+msgstr "/en/Extensions"
 
-#: jinja2/base.html:141 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:145 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:148
 msgid "References & Guides"
 msgstr "Tagairt agus Treoirleabhair"
 
-#: jinja2/base.html:146
+#: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
 #, fuzzy
-msgid "Learn the Web"
-msgstr "Foghlaim Conas Suíomh Gréasáin a Chruthú"
+msgid "Learning web development"
+msgstr "/en/Web_Development"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:151
 msgid "Tutorials"
 msgstr "Cúrsaí Teagaisc"
 
-#: jinja2/base.html:148
+#: jinja2/base.html:152
 msgid "References"
 msgstr "Tagairt"
 
-#: jinja2/base.html:149
+#: jinja2/base.html:153
 msgid "Developer Guides"
 msgstr "Treoirleabhair d'Fhorbróirí"
 
-#: jinja2/base.html:150
+#: jinja2/base.html:154
 msgid "Accessibility"
 msgstr "Inrochtaineacht"
 
-#: jinja2/base.html:151
+#: jinja2/base.html:155
+#, fuzzy
+msgid "Game development"
+msgstr "/en/Web_Development"
+
+#: jinja2/base.html:156
 msgid "...more docs"
 msgstr ""
 
-#: jinja2/base.html:155
+#: jinja2/base.html:160
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Saotharlann Mozilla"
 
-#: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
+#: jinja2/base.html:165 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Breiseáin"
 
-#: jinja2/base.html:161 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:166 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:162 kuma/landing/jinja2/landing/homepage.html:86
-#, fuzzy
-msgid "Firefox Marketplace"
-msgstr "Margadh Firefox OS"
-
-#: jinja2/base.html:163 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
-msgid "B2G OS"
-msgstr ""
-
-#: jinja2/base.html:164
-msgid "Persona"
-msgstr "Persona"
-
-#: jinja2/base.html:168
+#: jinja2/base.html:170
 msgid "Developer Tools"
 msgstr "Uirlisí d'Fhorbróirí"
 
-#: jinja2/base.html:168
+#: jinja2/base.html:170
 #, fuzzy
 msgid "Feedback"
 msgstr "Fotha"
 
-#: jinja2/base.html:173
+#: jinja2/base.html:175
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Cuardaigh Cabhair Firefox"
 
-#: jinja2/base.html:174
+#: jinja2/base.html:176
 #, fuzzy
 msgid "Get web development help"
 msgstr "Na huirlisí forbartha Gréasáin go léir"
 
-#: jinja2/base.html:177
+#: jinja2/base.html:179
 #, fuzzy
 msgid "Join the MDN community"
 msgstr "Ábhar agus comhphobal MDN"
 
-#: jinja2/base.html:178
+#: jinja2/base.html:180
 #, fuzzy
 msgid "Report a content problem"
 msgstr "Déan Tuairisc ar Fhadhb"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:181
 #, fuzzy
 msgid "Report a bug"
 msgstr "Déan Tuairisc ar Fhadhb"
 
-#: jinja2/base.html:186 jinja2/base.html:187 jinja2/base.html:189 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:188 jinja2/base.html:189 jinja2/base.html:191 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Cuardaigh"
 
-#: jinja2/base.html:205
+#: jinja2/base.html:207
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "Tá an t-ábhar ar fáil faoi <a href=\"%(copyright_url)s\">na ceadúnais seo</a>"
 
-#: jinja2/base.html:210
+#: jinja2/base.html:212
 msgid "About MDN"
 msgstr "Maidir le MDN"
 
-#: jinja2/base.html:211
+#: jinja2/base.html:213
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:212
+#: jinja2/base.html:214
 #, fuzzy
 msgid "Privacy"
 msgstr "Polasaí Príobháideachta"
 
-#: jinja2/base.html:213
+#: jinja2/base.html:215
 msgid "Cookies"
 msgstr ""
 
-#: jinja2/base.html:214
+#: jinja2/base.html:216
 msgid "Contribute to the code"
 msgstr ""
 
@@ -322,11 +322,11 @@ msgstr "Logáil Amach"
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
 msgstr "Ar mhaith leat cuidiú linn?<br /> <a href=\"%(login_url)s\">Logáil Isteach</a> nó <a href=\"%(register_url)s\">Cláraigh</a>"
 
-#: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:86
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
 msgstr "Teangacha eile:"
 
-#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:97
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
 msgid "Go"
 msgstr "Téigh"
 
@@ -338,7 +338,7 @@ msgstr "Logáil amach"
 msgid "Sign in"
 msgstr "Logáil isteach"
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:81 kuma/users/jinja2/users/includes/user_title_info.html:85
+#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:83 kuma/users/jinja2/users/includes/user_title_info.html:87
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -901,6 +901,10 @@ msgstr "Tá an t-ainm úsáideora rófhada (%(show_value)s carachtar). Ní mór 
 msgid "Mozilla"
 msgstr "Mozilla"
 
+#: kuma/core/sections.py:20
+msgid "Apps"
+msgstr "Feidhmchláir"
+
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
 msgstr "Soghluaiste"
@@ -913,7 +917,7 @@ msgstr "Gréasán"
 msgid "Moz Hacks"
 msgstr ""
 
-#: kuma/core/utils.py:430
+#: kuma/core/utils.py:425
 #, python-format
 msgid "Today at %s"
 msgstr "Inniu ag %s"
@@ -944,6 +948,10 @@ msgstr "APIanna / DOM"
 #, fuzzy
 msgid "Open Web Apps"
 msgstr "Cruthaigh<br />Aipeanna Gréasáin"
+
+#: kuma/core/translations/search/filter/b2g-os/name.py:4
+msgid "B2G OS"
+msgstr ""
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 #, fuzzy
@@ -1123,6 +1131,11 @@ msgstr ""
 msgid "History"
 msgstr "Stair"
 
+#: kuma/dashboards/jinja2/dashboards/spam.html:30
+#, python-format
+msgid "Trends Over Time, Ending %(date)s"
+msgstr ""
+
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 #, fuzzy
 msgid "Revision"
@@ -1243,26 +1256,14 @@ msgstr "Cuardaigh an doiciméadú"
 msgid "Show topics"
 msgstr "Taispeáin Stair"
 
-#: kuma/landing/jinja2/landing/homepage.html:69
-#, fuzzy
-msgid "Web Technologies"
-msgstr "Teicneolaíochtaí"
-
 #: kuma/landing/jinja2/landing/homepage.html:72
-msgid "Web<br />Platform"
-msgstr "An tArdán<br />Gréasáin"
+#, fuzzy
+msgid "Web<br />Technologies"
+msgstr "Teicneolaíochtaí"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
 msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:75
-msgid "HTML5"
-msgstr "HTML5"
-
-#: kuma/landing/jinja2/landing/homepage.html:76
-msgid "CSS3"
-msgstr "CSS3"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
@@ -1270,12 +1271,25 @@ msgstr "tuilleadh..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 #, fuzzy
-msgid "Mozilla<br> Docs"
-msgstr "Breiseáin Mozilla"
+msgid "Learning"
+msgstr "Foghlaim"
+
+#: kuma/landing/jinja2/landing/homepage.html:85
+#, fuzzy
+msgid "Getting started with the Web"
+msgstr "Tús Maith JavaScript"
+
+#: kuma/landing/jinja2/landing/homepage.html:86
+msgid "Learn HTML"
+msgstr "Foghlaim HTML"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
-msgid "App Center"
-msgstr "Lárionad Aipeanna"
+msgid "Learn CSS"
+msgstr "Foghlaim CSS"
+
+#: kuma/landing/jinja2/landing/homepage.html:88
+msgid "Learn JavaScript"
+msgstr "Foghlaim JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -1298,84 +1312,70 @@ msgstr "Dífhabhtóir JavaScript"
 msgid "Performance Tools"
 msgstr "Feidhmíocht"
 
-#: kuma/landing/jinja2/landing/homepage.html:102
-#, fuzzy
-msgid "Connect"
-msgstr "Nascacht"
-
-#: kuma/landing/jinja2/landing/homepage.html:103
-msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:104
-#, fuzzy
-msgid "Learn more and sign up!"
-msgstr "Tuilleadh eolais"
-
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:108
 #, fuzzy
 msgid "Open Web and Mobile"
 msgstr "Teicneolaíochtaí oscailte Gréasáin"
 
-#: kuma/landing/jinja2/landing/homepage.html:116
+#: kuma/landing/jinja2/landing/homepage.html:111
 #, fuzzy
 msgid "Learn Web Development"
 msgstr "/en/Web_Development"
 
-#: kuma/landing/jinja2/landing/homepage.html:119
+#: kuma/landing/jinja2/landing/homepage.html:114
 msgid "Get The Browser For Developers Like You"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:122
+#: kuma/landing/jinja2/landing/homepage.html:117
 msgid "Build Open Web Apps"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:125
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Get Involved"
 msgstr "Glac Páirt"
 
-#: kuma/landing/jinja2/landing/homepage.html:137
+#: kuma/landing/jinja2/landing/homepage.html:132
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
+#: kuma/landing/jinja2/landing/homepage.html:139 kuma/landing/jinja2/landing/homepage.html:146
 msgid "Help improve MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:155
+#: kuma/landing/jinja2/landing/homepage.html:150
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:156
 #, fuzzy
 msgid "Getting started"
 msgstr "Tús Maith"
 
-#: kuma/landing/jinja2/landing/homepage.html:162
+#: kuma/landing/jinja2/landing/homepage.html:157
 msgid "Editorial review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:163
+#: kuma/landing/jinja2/landing/homepage.html:158
 msgid "Technical review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:163
 #, fuzzy
 msgid "Translating"
 msgstr "{title} á aistriú"
 
-#: kuma/landing/jinja2/landing/homepage.html:169
+#: kuma/landing/jinja2/landing/homepage.html:164
 msgid "Promoting MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:170
+#: kuma/landing/jinja2/landing/homepage.html:165
 msgid "Contributing to the MDN codebase"
 msgstr ""
 
@@ -1399,7 +1399,7 @@ msgid ""
 "little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
+#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
 msgstr "Réamhamharc"
 
@@ -1775,7 +1775,7 @@ msgstr "Crios ama"
 msgid "Beta tester"
 msgstr ""
 
-#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:52
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:54
 msgid "Interests"
 msgstr "Suimeanna"
 
@@ -1787,24 +1787,24 @@ msgstr "Saineolas"
 msgid "Username"
 msgstr "Ainm úsáideora"
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:76
+#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:78
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
+#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:92
 #, fuzzy
 msgid "Stack Overflow"
 msgstr "StackOverflow"
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:94
+#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:98
+#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
+#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:104
 msgid "Facebook"
 msgstr ""
 
@@ -1962,7 +1962,7 @@ msgstr "Próifíl"
 msgid "This profile is inactive."
 msgstr "Tá an cuntas seo neamhghníomhach."
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:34
 #, fuzzy
 msgid "Email addresses"
 msgstr "Seoladh ríomhphoist"
@@ -2188,7 +2188,7 @@ msgstr ""
 msgid "Account Connections"
 msgstr "Bailiúcháin"
 
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Account connections"
 msgstr ""
 
@@ -2520,7 +2520,7 @@ msgstr "Leathanach"
 msgid "Date"
 msgstr "Dáta"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:392
 msgid "Edit page"
 msgstr "Cuir an leathanach in eagar"
 
@@ -2528,7 +2528,7 @@ msgstr "Cuir an leathanach in eagar"
 msgid "View complete diff"
 msgstr "Féach ar an difríocht iomlán"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:393
 msgid "View page history"
 msgstr "Féach ar stair an leathanaigh"
 
@@ -2605,7 +2605,7 @@ msgstr ""
 msgid "Use your GitHub account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr ""
 
@@ -2745,28 +2745,28 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "Ní é an t-údar a chruthaigh é seo"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/content.py:740 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
 msgstr "Eagar"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:26 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 #, fuzzy
 msgid "Advanced"
 msgstr "Ardleibhéal"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:28
+#: kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Manage"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:31
+#: kuma/users/jinja2/users/includes/user_title_info.html:33
 msgid "API keys"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:65
+#: kuma/users/jinja2/users/includes/user_title_info.html:67
 msgid "Areas of Expertise"
 msgstr "Réimsí Inniúlachta"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:107
+#: kuma/users/jinja2/users/includes/user_title_info.html:109
 #, python-format
 msgid "Member since %(date_joined)s"
 msgstr ""
@@ -2814,7 +2814,7 @@ msgstr "Eagarthóireacht - prós, gramadach, nó ábhar"
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
-#: kuma/wiki/content.py:720
+#: kuma/wiki/content.py:721
 msgid "Edit section"
 msgstr "Cuir rannán in eagar"
 
@@ -2882,154 +2882,157 @@ msgstr ""
 msgid "Show comparison"
 msgstr ""
 
-#: kuma/wiki/forms.py:35
+#: kuma/wiki/forms.py:36
 msgid "Please provide a title."
 msgstr "Cuir teideal air."
 
-#: kuma/wiki/forms.py:36
+#: kuma/wiki/forms.py:37
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Tá an teideal róghearr (%(show_value)s carachtar). Ní mór %(limit_value)s carachtar a bheith ann ar a laghad."
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:39
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:41
+#: kuma/wiki/forms.py:42
 msgid "Name Your Article"
 msgstr "Cuir Ainm ar d'Alt"
 
-#: kuma/wiki/forms.py:42
+#: kuma/wiki/forms.py:43
 msgid "Please provide a slug."
 msgstr "Cuir sluga leis."
 
-#: kuma/wiki/forms.py:43
+#: kuma/wiki/forms.py:44
 msgid "The slug provided is not valid."
 msgstr ""
 
-#: kuma/wiki/forms.py:44
+#: kuma/wiki/forms.py:45
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Tá an sluga róghearr (%(show_value)s carachtar). Ní mór %(limit_value)s carachtar a bheith ann ar a laghad."
 
-#: kuma/wiki/forms.py:46
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:49
+#: kuma/wiki/forms.py:50
 msgid "Please provide a summary."
 msgstr ""
 
-#: kuma/wiki/forms.py:50
+#: kuma/wiki/forms.py:51
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Tá an t-achoimre róghearr (%(show_value)s carachtar). Ní mór %(limit_value)s carachtar a bheith ann ar a laghad."
 
-#: kuma/wiki/forms.py:52
+#: kuma/wiki/forms.py:53
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:55
+#: kuma/wiki/forms.py:56
 msgid "Please provide content."
 msgstr ""
 
-#: kuma/wiki/forms.py:56
+#: kuma/wiki/forms.py:57
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Tá an t-ábhar róghearr (%(show_value)s carachtar). Ní mór %(limit_value)s carachtar a bheith ann ar a laghad."
 
-#: kuma/wiki/forms.py:58
+#: kuma/wiki/forms.py:59
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:61
+#: kuma/wiki/forms.py:62
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:64
+#: kuma/wiki/forms.py:65
 msgid "Another document with this slug already exists."
 msgstr "Tá cáipéis ann leis an sluga seo cheana."
 
-#: kuma/wiki/forms.py:65
+#: kuma/wiki/forms.py:66
 msgid "Another document with this metadata already exists."
 msgstr "Tá cáipéis ann leis na meiteashonraí seo cheana."
 
-#: kuma/wiki/forms.py:67
-msgid "This document was modified while you were editing it."
+#: kuma/wiki/forms.py:68
+#, python-format
+msgid ""
+"Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
+"making further edits."
 msgstr ""
 
-#: kuma/wiki/forms.py:69
+#: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Teideal:"
 
-#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:872
+#: kuma/wiki/forms.py:339 kuma/wiki/forms.py:409 kuma/wiki/forms.py:883
 msgid "Title of article"
 msgstr "Teideal an ailt"
 
-#: kuma/wiki/forms.py:344 kuma/wiki/forms.py:419 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:347 kuma/wiki/forms.py:422 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "Sluga:"
 
-#: kuma/wiki/forms.py:345 kuma/wiki/forms.py:420
+#: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
 msgid "Article URL"
 msgstr "URL an Ailt"
 
-#: kuma/wiki/forms.py:352 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:430 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "Clibeanna:"
 
-#: kuma/wiki/forms.py:435 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "Lorgfhocail:"
 
-#: kuma/wiki/forms.py:436
+#: kuma/wiki/forms.py:439
 msgid "Affects search results"
 msgstr "Téann sé i bhfeidhm ar thorthaí an xhuardaigh"
 
-#: kuma/wiki/forms.py:444
+#: kuma/wiki/forms.py:447
 msgid "Search result summary:"
 msgstr "Achoimre ar thorthaí an chuardaigh:"
 
-#: kuma/wiki/forms.py:445
+#: kuma/wiki/forms.py:448
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:456 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:459 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
 msgstr "Ábhar:"
 
-#: kuma/wiki/forms.py:468
+#: kuma/wiki/forms.py:471 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
 msgstr "Nóta Tráchta:"
 
-#: kuma/wiki/forms.py:472
+#: kuma/wiki/forms.py:475
 msgid "Tag this revision for review?"
 msgstr ""
 
-#: kuma/wiki/forms.py:479
+#: kuma/wiki/forms.py:482
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:878
+#: kuma/wiki/forms.py:889
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:879
+#: kuma/wiki/forms.py:890
 msgid "New article URL"
 msgstr ""
 
@@ -3314,112 +3317,112 @@ msgstr ""
 msgid "Restore this document"
 msgstr "Déan tuairisc ar an nóta tráchta seo"
 
-#: kuma/wiki/jinja2/wiki/document.html:166
+#: kuma/wiki/jinja2/wiki/document.html:176
 #, fuzzy
 msgid "Previous Search Result"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:166 kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
 #, fuzzy
 msgid "No Previous Search Result"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:172
+#: kuma/wiki/jinja2/wiki/document.html:182
 #, fuzzy
 msgid "Your Search Results"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:186
 #, fuzzy
 msgid "Next Search Result"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:180
+#: kuma/wiki/jinja2/wiki/document.html:190
 #, fuzzy
 msgid "see all contributors"
 msgstr "Do Rannpháirtithe"
 
-#: kuma/wiki/jinja2/wiki/document.html:180
+#: kuma/wiki/jinja2/wiki/document.html:190
 #, fuzzy
 msgid "hide contributors"
 msgstr "Do Rannpháirtithe"
 
-#: kuma/wiki/jinja2/wiki/document.html:184
+#: kuma/wiki/jinja2/wiki/document.html:194
 #, fuzzy, python-format
 msgid "View profile: %(username)s"
 msgstr "Féach ar phróifíl"
 
-#: kuma/wiki/jinja2/wiki/document.html:209
+#: kuma/wiki/jinja2/wiki/document.html:219
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:231
+#: kuma/wiki/jinja2/wiki/document.html:241
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:239
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:266
+#: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:275
+#: kuma/wiki/jinja2/wiki/document.html:285
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:283
+#: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:288
+#: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:295
+#: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:306
+#: kuma/wiki/jinja2/wiki/document.html:316
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:309
+#: kuma/wiki/jinja2/wiki/document.html:319
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:332
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:330
+#: kuma/wiki/jinja2/wiki/document.html:340
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Téarmaí do Rannpháirtithe"
 
-#: kuma/wiki/jinja2/wiki/document.html:336
+#: kuma/wiki/jinja2/wiki/document.html:346
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Rannpháirtithe: Leathanach Baile"
 
-#: kuma/wiki/jinja2/wiki/document.html:342
+#: kuma/wiki/jinja2/wiki/document.html:352
 msgid "Last updated by:"
 msgstr ""
 
@@ -3662,18 +3665,11 @@ msgstr "Roghnaigh teanga | {document}"
 msgid "Select a language to translate to:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/sphinx.html:32
+#: kuma/wiki/jinja2/wiki/sphinx.html:35
 #, python-format
 msgid ""
-"Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/sphinx.html:43
-#, python-format
-msgid ""
-"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
-"<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
+"&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
@@ -3868,70 +3864,70 @@ msgstr "Cuir Leaganacha i gComparáid"
 msgid "Revision %(num)s:"
 msgstr "Leagan {num}:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:102
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, fuzzy, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
 msgstr "Chaith tú vóta ar an Alt seo cheana."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:103
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, fuzzy, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 #, fuzzy
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "Chaith tú vóta ar an Alt seo cheana."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 #, fuzzy
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:118
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, fuzzy, python-format
 msgid "Subscribe to %(title)s"
 msgstr "Liostáil le fógraí eagarthóireachta"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:119
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, fuzzy, python-format
 msgid "Unsubscribe from %(title)s"
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "Chaith tú vóta ar an Alt seo cheana."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, fuzzy, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
 msgstr "Liostáil le fotha de thaispeántais de chuid {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:134
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, fuzzy, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
 msgstr "Liostáil le fotha de thaispeántais de chuid {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, fuzzy, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, fuzzy, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "Tá tú díliostáilte anois."
@@ -4021,11 +4017,11 @@ msgstr "Leathanach Nua"
 msgid "Discard changes and create a new document?"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:24
 msgid "Publish and Keep Editing"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
 #, fuzzy
 msgid "Discard"
 msgstr "Ná Coinnigh an Taispeántas"
@@ -4246,16 +4242,6 @@ msgid ""
 "        "
 msgstr ""
 
-#: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
-msgid "\"Load documents\""
-msgstr "Cáipéisí MDN"
-
-#: kuma/wiki/templates/admin/wiki/document/change_list.html:12
-#, python-format
-msgid "Add %(name)s"
-msgstr ""
-
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 #, fuzzy
 msgid "Load documents"
@@ -4322,25 +4308,15 @@ msgstr ""
 msgid "Sections may only be edited inline."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:53
+#: kuma/wiki/views/misc.py:50
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
-msgstr ""
-
-#: kuma/wiki/views/misc.py:106
-#, python-format
-msgid "%(obj_count)d object(s) loaded."
-msgstr ""
-
-#: kuma/wiki/views/misc.py:110
-#, python-format
-msgid "Failed to import data: %(error)s"
 msgstr ""
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
 msgstr ""
 
-#: kuma/wiki/views/translate.py:72
+#: kuma/wiki/views/translate.py:74
 msgid "You cannot translate this document."
 msgstr "Níl cead agat an cháipéis seo a aistriú."
 
@@ -4348,6 +4324,48 @@ msgstr "Níl cead agat an cháipéis seo a aistriú."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "Web Platform"
+#~ msgstr "An tArdán Gréasáin"
+
+#, fuzzy
+#~ msgid "Learn the Web"
+#~ msgstr "Foghlaim Conas Suíomh Gréasáin a Chruthú"
+
+#, fuzzy
+#~ msgid "Firefox Marketplace"
+#~ msgstr "Margadh Firefox OS"
+
+#~ msgid "Persona"
+#~ msgstr "Persona"
+
+#~ msgid "Web<br />Platform"
+#~ msgstr "An tArdán<br />Gréasáin"
+
+#~ msgid "HTML5"
+#~ msgstr "HTML5"
+
+#~ msgid "CSS3"
+#~ msgstr "CSS3"
+
+#, fuzzy
+#~ msgid "Mozilla<br> Docs"
+#~ msgstr "Breiseáin Mozilla"
+
+#~ msgid "App Center"
+#~ msgstr "Lárionad Aipeanna"
+
+#, fuzzy
+#~ msgid "Connect"
+#~ msgstr "Nascacht"
+
+#, fuzzy
+#~ msgid "Learn more and sign up!"
+#~ msgstr "Tuilleadh eolais"
+
+#, fuzzy
+#~ msgid "\"Load documents\""
+#~ msgstr "Cáipéisí MDN"
 
 #, fuzzy
 #~ msgid "Revert Revisions"
@@ -6062,9 +6080,6 @@ msgstr ""
 #~ msgid "<p>Want to learn to use the technologies that power the Web? <br>We've put together a great collection of resources to get you started.</p>"
 #~ msgstr "<p>An bhfuil fonn ort tuilleadh eolais a fháil faoi na teicneolaíochtaí a chumhachtaíonn an Gréasán? <br>Bhailíomar na hacmhainní is fearr chun cabhrú leat.</p>"
 
-#~ msgid "Learn CSS"
-#~ msgstr "Foghlaim CSS"
-
 #~ msgid "Back to Home"
 #~ msgstr "Baile"
 
@@ -6154,9 +6169,6 @@ msgstr ""
 
 #~ msgid "Quick Guide to Implement Web Fonts with @font-face"
 #~ msgstr "Treoir Mearthosaithe maidir le Clónna Gréasáin a chur i bhfeidhm le @font-face"
-
-#~ msgid "Learn HTML"
-#~ msgstr "Foghlaim HTML"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "Uraiceacht HTML"
@@ -6320,14 +6332,8 @@ msgstr ""
 #~ msgid "HTML5 Please"
 #~ msgstr "HTML5 Please"
 
-#~ msgid "Learn JavaScript"
-#~ msgstr "Foghlaim JavaScript"
-
 #~ msgid "Codecademy"
 #~ msgstr "Codecademy"
-
-#~ msgid "Getting Started with JavaScript"
-#~ msgstr "Tús Maith JavaScript"
 
 #~ msgid "What is JavaScript and how can it help you?"
 #~ msgstr "Cad is JavaScript ann, agus conas a thig leis cuidiú leat?"
@@ -7144,9 +7150,6 @@ msgstr ""
 
 #~ msgid "/en/Using_geolocation"
 #~ msgstr "/en/Using_geolocation"
-
-#~ msgid "/en/Extensions"
-#~ msgstr "/en/Extensions"
 
 #~ msgid "/en/Plugins"
 #~ msgstr "/en/Plugins"
