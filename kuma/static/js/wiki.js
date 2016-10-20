@@ -162,6 +162,24 @@
     });
 
     /*
+        Add intelligent break points to long article titles
+    */
+    $('#wiki-document-head h1').each(function() {
+        var $title = $(this);
+        var text = $title.text();
+        // split on . - : ( or capital letter, only if followed by 2 letters
+        var split = text.split(/(?=[\.:\-\(A-Z][\.:\-\(A-Z]{0,}[a-zA-Z]{3})/g);
+        // empty h1
+        $title.empty();
+        // put array back into h1 seperated by <wbr> tags
+        $.each(split, function(key, value) {
+            $title.append('<wbr>');
+            // add text back, make sure it goes back as text, not code to run
+            $title.append(doc.createTextNode(value));
+        });
+    });
+
+    /*
         Syntax highlighting scripts
     */
     if($('article pre').length && ('querySelectorAll' in doc)) (function() {
