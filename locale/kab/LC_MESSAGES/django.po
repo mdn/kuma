@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 10:03-0700\n"
-"PO-Revision-Date: 2016-10-13 13:42+0000\n"
+"PO-Revision-Date: 2016-10-20 15:57+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: kab\n"
@@ -3047,7 +3047,7 @@ msgstr "Amseɣtay n terbaɛt"
 #: kuma/wiki/search.py:310
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
-msgstr ""
+msgstr "Timerna n umatar n %(total)d n isemliyen ɣer %(total_chunks)d n iferdisen n teɣzi %(size)d ɣer umatar %(index)s."
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
@@ -3074,11 +3074,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "Wali iɛiwad n tɣuri | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "Wali iɣiwad n tɣuri"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
@@ -3619,7 +3619,7 @@ msgstr "Wali amaɣnu n useqdac:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Wali di MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
@@ -3673,7 +3673,7 @@ msgstr "Imagraden isnawanen imaynuten"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
-msgstr ""
+msgstr "Nɣel amagrad agi"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
@@ -3718,7 +3718,7 @@ msgstr "Taɣuri nniḍen %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
-msgstr ""
+msgstr "Aqeddac ad yeskan amgired gar igburen. Ma ulac aɣilif, smiren asebter agi di kra n tesdatin."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:102
 #, python-format
@@ -3830,7 +3830,7 @@ msgstr "Anaw n tuccḍa:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr ""
+msgstr "Di temɣeṛnaṭ:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
@@ -3842,7 +3842,7 @@ msgstr "Ẓreg taneɣruft"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Tasleṭ n temɣernaṭ:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
@@ -4016,11 +4016,11 @@ msgstr "Amazray n uɛiwed n tɣuri/awali i:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr ""
+msgstr "Wali amgire gar tisuqilin yettwafernen"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Wali amgired gar iɛiwad yettwafernen"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
