@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-10-20 12:47-0700\n"
+"POT-Creation-Date: 2016-10-20 21:36-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic https://pontoon.mozilla.org/ar/\n"
@@ -91,8 +91,8 @@ msgstr ""
 #: jinja2/base.html:78
 #, python-format
 msgid ""
-"You signed in with Persona. On November 1st you will no loner be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you "
-"can continue to sign in to MDN."
+"You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
+"you can continue to sign in to MDN."
 msgstr ""
 
 #: jinja2/base.html:86
