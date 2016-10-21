@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-21 09:40+0000\n"
+"PO-Revision-Date: 2016-10-21 09:50+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -174,9 +174,8 @@ msgid "APIs / DOM"
 msgstr "APIs / DOM"
 
 #: jinja2/base.html:144
-#, fuzzy
 msgid "WebExtensions"
-msgstr "Add-ons & Ekstensi"
+msgstr "WebExtensions"
 
 #: jinja2/base.html:145 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -187,9 +186,8 @@ msgid "References & Guides"
 msgstr "Panduan & Rujukan"
 
 #: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learning web development"
-msgstr "Belajar Pembangunan Web"
+msgstr "Belajar pembangunan web"
 
 #: jinja2/base.html:151
 msgid "Tutorials"
@@ -208,9 +206,8 @@ msgid "Accessibility"
 msgstr "Aksesibiliti"
 
 #: jinja2/base.html:155
-#, fuzzy
 msgid "Game development"
-msgstr "Pembangunan Web"
+msgstr "Pembangunan permainan"
 
 #: jinja2/base.html:156
 msgid "...more docs"
@@ -1100,7 +1097,7 @@ msgstr "Sejarah"
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
-msgstr ""
+msgstr "Aliran semasa, Berakhir %(date)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
@@ -1219,9 +1216,8 @@ msgid "Show topics"
 msgstr "Papar topik"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
-#, fuzzy
 msgid "Web<br />Technologies"
-msgstr "Teknologi Web"
+msgstr "Teknologi<br />Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -1232,27 +1228,24 @@ msgid "more..."
 msgstr "selanjutnya..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learning"
-msgstr "Saya Belajar"
+msgstr "Belajar"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
-#, fuzzy
 msgid "Getting started with the Web"
-msgstr "Mulakan"
+msgstr "Mulakan menggunakan Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
-msgstr ""
+msgstr "Belajar HTML"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn CSS"
-msgstr ""
+msgstr "Belajar CSS"
 
 #: kuma/landing/jinja2/landing/homepage.html:88
-#, fuzzy
 msgid "Learn JavaScript"
-msgstr "JavaScript"
+msgstr "Belajar JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -2847,6 +2840,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Gagal diterbitkan. Percubaan mengedit yang tidak yang bersesuaian. Sila salin dan tampal suntingan anda ke tempat yang selamat dan lawati halaman <a href=\"%(url)s\">sejarah semakan</a> untuk "
+"melihat apa yang telah berubah sebelum membuat suntingan."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -3531,13 +3526,13 @@ msgid "Select a language to translate to:"
 msgstr "Pilih bahasa untuk diterjemah ke:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Rangkaian Pembangun Mozilla dan penyumbang individu<br /> Kandungan tersedia di bawah lesen khas khusus untuk projek ini. &middot; <a href=\"%(about_url)s\">Perihal MDN</a> &middot;"
-" <a href=\"//github.com/mozilla/kuma\">Sumbangan untuk kod</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Polisi privasi</a>"
+"&copy;2005-%(this_year)s Rangkaian Pembangun Mozilla dan penyumbang individu<br /> Kandungan tersedia di bawah lesen khas khusus untuk projek ini. &middot; <a href=\"%(about_url)s\">Perihal MDN</a> "
+"&middot; <a href=\"//github.com/mozilla/kuma\">Sumbangan untuk kod</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Polisi privasi</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
