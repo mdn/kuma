@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-21 07:32+0000\n"
+"PO-Revision-Date: 2016-10-21 10:20+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
@@ -1237,9 +1237,8 @@ msgid "Show topics"
 msgstr "Mostrar temas"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
-#, fuzzy
 msgid "Web<br />Technologies"
-msgstr "Tecnologías web"
+msgstr "Tecnologías<br />web"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -1254,9 +1253,8 @@ msgid "Learning"
 msgstr "Aprendizaje"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
-#, fuzzy
 msgid "Getting started with the Web"
-msgstr "Introducción a JavaScript"
+msgstr "Introducción a la Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
