@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-06-24 20:09+0000\n"
-"Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
+"PO-Revision-Date: 2016-10-20 23:50+0000\n"
+"Last-Translator: Shaohua Wen <shaohua.wen@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -169,15 +169,15 @@ msgstr "已恢复"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr ""
+msgstr "发布失败。您当前未登录。请使用新的标签页登录并再次尝试发布。"
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "更改已保存。"
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr ""
+msgstr "发布失败。请将您所做的修改复制并粘贴到一个安全的地方，并尝试使用‘发布’按钮提交表单。"
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
@@ -314,7 +314,7 @@ msgstr "示例的 JavaScript 内容"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "结果"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
