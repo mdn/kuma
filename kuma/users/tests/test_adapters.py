@@ -178,14 +178,11 @@ class KumaAccountAdapterTestCase(UserTestCase):
         messages = self.test_account_connected_message(next_url, True)
         assert messages[0].tags == 'account success'
 
-    def test_account_connected_message_connection_page(self):
-        """Message appears on the connections page (bug 1229906)."""
-        next_url = reverse('socialaccount_connections')
-        self.test_account_connected_message(next_url, True)
-
     def test_extra_tags(self):
         """Extra tags can be added to the message."""
-        next_url = reverse('socialaccount_connections')
+        next_url = reverse('users.user_edit',
+                           kwargs={'username': self.user.username},
+                           locale='en-US')
         messages = self.test_account_connected_message(next_url, True,
                                                        extra_tags='congrats')
         assert messages[0].tags == 'congrats account success'

@@ -1244,7 +1244,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # Login without a refresh token
         token_data = self.github_token_data.copy()
         token_data['access_token'] = token
-        self.github_login(token_data=token_data, process='connect')
+        self.github_login(token_data=token_data, process='login')
 
         # Refresh token is still in database
         sa.refresh_from_db()

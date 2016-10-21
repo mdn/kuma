@@ -77,9 +77,8 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             user_url = reverse('users.user_edit',
                                kwargs={'username': request.user.username},
                                locale=request.LANGUAGE_CODE)
-            connections_url = reverse('socialaccount_connections')
             next_url = request.session.get('sociallogin_next_url', None)
-            if next_url not in (user_url, connections_url):
+            if next_url != user_url:
                 return
 
         # and add an extra tag to the account messages
@@ -158,6 +157,17 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         request.session['sociallogin_provider'] = (sociallogin
                                                    .account.provider)
         request.session.modified = True
+
+    def get_connect_redirect_url(self, request, socialaccount):
+        """
+        Returns the default URL to redirect to after successfully
+        connecting a social account.
+        """
+        assert request.user.is_authenticated()
+        user_url = reverse('users.user_edit',
+                           kwargs={'username': request.user.username},
+                           locale=request.LANGUAGE_CODE)
+        return user_url
 
     def save_user(self, request, sociallogin, form):
         """

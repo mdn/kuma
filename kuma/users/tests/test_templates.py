@@ -98,26 +98,6 @@ class AccountEmailTests(UserTestCase):
             self.assertContains(response, test_string)
 
 
-class SocialAccountConnectionsTests(UserTestCase):
-    localizing_client = True
-
-    def test_account_connections_page_requires_signin(self):
-        url = reverse('socialaccount_connections')
-        response = self.client.get(url, follow=True)
-        self.assertContains(response, 'Please sign in')
-        ok_(len(response.redirect_chain) > 0)
-
-    def test_account_connections_page(self):
-        u = self.user_model.objects.get(username='testuser')
-        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        url = reverse('socialaccount_connections')
-        response = self.client.get(url)
-
-        for test_string in ['Disconnect', 'Connect a new account',
-                            'Edit profile', 'Connect with']:
-            self.assertContains(response, test_string)
-
-
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
     existing_email = 'testuser@test.com'
     existing_username = 'testuser'
