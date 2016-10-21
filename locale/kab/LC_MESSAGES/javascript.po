@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-09-27 14:25+0000\n"
-"Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2016-10-21 11:35+0000\n"
+"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -169,15 +169,15 @@ msgstr "yuɣal-d"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr ""
+msgstr "Asuffeɣ ur yeddi ara. Ur tekcimed ara akka tura. MA ulac aɣilif seqdec iccer amaynut akken ad tkecmeḍ sakin ɛreḍ tikelt nniḍen."
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "Isnifal ttwakelsen."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr ""
+msgstr "Asuffeq ur yeddi ara. Ma ulac aɣilif nɣel sakin senṭeḍ asnifel inek ɣer wadig aɣelsan sakin ɛreḍ tuzna n tferkit s useqdec n tqeffalt 'Suffeɣ-d'."
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
@@ -314,7 +314,7 @@ msgstr "Agbur JavaScript aḥerfi"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "Agmuḍ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
