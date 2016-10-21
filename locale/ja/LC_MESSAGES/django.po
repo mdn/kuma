@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:47-0700\n"
-"PO-Revision-Date: 2016-10-20 23:40+0000\n"
+"PO-Revision-Date: 2016-10-20 23:47+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -99,7 +99,7 @@ msgstr "Mozilla Developer Network"
 msgid ""
 "You signed in with Persona. On November 1st you will no loner be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you "
 "can continue to sign in to MDN."
-msgstr ""
+msgstr "あなたは Persona でログインしましたが、11 月 1 日以降 MDN にこの方法でログインすることはできなくなります。<br>今後も MDN へのログインを可能にするには、<a href=\"%(persona_info)s\">あなたの GitHub アカウントを MDN プロフィールと関連付けてください</a>。"
 
 #: jinja2/base.html:86
 msgid "Skip to main content"
@@ -2857,7 +2857,7 @@ msgstr "このメタデータを持つ別のドキュメントが既に存在し
 msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
-msgstr ""
+msgstr "公開できませんでした。競合する編集が検出されました。あなたの編集内容を安全な場所へコピー＆ペーストしてから <a href=\"%(url)s\">リビジョン履歴</a> を参照し、編集前に何が変更されたのか確認してください。"
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
