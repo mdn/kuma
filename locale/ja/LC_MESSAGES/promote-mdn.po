@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2015-08-21 02:51+0000\n"
-"Last-Translator: Masahiko <chimantaea_mirabilis@yahoo.co.jp>\n"
+"PO-Revision-Date: 2016-10-22 08:34+0000\n"
+"Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -25,22 +25,15 @@ msgid "Plugin settings saved."
 msgstr "プラグインの設定を保存しました。"
 
 #: promote-mdn.php:245
-msgid ""
-"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
-"JavaScript and other Web standards and open technologies."
-msgstr ""
-"MDN は HTML、CSS、JavaScript、その他の Web 標準やオープンテクノロジーに関するドキュメントやデモなどを詰め込んだ、Web "
-"開発者のためのツールボックスです。"
+msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
+msgstr "MDN は HTML、CSS、JavaScript、その他のウェブ標準やオープンテクノロジーに関するドキュメントやデモなどを詰め込んだ、ウェブ開発者のためのツールボックスです。"
 
 #: promote-mdn.php:248
-msgid ""
-"MDN is the best online resource - for web developers, by web developers."
-msgstr "MDN は、Web 開発者による、Web 開発者のための、最高のオンラインリソースです。"
+msgid "MDN is the best online resource - for web developers, by web developers."
+msgstr "MDN は、ウェブ開発者による、ウェブ開発者のための、最高のオンラインリソースです。"
 
 #: promote-mdn.php:249
-msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages"
-" to MDN URLs."
+msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
 msgstr "このプラグインを使用すると、あなたのページやポストに含まれるキーワードやフレーズを自動的に MDN の URL へリンクする事ができます。"
 
 #: promote-mdn.php:256
@@ -84,9 +77,7 @@ msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
 msgstr "見出しタグ (h1、h2、h3、h4、h5、h6) にリンクを追加しない。"
 
 #: promote-mdn.php:268
-msgid ""
-"Do not add links to the following posts or pages (comma-separated id, slug, "
-"name):"
+msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
 msgstr "以下のページ及び投稿にはリンクを追加しない (カンマ区切りの ID、URL スラッグ、記事名で指定):"
 
 #: promote-mdn.php:270
@@ -114,38 +105,24 @@ msgid "Custom Keywords"
 msgstr "カスタムキーワード"
 
 #: promote-mdn.php:281
-msgid ""
-"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
-"target url at the end. Use a new line for new url and set of keywords. e.g.,"
-msgstr ""
-"自動リンクの追加キーワード。カンマ区切りでキーワードを指定し、最後に対象 URL を指定します。キーワードと URL "
-"のセットを追加する場合は、改行して次の行に記述してください。以下の例を参照してください:"
+msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr "自動リンクの追加キーワード。カンマ区切りでキーワードを指定し、最後に対象 URL を指定します。キーワードと URL のセットを追加する場合は、改行して次の行に記述してください。以下の例を参照してください:"
 
 #: promote-mdn.php:288
-msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you"
-" have too many custom keywords here, you may not link to MDN at all."
-msgstr ""
-"注意: これらのキーワードは、URL で読み込まれたものよりも優先されます。ここであまりに多くのカスタムキーワードを設定すると、ほとんどのページが "
-"MDN にリンクしなくなってしまう可能性があります。"
+msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
+msgstr "注意: これらのキーワードは、URL で読み込まれたものよりも優先されます。ここであまりに多くのカスタムキーワードを設定すると、ほとんどのページが MDN にリンクしなくなってしまう可能性があります。"
 
 #: promote-mdn.php:289
 msgid "Update options"
 msgstr "設定を更新"
 
 #: promote-mdn.php:312
-msgid ""
-"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
-"configure."
+msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
 msgstr "インストールありがとうございます。 <a href=\"%s\">設定</a>ページで詳細設定をしてください。"
 
 #: promote-mdn.php:313
-msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
-"href=\"%s\">setting</a> for a locale-specific URL for keywords."
-msgstr ""
-"fr_FR の翻訳、新しいサイドバー <a href=\"%s\">ウィジェット</a>、キーワードのためのロケール固有 URL の <a "
-"href=\"%s\">設定</a>。"
+msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
+msgstr "fr_FR の翻訳、新しいサイドバー <a href=\"%s\">ウィジェット</a>、キーワードのためのロケール固有 URL の <a href=\"%s\">設定</a>。"
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme

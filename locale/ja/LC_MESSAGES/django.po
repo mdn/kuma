@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 08:06+0000\n"
+"PO-Revision-Date: 2016-10-22 08:32+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -145,7 +145,7 @@ msgstr "ドキュメンテーション翻訳状況"
 
 #: jinja2/base.html:132 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr "Web 技術"
+msgstr "ウェブ技術"
 
 #: jinja2/base.html:136
 msgid "Technologies"
@@ -191,7 +191,7 @@ msgstr "リファレンスとガイド"
 
 #: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Learning web development"
-msgstr "Web 開発について学ぶ"
+msgstr "ウェブ開発について学ぶ"
 
 #: jinja2/base.html:151
 msgid "Tutorials"
@@ -247,7 +247,7 @@ msgstr "Firefox のサポートを得る"
 
 #: jinja2/base.html:176
 msgid "Get web development help"
-msgstr "Web 開発のサポートを得る"
+msgstr "ウェブ開発のサポートを得る"
 
 #: jinja2/base.html:179
 msgid "Join the MDN community"
@@ -906,7 +906,7 @@ msgstr "モバイル"
 # web, Web ヘッダ - タイトル
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
-msgstr "Web"
+msgstr "ウェブ"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
@@ -939,7 +939,7 @@ msgstr "API / DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr "オープン Web アプリ"
+msgstr "オープンウェブアプリ"
 
 #: kuma/core/translations/search/filter/b2g-os/name.py:4
 msgid "B2G OS"
@@ -993,7 +993,7 @@ msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr "Web 開発"
+msgstr "ウェブ開発"
 
 # docs, Key Topics for Web Developers - リスト項目
 #: kuma/core/translations/search/filter/webgl/name.py:4
@@ -1214,17 +1214,17 @@ msgstr "英語版が承認待ちになったときにメールを受け取る"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr "Mozilla Developer Network (MDN) のフェローシッププログラムは、Mozilla と共に世界を変えるワールドクラスの Web 開発者たちを招待します。"
+msgstr "Mozilla Developer Network (MDN) のフェローシッププログラムは、Mozilla と共に世界を変えるワールドクラスのウェブ開発者たちを招待します。"
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
 " OS."
-msgstr "Mozilla Developer Network (MDN) は、Web サイトと HTML5 アプリ向けの HTML、CSS、API を含むオープン Web についての情報を提供しています。また、Firefox OS のような Mozilla 製品のドキュメントもあります。"
+msgstr "Mozilla Developer Network (MDN) は、ウェブサイトと HTML5 アプリ向けの HTML、CSS、API を含むオープンウェブについての情報を提供しています。また、Firefox OS のような Mozilla 製品のドキュメントもあります。"
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr "オープン Web <span>に関する共有知</span>"
+msgstr "オープンウェブ <span>に関する共有知</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
@@ -1236,11 +1236,11 @@ msgstr "トピックを表示"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Technologies"
-msgstr "Web<br />技術"
+msgstr "ウェブ<br />技術"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr "Web API &amp; DOM"
+msgstr "ウェブ API &amp; DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
@@ -1252,7 +1252,7 @@ msgstr "学習"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
-msgstr "はじめての Web 開発"
+msgstr "はじめてのウェブ開発"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
@@ -1276,7 +1276,7 @@ msgstr "ページインスペクタ"
 
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
-msgstr "Web コンソール"
+msgstr "ウェブコンソール"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
@@ -1288,11 +1288,11 @@ msgstr "パフォーマンス計測ツール"
 
 #: kuma/landing/jinja2/landing/homepage.html:108
 msgid "Open Web and Mobile"
-msgstr "オープン Web とモバイル"
+msgstr "オープンウェブとモバイル"
 
 #: kuma/landing/jinja2/landing/homepage.html:111
 msgid "Learn Web Development"
-msgstr "Web 開発について学ぶ"
+msgstr "ウェブ開発について学ぶ"
 
 #: kuma/landing/jinja2/landing/homepage.html:114
 msgid "Get The Browser For Developers Like You"
@@ -1300,7 +1300,7 @@ msgstr "あなたのような開発者向けのブラウザーを手に入れよ
 
 #: kuma/landing/jinja2/landing/homepage.html:117
 msgid "Build Open Web Apps"
-msgstr "オープン Web アプリの構築"
+msgstr "オープンウェブアプリの構築"
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
@@ -1370,8 +1370,8 @@ msgid ""
 "source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
 " bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>ボタンを入手:</strong> あなたの Web サイトやブログで MDN を宣伝するために、以下の簡単なフォームでカスタムボタンのソースコードを作成してください。</li> <li><strong>ボタンを配置:</strong> ソースコードをコピーして、あなたの Web サイトやブログに貼りつけて、MDN "
-"へ訪れやすいように手助けしてください。</li> <li><strong>快感:</strong> MDN を世界に共有したことで開発者の生活を少しだけ良くできたということを忘れずにプライドを持ってください。</li> </ol>"
+"<ol> <li><strong>ボタンを入手:</strong> あなたのウェブサイトやブログで MDN を宣伝するために、以下の簡単なフォームでカスタムボタンのソースコードを作成してください。</li> <li><strong>ボタンを配置:</strong> ソースコードをコピーして、あなたのウェブサイトやブログに貼りつけて、MDN へ訪れやすいように手助けしてください。</li> "
+"<li><strong>快感:</strong> MDN を世界に共有したことで開発者の生活を少しだけ良くできたということを忘れずにプライドを持ってください。</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
@@ -1395,7 +1395,7 @@ msgstr "開発者のための、開発者による"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr "Web 開発者のツールボックス"
+msgstr "ウェブ開発者のツールボックス"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -1419,7 +1419,7 @@ msgstr "&lt;FOO&gt; と置き換え"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr "あなたの Web サイトにカスタムボタンを設置しよう"
+msgstr "あなたのウェブサイトにカスタムボタンを設置しよう"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
@@ -1431,19 +1431,19 @@ msgstr "あなたのボタンのリンク先:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr "より良い Web のための MDN のより良い CSS ドキュメント"
+msgstr "より良いウェブのための MDN のより良い CSS ドキュメント"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163 kuma/landing/jinja2/landing/promote_buttons.html:167 kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr "より良い Web のための MDN のより良い HTML ドキュメント"
+msgstr "より良いウェブのための MDN のより良い HTML ドキュメント"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164 kuma/landing/jinja2/landing/promote_buttons.html:168 kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr "より良い Web のための MDN のより良い JavaScript ドキュメント"
+msgstr "より良いウェブのための MDN のより良い JavaScript ドキュメント"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr "より良い Web のための MDN のより良い Web ドキュメント"
+msgstr "より良いウェブのための MDN のより良いウェブドキュメント"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
@@ -1459,7 +1459,7 @@ msgstr "MDN には、開発者による JavaScript 関連ドキュメント、�
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr "MDN には、開発者による Web 関連ドキュメント、その他多数のコンテンツがあります。"
+msgstr "MDN には、開発者によるウェブ関連ドキュメント、その他多数のコンテンツがあります。"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
@@ -1475,11 +1475,11 @@ msgstr "MDN の、開発者による開発者のための JavaScript 関連ド�
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr "MDN の、開発者による開発者のための Web 関連ドキュメント"
+msgstr "MDN の、開発者による開発者のためのウェブ関連ドキュメント"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr "MDN は、HTML、CSS、JavaScript、他の Web 標準やオープン技術に関するドキュメントなどが詰まった、あなたのための Web 開発者用ツールボックスです。"
+msgstr "MDN は、HTML、CSS、JavaScript、他のウェブ標準やオープン技術に関するドキュメントなどが詰まった、あなたのための Web 開発者用ツールボックスです。"
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -1806,7 +1806,7 @@ msgstr "タグ"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr "Web サイトの URL を正しく入力してください。"
+msgstr "ウェブサイトの URL を正しく入力してください。"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
@@ -1834,7 +1834,7 @@ msgstr "Facebook の URL を正しく入力してください。"
 
 #: kuma/users/models.py:136
 msgid "Website"
-msgstr "Web サイト"
+msgstr "ウェブサイト"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
