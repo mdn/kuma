@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-10-22 13:29+0000\n"
+"PO-Revision-Date: 2016-10-22 15:12+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -152,7 +152,7 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr "Promote MDN は記事中のキーワードを MDN の文書へ自動的にリンクします。"
+msgstr "Promote MDN は記事中のキーワードを MDN のドキュメントへ自動的にリンクします。"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-10-22 10:03+0000\n"
+"PO-Revision-Date: 2016-10-22 15:15+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -141,7 +141,7 @@ msgstr "古い表を表示"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr "草稿を保存"
+msgstr "下書きを保存"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
@@ -153,15 +153,15 @@ msgstr "不明な日時"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
-msgstr "この日時に保存された草稿があります:"
+msgstr "この日時に保存された下書きがあります:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr "草稿の内容を復元"
+msgstr "下書きの内容を復元"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr "草稿を削除"
+msgstr "下書きを破棄"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
@@ -181,7 +181,7 @@ msgstr "公開できませんでした。あなたの編集内容を安全な場
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
-msgstr "草稿"
+msgstr "下書き"
 
 #: kuma/static/js/wiki-edit.js:626
 msgid "saved"

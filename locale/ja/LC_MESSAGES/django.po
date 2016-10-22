@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 13:23+0000\n"
+"PO-Revision-Date: 2016-10-22 15:20+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -296,7 +296,7 @@ msgstr "MDN のコードに貢献する"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr "<li>再度 <a href=\"/logout\">ログアウト</a> を試みる</li>"
+msgstr "<li><a href=\"/logout\">ログアウト</a> して再度試す。</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
@@ -605,15 +605,15 @@ msgstr "ズールー語"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr "これらのメール通知を解除:"
+msgstr "これらのメール通知を停止:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr "通知解除"
+msgstr "通知を停止"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr "本当に通知を解除しますか？"
+msgstr "本当に通知を停止しますか？"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -622,21 +622,21 @@ msgstr "キャンセル"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr "通知解除エラー"
+msgstr "通知停止エラー"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
-msgstr "メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザーへコピー＆ペーストしてください。"
+msgstr "メール通知を見つけられませんでした。すでに通知が停止されているか、通知停止のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザーへコピー＆ペーストしてください。"
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr "通知解除しました"
+msgstr "通知を停止しました"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr "通知を解除しました。"
+msgstr "通知を停止しました。"
 
 #: kuma/attachments/admin.py:60
 #, python-format
@@ -3764,7 +3764,7 @@ msgstr "%(title)s と全サブ記事を購読する"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr "%(title)s と全サブ記事の購読を解除する"
+msgstr "%(title)s と全サブ記事の購読を中止する"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3772,7 +3772,7 @@ msgstr "この記事と全サブ記事の購読を開始しました。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr "この記事と全サブ記事の購読を解除しました。"
+msgstr "この記事と全サブ記事の購読を中止しました。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
@@ -3786,7 +3786,7 @@ msgstr "%(title)s を購読する"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "%(title)s の購読を解除する"
+msgstr "%(title)s の購読を中止する"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3796,7 +3796,7 @@ msgstr "%(title)s の購読を開始しました。"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "%(title)s の購読を解除しました。"
+msgstr "%(title)s の購読を中止しました。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, python-format
@@ -3928,7 +3928,7 @@ msgstr "あなたの投稿には MDN にふさわしくないと思われる内�
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "このメッセージを間違って受け取ったと思われる場合は、コンテンツの草稿を保存し、<a href=\"%(admin_email)s\">サイト管理者までご連絡ください</a>。"
+msgstr "このメッセージを間違って受け取ったと思われる場合は、コンテンツの下書きを保存し、<a href=\"%(admin_email)s\">サイト管理者までご連絡ください</a>。"
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
