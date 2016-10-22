@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 15:20+0000\n"
+"PO-Revision-Date: 2016-10-22 15:38+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -1534,7 +1534,7 @@ msgstr "検索は一時的に利用できなくなっています。後で再度
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr "検索クエリに問題があります。後で再度試してください。"
+msgstr "検索語句に問題があります。後で再度試してください。"
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -3409,7 +3409,7 @@ msgstr "記事へのタグの付け方"
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr "記事のカテゴリを設定してください。それにより、検索エンジンで絞り込みを行った場合にもこの記事を正しく見つけられるようになります。詳しくは <a target=\"_blank\" href=\"%(url)s\">タグ付けガイド</a> を参照してください。"
+msgstr "記事のカテゴリーを設定してください。それにより、検索エンジンで絞り込みを行った場合にもこの記事を正しく見つけられるようになります。詳しくは <a target=\"_blank\" href=\"%(url)s\">タグ付けガイド</a> を参照してください。"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3806,7 +3806,7 @@ msgstr "<bdi>%(language)s</bdi> 版を購読する"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr "<bdi>%(language)s</bdi> 版の購読を解除する"
+msgstr "<bdi>%(language)s</bdi> 版の購読を中止する"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
@@ -3816,7 +3816,7 @@ msgstr "この記事の %(language)s 版の購読を開始しました。"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr "この記事の %(language)s 版の編集通知を解除しました。"
+msgstr "この記事の %(language)s 版の編集通知を停止しました。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
