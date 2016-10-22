@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-10-22 08:34+0000\n"
+"PO-Revision-Date: 2016-10-22 13:29+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -78,7 +78,7 @@ msgstr "見出しタグ (h1、h2、h3、h4、h5、h6) にリンクを追加し�
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
-msgstr "以下のページ及び投稿にはリンクを追加しない (カンマ区切りの ID、URL スラッグ、記事名で指定):"
+msgstr "以下のページや投稿にはリンクを追加しない (カンマ区切りの ID、URL スラグ、記事名で指定):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"

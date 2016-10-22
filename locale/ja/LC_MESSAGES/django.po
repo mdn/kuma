@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 13:15+0000\n"
+"PO-Revision-Date: 2016-10-22 13:23+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -851,7 +851,7 @@ msgstr "API キーを使用するには特別な権限が必要です。<a href=
 msgid ""
 "<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
 " as you can.</p>"
-msgstr "<p>このキーの用途を次の欄に入力してください。<p><strong>注記:</strong> これは、キーの生成日時を除き、このキーを識別するための唯一の手段となります。よって、出来るだけ明確に記述してください。</p>"
+msgstr "<p>このキーの用途を次の欄に入力してください。<p><strong>注記:</strong> これは、キーの生成日時を除き、このキーを識別するための唯一の手段となります。よって、できるだけ明確に記述してください。</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
