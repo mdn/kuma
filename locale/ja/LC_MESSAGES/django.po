@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 07:32+0000\n"
+"PO-Revision-Date: 2016-10-22 08:06+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -87,7 +87,7 @@ msgstr "<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a> の Matthew
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr "内部サーバエラー"
+msgstr "内部サーバーエラー"
 
 # メインページタイトル
 #: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:103 kuma/search/jinja2/search/plugin.html:3
@@ -3754,7 +3754,7 @@ msgstr "リビジョン %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
-msgstr "サーバが内容の比較をレンダリングしています。数分後にこのページを再読み込みしてください。"
+msgstr "サーバーが内容の比較をレンダリングしています。数分後にこのページを再読み込みしてください。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, python-format
@@ -4184,7 +4184,7 @@ msgstr "あなたはこのドキュメントを翻訳できません。"
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr "Elasticsearch サーバ: %(backend)s"
+msgstr "Elasticsearch サーバー: %(backend)s"
 
 #~ msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
 #~ msgstr "あなたは Persona でログインしていますが、<a href=\"%(persona_info)s\">Persona 対応は無効化されます。詳細はこちら</a>。"
