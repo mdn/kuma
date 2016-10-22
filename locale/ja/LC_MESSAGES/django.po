@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 12:58+0000\n"
+"PO-Revision-Date: 2016-10-22 13:15+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -2811,7 +2811,7 @@ msgstr "スラグの長さは %(limit_value)s 文字以下に納めるように�
 # 100%
 #: kuma/wiki/forms.py:50
 msgid "Please provide a summary."
-msgstr "URL スラグを入力して下さい。"
+msgstr "URL スラグを入力してください。"
 
 #: kuma/wiki/forms.py:51
 #, python-format
