@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 08:32+0000\n"
+"PO-Revision-Date: 2016-10-22 10:00+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -47,12 +47,12 @@ msgstr "<p>申し訳ありませんが、その操作は実行できません。
 #: jinja2/403.html:50
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr "<li>再度<a href=\"%(logout_url)s\">ログアウト</a>を試みる。</li>"
+msgstr "<li><a href=\"%(logout_url)s\">ログアウト</a> して再度試す。</li>"
 
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr "<li>再度 <a href=\"%(login_url)s\">ログイン</a> を試みる。</li>"
+msgstr "<li><a href=\"%(login_url)s\">ログイン</a> して再度試す。</li>"
 
 #: jinja2/403.html:62
 msgid ""
@@ -103,7 +103,7 @@ msgstr "あなたは Persona でログインしましたが、11 月 1 日以降
 
 #: jinja2/base.html:86
 msgid "Skip to main content"
-msgstr "メインコンテンツへ移動"
+msgstr "本文へ移動"
 
 #: jinja2/base.html:88
 msgid "Select language"
