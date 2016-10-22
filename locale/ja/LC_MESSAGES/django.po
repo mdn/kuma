@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 10:20+0000\n"
+"PO-Revision-Date: 2016-10-22 10:28+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -2577,7 +2577,7 @@ msgstr "あなたはプロフィールを作成することで MDN に参加す�
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr "単語が好きですか？"
+msgstr "文章が好きですか？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
@@ -2587,7 +2587,7 @@ msgstr "コードが好きですか？"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr "単語とコードの両方が好きですか？"
+msgstr "文章とコードの両方が好きですか？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
@@ -2621,7 +2621,7 @@ msgstr "IRC の詳細は %(irc_link)s を参照してください。"
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
-msgstr "MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。"
+msgstr "MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャーを務める Janet Swisher (jms) が常駐しています。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -3019,7 +3019,7 @@ msgstr "ユーザーエージェント"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
-msgstr "HTTP リファラ"
+msgstr "HTTP リファラー"
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
 msgid "Data submitted to Akismet"
@@ -3256,7 +3256,7 @@ msgstr "この記事内"
 #: kuma/wiki/jinja2/wiki/document.html:241
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr "このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全なコンテンツを表示するには数分たってから <a href=\"%(url)s\">このページを再度読み込む</a> か、スーパーリロード (<kbd>ctlr</kbd> + <kbd>F5</kbd>)をお試しください。"
+msgstr "このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全な内容を表示するには数分たってから <a href=\"%(url)s\">このページを再度読み込む</a> か、スーパーリロード (<kbd>ctlr</kbd> + <kbd>F5</kbd>) をお試しください。"
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
@@ -3270,7 +3270,7 @@ msgstr "このドキュメントへの更新が <abbr title=\"%(started_at)s\">�
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
 " a few minutes."
-msgstr "このドキュメントは <abbr title=\"%(scheduled_at)s\">更新が予定されています</abbr>。コンテンツに欠落などの問題がある場合は、数分たってから <a href=\"%(url)s\">このページを再読み込み</a> してください。"
+msgstr "このドキュメントは <abbr title=\"%(scheduled_at)s\">更新が予定されています</abbr>。内容に欠落などの問題がある場合は、数分後に <a href=\"%(url)s\">このページを再読み込み</a> してください。"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3301,7 +3301,7 @@ msgstr "この記事はまだボランティアによって <bdi>%(locale)s</bdi
 
 #: kuma/wiki/jinja2/wiki/document.html:316
 msgid "This article doesn't have any content yet."
-msgstr "この記事にはまだコンテンツがありません。"
+msgstr "この記事にはまだ内容がありません。"
 
 #: kuma/wiki/jinja2/wiki/document.html:319
 #, python-format
@@ -3841,7 +3841,7 @@ msgstr "スタイルガイド"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
 msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
-msgstr[0] "このページにスクリプト エラーがあります。サイト編集者によって解決されるまでの間は、以下の部分的なコンテンツのみが表示可能です。"
+msgstr[0] "このページにスクリプトエラーがあります。サイト編集者によって解決されるまでの間は、以下の部分的な内容のみが表示可能です。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -4071,7 +4071,7 @@ msgstr "%(tag)s タグの付いた翻訳記事"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr "何らかのローカリゼーションタグが付いた記事"
+msgstr "何らかのローカライズタグが付いた記事"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:15
 #, python-format
