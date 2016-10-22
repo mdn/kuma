@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 06:50+0000\n"
+"PO-Revision-Date: 2016-10-22 07:32+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -29,7 +29,7 @@ msgstr "あなたのアカウントは編集が禁止されています。"
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr "このユーザカウントは停止されています。"
+msgstr "このユーザーアカウントは停止されています。"
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
@@ -690,7 +690,7 @@ msgstr "添付ファイルがゴミ箱へ移動された日時"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr "添付ファイルをゴミ箱へ移動したユーザの名前"
+msgstr "添付ファイルをゴミ箱へ移動したユーザーの名前"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -775,7 +775,7 @@ msgstr "最終変更日"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
-msgstr "アップロードしたユーザ:"
+msgstr "アップロードしたユーザー:"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
@@ -1058,7 +1058,7 @@ msgstr "ロケール:"
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
-msgstr "ユーザ:"
+msgstr "ユーザー:"
 
 #: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
@@ -1155,7 +1155,7 @@ msgstr "この IP からの編集を禁止"
 # 88%
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "User agent:"
-msgstr "ユーザエージェント:"
+msgstr "ユーザーエージェント:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "Referrer:"
@@ -1671,15 +1671,15 @@ msgstr "申し訳ありませんが、ログインするには少なくとも 1 
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr "メールアドレスをユーザ名として使用することはできません。"
+msgstr "メールアドレスをユーザー名として使用することはできません。"
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr "このユーザ名は既に使用されています。"
+msgstr "このユーザー名は既に使用されています。"
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr "ユーザ"
+msgstr "ユーザー"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1700,7 +1700,7 @@ msgstr "ハッシュ"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr "ユーザ名で利用できる文字は半角英数字と . - _ + のみです。"
+msgstr "ユーザー名で利用できる文字は半角英数字と . - _ + のみです。"
 
 #: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
@@ -1721,7 +1721,7 @@ msgstr "専門分野"
 # 88%
 #: kuma/users/forms.py:52
 msgid "Username"
-msgstr "ユーザ名"
+msgstr "ユーザー名"
 
 # 各ページ, 2段目ヘッダ - Twitter リンク
 #: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:78
@@ -1754,7 +1754,7 @@ msgstr "このフィールドは入力必須です。"
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
-msgstr "ユーザ名はすでに使用されています。"
+msgstr "ユーザー名はすでに使用されています。"
 
 #: kuma/users/models.py:29
 #, python-format
@@ -1838,17 +1838,17 @@ msgstr "Web サイト"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr "ユーザ名は必須です。"
+msgstr "ユーザー名は必須です。"
 
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "ユーザ名が短すぎます (%(show_value)s 文字)。 ユーザ名は %(limit_value)s 文字以上にしなければなりません。"
+msgstr "ユーザー名が短すぎます (%(show_value)s 文字)。 ユーザー名は %(limit_value)s 文字以上にしなければなりません。"
 
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr "ユーザ名が長すぎます (%(show_value)s 文字)。 ユーザ名は %(limit_value)s 文字以下にしなければなりません。"
+msgstr "ユーザー名が長すぎます (%(show_value)s 文字)。 ユーザー名は %(limit_value)s 文字以下にしなければなりません。"
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
@@ -2167,11 +2167,11 @@ msgstr "アカウントがなくても MDN のすべてのページにアクセ�
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr "MDN プロフィールを設定するには、<strong>ユーザ名を選択してください</strong>。あなたのユーザ名は、あなたの貢献を示すために MDN サイト上に表示されます。"
+msgstr "MDN プロフィールを設定するには、<strong>ユーザー名を選択してください</strong>。あなたのユーザー名は、あなたの貢献を示すために MDN サイト上に表示されます。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr "MDN プロフィールを設定するには、<strong>ユーザ名とメールアドレスを選択してください</strong>。あなたのユーザ名は、あなたの貢献を示すために MDN サイト上に表示されます。"
+msgstr "MDN プロフィールを設定するには、<strong>ユーザー名とメールアドレスを選択してください</strong>。あなたのユーザー名は、あなたの貢献を示すために MDN サイト上に表示されます。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
@@ -2181,11 +2181,11 @@ msgstr "<strong>問題がある</strong> 場合は、ログインするか MDN �
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr "あなたの GitHub ユーザ名 %(username)s はすでに利用されています。別のユーザ名を選んでください。"
+msgstr "あなたの GitHub ユーザー名 %(username)s はすでに利用されています。別のユーザー名を選んでください。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
-msgstr "他のユーザに表示する名前を入力し、他のユーザがあなたの貢献を特定できるようにしてください。"
+msgstr "他のユーザーに表示する名前を入力し、他のユーザーがあなたの貢献を特定できるようにしてください。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
@@ -2263,7 +2263,7 @@ msgstr "あるいは以下のテキストボックスに理由を入力してく
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
-msgstr "ユーザをアカウント停止にする"
+msgstr "ユーザーをアカウント停止にする"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
 #, python-format
@@ -2290,19 +2290,19 @@ msgstr "スパムを報告"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
-msgstr "ユーザをスパム行為のためアカウント停止にする"
+msgstr "ユーザーをスパム行為のためアカウント停止にする"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 msgid "Ban User for Spam & Submit Spam"
-msgstr "ユーザをスパム行為のためアカウント停止にする & スパムを報告"
+msgstr "ユーザーをスパム行為のためアカウント停止にする & スパムを報告"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
-msgstr "他の理由でユーザをアカウント停止にする。"
+msgstr "他の理由でユーザーをアカウント停止にする。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "ユーザが過去 3 日間に作成した取り消し可能なリビジョンはなく、このユーザは既にアカウント停止されています。"
+msgstr "ユーザーが過去 3 日間に作成した取り消し可能なリビジョンはなく、このユーザは既にアカウント停止されています。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2322,7 +2322,7 @@ msgstr "スパムとして Akismet に送信したもの:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "このユーザが編集したものでスパムとして報告されたリビジョンはありません。"
+msgstr "このユーザーが編集したものでスパムとして報告されたリビジョンはありません。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
@@ -2330,7 +2330,7 @@ msgstr "削除済み:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
-msgstr "このユーザが編集したもので削除されたリビジョンはありません。"
+msgstr "このユーザーが編集したもので削除されたリビジョンはありません。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
@@ -2338,7 +2338,7 @@ msgstr "復元済み:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 msgid "The user did not have any revisions that were reverted."
-msgstr "このユーザが編集したもので復元されたリビジョンはありません。"
+msgstr "このユーザーが編集したもので復元されたリビジョンはありません。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
@@ -2346,7 +2346,7 @@ msgstr "フォローアップが必要"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
-msgstr "ユーザによる新たなアクション:"
+msgstr "ユーザーによる新たなアクション:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2380,7 +2380,7 @@ msgstr "最新版が非スパム:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr "既にスパムとして特定されているユーザ:"
+msgstr "既にスパムとして特定されているユーザー:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
@@ -2433,7 +2433,7 @@ msgstr "<p class=\"none\">まだ MDN ドキュメントに貢献していませ�
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr "このユーザは活動履歴がありません。"
+msgstr "このユーザーは活動履歴がありません。"
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
@@ -2635,7 +2635,7 @@ msgstr "既にスパムとして報告されています。"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
-msgstr "このユーザが過去 3 日間に作成したリビジョンはありません。"
+msgstr "このユーザーが過去 3 日間に作成したリビジョンはありません。"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/content.py:740 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
@@ -2677,11 +2677,11 @@ msgstr "リビジョンを整理"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
-msgstr "ユーザをアカウント停止にする"
+msgstr "ユーザーをアカウント停止にする"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
-msgstr "ユーザをアカウント停止にし、整理する"
+msgstr "ユーザーをアカウント停止にし、整理する"
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
@@ -2718,7 +2718,7 @@ msgstr "MDN ドキュメント"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr "MDN ユーザによって作成されたドキュメント"
+msgstr "MDN ユーザーによって作成されたドキュメント"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
@@ -3015,7 +3015,7 @@ msgstr "IP アドレス"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
-msgstr "ユーザエージェント"
+msgstr "ユーザーエージェント"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
@@ -3097,7 +3097,7 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
-"<p>以下の条件を満たすことでページの新規作成権限を与えられる可能性が上がります。</p> <ul>あなたの MDN ユーザ名を教えてください。</li> <li>ページを新規作成したい理由を教えてください。(新機能を解説したいのであればどのような機能か、用語集を編集したいのであればどのような用語か、など)</li> <li>既存のページにいくつかの適切な変更を加えていること。</li> "
+"<p>以下の条件を満たすことでページの新規作成権限を与えられる可能性が上がります。</p> <ul>あなたの MDN ユーザー名を教えてください。</li> <li>ページを新規作成したい理由を教えてください。(新機能を解説したいのであればどのような機能か、用語集を編集したいのであればどのような用語か、など)</li> <li>既存のページにいくつかの適切な変更を加えていること。</li> "
 "<li>しばらく前からサイトに貢献していること。</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
@@ -3650,7 +3650,7 @@ msgstr "%(creator)s が %(document_title)s を変更しました。"
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr "ユーザプロフィールを表示:"
+msgstr "ユーザープロフィールを表示:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
