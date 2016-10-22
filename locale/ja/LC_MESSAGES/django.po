@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 10:28+0000\n"
+"PO-Revision-Date: 2016-10-22 12:58+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -1526,7 +1526,7 @@ msgstr "現在のインデックス？"
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr "現在のインデックス %s には既に後継が設定されています"
+msgstr "現在のインデックス %s にはすでに後継が設定されています"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
@@ -1675,7 +1675,7 @@ msgstr "メールアドレスをユーザー名として使用することはで
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr "このユーザー名は既に使用されています。"
+msgstr "このユーザー名はすでに使用されています。"
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -1984,7 +1984,7 @@ msgstr "貢献するためには MDN にログインする必要があります�
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr "既に MDN プロフィールをお持ちの場合はログインしてください:"
+msgstr "すでに MDN プロフィールをお持ちの場合はログインしてください:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2024,7 +2024,7 @@ msgstr "不正なトークン"
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr "このパスワードリセット用リンクは、既に使用されたなどの理由で無効です。改めて <a href=\"%(passwd_reset_url)s\">パスワードのリセット</a> を申請してください。"
+msgstr "このパスワードリセット用リンクは、すでに使用されたなどの理由で無効です。改めて <a href=\"%(passwd_reset_url)s\">パスワードのリセット</a> を申請してください。"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -2090,7 +2090,7 @@ msgstr "注"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr "既に %(user_display)s としてログインしています。"
+msgstr "すでに %(user_display)s としてログインしています。"
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -2144,7 +2144,7 @@ msgstr "続けるには MDN プロフィールを作成してください"
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr "このメールアドレスのアカウントは既に存在しています。Persona をあなたの MDN アカウントに接続するには、<a href=\"%(connections_url)s\">ログインしてあなたのソーシャルアカウント接続ページで設定する必要があります。</a>"
+msgstr "このメールアドレスのアカウントはすでに存在しています。Persona をあなたの MDN アカウントに接続するには、<a href=\"%(connections_url)s\">ログインしてあなたのソーシャルアカウント接続ページで設定する必要があります。</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
@@ -2192,7 +2192,7 @@ msgstr "他のユーザーに表示する名前を入力し、他のユーザー
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
-msgstr "選択されたメールアドレスのプロフィールは既に存在します。<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</a>。"
+msgstr "選択されたメールアドレスのプロフィールはすでに存在します。<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</a>。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
@@ -2278,7 +2278,7 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> のアカウントが停止されまし
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr "%(user)s のアカウントは既に停止されています。この人物による以下のリビジョンをレビュー、取り消しできます。"
+msgstr "%(user)s のアカウントはすでに停止されています。この人物による以下のリビジョンをレビュー、取り消しできます。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
@@ -2302,7 +2302,7 @@ msgstr "他の理由でユーザーをアカウント停止にする。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "ユーザーが過去 3 日間に作成した取り消し可能なリビジョンはなく、このユーザは既にアカウント停止されています。"
+msgstr "ユーザーが過去 3 日間に作成した取り消し可能なリビジョンはなく、このユーザはすでにアカウント停止されています。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2380,7 +2380,7 @@ msgstr "最新版が非スパム:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr "既にスパムとして特定されているユーザー:"
+msgstr "すでにスパムとして特定されているユーザー:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
@@ -2631,7 +2631,7 @@ msgstr "ブログ: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr "既にスパムとして報告されています。"
+msgstr "すでにスパムとして報告されています。"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
@@ -2846,11 +2846,11 @@ msgstr "コメントの長さは %(limit_value)s 文字以下に納めるよう�
 # 100%
 #: kuma/wiki/forms.py:65
 msgid "Another document with this slug already exists."
-msgstr "別のドキュメントが既にこのスラグを利用しています。"
+msgstr "別のドキュメントがすでにこのスラグを利用しています。"
 
 #: kuma/wiki/forms.py:66
 msgid "Another document with this metadata already exists."
-msgstr "このメタデータを持つ別のドキュメントが既に存在します。"
+msgstr "このメタデータを持つ別のドキュメントがすでに存在します。"
 
 #: kuma/wiki/forms.py:68
 #, python-format
@@ -4139,7 +4139,7 @@ msgstr "コンテンツの生成時にエラーが発生しました。"
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr "ドキュメントは既に存在します。注: リダイレクトを削除しないと、移動されたドキュメントを元に戻すことはできません。"
+msgstr "ドキュメントはすでに存在します。注: リダイレクトを削除しないと、移動されたドキュメントを元に戻すことはできません。"
 
 #: kuma/wiki/views/document.py:607
 #, python-format
