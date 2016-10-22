@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 10:00+0000\n"
+"PO-Revision-Date: 2016-10-22 10:20+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -141,7 +141,7 @@ msgstr "リビジョンダッシュボード"
 
 #: jinja2/base.html:123
 msgid "Documentation status"
-msgstr "ドキュメンテーション翻訳状況"
+msgstr "ドキュメント翻訳状況"
 
 #: jinja2/base.html:132 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
@@ -149,7 +149,7 @@ msgstr "ウェブ技術"
 
 #: jinja2/base.html:136
 msgid "Technologies"
-msgstr "テクノロジ"
+msgstr "テクノロジー"
 
 #: jinja2/base.html:138 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
@@ -167,7 +167,7 @@ msgstr "JavaScript"
 
 #: jinja2/base.html:141
 msgid "Graphics"
-msgstr "グラフィクス"
+msgstr "グラフィックス"
 
 #: jinja2/base.html:142
 msgid "HTTP"
@@ -199,7 +199,7 @@ msgstr "チュートリアル"
 
 #: jinja2/base.html:152
 msgid "References"
-msgstr "レファレンス"
+msgstr "リファレンス"
 
 #: jinja2/base.html:153
 msgid "Developer Guides"
@@ -449,7 +449,7 @@ msgstr "フラニ語"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr "グルジア語"
+msgstr "ジョージア語"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
@@ -628,7 +628,7 @@ msgstr "通知解除エラー"
 msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
-msgstr "メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザへコピー＆ペーストしてください。"
+msgstr "メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザーへコピー＆ペーストしてください。"
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -1159,7 +1159,7 @@ msgstr "ユーザーエージェント:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "Referrer:"
-msgstr "リファラ:"
+msgstr "リファラー:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
 #, python-format
@@ -1186,7 +1186,7 @@ msgstr "スパム"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
-msgstr "このフィルタセットに一致するリビジョンはありません。"
+msgstr "このフィルターセットに一致するリビジョンはありません。"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -1272,7 +1272,7 @@ msgstr "開発ツール"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
-msgstr "ページインスペクタ"
+msgstr "ページインスペクター"
 
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
@@ -1280,7 +1280,7 @@ msgstr "ウェブコンソール"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
-msgstr "JavaScript デバッガ"
+msgstr "JavaScript デバッガー"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
@@ -1403,15 +1403,15 @@ msgstr "色を選択"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr "グレー"
+msgstr "灰色"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr "オレンジ"
+msgstr "オレンジ色"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr "赤"
+msgstr "赤色"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1712,7 +1712,7 @@ msgstr "ベータテストに参加"
 
 #: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:54
 msgid "Interests"
-msgstr "興味がある事"
+msgstr "興味があること"
 
 #: kuma/users/forms.py:46
 msgid "Expertise"
@@ -1746,20 +1746,20 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:136
 msgid "Areas of expertise must be a subset of interests"
-msgstr "「専門分野」は、「興味がある事」のサブセットとしてください"
+msgstr "「専門分野」は「興味があること」のサブセットとしてください"
 
 #: kuma/users/forms.py:145
 msgid "This field cannot be blank."
-msgstr "このフィールドは入力必須です。"
+msgstr "この項目は入力必須です。"
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
-msgstr "ユーザー名はすでに使用されています。"
+msgstr "このユーザー名はすでに使用されています。"
 
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr "%(banned_user)s は %(banned_by)s によって活動を禁止されています"
+msgstr "%(banned_user)s は %(banned_by)s によってアカウントを停止されています"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -1888,7 +1888,7 @@ msgstr "メールアドレス:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr "非アクティブのプロファイル"
+msgstr "非アクティブのプロフィール"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
@@ -1911,7 +1911,7 @@ msgstr "以下のメールアドレスが追加されています:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr "優先メールアドレスにする"
+msgstr "主要メールアドレスにする"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -2041,11 +2041,11 @@ msgstr "パスワード設定"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr "アカウント登録"
+msgstr "ユーザー登録"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr "アカウント登録"
+msgstr "ユーザー登録"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
@@ -2059,7 +2059,7 @@ msgstr "プロフィールの作成は無効化されています"
 #: kuma/users/jinja2/account/signup_closed.html:5
 #, python-format
 msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr "申し訳ありませんが、Persona によるプロファイルの作成はできません。<a href=\"%(url)s\">GitHub アカウントで再度試してください</a>。"
+msgstr "申し訳ありませんが、Persona によるプロフィールの作成はできません。<a href=\"%(url)s\">GitHub アカウントで再度試してください</a>。"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2081,11 +2081,11 @@ msgstr "確認のためのメールを送信しました。そのメールに書
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
-msgstr "<strong>補足:</strong> あなたの <a href=\"%(email_url)s\">メールアドレスは変更できます</a>。"
+msgstr "<strong>注:</strong> あなたの <a href=\"%(email_url)s\">メールアドレスは変更できます</a>。"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr "注記"
+msgstr "注"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
@@ -2118,7 +2118,7 @@ msgstr "次のいずれかのサービスを利用してログインできます
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr "切断"
+msgstr "接続を解除"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
@@ -2192,7 +2192,7 @@ msgstr "他のユーザーに表示する名前を入力し、他のユーザー
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
-msgstr "選択されたメールアドレスのプロファイルは既に存在します。<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</a>。"
+msgstr "選択されたメールアドレスのプロフィールは既に存在します。<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</a>。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
@@ -2203,7 +2203,7 @@ msgstr "MDN 関連のメッセージや通知を受け取りたいメールア�
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
-msgstr "規約とプライバシー"
+msgstr "利用規約とプライバシー"
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
@@ -2221,7 +2221,7 @@ msgstr "Persona でログイン"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr "GitHubでログイン"
+msgstr "GitHub でログイン"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
@@ -2233,7 +2233,7 @@ msgstr "Persona でログイン"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
-msgstr "Github と接続"
+msgstr "GitHub と接続"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
 msgid "Create MDN profile with GitHub"
@@ -2241,7 +2241,7 @@ msgstr "GitHub で MDN プロフィールを作成"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
 msgid "Sign in with GitHub"
-msgstr "GitHubでログイン"
+msgstr "GitHub でログイン"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
@@ -2481,7 +2481,7 @@ msgstr "まず興味のある分野を追加し、そして選択肢から自身
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid "My Profiles"
-msgstr "マイプロフィール"
+msgstr "自分のプロフィール"
 
 #: kuma/users/jinja2/users/user_edit.html:94 kuma/users/jinja2/users/user_edit.html:111
 msgid "Change"
@@ -2493,7 +2493,7 @@ msgstr "Persona アカウントを利用してログインしてください。"
 
 #: kuma/users/jinja2/users/user_edit.html:118
 msgid "Use your GitHub account to sign in."
-msgstr "Github アカウントを利用してログインしてください。"
+msgstr "GitHub アカウントを利用してログインしてください。"
 
 #: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
@@ -2507,12 +2507,12 @@ msgstr "%(username)s さん、こんにちは！"
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr "<a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> にプロファイルを作成していただき、ありがとうございます。ここはあなたのような開発者のために優れた資料を作成しているコミュニティです。"
+msgstr "<a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> にプロフィールを作成していただき、ありがとうございます。ここはあなたのような開発者のために優れた資料を作成しているコミュニティです。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr "あなたはプロファイルを作成することで <a href=\"%(started_link)s\">MDN に参加する</a> 最初のステップを完了しました。"
+msgstr "あなたはプロフィールを作成することで <a href=\"%(started_link)s\">MDN に参加する</a> 最初のステップを完了しました。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
@@ -2565,14 +2565,14 @@ msgstr "%(username)s さん、こんにちは"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
-msgstr "Mozilla Developer Network (MDN) にプロファイルを作成していただき、ありがとうございます。ここはあなたのような開発者のための優れた資料を作成しているコミュニティです。"
+msgstr "Mozilla Developer Network (MDN) にプロフィールを作成していただき、ありがとうございます。ここはあなたのような開発者のための優れた資料を作成しているコミュニティです。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
 msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
-msgstr "あなたはプロファイルを作成することで MDN に参加する最初のステップを完了しました。次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんあります。"
+msgstr "あなたはプロフィールを作成することで MDN に参加する最初のステップを完了しました。次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんあります。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -3854,7 +3854,7 @@ msgstr[0] "このエラーについての詳細情報"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr "MDN プロファイルを持っている人なら誰でもドキュメントを編集して問題点を修正できます。まずは <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript トラブルシューティングガイド</a> を見てみてください。"
+msgstr "MDN プロフィールを持っている人なら誰でもドキュメントを編集して問題点を修正できます。まずは <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript トラブルシューティングガイド</a> を見てみてください。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
