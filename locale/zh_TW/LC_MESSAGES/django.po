@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-22 04:00+0000\n"
+"PO-Revision-Date: 2016-10-22 04:03+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -173,9 +173,8 @@ msgid "APIs / DOM"
 msgstr "API / DOM"
 
 #: jinja2/base.html:144
-#, fuzzy
 msgid "WebExtensions"
-msgstr "附加元件與擴充套件"
+msgstr "WebExtensions"
 
 #: jinja2/base.html:145 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -186,7 +185,6 @@ msgid "References & Guides"
 msgstr "參考資料與導覽"
 
 #: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learning web development"
 msgstr "學習網頁開發"
 
@@ -207,9 +205,8 @@ msgid "Accessibility"
 msgstr "親和力"
 
 #: jinja2/base.html:155
-#, fuzzy
 msgid "Game development"
-msgstr "網頁開發"
+msgstr "遊戲開發"
 
 #: jinja2/base.html:156
 msgid "...more docs"
@@ -1214,9 +1211,8 @@ msgid "Show topics"
 msgstr "顯示主題"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
-#, fuzzy
 msgid "Web<br />Technologies"
-msgstr "網頁技術"
+msgstr "Web 技術"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -1227,14 +1223,12 @@ msgid "more..."
 msgstr "更多..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learning"
-msgstr "我還在學習中"
+msgstr "學習"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
-#, fuzzy
 msgid "Getting started with the Web"
-msgstr "JavaScript 新手上路"
+msgstr "Web 新手上路"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
@@ -2826,7 +2820,7 @@ msgstr "其他文件已使用此後設資料。"
 msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
-msgstr ""
+msgstr "偵測到衝突的編輯，發布失敗。請將您的編輯複製貼到安全的地方，然後到 <a href=\"%(url)s\">修改紀錄</a> 頁面看看發生了那些修改。"
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -3505,13 +3499,13 @@ msgid "Select a language to translate to:"
 msgstr "選取要翻譯的語言:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network 及個別貢獻者<br /> 內容依照此專案的授權條款提供大眾使用。&middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network 及個別貢獻者<br /> 內容依照此專案的授權條款提供大眾使用。&middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a"
+" href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
