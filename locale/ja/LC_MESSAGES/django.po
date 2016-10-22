@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-21 05:02+0000\n"
+"PO-Revision-Date: 2016-10-22 06:50+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -628,7 +628,7 @@ msgstr "通知解除エラー"
 msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
-msgstr "メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザへコピー＆ペーストしてください。"
+msgstr "メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザへコピー＆ペーストしてください。"
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -1296,7 +1296,7 @@ msgstr "Web 開発について学ぶ"
 
 #: kuma/landing/jinja2/landing/homepage.html:114
 msgid "Get The Browser For Developers Like You"
-msgstr "あなたのような開発者向けのブラウザを手に入れよう"
+msgstr "あなたのような開発者向けのブラウザーを手に入れよう"
 
 #: kuma/landing/jinja2/landing/homepage.html:117
 msgid "Build Open Web Apps"
@@ -4099,7 +4099,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"          以下のドキュメントはデータベースから永久に削除されます。この操作は取り消せません。キャンセルするにはブラウザの「戻る」ボタンを押してください。\n"
+"          以下のドキュメントはデータベースから永久に削除されます。この操作は取り消せません。キャンセルするにはブラウザーの「戻る」ボタンを押してください。\n"
 "        "
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30

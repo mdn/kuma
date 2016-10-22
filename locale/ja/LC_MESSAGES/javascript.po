@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-10-20 23:50+0000\n"
+"PO-Revision-Date: 2016-10-22 06:50+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -226,7 +226,7 @@ msgstr "Stack Overflow を検索"
 
 #: kuma/static/js/wiki.js:695
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "お使いのブラウザは MathML に対応していません。代わりに CSS フォールバックを表示します。"
+msgstr "お使いのブラウザーは MathML に対応していません。代わりに CSS フォールバックを表示します。"
 
 #: kuma/static/js/wiki.js:910
 msgid "Details"
