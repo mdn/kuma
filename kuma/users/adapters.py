@@ -133,6 +133,9 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         We use it to:
             1. Check if the user is connecting accounts via signup page
             2. store the name of the socialaccount provider in the user's session.
+
+        TODO: When legacy Persona sessions are cleared (Nov 1 2016), this
+        function can probably go away as well.
         """
         session_login_data = request.session.get('socialaccount_sociallogin', None)
         request_login = sociallogin
@@ -153,7 +156,11 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
                     raise ImmediateHttpResponse(
                         redirect('socialaccount_signup')
                     )
-        # TODO: Can the code that uses this just use request.session['socialaccount_sociallogin'].account.provider instead?
+
+        # sociallogin_provider is used in the UI to indicate what method was
+        # used to login to the website. The session variable
+        # 'socialaccount_sociallogin' has the same data, but will be dropped at
+        # the end of login.
         request.session['sociallogin_provider'] = (sociallogin
                                                    .account.provider)
         request.session.modified = True

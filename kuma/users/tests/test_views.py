@@ -1181,6 +1181,13 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.assertEqual(response.context["form"].initial["email"], '')
 
     def test_matching_accounts(self):
+        """
+        Legacy Persona accounts are detected.
+
+        This prompts the "account recovery" workflow, where a user can
+        request an email with a link that allows login to the existing
+        Persona-backed account, instead of creating a fresh account.
+        """
         testemail = 'octo.cat.III@github-inc.com'
         profile_data = self.github_profile_data.copy()
         profile_data['email'] = testemail
@@ -1190,15 +1197,13 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         response = self.client.get(self.signup_url)
         self.assertFalse(response.context['matching_accounts'])
 
-        # assuming there is already a Persona account with the given email
-        # address
+        # Create a legacy Persona account with the given email address
         octocat3 = user(username='octocat3', is_active=True,
                         email=testemail, password='test', save=True)
         social_account = SocialAccount.objects.create(uid=testemail,
                                                       provider='persona',
                                                       user=octocat3)
         response = self.client.get(self.signup_url)
-        # TODO: what is new path here?
         self.assertEqual(list(response.context['matching_accounts']),
                          [social_account])
 

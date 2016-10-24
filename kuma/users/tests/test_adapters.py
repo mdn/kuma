@@ -21,16 +21,21 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         self.adapter = KumaSocialAccountAdapter()
 
     def test_pre_social_login_overwrites_session_var(self):
-        """ https://bugzil.la/1055870 """
-        # Set up a pre-existing GitHub sign-in session
+        """
+        When a user logs in a second time, second login wins the session.
+
+        https://bugzil.la/1055870
+        """
+        # Set up a pre-existing "Alternate" sign-in session
         request = self.rf.get('/')
         session = self.client.session
-        session['sociallogin_provider'] = 'github'
+        session['sociallogin_provider'] = 'alternate'
         session.save()
         request.session = session
 
-        # Set up an alternate SocialLogin
+        # Set up a in-process GitHub SocialLogin (unsaved)
         account = SocialAccount.objects.get(user__username='testuser')
+        assert account.provider == 'github'
         sociallogin = SocialLogin(account=account)
 
         # Verify the social_login receiver over-writes the provider
@@ -42,8 +47,11 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
             "session variable")
 
     def test_pre_social_login_error_for_unmatched_login(self):
-        """ https://bugzil.la/1063830 """
+        """
+        When we suspect the signup form is used as a connection form, abort.
 
+        https://bugzil.la/1063830
+        """
         # Set up a GitHub SocialLogin in the session
         github_account = SocialAccount.objects.get(user__username='testuser2')
         github_login = SocialLogin(account=github_account,
@@ -70,16 +78,26 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
     def test_pre_social_login_matched_login(self):
         """
-        https://bugzil.la/1063830, happy path
+        When we detected a legacy Persona account, advise recovery of account.
 
         A user tries to sign in with GitHub, but their GitHub email matches
-        an existing MDN account. They are prompted to TODO
-        """
+        an existing MDN account backed by Persona. They are prompted to
+        recover the existing account.
 
-        # Set up a GitHub SocialLogin in the session
+        https://bugzil.la/1063830, happy path
+        """
+        # Set up a session-only GitHub SocialLogin
+        # These are created at the start of the signup process, and saved on
+        #  profile completion.
         github_account = SocialAccount.objects.get(user__username='testuser2')
         github_login = SocialLogin(account=github_account,
                                    user=github_account.user)
+
+        # Setup existing Persona SocialLogin for the same email
+        SocialAccount.objects.create(
+            user=github_account.user,
+            provider='persona',
+            uid=github_account.user.email)
 
         request = self.rf.get('/')
         session = self.client.session
@@ -88,18 +106,11 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         session.save()
         request.session = session
 
-        # Set up an matching other SocialLogin for request
-        other_account = SocialAccount.objects.create(
-            user=github_account.user,
-            provider='other',
-            uid=github_account.user.email)
-        other_login = SocialLogin(account=other_account)
-
         # Verify the social_login receiver over-writes the provider
         # stored in the session
-        self.adapter.pre_social_login(request, other_login)
+        self.adapter.pre_social_login(request, github_login)
         session = request.session
-        eq_(session['sociallogin_provider'], 'other')
+        eq_(session['sociallogin_provider'], 'github')
 
     def test_pre_social_login_same_provider(self):
         """

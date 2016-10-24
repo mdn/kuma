@@ -470,6 +470,7 @@ class SignupView(BaseSignupView):
         form.fields['email'].label = _('Email address')
         self.matching_user = None
         initial_username = form.initial.get('username', None)
+
         # For GitHub users, see if we can find matching user by username
         assert self.sociallogin.account.provider == 'github'
         User = get_user_model()
@@ -566,20 +567,20 @@ class SignupView(BaseSignupView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
-        or_query = []
-        # TODO: what is new process for this?
-        # For GitHub users, find matching Persona social accounts by emails
+
+        # For GitHub users, find matching legacy Persona social accounts
         assert self.sociallogin.account.provider == 'github'
+        or_query = []
         for email_address in self.email_addresses.values():
             if email_address['verified']:
                 or_query.append(Q(uid=email_address['email']))
-
         if or_query:
             reduced_or_query = reduce(operator.or_, or_query)
             matching_accounts = (SocialAccount.objects
                                               .filter(reduced_or_query))
         else:
             matching_accounts = SocialAccount.objects.none()
+
         context.update({
             'email_addresses': self.email_addresses,
             'matching_user': self.matching_user,
