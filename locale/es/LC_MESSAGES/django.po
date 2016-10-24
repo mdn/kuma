@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-21 10:20+0000\n"
-"Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
+"PO-Revision-Date: 2016-10-24 11:10+0000\n"
+"Last-Translator: Inma Barrios <inma.barrios@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1118,7 +1118,7 @@ msgstr "Historial"
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
-msgstr ""
+msgstr "Tendencias en el tiempo, hasta %(date)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
@@ -2881,6 +2881,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"La publicación ha fallado. Se ha detectado un conflicto en los intentos de edición. Por favor, copia y pega en un lugar seguro lo que has editado y visita la página con el <a "
+"href=\"%(url)s\">historial de revisiones</a> para ver qué ha cambiado antes de hacer más ediciones."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -3579,12 +3581,12 @@ msgid "Select a language to translate to:"
 msgstr "Seleccionar el idioma al que traducir:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2013 Mozilla Developer Network y colaboradores particulares.<br /> El contenido está disponible según una licencia específica para este proyecto. &middot; <a "
+"&copy; 2005-%(this_year)s Mozilla Developer Network y colaboradores particulares.<br /> El contenido está disponible bajo una licencia específica para este proyecto. &middot; <a "
 "href=\"%(about_url)s\">Acerca de MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Colabora con el código</a> &middot; <a href=\"//www.mozilla.org/es-ES/privacy\">Política de privacidad</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
