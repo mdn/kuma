@@ -141,7 +141,10 @@ class Extractor(object):
             sample = pq('<section>%s</section>' % section)
         else:
             # If no section, fall back to plain old ID lookup
-            sample = pq(src).find('[id=%s]' % quoteattr(name))
+            try:
+                sample = pq(src).find('[id=%s]' % quoteattr(name))
+            except ValueError:
+                return data
 
         selector_templates = (
             '.%s',

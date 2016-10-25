@@ -1138,7 +1138,7 @@ class ExtractorTests(UserTestCase):
         eq_(expected, result)
 
     @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples_with_problematic_sample_name(self):
+    def test_code_samples_with_null_character_in_sample_name(self):
         rev = revision(is_approved=True, save=True, content="""
             <div id="sample" class="code-sample">
                 <pre class="brush: html">Some HTML</pre>
@@ -1149,7 +1149,24 @@ class ExtractorTests(UserTestCase):
         """)
         # The real test here is to ensure that no exception is raised, but
         # might as well also check that the sample section was not found.
-        result = rev.document.extract.code_sample("""sam<'&">ple""")
+        sample_name = u"sam\x00ple"  # Null character in name
+        result = rev.document.extract.code_sample(sample_name)
+        eq_(dict(html=None, css=None, js=None), result)
+
+    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
+    def test_code_samples_with_escapable_characters_in_sample_name(self):
+        rev = revision(is_approved=True, save=True, content="""
+            <div id="sample" class="code-sample">
+                <pre class="brush: html">Some HTML</pre>
+                <pre class="brush: css">.some-css { color: red; }</pre>
+                <pre class="brush: js">window.alert("HI THERE")</pre>
+            </div>
+            {{ LinkCodeSample('sample1') }}
+        """)
+        # The real test here is to ensure that no exception is raised, but
+        # might as well also check that the sample section was not found.
+        sample_name = u"""sam<'&">ple"""  # One of "<>'& in name
+        result = rev.document.extract.code_sample(sample_name)
         eq_(dict(html=None, css=None, js=None), result)
 
 
