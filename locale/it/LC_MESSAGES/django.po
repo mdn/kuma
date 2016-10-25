@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-25 11:13+0000\n"
+"PO-Revision-Date: 2016-10-25 18:15+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -101,6 +101,8 @@ msgid ""
 "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you"
 " can continue to sign in to MDN."
 msgstr ""
+"Hai effettuato l’accesso tramite Persona, un sistema di autenticazione che verrà definitivamente interrotto a partire dal prossimo primo novembre.<br>Per continuare a utilizzare il tuo profilo MDN, "
+"<a href=\"%(persona_info)s\">associalo ad un account GitHub</a>."
 
 #: jinja2/base.html:86
 msgid "Skip to main content"
@@ -2864,6 +2866,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Pubblicazione dei contenuti non riuscita. Sono stati rilevati dei tentativi di modifica in conflitto con la presente versione. Salva i contenuti non pubblicati in un luogo sicuro e, prima di "
+"effettuare ulteriori modifiche, consulta <a href=\"%(url)s\">lo storico delle revisioni</a>."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -3552,13 +3556,13 @@ msgid "Select a language to translate to:"
 msgstr "Selezionare una lingua in cui tradurre:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network e di singoli collaboratori<br /> Contenuto disponibile con una licenza personalizzata. &middot; <a href=\"%(about_url)s\">Informazioni su MDN</a> &middot; "
-"<a href=\"//github.com/mozilla/kuma\">Contribuisci al codice</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Informativa sulla privacy</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network e di singoli collaboratori<br /> Contenuto disponibile con una licenza personalizzata. &middot; <a href=\"%(about_url)s\">Informazioni su MDN</a> "
+"&middot; <a href=\"//github.com/mozilla/kuma\">Collabora al codice</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Informativa sulla privacy</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
