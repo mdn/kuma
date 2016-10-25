@@ -15,21 +15,20 @@ services:
       - kumascript
     environment:
       # Django settings overrides:
-      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-      - ALLOWED_HOSTS=localhost,localhost:8000
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=https
+      - ALLOWED_HOSTS=localhost
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
-      - CSRF_COOKIE_SECURE=False
+      - CSRF_COOKIE_SECURE=True
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - DEBUG=True
       - DOMAIN=localhost
       - ES_URLS=elasticsearch:9200
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - MEMCACHE_SERVERS=memcached:11211
-      - PROD_DETAILS_DIR=/app/product_details_json
-      - PROTOCOL=http://
-      - SESSION_COOKIE_SECURE=False
-      - SITE_URL=http://localhost:8000
+      - PROTOCOL=https://
+      - SESSION_COOKIE_SECURE=True
+      - SITE_URL=https://localhost
       # Celery environment overrides:
       - C_FORCE_ROOT=1  # TODO: switch to non-root user
       # Other environment overrides
@@ -38,6 +37,7 @@ services:
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
+    cpu_shares: 700
     command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
     ports:
       - "8000:8000"
@@ -55,14 +55,16 @@ services:
     ports:
       - "8001:8000"
 
-  #nginx:
-  #  build: ./docker/images/nginx
-  #  volumes:
-  #    - ./static:/app/static
-  #  ports:
-  #    - "80:80"
-  #  depends_on:
-  #    - web
+  nginx:
+    build: ./docker/images/nginx
+    volumes:
+      - ./static:/app/static
+      - ./ssl:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
 
   memcached:
     image: memcached
