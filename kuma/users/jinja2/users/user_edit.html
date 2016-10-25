@@ -24,9 +24,6 @@
 {% endblock %}
 
 {% block content %}
-  <form class="submission" method="post" action="">
-    {% csrf_token %}
-
     <div class="column-container">
 
       <div class="column-2 smaller">
@@ -51,7 +48,8 @@
 
       <div id="user-edit" class="column-half">
         <h1 class="user-title">{% include 'socialaccount/snippets/login_service_icon.html' %}{{ edit_user.username }}</h1>
-
+            <form class="submission" method="post" action="">
+              {% csrf_token %}
               <fieldset class="section notitle" id="personal">
                 <ul>
                   <li id="field-beta" class="field">
@@ -132,25 +130,31 @@
 
                 </ul>
               </fieldset>
-
+              <p><button type="submit" class="positive">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button></p>
+            </form>
       </div>
-
+      <div class="column-4">
+        {% if waffle.switch('newsletter') %}
+          <div class="newsletter-box">
+            {% include "includes/newsletter.html" %}
+          </div>
+          <h3>Unsubscribe</h3>
+          <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
+        {% endif %}
+      </div>
     </div>
 
-    <div class="column-container">
-      <div class="column-2"></div>
-      <div class="column-half">
-        <p><button type="submit" class="positive">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button></p>
-      </div>
-    </div>
-
-  </form>
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript">
-// <![CDATA[
+  <script type="text/javascript">
+  // <![CDATA[
     var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS|jsonencode }};
-// ]]>
-</script>
+  // ]]>
+  </script>
+
+  {% if waffle.switch('newsletter') %}
+    {% javascript 'newsletter' %}
+  {% endif %}
+
 {% endblock %}
