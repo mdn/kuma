@@ -60,7 +60,7 @@
                             {% endif %}
                         </dl>
                         {% endif %}
-                        {% if request.user.is_superuser and revision.creator.active_ban %}
+                        {% if request.user.has_perm('users.add_userban') and revision.creator.active_ban %}
                             <div class="banned">
                             {{ _('banned %(ban_date)s by %(user)s',
                                  ban_date=datetimeformat(revision.creator.active_ban.date, format='date'),

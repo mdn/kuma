@@ -103,3 +103,10 @@
 </ul>
 
 <div class="user-since">{% trans date_joined=datetimeformat(detail_user.date_joined, format='date') %}Member since {{ date_joined }}{% endtrans %}</div>
+{% if not is_me and user.has_perm('users.add_userban') and detail_user.active_ban %}
+  <div class="banned">
+    {{ _('banned %(ban_date)s by %(user)s',
+    ban_date=datetimeformat(detail_user.active_ban.date, format='date'),
+    user=user_display(detail_user.active_ban.by)) }}
+  </div>
+{% endif %}
