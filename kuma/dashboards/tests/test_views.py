@@ -83,8 +83,8 @@ class RevisionsDashTest(UserTestCase):
         eq_(200, response.status_code)
 
         page = pq(response.content)
-        spam_table_cell = page.find('td.dashboard-spam')
-        eq_(spam_table_cell, [])
+        spam_report_button = page.find('.spam-ham-button')
+        eq_(spam_report_button, [])
 
         flag = Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG)
         flag.users.add(User.objects.get(username='admin'))
@@ -94,9 +94,9 @@ class RevisionsDashTest(UserTestCase):
         eq_(200, response.status_code)
 
         page = pq(response.content)
-        ip_button = page.find('td.dashboard-spam')
+        spam_report_button = page.find('.spam-ham-button')
         # Revisions available, admin has privileges to see this
-        ok_(len(ip_button) > 0)
+        ok_(len(spam_report_button) > 0)
 
     def test_locale_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='fr'),

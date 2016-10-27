@@ -252,6 +252,7 @@
                 }
                 // Enter key
                 else if(code === 13) {
+                    $selectedItem = $(e.target);
                     settings.onEnterKey($selectedItem);
                 }
             });

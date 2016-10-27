@@ -10,6 +10,7 @@
 .dashboard-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 
     thead tr {
         background: #3a3a3a;
@@ -62,9 +63,13 @@
     /* needs extra specificity to over-ride rules above */
     .dashboard-title,
     .dashboard-comment,
-    .dashboard-author,
     .dashboard-tags {
         @extend $column-3;
+    }
+
+    .dashboard-report {
+        @extend $column-2;
+        word-break: break-all;
     }
 
     .dashboard-spam {

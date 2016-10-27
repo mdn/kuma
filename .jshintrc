@@ -87,6 +87,7 @@
         "ga", // Google Analytics
         "mdn", // Our internal MDN object
         "gettext", // Our l10n object
+        "interpolate", // more l10n
         "YT", // YouTube (used within wiki)
         "Prism" // Prism Syntax Highlighting
     ]
