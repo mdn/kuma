@@ -358,7 +358,7 @@ def user_detail(request, username):
     """
     detail_user = get_object_or_404(User, username=username)
 
-    if (detail_user.active_ban and not request.user.is_superuser):
+    if (detail_user.active_ban and not request.user.has_perm('users.add_userban')):
         return render(request, '403.html',
                       {'reason': 'bannedprofile'}, status=403)
 
