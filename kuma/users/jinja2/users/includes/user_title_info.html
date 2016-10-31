@@ -5,9 +5,6 @@
     {% if detail_user.fullname %}
         <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
     {% endif %}
-    {% if user.is_authenticated() and is_me %}
-        {% include 'socialaccount/snippets/login_service_icon.html' %}
-    {% endif %}
 </h1>
 
 <div class="user-buttons">
@@ -29,7 +26,6 @@
         <div class="submenu-column">
           <div class="title">{{ _('Manage') }}</div>
           <ul>
-            <li><a href="{{ url('socialaccount_connections') }}" class="neutral">{{ _("Account connections") }}</a></li>
             <li><a href="{{ url('authkeys.list') }}" class="neutral">{{ _("API keys") }}</a></li>
             <li><a href="{{ url('account_email') }}" class="neutral">{{ _("Email addresses") }}</a></li>
           </ul>

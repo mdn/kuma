@@ -3,7 +3,7 @@ import logging
 from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from djcelery_transactions import task as transaction_task
@@ -19,6 +19,20 @@ WELCOME_EMAIL_STRINGS = [
     "Like words?",
     "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
 ]
+
+
+@transaction_task
+def send_recovery_email(user_pk, email, locale=None):
+    user = get_user_model().objects.get(pk=user_pk)
+    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
+    url = settings.SITE_URL + user.get_recovery_url()
+    context = {'recovery_url': url, 'username': user.username}
+    with translation.override(locale):
+        subject = render_email('users/email/recovery/subject.ltxt', context)
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        plain = render_email('users/email/recovery/plain.ltxt', context)
+        send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [email])
 
 
 @transaction_task

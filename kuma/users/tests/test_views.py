@@ -17,7 +17,7 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag
 from pytz import timezone, utc
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_, ok_, KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
@@ -27,7 +27,7 @@ from kuma.wiki.tests import document as create_document
 
 
 from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, email, user
-from ..models import UserBan
+from ..models import User, UserBan
 from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
@@ -886,7 +886,6 @@ class UserViewsTest(UserTestCase):
 
         test_sites = {
             'twitter': 'http://twitter.com/lmorchard',
-            'github': 'http://github.com/lmorchard',
             'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
             'linkedin': 'https://www.linkedin.com/in/testuser',
             'mozillians': 'https://mozillians.org/u/testuser',
@@ -917,6 +916,11 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
         for k, v in test_sites.items():
             eq_(v, doc.find('#user-edit *[name="user-%s_url"]' % k).val())
+
+        # Github is not an editable field
+        github_div = doc.find("#field_github_url div.field-account")
+        github_acct = testuser.socialaccount_set.get()
+        assert github_div.html().strip() == github_acct.get_profile_url()
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
@@ -1051,76 +1055,6 @@ class Test404Case(UserTestCase):
         self.client.logout()
 
 
-class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
-    """
-    Test sign-up/in flow with Persona.
-    """
-    existing_persona_email = 'testuser@test.com'
-    existing_persona_username = 'testuser'
-    localizing_client = False
-
-    def test_persona_auth_failure(self):
-        """
-        Failed Persona auth does not crash or otherwise error, but
-        correctly redirects to an explanatory page.
-        """
-        data = {
-            'status': 'failure',
-            'reason': 'this email address has been naughty'
-        }
-        response = self.persona_login(verifier_data=data)
-        eq_(200, response.status_code)
-        eq_(response.redirect_chain,
-            [('http://testserver/users/persona/complete?process=&next=',
-              302)])
-
-    def test_persona_auth_success(self):
-        """
-        Successful Persona auth of a new (i.e., no connected social
-        account with that email) user redirects to the signup
-        completion page.
-        """
-        response = self.persona_login()
-        eq_(response.status_code, 200)
-        expected_redirects = [
-            ('http://testserver/users/persona/complete?process=&next=', 302),
-            ('http://testserver/users/account/signup', 302),
-        ]
-        for red in expected_redirects:
-            ok_(red in response.redirect_chain)
-
-    def test_persona_signin(self):
-        """
-        When an existing user signs in with Persona, using the email
-        address associated with their account, authentication is
-        successful and redirects to the home page when no explicit
-        'next' is provided.
-        """
-        data = self.persona_verifier_data.copy()
-        data['email'] = self.existing_persona_email
-        response = self.persona_login(verifier_data=data)
-        eq_(response.status_code, 200)
-        expected_redirects = [
-            ('http://testserver/users/persona/complete?process=&next=', 302),
-            ('http://testserver/en-US/', 301)
-        ]
-        for red in expected_redirects:
-            ok_(red in response.redirect_chain)
-
-    def test_persona_signin_next(self):
-        """
-        When an existing user successfully authenticates with Persona,
-        from a page which supplied a 'next' parameter, they are
-        redirected back to that page following authentication.
-        """
-        data = self.persona_verifier_data.copy()
-        data['email'] = self.existing_persona_email
-        doc_url = reverse('wiki.document', args=['article-title'],
-                          locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.persona_login(verifier_data=data, next_url=doc_url)
-        ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
-
-
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
     localizing_client = False
 
@@ -1247,6 +1181,13 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.assertEqual(response.context["form"].initial["email"], '')
 
     def test_matching_accounts(self):
+        """
+        Legacy Persona accounts are detected.
+
+        This prompts the "account recovery" workflow, where a user can
+        request an email with a link that allows login to the existing
+        Persona-backed account, instead of creating a fresh account.
+        """
         testemail = 'octo.cat.III@github-inc.com'
         profile_data = self.github_profile_data.copy()
         profile_data['email'] = testemail
@@ -1256,8 +1197,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         response = self.client.get(self.signup_url)
         self.assertFalse(response.context['matching_accounts'])
 
-        # assuming there is already a Persona account with the given email
-        # address
+        # Create a legacy Persona account with the given email address
         octocat3 = user(username='octocat3', is_active=True,
                         email=testemail, password='test', save=True)
         social_account = SocialAccount.objects.create(uid=testemail,
@@ -1309,10 +1249,76 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # Login without a refresh token
         token_data = self.github_token_data.copy()
         token_data['access_token'] = token
-        self.github_login(token_data=token_data, process='connect')
+        self.github_login(token_data=token_data, process='login')
 
         # Refresh token is still in database
         sa.refresh_from_db()
         social_token = sa.socialtoken_set.get()
         self.assertEqual(token, social_token.token)
         self.assertEqual(refresh_token, social_token.token_secret)
+
+
+class UserDeleteTests(KumaTestCase):
+    def test_missing_user_is_missing(self):
+        assert not User.objects.filter(username='missing').exists()
+        url = reverse('users.user_delete', kwargs={'username': 'missing'})
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 404
+
+    def test_wrong_user_is_forbidden(self):
+        assert user(username='right', save=True)
+        assert user(username='wrong', password='wrong', save=True)
+        self.client.login(username='wrong', password='wrong')
+        url = reverse('users.user_delete', kwargs={'username': 'right'})
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 403
+
+    def test_right_user_is_ok(self):
+        assert user(username='user', password='password', save=True)
+        self.client.login(username='user', password='password')
+        url = reverse('users.user_delete', kwargs={'username': 'user'})
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 200
+
+
+class SendRecoveryEmailTests(KumaTestCase):
+    def test_send_email(self):
+        url = reverse('users.send_recovery_email', force_locale=True)
+        response = self.client.post(url, {'email': 'test@example.com'},
+                                    follow=True)
+        next_url = reverse('users.recovery_email_sent', force_locale=True)
+        self.assertRedirects(response, next_url)
+
+    def test_bad_email(self):
+        url = reverse('users.send_recovery_email', force_locale=True)
+        response = self.client.post(url, {'email': 'not an email'})
+        assert response.status_code == 400
+
+
+class RecoverTests(KumaTestCase):
+
+    def setUp(self):
+        self.user = user(username='legacy', password='password', save=True)
+
+    def test_recover_valid(self):
+        recover_url = self.user.get_recovery_url()
+        response = self.client.get(recover_url, follow=True)
+        next_url = reverse('users.recover_done', force_locale=True)
+        self.assertRedirects(response, next_url)
+        self.user.refresh_from_db()
+        assert not self.user.has_usable_password()
+
+    def test_invalid_token_fails(self):
+        recover_url = self.user.get_recovery_url()
+        last_char = recover_url[-1]
+        bad_last_char = '2' if last_char == '3' else '3'
+        bad_recover_url = recover_url[:-1] + bad_last_char
+        response = self.client.get(bad_recover_url)
+        assert 'This link is no longer valid.' in response.content
+
+    def test_invalid_uid_fails(self):
+        assert not User.objects.filter(id=666).exists()
+        self.user.id = 666
+        bad_recover_url = self.user.get_recovery_url()
+        response = self.client.get(bad_recover_url)
+        assert 'This link is no longer valid.' in response.content

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% set title = _('Recovery Email Sent') %}
+
+{% block body_attributes %}{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<p>{{ _('Click the link in the email to recover your existing account.') }}</p>
+{% endblock %}

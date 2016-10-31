@@ -1,0 +1,13 @@
+{% autoescape false -%}
+{{ _('Hello from MDN!') }}
+
+{% trans domain=settings.DOMAIN, username=username %}
+You are receiving this e-mail because you or someone else has requested access
+to your user account {{ username }} at {{ domain }}. It can be safely ignored
+if you did not make this request. Click the link below to access your account:
+{% endtrans %}
+
+{{ recovery_url }}
+
+{{ _('Thank you for using MDN!') }}
+{% endautoescape -%}

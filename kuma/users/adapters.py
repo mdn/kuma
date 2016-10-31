@@ -25,7 +25,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
 
     def is_open_for_signup(self, request):
         """
-        We disable the signup with regular accounts as we require Persona
+        We disable the signup with regular accounts as we require GitHub
         (for now)
         """
         return False
@@ -67,18 +67,18 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             level = messages.SUCCESS
 
             # when a next URL is set because of a multi step sign-in
-            # (e.g. sign-in with github, verified mail is found in Persona
-            # social accounts, agree to first log in with Persona to connect
+            # (e.g. sign-in with github, verified mail is found in other
+            # social accounts, agree to first log in with other to connect
             # instead) and the next URL is not the edit profile page (which
             # would indicate the start of the sign-in process from the edit
             # profile page) we ignore the message "account connected" message
             # as it would be misleading
+            # Bug 1229906#c2 - need from "create new account" page
             user_url = reverse('users.user_edit',
                                kwargs={'username': request.user.username},
                                locale=request.LANGUAGE_CODE)
-            connections_url = reverse('socialaccount_connections')
             next_url = request.session.get('sociallogin_next_url', None)
-            if next_url not in (user_url, connections_url):
+            if next_url != user_url:
                 return
 
         # and add an extra tag to the account messages
@@ -105,9 +105,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         allowed = True
         if flag_is_active(request, 'registration_disabled'):
             allowed = False
-        elif sociallogin.account.provider == 'persona':
-            allowed = False
-            request.used_persona = True
 
         # bug 1291892: Don't confuse next login with connecting accounts
         if not allowed:
@@ -136,6 +133,9 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         We use it to:
             1. Check if the user is connecting accounts via signup page
             2. store the name of the socialaccount provider in the user's session.
+
+        TODO: When legacy Persona sessions are cleared (Nov 1 2016), this
+        function can probably go away as well.
         """
         session_login_data = request.session.get('socialaccount_sociallogin', None)
         request_login = sociallogin
@@ -156,10 +156,25 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
                     raise ImmediateHttpResponse(
                         redirect('socialaccount_signup')
                     )
-        # TODO: Can the code that uses this just use request.session['socialaccount_sociallogin'].account.provider instead?
+
+        # sociallogin_provider is used in the UI to indicate what method was
+        # used to login to the website. The session variable
+        # 'socialaccount_sociallogin' has the same data, but will be dropped at
+        # the end of login.
         request.session['sociallogin_provider'] = (sociallogin
                                                    .account.provider)
         request.session.modified = True
+
+    def get_connect_redirect_url(self, request, socialaccount):
+        """
+        Returns the default URL to redirect to after successfully
+        connecting a social account.
+        """
+        assert request.user.is_authenticated()
+        user_url = reverse('users.user_edit',
+                           kwargs={'username': request.user.username},
+                           locale=request.LANGUAGE_CODE)
+        return user_url
 
     def save_user(self, request, sociallogin, form):
         """

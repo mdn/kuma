@@ -9,7 +9,7 @@
 
   <p>{% trans login_url=login_url %}Already have an profile? Then please <a href="{{ login_url }}">sign in</a>.{% endtrans %}</p>
 
-  <form class="signup" id="signup_form" method="post" action="{{ url('account_signup') }}">
+  <form class="signup" id="signup_form" method="post" action="{{ url('account_signup') }}" {% if matching_accounts.exists() %}data-account-match-for="{{ provider.name }}>
     {% csrf_token %}
     {{ form.as_p() }}
     {% if redirect_field_value %}

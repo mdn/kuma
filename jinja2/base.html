@@ -73,15 +73,6 @@
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
-  {% if user.is_authenticated() and request.session.sociallogin_provider == 'persona' %}
-      <div class="notification error" data-level="error">
-          {% trans persona_info='/docs/MDN/Contribute/Howto/Link_a_GitHub_account' %}
-            You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br>
-            Please <a href="{{ persona_info }}">link your GitHub account to your MDN profile now</a> so you can continue to sign in to MDN.
-          {% endtrans %}
-      </div>
-  {% endif %}
-
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
     {%- if not is_sphinx %}

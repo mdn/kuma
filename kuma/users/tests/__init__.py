@@ -94,41 +94,6 @@ class SampleRevisionsMixin(object):
 
 
 class SocialTestMixin(object):
-
-    persona_verifier_data = {
-        'status': 'okay',
-        'email': 'new_persona_user@example.com',
-        'audience': 'https://developer-local.allizom.org',
-    }
-
-    def persona_login(self, verifier_data=None, next_url=None):
-        """
-        Mock a login to Persona and return the response.
-
-        Keyword Arguments:
-        verifier_data - Persona data, or None for default
-        next_url - Post-login URL
-        """
-        url = reverse('persona_login', locale=settings.WIKI_DEFAULT_LANGUAGE)
-        if next_url:
-            post_data = {'next': next_url}
-        else:
-            post_data = None
-
-        # Mock the response from the Persona server
-        with requests_mock.Mocker() as mock_requests:
-            # The login view will POST to the Persona server:
-            # Request for login state and email
-            mock_requests.post(
-                settings.PERSONA_VERIFIER_URL,
-                json=verifier_data or self.persona_verifier_data,
-                headers={'content_type': 'application/json'}
-            )
-
-            # Start the Persona login process
-            response = self.client.post(url, follow=True, data=post_data)
-        return response
-
     github_token_data = {
         'uid': 1,
         'access_token': 'github_token',

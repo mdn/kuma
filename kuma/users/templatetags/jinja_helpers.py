@@ -100,7 +100,6 @@ library.global_function(get_providers)
 def provider_login_url(context, provider_id, **params):
     """
     {{ provider_login_url("github", next="/some/url") }}
-    {{ provider_login_url("persona", next="/some/other/url") }}
     """
     request = context['request']
     provider = providers.registry.by_id(provider_id)

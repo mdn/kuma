@@ -1,12 +1,7 @@
 {% extends "account/base.html" %}
 
 {% set subtitle = _('Profile Creation Disabled') %}
-{% if request.used_persona %}
-  {% set message = _('We are sorry, but you can not create a profile with Persona. <a href="%(url)s">Please try again with a GitHub account</a>.',
-                     url=provider_login_url('github')) %}
-{% else %}
-  {% set message = _('We are sorry, but profile creation is currently disabled.') %}
-{% endif %}
+{% set message = _('We are sorry, but profile creation is currently disabled.') %}
 
 {% block title %}{{ page_title(subtitle) }}{% endblock %}
 
