@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 21:36-0700\n"
-"PO-Revision-Date: 2016-10-31 17:37+0000\n"
+"PO-Revision-Date: 2016-10-31 17:44+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
 "Language: nl\n"
@@ -3571,13 +3571,13 @@ msgid "Select a language to translate to:"
 msgstr "Selecteer een taal waarnaar te vertalen:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network en individuele medewerkers<br /> Inhoud is beschikbaar onder een voor dit project specifieke licentie. &middot; <a href=\"%(about_url)s\">Over MDN</a> "
-"&middot; <a href=\"//github.com/mozilla/kuma\">Bijdragen aan de code</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybeleid</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network en individuele medewerkers<br /> Inhoud is beschikbaar onder een voor dit project specifieke licentie. &middot; <a href=\"%(about_url)s\">Over "
+"MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Bijdragen aan de code</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybeleid</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
