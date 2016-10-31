@@ -165,5 +165,28 @@ class UserRecoveryEmailFormTests(KumaTestCase):
         request.LANGUAGE_CODE = 'en-US'
         assert form.is_valid()
         form.save(request)
-        expected = [mock.call(user1.pk, 'en-US'), mock.call(user2.pk, 'en-US')]
+        expected = [mock.call(user1.pk, email, 'en-US'),
+                    mock.call(user2.pk, email, 'en-US')]
         mock_send_email.assert_has_calls(expected, any_order=True)
+
+    def test_send_persona_owner(self, mock_send_email):
+        email = 'persona@example.com'
+        user1 = User.objects.create(username='other', email='other@example.com')
+        user1.socialaccount_set.create(provider='persona', uid=email)
+        form = UserRecoveryEmailForm(data={'email': email})
+        request = self.factory.post('/en-US/account/recover/send')
+        request.LANGUAGE_CODE = 'en-US'
+        assert form.is_valid()
+        form.save(request)
+        mock_send_email.assert_called_once_with(user1.pk, email, 'en-US')
+
+    def test_send_confirmed_email(self, mock_send_email):
+        email = 'confirmed@example.com'
+        user1 = User.objects.create(username='other', email='other@example.com')
+        user1.emailaddress_set.create(email=email)
+        form = UserRecoveryEmailForm(data={'email': email})
+        request = self.factory.post('/en-US/account/recover/send')
+        request.LANGUAGE_CODE = 'en-US'
+        assert form.is_valid()
+        form.save(request)
+        mock_send_email.assert_called_once_with(user1.pk, email, 'en-US')

@@ -19,13 +19,13 @@ class SendRecoveryEmailTests(TestCase):
         testuser = user(username='legacy', email='legacy@example.com')
         testuser.set_unusable_password()
         testuser.save()
-        send_recovery_email(testuser.pk)
+        send_recovery_email(testuser.pk, email='actual@example.com')
         testuser.refresh_from_db()
         assert testuser.has_usable_password()
         recovery_url = testuser.get_recovery_url()
         assert len(mail.outbox) == 1
         recovery_email = mail.outbox[0]
-        assert recovery_email.to == [testuser.email]
+        assert recovery_email.to == ['actual@example.com']
         assert recovery_url in recovery_email.body
         assert testuser.username in recovery_email.subject
 

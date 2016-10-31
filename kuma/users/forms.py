@@ -166,6 +166,21 @@ class UserRecoveryEmailForm(forms.Form):
         Send email(s) with an account recovery link.
         """
         email = self.cleaned_data["email"]
-        users = User.objects.filter(email__iexact=email, is_active=True)
-        for user in users:
-            send_recovery_email(user.pk, request.LANGUAGE_CODE)
+
+        # Gather matching active users
+        active_users = User.objects.filter(is_active=True)
+        # Users using email as the primary contact email
+        primary_users = active_users.filter(email__iexact=email)
+        # Users with a matching Persona account
+        personas = active_users.filter(socialaccount__uid__iexact=email,
+                                       socialaccount__provider='persona')
+        # Users with that confirmed email
+        confirmed = active_users.filter(emailaddress__email__iexact=email)
+
+        # Send one account recovery email to each matching user
+        user_pks = set()
+        user_pks.update(primary_users.values_list('pk', flat=True))
+        user_pks.update(personas.values_list('pk', flat=True))
+        user_pks.update(confirmed.values_list('pk', flat=True))
+        for user_pk in sorted(user_pks):
+            send_recovery_email(user_pk, email, request.LANGUAGE_CODE)

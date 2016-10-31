@@ -22,7 +22,7 @@ WELCOME_EMAIL_STRINGS = [
 
 
 @transaction_task
-def send_recovery_email(user_pk, locale=None):
+def send_recovery_email(user_pk, email, locale=None):
     user = get_user_model().objects.get(pk=user_pk)
     locale = locale or settings.WIKI_DEFAULT_LANGUAGE
     url = settings.SITE_URL + user.get_recovery_url()
@@ -32,7 +32,7 @@ def send_recovery_email(user_pk, locale=None):
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         plain = render_email('users/email/recovery/plain.ltxt', context)
-        send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [user.email])
+        send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [email])
 
 
 @transaction_task
