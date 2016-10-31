@@ -22,6 +22,7 @@ services:
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - DEBUG=True
+      - DEBUG_TOOLBAR=True
       - DOMAIN=localhost
       - ES_URLS=elasticsearch:9200
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
@@ -32,18 +33,19 @@ services:
       - SITE_URL=http://localhost:8000
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=True
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
-    command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
     ports:
       - "8000:8000"
 
   # API is used by KumaScript for content and metadata
   api:
     <<: *worker
-    command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
     depends_on:
       - memcached
       - mysql
