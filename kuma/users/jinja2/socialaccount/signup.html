@@ -21,7 +21,7 @@
       <article id="browser_register">
           <h1>{{ _('Create your MDN profile to continue') }}</h1>
           {% if matching_accounts.exists() and provider.id == 'github' %}
-            <div class="notification warning" level="warning">
+            <div class="notification warning" data-level="warning">
               {% trans %}
                 An existing MDN profile matches your GitHub email. Click here to recover a profile:
               {% endtrans %}
@@ -74,7 +74,7 @@
 
           {% if form.errors %}
             {% for error in form.non_field_errors() %}
-              <div class="notification error">{{ error }}</div>
+              <div class="notification error" data-level="error">{{ error }}</div>
             {% endfor %}
           {% endif %}
 

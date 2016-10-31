@@ -115,6 +115,9 @@
                 </ul>
               </fieldset>
               <p><button type="submit" class="positive">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button></p>
+              {% if is_me %}
+              <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
+              {% endif %}
             </form>
       </div>
       <div class="column-4">
@@ -124,11 +127,6 @@
           </div>
           <h3>Unsubscribe</h3>
           <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
-        {% endif %}
-      </div>
-      <div class="column-4">
-        {% if is_me %}
-        <a href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
         {% endif %}
       </div>
     </div>
