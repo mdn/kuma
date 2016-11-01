@@ -226,6 +226,16 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
         response = self.client.get(url, follow=False)
         self.assertRedirects(response, '/fr/Firefox', status_code=301)
 
+    def test_docs_zone_with_get_param_locale(self):
+        # A url with a get parameter locale should redirect to a
+        # version of the url with the locale at the head of the path,
+        # and then proceed from there as if we went to that url originally.
+        url = '/docs/Firefox'
+        response = self.client.get(url, {'lang': 'fr'}, follow=True)
+        self.assertEqual(response.redirect_chain,
+                         [('http://testserver/fr/docs/Firefox', 301),
+                          ('http://testserver/fr/Firefox', 301)])
+
     def test_zone_document_with_implied_default_locale(self):
         # This url will get two redirects: one to add the missing default
         # locale, and the other as a zone remap non-permanent redirect.
