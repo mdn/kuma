@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-06-24 20:10+0000\n"
-"Last-Translator: Alfredos-Panagiotis Damkalis <fredy@fredy.gr>\n"
+"PO-Revision-Date: 2016-11-01 11:53+0000\n"
+"Last-Translator: Ioannis Protonotarios <ioannis@protonotarios.eu>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -172,7 +172,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "Οι αλλαγές αποθηκεύτηκαν."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
@@ -313,7 +313,7 @@ msgstr "Περιεχόμενο δείγματος Javascript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "Αποτέλεσμα"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"

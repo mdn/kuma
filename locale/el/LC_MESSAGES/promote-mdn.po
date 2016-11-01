@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-06-12 13:36+0000\n"
-"Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
+"PO-Revision-Date: 2016-11-01 11:46+0000\n"
+"Last-Translator: Ioannis Protonotarios <ioannis@protonotarios.eu>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -61,11 +61,11 @@ msgstr "Επαναφόρτωση τώρα"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "Προσθήκη συνδέσμων στις ροές RSS"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "Άνοιγμα συνδέσεων σε νέο παράθυρο"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
@@ -89,15 +89,15 @@ msgstr "Όρια"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
-msgstr ""
+msgstr "Μέγιστος αριθμός συνδέσμων που να παραχθούν ανά δημοσίευση:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr ""
+msgstr "Μέγιστος αριθμός συνδέσμων που να παραχθούν για μια σκέτη λέξη/φράση:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr ""
+msgstr "Μέγιστος αριθμός συνδέσμων που να παραχθούν για μια διεύθυνση URL:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
@@ -135,7 +135,7 @@ msgstr "απόκρυψη"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr ""
+msgstr "Εικόνα πλευρικής εργαλειοθήκης και σύνδεσμοι προς το MDN."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
