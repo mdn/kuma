@@ -5,7 +5,7 @@ from kuma.core.cache import memcache
 from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 
-from . import revision
+from . import revision, document
 from ..middleware import DocumentZoneMiddleware
 from ..models import DocumentZone
 
@@ -150,3 +150,111 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         url = '/en-US/docs/%s' % non_zone_doc.slug
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)
+
+
+class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
+    """bug 1267197 -- Locales and DocumentZones do not always play nicely together,
+    particularly with the middleware that attempts to redirect requests to the
+    right location.
+
+    """
+
+    def setUp(self):
+        super(DocumentZoneWithLocaleTestCase, self).setUp()
+        memcache.clear()
+
+        root_rev = revision(title='Firefox', slug='Mozilla/Firefox',
+                            is_approved=True, save=True)
+        self.en_doc = root_rev.document
+        self.en_doc.locale = 'en-US'
+        self.en_doc.save()
+
+        self.en_root_zone = DocumentZone(document=self.en_doc, url_root='Firefox')
+        self.en_root_zone.save()
+
+        self.fr_doc = document(title='Firefox', slug='Mozilla/Firefox',
+                               parent=self.en_doc, locale='fr', save=True)
+        revision(document=self.fr_doc, is_approved=True, save=True)
+
+        self.fr_root_zone = DocumentZone(document=self.fr_doc, url_root='Firefox')
+        self.fr_root_zone.save()
+
+    def test_zone_with_implied_default_locale(self):
+        # This url lacks a locale, so the locale middleware will redirect to the
+        # canonical one for the default language.
+        url = '/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertRedirects(response, '/en-US/Firefox', status_code=301)
+
+    def test_zone_with_default_locale(self):
+        # This url is the canonical one for the English zone for this document,
+        # so just load it.
+        url = '/en-US/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertEqual(response.status_code, 200)
+
+    def test_zone_with_non_default_locale(self):
+        # This url is the canonical one for the French zone for this document,
+        # so just load it.
+        url = '/fr/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertEqual(response.status_code, 200)
+
+    def test_docs_zone_with_implied_default_locale(self):
+        # This url will get two redirects: one to add the missing default
+        # locale, and the other by triggering the new logic that will strip the
+        # /docs/ prefix from a DocumentZone url.
+        url = '/docs/Firefox'
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.redirect_chain,
+                         [('http://testserver/en-US/docs/Firefox', 301),
+                          ('http://testserver/en-US/Firefox', 301)])
+
+    def test_docs_zone_with_default_locale(self):
+        # This url which mixes the Document url prefix /docs/ with a locale and
+        # a DocumentZone url will trigger the new logic, and will cause a
+        # permanent redirect to the canonical zone url.
+        url = '/en-US/docs/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertRedirects(response, '/en-US/Firefox', status_code=301)
+
+    def test_docs_zone_with_non_default_locale(self):
+        # This url which mixes the Document url prefix /docs/ with a locale and
+        # a DocumentZone url will trigger the new logic, and will cause a
+        # permanent redirect to the canonical zone url.
+        url = '/fr/docs/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertRedirects(response, '/fr/Firefox', status_code=301)
+
+    def test_docs_zone_with_get_param_locale(self):
+        # A url with a get parameter locale should redirect to a
+        # version of the url with the locale at the head of the path,
+        # and then proceed from there as if we went to that url originally.
+        url = '/docs/Firefox'
+        response = self.client.get(url, {'lang': 'fr'}, follow=True)
+        self.assertEqual(response.redirect_chain,
+                         [('http://testserver/fr/docs/Firefox', 301),
+                          ('http://testserver/fr/Firefox', 301)])
+
+    def test_zone_document_with_implied_default_locale(self):
+        # This url will get two redirects: one to add the missing default
+        # locale, and the other as a zone remap non-permanent redirect.
+        url = '/docs/Mozilla/Firefox'
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.redirect_chain,
+                         [('http://testserver/en-US/docs/Mozilla/Firefox', 301),
+                          ('http://testserver/en-US/Firefox', 302)])
+
+    def test_zone_document_with_default_locale(self):
+        # This url is the canonical one for our English document, so it should
+        # get a single, non-permanent redirect to the zone url.
+        url = '/en-US/docs/Mozilla/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertRedirects(response, '/en-US/Firefox', status_code=302)
+
+    def test_zone_document_with_non_default_locale(self):
+        # This url is the canonical one for our French document, so it should
+        # get a single, non-permanent redirect to the zone url.
+        url = '/fr/docs/Mozilla/Firefox'
+        response = self.client.get(url, follow=False)
+        self.assertRedirects(response, '/fr/Firefox', status_code=302)

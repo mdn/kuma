@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.shortcuts import render
 
 from kuma.core.utils import urlparams
@@ -45,11 +45,18 @@ class DocumentZoneMiddleware(object):
                 new_path = '/%s%s' % (request.LANGUAGE_CODE, new_path)
 
                 query = request.GET.copy()
-                if 'lang' in query:
-                    query.pop('lang')
                 new_path = urlparams(new_path, query_dict=query)
 
                 return HttpResponseRedirect(new_path)
+
+            elif request.path_info == u'/docs{}'.format(new_path):
+                # Is this a request for a DocumentZone, but with /docs/ wedged
+                # in the url path between the language code and the zone's url_root?
+                new_path = u'/{}{}'.format(request.LANGUAGE_CODE, new_path)
+                query = request.GET.copy()
+                new_path = urlparams(new_path, query_dict=query)
+
+                return HttpResponsePermanentRedirect(new_path)
 
             elif request.path_info.startswith(new_path):
                 # Is this a request for the relocated wiki path? If so, rewrite
