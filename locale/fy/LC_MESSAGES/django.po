@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-10-20 21:36-0700\n"
+"POT-Creation-Date: 2016-11-02 13:04-0700\n"
 "PO-Revision-Date: 2016-09-23 12:27+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
@@ -88,200 +88,193 @@ msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> troch Matth
 msgid "Internal Server Error"
 msgstr "Ynterne serverflater"
 
-#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:103 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
-#: jinja2/base.html:78
-#, python-format
-msgid ""
-"You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
-"you can continue to sign in to MDN."
-msgstr ""
-
-#: jinja2/base.html:86
+#: jinja2/base.html:77
 msgid "Skip to main content"
 msgstr "Nei haadynhâld"
 
-#: jinja2/base.html:88
+#: jinja2/base.html:79
 msgid "Select language"
 msgstr "Taal selektearje"
 
-#: jinja2/base.html:89
+#: jinja2/base.html:80
 msgid "Skip to search"
 msgstr "Nei sykjen"
 
-#: jinja2/base.html:110 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Helpmiddelen"
 
-#: jinja2/base.html:114
+#: jinja2/base.html:105
 msgid "Contribute to MDN"
 msgstr "Bydrage oan MDN"
 
-#: jinja2/base.html:116
+#: jinja2/base.html:107
 msgid "Get started"
 msgstr "Oan it wurk"
 
-#: jinja2/base.html:117
+#: jinja2/base.html:108
 msgid "Review or localize docs"
 msgstr "Dokuminten beoardiele of oersette"
 
-#: jinja2/base.html:120
+#: jinja2/base.html:111
 msgid "Site Tools"
 msgstr "Website-helpmiddelen"
 
-#: jinja2/base.html:122
+#: jinja2/base.html:113
 msgid "Revision dashboard"
 msgstr "Refyzjedashboerd"
 
-#: jinja2/base.html:123
+#: jinja2/base.html:114
 msgid "Documentation status"
 msgstr "Dokumentaasjesteat"
 
-#: jinja2/base.html:132 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
 msgstr "Webtechnologyën"
 
-#: jinja2/base.html:136
+#: jinja2/base.html:127
 msgid "Technologies"
 msgstr "Technologyën"
 
-#: jinja2/base.html:138 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:139 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:130 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:140 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:141
+#: jinja2/base.html:132
 msgid "Graphics"
 msgstr "Graphics"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:133
 msgid "HTTP"
 msgstr ""
 
-#: jinja2/base.html:143
+#: jinja2/base.html:134
 msgid "APIs / DOM"
 msgstr "API’s / DOM"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:135
 #, fuzzy
 msgid "WebExtensions"
 msgstr "Add-ons en útwreidingen"
 
-#: jinja2/base.html:145 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:148
+#: jinja2/base.html:139
 msgid "References & Guides"
 msgstr "Referinsjes en gidsen"
 
-#: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
 #, fuzzy
 msgid "Learning web development"
 msgstr "Webûntwikling leare"
 
-#: jinja2/base.html:151
+#: jinja2/base.html:142
 msgid "Tutorials"
 msgstr "Hânliedingen"
 
-#: jinja2/base.html:152
+#: jinja2/base.html:143
 msgid "References"
 msgstr "Referinsjes"
 
-#: jinja2/base.html:153
+#: jinja2/base.html:144
 msgid "Developer Guides"
 msgstr "Gidsen foar ûntwikkelers"
 
-#: jinja2/base.html:154
+#: jinja2/base.html:145
 msgid "Accessibility"
 msgstr "Tagonklikheid"
 
-#: jinja2/base.html:155
+#: jinja2/base.html:146
 #, fuzzy
 msgid "Game development"
 msgstr "Webûntwikkeling"
 
-#: jinja2/base.html:156
+#: jinja2/base.html:147
 msgid "...more docs"
 msgstr "…mear dokuminten"
 
-#: jinja2/base.html:160
+#: jinja2/base.html:151
 msgid "Mozilla Docs"
 msgstr "Mozilla Docs"
 
-#: jinja2/base.html:165 kuma/core/sections.py:6
+#: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Add-ons"
 
-#: jinja2/base.html:166 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:161
 msgid "Developer Tools"
 msgstr "Helpmiddelen foar ûntwikkelers"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:161
 msgid "Feedback"
 msgstr "Kommentaar"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:166
 msgid "Get Firefox help"
 msgstr "Help by Firefox krije"
 
-#: jinja2/base.html:176
+#: jinja2/base.html:167
 msgid "Get web development help"
 msgstr "Help by webûntwikling krije"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:170
 msgid "Join the MDN community"
 msgstr "Dielnimme oan MDN-mienskip"
 
-#: jinja2/base.html:180
+#: jinja2/base.html:171
 msgid "Report a content problem"
 msgstr "In ynhâldsprobleem melde"
 
-#: jinja2/base.html:181
+#: jinja2/base.html:172
 msgid "Report a bug"
 msgstr "In bug melde"
 
-#: jinja2/base.html:188 jinja2/base.html:189 jinja2/base.html:191 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Sykje"
 
-#: jinja2/base.html:207
+#: jinja2/base.html:198
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network en yndividuele meiwurkers.</p> <p>Ynhâld is beskikber ûnder <a href=\"%(copyright_url)s\">dizze lisinsjes</a>.</p>"
 
-#: jinja2/base.html:212
+#: jinja2/base.html:203
 msgid "About MDN"
 msgstr "Oer MDN"
 
-#: jinja2/base.html:213
+#: jinja2/base.html:204
 msgid "Terms"
 msgstr "Betingsten"
 
-#: jinja2/base.html:214
+#: jinja2/base.html:205
 msgid "Privacy"
 msgstr "Privacy"
 
-#: jinja2/base.html:215
+#: jinja2/base.html:206
 msgid "Cookies"
 msgstr "Cookies"
 
-#: jinja2/base.html:216
+#: jinja2/base.html:207
 msgid "Contribute to the code"
 msgstr "Bydrage oan de koade"
 
@@ -319,33 +312,54 @@ msgstr "Oare talen:"
 msgid "Go"
 msgstr "Gean"
 
-#: jinja2/includes/login.html:6
+#: jinja2/includes/login.html:4
 msgid "Sign out"
 msgstr "Ofmelde"
 
-#: jinja2/includes/login.html:17
+#: jinja2/includes/login.html:8
 msgid "Sign in"
 msgstr "Oanmelde"
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:83 kuma/users/jinja2/users/includes/user_title_info.html:87
-msgid "GitHub"
-msgstr "GitHub"
+#: jinja2/includes/newsletter.html:3
+#, fuzzy
+msgid "Learn the best of web development"
+msgstr "Webûntwikling leare"
 
-#: jinja2/includes/login.html:24
-msgid "Sign in or create an account:"
-msgstr "Oanmelde of in account oanmeitsje:"
+#: jinja2/includes/newsletter.html:4
+#, fuzzy
+msgid "Sign up for our newsletter:"
+msgstr "Toan de folgjende ôfbylding"
 
-#: jinja2/includes/login.html:28
-msgid "Sign in:"
-msgstr "Oanmelde:"
+#: jinja2/includes/newsletter.html:11
+#, fuzzy
+msgid "E-mail"
+msgstr "E-mailadres:"
 
-#: jinja2/includes/login.html:28
-msgid "Why is Persona sign in only?"
-msgstr "Wêrom wurket Persona allinnich foar oanmelding?"
+#: jinja2/includes/newsletter.html:18
+#, python-format
+msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
+msgstr ""
 
-#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:8
-msgid "We are sorry, but profile creation is currently disabled."
-msgstr "It spyt ús, mar it oanmeitsjen fan profilen is op dit stuit útskeakele."
+#: jinja2/includes/newsletter.html:24
+#, fuzzy
+msgid "Sign up now"
+msgstr "Registraasje"
+
+#: jinja2/includes/newsletter.html:27
+msgid "The newsletter is offered in English only at the moment."
+msgstr ""
+
+#: jinja2/includes/newsletter.html:31
+msgid "Thanks! Please check your inbox to confirm your subscription."
+msgstr ""
+
+#: jinja2/includes/newsletter.html:32
+msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
+msgstr ""
+
+#: jinja2/includes/newsletter.html:39
+msgid "Hide Newsletter Sign-up"
+msgstr ""
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -730,7 +744,7 @@ msgstr "Ofbyldingen kinne tafoege wurde en dêrnei yn it artikel keppele wurde."
 msgid "File"
 msgstr "Bestân"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
 msgid "Title"
 msgstr "Titel"
@@ -1273,31 +1287,31 @@ msgstr "JavaScript-debugger"
 msgid "Performance Tools"
 msgstr "Prestaasjehelpmiddelen"
 
-#: kuma/landing/jinja2/landing/homepage.html:108
+#: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
 msgstr "Webûntwikling leare"
 
-#: kuma/landing/jinja2/landing/homepage.html:111
+#: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
 msgstr "Webûntwikling leare"
 
-#: kuma/landing/jinja2/landing/homepage.html:114
+#: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
 msgstr "Brûk de browser foar ûntwikkelers lykas jo"
 
-#: kuma/landing/jinja2/landing/homepage.html:117
+#: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
 msgstr "Iepen webapps meitsje"
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">lês mear op hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
 msgstr "Meiwurkje"
 
-#: kuma/landing/jinja2/landing/homepage.html:132
+#: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1306,35 +1320,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Slút jo oan by <span class=\"number\">%(contributors)s</span>meiwurkers</span> <span class=\"row2\">yn <span class=\"number\">%(locales)s</span> talen en "
 "locales</span> <span class=\"row3\">oer de hiele wrâld.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:139 kuma/landing/jinja2/landing/homepage.html:146
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
 msgstr "Help MDN te ferbetterjen"
 
-#: kuma/landing/jinja2/landing/homepage.html:150
+#: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Alle ûnderdielen fan MDN (dokuminten en de website sels) wurde makke troch in iepen mienskip fan ûntwikkelers. Slút jo by ús oan! Kies ien fan dizze manieren om te helpen:"
 
-#: kuma/landing/jinja2/landing/homepage.html:156
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
 msgstr "Oan it wurk"
 
-#: kuma/landing/jinja2/landing/homepage.html:157
+#: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
 msgstr "Redaksjonele beoardieling"
 
-#: kuma/landing/jinja2/landing/homepage.html:158
+#: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
 msgstr "Technyske beoardieling"
 
-#: kuma/landing/jinja2/landing/homepage.html:163
+#: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
 msgstr "Oersette"
 
-#: kuma/landing/jinja2/landing/homepage.html:164
+#: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
 msgstr "MDN promoatsje"
 
-#: kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
 msgstr "Bydrage oan de MDN-koadebase"
 
@@ -1697,134 +1711,143 @@ msgstr "hash"
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr "Brûkersnamme mei allinnich letters, sifers en dizze tekens befetsje: . - _ +"
 
-#: kuma/users/forms.py:30 kuma/users/models.py:41
+#: kuma/users/forms.py:31 kuma/users/models.py:46
 msgid "Timezone"
 msgstr "Tiidssône"
 
-#: kuma/users/forms.py:36
+#: kuma/users/forms.py:37
 msgid "Beta tester"
 msgstr "Bètatester"
 
-#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:54
+#: kuma/users/forms.py:41 kuma/users/jinja2/users/includes/user_title_info.html:50
 msgid "Interests"
 msgstr "Ynteresses"
 
-#: kuma/users/forms.py:46
+#: kuma/users/forms.py:47
 msgid "Expertise"
 msgstr "Underfining"
 
-#: kuma/users/forms.py:52
+#: kuma/users/forms.py:53
 msgid "Username"
 msgstr "Brûkersnamme"
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:78
+#: kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:92
+#: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
+msgid "GitHub"
+msgstr "GitHub"
+
+#: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
 msgstr "Stack Overflow"
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:96
+#: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:100
+#: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
 msgstr "Mozillians"
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:104
+#: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
 msgstr "Facebook"
 
-#: kuma/users/forms.py:136
+#: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
 msgstr "Underfiningsgebieden moatte in subset wêze fan ynteresses"
 
-#: kuma/users/forms.py:145
+#: kuma/users/forms.py:146
 msgid "This field cannot be blank."
 msgstr "Dit fjild kin net leech wêze."
 
-#: kuma/users/forms.py:151
+#: kuma/users/forms.py:152
 msgid "Username already in use."
 msgstr "Brûkersnamme wurdt al brûkt."
 
-#: kuma/users/models.py:29
+#: kuma/users/forms.py:162
+#, fuzzy
+msgid "Email"
+msgstr "E-mailadres:"
+
+#: kuma/users/models.py:34
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
 msgstr "%(banned_user)s blokkearre troch %(banned_by)s"
 
-#: kuma/users/models.py:32
+#: kuma/users/models.py:37
 #, python-format
 msgid "%s (no longer active)"
 msgstr "%s (net mear aktyf)"
 
-#: kuma/users/models.py:51
+#: kuma/users/models.py:56
 msgid "Language"
 msgstr "Taal"
 
-#: kuma/users/models.py:56
+#: kuma/users/models.py:61
 msgid "Homepage"
 msgstr "Begjinside"
 
-#: kuma/users/models.py:60
+#: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
 msgstr "Dizze URL hat in ûnjildich formaat. Jildige URL’s sjogge der út as http://example.com/my_page."
 
-#: kuma/users/models.py:70
+#: kuma/users/models.py:75
 msgid "Name"
 msgstr "Namme"
 
-#: kuma/users/models.py:75
+#: kuma/users/models.py:80
 msgid "Organization"
 msgstr "Organisaasje"
 
-#: kuma/users/models.py:80
+#: kuma/users/models.py:85
 msgid "Location"
 msgstr "Lokaasje"
 
-#: kuma/users/models.py:85
+#: kuma/users/models.py:90
 msgid "About Me"
 msgstr "Oer my"
 
-#: kuma/users/models.py:89
+#: kuma/users/models.py:94
 msgid "IRC nickname"
 msgstr "IRC-nicknamme"
 
-#: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
+#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
 msgstr "Labels"
 
-#: kuma/users/models.py:99
+#: kuma/users/models.py:104
 msgid "Enter a valid website URL."
 msgstr "Fier in jildige website-URL yn."
 
-#: kuma/users/models.py:104
+#: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
 msgstr "Fier in jildige Twitter-URL yn."
 
-#: kuma/users/models.py:109
+#: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
 msgstr "Fier in jildige GitHub-URL yn."
 
-#: kuma/users/models.py:114
+#: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
 msgstr "Fier in jildige Stack Overflow-URL yn."
 
-#: kuma/users/models.py:119
+#: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
 msgstr "Fier in jildige LinkedIn-URL yn."
 
-#: kuma/users/models.py:124
+#: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
 msgstr "Fier in jildige Mozillians-URL yn."
 
-#: kuma/users/models.py:129
+#: kuma/users/models.py:134
 msgid "Enter a valid Facebook URL."
 msgstr "Fier in jildige Facebook-URL yn."
 
-#: kuma/users/models.py:136
+#: kuma/users/models.py:141
 msgid "Website"
 msgstr "Website"
 
@@ -1850,29 +1873,29 @@ msgstr "Jo moatte akkoard gean mei de brûksbetingsten."
 msgid "I agree"
 msgstr "Ik gean akkoard"
 
-#: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
+#: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr "Set de folgjende stap om mei te dwaan op MDN!"
 
-#: kuma/users/views.py:454
+#: kuma/users/views.py:470
 msgid "Email address"
 msgstr "E-mailadres"
 
-#: kuma/users/views.py:499
+#: kuma/users/views.py:516
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>ferifiearre</b>"
 
-#: kuma/users/views.py:502
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s net ferifiearre"
 
-#: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
 msgid "Other:"
 msgstr "Oars:"
 
-#: kuma/users/views.py:508
+#: kuma/users/views.py:525
 msgid "Email:"
 msgstr "E-mailadres:"
 
@@ -1884,7 +1907,7 @@ msgstr "Profyl ynaktyf"
 msgid "This profile is inactive."
 msgstr "Dit profyl is ynaktyf."
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:34
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
 msgstr "E-mailadressen"
 
@@ -1921,7 +1944,7 @@ msgstr "E-mailadres tafoegje"
 msgid "Add Email"
 msgstr "E-mailadres tafoegje"
 
-#: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
+#: kuma/users/jinja2/account/email.html:60
 msgid "Edit profile"
 msgstr "Profyl bewurkje"
 
@@ -1964,13 +1987,18 @@ msgstr "Meld jo oan"
 msgid "All content on MDN is free and available without signing in."
 msgstr "Alle ynhâld op MDN is frij en beskikber sûnder oanmelding."
 
-#: kuma/users/jinja2/account/login.html:19
-msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
+#: kuma/users/jinja2/account/login.html:20
+#, fuzzy
+msgid "In order to contribute, you need to sign in to an existing MDN profile."
 msgstr "Om by te dragen, moatte jo jo by MDN oanmelde. Jo kinne jo oanmelde fia GitHub, wêrnei in MDN-profyl foar jo oanmakke wurdt as jo dat noch net hawwe."
 
-#: kuma/users/jinja2/account/login.html:31
-msgid "If you already have a MDN profile sign in:"
-msgstr "As jo al in MDN-profyl hawwe, meld jo dan oan:"
+#: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
+msgid "We are sorry, but profile creation is currently disabled."
+msgstr "It spyt ús, mar it oanmeitsjen fan profilen is op dit stuit útskeakele."
+
+#: kuma/users/jinja2/account/login.html:27
+msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
+msgstr "Om by te dragen, moatte jo jo by MDN oanmelde. Jo kinne jo oanmelde fia GitHub, wêrnei in MDN-profyl foar jo oanmakke wurdt as jo dat noch net hawwe."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2042,11 +2070,6 @@ msgstr "Hawwe jo al in profyl? <a href=\"%(login_url)s\">Meld jo dan oan</a>."
 msgid "Profile Creation Disabled"
 msgstr "Oanmeitsjen fan profyl útskeakele"
 
-#: kuma/users/jinja2/account/signup_closed.html:5
-#, python-format
-msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr "Sorry, mar jo kinne net in profyl oanmeitsje mei Persona. <a href=\"%(url)s\">Probearje opnij mei in GitHub-account</a>."
-
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
@@ -2090,30 +2113,6 @@ msgstr "Oanmelden by account mislearre"
 msgid "An error occurred while attempting to sign in with your account."
 msgstr "Der is in flater bard by it oanmelden by jo account."
 
-#: kuma/users/jinja2/socialaccount/connections.html:3
-msgid "Account Connections"
-msgstr "Accountkeppelingen"
-
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:32
-msgid "Account connections"
-msgstr "Accountkeppelingen"
-
-#: kuma/users/jinja2/socialaccount/connections.html:11
-msgid "You can sign in to your profile using any of the following:"
-msgstr "Jo kinne jo op de folgjende manieren by jo profyl oanmelde:"
-
-#: kuma/users/jinja2/socialaccount/connections.html:50
-msgid "Disconnect"
-msgstr "Untkeppelje"
-
-#: kuma/users/jinja2/socialaccount/connections.html:58
-msgid "You have no connected accounts."
-msgstr "Jo hawwe gjin keppele accounts."
-
-#: kuma/users/jinja2/socialaccount/connections.html:61
-msgid "Connect a new account"
-msgstr "In nij account keppelje"
-
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
 msgstr "Oanmelding annulearre"
@@ -2123,62 +2122,51 @@ msgstr "Oanmelding annulearre"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Jo hawwe besletten de oanmelding by ús website fia ien fan jo besteande accounts te annulearjen. As dit in fersin wie, gean dan fierder mei <a href=\"%(login_url)s\">oanmelden</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:22
 msgid "Create your MDN profile to continue"
 msgstr "Meitsje jo MDN-profyl oan om fierder te gean"
 
-#: kuma/users/jinja2/socialaccount/signup.html:23
-#, python-format
-msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr "Der bestiet al in profyl mei dit e-mailadres. <a href=\"%(connections_url)s\">Jo moatte jo oanmelde en jo sosjale-accountkeppelingen te besykje</a> om Persona oan jo MDN-profyl te keppeljen."
+#: kuma/users/jinja2/socialaccount/signup.html:25
+msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
+msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:36
-#, python-format
-msgid ""
-"A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
-"connect with my MDN profile</a>"
-msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
-msgstr[0] ""
-"Der bestiet al in profyl mei ûndersteand e-mailadres. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, keppelje mei "
-"myn MDN-profyl</a>"
-msgstr[1] ""
-"Der bestiet al in profyl mei ien fan dizze ûndersteande e-mailadressen. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s"
-"\">Ja, keppelje mei myn MDN-profyl</a>"
+#: kuma/users/jinja2/socialaccount/signup.html:34
+#, fuzzy
+msgid "Recover my Profile"
+msgstr "Myn profilen"
 
-#: kuma/users/jinja2/socialaccount/signup.html:48
+#: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr "Tank foar it oanmelden by MDN mei %(provider_name)s. Der is noch ien stap te gean om mei MDN mei te dwaan: <strong>meitsje jo MDN-profyl oan</strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:54
+#: kuma/users/jinja2/socialaccount/signup.html:49
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "Jo kinne alles op de MDN-website benaderje, ek sûnder in MDN-profyl. Troch jo by MDN oan te sluten, kinne jo lykwols dokuminten bewurkje en jo eigen profylside beheare."
 
-#: kuma/users/jinja2/socialaccount/signup.html:61
+#: kuma/users/jinja2/socialaccount/signup.html:56
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "<strong>Kies in brûkersnamme</strong> om jo MDN-profyl yn te stellen. Jo brûkersnamme sil op MDN werjûn wurde om bydragen dy't jo leverje te identifisearjen."
 
-#: kuma/users/jinja2/socialaccount/signup.html:67
+#: kuma/users/jinja2/socialaccount/signup.html:62
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "<strong>Kies in brûkersnamme en e-mailadres</strong> om jo MDN-profyl yn te stellen. Jo brûkersnamme sil op MDN werjûn om bydragen dy't jo leverje te identifisearjen."
 
-#: kuma/users/jinja2/socialaccount/signup.html:75
+#: kuma/users/jinja2/socialaccount/signup.html:70
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "As jo <strong>problemen hawwe</strong> by it oanmelden of it oanmeitsjen fan in MDN-profyl, <strong><a href=\"%(bug_href)s\" rel=\"external\">lit it dan witte</a></strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:100
+#: kuma/users/jinja2/socialaccount/signup.html:95
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr "Jo GitHub-brûkersnamme %(username)s is al yn gebrûk. Kies in oare."
 
-#: kuma/users/jinja2/socialaccount/signup.html:104
+#: kuma/users/jinja2/socialaccount/signup.html:99
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "Fier de namme yn dy't jo by oare brûkers werjaan wolle om jo bydragen werkenne te kinnen."
 
-#: kuma/users/jinja2/socialaccount/signup.html:118
+#: kuma/users/jinja2/socialaccount/signup.html:113
 #, python-format
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
@@ -2187,7 +2175,7 @@ msgstr ""
 "Der bestiet al in profyl mei it selektearre e-mailadres. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Keppelje jo %(provider_name)s-account "
 "dermei.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:148
+#: kuma/users/jinja2/socialaccount/signup.html:143
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
@@ -2196,44 +2184,28 @@ msgstr ""
 "Hokker e-mailadres moatte wy brûke om jo MDN-relatearre berjochten en meldingen te stjoeren? Dit adres sil <strong>niet</strong> op MDN werjûn wurde en sil brûkt wurde neffens ús <a href="
 "\"%(privacy_url)s\">privacybelied</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:164
+#: kuma/users/jinja2/socialaccount/signup.html:159
 msgid "Terms and Privacy"
 msgstr "Betingsten en privacy"
 
-#: kuma/users/jinja2/socialaccount/signup.html:173
+#: kuma/users/jinja2/socialaccount/signup.html:168
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "mei Mozilla’s <a href=\"%(terms_url)s\">Betingsten</a> en <a href=\"%(privacy_url)s\">Privacyferklearring</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:183
+#: kuma/users/jinja2/socialaccount/signup.html:178
 msgid "Create my MDN profile"
 msgstr "Myn MDN-profyl oanmeitsje"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
-msgid "Signed in with Persona"
-msgstr "Oanmeld mei Persona"
-
-#: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
 msgstr "Oanmeld mei GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
-msgid "Connect with Persona"
-msgstr "Keppelje mei Persona"
-
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
-msgid "Sign in with Persona"
-msgstr "Oanmelde mei Persona"
-
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
 msgstr "Keppelje mei GitHub"
 
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
-msgid "Create MDN profile with GitHub"
-msgstr "MDN-profyl oanmeitsje mei GitHub"
-
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
+#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
 msgstr "Oanmelde mei GitHub"
 
@@ -2380,6 +2352,37 @@ msgstr "Al identifisearre as spam:"
 msgid "Identified as not spam:"
 msgstr "Identifisearre as gjin spam:"
 
+#: kuma/users/jinja2/users/recover_done.html:3
+#, fuzzy
+msgid "Connect Account"
+msgstr "In nij account keppelje"
+
+#: kuma/users/jinja2/users/recover_done.html:12
+msgid "Use the button below to connect your MDN profile to GitHub."
+msgstr ""
+
+#: kuma/users/jinja2/users/recover_done.html:18
+msgid "This account recovery link cannot be used to log in again."
+msgstr ""
+
+#: kuma/users/jinja2/users/recover_failed.html:3
+#, fuzzy
+msgid "Account Recovery Failed"
+msgstr "Oanmelden by account mislearre"
+
+#: kuma/users/jinja2/users/recover_failed.html:11
+#, fuzzy
+msgid "This link is no longer valid."
+msgstr "De opjûne identificator is net jildich."
+
+#: kuma/users/jinja2/users/recovery_email_sent.html:3
+msgid "Recovery Email Sent"
+msgstr ""
+
+#: kuma/users/jinja2/users/recovery_email_sent.html:11
+msgid "Click the link in the email to recover your existing account."
+msgstr ""
+
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr "Jo binne blokkearre"
@@ -2391,6 +2394,39 @@ msgstr "Jo binne om de folgjende redenen blokkearre:"
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik hjir</a> om dizze blokkearring oan te fjochtsjen.</p>"
+
+#: kuma/users/jinja2/users/user_delete.html:11
+#, fuzzy
+msgid "Delete your profile"
+msgstr "Jo profyl bewurkje"
+
+#: kuma/users/jinja2/users/user_delete.html:28
+msgid "We're sorry to see you go."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:31
+msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:38
+msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:57
+msgid "I haven't changed any pages; just delete my account."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:62
+msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:67
+msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:70
+msgid "File a bug to close your account"
+msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2408,7 +2444,7 @@ msgstr "Side"
 msgid "Date"
 msgstr "Datum"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:392
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
 msgid "Edit page"
 msgstr "Side bewurkje"
 
@@ -2416,7 +2452,7 @@ msgstr "Side bewurkje"
 msgid "View complete diff"
 msgstr "Folsleine diff besjen"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:401
 msgid "View page history"
 msgstr "Sideskiednis werjaan"
 
@@ -2433,67 +2469,90 @@ msgstr "Dizze brûker hat gjin aktiviteit."
 msgid "Edit Your Profile"
 msgstr "Jo profyl bewurkje"
 
-#: kuma/users/jinja2/users/user_edit.html:36
+#: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
 msgstr "Wizigje jo avatar op"
 
-#: kuma/users/jinja2/users/user_edit.html:40
+#: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
 msgstr "Profyl besjen"
 
-#: kuma/users/jinja2/users/user_edit.html:48
+#: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr "Jo bewurkje in oar profyl as dat fan josels. Wês foarsichtich!"
 
-#: kuma/users/jinja2/users/user_edit.html:59
+#: kuma/users/jinja2/users/user_edit.html:54
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 "Wy heare graach jo kommentaar oer wizigingen oan de website! Bètatesters krije earst tagong ta nije funksjes en sa no en dan stjoere wy in e-mailberjocht wêryn wy freegje bepaalde saken te helpen "
 "te testen."
 
-#: kuma/users/jinja2/users/user_edit.html:62
+#: kuma/users/jinja2/users/user_edit.html:57
 msgid "Primary Email"
 msgstr "Primêre e-mailadres"
 
-#: kuma/users/jinja2/users/user_edit.html:63
+#: kuma/users/jinja2/users/user_edit.html:57
 msgid "Edit email"
 msgstr "E-mailadres bewurkje"
 
-#: kuma/users/jinja2/users/user_edit.html:75
+#: kuma/users/jinja2/users/user_edit.html:70
 msgid "Interests (tags)"
 msgstr "Ynteresses (labels)"
 
-#: kuma/users/jinja2/users/user_edit.html:76
+#: kuma/users/jinja2/users/user_edit.html:71
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "Skied labels mei komma’s of spaasjes. Ferbyn labels dy't út mear wurden bestean mei rjochte dûbele oanhellingstekens, lykas \"objektoriëntearre programmearje\"."
 
-#: kuma/users/jinja2/users/user_edit.html:82
+#: kuma/users/jinja2/users/user_edit.html:77
 msgid "Areas of expertise"
 msgstr "Underfiningsgebieden"
 
-#: kuma/users/jinja2/users/user_edit.html:83
+#: kuma/users/jinja2/users/user_edit.html:78
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "Foegje earst jo ynteresses ta en beskriuw josels dêrnei as in ekspert yn bepaalde ûnderwerpen."
 
-#: kuma/users/jinja2/users/user_edit.html:91
+#: kuma/users/jinja2/users/user_edit.html:86
 msgid "My Profiles"
 msgstr "Myn profilen"
 
-#: kuma/users/jinja2/users/user_edit.html:94 kuma/users/jinja2/users/user_edit.html:111
-msgid "Change"
-msgstr "Wizigje"
-
-#: kuma/users/jinja2/users/user_edit.html:101
-msgid "Use your Persona account to sign in."
-msgstr "Brûk jo Persona-account om jo oan te melden."
-
-#: kuma/users/jinja2/users/user_edit.html:118
+#: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
 msgstr "Brûk jo GitHub-account om jo oan te melden."
 
-#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
+#: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr "Publisearje"
+
+#: kuma/users/jinja2/users/user_edit.html:119
+#, fuzzy
+msgid "Delete your account."
+msgstr "Delete Comment"
+
+#: kuma/users/jinja2/users/user_edit.html:129
+msgid "Manage your Mozilla Newsletter Subscriptions."
+msgstr ""
+
+#: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
+#, fuzzy
+msgid "Hello from MDN!"
+msgstr "Help MDN te ferbetterjen"
+
+#: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
+#, python-format
+msgid ""
+"You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
+"link below to access your account:"
+msgstr ""
+
+#: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
+#, fuzzy
+msgid "Thank you for using MDN!"
+msgstr "Tank dat jo de tiid nimme om MDN te ferbetterjen!"
+
+#: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
+#, python-format
+msgid "Profile Recovery for %(username)s at %(domain)s"
+msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -2637,27 +2696,27 @@ msgstr "Al rapportearre as spam."
 msgid "This user has not created any revisions in the past three days."
 msgstr "Brûker hat yn de lêste 3 dagen gjin refyzjes makke."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/content.py:740 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
 msgstr "Bewurkje"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:26 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
 msgstr "Avansearre"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:30
+#: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
 msgstr "Beheare"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:33
+#: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
 msgstr "API-kaaien"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:67
+#: kuma/users/jinja2/users/includes/user_title_info.html:63
 msgid "Areas of Expertise"
 msgstr "Underfiningsgebieden"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:109
+#: kuma/users/jinja2/users/includes/user_title_info.html:105
 #, python-format
 msgid "Member since %(date_joined)s"
 msgstr "Lid sûnt %(date_joined)s"
@@ -2703,7 +2762,7 @@ msgstr "Redaksjoneel - proza, grammatika of ynhâld"
 msgid "Localization in progress - not completely translated yet."
 msgstr "Oan oersetting wurdt wurke - noch net folslein oerset."
 
-#: kuma/wiki/content.py:721
+#: kuma/wiki/content.py:724
 msgid "Edit section"
 msgstr "Seksje bewurkje"
 
@@ -4163,6 +4222,71 @@ msgstr "Jo kinne dit dokumint net oersette."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch-server: %(backend)s"
 
+#~ msgid "Sign in or create an account:"
+#~ msgstr "Oanmelde of in account oanmeitsje:"
+
+#~ msgid "Sign in:"
+#~ msgstr "Oanmelde:"
+
+#~ msgid "Why is Persona sign in only?"
+#~ msgstr "Wêrom wurket Persona allinnich foar oanmelding?"
+
+#~ msgid "If you already have a MDN profile sign in:"
+#~ msgstr "As jo al in MDN-profyl hawwe, meld jo dan oan:"
+
+#~ msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
+#~ msgstr "Sorry, mar jo kinne net in profyl oanmeitsje mei Persona. <a href=\"%(url)s\">Probearje opnij mei in GitHub-account</a>."
+
+#~ msgid "Account Connections"
+#~ msgstr "Accountkeppelingen"
+
+#~ msgid "Account connections"
+#~ msgstr "Accountkeppelingen"
+
+#~ msgid "You can sign in to your profile using any of the following:"
+#~ msgstr "Jo kinne jo op de folgjende manieren by jo profyl oanmelde:"
+
+#~ msgid "Disconnect"
+#~ msgstr "Untkeppelje"
+
+#~ msgid "You have no connected accounts."
+#~ msgstr "Jo hawwe gjin keppele accounts."
+
+#~ msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
+#~ msgstr ""
+#~ "Der bestiet al in profyl mei dit e-mailadres. <a href=\"%(connections_url)s\">Jo moatte jo oanmelde en jo sosjale-accountkeppelingen te besykje</a> om Persona oan jo MDN-profyl te keppeljen."
+
+#~ msgid ""
+#~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
+#~ "connect with my MDN profile</a>"
+#~ msgid_plural ""
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ msgstr[0] ""
+#~ "Der bestiet al in profyl mei ûndersteand e-mailadres. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, keppelje "
+#~ "mei myn MDN-profyl</a>"
+#~ msgstr[1] ""
+#~ "Der bestiet al in profyl mei ien fan dizze ûndersteande e-mailadressen. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Ja, keppelje mei myn MDN-profyl</a>"
+
+#~ msgid "Signed in with Persona"
+#~ msgstr "Oanmeld mei Persona"
+
+#~ msgid "Connect with Persona"
+#~ msgstr "Keppelje mei Persona"
+
+#~ msgid "Sign in with Persona"
+#~ msgstr "Oanmelde mei Persona"
+
+#~ msgid "Create MDN profile with GitHub"
+#~ msgstr "MDN-profyl oanmeitsje mei GitHub"
+
+#~ msgid "Change"
+#~ msgstr "Wizigje"
+
+#~ msgid "Use your Persona account to sign in."
+#~ msgstr "Brûk jo Persona-account om jo oan te melden."
+
 #~ msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
 #~ msgstr "Jo binne oanmeld mei Persona. <a href=\"%(persona_info)s\">Persona wurdt útskeakele. Lês mear.</a>"
 
@@ -4250,9 +4374,6 @@ msgstr "Elasticsearch-server: %(backend)s"
 
 #~ msgid "Resubmit"
 #~ msgstr "datum yntsjinjen"
-
-#~ msgid "Send me the newsletter"
-#~ msgstr "Toan de folgjende ôfbylding"
 
 #~ msgid "%(number)d year ago"
 #~ msgid_plural "%(number)d years ago"
@@ -5223,9 +5344,6 @@ msgstr "Elasticsearch-server: %(backend)s"
 
 #~ msgid "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
 #~ msgstr "In wiidweidige, brûkbere en akkurate boarne foar elkenien dy't ûntwikkelt foar it iepen ynternet."
-
-#~ msgid "Delete comment"
-#~ msgstr "Delete Comment"
 
 #~ msgid "Flag content"
 #~ msgstr "Flagge-ynhâld"

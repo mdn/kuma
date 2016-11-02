@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-10-20 21:36-0700\n"
+"POT-Creation-Date: 2016-11-02 13:04-0700\n"
 "PO-Revision-Date: 2016-10-21 15:11+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
@@ -78,7 +78,8 @@ msgstr "Вы можете попытаться поискать или нача�
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr "Если вы следуете ссылке в документации, вы можете войти и создать страницу. В противном случае пожалуйста, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">создайте сообщение об ошибке</a>. Спасибо!"
+msgstr ""
+"Если вы следуете ссылке в документации, вы можете войти и создать страницу. В противном случае пожалуйста, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">создайте сообщение об ошибке</a>. Спасибо!"
 
 #: jinja2/404.html:36
 #, python-format
@@ -89,199 +90,190 @@ msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> от Matthe
 msgid "Internal Server Error"
 msgstr "Внутренняя ошибка сервера"
 
-#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:103 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
-#: jinja2/base.html:78
-#, python-format
-msgid ""
-"You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you"
-" can continue to sign in to MDN."
-msgstr ""
-"Вы вошли через Persona. С 1 ноября вы больше не сможете входить на MDN через эту систему.<br> Пожалуйста, <a href=\"%(persona_info)s\">привяжите ваш GitHub аккаунт к вашему MDN профилю сейчас</a>, "
-"чтобы вы смогли продолжить входить на MDN."
-
-#: jinja2/base.html:86
+#: jinja2/base.html:77
 msgid "Skip to main content"
 msgstr "Перейти к главному содержимому"
 
-#: jinja2/base.html:88
+#: jinja2/base.html:79
 msgid "Select language"
 msgstr "Выбор языка"
 
-#: jinja2/base.html:89
+#: jinja2/base.html:80
 msgid "Skip to search"
 msgstr "Перейти к поиску"
 
-#: jinja2/base.html:110 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Инструменты"
 
-#: jinja2/base.html:114
+#: jinja2/base.html:105
 msgid "Contribute to MDN"
 msgstr "Помочь MDN"
 
-#: jinja2/base.html:116
+#: jinja2/base.html:107
 msgid "Get started"
 msgstr "Начиная"
 
-#: jinja2/base.html:117
+#: jinja2/base.html:108
 msgid "Review or localize docs"
 msgstr "Проверяйте или переводите документацию"
 
-#: jinja2/base.html:120
+#: jinja2/base.html:111
 msgid "Site Tools"
 msgstr "Инструменты сайта"
 
-#: jinja2/base.html:122
+#: jinja2/base.html:113
 msgid "Revision dashboard"
 msgstr "Панель ревизий"
 
-#: jinja2/base.html:123
+#: jinja2/base.html:114
 msgid "Documentation status"
 msgstr "Статус документации"
 
-#: jinja2/base.html:132 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
 msgstr "Веб-технологии"
 
-#: jinja2/base.html:136
+#: jinja2/base.html:127
 msgid "Technologies"
 msgstr "Технологии"
 
-#: jinja2/base.html:138 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:139 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:130 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:140 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:141
+#: jinja2/base.html:132
 msgid "Graphics"
 msgstr "Графика"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:133
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:143
+#: jinja2/base.html:134
 msgid "APIs / DOM"
 msgstr "API / DOM"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:135
 msgid "WebExtensions"
 msgstr "WebExtensions"
 
-#: jinja2/base.html:145 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:148
+#: jinja2/base.html:139
 msgid "References & Guides"
 msgstr "Справочники и руководства"
 
-#: jinja2/base.html:150 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Learning web development"
 msgstr "Изучение Веб-разработки"
 
-#: jinja2/base.html:151
+#: jinja2/base.html:142
 msgid "Tutorials"
 msgstr "Уроки"
 
-#: jinja2/base.html:152
+#: jinja2/base.html:143
 msgid "References"
 msgstr "Справочники"
 
-#: jinja2/base.html:153
+#: jinja2/base.html:144
 msgid "Developer Guides"
 msgstr "Руководства разработчика"
 
-#: jinja2/base.html:154
+#: jinja2/base.html:145
 msgid "Accessibility"
 msgstr "Доступность"
 
-#: jinja2/base.html:155
+#: jinja2/base.html:146
 msgid "Game development"
 msgstr "Разработка игр"
 
-#: jinja2/base.html:156
+#: jinja2/base.html:147
 msgid "...more docs"
 msgstr "...больше документации"
 
-#: jinja2/base.html:160
+#: jinja2/base.html:151
 msgid "Mozilla Docs"
 msgstr "Документация Mozilla"
 
-#: jinja2/base.html:165 kuma/core/sections.py:6
+#: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Дополнения"
 
-#: jinja2/base.html:166 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:161
 msgid "Developer Tools"
 msgstr "Инструменты Разработчика"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:161
 msgid "Feedback"
 msgstr "Обратная связь"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:166
 msgid "Get Firefox help"
 msgstr "Получить помощь Firefox"
 
-#: jinja2/base.html:176
+#: jinja2/base.html:167
 msgid "Get web development help"
 msgstr "Получить помощь по веб-разработке"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:170
 msgid "Join the MDN community"
 msgstr "Присоединиться к сообществу MDN"
 
-#: jinja2/base.html:180
+#: jinja2/base.html:171
 msgid "Report a content problem"
 msgstr "Сообщить о проблеме содержания"
 
-#: jinja2/base.html:181
+#: jinja2/base.html:172
 msgid "Report a bug"
 msgstr "Сообщить об ошибке"
 
-#: jinja2/base.html:188 jinja2/base.html:189 jinja2/base.html:191 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Поиск"
 
-#: jinja2/base.html:207
+#: jinja2/base.html:198
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network и отдельные соучастники.</p><p>Содержимое доступно на условиях <a href=\"%(copyright_url)s\">этих лицензий</a>.</p>"
 
-#: jinja2/base.html:212
+#: jinja2/base.html:203
 msgid "About MDN"
 msgstr "О MDN"
 
-#: jinja2/base.html:213
+#: jinja2/base.html:204
 msgid "Terms"
 msgstr "Условия использования"
 
-#: jinja2/base.html:214
+#: jinja2/base.html:205
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
-#: jinja2/base.html:215
+#: jinja2/base.html:206
 msgid "Cookies"
 msgstr "Куки"
 
-#: jinja2/base.html:216
+#: jinja2/base.html:207
 msgid "Contribute to the code"
 msgstr "Внести вклад в код"
 
@@ -319,33 +311,54 @@ msgstr "На других языках:"
 msgid "Go"
 msgstr "Перейти"
 
-#: jinja2/includes/login.html:6
+#: jinja2/includes/login.html:4
 msgid "Sign out"
 msgstr "Выйти"
 
-#: jinja2/includes/login.html:17
+#: jinja2/includes/login.html:8
 msgid "Sign in"
 msgstr "Войти"
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:83 kuma/users/jinja2/users/includes/user_title_info.html:87
-msgid "GitHub"
-msgstr "GitHub"
+#: jinja2/includes/newsletter.html:3
+#, fuzzy
+msgid "Learn the best of web development"
+msgstr "Изучение Веб-разработки"
 
-#: jinja2/includes/login.html:24
-msgid "Sign in or create an account:"
-msgstr "Войти или создать аккаунт:"
+#: jinja2/includes/newsletter.html:4
+#, fuzzy
+msgid "Sign up for our newsletter:"
+msgstr "Присылать мне новости"
 
-#: jinja2/includes/login.html:28
-msgid "Sign in:"
-msgstr "Войти:"
+#: jinja2/includes/newsletter.html:11
+#, fuzzy
+msgid "E-mail"
+msgstr "Эл. почта:"
 
-#: jinja2/includes/login.html:28
-msgid "Why is Persona sign in only?"
-msgstr "Почему через Persona можно только войти?"
+#: jinja2/includes/newsletter.html:18
+#, fuzzy, python-format
+msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
+msgstr "c <a href=\"%(privacy_url)s\">политикой приватности</a>"
 
-#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:8
-msgid "We are sorry, but profile creation is currently disabled."
-msgstr "Извините, но создание профиля сейчас невозможно."
+#: jinja2/includes/newsletter.html:24
+#, fuzzy
+msgid "Sign up now"
+msgstr "Регистрация"
+
+#: jinja2/includes/newsletter.html:27
+msgid "The newsletter is offered in English only at the moment."
+msgstr ""
+
+#: jinja2/includes/newsletter.html:31
+msgid "Thanks! Please check your inbox to confirm your subscription."
+msgstr ""
+
+#: jinja2/includes/newsletter.html:32
+msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
+msgstr ""
+
+#: jinja2/includes/newsletter.html:39
+msgid "Hide Newsletter Sign-up"
+msgstr ""
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -729,7 +742,7 @@ msgstr "Можно прикрепить изображения, а затем в
 msgid "File"
 msgstr "Файл"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
 msgid "Title"
 msgstr "Заголовок"
@@ -810,8 +823,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"Это ваши ключи API. Они полезны для построения приложений, выполняющих задачи на MDN от вашего имени. Если вы прекратили использовать какой-либо из них или подозреваете, что один из них попал в руки"
-" лицам, которым вы не доверяете свой аккаунт, нажмите кнопку удалить ключ. Вы в любой момент легко сможете создать ему замену."
+"Это ваши ключи API. Они полезны для построения приложений, выполняющих задачи на MDN от вашего имени. Если вы прекратили использовать какой-либо из них или подозреваете, что один из них попал в "
+"руки лицам, которым вы не доверяете свой аккаунт, нажмите кнопку удалить ключ. Вы в любой момент легко сможете создать ему замену."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -837,8 +850,8 @@ msgstr "Вам нужно специальное разрешение, чтоб�
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 "<p>Опишите ниже предполагаемое использование этого ключа. <p><strong>ОБРАТИТЕ ВНИМАНИЕ:</strong> Оно будет вашим единственным способом идентификации этого ключа в дальнейшем, за исключение даты и "
 "времени его создания. Так что, чем яснее вы опишите его предназначение, тем лучше.</p>"
@@ -853,9 +866,9 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>Ваш новый ключ только что был создан. Пожалуйста, обратите внимание на его атрибуты, указанные ниже (например, скопировав их в настройки вашего приложения). Эта информация больше никогда не будет"
-" снова отображена, и её невозможно будет восстановить в случае утраты.</p> <p><strong>ОБРАТИТЕ ВНИМАНИЕ:</strong> Когда вы закончите, <a class=\"button\" href=\"%(list_url)s\">вернитесь к списку "
-"ключей</a>. Перезагрузка данной страницы создаст новый ключ.</p>"
+"<p>Ваш новый ключ только что был создан. Пожалуйста, обратите внимание на его атрибуты, указанные ниже (например, скопировав их в настройки вашего приложения). Эта информация больше никогда не "
+"будет снова отображена, и её невозможно будет восстановить в случае утраты.</p> <p><strong>ОБРАТИТЕ ВНИМАНИЕ:</strong> Когда вы закончите, <a class=\"button\" href=\"%(list_url)s\">вернитесь к "
+"списку ключей</a>. Перезагрузка данной страницы создаст новый ключ.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -1199,8 +1212,8 @@ msgstr "Братство Mozilla Developer Network (MDN) приглашает в
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 "Mozilla Developer Network (MDN) предоставляет информацию об открытых веб-технологиях, включая HTML, CSS и API-интерфейсы для веб-сайтов и приложений HTML5. Он также содержит материалы о продуктах "
 "Mozilla, таких как Firefox OS."
@@ -1269,68 +1282,68 @@ msgstr "Отладчик JavaScript"
 msgid "Performance Tools"
 msgstr "Инструменты производительности"
 
-#: kuma/landing/jinja2/landing/homepage.html:108
+#: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
 msgstr "Открытый веб и мобильный интернет"
 
-#: kuma/landing/jinja2/landing/homepage.html:111
+#: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
 msgstr "Изучите веб-разработку"
 
-#: kuma/landing/jinja2/landing/homepage.html:114
+#: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
 msgstr "Загрузите браузер для разработчиков, таких как вы"
 
-#: kuma/landing/jinja2/landing/homepage.html:117
+#: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
 msgstr "Создавайте открытые веб-приложения"
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">почитать на hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
 msgstr "Присоединиться"
 
-#: kuma/landing/jinja2/landing/homepage.html:132
+#: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">Присоединяйтесь к <span class=\"number\">%(contributors)s</span> участникам</span> <span class=\"row2\">на <span class=\"number\">%(locales)s</span> языках"
-" и регионах</span> <span class=\"row3\">по всему миру.</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">Присоединяйтесь к <span class=\"number\">%(contributors)s</span> участникам</span> <span class=\"row2\">на <span class=\"number\">%(locales)s</span> "
+"языках и регионах</span> <span class=\"row3\">по всему миру.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:139 kuma/landing/jinja2/landing/homepage.html:146
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
 msgstr "Помогите нам улучшить MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:150
+#: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Все части MDN (документация и сам сайт) созданы открытым сообществом разработчиков. Пожалуйста, присоединяйтесь к нам! Выберите один из этих способов помочь:"
 
-#: kuma/landing/jinja2/landing/homepage.html:156
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
 msgstr "Начинаем"
 
-#: kuma/landing/jinja2/landing/homepage.html:157
+#: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
 msgstr "Редакционный обзор"
 
-#: kuma/landing/jinja2/landing/homepage.html:158
+#: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
 msgstr "Технический обзор"
 
-#: kuma/landing/jinja2/landing/homepage.html:163
+#: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
 msgstr "Перевод"
 
-#: kuma/landing/jinja2/landing/homepage.html:164
+#: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
 msgstr "Продвижение MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
 msgstr "Вклад в кодовую базу MDN"
 
@@ -1350,12 +1363,12 @@ msgstr "Распространите немного любви к разрабо
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol><li><strong>Получить кнопки:</strong> Используйте нашу простую форму ниже для создания пользовательской кнопки и получения исходного кода для поддержания MDN на вашем сайте или "
-"блоге.</li><li><strong>Разместить кнопки:</strong> Скопируйте исходный код и вставьте его, где угодно на вашем сайте или блоге, чтобы помочь людям узнать о MDN.</li><li><strong>Чувствуйте себя "
-"хорошо:</strong> Гордитесь, зная, что вы делаете жизни разработчиков чуточку лучше, делясь MDN с миром.</li></ol>"
+"<ol><li><strong>Получить кнопки:</strong> Используйте нашу простую форму ниже для создания пользовательской кнопки и получения исходного кода для поддержания MDN на вашем сайте или блоге.</"
+"li><li><strong>Разместить кнопки:</strong> Скопируйте исходный код и вставьте его, где угодно на вашем сайте или блоге, чтобы помочь людям узнать о MDN.</li><li><strong>Чувствуйте себя хорошо:</"
+"strong> Гордитесь, зная, что вы делаете жизни разработчиков чуточку лучше, делясь MDN с миром.</li></ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
@@ -1660,11 +1673,11 @@ msgstr "тип"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
-"Извините, у вас должен быть как минимум один присоединённый аккаунт для входа. Чтобы отсоединить этот аккаунт, присоедините сначала другой. Для удаления вашего MDN профиля, пожалуйста, <a "
-"href=\"%(bug_form_url)s\" rel=\"nofollow\">создайте сообщение об ошибке</a>."
+"Извините, у вас должен быть как минимум один присоединённый аккаунт для входа. Чтобы отсоединить этот аккаунт, присоедините сначала другой. Для удаления вашего MDN профиля, пожалуйста, <a href="
+"\"%(bug_form_url)s\" rel=\"nofollow\">создайте сообщение об ошибке</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1699,134 +1712,143 @@ msgstr "хэш"
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr "Имя пользователя может содержать только буквы, цифры и эти символы: . - _ +"
 
-#: kuma/users/forms.py:30 kuma/users/models.py:41
+#: kuma/users/forms.py:31 kuma/users/models.py:46
 msgid "Timezone"
 msgstr "Часовой пояс"
 
-#: kuma/users/forms.py:36
+#: kuma/users/forms.py:37
 msgid "Beta tester"
 msgstr "Бета-тестер"
 
-#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:54
+#: kuma/users/forms.py:41 kuma/users/jinja2/users/includes/user_title_info.html:50
 msgid "Interests"
 msgstr "Интересы"
 
-#: kuma/users/forms.py:46
+#: kuma/users/forms.py:47
 msgid "Expertise"
 msgstr "Эксперт в"
 
-#: kuma/users/forms.py:52
+#: kuma/users/forms.py:53
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:78
+#: kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
 msgstr "Твиттер"
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:92
+#: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
+msgid "GitHub"
+msgstr "GitHub"
+
+#: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
 msgstr "Stack Overflow"
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:96
+#: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:100
+#: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
 msgstr "Мозилльцы"
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:104
+#: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
 msgstr "Фейсбук"
 
-#: kuma/users/forms.py:136
+#: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
 msgstr "Вы должны быть экспертом в области, входящей в область интересов"
 
-#: kuma/users/forms.py:145
+#: kuma/users/forms.py:146
 msgid "This field cannot be blank."
 msgstr "Это поле не может быть пустым."
 
-#: kuma/users/forms.py:151
+#: kuma/users/forms.py:152
 msgid "Username already in use."
 msgstr "Имя пользователя уже используется."
 
-#: kuma/users/models.py:29
+#: kuma/users/forms.py:162
+#, fuzzy
+msgid "Email"
+msgstr "Эл. почта:"
+
+#: kuma/users/models.py:34
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
 msgstr "%(banned_user)s заблокирован %(banned_by)s"
 
-#: kuma/users/models.py:32
+#: kuma/users/models.py:37
 #, python-format
 msgid "%s (no longer active)"
 msgstr "%s (больше не активен)"
 
-#: kuma/users/models.py:51
+#: kuma/users/models.py:56
 msgid "Language"
 msgstr "Язык"
 
-#: kuma/users/models.py:56
+#: kuma/users/models.py:61
 msgid "Homepage"
 msgstr "Домашняя страница"
 
-#: kuma/users/models.py:60
+#: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
 msgstr "Введенный URL некорректен. Он должен выглядеть примерно так: http://example.com/my_page."
 
-#: kuma/users/models.py:70
+#: kuma/users/models.py:75
 msgid "Name"
 msgstr "Имя"
 
-#: kuma/users/models.py:75
+#: kuma/users/models.py:80
 msgid "Organization"
 msgstr "Организация"
 
-#: kuma/users/models.py:80
+#: kuma/users/models.py:85
 msgid "Location"
 msgstr "Местоположение"
 
-#: kuma/users/models.py:85
+#: kuma/users/models.py:90
 msgid "About Me"
 msgstr "Обо мне"
 
-#: kuma/users/models.py:89
+#: kuma/users/models.py:94
 msgid "IRC nickname"
 msgstr "Ник в IRC"
 
-#: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
+#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
 msgstr "Метки"
 
-#: kuma/users/models.py:99
+#: kuma/users/models.py:104
 msgid "Enter a valid website URL."
 msgstr "Введите действительный URL сайта."
 
-#: kuma/users/models.py:104
+#: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
 msgstr "Введите действительный URL Твиттер."
 
-#: kuma/users/models.py:109
+#: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
 msgstr "Введите действительный GitHub URL."
 
-#: kuma/users/models.py:114
+#: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
 msgstr "Введите действительный Stack Overflow URL."
 
-#: kuma/users/models.py:119
+#: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
 msgstr "Введите действительный LinkedIn URL."
 
-#: kuma/users/models.py:124
+#: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
 msgstr "Введите действительный Mozillians URL."
 
-#: kuma/users/models.py:129
+#: kuma/users/models.py:134
 msgid "Enter a valid Facebook URL."
 msgstr "Введите действительный URL Фейсбука."
 
-#: kuma/users/models.py:136
+#: kuma/users/models.py:141
 msgid "Website"
 msgstr "Веб-сайт"
 
@@ -1852,29 +1874,29 @@ msgstr "Вы должны согласиться с условиями испо�
 msgid "I agree"
 msgstr "Я согласен(а)"
 
-#: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
+#: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr "Сделайте следующий шаг к участию в MDN!"
 
-#: kuma/users/views.py:454
+#: kuma/users/views.py:470
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: kuma/users/views.py:499
+#: kuma/users/views.py:516
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>Подтвержден</b>"
 
-#: kuma/users/views.py:502
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s Неподтвержден"
 
-#: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
 msgid "Other:"
 msgstr "Другое:"
 
-#: kuma/users/views.py:508
+#: kuma/users/views.py:525
 msgid "Email:"
 msgstr "Эл. почта:"
 
@@ -1886,7 +1908,7 @@ msgstr "Профиль неактивен"
 msgid "This profile is inactive."
 msgstr "Этот профиль неактивен."
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:34
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
 msgstr "Адреса электронной почты"
 
@@ -1923,7 +1945,7 @@ msgstr "Добавить адрес электронной почты"
 msgid "Add Email"
 msgstr "Добавить электронную почту"
 
-#: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
+#: kuma/users/jinja2/account/email.html:60
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
@@ -1966,13 +1988,18 @@ msgstr "Пожалуйста, войдите"
 msgid "All content on MDN is free and available without signing in."
 msgstr "Все содержимое на MDN бесплатно и доступно без регистрации."
 
-#: kuma/users/jinja2/account/login.html:19
-msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
+#: kuma/users/jinja2/account/login.html:20
+#, fuzzy
+msgid "In order to contribute, you need to sign in to an existing MDN profile."
 msgstr "Для внесения вклада, вам нужно войти на MDN. Вы можете войти, используя GitHub, и для вас будет создан MDN профиль, если у вас его ещё нет."
 
-#: kuma/users/jinja2/account/login.html:31
-msgid "If you already have a MDN profile sign in:"
-msgstr "Если у вас уже есть MDN профиль, войдите:"
+#: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
+msgid "We are sorry, but profile creation is currently disabled."
+msgstr "Извините, но создание профиля сейчас невозможно."
+
+#: kuma/users/jinja2/account/login.html:27
+msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
+msgstr "Для внесения вклада, вам нужно войти на MDN. Вы можете войти, используя GitHub, и для вас будет создан MDN профиль, если у вас его ещё нет."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2043,11 +2070,6 @@ msgstr "Уже есть профиль? Тогда, пожалуйста, <a hre
 msgid "Profile Creation Disabled"
 msgstr "Создание профиля отключено"
 
-#: kuma/users/jinja2/account/signup_closed.html:5
-#, python-format
-msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
-msgstr "Извините, но вы не можете создать профиль с помощью Persona. <a href=\"%(url)s\">Пожалуйста, повторите попытку с помощью учётной записи GitHub</a>."
-
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
@@ -2091,30 +2113,6 @@ msgstr "Вход в аккаунт не удался"
 msgid "An error occurred while attempting to sign in with your account."
 msgstr "Произошла ошибка, пока вы пытались войти в свой аккаунт."
 
-#: kuma/users/jinja2/socialaccount/connections.html:3
-msgid "Account Connections"
-msgstr "Присоединённые аккаунты"
-
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:32
-msgid "Account connections"
-msgstr "Присоединённые аккаунты"
-
-#: kuma/users/jinja2/socialaccount/connections.html:11
-msgid "You can sign in to your profile using any of the following:"
-msgstr "Вы можете войти в свой профиль любым из следующих способов:"
-
-#: kuma/users/jinja2/socialaccount/connections.html:50
-msgid "Disconnect"
-msgstr "Отсоединить"
-
-#: kuma/users/jinja2/socialaccount/connections.html:58
-msgid "You have no connected accounts."
-msgstr "У вас нет присоединённых аккаунтов."
-
-#: kuma/users/jinja2/socialaccount/connections.html:61
-msgid "Connect a new account"
-msgstr "Подключить новый аккаунт"
-
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
 msgstr "Вход отменён"
@@ -2124,67 +2122,53 @@ msgstr "Вход отменён"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Вы решили отменить вход на наш сайт, используя один из ваших существующих аккаунтов. Если это была ошибка, пожалуйста, <a href=\"%(login_url)s\">войдите</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:22
 msgid "Create your MDN profile to continue"
 msgstr "Создайте свой MDN профиль, чтобы продолжить"
 
-#: kuma/users/jinja2/socialaccount/signup.html:23
-#, python-format
-msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr "Профиль с таким адресом электронной почты уже существует. Чтобы присоединить Persona к вашему MDN профилю, <a href=\"%(connections_url)s\">вам нужно войти и открыть присоединённые аккаунты.</a>"
+#: kuma/users/jinja2/socialaccount/signup.html:25
+msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
+msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:36
-#, python-format
-msgid ""
-"A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
-"connect with my MDN profile</a>"
-msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
-msgstr[0] ""
-"Профиль с таким адресом электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
-"соединить с моим MDN профилем</a>"
-msgstr[1] ""
-"Профиль с такими адресами электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
-"соединить с моим MDN профилем</a>"
-msgstr[2] ""
-"Профиль с такими адресами электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
-"соединить с моим MDN профилем</a>"
+#: kuma/users/jinja2/socialaccount/signup.html:34
+#, fuzzy
+msgid "Recover my Profile"
+msgstr "Сообщить о проблеме"
 
-#: kuma/users/jinja2/socialaccount/signup.html:48
+#: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr "Спасибо за вход на MDN с помощью %(provider_name)s. У вас есть ещё один шаг для присоединения к MDN: <strong>создайте свой MDN профиль</strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:54
+#: kuma/users/jinja2/socialaccount/signup.html:49
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "Вы можете получить доступ ко всему на MDN, даже без MDN профиля. Однако, присоединяясь к MDN, вы сможете редактировать документацию и иметь свою страничку."
 
-#: kuma/users/jinja2/socialaccount/signup.html:61
+#: kuma/users/jinja2/socialaccount/signup.html:56
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "Для создания вашего MDN профиля, пожалуйста, <strong>выберите имя пользователя</strong>. Ваше имя пользователя будет отображаться на MDN, чтобы обозначить любой вклад, который вы сделаете."
 
-#: kuma/users/jinja2/socialaccount/signup.html:67
+#: kuma/users/jinja2/socialaccount/signup.html:62
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 "Для создания вашего MDN профиля, пожалуйста, <strong>выберите имя пользователя и адрес электронной почты</strong>. Ваше имя пользователя будет отображаться на MDN, чтобы обозначить любой вклад, "
 "который вы сделаете."
 
-#: kuma/users/jinja2/socialaccount/signup.html:75
+#: kuma/users/jinja2/socialaccount/signup.html:70
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "Если у вас <strong>есть проблемы</strong> со входом или созданием MDN профиля, <strong><a href=\"%(bug_href)s\" rel=\"external\">дайте нам знать</a></strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:100
+#: kuma/users/jinja2/socialaccount/signup.html:95
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr "Ваше имя пользователя GitHub %(username)s уже занято. Пожалуйста, выберите другое."
 
-#: kuma/users/jinja2/socialaccount/signup.html:104
+#: kuma/users/jinja2/socialaccount/signup.html:99
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "Пожалуйста, введите имя, которое вы хотите, чтобы позволять другим пользоватем увидеть ваш вклад."
 
-#: kuma/users/jinja2/socialaccount/signup.html:118
+#: kuma/users/jinja2/socialaccount/signup.html:113
 #, python-format
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
@@ -2193,53 +2177,37 @@ msgstr ""
 "Профиль с выбранным адресом электронной почты уже существует. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Подключить к нему ваш аккаунт в "
 "%(provider_name)s.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:148
+#: kuma/users/jinja2/socialaccount/signup.html:143
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 "Какой адрес электронной почты нам следует использовать, чтобы присылать сообщения и оповещения от MDN? Этот адрес <strong>не будет</strong> отображаться на MDN и использоваться в соответвии с нашей "
 "<a href=\"%(privacy_url)s\">политикой приватности</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:164
+#: kuma/users/jinja2/socialaccount/signup.html:159
 msgid "Terms and Privacy"
 msgstr "Условия и конфиденциальность"
 
-#: kuma/users/jinja2/socialaccount/signup.html:173
+#: kuma/users/jinja2/socialaccount/signup.html:168
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "с <a href=\"%(terms_url)s\">Условиями использования</a> и <a href=\"%(privacy_url)s\">Уведомлением о конфиденциальности</a> Mozilla."
 
-#: kuma/users/jinja2/socialaccount/signup.html:183
+#: kuma/users/jinja2/socialaccount/signup.html:178
 msgid "Create my MDN profile"
 msgstr "Создать мой MDN профиль"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
-msgid "Signed in with Persona"
-msgstr "Вошли через Persona"
-
-#: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
 msgstr "Вошли через GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
-msgid "Connect with Persona"
-msgstr "Присоединить Persona"
-
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
-msgid "Sign in with Persona"
-msgstr "Войти через Persona"
-
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
 msgstr "Присоединить GitHub"
 
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
-msgid "Create MDN profile with GitHub"
-msgstr "Создать MDN профиль с помощью GitHub"
-
-#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
+#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
 msgstr "Войти через GitHub"
 
@@ -2386,6 +2354,37 @@ msgstr "Уже обозначено как спам:"
 msgid "Identified as not spam:"
 msgstr "Обозначено как не спам:"
 
+#: kuma/users/jinja2/users/recover_done.html:3
+#, fuzzy
+msgid "Connect Account"
+msgstr "Подключить новый аккаунт"
+
+#: kuma/users/jinja2/users/recover_done.html:12
+msgid "Use the button below to connect your MDN profile to GitHub."
+msgstr ""
+
+#: kuma/users/jinja2/users/recover_done.html:18
+msgid "This account recovery link cannot be used to log in again."
+msgstr ""
+
+#: kuma/users/jinja2/users/recover_failed.html:3
+#, fuzzy
+msgid "Account Recovery Failed"
+msgstr "Вход в аккаунт не удался"
+
+#: kuma/users/jinja2/users/recover_failed.html:11
+#, fuzzy
+msgid "This link is no longer valid."
+msgstr "Указанный url не корректен."
+
+#: kuma/users/jinja2/users/recovery_email_sent.html:3
+msgid "Recovery Email Sent"
+msgstr ""
+
+#: kuma/users/jinja2/users/recovery_email_sent.html:11
+msgid "Click the link in the email to recover your existing account."
+msgstr ""
+
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr "Вы заблокированы"
@@ -2397,6 +2396,39 @@ msgstr "Вы были заблокированы по следующим при�
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Щёлкните здесь</a>, чтобы обжаловать блокировку.</p>"
+
+#: kuma/users/jinja2/users/user_delete.html:11
+#, fuzzy
+msgid "Delete your profile"
+msgstr "Перейти к вашему профилю"
+
+#: kuma/users/jinja2/users/user_delete.html:28
+msgid "We're sorry to see you go."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:31
+msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:38
+msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:57
+msgid "I haven't changed any pages; just delete my account."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:62
+msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:67
+msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
+msgstr ""
+
+#: kuma/users/jinja2/users/user_delete.html:70
+msgid "File a bug to close your account"
+msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2414,7 +2446,7 @@ msgstr "Страница"
 msgid "Date"
 msgstr "Дата"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:392
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
 msgid "Edit page"
 msgstr "Редактировать страницу"
 
@@ -2422,7 +2454,7 @@ msgstr "Редактировать страницу"
 msgid "View complete diff"
 msgstr "Просмотреть полную разницу"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:401
 msgid "View page history"
 msgstr "Просмотреть историю страницы"
 
@@ -2439,67 +2471,90 @@ msgstr "Этот пользователь не имеет никакой акт�
 msgid "Edit Your Profile"
 msgstr "Редактировать Ваш профиль"
 
-#: kuma/users/jinja2/users/user_edit.html:36
+#: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
 msgstr "Сменить аватар на"
 
-#: kuma/users/jinja2/users/user_edit.html:40
+#: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
 msgstr "Просмотреть профиль"
 
-#: kuma/users/jinja2/users/user_edit.html:48
+#: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr "Вы изменяете другой профиль, а не свой! Пожалуйста, будьте внимательны!"
 
-#: kuma/users/jinja2/users/user_edit.html:59
+#: kuma/users/jinja2/users/user_edit.html:54
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 "Мы были бы рады, если бы вы оставили отзыв об изменениях на сайте. Бета тестеры получают доступ к новым фишкам первыми, а мы иногда отправляем письмо, запрашивая помощь в тестировании специфичных "
 "штук."
 
-#: kuma/users/jinja2/users/user_edit.html:62
+#: kuma/users/jinja2/users/user_edit.html:57
 msgid "Primary Email"
 msgstr "Основной адрес электронной почты"
 
-#: kuma/users/jinja2/users/user_edit.html:63
+#: kuma/users/jinja2/users/user_edit.html:57
 msgid "Edit email"
 msgstr "Изменить электронную почту"
 
-#: kuma/users/jinja2/users/user_edit.html:75
+#: kuma/users/jinja2/users/user_edit.html:70
 msgid "Interests (tags)"
 msgstr "Интересы (метки)"
 
-#: kuma/users/jinja2/users/user_edit.html:76
+#: kuma/users/jinja2/users/user_edit.html:71
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "Разделяйте метки запятыми или пробелами. Метки, состоящие из нескольких слов заключайте в кавычки, например, \"веб стандарты\"."
 
-#: kuma/users/jinja2/users/user_edit.html:82
+#: kuma/users/jinja2/users/user_edit.html:77
 msgid "Areas of expertise"
 msgstr "Экспертные области"
 
-#: kuma/users/jinja2/users/user_edit.html:83
+#: kuma/users/jinja2/users/user_edit.html:78
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "Добавьте сначала свои интересы, а уже потом провозглашайте себя экспертом в выбранных темах."
 
-#: kuma/users/jinja2/users/user_edit.html:91
+#: kuma/users/jinja2/users/user_edit.html:86
 msgid "My Profiles"
 msgstr "Мои профили"
 
-#: kuma/users/jinja2/users/user_edit.html:94 kuma/users/jinja2/users/user_edit.html:111
-msgid "Change"
-msgstr "Изменить"
-
-#: kuma/users/jinja2/users/user_edit.html:101
-msgid "Use your Persona account to sign in."
-msgstr "Используйте ваш аккаунт Persona, чтобы войти."
-
-#: kuma/users/jinja2/users/user_edit.html:118
+#: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
 msgstr "Используйте ваш GitHub аккаунт, чтобы войти."
 
-#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
+#: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr "Опубликовать"
+
+#: kuma/users/jinja2/users/user_edit.html:119
+#, fuzzy
+msgid "Delete your account."
+msgstr "Удалить этот комментарий"
+
+#: kuma/users/jinja2/users/user_edit.html:129
+msgid "Manage your Mozilla Newsletter Subscriptions."
+msgstr ""
+
+#: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
+#, fuzzy
+msgid "Hello from MDN!"
+msgstr "Помогите нам улучшить MDN"
+
+#: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
+#, python-format
+msgid ""
+"You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
+"link below to access your account:"
+msgstr ""
+
+#: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
+#, fuzzy
+msgid "Thank you for using MDN!"
+msgstr "Спасибо вам за время, потраченное на улучшение MDN!"
+
+#: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
+#, python-format
+msgid "Profile Recovery for %(username)s at %(domain)s"
+msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -2643,27 +2698,27 @@ msgstr "Уже обозначено как спам."
 msgid "This user has not created any revisions in the past three days."
 msgstr "Пользователь не делал каких-либо ревизий в последние 3 дня."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/content.py:740 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
 msgstr "Редактировать"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:26 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
 msgstr "Дополнительно"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:30
+#: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
 msgstr "Управление"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:33
+#: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
 msgstr "API ключи"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:67
+#: kuma/users/jinja2/users/includes/user_title_info.html:63
 msgid "Areas of Expertise"
 msgstr "Экспертные области"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:109
+#: kuma/users/jinja2/users/includes/user_title_info.html:105
 #, python-format
 msgid "Member since %(date_joined)s"
 msgstr "Участник с %(date_joined)s"
@@ -2709,7 +2764,7 @@ msgstr "Редакционная — текст, грамматика или с�
 msgid "Localization in progress - not completely translated yet."
 msgstr "Локализация в процессе - ещё не переведено полностью."
 
-#: kuma/wiki/content.py:721
+#: kuma/wiki/content.py:724
 msgid "Edit section"
 msgstr "Редактировать раздел"
 
@@ -3076,8 +3131,8 @@ msgstr "Вы пытаетесь создать новую страницу."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 "Не у каждого есть право на создание новой страницы. Чтобы запросить создание новой страницы, пожалуйста, <a href=\"%(request_page_url)s\">сообщите об ошибке</a>. Если вам нужно разрешение создавать "
 "новые страницы, пожалуйста, <a href=\"%(email_link)s\">свяжитесь с нами</a>."
@@ -3241,20 +3296,20 @@ msgstr "Данный документ был впервые отрисован �
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
-"<abbr title=\"%(started_at)s\">В настоящее время идёт</abbr> обновление данного документа. Если содержимое ниже кажется устаревшим, или чего-то не хватает, пожалуйста, <a "
-"href=\"%(url)s\">перезагрузите эту страницу</a> через несколько минут."
+"<abbr title=\"%(started_at)s\">В настоящее время идёт</abbr> обновление данного документа. Если содержимое ниже кажется устаревшим, или чего-то не хватает, пожалуйста, <a href=\"%(url)s"
+"\">перезагрузите эту страницу</a> через несколько минут."
 
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
-"<abbr title=\"%(scheduled_at)s\">Было запланировано</abbr> обновление данного документа. Если содержимое ниже кажется устаревшим, или чего-то не хватает, пожалуйста, <a "
-"href=\"%(url)s\">перезагрузите эту страницу</a> через несколько минут."
+"<abbr title=\"%(scheduled_at)s\">Было запланировано</abbr> обновление данного документа. Если содержимое ниже кажется устаревшим, или чего-то не хватает, пожалуйста, <a href=\"%(url)s"
+"\">перезагрузите эту страницу</a> через несколько минут."
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3838,8 +3893,8 @@ msgstr[2] "Больше информации об этих ошибках"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
-"Кто угодно с профилем MDN может отредактировать документ, чтобы исправить ошибку. Используйте <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">руководство исправления ошибок "
-"KumaScript</a>, как отправную точку."
+"Кто угодно с профилем MDN может отредактировать документ, чтобы исправить ошибку. Используйте <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">руководство исправления ошибок KumaScript</"
+"a>, как отправную точку."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -3904,8 +3959,8 @@ msgstr "Сообщите нам, почему вы сделали добавле
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 "Ваше представление включает содержимое, которое может быть не“пригодно для MDN. Повторные попытки представить неподходящие материалы могут привести к отключению вашей учетной записи. Обратитесь к "
 "нашему руководству “<a href=\"%(does_this_belong_url)s\">Можно ли это размещать на MDN?</a>“ для получения сведений о том, что является подходящим материалом."
@@ -4177,6 +4232,81 @@ msgstr "Вы не можете переводить эту статью."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Сервер Elasticsearch: %(backend)s"
 
+#~ msgid ""
+#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
+#~ "you can continue to sign in to MDN."
+#~ msgstr ""
+#~ "Вы вошли через Persona. С 1 ноября вы больше не сможете входить на MDN через эту систему.<br> Пожалуйста, <a href=\"%(persona_info)s\">привяжите ваш GitHub аккаунт к вашему MDN профилю сейчас</"
+#~ "a>, чтобы вы смогли продолжить входить на MDN."
+
+#~ msgid "Sign in or create an account:"
+#~ msgstr "Войти или создать аккаунт:"
+
+#~ msgid "Sign in:"
+#~ msgstr "Войти:"
+
+#~ msgid "Why is Persona sign in only?"
+#~ msgstr "Почему через Persona можно только войти?"
+
+#~ msgid "If you already have a MDN profile sign in:"
+#~ msgstr "Если у вас уже есть MDN профиль, войдите:"
+
+#~ msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
+#~ msgstr "Извините, но вы не можете создать профиль с помощью Persona. <a href=\"%(url)s\">Пожалуйста, повторите попытку с помощью учётной записи GitHub</a>."
+
+#~ msgid "Account Connections"
+#~ msgstr "Присоединённые аккаунты"
+
+#~ msgid "Account connections"
+#~ msgstr "Присоединённые аккаунты"
+
+#~ msgid "You can sign in to your profile using any of the following:"
+#~ msgstr "Вы можете войти в свой профиль любым из следующих способов:"
+
+#~ msgid "Disconnect"
+#~ msgstr "Отсоединить"
+
+#~ msgid "You have no connected accounts."
+#~ msgstr "У вас нет присоединённых аккаунтов."
+
+#~ msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
+#~ msgstr ""
+#~ "Профиль с таким адресом электронной почты уже существует. Чтобы присоединить Persona к вашему MDN профилю, <a href=\"%(connections_url)s\">вам нужно войти и открыть присоединённые аккаунты.</a>"
+
+#~ msgid ""
+#~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
+#~ "connect with my MDN profile</a>"
+#~ msgid_plural ""
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ msgstr[0] ""
+#~ "Профиль с таким адресом электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
+#~ "соединить с моим MDN профилем</a>"
+#~ msgstr[1] ""
+#~ "Профиль с такими адресами электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
+#~ "соединить с моим MDN профилем</a>"
+#~ msgstr[2] ""
+#~ "Профиль с такими адресами электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
+#~ "соединить с моим MDN профилем</a>"
+
+#~ msgid "Signed in with Persona"
+#~ msgstr "Вошли через Persona"
+
+#~ msgid "Connect with Persona"
+#~ msgstr "Присоединить Persona"
+
+#~ msgid "Sign in with Persona"
+#~ msgstr "Войти через Persona"
+
+#~ msgid "Create MDN profile with GitHub"
+#~ msgstr "Создать MDN профиль с помощью GitHub"
+
+#~ msgid "Change"
+#~ msgstr "Изменить"
+
+#~ msgid "Use your Persona account to sign in."
+#~ msgstr "Используйте ваш аккаунт Persona, чтобы войти."
+
 #~ msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
 #~ msgstr "Вы вошли через Persona. <a href=\"%(persona_info)s\">Persona будет отключена. Узнать больше.</a>"
 
@@ -4220,11 +4350,11 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "Пока вы редактировали этот документ, он был изменён."
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
-#~ "Содержимое доступно под указанной в данном проекте лицензией. &middot; <a href=\"%(about_url)s\">О MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Внести вклад в код</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/ru/privacy\">Политика приватности</a>"
+#~ "Содержимое доступно под указанной в данном проекте лицензией. &middot; <a href=\"%(about_url)s\">О MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Внести вклад в код</a> &middot; <a href="
+#~ "\"//www.mozilla.org/ru/privacy\">Политика приватности</a>"
 
 #~ msgid "\"Load documents\""
 #~ msgstr "\"Загрузка документов\""
@@ -4301,17 +4431,11 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
 #~ msgstr "Подпишитесь на переодические новости о Firefox OS, Firefox Marketplace и экосистеме открытых веб-приложений."
 
-#~ msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-#~ msgstr "c <a href=\"%(privacy_url)s\">политикой приватности</a>"
-
 #~ msgid "You must agree to the privacy policy."
 #~ msgstr "Вы должны согласиться с политикой конфиденциальности."
 
 #~ msgid "Plain text"
 #~ msgstr "Обычный текст"
-
-#~ msgid "Send me the newsletter"
-#~ msgstr "Присылать мне новости"
 
 #~ msgid "Preferred format"
 #~ msgstr "Предпочитаемый формат"
@@ -4466,13 +4590,13 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ "переходы."
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
-#~ "CSS3 анимации - новая возможность современных браузеров типа Firefox, который добавляет большую гибкость и контроль над стилем и обытом Веба. Анимации позволяют вам изменять значения свойств через "
-#~ "некоторое время без или с минимальным количеством JavaScript, а также лучше контролируются, чем CSS переходы. Выйдите за пределы статических свойств, чтобы анимировать внешний вид и позиции HTML "
-#~ "элементов. Вы можете достичь этих эффектов без Flash или Silverlight, создать креативные динамические интерфейсы и привлекательный анимации с CSS3."
+#~ "CSS3 анимации - новая возможность современных браузеров типа Firefox, который добавляет большую гибкость и контроль над стилем и обытом Веба. Анимации позволяют вам изменять значения свойств "
+#~ "через некоторое время без или с минимальным количеством JavaScript, а также лучше контролируются, чем CSS переходы. Выйдите за пределы статических свойств, чтобы анимировать внешний вид и "
+#~ "позиции HTML элементов. Вы можете достичь этих эффектов без Flash или Silverlight, создать креативные динамические интерфейсы и привлекательный анимации с CSS3."
 
 #~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
 #~ msgstr "Июль 2011 Dev Derby Challenge - HTML5 <video>"
@@ -4531,11 +4655,11 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "Ноябрь 2011"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
-#~ " that make it easy to control and draw in."
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
 #~ msgstr ""
-#~ "Canvas позволяет вам рисовать в веб, используя JavaScript для отрисовки 2D фигур, bmp изображений и расширенных графических эффектов. Каждый элемент <canvas> предоставляет графический контекст со "
-#~ "своим состоянием и методами, позволяющими легко его контролировать и рисовать в нём."
+#~ "Canvas позволяет вам рисовать в веб, используя JavaScript для отрисовки 2D фигур, bmp изображений и расширенных графических эффектов. Каждый элемент <canvas> предоставляет графический контекст "
+#~ "со своим состоянием и методами, позволяющими легко его контролировать и рисовать в нём."
 
 #~ msgid "December 2011 Dev Derby Challenge - IndexedDB"
 #~ msgstr "Декабрь 2011 Dev Derby Challenge - IndexedDB"
@@ -4628,8 +4752,8 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "Июль 2012"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-#~ "input with HTML, and more. What else can you do without JavaScript?"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
 #~ msgstr ""
 #~ "Создание многофункциональных пользовательских интерфейсов для веб никогда не было проще. Сегодняшние открытые веб-стандарты приносят некоторые из самых мощных функций на кончики ваших пальцев. "
 #~ "Анимируйте страницы с помощью CSS, проверяйте пользовательский ввод с HTML и многое другое. Что ещё вы сможете сделать без JavaScript?"
@@ -4704,8 +4828,8 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "Февраль 2013"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
-#~ " all the interactions users have come to expect."
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
 #~ msgstr ""
 #~ "Touch Events API позволяет вам одновременно отслеживать несколько касаний на устройствах, которые их поддерживают. Создавайте сложные игры, добавляйте поддержку pinch-to-zoom и многое другое. "
 #~ "Используя multi-touch, ваше приложение может реагировать на все привычные и ожидаемые пользователем взаимодействия."
@@ -4718,7 +4842,8 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"
 #~ msgstr ""
-#~ "С каждым днйм мобильный Веб становится всё более важным. На этот раз, единственное ограничение - это ваша креативность. Какой удивительный интерфейс вы сможете построить для мобильных пользователей?"
+#~ "С каждым днйм мобильный Веб становится всё более важным. На этот раз, единственное ограничение - это ваша креативность. Какой удивительный интерфейс вы сможете построить для мобильных "
+#~ "пользователей?"
 
 #~ msgid "April 2013 Dev Derby Challenge - Web Workers"
 #~ msgstr "Апрель 2013 Dev Derby Challenge - Web Workers"
@@ -4866,8 +4991,10 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "Формы"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
-#~ msgstr "Элементы форм и атрибуты в HTML5 представляют степень семантической разметки выше HTML4, а также избавляют от необходимости написания утомительных сценариев и стилей, требовавшихся в HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgstr ""
+#~ "Элементы форм и атрибуты в HTML5 представляют степень семантической разметки выше HTML4, а также избавляют от необходимости написания утомительных сценариев и стилей, требовавшихся в HTML4."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 #~ msgstr "https://developer.mozilla.org/ru/docs/Web/HTML/Forms_in_HTML"
@@ -5265,12 +5392,12 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Добро пожаловать в Mozilla Demo Studio, где такие как вы разработчики могут разрабатывать, делиться, демонстрировать и узнавать всё о веб технологиях. Посмотрите, что можно сделать, исследуя Демо"
-#~ " студию:</p> <ul> <li>Посмотреть демо, показывающие, что можно сделать с HTML, CSS и JavaScript.</li> <li>Исследовать исходный код демо и увидеть, как они работают.</li> <li>Прочитать документацию, "
-#~ "чтобы узнать о открытых стандартах и технологиях, составляющих Web.</li> </ul>"
+#~ "<p>Добро пожаловать в Mozilla Demo Studio, где такие как вы разработчики могут разрабатывать, делиться, демонстрировать и узнавать всё о веб технологиях. Посмотрите, что можно сделать, исследуя "
+#~ "Демо студию:</p> <ul> <li>Посмотреть демо, показывающие, что можно сделать с HTML, CSS и JavaScript.</li> <li>Исследовать исходный код демо и увидеть, как они работают.</li> <li>Прочитать "
+#~ "документацию, чтобы узнать о открытых стандартах и технологиях, составляющих Web.</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "Перейти к предыдущему демо, %(demo_title)s"
@@ -5373,9 +5500,6 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "More by %(creator)s"
 #~ msgstr "Больше от %(creator)s"
-
-#~ msgid "Report a Problem"
-#~ msgstr "Сообщить о проблеме"
 
 #~ msgid "Flag Content"
 #~ msgstr "Отметить контент"
@@ -5543,15 +5667,15 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "Подготовка вашего демо"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul><li> Исходный код вашего демо должен быть запакован в ZIP архив.</li><li>Файл главной страницы вашего демо должен называться <code>index.html</code> и быть в корне ZIP.</li><li>Ваше демо должно "
-#~ "быть построено на клиентских технологиях (HTML, CSS, JavaScript). Серверные языки, такие как PHP и Ruby, не поддерживаются.</li><li>Если в вашем демо нужны внешние ресурсы, для доступа к ним вы "
-#~ "должны использовать AJAX.</li><li>Чтобы опубликовать демо, ваш нужен <a href=\"%(signup_url)s\">MDN профиль</a>.</li><li>Пожалуйста, укажите в поле подробности демо сведения о любом строннем "
-#~ "контенте, который не может быть лицензирован на условиях CC-BY-SA, и приведите ссылки на веб-сайты авторов.</li></ul>"
+#~ "<ul><li> Исходный код вашего демо должен быть запакован в ZIP архив.</li><li>Файл главной страницы вашего демо должен называться <code>index.html</code> и быть в корне ZIP.</li><li>Ваше демо "
+#~ "должно быть построено на клиентских технологиях (HTML, CSS, JavaScript). Серверные языки, такие как PHP и Ruby, не поддерживаются.</li><li>Если в вашем демо нужны внешние ресурсы, для доступа к "
+#~ "ним вы должны использовать AJAX.</li><li>Чтобы опубликовать демо, ваш нужен <a href=\"%(signup_url)s\">MDN профиль</a>.</li><li>Пожалуйста, укажите в поле подробности демо сведения о любом "
+#~ "строннем контенте, который не может быть лицензирован на условиях CC-BY-SA, и приведите ссылки на веб-сайты авторов.</li></ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "Предоставьте исходный код"
@@ -5574,31 +5698,28 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgid "Update Your Profile"
 #~ msgstr "Обновить ваш профиль"
 
-#~ msgid "Go to your profile"
-#~ msgstr "Перейти к вашему профилю"
-
 #~ msgid "Before You Begin"
 #~ msgstr "Перед тем, как вы начнёте"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
 #~ "<ul><li>Вы должны быть готовы <strong>предоставить исходный код</strong> вашего демо. Демо размещаются на серверах Демо Студии.</li><li>Исходный код вашего демо должен быть доступен под "
-#~ "<strong>открытой лицензией</strong>, такой как MPL, GPL или BSD.</li><li>Ваше демо должно демонстрировать <strong>открытые веб-технологии</strong>, такие как HTML5 и CSS3.</li><li>Ваше демо должно "
-#~ "поддерживать широкий спектр <strong>современных веб-браузеров</strong>, таких как Firefox, Chrome, Safari и Opera.</li></ul>"
+#~ "<strong>открытой лицензией</strong>, такой как MPL, GPL или BSD.</li><li>Ваше демо должно демонстрировать <strong>открытые веб-технологии</strong>, такие как HTML5 и CSS3.</li><li>Ваше демо "
+#~ "должно поддерживать широкий спектр <strong>современных веб-браузеров</strong>, таких как Firefox, Chrome, Safari и Opera.</li></ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul><li> Исходный код вашего демо должен быть запакован в <strong>ZIP архив</strong>.</li><li>Главная страница вашего демо должна быть названа <strong><code>index.html</code></strong> и быть в корне"
-#~ " ZIP.</li><li>Ваше демо должно быть построено на <strong>клиентских технологиях</strong> (HTML, CSS, JavaScript). Серверные языки, такие как как PHP и Ruby, не поддерживаются.</li><li>Если в вашем "
-#~ "демо нужны внешние ресурсы, для доступа к ним вы должны использовать <strong>AJAX</strong>.</li><li>Пожалуйста, укажите в поле подробности демо сведения о любом строннем контенте, который не может "
-#~ "быть лицензирован на условиях CC-BY-SA, и приведите ссылки на веб-сайты авторов.</li></ul>"
+#~ "<ul><li> Исходный код вашего демо должен быть запакован в <strong>ZIP архив</strong>.</li><li>Главная страница вашего демо должна быть названа <strong><code>index.html</code></strong> и быть в "
+#~ "корне ZIP.</li><li>Ваше демо должно быть построено на <strong>клиентских технологиях</strong> (HTML, CSS, JavaScript). Серверные языки, такие как как PHP и Ruby, не поддерживаются.</li><li>Если "
+#~ "в вашем демо нужны внешние ресурсы, для доступа к ним вы должны использовать <strong>AJAX</strong>.</li><li>Пожалуйста, укажите в поле подробности демо сведения о любом строннем контенте, "
+#~ "который не может быть лицензирован на условиях CC-BY-SA, и приведите ссылки на веб-сайты авторов.</li></ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Чтобы отправить своё демо, вам нужен <strong><a href=\"%(signup_url)s\">MDN профиль</a></strong>.</p>"
@@ -5850,11 +5971,11 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "%s заблокирован пользователем %s"
 
 #~ msgid ""
-#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a "
-#~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
+#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href="
+#~ "\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
 #~ msgstr ""
-#~ "<p><a href=\"%(parent_url)s\" title=\"%(parent_title)s\">Просмотреть родителя «%(parent_locale)s»</a> (<a href=\"%(mod_url)s\">последний раз менялся %(parent_modified)s</a>) </p> <p> <a "
-#~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Редактировать перевод «%(doc_locale)s»</a> (последний раз менялся %(doc_modified)s)</p>"
+#~ "<p><a href=\"%(parent_url)s\" title=\"%(parent_title)s\">Просмотреть родителя «%(parent_locale)s»</a> (<a href=\"%(mod_url)s\">последний раз менялся %(parent_modified)s</a>) </p> <p> <a href="
+#~ "\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Редактировать перевод «%(doc_locale)s»</a> (последний раз менялся %(doc_modified)s)</p>"
 
 #~ msgid "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>Contributors to this page:</strong> %(contributors_list)s </div>"
 #~ msgstr "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>На данную страницу внесли свой вклад:</strong> %(contributors_list)s </div>"
@@ -5881,11 +6002,11 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> сказал,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Отправлено <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Отправлено <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Ответить на этот комментарий от {full_name}"
@@ -5895,9 +6016,6 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "Edit this comment"
 #~ msgstr "Редактировать этот комментарий"
-
-#~ msgid "Delete this comment"
-#~ msgstr "Удалить этот комментарий"
 
 #~ msgid "Email address is required."
 #~ msgstr "Необходим адрес эл. почты."

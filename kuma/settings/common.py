@@ -566,7 +566,7 @@ PUENTE = {
         ],
     },
     'PROJECT': 'MDN',
-    'VERSION': '2016.0',
+    'VERSION': '2016.1',
     'MSGID_BUGS_ADDRESS': 'dev-mdn@lists.mozilla.org',
 }
 
