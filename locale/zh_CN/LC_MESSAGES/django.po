@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-02 21:55+0000\n"
+"PO-Revision-Date: 2016-11-02 22:03+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -2325,19 +2325,16 @@ msgid "This account recovery link cannot be used to log in again."
 msgstr "此账户找回链接不能被再次用于登录。"
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "账户登录失败"
+msgstr "找回账户失败"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "此网址缩略名无效。"
+msgstr "此链接已经失效。"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
-#, fuzzy
 msgid "Recovery Email Sent"
-msgstr "已发送提醒邮件。"
+msgstr "找回邮件已发送"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
@@ -2356,9 +2353,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p>要申诉这个决定可以<a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">点击这里</a>。</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "转到您的个人资料"
+msgstr "删除您的资料"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2482,18 +2478,16 @@ msgid "Publish"
 msgstr "发布"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "删除评论"
+msgstr "删除您的账户。"
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "管理您的 Mozilla 新闻报订阅。"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "帮助改进 MDN"
+msgstr "欢迎来到 MDN！"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2503,9 +2497,8 @@ msgid ""
 msgstr "您收到这封电子邮件是因为您或者某人请求访问您在 %(domain)s 的 %(username)s 账户。如果您没有执行此请求，只需忽略本邮件。点击下面的链接访问您的账户："
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "感谢您的注册！"
+msgstr "感谢您使用 MDN！"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
