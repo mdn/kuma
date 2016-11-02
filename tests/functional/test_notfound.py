@@ -2,7 +2,7 @@ import pytest
 import requests
 
 from pages.notfound import NotFoundPage
-from pages.urls import assert_valid_url
+from utils.urls import assert_valid_url
 
 ARTICLE_NAME = 'Not Found'
 ARTICLE_TITLE_SUFIX = " | MDN"
