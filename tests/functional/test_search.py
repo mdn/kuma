@@ -22,7 +22,7 @@ def test_search_homepage(base_url, selenium):
     # results found
     assert search.search_result_items_length == 10
 
-
+@pytest.mark.flaky(reruns=1)
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_search_home_header(base_url, selenium):
@@ -32,7 +32,7 @@ def test_search_home_header(base_url, selenium):
     width_before = page.header.search_field_width
     page.header.search_field_focus()
     width_after = page.header.search_field_width
-    assert width_before < width_after
+    assert width_before < width_after, 'search field did not expand'
     # search for CSS
     search = page.header.search_for_term(SEARCH_TERM)
     # search term is in search box
@@ -40,7 +40,7 @@ def test_search_home_header(base_url, selenium):
     # results found
     assert search.search_result_items_length == 10
 
-
+@pytest.mark.flaky(reruns=1)
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_search_article_header(base_url, selenium):
@@ -50,7 +50,7 @@ def test_search_article_header(base_url, selenium):
     width_before = page.header.search_field_width
     page.header.search_field_focus()
     width_after = page.header.search_field_width
-    assert width_before < width_after
+    assert width_before < width_after, 'search field did not expand'
     # search for CSS
     search = page.header.search_for_term(SEARCH_TERM)
     # search term is in search box

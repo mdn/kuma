@@ -160,6 +160,7 @@ class BasePage(Page):
             search_field = self.find_element(*self._search_field_locator)
             focus = ActionChains(self.selenium).move_to_element(search_field).click()
             focus.perform()
+            # this can be a bit flaky sometimes
             self.wait.until(lambda s: not plaform_submenu_trigger.is_displayed())
 
         def search_for_term(self, term):
