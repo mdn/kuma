@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-02 22:41+0000\n"
+"PO-Revision-Date: 2016-11-02 22:53+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -356,19 +356,20 @@ msgstr "Feliratkozás most"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "A hírlevél pillanatnyilag csak angolul elérhető."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Köszönjük! Keresse meg postafiókjában a jóváhagyó levelet."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
+"Ha korábban nem erősítette meg a Mozilla kapcsolódó hírlevél feliratkozását, akkor lehet hogy meg kell tennie. Ellenőrizze a Beérkezett üzenetek mappáját vagy a spam-szűrőjét az e-mailünk után."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "Hírlevél feliratkozás elrejtése"
 
 # 100%
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
@@ -2146,7 +2147,7 @@ msgstr "Hozza létre az MDN profilját a folytatáshoz"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Egy létező MDN profil megfelel a GitHub e-mail címével. Kattintson ide a profil helyreállításához:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
 msgid "Recover my Profile"
@@ -2374,11 +2375,11 @@ msgstr "Fiók hozzákapcsolása"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Használja a lenti gombot a MDN profilja GitHubbal történő összekapcsolásához."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Ez a fiók-helyreállítási hivatkozás nem használható újbóli bejelentkezéshez."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
@@ -2394,7 +2395,7 @@ msgstr "Helyreállító e-mail elküldve"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Kattintson a hivatkozásra az e-mailben a meglévő fiókja helyreállításához."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2414,31 +2415,31 @@ msgstr "Profil törlése"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Sajnáljuk, hogy távozik."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "Ugyan lehetséges törölni a fiókját, de nem tudjuk kitörölni a verziókat (oldalváltozásokat) amelyeket tett, és a tartalom licencünk megköveteli a verziók szerzőinek megnevezését."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Adjon fel egy hibajelentést a fiókja lezárásának kérésével, és győződjön meg róla, hogy ezen lehetőségek egyike szerepel a leírás mezőben:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Nem változtattam egyetlen oldalt sem; csak töröljék a fiókomat."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Tartsák meg a megnevezéseimet az oldalváltozásaimhoz; töröljék az e-mail címemet, és fagyasszák be a fiókomat, hogy többé ne tudjak bejelentkezni."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Írják át az összes megnevezésemet „Anonymous”-ra, és töröljék a fiókomat."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Adjon fel egy hibajelentést a fiókja törléséhez"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2541,12 +2542,11 @@ msgstr "Fiókja törlése."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Kezelje a Mozilla hírlevél-feliratkozásait."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Segítsen az MDN tökéletesítésében"
+msgstr "Üdvözlet az MDN-ből!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2554,16 +2554,17 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Azért kapja ezt az e-mailt, mert Ön vagy valaki más hozzáférést kért a(z) %(username)s felhasználói fiókjához, itt: %(domain)s. Biztonságosan figyelmen kívül hagyhatja, ha nem Ön kérte. Kattintson a"
+" lenti hivatkozásra a fiókja eléréséhez:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Köszönjük, hogy regisztrált!"
+msgstr "Köszönjük, hogy használja az MDN-t!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Profil helyreállítás ehhez: %(username)s, itt: %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
