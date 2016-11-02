@@ -18,6 +18,7 @@ env:
         - TOXENV=flake8
         - TOXENV=docs
         - TOXENV=dennis
+        - TOXENV=locales DOCKER_COMPOSE_VERSION=1.8.0
         - TOXENV=docker DOCKER_COMPOSE_VERSION=1.8.0
     global:
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
@@ -27,6 +28,7 @@ env:
 matrix:
     allow_failures:
         - env: TOXENV=dennis
+        - env: TOXENV=locales DOCKER_COMPOSE_VERSION=1.8.0
         - env: TOXENV=docker DOCKER_COMPOSE_VERSION=1.8.0
 before_install:
     - scripts/travis-install
