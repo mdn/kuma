@@ -3,10 +3,10 @@ import pytest
 from utils.urls import assert_valid_url
 from pages.home import HomePage
 
-# this fails on staging in French be cause there is not a French translation
-# this fails on staging in German beecause the German page has a redirect
+# this fails on staging in French because there is not a French translation
+# this fails on staging in German because the German page has a redirect
 # it's really common to have redirects with locales
-# passes in production on French
+# passes in production in French
 TEST_LOCALE = 'fr'
 
 
