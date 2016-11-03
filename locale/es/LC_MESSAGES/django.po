@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 14:02+0000\n"
+"PO-Revision-Date: 2016-11-03 14:12+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
@@ -2419,23 +2419,23 @@ msgstr "Aunque puedes eliminar tu cuenta, no podemos eliminar las revisiones que
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr "Envía un bug para cerrar tu cuenta y asegúrate de que una de las siguientes opciones está incluida en el campo de descripción:"
+msgstr "Envía un bug para cerrar la cuenta y asegúrate de que una de las siguientes opciones está incluida en el campo de descripción:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "No he cambiado ninguna página; eliminar mi cuenta."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Mantener mi colaboración en la página de cambios; eliminar mi correo electrónico y congelar mi cuenta para que no pueda volver a acceder."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Cambiar todas las colaboraciones de la página de cambios a \"Anónimo\" y eliminar mi cuenta."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Envía un bug para cerrar la cuenta"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2533,18 +2533,16 @@ msgid "Publish"
 msgstr "Publicar"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Eliminar comentario"
+msgstr "Eliminar tu cuenta."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Gestionar las subscripciones al boletín de Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Ayuda a mejorar MDN"
+msgstr "¡Hola desde MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2552,16 +2550,16 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Has recibido este correo porque alguien ha solicitado acceso a tu cuenta %(username)s en %(domain)s. Si no fuiste tú, puedes ignorarlo. Haz clic en el enlace de más abajo para acceder a tu cuenta:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "¡Gracias por registrarte!"
+msgstr "¡Gracias por usar MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Recuperación de perfil para %(username)s en %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
