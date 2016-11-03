@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 11:04+0000\n"
+"PO-Revision-Date: 2016-11-03 12:00+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2392,19 +2392,19 @@ msgstr "Wylst it mooglik is jo account fuort te smiten, wy kinne refyzjes (sidew
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Meitsje in bug oan om jo account te sluten en wês wis dat ien fan dizze opsjes yn de omskriuwing stiet:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Ik haw gjin siden wizige; smyt myn account gewoanwei fuort."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Bewarje myn namme foar sidewizigingen; smyt myn e-mailadres fuort en befries myn account sa dat ik my nea mear oanmelde kin."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Wizigje al myn nammefermeldingen foar sidewizigingen nei ‘Anonymous’, en smyt myn account fuort."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
@@ -2523,6 +2523,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Jo ûntfange dit e-mailberjocht, omdat jo of in oar tagong frege hat ta jo brûkeraccount %(username)s op %(domain)s. It kin feilich negearre wurde as jo dit fersyk makke hawwe. Klik op ûndersteande "
+"keppeling foar tagong ta jo account:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
