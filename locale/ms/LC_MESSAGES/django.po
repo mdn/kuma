@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 01:39+0000\n"
+"PO-Revision-Date: 2016-11-03 02:00+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -318,18 +318,16 @@ msgid "Sign in"
 msgstr "Daftar masuk"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Belajar pembangunan web"
+msgstr "Ketahui ilmu pembangunan web"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
 msgstr "Daftar untuk melanggan surat berita kami:"
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
-msgstr "E-mel:"
+msgstr "E-mel"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
@@ -337,9 +335,8 @@ msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(p
 msgstr "Saya setuju Mozilla mengendalikan maklumat saya seperti yang dijelaskan dalam <a href=\"%(policy_url)s\">Polisi Privasi</a>."
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "Daftar"
+msgstr "Daftar sekarang"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -1755,9 +1752,8 @@ msgid "Username already in use."
 msgstr "Nama pengguna sedang digunakan."
 
 #: kuma/users/forms.py:162
-#, fuzzy
 msgid "Email"
-msgstr "E-mel:"
+msgstr "E-mel"
 
 #: kuma/users/models.py:34
 #, python-format
@@ -1975,9 +1971,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Semua kandungan di MDN adalah percuma dan tersedia tanpa mendaftar masuk."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "Untuk membuat sumbangan, anda perlu daftar masuk ke MDN. Anda boleh daftar masuk menggunakan GitHub dan profil MDN akan dicipta untuk anda sekiranya anda masih belum ada profil."
+msgstr "Untuk membuat sumbangan, anda perlu mendaftar masuk ke profil MDN sedia ada."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2119,9 +2114,8 @@ msgid "An existing MDN profile matches your GitHub email. Click here to recover 
 msgstr "Ada profil MDN yang sepadan dengan e-mel GitHub anda. Klik sini untuk mendapatkan semula profil:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "Profil Saya"
+msgstr "Dapatkan semula Profil saya"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2341,9 +2335,8 @@ msgid "Identified as not spam:"
 msgstr "Dikenal pasti sebagai bukan spam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Sambung ke akaun baru"
+msgstr "Hubungkan Akaun"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
@@ -2354,14 +2347,12 @@ msgid "This account recovery link cannot be used to log in again."
 msgstr "Pautan pemulihan akaun ini tidak lagi boleh digunakan untuk log masuk semula."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Gagal Daftar masuk Akaun"
+msgstr "Gagal Mendapatkan Semula Akaun"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "Slug yang disediakan tidak sah."
+msgstr "Pautan ini sudah tidak sah."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
@@ -2384,9 +2375,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik sini here</a> untuk merayu sekatan ini.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Edit Profil Anda"
+msgstr "Hapus profil anda"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2408,15 +2398,15 @@ msgstr "Saya tidak pernah meminda mana-mana halaman; hapuskan sahaja akaun saya.
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Kekalkan sumbangan saya meminda halaman; hapuskan alamat e-mel saya dan bekukan akaun saya supaya saya tidak boleh lagi log masuk."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Tukar semua sumbangan pindaan halaman saya menjadi \"Anonimus\", dan hapuskan akaun saya."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Failkan pepijat untuk menutup akaun anda"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2515,16 +2505,15 @@ msgstr "Terbitkan"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 msgid "Delete your account."
-msgstr ""
+msgstr "Hapuskan akaun anda."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Urus Langganan Surat Berita Mozilla anda."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Bantu meningkatkan MDN"
+msgstr "Helo dari MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2532,16 +2521,17 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Anda menerima e-mel ini kerana anda atau ada pihak lain telah meminta akses kepada akaun pengguna anda %(username)s di %(domain)s. Abaikan sahaja jika anda tidak membuat permintaan ini. Klik pautan "
+"di bawah untuk mengakses akaun anda:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Terima kasih kerana meluangkan masa untuk memperbaiki MDN!"
+msgstr "Terima kasih kerana menggunakan MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Pemulihan Profil untuk %(username)s di %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
