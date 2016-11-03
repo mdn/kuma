@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 11:00+0000\n"
+"PO-Revision-Date: 2016-11-03 11:04+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Meitsje in bug oan om jo account te sluten"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2892,6 +2892,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Publisearjen is mislearre. Konfliktearjende bewurkingsbesykjen detektearre. Kopiearje en plak jo bewurkingen nei in feilich plak en besykje de side <a href=\"%(url)s\">Refyzjeskiednis</a> om te sjen"
+" wat der wizige is eardat jo fierdere bewurkingen útfiere."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -3576,13 +3578,13 @@ msgid "Select a language to translate to:"
 msgstr "Selektearje in taal wêrnei't oer te setten:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network en yndividuele meiwurkers<br /> Ynhâld is beskikber ûnder in foar dit projekt spesifike lisinsje. &middot; <a href=\"%(about_url)s\">Oer MDN</a> &middot; "
-"<a href=\"//github.com/mozilla/kuma\">Bydragen oan de koade</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybelied</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network en yndividuele meiwurkers<br /> Ynhâld is beskikber ûnder in foar dit projekt spesifike lisinsje. &middot; <a href=\"%(about_url)s\">Oer MDN</a> "
+"&middot; <a href=\"//github.com/mozilla/kuma\">Bydrage oan de koade</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybelied</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
