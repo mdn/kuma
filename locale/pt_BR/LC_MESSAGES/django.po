@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 12:41+0000\n"
+"PO-Revision-Date: 2016-11-03 12:44+0000\n"
 "Last-Translator: Cynthia Pereira <cynthiacpereira@gmail.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -329,9 +329,8 @@ msgid "Sign in"
 msgstr "Entrar"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Aprenda sobre desenvolvimento web"
+msgstr "Aprenda o melhor do desenvolvimento web"
 
 #: jinja2/includes/newsletter.html:4
 #, fuzzy
@@ -358,7 +357,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Obrigado! Por favor, confira sua caixa de entrada para confirmar seu cadastro."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
