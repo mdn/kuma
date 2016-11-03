@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 19:21+0000\n"
+"PO-Revision-Date: 2016-11-03 19:26+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -326,9 +326,8 @@ msgid "Sign in"
 msgstr "Connexion"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Apprendre le développement web"
+msgstr "Recevez le meilleur du développement web"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
