@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 02:00+0000\n"
+"PO-Revision-Date: 2016-11-03 02:01+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2348,7 +2348,7 @@ msgstr "Pautan pemulihan akaun ini tidak lagi boleh digunakan untuk log masuk se
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
-msgstr "Gagal Mendapatkan Semula Akaun"
+msgstr "Gagal Memulih Akaun"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 msgid "This link is no longer valid."
