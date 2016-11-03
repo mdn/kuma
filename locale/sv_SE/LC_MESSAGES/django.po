@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 15:49+0000\n"
+"PO-Revision-Date: 2016-11-03 18:19+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -2395,7 +2395,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Jag har inte ändrat några sidor; ta bort mitt konto."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
@@ -2407,7 +2407,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Skicka in en felrapport för att stänga ditt konto"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2504,16 +2504,15 @@ msgstr "Publicera"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 msgid "Delete your account."
-msgstr ""
+msgstr "Ta bort ditt konto."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Hantera dina prenumerationer på nyhetsbrev från Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Hjälp till att förbättra MDN"
+msgstr "Hej från MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2521,16 +2520,17 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Du får detta e-postmeddelande eftersom du eller någon annan har begärt tillgång till ditt användarkonto %(username)s på %(domain)s. Det kan ignoreras om du inte gjort denna begäran. Klicka på länken"
+" nedan för att komma åt ditt konto:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Tack för att du tog dig tid att förbättra MDN!"
+msgstr "Tack för att du använder MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Profilåterställning för %(username)s på %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
