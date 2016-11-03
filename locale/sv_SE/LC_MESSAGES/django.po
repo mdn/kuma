@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 15:40+0000\n"
+"PO-Revision-Date: 2016-11-03 15:49+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -1756,9 +1756,8 @@ msgid "Username already in use."
 msgstr "Användarnamnet används redan."
 
 #: kuma/users/forms.py:162
-#, fuzzy
 msgid "Email"
-msgstr "E-post:"
+msgstr "E-post"
 
 #: kuma/users/models.py:34
 #, python-format
@@ -1976,9 +1975,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Allt innehåll på MDN är gratis och tillgängligt utan inloggning."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "För att bidra måste du logga in på MDN. Du kan logga in med GitHub så kommer en MDN profil att skapas för dig om du inte redan har en."
+msgstr "För att bidra, måste du logga in på en befintlig MDN-profil."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2115,12 +2113,11 @@ msgstr "Skapa din MDN profil för att fortsätta"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "En befintlig MDN-profil matchar din e-post för GitHub. Klicka här för att återställa en profil:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "Rapportera ett problem"
+msgstr "Återställ min profil"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2341,35 +2338,32 @@ msgid "Identified as not spam:"
 msgstr "Identifierad som inte spam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Koppla ett nytt konto"
+msgstr "Koppla konto"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Använd knappen nedan för att koppla din MDN-profil till GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Denna kontoåterställningslänk kan inte användas för att logga in igen."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Kontoinloggning misslyckades"
+msgstr "Kontoåterställning misslyckades"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "Sluggen som tillhandahålls är inte giltig."
+msgstr "Denna länk är inte längre giltig."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "E-post för återställning har skickats"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Klicka på länken i mejlet för att återställa ditt befintliga konto."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2384,13 +2378,12 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klicka här</a> för att överklaga denna bannlysning.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Gå till din profil"
+msgstr "Ta bort din profil"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Vi är ledsna över att se dig lämna."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
