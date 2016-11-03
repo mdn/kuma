@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 03:52+0000\n"
+"PO-Revision-Date: 2016-11-03 19:23+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -363,11 +363,11 @@ msgstr "ありがとうございます！ 購読確認用の新着メールを�
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "これまでに Mozilla 関連のニュースレターを購読したことがない場合、購読開始の確認が必要となります。お送りした確認メールを受信トレイもしくは迷惑メールフィルタから探してください。"
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "ニュースレター購読リンクを隠す"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -2136,7 +2136,7 @@ msgstr "続けるには MDN プロフィールを作成してください"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "既存の MDN プロフィールがあなたの GitHub 登録アドレスと一致しました。プロフィールを復元するにはこちらをクリックしてください:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
 msgid "Recover my Profile"
@@ -2362,11 +2362,11 @@ msgstr "アカウントを接続"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "以下のボタンを使ってあなたの MDN プロフィールを GitHub と関連付けましょう。"
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "このアカウント復元リンクを使って再度ログインすることはできません。"
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
@@ -2382,7 +2382,7 @@ msgstr "復元メールをお送りしました"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "あなたの既存アカウントを復元するにはメール内のリンクをクリックしてください。"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2402,7 +2402,7 @@ msgstr "プロフィールを削除"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "あなたが離れてしまうのは残念です。"
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
