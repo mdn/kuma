@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 18:19+0000\n"
+"PO-Revision-Date: 2016-11-03 18:30+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -2387,11 +2387,11 @@ msgstr "Vi är ledsna över att se dig lämna."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "Även om det är möjligt att ta bort ditt konto, kan vi inte ta bort eventuella revideringar (ändrade sidor) du har gjort och vår innehållslicens kräver att dina ändringar har en tillskrivning."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Skicka in en felrapport för att begära att ditt konto stängs och säkerställ att ett av dessa alternativ är i beskrivningsfältet:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
@@ -2399,11 +2399,11 @@ msgstr "Jag har inte ändrat några sidor; ta bort mitt konto."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Behåll mina tillskrivningar för mina ändrade sidor; ta bort min e-postadress och frys mitt konto så att jag aldrig kan logga in igen."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Växla alla mina tillskrivningar för ändrade sidor till \"Anonym\" och ta bort mitt konto."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
