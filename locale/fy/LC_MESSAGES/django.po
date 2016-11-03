@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 08:37+0000\n"
+"PO-Revision-Date: 2016-11-03 11:00+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2506,18 +2506,16 @@ msgid "Publish"
 msgstr "Publisearje"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Delete Comment"
+msgstr "Jo account fuortsmite."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Behear jo Mozilla-nijsbriefabonneminten."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Help MDN te ferbetterjen"
+msgstr "Goeie fan MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2527,14 +2525,13 @@ msgid ""
 msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Tank dat jo de tiid nimme om MDN te ferbetterjen!"
+msgstr "Tank foar it gebrûk fan MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Profywerstel foar %(username)s op %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
