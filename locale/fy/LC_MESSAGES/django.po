@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 12:00+0000\n"
+"PO-Revision-Date: 2016-11-03 12:02+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2388,7 +2388,7 @@ msgstr "Wy fine it spitich dat jo ús ferlitte."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr "Wylst it mooglik is jo account fuort te smiten, wy kinne refyzjes (sidewizigingen) dy't jo makke hawwe net fuortsmite en ús ynhâldslisinsje fereasket dat jo refyzjes in attribút hawwe."
+msgstr "Wylst it mooglik is jo account fuort te smiten, wy kinne refyzjes (sidewizigingen) dy't jo makke hawwe net fuortsmite en ús ynhâldslisinsje fereasket dat jo refyzjes in nammeferwizing hawwe."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
@@ -2400,11 +2400,11 @@ msgstr "Ik haw gjin siden wizige; smyt myn account gewoanwei fuort."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr "Bewarje myn namme foar sidewizigingen; smyt myn e-mailadres fuort en befries myn account sa dat ik my nea mear oanmelde kin."
+msgstr "Bewarje myn nammeferwizing foar sidewizigingen; smyt myn e-mailadres fuort en befries myn account sa dat ik my nea mear oanmelde kin."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr "Wizigje al myn nammefermeldingen foar sidewizigingen nei ‘Anonymous’, en smyt myn account fuort."
+msgstr "Wizigje al myn nammeferwizingen foar sidewizigingen nei ‘Anonymous’, en smyt myn account fuort."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
