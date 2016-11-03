@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 01:20+0000\n"
+"PO-Revision-Date: 2016-11-03 01:39+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -352,10 +352,12 @@ msgstr "Terima kasih! Sila semak peti masuk anda untuk mengesahkan langganan and
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
+"Jika anda belum pernah mengesahkan langganan surat berita berkaitan Mozilla, anda mungkin perlu untuk berbuat demikian. Sila semak peti masuk atau penapis spam anda untuk dapatkan e-mel daripada "
+"kami."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "Sorok Pendaftaran Surat Berita"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -2114,7 +2116,7 @@ msgstr "Cipta profil MDN anda untuk meneruskan"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Ada profil MDN yang sepadan dengan e-mel GitHub anda. Klik sini untuk mendapatkan semula profil:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
 #, fuzzy
@@ -2345,11 +2347,11 @@ msgstr "Sambung ke akaun baru"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Gunakan butang di bawah untuk menyambung profil MDN anda ke GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Pautan pemulihan akaun ini tidak lagi boleh digunakan untuk log masuk semula."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 #, fuzzy
@@ -2363,11 +2365,11 @@ msgstr "Slug yang disediakan tidak sah."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "E-mel Pemulihan Dihantar"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Klik pautan dalam e-mel untuk mendapatkan semula akaun sedia ada anda."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2388,19 +2390,21 @@ msgstr "Edit Profil Anda"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Kami sedih kerana kehilangan anda."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
 msgstr ""
+"Walaupun akaun anda mungkin dihapus, kami tidak akan menghapuskan sebarang semakan (pindaan dalam halaman) yang telah anda buat kerana kandungan lesen kami mensyaratkan bahawa semakan anda itu "
+"diiktiraf sebagai sumbangan."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Sila failkan pepijat untuk permintaan menutup akaun anda, dan pastikan salah satu pilihan ini ada dalam bidang keterangan:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Saya tidak pernah meminda mana-mana halaman; hapuskan sahaja akaun saya."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
