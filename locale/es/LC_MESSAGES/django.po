@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 10:13+0000\n"
+"PO-Revision-Date: 2016-11-03 12:38+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
@@ -354,7 +354,7 @@ msgstr "Por ahora, el boletín solo está disponible en inglés."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "¡Gracias! Comprueba tu correo para confirmar la subscripción."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
