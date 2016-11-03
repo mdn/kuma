@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 07:45+0000\n"
+"PO-Revision-Date: 2016-11-03 08:37+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2348,25 +2348,23 @@ msgstr "Brûk de knop hjirûnder om jo MDN-profyl te keppeljen mei GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Dizze keppeling foar accountwerstel kin net brûkt wurde om opnij oan te melden."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Oanmelden by account mislearre"
+msgstr "Accountwerstel mislearre"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "De opjûne identificator is net jildich."
+msgstr "Dizze keppeling is net langer jildich."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "Werstel-e-mail ferstjoerd"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Klik op de keppeling yn it e-mailberjocht om je besteande account werom te bringen."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2381,17 +2379,16 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik hjir</a> om dizze blokkearring oan te fjochtsjen.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Jo profyl bewurkje"
+msgstr "Jo profyl fuortsmite"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Wy fine it spitich dat jo ús ferlitte."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "Wylst it mooglik is jo account fuort te smiten, wy kinne refyzjes (sidewizigingen) dy't jo makke hawwe net fuortsmite en ús ynhâldslisinsje fereasket dat jo refyzjes in attribút hawwe."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
