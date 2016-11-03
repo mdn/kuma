@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 07:40+0000\n"
+"PO-Revision-Date: 2016-11-03 07:45+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -1977,9 +1977,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Alle ynhâld op MDN is frij en beskikber sûnder oanmelding."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "Om by te dragen, moatte jo jo by MDN oanmelde. Jo kinne jo oanmelde fia GitHub, wêrnei in MDN-profyl foar jo oanmakke wurdt as jo dat noch net hawwe."
+msgstr "Om mei te wurkjen, moatte jo jo oanmelde mei in besteand MDN-profyl."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2116,12 +2115,11 @@ msgstr "Meitsje jo MDN-profyl oan om fierder te gean"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "In besteand MDN-profyl is lyk oan jo GitHub-e-mailadres. Klik hjir om it profyl werom te bringen:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "Myn profilen"
+msgstr "Myn profyl werombringe"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2341,13 +2339,12 @@ msgid "Identified as not spam:"
 msgstr "Identifisearre as gjin spam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "In nij account keppelje"
+msgstr "Account keppelje"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Brûk de knop hjirûnder om jo MDN-profyl te keppeljen mei GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
