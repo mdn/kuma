@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 18:57+0000\n"
+"PO-Revision-Date: 2016-11-03 19:21+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -331,19 +331,17 @@ msgid "Learn the best of web development"
 msgstr "Apprendre le développement web"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "S'abonner à la lettre de diffusion"
+msgstr "S'abonner à la lettre d'information&nbsp;:"
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
-msgstr "Courriel"
+msgstr "Adresse électronique"
 
 #: jinja2/includes/newsletter.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr "vers la <a href=\"%(privacy_url)s\">politique de confidentialité</a>"
+msgstr "J'accepte la gestion de mes informations personnelles par Mozilla comme indiqué dans cette <a href=\"%(policy_url)s\">politique de confidentialité</a>."
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
@@ -360,11 +358,12 @@ msgstr "Merci&nbsp;! Veuillez vérifier votre boîte de réception afin de confi
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
+"Si vous n'avez pas déjà confirmé d'inscription à une lettre d'information Mozilla, vous devrez valider cette inscription. Veuillez vérifier votre boîte de réception, éventuellement vos messages "
+"indésirables, pour consulter le message que nous vous avons envoyé."
 
 #: jinja2/includes/newsletter.html:39
-#, fuzzy
 msgid "Hide Newsletter Sign-up"
-msgstr "Lettre d'informations"
+msgstr "Masquer l'inscription à la lettre d'information"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -2013,9 +2012,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "L'ensemble du contenu de MDN est disponible gratuitement sans qu'il soit nécessaire de se connecter."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "Afin de contribuer, vous devez vous connecter à MDN. Vous pouvez vous connecter en utilisant GitHub. Un profil MDN sera créé si vous n'en n'avez pas déjà un."
+msgstr "Afin de contribuer, vous devez vous connecter à un profil MDN existant."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2157,9 +2155,8 @@ msgid "An existing MDN profile matches your GitHub email. Click here to recover 
 msgstr "Un profil MDN existant correspond à votre adresse électronique GitHub. Cliquez ici pour récupérer un profil&nbsp;:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "{user} | Profil"
+msgstr "Récupérer mon profil"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2383,9 +2380,8 @@ msgid "Identified as not spam:"
 msgstr "Identifié comme n'étant pas du spam&nbsp;:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Connecter un compte"
+msgstr "Connecter le compte"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
@@ -2396,19 +2392,16 @@ msgid "This account recovery link cannot be used to log in again."
 msgstr "Ce lien de récupération ne peut pas être à nouveau utilisé pour se connecter."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Échec de la connexion au compte"
+msgstr "Échec de la récupération du compte"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "L'identifiant n'est pas valide."
+msgstr "Ce lien n'est plus valide."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
-#, fuzzy
 msgid "Recovery Email Sent"
-msgstr "Un message de rappel a été envoyé."
+msgstr "Le courrier électronique de récupération a été envoyé"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
@@ -2427,9 +2420,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Cliquez ici</a> pour contester ce bannissement.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Aller à votre profil"
+msgstr "Supprimer votre profil"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2438,10 +2430,12 @@ msgstr "Nous sommes désolés que vous nous quittiez."
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
 msgstr ""
+"Bien qu'il soit possible de supprimer votre compte, nous ne pouvons pas supprimer les révisions (c'est-à-dire les modifications apportées aux pages) que vous avez effectuées. De plus, la licence "
+"appliquée à notre contenu nécessite une attribution pour chaque révision."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Veuillez saisir un bogue pour demander la fermeture de votre compte et vérifiez que l'une de ces options est renseignée dans le champ «&nbsp;description&nbsp;»&nbsp;:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
@@ -2449,7 +2443,7 @@ msgstr "Je n'ai modifié aucune page, veuillez simplement supprimer mon compte."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Veuillez conserver l'attribution existante pour mes modifications, supprimer mon adresse électronique et geler mon compte afin que je ne puisse plus me connecter à nouveau."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
@@ -2555,18 +2549,16 @@ msgid "Publish"
 msgstr "Publier"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Supprimer le commentaire"
+msgstr "Supprimer votre compte."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "Gérez vos inscriptions aux lettres d'information Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Améliorer MDN"
+msgstr "Bonjour de la part de MDN !"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2578,9 +2570,8 @@ msgstr ""
 "cette demande. Cliquez sur le lien ci-dessous pour accéder à votre compte :"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Merci pour votre enregistrement !"
+msgstr "Merci d'utiliser MDN !"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
