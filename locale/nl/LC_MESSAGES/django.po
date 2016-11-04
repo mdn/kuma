@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 12:59+0000\n"
+"PO-Revision-Date: 2016-11-03 13:18+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
 "Language: nl\n"
@@ -345,9 +345,9 @@ msgid "E-mail"
 msgstr "E-mailadres"
 
 #: jinja2/includes/newsletter.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr "naar het <a href=\"%(privacy_url)s\">privacybeleid</a>"
+msgstr "Ik ben het eens met hoe Mozilla met mijn gegevens omgaat, zoals uitgelegd in dit <a href=\"%(policy_url)s\">privacybeleid</a>."
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
@@ -355,11 +355,11 @@ msgstr "Nu registreren"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "De nieuwsbrief wordt op dit moment alleen in het Engels aangeboden."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Bedankt! Controleer uw Postvak IN om uw inschrijving te bevestigen."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
