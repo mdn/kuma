@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-03 13:18+0000\n"
+"PO-Revision-Date: 2016-11-04 13:15+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
 "Language: nl\n"
@@ -363,12 +363,11 @@ msgstr "Bedankt! Controleer uw Postvak IN om uw inschrijving te bevestigen."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "Als u nog niet eerder een inschrijving voor een Mozilla-gerelateerde nieuwsbrief hebt bevestigd, dient u dit mogelijk te doen. Controleer uw Postvak IN of uw spamfilter op een e-mail van ons."
 
 #: jinja2/includes/newsletter.html:39
-#, fuzzy
 msgid "Hide Newsletter Sign-up"
-msgstr "Nieuwsbrief"
+msgstr "Nieuwsbriefinschrijving verbergen"
 
 # 100%
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
@@ -2003,9 +2002,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Alle inhoud op MDN is vrij en beschikbaar zonder aanmelding."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "Om bij te dragen, dient u zich bij MDN aan te melden. U kunt zich aanmelden via GitHub, waarna een MDN-profiel voor u wordt aangemaakt als u dat nog niet hebt."
+msgstr "Om bij te dragen, dient u zich bij een bestaand MDN-profiel aan te melden."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2144,12 +2142,11 @@ msgstr "Maak uw MDN-profiel aan om verder te gaan"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Uw GitHub-e-mailadres komt overeen met een bestaand MDN-profiel. Klik hier om een profiel te herstellen:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "{user} | Profiel"
+msgstr "Mijn profiel herstellen"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2369,36 +2366,32 @@ msgid "Identified as not spam:"
 msgstr "Geïdentificeerd als geen spam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Een account koppelen"
+msgstr "Account koppelen"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Gebruik de onderstaande knop om uw MDN-profiel met GitHub te koppelen."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Deze koppeling voor accountherstel kan niet meer worden gebruikt om u aan te melden."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Aanmelden bij account mislukt"
+msgstr "Accountherstel is mislukt"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "De opgegeven identificator is niet geldig."
+msgstr "Deze koppeling is niet meer geldig."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
-#, fuzzy
 msgid "Recovery Email Sent"
-msgstr "Herinnerings-e-mailbericht verzonden."
+msgstr "Herstel-e-mailbericht verzonden"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Klik op de koppeling in het e-mailbericht om uw bestaande account te herstellen."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2413,37 +2406,38 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik hier</a> om deze blokkering aan te vechten.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Naar uw profiel"
+msgstr "Uw profiel verwijderen"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "We vinden het jammer dat u weggaat."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
 msgstr ""
+"Hoewel uw account kan worden verwijderd, kunnen we niet alle revisies (paginawijzigingen) die u hebt aangebracht verwijderen, en vereist onze inhoudslicentie dat uw revisies een naamsvermelding "
+"bevatten."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Meld een bug met een verzoek om uw account te sluiten, en zorg ervoor dat een van deze opties in het beschrijvingsveld is vermeld:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Ik heb geen pagina’s gewijzigd; verwijder eenvoudig mijn account."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Behoud mijn naamsvermelding voor mijn paginawijzigingen; verwijder mijn e-mailadres en bevries mijn account, zodat ik me nooit meer kan aanmelden."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Zet mijn naamsvermeldingen voor paginawijzigingen om naar ‘Anoniem’, en verwijder mijn account."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Een bug melden om uw account te sluiten"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2541,18 +2535,16 @@ msgid "Publish"
 msgstr "Publiceren"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Reactie verwijderen"
+msgstr "Uw account verwijderen."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Uw Mozilla-nieuwsbriefabonnementen beheren."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Help MDN te verbeteren"
+msgstr "MDN zegt hallo!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2560,16 +2552,17 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"U ontvangt dit e-mailbericht omdat u of iemand anders om toegang tot uw gebruikersaccount %(username)s op %(domain)s heeft gevraagd. Als u dit verzoek niet hebt ingediend, kan het veilig worden "
+"genegeerd. Klik op de onderstaande koppeling voor toegang tot uw account:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Bedankt voor uw registratie!"
+msgstr "Bedankt voor het gebruik van MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Profielherstel voor %(username)s op %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
