@@ -6,7 +6,7 @@ from pages.base import BasePage
 
 class ArticlePage(BasePage):
 
-    URL_TEMPLATE = '/{locale}/{path}'
+    URL_TEMPLATE = '/{locale}/docs/User:anonymous:uitest'
 
     # article meta
     _language_button_locator = (By.ID, 'languages-menu')

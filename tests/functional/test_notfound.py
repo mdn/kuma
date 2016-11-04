@@ -2,7 +2,7 @@ import pytest
 import requests
 
 from pages.notfound import NotFoundPage
-from pages.urls import assert_valid_url
+from utils.urls import assert_valid_url
 
 ARTICLE_NAME = 'Not Found'
 ARTICLE_TITLE_SUFIX = " | MDN"
@@ -10,6 +10,7 @@ ARTICLE_TITLE_SUFIX = " | MDN"
 
 # page headers
 @pytest.mark.smoke
+@pytest.mark.nodata
 @pytest.mark.nondestructive
 def test_is_not_found_status(base_url, selenium):
     page = NotFoundPage(selenium, base_url).open()
@@ -17,6 +18,7 @@ def test_is_not_found_status(base_url, selenium):
 
 
 @pytest.mark.smoke
+@pytest.mark.nodata
 @pytest.mark.nondestructive
 def test_is_expected_content(base_url, selenium):
     page = NotFoundPage(selenium, base_url).open()

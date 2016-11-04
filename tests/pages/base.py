@@ -17,7 +17,7 @@ class BasePage(Page):
         super(BasePage, self).__init__(selenium, base_url, locale=locale, **url_kwargs)
 
     def wait_for_page_to_load(self):
-        self.wait.until(lambda s: self.seed_url in s.current_url)
+        # self.wait.until(lambda s: self.seed_url in s.current_url)
         el = self.find_element(By.TAG_NAME, 'html')
         self.wait.until(lambda s: el.get_attribute('data-ffo-opensanslight'))
         return self
@@ -113,10 +113,10 @@ class BasePage(Page):
             hover.perform()
             self.wait.until(lambda s: submenu.is_displayed())
 
-        def open_feedback(self, locale, path):
+        def open_feedback(self):
             self.find_element(*self._feedback_link_locator).click()
             from pages.article import ArticlePage
-            return ArticlePage(self.selenium, self.page.base_url, locale, path=path).wait_for_page_to_load()
+            return ArticlePage(self.selenium, self.page.base_url).wait_for_page_to_load()
 
         def localized_feedback_path(self, locale):
             link = self.find_element(*self._feedback_link_locator)
@@ -160,6 +160,7 @@ class BasePage(Page):
             search_field = self.find_element(*self._search_field_locator)
             focus = ActionChains(self.selenium).move_to_element(search_field).click()
             focus.perform()
+            # this can be a bit flaky sometimes
             self.wait.until(lambda s: not plaform_submenu_trigger.is_displayed())
 
         def search_for_term(self, term):

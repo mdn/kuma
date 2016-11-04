@@ -2,7 +2,6 @@ import pytest
 
 from pages.article import ArticlePage
 
-ARTICLE_PATH = 'docs/User:anonymous:uitest'
 ARTICLE_NAME = 'User:anonymous:uitest'
 ARTICLE_TITLE_SUFIX = " | MDN"
 
@@ -10,7 +9,7 @@ ARTICLE_TITLE_SUFIX = " | MDN"
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_report_content(base_url, selenium):
-    page = ArticlePage(selenium, base_url, path=ARTICLE_PATH).open()
+    page = ArticlePage(selenium, base_url).open()
     assert page.header.is_feedback_submenu_trigger_displayed
     assert not page.header.is_feedback_submenu_displayed
     page.header.show_feedback_submenu()
@@ -27,7 +26,7 @@ def test_report_content(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_report_bug(base_url, selenium):
-    page = ArticlePage(selenium, base_url, path=ARTICLE_PATH).open()
+    page = ArticlePage(selenium, base_url).open()
     assert page.header.is_feedback_submenu_trigger_displayed
     assert not page.header.is_feedback_submenu_displayed
     page.header.show_feedback_submenu()
