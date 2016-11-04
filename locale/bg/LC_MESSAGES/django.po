@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-08-09 14:35+0000\n"
-"Last-Translator: stoyan <stoyan@gmx.com>\n"
+"PO-Revision-Date: 2016-11-04 08:26+0000\n"
+"Last-Translator: :stoyan <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -97,7 +97,7 @@ msgstr ""
 
 #: jinja2/base.html:79
 msgid "Select language"
-msgstr ""
+msgstr "Изберете език"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
@@ -137,7 +137,7 @@ msgstr ""
 
 #: jinja2/base.html:127
 msgid "Technologies"
-msgstr ""
+msgstr "Технологии"
 
 #: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
@@ -209,11 +209,11 @@ msgstr ""
 
 #: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
-msgstr ""
+msgstr "Добавки"
 
 #: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
-msgstr ""
+msgstr "Firefox"
 
 #: jinja2/base.html:161
 msgid "Developer Tools"
@@ -221,7 +221,7 @@ msgstr ""
 
 #: jinja2/base.html:161
 msgid "Feedback"
-msgstr ""
+msgstr "Обратна връзка"
 
 #: jinja2/base.html:166
 msgid "Get Firefox help"
@@ -264,11 +264,11 @@ msgstr ""
 
 #: jinja2/base.html:205
 msgid "Privacy"
-msgstr ""
+msgstr "Поверителност"
 
 #: jinja2/base.html:206
 msgid "Cookies"
-msgstr ""
+msgstr "Бисквитки"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
@@ -367,91 +367,91 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
-msgstr ""
+msgstr "Албански"
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr ""
+msgstr "Арабски"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Азербайджански"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "Бамбара"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "Бенгалски (Бангладеш)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
-msgstr ""
+msgstr "Бенгалски (Индия)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "Бирмански"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "Каталунски"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Китайски (опростен)"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Китайски (традиционен)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
-msgstr ""
+msgstr "Хърватски"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
-msgstr ""
+msgstr "Чешки"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
-msgstr ""
+msgstr "Холандски"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "English (US)"
-msgstr ""
+msgstr "Английски (САЩ)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr ""
+msgstr "Еве"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
-msgstr ""
+msgstr "Финландски"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "Френски"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr ""
+msgstr "Фризийски"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
-msgstr ""
+msgstr "Фула"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr ""
+msgstr "Грузински"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "Германски"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
-msgstr ""
+msgstr "Гръцки"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Отписване"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
@@ -839,8 +839,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -882,7 +882,7 @@ msgstr ""
 
 #: kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "Приложения"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
@@ -927,7 +927,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/b2g-os/name.py:4
 msgid "B2G OS"
-msgstr ""
+msgstr "B2G ОС"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
@@ -1196,8 +1196,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1241,9 +1241,8 @@ msgid "Learn CSS"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:88
-#, fuzzy
 msgid "Learn JavaScript"
-msgstr "JavaScript"
+msgstr "Научете JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -1344,8 +1343,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
@@ -1645,8 +1644,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -2143,8 +2142,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:143
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:159
@@ -3073,8 +3072,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3233,15 +3232,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:276
@@ -3881,8 +3880,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11

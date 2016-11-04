@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-10-06 13:11+0000\n"
-"Last-Translator: k.berov <k.berov@gmail.com>\n"
+"PO-Revision-Date: 2016-11-04 08:30+0000\n"
+"Last-Translator: :stoyan <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -161,11 +161,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "Отхвърляне на черновата"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "възстановен"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -181,11 +181,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
-msgstr ""
+msgstr "Чернова"
 
 #: kuma/static/js/wiki-edit.js:626
 msgid "saved"
-msgstr ""
+msgstr "запазено"
 
 #: kuma/static/js/wiki-edit.js:645
 msgid "autosaved"
@@ -193,11 +193,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:654
 msgid "published"
-msgstr ""
+msgstr "публикувано"
 
 #: kuma/static/js/wiki-edit.js:658
 msgid "discarded"
-msgstr ""
+msgstr "отхвърлено"
 
 #: kuma/static/js/wiki-edit.js:696
 msgid "Autosave enabled."
@@ -210,11 +210,11 @@ msgstr ""
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
-msgstr ""
+msgstr "Отваряне в %(site)s"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "Нов етикет…"
 
 #: kuma/static/js/wiki.js:218
 msgid "How to read CSS syntax."
@@ -238,7 +238,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "Няма прикачени файлове"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
@@ -262,7 +262,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
-msgstr ""
+msgstr "Документ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:65
 msgid "URL"
@@ -278,7 +278,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
-msgstr ""
+msgstr "Избор на раздел"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
@@ -290,11 +290,11 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
-msgstr ""
+msgstr "Съдържание на HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
-msgstr ""
+msgstr "Примерно съдържание на HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
@@ -302,7 +302,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr ""
+msgstr "Примерно съдържание на CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
@@ -342,16 +342,16 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "Съотношение"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
-msgstr ""
+msgstr "Трябва да въведете валиден адрес на видео в YouTube."
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:32
 msgid "The URL you've entered doesn't appear to be valid"
-msgstr ""
+msgstr "Връзката, която добавихте изглежда не съществува"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "По подразбиране"
