@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-05 22:20+0000\n"
+"PO-Revision-Date: 2016-11-05 22:27+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -321,29 +321,25 @@ msgid "Sign in"
 msgstr "登入"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "學習網頁開發"
+msgstr "了解網頁開發精華"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "寄電子報給我"
+msgstr "訂閱我們的電子報:"
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
 msgstr "電子郵件"
 
 #: jinja2/includes/newsletter.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr "<a href=\"%(privacy_url)s\">隱私權保護政策</a>"
+msgstr "我同意 Mozilla 依照 <a href=\"%(policy_url)s\">隱私權保護政策</a> 當中描述的方式處理我的資訊。"
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "註冊"
+msgstr "立即註冊"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -1967,9 +1963,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "MDN 上的所有內容皆為免費，不需要登入即可使用。"
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "您必須要先登入到 MDN 才能貢獻。您可以使用 GitHub 登入，若您還沒有 MDN 帳號我們會為您建立一組。"
+msgstr "若要貢獻，您必須要先登入到 MDN。"
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2111,9 +2106,8 @@ msgid "An existing MDN profile matches your GitHub email. Click here to recover 
 msgstr "已有符合您 GitHub 電子郵件地址的 MDN 個人資料。點擊此處找回該資料:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "{user} | 個人資料"
+msgstr "找回我的帳號資料"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2329,9 +2323,8 @@ msgid "Identified as not spam:"
 msgstr "被識別為非垃圾文:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "連結新帳號"
+msgstr "連結帳號"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
@@ -2342,19 +2335,16 @@ msgid "This account recovery link cannot be used to log in again."
 msgstr "此帳號救援鏈結無法用來再次登入。"
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "帳號登入失敗"
+msgstr "帳號救援失敗"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "輸入的 URL 代稱無效。"
+msgstr "此鏈結無效。"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
-#, fuzzy
 msgid "Recovery Email Sent"
-msgstr "提醒信件已送出。"
+msgstr "已寄出帳號救援郵件"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
@@ -2373,9 +2363,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p>若要申訴停權請<a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">按此</a></p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "前往您的個人資料"
+msgstr "刪除您的帳號"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2383,23 +2372,23 @@ msgstr "很抱歉看到您離開。"
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "雖然可以刪除您的帳號，但我們無法刪除您做過的任何編修，我們的內容授權也必須為您的修改留下作者資訊。"
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "請開 bug 要求關閉帳號，並且務必在描述欄位中選擇下列一種選項:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "我沒有改過任何頁面，請直接刪除我的帳號。"
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "保留我的修改紀錄，刪除我的電子郵件地址紀錄並凍結帳號，讓我無法再次登入。"
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "將我所有做過的變更修改為匿名修改，再刪除我的帳號。"
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
@@ -2499,18 +2488,16 @@ msgid "Publish"
 msgstr "發布"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "刪除此回應"
+msgstr "刪除您的帳號。"
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "管理您的 Mozilla 電子報訂閱狀況。"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "協助改善 MDN"
+msgstr "來自 MDN 的哈囉！"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2520,9 +2507,8 @@ msgid ""
 msgstr "您會收到這封信是因為您或某人要求存取您在 %(domain)s 上的帳號 %(username)s。若您沒有做出這個請求，請直接忽略本訊息。請點擊下列鏈結存取您的帳號:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "感謝你的註冊！"
+msgstr "感謝您使用 MDN！"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
