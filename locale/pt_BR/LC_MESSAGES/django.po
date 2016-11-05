@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-05 17:09+0000\n"
-"Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
+"PO-Revision-Date: 2016-11-04 22:15+0000\n"
+"Last-Translator: Maykon Chagas <mchagas@riseup.net>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -2138,9 +2138,8 @@ msgid "An existing MDN profile matches your GitHub email. Click here to recover 
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "{user} | Perfil"
+msgstr "Recuperar meu perfil"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2359,13 +2358,12 @@ msgid "Identified as not spam:"
 msgstr "Identificado como não spam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Conectar uma nova conta"
+msgstr "Conectar conta"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Use o botão abaixo para conectar seu perfil do MDN ao GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
