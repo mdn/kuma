@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-02 13:04-0700\n"
-"PO-Revision-Date: 2016-11-04 13:15+0000\n"
+"PO-Revision-Date: 2016-11-06 16:16+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
 "Language: nl\n"
@@ -351,7 +351,7 @@ msgstr "Ik ben het eens met hoe Mozilla met mijn gegevens omgaat, zoals uitgeleg
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
-msgstr "Nu registreren"
+msgstr "Nu inschrijven"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
