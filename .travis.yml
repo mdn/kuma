@@ -17,7 +17,6 @@ env:
         - TOXENV=py27
         - TOXENV=flake8
         - TOXENV=docs
-        - TOXENV=dennis
         - TOXENV=locales DOCKER_COMPOSE_VERSION=1.8.0
         - TOXENV=docker DOCKER_COMPOSE_VERSION=1.8.0
     global:
@@ -27,7 +26,6 @@ env:
         - CFLAGS=-O0
 matrix:
     allow_failures:
-        - env: TOXENV=dennis
         - env: TOXENV=locales DOCKER_COMPOSE_VERSION=1.8.0
         - env: TOXENV=docker DOCKER_COMPOSE_VERSION=1.8.0
 before_install:
