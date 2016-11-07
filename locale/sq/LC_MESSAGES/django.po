@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-02 13:04-0700\n"
+"POT-Creation-Date: 2016-11-07 11:53-0800\n"
 "PO-Revision-Date: 2016-08-18 08:32+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -336,6 +336,10 @@ msgstr "Dërgomëni buletinin"
 #, fuzzy
 msgid "E-mail"
 msgstr "Shtoni Email"
+
+#: jinja2/includes/newsletter.html:12
+msgid "you@example.com"
+msgstr ""
 
 #: jinja2/includes/newsletter.html:18
 #, fuzzy, python-format

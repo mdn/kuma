@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-02 13:04-0700\n"
+"POT-Creation-Date: 2016-11-07 11:53-0800\n"
 "PO-Revision-Date: 2016-08-02 17:47+0000\n"
 "Last-Translator: Belayet Hossain <bellayet@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -339,6 +339,10 @@ msgstr "আমাকে নিউজলেটার পাঠান"
 #, fuzzy
 msgid "E-mail"
 msgstr "ইমেইল:"
+
+#: jinja2/includes/newsletter.html:12
+msgid "you@example.com"
+msgstr ""
 
 #: jinja2/includes/newsletter.html:18
 #, python-format

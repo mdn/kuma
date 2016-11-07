@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-02 13:04-0700\n"
+"POT-Creation-Date: 2016-11-07 11:53-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic https://pontoon.mozilla.org/ar/\n"
@@ -323,6 +323,10 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:11
 msgid "E-mail"
+msgstr ""
+
+#: jinja2/includes/newsletter.html:12
+msgid "you@example.com"
 msgstr ""
 
 #: jinja2/includes/newsletter.html:18
