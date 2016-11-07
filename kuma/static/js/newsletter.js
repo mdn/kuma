@@ -70,18 +70,16 @@
 
         // show success message
         function newsletterThanks() {
-            var thanks = doc.getElementById('newsletterThanks');
-
             // show thanks message
-            $(thanks).removeClass('hidden');
-
+            $('#newsletterThanks').removeClass('hidden');
+            // hide close button, analytics get confusing if it stays
+            $('#newsletterHide').addClass('hidden');
             // track success
             mdn.analytics.trackEvent({
                 'category': 'newsletter',
                 'action': 'progression',
                 'label': 'complete'
             });
-
             // don't show signup form on article pages anymore
             newsletterSaveHide();
         }
