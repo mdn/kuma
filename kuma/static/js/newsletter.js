@@ -17,7 +17,7 @@
         }
 
         // check for article
-        if(doc.querySelector('.wiki-block-newsletter')) {
+        if(doc.querySelector('#wikiArticle')) {
             isArticle = true;
         }
 
@@ -70,6 +70,8 @@
 
         // show success message
         function newsletterThanks() {
+            // hide form
+            $(newsletterForm).addClass('hidden');
             // show thanks message
             $('#newsletterThanks').removeClass('hidden');
             // hide close button, analytics get confusing if it stays
@@ -135,7 +137,6 @@
                     }
                     var response = r.target.response;
                     if (response.success === true) {
-                        $(newsletterForm).addClass('hidden');
                         newsletterThanks();
                     } else {
                         if(response.errors) {
@@ -189,9 +190,8 @@
     }
 
     function newsletterHide() {
-        // remove newsletter parent wiki-block
-        var $wikiBlock = $('.wiki-block-newsletter');
-        $wikiBlock.addClass('hidden');
+        var $newsletterBox = $('.newsletter-box');
+        $newsletterBox.addClass('hidden');
     }
 
     function newsletterSaveHide() {
