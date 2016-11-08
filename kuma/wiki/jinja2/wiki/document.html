@@ -300,7 +300,7 @@
                   {% endif %}
                 {% endif %}
               {% endif %}
-              {% if fallback_reason=='no_translation' %}
+              {% if fallback_reason %}
                 <div id="doc-pending-fallback" class="warning">
                   <p><bdi>{% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native, parent_language=document.language %}
                     Our volunteers haven't translated this article into <bdi>{{ locale }}</bdi> yet.
