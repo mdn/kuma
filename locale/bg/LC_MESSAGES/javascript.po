@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-11-09 09:02+0000\n"
+"PO-Revision-Date: 2016-11-09 09:19+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -97,11 +97,11 @@ msgstr "Избрано: "
 
 #: kuma/static/js/users.js:108
 msgid "New interest..."
-msgstr ""
+msgstr "Нов интерес..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Отваряне бележките по осъществяването"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
@@ -109,7 +109,7 @@ msgstr "Отваряне"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
-msgstr ""
+msgstr "Връщане към таблицата за съвместимостта."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
@@ -117,15 +117,15 @@ msgstr "Затваряне"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "Новите таблици за съвместимостта са в бета-версия "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "Повече относно бета-версията."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Попълване на въпросника"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
@@ -298,19 +298,19 @@ msgstr "Примерно съдържание на HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
-msgstr ""
+msgstr "Съдържание в CSS формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr "Примерно съдържание на CSS"
+msgstr "Примерно съдържание в CSS формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
-msgstr ""
+msgstr "Съдържание в JavaScript формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
-msgstr ""
+msgstr "Примерно съдържание в JavaScript формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
