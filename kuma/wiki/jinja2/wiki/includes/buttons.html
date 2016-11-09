@@ -23,7 +23,7 @@
             <ul id="translations">
               {% if document.other_translations or fallback_reason %}
                 {# show the parent locale in choices if fall back to parent for any reason #}
-                {% if fallback_reason %}
+                {% if fallback_reason=='no_translation' %}
                   <li><bdi><a rel="internal" href="{{ document.get_absolute_url() }}" title="{{ get_locale_localized(document.locale) }}">{{ document.language }} ({{ document.locale }})</a></bdi></li>
                 {% endif %}
                 {% for translation in document.other_translations %}
