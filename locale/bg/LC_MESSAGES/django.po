@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-09 12:17+0000\n"
+"PO-Revision-Date: 2016-11-09 16:10+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -33,7 +33,7 @@ msgstr "Този профил е забранен."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr "Впишете, за да прегледате цялата хронология"
+msgstr "Влезте, за да прегледате цялата хронология"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
@@ -42,17 +42,17 @@ msgstr "<p>Съжаляваме %(name)s, за жалост не можем да
 
 #: jinja2/403.html:43 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>Съжаляваме, за жалост не можем да направим това.</p>"
 
 #: jinja2/403.html:50
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(logout_url)s\">Излезте</a> и опитайте отново.</li>"
 
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(login_url)s\">Влезте</a> и опитайте отново.</li>"
 
 #: jinja2/403.html:62
 msgid ""
