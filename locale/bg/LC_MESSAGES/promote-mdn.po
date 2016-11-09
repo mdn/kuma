@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-11-09 11:09+0000\n"
+"PO-Revision-Date: 2016-11-09 12:01+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: bg\n"
@@ -49,11 +49,11 @@ msgstr "Преглед"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr ""
+msgstr "Да се използват ключовите думи и връзки за %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr ""
+msgstr "Презареждаме ма ключовите думи след (секунди):"
 
 #: promote-mdn.php:260
 msgid "Reload now"
@@ -61,11 +61,11 @@ msgstr "Презареждане сега"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "Добавяне на връзки към емисията с RSS"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "Отваряне на връзките в нов прозорец"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
@@ -73,15 +73,15 @@ msgstr "Изключения"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr ""
+msgstr "Да не се добавят връзки в заглавията (h1,h2,h3,h4,h5,h6)."
 
 #: promote-mdn.php:268
 msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
-msgstr ""
+msgstr "Да не се добавят връзки към следните статии или страници (разделени със запетая id, слог, име):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"
-msgstr ""
+msgstr "Да не се добавят връзки към следните връзки (разделени със запетаи):"
 
 #: promote-mdn.php:274
 msgid "Limits"
@@ -89,19 +89,19 @@ msgstr "Ограничения"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
-msgstr "Максимален брой създадени препратки на публикация:"
+msgstr "Максимален брой създадени връзки на публикация:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr "Максимален брой препратки, създадени за отделна ключова дума/фраза:"
+msgstr "Максимален брой връзки, създадени за отделна ключова дума/фраза:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr ""
+msgstr "Максимален брой връзки, които да се създадат за отделен URL:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
-msgstr ""
+msgstr "Потребителски ключови думи"
 
 #: promote-mdn.php:281
 msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr ""
+msgstr "Възможности за обновление"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
@@ -127,23 +127,23 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "Популяризиране на MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
-msgstr ""
+msgstr "скриване"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr ""
+msgstr "Картинка в страничния панел и връзки към MDN."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr ""
+msgstr "Помогнете да разпространим MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
-msgstr ""
+msgstr "Сваляне на добавката за WordPress"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/groovecoder/wp-promote-mdn"
@@ -151,7 +151,7 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr ""
+msgstr "Популяризаторът на MDN автоматично свързва ключови думи и фрази с документи в MDN"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
