@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-11-04 08:30+0000\n"
-"Last-Translator: :stoyan <stoyan@gmx.com>\n"
+"PO-Revision-Date: 2016-11-09 09:02+0000\n"
+"Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -149,15 +149,15 @@ msgstr "Включване на автоматичния запис."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
-msgstr ""
+msgstr "незнайна дата"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
-msgstr ""
+msgstr "Имате чернова от:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Възстановяване съдържанието на черновата"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
@@ -173,7 +173,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "Промените са записани."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
@@ -185,11 +185,11 @@ msgstr "Чернова"
 
 #: kuma/static/js/wiki-edit.js:626
 msgid "saved"
-msgstr "запазено"
+msgstr "записано"
 
 #: kuma/static/js/wiki-edit.js:645
 msgid "autosaved"
-msgstr ""
+msgstr "автоматично записано"
 
 #: kuma/static/js/wiki-edit.js:654
 msgid "published"
@@ -201,11 +201,11 @@ msgstr "отхвърлено"
 
 #: kuma/static/js/wiki-edit.js:696
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Автоматичният запис е включен."
 
 #: kuma/static/js/wiki-edit.js:703
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Автоматичният запис е изключен."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -258,7 +258,7 @@ msgstr "Създаване на пренасочване"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:4
 msgid "MDN Redirect"
-msgstr ""
+msgstr "Пренасочване от MDN"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
@@ -274,7 +274,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
-msgstr ""
+msgstr "Търсене на примери"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
@@ -282,7 +282,7 @@ msgstr "Избор на раздел"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr ""
+msgstr "Раздели в документ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
