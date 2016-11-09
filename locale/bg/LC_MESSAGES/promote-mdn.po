@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-11-09 09:23+0000\n"
+"PO-Revision-Date: 2016-11-09 09:59+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: bg\n"
@@ -89,11 +89,11 @@ msgstr "Ограничения"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
-msgstr ""
+msgstr "Максимален брой създадени препратки на публикация:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr ""
+msgstr "Максимален брой препратки, създадени за отделна ключова дума/фраза:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
