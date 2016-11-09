@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-09 12:02+0000\n"
+"PO-Revision-Date: 2016-11-09 12:17+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -25,11 +25,11 @@ msgstr "Уикито е в режим само за четене."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "На вашия профил е забранено да прави промени."
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Този профил е забранен."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
@@ -85,19 +85,19 @@ msgstr ""
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Вътрешна Грешка на Сървъра"
 
 #: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
-msgstr ""
+msgstr "Мрежа на разработчиците на Мозила"
 
 #: jinja2/base.html:77
 msgid "Skip to main content"
-msgstr ""
+msgstr "Към главното съдържание"
 
 #: jinja2/base.html:79
 msgid "Select language"
-msgstr "Изберете език"
+msgstr "Избор на език"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
@@ -129,11 +129,11 @@ msgstr ""
 
 #: jinja2/base.html:114
 msgid "Documentation status"
-msgstr ""
+msgstr "Състояние на документацията"
 
 #: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr ""
+msgstr "Уеб-технологии"
 
 #: jinja2/base.html:127
 msgid "Technologies"
@@ -153,19 +153,19 @@ msgstr "JavaScript"
 
 #: jinja2/base.html:132
 msgid "Graphics"
-msgstr ""
+msgstr "Графика"
 
 #: jinja2/base.html:133
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: jinja2/base.html:134
 msgid "APIs / DOM"
-msgstr ""
+msgstr "Програмни интерфейси (APIs) / DOM"
 
 #: jinja2/base.html:135
 msgid "WebExtensions"
-msgstr ""
+msgstr "Уеб-разширения"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -173,23 +173,23 @@ msgstr "MathML"
 
 #: jinja2/base.html:139
 msgid "References & Guides"
-msgstr ""
+msgstr "Справочници и ръководства"
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Learning web development"
-msgstr ""
+msgstr "Обучение на уеб-разработчици"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
-msgstr ""
+msgstr "Уроци"
 
 #: jinja2/base.html:143
 msgid "References"
-msgstr ""
+msgstr "Справочници"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
-msgstr ""
+msgstr "Ръководства за разработчици"
 
 #: jinja2/base.html:145
 msgid "Accessibility"
@@ -197,11 +197,11 @@ msgstr "Достъпност"
 
 #: jinja2/base.html:146
 msgid "Game development"
-msgstr ""
+msgstr "Разработка на игри"
 
 #: jinja2/base.html:147
 msgid "...more docs"
-msgstr ""
+msgstr "...още документи"
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
@@ -289,32 +289,32 @@ msgstr ""
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Профил"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr ""
+msgstr "Изход"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "Искате да помогнете?<br /> <a href=\"%(login_url)s\">Влезте</a>"
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
-msgstr ""
+msgstr "Други езици:"
 
 #: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
 msgid "Go"
-msgstr ""
+msgstr "Отиване"
 
 #: jinja2/includes/login.html:4
 msgid "Sign out"
-msgstr ""
+msgstr "Изход"
 
 #: jinja2/includes/login.html:8
 msgid "Sign in"
-msgstr ""
+msgstr "Вход"
 
 #: jinja2/includes/newsletter.html:3
 msgid "Learn the best of web development"
@@ -322,15 +322,15 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
-msgstr ""
+msgstr "Записване за новинарската ни емисия:"
 
 #: jinja2/includes/newsletter.html:11
 msgid "E-mail"
-msgstr ""
+msgstr "Е-поща"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr ""
+msgstr "вие@example.com"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
