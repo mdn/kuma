@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-11-09 09:19+0000\n"
+"PO-Revision-Date: 2016-11-09 09:21+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -169,7 +169,7 @@ msgstr "възстановен"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr ""
+msgstr "Публикуването пропадна. В момента не сте влезли. Моля използвайте нов раздел, за да влезете и се опитайте да публикувате отново."
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
