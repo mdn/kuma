@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-08 11:43+0000\n"
+"PO-Revision-Date: 2016-11-07 11:14+0000\n"
 "Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -321,14 +321,12 @@ msgid "Sign in"
 msgstr "Accedi"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Imparare lo sviluppo web"
+msgstr "Impara il meglio del meglio dello sviluppo web"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "Voglio ricevere la newsletter"
+msgstr "Iscriviti alla newsletter:"
 
 #: jinja2/includes/newsletter.html:11
 msgid "E-mail"
@@ -358,6 +356,8 @@ msgstr "Grazie mille. Controlla la tua casella di posta per confermare l’iscri
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
+"Se non hai mai confermato prima d’ora l’iscrizione a una newsletter Mozilla, dovrai farlo adesso per completare l’iscrizione. Controlla se hai ricevuto un nuovo messaggio da parte di Mozilla, "
+"potrebbe anche essere finita per sbaglio nella cartella dello spam."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
@@ -2367,12 +2367,11 @@ msgstr "Utilizza il pulsante qui sotto per associare il tuo profilo MDN a un acc
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Questo link per il recupero non potrà più essere utilizzato per accedere al sito in futuro."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Accesso non riuscito"
+msgstr "Impossibile recuperare l'account"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 msgid "This link is no longer valid."
@@ -2404,11 +2403,13 @@ msgstr "Cancella il tuo profilo"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Ci mancherà il tuo contributo a MDN."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
 msgstr ""
+"È possibile eliminare un account, ma non le revisioni effettuate utilizzando l'account stesso (ovvero le modifiche che hai apportato alle pagine con quel profilo). In accordo con la licenza sui "
+"contenuti di MDN, ogni revisione deve essere attribuita a un profilo."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
@@ -2420,7 +2421,7 @@ msgstr "Non ho mai effettuato modifiche, eliminate senza problemi il mio account
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Mantenete i crediti per le mie modifiche alle pagine, rimuovete il mio indirizzo email e bloccate il mio account in modo che non sia più utilizzabile."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
@@ -2547,9 +2548,8 @@ msgstr ""
 "tranquillamente ignorare questo messaggio. Per accedere al tuo account fai clic sul seguente link:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Grazie per esserti registrato."
+msgstr "Grazie per aver scelto MDN."
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
