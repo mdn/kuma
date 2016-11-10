@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-09-25 11:17+0000\n"
-"Last-Translator: sumanth1594 <sumanth1594@gmail.com>\n"
+"PO-Revision-Date: 2016-11-08 19:45+0000\n"
+"Last-Translator: damodara <vvsvmb151@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -169,11 +169,11 @@ msgstr "తిరిగివుంచుము"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr ""
+msgstr "ప్రచురణ విఫలమయ్యింది. మీరు ప్రస్తుతం మీ ఖాతాలోకి ప్రవేశించి లేరు. కొత్త ట్యాబులో మీ ఖాతాలోకి ప్రవేశించి తిరిగి ప్రచురించండి."
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "మార్పులు చేయబడ్డాయి."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
