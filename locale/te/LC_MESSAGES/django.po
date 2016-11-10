@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 16:06+0000\n"
-"Last-Translator: damodara <vvsvmb151@gmail.com>\n"
+"PO-Revision-Date: 2016-11-10 17:33+0000\n"
+"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -254,7 +254,7 @@ msgstr "వెతుకు"
 #: jinja2/base.html:198
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr ""
+msgstr "<p>&copy; 2005-%(thisyear)s Mozillaఅభివృద్ధికారుల జాలం మరియు స్వతంత్ర తోడ్పాటుదారులు.</p><p>విషయం <a href=\"%(copyright_url)s\">ఈ లైసెన్సుల</a> కింద అందుబాటులో ఉంది.</p>"
 
 #: jinja2/base.html:203
 msgid "About MDN"
@@ -338,7 +338,7 @@ msgstr "you@example.com"
 #: jinja2/includes/newsletter.html:18
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr ""
+msgstr "ఈ <a href=\"%(policy_url)s\">గోప్యత విధానాన్ని</a> అనుసరించి Mozillaనా సమాచారాన్ని ఉపయోగించుకోవడానికి సమ్మతిస్తున్నాను."
 
 #: jinja2/includes/newsletter.html:24
 #, fuzzy
@@ -355,7 +355,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "మీరు ఒకవేళ Mozillaసంబంధిత వార్తాప్రతి కి చందాని ఇంతకమునుపు ధృవీకరించనట్లైతే , మీరు ఆ పని చెయ్యాలి. దయచేసి మీ ఇన్ బాక్స్ గానీ స్పామ్ లో గానీ మానుంచి వచ్చిన ఈమెయిల్ను చూడండి."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
@@ -781,7 +781,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
-msgstr ""
+msgstr "వ్యాసం వీటికి జోడింపబడింది"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
@@ -794,19 +794,19 @@ msgstr "వర్తించదు"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "వెతకాల్సిన కీలకం"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
-msgstr ""
+msgstr "హ్యాష్ చేయబడ్డ రహస్యం"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "ఉద్యుక్త వాడుక యొక్క వివరణ"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "సృష్టించబడింది"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
@@ -815,7 +815,7 @@ msgstr "తొలగించు"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr ""
+msgstr "ఈ కీలకం ఇప్పటిదాకా వాడబడలేదు."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
@@ -1200,13 +1200,15 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr ""
+msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN) ఫెలోషిప్ కార్యక్రమం, ప్రపంచస్థాయి అభివృద్ధికారులను మొజిల్లాతో పాటుగా ఈ ప్రపంచాన్ని మార్చటానికి ఆహ్వానిస్తుంది."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
 " OS."
 msgstr ""
+"Mozillaఅభివృద్ధికారుల జాలం (MDN), HTML, CSS, మరియు జాలగూళ్ల, HTML5 అనువర్తనాల APIలు వంటి స్వేచ్ఛాజాల సాంకేతికతకు సంబంధించి సమాచారాన్ని అందిస్తుంది. ఇది ఫైర్ఫాక్స్ OS వంటి ఇతర ఫైర్ఫాక్స్ ఉత్పత్తుల "
+"సమాచారాన్ని కూడా ప్రామాణికరిస్తుంది."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1535,7 +1537,7 @@ msgstr ""
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Mozillaఅభివృద్ధికారుల జాలపు ప్రామాణిక పత్రాలను శోధించు"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
