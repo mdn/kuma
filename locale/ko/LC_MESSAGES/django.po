@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 01:35+0000\n"
+"PO-Revision-Date: 2016-11-10 01:58+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -2418,27 +2418,27 @@ msgstr "당신이 떠나는 것을 보게 되어 유감입니다."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "계정 삭제는 가능하지만 만들어진 리비전(페이지 변경)은 삭제할 수 없고 콘텐츠 라이센스 상 리비전에 저작자가 표시 됩니다."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "계정 폐쇄를 요청하는 버그를 제출하고, 아래 옵션 중 하나가 설명난에 놓이도록 확인해 주세요:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "나는 페이지를 바꾼 적이 없습니다. 그러니 그냥 계정을 삭제해 주세요."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "내가 변경한 페이지에 대한 저작자 표시를 유지하세요. 하지만 메일 주소를 지우고 다시 로그인할 수 없도록 계정을 동결해 주세요."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "내가 변경한 모든 페이지의 저작자 표시를 \"익명\"으로 돌리고 계정을 삭제해 주세요."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "계정을 닫기 위해 버그 제출"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2534,35 +2534,32 @@ msgid "Publish"
 msgstr "게시"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "댓글 삭제"
+msgstr "계정을 삭제합니다."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Mozilla 뉴스레터 구독을 관리합니다."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "MDN 참여하기"
+msgstr "안녕하세요. MDN입니다!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
 msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
-msgstr ""
+msgstr "누군가가 %(domain)s에서 사용자 계정 %(username)s에 접근을 요청했기에 이 메일을 보고 있습니다. 요청하지 않은 경우 이를 안전하게 무시할 수 있습니다. 계정에 접근하려면 아래 링크를 클릭하세요:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "등록해 주셔서 감사합니다!"
+msgstr "MDN을 이용해 주셔서 감사합니다!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "%(domain)s의 %(username)s 프로필 복구"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
