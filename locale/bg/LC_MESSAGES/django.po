@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-09 16:10+0000\n"
+"PO-Revision-Date: 2016-11-10 20:57+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -62,11 +62,11 @@ msgstr ""
 
 #: jinja2/404.html:6
 msgid "Not Found"
-msgstr ""
+msgstr "Не е намерено"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
-msgstr ""
+msgstr "Съжаляваме, не успяхме да намерим каквото търсехте."
 
 #: jinja2/404.html:24
 #, python-format
