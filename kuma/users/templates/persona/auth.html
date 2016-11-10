@@ -1,6 +1,0 @@
-<form id="_persona_login" method="post" action="{% url 'persona_login' %}" data-csrf-token-url="{% url 'persona_csrf_token' %}" data-request='{{ request_parameters|safe }}' data-persona-script="{{ settings.PERSONA_INCLUDE_URL }}">
-  <input type="hidden" name="csrfmiddlewaretoken" value="" id="_persona_csrf_token" />
-  <input type="hidden" name="next" value="" id="_persona_next_url"/>
-  <input type="hidden" name="process" value="" id="_persona_process"/>
-  <input type="hidden" name="assertion" id="_persona_assertion"/>
-</form>

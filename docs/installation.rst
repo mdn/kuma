@@ -75,7 +75,7 @@ To initialize a fresh database, run the migrations::
 It will run the standard Django migrations, with output similar to::
 
     Operations to perform:
-      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
+      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
       Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
     Synchronizing apps without migrations:
       Creating tables...

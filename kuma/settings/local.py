@@ -25,7 +25,6 @@ LOG_LEVEL = logging.ERROR
 PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer-local.allizom.org')
 SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
-SOCIALACCOUNT_PROVIDERS['persona']['AUDIENCE'] = SITE_URL
 
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 0
