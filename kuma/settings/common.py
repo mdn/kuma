@@ -759,6 +759,15 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'dashboard': {
+        'source_filenames': (
+            'js/dashboard.js',
+        ),
+        'output_filename': 'build/js/dashboard.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
     'jquery-ui': {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
