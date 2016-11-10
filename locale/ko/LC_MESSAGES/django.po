@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-02 21:04+0000\n"
+"PO-Revision-Date: 2016-11-10 01:35+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -337,23 +337,21 @@ msgid "Learn the best of web development"
 msgstr "웹 개발 배우기"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "뉴스레터 신청하기"
+msgstr "뉴스레터 신청:"
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
 msgstr "메일 주소"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr ""
+msgstr "you@example.com"
 
 #: jinja2/includes/newsletter.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr "<a href=\"%(privacy_url)s\">개인정보 취급방침</a>"
+msgstr "저는 <a href=\"%(policy_url)s\">개인정보 취급방침</a>에 설명된 대로 Mozilla가 정보를 다루는 것에 동의합니다."
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
@@ -361,19 +359,19 @@ msgstr "회원가입"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "뉴스레터가 지금은 영어로만 제공됩니다."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "감사합니다! 구독 확인을 위해 받은 편지함을 확인해 주세요."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "이전에 Mozilla 관련 뉴스레터 구독을 확인하지 않은 경우, 이를 확인할 필요가 있습니다. 받은 편지함 또는 우리 email에 대한 스팸 필터를 확인해 주세요."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "뉴스레터 신청 숨기기"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -2011,9 +2009,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "MDN에 있는 모든 콘텐츠는 무료이며 로그인 하지 않아도 사용 가능합니다."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "공헌하기 위해서는, MDN에 로그인이 필요합니다. Github를 사용하여 로그인 할 수 있으며 아직 없다면 MDN 프로필이 생성됩니다."
+msgstr "공헌하기 위해서는, 기존 MDN 프로필에 로그인해야 합니다."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2151,12 +2148,11 @@ msgstr "계속하려면 MDN 프로필을 만드세요"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "기존 MDN 프로필이 GitHub 메일 주소와 일치합니다. 프로필을 복구하려면 여기를 클릭하세요:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "{user} | 프로필"
+msgstr "자기 프로필 복구"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2373,36 +2369,32 @@ msgid "Identified as not spam:"
 msgstr "스팸이 아닌 것으로 확인됨:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "새 계정 연결"
+msgstr "계정 연결"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "MDN 프로필을 GitHub에 연결하려면 아래 버튼을 이용하세요."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "이 계정 복구 링크는 다시 로그인할 수 없습니다."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "계정 로그인 실패"
+msgstr "계정 복구 실패"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "제공된 슬러그가 유효하지 않습니다."
+msgstr "이 링크는 더는 유효하지 않습니다."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
-#, fuzzy
 msgid "Recovery Email Sent"
-msgstr "알림 이메일이 발송되었습니다."
+msgstr "복구 이메일 발송함"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "기존 계정을 복구하려면 이메일 내 링크를 클릭하세요."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2417,13 +2409,12 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">차단 해제 요청</a> (영문 작성 필요)</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "프로필로 이동"
+msgstr "프로필 삭제"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "당신이 떠나는 것을 보게 되어 유감입니다."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
