@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 22:40+0000\n"
+"PO-Revision-Date: 2016-11-10 22:43+0000\n"
 "Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
@@ -375,6 +375,7 @@ msgstr "Obrigado! Por favor verifique a sua caixa de correio para confirmar a su
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
+"Se não confirmou previamente uma subscrição a uma newsletter relacionada com a Mozilla, pode ter de o fazer. Por favor verifique a sua caixa de entrada ou o seu filtro de spam por um email nosso."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
@@ -1153,7 +1154,7 @@ msgstr "Histórico"
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
-msgstr ""
+msgstr "Tendências ao longo do tempo, terminam a %(date)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
@@ -2569,7 +2570,7 @@ msgstr "Apagar a sua conta."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Gerir a suas subscrições à newsletter da Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
