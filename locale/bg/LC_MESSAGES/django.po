@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 20:57+0000\n"
+"PO-Revision-Date: 2016-11-11 20:01+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -71,17 +71,17 @@ msgstr "Съжаляваме, не успяхме да намерим какво
 #: jinja2/404.html:24
 #, python-format
 msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
-msgstr ""
+msgstr "Може да опитате с търсене или да започнете от <a href=\"%(homepage_url)s\">началната страница</a>."
 
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr ""
+msgstr "Ако сте последвали връзка в документацията, може да влезете и да създадете страницата. Иначе, моля <a href=\"%(bug_form_url)s\" rel=\"nofollow\">докладвайте за грешка</a>. Благодарим!"
 
 #: jinja2/404.html:36
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
-msgstr ""
+msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> от Матю Инман от <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
@@ -101,7 +101,7 @@ msgstr "Избор на език"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
-msgstr ""
+msgstr "Към страницата за търсене"
 
 #: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -109,15 +109,15 @@ msgstr "Инструменти"
 
 #: jinja2/base.html:105
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "Помогнете за MDN"
 
 #: jinja2/base.html:107
 msgid "Get started"
-msgstr ""
+msgstr "Да започваме"
 
 #: jinja2/base.html:108
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Преглед и превод на документи"
 
 #: jinja2/base.html:111
 msgid "Site Tools"
