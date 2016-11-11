@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-11 11:22+0000\n"
+"PO-Revision-Date: 2016-11-11 11:31+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -321,9 +321,8 @@ msgid "Sign in"
 msgstr "Přihlásit se"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Naučte se vytvářet web"
+msgstr "Naučte se to nejlepší z vývoje webu"
 
 #: jinja2/includes/newsletter.html:4
 #, fuzzy
@@ -2411,23 +2410,23 @@ msgstr "I když je možné smazat váš účet, nemůžeme smazat žádné reviz
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Prosím, vytvořte bug se žádostí o smazání vašeho účtu, a ujistěte se, že jedna z následujících možností je v poli popis:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Neupravil jsem žádné stránky; jen smažte můj účet."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Zachovejte uvedení autora pro mé úpravy stránek; smažte moji e-mailovou adresu a zmrazte můj účet, abych se již nemohl přihlásit."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Přepněte má uvedení autora u změn stránek na \"Anonymous\" a smažte můj účet."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Vytvořte bug pro smazání vašeho účtu"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2526,11 +2525,11 @@ msgstr "Publikovat"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 msgid "Delete your account."
-msgstr ""
+msgstr "Smazat váš účet"
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Spravujte své odběry magazínů Mozilly."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 #, fuzzy
@@ -2543,6 +2542,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Tento e-mail jsme vám poslali, protože vy, nebo někdo jiný, požádal o přístup k vašemu účtu %(username)s na %(domain)s. Můžete ho bezpečeně ignorovat, pokud jste tento požadavek nevytvořili vy. "
+"Klikněte na odkaz níže pro přístup k vašemu účtu:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 #, fuzzy
