@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-07-17 09:09+0000\n"
-"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
+"PO-Revision-Date: 2016-11-11 09:33+0000\n"
+"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -168,15 +168,15 @@ msgstr "obnoveno"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr ""
+msgstr "Publikování selhalo. Momentálně nejste přihlášeni. Použijte prosím nový panel pro přihlášení a zkuste publikaci znovu."
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "Změny uloženy."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr ""
+msgstr "Publikování selhalo. Prosím, zkopírujte a vložte vaše úpravy na bezpečné místo a zkuste odeslat formulář pomocí tlačítka 'Odeslat'."
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
@@ -313,7 +313,7 @@ msgstr "Ukázkový JavaScriptový obsah"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "Výsledek"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
