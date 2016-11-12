@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 22:40+0000\n"
+"PO-Revision-Date: 2016-11-12 22:47+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1079,18 +1079,18 @@ msgstr "Филтър"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr ""
+msgstr "Връщане в предишното състояние"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
 #: kuma/wiki/feeds.py:340
 msgid "View Page"
-msgstr ""
+msgstr "Преглед на страницата"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
 msgid "Edit Page"
-msgstr ""
+msgstr "Промяна на страница"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
@@ -1100,16 +1100,16 @@ msgstr "История"
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
-msgstr ""
+msgstr "Тенденции във времето към %(date)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
-msgstr ""
+msgstr "Версия"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
-msgstr ""
+msgstr "Коментар"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Author"
@@ -1117,27 +1117,27 @@ msgstr "Автор"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "Превключване на IP-та"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
-msgstr ""
+msgstr "ново"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
-msgstr ""
+msgstr "изтрито"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Забрана за промяна от това IP"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "User agent:"
-msgstr ""
+msgstr "Потребителски агент:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "Referrer:"
