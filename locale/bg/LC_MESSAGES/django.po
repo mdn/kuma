@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 16:51+0000\n"
+"PO-Revision-Date: 2016-11-12 22:20+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -471,7 +471,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "Унгарски"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
@@ -495,7 +495,7 @@ msgstr "Японски"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Korean"
-msgstr ""
+msgstr "Корейски"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Lingala"
@@ -519,7 +519,7 @@ msgstr "Персийски"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Polish"
-msgstr ""
+msgstr "Полски"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
@@ -551,7 +551,7 @@ msgstr "Испански"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Swahili"
-msgstr ""
+msgstr "Суахили"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swedish"
@@ -643,7 +643,7 @@ msgstr ""
 
 #: kuma/attachments/admin.py:64
 msgid "and"
-msgstr ""
+msgstr "и"
 
 #: kuma/attachments/admin.py:127
 #, python-format
@@ -656,7 +656,7 @@ msgstr "Прикачени файлове"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "Наскоро променени файлове в MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
@@ -664,7 +664,7 @@ msgstr ""
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
-msgstr ""
+msgstr "Не са разрешени файлове от този тип."
 
 #: kuma/attachments/models.py:112
 msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
@@ -696,7 +696,7 @@ msgstr ""
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr ""
+msgstr "Прикачен файл, изхвърлен в кошчето"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
