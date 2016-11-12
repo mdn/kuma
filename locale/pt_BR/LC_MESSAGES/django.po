@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 12:53+0000\n"
+"PO-Revision-Date: 2016-11-12 15:29+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -123,7 +123,7 @@ msgstr "Contribuir com o MDN"
 
 #: jinja2/base.html:107
 msgid "Get started"
-msgstr "Introdução"
+msgstr "Começar"
 
 #: jinja2/base.html:108
 msgid "Review or localize docs"
