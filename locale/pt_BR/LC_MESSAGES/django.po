@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 00:26+0000\n"
+"PO-Revision-Date: 2016-11-12 12:53+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -2137,7 +2137,7 @@ msgstr "Criar seu perfil MDN para continuar"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Um perfil existente do MDN coincide com seu e-mail do GitHub. Clique aqui para recuperar um perfil:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
 msgid "Recover my Profile"
@@ -2369,12 +2369,11 @@ msgstr "Use o botão abaixo para conectar seu perfil do MDN ao GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Esse link de recuperação de conta não pode ser usado para se conectar novamente."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Falha no login"
+msgstr "Falha ao recuperar conta"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 msgid "This link is no longer valid."
@@ -2401,9 +2400,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Clique aqui</a> para recorrer dessa proibição.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Ir para o seu perfil"
+msgstr "Excluir seu perfil"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2411,27 +2409,27 @@ msgstr "Lamentamos ver você partir."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "Mesmo que seja possível remover sua conta, não podemos remover revisões (alteração em páginas) que você tenha feito, e nossa licença de conteúdo requer que tenham uma atribuição."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Por favor registre um bug para solicitar o encerramento da sua conta, e certifique-se que uma dessas opções esteja no campo de descrição:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Eu não alterei nenhuma página; apenas apague minha conta."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Manter a atribuição para alterações na minha página; remover meu endereço de e-mail e congelar minha conta para que eu não possa entrar novamente."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Mude todas as minhas alterações em páginas para \"Anônimo\", e remova minha conta."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Registre um bug para fechar sua conta"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2528,18 +2526,16 @@ msgid "Publish"
 msgstr "Publicar"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Apagar comentário"
+msgstr "Excluir sua conta."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Gerencie suas assinaturas de notícias Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Ajude a melhorar o MDN"
+msgstr "Olá da MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2547,6 +2543,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Você está recebendo este e-mail porque você ou outra pessoa solicitou acesso à sua conta de usuário %(username)s no %(domain)s. Isso pode ser ignorado com segurança se você não fez essa solicitação."
+" Clique no link abaixo para acessar sua conta:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
@@ -2555,7 +2553,7 @@ msgstr "Obrigado por usar a MDN!"
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Recuperação de perfil para %(username)s no %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -2916,6 +2914,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Falha ao publicar. Foram detectados conflitos em tentativas de edição. Por favor copie e cole suas alterações em um local seguro e visite a página de <a href=\"%(url)s\">histórico de revisões</a> "
+"para visualizar o que foi alterado antes de fazer novas alterações."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
