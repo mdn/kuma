@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 10:43+0000\n"
+"PO-Revision-Date: 2016-11-12 16:40+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -252,7 +252,7 @@ msgstr "Търсене"
 #: jinja2/base.html:198
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr ""
+msgstr "<p>© 2005-%(thisyear)s Мрежата на Разработчиците на Мозила и отделни участници.</p><p>Съдържанието се разпространява под <a href=\"%(copyright_url)s\">тези лицензи</a>.</p>"
 
 #: jinja2/base.html:203
 msgid "About MDN"
@@ -318,7 +318,7 @@ msgstr "Вход"
 
 #: jinja2/includes/newsletter.html:3
 msgid "Learn the best of web development"
-msgstr ""
+msgstr "Научете най-доброто в програмирането за уеб"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
@@ -339,7 +339,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
-msgstr ""
+msgstr "Записване сега"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
