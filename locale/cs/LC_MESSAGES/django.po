@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 09:59+0000\n"
+"PO-Revision-Date: 2016-11-12 10:52+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -4109,6 +4109,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          Následující dokumenty budou trvale odstraněny z databáze. Tato akce nemůže být navrácena. Pro zrušení, klikněte na tlačítko \"Zpět\" ve vašem prohlížeči.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
@@ -4145,7 +4148,7 @@ msgstr "Při vytváření obsahu nastala chyba."
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr ""
+msgstr "Dokument již existuje. Poznámka: Nemůžete navrátit dokument, který byl přesunut, dokud nesmažete jeho přesměrování."
 
 #: kuma/wiki/views/document.py:607
 #, python-format
@@ -4173,7 +4176,7 @@ msgstr "Chyba v předpokladech ETag"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "Sekce mohou být upraveny pouze v kontextu."
 
 #: kuma/wiki/views/misc.py:50
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
@@ -4181,7 +4184,7 @@ msgstr "Automatické návrhy vyžadují částečný nadpis. Pro kompletní inde
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "Dokument byl upraven; prosím, zkontrolujte jej znovu."
 
 #: kuma/wiki/views/translate.py:74
 msgid "You cannot translate this document."
