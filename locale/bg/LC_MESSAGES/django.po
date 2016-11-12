@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 16:40+0000\n"
+"PO-Revision-Date: 2016-11-12 16:51+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -359,15 +359,15 @@ msgstr ""
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
-msgstr ""
+msgstr "Назад"
 
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
-msgstr ""
+msgstr "Напред"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "Aфриканс"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
@@ -459,7 +459,7 @@ msgstr "Гръцки"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
-msgstr ""
+msgstr "Хауса"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
@@ -483,15 +483,15 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
-msgstr ""
+msgstr "Ирландски"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "Италиански"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
-msgstr ""
+msgstr "Японски"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Korean"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Persian"
-msgstr ""
+msgstr "Персийски"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Polish"
@@ -523,23 +523,23 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "Португалски (Бразилия)"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "Португалски (Португалия)"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Romanian"
-msgstr ""
+msgstr "Румънски"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Russian"
-msgstr ""
+msgstr "Руски"
 
 #: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
 msgid "Serbian"
-msgstr ""
+msgstr "Сръбски"
 
 #: jinja2/includes/translate_locales.html:48
 msgid "Songhai"
@@ -547,7 +547,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Spanish"
-msgstr ""
+msgstr "Испански"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Swahili"
@@ -555,7 +555,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swedish"
-msgstr ""
+msgstr "Шведски"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Tagalog"
@@ -563,7 +563,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tamil"
-msgstr ""
+msgstr "Тамилски"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Thai"
@@ -575,15 +575,15 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Turkish"
-msgstr ""
+msgstr "Турски"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Ukrainian"
-msgstr ""
+msgstr "Украински"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Vietnamese"
-msgstr ""
+msgstr "Виетнамски"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Wolof"
@@ -599,7 +599,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Zulu"
-msgstr ""
+msgstr "Зулу"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -611,7 +611,7 @@ msgstr "Отписване"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Сигурни ли сте, че искате да се отпишете?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -620,7 +620,7 @@ msgstr "Отказ"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr ""
+msgstr "Грешка при отписването"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
@@ -630,11 +630,11 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Отписани"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "Бяхте отписани."
 
 #: kuma/attachments/admin.py:60
 #, python-format
@@ -652,7 +652,7 @@ msgstr ""
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
-msgstr ""
+msgstr "Прикачени файлове"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
