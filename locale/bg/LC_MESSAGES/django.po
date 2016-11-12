@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 09:00+0000\n"
+"PO-Revision-Date: 2016-11-12 09:20+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -233,15 +233,15 @@ msgstr "Помощ за уеб-разработчици"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Присъединете се към общността на MDN"
 
 #: jinja2/base.html:171
 msgid "Report a content problem"
-msgstr ""
+msgstr "Докладвайте проблем със съдържанието"
 
 #: jinja2/base.html:172
 msgid "Report a bug"
-msgstr ""
+msgstr "Докладване на програмна грешка"
 
 #: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
@@ -256,11 +256,11 @@ msgstr ""
 
 #: jinja2/base.html:203
 msgid "About MDN"
-msgstr ""
+msgstr "Относно MDN"
 
 #: jinja2/base.html:204
 msgid "Terms"
-msgstr ""
+msgstr "Условия"
 
 #: jinja2/base.html:205
 msgid "Privacy"
@@ -272,15 +272,15 @@ msgstr "Бисквитки"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr ""
+msgstr "Принос към програмния код"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">Излезте</a>, и опитайте отново.</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Търсене в помощта за Firefox"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
