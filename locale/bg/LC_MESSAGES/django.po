@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 01:11+0000\n"
+"PO-Revision-Date: 2016-11-12 09:00+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -205,7 +205,7 @@ msgstr "...още документи"
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Документация от Мозила"
 
 #: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
@@ -217,19 +217,19 @@ msgstr "Firefox"
 
 #: jinja2/base.html:161
 msgid "Developer Tools"
-msgstr ""
+msgstr "Инструменти за разработчици"
 
 #: jinja2/base.html:161
 msgid "Feedback"
-msgstr "Обратна връзка"
+msgstr "Отзиви"
 
 #: jinja2/base.html:166
 msgid "Get Firefox help"
-msgstr ""
+msgstr "Помощ за Firefox"
 
 #: jinja2/base.html:167
 msgid "Get web development help"
-msgstr ""
+msgstr "Помощ за уеб-разработчици"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
