@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-10-22 08:45+0000\n"
-"Last-Translator: Richard Závodný <rickydesign@email.cz>\n"
+"PO-Revision-Date: 2016-11-12 09:59+0000\n"
+"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -178,9 +178,8 @@ msgid "References & Guides"
 msgstr "Reference a návody"
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learning web development"
-msgstr "Naučte se vytvářet web"
+msgstr "Naučte se vyvíjet web"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
@@ -199,9 +198,8 @@ msgid "Accessibility"
 msgstr "Přístupnost"
 
 #: jinja2/base.html:146
-#, fuzzy
 msgid "Game development"
-msgstr "Vývoj webu"
+msgstr "Vývoj her"
 
 #: jinja2/base.html:147
 msgid "...more docs"
@@ -325,14 +323,12 @@ msgid "Learn the best of web development"
 msgstr "Naučte se to nejlepší z vývoje webu"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "Pošlete mi newsletter"
+msgstr "Přihlaste se k odběru našeho zpravodaje:"
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
-msgstr "E-mail:"
+msgstr "E-mail"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
@@ -344,9 +340,8 @@ msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(p
 msgstr "Souhlasím s tím, aby Mozilla zpracovávala mé informace tak, jak je popsáno v <a href=\"%(policy_url)s\">Zásadách ochrany soukromí</a>."
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "Přihlášení"
+msgstr "Zaregistrujte se nyní"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -1247,9 +1242,8 @@ msgid "more..."
 msgstr "více..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learning"
-msgstr "Učím se"
+msgstr "Učení se"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
