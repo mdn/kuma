@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 01:58+0000\n"
-"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
+"PO-Revision-Date: 2016-11-13 08:47+0000\n"
+"Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -1320,7 +1320,7 @@ msgstr "웹 개발 배우기"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
-msgstr "당신과 같은 개발자들을 위해 만든 브라우저 다운받기"
+msgstr "개발자를 위한 웹 브라우저"
 
 #: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
