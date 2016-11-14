@@ -115,6 +115,7 @@ def is_superuser(u):
         raise PermissionDenied
     return False
 
+
 superuser_required = user_passes_test(is_superuser)
 #: A decorator to use for requiring a superuser
 

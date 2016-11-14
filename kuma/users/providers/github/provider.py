@@ -44,4 +44,5 @@ class KumaGitHubProvider(GitHubProvider):
     def get_default_scope(self):
         return ['user:email']
 
+
 providers.registry.register(KumaGitHubProvider)

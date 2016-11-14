@@ -13,6 +13,8 @@ def promote(modeladmin, request, queryset):
     index = queryset[0]
     index.promote()
     messages.info(request, _("Promoted search index %s.") % index)
+
+
 promote.short_description = _("Promote selected search index to current index")
 
 
@@ -27,6 +29,8 @@ def demote(modeladmin, request, queryset):
     index = queryset[0]
     index.demote()
     messages.info(request, _("Demoted search index %s.") % index)
+
+
 demote.short_description = _("Demote selected search index "
                              "(automatic fallback to previous index)")
 
@@ -39,6 +43,8 @@ def populate(modeladmin, request, queryset):
     index = queryset[0]
     message = index.populate()
     messages.info(request, message)
+
+
 populate.short_description = _("Populate selected search index via Celery")
 
 
