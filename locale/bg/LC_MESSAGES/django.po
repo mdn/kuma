@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-12 22:47+0000\n"
+"PO-Revision-Date: 2016-11-14 21:36+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -343,11 +343,11 @@ msgstr "Записване сега"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "Новинарската емисия се предлага само на английски сега."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Благодарим! Моля проверете електронната си поща, за да потвърдите абонамента си."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
@@ -355,7 +355,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "Скриване на възможността за абониране за новинарската емисия"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -672,11 +672,11 @@ msgstr ""
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
-msgstr ""
+msgstr "версия на прикачения файл"
 
 #: kuma/attachments/models.py:141
 msgid "attachment revisions"
-msgstr ""
+msgstr "версии на прикачения файл"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -711,7 +711,7 @@ msgstr "Прикачени файлове | %(title)s"
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "Качване на файл в статията %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
 msgid "Upload files"
