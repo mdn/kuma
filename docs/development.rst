@@ -124,6 +124,13 @@ Apps are migrated using Django's migration system. To run the migrations::
 If your changes include schema modifications, see the Django documentation for
 the `migration workflow`_.
 
+To improve the speed of the test suite, the ``py.test`` option ``--reuse-db``
+is used, which does not delete the test database after use. If you change
+migrations yourself or switch to a branch with different migrations, you will
+need to recreate your test database by running::
+
+    py.test --create-db kuma/core
+
 .. _migration workflow: https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow
 
 Coding conventions
