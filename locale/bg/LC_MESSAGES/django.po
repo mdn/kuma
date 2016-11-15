@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-14 21:36+0000\n"
+"PO-Revision-Date: 2016-11-15 12:20+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -59,6 +59,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> от Матю Инман в<a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
+"Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -335,7 +337,7 @@ msgstr "вие@example.com"
 #: jinja2/includes/newsletter.html:18
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr ""
+msgstr "Съгласен съм Мозила да ползва информацията за мен, както е обяснено в <a href=\"%(policy_url)s\">тази Политика за Поверителност</a>."
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
@@ -639,7 +641,7 @@ msgstr "Бяхте отписани."
 #: kuma/attachments/admin.py:60
 #, python-format
 msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
-msgstr ""
+msgstr "Следните прикачени файлове бяха преместени в кошчето: %(filenames)s. Ако искате, ги прегледайте преди автоматичното им изтриване след %(days)s дни от хранилището за файлове."
 
 #: kuma/attachments/admin.py:64
 msgid "and"
@@ -680,7 +682,7 @@ msgstr "версии на прикачения файл"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "Прикаченият файл, преместен в кошчето"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
@@ -753,7 +755,7 @@ msgstr "Коментари"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
-msgstr ""
+msgstr "Прикачени към тази статия"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
@@ -773,7 +775,7 @@ msgstr "Качено от"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
-msgstr ""
+msgstr "С връзка в статията"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
@@ -782,7 +784,7 @@ msgstr ""
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s байта"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
@@ -849,7 +851,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
-msgstr ""
+msgstr "Създаване"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:20
 #, python-format
@@ -868,7 +870,7 @@ msgstr "Тайна"
 
 #: kuma/core/apps.py:13
 msgid "Core"
-msgstr ""
+msgstr "Ядро"
 
 #: kuma/core/form_fields.py:57
 #, python-format
@@ -935,7 +937,7 @@ msgstr "B2G ОС"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
-msgstr ""
+msgstr "Уча"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
@@ -943,7 +945,7 @@ msgstr "Платно"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "Примери с код"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
