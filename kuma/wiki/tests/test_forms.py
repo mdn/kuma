@@ -252,7 +252,6 @@ class RevisionFormViewTests(UserTransactionTestCase):
     # Keys for a page edit (English or translation)
     akismet_keys_edit = sorted(akismet_keys + ['permalink'])
 
-    #@profile
     def setUp(self):
         super(RevisionFormViewTests, self).setUp()
         self.testuser = self.user_model.objects.get(username='testuser')
@@ -751,7 +750,6 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
-    #@profile
     def setup_form(self, mock_requests):
         """
         Setup a RevisionForm for a POST to create a new translation.
@@ -802,7 +800,6 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         return rev_form
 
     @requests_mock.mock()
-    #@profile
     def test_new_translation(self, mock_requests):
         """Test Akismet dual locale setting for new translations."""
         from django.conf import settings
