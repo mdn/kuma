@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import time
 
 from django.contrib.auth.models import Permission
 from django.core import mail
@@ -251,6 +252,7 @@ class RevisionFormViewTests(UserTransactionTestCase):
     # Keys for a page edit (English or translation)
     akismet_keys_edit = sorted(akismet_keys + ['permalink'])
 
+    #@profile
     def setUp(self):
         super(RevisionFormViewTests, self).setUp()
         self.testuser = self.user_model.objects.get(username='testuser')
@@ -716,6 +718,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
 
 
 class RevisionFormNewTranslationTests(RevisionFormViewTests):
+    t1 = time.time()
     """Test RevisionForm as used to create a page in translate view."""
 
     original = {  # Default attributes of original English page
@@ -748,6 +751,7 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
+    #@profile
     def setup_form(self, mock_requests):
         """
         Setup a RevisionForm for a POST to create a new translation.
@@ -797,10 +801,14 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         rev_form.instance.document = fr_html_doc
         return rev_form
 
-    @pytest.mark.spam
     @requests_mock.mock()
+    #@profile
     def test_new_translation(self, mock_requests):
         """Test Akismet dual locale setting for new translations."""
+        from django.conf import settings
+        print settings.DATABASES
+        t = time.time()
+        print t - self.t1
         rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
@@ -814,6 +822,7 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
             u'Traduction initiale'
         )
         assert parameters['comment_content'] == expected_content
+        print time.time() - t
 
 
 class RevisionFormEditTranslationTests(RevisionFormViewTests):
@@ -913,7 +922,6 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
 
         return rev_form1, rev_form2
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_edit_translation(self, mock_requests):
         rev_form1, rev_form2 = self.setup_forms(mock_requests)
