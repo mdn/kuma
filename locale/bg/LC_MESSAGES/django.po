@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-15 12:20+0000\n"
+"PO-Revision-Date: 2016-11-15 12:21+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1212,11 +1212,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "Търсене в документите"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "Показване на теми"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Technologies"
