@@ -12,6 +12,7 @@ def history_link(self):
     what = (count == 1) and 'action' or 'actions'
     return '<a href="%s">%s&nbsp;%s</a>' % (url, count, what)
 
+
 history_link.allow_tags = True
 history_link.short_description = 'Usage history'
 
@@ -31,6 +32,7 @@ def key_link(self):
                   args=[key.id])
     return '<a href="%s">%s (#%s)</a>' % (url, key.user, key.id)
 
+
 key_link.allow_tags = True
 key_link.short_description = 'Key'
 
@@ -41,6 +43,7 @@ def content_object_link(self):
                                       obj._meta.model_name)
     url = reverse(url_key, args=[obj.id])
     return '<a href="%s">%s (#%s)</a>' % (url, self.content_type, obj.pk)
+
 
 content_object_link.allow_tags = True
 content_object_link.short_description = 'Object'

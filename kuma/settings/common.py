@@ -248,6 +248,7 @@ def _get_locales():
         locales[locale] = _Language(meta['English'], meta['native'])
     return locales
 
+
 LOCALES = _get_locales()
 LANGUAGES = [(locale, LOCALES[locale].native) for locale in MDN_LANGUAGES]
 
@@ -1347,6 +1348,7 @@ DBGETTEXT_ROOT = 'translations'
 def get_user_url(user):
     from kuma.core.urlresolvers import reverse
     return reverse('users.user_detail', args=[user.username])
+
 
 ABSOLUTE_URL_OVERRIDES = {
     'users.user': get_user_url

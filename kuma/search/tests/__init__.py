@@ -20,6 +20,7 @@ from ..models import Index
 class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
     pass
 
+
 factory = LocalizingAPIRequestFactory()
 
 
