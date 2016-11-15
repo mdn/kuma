@@ -15,6 +15,3 @@
 
     # Required to load production database
     max_allowed_packet=100M
-    
-    general_log_file        = /var/log/mysql/mysql.log
-    general_log             = 1
