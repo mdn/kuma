@@ -247,15 +247,18 @@ Now you can sign in with GitHub.
 To associate your password-only admin account with GitHub:
 
 #. Login with your password at http://localhost:8000/admin/login/
-#. Go to Account Connections at http://localhost:8000/en-US/users/account/connections
-#. Click "Connect with GitHub"
-#. (*Optional*) `Disable your admin password`_.
+#. Go to the Homepage at https://developer.mozilla.org/en-US/
+#. Click your username at the top to view your profile
+#. Click Edit to edit your profile
+#. Under My Profiles, click `Use your GitHub account to sign in`_
+#. (*Optional*) `Disable your admin password`_
 
 To create a new account with GitHub, use the regular "Sign in" widget at the
 top of any page.
 
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
 .. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
+.. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
 
 Interact with the Docker containers
 ===================================
