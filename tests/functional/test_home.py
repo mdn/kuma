@@ -1,5 +1,6 @@
 import pytest
 
+from utils.urls import assert_valid_url
 from pages.home import HomePage
 
 
@@ -7,9 +8,17 @@ from pages.home import HomePage
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
-def test_is_masthead_displayed(base_url, selenium):
+def test_masthead_displayed(base_url, selenium):
     page = HomePage(selenium, base_url).open()
     assert page.is_masthead_displayed
+
+
+# header tests
+@pytest.mark.smoke
+@pytest.mark.nodata
+@pytest.mark.nondestructive
+def test_header_displays(base_url, selenium):
+    page = HomePage(selenium, base_url).open()
     assert page.Header.is_displayed
     assert page.Header.is_menu_displayed
 
@@ -29,7 +38,7 @@ def test_header_platform_submenu(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
-def test_is_footer_displayed(base_url, selenium):
+def test_footer_displays(base_url, selenium):
     page = HomePage(selenium, base_url).open()
     assert page.Footer.is_displayed
     assert page.Footer.is_privacy_displayed

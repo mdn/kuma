@@ -15,6 +15,7 @@ def test_title(base_url, selenium):
     assert page.article_title_text in selenium.title, 'article title not in page title'
 
 
+# layout
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_article_layout(base_url, selenium):
@@ -39,15 +40,9 @@ def test_page_buttons_displayed(base_url, selenium):
 # header tests
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-def test_is_header_displayed(base_url, selenium):
+def test_header_displays(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.Header.is_displayed
-
-
-@pytest.mark.smoke
-@pytest.mark.nondestructive
-def test_is_header_menu_displayed(base_url, selenium):
-    page = ArticlePage(selenium, base_url).open()
     assert page.Header.is_menu_displayed
 
 
@@ -74,14 +69,9 @@ def test_header_feedback_submenu(base_url, selenium):
 # footer tests
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-def test_is_footer_displayed(base_url, selenium):
+def test_footer_displays(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.Footer.is_displayed
-
-
-@pytest.mark.smoke
-@pytest.mark.nondestructive
-def test_is_footer_links_displayed(base_url, selenium):
-    page = ArticlePage(selenium, base_url).open()
     assert page.Footer.is_privacy_displayed
     assert page.Footer.is_license_displayed
+    assert page.Footer.is_select_language_displayed
