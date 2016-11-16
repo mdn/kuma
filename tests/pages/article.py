@@ -2,6 +2,7 @@ from pypom import Region
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+from pages.regions.column_container import ColumnContainer
 
 
 class ArticlePage(BasePage):
@@ -43,6 +44,11 @@ class ArticlePage(BasePage):
     def is_advanced_menu_displayed(self):
         return self.find_element(*self._advanced_button_locator).is_displayed()
 
+    @property
+    def article_column_container_region(self):
+        article_column_container = self.find_element(*self._article_column_container)
+        return ColumnContainer(self, root=article_column_container)
+
     # article columns
     @property
     def is_article_column_left_present(self):
@@ -70,30 +76,6 @@ class ArticlePage(BasePage):
         # right column is present
         right_present = right_column.is_displayed()
         return right_expected and right_present
-
-    @property
-    def is_article_columns_expected_layout(self):
-        left_column = self.find_element(*self._article_left_column_locator)
-        content_column = self.find_element(*self._article_content_column_locator)
-        right_column = self.find_element(*self._article_right_column_locator)
-
-        left_column_location = left_column.location
-        content_column_location = content_column.location
-        right_column_location = right_column.location
-
-        left_column_y = left_column_location['y']
-        content_column_y = content_column_location['y']
-        right_column_y = right_column_location['y']
-
-        left_column_x = left_column_location['x']
-        content_column_x = content_column_location['x']
-        right_column_x = right_column_location['x']
-
-        # check y coordinates all the same
-        y_match = left_column_y == content_column_y == right_column_y
-        # check x coordinates are acsending
-        x_acsend = left_column_x < content_column_x < right_column_x
-        return y_match and x_acsend
 
     # article wrapper is displayed
     @property
