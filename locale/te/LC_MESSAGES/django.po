@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-10 17:33+0000\n"
+"PO-Revision-Date: 2016-11-16 09:48+0000\n"
 "Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -117,7 +117,7 @@ msgstr "ప్రారంభించడానికి"
 
 #: jinja2/base.html:108
 msgid "Review or localize docs"
-msgstr ""
+msgstr "పత్రాలను సరిచూడు లేదా స్థానికీకరించు"
 
 #: jinja2/base.html:111
 msgid "Site Tools"
@@ -165,7 +165,7 @@ msgstr "APIలు / DOM"
 
 #: jinja2/base.html:135
 msgid "WebExtensions"
-msgstr ""
+msgstr "WebExtensions"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -176,9 +176,8 @@ msgid "References & Guides"
 msgstr ""
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learning web development"
-msgstr "వెబ్ డవలప్మెంట్ కోసం సహాయం"
+msgstr "జాల అభివృద్ధి నేర్చుకోవడం"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
@@ -197,9 +196,8 @@ msgid "Accessibility"
 msgstr ""
 
 #: jinja2/base.html:146
-#, fuzzy
 msgid "Game development"
-msgstr "వెబ్ డవలప్మెంట్ కోసం సహాయం"
+msgstr "ఆట అభివృద్ధి"
 
 #: jinja2/base.html:147
 msgid "...more docs"
@@ -319,9 +317,8 @@ msgid "Sign in"
 msgstr "సైన్ ఇన్"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "వెబ్ డవలప్మెంట్ కోసం సహాయం"
+msgstr "జాల అభివృద్ధి గురించి ఉత్తమంగా నేర్చుకోండి"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
@@ -341,9 +338,8 @@ msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(p
 msgstr "ఈ <a href=\"%(policy_url)s\">గోప్యత విధానాన్ని</a> అనుసరించి Mozillaనా సమాచారాన్ని ఉపయోగించుకోవడానికి సమ్మతిస్తున్నాను."
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "సైన్ ఇన్"
+msgstr "ఇప్పుడే ఖాతా సృష్టించుకోండి"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -825,7 +821,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "కొత్త కీ ని సృష్టించండి"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
@@ -975,7 +971,7 @@ msgstr "మధ్యస్థం"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
-msgstr ""
+msgstr "Marketplace"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
@@ -983,11 +979,11 @@ msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr ""
+msgstr "జాల అభివృద్ధి"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
-msgstr ""
+msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
@@ -995,7 +991,7 @@ msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
-msgstr ""
+msgstr "దస్త్ర రీతి"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
@@ -1007,7 +1003,7 @@ msgstr "విషయాలు"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
-msgstr ""
+msgstr "అన్ని స్థానికీకరణలు"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
@@ -1031,11 +1027,11 @@ msgstr "30 రోజులు"
 
 #: kuma/dashboards/forms.py:23
 msgid "All Authors"
-msgstr ""
+msgstr "రచయితలందరు"
 
 #: kuma/dashboards/forms.py:24
 msgid "Known Authors"
-msgstr ""
+msgstr "తెలిసిన రచయితలు"
 
 #: kuma/dashboards/forms.py:25
 msgid "Unknown Authors"
@@ -1223,9 +1219,8 @@ msgid "Show topics"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:72
-#, fuzzy
 msgid "Web<br />Technologies"
-msgstr "జాల సాంకేతికతలు"
+msgstr "జాల<br /> సాంకేతికతలు"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -1236,7 +1231,6 @@ msgid "more..."
 msgstr "ఇంకా..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learning"
 msgstr "నేను నేర్చుకుంటున్నాను"
 
@@ -1750,9 +1744,8 @@ msgid "Username already in use."
 msgstr "వాడుకరి పేరు ఇప్పటికే వాడుకలో ఉంది."
 
 #: kuma/users/forms.py:162
-#, fuzzy
 msgid "Email"
-msgstr "ఇమెయిల్:"
+msgstr "ఇమెయిల్"
 
 #: kuma/users/models.py:34
 #, python-format
