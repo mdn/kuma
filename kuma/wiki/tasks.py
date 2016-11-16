@@ -141,15 +141,14 @@ def build_json_data_for_document(pk, stale):
 
 
 @task
-def move_page(locale, slug, new_slug, email):
+def move_page(locale, slug, new_slug, user_id):
     transaction.set_autocommit(False)
     User = get_user_model()
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         transaction.rollback()
-        logging.error('Page move failed: no user with email address %s' %
-                      email)
+        logging.error('Page move failed: no user with id %s' % user_id)
         return
 
     try:
