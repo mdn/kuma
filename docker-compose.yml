@@ -16,7 +16,7 @@ services:
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-      - ALLOWED_HOSTS=localhost,localhost:8000
+      - ALLOWED_HOSTS=localhost,127.0.0.1,[::1],web,api
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
       - CSRF_COOKIE_SECURE=False
