@@ -2,6 +2,7 @@ from pypom import Region
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+from pages.regions.column_container import ColumnContainer
 
 
 class SearchPage(BasePage):
@@ -22,6 +23,7 @@ class SearchPage(BasePage):
     # layout
     _results_explanation_locator = (By.CSS_SELECTOR, '#content .search-results-explanation')
     _results_explanation_p_locator = (By.CSS_SELECTOR, '#content .search-results-explanation p')
+    _column_container = (By.CSS_SELECTOR, '#search-form > .column-container')
     _main_column_locator = (By.CSS_SELECTOR, '#content .column-main')
     _side_column_locator = (By.CSS_SELECTOR, '#content .column-strip')
 
@@ -85,6 +87,11 @@ class SearchPage(BasePage):
     def is_side_column_present(self):
         side_column = self.find_element(*self._side_column_locator)
         return side_column.is_displayed()
+
+    @property
+    def column_container_region(self):
+        column_container = self.find_element(*self._column_container)
+        return ColumnContainer(self, root=column_container)
 
     @property
     def is_article_columns_expected_layout(self):

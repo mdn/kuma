@@ -1,6 +1,4 @@
 import re
-from urlparse import urlparse, parse_qs
-from braceexpand import braceexpand
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -8,6 +6,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
 
 from pypom import Page, Region
+
 
 class BasePage(Page):
 
@@ -17,7 +16,6 @@ class BasePage(Page):
         super(BasePage, self).__init__(selenium, base_url, locale=locale, **url_kwargs)
 
     def wait_for_page_to_load(self):
-        # self.wait.until(lambda s: self.seed_url in s.current_url)
         el = self.find_element(By.TAG_NAME, 'html')
         self.wait.until(lambda s: el.get_attribute('data-ffo-opensanslight'))
         return self
@@ -131,24 +129,19 @@ class BasePage(Page):
 
         def open_report_content(self):
             self.find_element(*self._report_content_locator).click()
-            # TODO - what to return???
-            # return FeedbackPage(self.selenium, self.page.base_url).wait_for_page_to_load()
+            # launches new window, cannot return new page object like other opens
 
         def is_report_content_url_expected(self, selenium, article_url):
             current_url = selenium.current_url
             report_url = self.report_content_form_url
-            # current_url_simplified = re.sub(r'[^a-zA-Z]', '', current_url)
-            # article_url_simplified = re.sub(r'[^a-zA-Z]', '', article_url)
+            article_url_no_protocal = re.sub(r'[^http:]', '', article_url)
             # compare
             url_matches = report_url in current_url
-            # url_contains_article = article_url_simplified in current_url_simplified
+            url_contains_article = article_url_no_protocal in current_url
             return url_matches
 
         def open_report_bug(self):
             self.find_element(*self._report_bug_locator).click()
-
-        def is_report_bug_url_expected(self, selenium):
-            return self.report_bug_form_url in selenium.current_url
 
         @property
         def search_field_width(self):
@@ -156,7 +149,7 @@ class BasePage(Page):
             return search_field.size['width']
 
         def search_field_focus(self):
-            plaform_submenu_trigger  = self.find_element(*self._platform_submenu_trigger_locator)
+            plaform_submenu_trigger = self.find_element(*self._platform_submenu_trigger_locator)
             search_field = self.find_element(*self._search_field_locator)
             focus = ActionChains(self.selenium).move_to_element(search_field).click()
             focus.perform()

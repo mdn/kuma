@@ -22,6 +22,7 @@ def test_search_homepage(base_url, selenium):
     # results found
     assert search.search_result_items_length == 10
 
+
 @pytest.mark.flaky(reruns=1)
 @pytest.mark.smoke
 @pytest.mark.nondestructive
@@ -39,6 +40,7 @@ def test_search_home_header(base_url, selenium):
     assert search.search_input_value == SEARCH_TERM, 'search term not preserved'
     # results found
     assert search.search_result_items_length == 10
+
 
 @pytest.mark.flaky(reruns=1)
 @pytest.mark.smoke
@@ -71,7 +73,8 @@ def test_search_layout(base_url, selenium):
     assert page.is_results_explanation_displayed
     assert page.is_main_column_present
     assert page.is_side_column_present
-    assert page.is_article_columns_expected_layout
+    column_container = page.column_container_region
+    assert column_container.is_expected_stacking
     # default web topics checked
     assert page.is_css_filter_checked
     assert page.is_html_filter_checked
