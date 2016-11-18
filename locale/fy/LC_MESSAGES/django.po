@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-09 08:04+0000\n"
+"PO-Revision-Date: 2016-11-18 08:09+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -134,11 +134,11 @@ msgstr "Dokumentaasjesteat"
 
 #: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr "Webtechnologyën"
+msgstr "Webtechnologyen"
 
 #: jinja2/base.html:127
 msgid "Technologies"
-msgstr "Technologyën"
+msgstr "Technologyen"
 
 #: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
@@ -1475,7 +1475,7 @@ msgstr "Webdokuminten troch ûntwikkelers, foar ûntwikkelers op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr "MDN is jo wurkset foar webûntwikkelers foar dokuminten en mear oer HTML, CSS, JavaScript en oare webstanderts en iepen technologyën."
+msgstr "MDN is jo wurkset foar webûntwikkelers foar dokuminten en mear oer HTML, CSS, JavaScript en oare webstanderts en iepen technologyen."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -2737,7 +2737,7 @@ msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr "Technysk - koadefoarbylden, API’s of technologyën"
+msgstr "Technysk - koadefoarbylden, API’s of technologyen"
 
 #: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
