@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-09 00:51+0000\n"
+"PO-Revision-Date: 2016-11-19 21:08+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -319,18 +319,16 @@ msgid "Sign in"
 msgstr "Kcem"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Issin taneflit Web"
+msgstr "Issin ayen ifazen di tneflit Web"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
 msgstr ""
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
-msgstr "Imayl:"
+msgstr "Imayl"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
@@ -342,9 +340,8 @@ msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(p
 msgstr ""
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "Jerred"
+msgstr "Jerred tura"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -1764,9 +1761,8 @@ msgid "Username already in use."
 msgstr "Isem n useqdac yettuseqdac yakan."
 
 #: kuma/users/forms.py:162
-#, fuzzy
 msgid "Email"
-msgstr "Imayl:"
+msgstr "Imayl"
 
 #: kuma/users/models.py:34
 #, python-format
@@ -1984,9 +1980,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Akk agbur n MDN yella baṭen war ma tesriḍ tuqqna."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "Akken ad tettekkiḍ, tesriḍ ad teqqneḍ ɣer MDN. Tzemreḍ ad teqqneḍ s useqdec n GitHub udiɣ amaɣnu MDN ad yettwarnu ma yella ur ɣur-k ara yiwen."
+msgstr "Akken ad tettekkiḍ, tesriḍ ad teqqneḍ ɣer umaqnu yellan di MDN."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2126,9 +2121,8 @@ msgid "An existing MDN profile matches your GitHub email. Click here to recover 
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "Imeɣna yinu"
+msgstr "Err-d amaɣnu yinu"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2348,9 +2342,8 @@ msgid "Identified as not spam:"
 msgstr "Yettwammel mačči d aspam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Qqen amiḍan nniḍen"
+msgstr "Qqen amiḍan"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
@@ -2361,14 +2354,12 @@ msgid "This account recovery link cannot be used to log in again."
 msgstr ""
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Tuqqna n umiḍan ur teddi ara"
+msgstr "Tiririt n umiḍan ur teddi ara"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "Asulay mačči d ameɣtu."
+msgstr "Aseɣwen agi mačči d ameɣtu."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
@@ -2391,9 +2382,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Sit dagii</a> akken ad berriḍ ɣef ugdel agi.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Ẓreg amaɣnu yinek"
+msgstr "Kkes amaɣnu yinek"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2527,9 +2517,8 @@ msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Mudd afus i tneflit n MDN"
+msgstr "Azul si MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2539,9 +2528,8 @@ msgid ""
 msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Tanemmirt imi d-muḍḍed afus deg usnerni n MDN!"
+msgstr "Tanemmirt imi tesqedceḍ MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
