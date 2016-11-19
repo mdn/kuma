@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-19 21:20+0000\n"
+"PO-Revision-Date: 2016-11-19 21:24+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1278,7 +1278,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Обучение за уеб-разработчици"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
@@ -1313,23 +1313,23 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
-msgstr ""
+msgstr "Първи стъпки"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr ""
+msgstr "Редакторски преглед"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
-msgstr ""
+msgstr "Технически преглед"
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
-msgstr ""
+msgstr "Превеждане"
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
-msgstr ""
+msgstr "Популяризиране на MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
