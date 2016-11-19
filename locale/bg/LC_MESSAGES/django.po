@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-19 20:59+0000\n"
+"PO-Revision-Date: 2016-11-19 21:20+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -820,6 +820,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
+"Това са вашите API-ключове. Те са полезни за изграждане на приложения, които изпълняват задачи на MDN от ваше име. Ако сте спрели да използвате някое от тях, или подозирате, че са използвани от "
+"трети страни, на които нямате доверие, изтрийте ключа. Лесно е да създадете нов ключ по всяко време."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -827,7 +829,7 @@ msgstr "Създаване на нов ключ"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr ""
+msgstr "Все още нямате API-ключове."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
@@ -900,7 +902,7 @@ msgstr "Уеб"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Мозила-хакове"
 
 #: kuma/core/utils.py:425
 #, python-format
@@ -929,7 +931,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr ""
+msgstr "Уеб приложения с отворен код"
 
 #: kuma/core/translations/search/filter/b2g-os/name.py:4
 msgid "B2G OS"
@@ -1162,15 +1164,15 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
 msgid "Submit as:"
-msgstr ""
+msgstr "Изпращане като:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
-msgstr ""
+msgstr "спам"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Няма ревизии съответстващи на този филтър."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -1232,43 +1234,43 @@ msgstr "още..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Learning"
-msgstr ""
+msgstr "Уча се"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
-msgstr ""
+msgstr "Да се запознаем с Уеб"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
-msgstr ""
+msgstr "Обучение по HTML"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn CSS"
-msgstr ""
+msgstr "Обучение по CSS"
 
 #: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Learn JavaScript"
-msgstr "Научете JavaScript"
+msgstr "Обучение по JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Инструменти<br />за разработчици"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
-msgstr ""
+msgstr "Изследвач на страницата"
 
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
-msgstr ""
+msgstr "Уеб-конзола"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "Дебъгер на JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
-msgstr ""
+msgstr "Инструменти за производителност"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
