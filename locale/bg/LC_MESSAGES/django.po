@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-15 12:21+0000\n"
+"PO-Revision-Date: 2016-11-19 20:59+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -465,11 +465,11 @@ msgstr "Хауса"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
-msgstr ""
+msgstr "Иврит"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
-msgstr ""
+msgstr "Хинди (Индия)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
@@ -477,11 +477,11 @@ msgstr "Унгарски"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
-msgstr ""
+msgstr "Игбо"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "Индонезийски"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
@@ -501,11 +501,11 @@ msgstr "Корейски"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Lingala"
-msgstr ""
+msgstr "Лингала"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Malagasy"
-msgstr ""
+msgstr "Малагашки"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Malay"
@@ -569,7 +569,7 @@ msgstr "Тамилски"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Thai"
-msgstr ""
+msgstr "Тайландски"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tswana"
@@ -721,7 +721,7 @@ msgstr "Качване на файлове"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "Как се ползват прикачени файлове"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
@@ -729,11 +729,11 @@ msgstr "Качване на файлове"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
-msgstr ""
+msgstr "Този документ няма прикачени файлове."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
+msgstr "Могат да се прикачват изображения и после в статиите да се поставят връзки към тях."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
@@ -759,7 +759,7 @@ msgstr "Прикачени към тази статия"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr ""
+msgstr "Прикачен към друга статия"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
@@ -792,7 +792,7 @@ msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Ключ за справка"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
@@ -800,7 +800,7 @@ msgstr ""
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "Описание на предназначението"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
