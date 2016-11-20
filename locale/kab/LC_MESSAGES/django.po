@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-20 04:23+0000\n"
+"PO-Revision-Date: 2016-11-20 04:59+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -337,7 +337,7 @@ msgstr "you@example.com"
 #: jinja2/includes/newsletter.html:18
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr ""
+msgstr "Qebleɣ asefrek n telɣut inu tudmawant sɣuṛ Mozilla akken yella di <a href=\"%(policy_url)s\">tasertit n tbaḍnit</a>."
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
@@ -345,19 +345,19 @@ msgstr "Jerred tura"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "Tabratt n isallen tella kan s Teglizit akka tura."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Tanemmirt! Ma ulac aɣilif senqed tabwaṭ inek n imaylen akken ad tesentmeḍ ajerred inek."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "Ma yella ur tsentmeḍ ara ajerred inek ar tebratt n isallen icudden ar Mozilla, ahat tzemreḍ akka tura. Ma ulac aɣilif, wali ma yella yimayl di tebwaṭ inek n imaylen neɣ ula deg ispamen."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "Ffer ajerred ɣer tebratt n isallen"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -2118,7 +2118,7 @@ msgstr "Rnu amaqnu inek MDN akken ad tkemled"
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Yella umaɣnu MDN icudden ar yimayl GitHub. Sit dagi akken ad terreḍ amaɣnu:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
 msgid "Recover my Profile"
@@ -2351,7 +2351,7 @@ msgstr "Seqdec taqeffalt n daw-a akken ad teqqneḍ amaɣnu yinek MDN ar GitHub.
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Aseɣwen agi n tririt ur izmir ara ad yettwaseqdec tikelt nniḍen akken di tuqqna."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
@@ -2395,19 +2395,19 @@ msgstr "Akken tzemreḍ ad tekkseḍ amiḍan inek, ur nezmir ara ad nekkes akk 
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Ma ulac aɣilif, azen-d abug nusuter n umdal n umiḍan inek sakin senqed ma yella yiwen seg iɣewwaṛen yettunefk-d deg urti n uglam:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Ur snifleɣ ala yiwen nusebter; kkes kan amiḍan inu."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Eǧǧ ayen akk s wayes ttekkaɣ deg usnifel n usebter; kkes tansa yinu imayl sakin sbek amiḍan inu akken werǧin ad kecmeɣ."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Cudd asnifel inu ɣer umidan \"Udrig\", sakin kkes amiḍan inu."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
@@ -2514,7 +2514,7 @@ msgstr "Kkes amiḍan inek."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Sefrek ajerred inek ɣer tebraṭṭ n isallen Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
@@ -2526,6 +2526,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Tremseḍ-d imayl agi acku kečč neɣ albaɛḍ nniḍen yessuter-d anekcum neɣ umiḍan inek %(username)s di %(domain)s. Yezmer ad yettwazgel ma mačči d kečč i d-yessutren aya. Sit dagi akken ad kecmeḍ ar "
+"umiḍan inek:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
