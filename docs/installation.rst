@@ -60,6 +60,8 @@ command accordingly, or force the ``kuma`` name with::
 
         docker-compose up -d -p kuma
 
+.. _provision-the-database:
+
 Provision the database
 ======================
 There are two options for provisioning the database. One option is to
