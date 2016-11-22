@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-22 14:20+0000\n"
+"PO-Revision-Date: 2016-11-22 14:36+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
-msgstr ""
+msgstr "Предварителен преглед"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1365,7 +1365,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "По-добра документация"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
@@ -1373,11 +1373,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "От Разработчици за Разработчици"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Инструменти за уеб-разработчика"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -1405,7 +1405,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Вашият изходен код:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
@@ -1520,11 +1520,11 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "име"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "име на група"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
@@ -1547,7 +1547,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr ""
+msgstr "Търсене в сайта на MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
@@ -1631,11 +1631,11 @@ msgstr ""
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "създадено"
 
 #: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
-msgstr ""
+msgstr "Спам"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
@@ -1643,7 +1643,7 @@ msgstr ""
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "изпратено на"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1666,7 +1666,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Потребител"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1675,15 +1675,15 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "алгоритъм"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "сол"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "хеш"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
@@ -1691,7 +1691,7 @@ msgstr ""
 
 #: kuma/users/forms.py:31 kuma/users/models.py:46
 msgid "Timezone"
-msgstr ""
+msgstr "Часови пояс"
 
 #: kuma/users/forms.py:37
 msgid "Beta tester"
@@ -1707,31 +1707,31 @@ msgstr ""
 
 #: kuma/users/forms.py:53
 msgid "Username"
-msgstr ""
+msgstr "Потребителско име"
 
 #: kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
-msgstr ""
+msgstr "Мозилияни"
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
@@ -1761,11 +1761,11 @@ msgstr ""
 
 #: kuma/users/models.py:56
 msgid "Language"
-msgstr ""
+msgstr "Език"
 
 #: kuma/users/models.py:61
 msgid "Homepage"
-msgstr ""
+msgstr "Начална страница"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1785,7 +1785,7 @@ msgstr ""
 
 #: kuma/users/models.py:90
 msgid "About Me"
-msgstr ""
+msgstr "За мен"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
@@ -1848,7 +1848,7 @@ msgstr ""
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "Съгласен съм"
 
 #: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -1870,11 +1870,11 @@ msgstr ""
 
 #: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
 msgid "Other:"
-msgstr ""
+msgstr "Друго:"
 
 #: kuma/users/views.py:525
 msgid "Email:"
-msgstr ""
+msgstr "Е-поща:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
@@ -1886,7 +1886,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
-msgstr ""
+msgstr "Адреси за е-поща"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
@@ -1907,7 +1907,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "Премахване"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
@@ -1919,11 +1919,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Добавяне на е-поща"
 
 #: kuma/users/jinja2/account/email.html:60
 msgid "Edit profile"
-msgstr ""
+msgstr "Промяна на профила"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
@@ -1940,7 +1940,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "Потвърждаване"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -1954,7 +1954,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "Вход"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"
@@ -1989,7 +1989,7 @@ msgstr ""
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "Нулиране на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
@@ -2069,7 +2069,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Бележка"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
@@ -2169,7 +2169,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "Влязъл с GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
@@ -2242,7 +2242,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "Обобщение"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
@@ -2262,7 +2262,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
-msgstr ""
+msgstr "Изтрито:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
