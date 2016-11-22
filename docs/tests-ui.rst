@@ -1,177 +1,151 @@
-Client-side Testing with Intern
-===============================
-From 2014 to 2016, we used Intern_ for client-side testing. It uses Selenium
-WebDriver API which lets us write automated testing via JavaScript. Intern is
-an open source project created and maintained by SitePen_.
+===================
+Client-side Testing
+===================
 
-In 2016, we started to convert our client-side tests to Python, to standardize
-on common Mozilla QA processes, and as part of an effort to add client-side
-tests to the development pipline.  The Intern tests described here are no
-longer run for development and deployment, and have not been updated for the
-Docker development environment.
+Kuma has a suite of functional tests using `Selenium`_ and `pytest`_. This allows us
+to emulate users interacting with a real browser. All these test suites live in
+the /tests/ directory.
 
-.. _SitePen: http://sitepen.com
-.. _Intern: https://theintern.github.io/
+The tests directory comprises of:
 
-Installing Dependencies
------------------------
+* ``/functional`` contains pytest tests.
+* ``/pages`` contains Python pypom page objects.
+* ``/utils`` contains helper functions.
 
-1. Go to the ``tests/ui/`` directory::
+.. _`Selenium`: http://docs.seleniumhq.org/
+.. _`pytest`: http://pytest.org/latest/
 
-    cd tests/ui
+Setting up test virtual environment
+===================================
 
-2. Use ``npm`` to install Intern::
+#. In the terminal go to the directory where you have downloaded kuma
 
-    npm install intern@^3.0
+#. Create a virtual environment for the tests to run in (the example uses the
+   name mdntests)::
 
-.. warning:: Do *not* install Intern globally -- path issues may occur.
+   $ virtualenv mdntests
 
-Running Tests
--------------
+#. Activate the virtual environment::
 
-On your machine
-~~~~~~~~~~~~~~~
+   $ source mdntests/bin/activate
 
-1. Install `JDK <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_
+#. Make sure the version of pip in the virtual environment is high enough to support hashes::
 
-2. Download the most current `release of Selenium <http://selenium-release.storage.googleapis.com/index.html>`_ standalone server. (It's the ``.jar`` file.)
+   $ pip install "pip>=8"
 
-.. note:: Firefox should work out of the box. You need to install `Chrome <https://sites.google.com/a/chromium.org/chromedriver/>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers yourself.
+#. Install the requirements the tests need to run::
 
-3. From the command line, start WebDriver::
+   $ pip install -r requirements/test.txt
 
-    # Substitute your WebDriver version in the `#` chars
-    java -jar /path/to/selenium-server-standalone-#.#.#.jar
+You may want to add your virtual environment folder to your local .gitignore
+file
 
-4. Go to the ``tests/ui/`` directory::
+Running the tests
+=================
 
-    cd tests/ui
+Before running the tests you will need to download the driver for the browser
+you want to test in. Drivers are listed and linked to in the `pytest-selenium`_
+documentation.
 
-5. Run intern with the ``intern-local`` config file (omit the ``.js``)::
+The minimum amount of information necessary to run the tests against the staging
+server is the directory the tests are in and which driver to use.
 
-    ./node_modules/.bin/intern-runner config=intern-local b=firefox
+This command will run all the tests in the suite that are marked as
+nondestructive.
 
-The above tries to run the entire suite of tests. You can change the behavior with `command line arguments`_. E.g., ::
+In the virtual environment run::
 
-    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='Web' destructive=true
+   $ py.test tests/functional/ --driver Chrome --driver-path /path/to/chromedriver
 
-The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
+You will be prompted "Do you want the application 'python' to accept incoming
+network connections?" The tests seem to run fine no matter how you answer.
 
-Safari requires some special configuration to ensure tests run correctly:
+This basic command can be modified to run subsets of the tests, use different
+browsers, run the tests against a local environment, or run tests concurrently.
 
-1.  Open your Safari browser's preferences dialog and disable the popup blocker
+.. _`pytest-selenium`: http://pytest-selenium.readthedocs.io/en/latest/user_guide.html#specifying-a-browser
 
-2.  You must download and manually install the `Safari Selenium Extension <https://github.com/SeleniumHQ/selenium/blob/master/javascript/safari-driver/prebuilt/SafariDriver.safariextz>`_.  Once downloaded, drag the extension into the Safari extensions list within the Preferences dialog.
+Only running tests in one file
+------------------------------
 
-On a Cloud Provider
-~~~~~~~~~~~~~~~~~~~
+Add the name of the file to the test location::
 
-We have tested running the Intern test suite with BrowserStack and SauceLabs.
-We have better luck with BrowserStack, and it's the provider MDN staff devs
-use.
+   $ py.test tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
 
-1. Sign up for either `BrowserStack <http://www.browserstack.com/>`_ or `SauceLabs <https://saucelabs.com/>`_.
+Only running certain types of tests
+-----------------------------------
 
-2. Go to the ``tests/ui/`` directory::
+Specify the desired marker using ``-m``::
 
-    cd tests/ui
+   $ py.test tests/functional/ -m smoke --driver Chrome --driver-path /path/to/chromedriver
 
-3. Set the `appropriate environment variables
-   <https://theintern.github.io/intern/#hosted-selenium>`_ with your provider credentials.
-   E.g., ::
+More information about the marks is below.
 
-    export BROWSERSTACK_USERNAME='fakeuser'
-    export BROWSERSTACK_ACCESS_KEY='fakeaccesskey'
+Run the tests against a different url
+-------------------------------------
 
-3. Run intern with the appropriate config file (omitting the ``.js``). E.g., ::
+By default the tests will run against the staging server.
 
-    ./node_modules/.bin/intern-runner config=intern-browserstack
+Pass the desired URL to the command with ``--base-url``::
 
-.. _command line arguments:
+   $ py.test tests/functional/ --base-url https://developer-local.allizom.org --driver Chrome --driver-path /path/to/chromedriver
 
-Command-Line Arguments
-~~~~~~~~~~~~~~~~~~~~~~
-
-* ``b`` - browsers to run (e.g., ``b=chrome,firefox``)
-* ``t`` - test suites to run (e.g., ``t=wiki,homepage``)
-* ``d`` - domain to run against (e.g., ``d=developer.allizom.org``)
-* ``u`` - username for Persona (e.g., ``u=testuser@example.com``)
-* ``p`` - password for Persona (e.g., ``p=testpass``)
-* ``wd`` - slug of existing article to test (e.g., ``wd=My_Test_Doc``)
-* ``destructive=true`` - create real docs (do not run this on production)
-
-Adding a Test Suite
--------------------
-
-To add a test suite, place your JavaScript file within the `tests/ui/tests` directory. Use the following as a template for your test suite code::
-
-    define([
-        'intern!object',
-        'intern/chai!assert',
-        'base/_config'
-    ], function(registerSuite, assert, config) {
-
-        registerSuite({
-
-            // Unique, short name for test suite
-            name: '',
-
-            // Anything to run before each test (setup)
-            before: function() {
-
-            },
-
-            // Text decribing what the test is testing
-            '': function() {
-
-            }
-        });
-
-    });
-
-
-To run your new tests with, add the new suite path to the `tests/ui/_tests.js` file.
-
-Identifying Test Failures
+Run the tests in parallel
 -------------------------
 
-Tests are run for each browser cited in the config's `environments` setting. A sample output with error may look like::
+By default the tests will run one after the other but you can run several at
+the same time by specifying a value for `-n`::
 
-    $ ./node_modules/.bin/intern-runner config=intern-local
+   $ py.test tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
 
-    Listening on 0.0.0.0:9000
-    Starting tunnel...
-    Initialised firefox 31.0 on MAC
-    Test main - home - Ensure homepage is displaying search form and accepts text FAILED on firefox 31.0 on MAC:
-    AssertionError: fake test failure: expected false to be truthy
-      at new CompatCommand  <node_modules/intern/runner.js:208:14>
-      at CompatCommand.Command.then  <node_modules/intern/node_modules/leadfoot/Command.js:525:10>
-      at Test.registerSuite.Ensure homepage is displaying search form and accepts text [as test]  <tests/homepage.js:18:26>
-      at Test.run  <node_modules/intern/lib/Test.js:169:19>
-      at <node_modules/intern/lib/Suite.js:237:13>
-      at signalListener  <node_modules/intern/node_modules/dojo/Deferred.js:37:21>
-      at Promise.then.promise.then  <node_modules/intern/node_modules/dojo/Deferred.js:258:5>
-      at runTest  <node_modules/intern/lib/Suite.js:236:46>
-      at <node_modules/intern/lib/Suite.js:249:7>
-      at process._tickCallback  <node.js:419:13>
+Run tests on SauceLabs
+----------------------
 
-    =============================== Coverage summary ===============================
-    Statements   : 100% ( 1/1 )
-    Branches     : 100% ( 0/0 )
-    Functions    : 100% ( 0/0 )
-    Lines        : 100% ( 1/1 )
-    ================================================================================
-    firefox 31.0 on MAC: 1/5 tests failed
+Running the tests on SauceLabs will allow you to test browsers not on your host
+machine.
 
-    ----------------------|-----------|-----------|-----------|-----------|
-    File                  |   % Stmts |% Branches |   % Funcs |   % Lines |
-    ----------------------|-----------|-----------|-----------|-----------|
-       ui/                |       100 |       100 |       100 |       100 |
-          intern-local.js |       100 |       100 |       100 |       100 |
-    ----------------------|-----------|-----------|-----------|-----------|
-    All files             |       100 |       100 |       100 |       100 |
-    ----------------------|-----------|-----------|-----------|-----------|
+#. `Signup for an account`_.
 
-    TOTAL: tested 1 platforms, 1/5 tests failed
+#. Log in and obtain your Remote Access Key from user settings.
 
-At present time, `SitePen is looking to pretty up the console output <https://github.com/theintern/intern/issues/258>`_.
+#. Run a test specifying ``SauceLabs`` as your driver, and pass your credentials
+   and the browser to test::
+
+   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 py.test tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
+
+Alternatively you can save your credentials `in a configuration file`_ so you
+don't have to type them each time.
+
+.. _`Signup for an account`: https://saucelabs.com/opensauce/
+.. _`in a configuration file`: http://pytest-selenium.readthedocs.io/en/latest/user_guide.html#sauce-labs
+
+Marks
+=====
+
+* ``nondestructive``
+
+  Tests are considered destructive unless otherwise indicated. Tests that
+  create, modify, or delete data are considered destructive and should not be
+  run in production.
+
+* ``smoke``
+
+  These tests should be the critical baseline functional tests.
+
+* ``nodata``
+
+  New instances of kuma have empty databases so only a subset of tests can be
+  run against them. These tests are marked with ``nodata``.
+
+* ``login``
+
+  These tests require the testing accounts to exist on the target site. For
+  security reasons these accounts will not be on production.
+
+Guidelines for writing tests
+============================
+
+See `Bedrock`_ and the `Web QA Style Guide`_.
+
+.. _`Bedrock`: http://bedrock.readthedocs.io/en/latest/testing.html#guidelines-for-writing-functional-tests
+.. _`Web QA Style Guide`: https://wiki.mozilla.org/QA/Execution/Web_Testing/Docs/Automation/StyleGuide
