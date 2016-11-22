@@ -96,7 +96,7 @@ def entity_decode(str):
 
 @library.global_function
 def page_title(title):
-    return jinja2.Markup(u'%s | MDN' % title)
+    return jinja2.Markup(u'%s | MDN' % jinja2.escape(title))
 
 
 @library.filter
