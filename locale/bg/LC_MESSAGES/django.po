@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-22 09:41+0000\n"
+"PO-Revision-Date: 2016-11-22 14:20+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -353,7 +353,7 @@ msgstr "Благодарим! Моля проверете електроннат
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "Ако не сте потвърждавали абонамент за някоя от новинарските емисии на Мозила, може би трябва да го направите. Моля, проверете пощенската си кутия или спам-филтрите си за писмо от нас."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
@@ -662,7 +662,7 @@ msgstr "Наскоро променени файлове в MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr ""
+msgstr "Скорошни версии на прикачените файлове в MDN"
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
@@ -686,11 +686,11 @@ msgstr "Прикаченият файл, преместен в кошчето"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "Датата и времето на изхвърляне в кошчето на прикачения файл"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "Потребителското име на потребителя, който изхвърли прикачения файл в кошчето"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -927,7 +927,7 @@ msgstr "Аз съм експерт"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "APIs и DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
@@ -967,7 +967,7 @@ msgstr "Игри"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
-msgstr ""
+msgstr "Наръчник и Урок"
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
@@ -979,7 +979,7 @@ msgstr "Пазар"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
@@ -1150,7 +1150,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr ""
+msgstr "ограничен на %(ban_date)s от %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
 #, python-format
@@ -1160,7 +1160,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s от %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
 msgid "Submit as:"
@@ -1294,7 +1294,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
-msgstr ""
+msgstr "Присъединете се"
 
 #: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
@@ -1305,7 +1305,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Помогнете да подобрим MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
