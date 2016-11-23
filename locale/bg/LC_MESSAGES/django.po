@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-22 14:36+0000\n"
+"PO-Revision-Date: 2016-11-23 15:01+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -779,7 +779,7 @@ msgstr "С връзка в статията"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
-msgstr ""
+msgstr "Статия, прикачена към"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
@@ -877,12 +877,12 @@ msgstr "Ядро"
 #: kuma/core/form_fields.py:57
 #, python-format
 msgid "Ensure this value has at least %(limit_value)s characters (it has %(show_value)s)."
-msgstr ""
+msgstr "Уверете се, че тази стойност съдържа поне %(limit_value)s знака (въведени са %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
 #, python-format
 msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
-msgstr ""
+msgstr "Уверете се, че тази стойност съдържа най-много %(limit_value)s знака (въведени са %(show_value)s)."
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
@@ -1178,7 +1178,7 @@ msgstr "Няма ревизии съответстващи на този фил�
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Вече да не се получават писма, когато са одобрени английски версии"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -2266,7 +2266,7 @@ msgstr "Изтрито:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
-msgstr ""
+msgstr "Не бяха изтрити версии на този потребител."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
