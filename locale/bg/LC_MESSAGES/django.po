@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-23 15:01+0000\n"
+"PO-Revision-Date: 2016-11-23 15:07+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1178,13 +1178,13 @@ msgstr "Няма ревизии съответстващи на този фил�
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr "Вече да не се получават писма, когато са одобрени английски версии"
+msgstr "Вече да не се получават писма, когато са одобрени български версии"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Да се получават писма, когато са одобрени български версии"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -1369,7 +1369,7 @@ msgstr "По-добра документация"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr ""
+msgstr "Задвижвано от разработчици"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
@@ -1397,11 +1397,11 @@ msgstr "Червен"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Да се замени &lt;FOO&gt; с"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Добавяне на бутона към вашия сайт"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
@@ -1551,7 +1551,7 @@ msgstr "Търсене в сайта на MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Резултати"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1619,15 +1619,15 @@ msgstr "Всички теми"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "Филтриране по"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Подадените данни съдържат невалидно съдържание."
 
 #: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
-msgstr ""
+msgstr "Подадените данни съдържат невалидно съдържание. Моля, опитайте отново."
 
 #: kuma/spam/models.py:10
 msgid "created"
