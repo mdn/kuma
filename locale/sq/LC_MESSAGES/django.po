@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-09 11:37+0000\n"
+"PO-Revision-Date: 2016-11-23 08:27+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
 "Language: sq\n"
@@ -180,7 +180,7 @@ msgstr "Referenca & Udhërrëfyes"
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Learning web development"
-msgstr ""
+msgstr "Mësoni programim Web"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
@@ -1246,7 +1246,7 @@ msgstr "më tepër..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Learning"
-msgstr ""
+msgstr "Të nxënët"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
