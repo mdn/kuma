@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-23 22:40+0000\n"
+"PO-Revision-Date: 2016-11-23 22:45+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
@@ -2418,11 +2418,11 @@ msgstr "Я не змінював жодних сторінок; просто в�
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr "Оставить мой вклад, удалить мой адрес электронной почты и заморозить мой аккаунт, чтобы я никогда не смог войти в него снова."
+msgstr "Залиште мій вклад, видаліть мою адресу ел. пошти й заморозьте мій обліковий запис, щоб я ніколи не зміг зайти у нього знову."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Зробіть мій вклад анонімним і видаліть мій обліковий запис."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
@@ -2911,6 +2911,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Не вдалося опублікувати. Виявлено конфліктні спроби редагування. Будь ласка, скопіюйте й вставте ваші правки в безпечне місце і відвідайте <a href=\"%(url)s\">історію ревізій</a>, щоб подивитися, що"
+" було відредаговано, до того, як ви будете робити подальші зміни."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
