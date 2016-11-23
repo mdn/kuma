@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-23 22:20+0000\n"
+"PO-Revision-Date: 2016-11-23 22:40+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
@@ -2366,29 +2366,27 @@ msgstr "Використайте кнопку нижче, щоб під'єдна
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Це посилання на відновлення облікового запису не може бути використане ще раз."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Не вдалося увійти в обліковий запис"
+msgstr "Не вдалося відновити обліковий запис"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "Вказане посилання некоректне."
+msgstr "Це посилання більше не дійсне."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "Надіслано лист відновлення"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Клацніть на посилання у листі, щоб відновити ваш інснуючий обліковий запис."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr "Ви заблоковані"
+msgstr "Ви були заблоковані"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
@@ -2399,29 +2397,28 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Натисніть тут</a>, щоб оскаржити блокування.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Змінити свій профіль"
+msgstr "Видалити свій профіль"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Нам шкода, що ви йдете."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "Хоча і можливо видалити обліковий запис, ми не можемо видалити будь-які ревізії (зміни сторінок), що ви зробили, і наша ліцензія вимагає, щоб ваші зміни мали авторство."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Будь ласка, створіть повідомлення про помилку, щоб запросити закриття вашого облікового запису, і впевніться, що одна з цих опцій присутня у полі опису:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Я не змінював жодних сторінок; просто видаліть мій обліковий запис."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Оставить мой вклад, удалить мой адрес электронной почты и заморозить мой аккаунт, чтобы я никогда не смог войти в него снова."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
@@ -2429,7 +2426,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Повідомити про проблему, щоб закрити мій обліковий запис"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2527,16 +2524,15 @@ msgstr "Опублікувати"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 msgid "Delete your account."
-msgstr ""
+msgstr "Видалити свій обліковий запис."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Керувати підписками на розсилки Mozilla."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Допоможіть нам покращити MDN"
+msgstr "Вітання від MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2544,16 +2540,17 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Ви отримали цей лист, оскільки ви чи хтось ще запросив доступ до вашого облікового запису %(username)s на %(domain)s. Ви можете проігнорувати цей лист, якщо ви не відправляли цей запит. Клацніть на "
+"посилання нижче, щоб отримати доступ до вашого облікового запису:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Спасибі вам за час, витрачений на поліпшення MDN!"
+msgstr "Дякуємо, що скористалися MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Відновлення облікового запису для %(username)s на %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -3600,13 +3597,13 @@ msgid "Select a language to translate to:"
 msgstr "Виберіть мову перекладу:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network і окремі учасники.<br /> Вміст доступний на умовах ліцензії, вказаної у цьому проекті. &middot; <a href=\"%(about_url)s\">Про MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Політика приватності</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network і окремі учасники.<br /> Вміст доступний на умовах ліцензії, вказаної у цьому проекті. &middot; <a href=\"%(about_url)s\">Про MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a href=\"//www.mozilla.org/privacy\">Політика приватності</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format

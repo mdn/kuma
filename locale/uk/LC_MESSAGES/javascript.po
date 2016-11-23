@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-10-20 12:46-0700\n"
-"PO-Revision-Date: 2016-06-26 22:20+0000\n"
+"PO-Revision-Date: 2016-11-23 22:34+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
@@ -169,15 +169,15 @@ msgstr "відновлено"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr ""
+msgstr "Не вдалося опублікувати. Ви поки що не увійшли. Будь ласка, зробіть вхід у новій вкладці та спробуйте опублікувати знову."
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "Зміни збережено."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr ""
+msgstr "Не вдалося опублікувати. Будь ласка, скопіюйте і вставте свої зміни в безпечне місце та спробуйте надіслати форму використовуючи кнопку \"Опублікувати\"."
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
@@ -314,7 +314,7 @@ msgstr "Зразок JavaScript-вмісту"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "Результат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
