@@ -108,12 +108,12 @@ layout, and use the browser's inspector to look for 404s on static assets.
 
 Publish the new MDN Sphinx Theme
 --------------------------------
-To use the new theme in the public documentation,
+To use the new theme in the public documentation:
 
-1. Commit the new template to ``sphinx-theme``, open a pull request
-2. Remove the clone of the ``sphinx-theme`` from your Kuma repo (Docker method)
-3. After review, merge the PR to the master branch of ``sphinx-theme``
-4. Tag and publish a new version of ``mdn-sphinx-theme`` to PyPI_
-5. Update ``requirements/docs.txt`` in ``kuma``, merge to master
+1. Commit the new template to ``sphinx-theme``, open a pull request.
+2. Remove the clone of the ``sphinx-theme`` from your Kuma repo (Docker method.)
+3. After review, merge the PR to the master branch of ``sphinx-theme``.
+4. Tag and publish a new version of ``mdn-sphinx-theme`` to PyPI_.
+5. Update ``requirements/docs.txt`` in ``kuma``, merge to master.
 
 .. _PyPI: https://pypi.python.org/pypi/mdn-sphinx-theme
