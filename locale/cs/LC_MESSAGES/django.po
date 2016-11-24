@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-23 16:53+0000\n"
+"PO-Revision-Date: 2016-11-24 12:40+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -1443,19 +1443,19 @@ msgstr "Lepší Webová dokumentace pro lepší Web na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr ""
+msgstr "MDN dokumentace od vývojářů pro CSS a další."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr ""
+msgstr "MDN dokumentace od vývojářů pro HTML a další."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr ""
+msgstr "MDN dokumentace od vývojářů pro JavaScript a další."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr ""
+msgstr "MDN dokumentace od vývojářů pro Web a další."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
@@ -2262,7 +2262,7 @@ msgstr "Zablokovat uživatele z jiných důvodů."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr ""
+msgstr "Uživatel v posledních třech dnech nevytvořil žádné revize, které by měly být obnoveny, a tento uživatel již byl zablokován."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2556,7 +2556,7 @@ msgstr "Děkujeme za vytvoření profilu na <a href=\"%(mdn_link)s\">Mozilla Dev
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr ""
+msgstr "Dokončili jste první krok <a href=\"%(started_link)s\">Začínáme na MDN</a> vytvořením svého profilu."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
@@ -2564,6 +2564,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
+"Nyní pokračujte výběrem úkolu na MDN a pusťte se do něj! Máme spoustu úvodních úkolu, ze kterých si můžete vybrat, ať už <a href=\"%(words_link)s\">píšete</a>, <a "
+"href=\"%(code_link)s\">programujete</a>, <a href=\"%(both_link)s\">píšete i programujete</a>, nebo chcete <a href=\"%(translate_link)s\">překládat MDN do svého jazyka</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2572,7 +2574,7 @@ msgstr "Mluvte s námi!"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
 msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
-msgstr ""
+msgstr "Chcete se s někým podělit o MDN? Tady je několik způsobů, jak to můžete udělat:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
@@ -2585,16 +2587,18 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"Konverzace v reálném čase: <a href=\"%(channel_link)s\">#mdn kanál na irc.mozilla.org</a>. (Získejte více informací o <a href=\"%(irc_link)s\">IRC</a>.) Zde můžete najít šéfredaktory MDN: Eric "
+"Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), a mne (jms), komunitního manažera MDN."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
 msgid "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
-msgstr ""
+msgstr "Blog: Na blogu <a href=\"%(blog_link)s\">about:community</a> najdete příspěvky se štítkem <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:60 kuma/users/jinja2/users/email/welcome/plain.ltxt:51
 msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
-msgstr ""
+msgstr "Nestyďte se, pokud máte nějaké pochybnosti, problémy, otázky, a kontaktujte nás! Jsme tady, abychom vám pomohli."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
@@ -2605,7 +2609,7 @@ msgstr "Ahoj %(username)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
-msgstr ""
+msgstr "Děkujeme za vytvoření profilu na Mozilla Developer Network (MDN) -- komunitě lidí vytvářejících užitečné zdroje pro vývojáře jako jste vy."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
@@ -2613,6 +2617,8 @@ msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
 msgstr ""
+"Dokončili jste první krok Začínáme na MDN vytvořením svého profilu. Nyní pokračujte výběrem úkolu na MDN a pusťte se do něj! Máme spoustu úvodních úkolu, ze kterých si můžete vybrat podle vašich "
+"zájmů."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2648,7 +2654,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Konverzace v reálném čase: #mdn kanál na irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
@@ -2662,6 +2668,8 @@ msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
 msgstr ""
+"Zde můžete najít šéfredaktory MDN: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), a mne (jms), komunitního manažera "
+"MDN."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2741,7 +2749,7 @@ msgstr ""
 
 #: kuma/wiki/constants.py:215
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Lokalizace probíhá - zatím nepřeloženo."
 
 #: kuma/wiki/content.py:724
 msgid "Edit section"
@@ -2750,7 +2758,7 @@ msgstr "Upravit sekci"
 #: kuma/wiki/events.py:72
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr ""
+msgstr "[MDN] Stránku \"%(document_title)s\" změnil uživatel %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
@@ -2894,6 +2902,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Publikování se nezdařilo. Zjištěny konfliktní úpravy. Prosím zkopírujte a uložte vaše úpravy na bezpečné místo a navštivte <a href=\"%(url)s\">historii revizí</a>, abyste zjistili, co bylo upraveno "
+"před provedením dalších úprav."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -2989,7 +2999,7 @@ msgstr "odkaz z obsahu dokumentu"
 #: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
-msgstr ""
+msgstr "Přílohu %(attachment_id)s nelze k dokumentu %(document_id)s připojit vícekrát"
 
 #: kuma/wiki/models.py:1542
 msgid "Review Tag"
@@ -3001,11 +3011,11 @@ msgstr "Označení ke kontrole"
 
 #: kuma/wiki/models.py:1549
 msgid "Localization Tag"
-msgstr ""
+msgstr "Lokalizační štítek"
 
 #: kuma/wiki/models.py:1550
 msgid "Localization Tags"
-msgstr ""
+msgstr "Lokalizační štítky"
 
 #: kuma/wiki/models.py:1583
 msgid "No table of contents"
@@ -3184,7 +3194,7 @@ msgstr "Obsah"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
-msgstr ""
+msgstr "Proč se vracíte k této revizi?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
@@ -3263,7 +3273,7 @@ msgstr "V tomto článku"
 #: kuma/wiki/jinja2/wiki/document.html:241
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr ""
+msgstr "Tento dokument je systémem vykreslován poprvé. <a href=\"%(url)s\">Načtěte prosím tuto stránku znovu</a> za pár minut pro zobrazení celého obsahu."
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
@@ -3271,6 +3281,8 @@ msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
 "page</a> in a few minutes."
 msgstr ""
+"<abbr title=\"%(started_at)s\">Právě probíhá</abbr> aktualizace tohoto dokumentu. Pokud se obsah níže zdá být neaktuální nebo něco chybí, <a href=\"%(url)s\">načtěte prosím tuto stránku znovu</a> za"
+" pár minut."
 
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
@@ -3367,7 +3379,7 @@ msgstr "Upravit nadpis a vlastnosti stránky"
 
 #: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Maximální čas vykreslování:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
@@ -3383,7 +3395,7 @@ msgstr "Minuty"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
-msgstr ""
+msgstr "Najděte zdroj překladu s pomocí vyhledávání níže a poté klikněte na tlačítko \"Publikovat\"."
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
@@ -3404,7 +3416,7 @@ msgstr "Nebojte se, že něco zničíte - změny můžete kdekoli vrátit."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Bavte se a buďte hrdí na své příspěvky!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
@@ -3437,7 +3449,7 @@ msgstr "Přesunout článek | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
-msgstr ""
+msgstr "Zadejte prosím nové umístění pro tuto stránku do polí níže. Ujistěte se, že vaše nové umístění splňuje tato pravidla:"
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
@@ -3491,7 +3503,7 @@ msgstr "Přesunout stránku"
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr ""
+msgstr "Následujících %(count)s podstránek bude tímto přesunem ovlivněno:"
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
@@ -3499,12 +3511,12 @@ msgstr "Žádné další dokumenty nebudou touto změnou ovlivněny."
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Požádáno o přesun stránky"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
-msgstr ""
+msgstr "<h1>Naplánováno přesunutí stránky</h1> <p>Přesun %(old_slug)s do <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p>Po dokončení přesunu nebo při chybě dostanete e-mail.</p>"
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
@@ -3590,7 +3602,7 @@ msgstr "Překlad obsahu"
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
-msgstr ""
+msgstr "Schválená verze v jazyce %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
@@ -3617,7 +3629,7 @@ msgstr "Překlad do jazyka %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
-msgstr ""
+msgstr "Přeložit štítky"
 
 #: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
@@ -3678,7 +3690,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
-msgstr ""
+msgstr "Tento článek potřebuje tyto kontroly:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
@@ -3722,11 +3734,11 @@ msgstr "Smazat tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
-msgstr ""
+msgstr "Spravovat obsah"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Převést na obsah"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
@@ -3751,25 +3763,25 @@ msgstr "Revize %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
-msgstr ""
+msgstr "Server vykresluje porovnání obsahu. Obnovte prosím tuto stránku za pár minut."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Odebírat %(title)s a všechny jeho podčlánky"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Přestat odebírat %(title)s a všechny jeho podčlánky"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr ""
+msgstr "Nyní odebíráte tento článek a všechny jeho podčlánky."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr ""
+msgstr "Přestali jste odebírat tento článek a všechny jeho podčlánky."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
@@ -3778,42 +3790,42 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr ""
+msgstr "Odebírat %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr ""
+msgstr "Přestat odebírat %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr ""
+msgstr "Nyní odebíráte %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr ""
+msgstr "Přestali jste odebírat %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Odebírat verzi v jazyce <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Přestat odebírat verzi v jazyce <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr ""
+msgstr "Nyní odebíráte verzi v jazyce %(language)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr ""
+msgstr "Přestali jste odebírat verzi v jazyce %(language)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
@@ -3849,13 +3861,13 @@ msgstr "Skrýt informace o chybě"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Další informace o této chybě"
+msgstr[1] "Další informace o těchto chybách"
+msgstr[2] "Další informace o těchto chybách"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr ""
+msgstr "Každý s profilem na MDN může v dokumentech opravovat chyby. Použijte <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">příručku KumaScript pro řešení problémů</a> jako výchozí bod."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -3895,11 +3907,11 @@ msgstr "Zahodit změny a vytvořit nový dokument?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:24
 msgid "Publish and Keep Editing"
-msgstr ""
+msgstr "Publikovat a pokračovat v úpravách"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
 msgid "Discard"
-msgstr ""
+msgstr "Zahodit"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -3927,7 +3939,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr ""
+msgstr "Pokud si myslíte, že jste obdrželi tuto zprávu omylem, prosím uložte kopii vašeho obsahu a <a href=\"%(admin_email)s\">kontaktujte administrátory</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
@@ -3950,7 +3962,7 @@ msgstr "URL pro jazyk %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr ""
+msgstr "Najděte zdroj překladu pomocí vyhledávání výše a klikněte na tlačítko \"Uložit\"."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
@@ -3963,7 +3975,7 @@ msgstr[2] "Nalezeno %(num)s dokumentů"
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr ""
+msgstr "Články se štítkem %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
@@ -3983,7 +3995,7 @@ msgstr "Dokumenty s chybami"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "Dokumenty nejvyšší úrovně"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
@@ -3995,7 +4007,7 @@ msgstr "Všechny dokumenty"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Je potřeba aktualizace překladu"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
@@ -4013,11 +4025,11 @@ msgstr "Dokumenty ke kontrole"
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Články se štítkem %(tag)s, které potřebují kontrolu"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Všechny články ke kontrole"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
@@ -4070,7 +4082,7 @@ msgstr "Žádné štítky tady nejsou."
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Přeložené články se štítkem %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
@@ -4087,7 +4099,7 @@ msgstr[2] "Nalezeno %(count)s dokumentů."
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
 msgid "Purge documents"
-msgstr ""
+msgstr "Vymazat dokumenty"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
