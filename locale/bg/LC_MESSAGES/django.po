@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-25 17:40+0000\n"
+"PO-Revision-Date: 2016-11-25 17:55+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1425,7 +1425,7 @@ msgstr "По-добра JavaScript документация за по добър
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "По-добра Уеб документация за по добър Уеб на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
@@ -1528,7 +1528,7 @@ msgstr "име на група"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Търсенето е недостъпно"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
@@ -1773,15 +1773,15 @@ msgstr ""
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "Име"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "Организация"
 
 #: kuma/users/models.py:85
 msgid "Location"
-msgstr ""
+msgstr "Адрес"
 
 #: kuma/users/models.py:90
 msgid "About Me"
@@ -1789,32 +1789,32 @@ msgstr "За мен"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
-msgstr ""
+msgstr "Псевдоним за IRC"
 
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "Етикети"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Въведете валиден адрес за сайт."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Въведете валиден адрес в Twitter."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Въведете валиден адрес в GitHub."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Въведете валиден адрес в Stack Overflow."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Въведете валиден адрес в LinkedIn."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
@@ -1826,25 +1826,25 @@ msgstr ""
 
 #: kuma/users/models.py:141
 msgid "Website"
-msgstr ""
+msgstr "Уеб сайт"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "Потребителското име е задължително."
 
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Потребителското име е твърде късо (%(show_value)s знака). То трябва да съдържа поне %(limit_value)s знака."
 
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr ""
+msgstr "Потребителското име е твърде дълго (%(show_value)s символа). Трябва да е с дължина ненадвишаваща %(limit_value)s знака."
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Трябва да приемете условията за ползване."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
@@ -1856,12 +1856,12 @@ msgstr ""
 
 #: kuma/users/views.py:470
 msgid "Email address"
-msgstr ""
+msgstr "Е-поща"
 
 #: kuma/users/views.py:516
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>потвърден</b>"
 
 #: kuma/users/views.py:519
 #, python-format
@@ -1878,7 +1878,7 @@ msgstr "Е-поща:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Профилът не е активен"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
