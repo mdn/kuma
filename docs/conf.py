@@ -194,7 +194,7 @@ latex_documents = [
 # the title page.
 #latex_logo = None
 
-# For "manual" documents, if this is true, then toplevel headings are parts,
+# For "manual" documents, if this is true, then top-level headings are parts,
 # not chapters.
 #latex_use_parts = False
 
