@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-26 18:48+0000\n"
+"PO-Revision-Date: 2016-11-26 19:17+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3385,7 +3385,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr ""
+msgstr "Категоризирайте статията. Това ще я направи откриваема при правилно филтриране в търсачката. <a target=\"_blank\" href=\"%(url)s\">Прочетете наръчника за етикетиране</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3600,7 +3600,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "етикети на %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
@@ -3875,11 +3875,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Коментар към версията"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Научете се как да ползвате коментари за промените"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
