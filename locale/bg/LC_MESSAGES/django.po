@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-25 17:55+0000\n"
+"PO-Revision-Date: 2016-11-26 12:01+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1333,7 +1333,7 @@ msgstr "Популяризиране на MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
-msgstr ""
+msgstr "Принос към програмния код в MDN"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -1899,7 +1899,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Задаване като основен"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -1915,7 +1915,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Добавяне на адрес за е-поща"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
@@ -1970,7 +1970,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "За съжаление създаването на профил е изключено в момента."
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -1978,13 +1978,13 @@ msgstr ""
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Наистина ли искате да излезете?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "Промяна на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
@@ -1997,7 +1997,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Нулиране на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -2009,7 +2009,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Грешен токън"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
@@ -2018,19 +2018,19 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Промяна на парола"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Вашата парола е сменена."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "Задаване на парола"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Регистриране"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
@@ -2043,7 +2043,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Създаването на профил е изключено"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2078,7 +2078,7 @@ msgstr ""
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "Влизане с OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
@@ -2173,11 +2173,11 @@ msgstr "Влязъл с GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "Свързване с GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "Влизане чрез GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
@@ -2328,7 +2328,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Използвайте бутона долу, за да свържете вашия профил в MDN с GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
@@ -2481,7 +2481,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Използвайте профила си в GitHub, за да влезете."
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
