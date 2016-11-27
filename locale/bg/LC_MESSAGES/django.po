@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-27 17:20+0000\n"
+"PO-Revision-Date: 2016-11-27 17:26+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3380,7 +3380,7 @@ msgstr "Забавлявайте се и се гордейте с приноса
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "Как се поставя етикет на статия"
 
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
@@ -3879,7 +3879,7 @@ msgstr "Коментар към версията"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr "Научете се как да ползвате коментари за промените"
+msgstr "Как се ползват коментари за промените"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
@@ -3989,6 +3989,8 @@ msgstr ""
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
 msgstr ""
+"Моля прегледайте тези статии за правописни грешки, словоред, пунктуация и т.н., след което махнете отметката, че статията се нуждае от коректорка намеса. <a href=\"%(url)s\">По-подробни "
+"напътствия</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
