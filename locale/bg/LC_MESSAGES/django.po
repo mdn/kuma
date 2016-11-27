@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-26 19:17+0000\n"
+"PO-Revision-Date: 2016-11-27 17:20+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2705,7 +2705,7 @@ msgstr ""
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Технически – примери с програмен код, програмни интерфейси или технологии"
 
 #: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
@@ -3259,7 +3259,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:285
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Тази статия се нуждае от коректор. <a href=\"%(url)s\">Как да помогнете.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
@@ -3871,7 +3871,7 @@ msgstr "Отхвърляне"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Има нужда от преглед?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
