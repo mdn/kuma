@@ -75,7 +75,7 @@ To initialize a fresh database, run the migrations::
 It will run the standard Django migrations, with output similar to::
 
     Operations to perform:
-      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
+      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
       Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
     Synchronizing apps without migrations:
       Creating tables...
@@ -247,15 +247,18 @@ Now you can sign in with GitHub.
 To associate your password-only admin account with GitHub:
 
 #. Login with your password at http://localhost:8000/admin/login/
-#. Go to Account Connections at http://localhost:8000/en-US/users/account/connections
-#. Click "Connect with GitHub"
-#. (*Optional*) `Disable your admin password`_.
+#. Go to the Homepage at https://developer.mozilla.org/en-US/
+#. Click your username at the top to view your profile
+#. Click Edit to edit your profile
+#. Under My Profiles, click `Use your GitHub account to sign in`_
+#. (*Optional*) `Disable your admin password`_
 
 To create a new account with GitHub, use the regular "Sign in" widget at the
 top of any page.
 
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
 .. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
+.. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
 
 Interact with the Docker containers
 ===================================
