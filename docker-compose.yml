@@ -1,10 +1,9 @@
-# Configuration for multi-container development environment
-
-version: '2'
+version: '2.1'
 services:
   worker: &worker
     image: quay.io/mozmar/kuma_base
     command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
+    user: ${UID:-0}
     volumes:
       - ./:/app
     depends_on:
