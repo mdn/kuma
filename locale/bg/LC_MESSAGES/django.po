@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-23 15:07+0000\n"
+"PO-Revision-Date: 2016-11-27 21:53+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1333,7 +1333,7 @@ msgstr "Популяризиране на MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
-msgstr ""
+msgstr "Принос към програмния код в MDN"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -1409,23 +1409,23 @@ msgstr "Вашият изходен код:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Вашият бутон ще отведе хората на:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "По-добра CSS документация за по добър Уеб на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163 kuma/landing/jinja2/landing/promote_buttons.html:167 kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "По-добра HTML документация за по добър Уеб на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164 kuma/landing/jinja2/landing/promote_buttons.html:168 kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "По-добра JavaScript документация за по добър Уеб на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "По-добра Уеб документация за по добър Уеб на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
@@ -1445,19 +1445,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "CSS документация от разработчици за разработчици в MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187 kuma/landing/jinja2/landing/promote_buttons.html:191 kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "HTML документация от разработчици за разработчици в MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188 kuma/landing/jinja2/landing/promote_buttons.html:192 kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "JavaScript документация от разработчици за разработчици в MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Уеб документация от разработчици за разработчици в MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
@@ -1528,7 +1528,7 @@ msgstr "име на група"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Търсенето е недостъпно"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
@@ -1773,15 +1773,15 @@ msgstr ""
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "Име"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "Организация"
 
 #: kuma/users/models.py:85
 msgid "Location"
-msgstr ""
+msgstr "Адрес"
 
 #: kuma/users/models.py:90
 msgid "About Me"
@@ -1789,32 +1789,32 @@ msgstr "За мен"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
-msgstr ""
+msgstr "Псевдоним за IRC"
 
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "Етикети"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Въведете валиден адрес за сайт."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Въведете валиден адрес в Twitter."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Въведете валиден адрес в GitHub."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Въведете валиден адрес в Stack Overflow."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Въведете валиден адрес в LinkedIn."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
@@ -1826,25 +1826,25 @@ msgstr ""
 
 #: kuma/users/models.py:141
 msgid "Website"
-msgstr ""
+msgstr "Уеб сайт"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "Потребителското име е задължително."
 
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Потребителското име е твърде късо (%(show_value)s знака). То трябва да съдържа поне %(limit_value)s знака."
 
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr ""
+msgstr "Потребителското име е твърде дълго (%(show_value)s символа). Трябва да е с дължина ненадвишаваща %(limit_value)s знака."
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Трябва да приемете условията за ползване."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
@@ -1856,12 +1856,12 @@ msgstr ""
 
 #: kuma/users/views.py:470
 msgid "Email address"
-msgstr ""
+msgstr "Е-поща"
 
 #: kuma/users/views.py:516
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>потвърден</b>"
 
 #: kuma/users/views.py:519
 #, python-format
@@ -1878,7 +1878,7 @@ msgstr "Е-поща:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Профилът не е активен"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
@@ -1899,7 +1899,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Задаване като основен"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -1915,7 +1915,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Добавяне на адрес за е-поща"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
@@ -1970,7 +1970,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "За съжаление създаването на профил е изключено в момента."
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -1978,13 +1978,13 @@ msgstr ""
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Наистина ли искате да излезете?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "Промяна на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
@@ -1997,7 +1997,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Нулиране на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -2009,7 +2009,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Грешен токън"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
@@ -2018,19 +2018,19 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Промяна на парола"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Вашата парола е сменена."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "Задаване на парола"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Регистриране"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
@@ -2043,7 +2043,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Създаването на профил е изключено"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2078,7 +2078,7 @@ msgstr ""
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "Влизане с OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
@@ -2103,7 +2103,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:25
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "В MDN има профил, съвпадащ с вашата е-поща от GitHub. Щракнете тук, за да възстановите профила:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:34
 msgid "Recover my Profile"
@@ -2134,7 +2134,7 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:95
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "Потребителското ви име от GitHub %(username)s е вече заето. Моля изберете друго."
 
 #: kuma/users/jinja2/socialaccount/signup.html:99
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
@@ -2173,11 +2173,11 @@ msgstr "Влязъл с GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "Свързване с GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "Влизане чрез GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
@@ -2328,7 +2328,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Използвайте бутона долу, за да свържете вашия профил в MDN с GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
@@ -2412,7 +2412,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
 msgid "Edit page"
-msgstr ""
+msgstr "Редактиране на страницата"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
@@ -2433,7 +2433,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Редактиране на профила"
 
 #: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
@@ -2465,7 +2465,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:71
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
-msgstr ""
+msgstr "Разделете етикетите със запетаи или празно място. Многословните етикети заграждайте с кавички така: \"уеб стандарти\"."
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "Areas of expertise"
@@ -2481,7 +2481,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Използвайте профила си в GitHub, за да влезете."
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
@@ -2651,7 +2651,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
-msgstr ""
+msgstr "Редактиране"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
@@ -2705,7 +2705,7 @@ msgstr ""
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Технически – примери с програмен код, програмни интерфейси или технологии"
 
 #: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
@@ -2895,7 +2895,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "Етикети:"
 
 #: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
@@ -3259,7 +3259,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:285
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Тази статия се нуждае от коректор. <a href=\"%(url)s\">Как да помогнете.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
@@ -3363,29 +3363,29 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Благодарим ви, че отделяте време за подобряване на MDN! "
 
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
-msgstr ""
+msgstr "Изглежда, че за първи път допринасяте за MDN. Може намерите отговорите, на често задаваните въпроси в нашият <a target=\"_blank\" href=\"%(url)s\">Наръчник за редактори</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:167
 msgid "Don't be afraid to break something, you can always revert your changes."
-msgstr ""
+msgstr "Не се страхувайте, че ще счупите нещо. Винаги можете да върнете нещата до предишното им състояние."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Забавлявайте се и се гордейте с приноса си!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "Как се поставя етикет на статия"
 
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr ""
+msgstr "Категоризирайте статията. Това ще я направи откриваема при правилно филтриране в търсачката. <a target=\"_blank\" href=\"%(url)s\">Прочетете наръчника за етикетиране</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3587,11 +3587,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
-msgstr ""
+msgstr "Превод на етикетите"
 
 #: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
-msgstr ""
+msgstr "Етикети на английски"
 
 #: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
@@ -3600,7 +3600,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "етикети на %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
@@ -3859,7 +3859,7 @@ msgstr "Нова страница"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Отхвърляне на промените и създаване на нов документ?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:24
 msgid "Publish and Keep Editing"
@@ -3871,15 +3871,15 @@ msgstr "Отхвърляне"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Има нужда от преглед?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Коментар към версията"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Как се ползват коментари за промените"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
@@ -3989,6 +3989,8 @@ msgstr ""
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
 msgstr ""
+"Моля прегледайте тези статии за правописни грешки, словоред, пунктуация и т.н., след което махнете отметката, че статията се нуждае от коректорка намеса. <a href=\"%(url)s\">По-подробни "
+"напътствия</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
@@ -4027,11 +4029,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "Всички етикети"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr ""
+msgstr "Няма етикети."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
