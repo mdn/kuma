@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-24 12:45+0000\n"
+"PO-Revision-Date: 2016-11-28 12:21+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -358,7 +358,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "Skrýt přihlášení odběru novinek"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -3657,7 +3657,7 @@ msgstr "Poznámky k verzi"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
-msgstr ""
+msgstr "Lokalizační štítky"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
@@ -3688,12 +3688,12 @@ msgstr "Historie článku:"
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr ""
+msgstr "Máte přihlášený odběr úprav článku %(title)s a všech jeho podčlánků."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Máte přihlášený odběr úprav článku %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
@@ -3852,7 +3852,7 @@ msgstr "Průvodce úpravou"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
-msgstr ""
+msgstr "Style Guide"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
