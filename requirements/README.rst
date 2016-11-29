@@ -9,6 +9,7 @@ Kuma.  The files are:
 * ``docs.txt`` - Requirements for building docs in `Read the Docs`_
 * ``dev.txt`` - Requirements for Docker or native development
 * ``local.txt`` - Requirements for local development with Vagrant
+* ``test.txt`` - Requirements to run functional tests
 * ``travis.txt`` - Requirements for testing in TravisCI
 
 Hash-Checking Mode

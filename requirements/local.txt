@@ -12,5 +12,9 @@ locustio==0.7.3 \
     --hash=sha256:220e1f97ece2def3454aeecc5070419518e4e16c5aa39d21eb509a38f47847ec
 
 # Enhanced HTTPS support for httplib and urllib2
-ndg-httpsclient==0.4.0 \
-    --hash=sha256:e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274
+# Required in Vagrant to patch Python2.7 for SNI support
+# Not required in Docker, because Python 2.7 is patched
+# To test, run:
+#  python -c 'import requests; requests.get("https://sni.velox.ch")'
+ndg-httpsclient==0.4.2 \
+    --hash=sha256:580987ef194334c50389e0d7de885fccf15605c13c6eecaabd8d6c43768eb8ac
