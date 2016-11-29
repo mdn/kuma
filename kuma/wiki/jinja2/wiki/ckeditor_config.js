@@ -113,7 +113,8 @@
         { name: 'Three Columns', element: 'div', attributes: { 'class': 'threecolumns' }, type: 'wrap' },
         { name: 'Article Summary', element: 'p', attributes: { 'class': 'summary' } },
         { name: 'Syntax Box', element: 'pre', attributes: { 'class': 'syntaxbox' } },
-        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } }
+        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } },
+        { name: 'Hidden When Reading', element: 'div', attributes: { 'class': 'hidden' }, type: 'wrap' }
       ]);
     }
 
