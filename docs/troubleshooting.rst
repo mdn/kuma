@@ -36,7 +36,7 @@ services, it is easiest to add an override configuration file, as documented in
 Linux file permissions
 ----------------------
 On Linux, it is common that files created inside a Docker container are owned
-by the root user on the host system.  This can cause problems when trying to
+by the root user on the host system. This can cause problems when trying to
 work with them after creation. We are investigating solutions to create files
 as the developer's user.
 
@@ -81,7 +81,7 @@ exactly as it is listed in ``Procfile``
 -  ``stylus`` - runs a process to compile all ``.styl`` changes into ``.css``
 
 An alternative is to run most processes via ``foreman``, and override one or
-more with a custom command.  Open two sessions with ``vagrant ssh``. In the
+more with a custom command. Open two sessions with ``vagrant ssh``. In the
 first session, run all but the target process (such as ``web``)::
 
     foreman run all=1,web=0
@@ -153,7 +153,7 @@ Getting more help
 If you have more problems running Kuma, please:
 
 #. Paste errors to `pastebin`_
-#. email the `dev-mdn`_ list
+#. Email the `dev-mdn`_ list
 #. After you email dev-mdn, you can also ask in `IRC`_
 
 .. _pastebin: https://pastebin.mozilla.org/

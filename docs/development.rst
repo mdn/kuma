@@ -164,7 +164,7 @@ this approach the next time they're upgraded.
 
 Advanced Configuration
 ======================
-`Environment variables`_ are used to change the way different components works.
+`Environment variables`_ are used to change the way different components work.
 There are a few ways to change an environment variables:
 
 * Exporting in the shell, such as::

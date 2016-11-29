@@ -7,7 +7,7 @@ Kuma uses Elasticsearch_ to power its on-site search.
 
 Installed Version
 =================
-Elasticsearch `releases new versions often`_, and Kuma is slow to upgrade.  The
+Elasticsearch `releases new versions often`_, and Kuma is slow to upgrade. The
 Docker and Vagrant environments use 1.7, but production is older.
 
 The Kuma search tests use the configured Elasticsearch, and can be run inside
@@ -66,5 +66,5 @@ Inside the ``web`` Docker container or Vagrant VM::
 
     ./manage.py reindex
 
-This will populate and activate the fallback index "main_index".  It will be
+This will populate and activate the fallback index "main_index". It will be
 overwritten when the search tests run.

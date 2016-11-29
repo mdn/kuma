@@ -126,7 +126,7 @@ To use a marker, add a decorator to the class or function. Examples::
 
 Adding Tests
 ============
-Code should be written so it can be tested, and then there should be tests for
+Code should be written so that it can be tested, and then there should be tests for
 it.
 
 When adding code to an app, tests should be added in that app that cover the
@@ -142,7 +142,7 @@ Changing Tests
 ==============
 Unless the current behavior, and thus the test that verifies that behavior is
 correct, is demonstrably wrong, don't change tests. Tests may be refactored as
-long as its clear that the result is the same.
+long as it's clear that the result is the same.
 
 
 Removing Tests

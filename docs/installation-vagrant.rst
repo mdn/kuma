@@ -2,7 +2,7 @@
 Installation via Vagrant
 ========================
 Since 2011, staff developers ran a model of the entire MDN stack in a
-Vagrant_-managed virtual machine.  This included backing services like a
+Vagrant_-managed virtual machine. This included backing services like a
 database, caching server, and search engine, as well as the application
 services like Django, KumaScript, and Celery.
 
@@ -10,21 +10,21 @@ Vagrant started out closely aligned with production, but over the years the
 Vagrant environment evolved to make development easier, and the production
 configuration was maintained by the operations team. For example, Vagrant
 switched the operating system from CentOS_ to Ubuntu_, and the provisioning
-system from Puppet_ to Ansible_.  The Puppet scripts used to maintain the
+system from Puppet_ to Ansible_. The Puppet scripts used to maintain the
 production infrastructure have evolved, and can not be published or reused for
-development due to configuration secrets.  Both systems work, but it is less
-likely that the development environment can be use to reproduce production
+development due to configuration secrets. Both systems work, but it is less
+likely that the development environment can be used to reproduce production
 issues, or that the development environment can be used as a testbed for
 infrastructure changes.
 
 Starting in 2011, Kuma is moving to Docker for development, testing, and
-deployment.  Docker is now the primary development environment, and the
+deployment. Docker is now the primary development environment, and the
 :doc:`Docker setup instructions <installation>` should be used by new
 developers.
 
 Until the transition is complete, we cover development with both the Docker and
 the Vagrant environments. We do not plan to keep feature parity between the
-environments, and will only fix critial errors in Vagrant provisioning.
+environments, and will only fix critical errors in Vagrant provisioning.
 
 There are common issues encountered when provisioning Vagrant, or maintaining a
 long-lived installation. See the `Errors`_ section for tips and tricks, as well

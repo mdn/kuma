@@ -37,9 +37,9 @@ Getting the Localizations
 Localizations are found in this repository under the ``locale`` folder.
 
 The gettext portable object (``.po``) files need to be compiled into the
-gettext machine object (``.mo``) files before translations will appear.  This
+gettext machine object (``.mo``) files before translations will appear. This
 is done once during initial setup and provisioning, but will be out of date
-when the Kuma locales are updated.
+when the kuma locales are updated.
 
 To refresh the translations, enter the development environment, then:
 
@@ -95,7 +95,7 @@ code of the language you are adding.
 
     make locale LOCALE=bg
 
-#. Generate the compiled filed for all the locales, including the new one::
+#. Generate the compiled files for all the locales, including the new one::
 
     make localerefresh
 
