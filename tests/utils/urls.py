@@ -1,5 +1,9 @@
 import requests
 
+from urlparse import urlparse, parse_qs
+from braceexpand import braceexpand
+
+
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py
 def get_abs_url(url, base_url):
     try:
