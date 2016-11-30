@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-10-20 23:50+0000\n"
-"Last-Translator: Shaohua Wen <shaohua.wen@gmail.com>\n"
+"PO-Revision-Date: 2016-11-30 19:42+0000\n"
+"Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -25,46 +25,46 @@ msgstr "关闭通知"
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "还原"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "查看页面"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "编辑页面"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "历史记录"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
-msgstr ""
+msgstr "请稍等，正在更新过滤器…"
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "过滤器已更新。"
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "正在提交..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "已提交为 %(submission_type)s"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(user)s 于 %(sent_date)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
 msgid "Error submitting as %(type)s"
-msgstr ""
+msgstr "提交为 %(type)s 时出错"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
