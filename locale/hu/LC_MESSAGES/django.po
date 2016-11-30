@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 08:04-0800\n"
-"PO-Revision-Date: 2016-11-30 20:21+0000\n"
+"PO-Revision-Date: 2016-11-30 20:23+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -515,7 +515,7 @@ msgstr "japán"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Kabyle"
-msgstr ""
+msgstr "kabil"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Korean"
@@ -3349,11 +3349,13 @@ msgid "This translation is in progress."
 msgstr "A fordítás folyamatban van."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
 "href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "Önkénteseink még nem fordították le ezt a cikket <bdi>%(locale)s</bdi> nyelvre. <a href=\"%(help_link)s\">Csatlakozzon, és segítsen a munka befejezésében!</a>"
+msgstr ""
+"Önkénteseink még nem fordították le ezt a cikket <bdi>%(locale)s</bdi> nyelvre. <a href=\"%(help_link)s\">Csatlakozzon, és segítsen a munka befejezésében!</a><br>Elolvashatja a cikket <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a> nyelven is."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
