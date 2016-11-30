@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 08:04-0800\n"
-"PO-Revision-Date: 2016-11-30 21:42+0000\n"
+"PO-Revision-Date: 2016-11-30 21:53+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3218,11 +3218,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:190
 msgid "see all contributors"
-msgstr ""
+msgstr "всички сътрудници"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
 msgid "hide contributors"
-msgstr ""
+msgstr "скриване на сътрудници"
 
 #: kuma/wiki/jinja2/wiki/document.html:194
 #, python-format
@@ -3255,12 +3255,12 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr ""
+msgstr "Тази статия се нуждае от технически преглед. <a href=\"%(url)s\">Как можете да помогнете.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:285
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Тази статия се нуждае от коректор. <a href=\"%(url)s\">Как да помогнете.</a>"
+msgstr "Тази статия се нуждае от редакционен преглед. <a href=\"%(url)s\">Как можете да помогнете.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
@@ -3293,7 +3293,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "Етикети за документа и сътрудници"
 
 #: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
