@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-30 07:00-0800\n"
+"POT-Creation-Date: 2016-11-30 08:04-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Xhosa https://pontoon.mozilla.org/xh/\n"
@@ -491,110 +491,114 @@ msgid "Japanese"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:35
-msgid "Korean"
+msgid "Kabyle"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:36
-msgid "Lingala"
+msgid "Korean"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:37
-msgid "Malagasy"
+msgid "Lingala"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:38
-msgid "Malay"
+msgid "Malagasy"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:39
-msgid "Malayalam"
+msgid "Malay"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:40
-msgid "Persian"
+msgid "Malayalam"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:41
-msgid "Polish"
+msgid "Persian"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:42
-msgid "Portuguese (Brazilian)"
+msgid "Polish"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:43
-msgid "Portuguese (Portugal)"
+msgid "Portuguese (Brazilian)"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:44
-msgid "Romanian"
+msgid "Portuguese (Portugal)"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:45
+msgid "Romanian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:46
 msgid "Russian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
+#: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
 msgid "Serbian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:48
+#: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:49
+#: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:50
+#: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:51
+#: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:52
+#: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:53
+#: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:54
+#: jinja2/includes/translate_locales.html:55
 msgid "Thai"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:55
+#: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:56
+#: jinja2/includes/translate_locales.html:57
 msgid "Turkish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:57
+#: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:58
+#: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:59
+#: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:60
+#: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:61
+#: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:62
+#: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
 msgstr ""
 
