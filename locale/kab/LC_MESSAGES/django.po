@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 08:04-0800\n"
-"PO-Revision-Date: 2016-11-30 19:08+0000\n"
+"PO-Revision-Date: 2016-11-30 23:38+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -2140,11 +2140,9 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr "Ma ulac aɣilif sekcem isem i tebɣiḍ ad sekneḍ i yiseqdacen nniḍen akken ad tesulud attekki yinek."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
-#, fuzzy, python-format
+#, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr ""
-"Yella yakan umaɣnu s tansa agi imayl yettwafernen. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Qqen amiḍan inek %(provider_name)s ɣer umaɣnu "
-"agi.</a>"
+msgstr "Yella yakan umaɣnu s tansa agi imayl yettwafernen. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Qqen amiḍan inek %(provider_name)s ɣer umaɣnu-agi.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
@@ -3312,11 +3310,13 @@ msgid "This translation is in progress."
 msgstr "Tasuqilt agi tetteddu."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
 "href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "Iwiziwen nneɣ ur suqqlen ara ayakan margard agi <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Mudd-aɣ-d afus akken ad t-nessuqel! </a>"
+msgstr ""
+"Iwiziyen nneɣ ur suqqlen ara yakan amagrad-agi <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Mudd-aɣ-d afus akken ad t-nessuqel! </a><br>Tzemreḍ daɣen ad teɣreḍ amagrad s <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
