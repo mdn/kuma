@@ -154,6 +154,7 @@ MDN_LANGUAGES = (
     'it',
     'ja',
     'ka',
+    'kab',
     'ko',
     'ln',
     'mg',
