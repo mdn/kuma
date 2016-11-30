@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-07 11:53-0800\n"
+"POT-Creation-Date: 2016-11-30 07:00-0800\n"
 "PO-Revision-Date: 2016-11-18 08:09+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
@@ -58,8 +58,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> troch Matthew Inman fan <a href=\"http://theoatmeal.com\" "
-"rel=\"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> troch Matthew Inman fan <a href=\"http://theoatmeal.com\" rel=\"nofollow"
+"\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -822,8 +822,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"Dit binne jo API-kaaien. Se binne handich foar it bouwen fan applikaasjes dy't yn jo namme taken op MDN útfiere. As jo der in oantal net mear brûke, of as jo fermoedzje dat der ien bleatsteld is oan"
-" partijen dy't jo net mei jo account fertrouwe, smyt dan de kaai fuort. Der kin altyd ienfâldichwei in ferfangende kaai oanmakke wurde."
+"Dit binne jo API-kaaien. Se binne handich foar it bouwen fan applikaasjes dy't yn jo namme taken op MDN útfiere. As jo der in oantal net mear brûke, of as jo fermoedzje dat der ien bleatsteld is "
+"oan partijen dy't jo net mei jo account fertrouwe, smyt dan de kaai fuort. Der kin altyd ienfâldichwei in ferfangende kaai oanmakke wurde."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -849,8 +849,8 @@ msgstr "Jo hawwe spesjale tastimming nedich om API-kaaien brûke te kinnen. Jo k
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 "<p>Beskriuw hjirûnder jo bedoelde gebrûk foar dizze kaai. <p><strong>NOAT:</strong> dit is jo iennichste middel om dizze kaai letter te identifisearjen, oars as de datum en tiid fan de oanmaak "
 "derfan. Wês dus sa dúdlik mooglik.</p>"
@@ -1088,26 +1088,6 @@ msgstr "Auteurs:"
 msgid "Filter"
 msgstr "Filterje"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
-msgid "Revert"
-msgstr "Weromsette"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
-#: kuma/wiki/feeds.py:340
-msgid "View Page"
-msgstr "Side werjaan"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
-msgid "Edit Page"
-msgstr "Side bewurkje"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
-msgid "History"
-msgstr "Skiednis"
-
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
@@ -1130,46 +1110,46 @@ msgstr "Auteur"
 msgid "Toggle IPs"
 msgstr "IP’s wikselje"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
 msgstr "nij"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
 msgstr "fuortsmiten"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
 msgstr "IP:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
 msgstr "IP blokkearje foar bewurkjen"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "User agent:"
 msgstr "Useragent:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
 msgid "Referrer:"
 msgstr "Referrer:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "blokkearre op %(ban_date)s troch %(user)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr "Yntsjinne as %(submission_type)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
 #, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "op %(sent_date)s troch %(user)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
 msgstr "Yntsjinje as:"
 
@@ -1177,7 +1157,7 @@ msgstr "Yntsjinje as:"
 msgid "spam"
 msgstr "spam"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
 msgstr "Der binne gjin refyzjes dy't oan dizze filterset foldogge."
 
@@ -1211,8 +1191,8 @@ msgstr "It Mozilla Developer Network (MDN) Fellowship Program nûget webûntwikk
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 "It Mozilla Developer Network (MDN) biedt ynformaasje oer Open Web-technologyën, wêrûnder HTML, CSS en API’s foar sawol websites as HTML5-apps. Ek dokumintearret it Mozilla-produkten, lykas Firefox "
 "OS."
@@ -1362,11 +1342,11 @@ msgstr "Ferspried ûntwikkelersleafde."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>Helje knoppen op:</strong> brûk it ûndersteande formulier om in o​anpaste knop en boarnekoade te meitsjen foar it promoatsjen fan MDN op jo website of blog.</li> <li><strong> Pleats"
-" knoppen:</strong> kopiearje de boarnekoade en plak dizze earne op jo website of blog om minsken te helpen nei MDN troch te klikken.</li> <li><strong> Fiel jo goed:</strong> wês grutsk op de "
+"<ol> <li><strong>Helje knoppen op:</strong> brûk it ûndersteande formulier om in o​anpaste knop en boarnekoade te meitsjen foar it promoatsjen fan MDN op jo website of blog.</li> <li><strong> Pleats "
+"knoppen:</strong> kopiearje de boarnekoade en plak dizze earne op jo website of blog om minsken te helpen nei MDN troch te klikken.</li> <li><strong> Fiel jo goed:</strong> wês grutsk op de "
 "wittensweardichheid dat jo it libben fan ûntwikkelers in bytsje better meitsje troch MDN mei de wrâld te dielen.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
@@ -1486,36 +1466,36 @@ msgstr "Kin net mear as ien yndeks tagelyk opwurdearje."
 msgid "Promoted search index %s."
 msgstr "Sykyndeks %s opwurdearre."
 
-#: kuma/search/admin.py:16
+#: kuma/search/admin.py:18
 msgid "Promote selected search index to current index"
 msgstr "Selektearre sykyndeks opwurdearje nei aktuele yndeks"
 
-#: kuma/search/admin.py:21
+#: kuma/search/admin.py:23
 msgid "Can't demote more than one index at once."
 msgstr "Kin net mear as ien yndeks tagelyk ôfwurdearje."
 
-#: kuma/search/admin.py:24
+#: kuma/search/admin.py:26
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
 msgstr "Kin de yndeks net ôfwurdearje as der mar ien bestiet. Meitsje earst in nije en folje dizze yn."
 
-#: kuma/search/admin.py:29
+#: kuma/search/admin.py:31
 #, python-format
 msgid "Demoted search index %s."
 msgstr "Sykyndeks %s ôfwurdearre."
 
-#: kuma/search/admin.py:30
+#: kuma/search/admin.py:34
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr "Selektearre sykyndeks ôfwurdearje (automatyske tebekfal nei foarige yndeks)"
 
-#: kuma/search/admin.py:37
+#: kuma/search/admin.py:41
 msgid "Can't populate more than one index at once."
 msgstr "Kin net mear as ien yndeks tagelyk ynfolje."
 
-#: kuma/search/admin.py:42
+#: kuma/search/admin.py:48
 msgid "Populate selected search index via Celery"
 msgstr "Selektearre sykyndeks ynfolje fia Celery"
 
-#: kuma/search/admin.py:57
+#: kuma/search/admin.py:63
 msgid "Is current index?"
 msgstr "Is dit de aktuele yndeks?"
 
@@ -1666,11 +1646,11 @@ msgstr "type"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
-"Sorry, jo moatte op syn minst ien keppele account hawwe om jo oan melde te kinnen. Keppelje earst in oar account om dizze te ûntkeppeljen. <a href=\"%(bug_form_url)s\" rel=\"nofollow\">Meld in "
-"bug</a> om jo MDN-profyl fuort te smiten."
+"Sorry, jo moatte op syn minst ien keppele account hawwe om jo oan melde te kinnen. Keppelje earst in oar account om dizze te ûntkeppeljen. <a href=\"%(bug_form_url)s\" rel=\"nofollow\">Meld in bug</"
+"a> om jo MDN-profyl fuort te smiten."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1884,7 +1864,7 @@ msgstr "%(email)s <b>ferifiearre</b>"
 msgid "%(email)s Unverified"
 msgstr "%(email)s net ferifiearre"
 
-#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
+#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Oars:"
 
@@ -2030,7 +2010,8 @@ msgstr "Unjildige token"
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr "De keppeling foar it wizigjen fan it wachtwurd wie ûnjildich, mooglik omdat dizze al brûkt is. Doch in <a href=\"%(passwd_reset_url)s\">nije oanfraach foar opnij ynstellen fan it wachtwurd</a>."
+msgstr ""
+"De keppeling foar it wizigjen fan it wachtwurd wie ûnjildich, mooglik omdat dizze al brûkt is. Doch in <a href=\"%(passwd_reset_url)s\">nije oanfraach foar opnij ynstellen fan it wachtwurd</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -2113,77 +2094,75 @@ msgstr "Oanmelding annulearre"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Jo hawwe besletten de oanmelding by ús website fia ien fan jo besteande accounts te annulearjen. As dit in fersin wie, gean dan fierder mei <a href=\"%(login_url)s\">oanmelden</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:22
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
 msgstr "Meitsje jo MDN-profyl oan om fierder te gean"
 
-#: kuma/users/jinja2/socialaccount/signup.html:25
+#: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
 msgstr "In besteand MDN-profyl is lyk oan jo GitHub-e-mailadres. Klik hjir om it profyl werom te bringen:"
 
-#: kuma/users/jinja2/socialaccount/signup.html:34
+#: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
 msgstr "Myn profyl werombringe"
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr "Tank foar it oanmelden by MDN mei %(provider_name)s. Der is noch ien stap te gean om mei MDN mei te dwaan: <strong>meitsje jo MDN-profyl oan</strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:49
+#: kuma/users/jinja2/socialaccount/signup.html:47
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "Jo kinne alles op de MDN-website benaderje, ek sûnder in MDN-profyl. Troch jo by MDN oan te sluten, kinne jo lykwols dokuminten bewurkje en jo eigen profylside beheare."
 
-#: kuma/users/jinja2/socialaccount/signup.html:56
+#: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "<strong>Kies in brûkersnamme</strong> om jo MDN-profyl yn te stellen. Jo brûkersnamme sil op MDN werjûn wurde om bydragen dy't jo leverje te identifisearjen."
 
-#: kuma/users/jinja2/socialaccount/signup.html:62
+#: kuma/users/jinja2/socialaccount/signup.html:60
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "<strong>Kies in brûkersnamme en e-mailadres</strong> om jo MDN-profyl yn te stellen. Jo brûkersnamme sil op MDN werjûn om bydragen dy't jo leverje te identifisearjen."
 
-#: kuma/users/jinja2/socialaccount/signup.html:70
+#: kuma/users/jinja2/socialaccount/signup.html:68
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "As jo <strong>problemen hawwe</strong> by it oanmelden of it oanmeitsjen fan in MDN-profyl, <strong><a href=\"%(bug_href)s\" rel=\"external\">lit it dan witte</a></strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:95
+#: kuma/users/jinja2/socialaccount/signup.html:93
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr "Jo GitHub-brûkersnamme %(username)s is al yn gebrûk. Kies in oare."
 
-#: kuma/users/jinja2/socialaccount/signup.html:99
+#: kuma/users/jinja2/socialaccount/signup.html:97
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "Fier de namme yn dy't jo by oare brûkers werjaan wolle om jo bydragen werkenne te kinnen."
 
-#: kuma/users/jinja2/socialaccount/signup.html:113
-#, python-format
-msgid ""
-"A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
-"to it.</a>"
+#: kuma/users/jinja2/socialaccount/signup.html:111
+#, fuzzy, python-format
+msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
 msgstr ""
 "Der bestiet al in profyl mei it selektearre e-mailadres. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Keppelje jo %(provider_name)s-account "
 "dermei.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:143
+#: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Hokker e-mailadres moatte wy brûke om jo MDN-relatearre berjochten en meldingen te stjoeren? Dit adres sil <strong>niet</strong> op MDN werjûn wurde en sil brûkt wurde neffens ús <a "
-"href=\"%(privacy_url)s\">privacybelied</a>."
+"Hokker e-mailadres moatte wy brûke om jo MDN-relatearre berjochten en meldingen te stjoeren? Dit adres sil <strong>niet</strong> op MDN werjûn wurde en sil brûkt wurde neffens ús <a href="
+"\"%(privacy_url)s\">privacybelied</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:159
+#: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
 msgstr "Betingsten en privacy"
 
-#: kuma/users/jinja2/socialaccount/signup.html:168
+#: kuma/users/jinja2/socialaccount/signup.html:166
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "mei Mozilla’s <a href=\"%(terms_url)s\">Betingsten</a> en <a href=\"%(privacy_url)s\">Privacyferklearring</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:178
+#: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
 msgstr "Myn MDN-profyl oanmeitsje"
 
@@ -2303,6 +2282,17 @@ msgstr "Hat ferfolch nedich"
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
 msgstr "Nije aksje fan brûker:"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+msgid "View Page"
+msgstr "Side werjaan"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
+msgid "History"
+msgstr "Skiednis"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2430,7 +2420,7 @@ msgstr "Side"
 msgid "Date"
 msgstr "Datum"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
 msgstr "Side bewurkje"
 
@@ -2438,7 +2428,7 @@ msgstr "Side bewurkje"
 msgid "View complete diff"
 msgstr "Folsleine diff besjen"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
 msgstr "Sideskiednis werjaan"
 
@@ -2470,8 +2460,8 @@ msgstr "Jo bewurkje in oar profyl as dat fan josels. Wês foarsichtich!"
 #: kuma/users/jinja2/users/user_edit.html:54
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
-"Wy heare graach jo kommentaar oer wizigingen oan de website! Bètatesters krije earst tagong ta nije funksjes en sa no en dan stjoere wy in e-mailberjocht wêryn wy freegje bepaalde saken te helpen te"
-" testen."
+"Wy heare graach jo kommentaar oer wizigingen oan de website! Bètatesters krije earst tagong ta nije funksjes en sa no en dan stjoere wy in e-mailberjocht wêryn wy freegje bepaalde saken te helpen "
+"te testen."
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Primary Email"
@@ -2560,8 +2550,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"Gean no fierder troch in taak op MDN te kiezen, en út te fieren! Der binne in oantal begjintaken wêr't jo út kieze kinne, of jo no <a href=\"%(words_link)s\">fan wurden hâlde</a>, <a "
-"href=\"%(code_link)s\">fan koade hâlde</a>, <a href=\"%(both_link)s\">sawol fan wurden as fan koade hâlde</a>, of dat jo <a href=\"%(translate_link)s\">MDN nei jo taal oersette wolle</a>."
+"Gean no fierder troch in taak op MDN te kiezen, en út te fieren! Der binne in oantal begjintaken wêr't jo út kieze kinne, of jo no <a href=\"%(words_link)s\">fan wurden hâlde</a>, <a href="
+"\"%(code_link)s\">fan koade hâlde</a>, <a href=\"%(both_link)s\">sawol fan wurden as fan koade hâlde</a>, of dat jo <a href=\"%(translate_link)s\">MDN nei jo taal oersette wolle</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2681,11 +2671,11 @@ msgstr "Al rapportearre as spam."
 msgid "This user has not created any revisions in the past three days."
 msgstr "Brûker hat yn de lêste 3 dagen gjin refyzjes makke."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "Bewurkje"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
 msgstr "Avansearre"
 
@@ -2811,6 +2801,10 @@ msgstr "Resinte MDN-refyzjes"
 msgid "Recent revisions to MDN documents"
 msgstr "Resinte refyzjes fan MDN-dokuminten"
 
+#: kuma/wiki/feeds.py:343
+msgid "Edit Page"
+msgstr "Side bewurkje"
+
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
 msgstr "Fergeliking toane"
@@ -2898,8 +2892,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
-"Publisearjen is mislearre. Konfliktearjende bewurkingsbesykjen detektearre. Kopiearje en plak jo bewurkingen nei in feilich plak en besykje de side <a href=\"%(url)s\">Refyzjeskiednis</a> om te sjen"
-" wat der wizige is eardat jo fierdere bewurkingen útfiere."
+"Publisearjen is mislearre. Konfliktearjende bewurkingsbesykjen detektearre. Kopiearje en plak jo bewurkingen nei in feilich plak en besykje de side <a href=\"%(url)s\">Refyzjeskiednis</a> om te "
+"sjen wat der wizige is eardat jo fierdere bewurkingen útfiere."
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
@@ -3114,11 +3108,11 @@ msgstr "Jo probearje in nije side te meitsjen."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
-"It meitsjen fan in nije side is in beheinde aksje. Foar it oanfreegjen fan in nije side kinne jo <a href=\"%(request_page_url)s\">in bug melde</a>. As jo tastimming nedich hawwe foar it meitsjen fan"
-" nije siden, <a href=\"%(email_link)s\">nim dan kontakt mei ús op</a>."
+"It meitsjen fan in nije side is in beheinde aksje. Foar it oanfreegjen fan in nije side kinne jo <a href=\"%(request_page_url)s\">in bug melde</a>. As jo tastimming nedich hawwe foar it meitsjen "
+"fan nije siden, <a href=\"%(email_link)s\">nim dan kontakt mei ús op</a>."
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -3201,6 +3195,10 @@ msgstr "Wêrom sette jo dizze refyzje werom?"
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr "Jo geane it dokumint nei dizze refyzje weromsette. Klik op ‘Weromsette’ om de ynhâld&nbsp;hjirboppe werom te setten."
 
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+msgid "Revert"
+msgstr "Weromsette"
+
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
 msgstr "In nij sjabloan anmeitsje"
@@ -3279,8 +3277,8 @@ msgstr "Dit dokumint wurdt foar it earst troch it systeem werjûn. <a href=\"%(u
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 "Der wurdt op dit stuit in <abbr title=\"%(started_at)s\">fernijing fan dit dokumint</abbr> útfierd. As de ûndersteande ynhâld der frjemd útsjocht of as der wat ûntbrekt, <a href=\"%(url)s\">fernij "
 "dan dizze side</a> oer inkelde minuten."
@@ -3288,11 +3286,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
-"Der is in fernijing fan dit dokumint <abbr title=\"%(scheduled_at)s\">pland</abbr>. As de ûndersteande ynhâld der frjemd útsjocht of as der wat ûntbrekt, <a href=\"%(url)s\">fernij dan dizze "
-"side</a> oer inkelde minuten."
+"Der is in fernijing fan dit dokumint <abbr title=\"%(scheduled_at)s\">pland</abbr>. As de ûndersteande ynhâld der frjemd útsjocht of as der wat ûntbrekt, <a href=\"%(url)s\">fernij dan dizze side</"
+"a> oer inkelde minuten."
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3314,32 +3312,34 @@ msgid "This translation is in progress."
 msgstr "Oan dizze oersetting wurdt wurke."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, python-format
-msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
+#, fuzzy, python-format
+msgid ""
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a href="
+"\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr "Us frijwilligers hawwe dit artikel net nei it <bdi>%(locale)s</bdi> oerset (Dat hoecht ek net). <a href=\"%(help_link)s\">Doch mei en help dit putsje te foltôgjen!</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
 msgstr "Dit artikel hat noch gjin ynhâld."
 
-#: kuma/wiki/jinja2/wiki/document.html:319
+#: kuma/wiki/jinja2/wiki/document.html:320
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Sykje nei <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">siden dy't %(title)s</a> brûke om use-case-foarbylden en it oantal siden dat dizze macro brûkt te sjen."
 
-#: kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "This article doesn't have approved content yet."
 msgstr "Dit artikel hat noch gjin goedkarre ynhâld."
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "Dokumintlabels en -meiwurkers"
 
-#: kuma/wiki/jinja2/wiki/document.html:346
+#: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
 msgstr "Oan dizze side hawwe bydroegen:"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "Lêst bywurke troch:"
 
@@ -3707,47 +3707,47 @@ msgstr "Bewarje"
 msgid "Languages"
 msgstr "Talen"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:29
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "No translations exist for this article."
 msgstr "Foar dit artikel bestean gjin oersettingen."
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
 msgid "Add a translation"
 msgstr "In oersetting tafoegje"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
 msgstr "Folgje"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:63
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
 msgstr "Nij sub-artikel"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:64
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
 msgstr "Dit artikel klone"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
 msgstr "Dit artikel ferpleatse"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
 msgstr "Werjaan yn behear"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:78
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:82
 msgid "Delete this article"
 msgstr "Dit artikel fuortsmite"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:83
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
 msgstr "Ynhâldssône beheare"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:86
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
 msgid "Convert to content zone"
 msgstr "Konvertearje nei ynhâldssône"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:88
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
 msgstr "Dit artikel ôfdrukke"
 
@@ -3939,11 +3939,11 @@ msgstr "Fertel ús wêrom't jo oanfollingen en wizigingen oanbrocht hawwe. Dit i
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
-"Jo ynstjoering befettet ynhâld dy't mooglik net geskikt is foar MDN. Werhelle besykjen ta yntsjinjen fan ûngeskikt materiaal kin liede ta deaktivearing fan jo account. Sjoch ús hânlieding ‘<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>’ foar details oer wat der ûnder geskikt materiaal falt."
+"Jo ynstjoering befettet ynhâld dy't mooglik net geskikt is foar MDN. Werhelle besykjen ta yntsjinjen fan ûngeskikt materiaal kin liede ta deaktivearing fan jo account. Sjoch ús hânlieding ‘<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>’ foar details oer wat der ûnder geskikt materiaal falt."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -4042,8 +4042,8 @@ msgstr "Alle artikelen foar beoardieling"
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
 msgstr ""
-"Kontrolearje dizze artikelen op stavering, grammatika, opmaak, foarmjouwing ensfh., en wiskje dêrnei de flagge Redaksjonele beoardieling. <a href=\"%(url)s\">Besjoch mear detaillearre "
-"ynstruksjes</a>."
+"Kontrolearje dizze artikelen op stavering, grammatika, opmaak, foarmjouwing ensfh., en wiskje dêrnei de flagge Redaksjonele beoardieling. <a href=\"%(url)s\">Besjoch mear detaillearre ynstruksjes</"
+"a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
@@ -4240,20 +4240,21 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgstr "Jo hawwe gjin keppele accounts."
 
 #~ msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-#~ msgstr "Der bestiet al in profyl mei dit e-mailadres. <a href=\"%(connections_url)s\">Jo moatte jo oanmelde en jo sosjale-accountkeppelingen te besykje</a> om Persona oan jo MDN-profyl te keppeljen."
+#~ msgstr ""
+#~ "Der bestiet al in profyl mei dit e-mailadres. <a href=\"%(connections_url)s\">Jo moatte jo oanmelde en jo sosjale-accountkeppelingen te besykje</a> om Persona oan jo MDN-profyl te keppeljen."
 
 #~ msgid ""
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 #~ msgstr[0] ""
-#~ "Der bestiet al in profyl mei ûndersteand e-mailadres. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, keppelje mei "
-#~ "myn MDN-profyl</a>"
+#~ "Der bestiet al in profyl mei ûndersteand e-mailadres. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, keppelje "
+#~ "mei myn MDN-profyl</a>"
 #~ msgstr[1] ""
-#~ "Der bestiet al in profyl mei ien fan dizze ûndersteande e-mailadressen. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Ja, keppelje mei myn MDN-profyl</a>"
+#~ "Der bestiet al in profyl mei ien fan dizze ûndersteande e-mailadressen. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Ja, keppelje mei myn MDN-profyl</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "Oanmeld mei Persona"
@@ -4316,11 +4317,11 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgstr "Dit dokumint is oanpast wylst jo it bewurke."
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
-#~ "Ynhâld is beskikber ûnder in foar dit projekt spesifike lisinsje. &middot; <a href=\"%(about_url)s\">Oer MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Bydragen oan de koade</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacybelied</a>"
+#~ "Ynhâld is beskikber ûnder in foar dit projekt spesifike lisinsje. &middot; <a href=\"%(about_url)s\">Oer MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Bydragen oan de koade</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacybelied</a>"
 
 #~ msgid "\"Load documents\""
 #~ msgstr "‘Dokuminten lade’"
@@ -4515,8 +4516,8 @@ msgstr "Elasticsearch-server: %(backend)s"
 
 #~ msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
 #~ msgstr ""
-#~ "De CSS3-Lettertype-spesifikaasje befettet ferbettere funksjes foar lettertypen en typografy lykas jo eigen lettertypen opnimme fia @font-face of kontrôle oer OpenType lettertypefunksjes direkt fia "
-#~ "CSS."
+#~ "De CSS3-Lettertype-spesifikaasje befettet ferbettere funksjes foar lettertypen en typografy lykas jo eigen lettertypen opnimme fia @font-face of kontrôle oer OpenType lettertypefunksjes direkt "
+#~ "fia CSS."
 
 #~ msgid "http://en.wikipedia.org/wiki/Web_typography"
 #~ msgstr "http://en.wikipedia.org/wiki/Web_typography"
@@ -4527,7 +4528,8 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "Formulieren"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr ""
 #~ "Formuliereleminten en attributen yn HTML5 jouwe in hegere graad fan semantyske opmaak as HTML4 en meitsje in grut part fan de needsaak foar in protte programmearwurk en opmaak dy't nedich wie yn "
 #~ "HTML4 oerstallich."
@@ -4830,8 +4832,8 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
 #~ msgstr ""
-#~ "<p>Jo steane op it punt om <strong>%(demo_title)s</strong> fuort te smiten út de Demo Studio.</p> <p>De Demo's list, boarnekoade, en statistiken sille <strong>fuortsmiten</strong> wurde.</p> <p>Dize"
-#~ " aksje <strong>kin net ûngedien makke wurde</strong>."
+#~ "<p>Jo steane op it punt om <strong>%(demo_title)s</strong> fuort te smiten út de Demo Studio.</p> <p>De Demo's list, boarnekoade, en statistiken sille <strong>fuortsmiten</strong> wurde.</p> "
+#~ "<p>Dize aksje <strong>kin net ûngedien makke wurde</strong>."
 
 #~ msgid "Mozilla Demo Studio"
 #~ msgstr "Mozilla Demo Studio"
@@ -5000,11 +5002,11 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgstr "Stoer in nije demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>Oft jo no in prachtich nije manier om it ynternet te ûntdekken meitsje of allinnich eksperimintearet mei de lêste technologyën, wy noegje dy út om jo eigen demos yn te stjoeren om te dielen mei "
-#~ "(of te showen oan) oare webûntwikkelers.</p> <p>Meitsje it formulier hjirûnder kompleet om wis te wêzen dat dyn demo suksesfol ferstjoerd is nei de Demo Studio.</p>"
+#~ "<p>Oft jo no in prachtich nije manier om it ynternet te ûntdekken meitsje of allinnich eksperimintearet mei de lêste technologyën, wy noegje dy út om jo eigen demos yn te stjoeren om te dielen "
+#~ "mei (of te showen oan) oare webûntwikkelers.</p> <p>Meitsje it formulier hjirûnder kompleet om wis te wêzen dat dyn demo suksesfol ferstjoerd is nei de Demo Studio.</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "Omskriuw jo demo"
@@ -5037,20 +5039,20 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgstr "<p>Laad in ZIP-bestân op fan jo boarnekoade, wêryn de haadside fan jo demo de namme <code>index.html</code> hat yn de boppeste map (root).</p>"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr ""
-#~ "<p>Oft jo no in prachtich nije manier om it ynternet te ûntdekken meitsje of allinnich eksperimintearet mei de lêste technologyën, wy noegje dy út om jo eigen demos yn te stjoeren om te dielen mei "
-#~ "(of te showen oan) oare webûntwikkelers.</p>"
+#~ "<p>Oft jo no in prachtich nije manier om it ynternet te ûntdekken meitsje of allinnich eksperimintearet mei de lêste technologyën, wy noegje dy út om jo eigen demos yn te stjoeren om te dielen "
+#~ "mei (of te showen oan) oare webûntwikkelers.</p>"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Do moast ree wêze om <strong>de boarnekoade te jaan</strong> foar dyn demo. Demos wurde host op de Demo Studio har tsjinners.</li> <li>De boarnekoade fan dyn demo moat beskikber wêze ûnder "
-#~ "in <strong>iepen lisinsje</strong>, lykas MPL, GPL, of BSD.</li> <li>Dyn demo moat foarbylden jaan fan <strong>iepen webtechnologyën</strong>, lykas HTML5 en CSS3.</li> <li>Dyn demo moat in grut "
-#~ "ferskaat fan <strong>moderne webbrowsers</strong> stypje, lykas Firefox, Chrome, Safari, en Opera.</li> </ul>"
+#~ "<ul> <li>Do moast ree wêze om <strong>de boarnekoade te jaan</strong> foar dyn demo. Demos wurde host op de Demo Studio har tsjinners.</li> <li>De boarnekoade fan dyn demo moat beskikber wêze "
+#~ "ûnder in <strong>iepen lisinsje</strong>, lykas MPL, GPL, of BSD.</li> <li>Dyn demo moat foarbylden jaan fan <strong>iepen webtechnologyën</strong>, lykas HTML5 en CSS3.</li> <li>Dyn demo moat "
+#~ "in grut ferskaat fan <strong>moderne webbrowsers</strong> stypje, lykas Firefox, Chrome, Safari, en Opera.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Om jo demo yn te stjoeren, moatte jo in <strong><a href=\"%(signup_url)s\">MDN account</a></strong> hawwe.</p>"
@@ -5174,11 +5176,11 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgstr "\"HTML5 is goed foar Mobyl, sizze ûntwikkelers\""
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "\"'Hannen del, de ûntwikkeler pool foar HTML / JS rockstjerren is tsien kear gtutter [en] der is gjin ynlaad delgong. Jo wize minsken simpel op in URL en der giet it -- it is ynstallearre.' It feit "
-#~ "dat apps direkt ynstallearre wurde kinne troch in URL yn stee fan te wachtsjen op in App winkelynlaad betsjut dat ûntwikkelers barriêres ferlytsje nei tuskenkomst.\""
+#~ "\"'Hannen del, de ûntwikkeler pool foar HTML / JS rockstjerren is tsien kear gtutter [en] der is gjin ynlaad delgong. Jo wize minsken simpel op in URL en der giet it -- it is ynstallearre.' It "
+#~ "feit dat apps direkt ynstallearre wurde kinne troch in URL yn stee fan te wachtsjen op in App winkelynlaad betsjut dat ûntwikkelers barriêres ferlytsje nei tuskenkomst.\""
 
 #~ msgid "A Mozilla source tree browser."
 #~ msgstr "In Mozilla boarne tree browser."
@@ -5319,13 +5321,13 @@ msgstr "Elasticsearch-server: %(backend)s"
 #~ msgstr "<p><a href=\"/Special:UserRegistration\">Registrearje</a> of <a href=\"/Special:UserLogin\">loch yn</a> om jo eigen ta te foegjen.</p>"
 
 #~ msgid ""
-#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> <li>View "
-#~ "<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
+#~ "<li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
 #~ "<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Wolkom by de Mozilla Demo Studio, wêr't ûntwikkelers lykas jo ûntwerpe, diele, demonstrearje, en leare kinne oer Web technologyën. Sjoch wat mooglike is troch de Demo Studio te besykjen:</p> <ul>"
-#~ " <li>Besjoch <strong>demo's</strong> dy't toane wat HTML, CSS, en JavaScript dwaan kinne.</li> <li>Ynspektearje de <strong>boarnekoade</strong> foar dizze demo's sa dat jo sjen kinne hoe't se "
-#~ "wurkje.</li> <li>Lês <strong>dokumintaasje</strong> om te learen oer de iepen standerts en technologyën dy't it Web fersterkje.</li> </ul>"
+#~ "<p>Wolkom by de Mozilla Demo Studio, wêr't ûntwikkelers lykas jo ûntwerpe, diele, demonstrearje, en leare kinne oer Web technologyën. Sjoch wat mooglike is troch de Demo Studio te besykjen:</p> "
+#~ "<ul> <li>Besjoch <strong>demo's</strong> dy't toane wat HTML, CSS, en JavaScript dwaan kinne.</li> <li>Ynspektearje de <strong>boarnekoade</strong> foar dizze demo's sa dat jo sjen kinne hoe't "
+#~ "se wurkje.</li> <li>Lês <strong>dokumintaasje</strong> om te learen oer de iepen standerts en technologyën dy't it Web fersterkje.</li> </ul>"
 
 #~ msgid "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
 #~ msgstr "In wiidweidige, brûkbere en akkurate boarne foar elkenien dy't ûntwikkelt foar it iepen ynternet."
