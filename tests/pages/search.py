@@ -2,6 +2,7 @@ from pypom import Region
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+from pages.regions.column_container import ColumnContainer
 
 
 class SearchPage(BasePage):
@@ -22,6 +23,7 @@ class SearchPage(BasePage):
     # layout
     _results_explanation_locator = (By.CSS_SELECTOR, '#content .search-results-explanation')
     _results_explanation_p_locator = (By.CSS_SELECTOR, '#content .search-results-explanation p')
+    _column_container = (By.CSS_SELECTOR, '#search-form > .column-container')
     _main_column_locator = (By.CSS_SELECTOR, '#content .column-main')
     _side_column_locator = (By.CSS_SELECTOR, '#content .column-strip')
 
@@ -87,21 +89,6 @@ class SearchPage(BasePage):
         return side_column.is_displayed()
 
     @property
-    def is_article_columns_expected_layout(self):
-        main_column = self.find_element(*self._main_column_locator)
-        side_column = self.find_element(*self._side_column_locator)
-
-        main_column_location = main_column.location
-        side_column_location = side_column.location
-
-        main_column_y = main_column_location['y']
-        side_column_y = side_column_location['y']
-
-        main_column_x = main_column_location['x']
-        side_column_x = side_column_location['x']
-
-        # check y coordinates all the same
-        y_match = main_column_y == side_column_y
-        # check x coordinates are acsending
-        x_acsend = main_column_x < side_column_x
-        return y_match and x_acsend
+    def column_container_region(self):
+        column_container = self.find_element(*self._column_container)
+        return ColumnContainer(self, root=column_container)
