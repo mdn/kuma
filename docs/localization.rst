@@ -77,21 +77,25 @@ To update the localizations:
     git add --all locale
     git commit -m "MDN string update YYYY-MM-DD"
 
-Adding a new Locale
-===================
+Adding a New Locale (UI Strings)
+================================
+The process for getting a new locale on MDN is documented at
+`Starting a new MDN localization`_. One step is to enable translation of the
+UI strings.
+
 This example shows adding a Bulgarian (bg) locale. Change ``bg`` to the locale
 code of the language you are adding.
 
 #. `Update the Localizations`_ as above, so that your commit will be limited to
    the new locale.
 
-#. Add the locale to ``MDN_LANGUAGES`` in ``kuma/settings/common.py``
+#. Add the locale to ``CANDIDATE_LANGUAGES`` in ``kuma/settings/common.py``.
 
 #. Download the latest ``languages.json`` from
    https://product-details.mozilla.org/1.0/languages.json
    and place it at ``kuma/settings/languages.json``.
 
-#. Add the locale to the ``locale/`` folder::
+#. Add the locale to ``translate_locales.html`` and the ``locale/`` folder::
 
     make locale LOCALE=bg
 
@@ -99,26 +103,30 @@ code of the language you are adding.
 
     make localerefresh
 
+#. Commit the changes to ``locale``,
+   ``jinja2/includes/translate_locales.html``, and ``kuma/settings``.
+   The other locales should include a new string representing the new language.
+
+When the change is merged to master, enable the language in Pontoon_ as well,
+and notify the language community to start UI translation.
+
+.. _Starting a new MDN localization: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
+
+Adding a New Locale (Page Translations)
+=======================================
+Once the new translation community has completed the rest of the process for
+`starting a new MDN localization`_, it is time to enable the language for page
+translations:
+
+#. Move the local from ``CANDIDATE_LANGUAGES`` to ``MDN_LANGUAGES`` in
+   ``kuma/settings/common.py``.
+
 #. Restart the web server and verify that Django loads the new locale without
    errors by visiting the locale's home page, for example
    http://localhost:8000/bg/ (https://developer-local.allizom.org/bg/
-   if you are using Vagrant)
+   if you are using Vagrant).
 
-#. Commit the changes to ``locale/bg`` and ``kuma/settings``.
-   Verify that the other locales are just timestamp updates before reverting
-   them.
+#. Commit the change to ``kuma/settings/common.py``.
 
-#. BONUS: Use the  `debug translation feature`_ of ``dennis-cmd`` to test a
-   fake translation of the locale::
-
-        cd locale
-        dennis-cmd locale/bg/LC_MESSAGES/django.po
-        ./compile-mo.sh bg  # Edit and repeat until any errors are fixed
-        cd ..
-        make localerefresh
-
-   Restart the django server and re-visit the new locale to verify it shows
-   "translated" strings in the locale.  Don't commit the debug translation.
-
-.. _our Travis install script: https://github.com/mozilla/kuma/blob/master/scripts/travis-install
-.. _debug translation feature: http://dennis.readthedocs.io/en/latest/translating.html
+When the change is merged and deployed, inform the localization lead and the
+community that they can begin translating content.
