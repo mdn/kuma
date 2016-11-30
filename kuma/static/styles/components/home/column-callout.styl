@@ -83,6 +83,39 @@ Media queries
 /*
 Colours and icons
 -------------------------------------------------------------- */
+.callout-foundation {
+    background: #523e53;
+
+    strong {
+        content: '';
+        display: block;
+        height: 30px;
+        width: 109px;
+        margin-bottom: 2px;
+        background-image: url($path-to-images + 'home-foundation.gif');
+        direction: ltr; // ltr should be set with negative text indent
+        text-indent: 100%;
+        overflow: hidden;
+    }
+
+    a:before {
+        display: none;
+    }
+
+    a:after {
+        height: 79px;
+        background-image: url($path-to-images + 'home-foundation.gif');
+        background-position: 0 -29px;
+    }
+
+    button {
+        margin-top: 6px;
+        border: 3px solid #fff;
+        background-color: transparent;
+        color: #fff;
+    }
+}
+
 .callout-learn {
     background-color: #c43957;
 }

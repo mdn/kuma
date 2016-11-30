@@ -33,6 +33,7 @@ Switches
 * ``newsletter`` - Show newsletter sign-up site wide.
 * ``newsletter_article`` - Show newsletter sign-up in article footer (must be
   used in combination with ``newsletter``).
+* ``foundation_callout`` - show Foundation donation tile on homepage.
 
 
 Flags
