@@ -41,6 +41,7 @@ then
     if [ -e /tmp/provision_failed ]
     then
         sudo cat /var/log/mysql/error.log
+        sudo cat /var/log/mysql-5.6/error.log
         # Maybe https://github.com/travis-ci/travis-ci/issues/6842 ?
         sudo ls /run
         sudo ls /run/mysql-5.6
