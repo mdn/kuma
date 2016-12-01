@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-11-30 16:29+0000\n"
-"Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
+"PO-Revision-Date: 2016-12-01 00:36+0000\n"
+"Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -29,42 +29,42 @@ msgstr "Reverter"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "Ver página"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "Editar página"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "Histórico"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
-msgstr ""
+msgstr "Aguarde! A atualizar filtros…"
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "Filtros atualizados."
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "A submeter..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Submetido como %(submission_type)s"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s por %(user)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
 msgid "Error submitting as %(type)s"
-msgstr ""
+msgstr "Erro ao submeter como %(type)s"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
