@@ -1,55 +1,75 @@
 ---
-language: python
-python: "2.7"
+services: docker
 
 env:
-  - SITE=test.yml
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: centos-7-test.yml
+  - distro: centos6
+    init: /sbin/init
+    run_opts: ""
+    playbook: test.yml
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    playbook: test.yml
+
+services:
+  - docker
 
 before_install:
-  - sudo apt-get update -qq
-
-  # Remove MySQL. Completely and totally.
-  - sudo apt-get remove --purge 'mysql*'
-  - sudo apt-get autoremove
-  - sudo apt-get autoclean
-  - sudo rm -rf /var/lib/mysql
-  - sudo truncate -s 0 /var/log/mysql/error.log
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  # Pull container
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - container_id=$(mktemp)
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
 
-  # Run the role/playbook again, checking to make sure it's idempotent.
+  # Test role.
+  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
+
+  # Test role idempotence.
+  - idempotence=$(mktemp)
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
   - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Some MySQL debugging (show all the logs).
-  - "sudo ls -lah /var/log"
-  - "sudo cat /var/log/mysql/error.log"
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /var/log
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log || true
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err || true
 
   # Check to make sure we can connect to MySQL via Unix socket.
   - >
-    mysql -u root -proot -e 'show databases;'
-    | grep -q 'performance_schema'
+    sudo docker exec "$(cat ${container_id})" mysql -u root -proot -e 'show databases;'
+    | grep -q 'information_schema'
     && (echo 'MySQL running normally' && exit 0)
     || (echo 'MySQL not running' && exit 1)
 
   # Check to make sure we can connect to MySQL via TCP.
   - >
-    mysql -u root -proot -h 127.0.0.1 -e 'show databases;'
-    | grep -q 'performance_schema'
+    sudo docker exec "$(cat ${container_id})" mysql -u root -proot -h 127.0.0.1 -e 'show databases;'
+    | grep -q 'information_schema'
     && (echo 'MySQL running normally' && exit 0)
     || (echo 'MySQL not running' && exit 1)
+
+after_failure:
+  # Check MySQL settings.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.log'
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

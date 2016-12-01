@@ -1,5 +1,15 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+
+  pre_tasks:
+    - name: Copy initctl_faker into place for Ubuntu 14.04.
+      copy:
+        src: initctl_faker
+        dest: /sbin/initctl
+        mode: 0755
+        force: yes
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
+      changed_when: false
+
   roles:
-    - ansible-role-mysql
+    - role_under_test

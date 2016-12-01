@@ -3,20 +3,20 @@ dependencies: []
 
 galaxy_info:
   author: geerlingguy
-  description: MySQL server for RHEL/CentOS 6.x and Debian/Ubuntu
+  description: MySQL server for RHEL/CentOS and Debian/Ubuntu.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.4
+  min_ansible_version: 1.9
   platforms:
-  - name: EL
-    versions:
-    - 6
-    - 7
-  - name: Ubuntu
-    versions:
-    - all
-  - name: Debian
-    versions:
-    - all
-  categories:
+    - name: EL
+      versions:
+      - 6
+      - 7
+    - name: Ubuntu
+      versions:
+      - all
+    - name: Debian
+      versions:
+      - all
+  galaxy_tags:
     - database
