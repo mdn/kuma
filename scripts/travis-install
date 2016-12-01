@@ -32,3 +32,10 @@ then
     chmod +x docker-compose
     sudo mv docker-compose /usr/local/bin
 fi
+
+# Debug failures on Dec 1 2016
+if [ "$TOXENV" == "py27" ]
+then
+    pip install -r requirements/travis.txt
+    ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml || cat /var/log/mysql/error.log
+fi
