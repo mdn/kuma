@@ -20,7 +20,7 @@
     - { role: geerlingguy.mysql,
         tags: [mysql],
         mysql_innodb_log_file_size: 64M,
-        mysql_socket: /run/mysql-5.6/mysqld.sock
+        mysql_socket: /run/mysql-5.6/mysqld.sock,
         mysql_pid: /run/mysql-5.6/mysqld.pid
       }
     # TravisCI includes node/npm under nvm
