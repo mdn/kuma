@@ -21,10 +21,10 @@
         tags: [mysql],
         mysql_innodb_log_file_size: 64M,
         mysql_socket: /run/mysql-5.6/mysqld.sock,
-        mysql_pid_file: /run/mysql-5.6/mysqld.pid
-        mysql_slow_query_log_file: /var/log/mysql-5.6/mysql-slow.log
-        mysql_log_error: /var/log/mysql-5.6/error.err
-        mysql_config_file: /etc/mysql-5.6/my.cnf
+        mysql_pid_file: /run/mysql-5.6/mysqld.pid,
+        mysql_slow_query_log_file: /var/log/mysql-5.6/mysql-slow.log,
+        mysql_log_error: /var/log/mysql-5.6/error.err,
+        mysql_config_file: /etc/mysql-5.6/my.cnf,
         mysql_config_include_dir: /etc/mysql-5.6/conf.d
       }
     # TravisCI includes node/npm under nvm
