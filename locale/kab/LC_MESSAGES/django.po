@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 08:04-0800\n"
-"PO-Revision-Date: 2016-11-30 23:38+0000\n"
+"PO-Revision-Date: 2016-11-30 23:42+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -332,7 +332,7 @@ msgstr "Imayl"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr "you@example.com"
+msgstr "imayl@amedya.com"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
