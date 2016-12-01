@@ -46,6 +46,8 @@ then
         sudo ls /run/mysql-5.6
         sudo ls /var/run
         sudo ls /var/run/mysqld.sock
+
+        sudo cat /etc/init.d/mysql
         exit 1
     fi
 fi
