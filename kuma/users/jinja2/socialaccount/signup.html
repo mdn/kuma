@@ -11,8 +11,6 @@
 
 {% set provider = account.get_provider() %}
 {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
-{% set persona_login_url = url('account_login') %}
-{% set persona_next_url = github_connect_url %}
 
 {% block content %}
 <section id="content">
@@ -110,9 +108,9 @@
                       <li>
                       {# we have to handle this error message here to have access to the request #}
                       {% if error == form.duplicate_email_error_label %}
-                        {% trans persona_login_url=persona_login_url, provider_name=provider.name %}
+                        {% trans login_url=url('account_login'), next_url=github_connect_url, provider_name=provider.name %}
                         A profile already exists with the selected email address.
-                        <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Connect your {{ provider_name }} account to it.</a>
+                        <a href="{{ login_url }}" class="launch-login" data-next="{{ next_url }}">Connect your {{ provider_name }} account to it.</a>
                         {% endtrans %}
                       {% else %}
                         {{ error }}

@@ -154,6 +154,7 @@ MDN_LANGUAGES = (
     'it',
     'ja',
     'ka',
+    'kab',
     'ko',
     'ln',
     'mg',
@@ -355,7 +356,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '@api',
     '__debug__',
     '.well-known',
-    'users/persona/',
     'users/github/login/callback/',
 )
 
@@ -468,7 +468,6 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'kuma.users.providers.persona',
     'kuma.users.providers.github',
 
     # util
@@ -1382,17 +1381,6 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
 SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
-SOCIALACCOUNT_PROVIDERS = {
-    'persona': {
-        'AUDIENCE': SITE_URL,
-        'REQUEST_PARAMETERS': {
-            'siteName': 'Mozilla Developer Network',
-            'siteLogo': STATIC_URL + 'img/opengraph-logo.png',
-        }
-    }
-}
-PERSONA_VERIFIER_URL = 'https://verifier.login.persona.org/verify'
-PERSONA_INCLUDE_URL = 'https://login.persona.org/include.js'
 
 HONEYPOT_FIELD_NAME = 'website'
 

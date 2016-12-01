@@ -9,10 +9,10 @@ transitioning to Docker for integration testing and deployment as well.
 **Current Status**:
 
 * Kuma developers are using Docker for daily development and maintenance tasks.
-  Staff developers primarily use `Docker for Mac`_.  Other staff
+  Staff developers primarily use `Docker for Mac`_. Other staff
   members and contributors use `Docker's Ubuntu packages`_.
 * When the master branch is updated, the ``kuma_base`` image is refreshed and
-  published to `quay.io`_.  This image contains system packages and
+  published to `quay.io`_. This image contains system packages and
   third-party libraries.
 * The Docker development environment is evolving rapidly, to address issues
   found during development and to move toward a containerized design. You may
@@ -62,7 +62,7 @@ command accordingly, or force the ``kuma`` name with::
 
 Provision the database
 ======================
-There are two options for provisioning the database.  One option is to
+There are two options for provisioning the database. One option is to
 initialize a new, empty database, and another is to restore an existing
 database from a data dump.
 
@@ -75,7 +75,7 @@ To initialize a fresh database, run the migrations::
 It will run the standard Django migrations, with output similar to::
 
     Operations to perform:
-      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, persona, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
+      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
       Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
     Synchronizing apps without migrations:
       Creating tables...
@@ -114,12 +114,12 @@ Dozens of lines of warnings will be printed::
     ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'Last-Translator' still has the initial default value
 
 Warnings are OK, and will be fixed as translators update the strings on
-Pontoon_.  If there is an error, the output will end with the error, such as::
+Pontoon_. If there is an error, the output will end with the error, such as::
 
     ./az/LC_MESSAGES/django.po:263: 'msgid' and 'msgstr' entries do not both end with '\n'
     msgfmt: found 1 fatal error
 
-These need to be fixed by a Kuma developer. Notify then in the #mdndev IRC
+These need to be fixed by a Kuma developer. Notify them in the #mdndev IRC
 channel or open a bug. You can continue with installation, but non-English
 locales will not be localized.
 
@@ -184,7 +184,7 @@ shell::
 Enable the wiki
 ===============
 By default, the wiki is disabled with a
-:doc:`feature toggle <feature-toggles>`.  To enable editing:
+:doc:`feature toggle <feature-toggles>`. To enable editing:
 
 #. Log in as an admin user.
 #. Open the `Waffle / Flags`_ section of the admin site.
@@ -247,20 +247,23 @@ Now you can sign in with GitHub.
 To associate your password-only admin account with GitHub:
 
 #. Login with your password at http://localhost:8000/admin/login/
-#. Go to Account Connections at http://localhost:8000/en-US/users/account/connections
-#. Click "Connect with GitHub"
-#. (*Optional*) `Disable your admin password`_.
+#. Go to the Homepage at https://developer.mozilla.org/en-US/
+#. Click your username at the top to view your profile
+#. Click Edit to edit your profile
+#. Under My Profiles, click `Use your GitHub account to sign in`_
+#. (*Optional*) `Disable your admin password`_
 
 To create a new account with GitHub, use the regular "Sign in" widget at the
 top of any page.
 
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
 .. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
+.. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
 
 Interact with the Docker containers
 ===================================
 The current directory is mounted as the ``/app`` folder in the web and worker
-containers (``kuma_web_1`` and ``kuma_worker_1``).  Changes made to your local
+containers (``kuma_web_1`` and ``kuma_worker_1``). Changes made to your local
 directory are usually reflected in the running containers. To force the issue,
 the container can be restarted::
 

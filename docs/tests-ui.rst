@@ -38,7 +38,7 @@ Setting up test virtual environment
    $ pip install -r requirements/test.txt
 
 You may want to add your virtual environment folder to your local .gitignore
-file
+file.
 
 Running the tests
 =================
@@ -94,7 +94,7 @@ Run the tests in parallel
 -------------------------
 
 By default the tests will run one after the other but you can run several at
-the same time by specifying a value for `-n`::
+the same time by specifying a value for ``-n``::
 
    $ py.test tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
 

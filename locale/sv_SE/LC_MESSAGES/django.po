@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-08 17:53+0000\n"
+"POT-Creation-Date: 2016-11-30 08:04-0800\n"
+"PO-Revision-Date: 2016-11-30 18:42+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -495,110 +495,114 @@ msgid "Japanese"
 msgstr "Japanska"
 
 #: jinja2/includes/translate_locales.html:35
+msgid "Kabyle"
+msgstr "Kabyliska"
+
+#: jinja2/includes/translate_locales.html:36
 msgid "Korean"
 msgstr "Koreanska"
 
-#: jinja2/includes/translate_locales.html:36
+#: jinja2/includes/translate_locales.html:37
 msgid "Lingala"
 msgstr "Lingala"
 
-#: jinja2/includes/translate_locales.html:37
+#: jinja2/includes/translate_locales.html:38
 msgid "Malagasy"
 msgstr "Malagassiska"
 
-#: jinja2/includes/translate_locales.html:38
+#: jinja2/includes/translate_locales.html:39
 msgid "Malay"
 msgstr "Malajiska"
 
-#: jinja2/includes/translate_locales.html:39
+#: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
 msgstr "Malayalam"
 
-#: jinja2/includes/translate_locales.html:40
+#: jinja2/includes/translate_locales.html:41
 msgid "Persian"
 msgstr "Persiska"
 
-#: jinja2/includes/translate_locales.html:41
+#: jinja2/includes/translate_locales.html:42
 msgid "Polish"
 msgstr "Polska"
 
-#: jinja2/includes/translate_locales.html:42
+#: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Brazilian)"
 msgstr "Portugisiska (Brasilien)"
 
-#: jinja2/includes/translate_locales.html:43
+#: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Portugal)"
 msgstr "Portugisiska (Portugal)"
 
-#: jinja2/includes/translate_locales.html:44
+#: jinja2/includes/translate_locales.html:45
 msgid "Romanian"
 msgstr "Rumänska"
 
-#: jinja2/includes/translate_locales.html:45
+#: jinja2/includes/translate_locales.html:46
 msgid "Russian"
 msgstr "Ryska"
 
-#: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
+#: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
 msgid "Serbian"
 msgstr "Serbiska"
 
-#: jinja2/includes/translate_locales.html:48
+#: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
 msgstr "Songhai"
 
-#: jinja2/includes/translate_locales.html:49
+#: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
 msgstr "Spanska"
 
-#: jinja2/includes/translate_locales.html:50
+#: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
 msgstr "Swahili"
 
-#: jinja2/includes/translate_locales.html:51
+#: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
 msgstr "Svenska"
 
-#: jinja2/includes/translate_locales.html:52
+#: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
 msgstr "Tagalog"
 
-#: jinja2/includes/translate_locales.html:53
+#: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
 msgstr "Tamil"
 
-#: jinja2/includes/translate_locales.html:54
+#: jinja2/includes/translate_locales.html:55
 msgid "Thai"
 msgstr "Thai"
 
-#: jinja2/includes/translate_locales.html:55
+#: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
 msgstr "Tswana"
 
-#: jinja2/includes/translate_locales.html:56
+#: jinja2/includes/translate_locales.html:57
 msgid "Turkish"
 msgstr "Turkiska"
 
-#: jinja2/includes/translate_locales.html:57
+#: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
 msgstr "Ukrainska"
 
-#: jinja2/includes/translate_locales.html:58
+#: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
 msgstr "Vietnamesiska"
 
-#: jinja2/includes/translate_locales.html:59
+#: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
 msgstr "Wolof"
 
-#: jinja2/includes/translate_locales.html:60
+#: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
 msgstr "Xhosa"
 
-#: jinja2/includes/translate_locales.html:61
+#: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
 msgstr "Yoruba"
 
-#: jinja2/includes/translate_locales.html:62
+#: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
 msgstr "Zulu"
 
@@ -1087,26 +1091,6 @@ msgstr "Upphovsmän:"
 msgid "Filter"
 msgstr "Filtrera"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
-msgid "Revert"
-msgstr "Återställ"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
-#: kuma/wiki/feeds.py:340
-msgid "View Page"
-msgstr "Visa sida"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
-msgid "Edit Page"
-msgstr "Redigera sida"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
-msgid "History"
-msgstr "Historik"
-
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
@@ -1129,46 +1113,46 @@ msgstr "Upphovsman"
 msgid "Toggle IPs"
 msgstr "Växla IP"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
 msgstr "ny"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
 msgstr "borttagen"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
 msgstr "IP:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
 msgstr "Bannlys IP från att redigera"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "User agent:"
 msgstr "Användaragent:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
 msgid "Referrer:"
 msgstr "Referent:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "bannlyst den %(ban_date)s av %(user)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr "Inskickad som %(submission_type)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
 #, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "%(sent_date)s av %(user)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
 msgstr "Skicka in som:"
 
@@ -1176,7 +1160,7 @@ msgstr "Skicka in som:"
 msgid "spam"
 msgstr "skräppost"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
 msgstr "Det finns inga revisioner som matchar filteruppsättningen."
 
@@ -1484,36 +1468,36 @@ msgstr "Kan inte uppgradera mer än ett index åt gången."
 msgid "Promoted search index %s."
 msgstr "Uppgradera sökindex %s."
 
-#: kuma/search/admin.py:16
+#: kuma/search/admin.py:18
 msgid "Promote selected search index to current index"
 msgstr "Uppgradera valt sökindex till aktuellt index"
 
-#: kuma/search/admin.py:21
+#: kuma/search/admin.py:23
 msgid "Can't demote more than one index at once."
 msgstr "Går inte att nedgradera mer än ett index åt gången."
 
-#: kuma/search/admin.py:24
+#: kuma/search/admin.py:26
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
 msgstr "Går inte att nedgradera index om det bara finns ett. Skapa ett och fyll i ett nytt först."
 
-#: kuma/search/admin.py:29
+#: kuma/search/admin.py:31
 #, python-format
 msgid "Demoted search index %s."
 msgstr "Nedgradera sökindex %s."
 
-#: kuma/search/admin.py:30
+#: kuma/search/admin.py:34
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr "Nedgradera valda sökindex (automatisk återgång till tidigare index)"
 
-#: kuma/search/admin.py:37
+#: kuma/search/admin.py:41
 msgid "Can't populate more than one index at once."
 msgstr "Går inte att fylla i fler än ett index åt gången."
 
-#: kuma/search/admin.py:42
+#: kuma/search/admin.py:48
 msgid "Populate selected search index via Celery"
 msgstr "Fyll i valda sökindex via Celery"
 
-#: kuma/search/admin.py:57
+#: kuma/search/admin.py:63
 msgid "Is current index?"
 msgstr "Är aktuellt index?"
 
@@ -1882,7 +1866,7 @@ msgstr "%(email)s <b>Verifierad</b>"
 msgid "%(email)s Unverified"
 msgstr "%(email)s Ej verifierade"
 
-#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
+#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Annat:"
 
@@ -2111,60 +2095,56 @@ msgstr "Inloggning avbruten"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Du har beslutat att avbryta inloggningen på vår webbplats med ett av dina befintliga konton. Om detta var ett misstag, vänligen gå till <a href=\"%(login_url)s\">logga in</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:22
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
 msgstr "Skapa din MDN profil för att fortsätta"
 
-#: kuma/users/jinja2/socialaccount/signup.html:25
+#: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
 msgstr "En befintlig MDN-profil matchar din e-post för GitHub. Klicka här för att återställa en profil:"
 
-#: kuma/users/jinja2/socialaccount/signup.html:34
+#: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
 msgstr "Återställ min profil"
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr "Tack för att du loggar in på MDN med %(provider_name)s. Du har ytterligare ett steg för att gå med MDN: <strong>skapa din MDN profil</strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:49
+#: kuma/users/jinja2/socialaccount/signup.html:47
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "Du kan komma åt allt på MDN webbplats även utan en MDN profil. Om du går med i MDN, kommer du att kunna redigera dokument och ha din egen profilsida."
 
-#: kuma/users/jinja2/socialaccount/signup.html:56
+#: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "För att konfigurera din MDN profil, vänligen <strong>Välj ett användarnamn</strong>. Ditt användarnamn kommer att visas på MDN för att identifiera eventuella bidrag som du gör."
 
-#: kuma/users/jinja2/socialaccount/signup.html:62
+#: kuma/users/jinja2/socialaccount/signup.html:60
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 "För att konfigurera din MDN profil, vänligen <strong>Välj ett användarnamn och e-postadress</strong>. Ditt användarnamn kommer att visas på MDN för att identifiera eventuella bidrag som du gör."
 
-#: kuma/users/jinja2/socialaccount/signup.html:70
+#: kuma/users/jinja2/socialaccount/signup.html:68
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "Om du <strong>har problem med att</strong> logga in eller skapa en MDN profil, <strong><a href=\"%(bug_href)s\" rel=\"external\">Berätta för oss</a></strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:95
+#: kuma/users/jinja2/socialaccount/signup.html:93
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr "Ditt GitHub användarnamn %(username)s är redan taget. Välj en annat."
 
-#: kuma/users/jinja2/socialaccount/signup.html:99
+#: kuma/users/jinja2/socialaccount/signup.html:97
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "Skriv in det namn du vill ska visas för andra användare för att identifiera dina bidrag."
 
-#: kuma/users/jinja2/socialaccount/signup.html:113
+#: kuma/users/jinja2/socialaccount/signup.html:111
 #, python-format
-msgid ""
-"A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
-"to it.</a>"
-msgstr ""
-"Det finns redan en profil med den valda e-postadressen. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Anslut ditt %(provider_name)s konto till "
-"den.</a>"
+msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
+msgstr "Det finns redan en profil med den valda e-postadressen. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Anslut ditt %(provider_name)s konto till den.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:143
+#: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
@@ -2173,16 +2153,16 @@ msgstr ""
 "Vilken e-postadress ska vi använda för att skicka MDN relaterade meddelanden och aviseringar? Denna adress kommer <strong>inte</strong> att visas på MDN och används enligt vår <a "
 "href=\"%(privacy_url)s\">sekretesspolicy</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:159
+#: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
 msgstr "Villkor och sekretess"
 
-#: kuma/users/jinja2/socialaccount/signup.html:168
+#: kuma/users/jinja2/socialaccount/signup.html:166
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "till Mozillas <a href=\"%(terms_url)s\">villkor</a> och <a href=\"%(privacy_url)s\">sekretesspolicy</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:178
+#: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
 msgstr "Skapa min MDN-profil"
 
@@ -2302,6 +2282,17 @@ msgstr "Behöver uppföljning"
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
 msgstr "Ny åtgärd av användare:"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+msgid "View Page"
+msgstr "Visa sida"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
+msgid "History"
+msgstr "Historik"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2429,7 +2420,7 @@ msgstr "Sida"
 msgid "Date"
 msgstr "Datum"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
 msgstr "Redigera sida"
 
@@ -2437,7 +2428,7 @@ msgstr "Redigera sida"
 msgid "View complete diff"
 msgstr "Visa fullständig diff"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
 msgstr "Visa sidhistorik"
 
@@ -2678,11 +2669,11 @@ msgstr "Redan identifierad som spam."
 msgid "This user has not created any revisions in the past three days."
 msgstr "Den här användaren har inte skapat några revideringar under de senaste tre dagarna."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "Redigera"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
 msgstr "Avancerat"
 
@@ -2807,6 +2798,10 @@ msgstr "MDN senaste revisioner"
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
 msgstr "Senaste revisionerna för MDN dokument"
+
+#: kuma/wiki/feeds.py:343
+msgid "Edit Page"
+msgstr "Redigera sida"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -3198,6 +3193,10 @@ msgstr "Varför återgår du till denna revision?"
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr "Du håller på att återställa dokumentet till denna revision. Klicka på \"återställ\" för att återställa till innehållet&nbsp;ovan."
 
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+msgid "Revert"
+msgstr "Återställ"
+
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
 msgstr "Skapa en ny mall"
@@ -3312,31 +3311,35 @@ msgstr "Den här översättningen är under uppbyggnad."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
-msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr "Våra volontärer har inte översatt denna artikel till <bdi>%(locale)s</bdi> ännu. <a href=\"%(help_link)s\">Gå med oss och hjälpa till att få jobbet gjort!</a>"
+msgid ""
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+msgstr ""
+"Våra volontärer har inte översatt denna artikel till <bdi>%(locale)s</bdi> ännu. <a href=\"%(help_link)s\">Gå med oss och hjälpa till att få jobbet gjort!</a><br> Du kan också läsa artikeln på <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
 msgstr "Denna artikel har inte något innehåll ännu."
 
-#: kuma/wiki/jinja2/wiki/document.html:319
+#: kuma/wiki/jinja2/wiki/document.html:320
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Söka efter <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">sidor som använder %(title)s</a> för att se exempel av användningsfall och hur många sidor använder makrot."
 
-#: kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "This article doesn't have approved content yet."
 msgstr "Denna artikel har inget godkänt innehåll ännu."
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "Dokumenttaggar och bidragare"
 
-#: kuma/wiki/jinja2/wiki/document.html:346
+#: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
 msgstr "Bidragare till denna sida:"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "Senast uppdaterad av:"
 
@@ -3702,47 +3705,47 @@ msgstr "Spara"
 msgid "Languages"
 msgstr "Språk"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:29
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "No translations exist for this article."
 msgstr "Det finns inga översättningar för denna artikel."
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
 msgid "Add a translation"
 msgstr "Lägg till översättning"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
 msgstr "Bevaka"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:63
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
 msgstr "Ny underartikel"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:64
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
 msgstr "Klona denna artikel"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
 msgstr "Flytta denna artikel"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
 msgstr "Visa i admin"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:78
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:82
 msgid "Delete this article"
 msgstr "Ta bort denna artikel"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:83
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
 msgstr "Hantera innehållszon"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:86
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
 msgid "Convert to content zone"
 msgstr "Konvertera till innehållszon"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:88
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
 msgstr "Skriv ut denna artikel"
 

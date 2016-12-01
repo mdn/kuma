@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-07 11:53-0800\n"
-"PO-Revision-Date: 2016-11-07 22:54+0000\n"
+"POT-Creation-Date: 2016-11-30 08:04-0800\n"
+"PO-Revision-Date: 2016-12-01 06:04+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -498,110 +498,114 @@ msgid "Japanese"
 msgstr "日語"
 
 #: jinja2/includes/translate_locales.html:35
+msgid "Kabyle"
+msgstr "卡拜爾語"
+
+#: jinja2/includes/translate_locales.html:36
 msgid "Korean"
 msgstr "韓語"
 
-#: jinja2/includes/translate_locales.html:36
+#: jinja2/includes/translate_locales.html:37
 msgid "Lingala"
 msgstr "林格拉語"
 
-#: jinja2/includes/translate_locales.html:37
+#: jinja2/includes/translate_locales.html:38
 msgid "Malagasy"
 msgstr "馬拉加西語"
 
-#: jinja2/includes/translate_locales.html:38
+#: jinja2/includes/translate_locales.html:39
 msgid "Malay"
 msgstr "馬來語"
 
-#: jinja2/includes/translate_locales.html:39
+#: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
 msgstr "馬拉亞拉姆語"
 
-#: jinja2/includes/translate_locales.html:40
+#: jinja2/includes/translate_locales.html:41
 msgid "Persian"
 msgstr "波斯語"
 
-#: jinja2/includes/translate_locales.html:41
+#: jinja2/includes/translate_locales.html:42
 msgid "Polish"
 msgstr "波蘭語"
 
-#: jinja2/includes/translate_locales.html:42
+#: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Brazilian)"
 msgstr "葡萄牙語（巴西）"
 
-#: jinja2/includes/translate_locales.html:43
+#: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Portugal)"
 msgstr "葡萄牙語（葡萄牙）"
 
-#: jinja2/includes/translate_locales.html:44
+#: jinja2/includes/translate_locales.html:45
 msgid "Romanian"
 msgstr "羅馬尼亞語"
 
-#: jinja2/includes/translate_locales.html:45
+#: jinja2/includes/translate_locales.html:46
 msgid "Russian"
 msgstr "俄語"
 
-#: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
+#: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
 msgid "Serbian"
 msgstr "塞爾維亞語"
 
-#: jinja2/includes/translate_locales.html:48
+#: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
 msgstr "桑海語"
 
-#: jinja2/includes/translate_locales.html:49
+#: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
 msgstr "西班牙語"
 
-#: jinja2/includes/translate_locales.html:50
+#: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
 msgstr "斯瓦希里語"
 
-#: jinja2/includes/translate_locales.html:51
+#: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
 msgstr "瑞典語"
 
-#: jinja2/includes/translate_locales.html:52
+#: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
 msgstr "塔加拉語"
 
-#: jinja2/includes/translate_locales.html:53
+#: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
 msgstr "坦米爾語"
 
-#: jinja2/includes/translate_locales.html:54
+#: jinja2/includes/translate_locales.html:55
 msgid "Thai"
 msgstr "泰語"
 
-#: jinja2/includes/translate_locales.html:55
+#: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
 msgstr "瓦納語"
 
-#: jinja2/includes/translate_locales.html:56
+#: jinja2/includes/translate_locales.html:57
 msgid "Turkish"
 msgstr "土耳其語"
 
-#: jinja2/includes/translate_locales.html:57
+#: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
 msgstr "烏克蘭語"
 
-#: jinja2/includes/translate_locales.html:58
+#: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
 msgstr "越南語"
 
-#: jinja2/includes/translate_locales.html:59
+#: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
 msgstr "渥魯夫語"
 
-#: jinja2/includes/translate_locales.html:60
+#: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
 msgstr "科薩語"
 
-#: jinja2/includes/translate_locales.html:61
+#: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
 msgstr "約魯巴語"
 
-#: jinja2/includes/translate_locales.html:62
+#: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
 msgstr "祖魯語"
 
@@ -1083,27 +1087,6 @@ msgstr "作者:"
 msgid "Filter"
 msgstr "過濾"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
-msgid "Revert"
-msgstr "退回"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
-#: kuma/wiki/feeds.py:340
-msgid "View Page"
-msgstr "檢視頁面"
-
-# 88%
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
-msgid "Edit Page"
-msgstr "編輯頁面"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
-msgid "History"
-msgstr "歷史紀錄"
-
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
@@ -1126,47 +1109,47 @@ msgstr "作者"
 msgid "Toggle IPs"
 msgstr "切換 IP"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
 msgstr "新"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
 msgstr "已刪除"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
 msgstr "IP:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
 msgstr "封鎖 IP 不讓其進行編輯"
 
 # 88%
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "User agent:"
 msgstr "使用者代理字串:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
 msgid "Referrer:"
 msgstr "Referrer:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "已被 %(user)s 於 %(ban_date)s 封鎖。"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr "已提交為 %(submission_type)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
 #, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "由 %(user)s 張貼於 %(sent_date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
 msgstr "送出為:"
 
@@ -1174,7 +1157,7 @@ msgstr "送出為:"
 msgid "spam"
 msgstr "垃圾文章"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
 msgstr "沒有符合這些條件的修改。"
 
@@ -1478,36 +1461,36 @@ msgstr "無法一次提升超過一組索引。"
 msgid "Promoted search index %s."
 msgstr "已提升搜尋索引 %s。"
 
-#: kuma/search/admin.py:16
+#: kuma/search/admin.py:18
 msgid "Promote selected search index to current index"
 msgstr "已將選擇的搜尋索引提升為目前的索引"
 
-#: kuma/search/admin.py:21
+#: kuma/search/admin.py:23
 msgid "Can't demote more than one index at once."
 msgstr "無法一次降級超過一組索引。"
 
-#: kuma/search/admin.py:24
+#: kuma/search/admin.py:26
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
 msgstr "只有一組索引時無法降級索引，請先建立計算一組新的。"
 
-#: kuma/search/admin.py:29
+#: kuma/search/admin.py:31
 #, python-format
 msgid "Demoted search index %s."
 msgstr "已降級搜尋索引 %s。"
 
-#: kuma/search/admin.py:30
+#: kuma/search/admin.py:34
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr "已降級選擇的搜尋索引（自動回歸至先前的索引）"
 
-#: kuma/search/admin.py:37
+#: kuma/search/admin.py:41
 msgid "Can't populate more than one index at once."
 msgstr "無法一次計算超過一組索引。"
 
-#: kuma/search/admin.py:42
+#: kuma/search/admin.py:48
 msgid "Populate selected search index via Celery"
 msgstr "透過 Celery 來計算所選擇的搜尋索引"
 
-#: kuma/search/admin.py:57
+#: kuma/search/admin.py:63
 msgid "Is current index?"
 msgstr "是目前的索引嗎？"
 
@@ -1870,7 +1853,7 @@ msgstr "%(email)s <b>已驗證</b>"
 msgid "%(email)s Unverified"
 msgstr "%(email)s <b>未驗證</b>"
 
-#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
+#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "其他:"
 
@@ -2101,73 +2084,71 @@ msgstr "已取消登入"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "您決定要取消使用某組現有的帳號登入我們的網站。若這是個錯誤，請<a href=\"%(login_url)s\">登入</a>以繼續。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:22
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
 msgstr "建立您的 MDN 個人資料以繼續"
 
-#: kuma/users/jinja2/socialaccount/signup.html:25
+#: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
 msgstr "已有符合您 GitHub 電子郵件地址的 MDN 個人資料。點擊此處找回該資料:"
 
-#: kuma/users/jinja2/socialaccount/signup.html:34
+#: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
 msgstr "找回我的帳號資料"
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr "感謝您使用 %(provider_name)s 登入 MDN。只要再一個步驟即可加入MDN: <strong>建立您的 MDN 帳號</strong>。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:49
+#: kuma/users/jinja2/socialaccount/signup.html:47
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "您不需註冊帳號即可存取 MDN 網站的所有內容。加入 MDN 後，您還可以編輯文件並擁有自己專屬的頁面。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:56
+#: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "若要建立您的 MDN 帳號，請 <strong>設定使用者名稱</strong>。您的使用者名稱將會顯示於 MDN 以識別您的貢獻。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:62
+#: kuma/users/jinja2/socialaccount/signup.html:60
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "若要建立您的 MDN 帳號，請 <strong>設定使用者名稱及電子郵件信箱</strong>。您的使用者名稱將會顯示於 MDN 以識別您的貢獻。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:70
+#: kuma/users/jinja2/socialaccount/signup.html:68
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "如您在登入或建立MDN帳號時<strong>發生問題，請<a href=\"%(bug_href)s\" rel=\"external\">通知我們</a></strong>。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:95
+#: kuma/users/jinja2/socialaccount/signup.html:93
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr "您的 GitHub 帳號 %(username)s 已被使用，請挑一個別的帳號。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:99
+#: kuma/users/jinja2/socialaccount/signup.html:97
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "請輸入您希望讓其他使用者看到的名稱，以證明您的貢獻。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:113
+#: kuma/users/jinja2/socialaccount/signup.html:111
 #, python-format
-msgid ""
-"A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
-"to it.</a>"
-msgstr "已有帳號使用選擇的電子郵件地址，<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">連結您的 %(provider_name)s 帳號。</a>"
+msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
+msgstr "已有帳號使用選擇的電子郵件地址，<a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">請連結您的 %(provider_name)s 帳號。</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:143
+#: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
 "href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr "我們應該傳送 MDN 相關的訊息與通知到哪個電子郵件地址？此地址將 <strong>不會</strong> 顯示在 MDN，並將依照我們的 <a href=\"%(privacy_url)s\">隱私權保護政策</a> 使用。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:159
+#: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
 msgstr "使用條款及隱私權"
 
-#: kuma/users/jinja2/socialaccount/signup.html:168
+#: kuma/users/jinja2/socialaccount/signup.html:166
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "Mozilla 的 <a href=\"%(terms_url)s\">條款</a> 及 <a href=\"%(privacy_url)s\">隱私權公告</a>。"
 
-#: kuma/users/jinja2/socialaccount/signup.html:178
+#: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
 msgstr "建立MDN帳號"
 
@@ -2287,6 +2268,17 @@ msgstr "需要處理的頁面"
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
 msgstr "使用者的新操作:"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+msgid "View Page"
+msgstr "檢視頁面"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
+msgid "History"
+msgstr "歷史紀錄"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2414,7 +2406,7 @@ msgstr "頁面"
 msgid "Date"
 msgstr "日期"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
 msgstr "編輯頁面"
 
@@ -2422,7 +2414,7 @@ msgstr "編輯頁面"
 msgid "View complete diff"
 msgstr "檢視完整比對"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
 msgstr "檢視頁面歷史紀錄"
 
@@ -2655,11 +2647,11 @@ msgstr "已被回報為垃圾文章。"
 msgid "This user has not created any revisions in the past three days."
 msgstr "此使用者過去三天內並未進行任何修改。"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "編輯"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
 msgstr "進階"
 
@@ -2784,6 +2776,11 @@ msgstr "MDN 最近版本"
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
 msgstr "MDN 文件最近的修改"
+
+# 88%
+#: kuma/wiki/feeds.py:343
+msgid "Edit Page"
+msgstr "編輯頁面"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -3175,6 +3172,10 @@ msgstr "您為什麼要回退到這筆修改？"
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr "您正要將文件還原回此一版本。點擊「還原 (Revert)」即可還原為&nbsp;上述內容。"
 
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+msgid "Revert"
+msgstr "退回"
+
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
 msgstr "建立新範本"
@@ -3285,31 +3286,33 @@ msgstr "正在翻譯中。"
 
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
-msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr "我們的志工尚未將此文章翻譯為 <bdi>%(locale)s</bdi> 版本。<a href=\"%(help_link)s\">加入我們，幫忙翻譯！</a>"
+msgid ""
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+msgstr "我們的志工尚未將本文翻譯為 <bdi>%(locale)s</bdi> 版本。<a href=\"%(help_link)s\">加入我們，幫忙翻譯！</a><br>您也可以閱讀本文的 <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> 版本。"
 
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
 msgstr "這篇文章還沒有任何內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:319
+#: kuma/wiki/jinja2/wiki/document.html:320
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "搜尋 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">標題為 %(title)s 的頁面</a>，了解用法以及使用此巨集的頁面數量。"
 
-#: kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "This article doesn't have approved content yet."
 msgstr "這篇文章還沒有任何通過審核的內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "文件標籤與貢獻者"
 
-#: kuma/wiki/jinja2/wiki/document.html:346
+#: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
 msgstr "此頁面的貢獻者:"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "最近更新:"
 
@@ -3674,47 +3677,47 @@ msgstr "儲存"
 msgid "Languages"
 msgstr "語言"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:29
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "No translations exist for this article."
 msgstr "此文件沒有翻譯。"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
 msgid "Add a translation"
 msgstr "新增翻譯"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
 msgstr "關注"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:63
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
 msgstr "新增子文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:64
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
 msgstr "複製此文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
 msgstr "移動此文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
 msgstr "以管理員模式檢視"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:78
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:82
 msgid "Delete this article"
 msgstr "刪除此文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:83
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
 msgstr "管理內容區域"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:86
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
 msgid "Convert to content zone"
 msgstr "轉換為內容區域"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:88
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
 msgstr "列印此文件"
 

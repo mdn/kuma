@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-07 11:53-0800\n"
+"POT-Creation-Date: 2016-11-30 08:04-0800\n"
 "PO-Revision-Date: 2016-11-12 20:30+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -502,110 +502,114 @@ msgid "Japanese"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:35
-msgid "Korean"
+msgid "Kabyle"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:36
-msgid "Lingala"
+msgid "Korean"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:37
-msgid "Malagasy"
+msgid "Lingala"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:38
-msgid "Malay"
+msgid "Malagasy"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:39
-msgid "Malayalam"
+msgid "Malay"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:40
+msgid "Malayalam"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:41
 msgid "Persian"
 msgstr "Persian"
 
-#: jinja2/includes/translate_locales.html:41
+#: jinja2/includes/translate_locales.html:42
 msgid "Polish"
 msgstr "Polish"
 
-#: jinja2/includes/translate_locales.html:42
+#: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Brazilian)"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:43
+#: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Portugal)"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:44
+#: jinja2/includes/translate_locales.html:45
 msgid "Romanian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:45
+#: jinja2/includes/translate_locales.html:46
 msgid "Russian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
+#: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
 msgid "Serbian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:48
+#: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:49
+#: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:50
+#: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:51
+#: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:52
+#: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:53
+#: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:54
+#: jinja2/includes/translate_locales.html:55
 msgid "Thai"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:55
+#: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:56
+#: jinja2/includes/translate_locales.html:57
 msgid "Turkish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:57
+#: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:58
+#: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:59
+#: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:60
+#: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:61
+#: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:62
+#: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
 msgstr ""
 
@@ -838,8 +842,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"এগুলো আপনার API কী। এগুলো আপনার হয়ে MDN এ কাজ করা অ্যাপ্লিকেশন তৈরির জন্য দরকার। যদি আপনি এর মধ্যে থেকে একটিও ব্যবহার করা বন্ধ করে দেন, অথবা এমন সন্দেহ হয় যে, এরমধ্যে থেকে যেকোনো একটি কারও কাছে "
-"উন্মুক্ত হয়ে গেছে, তাহলে কী-টি মুছে ফেলার জন্য <span class=\"button\">X</span> বাটনে ক্লিক করুন। চাইলে সহজেই যেকোন সময় নতুন করে বদলি কী তৈরি করতে পারবেন।"
+"এগুলো আপনার API কী। এগুলো আপনার হয়ে MDN এ কাজ করা অ্যাপ্লিকেশন তৈরির জন্য দরকার। যদি আপনি এর মধ্যে থেকে একটিও ব্যবহার করা বন্ধ করে দেন, অথবা এমন সন্দেহ হয় যে, এরমধ্যে থেকে যেকোনো একটি কারও কাছে উন্মুক্ত হয়ে "
+"গেছে, তাহলে কী-টি মুছে ফেলার জন্য <span class=\"button\">X</span> বাটনে ক্লিক করুন। চাইলে সহজেই যেকোন সময় নতুন করে বদলি কী তৈরি করতে পারবেন।"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -865,11 +869,11 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
-"<p>নিচে আপনি কি কাজে চাবিটি ব্যবহার করবেন তার বর্ণনা দিন।<p><strong>খেয়াল করুনঃ</strong> পরে শুধুমাত্র এটি ব্যবহার করেই আপনি এই চাবিটি সনাক্ত করতে পারবেন, তৈরি হওয়ার তারিখ আর সময়ের পাশাপাশি। তাই, "
-"যতটা সম্ভব পরিষ্কার করেই লিখুন।</p>"
+"<p>নিচে আপনি কি কাজে চাবিটি ব্যবহার করবেন তার বর্ণনা দিন।<p><strong>খেয়াল করুনঃ</strong> পরে শুধুমাত্র এটি ব্যবহার করেই আপনি এই চাবিটি সনাক্ত করতে পারবেন, তৈরি হওয়ার তারিখ আর সময়ের পাশাপাশি। তাই, যতটা সম্ভব "
+"পরিষ্কার করেই লিখুন।</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -881,8 +885,8 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>আপনার নতুন কি তৈরি করা হয়েছে। নিচের তথ্যগুলো লিখে রাখুন (যেমনঃ আপনার অ্যাপলিকেশন সেটিংসে কপি করে রাখতে পারেন)। এই তথ্যগুলো আর কখনো দেখানো হবেনা, এবং হারিয়ে গেলে ফিরেও পাওয়া যাবেনা।</p> "
-"<p><strong>লক্ষ্য করুনঃ</strong> আপনার কাজ হয়ে গেলে <a class=\"button\" href=\"%(list_url)s\">কি লিস্টে ফিরে যান</a>। এই পাতাটি পুনরায় লোড করলে নতুন একটি কি তৈরি হবে।</p>"
+"<p>আপনার নতুন কি তৈরি করা হয়েছে। নিচের তথ্যগুলো লিখে রাখুন (যেমনঃ আপনার অ্যাপলিকেশন সেটিংসে কপি করে রাখতে পারেন)। এই তথ্যগুলো আর কখনো দেখানো হবেনা, এবং হারিয়ে গেলে ফিরেও পাওয়া যাবেনা।</p> <p><strong>লক্ষ্য "
+"করুনঃ</strong> আপনার কাজ হয়ে গেলে <a class=\"button\" href=\"%(list_url)s\">কি লিস্টে ফিরে যান</a>। এই পাতাটি পুনরায় লোড করলে নতুন একটি কি তৈরি হবে।</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -1105,26 +1109,6 @@ msgstr ""
 msgid "Filter"
 msgstr "ফিল্টার"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
-msgid "Revert"
-msgstr "পূর্বাবস্থায় ফেরান"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
-#: kuma/wiki/feeds.py:340
-msgid "View Page"
-msgstr "পৃষ্ঠা প্রদর্শন করুন"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
-msgid "Edit Page"
-msgstr "পৃষ্ঠা সম্পাদন করুন"
-
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
-msgid "History"
-msgstr "ইতিহাস"
-
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
@@ -1148,49 +1132,49 @@ msgstr ""
 msgid "Toggle IPs"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
 msgstr "নতুন"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 #, fuzzy
 msgid "deleted"
 msgstr "মুছুন"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 #, fuzzy
 msgid "User agent:"
 msgstr "ইউজারনেম"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
 #, fuzzy
 msgid "Referrer:"
 msgstr "প্রসঙ্গ"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, fuzzy, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "পোস্ট করেছেন %(entrydate)s তারিখে  %(authorlink)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
 #, fuzzy, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "পোস্ট করেছেন %(entrydate)s তারিখে  %(authorlink)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 #, fuzzy
 msgid "Submit as:"
 msgstr "একটি ডেমো জমা দিন"
@@ -1199,7 +1183,7 @@ msgstr "একটি ডেমো জমা দিন"
 msgid "spam"
 msgstr "স্প্যাম"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
 msgstr ""
 
@@ -1233,11 +1217,10 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
-"মজিলা ডেভেলপার নেটওয়ার্ক (MDN) এ এইচটিএমএল, সিএসএস এবং এইচটিএমএলফাইফ এপস এবং ওয়েবসাইটগুলোর API সংক্রান্ত ওপেন ওয়েব টেকনোলজিগুলো সম্পর্কে তথ্য প্রদান করে। এটি মজিলা প্রোডাক্ট যেমন ফায়ারফক্স ওএস'কেও "
-"ব্যাখ্যা করে।"
+"মজিলা ডেভেলপার নেটওয়ার্ক (MDN) এ এইচটিএমএল, সিএসএস এবং এইচটিএমএলফাইফ এপস এবং ওয়েবসাইটগুলোর API সংক্রান্ত ওপেন ওয়েব টেকনোলজিগুলো সম্পর্কে তথ্য প্রদান করে। এটি মজিলা প্রোডাক্ট যেমন ফায়ারফক্স ওএস'কেও ব্যাখ্যা করে।"
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1388,12 +1371,12 @@ msgstr "কিছু ডেভেলপার ভাললাগা ছড়ি
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>বাটন নিন:</strong>নিচে থাকা আমাদের সিম্পল ফর্ম ব্যাবহার করে একটি কাস্টম বাটন তৈরি করুন এবং সোর্স কোড ব্যাবহারের দ্বারা MDN কে আপনার ওয়েবসাইট অথবা ব্লগে প্রমোট করুন</li> "
-"<li><strong>বাটন পোস্ট করুন:</strong> সোর্স কোড কপি করুন এবং সেটা আপনার ব্লগ অথবা ওয়েবসাইটের যেকোনো জায়গায় পেস্ট করার দ্বারা মানুষদের MDN এর মাঝ দিয়ে ক্লিক করতে সাহায্য করুন</li> <li><strong>ভাল "
-"লাগা:</strong></li>আপনি এটা ভেবে গর্ববোধ করতে পারেন যে MDN বিশ্বের সাথে শেয়ার করার দ্বারা আপনি ডেভলপারদের জীবনকে সামান্যতম হলেও সহজ করছেন।</ol>"
+"<ol> <li><strong>বাটন নিন:</strong>নিচে থাকা আমাদের সিম্পল ফর্ম ব্যাবহার করে একটি কাস্টম বাটন তৈরি করুন এবং সোর্স কোড ব্যাবহারের দ্বারা MDN কে আপনার ওয়েবসাইট অথবা ব্লগে প্রমোট করুন</li> <li><strong>বাটন পোস্ট "
+"করুন:</strong> সোর্স কোড কপি করুন এবং সেটা আপনার ব্লগ অথবা ওয়েবসাইটের যেকোনো জায়গায় পেস্ট করার দ্বারা মানুষদের MDN এর মাঝ দিয়ে ক্লিক করতে সাহায্য করুন</li> <li><strong>ভাল লাগা:</strong></li>আপনি এটা ভেবে "
+"গর্ববোধ করতে পারেন যে MDN বিশ্বের সাথে শেয়ার করার দ্বারা আপনি ডেভলপারদের জীবনকে সামান্যতম হলেও সহজ করছেন।</ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
@@ -1517,36 +1500,36 @@ msgstr "একবারে একের অধিক ইনডেক্স প�
 msgid "Promoted search index %s."
 msgstr "%s সার্চ ইনডেক্সকে প্রমোট করুন।"
 
-#: kuma/search/admin.py:16
+#: kuma/search/admin.py:18
 msgid "Promote selected search index to current index"
 msgstr "নির্বাচনকৃত সার্চ ইনডেক্সকে বর্তমান ইনডেক্স দিয়ে প্রমোট করুন।"
 
-#: kuma/search/admin.py:21
+#: kuma/search/admin.py:23
 msgid "Can't demote more than one index at once."
 msgstr "একবারে একের অধিক ইনডেক্সকে ডিমোট করতে পারবেন না।"
 
-#: kuma/search/admin.py:24
+#: kuma/search/admin.py:26
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
 msgstr "শুধুমাত্র একটি থাকলে সেটিকে ডিমোট করতে পারবেন না। নতুন একটিকে তৈরি ও পূরণ করুন প্রথমে।"
 
-#: kuma/search/admin.py:29
+#: kuma/search/admin.py:31
 #, python-format
 msgid "Demoted search index %s."
 msgstr "ডিমোটকৃত অনুসন্ধান সূচিপত্র %s ।"
 
-#: kuma/search/admin.py:30
+#: kuma/search/admin.py:34
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr "বাছাইকৃত অনুসন্ধান সূচিপত্র ডিমোট করা (স্বয়ংকৃতভাবে পূর্বের সূচিপত্রে ফিরে যাওয়া)"
 
-#: kuma/search/admin.py:37
+#: kuma/search/admin.py:41
 msgid "Can't populate more than one index at once."
 msgstr "একবার একের অধিক সূচিপত্রকে জড়ো করা যাচ্ছে না।"
 
-#: kuma/search/admin.py:42
+#: kuma/search/admin.py:48
 msgid "Populate selected search index via Celery"
 msgstr "সেলেরির মাধ্যমে বাছাইকৃত অনুসন্ধানীয় সূচিপত্র জড়ো করুন"
 
-#: kuma/search/admin.py:57
+#: kuma/search/admin.py:63
 msgid "Is current index?"
 msgstr "চলমান সূচীপত্র?"
 
@@ -1701,8 +1684,8 @@ msgstr "টাইপ"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1921,7 +1904,7 @@ msgstr ""
 msgid "%(email)s Unverified"
 msgstr "%(email)s অানভেরিফাইড"
 
-#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:130
+#: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "অন্যান্য:"
 
@@ -2152,76 +2135,73 @@ msgstr ""
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:22
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
 msgstr "চালিয়ে যেতে আপনার MDN প্রোফাইল তৈরি করুন"
 
-#: kuma/users/jinja2/socialaccount/signup.html:25
+#: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:34
+#: kuma/users/jinja2/socialaccount/signup.html:32
 #, fuzzy
 msgid "Recover my Profile"
 msgstr "{user} | প্রোফাইল"
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:49
+#: kuma/users/jinja2/socialaccount/signup.html:47
 #, fuzzy
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
-msgstr ""
-"আপনি এমডিএন ওয়েব সাইটের এর সকল বিষয়এ প্রবেশ করতে পারবেন যদিও আপানার কোন একাউন্ট না থাকে, কিন্তু আপনি যখন জয়েন করবেন তখন আপনি ডক এডিট,ডেমো সাবমিট করতে পারবেন ও আপনার একটা নিজস্ব প্রোফাইল পেজ থাকবে।"
+msgstr "আপনি এমডিএন ওয়েব সাইটের এর সকল বিষয়এ প্রবেশ করতে পারবেন যদিও আপানার কোন একাউন্ট না থাকে, কিন্তু আপনি যখন জয়েন করবেন তখন আপনি ডক এডিট,ডেমো সাবমিট করতে পারবেন ও আপনার একটা নিজস্ব প্রোফাইল পেজ থাকবে।"
 
-#: kuma/users/jinja2/socialaccount/signup.html:56
+#: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:62
+#: kuma/users/jinja2/socialaccount/signup.html:60
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:70
+#: kuma/users/jinja2/socialaccount/signup.html:68
 #, fuzzy, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "<strong>লগইন করতে সমস্যা ?<a href=\"%(bug_href)s\" rel=\"external\">চলুন জানি</a></strong>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:95
+#: kuma/users/jinja2/socialaccount/signup.html:93
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:99
+#: kuma/users/jinja2/socialaccount/signup.html:97
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:113
+#: kuma/users/jinja2/socialaccount/signup.html:111
 #, python-format
-msgid ""
-"A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
-"to it.</a>"
+msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:143
+#: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:159
+#: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:168
+#: kuma/users/jinja2/socialaccount/signup.html:166
 #, fuzzy, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "আমি <a href=\"%(terms_url)s#tfc\">অবদানকারীদের জন্যে নিয়ম</a> এবং <a href=\"%(terms_url)s#rrd\"> প্রতিনিধির অধিকারের বিস্তারিত</a> সমর্থন করলাম।"
 
-#: kuma/users/jinja2/socialaccount/signup.html:178
+#: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
 msgstr "আমার MDN প্রোফাইল তৈরি করুন"
 
@@ -2351,6 +2331,17 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
 msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+msgid "View Page"
+msgstr "পৃষ্ঠা প্রদর্শন করুন"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
+msgid "History"
+msgstr "ইতিহাস"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2485,7 +2476,7 @@ msgstr "পৃষ্ঠা"
 msgid "Date"
 msgstr "তারিখ"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:400
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
 msgstr "পৃষ্ঠা সম্পাদন"
 
@@ -2493,7 +2484,7 @@ msgstr "পৃষ্ঠা সম্পাদন"
 msgid "View complete diff"
 msgstr "সম্পূর্ণ পরিবর্তন দেখুন"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
 msgstr "পৃষ্ঠার ইতিহাস দেখুন"
 
@@ -2728,11 +2719,11 @@ msgstr "ইতিমধ্যে স্প্যাম হিসেবে রি
 msgid "This user has not created any revisions in the past three days."
 msgstr "এটা লেখক তৈরি করেননি"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:41
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "সম্পাদনা"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
 msgstr "অগ্রসর"
 
@@ -2859,6 +2850,10 @@ msgstr "এমডিএনে সাম্প্রতিক সংশোধন�
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
 msgstr "এমডিএন ডকুমেন্টগুলোর সাম্প্রতিক সংশোধনসমূহ"
+
+#: kuma/wiki/feeds.py:343
+msgid "Edit Page"
+msgstr "পৃষ্ঠা সম্পাদন করুন"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -3168,8 +3163,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3252,6 +3247,10 @@ msgstr "কেন আপনি এই পুনর্মূল্যায়নট
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr ""
 
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+msgid "Revert"
+msgstr "পূর্বাবস্থায় ফেরান"
+
 #: kuma/wiki/jinja2/wiki/create.html:6
 #, fuzzy
 msgid "Create a New Template"
@@ -3332,20 +3331,18 @@ msgstr "এই নথিটি প্রথমবারের মতো সি�
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
-"বর্তমানে নথিটির একটু হালনাগাদ<abbr title=\"%(started_at)s\">এইমুহুর্তে চলছে</abbr>। নিচের কন্টেন্ট যদি নতুনত্বহীন বা এটাতে কিছু নেই বলে মনে হয় তবে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড"
-" করুন</a>।"
+"বর্তমানে নথিটির একটু হালনাগাদ<abbr title=\"%(started_at)s\">এইমুহুর্তে চলছে</abbr>। নিচের কন্টেন্ট যদি নতুনত্বহীন বা এটাতে কিছু নেই বলে মনে হয় তবে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড করুন</a>।"
 
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
-"এই নথিটির একটি হালনাগাদ <abbr title=\"%(scheduled_at)s\">শিডিউল করা হয়েছে</abbr>। নিচের কন্টেন্ট যদি নতুনত্বহীন বা এটাতে কিছু নেই বলে মনে হয় তবে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড "
-"করুন</a>।"
+"এই নথিটির একটি হালনাগাদ <abbr title=\"%(scheduled_at)s\">শিডিউল করা হয়েছে</abbr>। নিচের কন্টেন্ট যদি নতুনত্বহীন বা এটাতে কিছু নেই বলে মনে হয় তবে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড করুন</a>।"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3369,32 +3366,34 @@ msgstr "এই নিবন্ধটি অনুবাদ প্রক্রি
 
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
-msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgid ""
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a href="
+"\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
 msgstr "এই নিবন্ধটির এখনো কোনো বিষয়বস্তু নেই।"
 
-#: kuma/wiki/jinja2/wiki/document.html:319
+#: kuma/wiki/jinja2/wiki/document.html:320
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "ডকুমেন্ট ট্যাগ এবং অবদানকারী"
 
-#: kuma/wiki/jinja2/wiki/document.html:346
+#: kuma/wiki/jinja2/wiki/document.html:347
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "MDN কোডবেসে অবদান রাখা"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "সর্বশেষ হালনাগাদ করেছেন:"
 
@@ -3764,49 +3763,49 @@ msgstr "সংরক্ষণ করা"
 msgid "Languages"
 msgstr "ভাষাসমূহ"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:29
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 #, fuzzy
 msgid "No translations exist for this article."
 msgstr "আপনি ইতিমধ্যে এই উপর নিবন্ধ ভোট দিয়েছেন।"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
 msgid "Add a translation"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
 msgstr "দেখুন"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:63
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 #, fuzzy
 msgid "New sub-article"
 msgstr "নতুন প্রবন্ধের ইউআরএল"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:64
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
 msgstr "নিবন্ধটি নকল করুন"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:67
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
 msgstr "নিবন্ধটি অপসারণ করুন"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:78
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:82
 msgid "Delete this article"
 msgstr "নিবন্ধটি মুছে দিন"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:83
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:86
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
 msgid "Convert to content zone"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:88
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
 msgstr "নিবন্ধটি প্রিন্ট করুন"
 
@@ -4003,8 +4002,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
@@ -4482,18 +4481,16 @@ msgstr ""
 #~ msgstr "জুন ২০১১"
 
 #~ msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
-#~ msgstr ""
-#~ "CSS3 অ্যানিমেশন আপনাকে সময়ের সাথে সাথে দৃশ্যমান অবস্থা, অবস্থান ইত্যাদির প্রোপার্টির মান কোন জাভাস্ক্রিপ্ট ব্যবহার না করেই অথবা কম ব্যবহার করে পরিবর্তন করতে দেয়। আর এটা ট্রানজিশন থেকে বেশি সুবিধা "
-#~ "দেয়।"
+#~ msgstr "CSS3 অ্যানিমেশন আপনাকে সময়ের সাথে সাথে দৃশ্যমান অবস্থা, অবস্থান ইত্যাদির প্রোপার্টির মান কোন জাভাস্ক্রিপ্ট ব্যবহার না করেই অথবা কম ব্যবহার করে পরিবর্তন করতে দেয়। আর এটা ট্রানজিশন থেকে বেশি সুবিধা দেয়।"
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
-#~ "সিএসএস অ্যানিমেশন হালের ব্রাউজার যেমনঃ ফায়ারফক্স এর নতুন ফিচার, যা ওয়েবের স্টাইল ও অভিজ্ঞতায় আরও স্বাধীনতা ও নিয়ন্ত্রণ যোগ করে। সিএসএস ৩ অ্যানিমেশন আপনাকে সময়ের বিপরীতে প্রোপার্টির মান, ধরন অথবা "
-#~ "অবস্থান ইত্যাদি কোন জাভাস্ক্রিপ্ট ছাড়াই বা অল্প কিছু জাভাস্ক্রিপ্টের সাহায্যে পরিবর্তন করতে দেয়, এবং ট্রানজিশন থেকে আরও বেশি নিয়ন্ত্রণ পাওয়া যায়। HTML এলিমেন্ট সমূহের অবস্থান এবং ধরন পরিবর্তনে স্থির"
-#~ " প্রোপার্টির বদলে সিএসএস ৩ ব্যবহার করুন। ফ্ল্যাশ ও সিলভারলাইট ছাড়াই আপনি সৃষ্টিশীল ও ডায়নামিক ইন্টারফেস সিএসএস ৩ ব্যবহার করে তৈরি করুন দারুণ সব অ্যানিমেশন।"
+#~ "সিএসএস অ্যানিমেশন হালের ব্রাউজার যেমনঃ ফায়ারফক্স এর নতুন ফিচার, যা ওয়েবের স্টাইল ও অভিজ্ঞতায় আরও স্বাধীনতা ও নিয়ন্ত্রণ যোগ করে। সিএসএস ৩ অ্যানিমেশন আপনাকে সময়ের বিপরীতে প্রোপার্টির মান, ধরন অথবা অবস্থান "
+#~ "ইত্যাদি কোন জাভাস্ক্রিপ্ট ছাড়াই বা অল্প কিছু জাভাস্ক্রিপ্টের সাহায্যে পরিবর্তন করতে দেয়, এবং ট্রানজিশন থেকে আরও বেশি নিয়ন্ত্রণ পাওয়া যায়। HTML এলিমেন্ট সমূহের অবস্থান এবং ধরন পরিবর্তনে স্থির প্রোপার্টির বদলে সিএসএস "
+#~ "৩ ব্যবহার করুন। ফ্ল্যাশ ও সিলভারলাইট ছাড়াই আপনি সৃষ্টিশীল ও ডায়নামিক ইন্টারফেস সিএসএস ৩ ব্যবহার করে তৈরি করুন দারুণ সব অ্যানিমেশন।"
 
 #~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
 #~ msgstr "ডেভ ডার্বি চ্যালেঞ্জ জুলাই ২০১১ - HTML5 <video>"
@@ -4542,8 +4539,8 @@ msgstr ""
 
 #~ msgid "CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."
 #~ msgstr ""
-#~ "সিএসএস মিডিয়া কুয়েরি ওয়েব ডেভেলপারদের রেস্পন্সিভ ওয়েব ডিজাইন তৈরি, তথা ডিভাইসের স্ক্রিন সাইজ যেমনঃ ডেক্সটপ, ট্যাবলেট এবং মোবাইল ইত্যাদির স্ক্রিনের রেজুলেশন ও আঁকার অনুযায়ী ব্যবহারকারীর অভিজ্ঞতা "
-#~ "উন্নয়নের সুবিধা দেয়।"
+#~ "সিএসএস মিডিয়া কুয়েরি ওয়েব ডেভেলপারদের রেস্পন্সিভ ওয়েব ডিজাইন তৈরি, তথা ডিভাইসের স্ক্রিন সাইজ যেমনঃ ডেক্সটপ, ট্যাবলেট এবং মোবাইল ইত্যাদির স্ক্রিনের রেজুলেশন ও আঁকার অনুযায়ী ব্যবহারকারীর অভিজ্ঞতা উন্নয়নের সুবিধা "
+#~ "দেয়।"
 
 #~ msgid "November 2011 Dev Derby Challenge - Canvas"
 #~ msgstr "নভেম্বর ২০১১ ডেভ ডারবি চ্যালেঞ্জ - ক্যানভাস"
@@ -4552,11 +4549,11 @@ msgstr ""
 #~ msgstr "নভেম্বর ২০১১"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
-#~ " that make it easy to control and draw in."
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
 #~ msgstr ""
-#~ "ক্যানভাস আপনাকে জাভাস্ক্রিপ্ট ব্যবহার করে 2D আকৃতি, বিটম্যাপ ইমেজ ও অ্যাডভান্সড গ্রাফিক্যাল ইফেক্ট তৈরি করতে সহায়তা করে। প্রত্যেক <canvas> এলিমেন্ট এর নিজস্ব স্টেট এবং মেথড সহ একটি গ্রাফিক্স "
-#~ "কনটেক্সট প্রদান করে, যেটা একে নিয়ন্ত্রণ এবং আঁকার কাজে সহযোগিতা করে।"
+#~ "ক্যানভাস আপনাকে জাভাস্ক্রিপ্ট ব্যবহার করে 2D আকৃতি, বিটম্যাপ ইমেজ ও অ্যাডভান্সড গ্রাফিক্যাল ইফেক্ট তৈরি করতে সহায়তা করে। প্রত্যেক <canvas> এলিমেন্ট এর নিজস্ব স্টেট এবং মেথড সহ একটি গ্রাফিক্স কনটেক্সট প্রদান করে, "
+#~ "যেটা একে নিয়ন্ত্রণ এবং আঁকার কাজে সহযোগিতা করে।"
 
 #~ msgid "December 2011 Dev Derby Challenge - IndexedDB"
 #~ msgstr "ডিসেম্বর ২০১১ ডেভ ডারবি চ্যালেঞ্জ - IndexedDB"
@@ -4592,8 +4589,7 @@ msgstr ""
 #~ msgstr "ফেব্রুয়ারী ২০১২"
 
 #~ msgid "Touch Events help you make websites and applications more engaging by responding appropriately when users interact with touch screens."
-#~ msgstr ""
-#~ "টাচ ইভেন্ট আপনাকে আরও আকর্ষণীয় ওয়েবসাইট এবং অ্যাপ তৈরি করতে সাহায্য করে। এতে যখনই ব্যবহারকারীরা টাচ স্ক্রিনে স্পর্শ করবে তখনই আপনার সাইট অথবা অ্যাপ সে অনুযায়ী সাড়া দিতে পারার সক্ষমতা অর্জন করবে।"
+#~ msgstr "টাচ ইভেন্ট আপনাকে আরও আকর্ষণীয় ওয়েবসাইট এবং অ্যাপ তৈরি করতে সাহায্য করে। এতে যখনই ব্যবহারকারীরা টাচ স্ক্রিনে স্পর্শ করবে তখনই আপনার সাইট অথবা অ্যাপ সে অনুযায়ী সাড়া দিতে পারার সক্ষমতা অর্জন করবে।"
 
 #~ msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
 #~ msgstr "মার্চ ২০১২ ডেভ ডারবি চ্যালেঞ্জ - সিএসএস ৩ডি ট্রান্সফরম সমূহ"
@@ -4650,11 +4646,11 @@ msgstr ""
 #~ msgstr "জুলাই ২০১২"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-#~ "input with HTML, and more. What else can you do without JavaScript?"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
 #~ msgstr ""
-#~ "ওয়েবের জন্য ভালো ইউজার এক্সপেরিয়েন্স তৈরি করা এতটা সহজ ছিলনা। আজকের মুক্ত ওয়েবের আদর্শ সবচেয়ে শক্তিশালী কিছু ফিচার একেবারে আপনার আঙ্গুলের ডগায় নিয়ে এসেছে। CSS ব্যবহার করে পেজকে অ্যানিমেট করা, HTML "
-#~ "ব্যবহার করে ব্যবহারকারীর ইনপুট যাচাই করা আরও কত কি ! জাভাস্ক্রিপ্ট ছাড়া আপনি আরও কি করতে পারেন?"
+#~ "ওয়েবের জন্য ভালো ইউজার এক্সপেরিয়েন্স তৈরি করা এতটা সহজ ছিলনা। আজকের মুক্ত ওয়েবের আদর্শ সবচেয়ে শক্তিশালী কিছু ফিচার একেবারে আপনার আঙ্গুলের ডগায় নিয়ে এসেছে। CSS ব্যবহার করে পেজকে অ্যানিমেট করা, HTML ব্যবহার "
+#~ "করে ব্যবহারকারীর ইনপুট যাচাই করা আরও কত কি ! জাভাস্ক্রিপ্ট ছাড়া আপনি আরও কি করতে পারেন?"
 
 #~ msgid "August 2012 Dev Derby Challenge - Camera API"
 #~ msgstr "আগস্ট ২০১২ ডেভ ডারভি চ্যালেন্জ-ক্যামেরা API"
@@ -4666,8 +4662,7 @@ msgstr ""
 #~ msgstr "আগস্ট ২০১২"
 
 #~ msgid "The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."
-#~ msgstr ""
-#~ "ক্যামেরা এপিআই আপনাকে (অনুমতি নিয়ে) মোবাইল ডিভাইসের ক্যামেরা ব্যবহার করার সুবিধা প্রদান করে। ক্যামেরা এপিআই ব্যবহারের মাধ্যমে ব্যবহারকারীরা সহজে ছবি তুলতে পারে এবং আপনার ওয়েব পেজে আপলোড করতে পারে।"
+#~ msgstr "ক্যামেরা এপিআই আপনাকে (অনুমতি নিয়ে) মোবাইল ডিভাইসের ক্যামেরা ব্যবহার করার সুবিধা প্রদান করে। ক্যামেরা এপিআই ব্যবহারের মাধ্যমে ব্যবহারকারীরা সহজে ছবি তুলতে পারে এবং আপনার ওয়েব পেজে আপলোড করতে পারে।"
 
 #~ msgid "September 2012 Dev Derby Challenge - Geolocation II"
 #~ msgstr "সেপ্টেম্বর ২০১২ ডেভ ডারবি চ্যালেঞ্জ - জিওলোকেশন ২"
@@ -4688,11 +4683,11 @@ msgstr ""
 #~ msgstr "অক্টোবর ২০১২"
 
 #~ msgid ""
-#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-#~ "you do with Media Queries?"
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
+#~ "can you do with Media Queries?"
 #~ msgstr ""
-#~ "সিএসএস মিডিয়া অনুসন্ধানগুলো(?) রেসপনসিভ, মোবাইল নির্ভর ওয়েব ডিজাইনের জন্য এখন একটি সাধারন টুল। এমনকি এগুলো এখন WC3 সুপারিশকৃত ! এগুলো আপনাকে একটি ডিসপ্লের শুধুমাত্র প্রস্থ ছাড়াও অনেক কিছু বলতে পারে।"
-#~ " মিডিয়া অনুসন্ধান নিয়ে তাহলে আপনি কি করতে পারেন ?"
+#~ "সিএসএস মিডিয়া অনুসন্ধানগুলো(?) রেসপনসিভ, মোবাইল নির্ভর ওয়েব ডিজাইনের জন্য এখন একটি সাধারন টুল। এমনকি এগুলো এখন WC3 সুপারিশকৃত ! এগুলো আপনাকে একটি ডিসপ্লের শুধুমাত্র প্রস্থ ছাড়াও অনেক কিছু বলতে পারে। মিডিয়া "
+#~ "অনুসন্ধান নিয়ে তাহলে আপনি কি করতে পারেন ?"
 
 #~ msgid "November 2012 Dev Derby Challenge - Fullscreen API"
 #~ msgstr "নভেম্বর ২০১২ ডেভ ডারবি চ্যালেঞ্জ - ফুলস্ক্রীন API"
@@ -4704,8 +4699,7 @@ msgstr ""
 #~ msgstr "নভেম্বর ২০১২"
 
 #~ msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
-#~ msgstr ""
-#~ "ফুলস্ক্রিন এপিআই এর সাহায্যে আপনি ব্রাউজার উইন্ডোর সীমাবদ্ধতা অতিক্রম করতে পারেন। এমনকি আপনি ফুলস্ক্রিন অবস্থার পরিবর্তন সনাক্ত করতে পারেন এবং ফুলস্ক্রিন পেজগুলো আলাদাভাবে স্টাইল(?) করতে পারেন।"
+#~ msgstr "ফুলস্ক্রিন এপিআই এর সাহায্যে আপনি ব্রাউজার উইন্ডোর সীমাবদ্ধতা অতিক্রম করতে পারেন। এমনকি আপনি ফুলস্ক্রিন অবস্থার পরিবর্তন সনাক্ত করতে পারেন এবং ফুলস্ক্রিন পেজগুলো আলাদাভাবে স্টাইল(?) করতে পারেন।"
 
 #~ msgid "December 2012 Dev Derby Challenge - Offline"
 #~ msgstr "ডিসেম্বর ২০১২ ডেভ ডারবি চ্যালেঞ্জ - অফলাইন"
@@ -4717,11 +4711,11 @@ msgstr ""
 #~ msgstr "ডিসেম্বর ২০১২"
 
 #~ msgid ""
-#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-#~ "users, improve performance, and more."
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
+#~ "mobile users, improve performance, and more."
 #~ msgstr ""
-#~ "ওপেন ওয়েবের ক্রম-পরিপূর্ণতাপ্রাপ্ত অফলাইন সক্ষমতার মাধ্যমে আপনি এমন অ্যাপস তৈরি করতে পারবেন যা ইন্টারনেট সংযোগসহ অথবা ইন্টারনেট সংযোগ ছাড়াই কাজ করবে। অফলাইন প্রযুক্তির সাহায্যে আপনি ভ্রমণকারী এবং "
-#~ "মোবাইল ব্যবহারকারীদের আরো ভালো সহায়তা দিতে পারবেন। Performance এর উন্নয়নসহ আরো অনেক কিছু তো রয়েছেই।"
+#~ "ওপেন ওয়েবের ক্রম-পরিপূর্ণতাপ্রাপ্ত অফলাইন সক্ষমতার মাধ্যমে আপনি এমন অ্যাপস তৈরি করতে পারবেন যা ইন্টারনেট সংযোগসহ অথবা ইন্টারনেট সংযোগ ছাড়াই কাজ করবে। অফলাইন প্রযুক্তির সাহায্যে আপনি ভ্রমণকারী এবং মোবাইল "
+#~ "ব্যবহারকারীদের আরো ভালো সহায়তা দিতে পারবেন। Performance এর উন্নয়নসহ আরো অনেক কিছু তো রয়েছেই।"
 
 #~ msgid "January 2013 Dev Derby Challenge - Drag and Drop"
 #~ msgstr "জানুয়ারি ২০১৩ ডেভ ডারবি চ্যালেঞ্জ - ড্র্যাগ এন্ড ড্রপ"
@@ -4745,11 +4739,11 @@ msgstr ""
 #~ msgstr "ফেব্রুয়ারী ২০১৩"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
-#~ " all the interactions users have come to expect."
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
 #~ msgstr ""
-#~ "টাচ ইভেন্ট এপিআই আপনাকে একই সময়ে বহুবিধ টাচ ট্র্যাক করতে দেয় সে সকল ডিভাইসে যেগুলো তা সমর্থন করে। জটিল গেম বানান, চিমটি থেকে জুম এবং আরো সমর্থন করে। মাল্টি-টাচ ব্যবহারের মাধ্যমে, আাপনার অ্যাপটি "
-#~ "ব্যবহারকারির আশা করা সব মিথষ্ক্রিয়ার উত্তর দিতে পারে।"
+#~ "টাচ ইভেন্ট এপিআই আপনাকে একই সময়ে বহুবিধ টাচ ট্র্যাক করতে দেয় সে সকল ডিভাইসে যেগুলো তা সমর্থন করে। জটিল গেম বানান, চিমটি থেকে জুম এবং আরো সমর্থন করে। মাল্টি-টাচ ব্যবহারের মাধ্যমে, আাপনার অ্যাপটি ব্যবহারকারির "
+#~ "আশা করা সব মিথষ্ক্রিয়ার উত্তর দিতে পারে।"
 
 #~ msgid "March 2013 Dev Derby Challenge - Mobile"
 #~ msgstr "মার্চ ২০১৩ ডেভ ডারবি চ্যালেঞ্জ - মোবাইল"
@@ -4772,8 +4766,7 @@ msgstr ""
 #~ msgid ""
 #~ "Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
 #~ "tasks."
-#~ msgstr ""
-#~ "ওয়েব ওয়ার্কার্স এটাকে আপনার জন্য সহজ করে তুলে নেপথ্যে স্ক্রিপ্ট রান করানোর জন্য । ওয়েব ওয়ার্কার্স ব্যাবহারের মাধ্যমে ,আপনি ঝক্‌ঝকে ইউজার ইন্টারফেস তৈরী করতে পারবেন যেটা computationally-intensive."
+#~ msgstr "ওয়েব ওয়ার্কার্স এটাকে আপনার জন্য সহজ করে তুলে নেপথ্যে স্ক্রিপ্ট রান করানোর জন্য । ওয়েব ওয়ার্কার্স ব্যাবহারের মাধ্যমে ,আপনি ঝক্‌ঝকে ইউজার ইন্টারফেস তৈরী করতে পারবেন যেটা computationally-intensive."
 
 #~ msgid "May 2013 Dev Derby Challenge - getUserMedia"
 #~ msgstr "মে ২০১৩ ডেভ ডারবি চ্যালেঞ্জ - getUserMedia"
@@ -4790,8 +4783,7 @@ msgstr ""
 #~ msgid ""
 #~ "The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."
 #~ msgstr ""
-#~ "গেটইউজারমিডিয়া ফাংশনটি আপনাকে (অনুমতি সাপেক্ষে) আপনার ব্যবহারকারীর ক্যামেরা এবং মাইক্রোফোন সমূহে প্রবেশ করতে দিবে । কোন প্লাগইন প্রয়োজন নেই ! একবার এই মাধ্যম টি পেলে আপনি কি করতে পারবেন ? সম্ভাবনা "
-#~ "সীমাহীন।"
+#~ "গেটইউজারমিডিয়া ফাংশনটি আপনাকে (অনুমতি সাপেক্ষে) আপনার ব্যবহারকারীর ক্যামেরা এবং মাইক্রোফোন সমূহে প্রবেশ করতে দিবে । কোন প্লাগইন প্রয়োজন নেই ! একবার এই মাধ্যম টি পেলে আপনি কি করতে পারবেন ? সম্ভাবনা সীমাহীন।"
 
 #~ msgid "June 2013 Dev Derby Challenge - WebGL II"
 #~ msgstr "জুন ২০১৩ ডেভ ডারবি চ্যালেঞ্জ - ওয়েবজিএল ২"
@@ -4911,10 +4903,11 @@ msgstr ""
 #~ msgid "Forms"
 #~ msgstr "ফর্ম"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr ""
-#~ "এইচটিএমএল৫ এর ফরম উপাদান এবং এট্রিবিউট এইচটিএমএল৪ এর তুলনায় অধিক মাত্রায় শব্দার্থগতভাবে মার্ক-আপ প্রদান করে এবং বেশি পরিমাণে ক্লান্তিকর স্ক্রিপ্টিং এবং স্টাইলিং এর প্রয়োজনীয়তা দূর করে যা এইচটিএমএল৪ "
-#~ "এ প্রয়োজনীয় ছিল। "
+#~ "এইচটিএমএল৫ এর ফরম উপাদান এবং এট্রিবিউট এইচটিএমএল৪ এর তুলনায় অধিক মাত্রায় শব্দার্থগতভাবে মার্ক-আপ প্রদান করে এবং বেশি পরিমাণে ক্লান্তিকর স্ক্রিপ্টিং এবং স্টাইলিং এর প্রয়োজনীয়তা দূর করে যা এইচটিএমএল৪ এ প্রয়োজনীয় "
+#~ "ছিল। "
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 #~ msgstr "https://developer.mozilla.org/bn-BD/docs/Web/HTML/Forms_in_HTML"
@@ -5289,8 +5282,8 @@ msgstr ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
 #~ msgstr ""
-#~ "<p>অাপনি  <strong>%(demo_title)sটি</strong> ডেমো স্টুডিও থেকে মুছতে যাচ্ছেন।</p> <p> এতে ডেমোটির তালিকা, সোর্স কোড এবং পরিসংখ্যান <strong>মুছে যাবে</strong> যাবে.</p> <p>এই কাজটি <strong>পুনরায় "
-#~ "অাগের মত করা যাবে না</strong>।"
+#~ "<p>অাপনি  <strong>%(demo_title)sটি</strong> ডেমো স্টুডিও থেকে মুছতে যাচ্ছেন।</p> <p> এতে ডেমোটির তালিকা, সোর্স কোড এবং পরিসংখ্যান <strong>মুছে যাবে</strong> যাবে.</p> <p>এই কাজটি <strong>পুনরায় অাগের মত "
+#~ "করা যাবে না</strong>।"
 
 #~ msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
 #~ msgstr "<button type=\"submit\"class=\"remove\"><span>ডেমো সরান</span></button>"
@@ -5303,12 +5296,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>মোজিলা ডেমো স্টুডিওতে অাপনাকে স্বাগতম। এখান থেকে ডেভলপাররা যেমন অাপনি নতুন কিছু তৈরি করতে, পরীক্ষা করে দেখতে  এবং সবার সাথে শেয়ার করতে পারবেন এবং ওয়েব টেকনোলজি সম্পর্কে শিখতে পারবেন। ডেমো স্টুডিও"
-#~ " দ্বারা যা যা সম্ভব তা দেখুন:</p> <ul> <li>HTML, CSS, এবং JavaScript কি করতে পারে তার ডেমো দেখুন.</li> <li>সোর্স কোডগুলো পরীক্ষা করে দেখুন এবং জানুন কি ভাবে সেগুলো কাজ করে।</li> <li>ওপেন স্ট্যাডার্ড"
-#~ " সম্পর্কে জানতে এবং যে সকল টেকনোলজি সম্পর্কে দ্বারা ওয়েব তৈরি তা জানতে ডকুমেন্টেশনগুলো পড়ুন</li> </ul>"
+#~ "<p>মোজিলা ডেমো স্টুডিওতে অাপনাকে স্বাগতম। এখান থেকে ডেভলপাররা যেমন অাপনি নতুন কিছু তৈরি করতে, পরীক্ষা করে দেখতে  এবং সবার সাথে শেয়ার করতে পারবেন এবং ওয়েব টেকনোলজি সম্পর্কে শিখতে পারবেন। ডেমো স্টুডিও দ্বারা "
+#~ "যা যা সম্ভব তা দেখুন:</p> <ul> <li>HTML, CSS, এবং JavaScript কি করতে পারে তার ডেমো দেখুন.</li> <li>সোর্স কোডগুলো পরীক্ষা করে দেখুন এবং জানুন কি ভাবে সেগুলো কাজ করে।</li> <li>ওপেন স্ট্যাডার্ড সম্পর্কে জানতে "
+#~ "এবং যে সকল টেকনোলজি সম্পর্কে দ্বারা ওয়েব তৈরি তা জানতে ডকুমেন্টেশনগুলো পড়ুন</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "পূর্ববর্তী ডেমোটি দেখুন, {demo_title}"
@@ -5534,11 +5527,11 @@ msgstr ""
 #~ msgstr "একটি ডেমো জমা দিন"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "হতে পারে আপনি ওয়েবকে উপলব্ধি করার নতুন কোন চমৎকার পদ্ধতি আবিষ্কার করেছন বা আপনি কেবল হালনাগাদ প্রযুক্তিগুলো নিয়ে গবেষণা করছেন, আমরা আপনাকে আপনার ডেমো অন্য ওয়েব ডেভেলপারের সাথে শেয়ার করার জন্য (বা "
-#~ "দেখানোর জন্য) আমন্ত্রণ জানাচ্ছি। ডেমো স্টুডিওতে আপনার ডেমোর জমা নিশ্চিত করার জন্য অনুগ্রহ করে নিচের ফরমটা পূরণ করে নিন।"
+#~ "হতে পারে আপনি ওয়েবকে উপলব্ধি করার নতুন কোন চমৎকার পদ্ধতি আবিষ্কার করেছন বা আপনি কেবল হালনাগাদ প্রযুক্তিগুলো নিয়ে গবেষণা করছেন, আমরা আপনাকে আপনার ডেমো অন্য ওয়েব ডেভেলপারের সাথে শেয়ার করার জন্য (বা দেখানোর "
+#~ "জন্য) আমন্ত্রণ জানাচ্ছি। ডেমো স্টুডিওতে আপনার ডেমোর জমা নিশ্চিত করার জন্য অনুগ্রহ করে নিচের ফরমটা পূরণ করে নিন।"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "আপনার ডেমো বর্ণনা করুন"
@@ -5568,15 +5561,15 @@ msgstr ""
 #~ msgstr "আপনার ডেমো তৈরী করুন"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>আপনার ডেমো'র সোর্স কোডকে অবশ্যই একটা জিপ (ZIP) ফাইলের মধ্যে প্যাক করে নিতে হবে।</li> <li>জিপ ফাইলের রুটে আপনার ডেমোর মূল পাতা রেখে সেটার নাম <code>index.html</code> করে দিতে হবে।</li> "
-#~ "<li>আপনার ডেমো অবশ্যই ক্ল্যায়েন্ট-সাইড টেকনোলজি (যেমন- এইচটিএমএল, সিএসএস, জাভাস্ক্রিপ্ট) দিয়ে তৈরি হতে হবে। রুবি বা পিএইচপির মতো সার্ভার-সাইড ভাষাগুলো সমর্থিত নয়।</li> <li>আপনার ডেমোর যদি বাহ্যিক "
-#~ "রিসোর্সের প্রয়োজন হয় তবে সেক্ষেত্রে আপনার উচিত হবে AJAX ব্যবহার করে সেগুলো একসেস করা। <li>আপনার ডেমো জমা দেওয়া জন্য আপনার <a href=\"%(signup_url)s\">MDN একাউন্ট</a> এর প্রয়োজন হবে।</li> <li>অনুগ্রহ "
-#~ "করে ডেমো ডিটেইল বক্সে কোন তৃতীয় পক্ষীয় কন্টেন্ট নির্ধারণ করে দিন যেগুলোর জন্য CC-BY-SA লাইসেন্স প্রযোজন্য হবে না এবং সেগুলোর লেখকের ওয়েবসাইটের ঠিকানাও যুক্ত করে দিন।</li> </ul>"
+#~ "<li>আপনার ডেমো অবশ্যই ক্ল্যায়েন্ট-সাইড টেকনোলজি (যেমন- এইচটিএমএল, সিএসএস, জাভাস্ক্রিপ্ট) দিয়ে তৈরি হতে হবে। রুবি বা পিএইচপির মতো সার্ভার-সাইড ভাষাগুলো সমর্থিত নয়।</li> <li>আপনার ডেমোর যদি বাহ্যিক রিসোর্সের "
+#~ "প্রয়োজন হয় তবে সেক্ষেত্রে আপনার উচিত হবে AJAX ব্যবহার করে সেগুলো একসেস করা। <li>আপনার ডেমো জমা দেওয়া জন্য আপনার <a href=\"%(signup_url)s\">MDN একাউন্ট</a> এর প্রয়োজন হবে।</li> <li>অনুগ্রহ করে ডেমো ডিটেইল "
+#~ "বক্সে কোন তৃতীয় পক্ষীয় কন্টেন্ট নির্ধারণ করে দিন যেগুলোর জন্য CC-BY-SA লাইসেন্স প্রযোজন্য হবে না এবং সেগুলোর লেখকের ওয়েবসাইটের ঠিকানাও যুক্ত করে দিন।</li> </ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "আপনার সোর্স কোডটি প্রদান করুন"
@@ -5605,32 +5598,32 @@ msgstr ""
 #~ msgstr "<p>ডেভেলপিং সম্পর্কিত আপনার আগ্রহ এবং দক্ষতা MDN কমিউনিটিতে শেয়ার করতে পারেন। আমরা আপনাকে আরো ভাল অভিজ্ঞতা দিতে সমর্থ হব। সেই সাথে আপনি আপনার চমৎকার কাজ গুলো দেখানোর সুযোগ পাবেন।</p>"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr "<p>ওয়েব কে সুন্দর করার জন্য আপনি যদি নতুন কোন পথ খুঁজে পান অথবা লেটেস্ট টেকনোলজির অভিজ্ঞতা পান তাহলে আমরা আপনাকে আপনার নিজের ডেমো শেয়ার করার জন্য কিংবা দেখানোর জন্য আমন্ত্রন জানাবো।</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "আরম্ভ করার পূর্বে"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>আপনাকে অবশ্যই আপনার ডেমোর জন্য <strong>সোর্স কোড সরবরাহ</strong> করতে হবে। ডেমো গুলো ডেমো স্টুডিওর সার্ভারে থাকে।</li> <li>  আপনার ডেমোর সোর্স কোড গুলো অবশ্যই  <strong>ওপেন "
-#~ "লাইসেন্স</strong> এর মধ্য সহজলভ্য হতে হবে। উদাহরন  স্বরুপ  MPL, GPL, কিংবা BSD এর মত  ওপেন লাইসেন্স হতে পারে।</li> <li>আপনার ডেমো গুলো <strong>ওপেন ওয়েব টেকনোলজির</strong>শো কেস হতে হবে,  যেমন "
-#~ "এইচটিএমএল ৫ ও সিএসএস ৩।</li> <li>আপনার ডেমো অবশ্যই অনেক গুলো <strong>আধুনিক ওয়েব ব্রাউজার </strong> কে সমর্থন করতে হবে, যেমন ফায়ারফক্স,ক্রোম,সাফারি এবং অপেরা.</li> </ul>"
+#~ "<ul> <li>আপনাকে অবশ্যই আপনার ডেমোর জন্য <strong>সোর্স কোড সরবরাহ</strong> করতে হবে। ডেমো গুলো ডেমো স্টুডিওর সার্ভারে থাকে।</li> <li>  আপনার ডেমোর সোর্স কোড গুলো অবশ্যই  <strong>ওপেন লাইসেন্স</strong> এর "
+#~ "মধ্য সহজলভ্য হতে হবে। উদাহরন  স্বরুপ  MPL, GPL, কিংবা BSD এর মত  ওপেন লাইসেন্স হতে পারে।</li> <li>আপনার ডেমো গুলো <strong>ওপেন ওয়েব টেকনোলজির</strong>শো কেস হতে হবে,  যেমন এইচটিএমএল ৫ ও সিএসএস ৩।</li> "
+#~ "<li>আপনার ডেমো অবশ্যই অনেক গুলো <strong>আধুনিক ওয়েব ব্রাউজার </strong> কে সমর্থন করতে হবে, যেমন ফায়ারফক্স,ক্রোম,সাফারি এবং অপেরা.</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "আপনার ডেমোর সোর্স কোড একটা <strong>জিপ ফাইল</strong> এর মধ্যে প্যাকেজ আকারে থাকতে হবে। </li> <li>আপনর ডেমোর প্রধান পেজ এর নাম  <strong><code>index.html</code></strong> আকারে  জিপ ফাইলের মধ্যে থাকতে "
-#~ "হবে। </li> <li>আপনার ডেমো অবশ্যই <strong>ক্লাইন্ট সাইড টেকনোলজি/strong> (এইচটিএমএল, সিএসএস , জাভাস্ক্রিপ্ট) এ তৈরি হতে হবে  ।সার্ভার সম্পর্কিত ভাষা যেমন পিএইচপি ও রুবি এইটা সমর্থন করে না </li> "
-#~ "<li>আপনার ডেমোর জন্য বাহিরের রিসোর্স দরকার হলে এক্সেস পাবার জন্য <strong>AJAX</strong> ব্যবহার করতে পারেন।</li> <li>ডেমো ডিটেইলস বক্সে কোন CC-BY-SA লাইসেন্সহীন কোন তৃতীয় পক্ষের কনটেন্ট আছে কিনা "
-#~ "চিহ্নিত করুন এবং অথার ওয়েব সাইটের লিঙ্ক যুক্ত করুন। </li> </ul>।"
+#~ "হবে। </li> <li>আপনার ডেমো অবশ্যই <strong>ক্লাইন্ট সাইড টেকনোলজি/strong> (এইচটিএমএল, সিএসএস , জাভাস্ক্রিপ্ট) এ তৈরি হতে হবে  ।সার্ভার সম্পর্কিত ভাষা যেমন পিএইচপি ও রুবি এইটা সমর্থন করে না </li> <li>আপনার "
+#~ "ডেমোর জন্য বাহিরের রিসোর্স দরকার হলে এক্সেস পাবার জন্য <strong>AJAX</strong> ব্যবহার করতে পারেন।</li> <li>ডেমো ডিটেইলস বক্সে কোন CC-BY-SA লাইসেন্সহীন কোন তৃতীয় পক্ষের কনটেন্ট আছে কিনা চিহ্নিত করুন এবং অথার "
+#~ "ওয়েব সাইটের লিঙ্ক যুক্ত করুন। </li> </ul>।"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>আপনর ডেমো সাবমিট করার জন্য আপনার <strong><a href=\"%(signup_url)s\">MDN অ্যাকাউন্ট</a></strong> দরকার।</p>"
@@ -5903,37 +5896,37 @@ msgstr ""
 #~ msgstr "আপনার ডেমো জমা দিন"
 
 #~ msgid ""
-#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose\"> "
-#~ "<li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
-#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of the "
-#~ "month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many "
-#~ "&ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than once in "
-#~ "the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
+#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose"
+#~ "\"> <li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
+#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of "
+#~ "the month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how "
+#~ "many &ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than "
+#~ "once in the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
 #~ msgstr ""
-#~ "<p>নিয়মসমূহের একটি সারাংশ নিম্নে পাওয়া যাবে। প্রতিযোগিতার পূর্ণ বিবরণ দেখার জন্য দয়া করে <a href=\"%(rules_url)s\">ডেভ ডার্বি কনটেস্টের অফিসিয়াল নিয়মাবলী</a>দেখুন।</p> <ul class=\"prose\"> <li>প্রায়"
-#~ " যে কেউই প্রবেশ করতে পারেন (<a href=\"%(rules_url)s\">নিয়মগুলো দেখুন</a> ব্যতিক্রমসমূহের জন্য)।</li> <li>প্রতি মাসে একটি করে নতুন প্রতিযোগিতা হবে।</li> <li>আপনার এন্ট্রি অবশ্যই নির্দিষ্ট মানদণ্ড "
-#~ "পুরণ করতে হবে; <a href=\"%(rules_url)s\">নিয়মগুলো দেখুন</a> সামগ্রিক মানদণ্ড এবং বর্তমান চ্যালেঞ্জ বিভাগের বিশেষ মানদণ্ডের জন্য।</li> <li>প্রতিটি প্রতিযোগিতা মাসের প্রথম দিনটি থেকে শেষ দিনটি পর্যন্ত"
-#~ " চলবে (<strong>মার্কিন প্যাসিফিক সময়ের</strong> উপর ভিত্তি করে)।</li> <li>যোগ্যতাসম্পন্ন সমালোচকের একটি প্যানেলের দ্বারা এন্ট্রিসমূহ বিচার করা হবে, যারা আপনি কতগুলো &এলডিকিউও;লাইক্‌স&আরডিকিউও; "
-#~ "এন্ট্রি পেলেন তা বিচারে নিতে বা নাও নিতে পারেন।</li> <li>প্রত্যেক মাসের বিজয়ীদের নাম <strong>পরবর্তি মাসের ২০ তারিখের দিকে</strong>ঘোষণা করা হবে।</li <li>আপনি একই পঞ্জিকাবর্ষে একবারের বেশি জিততে "
-#~ "পারবেন না।</li> <li>দয়া করে আপনার এন্ট্রি সাবমিট করার পূর্বে <a href=\"%(rules_url)s\">ডেভ ডার্বি কনটেস্টের অফিসিয়াল নিয়মাবলী</a> পড়ুন।</li> </ul>"
+#~ "<p>নিয়মসমূহের একটি সারাংশ নিম্নে পাওয়া যাবে। প্রতিযোগিতার পূর্ণ বিবরণ দেখার জন্য দয়া করে <a href=\"%(rules_url)s\">ডেভ ডার্বি কনটেস্টের অফিসিয়াল নিয়মাবলী</a>দেখুন।</p> <ul class=\"prose\"> <li>প্রায় যে "
+#~ "কেউই প্রবেশ করতে পারেন (<a href=\"%(rules_url)s\">নিয়মগুলো দেখুন</a> ব্যতিক্রমসমূহের জন্য)।</li> <li>প্রতি মাসে একটি করে নতুন প্রতিযোগিতা হবে।</li> <li>আপনার এন্ট্রি অবশ্যই নির্দিষ্ট মানদণ্ড পুরণ করতে হবে; <a "
+#~ "href=\"%(rules_url)s\">নিয়মগুলো দেখুন</a> সামগ্রিক মানদণ্ড এবং বর্তমান চ্যালেঞ্জ বিভাগের বিশেষ মানদণ্ডের জন্য।</li> <li>প্রতিটি প্রতিযোগিতা মাসের প্রথম দিনটি থেকে শেষ দিনটি পর্যন্ত চলবে (<strong>মার্কিন "
+#~ "প্যাসিফিক সময়ের</strong> উপর ভিত্তি করে)।</li> <li>যোগ্যতাসম্পন্ন সমালোচকের একটি প্যানেলের দ্বারা এন্ট্রিসমূহ বিচার করা হবে, যারা আপনি কতগুলো &এলডিকিউও;লাইক্‌স&আরডিকিউও; এন্ট্রি পেলেন তা বিচারে নিতে বা নাও "
+#~ "নিতে পারেন।</li> <li>প্রত্যেক মাসের বিজয়ীদের নাম <strong>পরবর্তি মাসের ২০ তারিখের দিকে</strong>ঘোষণা করা হবে।</li <li>আপনি একই পঞ্জিকাবর্ষে একবারের বেশি জিততে পারবেন না।</li> <li>দয়া করে আপনার এন্ট্রি "
+#~ "সাবমিট করার পূর্বে <a href=\"%(rules_url)s\">ডেভ ডার্বি কনটেস্টের অফিসিয়াল নিয়মাবলী</a> পড়ুন।</li> </ul>"
 
 #~ msgid "<p>Entries will be reviewed by a panel of qualified judges, including members of the Mozilla team and outside experts. We will rate the demos across 4 dimensions:</p>"
 #~ msgstr "লিপিবদ্ধকরণ বিষয় গুলো একটি কোয়ালিফায়েড জার্জ এর প্যানেল, এমনকি মোজিলা টিম মেম্বার এবং বাহিরের কিছু এক্সপার্ট এর মাধ্যমে রিভিও হয়।আমরা ডেমো গুলো মোটামোটি ৪ ডায়মেনশনে রেটিং দেওয়া হয়।"
 
 #~ msgid ""
-#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is the"
-#~ " demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the "
-#~ "Web today?</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is "
+#~ "the demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in "
+#~ "enhancing the Web today?</li> </ul>"
 #~ msgstr ""
-#~ "<ul class=\"prose\"> <li></li>প্রযুক্তি</strong> &ndash; ডেমো কী ওপেন ওয়েব প্রযুক্তিগুলোর প্রদর্শন করে?</li> <li><strong>মৌলিকত্ব</strong> &ndash; কীভাবে ডেমো উদ্ভাবনী এবং অনন্য?</li> "
-#~ "<li><strong>চারুকলা</strong> &ndash; ভিজুয়াল ডিজাইন এবং ইন্টার‍্যাকশন এক্সপেরিয়েন্সে কীভাবে ভালো?</li> <li><strong>বাস্তবতা</strong> &ndash; কীভাবে ডেমো বর্তমানে ওয়েবের প্রসারে প্রয়োজনীয়?</li> </ul>"
+#~ "<ul class=\"prose\"> <li></li>প্রযুক্তি</strong> &ndash; ডেমো কী ওপেন ওয়েব প্রযুক্তিগুলোর প্রদর্শন করে?</li> <li><strong>মৌলিকত্ব</strong> &ndash; কীভাবে ডেমো উদ্ভাবনী এবং অনন্য?</li> <li><strong>চারুকলা</"
+#~ "strong> &ndash; ভিজুয়াল ডিজাইন এবং ইন্টার‍্যাকশন এক্সপেরিয়েন্সে কীভাবে ভালো?</li> <li><strong>বাস্তবতা</strong> &ndash; কীভাবে ডেমো বর্তমানে ওয়েবের প্রসারে প্রয়োজনীয়?</li> </ul>"
 
 #~ msgid "<p>The judges will use all four dimensions in scoring each entry, and any additional criteria specified for a particular contest.</p>"
 #~ msgstr "<p> বিচারকগণ ব্যবহার করবেন প্রতিটি এন্ট্রি স্কোরিং এর জন্য সকল চারটি মাত্রা, এবং একটি বিশেষ প্রতিযোগীতার জন্য নির্দিষ্ট কোন অতিরিক্ত মানদণ্ড।</p>"
 
 #~ msgid ""
-#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby "
-#~ "to &ldquo;vote.&rdquo;</p>"
+#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev "
+#~ "Derby to &ldquo;vote.&rdquo;</p>"
 #~ msgstr ""
 #~ "<p> এছাড়াও কমিউনিটি থেকে কতগুলো &ldquo;likes&rdquo; পেয়েছেন বিচারকগণ তা বিবেচনায় নিতেও পারেন। তাই অন্যদের সাথে আপনার ডেমো শেয়ার করতে এবং তাদেরকে ডেভ ডার্বির &ldquo;vote.&rdquo; তে পরিদর্শন করতে "
 #~ "উৎসাহিত করতে ভুলবেন না।</p>"
@@ -5948,9 +5941,9 @@ msgstr ""
 #~ "James is a London-based UI Developer with a passion for JavaScript, HTML5 and anything that enables him and others to create stuff of value. He's currently freelancing and working on interactive "
 #~ "media at Storygami, a new startup that he's the CTO of. James shares opinionated technical articles and code on his website and github."
 #~ msgstr ""
-#~ "জেমস একজন লন্ডন-ভিত্তিক ইউআই ডেভেলপার যার- জাভাস্ক্রিপ্ট, এইচটিএমএলফাইভ এবং অন্যান্য সম্পৃক্ত বিষয় যেগুলো তাকে এবং অন্যদেরকে গুরুত্ববহুল কিছু তৈরি করতে সাহায্য করে- সেগুলোর প্রতি আসক্তি রয়েছে। "
-#~ "বর্তমানে সে ফ্রিল্যান্সিং করার সাথে সাথে ইন্টারএকটিভ মিডিয়া নিয়ে স্টোরিগ্যামি নামের একটা নতুন উদ্যোগে কাজ করছে, যেখানে সে প্রধান কারিগরি কর্মকর্তা হিসেবে কর্মরত। জেমস তার ওয়েবসাইট এবং গিটহাবে তার "
-#~ "নিজের প্রযুক্তিবিষয়ক লেখালেখি ও কোডগুলো শেয়ার করে।"
+#~ "জেমস একজন লন্ডন-ভিত্তিক ইউআই ডেভেলপার যার- জাভাস্ক্রিপ্ট, এইচটিএমএলফাইভ এবং অন্যান্য সম্পৃক্ত বিষয় যেগুলো তাকে এবং অন্যদেরকে গুরুত্ববহুল কিছু তৈরি করতে সাহায্য করে- সেগুলোর প্রতি আসক্তি রয়েছে। বর্তমানে সে ফ্রিল্যান্সিং "
+#~ "করার সাথে সাথে ইন্টারএকটিভ মিডিয়া নিয়ে স্টোরিগ্যামি নামের একটা নতুন উদ্যোগে কাজ করছে, যেখানে সে প্রধান কারিগরি কর্মকর্তা হিসেবে কর্মরত। জেমস তার ওয়েবসাইট এবং গিটহাবে তার নিজের প্রযুক্তিবিষয়ক লেখালেখি ও "
+#~ "কোডগুলো শেয়ার করে।"
 
 #~ msgid "Developer Engagement Community Organizer, Mozilla"
 #~ msgstr "ডেভেলপার এঙ্গেজমেন্ট কমিউনিটি সংগঠক, মজিলা"
@@ -5959,8 +5952,8 @@ msgstr ""
 #~ "Janet has been wandering around software development since the twentieth century, and around open source software and documentation since 2004. She started working for Mozilla on developer "
 #~ "documentation in 2010, and recently became Community Manager for Developer Engagement. Her superpower is taking things literally."
 #~ msgstr ""
-#~ "প্রায় বিংশ শতাব্দীর শুরু থেকেই জ্যানেট সফটওয়্যার ডেভেলপমেন্ট ক্ষেত্রে বিচরণ করছে, এবং ২০০৪ থেকে সে ওপেনসোর্স সফটওয়্যার এবং ডকুমেন্টেশন নিয়ে কাজ শুরু করে। ২০১০ সালে সে মজিলা ডেভেলপার ডকুমেন্টেশনে কাজ"
-#~ " করে এবং সম্প্রতি সে ডেভেলপার এনগেজমেন্ট এর কমিউনিটি ব্যবস্থাপক নির্বাচিত হয়েছে। তার সবচেয়ে ভাল গুণ হচ্ছে যেকোন বিষয় সোজাসুজি বা সরাসরি নেওয়া।"
+#~ "প্রায় বিংশ শতাব্দীর শুরু থেকেই জ্যানেট সফটওয়্যার ডেভেলপমেন্ট ক্ষেত্রে বিচরণ করছে, এবং ২০০৪ থেকে সে ওপেনসোর্স সফটওয়্যার এবং ডকুমেন্টেশন নিয়ে কাজ শুরু করে। ২০১০ সালে সে মজিলা ডেভেলপার ডকুমেন্টেশনে কাজ করে এবং "
+#~ "সম্প্রতি সে ডেভেলপার এনগেজমেন্ট এর কমিউনিটি ব্যবস্থাপক নির্বাচিত হয়েছে। তার সবচেয়ে ভাল গুণ হচ্ছে যেকোন বিষয় সোজাসুজি বা সরাসরি নেওয়া।"
 
 #~ msgid ""
 #~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev Derby is on hiatus while we work on revamping the contest series. When it returns, you may see some changes in the "
@@ -5974,15 +5967,15 @@ msgstr ""
 #~ msgstr "ডেমো দেখুন"
 
 #~ msgid ""
-#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" "
-#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a "
-#~ "limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
+#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones"
+#~ "\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" href=\"http://www.rickshawbags.com/"
+#~ "bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to "
+#~ "show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
-#~ "<h1>পুরষ্কার</h1> <ol> <li class=\"first\"> <h3>অ্যান্ড্রয়েড মোবাইল ডিভাইস</h3> <p>বিজয়ীরা অ্যান্ড্রয়েড ডিভাইস পাবে <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">স্যামসাং</a>.</p> </li> <li class=\"second\"> <h3>রিকশা ল্যাপটপ ব্যাগ</h3> <p>রানার-আপ পাবে একটি হ্যান্ড-ক্রাফট ল্যাপটপ ব্যাগ<a rel=\"external\" href=\"http://www.rickshawbags.com/bags"
-#~ "/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">রিকশা</a>.</p> </li> <li class=\"third\"> <h3>MDN টি-শার্ট</h3> <p> তৃতীয় স্থান অধিকারী পাবে একটি লিমিটেড এডিশন MDN টি-শার্ট "
-#~ "যা তাদের গিক প্রতিভা প্রকাশ করবে।</p> </li> </ol>"
+#~ "<h1>পুরষ্কার</h1> <ol> <li class=\"first\"> <h3>অ্যান্ড্রয়েড মোবাইল ডিভাইস</h3> <p>বিজয়ীরা অ্যান্ড্রয়েড ডিভাইস পাবে <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">স্যামসাং</a>."
+#~ "</p> </li> <li class=\"second\"> <h3>রিকশা ল্যাপটপ ব্যাগ</h3> <p>রানার-আপ পাবে একটি হ্যান্ড-ক্রাফট ল্যাপটপ ব্যাগ<a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/"
+#~ "standard-commuter-laptop-bag-black.html\">রিকশা</a>.</p> </li> <li class=\"third\"> <h3>MDN টি-শার্ট</h3> <p> তৃতীয় স্থান অধিকারী পাবে একটি লিমিটেড এডিশন MDN টি-শার্ট যা তাদের গিক প্রতিভা প্রকাশ করবে।"
+#~ "</p> </li> </ol>"
 
 #~ msgid "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn More</strong>"
 #~ msgstr "<span>যোগ দিন</span> <em>ডেভ ডার্বি/em> &amp; পুরস্কার জিতুন<br/><strong>আরো শিখুন</strong>"
@@ -6006,11 +5999,11 @@ msgstr ""
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> বলে,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "পোষ্ট হয়েছে <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "পোষ্ট হয়েছে <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "{full_name} দিয়ে এই কমেন্টের উত্তর দিন"
@@ -6045,13 +6038,13 @@ msgstr ""
 #~ msgid ""
 #~ "Here you can see some of the developer events at which Mozilla will be participating, and the topics on which our Mozillians will be speaking. If you are organizing an event and would like a "
 #~ "Mozillian to participate, please <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">file a bug</a>. If you are a Mozillian speaking at an event that's not listed here, or if an "
-#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps "
-#~ "events</a> page to find a Mozilla Reps event near you!"
+#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla "
+#~ "Reps events</a> page to find a Mozilla Reps event near you!"
 #~ msgstr ""
-#~ "এখানে আপনি কিছু ডেভেলপার ইভেন্টসমূহ যেখানে মজিলা অংশগ্রহণ করবে দেখতে পারবেন, এবং যেসব বিষয়ে আমাদের মজিলিয়ানরা কথা বলবেন। যদি আপনি কোন ইভেন্ট আয়োজন করছেন এবং চাচ্ছেন একজন মজিলিয়ান অংশগ্রহণ করুক, "
-#~ "অনুগ্রহ করে <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">একটি বাগ ফাইল করুন</a>। যদি আপনি কোন ইভেন্টে বক্তৃতাদানকারী একজন মজিলিয়ান হন যা এখানে তালিকাভুক্ত করা হয় নি, অথবা যদি "
-#~ "একটি বিদ্যমান ইভেন্টের এন্ট্রি আপডেটের প্রয়োজন হলে, <a href=\"mailto:dev-events@mozilla.com\">আমাদের জানান</a>! আপনি আপনার নিকটের একজন মজিলা রেপস্‌ খুঁজে পাবার জন্য <a "
-#~ "href=\"https://reps.mozilla.org/events/#/period/future/\">মজিলা রেপস্‌ ইভেন্টসমূহ</a> পেইজটি দেখতে পারেন!"
+#~ "এখানে আপনি কিছু ডেভেলপার ইভেন্টসমূহ যেখানে মজিলা অংশগ্রহণ করবে দেখতে পারবেন, এবং যেসব বিষয়ে আমাদের মজিলিয়ানরা কথা বলবেন। যদি আপনি কোন ইভেন্ট আয়োজন করছেন এবং চাচ্ছেন একজন মজিলিয়ান অংশগ্রহণ করুক, অনুগ্রহ "
+#~ "করে <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">একটি বাগ ফাইল করুন</a>। যদি আপনি কোন ইভেন্টে বক্তৃতাদানকারী একজন মজিলিয়ান হন যা এখানে তালিকাভুক্ত করা হয় নি, অথবা যদি একটি "
+#~ "বিদ্যমান ইভেন্টের এন্ট্রি আপডেটের প্রয়োজন হলে, <a href=\"mailto:dev-events@mozilla.com\">আমাদের জানান</a>! আপনি আপনার নিকটের একজন মজিলা রেপস্‌ খুঁজে পাবার জন্য <a href=\"https://reps.mozilla.org/events/#/"
+#~ "period/future/\">মজিলা রেপস্‌ ইভেন্টসমূহ</a> পেইজটি দেখতে পারেন!"
 
 #~ msgid "Upcoming Conferences"
 #~ msgstr "আসন্ন সম্মেলন"
@@ -6117,36 +6110,36 @@ msgstr ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
 #~ "location of the HTML elements within the pages.</p>"
 #~ msgstr ""
-#~ "<p><strong>ক্যাসকেডিং স্টাইল শিটস</strong> হচ্ছে ওয়েব পাতাসমূহের উপস্থাপন কে বর্ণিত করার জন্য ব্যবহৃত ভাষা। দেখতে সুন্দর ওয়েব পাতাসমূহ তৈরি জন্য এবং এইচটিএমএল ইলিমেন্ট এর উপস্থাপন ও অবস্থান নির্দেশ "
-#~ "করার জন্য আপনার সিএসএস শিখতে হবে।</p>"
+#~ "<p><strong>ক্যাসকেডিং স্টাইল শিটস</strong> হচ্ছে ওয়েব পাতাসমূহের উপস্থাপন কে বর্ণিত করার জন্য ব্যবহৃত ভাষা। দেখতে সুন্দর ওয়েব পাতাসমূহ তৈরি জন্য এবং এইচটিএমএল ইলিমেন্ট এর উপস্থাপন ও অবস্থান নির্দেশ করার জন্য "
+#~ "আপনার সিএসএস শিখতে হবে।</p>"
 
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr ""
-#~ "<p><strong>জাভাস্ক্রিপ্ট</strong>(সংক্ষেপে JS) এমন একটি প্রোগ্রামিং ল্যাঙ্গুয়েজ যা এইচটিএমএলের লিঙ্কস্‌ এবং ফরমগুলোর দ্বারা উপলব্ধ মৌলিক স্তরের ঊর্ধ্বে গিয়ে ওয়েব পেইজগুলোকে ব্যবহারকারীর "
-#~ "ইন্টার‍্যাকশনে সাড়া দিতে সক্ষম করে। </p>"
+#~ "<p><strong>জাভাস্ক্রিপ্ট</strong>(সংক্ষেপে JS) এমন একটি প্রোগ্রামিং ল্যাঙ্গুয়েজ যা এইচটিএমএলের লিঙ্কস্‌ এবং ফরমগুলোর দ্বারা উপলব্ধ মৌলিক স্তরের ঊর্ধ্বে গিয়ে ওয়েব পেইজগুলোকে ব্যবহারকারীর ইন্টার‍্যাকশনে সাড়া দিতে সক্ষম "
+#~ "করে। </p>"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through "
-#~ "Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
-#~ "victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups "
+#~ "through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, "
+#~ "struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>নিজে নিজে শিখতে শিখতে ক্লান্ত?<br>আপনি কি ওপেন ওয়েব প্রযুক্তিগুলো শিখছে এমন একটি কমিউনিটির সাথে যুক্ত হতে চান?</h2> <p>তাহলে বিনামূল্যে পিয়ার-টু-পিয়ার ইউনিভার্সিটির <a "
-#~ "href=\"https://p2pu.org/en/schools/school-of-webcraft\">স্কুল অব ওয়েবক্রাফট</a> এর মাধ্যমে অনলাইন সমকক্ষ শিক্ষাসংক্রান্ত গ্রুপ গুলোতে যোগ দেওয়ার কথা চিন্তা করে দেখুন।</span> অন্যরা যারা আপনার মতো "
-#~ "একই জিনিস শিখছেন তাদের সাথে আপনার উদ্ভাবন, সংগ্রাম এবং বিজয়ের কথা ভাগাভাগি করুন।</p>"
+#~ "<h2>নিজে নিজে শিখতে শিখতে ক্লান্ত?<br>আপনি কি ওপেন ওয়েব প্রযুক্তিগুলো শিখছে এমন একটি কমিউনিটির সাথে যুক্ত হতে চান?</h2> <p>তাহলে বিনামূল্যে পিয়ার-টু-পিয়ার ইউনিভার্সিটির <a href=\"https://p2pu.org/en/schools/"
+#~ "school-of-webcraft\">স্কুল অব ওয়েবক্রাফট</a> এর মাধ্যমে অনলাইন সমকক্ষ শিক্ষাসংক্রান্ত গ্রুপ গুলোতে যোগ দেওয়ার কথা চিন্তা করে দেখুন।</span> অন্যরা যারা আপনার মতো একই জিনিস শিখছেন তাদের সাথে আপনার উদ্ভাবন, "
+#~ "সংগ্রাম এবং বিজয়ের কথা ভাগাভাগি করুন।</p>"
 
 #~ msgid "Back to Home"
 #~ msgstr "হোমে ফিরে যান"
 
 #~ msgid ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
-#~ "the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
-#~ "learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
-#~ "here.</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to "
+#~ "define the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just "
+#~ "starting out, learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find "
+#~ "helpful resources here.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) হচ্ছে ওয়েবের পাতাগুলোর উপাস্থাপনকে বর্ণিত করার জন্য বিশেষায়িত ভাষা। দেখতে সুন্দর ওয়েব পাতা তৈরি করতে আপনার CSS শিখতে হবে কারণ CSS ঐ "
-#~ "ওয়েব পাতার HTML ইলিমেন্টগুলোকে বর্ণিত করে।</p> <p>এই পাতায় বিদ্যমান লিংকগুলো আপনাকে বিবিধ CSS টিউটোরিয়াল এবং CSS প্রশিক্ষণ উপাদানের সান্নিধ্যে আনতে সাহায্য করবে। যেখানেই শুরু করেন না কেন, CSS এর "
-#~ "মৌলিক বিষয়গুলো যেকেউ আয়ত্বে আনার জন্য, অথবা অভিজ্ঞ ওয়েব ডেভেলপার যদি <strong>CSS3</strong> (সিএসএস এর নতুন স্ট্যান্ডার্ড) শেখা এবং এর সর্বোত্তম ব্যবহারে আগ্রহী হয়ে থাকেন, তাহলে এ পাতায় অনেকগুলো "
-#~ "সাহায্যকারী উপাদান খুঁজে পাবেন।</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) হচ্ছে ওয়েবের পাতাগুলোর উপাস্থাপনকে বর্ণিত করার জন্য বিশেষায়িত ভাষা। দেখতে সুন্দর ওয়েব পাতা তৈরি করতে আপনার CSS শিখতে হবে কারণ CSS ঐ ওয়েব "
+#~ "পাতার HTML ইলিমেন্টগুলোকে বর্ণিত করে।</p> <p>এই পাতায় বিদ্যমান লিংকগুলো আপনাকে বিবিধ CSS টিউটোরিয়াল এবং CSS প্রশিক্ষণ উপাদানের সান্নিধ্যে আনতে সাহায্য করবে। যেখানেই শুরু করেন না কেন, CSS এর মৌলিক বিষয়গুলো "
+#~ "যেকেউ আয়ত্বে আনার জন্য, অথবা অভিজ্ঞ ওয়েব ডেভেলপার যদি <strong>CSS3</strong> (সিএসএস এর নতুন স্ট্যান্ডার্ড) শেখা এবং এর সর্বোত্তম ব্যবহারে আগ্রহী হয়ে থাকেন, তাহলে এ পাতায় অনেকগুলো সাহায্যকারী উপাদান খুঁজে পাবেন।"
+#~ "</p>"
 
 #~ msgid "Introductory Level"
 #~ msgstr "পরিচিতি পর্যায়"
@@ -6253,45 +6246,45 @@ msgstr ""
 #~ msgstr "সিএসএস ট্রানজিশন বোঝা"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online peer "
-#~ "study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
+#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online "
+#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
 #~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>নিজে নিজে সিএসএস শিখতে শিখতে ক্লান্ত?<br>আপনি কি সিএসএস এবং ওপেন ওয়েব প্রযুক্তিগুলো শিখছে এমন একটি কমিউনিটির সাথে যুক্ত হতে চান?</h2> <p>তাহলে বিনামূল্যে পিয়ার-টু-পিয়ার ইউনিভার্সিটির <a "
-#~ "href=\"https://p2pu.org/en/schools/school-of-webcraft\">স্কুল অব ওয়েবক্রাফট</a> এর মাধ্যমে অনলাইন সমকক্ষ শিক্ষাসংক্রান্ত গ্রুপ গুলোতে যোগ দেওয়ার কথা চিন্তা করে দেখুন।</span> অন্যরা যারা আপনার মতো "
-#~ "একই জিনিস শিখছেন তাদের সাথে আপনার উদ্ভাবন, সংগ্রাম এবং বিজয়ের কথা ভাগাভাগি করুন।</p>"
+#~ "<h2>নিজে নিজে সিএসএস শিখতে শিখতে ক্লান্ত?<br>আপনি কি সিএসএস এবং ওপেন ওয়েব প্রযুক্তিগুলো শিখছে এমন একটি কমিউনিটির সাথে যুক্ত হতে চান?</h2> <p>তাহলে বিনামূল্যে পিয়ার-টু-পিয়ার ইউনিভার্সিটির <a href=\"https://"
+#~ "p2pu.org/en/schools/school-of-webcraft\">স্কুল অব ওয়েবক্রাফট</a> এর মাধ্যমে অনলাইন সমকক্ষ শিক্ষাসংক্রান্ত গ্রুপ গুলোতে যোগ দেওয়ার কথা চিন্তা করে দেখুন।</span> অন্যরা যারা আপনার মতো একই জিনিস শিখছেন তাদের সাথে "
+#~ "আপনার উদ্ভাবন, সংগ্রাম এবং বিজয়ের কথা ভাগাভাগি করুন।</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
-#~ " can't take advantage."
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
+#~ "and so can't take advantage."
 #~ msgstr ""
-#~ "এই সাইটটি <strong>CSS3</strong> এর বিস্তারিত আলোচনা, সর্বশেষ, বর্তমানে বিবর্ধন প্রক্রিয়ায় থাকা CSS ভার্সন। CSS3 ফিচারগুলো বিভিন্নভাবে বিভিন্ন আধুনিক ব্রাউজারে সমর্থন করে, কিন্তু এখনও অনেকে "
-#~ "ব্রাউজারের পূর্ববর্তী ভার্সনগুলো ব্যবহার করে এবং বিশেষ সুবিধাগুলো থেকে বঞ্চিত হয়।"
+#~ "এই সাইটটি <strong>CSS3</strong> এর বিস্তারিত আলোচনা, সর্বশেষ, বর্তমানে বিবর্ধন প্রক্রিয়ায় থাকা CSS ভার্সন। CSS3 ফিচারগুলো বিভিন্নভাবে বিভিন্ন আধুনিক ব্রাউজারে সমর্থন করে, কিন্তু এখনও অনেকে ব্রাউজারের পূর্ববর্তী "
+#~ "ভার্সনগুলো ব্যবহার করে এবং বিশেষ সুবিধাগুলো থেকে বঞ্চিত হয়।"
 
 #~ msgid ""
-#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
-#~ "please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, through an open "
-#~ "content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great "
+#~ "resource, please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, "
+#~ "through an open content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
 #~ msgstr ""
-#~ "<p>এসব রিসোর্সগুলো দূরদর্শী প্রতিষ্ঠান ও ওয়েব ডেভেলপারদের দ্বারা তৈরি যারা ওপেন স্ট্যান্ডার্ড এবং ওয়েব ডেভেলপমেন্টের জন্য সেরা পদ্ধতিগুলোকে বিকশিত করেছেন। আপনি যদি মনে করে আমরা সম্ভাবনাময় কোন "
-#~ "রিসোর্সকে উপেক্ষা করছি, তাহলে অনুগ্রহ করে <a href=\"%(feedback_url)s\">আমাদের এটা সম্পর্কে জানান দিন</a>। আমরা এই সবগুলো রিসোর্স আমাদের আন্তর্জাতিক কমিউনিটিগুলোর সাথে ভাগাভাগি করতে চাই, এজন্য আমরা "
-#~ "সেসব রিসোর্সগুলোকেই অগ্রাধিকার দিই যেগুলো ওপেন কন্টেন্ট লাইসেন্স যেমন <a href=\"http://creativecommons.org\" rel=\"external\">ক্রিয়েটিভ কমনস</a>'এর আওতায় ভাষান্তরিত বা ভাষান্তর করা যায়।</p>"
+#~ "<p>এসব রিসোর্সগুলো দূরদর্শী প্রতিষ্ঠান ও ওয়েব ডেভেলপারদের দ্বারা তৈরি যারা ওপেন স্ট্যান্ডার্ড এবং ওয়েব ডেভেলপমেন্টের জন্য সেরা পদ্ধতিগুলোকে বিকশিত করেছেন। আপনি যদি মনে করে আমরা সম্ভাবনাময় কোন রিসোর্সকে উপেক্ষা "
+#~ "করছি, তাহলে অনুগ্রহ করে <a href=\"%(feedback_url)s\">আমাদের এটা সম্পর্কে জানান দিন</a>। আমরা এই সবগুলো রিসোর্স আমাদের আন্তর্জাতিক কমিউনিটিগুলোর সাথে ভাগাভাগি করতে চাই, এজন্য আমরা সেসব রিসোর্সগুলোকেই "
+#~ "অগ্রাধিকার দিই যেগুলো ওপেন কন্টেন্ট লাইসেন্স যেমন <a href=\"http://creativecommons.org\" rel=\"external\">ক্রিয়েটিভ কমনস</a>'এর আওতায় ভাষান্তরিত বা ভাষান্তর করা যায়।</p>"
 
 #~ msgid ""
 #~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you "
-#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
-#~ "development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at "
+#~ "web development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">এইচটিএমএল (<strong>হাইপারটেক্সট মার্কআপ ল্যাঙ্গুয়েজ</strong>) হচ্ছে ওয়ার্ল্ডওয়াইড ওয়েবে তথ্য রাখার জন্য মূল সিনট্যাক্স বা ভাষা। আপনি যদি ওয়েব পাতা তৈরি বা পরিবর্তন করতে চান- তাহলে"
-#~ " সবচেয়ে ভালো হয় যদি এইচটিএমএল শিখেন।</p> <p>এই পাতার লিংকগুলো আপনাকে অনেকগুলো এইচটিএমএল টিউটোরিয়াল এবং এইচটিএমএল শিখার উপাদান এর সংস্পর্শে আসতে সহায়তা করবে। হোক আপনি কেবল এইচটিএমএল এর বেসিকগুলো শিখা"
-#~ " শুরু করেছেন, অথবা আপনি একজন পুরনো ওয়েব ডেভেলপার যে <strong>এইচটিএমএলফাইভ</strong> (এইচটিএমএল এর সর্বশেষ ভার্সন) শিখতে চাচ্ছেন, আপনি এইচটিএমএল ভালো ভাবে আয়ত্বে আনার জন্য সাহায্যকারী রিসোর্সগুলো "
-#~ "পাবেন।</p>"
+#~ "<p class=\"intro\">এইচটিএমএল (<strong>হাইপারটেক্সট মার্কআপ ল্যাঙ্গুয়েজ</strong>) হচ্ছে ওয়ার্ল্ডওয়াইড ওয়েবে তথ্য রাখার জন্য মূল সিনট্যাক্স বা ভাষা। আপনি যদি ওয়েব পাতা তৈরি বা পরিবর্তন করতে চান- তাহলে সবচেয়ে "
+#~ "ভালো হয় যদি এইচটিএমএল শিখেন।</p> <p>এই পাতার লিংকগুলো আপনাকে অনেকগুলো এইচটিএমএল টিউটোরিয়াল এবং এইচটিএমএল শিখার উপাদান এর সংস্পর্শে আসতে সহায়তা করবে। হোক আপনি কেবল এইচটিএমএল এর বেসিকগুলো শিখা শুরু "
+#~ "করেছেন, অথবা আপনি একজন পুরনো ওয়েব ডেভেলপার যে <strong>এইচটিএমএলফাইভ</strong> (এইচটিএমএল এর সর্বশেষ ভার্সন) শিখতে চাচ্ছেন, আপনি এইচটিএমএল ভালো ভাবে আয়ত্বে আনার জন্য সাহায্যকারী রিসোর্সগুলো পাবেন।</p>"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "এইচটিএমএলের মূলতত্ত্বগুলো"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
+#~ "depth."
 #~ msgstr "এইচটিএমএল কি, এটি কি করে, এর সংক্ষিপ্ত ইতিহাস এবং এইচটিএমএল ডকুমেন্ট এর গঠন দেখতে কেমন হয়। এই নিবন্ধে প্রতিটি বিষয় সম্পর্কে বিশদভাবে আলোকপাত করা হয়েছে।"
 
 #~ msgid "Basic Structure of a Web Page"
@@ -6496,13 +6489,13 @@ msgstr ""
 #~ msgstr "শিক্ষানবিস থেকে অভিজ্ঞ সবার জন্য জাভাস্ক্রিপ্টের নিয়মিত হালনাগাদকৃত একটি বিশাল নির্দেশিকা রয়েছে ।"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free online "
-#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
-#~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free "
+#~ "online peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share "
+#~ "your discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>আপনি কি একা একা জাভাস্ক্রিপ্ট শিখে হতাশ?<br>আপনি কি এমন কোনও সম্প্রদায়ের সাথে যুক্ত হতে চান যারা জাভাস্ক্রিপ্ট ও অন্যান্য মুক্ত ওয়েব প্রযুক্তি শিখছেন?</h2><p>আপনি অনলাইনে বিভিন্ন বিশ্ববিদ্যালয়ের"
-#~ " গ্রুপের সাথে গ্রুপ স্টাডির জন্য সাইন আপ করতে পারেন<span title=\"Peer-to-Peer University\"></span><a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>।আপনার উদ্ভাবন, "
-#~ "সংগ্রাম ও জয়লাভের কথা তাদের সাথে শেয়ার করুন যারা একই জিনিস শিখছে।</p>"
+#~ "<h2>আপনি কি একা একা জাভাস্ক্রিপ্ট শিখে হতাশ?<br>আপনি কি এমন কোনও সম্প্রদায়ের সাথে যুক্ত হতে চান যারা জাভাস্ক্রিপ্ট ও অন্যান্য মুক্ত ওয়েব প্রযুক্তি শিখছেন?</h2><p>আপনি অনলাইনে বিভিন্ন বিশ্ববিদ্যালয়ের গ্রুপের সাথে গ্রুপ "
+#~ "স্টাডির জন্য সাইন আপ করতে পারেন<span title=\"Peer-to-Peer University\"></span><a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>।আপনার উদ্ভাবন, সংগ্রাম ও জয়লাভের কথা "
+#~ "তাদের সাথে শেয়ার করুন যারা একই জিনিস শিখছে।</p>"
 
 #~ msgid "Scheduled a Celery task to populate search index %s."
 #~ msgstr "অনুসন্ধানকৃত সূচিপত্রকে জড়ো করতে একটি সেলেরি কাজের সময়সূচি ঠিক করুন %s."
@@ -6619,11 +6612,11 @@ msgstr ""
 #~ msgstr "এখানে পারসোনা আছে!"
 
 #~ msgid ""
-#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external\">Learn "
-#~ "more about it.</a>"
+#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external"
+#~ "\">Learn more about it.</a>"
 #~ msgstr ""
-#~ "MDN সুইচ করেছে<a href=\"%(browserid_href)s\" rel=\"external\">পারসোনা</a>, এটি একটি সুরক্ষিত এবং সহজ লগইন মাধ্যম যা শুধু মাত্র আপনি আপনার ই-মেইল দিয়ে করতে পারেন<a href=\"%(why_browserid)s\" "
-#~ "rel=\"external\">এটি সমন্ধে আরও জানতে।</a>"
+#~ "MDN সুইচ করেছে<a href=\"%(browserid_href)s\" rel=\"external\">পারসোনা</a>, এটি একটি সুরক্ষিত এবং সহজ লগইন মাধ্যম যা শুধু মাত্র আপনি আপনার ই-মেইল দিয়ে করতে পারেন<a href=\"%(why_browserid)s\" rel="
+#~ "\"external\">এটি সমন্ধে আরও জানতে।</a>"
 
 #~ msgid "New MDN Members"
 #~ msgstr "নতুন এমডিএন সদস্য"
@@ -6755,11 +6748,11 @@ msgstr ""
 #~ msgstr "নিশ্চিতকরণ ইমেইল সফলভাবে পাঠানো হয়েছে।"
 
 #~ msgid ""
-#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the link"
-#~ " in the email."
+#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the "
+#~ "link in the email."
 #~ msgstr ""
-#~ "আপনার অ্যাকাউন্ট সক্রিয় করতে প্রথমে আপনাকে আপনার ইমেইল ঠিকানা নিশ্চিত করতে হবে। আমরা আপনার একাউন্টে <strong>%(email)s</strong> ব‍্যাবহার করে একটি নিশ্চিত করন মেইল পাঠিয়েছি। আপনার ইমেইল লিখুন এবং "
-#~ "ফর্মটি জমা দিন, আর আমরা আপনাকে পুনরায় নিশ্চিতকরণ ইমেইল পাঠাবো।"
+#~ "আপনার অ্যাকাউন্ট সক্রিয় করতে প্রথমে আপনাকে আপনার ইমেইল ঠিকানা নিশ্চিত করতে হবে। আমরা আপনার একাউন্টে <strong>%(email)s</strong> ব‍্যাবহার করে একটি নিশ্চিত করন মেইল পাঠিয়েছি। আপনার ইমেইল লিখুন এবং ফর্মটি জমা "
+#~ "দিন, আর আমরা আপনাকে পুনরায় নিশ্চিতকরণ ইমেইল পাঠাবো।"
 
 #~ msgid "No email found for this account"
 #~ msgstr "এই অ্যাকাউন্টের জন্য কোনো ইমেইল পাওয়া যায়নি"

@@ -24,7 +24,8 @@ def test_feedback_layout(base_url, selenium):
     assert page.is_article_column_left_present
     assert page.is_article_column_content_present
     assert page.article_column_right_present
-    assert page.is_article_columns_expected_layout
+    column_container = page.article_column_container_region
+    assert column_container.is_expected_stacking
 
 
 @pytest.mark.smoke

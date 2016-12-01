@@ -5,5 +5,11 @@
 
 FROM quay.io/mozmar/kuma_base:latest
 COPY . /app
+# the following is needed until the --user flag is added to COPY
+# see https://github.com/docker/docker/pull/28499
+USER root
+RUN chown -R kuma /app
+USER kuma
+
 RUN make localecompile
 RUN make build-static && rm -rf build

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-10-20 12:46-0700\n"
+"POT-Creation-Date: 2016-11-30 06:58-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
@@ -16,8 +16,51 @@ msgstr ""
 msgid "Close submenu"
 msgstr ""
 
-#: kuma/static/js/components.js:542
+#: kuma/static/js/components.js:543
 msgid "Close notification"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:12
+msgid "Revert"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:13
+msgid "View Page"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:14
+msgid "Edit Page"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:15
+msgid "History"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:115
+msgid "Hang on! Updating filters…"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:122
+msgid "Updated filters."
+msgstr ""
+
+#: kuma/static/js/dashboard.js:139
+msgid "Submitting..."
+msgstr ""
+
+#: kuma/static/js/dashboard.js:147
+#, python-format
+msgid "Submitted as %(submission_type)s"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:148
+#, python-format
+msgid "%(sent_date)s by %(user)s"
+msgstr ""
+
+#: kuma/static/js/dashboard.js:158
+#, python-format
+msgid "Error submitting as %(type)s"
 msgstr ""
 
 #: kuma/static/js/helpfulness.js:32
