@@ -37,5 +37,15 @@ fi
 if [ "$TOXENV" == "py27" ]
 then
     pip install -r requirements/travis.txt
-    ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml || sudo cat /var/log/mysql/error.log
+    ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml || touch /tmp/provision_failed
+    if [ -e /tmp/provision_failed ]
+    then
+        sudo cat /var/log/mysql/error.log
+        # Maybe https://github.com/travis-ci/travis-ci/issues/6842 ?
+        sudo ls /run
+        sudo ls /run/mysql-5.6
+        sudo ls /var/run
+        sudo ls /var/run/mysqld.sock
+        exit 1
+    fi
 fi
