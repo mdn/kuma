@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 08:04-0800\n"
-"PO-Revision-Date: 2016-11-30 23:42+0000\n"
-"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2016-12-01 19:37+0000\n"
+"Last-Translator: Farés Bensadi <pharess@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -38,11 +38,11 @@ msgstr "Yessefk ad tkecmeḍ akken ad twaliḍ amazray"
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr "<p>Suref-aɣ%(name)s, ur nezmir ara ad tnegg.</p>"
+msgstr "<p>Suref-aɣ%(name)s, ur nezmir ara ad t-neg.</p>"
 
 #: jinja2/403.html:43 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr "<p>Suref-aɣ, ur nezmir ara ad tnegg.</p>"
+msgstr "<p>Suref-aɣ, ur nezmir ara ad t-neg.</p>"
 
 #: jinja2/403.html:50
 #, python-format
@@ -59,12 +59,12 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> sɣur Matthew Inman of <a href=\"http://theoatmeal.com\" "
-"rel=\"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> sɣur Matthew Inman n <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The"
+" Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
-msgstr "Ulac it"
+msgstr "Ulac-it"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
@@ -78,7 +78,7 @@ msgstr "Tzemreḍ ad tɛerḍeḍ anadi neɣ ad tuɣaled ɣer <a href=\"%(homepa
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr "Ma tḍefreḍ-d aseɣwen si tsemlit, tzemred ad teqqneḍ u ad ternud asebter. Ma ulac, ttxil-k <a href=\"%(bug_form_url)s\" rel=\"nofollow\">azen-d abug</a>. Tanemmirt!"
+msgstr "Ma tḍefreḍ-d aseɣwen seg tsemlit, tzemreḍ ad teqqneḍ u ad ternuḍ asebter. Ma ulac, ttxil-k <a href=\"%(bug_form_url)s\" rel=\"nofollow\">azen-d abug</a>. Tanemmirt!"
 
 #: jinja2/404.html:36
 #, python-format
@@ -87,7 +87,7 @@ msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> Sɣuṛ Mat
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr "Tuccḍa n uqeddac tagensant"
+msgstr "Tuccḍa tagensant n uqeddac"
 
 #: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
@@ -227,11 +227,11 @@ msgstr "Tikti"
 
 #: jinja2/base.html:166
 msgid "Get Firefox help"
-msgstr "Awi-d tallalt n Firefox"
+msgstr "Sis-d tallalt n Firefox"
 
 #: jinja2/base.html:167
 msgid "Get web development help"
-msgstr "Awi-d tallalt n tneflit web"
+msgstr "Sis-d tallalt n tneflit web"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
@@ -254,7 +254,7 @@ msgstr "Nadi"
 #: jinja2/base.html:198
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network akked ittekkiyen iman-nsen.</p> <p>Akk igburen llan daw  <a href=\"%(copyright_url)s\">n tugarin agi</a>.</p>"
+msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network akked ittekkiyen iman-nsen.</p> <p>Akk igburen llan ddaw <a href=\"%(copyright_url)s\">n turagin-a</a>.</p>"
 
 #: jinja2/base.html:203
 msgid "About MDN"
@@ -274,7 +274,7 @@ msgstr "Inagan n tuqqna"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr "Ttekki di tengalt"
+msgstr "Ttekki deg tengalt"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -320,7 +320,7 @@ msgstr "Kcem"
 
 #: jinja2/includes/newsletter.html:3
 msgid "Learn the best of web development"
-msgstr "Issin ayen ifazen di tneflit Web"
+msgstr "Issin ayen yufraren deg tneflit web"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
@@ -337,7 +337,7 @@ msgstr "imayl@amedya.com"
 #: jinja2/includes/newsletter.html:18
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr "Qebleɣ asefrek n telɣut inu tudmawant sɣuṛ Mozilla akken yella di <a href=\"%(policy_url)s\">tasertit n tbaḍnit</a>."
+msgstr "Qebleɣ asefrek n telɣut-inu tudmawant sɣur Mozilla akken yella deg <a href=\"%(policy_url)s\">tsertit n tbaḍnit</a>."
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
@@ -349,7 +349,7 @@ msgstr "Tabratt n isallen tella kan s Teglizit akka tura."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr "Tanemmirt! Ma ulac aɣilif senqed tabwaṭ inek n imaylen akken ad tesentmeḍ ajerred inek."
+msgstr "Tanemmirt! Ma ulac aɣilif senqed tabwaṭ-inek n imaylen akken ad tesentmeḍ ajerred-inek."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
