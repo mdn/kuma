@@ -52,6 +52,8 @@ then
         sudo cat /etc/init/mysql-5.6.conf || echo "No such file"
         sudo my_print_defaults mysqld_safe || echo "mysqd_safe failed"
         sudo my_print_defaults mysqld || echo "mysql failed"
+
+        sudo cat /etc/mysql-5.6/my.cnf || echo "No such file"
         exit 1
     fi
 fi
