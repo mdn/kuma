@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 08:04-0800\n"
-"PO-Revision-Date: 2016-12-01 02:36+0000\n"
+"PO-Revision-Date: 2016-12-01 02:44+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -2137,11 +2137,9 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr "Sila masukkan nama yang anda mahu paparkan kepada pengguna lain untuk mengenal pasti sumbangan anda."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
-#, fuzzy, python-format
+#, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr ""
-"Satu profile telah wujud dengan alamat e-mel yang dipilih. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Sambungkan ke akaun %(provider_name)s "
-"anda itu.</a>"
+msgstr "Satu profile telah wujud menggunakan alamat e-mel yang dipilih.  <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Hubungkan akaun %(provider_name)s anda.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
@@ -3313,11 +3311,13 @@ msgid "This translation is in progress."
 msgstr "Terjemahan ini sedang dijalankan."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
 "href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "Sukarelawan kami masih belum menterjemah artikel ini ke <bdi>%(locale)s</bdi> lagi. <a href=\"%(help_link)s\">Sertai kami dan bantu melaksanakannya!</a>"
+msgstr ""
+"Sukarelawan kami masih belum menterjemah artikel ini ke <bdi>%(locale)s</bdi> lagi.  <a href=\"%(help_link)s\">Sertai kami dan bantu melaksanakannya!</a><br> Anda juga boleh membaca artikel ini di "
+"<a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
