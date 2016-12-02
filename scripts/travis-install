@@ -15,6 +15,11 @@ then
     sudo apt-get autoremove
     sudo apt-get autoclean
     sudo rm -rf /var/lib/mysql
+    sudo rm -rf /var/lib/mysql-5.6
+    sudo rm -rf /run/mysql-5.6
+    sudo rm -rf /etc/mysql-5.6
+    sudo rm -f /etc/init/mysql-5.6.conf
+    sudo rm -f /var/log/mysql-5.6
 
     # Install Elasticsearch
     wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
