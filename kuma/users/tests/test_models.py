@@ -1,5 +1,7 @@
 import pytest
 
+from django.core.exceptions import ValidationError
+
 from kuma.core.tests import eq_, ok_
 from kuma.wiki.tests import revision
 
@@ -48,6 +50,30 @@ class TestUser(UserTestCase):
             user.save()
             new_user = self.user_model.objects.get(pk=user.pk)
             eq_(url, new_user.linkedin_url)
+
+    def test_stackoverflow_urls(self):
+        """Bug 1306087: Accept two-letter country-localized stackoverflow
+        domains but not meta.stackoverflow.com."""
+        user = self.user_model.objects.get(username='testuser')
+
+        valid_stackoverflow_urls = [
+            'https://stackoverflow.com/users/testuser',
+            'https://es.stackoverflow.com/users/testuser',
+        ]
+
+        for valid_url in valid_stackoverflow_urls:
+            user.stackoverflow_url = valid_url
+            user.full_clean()
+
+        invalid_stackoverflow_urls = [
+            'https://1a.stackoverflow.com/users/testuser',
+            'https://meta.stackoverflow.com/users/testuser'
+        ]
+
+        for invalid_url in invalid_stackoverflow_urls:
+            user.stackoverflow_url = invalid_url
+            with self.assertRaises(ValidationError):
+                user.full_clean()
 
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field.

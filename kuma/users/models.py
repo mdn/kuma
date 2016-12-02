@@ -115,7 +115,7 @@ class User(AbstractUser):
             'invalid',
         ),
         'stackoverflow': validators.RegexValidator(
-            r'^https?://stackoverflow\.com/users/',
+            r'^https?://([a-z]{2}\.)?stackoverflow\.com/users/',
             _('Enter a valid Stack Overflow URL.'),
             'invalid',
         ),
