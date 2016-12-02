@@ -53,13 +53,13 @@ then
         sudo cat /var/log/mysql/error.log || echo "No such file"
         sudo cat /var/log/mysql-5.6/error.log || echo "No such file"
         # Maybe https://github.com/travis-ci/travis-ci/issues/6842 ?
-        sudo ls /run
-        sudo ls /run/mysql-5.6
-        sudo ls /var/run
+        sudo ls /run || echo "No folder"
+        sudo ls /run/mysql-5.6 || echo "No folder"
+        sudo ls /var/run || echo "No folder"
 
-        sudo ls /etc/init.d
+        sudo ls /etc/init.d || echo "No folder"
         sudo cat /etc/init.d/mysql || echo "No such file"
-        sudo ls /etc/init
+        sudo ls /etc/init || echo "No folder"
         sudo cat /etc/init/mysql-5.6.conf || echo "No such file"
         sudo my_print_defaults mysqld_safe || echo "mysqd_safe failed"
         sudo my_print_defaults mysqld || echo "mysql failed"
