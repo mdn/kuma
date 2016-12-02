@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-02 18:18+0000\n"
+"PO-Revision-Date: 2016-12-02 18:44+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -1296,11 +1296,11 @@ msgstr "Web ouvert et mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "Sans but lucratif"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "grâce à votre soutien."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
@@ -2189,11 +2189,9 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr "Veuillez saisir le nom que vous souhaitez afficher pour identifier vos contributions."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
-#, fuzzy, python-format
+#, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr ""
-"Il existe déjà un profil avec l'adresse électronique sélectionnée. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connectez votre compte "
-"%(provider_name)s à ce profil.</a>"
+msgstr "Il existe déjà un profil avec l'adresse électronique sélectionnée. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connectez votre compte %(provider_name)s à ce profil.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
@@ -3382,11 +3380,13 @@ msgid "This translation is in progress."
 msgstr "Cette traduction est en cours."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
 "href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "Nos bénévoles n'ont pas encore traduit cet article en <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Aidez-nous à réaliser cette tâche&nbsp;!</a>"
+msgstr ""
+"Nos bénévoles n'ont pas encore traduit cet article en <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Aidez-nous à réaliser cette tâche&nbsp;!</a><br>Vous pouvez également lire cet article en <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 # 85%
 # 100%
