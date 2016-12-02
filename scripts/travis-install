@@ -16,10 +16,15 @@ then
     sudo apt-get autoclean
     sudo rm -rf /var/lib/mysql
     sudo rm -rf /var/lib/mysql-5.6
+    sudo rm -rf /run/mysql
     sudo rm -rf /run/mysql-5.6
+    sudo rm -rf /etc/mysql
     sudo rm -rf /etc/mysql-5.6
+    sudo rm -rf /var/log/mysql
     sudo rm -rf /var/log/mysql-5.6
     sudo rm -f /etc/init/mysql-5.6.conf
+    sudo rm -f /etc/init/mysql.conf
+    sudo rm -f /etc/init.d/mysql
 
     # Install Elasticsearch
     wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
@@ -45,8 +50,8 @@ then
     ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml || touch /tmp/provision_failed
     if [ -e /tmp/provision_failed ]
     then
-        sudo cat /var/log/mysql/error.log
-        sudo cat /var/log/mysql-5.6/error.log
+        sudo cat /var/log/mysql/error.log || echo "No such file"
+        sudo cat /var/log/mysql-5.6/error.log || echo "No such file"
         # Maybe https://github.com/travis-ci/travis-ci/issues/6842 ?
         sudo ls /run
         sudo ls /run/mysql-5.6
