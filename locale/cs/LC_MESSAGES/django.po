@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-05 13:27+0000\n"
+"PO-Revision-Date: 2016-12-05 15:32+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -2750,7 +2750,7 @@ msgstr "Technické - příklady kódu, API nebo technologií"
 
 #: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Redakce - próza, gramatika nebo obsah"
 
 #: kuma/wiki/constants.py:215
 msgid "Localization in progress - not completely translated yet."
@@ -3875,9 +3875,9 @@ msgstr "Style Guide"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
 msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Na této stránce došlo k chybě skriptu. Zatímco ji budeme opravovat, můžete se níže podívat alespoň na část obsahu."
+msgstr[1] "Na této stránce došlo k chybám skriptu. Zatímco je budeme opravovat, můžete se níže podívat alespoň na část obsahu."
+msgstr[2] "Na této stránce došlo k chybám skriptu. Zatímco je budeme opravovat, můžete se níže podívat alespoň na část obsahu."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -3960,6 +3960,8 @@ msgid ""
 "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
 "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Váš návrh obsahuje obsah, který nemusí být pro MDN vhodný. Opakované pokusy o odeslání nevhodného obsahu mohou vést k deaktivaci vašeho účtu. Přečtěte si prosím informace o vhodném obsahu v “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>”."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -3969,7 +3971,7 @@ msgstr "Pokud si myslíte, že jste obdrželi tuto zprávu omylem, prosím ulož
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
-msgstr ""
+msgstr "Pokud jste moderátor, můžete <a href=\"%(akismet_submission_url)s\" target=\"_blank\">označit tento příspěvek jako ham</a> a zkusit jej odeslat znovu."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4059,12 +4061,12 @@ msgstr "Všechny články ke kontrole"
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr ""
+msgstr "Zkontrolujte prosím v těchto článcích pravopis, gramatiku, úpravu atd. a poté odstraňte štítek Redakční kontroly. <a href=\"%(url)s\">Podívejte se na podrobnější pokyny</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
 msgid "Please review these articles for technical accuracy and completeness, and then clear the Technical review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr ""
+msgstr "Zkontrolujte prosím v těchto článcích technickou přesnost a úplnost a poté odstraňte štítek Technické kontroly. <a href=\"%(url)s\">Podívejte se na podrobnější pokyny</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
