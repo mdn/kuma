@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-04 11:31+0000\n"
-"Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
+"PO-Revision-Date: 2016-12-05 15:48+0000\n"
+"Last-Translator: Inma Barrios <inma.barrios@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1292,7 +1292,7 @@ msgstr "Sin ánimo de lucro."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr "Dona antes del 31 de diciembre."
+msgstr "Dona antes del 31 de dic."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
