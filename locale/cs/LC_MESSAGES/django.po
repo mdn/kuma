@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-05 11:56+0000\n"
+"PO-Revision-Date: 2016-12-05 13:27+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -2159,9 +2159,9 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr "Zadejte prosím jméno, které byste chtěli zobrazovat ostatní uživatelům u vašich příspěvků."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
-#, fuzzy, python-format
+#, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr "Profil s vybranou e-mailovou adresou již existuje. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Připojte k ní svůj %(provider_name)s účet</a>."
+msgstr "Profil s vybranou e-mailovou adresou již existuje. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Připojte k ní svůj %(provider_name)s účet</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
@@ -2546,7 +2546,7 @@ msgstr "Děkujeme vám, že používáte MDN!"
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Obnova profilu pro %(username)s z domény %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -2584,7 +2584,7 @@ msgstr "Chcete se s někým podělit o MDN? Tady je několik způsobů, jak to m
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
 msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr ""
+msgstr "Skupina: <a href=\"%(list_link)s\">přihlaste se</a> a řekněte nám, co vás o webovém serveru MDN zajímá."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
 #, python-format
@@ -2654,7 +2654,7 @@ msgstr "Mailing list: %(list_link)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
 msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr ""
+msgstr "Přihlaste se a řekněte nám, co vás o webovém serveru MDN zajímá."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
@@ -2916,7 +2916,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:72
 msgid "Changing this document's slug requires moving it and its children."
-msgstr ""
+msgstr "Změna adresy tohoto dokumentu vyžaduje jeho přesun včetně pod-dokumentů."
 
 #: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
@@ -3331,11 +3331,13 @@ msgid "This translation is in progress."
 msgstr "Probíhá překlad."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
 "href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "Naši dobrovolníci ještě tento článek do jazyka <bdi>%(locale)s</bdi> nepřeložili. <a href=\"%(help_link)s\">Přidejte se a pomozte nám tuto práci dokončit!</a>"
+msgstr ""
+"Naši dobrovolníci ještě tento článek do jazyka <bdi>%(locale)s</bdi> nepřeložili. <a href=\"%(help_link)s\">Přidejte se a pomozte nám tuto práci dokončit!</a><br>Tento článek si můžete přečíst také "
+"v jazyce <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
@@ -3377,6 +3379,7 @@ msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
+"Zkontrolujte prosím rozdíly mezi vaší změnou a změnou uloženou po začátku vašich úprav. Svou verzi můžete znovu uložit, ale zkuste prosím vyřešit konflikty tak, aby žádné změny nebyly ztraceny."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3475,7 +3478,7 @@ msgstr "Zadejte prosím nové umístění pro tuto stránku do polí níže. Uji
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
-msgstr ""
+msgstr "Ujistěte se prosím, že vybrané umístění je přímo pod existující stránkou."
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
@@ -3487,11 +3490,11 @@ msgstr "Zadejte pouze část URL, které následuje po \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
-msgstr ""
+msgstr "Nevkládejte prosím ukončující lomítko (pokud jej vložíte, bude automaticky odebráno, ale raději jej rovnou vynechte)."
 
 #: kuma/wiki/jinja2/wiki/move.html:31
 msgid "Your requested move cannot be completed due to the following slug conflicts:"
-msgstr ""
+msgstr "Vyžadovaný přesun nemohl být dokončen kvůli konfliktům adres:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
