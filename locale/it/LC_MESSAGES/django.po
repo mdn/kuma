@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-02 17:36+0000\n"
+"PO-Revision-Date: 2016-12-03 10:56+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -1275,15 +1275,15 @@ msgstr "Open Web e piattaforma mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "Orgogliosamente senza fini di lucro."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "Fai una donazione entro il 31 dicembre."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
-msgstr ""
+msgstr "Fai subito una donazione"
 
 #: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Learn Web Development"
@@ -3344,11 +3344,13 @@ msgid "This translation is in progress."
 msgstr "Traduzione in corso."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
 "href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "I volontari di MDN non hanno ancora tradotto questo articolo in <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Registrati per tradurlo tu.</a>"
+msgstr ""
+"I volontari di MDN non hanno ancora tradotto questo articolo in <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Unisciti a noi e traducilo tu stesso</a>. Puoi anche consultare l’articolo in <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
