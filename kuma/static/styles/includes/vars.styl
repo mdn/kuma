@@ -1,3 +1,5 @@
+@import 'mixins'; /* if we require rather than import we get errors */
+
 /*
 vendors
 ====================================================================== */
@@ -96,16 +98,16 @@ $grid-width-column-main = $calc-col-width(9);
 breakpoints & media queries
 ====================================================================== */
 
-$max-width-default = 1400px;
+$max-width-default = media-query-emify(1400px);
 
-$small-desktop-ends = 1200px;
-$tablet-ends = 1024px;
-$mobile-ends = 768px;
-$small-mobile-ends = 480px;
+$small-desktop-ends = media-query-emify(1200px);
+$tablet-ends = media-query-emify(1024px);
+$mobile-ends = media-query-emify(768px);
+$small-mobile-ends = media-query-emify(480px);
 
-$small-desktop-starts = $tablet-ends + 1px;
-$tablet-starts = $mobile-ends + 1px;
-$mobile-starts = $small-mobile-ends + 1px;
+$small-desktop-starts = $tablet-ends + 0.001em;
+$tablet-starts = $mobile-ends + 0.001em;
+$mobile-starts = $small-mobile-ends + 0.001em;
 
 $media-query-small-desktop = 'all and (max-width: $small-desktop-ends)';
 $media-query-tablet = 'all and (max-width: $tablet-ends)';
@@ -124,10 +126,10 @@ $media-query-tablet-only = 'all and (min-width: $tablet-starts) and (max-width: 
 $media-query-mobile-only = 'all and (min-width: $mobile-starts) and (max-width: $mobile-ends)';
 $media-query-small-mobile-only = $media-query-small-mobile;
 
-$navigation-break-ends = 1100px;
-$navigation-block-ends = 850px;
+$navigation-break-ends =  media-query-emify(1100px);
+$navigation-block-ends =  media-query-emify(850px);
 
-$navigation-break-starts = $navigation-block-ends + 1px;
+$navigation-break-starts = $navigation-block-ends + 0.001em;
 
 $media-query-navigation-break = 'all and (max-width: $navigation-break-ends)'; /* Moves nav items all the way to the left, moves logo above */
 $media-query-navigation-block = 'all and (max-width: $navigation-block-ends)'; /* Moves nav menu items to block, its own line */
