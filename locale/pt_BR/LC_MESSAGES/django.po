@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-10 12:00+0000\n"
+"PO-Revision-Date: 2016-12-10 12:02+0000\n"
 "Last-Translator: Maykon Chagas <mchagas@riseup.net>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -508,7 +508,7 @@ msgstr "Japonês"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Kabyle"
-msgstr ""
+msgstr "Kabyle"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Korean"
