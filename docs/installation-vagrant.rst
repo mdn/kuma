@@ -44,7 +44,7 @@ Install and run everything
    .. note:: (Windows) After installing VirtualBox you need to set
               ``PATH=C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe;``
 
-#. Install Vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
+#. Install Vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_.
 
 #. Install `Ansible <http://docs.ansible.com/>`_ >= 1.9.x on your machine so that
    Vagrant is able to set up the VM the way we need it.
@@ -81,7 +81,7 @@ Install and run everything
 
    Installation on Windows is complicated but we strive to make it easier
    in the future. Until then see this blog post for how to
-   `Run Vagrant with Ansible Provisioning on Windows <http://www.azavea.com/blogs/labs/2014/10/running-vagrant-with-ansible-provisioning-on-windows/>`_
+   `Run Vagrant with Ansible Provisioning on Windows <http://www.azavea.com/blogs/labs/2014/10/running-vagrant-with-ansible-provisioning-on-windows/>`_.
 
 #. Fork the project. (See `GitHub <https://help.github.com/articles/fork-a-repo#step-1-fork-the-spoon-knife-repository>`_)
 
@@ -91,7 +91,7 @@ Install and run everything
        cd kuma
        git submodule update --init --recursive
 
-#. Start the VM and install everything. (approx. 15 minutes on a fast net connection).::
+#. Start the VM and install everything. (approx. 15 minutes on a fast net connection)::
 
       vagrant up
 
@@ -141,7 +141,7 @@ Create an admin user
 
 You will want to make yourself an admin user to enable important site features.
 
-#. Sign up/in with Persona
+#. Sign up/in with Persona.
 
 #. After you sign in, SSH into the VM and make yourself an admin (exchange
    ``<< YOUR_USERNAME >>`` with the username you used when signing up for
@@ -191,10 +191,10 @@ testing sandbox.
 By default, `KumaScript`_ is also disabled with a :doc:`feature toggle <feature-toggles>`.
 To enable KumaScript:
 
-#. Sign in as the admin user
-#. Visit the `constance config admin panel`_
-#. Change ``KUMASCRIPT_TIMEOUT`` to 600
-#. Click "Save" at the bottom
+#. Sign in as the admin user.
+#. Visit the `constance config admin panel`_.
+#. Change ``KUMASCRIPT_TIMEOUT`` to 600.
+#. Click "Save" at the bottom.
 #. Import the `KumaScript auto-loaded modules`_::
 
     vagrant ssh
@@ -211,22 +211,22 @@ To enable KumaScript:
 (Advanced) Enable GitHub Auth
 =============================
 
-To enable GitHub authentication ...
+To enable GitHub authentication.
 
 `Register your own OAuth application on GitHub`_:
 
-* Application name: MDN (<username>)
-* Homepage url: https://developer-local.allizom.org/docs/MDN/Contribute/Howto/Create_an_MDN_account
+* Application name: MDN (<username>).
+* Homepage url: https://developer-local.allizom.org/docs/MDN/Contribute/Howto/Create_an_MDN_account.
 * Application description: My own GitHub app for MDN!
-* Authorization callback URL: https://developer-local.allizom.org/users/github/login/callback/
+* Authorization callback URL: https://developer-local.allizom.org/users/github/login/callback/.
 
 As the admin user, `add a django-allauth social app`_ for GitHub:
 
-* Provider: GitHub
-* Name: developer-local.allizom.org
-* Client id: <your GitHub App Client ID>
-* Secret key: <your GitHub App Client Secret>
-* Sites: example.com -> Chosen sites
+* Provider: GitHub.
+* Name: developer-local.allizom.org.
+* Client id: <your GitHub App Client ID>.
+* Secret key: <your GitHub App Client Secret>.
+* Sites: example.com -> Chosen sites.
 
 Now you can sign in with GitHub at https://developer-local.allizom.org/
 

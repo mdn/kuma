@@ -18,7 +18,7 @@ of development, it can be done entirely in Docker using ``docker-compose``.
 .. _Sphinx: https://en.wikipedia.org/wiki/Sphinx_(documentation_generator)
 .. _virtualenv: https://virtualenv.pypa.io/en/stable/
 
-Generating Documentation
+Generating documentation
 ------------------------
 Sphinx uses a ``Makefile`` in the ``docs`` subfolder to build documentation in
 several formats.  MDN only uses the HTML format, and the generated document
