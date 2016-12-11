@@ -5,7 +5,7 @@ Kuma uses Elasticsearch_ to power its on-site search.
 
 .. _Elasticsearch: https://www.elastic.co/products/elasticsearch
 
-Installed Version
+Installed version
 =================
 Elasticsearch `releases new versions often`_, and Kuma is slow to upgrade. The
 Docker and Vagrant environments use 1.7, but production is older.
@@ -17,7 +17,7 @@ the ``web`` Docker container or the Vagrant VM to confirm the engine works::
 
 .. _releases new versions often: https://en.wikipedia.org/wiki/Elasticsearch#History
 
-Indexing Documents
+Indexing documents
 ==================
 To see search results, you will need to index the documents.
 

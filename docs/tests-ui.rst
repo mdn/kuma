@@ -1,5 +1,5 @@
 ===================
-Client-side Testing
+Client-side testing
 ===================
 
 Kuma has a suite of functional tests using `Selenium`_ and `pytest`_. This allows us
@@ -18,7 +18,7 @@ The tests directory comprises of:
 Setting up test virtual environment
 ===================================
 
-#. In the terminal go to the directory where you have downloaded kuma
+#. In the terminal go to the directory where you have downloaded kuma.
 
 #. Create a virtual environment for the tests to run in (the example uses the
    name mdntests)::
