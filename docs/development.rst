@@ -2,7 +2,7 @@
 Development
 ===========
 
-Pick an Environment
+Pick an environment
 ===================
 There are two development environments, and you need to install at
 least one of them first.
@@ -21,7 +21,7 @@ least one of them first.
 Docker and Vagrant can be used at the same time on the same "host machine" (your
 laptop or desktop computer).
 
-Basic Docker Usage
+Basic Docker usage
 ------------------
 Edit files as usual on your host machine; the current directory is mounted
 via Docker host mounting at ``/app`` within the ``kuma_web_1`` and
@@ -41,9 +41,9 @@ There are ``make`` shortcuts on the host for frequent commands, such as::
     make bash       # docker exec -it kuma_web_1 bash
     make shell_plus # docker exec -it kuma_web_1 ./manage.py shell_plus
 
-Run all commands in this doc in the ``kuma_web_1`` container after ``make bash``
+Run all commands in this doc in the ``kuma_web_1`` container after ``make bash``.
 
-Basic Vagrant Usage
+Basic Vagrant usage
 -------------------
 Edit files as usual on your host machine; the current directory is
 mounted via NFS at ``/home/vagrant/src`` within the VM. Updates should be
@@ -73,7 +73,7 @@ There are additional Kuma-specific services that are configured in
 The Vagrant development instance is then available at
 https://developer-local.allizom.org.
 
-Running the Tests
+Running the tests
 =================
 One way to confirm that everything is working, or to pinpoint what is broken,
 is to run the test suite.
@@ -94,9 +94,9 @@ Intern <tests-ui>`.
 Kumascript tests
 ----------------
 If you're changing Kumascript, be sure to run its tests too.
-See https://github.com/mozilla/kumascript
+See https://github.com/mozilla/kumascript.
 
-Compiling Stylus Files
+Compiling stylus files
 ======================
 Stylus files need to be compiled for changes to take effect.
 
@@ -115,7 +115,7 @@ To watch for changes to the files and recompile::
 Watching for file changes performs well in the Vagrant environment, but can be
 slow with the host-mounted files in the Docker container.
 
-Database Migrations
+Database migrations
 ===================
 Apps are migrated using Django's migration system. To run the migrations::
 
@@ -126,7 +126,7 @@ the `migration workflow`_.
 
 .. _migration workflow: https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow
 
-Coding Conventions
+Coding conventions
 ==================
 See CONTRIBUTING.md_ for details of the coding style on Kuma.
 
@@ -135,7 +135,7 @@ New code is expected to have test coverage.  See the
 
 .. _CONTRIBUTING.md: https://github.com/mozilla/kuma/blob/master/CONTRIBUTING.md
 
-Managing Dependencies
+Managing dependencies
 =====================
 
 Python dependencies
@@ -151,18 +151,18 @@ Front-end dependencies
 Front-end dependencies are managed by Bower_ and checked into the repository.
 Follow these steps to add or upgrade a dependency:
 
-#. On the host, update ``bower.json``
-#. (*Docker only*) In the container, install ``git`` (``apt-get install -y git``)
-#. (*Docker only*) In the container, install ``bower-installer`` (``npm install -g bower-installer``)
-#. In the VM or container, install the dependency (``bower-installer``)
-#. On the host, prepare the dependency to be committed (``git add path/to/dependency``)
+#. On the host, update ``bower.json``.
+#. (*Docker only*) In the container, install ``git`` (``apt-get install -y git``).
+#. (*Docker only*) In the container, install ``bower-installer`` (``npm install -g bower-installer``).
+#. In the VM or container, install the dependency (``bower-installer``).
+#. On the host, prepare the dependency to be committed (``git add path/to/dependency``).
 
 Front-end dependencies that are not already managed by Bower should begin using
 this approach the next time they're upgraded.
 
 .. _Bower: http://bower.io
 
-Advanced Configuration
+Advanced configuration
 ======================
 `Environment variables`_ are used to change the way different components work.
 There are a few ways to change an environment variables:
@@ -183,11 +183,11 @@ There are a few ways to change an environment variables:
 
 .. _advanced_config_docker:
 
-The Docker Environment
+The Docker environment
 ----------------------
 Running docker-compose_ will create and run several containers, and each
 container's environment and settings are configured in ``docker-compose.yml``.
-The settings are "baked" into the containers created by ``docker-compose up``,
+The settings are "baked" into the containers created by ``docker-compose up``.
 
 To override a container's settings for development, use a local override file.
 For example, the ``web`` service runs in container ``kuma_web_1`` with the
@@ -231,7 +231,7 @@ documentation for more ideas on customizing the Docker environment.
 
 .. _vagrant-config:
 
-The Vagrant Environment
+The Vagrant environment
 -----------------------
 It is easiest to configure Vagrant with a ``.env`` file, so that overrides are used
 when ``vagrant up`` is called.  A sample ``.env`` could contain::
@@ -250,30 +250,30 @@ Configuration variables that are available for Vagrant:
 
 - ``VAGRANT_MEMORY_SIZE``
 
-  The size of the Virtualbox VM memory in MB. Default: ``2048``
+  The size of the Virtualbox VM memory in MB. Default: ``2048``.
 
 - ``VAGRANT_CPU_CORES``
 
-  The number of virtual CPU core the Virtualbox VM should have. Default: ``2``
+  The number of virtual CPU core the Virtualbox VM should have. Default: ``2``.
 
 - ``VAGRANT_IP``
 
-  The static IP the Virtualbox VM should be assigned to. Default: ``192.168.10.55``
+  The static IP the Virtualbox VM should be assigned to. Default: ``192.168.10.55``.
 
 - ``VAGRANT_GUI``
 
-  Whether the Virtualbox VM should boot with a GUI. Default: ``false``
+  Whether the Virtualbox VM should boot with a GUI. Default: ``false``.
 
 - ``VAGRANT_ANSIBLE_VERBOSE``
 
-  Whether the Ansible provisioner should print verbose output. Default: ``false``
+  Whether the Ansible provisioner should print verbose output. Default: ``false``.
 
 - ``VAGRANT_CACHIER``
 
   Whether to use the ``vagrant-cachier`` plugin to cache system packages
-  between installs. Default: ``true``
+  between installs. Default: ``true``.
 
-The Database
+The database
 ------------
 The database connection is defined by the environment variable
 ``DATABASE_URL``, with these defaults::
@@ -296,7 +296,7 @@ To connect to the database specified in ``DATABASE_URL``, use::
 
 .. _dj-database-url: https://github.com/kennethreitz/dj-database-url
 
-Asset Generation
+Asset generation
 ----------------
 Kuma will automatically run in debug mode, with the ``DEBUG`` setting
 turned to ``True``. That will make it serve images and have the pages
@@ -312,11 +312,11 @@ Production assets
 Assets are compressed on production. To emulate production and test compressed
 assets locally (*Vagrant only*):
 
-#. Set the environment variables ``DEBUG=false``
-#. Run ``make compilejsi18n collectstatic`` in the VM or container
-#. Restart the web process by restarting ``foreman``
+#. Set the environment variables ``DEBUG=false``.
+#. Run ``make compilejsi18n collectstatic`` in the VM or container.
+#. Restart the web process by restarting ``foreman``.
 
-Secure Cookies
+Secure cookies
 --------------
 To prevent error messages like "``Forbidden (CSRF cookie not set.):``", set the
 environment variable::

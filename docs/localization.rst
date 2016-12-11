@@ -32,7 +32,7 @@ For Vagrant, enter the environment with ``vagrant ssh``.
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _Django documentation on Translations: https://docs.djangoproject.com/en/dev/topics/i18n/translation/
 
-Getting the Localizations
+Getting the localizations
 =========================
 Localizations are found in this repository under the ``locale`` folder.
 
@@ -57,7 +57,7 @@ To refresh the translations, enter the development environment, then:
 
 .. _Update the Localizations:
 
-Updating the Localizations
+Updating the localizations
 ==========================
 When localizable strings are added, changed, or removed in the code, they need
 to be gathered into ``.po`` files for translation.
@@ -77,7 +77,7 @@ To update the localizations:
     git add --all locale
     git commit -m "MDN string update YYYY-MM-DD"
 
-Adding a new Locale
+Adding a new locale
 ===================
 This example shows adding a Bulgarian (bg) locale. Change ``bg`` to the locale
 code of the language you are adding.
@@ -85,7 +85,7 @@ code of the language you are adding.
 #. `Update the Localizations`_ as above, so that your commit will be limited to
    the new locale.
 
-#. Add the locale to ``MDN_LANGUAGES`` in ``kuma/settings/common.py``
+#. Add the locale to ``MDN_LANGUAGES`` in ``kuma/settings/common.py``.
 
 #. Download the latest ``languages.json`` from
    https://product-details.mozilla.org/1.0/languages.json
@@ -102,7 +102,7 @@ code of the language you are adding.
 #. Restart the web server and verify that Django loads the new locale without
    errors by visiting the locale's home page, for example
    http://localhost:8000/bg/ (https://developer-local.allizom.org/bg/
-   if you are using Vagrant)
+   if you are using Vagrant).
 
 #. Commit the changes to ``locale/bg`` and ``kuma/settings``.
    Verify that the other locales are just timestamp updates before reverting

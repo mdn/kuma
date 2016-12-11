@@ -42,7 +42,7 @@ Development
 
                 https://developer.mozilla.org/ (prod)
 
-Getting Started
+Getting started
 ===============
 
 Want to help make MDN great? Our `contribution guide

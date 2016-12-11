@@ -29,7 +29,7 @@ To update the CKEditor version, you'll need to edit ``build.sh`` and change
 the value of ``CKEDITOR_VERSION``.  Updating is important to keep MDN in sync
 with CKEditor's functional and security updates.
 
-Updating CKEditor Plugins
+Updating CKEditor plugins
 -------------------------
 Some plugins are maintained by MDN staff in the Kuma repo. Others are updated
 to the tag or commit number specified in ``build.sh``:
