@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-07-07 14:16+0000\n"
-"Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
+"PO-Revision-Date: 2016-12-11 18:52+0000\n"
+"Last-Translator: apurbamajumder258 <apurbamajumder258@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
 "MIME-Version: 1.0\n"
@@ -25,19 +25,19 @@ msgstr "নোটিফিকেশন বন্ধ করুন"
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "প্রত্যাবর্তন করা"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "পাতা দেখুন"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "পাতা সম্পাদনা করুন"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "ইতিহাস"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "জমা দেওয়া হচ্ছে..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
@@ -231,18 +231,16 @@ msgid "saved"
 msgstr "সংরক্ষিত"
 
 #: kuma/static/js/wiki-edit.js:645
-#, fuzzy
 msgid "autosaved"
-msgstr "সংরক্ষিত"
+msgstr "অটোসেভ"
 
 #: kuma/static/js/wiki-edit.js:654
 msgid "published"
 msgstr "প্রকাশিত"
 
 #: kuma/static/js/wiki-edit.js:658
-#, fuzzy
 msgid "discarded"
-msgstr "খসড়াটি বাতিল কর"
+msgstr "বাতিলকৃত"
 
 #: kuma/static/js/wiki-edit.js:696
 msgid "Autosave enabled."

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-12 19:39+0000\n"
+"PO-Revision-Date: 2016-12-12 19:47+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
@@ -443,7 +443,7 @@ msgstr "ফিনিশ"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "ফরাসি"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
@@ -615,7 +615,7 @@ msgstr ""
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "আনসাবস্ক্রাইব করুন এই ইমেইল থেকে:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
@@ -667,7 +667,7 @@ msgstr ""
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
-msgstr ""
+msgstr "সংযুক্তি"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
@@ -1300,11 +1300,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "31 শে ডিসেম্বরের পূর্বে দান করুন।"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
-msgstr ""
+msgstr "দান করুন"
 
 #: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Learn Web Development"
@@ -1432,7 +1432,7 @@ msgstr "লাল"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "&lt;FOO&gt; সাথে প্রতিস্থাপন করুন"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
@@ -1702,7 +1702,7 @@ msgstr ""
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "ইমেইল ঠিকানা ব্যবহারকারী নাম হিসেবে ব্যবহার করা যাবে না।"
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
@@ -1844,7 +1844,7 @@ msgstr "ট্যাগ"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "সঠিক ওয়েবসাইট URL প্রদান করুন।"
 
 #: kuma/users/models.py:109
 #, fuzzy
@@ -1926,7 +1926,7 @@ msgstr "ইমেইল:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "নিষ্ক্রিয় প্রোফাইল"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
@@ -1977,7 +1977,7 @@ msgstr "প্রোফাইল সম্পাদনা"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "আপনি কি সত্যিই বাছাইকৃত ইমেইল ঠিকানা অপসারণ করতে চাচ্ছেন?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
@@ -2020,7 +2020,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "আমরা দুঃখিত, কিন্তু প্রোফাইল তৈরা করা এখন বন্ধ।"
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -2093,7 +2093,7 @@ msgstr "ইতিমধ্যে প্রোফাইল রয়েছে? ত�
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "প্রোফাইল তৈরি অক্ষম"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2207,7 +2207,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "শর্তাবলী এবং গোপনীয়তা"
 
 #: kuma/users/jinja2/socialaccount/signup.html:166
 #, fuzzy, python-format
@@ -2269,7 +2269,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "আপনি স্প্যাম এর জন্য নিজেকে নিষিদ্ধ করতে পারবেন না।"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 #, fuzzy
@@ -2306,7 +2306,7 @@ msgstr "অ্যাকশন!"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
-msgstr ""
+msgstr "নিষিদ্ধ:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 #, fuzzy
@@ -2343,7 +2343,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
-msgstr ""
+msgstr "ব্যবহারকারীর দ্বারা নতুন কাজ:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
@@ -2447,7 +2447,7 @@ msgstr "আপনার প্রোফাইলে যান"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "আমরা দুঃখিত আপনাকে চলে যেতে দেখে।"
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
