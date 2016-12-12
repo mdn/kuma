@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-07 10:46+0000\n"
+"PO-Revision-Date: 2016-12-12 19:29+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -127,7 +127,7 @@ msgstr "Инструменти на сайта"
 
 #: jinja2/base.html:113
 msgid "Revision dashboard"
-msgstr ""
+msgstr "Табло с промените"
 
 #: jinja2/base.html:114
 msgid "Documentation status"
@@ -1174,17 +1174,17 @@ msgstr "Да се получават писма, когато са одобре�
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "Спиране изпращането на писма за чакащи прегледи на български"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Да получавам писма за чакащи прегледи на български"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr ""
+msgstr "Програмата за сътрудничество на Мрежата от Разработчици на Мозила (MDN) кани уеб-разработчици на световно равнище да помогнат да променим света с Мозила."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -2462,11 +2462,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Edit email"
-msgstr ""
+msgstr "Промяна на е-поща"
 
 #: kuma/users/jinja2/users/user_edit.html:70
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Интереси (етикети)"
 
 #: kuma/users/jinja2/users/user_edit.html:71
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
@@ -2474,7 +2474,7 @@ msgstr "Разделете етикетите със запетаи или пр�
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Сфери, в които сте експерт"
 
 #: kuma/users/jinja2/users/user_edit.html:78
 msgid "Add your interests first, then declare yourself an expert in selected topics."
@@ -2482,7 +2482,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:86
 msgid "My Profiles"
-msgstr ""
+msgstr "Моите профили"
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
@@ -2490,19 +2490,19 @@ msgstr "Използвайте профила си в GitHub, за да влез
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
-msgstr ""
+msgstr "Публикуване"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 msgid "Delete your account."
-msgstr ""
+msgstr "Изтриване на вашата сметка."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Управление на абонамента за новините от Мозила"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
-msgstr ""
+msgstr "Привет от MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2513,17 +2513,17 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
-msgstr ""
+msgstr "Благодрим ви, че използвате MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Възстановяване на профила за %(username)s при %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Здравейте %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
