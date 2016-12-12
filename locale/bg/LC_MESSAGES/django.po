@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-02 07:04-0800\n"
-"PO-Revision-Date: 2016-12-12 19:29+0000\n"
+"PO-Revision-Date: 2016-12-12 20:00+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -127,7 +127,7 @@ msgstr "Инструменти на сайта"
 
 #: jinja2/base.html:113
 msgid "Revision dashboard"
-msgstr "Табло с промените"
+msgstr ""
 
 #: jinja2/base.html:114
 msgid "Documentation status"
@@ -2341,15 +2341,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
-msgstr ""
+msgstr "Възстановяването на сметката се провали"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 msgid "This link is no longer valid."
-msgstr ""
+msgstr "Тази връзка е вече невалидна"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "Писмото за възстановяване е изпратено"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
@@ -2369,11 +2369,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:11
 msgid "Delete your profile"
-msgstr ""
+msgstr "Изтриване на вашия профил"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Жалко, че си отивате."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
@@ -2401,19 +2401,19 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Скоро променяни документи"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
-msgstr ""
+msgstr "Преглед на цялата активност"
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
-msgstr ""
+msgstr "Страница"
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
@@ -2421,20 +2421,20 @@ msgstr "Редактиране на страницата"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
-msgstr ""
+msgstr "Преглед на всички разлики"
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
-msgstr ""
+msgstr "Преглед на историята на страницата"
 
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
-msgstr ""
+msgstr "<p class=\"none\">Не сте помогнали за нито един документ в MDN. <a href=\"%(docs_url)s\">Давайте!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr ""
+msgstr "Този потребител не е активен."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
@@ -2442,15 +2442,15 @@ msgstr "Редактиране на профила"
 
 #: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Променете аватара си при"
 
 #: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
-msgstr ""
+msgstr "Преглед на профила"
 
 #: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Променяте чужд профил. Моля, Бъдете внимателни!"
 
 #: kuma/users/jinja2/users/user_edit.html:54
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
@@ -2458,7 +2458,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Primary Email"
-msgstr ""
+msgstr "Главна е-поща"
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Edit email"
@@ -2478,7 +2478,7 @@ msgstr "Сфери, в които сте експерт"
 
 #: kuma/users/jinja2/users/user_edit.html:78
 msgid "Add your interests first, then declare yourself an expert in selected topics."
-msgstr ""
+msgstr "Първо добавете интересите си, след което се обявете като експерт по избраните теми."
 
 #: kuma/users/jinja2/users/user_edit.html:86
 msgid "My Profiles"
@@ -2510,6 +2510,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Получавате това писмо защото вие или някой друг поиска достъп до вашата потребителска сметка %(username)s при %(domain)s. Можете спокойно да го пренебрегнете, ако не сте заявявали достъп. "
+"Щракнетевърху връзката долу, за достъп до вашата сметка:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
