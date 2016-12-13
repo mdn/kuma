@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-02 07:04-0800\n"
+"POT-Creation-Date: 2016-12-13 08:17-0800\n"
 "PO-Revision-Date: 2015-12-04 05:22-0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: Serbian https://pontoon.mozilla.org/sr_Latn/\n"
@@ -3904,17 +3904,14 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
-msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, python-format
-msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
+msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
 msgstr ""

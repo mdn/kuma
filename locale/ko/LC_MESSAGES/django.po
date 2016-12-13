@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-02 07:04-0800\n"
+"POT-Creation-Date: 2016-12-13 08:17-0800\n"
 "PO-Revision-Date: 2016-11-13 08:47+0000\n"
 "Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -4003,20 +4003,15 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "추가 및 변경 사유를 알려주세요. 이는 선택 사항이며 기록을 위한 것입니다."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, python-format
-msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-msgstr ""
-"당신 게시글이 MDN에 맞지 않을 수도 있는 내용을 포함합니다. 부적절한 소재를 여러 번 게시하는 경우 계정이 비활성화될 수 있습니다. 적절한 소재 구성에 대한 자세한 내용은 “<a href="
-"\"%(does_this_belong_url)s\">이게 MDN과 맞나요?</a>” 안내서를 참조하세요."
-
-#: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, python-format
-msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+#, fuzzy, python-format
+msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
 msgstr "실수로 이 메시지를 받았다고 믿는다면, 작업중인 내용을 저장한 다음, <a href=\"%(admin_email)s\">사이트 관리자에게 연락</a>해 주세요."
 
-#: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
+msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
 msgstr "당신이 스팸 감독자인 경우, <a href=\"%(akismet_submission_url)s\" target=\"_blank\">이 게시글을 스팸 아님으로 표시</a>하고 다시 게시 시도할 수 있습니다."
@@ -4272,6 +4267,13 @@ msgstr "이 문서를 번역할 수 없습니다."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 서버: %(backend)s"
+
+#~ msgid ""
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ msgstr ""
+#~ "당신 게시글이 MDN에 맞지 않을 수도 있는 내용을 포함합니다. 부적절한 소재를 여러 번 게시하는 경우 계정이 비활성화될 수 있습니다. 적절한 소재 구성에 대한 자세한 내용은 “<a href="
+#~ "\"%(does_this_belong_url)s\">이게 MDN과 맞나요?</a>” 안내서를 참조하세요."
 
 #~ msgid ""
 #~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "

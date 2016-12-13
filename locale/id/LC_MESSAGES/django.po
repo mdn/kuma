@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-02 07:04-0800\n"
+"POT-Creation-Date: 2016-12-13 08:17-0800\n"
 "PO-Revision-Date: 2016-08-28 07:19+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
@@ -3972,20 +3972,15 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Jelaskan pada kami mengapa anda membuat penambahan dan perubahan. Ini opsional, namun akan membuat riwayat lebih mudah dipahami."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, python-format
-msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-msgstr ""
-"Pengajuan anda menyertakan konten yang mungkin tidak akan cocok untuk MDN. Percobaan berulang kali untuk mengirimkan bahan yang tidak cocok dapat mengakibatkan akun anda dinonaktifkan. Lihat "
-"panduan kami “<a href=\"%(does_this_belong_url)s\">Apakah ini cocok untuk MDN?</a>” untuk rincian mengenai apa yang merupakan bahan yang tepat."
-
-#: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, python-format
-msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+#, fuzzy, python-format
+msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
 msgstr "Jika Anda yakin menerima pesan ini karena sebuah kesalahan, silakan <a href=\"%(admin_email)s\">menghubungi administrator situs</a>."
 
-#: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
+msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
 msgstr ""
@@ -4238,6 +4233,13 @@ msgstr "Anda tidak dapat menerjemahkan dokumen ini."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Server elasticsearch: %(backend)s"
+
+#~ msgid ""
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ msgstr ""
+#~ "Pengajuan anda menyertakan konten yang mungkin tidak akan cocok untuk MDN. Percobaan berulang kali untuk mengirimkan bahan yang tidak cocok dapat mengakibatkan akun anda dinonaktifkan. Lihat "
+#~ "panduan kami “<a href=\"%(does_this_belong_url)s\">Apakah ini cocok untuk MDN?</a>” untuk rincian mengenai apa yang merupakan bahan yang tepat."
 
 #~ msgid "Sign in or create an account:"
 #~ msgstr "Masuk atau membuat sebuah akun:"
