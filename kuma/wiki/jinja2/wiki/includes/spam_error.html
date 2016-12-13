@@ -5,8 +5,10 @@
     contact the site administrators</a>.
     {% endtrans %}
 </p>
-<p> We'll try to resolve the problem, and after that you will be able
+<p> {% trans %}
+    We'll try to resolve the problem, and after that you will be able
     to resubmit your contribution.
+    {% endtrans %}
 </p>
 {% if user and user.has_perm('wiki.change_documentspamattempt') -%}
 <p>
