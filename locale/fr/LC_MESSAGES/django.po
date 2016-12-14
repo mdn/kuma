@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-13 19:37+0000\n"
+"PO-Revision-Date: 2016-12-14 20:23+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -4021,9 +4021,11 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Dites nous pourquoi vous avez modifié la page. C'est facultatif mais permettra d'avoir un historique de versions plus explicite."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Si vous pensez avoir reçu ce message par erreur, veuillez enregistrer un brouillon de votre contenu et <a href=\"%(admin_email)s\">contacter les administrateurs du site</a>."
+msgstr ""
+"Malheureusement, nous n'avons pas pu enregistrer votre contribution. Veuillez sauvegarder un brouillon de votre modification puis <a href=\"%(admin_email)s\">contacter les administrateurs du "
+"site</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
