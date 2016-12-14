@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-13 18:15+0000\n"
-"Last-Translator: Nafis Sadik Fahim <md.n.s.f.11@gmail.com>\n"
+"PO-Revision-Date: 2016-12-14 18:39+0000\n"
+"Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
 "MIME-Version: 1.0\n"
@@ -2387,7 +2387,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
-msgstr ""
+msgstr "স্প্যাম হিসেবে শনাক্ত না:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
 #, fuzzy
@@ -2404,7 +2404,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
-msgstr ""
+msgstr "একাউন্ট উদ্ধার ব্যর্থ"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 #, fuzzy
@@ -2678,7 +2678,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "আপনার ভাষায় MDN অনুবাদ করতে চান?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
@@ -2773,7 +2773,7 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
-msgstr ""
+msgstr "অ্যাডমিন"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
@@ -3145,7 +3145,7 @@ msgstr "অনুসন্ধান পাওয়া যাচ্ছে না"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
-msgstr ""
+msgstr "Akismet ভুল"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
