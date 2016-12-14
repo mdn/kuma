@@ -1,7 +1,7 @@
 bobbyrenwick.pip,v1.2.0
 geerlingguy.apache,1.3.1
 geerlingguy.memcached,1.0.2
-geerlingguy.mysql,1.5.0
+geerlingguy.mysql,2.4.2
 Mayeu.RabbitMQ,1.4.0
 nodesource.node
 Stouts.elasticsearch,2.5.0

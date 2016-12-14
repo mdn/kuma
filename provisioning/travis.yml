@@ -11,13 +11,16 @@
         url: "https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x8C718D3B5072E1F5"
       tags: [mysql]
     - name: Add MySQL deb repository
-      apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ precise mysql-5.6' state=present
+      apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.6' state=present
       tags: [mysql]
     - name: Update APT cache
       apt: update_cache=yes
       tags: [mysql]
   roles:
-    - { role: geerlingguy.mysql, tags: [mysql], mysql_innodb_log_file_size: 64M }
+    - { role: geerlingguy.mysql,
+        tags: [mysql],
+        mysql_innodb_log_file_size: 64M,
+      }
     # TravisCI includes node/npm under nvm
     # However, kuma/tasks/node.yaml would need to be modified to:
     # use the nvm-configured npm (executable=path/to/nvm)

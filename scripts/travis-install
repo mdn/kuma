@@ -15,6 +15,16 @@ then
     sudo apt-get autoremove
     sudo apt-get autoclean
     sudo rm -rf /var/lib/mysql
+    sudo rm -rf /var/lib/mysql-5.6
+    sudo rm -rf /run/mysql
+    sudo rm -rf /run/mysql-5.6
+    sudo rm -rf /etc/mysql
+    sudo rm -rf /etc/mysql-5.6
+    sudo rm -rf /var/log/mysql
+    sudo rm -rf /var/log/mysql-5.6
+    sudo rm -f /etc/init/mysql-5.6.conf
+    sudo rm -f /etc/init/mysql.conf
+    sudo rm -f /etc/init.d/mysql
 
     # Install Elasticsearch
     wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
@@ -31,4 +41,30 @@ then
     curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     chmod +x docker-compose
     sudo mv docker-compose /usr/local/bin
+fi
+
+# Debug failures on Dec 1 2016
+if [ "$TOXENV" == "py27" ]
+then
+    pip install -r requirements/travis.txt
+    ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml || touch /tmp/provision_failed
+    if [ -e /tmp/provision_failed ]
+    then
+        sudo cat /var/log/mysql/error.log || echo "No such file"
+        sudo cat /var/log/mysql-5.6/error.log || echo "No such file"
+        # Maybe https://github.com/travis-ci/travis-ci/issues/6842 ?
+        sudo ls /run || echo "No folder"
+        sudo ls /run/mysql-5.6 || echo "No folder"
+        sudo ls /var/run || echo "No folder"
+
+        sudo ls /etc/init.d || echo "No folder"
+        sudo cat /etc/init.d/mysql || echo "No such file"
+        sudo ls /etc/init || echo "No folder"
+        sudo cat /etc/init/mysql-5.6.conf || echo "No such file"
+        sudo my_print_defaults mysqld_safe || echo "mysqd_safe failed"
+        sudo my_print_defaults mysqld || echo "mysql failed"
+
+        sudo cat /etc/mysql-5.6/my.cnf || echo "No such file"
+        exit 1
+    fi
 fi

@@ -1,0 +1,59 @@
+---
+# Variable configuration.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+  when: ansible_os_family != "RedHat"
+
+- name: Include OS-specific variables (RedHat).
+  include_vars: "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: Define mysql_packages.
+  set_fact:
+    mysql_packages: "{{ __mysql_packages | list }}"
+  when: mysql_packages is not defined
+
+- name: Define mysql_daemon.
+  set_fact:
+    mysql_daemon: "{{ __mysql_daemon }}"
+  when: mysql_daemon is not defined
+
+- name: Define mysql_slow_query_log_file.
+  set_fact:
+    mysql_slow_query_log_file: "{{ __mysql_slow_query_log_file }}"
+  when: mysql_slow_query_log_file is not defined
+
+- name: Define mysql_log_error.
+  set_fact:
+    mysql_log_error: "{{ __mysql_log_error }}"
+  when: mysql_log_error is not defined
+
+- name: Define mysql_syslog_tag.
+  set_fact:
+    mysql_syslog_tag: "{{ __mysql_syslog_tag }}"
+  when: mysql_syslog_tag is not defined
+
+- name: Define mysql_pid_file.
+  set_fact:
+    mysql_pid_file: "{{ __mysql_pid_file }}"
+  when: mysql_pid_file is not defined
+
+- name: Define mysql_config_file.
+  set_fact:
+    mysql_config_file: "{{ __mysql_config_file }}"
+  when: mysql_config_file is not defined
+
+- name: Define mysql_config_include_dir.
+  set_fact:
+    mysql_config_include_dir: "{{ __mysql_config_include_dir }}"
+  when: mysql_config_include_dir is not defined
+
+- name: Define mysql_socket.
+  set_fact:
+    mysql_socket: "{{ __mysql_socket }}"
+  when: mysql_socket is not defined
+
+- name: Define mysql_supports_innodb_large_prefix.
+  set_fact:
+    mysql_supports_innodb_large_prefix: "{{ __mysql_supports_innodb_large_prefix }}"
+  when: mysql_supports_innodb_large_prefix is not defined

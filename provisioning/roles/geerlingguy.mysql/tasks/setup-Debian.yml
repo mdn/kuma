@@ -7,10 +7,23 @@
   apt: update_cache=yes
   when: mysql_installed.stat.exists == false
 
+- name: Ensure MySQL Python libraries are installed.
+  apt: "name=python-mysqldb state=installed"
+
 - name: Ensure MySQL packages are installed.
   apt: "name={{ item }} state=installed"
-  with_items: mysql_packages
+  with_items: "{{ mysql_packages }}"
+  register: deb_mysql_install_packages
+
+# Because Ubuntu starts MySQL as part of the install process, we need to stop
+# mysql and remove the logfiles in case the user set a custom log file size.
+- name: Ensure MySQL is stopped after initial install.
+  service: "name={{ mysql_daemon }} state=stopped"
+  when: mysql_installed.stat.exists == false
 
 - name: Delete innodb log files created by apt package after initial install.
-  shell: "rm -f {{ mysql_datadir }}/ib_logfile[01]"
+  file: path={{ mysql_datadir }}/{{item}} state=absent
+  with_items:
+          - "ib_logfile0"
+          - "ib_logfile1"
   when: mysql_installed.stat.exists == false
