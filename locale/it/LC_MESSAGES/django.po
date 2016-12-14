@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-14 20:21+0000\n"
+"PO-Revision-Date: 2016-12-14 20:27+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -3975,13 +3975,13 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Facci conoscere per quale motivo hai modificato e aggiunto contenuti a questo documento. È facoltativo, però permette di rendere lo storico della pagina più comprensibile."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Se ritieni di aver ricevuto questo messaggio per errore, salva una bozza del contenuto e <a href=\"%(admin_email)s\">contatta l’amministratore del sito</a>."
+msgstr "Il sistema non è in grado di salvare il tuo contributo. Salva una copia delle modifiche effettuate e <a href=\"%(admin_email)s\">contatta l’amministratore del sito</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
-msgstr "Cercheremo di risolvere il problema, dopodiché dovrai reinserire il tuo contributo."
+msgstr "Cercheremo di risolvere il problema, dopodiché potrai reinserire il tuo contributo."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
