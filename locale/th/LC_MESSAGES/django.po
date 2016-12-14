@@ -1,17 +1,18 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2013-05-24 19:46+0200\n"
-"Last-Translator: Chengings <chengings@gmail.com>\n"
+"PO-Revision-Date: 2016-12-14 04:40+0000\n"
+"Last-Translator: nuttapong2539 <nuttapong2539@gmail.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"X-Generator: Pontoon\n"
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
@@ -31,7 +32,7 @@ msgstr ""
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "คุณต้องลงชื่อเข้าใช้เพื่อดูประวัติทั้งหมด"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
@@ -91,26 +92,25 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:77
 msgid "Skip to main content"
-msgstr ""
+msgstr "ข้ามไปยังเนื้อหาหลัก"
 
 #: jinja2/base.html:79
 msgid "Select language"
-msgstr ""
+msgstr "เลือกภาษา"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
-msgstr ""
+msgstr "ข้ามไปยังการค้นหา"
 
 #: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr ""
+msgstr "เครื่องมือ"
 
 #: jinja2/base.html:105
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "มีส่วนร่วมกับ MDN"
 
 #: jinja2/base.html:107
-#, fuzzy
 msgid "Get started"
 msgstr "เริ่มต้น"
 
@@ -119,9 +119,8 @@ msgid "Review or localize docs"
 msgstr ""
 
 #: jinja2/base.html:111
-#, fuzzy
 msgid "Site Tools"
-msgstr "เครื่องมือค้นหา"
+msgstr "เครื่องมือไซต์"
 
 #: jinja2/base.html:113
 msgid "Revision dashboard"
@@ -129,15 +128,15 @@ msgstr ""
 
 #: jinja2/base.html:114
 msgid "Documentation status"
-msgstr ""
+msgstr "สถานะเอกสาร"
 
 #: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr ""
+msgstr "เทคโนโลยีของเว็บ"
 
 #: jinja2/base.html:127
 msgid "Technologies"
-msgstr ""
+msgstr "เทคโนโลยี"
 
 # 80%
 #: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
@@ -158,7 +157,7 @@ msgstr ""
 
 #: jinja2/base.html:133
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: jinja2/base.html:134
 msgid "APIs / DOM"
@@ -171,7 +170,7 @@ msgstr "ส่วนขยาย"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:139
 msgid "References & Guides"
@@ -188,7 +187,7 @@ msgstr ""
 
 #: jinja2/base.html:143
 msgid "References"
-msgstr ""
+msgstr "อ้างอิง"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
@@ -221,11 +220,11 @@ msgstr "Firefox"
 
 #: jinja2/base.html:161
 msgid "Developer Tools"
-msgstr ""
+msgstr "เครื่องมือนักพัฒนา"
 
 #: jinja2/base.html:161
 msgid "Feedback"
-msgstr ""
+msgstr "ผลตอบรับ"
 
 #: jinja2/base.html:166
 #, fuzzy
@@ -239,12 +238,11 @@ msgstr "เครื่องมือพัฒนาเว็บทั้งห
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
-msgstr ""
+msgstr "เข้าร่วมชุมชน MDN"
 
 #: jinja2/base.html:171
-#, fuzzy
 msgid "Report a content problem"
-msgstr "รายงานความคิดเห็นนี้"
+msgstr "รายงานปัญหาของเนื้อหา"
 
 #: jinja2/base.html:172
 #, fuzzy
@@ -271,25 +269,24 @@ msgid "Terms"
 msgstr ""
 
 #: jinja2/base.html:205
-#, fuzzy
 msgid "Privacy"
-msgstr "นโยบายความเป็นส่วนตัว"
+msgstr "ความเป็นส่วนตัว"
 
 #: jinja2/base.html:206
 msgid "Cookies"
-msgstr ""
+msgstr "คุกกี้"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr ""
+msgstr "มีส่วนร่วมกับโค้ด"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">ลงชื่อออก</a>เพื่อลองอีกครั้ง</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "ค้นหาความช่วยเหลือ Firefox"
 
 #: jinja2/includes/common_macros.html:36
 #, fuzzy, python-format
@@ -323,7 +320,7 @@ msgstr "ออกจากระบบ"
 
 #: jinja2/includes/login.html:8
 msgid "Sign in"
-msgstr ""
+msgstr "ลงชื่อเข้าใช้"
 
 #: jinja2/includes/newsletter.html:3
 #, fuzzy
@@ -337,7 +334,6 @@ msgstr "ลงทะเบียนรับจดหมายข่าว"
 
 # 83%
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
 msgstr "อีเมล"
 
@@ -389,7 +385,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr ""
+msgstr "อารบิก"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
@@ -421,7 +417,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "จีน (ดั้งเดิม)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
@@ -449,7 +445,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "ฝรั่งเศส"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
@@ -586,7 +582,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Thai"
-msgstr ""
+msgstr "ไทย"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
@@ -622,15 +618,15 @@ msgstr ""
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "บอกเลิกสมาชิกจากอีเมลเหล่านี้:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "บอกเลิกสมาชิก"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "คุณแน่ใจหรือว่าต้องการบอกเลิกสมาชิก?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -638,9 +634,8 @@ msgid "Cancel"
 msgstr "ยกเลิก"
 
 #: jinja2/tidings/unsubscribe_error.html:7
-#, fuzzy
 msgid "Unsubscribe Error"
-msgstr "บอกรับ"
+msgstr "การบอกเลิกสมาชิกผิดพลาด"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
@@ -650,11 +645,11 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr ""
+msgstr "บอกเลิกสมาชิกแล้ว"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "คุณได้บอกเลิกสมาชิกแล้ว"
 
 #: kuma/attachments/admin.py:60
 #, python-format
@@ -663,7 +658,7 @@ msgstr ""
 
 #: kuma/attachments/admin.py:64
 msgid "and"
-msgstr ""
+msgstr "และ"
 
 #: kuma/attachments/admin.py:127
 #, python-format
@@ -870,8 +865,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -1225,8 +1220,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1392,8 +1387,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
@@ -1697,8 +1692,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -2221,8 +2216,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -3200,8 +3195,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3377,15 +3372,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:276
@@ -3410,8 +3405,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a href="
-"\"%(doc_abs_url)s\">%(parent_language)s</a>."
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:317
@@ -4308,65 +4303,51 @@ msgstr ""
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Sign in or create an account:"
 #~ msgstr "สร้างบัญชี"
 
-#, fuzzy
 #~ msgid "Sign in:"
 #~ msgstr "ออกจากระบบ"
 
 #~ msgid "Change"
 #~ msgstr "เปลี่ยน"
 
-#, fuzzy
 #~ msgid "Learn the Web"
 #~ msgstr "เรียนรู้วิธีการสร้างเว็บไซต์"
 
-#, fuzzy
 #~ msgid "Firefox Marketplace"
 #~ msgstr "Firefox Aurora"
 
 #~ msgid "HTML5"
 #~ msgstr "HTML5"
 
-#, fuzzy
 #~ msgid "Connect"
 #~ msgstr "Fennec"
 
-#, fuzzy
 #~ msgid "Learn more and sign up!"
 #~ msgstr "เรียนรู้เพิ่มเติม"
 
-#, fuzzy
 #~ msgid "\"Load documents\""
 #~ msgstr "แก้ไขความคิดเห็นนี้"
 
-#, fuzzy
 #~ msgid "Share:"
 #~ msgstr "แบ่งปัน"
 
-#, fuzzy
 #~ msgid "Resubmit"
 #~ msgstr "วันที่ส่ง"
 
-#, fuzzy
 #~ msgid "About me"
 #~ msgstr "เกี่ยวกับฉัน"
 
-# 91%
-#, fuzzy
 #~ msgid "Save Changes"
 #~ msgstr "บันทึกการเปลี่ยนแปลง"
 
-#, fuzzy
 #~ msgid "Sign in with"
 #~ msgstr "ลงทะเบียนตอนนี้"
 
 #~ msgid "You must agree to the privacy policy."
 #~ msgstr "คุณต้องยอมรับนโยบายความเป็นส่วนตัว"
 
-#, fuzzy
 #~ msgid "Preferred format"
 #~ msgstr "รูปแบบที่คุณต้องการ"
 
@@ -4431,7 +4412,6 @@ msgstr ""
 #~ msgid "Content deleted by moderator"
 #~ msgstr "เนื้อหาถูกลบโดยผู้ควบคุม"
 
-#, fuzzy
 #~ msgid "%(object)s Flagged"
 #~ msgstr "{object} ถูกปักธงแล้ว"
 
@@ -4468,10 +4448,6 @@ msgstr ""
 #~ msgid "August 2011"
 #~ msgstr "สิงหาคม 2554"
 
-# 86%
-# 78%
-# 100%
-#, fuzzy
 #~ msgid "Geolocation"
 #~ msgstr "Geolocation API"
 
@@ -4520,8 +4496,6 @@ msgstr ""
 #~ msgid "The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."
 #~ msgstr "Camera API สามารถมีสิทธิ์ในการเข้าถึงกล้องของอุปกรณ์พกพาได้ และผู้ใช้สามารถถ่ายและอัพโหลดภาพไปยังเว็บไซต์ด้วย Camera API"
 
-# 86%
-#, fuzzy
 #~ msgid "Geolocation II"
 #~ msgstr "Geolocation API"
 
@@ -4531,51 +4505,36 @@ msgstr ""
 #~ msgid "October 2012"
 #~ msgstr "ตุลาคม 2012"
 
-# 92%
 #~ msgid "November 2012"
 #~ msgstr "พฤศจิกายน 2012"
 
-# 92%
 #~ msgid "December 2012"
 #~ msgstr "ธันวาคม 2012"
 
 #~ msgid "Drag and Drop"
 #~ msgstr "ลากและวาง"
 
-# 91%
 #~ msgid "January 2013"
 #~ msgstr "มกราคม 2013"
 
-# 92%
 #~ msgid "February 2013"
 #~ msgstr "กุมภาพันธ์ 2013"
 
-# 90%
-# 100%
-#, fuzzy
 #~ msgid "March 2013"
 #~ msgstr "มีนาคม 2012"
 
 #~ msgid "Web Workers"
 #~ msgstr "Web Workers"
 
-# 90%
-# 100%
 #~ msgid "April 2013"
 #~ msgstr "เมษายน 2013"
 
-# 87%
-# 100%
-#, fuzzy
 #~ msgid "May 2013"
 #~ msgstr "พฤษภาคม 2012"
 
 #~ msgid "May"
 #~ msgstr "พฤษภาคม"
 
-# 88%
-# 100%
-#, fuzzy
 #~ msgid "June 2013"
 #~ msgstr "มิถุนายน 2554"
 
@@ -4585,35 +4544,27 @@ msgstr ""
 #~ msgid "File API"
 #~ msgstr "File API"
 
-# 88%
-# 100%
-#, fuzzy
 #~ msgid "July 2013"
 #~ msgstr "กรกฎาคม 2554"
 
 #~ msgid "July"
 #~ msgstr "กรกฎาคม"
 
-# 80%
 #~ msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 #~ msgstr "https://developer.mozilla.org/th/docs/Introducing_the_Audio_API_Extension"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html"
 
-# 84%
 #~ msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
 #~ msgstr "https://developer.mozilla.org/th/docs/HTML/Canvas"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 #~ msgstr "http://www.w3.org/TR/html5/dnd.html"
 
 #~ msgid "Device"
 #~ msgstr "อุปกรณ์"
 
-# 82%
 #~ msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 #~ msgstr "https://developer.mozilla.org/th/docs/using_files_from_web_applications"
 
@@ -4632,14 +4583,12 @@ msgstr ""
 #~ msgid "http://dev.w3.org/html5/spec/Overview.html"
 #~ msgstr "http://dev.w3.org/html5/spec/Overview.html"
 
-# 84%
 #~ msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
 #~ msgstr "https://developer.mozilla.org/th/docs/IndexedDB"
 
 #~ msgid "http://www.w3.org/TR/IndexedDB/"
 #~ msgstr "http://www.w3.org/TR/IndexedDB/"
 
-# 87%
 #~ msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
 #~ msgstr "https://developer.mozilla.org/th/docs/DragDrop/Drag_and_Drop"
 
@@ -4661,7 +4610,6 @@ msgstr ""
 #~ msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
 #~ msgstr "HTML5 Video รองรับการเล่นสื่อวีดิโอโดยไม่ต้องใช้โปรแกรมเสริม"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html"
 
@@ -4671,9 +4619,6 @@ msgstr ""
 #~ msgid "WebSockets"
 #~ msgstr "WebSockets"
 
-# 81%
-# 82%
-# 100%
 #~ msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
 #~ msgstr "https://developer.mozilla.org/th/docs/WebSockets"
 
@@ -4731,7 +4676,6 @@ msgstr ""
 #~ msgid "Demos recently submitted to MDN"
 #~ msgstr "การสาธิตที่ถูกส่งไปยัง MDN เมื่อเร็ว ๆ นี้"
 
-#, fuzzy
 #~ msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 #~ msgstr "โปรดทำให้ขนาดไฟล์น้อยกว่า %s ขนาดไฟล์ปัจจุบัน %s"
 
@@ -4804,7 +4748,6 @@ msgstr ""
 #~ msgid "access denied"
 #~ msgstr "การเข้าถึงถูกปฏิเสธ"
 
-#, fuzzy
 #~ msgid "%(subtitle)s | Demo Studio"
 #~ msgstr "{subtitle} | ห้องจัดแสดงการสาธิต"
 
@@ -4823,19 +4766,18 @@ msgstr ""
 #~ msgid ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
-#~ msgstr "<p>คุณกำลังจะลบ <strong>%(demo_title)s</strong> จากห้องจัดแสดงการสาธิต</p> <p>รายการของการสาธิต โค้ดต้นฉบับ และสถิติจะถูก <strong>ลบ</strong></p> <p>การกระทำนี้ <strong>ไม่สามารถยกเลิกได้</strong>"
+#~ msgstr ""
+#~ "<p>คุณกำลังจะลบ <strong>%(demo_title)s</strong> จากห้องจัดแสดงการสาธิต</p> <p>รายการของการสาธิต โค้ดต้นฉบับ และสถิติจะถูก <strong>ลบ</strong></p> <p>การกระทำนี้ <strong>ไม่สามารถยกเลิกได้</strong>"
 
 #~ msgid "Learn More"
 #~ msgstr "เรียนรู้เพิ่มเติม"
 
-#, fuzzy
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "ไปที่การสาธิตก่อนหน้า {demo_title}"
 
 #~ msgid "Prev"
 #~ msgstr "ก่อนหน้า"
 
-#, fuzzy
 #~ msgid "Go to the next demo, %(demo_title)s"
 #~ msgstr "ไปที่การสาธิตถัดไป {demo_title}"
 
@@ -4875,16 +4817,13 @@ msgstr ""
 #~ msgid "Built using"
 #~ msgstr "สร้างโดยใช้"
 
-#, fuzzy
 #~ msgid "See more demos made with %(tag_title)s"
 #~ msgstr "ดูการสาธิตเพิ่มเติมที่สร้างโดย {tag_title}"
 
-#, fuzzy
 #~ msgid "This demo has been viewed %(num)s time"
 #~ msgid_plural "This demo has been viewed %(num)s times"
 #~ msgstr[0] "การสาธิตนี้ถูกดูไปแล้ว {count} ครั้ง"
 
-#, fuzzy
 #~ msgid "%(num)s person liked this demo"
 #~ msgid_plural "%(num)s people liked this demo"
 #~ msgstr[0] "{count} คน ชอบการสาธิตนี้"
@@ -4904,7 +4843,6 @@ msgstr ""
 #~ msgid "More About This Demo From The Author"
 #~ msgstr "ข้อมูลเพิ่มเติมเกี่ยวกับการสาธิตนี้จากผู้สร้าง"
 
-#, fuzzy
 #~ msgid "About this Demo"
 #~ msgstr "เกี่ยวกับ Firefox"
 
@@ -4926,14 +4864,12 @@ msgstr ""
 #~ msgid "Resources"
 #~ msgstr "แหล่งข้อมูล"
 
-#, fuzzy
 #~ msgid "Demos tagged %(tag)s"
 #~ msgstr "การสาธิตติดป้าย {tag}"
 
 #~ msgid "Submissions"
 #~ msgstr "การเสนอ"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(tag_title)s demos"
 #~ msgstr "บอกรับฟีดของการสาธิต {tag_title}"
 
@@ -4955,15 +4891,12 @@ msgstr ""
 #~ msgid "Featured Demos"
 #~ msgstr "การสาธิตที่แนะนำ"
 
-# 77%
-#, fuzzy
 #~ msgid "See the previous demo"
 #~ msgstr "ดูภาพก่อนหน้า"
 
 #~ msgid "Details"
 #~ msgstr "รายละเอียด"
 
-#, fuzzy
 #~ msgid "Search demos"
 #~ msgstr "เครื่องมือค้นหา"
 
@@ -4988,29 +4921,21 @@ msgstr ""
 #~ msgid "Subscribe to a feed of all demos"
 #~ msgstr "บอกรับฟีดของการสาธิตทั้งหมด"
 
-#, fuzzy
 #~ msgid "Search for \"%(query)s\""
 #~ msgstr "ค้นหาสำหรับ \"{q}\""
 
-# 82%
-# 100%
-#, fuzzy
 #~ msgid "Search results for \"%(query)s\""
 #~ msgstr "ผลลัพธ์การค้นหาสำหรับ \"{q}\""
 
-#, fuzzy
 #~ msgid "Search demos for \"%(query)s\""
 #~ msgstr "ค้นหาการสาธิตสำหรับ \"{q}\""
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of search results for \"%(query)s\""
 #~ msgstr "บอกรับฟีดของผลการค้นหาสำหรับ \"{q}\""
 
-#, fuzzy
 #~ msgid "%(tag_title)s Demos"
 #~ msgstr "การสาธิต {tag_title}"
 
-#, fuzzy
 #~ msgid "Edit %(demo_title)s"
 #~ msgstr "แก้ไข {demo_title}"
 
@@ -5032,11 +4957,9 @@ msgstr ""
 #~ msgid "Before You Begin"
 #~ msgstr "ก่อนที่คุณจะเริ่ม"
 
-#, fuzzy
 #~ msgid "Log In to Profile"
 #~ msgstr "เข้าสู่บัญชี"
 
-#, fuzzy
 #~ msgid "See %(display_name)s's profile"
 #~ msgstr "ดูข้อมูลส่วนตัวของ {display_name}"
 
@@ -5055,7 +4978,6 @@ msgstr ""
 #~ msgid "Go to the first page"
 #~ msgstr "ไปที่หน้าแรก"
 
-#, fuzzy
 #~ msgid "First"
 #~ msgstr "อันดับ 1"
 
@@ -5083,8 +5005,6 @@ msgstr ""
 #~ msgid "Finalist"
 #~ msgstr "รอบสุดท้าย"
 
-# 87%
-#, fuzzy
 #~ msgid "Featured"
 #~ msgstr "คุณลักษณะ"
 
@@ -5104,7 +5024,6 @@ msgstr ""
 #~ msgid_plural "days"
 #~ msgstr[0] "วัน"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(display_name)s's demos"
 #~ msgstr "บอกรับฟีดสำหรับการสาธิตของ {display_name}"
 
@@ -5160,8 +5079,6 @@ msgstr ""
 #~ msgid "Current"
 #~ msgstr "ปัจจุบัน"
 
-# 75%
-#, fuzzy
 #~ msgid "Submit Your Demo"
 #~ msgstr "ส่งการสาธิต"
 
@@ -5216,10 +5133,6 @@ msgstr ""
 #~ msgid "Case Studies"
 #~ msgstr "กรณีศึกษา"
 
-# 80%
-# 75%
-# 100%
-#, fuzzy
 #~ msgid "All add-ons development documentation"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
@@ -5244,17 +5157,12 @@ msgstr ""
 #~ msgid "All add-on development tools"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
-# 80%
-#, fuzzy
 #~ msgid "All add-ons development entries"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
 #~ msgid "Forums"
 #~ msgstr "กระดานสนทนา"
 
-# 92%
-# 100%
-#, fuzzy
 #~ msgid "Featured Demo:"
 #~ msgstr "การสาธิตที่แนะนำ"
 
@@ -5330,73 +5238,42 @@ msgstr ""
 #~ msgid "Advanced JavaScript"
 #~ msgstr "จาวาสคริปต์ขั้นสูง"
 
-# 82%
-#, fuzzy
 #~ msgid "JavaScript Garden"
 #~ msgstr "คู่มือจาวาสคริปต์"
 
 #~ msgid "JavaScript Guide"
 #~ msgstr "คู่มือจาวาสคริปต์"
 
-# 85%
-#, fuzzy
 #~ msgid "Welcome to the <b>Mobile Developer Community</b>"
 #~ msgstr "ยินดีต้อนรับสู่<b>ชุมชนนักพัฒนาส่วนเสริม</b>"
 
-# 80%
-# 75%
-# 81%
-#, fuzzy
 #~ msgid "All mobile development documentation"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
-# 81%
-# 83%
-# 100%
-#, fuzzy
 #~ msgid "All mobile development entries"
 #~ msgstr "เครื่องมือพัฒนาเว็บทั้งหมด"
 
-# 85%
-#, fuzzy
 #~ msgid "Welcome to the <b>Mozilla Developer Community</b>"
 #~ msgstr "ยินดีต้อนรับสู่<b>ชุมชนนักพัฒนาส่วนเสริม</b>"
 
-# 80%
-# 75%
-#, fuzzy
 #~ msgid "All applications development documentation"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
-# 75%
-#, fuzzy
 #~ msgid "All application development tools"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
-# 75%
-# 85%
-# 100%
-#, fuzzy
 #~ msgid "All application development entries"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
-# 85%
-#, fuzzy
 #~ msgid "Welcome to the <b>Web Developer Community</b>"
 #~ msgstr "ยินดีต้อนรับสู่<b>ชุมชนนักพัฒนาส่วนเสริม</b>"
 
 #~ msgid "Awesome Web Demos"
 #~ msgstr "การสาธิตเว็บสุดเจ๋ง"
 
-# 80%
-# 75%
-# 81%
-#, fuzzy
 #~ msgid "All web development documentation"
 #~ msgstr "เครื่องมือการพัฒนาส่วนเสริมทั้งหมด"
 
-# 81%
-#, fuzzy
 #~ msgid "All web development entries"
 #~ msgstr "เครื่องมือพัฒนาเว็บทั้งหมด"
 
@@ -5415,28 +5292,20 @@ msgstr ""
 #~ msgid "Livechat ID"
 #~ msgstr "Livechat ID"
 
-# 100%
 #~ msgctxt "avatar"
 #~ msgid "Change"
 #~ msgstr "เปลี่ยน"
 
-# 100%
 #~ msgctxt "avatar"
 #~ msgid "Delete"
 #~ msgstr "ลบ"
 
-# 95%
-#, fuzzy
 #~ msgid "I forgot my password."
 #~ msgstr "ฉันลืมรหัสผ่านของฉัน"
 
-# 87%
-#, fuzzy
 #~ msgid "Website:"
 #~ msgstr "เว็บไซต์"
 
-# 83%
-#, fuzzy
 #~ msgid "Change my password"
 #~ msgstr "เปลี่ยนรหัสผ่าน"
 
@@ -5446,7 +5315,6 @@ msgstr ""
 #~ msgid "Firefox 3.0"
 #~ msgstr "Firefox 3.0"
 
-# 85%
 #~ msgid "Mobile:"
 #~ msgstr "Mobile:"
 
@@ -5528,87 +5396,57 @@ msgstr ""
 #~ msgid "April"
 #~ msgstr "เมษายน"
 
-# 81%
 #~ msgid "https://developer.mozilla.org/en-US/docs/CSS"
 #~ msgstr "https://developer.mozilla.org/th/docs/CSS"
 
-# 88%
 #~ msgid "https://developer.mozilla.org/en-US/docs/Detecting_device_orientation"
 #~ msgstr "https://developer.mozilla.org/th/docs/WebAPI/Detecting_device_orientation"
 
-# 85%
 #~ msgid "https://developer.mozilla.org/en-US/docs/css/@font-face"
 #~ msgstr "https://developer.mozilla.org/th/docs/css/@font-face"
 
-# 84%
 #~ msgid "https://developer.mozilla.org/en-US/docs/HTML/Forms_in_HTML"
 #~ msgstr "https://developer.mozilla.org/th/docs/HTML/Forms_in_HTML"
 
-# 87%
-# 75%
-# 100%
 #~ msgid "https://developer.mozilla.org/en-US/docs/Using_geolocation"
 #~ msgstr "https://developer.mozilla.org/th/docs/Using_geolocation"
 
-# 84%
 #~ msgid "https://developer.mozilla.org/en-US/docs/javascript"
 #~ msgstr "https://developer.mozilla.org/th/docs/JavaScript"
 
-# 84%
 #~ msgid "https://developer.mozilla.org/en-US/docs/HTML/HTML5"
 #~ msgstr "https://developer.mozilla.org/th/docs/HTML/HTML5"
 
-# 81%
-# 87%
-# 100%
 #~ msgid "https://developer.mozilla.org/en-US/docs/Mobile"
 #~ msgstr "https://developer.mozilla.org/th/docs/Mobile"
 
-# 87%
 #~ msgid "https://developer.mozilla.org/en-US/docs/dom/storage#localStorage"
 #~ msgstr "https://developer.mozilla.org/th/docs/dom/storage#localStorage"
 
-# 81%
 #~ msgid "https://developer.mozilla.org/en-US/docs/SVG"
 #~ msgstr "https://developer.mozilla.org/th/docs/SVG"
 
-# 87%
-# 75%
-# 75%
 #~ msgid "https://developer.mozilla.org/en-US/docs/Using_HTML5_audio_and_video"
 #~ msgstr "https://developer.mozilla.org/th/docs/HTML/Using_HTML5_audio_and_video"
 
-# 81%
-# 91%
-# 100%
 #~ msgid "https://developer.mozilla.org/en-US/docs/WebGL"
 #~ msgstr "https://developer.mozilla.org/th/docs/WebGL"
 
-# 84%
-# 77%
-# 77%
 #~ msgid "https://developer.mozilla.org/en-US/docs/DOM/Using_web_workers"
 #~ msgstr "https://developer.mozilla.org/th/docs/DOM/Using_web_workers"
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest/Using_XMLHttpRequest"
 #~ msgstr "https://developer.mozilla.org/th/docs/DOM/XMLHttpRequest/Using_XMLHttpRequest"
 
-# 84%
-# 77%
-# 100%
 #~ msgid "https://developer.mozilla.org/en-US/docs/DOM/Touch_events"
 #~ msgstr "https://developer.mozilla.org/th/docs/DOM/Touch_events"
 
 #~ msgid "Browse Thousands of Docs for <b>Web Developers</b>"
 #~ msgstr "เรียกดูเอกสารนับพันสำหรับ<b>นักพัฒนาเว็บ</b>"
 
-#~ msgid ""
-#~ "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
+#~ msgid "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 #~ msgstr "และแหล่งข้อมูลที่มากขึ้นสำหรับ: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">ส่วนเสริม Firefox</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 
-# 95%
-# 100%
-#, fuzzy
 #~ msgid "See what’s new for web developers in the latest version of Firefox"
 #~ msgstr "ดูว่ามีอะไรใหม่สำหรับนักพัฒนาเว็บใน Firefox รุ่นล่าสุด"
 
@@ -5621,9 +5459,6 @@ msgstr ""
 #~ msgid "More Demos&hellip;"
 #~ msgstr "ดูการสาธิตเพิ่มเติม&hellip;"
 
-# 85%
-# 100%
-#, fuzzy
 #~ msgid "Addons"
 #~ msgstr "ส่วนเสริม"
 
@@ -5660,7 +5495,6 @@ msgstr ""
 #~ msgid "Firefox Add-ons"
 #~ msgstr "ส่วนเสริม Firefox"
 
-# 75%
 #~ msgid "Featured Add-ons"
 #~ msgstr "ส่วนเสริมแนะนำ"
 
@@ -5695,21 +5529,21 @@ msgstr ""
 #~ msgstr "ยินดีต้อนรับสู่ Mozilla Developer Network"
 
 #~ msgid ""
-#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together "
-#~ "we can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
+#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together we "
+#~ "can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
 #~ msgstr ""
-#~ "เราเป็นชุมชนเปิดสำหรับนักพัฒนาโดยสร้างแหล่งข้อมูลสำหรับเว็บที่ดีกว่า โดยไม่คำนึงถึงแบรนด์ เบราว์เซอร์ หรือแพลตฟอร์ม ทุกคนสามารถมีส่วนร่วม และแต่ละคนมีส่วนทำให้เราแข็งแกร่งขึ้น เราสามารถผลักดันนวัตกรรมบนเว็บได้อย่างต่อเนื่องเพื่อส่งมอบสิ่งที่ดีกว่า "
-#~ "มันเริ่มต้นขึ้นที่นี่กับคุณ"
+#~ "เราเป็นชุมชนเปิดสำหรับนักพัฒนาโดยสร้างแหล่งข้อมูลสำหรับเว็บที่ดีกว่า โดยไม่คำนึงถึงแบรนด์ เบราว์เซอร์ หรือแพลตฟอร์ม ทุกคนสามารถมีส่วนร่วม และแต่ละคนมีส่วนทำให้เราแข็งแกร่งขึ้น "
+#~ "เราสามารถผลักดันนวัตกรรมบนเว็บได้อย่างต่อเนื่องเพื่อส่งมอบสิ่งที่ดีกว่า มันเริ่มต้นขึ้นที่นี่กับคุณ"
 
 #~ msgid "See what's new for Web developers in the latest version of Firefox."
 #~ msgstr "ดูว่ามีอะไรใหม่สำหรับนักพัฒนาเว็บใน Firefox รุ่นล่าสุด"
 
 #~ msgid ""
-#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our "
-#~ "mailing list</a> to discuss ways to help create great documentation."
+#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our mailing "
+#~ "list</a> to discuss ways to help create great documentation."
 #~ msgstr ""
-#~ "คิดอย่างไรกับ MDN โฉมใหม่? โปรด<a href=\"%(uservoice_url)s\">แบ่งปันความคิดเห็นของคุณ</a>ให้กับเรา <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">เข้าร่วมรายชื่ออีเมลของเรา</a> "
-#~ "เพื่อหารือเกี่ยวกับหนทางที่ช่วยในการสร้างเอกสารที่เยี่ยมยอด"
+#~ "คิดอย่างไรกับ MDN โฉมใหม่? โปรด<a href=\"%(uservoice_url)s\">แบ่งปันความคิดเห็นของคุณ</a>ให้กับเรา <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-"
+#~ "mdc\">เข้าร่วมรายชื่ออีเมลของเรา</a> เพื่อหารือเกี่ยวกับหนทางที่ช่วยในการสร้างเอกสารที่เยี่ยมยอด"
 
 #~ msgid "Geolocation & Camera API"
 #~ msgstr "Geolocation และ Camera API"
