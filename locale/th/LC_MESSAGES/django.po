@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-14 04:40+0000\n"
+"PO-Revision-Date: 2016-12-14 04:50+0000\n"
 "Last-Translator: nuttapong2539 <nuttapong2539@gmail.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -765,7 +765,6 @@ msgstr "คำอธิบาย"
 
 # 87%
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
-#, fuzzy
 msgid "Comments"
 msgstr "ความคิดเห็น"
 
@@ -903,9 +902,8 @@ msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_v
 msgstr ""
 
 #: kuma/core/sections.py:13
-#, fuzzy
 msgid "Mozilla"
-msgstr "Bugzilla"
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:20
 msgid "Apps"
@@ -1079,19 +1077,16 @@ msgid "User:"
 msgstr "ชื่อผู้ใช้:"
 
 #: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
-#, fuzzy
 msgid "Topic:"
-msgstr "หัวข้อ"
+msgstr "หัวข้อ:"
 
 #: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
-#, fuzzy
 msgid "Start Date:"
-msgstr "วันเริ่มต้น"
+msgstr "วันเริ่มต้น:"
 
 #: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
-#, fuzzy
 msgid "End Date:"
-msgstr "วันสิ้นสุด"
+msgstr "วันสิ้นสุด:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
@@ -1356,12 +1351,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:172
 msgid "Technical review"
-msgstr ""
+msgstr "การตรวจสอบทางเทคนิค"
 
 #: kuma/landing/jinja2/landing/homepage.html:177
-#, fuzzy
 msgid "Translating"
-msgstr "คำสำคัญของการแปล:"
+msgstr "การแปล"
 
 #: kuma/landing/jinja2/landing/homepage.html:178
 msgid "Promoting MDN"
@@ -1593,7 +1587,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "ผลลัพธ์"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1633,7 +1627,7 @@ msgstr[0] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "แสดงผลลัพธ์ทั้งหมด"
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
@@ -1650,13 +1644,12 @@ msgid "Docs"
 msgstr "เอกสาร"
 
 #: kuma/search/jinja2/search/results.html:183
-#, fuzzy
 msgid "All Topics"
-msgstr "หัวข้อ"
+msgstr "หัวข้อทั้งหมด"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "กรองด้วย"
 
 #: kuma/spam/forms.py:9
 #, fuzzy
@@ -1687,7 +1680,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "ประเภท"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1759,9 +1752,8 @@ msgid "GitHub"
 msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
-#, fuzzy
 msgid "Stack Overflow"
-msgstr "StackOverflow"
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
@@ -1773,7 +1765,7 @@ msgstr ""
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
@@ -1789,7 +1781,6 @@ msgstr ""
 
 # 83%
 #: kuma/users/forms.py:162
-#, fuzzy
 msgid "Email"
 msgstr "อีเมล"
 
@@ -1888,7 +1879,6 @@ msgid "Username is too long (%(show_value)s characters). It must be %(limit_valu
 msgstr ""
 
 #: kuma/users/signup.py:15
-#, fuzzy
 msgid "You must agree to the terms of use."
 msgstr "คุณต้องยอมรับนโยบายความเป็นส่วนตัว"
 
@@ -1902,7 +1892,7 @@ msgstr ""
 
 #: kuma/users/views.py:470
 msgid "Email address"
-msgstr ""
+msgstr "ที่อยู่อีเมล"
 
 #: kuma/users/views.py:516
 #, python-format
@@ -2885,7 +2875,7 @@ msgstr "แก้ไขหน้า"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "แสดงการเปรียบเทียบ"
 
 #: kuma/wiki/forms.py:36
 msgid "Please provide a title."
@@ -3011,7 +3001,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:447
 msgid "Search result summary:"
-msgstr ""
+msgstr "ผลลัพธ์การค้นหาโดยสรุป:"
 
 #: kuma/wiki/forms.py:448
 msgid "Only displayed on search results page"
@@ -3230,22 +3220,20 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
-msgstr ""
+msgstr "ผู้สร้าง"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
-#, fuzzy
 msgid "Creation Date"
-msgstr "สร้าง"
+msgstr "วันที่สร้าง"
 
 # 91%
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
-#, fuzzy
 msgid "Last Change By"
-msgstr "บันทึกการเปลี่ยนแปลง"
+msgstr "เปลี่ยนแปลงล่าสุดโดย"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "เปลี่ยนแปลงล่าสุดวันที่"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
@@ -3266,14 +3254,13 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
-msgstr ""
+msgstr "เอกสาร"
 
 # 87%
 # 75%
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
-#, fuzzy
 msgid "Content"
-msgstr "ความคิดเห็น"
+msgstr "เนื้อหา"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
@@ -3312,48 +3299,44 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2 kuma/wiki/jinja2/wiki/deletion_log.html:7
 msgid "Document Deleted"
-msgstr ""
+msgstr "เอกสารถูกลบแล้ว"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
 msgid "This document was deleted on %(when)s."
-msgstr ""
+msgstr "เอกสารนี้ถูกลบไปเมื่อ %(when)s"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
-msgstr ""
+msgstr "เหตุผลของการลบ"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
-#, fuzzy
 msgid "Restore this document"
-msgstr "รายงานความคิดเห็นนี้"
+msgstr "กู้คืนเอกสารนี้"
 
 #: kuma/wiki/jinja2/wiki/document.html:176
 msgid "Previous Search Result"
-msgstr ""
+msgstr "ผลการค้นหาก่อนหน้า"
 
 #: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
 msgid "No Previous Search Result"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:182
-#, fuzzy
 msgid "Your Search Results"
-msgstr "ผลลัพธ์การค้นหาสำหรับ \"{q}\""
+msgstr "ผลการค้นหาของคุณ"
 
 #: kuma/wiki/jinja2/wiki/document.html:186
 msgid "Next Search Result"
-msgstr ""
+msgstr "ผลการค้นหาถัดไป"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
-#, fuzzy
 msgid "see all contributors"
-msgstr "และผู้มีส่วนร่วมส่วนบุคคล"
+msgstr "ดูผู้มีส่วนร่วมทั้งหมด"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
-#, fuzzy
 msgid "hide contributors"
-msgstr "และผู้มีส่วนร่วมส่วนบุคคล"
+msgstr "ซ่อนผู้มีส่วนร่วม"
 
 #: kuma/wiki/jinja2/wiki/document.html:194
 #, python-format
@@ -3362,7 +3345,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:219
 msgid "In This Article"
-msgstr ""
+msgstr "ในบทความนี้"
 
 #: kuma/wiki/jinja2/wiki/document.html:241
 #, python-format
@@ -3411,7 +3394,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
-msgstr ""
+msgstr "บทความนี้ยังไม่มีเนื้อหา"
 
 #: kuma/wiki/jinja2/wiki/document.html:320
 #, python-format
@@ -3427,9 +3410,8 @@ msgid "Document Tags and Contributors"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:347
-#, fuzzy
 msgid "Contributors to this page:"
-msgstr "ไปที่หน้าแรก"
+msgstr "มีส่วนร่วมกับหน้านี้:"
 
 #: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
@@ -3453,7 +3435,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "การเปลี่ยนแปลงของคุณ"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
@@ -3478,15 +3460,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
-msgstr ""
+msgstr "วัน"
 
 #: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
-msgstr ""
+msgstr "ชั่วโมง"
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "นาที"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
@@ -3998,9 +3980,8 @@ msgid "Parsing macro:"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
-#, fuzzy
 msgid "Edit Document"
-msgstr "แก้ไขความคิดเห็นนี้"
+msgstr "แก้ไขเอกสาร"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
@@ -4157,7 +4138,7 @@ msgstr "รายงานความคิดเห็นนี้"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "ประวัติของ"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
@@ -4209,9 +4190,8 @@ msgid "Home"
 msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
-#, fuzzy
 msgid "Documents"
-msgstr "แก้ไขความคิดเห็นนี้"
+msgstr "เอกสาร"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:39
 msgid ""
@@ -4252,7 +4232,7 @@ msgstr ""
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
-msgstr ""
+msgstr "พบข้อผิดพลาดในการสร้างเนื้อหา"
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
@@ -4271,7 +4251,7 @@ msgstr ""
 #: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr ""
+msgstr "ประเภทของเนื้อหาที่ไม่รองรับ: %s"
 
 #: kuma/wiki/views/document.py:733
 #, python-format
@@ -4292,11 +4272,11 @@ msgstr ""
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "เอกสารได้รับการแก้ไขแล้ว โปรดตรวจสอบอีกครั้ง"
 
 #: kuma/wiki/views/translate.py:74
 msgid "You cannot translate this document."
-msgstr ""
+msgstr "คุณไม่สามารถแปลเอกสารนี้ได้"
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
