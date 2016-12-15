@@ -23,6 +23,6 @@ def test_is_not_found_status(base_url, selenium):
 def test_is_expected_content(base_url, selenium):
     page = NotFoundPage(selenium, base_url).open()
     assert (ARTICLE_NAME + ARTICLE_TITLE_SUFIX) == selenium.title, 'page title does not match expected'
-    assert page.article_title_text == ARTICLE_NAME, 'article title is not expected'
-    assert page.article_title_text in selenium.title, 'article title not in page title'
+    assert page.page_title_text == ARTICLE_NAME, 'article title is not expected'
+    assert page.page_title_text in selenium.title, 'article title not in page title'
     assert page.is_report_link_displayed

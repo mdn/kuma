@@ -11,6 +11,7 @@ VIEWPORT = {
 def base_url(base_url, request):
     return base_url or 'https://developer.allizom.org'
 
+
 @pytest.fixture
 def selenium(request, selenium):
     viewport = VIEWPORT['large']
@@ -18,3 +19,15 @@ def selenium(request, selenium):
         viewport = VIEWPORT[request.keywords.get('viewport').args[0]]
     selenium.set_window_size(viewport['width'], viewport['height'])
     return selenium
+
+
+@pytest.fixture(scope='session')
+def sensitive_url(request, base_url):
+    if not base_url:
+        return False
+    else:
+        # developer-local and localhost are not sensative
+        developer_local_match = str(base_url).startswith('https://developer-local')
+        localhost_match = str(base_url).startswith('http://localhost')
+        # treat it as sensitive if it's not identified as okay
+        return not (developer_local_match or localhost_match)

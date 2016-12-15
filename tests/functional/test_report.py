@@ -1,5 +1,5 @@
 import pytest
-
+from utils.urls import assert_valid_url
 from pages.article import ArticlePage
 
 ARTICLE_NAME = 'User:anonymous:uitest'
@@ -19,7 +19,7 @@ def test_report_content(base_url, selenium):
     page.header.open_report_content()
     # bugzilla loads in new window
     selenium.switch_to_window(selenium.window_handles[1])
-    # check form loaded
+    # check form loaded and has reporting URL in query
     assert page.header.is_report_content_url_expected(selenium, report_url)
 
 
@@ -31,6 +31,4 @@ def test_report_bug(base_url, selenium):
     assert not page.header.is_feedback_submenu_displayed
     page.header.show_feedback_submenu()
     assert page.header.is_report_bug_link_displayed
-    page.header.open_report_bug()
-    # check form loaded
-    assert page.header.is_report_bug_url_expected(selenium)
+    assert_valid_url(page.header.report_bug_form_url, follow_redirects=True)
