@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-12-16 19:41+0000\n"
+"PO-Revision-Date: 2016-12-16 19:44+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -40,38 +40,38 @@ msgstr "Ιστορικό"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
-msgstr ""
+msgstr "Περιμένετε! Γίνεται ενημέρωση φίλτρων…"
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "Τα φίλτρα ενημερώθηκαν."
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "Υποβολή..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Υποβλήθηκε ως %(submission_type)s"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s από %(user)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
 msgid "Error submitting as %(type)s"
-msgstr ""
+msgstr "Σφάλμα υποβολής ως %(type)s"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
-msgstr "Σας βοήθησε αυτή η σελίδα;"
+msgstr "Σάς βοήθησε αυτή η σελίδα;"
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr "Ναί"
+msgstr "Ναι"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
@@ -79,19 +79,19 @@ msgstr "Όχι"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
-msgstr "Να μην ξαναγίνει αυτή η ερώτηση"
+msgstr "Να μην ερωτηθώ ξανά"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr "Ευχαριστούμε για τα σχόλιά μας!"
+msgstr "Ευχαριστούμε για τα σχόλιά σας!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr "Δεν θα σας ενοχλήσουμε ξανά."
+msgstr "Δεν θα σάς ενοχλήσουμε ξανά."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr "Μετάφραση στην γλώσσα μου"
+msgstr "Μετάφραση στη γλώσσα μου"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
@@ -159,7 +159,7 @@ msgstr "Κλείσιμο"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr "Νέοι πίνακες συμβατότητας είναι σε δοκιμαστική έκδοση "
+msgstr "Οι νέοι πίνακες συμβατότητας είναι σε έκδοση beta "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
@@ -175,7 +175,7 @@ msgstr "Αναφορά σφάλματος."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr "Αναφέρθηκε. Ευχαριστώ!"
+msgstr "Αναφέρθηκε. Ευχαριστούμε!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
@@ -199,11 +199,11 @@ msgstr "Έχετε ένα προσχέδιο από:"
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr "Επαναφέρετε το περιεχόμενο του προσχεδίου"
+msgstr "Επαναφορά περιεχομένου προσχεδίου"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr "Απορρίψτε το προσχέδιο"
+msgstr "Απόρριψη προσχεδίου"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
