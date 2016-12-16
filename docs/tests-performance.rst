@@ -1,4 +1,4 @@
-Performance Testing with Locust
+Performance testing with Locust
 ===============================
 
 In 2015, as part of a "measure and improve performance" initiative, MDN staff
@@ -10,7 +10,7 @@ measure changes in code, caching and settings.
 These tests are not maintained or run during the current development process,
 and the instructions have not been updated for the Docker development environment.
 
-Running Tests
+Running tests
 -------------
 .. note:: **DO NOT RUN LOCUST TESTS AGAINST PRODUCTION**
 
@@ -27,7 +27,7 @@ Running Tests
 See `Start locust
 <http://docs.locust.io/en/latest/quickstart.html#start-locust>`_ for more.
 
-Adding a Test Suite
+Adding a test suite
 -------------------
 
 See `Writing a locustfile

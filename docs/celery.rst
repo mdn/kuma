@@ -1,10 +1,10 @@
 =============================
-Celery and Asynchronous Tasks
+Celery and asynchronous tasks
 =============================
 Kuma uses Celery_ to enable asynchronous task processing for long-running jobs
 and to speed up the request-response cycle.
 
-When is Celery Appropriate
+When is Celery appropriate
 ==========================
 You can use Celery to do any processing that doesn't need to happen in the
 current request-response cycle.  Ask yourself the question: "Is the user going
@@ -44,7 +44,7 @@ In general, it is better to get an algorithm right in the request loop, and
 only move it to an asynchronous task when it is identified as a performance
 issue.
 
-Celery Services
+Celery services
 ===============
 A working Celery installation requires several services.
 
@@ -81,7 +81,7 @@ production-ready alternatives:
 .. _message broker: http://docs.celeryproject.org/en/latest/getting-started/first-steps-with-celery.html#choosing-a-broker
 .. _stable broker: http://docs.celeryproject.org/en/latest/getting-started/brokers/index.html
 
-Result Store
+Result store
 ------------
 When a task completes, it returns processed data and task states to a
 `results store`_. Kuma doesn't use returned data, but it does use returned task
@@ -95,7 +95,7 @@ in `bug 1268257`_.
 .. _django-celery: https://github.com/celery/django-celery
 .. _results store: http://docs.celeryproject.org/en/latest/getting-started/first-steps-with-celery.html#keeping-results
 
-Periodic Tasks Scheduler
+Periodic tasks scheduler
 ------------------------
 Periodic tasks are scheduled with `celery beat`_, which adds tasks to the task
 queue when they become due.  It should only be run once in a deployment, or
@@ -133,7 +133,7 @@ documentation.
 .. _Flower: http://flower.readthedocs.io/en/latest/
 .. _Monitoring and Management Guide: http://docs.celeryproject.org/en/latest/userguide/monitoring.htm
 
-Configuring and Running Celery
+Configuring and running Celery
 ==============================
 We set some reasonable defaults for Celery in ``kuma/settings/common.py``. These can be
 overridden by the environment variables, including:

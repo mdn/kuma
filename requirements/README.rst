@@ -1,16 +1,16 @@
-Kuma Requirements
+Kuma requirements
 =================
 
 The files define the third-party libraries needed for running and developing
 Kuma.  The files are:
 
-* ``constraints.txt`` - Requirements for our requirements
-* ``default.txt`` - Requirements for production and deployment
-* ``docs.txt`` - Requirements for building docs in `Read the Docs`_
-* ``dev.txt`` - Requirements for Docker or native development
-* ``local.txt`` - Requirements for local development with Vagrant
-* ``test.txt`` - Requirements to run functional tests
-* ``travis.txt`` - Requirements for testing in TravisCI
+* ``constraints.txt`` - Requirements for our requirements.
+* ``default.txt`` - Requirements for production and deployment.
+* ``docs.txt`` - Requirements for building docs in `Read the Docs`_.
+* ``dev.txt`` - Requirements for Docker or native development.
+* ``local.txt`` - Requirements for local development with Vagrant.
+* ``test.txt`` - Requirements to run functional tests.
+* ``travis.txt`` - Requirements for testing in TravisCI.
 
 Hash-Checking Mode
 ------------------
@@ -63,7 +63,7 @@ For packages that are both dependencies and used directly, it's up to the
 developer to determine where it goes. The only rule is to not break production
 or deployment. Use comments to justify placement as needed.
 
-Requirements Format
+Requirements format
 -------------------
 The ``default.txt`` and ``local.txt`` should include a short comment
 explaining why a requirement is used. For example::
@@ -74,14 +74,14 @@ explaining why a requirement is used. For example::
 
 The purpose of the comment is:
 
-* Summarize the purpose of the requirement, to save an internet search
-* Describe how the requirement is used in Kuma
-* Help maintainer to prioritize upgrading requirements
-* Give a hint on exploratory tests needed to ensure upgrades do not break things
+* Summarize the purpose of the requirement, to save an internet search.
+* Describe how the requirement is used in Kuma.
+* Help maintainer to prioritize upgrading requirements.
+* Give a hint on exploratory tests needed to ensure upgrades do not break things.
 
 Within a requirements file, requirements should be alphabetical.
 
-Testing New Requirements in Docker
+Testing new requirements in Docker
 ----------------------------------
 
 The python dependencies are installed in a "base" image, and to test new requirements

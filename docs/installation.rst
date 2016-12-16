@@ -231,29 +231,29 @@ Enable GitHub Auth
 To enable GitHub authentication, you'll need to
 `register an OAuth application on GitHub`_, with settings like:
 
-* Application name: MDN Development for (<username>)
-* Homepage URL: http://localhost:8000/
+* Application name: MDN Development for (<username>). 
+* Homepage URL: http://localhost:8000/.
 * Application description: My own GitHub app for MDN!
-* Authorization callback URL: http://localhost:8000/users/github/login/callback/
+* Authorization callback URL: http://localhost:8000/users/github/login/callback/.
 
 As an admin user, `add a django-allauth social app`_ for GitHub:
 
-* Provider: GitHub
-* Name: MDN Development
-* Client id: <*your GitHub App Client ID*>
-* Secret key: <*your GitHub App Client Secret*>
-* Sites: Move ``example.com`` from "Available sites" to "Chosen sites"
+* Provider: GitHub.
+* Name: MDN Development.
+* Client id: <*your GitHub App Client ID*>.
+* Secret key: <*your GitHub App Client Secret*>.
+* Sites: Move ``example.com`` from "Available sites" to "Chosen sites".
 
 Now you can sign in with GitHub.
 
 To associate your password-only admin account with GitHub:
 
-#. Login with your password at http://localhost:8000/admin/login/
-#. Go to the Homepage at https://developer.mozilla.org/en-US/
-#. Click your username at the top to view your profile
-#. Click Edit to edit your profile
-#. Under My Profiles, click `Use your GitHub account to sign in`_
-#. (*Optional*) `Disable your admin password`_
+#. Login with your password at http://localhost:8000/admin/login/.
+#. Go to the Homepage at https://developer.mozilla.org/en-US/.
+#. Click your username at the top to view your profile.
+#. Click Edit to edit your profile.
+#. Under My Profiles, click `Use your GitHub account to sign in`_.
+#. (*Optional*) `Disable your admin password`_.
 
 To create a new account with GitHub, use the regular "Sign in" widget at the
 top of any page.

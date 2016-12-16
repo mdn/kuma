@@ -32,7 +32,7 @@ For Vagrant, enter the environment with ``vagrant ssh``.
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _Django documentation on Translations: https://docs.djangoproject.com/en/dev/topics/i18n/translation/
 
-Getting the Localizations
+Getting the localizations
 =========================
 Localizations are found in this repository under the ``locale`` folder.
 
@@ -57,7 +57,7 @@ To refresh the translations, enter the development environment, then:
 
 .. _Update the Localizations:
 
-Updating the Localizations
+Updating the localizations
 ==========================
 When localizable strings are added, changed, or removed in the code, they need
 to be gathered into ``.po`` files for translation.
@@ -77,7 +77,7 @@ To update the localizations:
     git add --all locale
     git commit -m "MDN string update YYYY-MM-DD"
 
-Adding a New Locale (UI Strings)
+Adding a new locale (UI strings)
 ================================
 The process for getting a new locale on MDN is documented at
 `Starting a new MDN localization`_. One step is to enable translation of the

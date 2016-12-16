@@ -1,5 +1,5 @@
 ===============
-Feature Toggles
+Feature toggles
 ===============
 
 MDN uses `feature toggles`_ to integrate un-finished feature changes as early
@@ -11,7 +11,7 @@ features in the django admin site's `waffle section`_.
 Some site features are controlled using `constance`_. You control these
 features in the django admin site's `constance section`_.
 
-Waffle Features
+Waffle features
 ===============
 
 Switches
@@ -63,7 +63,7 @@ other advanced criteria.
 * ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
   due to detected spam or Akismet errors.
 
-Constance Features
+Constance features
 ==================
 
 Constance configs let us set operational *values* for certain features in the
