@@ -188,6 +188,11 @@ MDN_LANGUAGES = (
     'zu',
 )
 
+# Locales being considered for MDN. This makes the UI strings available for
+# localization in Pontoon, but pages can not be translated into this language.
+# https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
+CANDIDATE_LANGUAGES = ()
+
 RTL_LANGUAGES = (
     'ar',
     'fa',
