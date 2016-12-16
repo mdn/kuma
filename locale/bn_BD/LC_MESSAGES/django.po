@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-14 18:41+0000\n"
+"PO-Revision-Date: 2016-12-16 18:07+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
@@ -560,11 +560,11 @@ msgstr "স্প্যানিশ"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
-msgstr ""
+msgstr "সোয়াহিলি"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
-msgstr ""
+msgstr "সুইডিশ"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
@@ -592,7 +592,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
-msgstr ""
+msgstr "ভিয়েতনামি"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
@@ -608,7 +608,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
-msgstr ""
+msgstr "জুলু"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -781,9 +781,8 @@ msgid "Last modified"
 msgstr "সর্বশেষ হালনাগাদের তারিখ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
-#, fuzzy
 msgid "Uploaded by"
-msgstr "আপলোড"
+msgstr "আপলোড করেছেন"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 #, fuzzy
@@ -791,9 +790,8 @@ msgid "Linked in article"
 msgstr "উইকিপিডিয়া নিবন্ধ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
-#, fuzzy
 msgid "Article attached to"
-msgstr "ট্যাগকৃত ডেমো {tag}"
+msgstr "নিবন্ধ যুক্ত আছে"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
@@ -1090,9 +1088,8 @@ msgid "Authors"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
-#, fuzzy
 msgid "Revision Dashboard"
-msgstr "সংস্করণ %s"
+msgstr "সংশোধন ড্যাশবোর্ড"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
@@ -1108,9 +1105,8 @@ msgid "Trends Over Time, Ending %(date)s"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
-#, fuzzy
 msgid "Revision"
-msgstr "সংস্করণ %s"
+msgstr "সংশোধন"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
@@ -1647,9 +1643,8 @@ msgid "Docs"
 msgstr "ডকুমেন্টেশন"
 
 #: kuma/search/jinja2/search/results.html:183
-#, fuzzy
 msgid "All Topics"
-msgstr "টপিকসমূহ"
+msgstr "সকল বিষয়"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
@@ -2264,14 +2259,12 @@ msgid "You cannot ban yourself for spam."
 msgstr "আপনি স্প্যাম এর জন্য নিজেকে নিষিদ্ধ করতে পারবেন না।"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
-#, fuzzy
 msgid "Submit Spam"
-msgstr "একটি ডেমো জমা দিন"
+msgstr "স্প্যাম থাকলে জানান"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
-#, fuzzy
 msgid "Ban User for Spam"
-msgstr "নিষেধাজ্ঞা জারি করুন"
+msgstr "স্প্যামের জন্য ব্যবহারকারীকে নিষিদ্ধ করুন"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 #, fuzzy
@@ -2292,9 +2285,8 @@ msgid "Summary"
 msgstr "সারসংক্ষেপ"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
-#, fuzzy
 msgid "Actions Taken"
-msgstr "অ্যাকশন!"
+msgstr "যেসব ব্যবস্থা নেয়া হয়েছে"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
@@ -2433,9 +2425,8 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p>নিষেধাজ্ঞার বিরুদ্ধে আপিল করতে <a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">এখানে ক্লিক করুন</a>।</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "আপনার প্রোফাইলে যান"
+msgstr "আপনার প্রোফাইল মুছে ফেলুন"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
@@ -2559,9 +2550,8 @@ msgid "Publish"
 msgstr "প্রকাশ"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "এই মন্তব্যটি মুছে দিতে চান?"
+msgstr "আপনার একাউন্ট মুছে ফেলুন।"
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
@@ -2580,9 +2570,8 @@ msgid ""
 msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "নিবন্ধন করার জন্য ধন্যবাদ!"
+msgstr "MDN ব্যবহার করার জন্য ধন্যবাদ!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
@@ -2745,9 +2734,9 @@ msgid "Areas of Expertise"
 msgstr "দক্ষতার ক্ষেত্রসমূহ"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:105
-#, fuzzy, python-format
+#, python-format
 msgid "Member since %(date_joined)s"
-msgstr "সদস্য হইতে {date}"
+msgstr "সদস্য %(date_joined)s তারিখ থেকে"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
