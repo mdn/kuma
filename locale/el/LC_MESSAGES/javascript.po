@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-11-01 11:53+0000\n"
-"Last-Translator: Ioannis Protonotarios <ioannis@protonotarios.eu>\n"
+"PO-Revision-Date: 2016-12-16 19:41+0000\n"
+"Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -24,19 +24,19 @@ msgstr "Κλείσιμο ειδοποίησης"
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "Προβολή σελίδας"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "Επεξεργασία σελίδας"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "Ιστορικό"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
