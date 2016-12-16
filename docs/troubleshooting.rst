@@ -18,14 +18,43 @@ These commands will reset your environment to a "fresh" version, while
 retaining the database::
 
   cd /path/to/kuma
-  docker-compose stop
-  docker-compose rm
+  docker-compose down
   make clean
   git submodule sync --recursive && git submodule update --init --recursive
   docker-compose pull
   docker-compose build --pull
   docker-compose up
 
+
+Reset a corrupt database
+------------------------
+The Kuma database can become corrupted if the system runs out of disk space,
+or is unexpectedly shutdown. MySQL can repair some issues, but sometimes you
+have to start from scratch. When this happens, pass an extra argument
+``--volumes`` to ``down``::
+
+  cd /path/to/kuma
+  docker-compose down --volumes
+  make clean
+  git submodule sync --recursive && git submodule update --init --recursive
+  docker-compose pull
+  docker-compose build --pull
+  docker-compose up -d mysql
+  sleep 20  # Wait for MySQL to initialize. See notes below
+  docker-compose up
+
+The ``--volumes`` flag will remove the named MySQL database volume, which will
+be recreated when you run ``docker-compose up``.
+
+The ``mysql`` container will take longer to start up as it recreates an empty
+database, and the ``kuma`` container will fail until the ``mysql`` container
+is ready for connections. The 20 second ``sleep`` should be sufficient, but
+if it is not, you may need to cancel and run ``docker-compose up`` again.
+
+Once ``mysql`` is ready for connections, follow the
+:doc:`installation instructions <installation>`, starting at
+:ref:`Provisioning a database <provision-the-database>`,
+to configure your now empty database.
 
 Run alternate services
 ----------------------
