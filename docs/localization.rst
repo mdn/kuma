@@ -118,7 +118,7 @@ Once the new translation community has completed the rest of the process for
 `starting a new MDN localization`_, it is time to enable the language for page
 translations:
 
-#. Move the local from ``CANDIDATE_LANGUAGES`` to ``MDN_LANGUAGES`` in
+#. Move the locale from ``CANDIDATE_LANGUAGES`` to ``MDN_LANGUAGES`` in
    ``kuma/settings/common.py``.
 
 #. Restart the web server and verify that Django loads the new locale without
