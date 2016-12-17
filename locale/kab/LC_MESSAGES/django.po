@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-14 23:26+0000\n"
+"PO-Revision-Date: 2016-12-17 19:38+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -3947,9 +3947,9 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Ini yaɣ-d acuɣer tesnifleḍ asebter. D afrayan, acukan aɣ-yeǧǧ ad nẓeṛ amazray n ileqman akken iwata."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Ma tɣileḍ d akken armas n yizen agi d tuccḍa, sekles ma ulac aɣilif agbur agi s waddad arewway sakin <a href=\"%(admin_email)s\"> nermes inebdalen n usmel</a>."
+msgstr "Suref-aɣ! Ur nsaweḍ ara ad nsekles attekki yinek. Ma ulac aɣilif, sekles asnifel s waddad arewway sakin <a href=\"%(admin_email)s\"> nermes inebdalen n usmel</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
