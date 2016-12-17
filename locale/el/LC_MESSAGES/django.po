@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-16 19:40+0000\n"
+"PO-Revision-Date: 2016-12-17 07:21+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -3692,9 +3692,8 @@ msgid "View Article:"
 msgstr "Άρθρο στη Wikipedia"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
-#, fuzzy
 msgid "Edit Article:"
-msgstr "Άρθρο στη Wikipedia"
+msgstr "Επεξεργασία άρθρου:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
@@ -3752,9 +3751,8 @@ msgid "View in admin"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:82
-#, fuzzy
 msgid "Delete this article"
-msgstr "Διαγραφή σχολίου"
+msgstr "Διαγραφή άρθρου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
@@ -3812,14 +3810,14 @@ msgid "Updating subscription status"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
+msgstr "Εγγραφή στο %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "Συνδρομή"
+msgstr "Κατάργηση εγγραφής από το %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
