@@ -117,7 +117,7 @@ msgstr "Επιλογές ενημέρωσης"
 
 #: promote-mdn.php:312
 msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
-msgstr ""
+msgstr "Ευχαριστούμε για την εγκατάσταση! Μεταβείτε στη σελίδα <a href=\"%s\">ρυθμίσεων</a> για προσαρμογή."
 
 #: promote-mdn.php:313
 msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."

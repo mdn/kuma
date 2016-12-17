@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-17 07:36+0000\n"
+"PO-Revision-Date: 2016-12-17 08:13+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Αυτό το προφίλ χρήστη έχει αποκλειστεί."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
@@ -323,14 +323,12 @@ msgid "Sign in"
 msgstr "Είσοδος"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "/en/Web_Development"
+msgstr "Μάθετε τα καλύτερα της ανάπτυξης ιστού"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "Δείτε την επόμενη εικόνα"
+msgstr "Εγγραφή στο newsletter μας:"
 
 #: jinja2/includes/newsletter.html:11
 msgid "E-mail"
@@ -619,11 +617,11 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Κατάργηση εγγραφής"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Θέλετε σίγουρα να καταργήσετε την εγγραφή σας;"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -794,11 +792,11 @@ msgstr "Άρθρο συνημμένο στο"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s bytes"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
-msgstr ""
+msgstr "μ/δ"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -861,7 +859,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
-msgstr ""
+msgstr "Δημιουργία"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:20
 #, python-format
@@ -872,15 +870,15 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
-msgstr ""
+msgstr "ID κλειδιού"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "Μυστικό"
 
 #: kuma/core/apps.py:13
 msgid "Core"
-msgstr ""
+msgstr "Πυρήνας"
 
 #: kuma/core/form_fields.py:57
 #, python-format
@@ -898,7 +896,7 @@ msgstr "Mozilla"
 
 #: kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "Εφαρμογές"
 
 # Χωρίς τόνους λόγω του css text-transform: uppercase.
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
@@ -945,7 +943,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/b2g-os/name.py:4
 msgid "B2G OS"
-msgstr ""
+msgstr "B2G OS"
 
 # Χωρίς τόνο λόγω του text-transform:uppercase
 #: kuma/core/translations/search/filter/beginner/name.py:4
@@ -954,11 +952,11 @@ msgstr "Μαθαίνω"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
-msgstr "Canvas"
+msgstr "Καμβάς"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "Δείγματα κώδικα"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
@@ -966,7 +964,7 @@ msgstr "Firefox για υπολογιστές"
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
-msgstr ""
+msgstr "Firefox για Android"
 
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
 msgid "Firefox OS"
@@ -1022,7 +1020,7 @@ msgstr "Όλες οι γλώσσες"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
-msgstr ""
+msgstr "Τίποτα"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
@@ -1066,11 +1064,11 @@ msgstr "Θέμα:"
 
 #: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr ""
+msgstr "Ημερομηνία έναρξης:"
 
 #: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
 msgid "End Date:"
-msgstr ""
+msgstr "Ημερομηνία λήξης:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
@@ -1078,7 +1076,7 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
-msgstr ""
+msgstr "Δημιουργοί"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1086,11 +1084,11 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
-msgstr ""
+msgstr "Δημιουργοί:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
-msgstr ""
+msgstr "Φίλτρο"
 
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
@@ -1529,15 +1527,15 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "όνομα"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "όνομα ομάδας"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Μη διαθέσιμη αναζήτηση"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
@@ -1560,9 +1558,8 @@ msgid "MDN Site Search"
 msgstr ""
 
 #: kuma/search/jinja2/search/results.html:69
-#, fuzzy
 msgid "Results"
-msgstr "Αποτελέσματα αναζήτησης"
+msgstr "Αποτελέσματα"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1603,35 +1600,35 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Προβάλλονται όλα τα αποτελέσματα."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Προβάλλονται τα αποτελέσματα %(start)s έως %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Αναζήτηση ξανά μόνο σε %(default_locale_native)s"
 
 # Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr "Εγγραφα"
+msgstr "Έγγραφα"
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
-msgstr ""
+msgstr "Όλα τα θέματα"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "Φιλτράρισμα κατά"
 
 #: kuma/spam/forms.py:9
 #, fuzzy
@@ -1706,23 +1703,23 @@ msgstr ""
 
 #: kuma/users/forms.py:31 kuma/users/models.py:46
 msgid "Timezone"
-msgstr ""
+msgstr "Ζώνη ώρας"
 
 #: kuma/users/forms.py:37
 msgid "Beta tester"
-msgstr ""
+msgstr "Δοκιμαστής beta"
 
 #: kuma/users/forms.py:41 kuma/users/jinja2/users/includes/user_title_info.html:50
 msgid "Interests"
-msgstr ""
+msgstr "Ενδιαφέροντα"
 
 #: kuma/users/forms.py:47
 msgid "Expertise"
-msgstr ""
+msgstr "Ειδίκευση"
 
 #: kuma/users/forms.py:53
 msgid "Username"
-msgstr ""
+msgstr "Όνομα χρήστη"
 
 #: kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
@@ -1734,11 +1731,11 @@ msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
@@ -1776,11 +1773,11 @@ msgstr ""
 
 #: kuma/users/models.py:56
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #: kuma/users/models.py:61
 msgid "Homepage"
-msgstr ""
+msgstr "Αρχική σελίδα"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1788,56 +1785,56 @@ msgstr "Αυτό το URL έχει μη έγκυρη μορφή. Τα έγκυρ
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "Οργανισμός"
 
 #: kuma/users/models.py:85
 msgid "Location"
-msgstr ""
+msgstr "Τοποθεσία"
 
 #: kuma/users/models.py:90
 msgid "About Me"
-msgstr ""
+msgstr "Σχετικά με εμένα"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
-msgstr ""
+msgstr "Ψευδώνυμο IRC"
 
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "Ετικέτες"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο URL ιστοσελίδας."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο Twitter URL."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο GitHub URL."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο Stack Overflow URL."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο LinkedIn URL."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο Mozillians URL."
 
 #: kuma/users/models.py:134
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Εισάγετε ένα έγκυρο Facebook URL."
 
 #: kuma/users/models.py:141
 msgid "Website"
@@ -1845,7 +1842,7 @@ msgstr "Ιστοσελίδα"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "Απαιτείται το όνομα χρήστη."
 
 #: kuma/users/signup.py:10
 #, python-format
@@ -1859,11 +1856,11 @@ msgstr ""
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Πρέπει να συμφωνήσετε με τους όρους χρήσης."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "Συμφωνώ"
 
 #: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -1871,7 +1868,7 @@ msgstr ""
 
 #: kuma/users/views.py:470
 msgid "Email address"
-msgstr ""
+msgstr "Διεύθυνση email"
 
 #: kuma/users/views.py:516
 #, python-format
@@ -2046,11 +2043,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
@@ -2085,7 +2082,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Σημείωση"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
@@ -2094,11 +2091,11 @@ msgstr ""
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "Είσοδος OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Αποτυχία σύνδεσης λογαριασμού"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -2106,7 +2103,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Η σύνδεση ακυρώθηκε"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2122,9 +2119,8 @@ msgid "An existing MDN profile matches your GitHub email. Click here to recover 
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:32
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "Αναφορά προβλήματος"
+msgstr "Ανάκτηση προφίλ"
 
 #: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
@@ -2184,37 +2180,37 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "Συνδεδεμένος με GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "Σύνδεση με GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "Είσοδος με GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
 msgid "Ban %(user)s"
-msgstr ""
+msgstr "Αποκλεισμός %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr ""
+msgstr "Γιατί αποκλείετε το χρήστη %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
-msgstr ""
+msgstr "Επιλέξτε ένα λόγο"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "ή εισάγετε ένα λόγο στο παρακάτω πλαίσιο κειμένου"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
-msgstr ""
+msgstr "Αποκλεισμός χρήστη"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
 #, python-format
@@ -2260,15 +2256,15 @@ msgstr "Δεν είναι δημιουργία του συντάκτη"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "Επισκόπηση"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
-msgstr ""
+msgstr "Ληφθείσες ενέργειες"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
-msgstr ""
+msgstr "Αποκλείστηκε:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 #, fuzzy
@@ -2311,18 +2307,18 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
 msgid "View Page"
-msgstr ""
+msgstr "Προβολή σελίδας"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
 msgid "History"
-msgstr ""
+msgstr "Ιστορικό"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
 msgid "None."
-msgstr ""
+msgstr "Τίποτα."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
@@ -2402,7 +2398,7 @@ msgstr "Διαγραφή προφίλ"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Λυπούμαστε που φεύγετε."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
@@ -2438,7 +2434,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
-msgstr ""
+msgstr "Σελίδα"
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
@@ -2446,7 +2442,7 @@ msgstr "Ημερομηνία"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
-msgstr ""
+msgstr "Επεξεργασία σελίδας"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
@@ -2467,15 +2463,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Επεξεργασία προφίλ"
 
 #: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Αλλαγή εικόνας χρήστη στο"
 
 #: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
-msgstr ""
+msgstr "Προβολή προφίλ"
 
 #: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2487,16 +2483,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Primary Email"
-msgstr ""
+msgstr "Πρωτεύον email"
 
 #: kuma/users/jinja2/users/user_edit.html:57
-#, fuzzy
 msgid "Edit email"
-msgstr "Επεξεργασία demo"
+msgstr "Επεξεργασία email"
 
 #: kuma/users/jinja2/users/user_edit.html:70
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Ενδιαφέροντα (ετικέτες)"
 
 #: kuma/users/jinja2/users/user_edit.html:71
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
@@ -2511,9 +2506,8 @@ msgid "Add your interests first, then declare yourself an expert in selected top
 msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:86
-#, fuzzy
 msgid "My Profiles"
-msgstr "από τον/την %(profile_link)s"
+msgstr "Τα προφίλ μου"
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
@@ -2521,12 +2515,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
-msgstr ""
+msgstr "Δημοσίευση"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Διαγραφή σχολίου"
+msgstr "Διαγραφή του λογαριασμού σας."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
@@ -2555,7 +2548,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Γεια σας, %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2576,7 +2569,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Μιλήστε μας!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
@@ -2626,22 +2619,22 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "Σάς αρέσουν οι λέξεις;"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr ""
+msgstr "Σάς αρέσει ο κώδικας;"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr ""
+msgstr "Σάς αρέσουν και οι λέξεις και ο κώδικας;"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "Θέλετε να μεταφράσετε το MDN στη γλώσσα σας;"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
@@ -2676,7 +2669,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "Ιστολόγιο: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
@@ -2692,26 +2685,25 @@ msgid "Edit"
 msgstr "Επεξεργασία"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "Advanced"
-msgstr "Προχωρημένο επίπεδο"
+msgstr "Για προχωρημένους"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
-msgstr ""
+msgstr "Διαχείριση"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
-msgstr ""
+msgstr "Κλειδιά API"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:63
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Τομείς ειδίκευσης"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:105
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Μέλος από %(date_joined)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
@@ -2740,7 +2732,7 @@ msgstr ""
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -2917,20 +2909,20 @@ msgstr ""
 #: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Τίτλος:"
 
 #: kuma/wiki/forms.py:339 kuma/wiki/forms.py:409 kuma/wiki/forms.py:883
 msgid "Title of article"
-msgstr ""
+msgstr "Τίτλος άρθρου"
 
 #: kuma/wiki/forms.py:347 kuma/wiki/forms.py:422 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "Slug:"
 
 #: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
 msgid "Article URL"
-msgstr ""
+msgstr "URL άρθρου"
 
 #: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
@@ -2938,11 +2930,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "Ετικέτες:"
 
 #: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "Λέξεις-κλειδιά:"
 
 #: kuma/wiki/forms.py:439
 msgid "Affects search results"
@@ -2958,11 +2950,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:459 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
-msgstr ""
+msgstr "Περιεχόμενο:"
 
 #: kuma/wiki/forms.py:471 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
-msgstr ""
+msgstr "Σχόλιο:"
 
 #: kuma/wiki/forms.py:475
 msgid "Tag this revision for review?"
@@ -2987,11 +2979,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:120
 msgid "Document Tag"
-msgstr ""
+msgstr "Ετικέτα εγγράφου"
 
 #: kuma/wiki/models.py:121
 msgid "Document Tags"
-msgstr ""
+msgstr "Ετικέτες εγγράφου"
 
 #: kuma/wiki/models.py:173
 #, fuzzy
@@ -3029,19 +3021,19 @@ msgstr ""
 
 #: kuma/wiki/models.py:1584
 msgid "All levels"
-msgstr ""
+msgstr "Όλα τα επίπεδα"
 
 #: kuma/wiki/models.py:1585
 msgid "H2 and higher"
-msgstr ""
+msgstr "H2 και υψηλότερο"
 
 #: kuma/wiki/models.py:1586
 msgid "H3 and higher"
-msgstr ""
+msgstr "H3 και υψηλότερο"
 
 #: kuma/wiki/models.py:1587
 msgid "H4 and higher"
-msgstr ""
+msgstr "H4 και υψηλότερο"
 
 #: kuma/wiki/models.py:1691
 #, python-format
@@ -3050,7 +3042,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
-msgstr ""
+msgstr "Διεύθυνση IP"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
@@ -3075,12 +3067,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1915
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: kuma/wiki/models.py:1923
-#, fuzzy
 msgid "Document (optional)"
-msgstr "Τεκμηρίωση MDN"
+msgstr "Έγγραφο (προαιρετικό)"
 
 #: kuma/wiki/models.py:1933
 msgid "reviewed"
@@ -3104,7 +3095,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
-msgstr ""
+msgstr "Σφάλμα Akismet"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
@@ -3140,20 +3131,20 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "Σύγκριση αναθεωρήσεων | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "Σύγκριση αναθεωρήσεων"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr ""
+msgstr "Πίσω στο ιστορικό"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "Διαγραφή σχολίου"
+msgstr "Διαγραφή εγγράφου | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3161,7 +3152,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
-msgstr ""
+msgstr "Δημιουργός"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
 msgid "Creation Date"
@@ -3169,11 +3160,11 @@ msgstr "Ημερομηνία δημιουργίας"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
-msgstr ""
+msgstr "Τελευταία αλλαγή από"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "Ημερομηνία τελευταίας αλλαγής"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
@@ -3181,24 +3172,24 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Θέλετε σίγουρα να συνεχίσετε;"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "Επαναφορά αναθεώρησης | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr ""
+msgstr "Θέλετε σίγουρα να επαναφέρετε αυτή την αναθεώρηση;"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
-msgstr ""
+msgstr "Έγγραφο"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
 msgid "Content"
-msgstr ""
+msgstr "Περιεχόμενο"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
@@ -3210,11 +3201,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
-msgstr ""
+msgstr "Δημιουργία νέου προτύπου"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
 msgid "Create a New Article"
@@ -3227,7 +3218,7 @@ msgstr "Δημιουργία λογαριασμού"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
-msgstr ""
+msgstr "Νέο έγγραφο"
 
 #: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
@@ -3235,7 +3226,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2 kuma/wiki/jinja2/wiki/deletion_log.html:7
 msgid "Document Deleted"
-msgstr ""
+msgstr "Το έγγραφο διαγράφηκε"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
@@ -3244,7 +3235,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
-msgstr ""
+msgstr "Λόγος για διαγραφή"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
@@ -3411,7 +3402,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "Λεπτά"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
@@ -3419,7 +3410,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Αναζήτηση:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
@@ -3466,7 +3457,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "Μετακίνηση άρθρου | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -3498,11 +3489,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "URL προεπισκόπησης:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "Νέο slug:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
@@ -3519,7 +3510,7 @@ msgstr "{count} προβολή"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Μετακίνηση σελίδας"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
@@ -3629,12 +3620,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Προβολή πηγής"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Show %(locale)s"
-msgstr "Προβολή demo"
+msgstr "Εμφάνιση %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
@@ -3644,32 +3635,32 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
-msgstr ""
+msgstr "Μετάφραση σε %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
-msgstr ""
+msgstr "Μετάφραση ετικετών"
 
 #: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
-msgstr ""
+msgstr "Αγγλικές ετικέτες"
 
 #: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
-msgstr ""
+msgstr "Αυτό το έγγραφο δεν έχει ετικέτες."
 
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "Ετικέτες σε %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
-msgstr ""
+msgstr "Σημειώσεις έκδοσης"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
-msgstr ""
+msgstr "Σημαίες μετάφρασης"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, fuzzy, python-format
@@ -3715,11 +3706,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "Γλώσσες"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "No translations exist for this article."
@@ -3727,24 +3718,23 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:37
 msgid "Add a translation"
-msgstr ""
+msgstr "Προσθήκη μετάφρασης"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
-msgstr ""
+msgstr "Παρακολούθηση"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
-msgstr ""
+msgstr "Νέο υπό-άρθρο"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
-msgstr ""
+msgstr "Κλωνοποίηση άρθρου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:71
-#, fuzzy
 msgid "Move this article"
-msgstr "Αφαίρεση αυτής της εργαλειοθήκης"
+msgstr "Μετακίνηση άρθρου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
@@ -3764,15 +3754,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
-msgstr ""
+msgstr "Εκτύπωση άρθρου"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr ""
+msgstr "ψίχουλα"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "Δείτε επίσης"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
@@ -3919,7 +3909,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "Νέα σελίδα"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
@@ -3966,17 +3956,17 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Μετάφραση περιγραφής"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Τίτλος σε %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "Slug σε %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
@@ -3996,18 +3986,18 @@ msgstr "Άρθρα με ετικέτα: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "Όλα τα πρότυπα"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(num)s πρότυπο."
+msgstr[1] "Βρέθηκαν %(num)s πρότυπα"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "Έγγραφα με σφάλματα"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
@@ -4019,7 +4009,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "Όλα τα έγγραφα"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
@@ -4027,7 +4017,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Δεν υπάρχουν άρθρα."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
@@ -4036,7 +4026,7 @@ msgstr "Έγγραφα για αξιολόγηση %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Έγγραφα για αξιολόγηση"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
@@ -4069,7 +4059,7 @@ msgstr "Ιστορικό αναθεώρησης | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "Ιστορικό του"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
@@ -4089,11 +4079,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "Όλες οι ετικέτες"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr ""
+msgstr "Δεν υπάρχουν ετικέτες."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
@@ -4108,8 +4098,8 @@ msgstr ""
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
@@ -4118,7 +4108,7 @@ msgstr "Εκκαθάριση εγγράφων"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr ""
+msgstr "Αρχική"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
@@ -4141,7 +4131,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "Φόρτωση"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
@@ -4158,7 +4148,7 @@ msgstr ""
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
-msgstr ""
+msgstr "Αναθεώρηση %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
