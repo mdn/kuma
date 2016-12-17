@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-17 07:21+0000\n"
+"PO-Revision-Date: 2016-12-17 07:36+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -100,7 +100,7 @@ msgstr "Επιλέξτε γλώσσα"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
-msgstr ""
+msgstr "Μεταπήδηση στην αναζήτηση"
 
 #: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -108,7 +108,7 @@ msgstr "Εργαλεία"
 
 #: jinja2/base.html:105
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "Συνεισφορά στο MDN"
 
 # Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #: jinja2/base.html:107
@@ -117,7 +117,7 @@ msgstr "Έναρξη"
 
 #: jinja2/base.html:108
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Αξιολόγηση ή μετάφραση εγγράφων"
 
 #: jinja2/base.html:111
 msgid "Site Tools"
@@ -338,7 +338,7 @@ msgstr "E-mail"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr ""
+msgstr "you@example.com"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
@@ -970,11 +970,11 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
 msgid "Firefox OS"
-msgstr ""
+msgstr "Firefox OS"
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr ""
+msgstr "Παιχνίδια"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -986,7 +986,7 @@ msgstr "Μέσο επίπεδο"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
-msgstr ""
+msgstr "Marketplace"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
@@ -1002,7 +1002,7 @@ msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
@@ -1010,15 +1010,15 @@ msgstr "Τύπος εγγράφου"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
-msgstr ""
+msgstr "Επίπεδο ικανότητας"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr ""
+msgstr "Θέματα"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
-msgstr ""
+msgstr "Όλες οι γλώσσες"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
@@ -1026,7 +1026,7 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
-msgstr ""
+msgstr "Ώρα"
 
 #: kuma/dashboards/forms.py:12
 msgid "Day"
@@ -1034,35 +1034,35 @@ msgstr "Ημέρα"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Εβδομάδα"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 ημέρες"
 
 #: kuma/dashboards/forms.py:23
 msgid "All Authors"
-msgstr ""
+msgstr "Όλοι οι δημιουργοί"
 
 #: kuma/dashboards/forms.py:24
 msgid "Known Authors"
-msgstr ""
+msgstr "Γνωστοί δημιουργοί"
 
 #: kuma/dashboards/forms.py:25
 msgid "Unknown Authors"
-msgstr ""
+msgstr "Άγνωστοι δημιουργοί"
 
 #: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Γλώσσα:"
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
-msgstr ""
+msgstr "Χρήστης:"
 
 #: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr ""
+msgstr "Θέμα:"
 
 #: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
@@ -1124,7 +1124,7 @@ msgstr "διαγράφηκε"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
@@ -1223,7 +1223,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "περισσότερα..."
 
 # Χωρίς τόνο λόγω του text-transform:uppercase
 #: kuma/landing/jinja2/landing/homepage.html:82
@@ -1248,7 +1248,7 @@ msgstr "Μάθετε JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Εργαλεία<br />Προγραμματιστή"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
@@ -1264,7 +1264,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
-msgstr ""
+msgstr "Εργαλεία επιδόσεων"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
@@ -1276,11 +1276,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "Δωρίστε πριν τις 31 Δεκ."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
-msgstr ""
+msgstr "Δωρεά τώρα"
 
 #: kuma/landing/jinja2/landing/homepage.html:123
 #, fuzzy
@@ -1329,7 +1329,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:172
 msgid "Technical review"
-msgstr ""
+msgstr "Τεχνική αξιολόγηση"
 
 #: kuma/landing/jinja2/landing/homepage.html:177
 #, fuzzy
@@ -1338,7 +1338,7 @@ msgstr "CSS Transitions"
 
 #: kuma/landing/jinja2/landing/homepage.html:178
 msgid "Promoting MDN"
-msgstr ""
+msgstr "Προώθηση του MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:179
 msgid "Contributing to the MDN codebase"
@@ -1351,7 +1351,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "Προώθηση του MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
@@ -1366,15 +1366,15 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
-msgstr ""
+msgstr "Προεπισκόπηση"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr ""
+msgstr "Επιλέξτε ένα στυλ κουμπιών"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "Καλύτερα έγγραφα"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
@@ -1382,7 +1382,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "Για προγραμματιστές, από προγραμματιστές"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
@@ -1662,7 +1662,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "τύπος"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1681,7 +1681,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1690,7 +1690,7 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "αλγόριθμος"
 
 #: kuma/users/backends.py:33
 msgid "salt"
@@ -1742,11 +1742,11 @@ msgstr ""
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
-msgstr ""
+msgstr "Mozillians"
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
@@ -1841,7 +1841,7 @@ msgstr ""
 
 #: kuma/users/models.py:141
 msgid "Website"
-msgstr ""
+msgstr "Ιστοσελίδα"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
@@ -1885,7 +1885,7 @@ msgstr ""
 
 #: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
-msgstr ""
+msgstr "Άλλο:"
 
 #: kuma/users/views.py:525
 msgid "Email:"
@@ -1893,15 +1893,15 @@ msgstr "Email:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Ανενεργό προφίλ"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "Αυτό το προφίλ είναι ανενεργό."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
-msgstr ""
+msgstr "Διευθύνσεις email"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
@@ -1914,7 +1914,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Ορισμός ως πρωταρχικό"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -1930,11 +1930,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Προσθήκη διεύθυνσης email"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Προσθήκη email"
 
 #: kuma/users/jinja2/account/email.html:60
 msgid "Edit profile"
@@ -1955,7 +1955,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -1969,7 +1969,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "Είσοδος"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"

@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-11-01 11:46+0000\n"
-"Last-Translator: Ioannis Protonotarios <ioannis@protonotarios.eu>\n"
+"PO-Revision-Date: 2016-12-17 07:41+0000\n"
+"Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -121,7 +121,7 @@ msgstr ""
 
 #: promote-mdn.php:313
 msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
-msgstr ""
+msgstr "Μετάφραση fr_FR, νέα πλευρική γραμμή <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> για ένα URL συγκεκριμένης γλώσσας για λέξεις-κλειδιά."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
@@ -151,7 +151,7 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr ""
+msgstr "Η προώθηση του MDN συνδέει αυτόματα λέξεις και φράσεις κλειδιά με τα έγγραφα του MDN"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
