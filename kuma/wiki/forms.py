@@ -40,6 +40,7 @@ TITLE_LONG = _(u'Please keep the length of the title to %(limit_value)s '
                u'characters or less. It is currently %(show_value)s '
                u'characters.')
 TITLE_PLACEHOLDER = _(u'Name Your Article')
+TAGS_LONG = _(u'The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters.')
 SLUG_REQUIRED = _(u'Please provide a slug.')
 SLUG_INVALID = _(u'The slug provided is not valid.')
 SLUG_SHORT = _(u'The slug is too short (%(show_value)s characters). '
@@ -430,7 +431,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     tags = StrippedCharField(
         required=False,
+	max_length = 255,
         label=_(u'Tags:'),
+	error_messages={
+		'max_length':TAGS_LONG
+	}
     )
 
     keywords = StrippedCharField(
