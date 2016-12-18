@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-18 08:01+0000\n"
+"PO-Revision-Date: 2016-12-18 08:04+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
@@ -2271,7 +2271,7 @@ msgstr "নিষেধাজ্ঞা জারি করুন"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "অন্য কোন কারণের জন্য ব্যবহারকারীকে নিষিদ্ধ করুন।"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 #, fuzzy
@@ -2743,7 +2743,7 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:44
 msgid "Banned"
-msgstr ""
+msgstr "নিষিদ্ধ হয়েছে"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 #, fuzzy
@@ -2764,7 +2764,7 @@ msgstr "অ্যাডমিন"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -3079,7 +3079,7 @@ msgstr "IP ঠিকানা"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
-msgstr ""
+msgstr "ইউজার-এজেন্ট"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
@@ -3182,7 +3182,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
 msgid "Delete Document | %(document)s"
-msgstr ""
+msgstr "নথি মুছে ফেলুন । %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3302,9 +3302,8 @@ msgid "see all contributors"
 msgstr "সকল কন্ট্রিবিউটরদের দেখুন"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
-#, fuzzy
 msgid "hide contributors"
-msgstr "করট্রিবিউটর দের জন্য নিয়মাবলী"
+msgstr "অবদানকারী গোপন করুন"
 
 #: kuma/wiki/jinja2/wiki/document.html:194
 #, python-format
@@ -3524,7 +3523,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "বর্তমান স্লাগ:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
@@ -3532,7 +3531,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "নতুন স্লাগ:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
