@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-16 18:07+0000\n"
+"PO-Revision-Date: 2016-12-18 08:01+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
@@ -62,11 +62,11 @@ msgstr ""
 
 #: jinja2/404.html:6
 msgid "Not Found"
-msgstr "খুজে পাওয়া যায়নি"
+msgstr "খুঁজে পাওয়া যায়নি"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
-msgstr "আমরা দুঃখিত, আপনি যা খুজছেন আমরা তা খুজে পাইনি।"
+msgstr "আমরা দুঃখিত, আপনি যা খুঁজছেন আমরা তা খুঁজে পাইনি।"
 
 #: jinja2/404.html:24
 #, python-format
@@ -89,7 +89,7 @@ msgstr "অভ্যন্তরীণ সার্ভার ত্রুটি�
 
 #: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
-msgstr "মজিলা ডেভোলাপার নেটওয়ার্ক"
+msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:77
 msgid "Skip to main content"
@@ -310,7 +310,7 @@ msgstr "অন্যান্য ভাষাসমূহ:"
 
 #: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
 msgid "Go"
-msgstr "যাও"
+msgstr "যান"
 
 #: jinja2/includes/login.html:4
 msgid "Sign out"
@@ -348,7 +348,7 @@ msgstr "এখন সাইন আপ করুন"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "নিউজলেটারটি এই মুহূর্তে শুধুমাত্র ইংরেজিতে প্রদান করা হচ্ছে।"
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
@@ -360,11 +360,11 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "নিউজলেটার সাইন-আপ লুকান"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
-msgstr "পেছনে"
+msgstr "পূর্ববর্তী"
 
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
@@ -520,7 +520,7 @@ msgstr "মালয়"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
-msgstr ""
+msgstr "মালয়ালাম"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Persian"
@@ -528,7 +528,7 @@ msgstr "Persian"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Polish"
-msgstr "Polish"
+msgstr "পোলিশ"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Brazilian)"
@@ -588,7 +588,7 @@ msgstr "তুর্কিশ"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
-msgstr ""
+msgstr "ইউক্রেনিয়ান"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
@@ -715,9 +715,9 @@ msgstr ""
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachments | %(title)s"
-msgstr "আরম্ভ {title}"
+msgstr "সংযুক্তি । %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
@@ -730,7 +730,7 @@ msgstr "ফাইল আপলোড"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "কিভাবে সংযুক্তি ব্যবহার করতে হয় শিখুন"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
@@ -769,7 +769,7 @@ msgstr "এই আর্টিকেলের সাথে সংযুক্ত
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr ""
+msgstr "অন্য নিবন্ধের সাথে সংযুক্ত"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
@@ -800,7 +800,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
-msgstr ""
+msgstr "প্রযোজ্য নয়"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -1131,11 +1131,11 @@ msgstr "মুছে ফেলা হয়েছে"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "সম্পাদনা থেকে এই IP কে নিষেধাজ্ঞা প্রদান করুন"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 #, fuzzy
@@ -1224,9 +1224,8 @@ msgid "Show topics"
 msgstr "বিষয় দেখান"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
-#, fuzzy
 msgid "Web<br />Technologies"
-msgstr "ওয়েব প্রযুক্তিসমূহ"
+msgstr "ওয়েব <br /> প্রযুক্তিসমূহ"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -1242,9 +1241,8 @@ msgid "Learning"
 msgstr "আমি শিখছি"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
-#, fuzzy
 msgid "Getting started with the Web"
-msgstr "জাভাস্ক্রিপ্টে আরম্ভ করুন"
+msgstr "ওয়েবে আরম্ভ করুন"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
@@ -1260,7 +1258,7 @@ msgstr "জাভাস্ক্রিপ্ট শিখুন"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr "ডেভেলপার টুলসমূহ"
+msgstr "ডেভেলপার <br /> টুলসমূহ"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
@@ -1284,7 +1282,7 @@ msgstr "মুক্ত ওয়েব এবং মোবাইল"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "গর্বের সহিত অলাভজনক।"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
@@ -1300,7 +1298,7 @@ msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
 #: kuma/landing/jinja2/landing/homepage.html:126
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "আপনার মত ডেভেলপারদের জন্য ব্রাউজার পান"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 #, fuzzy
@@ -1674,7 +1672,7 @@ msgstr ""
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "পাঠানো হয়েছে"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1771,7 +1769,7 @@ msgstr "আপনার দক্ষ্যতা সমূহ অবশ্যই
 
 #: kuma/users/forms.py:146
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "এই অংশটুকু খালি রাখা যাবে না।"
 
 #: kuma/users/forms.py:152
 #, fuzzy
@@ -1798,7 +1796,7 @@ msgstr "ভাষা"
 
 #: kuma/users/models.py:61
 msgid "Homepage"
-msgstr "হোম"
+msgstr "নীড়পাতা"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
