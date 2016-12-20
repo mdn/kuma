@@ -27,7 +27,7 @@ class AdminLogin(Page):
         # click login
         login_button = self.find_element(*self._login_button_locator)
         login_button.click()
-        # wait for dashboard to load
+        # wait for admin dashboard to load
         self.wait.until(lambda s: 'dashboard' in self.find_element(By.CSS_SELECTOR, 'body').get_attribute('class'))
 
     def login_super_user(self):
