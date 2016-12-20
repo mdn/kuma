@@ -1,3 +1,4 @@
+import re
 import requests
 
 from urlparse import urlparse, parse_qs
