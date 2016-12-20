@@ -56,18 +56,40 @@ details {
     clear: both;
     display: block;
     margin-bottom: $grid-spacing;
+    bidi-style(margin-left, $grid-spacing, margin-right, 0);
 }
 
-details + details {
-    margin-top: $grid-spacing * -1;
-}
-
-summary  {
-    display: block;
+summary {
+    display: block; /* removes Firefox's marker */
+    bidi-style(margin-left, ( -1 * $grid-spacing ), margin-right, 0);
+    cursor: pointer;
     color: $link-color;
 
     h1, h2, h3, h4, h5, h6 {
         display: inline-block;
+        margin-bottom: 0;
+        color: inherit;
+    }
+
+    &::-webkit-details-marker { /* removes webkit's marker */
+        display: none;
+    }
+
+    /* add marker back in way we control */
+    &:before {
+        bidi-value(content, '\25B6', '\25C0');
+        display: inline-block;
+        width: $grid-spacing; /* fixed width avoids content jog when marker swapped for narrower one */
+        color: $blue;
+    }
+
+    /* change marker when details is open */
+    details[open] > & {
+        margin-bottom: ($grid-spacing / 2);
+
+        &:before {
+            content: '\25BC';
+        }
     }
 }
 
@@ -96,4 +118,3 @@ hr {
         display: none;
     }
 }
-
