@@ -134,10 +134,9 @@ class BasePage(Page):
         def is_report_content_url_expected(self, selenium, article_url):
             current_url = selenium.current_url
             report_url = self.report_content_form_url
-            article_url_no_protocal = re.sub(r'[^http:]', '', article_url)
             # compare
             url_matches = report_url in current_url
-            url_contains_article = article_url_no_protocal in current_url
+            # TODO check url contains article url in query variable
             return url_matches
 
         def open_report_bug(self):

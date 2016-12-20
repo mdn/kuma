@@ -1,6 +1,5 @@
 import pytest
 
-from utils.urls import assert_valid_url
 from pages.home import HomePage
 
 
