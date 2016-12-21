@@ -33,6 +33,17 @@ def test_header_platform_submenu(base_url, selenium):
     assert page.header.is_platform_submenu_displayed
 
 
+@pytest.mark.smoke
+@pytest.mark.nodata
+@pytest.mark.nondestructive
+def test_header_signin(base_url, selenium):
+    page = HomePage(selenium, base_url).open()
+    # click on sign in widget
+    page.header.trigger_signin()
+    # assert it's fowarded to github
+    assert 'https://github.com' in str(selenium.current_url)
+
+
 # footer tests
 @pytest.mark.smoke
 @pytest.mark.nodata
