@@ -277,10 +277,20 @@ p.footnote {
 
 /* Classes created by the WYSIWYG */
 .twocolumns {
-   @include vendorize(column-count, 2);
+    @include vendorize(column-count, 2);
+
+    body[contenteditable] & {
+        border: $editor-box-border;
+        column-rule: $editor-box-border;
+    }
 }
 .threecolumns {
-   @include vendorize(column-count, 3);
+    @include vendorize(column-count, 3);
+
+    body[contenteditable] & {
+        border: $editor-box-border;
+        column-rule: $editor-box-border;
+    }
 }
 
 @media #{$media-query-small-mobile} {

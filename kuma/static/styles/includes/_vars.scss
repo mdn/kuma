@@ -185,3 +185,9 @@ $path-to-images : $path-to-assets + 'img/';
 $path-to-embedded-images : $path-to-images + 'embed/';
 $path-to-fonts : $path-to-assets + 'fonts/';
 $logo-sprite-url : $path-to-images + 'logo_sprite.svg';
+
+
+/*
+edit-mode customizations - applied to blocks only in edit mode
+====================================================================== */
+$editor-box-border : 2px dotted #ADF;
