@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+import pages.article_edit
 from pages.regions.column_container import ColumnContainer
 
 
@@ -38,6 +39,16 @@ class ArticlePage(BasePage):
     @property
     def is_edit_button_displayed(self):
         return self.find_element(*self._edit_button_locator).is_displayed()
+
+    def click_edit(self, signedin):
+        if (signedin):
+            edit_button = self.find_element(*self._edit_button_locator)
+            edit_button.click()
+            return pages.article_edit.EditPage(self.selenium, self.base_url).wait_for_page_to_load()
+        else:
+            edit_button = self.find_element(*self._edit_button_locator)
+            edit_button.click()
+            self.wait.until(lambda s: 'users/signin' in s.current_url)
 
     @property
     def is_advanced_menu_displayed(self):
