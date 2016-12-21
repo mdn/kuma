@@ -1,7 +1,7 @@
 import pytest
 
 from pages.home import HomePage
-
+from utils.urls import assert_valid_url
 
 # homepage tests
 @pytest.mark.smoke
@@ -35,6 +35,8 @@ def test_callouts(base_url, selenium):
     for link in callout_links:
         this_link = link.get_attribute('href')
         assert_valid_url(this_link, follow_redirects=True)
+
+
 # header tests
 @pytest.mark.smoke
 @pytest.mark.nodata
