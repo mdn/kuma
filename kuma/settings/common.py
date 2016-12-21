@@ -1185,7 +1185,7 @@ CONSTANCE_CONFIG = dict(
         "are removed from the file storage"
     ),
     KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
-        '(?i)^(data\:?)',
+        '(?i)^\s*(data\:?)',
         'Regex for protocols that are blocked for A HREFs'
     ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
