@@ -34,6 +34,7 @@ class BasePage(Page):
         # locators
         _root_locator = (By.ID, 'main-header')
         _menu_locator = (By.ID, 'nav-main-menu')
+        _signin_locator = (By.CSS_SELECTOR, '#nav-sec .login-link')
         _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
         _platform_submenu_trigger_locator = (By.XPATH,
                                              'id(\'nav-platform-submenu\')/..')
@@ -54,6 +55,10 @@ class BasePage(Page):
         @property
         def is_displayed(self):
             return self.root.is_displayed()
+
+        def trigger_signin(self):
+            signin_link = self.find_element(*self._signin_locator)
+            signin_link.click()
 
         # nav is displayed?
         @property
