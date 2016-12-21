@@ -9,6 +9,13 @@ class Ckeditor(Region):
     CKEDITOR_READY_QUERY = 'return window.CKEDITOR.instances.id_content.status === "ready";'
     CKEDITOR_CONTENT_QUERY = 'return window.CKEDITOR.instances["id_content"].getData();'
 
+    TEST_TEXT = ('<p>Pumpkin is an unusual word that shouldn\'t already be on the page.</p>'
+                '<h2>Heading Two</h2>'
+                '<p>Paragraph for heading two.</p>'
+                '<h3>Heading Three</h3>'
+                '<p>Paragraph for heading three.</p>'
+                '<iframe src="test.html"></iframe>')
+
     _root_locator = (By.ID, 'editor-wrapper')
     _content_textarea_locator = (By.ID, 'id_content')
     _draft_action_locator = (By.ID, 'draft-action')
@@ -26,15 +33,19 @@ class Ckeditor(Region):
 
     def draft_content(self, base_url):
         # remove domain from base url
-        parse_base_url = urlparse(base_url)
-        # check if this is a regular edit page or translation
-        if not str(parse_base_url.path).startswith('/en-US/'):
-            draft_name = 'draft/translate'  + parse_base_url.path.replace('$edit', '') + '/'
+        url = urlparse(base_url)
+        if url.path.startswith('/en-US/docs/new'):
+            draft_name = 'draft/new'
         else:
-            draft_name = 'draft/edit' + parse_base_url.path.replace('$edit', '')
-        draft_content_query = 'return localStorage.getItem("' + draft_name + '");'
-        draft_content = self.selenium.execute_script(draft_content_query)
-        return draft_content
+            url_strip_edit = url.path.replace('$edit', '')
+            # check if this is a regular edit page or translation
+            if not url.path.startswith('/en-US/'):
+                draft_name = 'draft/translate{}/'.format(url_strip_edit)
+            else:
+                draft_name = 'draft/edit' + url_strip_edit
+        return self.selenium.execute_script(
+            'return localStorage.getItem("{}");'.format(draft_name)
+        )
 
     def edit_source(self):
         # switch to source mode
@@ -43,7 +54,7 @@ class Ckeditor(Region):
         self.wait.until(lambda s: self.find_element(*self._source_textarea_locator))
         # send keys
         source_textarea = self.find_element(*self._source_textarea_locator)
-        edit_text = '<p>Pumpkin</p><iframe src="test.html"></iframe>';
+        edit_text = self.TEST_TEXT
         source_textarea.send_keys(edit_text)
         # switch out of source mode
         source_button.click()

@@ -1,29 +1,15 @@
 import pytest
 
-from pages.article import ArticlePage
+from pages.article_new import NewPage
 from pages.admin import AdminLogin
 
 
 @pytest.mark.smoke
-@pytest.mark.nondestructive
-def test_edit_sign_in(base_url, selenium):
-    page = ArticlePage(selenium, base_url).open()
-    # click edit
-    page.click_edit(False)
-    # check prompted for sign in
-    assert 'users/signin' in selenium.current_url
-
-
-@pytest.mark.smoke
 @pytest.mark.login
-@pytest.mark.nondestructive
-def test_edit(base_url, selenium):
+def test_new(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
-    admin.login_new_user()
-    article_page = ArticlePage(selenium, base_url).open()
-    page = article_page.click_edit(True)
-    # welcome message displays
-    assert page.is_first_contrib_welcome_displayed
+    admin.login_moderator_user()
+    page = NewPage(selenium, base_url).open()
     # CKEditor loads and is ready
     editor = page.editor()
     assert editor.ready
@@ -43,5 +29,16 @@ def test_edit(base_url, selenium):
     assert 'Pumpkin' in draft_content
     # save button enabled
     assert not page.is_save_button_disabled
-    # discard
-    page.discard()
+    # write title
+    page.write_title()
+    # check slug updates
+    assert page.is_slug_suggested
+    # publish
+    published_page = page.publish()
+    # correct content published
+    assert 'Pumpkin' in published_page.article_content()
+    # needs a review, because it's new
+    assert published_page.is_technical_review_needed
+    assert published_page.is_editorial_review_needed
+    # passes TOC test
+    assert published_page.is_test_toc
