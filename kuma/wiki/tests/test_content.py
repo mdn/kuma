@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from urlparse import urljoin
 
-import bleach
-import pytest
+from constance import config
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
-import mock
 from pyquery import PyQuery as pq
+import bleach
+import mock
+import pytest
 
 import kuma.wiki.content
 from kuma.core.tests import KumaTestCase, eq_, ok_
@@ -817,14 +818,19 @@ class ContentSectionToolTests(UserTestCase):
     def test_ahref_protocol_filter_invalid_protocol(self):
         doc_src = """
             <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
+            <p><a id="xss2" class="no-track" href=" data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
+            <p><a id="xss3" class="no-track" href="
+                data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
             <p><a id="ok" href="/docs/ok/test">OK link</a></p>
         """
         result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterAHrefProtocols('^(data\:?)')
+                      .filterAHrefProtocols(config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS)
                       .serialize())
         page = pq(result_src)
 
         eq_(page.find('#xss').attr('href'), '')
+        eq_(page.find('#xss2').attr('href'), '')
+        eq_(page.find('#xss3').attr('href'), '')
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
     def test_link_annotation(self):
