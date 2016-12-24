@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-18 08:04+0000\n"
-"Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
+"PO-Revision-Date: 2016-12-14 18:36+0000\n"
+"Last-Translator: Nafis Sadik Fahim <md.n.s.f.11@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
 "MIME-Version: 1.0\n"
@@ -1301,9 +1301,8 @@ msgid "Get The Browser For Developers Like You"
 msgstr "আপনার মত ডেভেলপারদের জন্য ব্রাউজার পান"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
-#, fuzzy
 msgid "Build Open Web Apps"
-msgstr "ওপেন ওয়েব অ্যাপসমূহ"
+msgstr "ওপেন ওয়েব অ্যাপস তৈরী করুন"
 
 #: kuma/landing/jinja2/landing/homepage.html:139
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
@@ -1325,9 +1324,8 @@ msgid "Help improve MDN"
 msgstr "এমডিএন উন্নিতকরণে সাহায্য করুন"
 
 #: kuma/landing/jinja2/landing/homepage.html:164
-#, fuzzy
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr "MDN (নথিসমূহ, ডেমোসমূহ এবং সাইটটি) এর সবগুলো অংশ ডেভেলপারদের একটি ওপেন কম্যুনিটি তৈরি করেছেন। অনুগ্রহ করে আমাদের সাথে যোগ দিন! আমাদের সাহায্য করার জন্য নিচের যেকোন একটি ক্ষেত্র নির্বাচন করুন:"
+msgstr "MDN (নথিসমূহ এবং সাইটটি) এর সবগুলো অংশ ডেভেলপারদের একটি ওপেন কম্যুনিটি তৈরি করেছেন। অনুগ্রহ করে আমাদের সাথে যোগ দিন! আমাদের সাহায্য করার জন্য যেকোন একটি ক্ষেত্র নির্বাচন করুন:"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Getting started"
@@ -1563,9 +1561,9 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr "মজিলা ডেভেলপার নেটওয়ার্ক ডকুমেন্টেশন অনুসন্ধান করুন"
 
 #: kuma/search/jinja2/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "\"{query}\" এর জন্য অনুসন্ধান ফলাফলসমূহ"
+msgstr "অনুসন্ধান ফলাফল \"%(query)s\" এর জন্য"
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
@@ -1772,9 +1770,8 @@ msgid "This field cannot be blank."
 msgstr "এই অংশটুকু খালি রাখা যাবে না।"
 
 #: kuma/users/forms.py:152
-#, fuzzy
 msgid "Username already in use."
-msgstr "ইউজারনেম আবশ্যক।"
+msgstr "ইউজারনেম আগেই ব্যবহার করা হয়েছে।"
 
 #: kuma/users/forms.py:162
 msgid "Email"
