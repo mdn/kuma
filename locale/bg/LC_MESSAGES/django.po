@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-25 12:38+0000\n"
+"PO-Revision-Date: 2016-12-25 12:49+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3852,7 +3852,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "Създаване на Шаблон"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
@@ -3864,7 +3864,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr ""
+msgstr "Промяна на Документ"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
@@ -3918,12 +3918,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Превод на Описанието"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Заглавие на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
@@ -3948,7 +3948,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "Всички шаблони"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
@@ -3959,11 +3959,11 @@ msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "Документи с грешки"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "Документи от най-горно ниво"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
@@ -3971,33 +3971,33 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "Всички документи"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Необходимо е обновяване на превода"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Няма статии."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr ""
+msgstr "Документи за преглед, означени с %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Документи за преглед"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Всички Статии, Нуждаещи се от Преглед, Означени с %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Всички Статии, Нуждаещи се от Преглед"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
@@ -4014,32 +4014,32 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
 msgid "Found %(count)s documents."
-msgstr ""
+msgstr "Намерени са %(count)s документа."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr ""
+msgstr "История на Версиите | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "История на"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr ""
+msgstr "История на версиите за:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr ""
+msgstr "Сравнение на Избраните Преводи"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Сравнение на Избраните Версии"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr ""
+msgstr "ТОзи документ няма версии."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
@@ -4052,7 +4052,7 @@ msgstr "Няма етикети."
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Преведни статии, означени с %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
@@ -4062,8 +4062,8 @@ msgstr ""
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Намерен е %(count)s документ."
+msgstr[1] "Намерени са %(count)s документа."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
