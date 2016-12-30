@@ -27,7 +27,11 @@ class Ckeditor(Region):
     def draft_content(self, base_url):
         # remove domain from base url
         parse_base_url = urlparse(base_url)
-        draft_name = 'draft/edit' + parse_base_url.path.replace('$edit', '')
+        # check if this is a regular edit page or translation
+        if not str(parse_base_url.path).startswith('/en-US/'):
+            draft_name = 'draft/translate'  + parse_base_url.path.replace('$edit', '') + '/'
+        else:
+            draft_name = 'draft/edit' + parse_base_url.path.replace('$edit', '')
         draft_content_query = 'return localStorage.getItem("' + draft_name + '");'
         draft_content = self.selenium.execute_script(draft_content_query)
         return draft_content
