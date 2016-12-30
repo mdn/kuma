@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-24 13:23+0000\n"
+"PO-Revision-Date: 2016-12-30 15:54+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
@@ -101,7 +101,7 @@ msgstr "ভাষা নির্বাচন করুন"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
-msgstr ""
+msgstr "খোঁজা স্কিপ করুন"
 
 #: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -157,11 +157,11 @@ msgstr "গ্রাফিক্স"
 
 #: jinja2/base.html:133
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: jinja2/base.html:134
 msgid "APIs / DOM"
-msgstr ""
+msgstr "APIs / DOM"
 
 #: jinja2/base.html:135
 #, fuzzy
@@ -183,7 +183,7 @@ msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
-msgstr ""
+msgstr "টিউটরিয়াল"
 
 #: jinja2/base.html:143
 msgid "References"
@@ -191,7 +191,7 @@ msgstr "তথ্যসূত্র"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
-msgstr ""
+msgstr "ডেভেলপার গাইড"
 
 #: jinja2/base.html:145
 msgid "Accessibility"
@@ -204,7 +204,7 @@ msgstr "ওয়েব ডেভলপমেন্ট"
 
 #: jinja2/base.html:147
 msgid "...more docs"
-msgstr ""
+msgstr "...অারো ডক"
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
@@ -280,11 +280,11 @@ msgstr "কোড তৈরীতে অবদান রাখুন"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">লগ আউট</a> করতে আবার চেস্টা করুন।</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Firefox সাহায্য খুঁজুন"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
@@ -302,7 +302,7 @@ msgstr "সাইন আউট"
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "অবদান রাখতে চান?<br /> <a href=\"%(login_url)s\">প্রবেশ করুন</a>"
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
@@ -335,7 +335,7 @@ msgstr "ই-মেইল"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr ""
+msgstr "you@example.com"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
@@ -352,7 +352,7 @@ msgstr "নিউজলেটারটি এই মুহূর্তে শু
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "ধন্যবাদ! দয়া করে আপনার সাবস্ক্রিপশন নিশ্চিত করতে ইনবক্স চেক করুন।"
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
@@ -796,7 +796,7 @@ msgstr "নিবন্ধ যুক্ত আছে"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s বাইট"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
@@ -1115,7 +1115,7 @@ msgstr "মন্তব্য"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Author"
-msgstr ""
+msgstr "লেখক"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
@@ -1163,9 +1163,8 @@ msgid "%(sent_date)s by %(user)s"
 msgstr "পোস্ট করেছেন %(entrydate)s তারিখে  %(authorlink)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
-#, fuzzy
 msgid "Submit as:"
-msgstr "একটি ডেমো জমা দিন"
+msgstr "সাবমিট করুন:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
@@ -1842,7 +1841,7 @@ msgstr ""
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "সঠিক LinkedIn URL প্রবেশ করুন।"
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
@@ -1990,7 +1989,7 @@ msgstr "অনুগ্রহ করে সাইন ইন করুন"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "MDN এর সকল বিষয়বস্তু ফ্রি এবং প্রবেশ না করেও ব্যবহারযোগ্য।"
 
 #: kuma/users/jinja2/account/login.html:20
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
@@ -2029,7 +2028,7 @@ msgstr "পাসওয়ার্ড রিসেট কর"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "পাসওয়ার্ড পুনরুদ্ধারের ক্ষেত্রে কোন সমস্যা হলে আমাদের সাথে যোগাযোগ করুন।"
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
@@ -2110,7 +2109,7 @@ msgstr "OpenID সাইন ইন"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "অ্যাকাউন্ট সাইন ইন ব্যর্থ"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -2118,7 +2117,7 @@ msgstr "আপনার একাউন্টে সাইন ইন করা�
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "লগ ইন বাতিল হয়েছে"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2164,7 +2163,7 @@ msgstr "<strong>লগইন করতে সমস্যা ?<a href=\"%(bug_hr
 #: kuma/users/jinja2/socialaccount/signup.html:93
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "আপনার GitHub ব্যবহারকারী নাম %(username)s ইতোমধ্যেই রয়েছে। দয়া করে অন্য একটি পছন্দ করুন।"
 
 #: kuma/users/jinja2/socialaccount/signup.html:97
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
@@ -2313,7 +2312,7 @@ msgstr "এটা লেখক তৈরি করেননি"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
-msgstr ""
+msgstr "পুনরাবৃত্তি প্রয়োজন"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
@@ -2351,7 +2350,7 @@ msgstr "মুছে দেয়া যাচ্ছে না:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
-msgstr ""
+msgstr "পুনরায় উল্লেখ করা যায়নি:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 msgid "No actions taken"
@@ -2363,7 +2362,7 @@ msgstr "সর্বশেষ সংস্করণটি স্প্যাম 
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "ইতোমধ্যেই স্প্যাম হিসেবে শনাক্ত:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
@@ -2395,7 +2394,7 @@ msgstr "রিকভারি ইমেইল পাঠানো হয়েছে
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "বিদ্যমান অ্যাকাউন্ট ফিরে পেতে চাইলে ইমেইলের লিংকটিতে ক্লিক করুন।"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2954,7 +2953,7 @@ msgstr "ট্যাগ:"
 
 #: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "কীওয়ার্ড:"
 
 #: kuma/wiki/forms.py:439
 msgid "Affects search results"
@@ -3231,9 +3230,8 @@ msgid "Revert"
 msgstr "পূর্বাবস্থায় ফেরান"
 
 #: kuma/wiki/jinja2/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "একটি নতুন চাবি তৈরি করুন"
+msgstr "নতুন টেম্পলেট বানান"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
 msgid "Create a New Article"
@@ -3337,7 +3335,7 @@ msgstr "এই নিবন্ধটির সম্পাদকীয় রিভ
 #: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr ""
+msgstr "অনুবাদ অসম্পূর্ণ। দয়া করে ইংরেজি থেকে <a href=\"%(translate_url)s\">নিবন্ধটি অনুবাদ করুন </a>।"
 
 #: kuma/wiki/jinja2/wiki/document.html:298
 #, fuzzy
@@ -3477,7 +3475,7 @@ msgstr "সর্বশেষ হালনাগাদের তারিখ"
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "অনুবাদ %(locale)s সম্পাদনা করুন"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, fuzzy, python-format
@@ -3836,9 +3834,9 @@ msgid "Updating subscription status"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "আপনি ইতিমধ্যে এই উপর নিবন্ধ ভোট দিয়েছেন।"
+msgstr "সাবস্ক্রাইব করুন %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, fuzzy, python-format
@@ -3904,12 +3902,12 @@ msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "ভুল তথ্য লুকান"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
+msgstr[0] "এই ত্রুটি সমন্ধে আরো তথ্য"
 msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
@@ -3959,9 +3957,8 @@ msgid "Publish and Keep Editing"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
-#, fuzzy
 msgid "Discard"
-msgstr "ডেমো অগ্রাহ্য করলাম।"
+msgstr "বাতিল"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
