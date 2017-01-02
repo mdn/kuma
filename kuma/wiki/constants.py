@@ -13,7 +13,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'nobr', 'dfn', 'caption', 'var', 's',
     'i', 'img', 'hr',
     'input', 'label', 'select', 'option', 'textarea',
-    # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
+    # Note: <iframe> is allowed, but src="" is filtered after bleach
     'iframe',
     'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'colgroup', 'col',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',

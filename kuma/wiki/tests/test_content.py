@@ -1083,6 +1083,41 @@ class AllowedHTMLTests(KumaTestCase):
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_iframe_in_script(self):
+        """iframe in script should be filtered"""
+        content = """
+            <script><iframe src="data:text/plain,foo"></iframe></script>
+        """
+        expected = """
+            &lt;script&gt;<iframe src=""></iframe>&lt;/script&gt;
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_iframe_in_style(self):
+        """iframe in style should be filtered"""
+        content = """
+            <style><iframe src="data:text/plain,foo"></iframe></style>
+        """
+        expected = """
+            &lt;style&gt;<iframe src=""></iframe>&lt;/style&gt;
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_iframe_in_textarea(self):
+        """
+        iframe in textarea should not be filtered since it's not parsed as tag
+        """
+        content = """
+            <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
+        """
+        expected = """
+            <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
 
 class ExtractorTests(UserTestCase):
     """Tests for document parsers that extract content"""
