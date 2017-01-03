@@ -83,9 +83,7 @@ msgstr "ఒకవేళ మీరు ప్రమాణపత్ర లంకె
 #: jinja2/404.html:36
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
-msgstr ""
-"<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a> మాథ్యూ ఇన్మాన్ చేత <a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">టం బీస్ట్స్</a>\n"
-"\n"
+msgstr "<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a> మాథ్యూ ఇన్మాన్ చేత <a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">టం బీస్ట్స్</a>"
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
