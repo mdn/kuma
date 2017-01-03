@@ -6,8 +6,8 @@ import bleach
 from constance import config
 from django_mysql.models import QuerySet
 
-from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
-                        TEMPLATE_TITLE_PREFIX)
+from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
+                        ALLOWED_STYLES, TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 
@@ -32,9 +32,11 @@ class BaseDocumentManager(models.Manager):
             tags = ALLOWED_TAGS
             attributes = ALLOWED_ATTRIBUTES
             styles = ALLOWED_STYLES
+        protocols = ALLOWED_PROTOCOLS
 
         bleached_content = bleach.clean(content_in, attributes=attributes,
-                                        tags=tags, styles=styles)
+                                        tags=tags, styles=styles,
+                                        protocols=protocols)
 
         allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
         blocked_protocols = config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS

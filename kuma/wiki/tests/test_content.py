@@ -1089,7 +1089,7 @@ class AllowedHTMLTests(KumaTestCase):
             <script><iframe src="data:text/plain,foo"></iframe></script>
         """
         expected = """
-            &lt;script&gt;<iframe src=""></iframe>&lt;/script&gt;
+            &lt;script&gt;<iframe></iframe>&lt;/script&gt;
         """
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))
@@ -1100,7 +1100,7 @@ class AllowedHTMLTests(KumaTestCase):
             <style><iframe src="data:text/plain,foo"></iframe></style>
         """
         expected = """
-            &lt;style&gt;<iframe src=""></iframe>&lt;/style&gt;
+            &lt;style&gt;<iframe></iframe>&lt;/style&gt;
         """
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))

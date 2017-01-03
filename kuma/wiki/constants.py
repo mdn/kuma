@@ -193,6 +193,9 @@ ALLOWED_STYLES = [
     'text-decoration-style', '-moz-text-decoration-style', 'text-decoration',
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
+ALLOWED_PROTOCOLS = [
+    'http', 'https', 'mailto', 'irc', 'news', 'ftp', 'ssh', 'nntp'
+]
 
 DIFF_WRAP_COLUMN = 65
 TEMPLATE_TITLE_PREFIX = 'Template:'
