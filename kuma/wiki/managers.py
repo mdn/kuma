@@ -39,10 +39,8 @@ class BaseDocumentManager(models.Manager):
                                         protocols=protocols)
 
         allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
-        blocked_protocols = config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS
         filtered_content = (parse_content(bleached_content)
                             .filterIframeHosts(allowed_hosts)
-                            .filterAHrefProtocols(blocked_protocols)
                             .serialize())
 
         return filtered_content

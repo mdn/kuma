@@ -343,6 +343,7 @@ class ContentSectionTool(object):
 
     @newrelic.agent.function_trace()
     def filterAHrefProtocols(self, blocked_protocols):
+        # TODO: Remove, deprecated by bleach 1.5.0
         self.stream = AHrefProtocolFilter(self.stream, blocked_protocols)
         return self
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from urlparse import urljoin
 
-from constance import config
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
@@ -15,7 +14,7 @@ from kuma.users.tests import UserTestCase
 
 from . import document, normalize_html, revision
 
-from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_TAGS
+from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
                        H3TOCFilter, SectionIDFilter, SectionTOCFilter,
                        get_content_sections, get_seo_description)
@@ -815,7 +814,7 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
-    def test_ahref_protocol_filter_invalid_protocol(self):
+    def test_bleach_filter_invalid_protocol(self):
         doc_src = """
             <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
             <p><a id="xss2" class="no-track" href=" data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
@@ -823,14 +822,15 @@ class ContentSectionToolTests(UserTestCase):
                 data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
             <p><a id="ok" href="/docs/ok/test">OK link</a></p>
         """
-        result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterAHrefProtocols(config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS)
-                      .serialize())
+        result_src = bleach.clean(doc_src,
+                                  tags=ALLOWED_TAGS,
+                                  attributes=ALLOWED_ATTRIBUTES,
+                                  protocols=ALLOWED_PROTOCOLS)
         page = pq(result_src)
 
-        eq_(page.find('#xss').attr('href'), '')
-        eq_(page.find('#xss2').attr('href'), '')
-        eq_(page.find('#xss3').attr('href'), '')
+        eq_(page.find('#xss').attr('href'), None)
+        eq_(page.find('#xss2').attr('href'), None)
+        eq_(page.find('#xss3').attr('href'), None)
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
     def test_link_annotation(self):
