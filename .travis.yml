@@ -27,7 +27,6 @@ env:
 matrix:
     allow_failures:
         - env: TOXENV=locales DOCKER_COMPOSE_VERSION=1.9.0
-        - env: TOXENV=docker DOCKER_COMPOSE_VERSION=1.9.0 UID=0
 before_install:
     - scripts/travis-install
     - pip install -U pip
