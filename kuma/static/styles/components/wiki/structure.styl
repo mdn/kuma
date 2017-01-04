@@ -19,6 +19,11 @@
     min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
 }
 
+/* don't let wiki content escape the article - BUG 1325569 */
+#wiki-column-container {
+    overflow: auto;
+}
+
 /* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content,
 #wiki-column-container.wiki-left-closed #wiki-content {
