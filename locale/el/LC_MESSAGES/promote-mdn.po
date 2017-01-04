@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-12-17 07:41+0000\n"
+"PO-Revision-Date: 2017-01-04 21:45+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
-msgstr ""
+msgstr "Επαναφορτωμένες τιμές από το URL."
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
