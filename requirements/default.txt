@@ -4,14 +4,14 @@
 -c constraints.txt
 
 # Sanitize HTML with a whitelist
-bleach==1.4.2 \
-    --hash=sha256:58a2c153c0b5450695c34ce2eddc23fb3ee476b31a878e6a5c24c75fd1ed4d89 \
-    --hash=sha256:56018a17d1488eb1a1e18e7cdddcaea24d3c7b3704172e356f6916c577f4fd9e
+bleach==1.4.3 \
+    --hash=sha256:75bb62077ad33f8d57fb783267b062a8a0662d2ded8398b8c0098a06b6f466cc \
+    --hash=sha256:1293061adb5a9eebb7b260516e691785ac08cc1646c8976aeda7db9dbb1c6f4b
 
 # Process tasks in the background
-celery==3.1.20 \
-    --hash=sha256:3071b71ef8c43178ace8435002b11f2ff06db7690f07d960540eab7f4183ddf7 \
-    --hash=sha256:d02f191c3d92a851c9d2028e91baf2a0f2734cd3b659743d3624011d1ef7a6d5
+celery==3.1.23 \
+    --hash=sha256:eaf5dee3becbc35c7754a2d4482d53bdf72ea3f85dd258525259983262081474 \
+    --hash=sha256:1a359c815837f9dbf193a7dbc6addafa34612c077ff70c66e3b16e14eebd2418
 
 # Provides middleware for preventing Vary: Cookie
 commonware==0.4.3 \
@@ -28,13 +28,12 @@ Django==1.8.16 \
     --hash=sha256:224aaf17a28609707d942deafe6d0a5b382baf22a6f33e4e61c56c62f09081dd
 
 # 3rd party logins like Github
-django-allauth==0.24.1 \
-    --hash=sha256:229a6a5a63ff55f9eb46d4dae3863ba775735bf60bfc16bf4e2042f214f18e1d
+django-allauth==0.25.2 \
+    --hash=sha256:382632fc4e85d577bcb4a747dcd0fff0b4893fffe275922e8489855608f50252
 
 # Refresh stale cache items asynchronously
-django-cacheback==1.0 \
-    --hash=sha256:8feaa8df6cbe23e1fca5d858f518a235442a8ddc4aefb5be0846692c69d65a8e \
-    --hash=sha256:2fc21e0ed78ee8e4cc07ac2c5936b27f956c99c81fc4f965e96fb27171180819
+django-cacheback==1.1 \
+    --hash=sha256:ba7dc1525de6b6f44d13f6e5b6b93ca7a9ef0ca560315872fe40f044b7b59e95
 
 # Integrate celery async tasks with Django (deprecated)
 django-celery==3.1.17 \
@@ -45,18 +44,18 @@ django-celery-transactions==0.3.6 \
     --hash=sha256:cdf966ec461e9ec736a7bedcf47cb219fc79ea86f2b39191cb258082dd4f4b33
 
 # Store dynamic settings in the database
-django-constance==1.1.2 \
-    --hash=sha256:7b7efca7776132728e91ed017fb4081136926c800331b6028f6d7079ae6b0872 \
-    --hash=sha256:8edba68cf47befa2d2e6d9eba98ff74dc9881e086bfcac0337fe8198d5edffbf
+django-constance==1.2 \
+    --hash=sha256:8dbd58f51d46de9215c4edd3dbcf054e0161b3bed9cdfb0b8602b97e3ab7de78 \
+    --hash=sha256:71f77d78475b02ac8e06d00c59df3fe22c1b631a7098e0c65a728ec1673b00a2
 
 # Translate database content, used in filters
 django-dbgettext==0.1.2 \
     --hash=sha256:f5a115b2338a9d71a333a4b89cec14afbd8fd0180f98ff35a9c7f5d96ee969a8
 
 # Add CreationDateTimeField, management commands
-django-extensions==1.6.1 \
-    --hash=sha256:4799534f35eba1c07cb6f9859aa5bb719886769f5d35d2a38e7490ce90c0ce69 \
-    --hash=sha256:f98f991d2b039033ac5faa638c0d1afb2720abf4d9d781573c3592d6899480a1
+django-extensions==1.6.7 \
+    --hash=sha256:7c33f1be6acf7414539cfdef2967bf6240d3c9317551b5d84622dff7824cd3c6 \
+    --hash=sha256:ebdfc329207231f63b5ccb591407aadbc1a524af752e52690f0646eb7ff52943
 
 # Modern flat theme for Django admin
 django-flat-theme==1.1.3 \
@@ -252,9 +251,9 @@ puente==0.4.1 \
     --hash=sha256:84f769c0ea607829c77bd8b3d6d6fbc16589cd7a5d4e5023f717cd3d5de54473
 
 # Parse HTML with CSS selectors like jquery, in prod and in tests
-pyquery==1.2.11 \
-    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
-    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
+pyquery==1.2.13 \
+    --hash=sha256:2c89331bd9524fefba9e771a94de8cd4668fb7349f27bfa1bbe57323dd06bc14 \
+    --hash=sha256:fbc95cf422ac79fa00c5107a2f33dff7dd106d6de569493bd938881b75d42e49
 
 # Translate environment variables into native Python types
 python-decouple==3.0 \
@@ -270,9 +269,9 @@ pytidylib==0.2.4 \
     --hash=sha256:0af07bd8ebd256af70ca925ada9337faf16d85b3072624f975136a5134150ab6
 
 # Send tracebacks to Sentry instead of emailing admins
-raven==5.10.2 \
-    --hash=sha256:f17269486e9f64ccd5a38a859e8191a8d8f5609e8f0efee6f1881e8a0fb20ed8 \
-    --hash=sha256:58d52e16c834f70046f07d53795cafbf2709aef87afa9ca2a9d21be28a6ed92c
+raven==5.19.0 \
+    --hash=sha256:e45d249385fe5ff4090978b82fd0a2744a2c57947241af416e20d9c85d3a2ead \
+    --hash=sha256:cd952238e5a5ffcf0a626f4c2a1326a587b84e24e0e6bca36deef9c9b1c01933
 
 # Modern caching server, to replace memcached in AWS
 redis==2.10.5 \
