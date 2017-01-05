@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-04 21:56+0000\n"
+"PO-Revision-Date: 2017-01-05 12:20+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -174,7 +174,7 @@ msgstr "MathML"
 
 #: jinja2/base.html:139
 msgid "References & Guides"
-msgstr ""
+msgstr "Αναφορές & Οδηγοί"
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
 #, fuzzy
@@ -3259,14 +3259,12 @@ msgid "Next Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
-#, fuzzy
 msgid "see all contributors"
-msgstr "Όροι συντελεστών"
+msgstr "προβολή όλων των εθελοντών"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
-#, fuzzy
 msgid "hide contributors"
-msgstr "Όροι συντελεστών"
+msgstr "απόκρυψη εθελοντών"
 
 #: kuma/wiki/jinja2/wiki/document.html:194
 #, python-format
@@ -3350,14 +3348,14 @@ msgid "Last updated by:"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Template"
-msgstr "Επεξεργασία demo"
+msgstr "%(title)s | Επεξεργασία πρότυπου"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Article"
-msgstr "Άρθρο στη Wikipedia"
+msgstr "%(title)s | Επεξεργασία άρθρου"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
