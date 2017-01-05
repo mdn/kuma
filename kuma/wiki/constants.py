@@ -246,7 +246,7 @@ INVALID_REV_SLUG_CHARS_RE = re.compile(r"""[\s\?\/%%]+""")
 DOCUMENT_PATH_RE = re.compile(r'[^\$]+')
 
 # how a redirect looks as rendered HTML
-REDIRECT_HTML = 'REDIRECT <a class="redirect"'
+REDIRECT_HTML = 'REDIRECT <a '
 REDIRECT_CONTENT = 'REDIRECT <a class="redirect" href="%(href)s">%(title)s</a>'
 
 DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
