@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-05 12:20+0000\n"
+"PO-Revision-Date: 2017-01-05 12:21+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -3334,9 +3334,8 @@ msgid "This article doesn't have approved content yet."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:341
-#, fuzzy
 msgid "Document Tags and Contributors"
-msgstr "Όροι συντελεστών"
+msgstr "Εθελοντές και ετικέτες εγγράφου"
 
 #: kuma/wiki/jinja2/wiki/document.html:347
 #, fuzzy
