@@ -156,18 +156,6 @@
     config.keystrokes = [
       // CTRL+0
       [ CKEDITOR.CTRL + 48, 'removeFormat' ],
-/*      // CTRL+2
-      [ CKEDITOR.CTRL + 50, 'mdn-format-h2' ],
-      // CTRL+3
-      [ CKEDITOR.CTRL + 51, 'mdn-format-h3' ],
-      // CTRL+4
-      [ CKEDITOR.CTRL + 52, 'mdn-format-h4' ],
-      // CTRL+5
-      [ CKEDITOR.CTRL + 53, 'mdn-format-h5' ],
-      // CTRL+O
-      [ CKEDITOR.CTRL + 79, 'mdn-format-code' ],
-      // CTRL+P
-      [ CKEDITOR.CTRL + 80, 'mdn-format-pre' ],*/
       // CTRL+K
       [ CKEDITOR.CTRL + 75, 'link' ],
       // CTRL+SHIFT+K
