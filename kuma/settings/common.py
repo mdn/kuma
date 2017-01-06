@@ -258,6 +258,20 @@ def _get_locales():
 LOCALES = _get_locales()
 LANGUAGES = [(locale, LOCALES[locale].native) for locale in MDN_LANGUAGES]
 
+
+def enable_candidate_languages():
+    # Enable candidate languages for display and translation
+    for locale in CANDIDATE_LANGUAGES:
+        LANGUAGE_URL_MAP[locale.lower()] = locale
+        LANGUAGES.append((locale, LOCALES[locale].native))
+
+
+ENABLE_CANDIDATE_LANGUAGES = config('ENABLE_CANDIDATE_LANGUAGES',
+                                    default=DEBUG,
+                                    cast=bool)
+if ENABLE_CANDIDATE_LANGUAGES:
+    enable_candidate_languages()
+
 # List of MindTouch locales mapped to Kuma locales.
 #
 # Language in MindTouch pages are first determined from the locale in the page
