@@ -125,67 +125,67 @@ LANGUAGE_CODE = 'en-US'
 
 # Accepted locales
 MDN_LANGUAGES = (
-    'en-US',
-    'af',
-    'ar',
-    'az',
-    'bm',
-    'bn-BD',
-    'bn-IN',
-    'ca',
-    'cs',
-    'de',
-    'ee',
-    'el',
-    'es',
-    'fa',
-    'ff',
-    'fi',
-    'fr',
-    'fy-NL',
-    'ga-IE',
-    'ha',
-    'he',
-    'hi-IN',
-    'hr',
-    'hu',
-    'id',
-    'ig',
-    'it',
-    'ja',
-    'ka',
-    'kab',
-    'ko',
-    'ln',
-    'mg',
-    'ml',
-    'ms',
-    'my',
-    'nl',
-    'pl',
-    'pt-BR',
-    'pt-PT',
-    'ro',
-    'ru',
-    'son',
-    'sq',
-    'sr',
-    'sr-Latn',
-    'sv-SE',
-    'sw',
-    'ta',
-    'th',
-    'tl',
-    'tn',
-    'tr',
-    'uk',
-    'vi',
-    'wo',
-    'xh',
-    'yo',
-    'zh-CN',
-    'zh-TW',
-    'zu',
+    'en-US',    # English
+    'af',       # Akrikaans
+    'ar',       # Arabic
+    'az',       # Azerbaijani
+    'bm',       # Bambara
+    'bn-BD',    # Bengali (Bangladesh)
+    'bn-IN',    # Bengali (India)
+    'ca',       # Catalan
+    'cs',       # Czech
+    'de',       # German
+    'ee',       # Ewe
+    'el',       # Greek
+    'es',       # Spanish
+    'fa',       # Persian
+    'ff',       # Fulah
+    'fi',       # Finnish
+    'fr',       # French
+    'fy-NL',    # Frisian (Netherlands)
+    'ga-IE',    # Irish (Ireland)
+    'ha',       # Hausa
+    'he',       # Hebrew
+    'hi-IN',    # Hindi (India)
+    'hr',       # Croatian *** not in Pontoon
+    'hu',       # Hungarian
+    'id',       # Indonesian
+    'ig',       # Igbo
+    'it',       # Italian
+    'ja',       # Japanese
+    'ka',       # Georgian
+    'kab',      # Kabyle
+    'ko',       # Korean
+    'ln',       # Lingala
+    'mg',       # Malagasy
+    'ml',       # Malayalam
+    'ms',       # Malay
+    'my',       # Burmese
+    'nl',       # Dutch
+    'pl',       # Polish
+    'pt-BR',    # Portuguese (Brazil)
+    'pt-PT',    # Portuguese (Portugal)
+    'ro',       # Romanian
+    'ru',       # Russian
+    'son',      # Songhay
+    'sq',       # Albanian
+    'sr',       # Serbian
+    'sr-Latn',  # Serbian (Latin)
+    'sv-SE',    # Swedish (Sweden)
+    'sw',       # Swahili
+    'ta',       # Tamil
+    'th',       # Thai
+    'tl',       # Tagalog
+    'tn',       # Tswana *** not in Pontoon
+    'tr',       # Turkish
+    'uk',       # Ukranian
+    'vi',       # Vietnamese
+    'wo',       # Wolof
+    'xh',       # Xhosa
+    'yo',       # Yoruba
+    'zh-CN',    # Chinese (China)
+    'zh-TW',    # Chinese (Taiwan, Province of China)
+    'zu',       # Zulu
 )
 
 # Locales being considered for MDN. This makes the UI strings available for
