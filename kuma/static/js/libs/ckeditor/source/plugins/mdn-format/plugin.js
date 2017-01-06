@@ -40,32 +40,6 @@ CKEDITOR.config.mdnFormat_formats = [
 ];
 
 CKEDITOR.plugins.add('mdn-format', {
-  buildLabel: function(format) {
-    var label = format.label;
-
-    // If there's a key shortcut, we want to add that to the label.
-
-    if (format.key) {
-        var modifiers = "";
-
-        if (format.key & CKEDITOR.ALT) {
-            modifiers += "Alt-";
-        }
-        if (format.key & CKEDITOR.CTRL) {
-            modifiers += "Ctrl-";
-        }
-        if (format.key & CKEDITOR.SHIFT) {
-            modifiers += "Shift-";
-        }
-
-        if (modifiers.length) {
-            label += " (" + modifiers + ")";
-        }
-    }
-
-    return label;
-  },
-
   init: function(editor) {
     var formats = editor.config.mdnFormat_formats,
       inlineStyleOrder = 100,
@@ -101,8 +75,28 @@ CKEDITOR.plugins.add('mdn-format', {
       });
 
       // Register the button if the button plugin is loaded.
-      if(editor.ui.addButton) {
-        var fullLabel = plugin.buildLabel(format);
+      if (editor.ui.addButton) {
+        var fullLabel = format.title;
+
+        // If there's a key shortcut, we want to add that to the label.
+
+        if (format.key) {
+            var modifiers = "";
+
+            if (format.key & CKEDITOR.ALT) {
+                modifiers += "Alt-";
+            }
+            if (format.key & CKEDITOR.CTRL) {
+                modifiers += "Ctrl-";
+            }
+            if (format.key & CKEDITOR.SHIFT) {
+                modifiers += "Shift-";
+            }
+
+            if (modifiers.length) {
+                fullLabel += " (" + modifiers + String.fromCharCode(format.key & 0xffff) + ")";
+            }
+        }
 
         editor.ui.addButton('MdnFormat' + CKEDITOR.tools.capitalize(format.tag), {
           icon: format.icon,
