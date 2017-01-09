@@ -118,8 +118,9 @@ class BasePage(Page):
 
         def open_feedback(self):
             self.find_element(*self._feedback_link_locator).click()
+            # import needs to be here to avoid circular reference
             from pages.article import ArticlePage
-            return ArticlePage(self.selenium, self.page.base_url)
+            return ArticlePage(self.selenium, self.page.base_url).wait_for_page_to_load()
 
         def localized_feedback_path(self, locale):
             link = self.find_element(*self._feedback_link_locator)
