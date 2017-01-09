@@ -436,8 +436,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         label=_(u'Tags:'),
         error_messages={
             'max_length': TAGS_LONG,
-}
-)
+        }
+    )
 
     keywords = StrippedCharField(
         required=False,
