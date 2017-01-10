@@ -851,6 +851,7 @@ PIPELINE_JS = {
             'js/search-navigator.js',
             'js/wiki.js',
             'js/wiki-samples.js',
+            'js/wiki-helpful-survey.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
