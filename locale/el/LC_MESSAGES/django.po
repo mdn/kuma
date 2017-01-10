@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-05 12:21+0000\n"
+"PO-Revision-Date: 2017-01-10 14:31+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -2166,7 +2166,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Όροι και απόρρητο"
 
 #: kuma/users/jinja2/socialaccount/signup.html:166
 #, fuzzy, python-format
@@ -2175,7 +2175,7 @@ msgstr "Αποδέχομαι τους <a href=\"%(terms_url)s#tfc\">όρους �
 
 #: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Δημιουργία προφίλ MDN"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with GitHub"
@@ -2525,7 +2525,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
-msgstr ""
+msgstr "Γεια σας από το MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -3077,7 +3077,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1944
 msgid "Needs Review"
-msgstr ""
+msgstr "Χρειάζεται αξιολόγηση"
 
 #: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
