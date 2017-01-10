@@ -179,6 +179,14 @@ There are a few ways to change an environment variables:
 * Changing the ``environment`` list in ``docker-compose.yml``.
 * Creating a ``.env`` file in the repository root directory.
 
+One variable you may wish to alter for local development is ``DEBUG_TOOLBAR``,
+which, when set to ``True``, will enable the Django Debug Toolbar::
+
+    DEBUG_TOOLBAR=True
+
+Note that enabling the Debug Toolbar can severely impact response time, adding
+around 4 seconds to page load time.
+
 .. _Environment variables: http://12factor.net/config
 
 .. _advanced_config_docker:
@@ -191,7 +199,7 @@ The settings are "baked" into the containers created by ``docker-compose up``.
 
 To override a container's settings for development, use a local override file.
 For example, the ``web`` service runs in container ``kuma_web_1`` with the
-default command 
+default command
 "``gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application``".
 A useful alternative for debugging is to run a single-threaded process that
 loads the Werkzeug debugger on exceptions (see docs for runserver_plus_), and
