@@ -22,5 +22,5 @@
     # However, kuma/tasks/node.yaml would need to be modified to:
     # use the nvm-configured npm (executable=path/to/nvm)
     # not symlink from /usr/bin to /usr/local/bin in TravisCI
-    - { role: nodesource.node, tags: [pipeline] }
+    - { role: geerlingguy.nodejs, tags: [pipeline], nodejs_install_npm_user: "root"}
     - kuma

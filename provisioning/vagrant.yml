@@ -37,7 +37,7 @@
     - Mayeu.RabbitMQ
     - Stouts.elasticsearch
     - bobbyrenwick.pip
-    - nodesource.node
+    - geerlingguy.nodejs
     - kuma
   environment:
     PYTHONDONTWRITEBYTECODE: 1
