@@ -48,9 +48,9 @@
                   <th scope="row">
                       <h3><a href="{{ revision.document.get_absolute_url() }}">{{ revision.document.title }}</a></h3>
                       <ul class="activity-actions">
-                          <li><a href="{{ revision.document.get_edit_url() }}" class="edit">{{ _("Edit page") }}</a></li>
+                          <li><a href="{{ revision.document.get_edit_url() }}" class="edit" rel="nofollow, noindex">{{ _("Edit page") }}</a></li>
                           <li>{% if revision.previous %}<a href="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ revision.previous.id }}&amp;to={{ revision.id }}" rel="nofollow, noindex" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
-                          <li><a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history">{{ _("View page history") }}</a></li>
+                          <li><a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history" rel="nofollow, noindex">{{ _("View page history") }}</a></li>
                       </ul>
                   </th>
                   <td>{{ datetimeformat(revision.created, format='date') }}<br />
