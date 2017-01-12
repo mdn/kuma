@@ -4,13 +4,13 @@
     https://developer.mozilla.org/en-US/docs/Template:TopicBox
     https://developer.mozilla.org/en-US/docs/Template:CommunityBox
 */
-$communitybox-spacing = 13px;
+$communitybox-spacing : 13px;
 
 .communitybox {
     padding: $communitybox-spacing;
     background-color: $homepage-background-color;
     background-image: url($path-to-images + "blueprint.png");
-    set-font-size($base-font-size);
+    @include set-font-size($base-font-size);
 
     &,
     & a,
@@ -21,7 +21,7 @@ $communitybox-spacing = 13px;
     }
 
     strong {
-        set-larger-font-size();
+        @include set-larger-font-size();
     }
 
     ul {
@@ -42,7 +42,7 @@ $communitybox-spacing = 13px;
 
 /* subheading */
 .communitysubhead {
-    set-larger-font-size();
+    @include set-larger-font-size();
     font-weight: bold;
 
     /* only need margin to balance it with content in other columns */
@@ -62,11 +62,11 @@ ul.communitymailinglist { /* needs specificity to get past .text-content ul */
     margin: 0 0 $content-vertical-spacing;
 }
 .communitymailinglist a {
-    background: rgba-fallback(rgba(255,255,255,0.3));
+    @include rgba-fallback(background, #fff, 0.3, $homepage-background-color);
     display: inline-block;
     color: #fff;
     padding: 3px 6px;
-    bidi-style(margin-right, 3px, margin-left, 0);
+    @include bidi-style(margin-right, 3px, margin-left, 0);
     border-radius: 3px;
 }
 
@@ -75,10 +75,12 @@ ul.communitymailinglist { /* needs specificity to get past .text-content ul */
     margin-top: $communitybox-spacing;
 }
 .communitycontact a {
-    border-bottom: 1px solid rgba-fallback(rgba(255,255,255,0.6));
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    @include rgba-fallback(border-bottom-color, #fff, 0.6, $homepage-background-color);
 }
 .communitycontact a:hover,
 .communitycontact a:focus {
     text-decoration: none;
-    border-bottom: 1px solid rgba-fallback(rgba(255,255,255,0.9));
+    @include rgba-fallback(border-bottom-color, #fff, 0.9, $homepage-background-color);
 }

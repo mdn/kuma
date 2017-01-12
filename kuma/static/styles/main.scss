@@ -1,21 +1,23 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
 /*
     Main stylesheet for the site, standalone
 */
 
-@require 'base/fonts/opensans';
+@import 'base/fonts/opensans';
 
 /* stylesheets used only in main  */
-@require 'base/elements';
-@require 'base/utilities';
-@require 'base/icons';
+@import 'base/elements';
+@import 'base/icons';
 
 /* components also used elsewhere */
-@require 'components/components';
-@require 'components/content';
-@require 'components/structure';
-@require 'components/form';
-@require 'components/tags';
-@require 'components/doc-title';
-@require 'components/errorlist';
-@require 'components/compact';
-@require 'components/newsletter';
+@import 'components/components';
+@import 'components/content';
+@import 'components/structure';
+@import 'components/form';
+@import 'components/tags';
+@import 'components/doc-title';
+@import 'components/errorlist';
+@import 'components/compact';
+@import 'components/newsletter';

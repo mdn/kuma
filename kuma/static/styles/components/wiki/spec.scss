@@ -1,5 +1,3 @@
-@require '../../includes/mixins_indicators';
-
 /*
 Colors and Badges for the Spec2 macro template
 ====================================================================== */
@@ -45,13 +43,13 @@ Badges
 .spec-Living:before,
 .spec-Standard:before,
 .spec-Draft:before {
-    @extends $indicator-inline;
+    @extend %indicator-inline;
     font-weight: 700;
     /* bidi for this is complicated, the tag itself is LTR but the
        name of the spec could be either LTR or RTL (depending on
        if it's been translated) so we add margins to both sides.
        Not perfect but good compromise.  */
-    bidi-value(margin, 0.2em 0.6em 0 0, 0.2em 0.6em 0);
+    @include bidi-value(margin, 0.2em 0.6em 0 0, 0.2em 0.6em 0);
     direction: ltr;
 }
 

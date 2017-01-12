@@ -4,10 +4,12 @@
     .twopartsyntaxbox is used for CSS properties
 */
 
+$syntaxbox-help-width: 1.1em;
+
 pre.syntaxbox,
 pre.twopartsyntaxbox {
+    @extend %code-block;
     background: $code-block-background-alt-color;
-    @extend $code-block;
     white-space: pre-wrap;
     text-overflow: ellipsis ellipsis;
 }
@@ -20,8 +22,8 @@ pre.twopartsyntaxbox {
     height: 1.2em;
     float: left;
     font-size: $larger-font-size;
-    width: 1.1em;
-    margin-left: @width * -1;
+    width: $syntaxbox-help-width;
+    margin-left: $syntaxbox-help-width * -1;
     margin-top: -4px;
     opacity: 0;
     overflow: hidden;
@@ -35,5 +37,3 @@ pre.twopartsyntaxbox {
         opacity: 1;
     }
 }
-
-

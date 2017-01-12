@@ -34,7 +34,7 @@ Enhancements!
 ====================================================================== */
 :not(pre):not(code)>code[class*='language-'],
 pre[class*='language-'] {
-    @extend $code-block;
+    @extend %code-block;
 }
 
 /*  we don't want <pre><em><code> to have the code-block styling  */

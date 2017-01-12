@@ -5,7 +5,7 @@ V 0.3.0
 
 #tabzilla {
     position: relative;
-    bidi-value(float, right, left);
+    @include bidi-value(float, right, left);
 }
 
 #tabzilla a {
@@ -32,7 +32,7 @@ V 0.3.0
 #tabzilla:before {
     position: absolute;
     display: block;
-    bidi-style(left, 28px, right, auto);
+    @include bidi-style(left, 28px, right, auto);
     top: 0;
     width: 88px;
     height: 26px;
@@ -50,7 +50,7 @@ Customization for MDN
     background-color: $text-color;
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     #tabzilla {
         display: none;
     }

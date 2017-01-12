@@ -2,7 +2,7 @@
 homepage masthead (search, feature callouts)
 ====================================================================== */
 .home-masthead {
-    clearfix();
+    @include clearfix();
     padding: $first-content-top-padding 0;
 
     h1 {
@@ -10,7 +10,7 @@ homepage masthead (search, feature callouts)
         width: 60%;
 
         span {
-            bidi-style(padding-left, 20%, padding-right, 0);
+            @include bidi-style(padding-left, 20%, padding-right, 0);
             display: block;
         }
     }
@@ -30,7 +30,7 @@ homepage masthead (search, feature callouts)
     /* Only use the "big search" style when the search filter feature
     is not enabled. */
     > input#home-q {
-        big-search();
+        @include big-search();
     }
 
     .search-icon {
@@ -39,15 +39,15 @@ homepage masthead (search, feature callouts)
     }
 
     input#home-q {
-        set-placeholder-style(letter-spacing, -1px);
-        set-placeholder-style(color, $text-color);
+        @include set-placeholder-style(letter-spacing, -1px);
+        @include set-placeholder-style(color, $text-color);
         color: $text-color;
         background-color: #fff;
-        bidi-style(padding-left, 30px, padding-right, 0);
+        @include bidi-style(padding-left, 30px, padding-right, 0);
     }
 }
 
-@media $media-query-tablet {
+@media #{$media-query-tablet} {
 
     .home-masthead {
         h1 {
@@ -56,15 +56,15 @@ homepage masthead (search, feature callouts)
 
             span {
                 display: inline;
-                bidi-style(padding-left, 0, padding-right, 0);
+                @include bidi-style(padding-left, 0, padding-right, 0);
             }
         }
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     h1 {
-        set-font-size(34px);
+        @include set-font-size(34px);
     }
     .search-form {
         width: 100%;

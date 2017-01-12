@@ -7,12 +7,12 @@
     margin-bottom: $grid-spacing;
     border-radius: 6px;
     padding: $grid-spacing ($grid-spacing *2);
-    set-font-size(28px);
+    @include set-font-size(28px);
     line-height: 1.5;
     text-align: center;
     text-transform: none;
 
     div {
-        set-smaller-font-size();
+        @include set-smaller-font-size();
     }
 }

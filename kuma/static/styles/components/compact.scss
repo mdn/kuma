@@ -7,7 +7,7 @@
     dd {
       display: inline;
       margin-bottom: 0;
-      bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
+      @include bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
 
         &:after {
           content: '\A';

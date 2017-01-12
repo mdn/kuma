@@ -1,11 +1,12 @@
-@require 'components/option-list';
+@import 'option-list';
 
 /*
     Additional formatting for the real page content; i.e. text in the <main> element
     We cannot put these styles in the tags.styl file because they don't apply to the entire layout
 */
 
-$table-blue = #d4dde4;
+$table-blue: #d4dde4;
+$table-cell-border: 2px solid #fff;
 
 .text-content {
 
@@ -16,29 +17,29 @@ $table-blue = #d4dde4;
         border-width: 1px 0 0 1px;
 
         &.standard-table:not(.learn-box) {
-            border: 2px solid #fff;
+            border: $table-cell-border;
 
             td {
-                background-color: rgba-fallback(rgba($table-blue, 0.15));
-                border: @border;
-                box-shadow: inset 0 -1px 0 0 rgba-fallback(rgba($table-blue, 0.5));
+                @include rgba-fallback(background-color, $table-blue, 0.15);
+                border: $table-cell-border;
+                box-shadow: inset 0 -1px 0 0 rgba($table-blue, 0.5);
             }
 
             /* alternating row colours (aka zebra or candy striping) */
             &:not(.nostripe) tr:nth-child(odd) td {
-                background-color: rgba-fallback(rgba($table-blue, 0.25));
+                @include rgba-fallback(background-color, $table-blue, 0.25);
             }
 
             td.header, th {
-                border: @border;
-                border-bottom: 2px solid rgba-fallback(rgba($table-blue, 1));
-                background: rgba-fallback(rgba($table-blue, 0.5));
+                border: $table-cell-border;
+                border-bottom: 2px solid $table-blue;
+                @include rgba-fallback(background, $table-blue, 0.5);
                 padding: 2px 8px 4px;
 
                 font-family: $heading-font-family;
                 font-size: 14px;
                 font-weight: bold;
-                {$selector-heading-font-fallback} {
+                #{$selector-heading-font-fallback} {
                     font-family: $heading-font-family-fallback;
                 }
             }
@@ -51,20 +52,22 @@ $table-blue = #d4dde4;
 
         &.fullwidth-table {
             background: #fff;
-            border: 1px solid rgba-fallback(rgba($table-blue, 0.5));
+            border-width: 1px;
+            border-style: solid;
+            @include rgba-fallback(border-color, $table-blue, 0.5);
             margin-bottom: $grid-spacing;
             width: 100%;
 
             td {
                 border: 1px solid #ccc;
                 padding: 5px;
-                bidi-value(text-align, left, right);
+                @include bidi-value(text-align, left, right);
                 vertical-align: top;
             }
 
             td.header, th {
-                background: rgba-fallback(rgba($table-blue, 0.5));
-                border: 1px solid rgba-fallback(rgba($table-blue, 1));
+                @include rgba-fallback(background, $table-blue, 0.5);
+                border: 1px solid $table-blue;
                 padding: 5px;
             }
         }
@@ -74,11 +77,11 @@ $table-blue = #d4dde4;
         border: solid #e0e0dc;
         border-width: 0 1px 1px 0;
         padding: $content-vertical-spacing $content-horizontal-spacing;
-        bidi-value('text-align', left, right);
+        @include bidi-value('text-align', left, right);
     }
 
     thead th {
-        background: rgba-fallback(rgba($table-blue, 0.5));
+        @include rgba-fallback(background, $table-blue, 0.5);
     }
 
     /* lists and definitions */
@@ -96,12 +99,12 @@ $table-blue = #d4dde4;
     }
 
     ul, ol {
-        bidi-style(padding-left, ($grid-spacing * 2), padding-right, 0);
+        @include bidi-style(padding-left, ($grid-spacing * 2), padding-right, 0);
         margin-bottom: $content-block-margin;
 
         &.no-bullets {
             list-style-type: none;
-            bidi-style(padding-left, 0, padding-right, 0);
+            @include bidi-style(padding-left, 0, padding-right, 0);
         }
     }
 
@@ -112,7 +115,7 @@ $table-blue = #d4dde4;
     li {
         margin-bottom: $content-vertical-spacing;
     }
-    prevent-last-child-spacing(li, padding-bottom);
+    @include prevent-last-child-spacing(li, padding-bottom);
 
     dt {
         font-style: normal;
@@ -121,7 +124,7 @@ $table-blue = #d4dde4;
 
     dd {
         margin-bottom: $content-block-margin;
-        bidi-style(padding-left, $grid-spacing, padding-right, 0);
+        @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 
     span.alllinks {
@@ -140,7 +143,7 @@ $table-blue = #d4dde4;
 
     .licenseblock,
     .originaldocinfo {
-        set-message-base(true);
+        @include set-message-base(true);
         background: #f1f1f1;
         border: 2px solid #cccccc;
         font-size: $smaller-font-size;
@@ -154,16 +157,16 @@ $table-blue = #d4dde4;
 }
 
 ul.directory-tree {
-    bidi-style(padding-left, 0, padding-right, 0);
+    @include bidi-style(padding-left, 0, padding-right, 0);
 
     &,
     ul {
-        bidi-style(margin-left, 0, margin-right, 0);
+        @include bidi-style(margin-left, 0, margin-right, 0);
         list-style: none;
     }
 
     ul {
-        bidi-style(padding-left, ($grid-spacing + $content-horizontal-spacing), padding-right, 0);
+        @include bidi-style(padding-left, ($grid-spacing + $content-horizontal-spacing), padding-right, 0);
 
         li {
             position: relative;
@@ -172,7 +175,7 @@ ul.directory-tree {
             &:after {
                 content: '';
                 position: absolute;
-                bidi-style(left, -15px, right, auto);
+                @include bidi-style(left, -15px, right, auto);
                 display: block;
             }
 
@@ -181,13 +184,13 @@ ul.directory-tree {
                 height: 0.75em;
                 width: 10px;
                 border-bottom: 1px solid $grey;
-                bidi-style(border-left, 1px solid $grey, border-right, none);
+                @include bidi-style(border-left, 1px solid $grey, border-right, none);
             }
 
             &:after {
                 bottom: -7px;
                 height: 100%;
-                bidi-style(border-left, 1px solid $grey, border-right, none);
+                @include bidi-style(border-left, 1px solid $grey, border-right, none);
             }
 
            &:last-child:after {
@@ -234,14 +237,13 @@ ul.directory-tree {
     }
 
     .ui-state-hover, .ui-state-focus, .ui-state-highlight, .ui-state-active {
-        background: #e4e4d9;
-        background: rgba-fallback(rgba(198,198,175,.2));
+        background: $light-background-color;
     }
 }
 
 div.bug {
     font-style: italic;
-    prevent-last-child-bottom-spacing();
+    @include prevent-last-child-bottom-spacing();
     overflow: hidden;
 
     pre {
@@ -250,8 +252,8 @@ div.bug {
 }
 
 .callout-box {
-    pull-aside();
-    bidi-value(margin-bottom, $grid-spacing, $grid-spacing); /* override behaviour of pull-aside */
+    @include pull-aside();
+    @include bidi-value(margin-bottom, $grid-spacing, $grid-spacing); /* override behaviour of pull-aside */
     box-sizing: border-box;
     background: $light-background-color;
     border: 1px solid #f1f1f1;
@@ -262,8 +264,8 @@ div.bug {
     z-index: 2;
 
     /* override behaviour of pull-aside */
-    @media $media-query-small-mobile {
-        bidi-value(margin-bottom, $grid-spacing, $grid-spacing);
+    @media #{$media-query-small-mobile} {
+        @include bidi-value(margin-bottom, $grid-spacing, $grid-spacing);
     }
 }
 
@@ -275,16 +277,16 @@ p.footnote {
 
 /* Classes created by the WYSIWYG */
 .twocolumns {
-    vendorize(column-count, 2);
+   @include vendorize(column-count, 2);
 }
 .threecolumns {
-    vendorize(column-count, 3);
+   @include vendorize(column-count, 3);
 }
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
    .twocolumns,
    .threecolumns {
-        vendorize(column-count, 1);
+       @include vendorize(column-count, 1);
     }
 }
 

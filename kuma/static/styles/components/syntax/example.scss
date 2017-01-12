@@ -1,5 +1,5 @@
-$bg-good = blend(rgba($positive, 0.05), #fff);
-$bg-bad = blend(rgba($negative, 0.05), #fff);
+$bg-good : mix($positive, #fff, 5%);
+$bg-bad : mix($negative, #fff, 5%);
 
 /*
 Pseudo element for icons

@@ -1,10 +1,10 @@
 .section-edit {
-    bidi-value(float, right, left);
-    bidi-style(margin-left, 20px, margin-right, 0);
-    set-smaller-font-size();
+    @include bidi-value(float, right, left);
+    @include bidi-style(margin-left, 20px, margin-right, 0);
+    @include set-smaller-font-size();
     opacity: 0;
 
-    @media $media-query-mobile {
+    @media #{$media-query-mobile} {
         display: none;
     }
 

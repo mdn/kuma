@@ -1,19 +1,19 @@
 /* contributor avatars at top of articles */
 
-$avatar-max-width = 20px;
-$avatar-margin = 5px;
-$avatar-limit = 6;
+$avatar-max-width: 20px;
+$avatar-margin: 5px;
+$avatar-limit: 6;
 
 .contributor-avatars {
-    bidi-value(float, right, left);
+    @include bidi-value(float, right, left);
     position: relative;
     max-width: ($avatar-limit * ($avatar-max-width + $avatar-margin));
     margin-top: 23px;
-    bidi-style(margin-left, $grid-spacing, margin-right, 0);
+    @include bidi-style(margin-left, $grid-spacing, margin-right, 0);
     margin-bottom: $grid-spacing;
     color: #777;
-    set-smaller-font-size();
-    bidi-value(text-align, right, left);
+    @include set-smaller-font-size();
+    @include bidi-value(text-align, right, left);
 
     .from-search &,
     .no-js & {
@@ -23,16 +23,16 @@ $avatar-limit = 6;
     &.contributor-avatars-open {
         max-width: none;
         width: 100%;
-        bidi-style(margin-left, 0, margin-right, 0);
+        @include bidi-style(margin-left, 0, margin-right, 0);
     }
 
 
     ul {
         display: inline-block;
         opacity: 0.7;
-        vendorize(transition, opacity .3s ease-in-out);
+       @include vendorize(transition, opacity .3s ease-in-out);
 
-        .contributor-avatars-open&,
+        &.contributor-avatars-open,
         &:hover,
         &.focused {
             opacity: 1;
@@ -40,8 +40,8 @@ $avatar-limit = 6;
     }
 
     li {
-        bidi-value(float, left, right);
-        bidi-value(margin, 0 0 4px $avatar-margin, 0 $avatar-margin 4px 0);
+        @include bidi-value(float, left, right);
+        @include bidi-value(margin, 0 0 4px $avatar-margin, 0 $avatar-margin 4px 0);
         display: inline-block;
 
 
@@ -52,12 +52,12 @@ $avatar-limit = 6;
 
     a {
         display: inline-block;
-        vendorize(transition, all .2s);
+       @include vendorize(transition, all .2s);
 
         &:hover,
         &:focus {
             outline: none;
-            vendorize(transform, scale(1.7));
+           @include vendorize(transform, scale(1.7));
         }
     }
 
@@ -75,17 +75,17 @@ $avatar-limit = 6;
     button {
         position: absolute;
         top: 100%;
-        bidi-style(right, 0, left, auto);
+        @include bidi-style(right, 0, left, auto);
         margin-top: -5px;
         padding: 0;
         color: $link-color;
-        bidi-value(text-align, right, left)
+        @include bidi-value(text-align, right, left);
         text-transform: none;
     }
 }
 
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .contributor-avatars {
         display: none;
     }

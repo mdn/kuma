@@ -1,9 +1,9 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 .submission {
     .section {
-        set-font-size($small-bump-font-size);
+        @include set-font-size($small-bump-font-size);
         margin: 0 0 $grid-spacing;
         padding: 35px 0 0;
         position: relative;
@@ -11,7 +11,7 @@
         & > legend {
             b {
                 display: block;
-                set-font-size($base-bump-font-size);
+                @include set-font-size($base-bump-font-size);
                 position: absolute;
             }
         }
@@ -88,7 +88,7 @@
     }
 
     .outer {
-        set-font-size($base-bump-font-size);
+        @include set-font-size($base-bump-font-size);
     }
 
     .choices {
@@ -117,21 +117,21 @@
 .field-note {
     color: #666;
     font-family: inherit;
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     font-style: normal;
     font-weight: normal;
-
-    p& {
-        margin: ($grid-spacing / 4) 0;
-    }
 
     .wordcount & {
         float: right;
     }
 }
 
+p.field-note {
+    margin: ($grid-spacing / 4) 0;
+}
+
 .field-management {
-    bidi-value(float, right, left);
+    @include bidi-value(float, right, left);
     margin: 0 0 5px;
 }
 
@@ -140,14 +140,14 @@
 }
 
 #field-beta {
-    @extend $checkbox-label-container;
+    @extend %checkbox-label-container;
 }
 
 #profiles {
     label {
         margin: 0 0 5px;
-        bidi-value(float, left, right);
-        bidi-style(margin-right, 10px, margin-left, 10px);
+        @include bidi-value(float, left, right);
+        @include bidi-style(margin-right, 10px, margin-left, 10px);
     }
 }
 

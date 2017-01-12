@@ -1,6 +1,3 @@
-@require '../../includes/vars';
-@require '../../includes/mixins';
-
 /*
     Typography
     - headings, blockquotes, paragraphs, links, pre, code
@@ -18,7 +15,7 @@ h1, h2, h3, h4 {
     font-weight: $light-font-weight;
     line-height: 1;
     color: $heading-color;
-    {$selector-heading-font-fallback} {
+    #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
         letter-spacing: -0.04em;
         line-height: 1;
@@ -28,26 +25,26 @@ h1, h2, h3, h4 {
 
 h2, h3 {
     font-family: $site-font-family;
-    {$selector-site-font-fallback} {
+    #{$selector-site-font-fallback} {
         font-family: $site-font-family-fallback;
     }
 }
 
 h1 {
-    heading-1();
+    @include heading-1();
     margin-bottom: $grid-spacing;
 
     line-height: 1.5;
-    {$selector-heading-font-fallback} {
+    #{$selector-heading-font-fallback} {
         line-height: 1.515;
     }
 }
 
 h2 {
-    heading-2();
+    @include heading-2();
 
     font-weight: 700;
-    {$selector-site-font-fallback} {
+    #{$selector-site-font-fallback} {
         font-weight: normal;
         letter-spacing: 0;
         word-spacing: -0.02em;
@@ -55,9 +52,9 @@ h2 {
 }
 
 h3 {
-    set-font-size(24px);
+    @include set-font-size(24px);
     letter-spacing: -0.021em;
-    {$selector-site-font-fallback} {
+    #{$selector-site-font-fallback} {
         line-height: 1.01;
         letter-spacing: 0.002em;
         word-spacing: 0.032em;
@@ -65,18 +62,18 @@ h3 {
 }
 
 h4 {
-    set-font-size(18px);
+    @include set-font-size(18px);
     letter-spacing: -0.014em;
-    {$selector-site-font-fallback} {
+    #{$selector-site-font-fallback} {
         letter-spacing: -0.044em;
         word-spacing: 0.22em;
     }
 }
 
 h5 {
-    set-font-size(16px);
+    @include set-font-size(16px);
     letter-spacing: -0.014em;
-    {$selector-site-font-fallback} {
+    #{$selector-site-font-fallback} {
       letter-spacing: -0.024em;
       word-spacing: .04em;
     }
@@ -93,7 +90,7 @@ p {
 ====================================================================== */
 
 blockquote {
-    prevent-last-child-bottom-spacing();
+    @include prevent-last-child-bottom-spacing();
     padding: 20px 25px;
     border-left: 5px solid #ccc;
     margin-bottom: $content-block-margin;
@@ -132,7 +129,7 @@ a {
         text-decoration: underline;
     }
 
-    {$selector-icon}:before {
+    #{$selector-icon}:before {
         cursor: pointer;
     }
 
@@ -164,7 +161,7 @@ code {
 
 /* pre is a block element so it gets a bit more fancy styling */
 pre {
-    set-font-size($base-font-size);
+    @include set-font-size($base-font-size);
     line-height: 19px;
     border: 0;
     background: $light-background-color;
@@ -181,7 +178,7 @@ pre code {
     font-style: normal;
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     h1, h2, h3, h4, h5, h6 {
         code {
             word-break: break-all;

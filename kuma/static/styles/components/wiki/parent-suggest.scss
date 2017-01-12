@@ -14,14 +14,14 @@
             top: -22px;
             left: 0;
 
-            vendorize(transition, unquote('opacity, top .4s'));
+           @include vendorize(transition, unquote('opacity, top .4s'));
         }
     }
 }
 
 #parent-suggest-input-container {
     background: #eaeff2;
-    create-gradient(#eaeff2, #d4dde4, top);
+    @include create-gradient(#eaeff2, #d4dde4, top);
     padding: 10px;
     border: 1px solid #d4dde4;
     box-shadow: 0 5px 10px #ccc;
@@ -31,7 +31,7 @@
     top: -10px;
     left: -90000px;
 
-    generate-arrow(7px);
+    @include generate-arrow(7px);
 
     &:before {
         border-right: 7px solid #dfe6eb;

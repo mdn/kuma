@@ -2,18 +2,18 @@
     These styles compliment the wiki styles when the page is a zone landing page or is simply in the zone.
 */
 
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /* Settings which apply to _all_ zone pages */
 .zone {
-    create-gradient-background($homepage-background-color, true);
-    use-white-logo();
-    remove-main-spacing();
-    override-main-header-color($blue-background-text-color);
+    @include create-gradient-background($homepage-background-color, true);
+    @include use-white-logo();
+    @include remove-main-spacing();
+    @include override-main-header-color($blue-background-text-color, $homepage-background-color);
 
     #main-header {
-        border-bottom-color: rgba-fallback(rgba(255, 255, 255, 0.2));
+         @include rgba-fallback(border-bottom-color, #fff, 0.2, $homepage-background-color);
     }
 
     /* zone content area needs to be adjusted for zone pages */
@@ -25,7 +25,7 @@
         padding-top: $first-content-top-padding !important;
 
         .center {
-            add-center-spacing();
+            @include add-center-spacing();
         }
     }
 }
@@ -34,7 +34,7 @@
 .zone-landing {
 
     h1 {
-        @extend $column-6;
+        @include column-6();
         color: $blue-background-text-color;
         clear: both;
     }
@@ -61,8 +61,7 @@
         color: $blue-background-text-color;
 
         a {
-            color: $blue-background-text-color;
-            color: rgba-fallback(rgba(255, 255, 255, 0.7));
+            @include rgba-fallback(color, $blue-background-text-color, 0.7, $homepage-background-color);
         }
     }
 
@@ -71,7 +70,7 @@
     }
 
     h3.title {
-        set-font-size($base-font-size);
+        @include set-font-size($base-font-size);
         margin: 6px 0 0 0;
     }
 }
@@ -87,13 +86,13 @@
 
     .masthead-text {
         p {
-            set-larger-font-size();
+            @include set-larger-font-size();
             font-weight: $light-font-weight;
         }
     }
 
     .zone-image {
-        bidi-style(right, 0, left, auto);
+        @include bidi-style(right, 0, left, auto);
         position: absolute;
         top: 100px;
         display: block;
@@ -106,8 +105,7 @@
     a.button, button {
         color: $blue-background-text-color;
         &:not(.transparent) {
-            background-color: #0095dd;
-            background-color: rgba-fallback(rgba(0, 0, 0, 0.1));
+            @include rgba-fallback(background-color, #000, 0.1);
             box-shadow: inset 0 -1px rgba(0, 0, 0, .1);
         }
     }
@@ -115,7 +113,7 @@
 
 .zone-landing-lists li {
     padding: $content-vertical-spacing 0;
-    prevent-last-child-spacing(padding-bottom);
+    @include prevent-last-child-spacing(padding-bottom);
 }
 
 
@@ -126,20 +124,20 @@
     overflow: hidden;
 
     .zone-title {
-        heading-2();
+        @include heading-2();
 
         a {
             color: $blue-background-text-color;
 
             font-family: $heading-font-family;
-            {$selector-heading-font-fallback} {
+            #{$selector-heading-font-fallback} {
                 font-family: $heading-font-family-fallback;
             }
         }
     }
 
     .zone-image {
-        bidi-style(right, 0, left, auto);
+        @include bidi-style(right, 0, left, auto);
         position: absolute;
         top: 0;
         display: block;
@@ -152,7 +150,7 @@
 
 .zone-content {
     padding-top: 38px;
-    reverse-link-decoration()
+    @include reverse-link-decoration()
 }
 
 .zone-subnav-container {
@@ -182,7 +180,7 @@
    because it's a specific zone */
 .dev-program-block {
     margin-bottom: ($grid-spacing * 2);
-    prevent-last-child-spacing('*', margin-bottom);
+    @include prevent-last-child-spacing('*', margin-bottom);
 
     ul {
         margin-bottom: 0;
@@ -190,13 +188,13 @@
 }
 
 .dev-program-first {
-    margin-top: -($grid-spacing * 4);
+    margin-top: ($grid-spacing * 4 * -1);
 }
 
-$dev-program-pad {
+%dev-program-pad {
     background: $light-background-color;
     padding: ($grid-spacing);
-    prevent-last-child-spacing(p, margin-bottom);
+    @include prevent-last-child-spacing(p, margin-bottom);
 }
 
 .dev-program-callouts {
@@ -204,10 +202,10 @@ $dev-program-pad {
     margin-right: $grid-margin;
 
     .dev-program-callout {
-        @extend $dev-program-pad;
+        @extend %dev-program-pad;
 
         h2 {
-            set-larger-font-size();
+            @include set-larger-font-size();
         }
     }
 }
@@ -230,18 +228,18 @@ $dev-program-pad {
 }
 
 .dev-program-explanation {
-    @extend $dev-program-pad;
+    @extend %dev-program-pad;
 }
 
 .dev-program-hacks {
     h3 {
-        set-larger-font-size();
+        @include set-larger-font-size();
         margin-bottom: 4px;
     }
 
     p {
         color: #bbb;
-        set-smaller-font-size();
+        @include set-smaller-font-size();
         margin-bottom: 10px;
 
         a {
@@ -262,7 +260,7 @@ $dev-program-pad {
     }
 }
 
-@media $media-query-tablet {
+@media #{$media-query-tablet} {
     .zone-landing {
         .zone-subnav-container {
             margin-top: 0;
@@ -292,7 +290,7 @@ $dev-program-pad {
 
 
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .zone-landing-header .zone-image, .zone-article-header .zone-image {
         display: none;
     }

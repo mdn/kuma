@@ -20,12 +20,12 @@ Supports colouring
 
 .bc-supports-yes,
 .bc-supports-yes .bc-history {
-    background-color: $bc-color-yes;
+    background-color: map-get($bc-colors, yes);
 }
 
 .bc-supports-partial,
 .bc-supports-partial .bc-history {
-    background: $bc-color-partial;
+    background: map-get($bc-colors, partial);
 }
 .bc-supports-partial {
     background-image: linear-gradient(to bottom right, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 4px, transparent 4px, transparent 65px, rgba(0,0,0,0.15) 65px, rgba(0,0,0,0.15) 75px, transparent 75px, transparent 136px, rgba(0,0,0,0.15) 136px, rgba(0,0,0,0.15) 146px, transparent 146px);
@@ -35,7 +35,7 @@ Supports colouring
 
 .bc-supports-no,
 .bc-supports-no .bc-history {
-    background-color: $bc-color-no;
+    background-color: map-get($bc-colors, no);
 }
 
 .bc-supports-no {
@@ -46,6 +46,5 @@ Supports colouring
 
 .bc-supports-unknown,
 .bc-supports-unknown .bc-history {
-    background-color: $bc-color-unknown;
+    background-color: map-get($bc-colors, unknown);
 }
-

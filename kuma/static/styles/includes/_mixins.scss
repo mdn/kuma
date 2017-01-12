@@ -1,109 +1,105 @@
-@require 'vars';
-@require 'prefixes';
+/*
+Provides main mixins for use within the MDN theme.
+====================================================================== */
+
+@function -remify($value) {
+    $u : unit($value);
+    $v : 0;
+
+    @if $u == 'px' {
+        $v : $value/$base-font-size * 1rem;
+    } @else {
+        $v : unit($value, u)
+    }
+
+    @return $v;
+}
+
+@mixin set-font-size($value) {
+    font-size: $value; // if this is px it will be the fallback for the rem value, otherwise it will be the only declaration
+
+    @if ($value != 'inherit') {
+        // make sure we're working with px otherwise remify will just spit out what we spat out before
+        $u : unit($value);
+        @if $u == 'px' {
+            font-size: -remify($value);
+        }
+    }
+}
+
+@mixin set-smaller-font-size() {
+    @include set-font-size($smaller-font-size);
+}
+@mixin set-larger-font-size() {
+    @include set-font-size($base-bump-font-size);
+}
+
 
 /*
-    Provides man mixins for use within the MDN theme.
-*/
+Vendor prefixes
+====================================================================== */
 
-/* searches expression for the provided string and replaces with provided value */
-replace($expr, $str, $val) {
-  $expr = clone($expr);
-  for $e, $i in $expr {
-    if ($e == $str) {
-      $expr[$i] = $val;
-    }
-  }
-  return $expr;
-}
-
-
-set-font-size(value) {
-    font-size: value;
-
-    if (value is not inherit) {
-
-        // make sure we're working with px otherwise remify will just spit out what we spat out before */
-        u = unit(value);
-        if (u is 'px') {
-            font-size: remify(value);
-        }
-    }
-}
-
-remify(value) {
-    u = unit(value);
-    v = 0;
-
-    if (u is 'px') {
-        v = unit(value/$base-font-size, 'rem')
-    } else {
-        v = unit(value, u)
-    }
-
-    return round(v, 3);
-}
-
-set-smaller-font-size() {
-    set-font-size($smaller-font-size);
-}
-set-larger-font-size() {
-    set-font-size($base-bump-font-size);
-}
-
-/* vendor prefixes */
-
-
-/* vendorizes a propery based on it's value in the prefixes.styl lookup table */
-vendorize($property, $value) {
-    $prefixes = $prefix-properties[''+$property];
+// vendorizes a propery based on it's value in the _prefixes lookup table
+@mixin vendorize($property, $value) {
 
     // might be a quoted because it has commas in it, example: transition-property
-    if($value is a 'string' or $value is a 'ident') {
-        $value = unquote($value);
+    @if (type-of($value) == 'string') {
+        $value : unquote($value);
     }
 
-    if($prefixes == null) {
-        // warn if we're prefixing something unrecognized.
-        warn('Warning in vendorize(): ' + $property + ' not listed in prefixes.styl')
-        // provide unprefixed value as fallback
-        $property: $value;
-    } else {
-        for $prefix in $prefixes {
-          {$prefix + $property}: $value;
+    @if (map-has-key($prefix-properties, $property)) {
+        @each $prefix in map-get($prefix-properties, $property) {
+          #{$prefix + $property}: $value;
         }
         // warn if we're vendorizing something unneccisarily
-        if($prefixes == '') {
-            warn('Warning in vendorize() ' + $property + ' does not need to be vendorized anymore. ')
+        @if(map-get($prefix-properties, $property)  == '') {
+            @warn 'Warning in vendorize() ' + $property + ' does not need to be vendorized anymore.';
         }
+    } @else {
+        // warn if we're prefixing something unrecognized.
+        @warn 'Warning in vendorize(): ' + $property + ' not listed in prefixes map';
+        // provide unprefixed value as fallback
+         #{$property}: $value;
     }
 }
 
-/* vendorizes a value indescriminately by adding the prefixes defined by VENDOR-PREFIXES  */
-vendorize-value(property, value, more = '') {
-    for prefix in VENDOR-PREFIXES {
-        {property}: unquote(prefix + value + more);
+// vendorizes a value indescriminately by adding the prefixes defined by VENDOR-PREFIXES
+@mixin vendorize-value($property, $value, $more : '') {
+    @each $prefix in $VENDOR-PREFIXES {
+        #{$property}: unquote($prefix + $value + $more);
     }
-    {property}: unquote(value + more);
+    #{$property}: unquote($value + $more);
 }
 
-/* prevents spacing of a given element if it's the last child */
-prevent-last-child-spacing(element = '*', property = 'padding') {
-    if (element is '*') {
-        element = unquote(element);
+
+
+/*
+Prevent last child spacing
+====================================================================== */
+
+// prevents spacing of a given element if it's the last child
+@mixin prevent-last-child-spacing($element : '*', $property : 'padding-bottom') {
+    @if ($element == '*') {
+        $element : unquote($element);
     }
 
-    & > {element}:last-child {
-        {property}: 0;
+    & > #{$element}:last-child {
+        #{$property}: 0;
     }
 }
 
-prevent-last-child-bottom-spacing(element = '*') {
-    prevent-last-child-spacing(element, margin-bottom);
-    prevent-last-child-spacing(element, padding-bottom);
+@mixin prevent-last-child-bottom-spacing($element : '*') {
+    @include prevent-last-child-spacing($element, margin-bottom);
+    @include prevent-last-child-spacing($element, padding-bottom);
 }
 
-/* text-decoration none, hover text-decoration underline */
-reverse-link-decoration() {
+
+/*
+Links
+====================================================================== */
+
+// text-decoration none, hover text-decoration underline
+@mixin reverse-link-decoration() {
     a {
         text-decoration: none;
         &:hover, &:active, &:focus {
@@ -112,124 +108,179 @@ reverse-link-decoration() {
     }
 }
 
-/* converts an rgba value to hex, blending on white or the provided background hex/rgb (must provide flat colour for background) */
-rgba-to-hex($color, $bg = #fff) {
 
-  if(typeof($color) == 'rgba') {
-        $a = alpha($color);
-        $fallback = $color * $a + $bg * (1 - $a);
+/*
+Colours
+====================================================================== */
 
-        return $fallback;
-  } else {
-        error('rgba-to-hex() must be used passed an rgba value');
-  }
-
-
+/*
+    creates a hex fallback of a property using an rgba value
+    will use white as the background matte if no colour is provided
+    */
+@mixin rgba-fallback($property, $color, $opacity, $bg : #fff) {
+    #{$property}: mix($color, $bg, $opacity * 100); // hex fallback
+    #{$property}: rgba($color, $opacity); // rgba value
 }
 
-/* creates a hex fallback of a property using an rgba value
-   will use white as the background matte if no colour is provided
-   example input: .test { border: 20px solid rgba-fallback(rgba(255,0,0,0.5), #000);}
-   example output: .test { border: 20px solid #800000; border: 20px solid rgba(255,0,0,0.5); }
-*/
-rgba-fallback($color, $bg = #fff) {
-    // check mixin was called inside a property
-    if (current-property) {
-        // check mixin was passed an rgba
-        if(typeof($color) == 'rgba') {
-            // get value of property
-            $val = current-property[1];
-            // create our fallback hex
-            $fallback-hex = rgba-to-hex($color, $bg);
-            // replace the rgba with the hex  in the value of the property
-            $hex-val = replace($val, '__CALL__', $fallback-hex);
-            // add a duplicate property with the fallback value
-            if($color != $fallback-hex) {
-                add-property(current-property[0], $hex-val);
-            }
-        } else {
-            error('rgba-fallback() must be given an rgba value');
-        }
 
-        // return the rgba for use in the original property
-        $color
-
-    } else {
-        error('rgba-fallback() must be used within a property');
-    }
-}
-
-/* generates a background property for header and zones */
-create-gradient-background(color = '', use-gradient = false) {
-    if use-gradient {
-        background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'mdn-header-gradient.png');
-        background-repeat: repeat, repeat-x;
-    } else {
-        background-image: url($path-to-images + 'header-background.png');
-        background-repeat: repeat;
-    }
-    background-position: 0 0, 0 0, 0 0;
-    if color {
-        background-color: color;
-    }
-}
-
-create-home-gradient-background(color) {
-    create-gradient-background(color);
+@mixin create-home-gradient-background($color) {
+    @include create-gradient-background($color);
     background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'blueprint.png'), url($path-to-images + 'mdn-header-gradient.png');
     background-repeat: repeat, repeat, repeat-x;
 }
 
 /* generates a cross-browser gradient */
-create-gradient(start-color, end-color, direction = false) {
-    if direction {
-        vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')');
-    } else {
-        vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')');
+@mixin create-gradient($start-color, $end-color, $direction : false) {
+    @if $direction {
+        @include vendorize-value(background, linear-gradient, '(' + $direction + ', ' + $start-color + ', ' + $end-color + ')');
+    } @else {
+        @include vendorize-value(background, linear-gradient, '(' + $start-color + ', ' + $end-color + ')');
     }
-    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)"); /* IE6-9 */
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + $start-color + "', endColorstr='" + $end-color + "', GradientType=1)"); /* IE6-9 */
 }
 
+/* uses the white logo instead of color logo */
+@mixin use-white-logo() {
+    #main-header .logo {
+        background-position: 0 -41px;
+    }
+}
+
+/* functions to transform the base colors into variations of themselves
+-------------------------------------------------------------- */
+
+@function -theme-pale-light($color) {
+    @return mix(white, $color, 80%);
+}
+
+@function -theme-pale-dark($color) {
+    @return mix(black, $color, 20%);
+}
+
+@function -theme-pale-medium($color) {
+    @return mix(white, $color, 45%);
+}
+
+/* functions to get correct text colors for variations of theme colors
+-------------------------------------------------------------- */
+
+@function -theme-pale-text($color) {
+    $color : -theme-pale-light($color);
+    $color : mix(black, $color, 60%);;
+    @return $color;
+}
+
+@function -theme-pale-contrast-text($color){
+    $hu : hue($color);
+    $lite : lightness($color);
+    $sat : saturation($color);
+    @if (($hu < 20deg or $hu > 199deg) and $sat > 30% and $lite < 70%) {
+        $color : $text-light;
+    } @else if ($lite < 50%) {
+        $color : $text-light;
+    } @else {
+        $color : $text-dark;
+    }
+    @return $color;
+}
+
+/* function to apply all the generated colors to a notification to theme it
+-------------------------------------------------------------- */
+
+@mixin notification-theme($color) {
+    background-color: -theme-pale-light($color);
+    border-color: -theme-pale-medium($color);
+    color: -theme-pale-contrast-text(-theme-pale-light($color));
+
+    .notification-button {
+        background-color: -theme-pale-medium($color);
+        color: -theme-pale-text($color);
+
+        &:hover, &:focus {
+          background: transparent;
+          text-decoration: none;
+        }
+    }
+
+    .notification-img i {
+        color: -theme-pale-dark($color);
+    }
+
+    button.close {
+        color: -theme-pale-medium($color);
+
+        &:hover, &:focus {
+            color: -theme-pale-dark($color);
+        }
+    }
+
+}
+
+/* coloured boxes
+-------------------------------------------------------------- */
+
+@mixin box-theme($color) {
+    background: -theme-pale-light($color);
+    border-color: -theme-pale-medium($color);
+}
+
+
+/*
+====================================================================== */
+
+
 /* generates the essential "before" and "after" code for pseudo-arrows */
-generate-arrow(arrow-width = 10px) {
+@mixin generate-arrow($arrow-width : 10px) {
     &:before, &:after {
         content: ' ';
         height: 0;
         position: absolute;
         width: 0;
-        border: arrow-width solid transparent;
+        border: $arrow-width solid transparent;
     }
 }
 
+
+/*
+====================================================================== */
+
 /* used to create sliding animations */
-slider(duration=$default-animation-duration, maximum-height = 10000px) {
+@mixin slider($duration : $default-animation-duration, $maximum-height : 10000px) {
     overflow-y: hidden;
-    max-height: maximum-height;
-    vendorize(transition-property, all);
-    vendorize(transition-duration, duration);
-    vendorize(transition-timing-function, $slide-timing-function);
+    max-height: $maximum-height;
+    @include vendorize(transition-property, all);
+    @include vendorize(transition-duration, $duration);
+    @include vendorize(transition-timing-function, $slide-timing-function);
 
     &.closed {
         max-height: 0;
     }
 }
 
-/* sets the base styles for messages (review, warning, error, notice, etc.) */
-set-message-base(remove-last-spacing = true) {
-    bidi-style(border-left-width, $border-width, border-right-width, 0);
-    bidi-style(border-left-style, solid, border-right-style, none);
-    padding: ($grid-spacing / 2);
-    margin-bottom: $grid-spacing;
-    set-smaller-font-size();
-    overflow: hidden;
 
-    if(remove-last-spacing) {
-        prevent-last-child-bottom-spacing();
+/*
+====================================================================== */
+
+/* sets the base styles for messages (review, warning, error, notice, etc.) */
+@mixin set-message-base($remove-last-spacing : true) {
+    overflow: hidden;
+    margin-bottom: $grid-spacing;
+    @include bidi-style(border-left-width, $border-width, border-right-width, 0);
+    @include bidi-style(border-left-style, solid, border-right-style, none);
+    padding: ($grid-spacing / 2);
+    @include set-smaller-font-size();
+
+    @if($remove-last-spacing) {
+        @include prevent-last-child-bottom-spacing();
     }
 }
 
+/*
+Spacing
+====================================================================== */
+
 /* removes the implied "<main>" spacing so page is more customizable */
-remove-main-spacing() {
+@mixin remove-main-spacing() {
     main > .center {
         width: auto;
         padding: 0;
@@ -238,18 +289,37 @@ remove-main-spacing() {
     }
 }
 
-add-center-spacing(spacing = $gutter-width) {
-    padding-left: spacing;
-    padding-right: spacing;
+@mixin add-center-spacing($spacing : $gutter-width) {
+    padding-left: $spacing;
+    padding-right: $spacing;
 }
 
-remove-center-spacing() {
+@mixin remove-center-spacing() {
     padding-left: 0;
     padding-right: 0;
 }
 
+/*
+Home & Zones
+====================================================================== */
+
+/* generates a background property for header and zones */
+@mixin create-gradient-background($color : '', $use-gradient : false) {
+    @if ($use-gradient) {
+        background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'mdn-header-gradient.png');
+        background-repeat: repeat, repeat-x;
+    } @else {
+        background-image: url($path-to-images + 'header-background.png');
+        background-repeat: repeat;
+    }
+    background-position: 0 0, 0 0, 0 0;
+    @if ($color) {
+        background-color: $color;
+    }
+}
+
 /* overrides the navigation menu color - zones and homepage */
-override-main-header-color(hex) {
+@mixin override-main-header-color($hex, $bg) {
 
     #tabzilla:before {
         background-color: transparent;
@@ -257,31 +327,28 @@ override-main-header-color(hex) {
 
     #main-header,
     #main-header a {
-        color: hex;
+        color: $hex;
     }
 
     .search-wrap {
-        background-color: rgba-fallback(rgba(255, 255, 255, 0.4));
+        @include rgba-fallback(background-color, #fff, 0.4, $bg);
 
         input, i, .search-trigger {
-            color: hex !important;
+            color: $hex !important;
         }
 
         input {
-            set-placeholder-style(color, hex);
+            @include set-placeholder-style(color, $hex);
         }
     }
 }
 
 /* overrides the size of the navigation search box on certain pages */
-minimize-header-search() {
+@mixin minimize-header-search() {
 
-    @media $media-query-break-and-up {
+    @media #{$media-query-break-and-up} {
         .main-nav-search {
             width: 36px;
-            @media $media-query-mobile {
-                width: auto;
-            }
         }
 
         .search-wrap input {
@@ -292,77 +359,88 @@ minimize-header-search() {
             }
         }
     }
+
+    @media #{$media-query-mobile} {
+        .main-nav-search {
+            width: auto;
+        }
+    }
 }
+
+
+/*
+====================================================================== */
 
 /* sets an input tag's placeholder styles */
-set-placeholder-style(prop, value) {
+@mixin set-placeholder-style($prop, $value) {
     &::-webkit-input-placeholder {
-        {prop}: value;
+        #{$prop}: $value;
     }
     &::-moz-placeholder {
-        {prop}: value;
+        #{$prop}: $value;
+    }
+    &:-ms-input-placeholder { // IE 9 & 10, Edge suppoerts -webkit-
+        #{$prop}: $value;
     }
 }
-
-/* uses the white logo instead of color logo */
-use-white-logo() {
-    #main-header .logo {
-        background-position: 0 -41px;
-    }
-}
-
-/* for use */
 
 /*
-    Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
+Bidi / l10n
+====================================================================== */
 
-        example:     bidi-style(left, 20px, right, auto)
-*/
-bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false) {
-    make-important = make-important ? unquote('!important') : unquote('');
+// Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
+// example: @include bidi-style(left, 20px, right, auto)
+@mixin bidi-style($ltr-prop, $value, $inverse-prop, $inverse-value, $make-important : false) {
+    $make-important: if($make-important, unquote('!important'), unquote(''));
 
-    {ltr-prop}: value make-important;
+    #{$ltr-prop}: $value $make-important;
 
     html[dir='rtl'] & {
-        if (ltr-prop != inverse-prop) {
-            {inverse-prop}: value make-important;
+        @if ($ltr-prop != $inverse-prop) {
+            #{$inverse-prop}: $value $make-important;
         }
-        {ltr-prop}: inverse-value make-important;
+        #{$ltr-prop}: $inverse-value $make-important;
     }
 }
 
-bidi-value(prop, ltr, rtl, make-important = false) {
-    bidi-style(prop, ltr, prop, rtl, make-important);
+@mixin bidi-value($prop, $ltr, $rtl, $make-important : false) {
+    @include bidi-style($prop, $ltr, $prop, $rtl, $make-important);
 }
 
-bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
-    make-important = make-important ? unquote('!important') : unquote('');
+@mixin bidi-value-vendorize($prop, $ltr, $rtl, $make-important : false) {
+    $make-important : if($make-important, unquote('!important'), unquote(''));
 
-    vendorize(prop, ltr make-important);
+    @include vendorize($prop, $ltr $make-important);
 
     html[dir='rtl'] & {
-        vendorize(prop, rtl make-important);
+        @include vendorize($prop, $rtl $make-important);
     }
 }
 
-/*
-    MIXINS LIKE CLASSES
+@mixin right-icons() {
+    @include bidi-value(margin-left, 0 !important, 10px !important);
+    @include bidi-value(margin-right, 10px !important, 0px !important);
+}
 
-    These are not dynamic but serve as mixins so that styles wont be repeated throughout files
-*/
-heading-1() {
-    set-font-size(($content-block-margin * 2));
+
+/*
+MIXINS LIKE CLASSES
+These are not dynamic but serve as mixins
+====================================================================== */
+
+@mixin heading-1() {
+    @include set-font-size(($content-block-margin * 2));
     letter-spacing: -2px;
 }
 
-heading-2() {
-    set-font-size(30px);
+@mixin heading-2() {
+    @include set-font-size(30px);
     letter-spacing: -1px;
 }
 
-big-search() {
-    background: rgba-fallback(rgba(255, 255, 255, 0.2));
-    set-larger-font-size();
+@mixin big-search() {
+    @include rgba-fallback(background, #fff, 0.2);
+    @include set-larger-font-size();
     display: block;
     margin: 0 auto;
     border: 0;
@@ -370,12 +448,53 @@ big-search() {
     width: 100%;
 
     font-family: $heading-font-family;
-    {$selector-heading-font-fallback} {
+    #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
 }
 
-offscreen() {
+@mixin clearfix() {
+    clear:both;
+
+    &:after {
+        content: ' ';
+        clear: both;
+        display: table;
+    }
+}
+
+@mixin title-header() {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $text-color;
+    text-decoration: none;
+    display: block;
+}
+
+/*
+pull aside
+- assumes content has a bottom margin of its own
+- floats to the right until there's not enough space for it
+-------------------------------------------------------------- */
+
+@mixin pull-aside() {
+    @include column-4();
+    min-width: 200px;
+    @include bidi-value(float, right, left);
+    @include bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
+
+    @media #{$media-query-small-mobile} {
+        width: 100%;
+        @include bidi-value(margin, 0, 0);
+    }
+}
+
+
+/*
+Placeholders
+====================================================================== */
+
+%offscreen-placeholder {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -386,54 +505,29 @@ offscreen() {
     width: 1px;
 }
 
-clearfix() {
-    clear:both;
-
-    &:after {
-        content: ' ';
-        clear: both;
-        display: table;
-    }
-}
-
-title-header() {
-    font-weight: bold;
-    text-transform: uppercase;
-    color: $text-color;
-    text-decoration: none;
-    display: block;
-}
-
-
-
 /* When an element contains a label and a checkbox in order (as on the edit
    user page and elsewhere) make them appear on the same line, with the
    checkbox to the left of the label. */
-$checkbox-label-container {
-    clearfix();
+%checkbox-label-container {
+    @include clearfix();
 
     input[type='checkbox'] {
-        bidi-value(float, left, right);
+        @include bidi-value(float, left, right);
     }
 
     label {
         position: absolute;
-        bidi-style(margin-left, 25px, margin-right, 0);
+        @include bidi-style(margin-left, 25px, margin-right, 0);
     }
 
     > p {
-        bidi-value(clear, left, right);
+        @include bidi-value(clear, left, right);
     }
-}
-
-$right-icons {
-    bidi-value(margin-left, 0 !important, 10px !important);
-    bidi-value(margin-right, 10px !important, 0px !important);
 }
 
 
 /* Styles for code blocks - used for wiki document and WYSIWYG editor */
-$code-block {
+%code-block {
     background: $code-block-background-color;
     border-left: $code-block-border-width $code-block-border-style $code-block-border-color;
     background-image:  url($path-to-images + 'blueprint-dark.png');
@@ -445,107 +539,82 @@ $code-block {
     direction: ltr;
     text-align: left;
 
-    vendorize(tab-size, 4);
-    vendorize(hyphens, none);
+   @include vendorize(tab-size, 4);
+   @include vendorize(hyphens, none);
 }
 
 
+/*
+Grid
+====================================================================== */
 
-
-/* functions to transform the base colors into variations of themselves
+/*
+grid - 12 columns assuming a 3% margin
 -------------------------------------------------------------- */
-
-theme-pale-light($color) {
-    return tint($color, 80%);
+@function -calc-col-width($col-span) {
+    $grid-margin-numb : $grid-margin / 1%; // remove percent unit
+    $col-percent : (100 - $grid-margin-numb * 11) / 12 * $col-span + $grid-margin-numb * ($col-span - 1);
+    $col-percent : if($col-percent > 100, 100, $col-percent); // not over 100
+    $col-percent : $col-percent;
+    $col-percent : $col-percent * 1%; // add % unit
+    @return $col-percent;
 }
 
-theme-pale-medium($color) {
-    $color = theme-pale-light($color);
-    $color = darken($color, 20%);
-    return $color;
+@mixin column-1() {
+    width: -calc-col-width(1) ; // 5.583%;
 }
-
-theme-pale-dark($color) {
-    return darken($color, 20%);
+@mixin column-2() {
+    width: -calc-col-width(2) ; // 14.167%;
 }
-
-/* functions to get correct text colors for variations of theme colors
--------------------------------------------------------------- */
-
-theme-pale-text($color) {
-    $color = theme-pale-light($color);
-    $color = darken($color, 60%);
-    return $color;
+@mixin column-3() {
+    width: -calc-col-width(3) ; // 22.75%;
 }
-
-theme-pale-contrast-text($color){
-    $hu = hue($color);
-    $lite = lightness($color);
-    $sat = saturation($color);
-    if (($hu < 20deg || $hu > 199deg) && $sat > 30% && $lite < 70%) {
-        $color = $text-light;
-    } else if ($lite < 50%) {
-        $color = $text-light;
-    } else {
-        $color = $text-dark;
-    }
-    return $color;
+@mixin column-strip() {
+    width: -calc-col-width(3) ; // 22.75%;
 }
-
-/* function to apply all the generated colors to a notification to theme it
--------------------------------------------------------------- */
-
-notification-theme($color) {
-    background-color: theme-pale-light($color);
-    border-color: theme-pale-medium($color);
-    color: theme-pale-contrast-text(theme-pale-light($color));
-
-    .notification-button {
-        background-color: theme-pale-medium($color);
-        color: theme-pale-text($color);
-
-        &:hover, &:focus {
-          background: transparent;
-          text-decoration: none;
-        }
-    }
-
-    .notification-img i {
-        color: theme-pale-dark($color);
-    }
-
-    button.close {
-        color: theme-pale-medium($color);
-
-        &:hover, &:focus {
-            color: theme-pale-dark($color);
-        }
-    }
-
+@mixin column-quarter() {
+    width: -calc-col-width(3) ; // 22.75%;
 }
-
-/* coloured boxes
--------------------------------------------------------------- */
-
-box-theme($color) {
-    background: theme-pale-light($color);
-    border-color: theme-pale-medium($color);
+@mixin column-4(){
+    width: -calc-col-width(4) ; // 31.333%;
 }
-
-/* pull aside
-   - assumes content has a bottom margin of its own
-   - floats to the right until there's not enough space for it
--------------------------------------------------------------- */
-
-pull-aside() {
-    @extend $column-4;
-    min-width: 200px;
-    bidi-value(float, right, left);
-    bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
-
-    @media $media-query-small-mobile {
-        width: 100%;
-        bidi-value(margin, 0, 0);
-    }
+@mixin column-third() {
+    width: -calc-col-width(4) ; // 31.333%;
 }
-
+@mixin column-5() {
+    width: -calc-col-width(5) ; // 39.917%;
+}
+@mixin column-6(){
+    width: -calc-col-width(6) ; // 48.5%;
+}
+@mixin column-half() {
+    width: -calc-col-width(6) ; // 48.5%;
+}
+@mixin column-7() {
+    width: -calc-col-width(7) ; // 57.083%;
+}
+@mixin column-8() {
+    width: -calc-col-width(8) ; // 65.667%;
+}
+@mixin column-9(){
+    width: $grid-width-column-main; // 74.25%
+}
+@mixin column-main() {
+    width: $grid-width-column-main; // 74.25%
+}
+@mixin column-10() {
+    width: -calc-col-width(10) ; // 82.833%;
+}
+@mixin column-11() {
+    width: -calc-col-width(11) ; // 91.417%;
+}
+@mixin column-12(){
+    width: auto;
+    margin: 0;
+    float: none;
+}
+@mixin column-all() {
+    width: auto;
+    margin: 0;
+    float: none;
+}

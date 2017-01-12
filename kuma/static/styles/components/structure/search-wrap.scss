@@ -3,40 +3,40 @@ Main navigation search box and its wrapper
 ====================================================================== */
 
 .search-wrap {
-    background-color: rgba-fallback(rgba(255, 255, 255, 0.9));
-    border-radius: 3px;
-    height: 21px;
-    position: absolute;
-    padding: 4px 8px;
-    top: 0;
-    bidi-style(right, 0, left, auto);
-    vendorize(transition-property, width);
-    vendorize(transition-duration, $default-animation-duration);
+   @include rgba-fallback(background-color, #fff, 0.9);
+   border-radius: 3px;
+   height: 21px;
+   position: absolute;
+   padding: 4px 8px;
+   top: 0;
+   @include bidi-style(right, 0, left, auto);
+   @include vendorize(transition-property, width);
+   @include vendorize(transition-duration, $default-animation-duration);
 
     &.expanded {
         background: #fff;
     }
 
     input {
-        background: transparent;
-        border: solid transparent;
-        bidi-value(border-width, 0 22px 0 0, 0 0 0 22px);
-        box-sizing: border-box;
-        color: $menu-link-color;
-        font-weight: bold;
-        overflow: hidden;
-        padding: 0;
-        position: relative;
-        vendorize(transition-property, 'width, opacity');
-        vendorize(transition-duration, $default-animation-duration);
-        width: 48px;
-        max-width: 100%;
-        z-index: 2;
-        cursor: text;
-        opacity: 0.01;
+         background: transparent;
+         border: solid transparent;
+         @include bidi-value(border-width, 0 22px 0 0, 0 0 0 22px);
+         box-sizing: border-box;
+         color: $menu-link-color;
+         font-weight: bold;
+         overflow: hidden;
+         padding: 0;
+         position: relative;
+         @include vendorize(transition-property, 'width, opacity');
+         @include vendorize(transition-duration, $default-animation-duration);
+         width: 48px;
+         max-width: 100%;
+         z-index: 2;
+         cursor: text;
+         opacity: 0.01;
 
-        set-placeholder-style(color, $text-color);
-        set-placeholder-style(text-transform, uppercase);
+         @include set-placeholder-style(color, $text-color);
+         @include set-placeholder-style(text-transform, uppercase);
 
         &:focus {
             width: 500px;
@@ -45,12 +45,12 @@ Main navigation search box and its wrapper
     }
 }
 
-@media $media-query-navigation-block {
+@media #{$media-query-navigation-block} {
     .search-wrap {
         width: 90%;
         width: calc(100% - 16px); /* 16px = left + right padding */
-        bidi-value(left, auto, 0);
-        bidi-value(right, 0, auto);
+        @include bidi-value(left, auto, 0);
+        @include bidi-value(right, 0, auto);
 
         input {
             width: 100%;
@@ -62,7 +62,7 @@ Main navigation search box and its wrapper
     cursor: text;
     position: absolute;
     top: 3px;
-    bidi-style(right, 12px, left, auto);
+    @include bidi-style(right, 12px, left, auto);
     z-index: 1;
 
 }

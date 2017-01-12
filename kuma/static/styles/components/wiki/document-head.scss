@@ -7,7 +7,7 @@
         margin-bottom: ($grid-spacing * 1.5);
 
         line-height: 1;
-        {$selector-site-font-fallback} {
+        #{$selector-site-font-fallback} {
             line-height: 1.005;
         }
     }

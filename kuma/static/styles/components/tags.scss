@@ -3,12 +3,21 @@
     - needs qualifying ul because to pass classes to tagit widget it must be input.tags
 */
 
+%tag-item {
+    background: $light-background-color;
+    border: 1px solid #cee9f9;
+    border-radius: 2px;
+    display: inline-block;
+    @include bidi-value(margin, 0 ($grid-spacing / 2) ($grid-spacing / 2) 0, 0 0 ($grid-spacing / 2) ($grid-spacing / 2));
+    padding: 3px ($grid-spacing / 2) 4px;
+}
+
 ul.tags {
     background-color: transparent;
     border: none;
     clear: both;
     margin-bottom: 0; /* doesn't need bottom margin, each tag takes care of that */
-    bidi-style(padding-left, 0, padding-right, 0); /* overrides padding added to lists in content areas */
+    @include bidi-style(padding-left, 0, padding-right, 0); /* overrides padding added to lists in content areas */
     width: 100%;
 
     .wiki-block &,
@@ -19,12 +28,7 @@ ul.tags {
 
 /* not nested because I want to be able to @extend it seperately in tagit */
 ul.tags li {
-    background: $light-background-color;
-    border: 1px solid #cee9f9;
-    border-radius: 2px;
-    display: inline-block;
-    bidi-value(margin, 0 ($grid-spacing / 2) ($grid-spacing / 2) 0, 0 0 ($grid-spacing / 2) ($grid-spacing / 2));
-    padding: 3px ($grid-spacing / 2) 4px;
+    @extend %tag-item;
 
     label {
         margin-bottom: 0; /* for tag lists of expertise on user edit page */
@@ -35,10 +39,10 @@ ul.tags li {
     small
 */
 
-$small-tag-spacing = 3px;
+$small-tag-spacing : 3px;
 
 ul.tags-small li {
-    bidi-value(margin, 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2) 0, 0 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2));
+    @include bidi-value(margin, 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2) 0, 0 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2));
     padding: 1px $small-tag-spacing;
 }
 
@@ -46,4 +50,3 @@ ul.tags-small li {
     clear: none;
     display: inline;
 }
-
