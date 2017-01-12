@@ -21,7 +21,7 @@ body .topicpage-table {
 .topicpage-table {
     h2 {
         font-family: $heading-font-family;
-        {$selector-heading-font-fallback} {
+        #{$selector-heading-font-fallback} {
             font-family: $heading-font-family-fallback;
         }
     }
@@ -36,7 +36,7 @@ body .topicpage-table {
 }
 
 /* Simulate two columns, if enough space is available    */
-@media $media-query-small-desktop-and-up {
+@media #{$media-query-small-desktop-and-up} {
     body .topicpage-table {
         display: table;
         border-collapse: separate;
@@ -53,9 +53,9 @@ body .topicpage-table {
             width: 50%;
 
             &:first-of-type {
-                bidi-style(padding-right, $grid-spacing, padding-left, 0);
-                bidi-style(margin-right, $grid-spacing, padding-left, 0);
-                bidi-style(border-right, solid 6px #eaeff2, border-left, none);
+                @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+                @include bidi-style(margin-right, $grid-spacing, padding-left, 0);
+                @include bidi-style(border-right, solid 6px #eaeff2, border-left, none);
             }
         }
     }

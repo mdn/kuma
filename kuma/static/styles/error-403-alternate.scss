@@ -1,4 +1,5 @@
-@require 'includes/vars';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 p.notice {
     margin-bottom: $grid-spacing;

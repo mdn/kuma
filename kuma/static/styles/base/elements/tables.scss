@@ -1,6 +1,3 @@
-@require '../../includes/vars';
-@require '../../includes/mixins';
-
 /*
     Table styles
 */
@@ -14,6 +11,5 @@ caption {
 }
 
 caption, th {
-    bidi-value(text-align, left, right);
+    @include bidi-value(text-align, left, right);
 }
-

@@ -28,7 +28,7 @@ a.github-button {
         text-decoration: none;
         display: block;
         float: left;
-        set-font-size($base-font-size);
+        @include set-font-size($base-font-size);
         line-height: 24px;
         color: white;
         padding: 0 10px 0 20px;
@@ -42,18 +42,18 @@ a.github-button {
             width: 24px;
             height: 24px;
             z-index: 1;
-            vendorize(transform, scale(0.707) rotate(45deg));
+           @include vendorize(transform, scale(0.707) rotate(45deg));
             border-radius: 0 3px 0 50px;
         }
 
         &.github-icon {
             padding-left: 3px;
             border-radius: 3px 0 0 3px;
-            create-gradient(#43a6e2, #287cc2);
+            @include create-gradient(#43a6e2, #287cc2);
             height: 24px;
 
             &:after {
-                create-gradient(#43a6e2, #287cc2, left top);
+                @include create-gradient(#43a6e2, #287cc2, left top);
             }
 
             i {
@@ -69,15 +69,15 @@ a.github-button {
         &.signin {
             text-shadow: 0px 1.5px 1px rgba(0, 0, 0, 0.35);
             line-height: 23px;
-            padding-bottom 1px;
+            padding-bottom: 1px;
 
             &:after {
                 z-index: 2;
-                create-gradient(#56565a, #3a3a3a, top left);
+                @include create-gradient(#56565a, #3a3a3a, top left);
             }
 
             & {
-                create-gradient(#56565a, #3a3a3a);
+                @include create-gradient(#56565a, #3a3a3a);
             }
         }
     }
@@ -85,13 +85,13 @@ a.github-button {
 
 a.github-button {
     span.github-icon {
-        create-gradient(#5d649a, #63397b);
+        @include create-gradient(#5d649a, #63397b);
 
         &:after {
-            create-gradient(#5d649a, #63397b, left top);
+            @include create-gradient(#5d649a, #63397b, left top);
         }
 
-        {$selector-icon} {
+        #{$selector-icon} {
             margin-left: 0;
             top: 0;
             left: 8px;

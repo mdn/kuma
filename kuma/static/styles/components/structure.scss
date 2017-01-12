@@ -8,30 +8,30 @@ we must have them available as classes as well.
 ====================================================================== */
 
 /* grid setup for direct class uses */
-@require '../includes/mixin_draw-grid';
-draw-grid();
+@import '../includes/mixin_draw-grid';
+@include draw-grid();
 
 /* columns */
-@require 'structure/cols';
+@import 'structure/cols';
 
 /*
 Pre-header
 ====================================================================== */
 
 /* soapbox notice */
-@require 'structure/global-notice';
+@import 'structure/global-notice';
 
 /* keyboard/screen reader skip link menu */
-@require 'structure/nav-access';
+@import 'structure/nav-access';
 
 
 /*
 Header
 ====================================================================== */
 
-@require 'structure/main-header';
-@require 'structure/tabzilla';
-@require 'structure/submenu';
+@import 'structure/main-header';
+@import 'structure/tabzilla';
+@import 'structure/submenu';
 
 
 /*
@@ -40,8 +40,8 @@ Secondary Navigation
 - profile (logged in) links
 -------------------------------------------------------------- */
 
-@require 'structure/nav-sec';
-@require 'structure/login';
+@import 'structure/nav-sec';
+@import 'structure/login';
 
 
 /*
@@ -50,23 +50,23 @@ Main Navigation
 - search bar
 -------------------------------------------------------------- */
 
-@require 'structure/main-nav';
-@require 'structure/main-nav-search';
-@require 'structure/search-wrap';
+@import 'structure/main-nav';
+@import 'structure/main-nav-search';
+@import 'structure/search-wrap';
 
 /*
 Footer
 ====================================================================== */
 
-@require 'structure/contentinfo';
+@import 'structure/contentinfo';
 
 /*
 Misc - needs sorting
 ====================================================================== */
 
-@require 'structure/socialaccount-providers';
-@require 'structure/feature-test-element';
-@require 'structure/pagination';
+@import 'structure/socialaccount-providers';
+@import 'structure/feature-test-element';
+@import 'structure/pagination';
 
 #wikiArticle > p:first-child:empty {
     display: none; /* bug 1305178: hide empty first paragraph */
@@ -87,13 +87,10 @@ p.field-explanation {
     width: 670px;
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
 
     .header-clear {
         display: none;
     }
 
 }
-
-
-

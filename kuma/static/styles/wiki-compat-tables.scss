@@ -1,45 +1,45 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
-@require 'components/compat-tables/vars';
+@import 'components/compat-tables/vars';
 
 /*
 Icons
 ====================================================================== */
-@require 'components/compat-tables/ic';
-@require 'components/compat-tables/bc-icons';
-@require 'components/compat-tables/bc-level';
-@require 'components/compat-tables/bc-browser';
+@import 'components/compat-tables/ic';
+@import 'components/compat-tables/bc-icons';
+@import 'components/compat-tables/bc-level';
+@import 'components/compat-tables/bc-browser';
 
 
 /*
 Table Layout
 ====================================================================== */
-@require 'components/compat-tables/bc-table';
+@import 'components/compat-tables/bc-table';
 
 
 /*
 Support cells
 ====================================================================== */
-@require 'components/compat-tables/bc-supports';
+@import 'components/compat-tables/bc-supports';
 
 
 /*
 History
 ====================================================================== */
-@require 'components/compat-tables/bc-history-link';
-@require 'components/compat-tables/bc-history';
+@import 'components/compat-tables/bc-history-link';
+@import 'components/compat-tables/bc-history';
 
 
 /*
 Footnotes & Legend
 ====================================================================== */
-@require 'components/compat-tables/bc-footnotes';
-@require 'components/compat-tables/bc-legend';
+@import 'components/compat-tables/bc-footnotes';
+@import 'components/compat-tables/bc-legend';
 
 
 /*
 Beta menu
 ====================================================================== */
-@require 'components/compat-tables/bc-beta';
+@import 'components/compat-tables/bc-beta';
 

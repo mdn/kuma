@@ -1,81 +1,81 @@
-@require 'includes/vars';
-@require 'includes/mixins';
-@require 'components/wiki/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'includes/mixins_indicators';
+@import 'components/wiki/mixins';
 
 /*
 General element over-rides
 ====================================================================== */
-@require 'components/wiki/elements';
+@import 'components/wiki/elements';
 
 
 /*
 Utitlity classes (reused in a variety of contexts)
 ====================================================================== */
-@require 'components/wiki/document-list';
-@require 'components/wiki/external-icon';
+@import 'components/wiki/document-list';
+@import 'components/wiki/external-icon';
 
 
 /*
 Components that may appear on most wiki pages
 ====================================================================== */
-@require 'components/wiki/structure';
-@require 'components/wiki/wiki-block';
-@require 'components/wiki/quick-links';
-@require 'components/wiki/reviews';
-@require 'components/wiki/contributors'
-@require 'components/wiki/toc';
-@require 'components/wiki/topicpage-table';
-@require 'components/wiki/kserrors';
-@require 'components/wiki/page-print';
-@require 'components/wiki/edit-section';
-@require 'components/wiki/offline-dialog-content';
-@require 'components/wiki/intrinsic';
-@require 'components/wiki/properties';
-@require 'components/wiki/spec';
-@require 'components/wiki/indicators';
-@require 'components/wiki/glossaryLink';
-@require 'components/wiki/communitybox';
-@require 'components/wiki/mega';
+@import 'components/wiki/structure';
+@import 'components/wiki/wiki-block';
+@import 'components/wiki/quick-links';
+@import 'components/wiki/reviews';
+@import 'components/wiki/contributors';
+@import 'components/wiki/toc';
+@import 'components/wiki/topicpage-table';
+@import 'components/wiki/kserrors';
+@import 'components/wiki/page-print';
+@import 'components/wiki/edit-section';
+@import 'components/wiki/offline-dialog-content';
+@import 'components/wiki/intrinsic';
+@import 'components/wiki/properties';
+@import 'components/wiki/spec';
+@import 'components/wiki/indicators';
+@import 'components/wiki/glossaryLink';
+@import 'components/wiki/communitybox';
+@import 'components/wiki/mega';
 
 
 /*
 Document head
 - contains the document title, search-from, contributor bar, etc.
 -------------------------------------------------------------- */
-@require 'components/wiki/document-head';
-@require 'components/wiki/contributor-avatars';
-@require 'components/wiki/from-search';
+@import 'components/wiki/document-head';
+@import 'components/wiki/contributor-avatars';
+@import 'components/wiki/from-search';
 
 
 /*
 Article meta
 - contains breadcrumbs and page buttons.
 -------------------------------------------------------------- */
-@require 'components/wiki/article-head';
-@require 'components/wiki/crumbs';
-@require 'components/wiki/page-buttons';
+@import 'components/wiki/article-head';
+@import 'components/wiki/crumbs';
+@import 'components/wiki/page-buttons';
 
 
 /*
 Styling for article content
 ====================================================================== */
 
-@require 'components/wiki/content/moreinfo';
-@require 'components/wiki/content/summary';
-@require 'components/wiki/content/card-grid';
-@require 'components/wiki/content/pull-aside';
-@require 'components/wiki/customcss';
-@require 'components/wiki/open-in-host';
-@require 'components/wiki/section-edit';
+@import 'components/wiki/content/moreinfo';
+@import 'components/wiki/content/summary';
+@import 'components/wiki/content/card-grid';
+@import 'components/wiki/content/pull-aside';
+@import 'components/wiki/customcss';
+@import 'components/wiki/open-in-host';
+@import 'components/wiki/section-edit';
 
 
 /*
 Delete, move or revert pages.
 ====================================================================== */
 
-@require 'components/wiki/parent-suggest';
-@require 'components/wiki/move-decendants';
-@require 'components/wiki/doc-source';
-@require 'components/wiki/delete-document';
-@require 'components/wiki/delete-revision';
-
+@import 'components/wiki/parent-suggest';
+@import 'components/wiki/move-decendants';
+@import 'components/wiki/doc-source';
+@import 'components/wiki/delete-document';
+@import 'components/wiki/delete-revision';

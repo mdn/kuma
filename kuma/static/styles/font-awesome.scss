@@ -1,20 +1,22 @@
 /*
-    Import Stylus version of Font Awesome 4.1
-    `stylus -C kuma/static/styles/libs/font-awesome/css/font-awesome.css kuma/static/styles/libs/font-awesome/stylus`
+    Import Scss version of Font Awesome 4.1
 */
-@import 'libs/font-awesome/stylus/font-awesome';
+@import 'libs/font-awesome/scss/font-awesome';
 
 /*
     Mapping 3.2.1 icon names to 4.1
     https://github.com/FortAwesome/Font-Awesome/wiki/Upgrading-from-3.2.1-to-4
 */
-icon-lookup = {
+
+
+$icon-lookup: (
     'icon-fixed-width': 'icon-fw',
     'icon-large': 'icon-lg',
     'icons-ul': 'icon-ul'
-}
+);
 
-icon-pseudo-lookup = {
+
+$icon-pseudo-lookup: (
     'icon-ban-circle': 'icon-ban',
     'icon-bar-chart': 'icon-bar-chart-o',
     'icon-beaker': 'icon-flask',
@@ -42,9 +44,9 @@ icon-pseudo-lookup = {
     'icon-collapse': 'icon-caret-square-o-down',
     'icon-comment-alt': 'icon-comment-o',
     'icon-comments-alt': 'icon-comments-o',
-    'icon-copy': 'icon-files-o',
-    'icon-cut': 'icon-scissors',
-    'icon-dashboard': 'icon-tachometer',
+    //'icon-copy': 'icon-files-o',
+    //'icon-cut': 'icon-scissors',
+    //'icon-dashboard': 'icon-tachometer',
     'icon-double-angle-down': 'icon-angle-double-down',
     'icon-double-angle-left': 'icon-angle-double-left',
     'icon-double-angle-right': 'icon-angle-double-right',
@@ -52,7 +54,7 @@ icon-pseudo-lookup = {
     'icon-download': 'icon-arrow-circle-o-down',
     'icon-download-alt': 'icon-download',
     'icon-edit-sign': 'icon-pencil-square',
-    'icon-edit': 'icon-pencil-square-o',
+    //'icon-edit': 'icon-pencil-square-o',
     'icon-ellipsis-horizontal': 'icon-ellipsis-h',
     'icon-ellipsis-vertical': 'icon-ellipsis-v',
     'icon-envelope-alt': 'icon-envelope-o',
@@ -74,7 +76,7 @@ icon-pseudo-lookup = {
     'icon-fullscreen': 'icon-arrows-alt',
     'icon-github-sign': 'icon-github-square',
     'icon-google-plus-sign': 'icon-google-plus-square',
-    'icon-group': 'icon-users',
+    //'icon-group': 'icon-users',
     'icon-h-sign': 'icon-h-square',
     'icon-hand-down': 'icon-hand-o-down',
     'icon-hand-left': 'icon-hand-o-left',
@@ -87,7 +89,7 @@ icon-pseudo-lookup = {
     'icon-indent-right': 'icon-indent',
     'icon-info-sign': 'icon-info-circle',
     'icon-keyboard': 'icon-keyboard-o',
-    'icon-legal': 'icon-gavel',
+    //'icon-legal': 'icon-gavel',
     'icon-lemon': 'icon-lemon-o',
     'icon-lightbulb': 'icon-lightbulb-o',
     'icon-linkedin-sign': 'icon-linkedin-square',
@@ -95,7 +97,7 @@ icon-pseudo-lookup = {
     'icon-microphone-off': 'icon-microphone-slash',
     'icon-minus-sign-alt': 'icon-minus-square',
     'icon-minus-sign': 'icon-minus-circle',
-    'icon-mobile-phone': 'icon-mobile',
+    //'icon-mobile-phone': 'icon-mobile',
     'icon-moon': 'icon-moon-o',
     'icon-move': 'icon-arrows',
     'icon-off': 'icon-power-off',
@@ -103,7 +105,7 @@ icon-pseudo-lookup = {
     'icon-ok-sign': 'icon-check-circle',
     'icon-ok': 'icon-check',
     'icon-paper-clip': 'icon-paperclip',
-    'icon-paste': 'icon-clipboard',
+    //'icon-paste': 'icon-clipboard',
     'icon-phone-sign': 'icon-phone-square',
     'icon-picture': 'icon-picture-o',
     'icon-pinterest-sign': 'icon-pinterest-square',
@@ -116,15 +118,15 @@ icon-pseudo-lookup = {
     'icon-remove-circle': 'icon-times-circle-o',
     'icon-remove-sign': 'icon-times-circle',
     'icon-remove': 'icon-times',
-    'icon-reorder': 'icon-bars',
+    //'icon-reorder': 'icon-bars',
     'icon-resize-full': 'icon-expand',
     'icon-resize-horizontal': 'icon-arrows-h',
     'icon-resize-small': 'icon-compress',
     'icon-resize-vertical': 'icon-arrows-v',
     'icon-rss-sign': 'icon-rss-square',
-    'icon-save': 'icon-floppy-o',
+    //'icon-save': 'icon-floppy-o',
     'icon-screenshot': 'icon-crosshairs',
-    'icon-share-alt': 'icon-share',
+    //'icon-share-alt': 'icon-share',
     'icon-share-sign': 'icon-share-square',
     'icon-share': 'icon-share-square-o',
     'icon-sign-blank': 'icon-square',
@@ -141,7 +143,7 @@ icon-pseudo-lookup = {
     'icon-sort-up': 'icon-sort-desc',
     'icon-stackexchange': 'icon-stack-overflow',
     'icon-star-empty': 'icon-star-o',
-    'icon-star-half-empty': 'icon-star-half-o',
+    //'icon-star-half-empty': 'icon-star-half-o',
     'icon-sun': 'icon-sun-o',
     'icon-thumbs-down-alt': 'icon-thumbs-o-down',
     'icon-thumbs-up-alt': 'icon-thumbs-o-up',
@@ -149,7 +151,7 @@ icon-pseudo-lookup = {
     'icon-trash': 'icon-trash-o',
     'icon-tumblr-sign': 'icon-tumblr-square',
     'icon-twitter-sign': 'icon-twitter-square',
-    'icon-unlink': 'icon-chain-broken',
+    //'icon-unlink': 'icon-chain-broken',
     'icon-upload': 'icon-arrow-circle-o-up',
     'icon-upload-alt': 'icon-upload',
     'icon-warning-sign': 'icon-exclamation-triangle',
@@ -157,16 +159,17 @@ icon-pseudo-lookup = {
     'icon-youtube-sign': 'icon-youtube-square',
     'icon-zoom-in': 'icon-search-plus',
     'icon-zoom-out': 'icon-search-minus'
-}
+);
 
-for old-icon-name, new-icon-name in icon-lookup {
-    .{old-icon-name}{
-        @extend .{new-icon-name};
-    }
-}
 
-for old-icon-name, new-icon-name in icon-pseudo-lookup {
-    .{old-icon-name}:before{
-        @extend .{new-icon-name}:before;
+// @each $old-icon-name, $new-icon-name in $icon-lookup {
+//    .#{$old-icon-name}{
+//        @extend .#{$new-icon-name};
+//    }
+// }
+
+@each $old-icon-name, $new-icon-name in $icon-pseudo-lookup {
+    .#{$old-icon-name}:before{
+        @extend .#{$new-icon-name}:before;
     }
 }

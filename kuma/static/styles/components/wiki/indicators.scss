@@ -1,6 +1,3 @@
-@require '../../includes/vars';
-@require '../../includes/mixins_indicators';
-
 /*
 Indicators
 - in a perfect world each indicator is composed of 2 classes that
@@ -25,17 +22,17 @@ block indicators aka banners
 .note,
 .warning,
 .geckoVersionNote {
-    @extends $indicator-block;
+    @extend %indicator-block;
 
     /* heading */
     p > strong {
-        @extends $indicator-block-heading;
+        @extend %indicator-block-heading;
     }
 }
 
 /* heading */
 .bannerHeading {
-    @extends $indicator-block-heading;
+    @extend %indicator-block-heading;
 }
 
 /* If there are 2 indicators in close proximity, snug them up.
@@ -71,7 +68,7 @@ modifications for 'system' indicators
 .draft,
 .notice:not(.experimental),
 .translationInProgress {
-    @extends $indicator-system;
+    @extend %indicator-system;
 }
 
 .warning {
@@ -79,7 +76,7 @@ modifications for 'system' indicators
     &#doc-rendering-in-progress,
     &#doc-rendering-scheduled,
     &.warning-review {
-        @extends $indicator-system;
+        @extend %indicator-system;
     }
 }
 
@@ -92,8 +89,8 @@ inline indicators aka badges
 .inlineIndicator,
 .indicatorInHeadline,
 .badge {
-    @extends $indicator-inline;
-    @extends $indicator-inline-icon;
+    @extend %indicator-inline;
+    @extend %indicator-inline-icon;
 }
 
 .inlineIndicator[title],
@@ -106,15 +103,15 @@ inline in a heading
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 .headingWithIndicator {
-    clearfix();
+    @include clearfix();
 
     h1, h2, h3, h4, h5, h6 {
-        bidi-value(float, left, right);
+        @include bidi-value(float, left, right);
     }
 }
 
 .indicatorInHeadline {
-    bidi-value(float, right, left);
+    @include bidi-value(float, right, left);
 }
 
 
@@ -123,59 +120,60 @@ icons for both types of indicators
 -------------------------------------------------------------- */
 
 #kserrors.warning {
-    indicator-icon('\f119'); /* frowny facy */
+    @extend %indicator-with-icon;
+    @include indicator-icon('\f119'); /* frowny facy */
 }
 
 #doc-rendering-in-progress.warning,
 #doc-rendering-scheduled.warning {
-    indicator-icon('\f017'); /* clock */
+    @include indicator-icon('\f017'); /* clock */
 }
 
 .experimental,
 .experimentalBadge,
 /* es7 and harmony macros  */
 .overheadIndicator[style='background: #9CF49C;'] {
-    indicator-icon('\f0c3'); /* flask */
+    @include indicator-icon('\f0c3'); /* flask */
 }
 
 .warning:not(.notification) {
-    indicator-icon('\f06a'); /* circle with excamation point */
+    @include indicator-icon('\f06a'); /* circle with excamation point */
 }
 
 .deprecated {
-    indicator-icon('\f088'); /* thumbs down */
+    @include indicator-icon('\f088'); /* thumbs down */
 }
 
 .draft,
 .warning.warning-review,
 .translationInProgress {
-    indicator-icon('\f044'); /* edit icon */
+    @include indicator-icon('\f044'); /* edit icon */
 }
 
 .note {
-    indicator-icon('\f016'); /* file icon rotated */
+    @include indicator-icon('\f016'); /* file icon rotated */
 
     &:before {
-        vendorize(transform, scaleY(-0.8) scaleX(0.8));
+       @include vendorize(transform, scaleY(-0.8) scaleX(0.8));
     }
 }
 
 .obsolete {
-    indicator-icon('\f014'); /* trash can */
+    @include indicator-icon('\f014'); /* trash can */
 }
 
 .nonStandard,
 .nonstandardBadge {
-    indicator-icon('\f071'); /* triangle with exclamation point */
+    @include indicator-icon('\f071'); /* triangle with exclamation point */
 }
 
 .privilegedBadge,
 .install{
-    indicator-icon('\f132'); /* shield */
+    @include indicator-icon('\f132'); /* shield */
 }
 
 .translationInProgress {
-    indicator-icon('\f0ac'); /* globe */
+    @include indicator-icon('\f0ac'); /* globe */
 }
 
 
@@ -193,14 +191,14 @@ Colours for both types
 .nonstandardBadge,
 .unimplemented,
 .unimplementedBadge {
-    @extends $indicator-danger;
+    @extend %indicator-danger;
 }
 
 /* experimental */
 .experimental,
 .experimentalBadge,
 .prefixBox {
-    @extends $indicator-warning;
+    @extend %indicator-warning;
 }
 
 /* if you don't know this it won't work */
@@ -212,7 +210,7 @@ Colours for both types
 .renamed,
 .privilegedBadge,
 .translationInProgress {
-    @extends $indicator-warning;
+    @extend %indicator-warning;
 }
 
 /* version info */
@@ -232,12 +230,12 @@ Colours for both types
 .geckoMinVerMethod,
 .firefoxVersionBadge,
 .geckoVersionBadge {
-    @extends $indicator-version;
+    @extend %indicator-version;
 }
 
 /* you might like to know */
 .optional {
-    @extends $indicator-info;
+    @extend %indicator-info;
 }
 
 /*
@@ -250,8 +248,8 @@ Special snowflakes
 #doc-rendering-scheduled.warning {
     border-color: #B54D48;
     background-color: #CA5651;
-    @extends $indicator-link-invert;
-    @extends $indicator-text-invert;
+    @extend %indicator-link-invert;
+    @extend %indicator-text-invert;
 }
 
 /* code colouration */
@@ -264,24 +262,24 @@ Special snowflakes
 .noscript {
     border-color: #f20000;
     background: #f00;
-    @extends $indicator-text-invert;
-    @extends $indicator-link-invert;
+    @extend %indicator-text-invert;
+    @extend %indicator-link-invert;
 }
 
 /* black */
 .readOnly {
     border-color: #4b4b4b;
     background: #595959;
-    @extends $indicator-text-invert;
-    @extends $indicator-link-invert;
+    @extend %indicator-text-invert;
+    @extend %indicator-link-invert;
 }
 
 /* heading that goes in with geckoVersionNote */
 .geckoVersionHeading {
     margin: (($grid-spacing / 2) * -1) (($grid-spacing / 2) * -1) 4px;
     padding: $content-vertical-spacing $content-horizontal-spacing;
-    background: theme-pale-medium($blue);
-    @extends $indicator-block-heading;
+    background: -theme-pale-medium($blue);
+    @extend %indicator-block-heading;
 
     > div {
         font-family: $tiny-font-family;

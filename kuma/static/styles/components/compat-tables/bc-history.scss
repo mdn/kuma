@@ -41,7 +41,7 @@ History
     padding-top: $bc-grid-spacing;
     padding-left: $bc-grid-spacing;
     margin-bottom: $bc-grid-spacing;
-    set-font-size($base-bump-font-size);
+    @include set-font-size($base-bump-font-size);
     text-align: left;
 }
 
@@ -99,7 +99,7 @@ History
 }
 
 
-bc-history-tablet-display() {
+@mixin bc-history-tablet-display() {
     .bc-table .bc-history {
         padding-left: 0;
         box-shadow: none;
@@ -108,15 +108,15 @@ bc-history-tablet-display() {
 
 @media all and (min-width: 769px) {
     .wiki-right-present.wiki-left-present {
-        bc-history-tablet-display()
+        @include bc-history-tablet-display()
     }
 }
 
-@media $media-query-mobile {
-    bc-history-tablet-display()
+@media #{$media-query-mobile} {
+    @include bc-history-tablet-display()
 }
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
 
     .bc-history dl {
        margin-left: $bc-grid-spacing;

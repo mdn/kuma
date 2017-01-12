@@ -1,11 +1,11 @@
 /*
 colorful callouts
 ====================================================================== */
-$callout-icon-spacing = 25px;
-$callout-icon-width = 90px;
+$callout-icon-spacing: 25px;
+$callout-icon-width: 90px;
 
 .column-callout {
-    @extend $column-4;
+    @include column-4();
     background: #00539F;
 
     a {
@@ -14,26 +14,26 @@ $callout-icon-width = 90px;
         min-height: 160px;
         position: relative;
         overflow: hidden;
-        set-larger-font-size();
+        @include set-larger-font-size();
 
         &:after {
             content: '';
             display: block;
             position: absolute;
             top: $callout-icon-spacing;
-            bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
+            @include bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
             height: $callout-icon-width;
             width: $callout-icon-width;
             background-image: url($path-to-embedded-images + 'promo-sprite.png');
         }
 
         &:before {
-            bidi-style(content, '\f061', content, '\f060');
-            bidi-style(right, $grid-spacing, left, auto);
+            @include bidi-style(content, '\f061', content, '\f060');
+            @include bidi-style(right, $grid-spacing, left, auto);
             font-family: 'FontAwesome';
             bottom: 11px;
             position: absolute;
-            set-font-size(24px);
+            @include set-font-size(24px);
             z-index: 4;
         }
     }
@@ -42,7 +42,7 @@ $callout-icon-width = 90px;
         position: absolute;
         z-index: 1;
         bottom: -2px;
-        bidi-value(padding, $grid-spacing 50px $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing 50px);
+        @include bidi-value(padding, $grid-spacing 50px $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing 50px);
         width: 75%;
         min-width: 160px;
         max-width: 270px;
@@ -54,14 +54,14 @@ $callout-icon-width = 90px;
 Media queries
 -------------------------------------------------------------- */
 
-@media $media-query-tablet {
+@media #{$media-query-tablet} {
     .column-callout a:after {
         top: $grid-spacing;
-        bidi-style(right, $grid-spacing, left, auto);
+        @include bidi-style(right, $grid-spacing, left, auto);
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
 
     .column-callout {
         margin-bottom: $grid-spacing;
@@ -69,14 +69,14 @@ Media queries
 
     .column-callout a:after {
         top: $callout-icon-spacing;
-        bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
+        @include bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
     }
 }
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
     .column-callout a:after {
         top: $grid-spacing;
-        bidi-style(right, $grid-spacing, left, auto);
+        @include bidi-style(right, $grid-spacing, left, auto);
     }
 }
 

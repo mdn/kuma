@@ -1,31 +1,31 @@
-@require 'includes/mixins';
-@require 'includes/vars';
-@require 'base/fonts/milk';
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'base/fonts/milk';
 
 /* Values used by all boxes. */
-$box-padding = 20px;
-$box-border-width = 1px;
-$box-border = $box-border-width solid #d8d4ca;
-$box-border-hover-color = #25a;
-$selection-border-width = 2px;
+$box-padding: 20px;
+$box-border-width: 1px;
+$box-border: $box-border-width solid #d8d4ca;
+$box-border-hover-color: #25a;
+$selection-border-width: 2px;
 
 /* Values used by "step" boxes (choose a color, choose a technology, etc.). */
-$step-box-width = 620px;
-$step-box-total-width = ($step-box-width + ($box-padding * 2) + ($box-border-width * 2));
+$step-box-width: 620px;
+$step-box-total-width: ($step-box-width + ($box-padding * 2) + ($box-border-width * 2));
 
 /* Values used for image alignment, and other alignment that is based on image alignment. */
-$number-of-images = 4;
-$img-width = 120px;
-$img-nohover-padding = 1px;
+$number-of-images: 4;
+$img-width: 120px;
+$img-nohover-padding: 1px;
 /* Some messy math here. Basically, this is the space available in #step-design
    after the widths, margins, paddings, and borders of children elements are
    taken into consideration, divided by the number of margins needed. */
-$img-margin-right = (($step-box-width - ($img-width * $number-of-images) - (($img-nohover-padding + $selection-border-width + $box-border-width) * 2 * $number-of-images)) / ($number-of-images - 1));
+$img-margin-right: (($step-box-width - ($img-width * $number-of-images) - (($img-nohover-padding + $selection-border-width + $box-border-width) * 2 * $number-of-images)) / ($number-of-images - 1));
 
 /* Values used by the preview box that floats off to the right. */
-$preview-box-width = $img-width;
-$preview-box-left-margin = 10px;
-$preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-border-width * 2));
+$preview-box-width: $img-width;
+$preview-box-left-margin: 10px;
+$preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-border-width * 2));
 
 #promote-buttons {
     #page-head {
@@ -64,17 +64,17 @@ $preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-bord
         border: $box-border;
         margin: 0 0 10px;
         padding: $box-padding;
-        vendorize-value(background, linear-gradient, '(top, rgba(255,255,255,.9) 0, rgba(255,255,255,0) 80%)');
+        @include vendorize-value(background, linear-gradient, '(top, rgba(255,255,255,.9) 0, rgba(255,255,255,0) 80%)');
         width: $step-box-width;
     }
 
     h3, h4, label {
-        set-font-size($base-bump-font-size);
+        @include set-font-size($base-bump-font-size);
     }
 
     h4 {
         margin-top: 12px;
-        margin-bottom: @margin-top;
+        margin-bottom: 12px;
     }
 
     li {
@@ -158,7 +158,7 @@ $preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-bord
         /* Very similar to what we do with $img-margin-right above. We assume
            that four list items are shown so that even if fewer list items are
            shown, they all lign up with the images in #step-design. Neato. */
-        margin-right: (($step-box-width - ($box-border * 2 * $number-of-images) - (@padding * 2 * $number-of-images) - (@width * 4)) / ($number-of-images - 1));
+        margin-right: (($step-box-width - ($box-border-width * 2 * $number-of-images) - (2px * 2 * $number-of-images) - ($img-width * 4)) / ($number-of-images - 1));
     }
 
     label {
@@ -174,7 +174,7 @@ $preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-bord
     li:hover, li.selected {
         border-color: $box-border-hover-color;
         border-width: $selection-border-width;
-        width: $img-width - @border-width; /* Make room for the border. */
+        width: $img-width - $selection-border-width; /* Make room for the border. */
 
         label {
             margin: -1px;
@@ -215,7 +215,7 @@ $preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-bord
     font: 12px monospace;
     height: 80px;
     padding: 5px;
-    width: $step-box-width - (@padding * 2);
+    width: $step-box-width - (5px * 2);
 }
 
 #button-preview {

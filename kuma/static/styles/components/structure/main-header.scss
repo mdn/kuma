@@ -3,14 +3,14 @@ Main header, wraps all components of logo, main, and secondary navigation
 ====================================================================== */
 
 #main-header {
-    clearfix();
+    @include clearfix();
     border-color: transparent;
-    border-bottom: 1px solid @border-color;
+    border-bottom: 1px solid transparent;
     border-top: 2px solid #fff;
 
     /* margin-top will be added to small-mobile media query to ensure login widget doesn't overly */
     .logo {
-        bidi-value(float, left, right);
+        @include bidi-value(float, left, right);
         width: 205px;
         height: 40px;
         margin-top: 7px;
@@ -30,7 +30,7 @@ Main header, wraps all components of logo, main, and secondary navigation
 }
 
 /* custom nav menu movement */
-@media $media-query-navigation-break {
+@media #{$media-query-navigation-break} {
 
     #main-header {
         .logo {
@@ -39,7 +39,7 @@ Main header, wraps all components of logo, main, and secondary navigation
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
 
     #main-header {
         .logo {
@@ -51,7 +51,7 @@ Main header, wraps all components of logo, main, and secondary navigation
     }
 }
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
 
     #main-header {
         .logo {

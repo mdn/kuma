@@ -8,29 +8,26 @@ Call to action button
     position: relative;
     min-width: 11rem;
     background-color: $neutral;
-    border: 2px solid rgba-fallback(rgba(255,255,255,0.4), $neutral);
+    border-width: 2px;
+    border-style: solid;
+    @include rgba-fallback(border-color, #fff, 0.4, $neutral);
     border-radius: 8px;
     overflow: hidden;
     color: #ffffff;
     display: inline-block;
     text-align: center;
 
-    a&:hover,
-    a&:focus {
-        color: $text-color;
-    }
-
     &.negative {
         background-color: $negative;
     }
 
-    &-head {
+    #{&}-head {
         box-sizing: border-box;
         display: inline-block;
         width: 100%;
         padding: 0.75rem;
         margin: 0px;
-        set-font-size(22px);
+        @include set-font-size(22px);
         line-height: 1;
         text-transform: uppercase;
         text-align: center;
@@ -51,7 +48,7 @@ Call to action button
         transition: opacity 0.2s ease-in-out 0s;
         background-color: inherit;
 
-        .js& {
+        .js & {
             opacity: 0;
             visibility: hidden;
         }
@@ -101,4 +98,9 @@ Call to action button
             }
         }
     }
+}
+
+a.cta:hover,
+a.cta:focus {
+    color: $text-color;
 }

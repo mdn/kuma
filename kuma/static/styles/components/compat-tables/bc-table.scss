@@ -10,7 +10,7 @@ table layout
     border: none; /* to over-ride .text-content styles */
     border-collapse: separate; /* to over-ride .text-content styles */
     border-spacing: 0;
-    background-color: rgba-fallback(rgba($table-blue, 0.5));
+    @include rgba-fallback('background-color', $table-blue, 0.5);
 }
 
 .bc-table,
@@ -54,11 +54,11 @@ table layout
     overflow: hidden;
 }
 
-/* everything except first column */
-for $num in (1..14) {
-    .bc-table-{$num} thead th,
-    .bc-table-{$num} tbody td {
-        width: (100 / $num)%;
+/* everything except first column, 12 columns */
+@for $num from 2 through 12 {
+    .bc-table-#{$num} thead th,
+    .bc-table-#{$num} tbody td {
+        width: (100 / $num) * 1%;
     }
 }
 
@@ -142,7 +142,7 @@ tablet display
 - mixins are included in media queries below
 ----------------------------------------------------------------------  */
 
-bc-table-tablet-display-flex() {
+@mixin bc-table-tablet-display-flex() {
     /*
     Flexbox for those lucky few who can handle it
     - enhances changes in bc-table-tablet-display-block
@@ -188,8 +188,8 @@ bc-table-tablet-display-flex() {
         justify-content: center;
     }
 
-    for $num in (2..8) { /* 1 is default for both colspan and flex */
-        .bc-table th[colspan={'"' + $num + '"'}] {
+    @for $num from 2 through 8 { /* 1 is default for both colspan and flex, don't need to include it */
+        .bc-table th[colspan='#{$num}'] {
             flex: $num $num 0;
         }
     }
@@ -218,12 +218,12 @@ bc-table-tablet-display-flex() {
 @supports (display: flex) {
     @media all and (min-width: 769px) {
         .wiki-right-present.wiki-left-present {
-            bc-table-tablet-display-flex();
+            @include bc-table-tablet-display-flex();
         }
     }
 
-    @media $media-query-mobile {
-        bc-table-tablet-display-flex();
+    @media #{$media-query-mobile} {
+        @include bc-table-tablet-display-flex();
     }
 }
 
@@ -231,7 +231,7 @@ bc-table-tablet-display-flex() {
 mobile display
 ----------------------------------------------------------------------  */
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
 
     .bc-table thead {
         display: none;

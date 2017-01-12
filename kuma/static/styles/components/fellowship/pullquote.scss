@@ -13,7 +13,7 @@ The quote on the fellowship page
         font-family: $heading-font-family;
         font-style: italic;
         font-size: $larger-font-size;
-        {$selector-heading-font-fallback} {
+        #{$selector-heading-font-fallback} {
             font-family: $heading-font-family-fallback;
         }
     }
@@ -23,13 +23,13 @@ The quote on the fellowship page
         color: $neutral;
     }
     .quote:before {
-        content: "“";
+        content: '\201C';
         position: absolute;
         top: -.3rem;
         left: -.8rem;
     }
     .quote:after {
-        content: "”";
+        content: '\201D';
         line-height: 1;
     }
     .attribution {

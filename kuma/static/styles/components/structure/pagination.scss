@@ -7,15 +7,15 @@ ol.pagination {
     padding: 0 0 ($grid-spacing * 1.5) 0;
 
     li {
-        bidi-value(float, left, right);
+        @include bidi-value(float, left, right);
         padding: 0 2px;
 
         &.prev, &.prev a {
-            bidi-style(padding-left, 0, padding-right, inherit);
+            @include bidi-style(padding-left, 0, padding-right, inherit);
         }
 
         a {
-            bidi-value(float, left, right);
+            @include bidi-value(float, left, right);
             padding: 3px 8px 5px;
 
             &:hover {

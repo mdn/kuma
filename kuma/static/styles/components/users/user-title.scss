@@ -1,21 +1,21 @@
 .user-title {
-    set-font-size(26px);
+    @include set-font-size(26px);
     letter-spacing: 0;
     margin-bottom: ($grid-spacing / 2);
 
-    @media $media-query-tablet {
+    @media #{$media-query-tablet} {
         line-height: 1.2;
     }
 }
 
 .user-title-profile {
-   bidi-value(float, right, left);
-   set-font-size($small-bump-font-size);
+   @include bidi-value(float, right, left);
+   @include set-font-size($small-bump-font-size);
 }
 
 .user-title-fullname {
     color: $user-head-secondary-text-color;
     font-weight: normal;
-    set-larger-font-size();
+    @include set-larger-font-size();
     white-space: nowrap;
 }

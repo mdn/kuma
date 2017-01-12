@@ -1,20 +1,18 @@
-@require '../../includes/vars';
-
 .user-links {
     display: inline-block;
-    bidi-style(margin-left, ($icon-margin * -1), margin-right, 0);
+    @include bidi-style(margin-left, ($icon-margin * -1), margin-right, 0);
 
     li {
         display: inline-block;
-        bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+        @include bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
         margin-bottom: $grid-spacing;
     }
 
     i {
-        set-font-size($base-font-size);
+        @include set-font-size($base-font-size);
     }
 
     a {
-        bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
+        @include bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
     }
 }

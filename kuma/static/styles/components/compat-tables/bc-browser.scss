@@ -2,7 +2,7 @@
 Icons in mobile view
 ====================================================================== */
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
 
     [class*='bc-browser-']:before,
     [class*='bc-browser-']:after {
@@ -29,29 +29,29 @@ Icons in mobile view
         left: 30px;
     }
 
-    .bc-browser-{$android-browser}:before {
+    .bc-browser-#{$android-browser}:before {
         content: '\e9ca';
     }
-    .bc-browser-{$chrome-android}:before,
-    .bc-browser-{$chrome-desktop}:before {
+    .bc-browser-#{$chrome-android}:before,
+    .bc-browser-#{$chrome-desktop}:before {
         content: '\eae5';
     }
-    .bc-browser-{$firefox-android}:before,
-    .bc-browser-{$firefox-desktop}:before,
-    .bc-browser-{$firefox-fxos}:before {
+    .bc-browser-#{$firefox-android}:before,
+    .bc-browser-#{$firefox-desktop}:before,
+    .bc-browser-#{$firefox-fxos}:before {
         content: '\eae6';
     }
-    .bc-browser-{$ie-desktop}:before,
-    .bc-browser-{$ie-mobile}:before {
+    .bc-browser-#{$ie-desktop}:before,
+    .bc-browser-#{$ie-mobile}:before {
         content: '\eae7';
     }
-    .bc-browser-{$opera-desktop}:before,
-    .bc-browser-{$opera-mobile}:before,
-    .bc-browser-{$opera-mini}:before {
+    .bc-browser-#{$opera-desktop}:before,
+    .bc-browser-#{$opera-mobile}:before,
+    .bc-browser-#{$opera-mini}:before {
         content: '\eae8';
     }
-    .bc-browser-{$safari-desktop}:before,
-    .bc-browser-{$safari-ios}:before {
+    .bc-browser-#{$safari-desktop}:before,
+    .bc-browser-#{$safari-ios}:before {
         content: '\e94a';
     }
 
@@ -63,30 +63,30 @@ Icons in mobile view
         left: 2px;
     }
 
-    .bc-browser-{$chrome-desktop}:after,
-    .bc-browser-{$firefox-desktop}:after,
-    .bc-browser-{$ie-desktop}:after,
-    .bc-browser-{$opera-desktop}:after,
-    .bc-browser-{$safari-desktop}:after {
+    .bc-browser-#{$chrome-desktop}:after,
+    .bc-browser-#{$firefox-desktop}:after,
+    .bc-browser-#{$ie-desktop}:after,
+    .bc-browser-#{$opera-desktop}:after,
+    .bc-browser-#{$safari-desktop}:after {
         content: '\f108';
     }
 
-    .bc-browser-{$android-browser}:after,
-    .bc-browser-{$chrome-android}:after,
-    .bc-browser-{$firefox-android}:after {
+    .bc-browser-#{$android-browser}:after,
+    .bc-browser-#{$chrome-android}:after,
+    .bc-browser-#{$firefox-android}:after {
         content: '\f17b';
     }
 
-    .bc-browser-{$ie-mobile}:after,
-    .bc-browser-{$opera-mobile}:after,
-    .bc-browser-{$safari-ios}:after {
+    .bc-browser-#{$ie-mobile}:after,
+    .bc-browser-#{$opera-mobile}:after,
+    .bc-browser-#{$safari-ios}:after {
         content: '\f10a';
     }
-    .bc-browser-{$opera-mini}:after {
+    .bc-browser-#{$opera-mini}:after {
         content: '\f10b';
     }
 
-    .bc-browser-{$firefox-fxos}:after {
+    .bc-browser-#{$firefox-fxos}:after {
         content: '\e600';
     }
 

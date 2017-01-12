@@ -1,5 +1,5 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
 html, body {
@@ -12,7 +12,7 @@ body {
     padding: $grid-spacing;
 
     font: 14px/1.5 $site-font-family;
-    {$selector-site-font-fallback} {
+    #{$selector-site-font-fallback} {
         font-family: $site-font-family-fallback;
     }
 }
@@ -25,7 +25,7 @@ body {
     position: relative;
 
     &:before {
-        set-font-size(10px);
+        @include set-font-size(10px);
         content: 'SEO Summary';
         position: absolute;
         top: -16px;
@@ -55,7 +55,7 @@ pre {
     position: relative;
 }
 pre:before {
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     font-family: arial, sans-serif;
     font-style: italic;
     position: absolute;
@@ -66,7 +66,7 @@ pre:before {
 }
 
 pre {
-    @extend $code-block;
+    @extend %code-block;
     direction: ltr;
     text-align: left;
     white-space: pre;
@@ -74,27 +74,37 @@ pre {
     word-break: normal;
 }
 
-createLanguageQuery(lang, content) {
-    unquote("pre[class^='brush:" + lang + "']:before, pre[class^='brush: " + lang + "']:before { content: '" + content + "' }");
+
+$languages: (
+    'js': 'JavaScript',
+    'json': 'JSON',
+    'css': 'CSS',
+    'bash': 'Bash',
+    'cpp': 'C++',
+    'java': 'Java',
+    'html': 'HTML',
+    'php': 'PHP',
+    'python': 'Python',
+    'sql': 'SQL',
+    'xml': 'XML'
+);
+
+@each $key, $value in $languages {
+    $nospace: unquote('pre[class^="brush:')+unquote($key)+unquote('"]:before');
+    $space: unquote('pre[class^="brush: ')+unquote($key)+unquote('"]:before');
+
+    #{$nospace},
+    #{$space}{
+        content: $value;
+    }
 }
-createLanguageQuery('js', 'JavaScript');
-createLanguageQuery('json', 'JSON');
-createLanguageQuery('css', 'CSS');
-createLanguageQuery('bash', 'Bash');
-createLanguageQuery('cpp', 'C++');
-createLanguageQuery('java', 'Java');
-createLanguageQuery('html', 'HTML');
-createLanguageQuery('php', 'PHP');
-createLanguageQuery('python', 'Python');
-createLanguageQuery('sql', 'SQL');
-createLanguageQuery('xml', 'XML');
 
 
 /* Notify the user that a given list item will open */
 li[data-default-state='open'] > a:after {
     content: '(defaults to "open")';
     color: #666;
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     font-family: arial, sans-serif;
     font-style: italic;
     display: inline-block;
@@ -108,7 +118,7 @@ details {
     padding: 3px;
 
     &:before {
-        set-font-size(10px);
+        @include set-font-size(10px);
         content: 'details';
         position: absolute;
         top: -17px;

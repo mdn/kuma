@@ -1,16 +1,16 @@
 .contentinfo {
     margin-bottom: ($grid-spacing * 2);
-    bidi-style(padding-left, 92px, padding-right, 0, true);
+    @include bidi-style(padding-left, 92px, padding-right, 0, true);
     padding-top: 5px;
     position: relative;
     min-height: 62px;
 
     &:after {
-        bidi-style(left, 0, right, 0);
+        @include bidi-style(left, 0, right, 0);
         content: '';
         display: block;
         width: 65px;
-        height: 60px
+        height: 60px;
         background: transparent url($logo-sprite-url) no-repeat 0px -83px;
         background-size: 205px auto;
         position: absolute;
@@ -23,12 +23,12 @@
 
     ul {
         margin-bottom: 0;
-        bidi-style(margin-left, 5px, margin-right, 0);
+        @include bidi-style(margin-left, 5px, margin-right, 0);
     }
 
     li {
-        bidi-value(float, left, right);
-        bidi-style(padding-right, 10px, padding-left, 0);
+        @include bidi-value(float, left, right);
+        @include bidi-style(padding-right, 10px, padding-left, 0);
         text-indent: -5px; /* to make space for bullet */
 
         &:before {
@@ -37,10 +37,10 @@
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .contentinfo {
         margin-bottom: 0;
-        bidi-style(padding-left, 0, padding-right, 0, true);
+        @include bidi-style(padding-left, 0, padding-right, 0, true);
 
         &:after {
             content: none;
@@ -56,20 +56,20 @@
 
         li {
             margin-bottom: $grid-spacing;
-            bidi-style(padding-right, $grid-spacing, padding-left, 0);
+            @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
         }
     }
 }
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
     .contentinfo {
         ul {
-            vendorize(columns, 10em);
+           @include vendorize(columns, 10em);
         }
 
         li {
             float: none;
-            bidi-style(padding-right, 0, padding-left, 0);
+            @include bidi-style(padding-right, 0, padding-left, 0);
         }
     }
 }

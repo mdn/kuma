@@ -1,234 +1,187 @@
+/******* this file cannot reference _mixins ******/
+
 /*
 vendors
 ====================================================================== */
-/* - this is a global variable set by stylus to 'moz webkit o ms official' by default
-   - as far as I can tell it only uses it for @keyframes
-   - and they're going to remove it in 1.0
-   - anyway, we get csslint errors if ms is in this list
-*/
-vendors =  webkit official;
 /* our custom variable for prefixing */
-VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
+$VENDOR-PREFIXES : '-webkit-', '-moz-', '-ms-';
 /* custom list of properties and their valid prefixes for vendors we support */
-@require 'prefixes';
+@import 'prefixes';
 
 
 /*
 colors
 ====================================================================== */
-$text-color = #3b3c40;
-$heading-color = #4d4e53;
-$link-color = #217AC0;
-$menu-link-color = $text-color;
-$blue-background-text-color = #fff;
-$header-background-color = #eaeff2;
-$light-background-color = #f4f7f8;
-$homepage-background-color = #00539f;
-$border-width = 5px;
-$code-block-background-color = #fafbfc;
-$code-block-background-alt-color = #dde4e9;
-$code-block-border-color = #558abb;
-$code-block-padding = 15px;
-$code-block-border-width = $border-width;
-$code-block-border-style = solid;
-$table-blue = #d4dde4;
+$text-color : #3b3c40;
+$heading-color : #4d4e53;
+$link-color : #217AC0;
+$menu-link-color : $text-color;
+$blue-background-text-color : #fff;
+$header-background-color : #eaeff2;
+$light-background-color : #f4f7f8;
+$homepage-background-color : #00539f;
+$border-width : 5px;
+$code-block-background-color : #fafbfc;
+$code-block-background-alt-color : #dde4e9;
+$code-block-border-color : #558abb;
+$code-block-padding : 15px;
+$code-block-border-width : $border-width;
+$code-block-border-style : solid;
+$table-blue : #d4dde4;
 
-$red = #ea3b28;
-$yellow = #ffcb00;
-$green = #70a300;
-$blue = #0095dd;
-$grey = #c7ccce;
-$orange = #c55200;
+$red : #ea3b28;
+$yellow : #ffcb00;
+$green : #70a300;
+$blue : #0095dd;
+$grey : #c7ccce;
+$orange : #c55200;
 
-$negative = $red;
-$warning = $yellow;
-$positive = $green;
-$neutral = $blue;
-$default = $grey;
+$negative : $red;
+$warning : $yellow;
+$positive : $green;
+$neutral : $blue;
+$default : $grey;
 
-$text-dark = $text-color;
-$text-light = #fff;
+$text-dark : $text-color;
+$text-light : #fff;
 
 
 /*
 typography
 ====================================================================== */
-$light-font-weight = 200;
-$site-font-family = 'Open Sans', Arial, sans-serif;
-$site-font-family-fallback = Arial, sans-serif;
-$heading-font-family = 'Open Sans Light', 'Helvetica', Arial, sans-serif;
-$heading-font-family-fallback = 'Helvetica', Arial, sans-serif;
-$tiny-font-family = 'Helvetica', Arial, sans-serif;
-$code-block-font-family = Consolas, Monaco, 'Andale Mono', monospace; /* prism */
-$code-inline-font-family = Consolas, "Liberation Mono", Courier, monospace; /* inline */
-$diff-font-family = $code-inline-font-family;
+$light-font-weight : 200;
+$site-font-family : 'Open Sans', Arial, sans-serif;
+$site-font-family-fallback : Arial, sans-serif;
+$heading-font-family : 'Open Sans Light', 'Helvetica', Arial, sans-serif;
+$heading-font-family-fallback : 'Helvetica', Arial, sans-serif;
+$tiny-font-family : 'Helvetica', Arial, sans-serif;
+$code-block-font-family : Consolas, Monaco, 'Andale Mono', monospace; /* prism */
+$code-inline-font-family : Consolas, "Liberation Mono", Courier, monospace; /* inline */
+$diff-font-family : $code-inline-font-family;
 
 /*
 sizes
 ====================================================================== */
-$larger-font-size = 20px;
-$base-font-size = 14px;
-$smaller-font-size = 12px;
-$tiny-font-size = 10px;
+$larger-font-size : 20px;
+$base-font-size : 14px;
+$smaller-font-size : 12px;
+$tiny-font-size : 10px;
 
-$small-bump-font-size = 13px;
-$base-bump-font-size = 16px;
+$small-bump-font-size : 13px;
+$base-bump-font-size : 16px;
 
 
 /*
 buttons
 ====================================================================== */
-$button-background = #eaeff2;
-$button-color = $menu-link-color;
-$button-shadow-color = #bbbfc2;
+$button-background : #eaeff2;
+$button-color : $menu-link-color;
+$button-shadow-color : #bbbfc2;
 
 
 /*
 grid
 ====================================================================== */
-$grid-spacing = 20px;
-$grid-margin = 3%;
-$grid-column-selector = '> [class^="column-"]';
-$grid-width-column-main = $calc-col-width(9);
+/*
+grid - 12 columns assuming a 3% margin
+-------------------------------------------------------------- */
+@function -calc-col-width($col-span) {
+    $grid-margin-numb : $grid-margin / 1%; // remove percent unit
+    $col-percent : (100 - $grid-margin-numb * 11) / 12 * $col-span + $grid-margin-numb * ($col-span - 1);
+    $col-percent : if($col-percent > 100, 100, $col-percent); // not over 100
+    $col-percent : $col-percent;
+    $col-percent : $col-percent * 1%; // add % unit
+    @return $col-percent;
+}
+
+$grid-spacing : 20px;
+$grid-margin : 3%;
+$grid-column-selector : '> [class^="column-"]';
+$grid-width-column-main : -calc-col-width(9);
 
 
 /*
 breakpoints & media queries
 ====================================================================== */
 
-$max-width-default = 1400px;
+$max-width-default : 1400px;
 
-$small-desktop-ends = 1200px;
-$tablet-ends = 1024px;
-$mobile-ends = 768px;
-$small-mobile-ends = 480px;
+$small-desktop-ends : 1200px;
+$tablet-ends : 1024px;
+$mobile-ends : 768px;
+$small-mobile-ends : 480px;
 
-$small-desktop-starts = $tablet-ends + 1px;
-$tablet-starts = $mobile-ends + 1px;
-$mobile-starts = $small-mobile-ends + 1px;
+$small-desktop-starts : $tablet-ends + 1px;
+$tablet-starts : $mobile-ends + 1px;
+$mobile-starts : $small-mobile-ends + 1px;
 
-$media-query-small-desktop = 'all and (max-width: $small-desktop-ends)';
-$media-query-tablet = 'all and (max-width: $tablet-ends)';
-$media-query-mobile = 'all and (max-width: $mobile-ends)';
-$media-query-small-mobile = 'all and (max-width : $small-mobile-ends)';
+$media-query-small-desktop : 'all and (max-width: #{$small-desktop-ends})';
+$media-query-tablet : 'all and (max-width: #{$tablet-ends})';
+$media-query-mobile : 'all and (max-width: #{$mobile-ends})';
+$media-query-small-mobile : 'all and (max-width : #{$small-mobile-ends})';
 
-$media-query-between-small-desktop-and-max-width = 'all and (min-width: $small-desktop-starts) and (max-width: $max-width-default)';
+$media-query-between-small-desktop-and-max-width : 'all and (min-width: #{$small-desktop-starts}) and (max-width: #{$max-width-default})';
 
-$media-query-small-desktop-and-up = 'all and (min-width: $small-desktop-starts)';
-$media-query-tablet-and-up = 'all and (min-width: $tablet-starts)';
-$media-query-mobile-and-up = 'all and (min-width: $mobile-starts)';
-$media-query-small-mobile-and-up = 'all and (min-width : $small-mobile-starts)';
+$media-query-small-desktop-and-up : 'all and (min-width: #{$small-desktop-starts})';
+$media-query-tablet-and-up : 'all and (min-width: #{$tablet-starts})';
+$media-query-mobile-and-up : 'all and (min-width: #{$mobile-starts})';
 
-$media-query-small-desktop-only = 'all and (min-width: $small-desktop-starts)';
-$media-query-tablet-only = 'all and (min-width: $tablet-starts) and (max-width: $tablet-ends)';
-$media-query-mobile-only = 'all and (min-width: $mobile-starts) and (max-width: $mobile-ends)';
-$media-query-small-mobile-only = $media-query-small-mobile;
+$media-query-small-desktop-only : 'all and (min-width: #{$small-desktop-starts})';
+$media-query-tablet-only : 'all and (min-width: #{$tablet-starts}) and (max-width: #{$tablet-ends})';
+$media-query-mobile-only : 'all and (min-width: #{$mobile-starts}) and (max-width: #{$mobile-ends})';
+$media-query-small-mobile-only : $media-query-small-mobile;
 
-$navigation-break-ends = 1100px;
-$navigation-block-ends = 850px;
+$navigation-break-ends : 1100px;
+$navigation-block-ends : 850px;
 
-$navigation-break-starts = $navigation-block-ends + 1px;
+$navigation-break-starts : $navigation-block-ends + 1px;
 
-$media-query-navigation-break = 'all and (max-width: $navigation-break-ends)'; /* Moves nav items all the way to the left, moves logo above */
-$media-query-navigation-block = 'all and (max-width: $navigation-block-ends)'; /* Moves nav menu items to block, its own line */
+$media-query-navigation-break : 'all and (max-width: #{$navigation-break-ends})'; /* Moves nav items all the way to the left, moves logo above */
+$media-query-navigation-block : 'all and (max-width: #{$navigation-block-ends})'; /* Moves nav menu items to block, its own line */
 
-$media-query-break-and-up = 'all and (min-width: $navigation-break-starts)';
+$media-query-break-and-up : 'all and (min-width: #{$navigation-break-starts})';
 
 /*
 animation
 ====================================================================== */
-$default-animation-duration = .5s;
-$slide-timing-function = cubic-bezier(0, 1, 0.5, 1);
+$default-animation-duration : .5s;
+$slide-timing-function : cubic-bezier(0, 1, 0.5, 1);
 
 
 /*
 dimensions
 ====================================================================== */
-$gutter-width = 24px;
-$content-block-margin = $gutter-width;
+$gutter-width : 24px;
+$content-block-margin : $gutter-width;
 
-$first-content-top-padding = ($grid-spacing * 1.5);
+$first-content-top-padding : ($grid-spacing * 1.5);
 
-$content-horizontal-spacing = 8px;
-$content-vertical-spacing = 6px;
-$list-item-spacing = $content-horizontal-spacing;
+$content-horizontal-spacing : 8px;
+$content-vertical-spacing : 6px;
+$list-item-spacing : $content-horizontal-spacing;
 
-$icon-margin = 10px;
+$icon-margin : 10px;
 
 
 /*
 forms
 ====================================================================== */
-$input-padding = $content-vertical-spacing $content-horizontal-spacing;
+$input-padding : $content-vertical-spacing $content-horizontal-spacing;
 
 
 /*
 selectors
 ====================================================================== */
-$selector-icon = 'i[class^="icon-"]';
-$selector-site-font-fallback = 'html[data-ffo-opensans="false"]:not(.no-js) &';
-$selector-heading-font-fallback = 'html[data-ffo-opensanslight="false"]:not(.no-js) &';
+$selector-icon : 'i[class^="icon-"]';
+$selector-site-font-fallback : 'html[data-ffo-opensans="false"]:not(.no-js) &';
+$selector-heading-font-fallback : 'html[data-ffo-opensanslight="false"]:not(.no-js) &';
 
 
 /*
 paths
 ====================================================================== */
-$path-to-assets = '../';
-$path-to-images = $path-to-assets + 'img/';
-$path-to-embedded-images = $path-to-images + 'embed/';
-$path-to-fonts = $path-to-assets + 'fonts/';
-$logo-sprite-url = $path-to-images + 'logo_sprite.svg';
-
-
-/*
-grid - 12 columns assuming a 3% margin
-====================================================================== */
-$calc-col-width($col-span) {
-    $grid-margin-numb = unit($grid-margin, '');
-    $col-percent = (100 - $grid-margin-numb * 11) / 12 * $col-span + $grid-margin-numb * ($col-span - 1);
-    if($col-percent > 100) {
-        $col-percent = 100;
-    }
-    $col-percent = unit($col-percent, unquote('%'));
-    $col-percent = round($col-percent, 3);
-    return $col-percent;
-}
-
-$column-1 {
-    width: $calc-col-width(1) ; // 5.583%;
-}
-$column-2 {
-    width: $calc-col-width(2) ; // 14.167%;
-}
-$column-3, $column-strip, $column-quarter {
-    width: $calc-col-width(3) ; // 22.75%;
-}
-$column-4, $column-third {
-    width: $calc-col-width(4) ; // 31.333%;
-}
-$column-5 {
-    width: $calc-col-width(5) ; // 39.917%;
-}
-$column-6, $column-half {
-    width: $calc-col-width(6) ; // 48.5%;
-}
-$column-7 {
-    width: $calc-col-width(7) ; // 57.083%;
-}
-$column-8 {
-    width: $calc-col-width(8) ; // 65.667%;
-}
-$column-9, $column-main {
-    width: $grid-width-column-main; // 74.25%
-}
-$column-10 {
-    width: $calc-col-width(10) ; // 82.833%;
-}
-$column-11 {
-    width: $calc-col-width(11) ; // 91.417%;
-}
-$column-12, $column-all {
-    width: auto;
-    margin: 0;
-    float: none;
-}
+$path-to-assets : '../';
+$path-to-images : $path-to-assets + 'img/';
+$path-to-embedded-images : $path-to-images + 'embed/';
+$path-to-fonts : $path-to-assets + 'fonts/';
+$logo-sprite-url : $path-to-images + 'logo_sprite.svg';

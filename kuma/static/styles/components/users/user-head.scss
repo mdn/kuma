@@ -9,15 +9,15 @@
 .user-buttons {
     position: absolute;
     top: $grid-spacing;
-    bidi-style(right, $grid-spacing, left, auto);
+    @include bidi-style(right, $grid-spacing, left, auto);
 
     & > a {
-        bidi-value(float, left, right);
-        bidi-value(margin, 0 5px 0 0, 0 0 0 5px);
+        @include bidi-value(float, left, right);
+        @include bidi-value(margin, 0 5px 0 0, 0 0 0 5px);
     }
 }
 
-@media $media-query-tablet {
+@media #{$media-query-tablet} {
     .user-buttons {
         position: relative;
         top: auto;
@@ -37,23 +37,23 @@
 
     li {
         display: inline;
-        bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+        @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
 
         &:before {
             color: $user-head-secondary-text-color;
             content: '/';
-            bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+            @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
         }
 
         &:first-child:before {
             content: '';
-            bidi-style(margin-right, 0, margin-left, 0);
+            @include bidi-style(margin-right, 0, margin-left, 0);
         }
     }
 }
 
 .user-since {
     color: #6a9412;
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     font-style: italic;
 }

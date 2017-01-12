@@ -1,8 +1,8 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 body.search-results {
-    create-gradient-background($header-background-color);
+    @include create-gradient-background($header-background-color);
 }
 
 main {
@@ -10,7 +10,7 @@ main {
 }
 
 /* update the header search size */
-minimize-header-search();
+@include minimize-header-search();
 
 /* search pane used by multiple blocks */
 .search-pane {
@@ -20,8 +20,8 @@ minimize-header-search();
 }
 
 /* block mentioning the number of results returned */
-h3 {$selector-icon}, fieldset {$selector-icon} {
-    bidi-style(margin-right, ($grid-spacing * .75), margin-left, 0);
+h3 #{$selector-icon}, fieldset #{$selector-icon} {
+    @include bidi-style(margin-right, ($grid-spacing * .75), margin-left, 0);
 }
 
 .search-results-explanation {
@@ -45,9 +45,9 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
 		}
 
     input {
-        big-search();
-        background: rgba-fallback(rgba(255, 255, 255, 0.5));
-        bidi-style(padding-left, 30px, padding-right, 0);
+        @include big-search();
+        @include rgba-fallback(background, #fff, 0.5);
+        @include bidi-style(padding-left, 30px, padding-right, 0);
     }
 }
 
@@ -65,7 +65,7 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
 }
 
 .result-list {
-    reverse-link-decoration();
+    @include reverse-link-decoration();
 
     .column-1 {
         text-align: center;
@@ -73,10 +73,10 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
     }
 
     h4 {
-        set-larger-font-size();
+        @include set-larger-font-size();
     }
 
-    h4, {$selector-icon} { /* bug #938074 */
+    h4, #{$selector-icon} { /* bug #938074 */
         line-height: 30px;
         margin-bottom: 0;
     }
@@ -87,7 +87,7 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
     }
 
     li {
-        slider();
+        @include slider();
         padding: 10px 0 $grid-spacing 0;
 
         &.closed {
@@ -106,10 +106,10 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
 }
 
 .result-list-link {
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     font-style: italic;
 
-    {$selector-icon} {
+    #{$selector-icon} {
         margin-right: 6px !important;
         margin-left: 0;
     }
@@ -120,23 +120,23 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
         margin-right: ($grid-spacing / 2);
     }
 
-    prevent-last-child-spacing(a, margin-right);
+    @include prevent-last-child-spacing(a, margin-right);
 }
 
 .search-results-more {
-    clearfix();
+    @include clearfix();
     padding: 0 $grid-spacing;
 }
 
 /* sidebar topic listings */
 .search-results-filters {
-    reverse-link-decoration();
+    @include reverse-link-decoration();
     fieldset {
         fieldset {
             margin-bottom: 30px;
         }
         legend {
-            set-font-size(24px);
+            @include set-font-size(24px);
             letter-spacing: -0.5px;
             margin: -7px 0 ($grid-spacing / 2);
 
@@ -167,7 +167,7 @@ h3 {$selector-icon}, fieldset {$selector-icon} {
         }
 
         .filter-count{
-            bidi-value(float, right, left)
+            @include bidi-value(float, right, left)
         }
 
     }
@@ -189,13 +189,13 @@ input.filter-button {
             display: none;
         }
         .result-list-item {
-            @extend $column-11;
+            @include column-11();
         }
     }
 }
 
 /* mobile media page */
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .result-list .column-1 {
         display: none;
     }

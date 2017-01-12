@@ -1,27 +1,27 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /*
 General element over-rides
 ====================================================================== */
-@require 'components/home/base';
+@import 'components/home/base';
 
 
 /*
 Blueprint section, heading, search form, and featured link lists
 ====================================================================== */
-@require 'components/home/home-masthead';
-@require 'components/home/home-features';
+@import 'components/home/home-masthead';
+@import 'components/home/home-features';
 
 
 /*
 Three colourful teasers
 ====================================================================== */
-@require 'components/home/home-callouts';
-@require 'components/home/column-callout';
+@import 'components/home/home-callouts';
+@import 'components/home/column-callout';
 
 
 /*
 ====================================================================== */
-@require 'components/home/home-hacks';
-@require 'components/home/home-contribute';
+@import 'components/home/home-hacks';
+@import 'components/home/home-contribute';
