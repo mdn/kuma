@@ -11,13 +11,13 @@ list item in #main-nav that contains the search form
         height: 21px;
     }
 
-    @media $media-query-navigation-block {
+    @media #{$media-query-navigation-block} {
     /* move the search box under the nav */
 
         .main-nav-search {
             display: none;
             padding: 0px;
-            bidi-value(margin, 10px 0 0 0, 10px 0 0 0);
+            @include bidi-value(margin, 10px 0 0 0, 10px 0 0 0);
             width: auto;
         }
     }

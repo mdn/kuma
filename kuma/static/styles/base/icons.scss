@@ -1,9 +1,6 @@
-@require '../includes/vars';
-@require '../includes/mixins';
-
-{$selector-icon} {
-    bidi-style(margin-left, $icon-margin, margin-right, 0);
-    bidi-style(margin-right, 0, margin-left, $icon-margin);
+#{$selector-icon} {
+    @include bidi-style(margin-left, $icon-margin, margin-right, 0);
+    @include bidi-style(margin-right, 0, margin-left, $icon-margin);
     cursor: default;
     display: inline-block;
 
@@ -13,13 +10,13 @@
     }
 
     &.no-margin {
-        bidi-style(margin-left, 0, margin-right, 0);
-        bidi-style(margin-right, 0, margin-left, 0);
+        @include bidi-style(margin-left, 0, margin-right, 0);
+        @include bidi-style(margin-right, 0, margin-left, 0);
     }
 }
 
-label {$selector-icon} {
-    $label-icon-margin = ($grid-spacing / 2);
-    bidi-value(margin-left, 0, $label-icon-margin);
-    bidi-value(margin-right, $label-icon-margin, 0);
+label #{$selector-icon} {
+    $label-icon-margin: ($grid-spacing / 2);
+    @include bidi-value(margin-left, 0, $label-icon-margin);
+    @include bidi-value(margin-right, $label-icon-margin, 0);
 }

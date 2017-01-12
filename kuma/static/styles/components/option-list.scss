@@ -6,26 +6,26 @@
 */
 
 ul.option-list {
-    clearfix();
+    @include clearfix();
     float:left;
     list-style-type: none;
     max-width: 100%;
     overflow: hidden;
-    bidi-style(padding-left, ($grid-spacing), padding-right, 0);
+    @include bidi-style(padding-left, ($grid-spacing), padding-right, 0);
 
     li {
-        clearfix();
+        @include clearfix();
     }
 }
 
 .option-list-options {
-    bidi-value(float, right, left);
-    bidi-style(margin-left, $grid-spacing, margin-right, $grid-spacing );
-    bidi-value(text-align, right, left);
+    @include bidi-value(float, right, left);
+    @include bidi-style(margin-left, $grid-spacing, margin-right, $grid-spacing );
+    @include bidi-value(text-align, right, left);
 }
 
 /* options drop beneath text on smaller screens */
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .option-list-options {
         width: 100%;
     }

@@ -13,16 +13,14 @@
         margin-bottom: 0; /* summaries already have bottom margin */
     }
 
-    h2 {$selector-icon},
-    h3 {$selector-icon} {
-        @extend $right-icons;
+    h2 #{$selector-icon},
+    h3 #{$selector-icon} {
+        @include right-icons();
     }
 
     summary {
-        clearfix();
-        set-font-size(20px);
+        @include clearfix();
+        @include set-font-size(20px);
         cursor: pointer;
-        margin: $summary-margin;
-        padding: $summary-padding;
     }
 }

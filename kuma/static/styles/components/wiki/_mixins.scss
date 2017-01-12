@@ -1,5 +1,5 @@
 /* mixins applying only to the wiki */
-make-wiki-blocks-flat() {
+@mixin make-wiki-blocks-flat() {
     #wiki-content, #wiki-right, #wiki-left {
         margin-right: 0;
         width: auto !important;
@@ -8,7 +8,7 @@ make-wiki-blocks-flat() {
     }
 }
 
-enable-toc-toggle() {
+@mixin enable-toc-toggle() {
     #toc {
         padding: ($grid-spacing / 2) $grid-spacing;
 
@@ -31,7 +31,7 @@ enable-toc-toggle() {
     }
 }
 
-$review-base {
-    box-theme($yellow);
+%review-base {
+    @include box-theme($yellow);
     color: $text-color;
 }

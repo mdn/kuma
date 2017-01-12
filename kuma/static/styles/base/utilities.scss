@@ -1,16 +1,13 @@
-@require '../includes/vars';
-@require '../includes/mixins';
-
 /*
     Utility classes
 */
 
 .offscreen {
-    offscreen();
+    @extend %offscreen-placeholder;
 }
 
 .clear {
-    clearfix();
+    @include clearfix();
 }
 
 .align-center {
@@ -22,14 +19,14 @@
     margin: 0 auto;
     position: relative;
     max-width: $max-width-default;
-    add-center-spacing();
+    @include add-center-spacing();
 
-    @media $media-query-mobile {
-        add-center-spacing(15px);
+    @media #{$media-query-mobile} {
+        @include add-center-spacing(15px);
     }
 
     @media print {
-        remove-center-spacing();
+        @include remove-center-spacing();
     }
 }
 
@@ -44,7 +41,7 @@
         padding: 3px;
 
         &:before {
-            set-font-size(10px);
+            @include set-font-size(10px);
             content: 'hidden';
             position: absolute;
             top: -17px;
@@ -59,18 +56,18 @@
 }
 
 .title {
-    title-header();
+    @include title-header();
 }
 
 .smaller {
-    set-smaller-font-size();
-    {$selector-heading-font-fallback} {
+    @include set-smaller-font-size();
+    #{$selector-heading-font-fallback} {
         letter-spacing: -0.01em;
     }
 }
 
 .larger {
-    set-larger-font-size();
+    @include set-larger-font-size();
 }
 
 .grid-padding {
@@ -79,12 +76,12 @@
 
 .heading-link {
     font-style: italic;
-    set-font-size($base-font-size);
+    @include set-font-size($base-font-size);
     font-weight: normal;
     display: inline-block;
     margin: 0 ($grid-spacing * 2);
 
-    @media $media-query-mobile {
+    @media #{$media-query-mobile} {
         margin: 8px 0 0 0;
         display: block;
     }
@@ -110,21 +107,21 @@
 }
 
 .media-side {
-    bidi-value(float, left, right);
-    bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+    @include bidi-value(float, left, right);
+    @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
 
     img {
         display: block;
     }
 
     .media-reverse & {
-        bidi-value(float, right, left);
-        bidi-style(margin-left, ($grid-spacing / 2), margin-right, 0);
+        @include bidi-value(float, right, left);
+        @include bidi-style(margin-left, ($grid-spacing / 2), margin-right, 0);
     }
 }
 
 /* declaration for stacking the two items */
-media-stack() {
+@mixin media-stack() {
     .media-body,
     .media-side {
         float: none;
@@ -149,26 +146,26 @@ media-stack() {
 
 /* triggers for stacking */
 .media-mobile-stack {
-    @media $media-query-mobile {
-        media-stack();
+    @media #{$media-query-mobile} {
+        @include media-stack();
     }
 }
 
 .media-small-mobile-stack {
-    @media $media-query-small-mobile {
-        media-stack();
+    @media #{$media-query-small-mobile} {
+        @include media-stack();
     }
 }
 
 /* elements with this class move spans off screen and only display icons */
 .only-icon {
-    {$selector-icon} {
+    #{$selector-icon} {
         margin-left: 0 !important;
         margin-right: 0 !important;
         margin-top: -1px !important;
     }
 
     span {
-        offscreen();
+        @extend %offscreen-placeholder;
     }
 }

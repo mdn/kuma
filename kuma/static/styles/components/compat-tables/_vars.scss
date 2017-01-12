@@ -1,26 +1,26 @@
 /* make stylus variables out of browser slugs,
    slugs will update before we're out of alpha */
 
-$android-browser = 'android';
-$chrome-android = 'chrome_for_android';
-$chrome-desktop = 'chrome_desktop';
-$firefox-android = 'firefox_android';
-$firefox-desktop = 'firefox_desktop';
-$firefox-fxos = 'firefox_os';
-$ie-desktop = 'ie_desktop';
-$ie-mobile = 'ie_mobile';
-$opera-desktop = 'opera_desktop';
-$opera-mobile = 'opera_mobile';
-$opera-mini = 'opera_mini';
-$safari-desktop = 'safari_desktop';
-$safari-ios = 'safari_ios';
+$android-browser: 'android';
+$chrome-android: 'chrome_for_android';
+$chrome-desktop: 'chrome_desktop';
+$firefox-android: 'firefox_android';
+$firefox-desktop: 'firefox_desktop';
+$firefox-fxos: 'firefox_os';
+$ie-desktop: 'ie_desktop';
+$ie-mobile: 'ie_mobile';
+$opera-desktop: 'opera_desktop';
+$opera-mobile: 'opera_mobile';
+$opera-mini: 'opera_mini';
+$safari-desktop: 'safari_desktop';
+$safari-ios: 'safari_ios';
 
-$bc-color-yes = #288436;
-$bc-color-no = #962a2a;
-$bc-color-partial = #a25e00;
-$bc-color-unknown = #bbbbbb;
-$bc-color-border = #ffffff;
-
-$bc-support = yes no partial unknown;
-
-$bc-grid-spacing = 10px;
+$bc-colors: (
+    yes: #288436,
+    no: #962a2a,
+    partial: #a25e00,
+    unknown: #bbbbbb
+);
+$bc-color-border: #ffffff;
+$bc-support: yes, no, partial, unknown;
+$bc-grid-spacing: 10px;

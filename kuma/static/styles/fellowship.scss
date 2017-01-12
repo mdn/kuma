@@ -1,9 +1,9 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
-@require 'components/fellowship/base';
-@require 'components/fellowship/details-list';
-@require 'components/fellowship/pullquote';
-@require 'components/fellowship/hero';
-@require 'components/fellowship/cta';
+@import 'components/fellowship/base';
+@import 'components/fellowship/details-list';
+@import 'components/fellowship/pullquote';
+@import 'components/fellowship/hero';
+@import 'components/fellowship/cta';
 

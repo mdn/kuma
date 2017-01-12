@@ -4,6 +4,6 @@
 
 .banned {
     color: $negative;
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     font-style: italic;
 }

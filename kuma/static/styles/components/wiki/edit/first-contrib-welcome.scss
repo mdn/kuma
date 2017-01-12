@@ -9,7 +9,7 @@
     h2 {
         margin: 0 0 10px;
         font: bold 18px/1.5 $site-font-family;
-        {$selector-site-font-fallback} {
+        #{$selector-site-font-fallback} {
             font-family: $site-font-family-fallback;
         }
     }

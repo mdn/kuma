@@ -1,6 +1,6 @@
 .newsletter-box {
     position: relative;
-    notification-theme($default);
+    @include notification-theme($default);
     margin-bottom: $grid-spacing;
     border: none;
     padding: $grid-spacing;
@@ -14,7 +14,7 @@
     margin-bottom: $grid-spacing;
 
     .wiki-block-newsletter & {
-        bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
+        @include bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
     }
 }
 
@@ -23,7 +23,7 @@
 }
 
 .newsletter-errors .errorlist {
-    bidi-style(padding-left, 0, padding-right, 0);
+    @include bidi-style(padding-left, 0, padding-right, 0);
     list-style-type: none;
 }
 
@@ -42,12 +42,12 @@
 .newsletter-hide {
     position: absolute;
     top: $grid-spacing;
-    bidi-style(right, $grid-spacing, left, auto);
+    @include bidi-style(right, $grid-spacing, left, auto);
     z-index: 11;
 }
 
 .newsletter-thanks {
     h2 {
-        bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
+        @include bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
     }
 }

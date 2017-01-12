@@ -1,37 +1,36 @@
-@require 'includes/vars';
-@require 'includes/mixins';
-@require 'components/components';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /*
 Profile shared
 ====================================================================== */
-@require 'components/users/vars';
-@require 'components/users/user-title';
+@import 'components/users/vars';
+@import 'components/users/user-title';
 
 
 /*
 Profile view
 ====================================================================== */
-@require 'components/activity';
-@require 'components/banned';
-@require 'components/users/docs-activity';
-@require 'components/users/user-links';
-@require 'components/users/user-head';
-@require 'components/users/user-section';
-@require 'components/users/user-tags';
+@import 'components/activity';
+@import 'components/banned';
+@import 'components/users/docs-activity';
+@import 'components/users/user-links';
+@import 'components/users/user-head';
+@import 'components/users/user-section';
+@import 'components/users/user-tags';
 
 
 /*
 Profile edit
 ====================================================================== */
-@require 'components/tagit';
-@require 'components/users/user-edit';
+@import 'components/tagit';
+@import 'components/users/user-edit';
 
 
 /*
 API keys page
 ====================================================================== */
-@require 'components/option-list';
+@import 'components/option-list';
 
 /*
  * Users app CSS

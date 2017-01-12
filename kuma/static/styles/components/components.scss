@@ -3,21 +3,21 @@
     For example, .toggler is used in a few different widgets (TOC, subnav, etc.)
 */
 
-@require '../base/utilities';
+@import '../base/utilities';
 
 /* toggler component: a basic slide up and slide now system*/
 .toggler {
     position: relative;
 
-    {$selector-icon} {
-        bidi-style(right, $icon-margin, left, auto);
+    #{$selector-icon} {
+        @include bidi-style(right, $icon-margin, left, auto);
         position: absolute;
         top: 3px;
         color: $text-color;
     }
 
     .icon-caret-right {
-        bidi-value-vendorize(transform, rotate(0deg), rotate(180deg));
+        @include bidi-value-vendorize(transform, rotate(0deg), rotate(180deg));
     }
 }
 
@@ -46,14 +46,14 @@
         background: $light-background-color;
     }
 
-    {$selector-icon} {
+    #{$selector-icon} {
         top: ($grid-spacing + 3px);
         right: $grid-spacing;
     }
 
     .toggle-container {
         a {
-            set-smaller-font-size();
+            @include set-smaller-font-size();
             display: block;
             padding: $content-vertical-spacing $grid-spacing;
         }
@@ -62,7 +62,7 @@
             background: #e9eef1;
 
             .toggler {
-                title-header();
+                @include title-header();
                 font-weight: normal;
                 padding-top: ($grid-spacing / 2);
                 padding-bottom: ($grid-spacing / 2);
@@ -84,7 +84,7 @@
                 color: #fff;
                 background-color: $text-color;
 
-                generate-arrow();
+                @include generate-arrow();
 
                 &:before {
                     border-right-color: #fff;
@@ -96,7 +96,7 @@
         }
     }
 
-    reverse-link-decoration();
+    @include reverse-link-decoration();
 }
 
 /*
@@ -105,12 +105,16 @@ Notifications
 
 /* style notifications
 -------------------------------------------------------------- */
+$notification-border-width: 2px;
+$notification-button-border: 1px solid;
+$notification-button-margin: 5px 5px 0 0;
+$notification-button-padding: 2px 5px 3px;
 
 .notification {
-    @extends .media;
+    @extend .media;
     border-radius: 2px;
     border-style: solid;
-    border-width: 2px;
+    border-width: $notification-border-width;
     margin-bottom: $grid-spacing;
     padding: ($grid-spacing / 2);
     position: relative;
@@ -140,23 +144,25 @@ Notifications
     }
 
     /* theme the various notification states */
-    notification-theme($default);
+    & {
+        @include notification-theme($default);
+    }
 
     &.info {
-        notification-theme($neutral);
+        @include notification-theme($neutral);
     }
 
     &.success {
-        notification-theme($positive);
+        @include notification-theme($positive);
     }
 
     &.warning {
-        notification-theme($warning);
+        @include notification-theme($warning);
 
         /* warning clashes with a class in CustomCSS so we have to re-assert border-width and link color
            the CustomCSS class might be changeable in the future but we can't change the notifier class
            because it is part of a django module . See also .notification-button. */
-        border-width: @border-width;
+        border-width: $notification-border-width;
         font-style: normal;
 
         a, a:visited, a:hover, a:focus {
@@ -171,12 +177,12 @@ Notifications
     }
 
     &.error {
-        notification-theme($negative);
+        @include notification-theme($negative);
     }
 }
 
 .notification-message {
-    @extends .media-body; /* here incase there's an icon, has the added benfiit of acting like a clearfix */
+    @extend .media-body; /* here incase there's an icon, has the added benfiit of acting like a clearfix */
 
     /* remove margin from first element in message */
      & *:first-child {
@@ -186,9 +192,9 @@ Notifications
 
 /* optional icon, message displays fine without it */
 .notification-img {
-    @extends .media-side;
+    @extend .media-side;
 
-    {$selector-icon} {
+    #{$selector-icon} {
         font-size: $larger-font-size;
         margin: 0;
     }
@@ -206,9 +212,9 @@ Notifications
     text-transform: none;
 
     .notification.warning & { /* see comment for &.warning */
-        border: @border;
-        margin: @margin;
-        padding: @padding;
+        border: $notification-button-border;
+        margin: $notification-button-margin;
+        padding: $notification-button-padding;
     }
 
 }

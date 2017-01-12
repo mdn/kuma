@@ -1,4 +1,5 @@
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /* 404 - Animate the tumbeast's eyes. Original animation by J Zeller. */
 @keyframes crazylefteye {
@@ -38,20 +39,20 @@
 
 #beast404re, #beast404le {
     position: absolute;
-    vendorize(animation-delay, 6s);
-    vendorize(animation-duration, 7s);
-    vendorize(animation-iteration-count, infinite);
-    vendorize(animation-play-state, running);
+   @include vendorize(animation-delay, 6s);
+   @include vendorize(animation-duration, 7s);
+   @include vendorize(animation-iteration-count, infinite);
+   @include vendorize(animation-play-state, running);
 }
 
 #beast404re {
     left: 231px;
     top: 68px;
-    vendorize(animation-name, crazyrighteye);
+   @include vendorize(animation-name, crazyrighteye);
 }
 
 #beast404le {
     left: 125px;
     top: 65px;
-    vendorize(animation-name, crazylefteye);
+   @include vendorize(animation-name, crazylefteye);
 }
