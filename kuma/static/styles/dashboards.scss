@@ -2,9 +2,9 @@
     Used to style the dashboard widgets in the dashboard apps
 */
 
-@require 'includes/vars';
-@require 'includes/mixins';
-@require 'components/banned';
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'components/banned';
 
 /* New revision dashboard styles */
 .dashboard-table {
@@ -20,7 +20,9 @@
 
     tbody tr {
         cursor: pointer;
-        border-top: 1px solid rgba-fallback(rgba($text-color, 0.4));
+        border-top-width: 1px;
+        border-top-style: solid;
+        @include rgba-fallback(border-top-color, $text-color, 0.4);
 
         &:hover {
             background: $light-background-color;
@@ -31,7 +33,7 @@
         }
 
         .new, .edit, .locale, .deleted {
-            set-font-size(11px);
+            @include set-font-size(11px);
             border-radius: 8px;
             color: #fff;
             display: inline-block;
@@ -39,23 +41,23 @@
             padding: 2px 4px;
         }
         .new {
-            background: rgba-fallback(rgba(green, 0.6));
+            @include rgba-fallback(background, $green, 0.6);
         }
         .edit {
             background: $blue;
         }
         .locale {
-            background: rgba-fallback(rgba(#777, 0.6));
+            @include rgba-fallback(background, #777, 0.6);
         }
         .deleted {
-            background: rgba-fallback(rgba(#f00, 0.6));
+            @include rgba-fallback(background, #f00, 0.6);
         }
     }
 
     /* Select only the outer table cells. */
     > thead th,
     .dashboard-row > td {
-        @extend $column-2;
+        @include column-2();
         padding: 6px;
         vertical-align: text-top;
     }
@@ -64,23 +66,23 @@
     .dashboard-title,
     .dashboard-comment,
     .dashboard-tags {
-        @extend $column-3;
+        @include column-3();
     }
 
     .dashboard-report {
-        @extend $column-2;
+        @include column-2();
         word-break: break-all;
     }
 
     .dashboard-spam {
-        @extend $column-1;
+        @include column-1();
         word-break: break-all;
     }
 
     #page-buttons {
         li {
             display: inline-block;
-            bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+            @include bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
             margin-top: $content-vertical-spacing;
         }
     }
@@ -173,7 +175,7 @@ th.stat-header { // needs extra specificity to over-ride default styles
 }
 
 .dashboard-slug {
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     opacity: 0.8;
     font-style: italic;
     display: block;
@@ -198,12 +200,8 @@ th.stat-header { // needs extra specificity to over-ride default styles
     color: $positive;
 }
 
-.dashboard-spam {
-    word-break: normal;
-}
-
 .dashboard-confirm {
-    set-larger-font-size();
+    @include set-larger-font-size();
     font-weight: bold;
 }
 

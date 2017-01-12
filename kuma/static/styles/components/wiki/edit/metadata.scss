@@ -2,7 +2,7 @@
     display: none;
     float: none;
     margin-top: ($grid-spacing / 2);
-    margin-bottom: @margin-top;
+    margin-bottom: ($grid-spacing / 2);
     width: auto;
 
     .new & {
@@ -16,7 +16,7 @@
 
     &.metadata-choose-parent {
         display: none;
-        set-font-size($small-bump-font-size);
+        @include set-font-size($small-bump-font-size);
     }
 
     input, input#id_title {

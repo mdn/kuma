@@ -2,8 +2,8 @@
    except we can't call them page titles because demos already has
    a class with that name */
 .doc-title {
-    clearfix();
-    title-header();
+    @include clearfix();
+    @include title-header();
     position: relative;
     margin-bottom: 10px;
 
@@ -16,13 +16,13 @@
     em {
         color: #333;
         font-style: normal;
-        bidi-style(margin-left, -3px, margin-right, 0);
+        @include bidi-style(margin-left, -3px, margin-right, 0);
         text-transform: none;
     }
 }
 
 .doc-title-properties {
-    set-smaller-font-size();
+    @include set-smaller-font-size();
 }
 
 /* small writing above the page title that says what action the user is
@@ -30,7 +30,7 @@
    class wouild be doc-title-prefix but it's part of the translation
    string and I didn't want to lose the translations by changing it */
 .title-prefix {
-    set-larger-font-size();
+    @include set-larger-font-size();
     display: block;
     line-height: 20px;
     color: #888;

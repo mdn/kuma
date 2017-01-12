@@ -5,5 +5,5 @@
     padding: $grid-spacing;
     margin-bottom: $grid-spacing;
 
-    prevent-last-child-spacing(p, margin-bottom);
+    @include prevent-last-child-spacing(p, margin-bottom);
 }

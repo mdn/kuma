@@ -62,12 +62,12 @@ td[tabindex]:focus .bc-history-link {
     border-top: 1px solid rgba($bc-color-border, 1);
 }
 
-for $support in $bc-support {
+@each $support in $bc-support {
 
-    .active.bc-supports-{$support} .bc-history-link,
-    td[tabindex].bc-supports-{$support}:hover .bc-history-link,
-    td[tabindex].bc-supports-{$support}:focus .bc-history-link {
-        color: $bc-color- + $support;
+    .active.bc-supports-#{$support} .bc-history-link,
+    td[tabindex].bc-supports-#{$support}:hover .bc-history-link,
+    td[tabindex].bc-supports-#{$support}:focus .bc-history-link {
+        color: map-get($bc-colors, $support);
     }
 }
 
@@ -76,7 +76,7 @@ for $support in $bc-support {
 mobile adjustments
 ----------------------------------------------------------------------  */
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
     .bc-history-link {
         width: calc(100% - 60px); /* falls back to 100% on non supporting browsers */
         height: 20px;

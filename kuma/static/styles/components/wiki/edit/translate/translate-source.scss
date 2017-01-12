@@ -5,6 +5,6 @@
         border: 0;
         /* Same formatting as CKEditor source view */
         font-family: 'Courier New', Monospace;
-        set-smaller-font-size();
+        @include set-smaller-font-size();
     }
 }

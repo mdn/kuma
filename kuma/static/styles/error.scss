@@ -1,5 +1,5 @@
-@require 'includes/mixins';
-@require 'includes/vars';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 .beast {
     float: right;

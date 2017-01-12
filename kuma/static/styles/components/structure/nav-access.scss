@@ -9,7 +9,7 @@ Keyboard & screen reader skip link menu
     z-index: 1001;
 
     a {
-        background: rgba-fallback(rgba(255, 255, 255, 0.9));
+        @include rgba-fallback(background, #fff, 0.9);
         padding: 12px 10px;
         position: absolute;
         left: 0;

@@ -7,9 +7,9 @@ global notices (via soapbox)
     background: $light-background-color;
 
     .wrap {
-        set-smaller-font-size();
+        @include set-smaller-font-size();
         padding: 10px 24px;
 
-        prevent-last-child-spacing(p, margin-bottom);
+        @include prevent-last-child-spacing(p, margin-bottom);
     }
 }

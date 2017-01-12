@@ -1,13 +1,10 @@
-@require '../../includes/vars';
-@require '../../includes/mixins';
-
 /*
     Styles for form elements
 */
 
 input, button, textarea, select, optgroup, option {
     font-family: inherit;
-    set-font-size(inherit);
+    @include set-font-size(inherit);
     font-style: inherit;
     font-weight: inherit;
 }
@@ -19,7 +16,7 @@ input[type=text], input[type=password], input[type=search], input[type=email], i
 }
 
 input[type='search'] {
-    vendorize(appearance, textfield);
+   @include vendorize(appearance, textfield);
 
     &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration {
         display: none;
@@ -57,7 +54,7 @@ label {
     text-decoration: none;
 
     &.disabled, &[disabled] {
-        box-shadow: inset 0 -1px alpha($button-shadow-color, 0.5);
+        box-shadow: inset 0 -1px rgba($button-shadow-color, 0.5);
     }
 
     &.neutral, &.negative, &.positive {
@@ -89,7 +86,7 @@ label {
         margin-bottom: -1px;
     }
 
-    {$selector-icon}:before {
+    #{$selector-icon}:before {
         cursor: pointer;
     }
 }

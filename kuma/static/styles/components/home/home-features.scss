@@ -12,23 +12,23 @@
     h3 {
         display: flex;
         flex-direction: row;
-        align-items: center
+        align-items: center;
         min-height: 39px;
-        set-larger-font-size();
+        @include set-larger-font-size();
         font-weight: bold;
         font-family: 'Open Sans Extra Bold', sans-serif;
         text-transform: uppercase;
-        clearfix();
+        @include clearfix();
 
-        {$selector-icon} {
+        #{$selector-icon} {
             width: 42px;
             height: 39px;
             background-position: 0 -147px;
             background-size: 134px auto;
             color: #0095dd;
-            bidi-value(float, left, right);
-            bidi-value(margin-right, $icon-margin, 0);
-            bidi-value(margin-left, 0, $icon-margin);
+            @include bidi-value(float, left, right);
+            @include bidi-value(margin-right, $icon-margin, 0);
+            @include bidi-value(margin-left, 0, $icon-margin);
 
             &:before {
                 margin: 11px 0 0 0;
@@ -38,7 +38,7 @@
         }
 
         span {
-            bidi-value(float, left, right);
+            @include bidi-value(float, left, right);
         }
     }
 
@@ -48,25 +48,25 @@
 }
 
 .column-feature {
-    @extend $column-third;
+    @include column-third();
 }
 
 .home-features-newsletter .column-container {
-    @extend $column-8;
-    bidi-value(float, left, right);
+    @include column-8();
+    @include bidi-value(float, left, right);
     margin-right: $grid-margin;
 }
 
 .feature-newsletter {
-    @extend $column-4;
-    bidi-value(float, left, right);
+    @include column-4();
+    @include bidi-value(float, left, right);
 
     h2 {
         font-family: 'Open Sans Extra Bold', sans-serif;
     }
 }
 
-@media $media-query-tablet {
+@media #{$media-query-tablet} {
     .home-features-newsletter .column-container {
         width: 48.5%;
     }
@@ -81,7 +81,7 @@
 
         li {
             display: inline-block;
-            bidi-style(padding-right, $grid-spacing, padding-left, 0);
+            @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
         }
     }
 
@@ -90,7 +90,7 @@
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
 
     .column-feature {
         ul {
@@ -99,7 +99,7 @@
 
         li {
             display: inline-block;
-            bidi-style(padding-right, $grid-spacing, padding-left, 0);
+            @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
         }
     }
 

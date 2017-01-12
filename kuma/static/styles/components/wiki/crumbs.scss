@@ -2,10 +2,10 @@
 .crumbs {
     margin-bottom: ($grid-spacing / 2);
 
-    set-smaller-font-size();
+    @include set-smaller-font-size();
 
     li {
-        bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+        @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
         display: inline-block;
     }
 
@@ -13,17 +13,17 @@
         display: block;
 
         &:after {
-            bidi-style(margin-left, 4px, margin-right, 0, true);
-            bidi-style(content, '\f054', content, '\f053');
+            @include bidi-style(margin-left, 4px, margin-right, 0, true);
+            @include bidi-style(content, '\f054', content, '\f053');
             display: inline-block;
             font-family: FontAwesome;
             text-decoration: none;
             color: #c1c2c4;
-            set-font-size(70%);
+            @include set-font-size(70%);
         }
     }
 
-    reverse-link-decoration();
+    @include reverse-link-decoration();
 }
 
 @media print {

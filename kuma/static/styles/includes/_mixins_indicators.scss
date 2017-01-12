@@ -1,16 +1,16 @@
 /*
 Mixins for indicators
 ====================================================================== */
-$icon-spacing = 30px;
-$inline-horizontal-padding = 0.35em;
+$icon-spacing: 30px;
+$inline-horizontal-padding: 0.35em;
 
 /*
 block indicators aka banners
 -------------------------------------------------------------- */
 
-$indicator-block {
-    set-message-base(true);
-    clearfix();
+%indicator-block {
+    @include set-message-base(true);
+    @include clearfix();
     clear: none; // over-rides default value assigned in clearfix
 
     background-color: $light-background-color;
@@ -19,8 +19,8 @@ $indicator-block {
     &:before {
         display: inline-block;
         width: 30px;
-        bidi-value(float, left, right);
-        bidi-value(margin, -5px 0 -5px ($icon-spacing * -1), -5px ($icon-spacing * -1) -5px 0);
+        @include bidi-value(float, left, right);
+        @include bidi-value(margin, -5px 0 -5px ($icon-spacing * -1), -5px ($icon-spacing * -1) -5px 0);
         font-family: "FontAwesome";
         font-size: $larger-font-size;
         font-style: normal;
@@ -33,15 +33,15 @@ $indicator-block {
     }
 }
 
-$indicator-block-heading {
+%indicator-block-heading {
     font-size: $base-font-size;
     font-weight: bold;
 }
 
-$indicator-system {
+%indicator-system {
     /* need to specifically declare RTL to over-ride RTL inherited from set-message-base */
-    bidi-value(border-width, 2px, 2px);
-    bidi-value(border-style, solid, solid);
+    @include bidi-value(border-width, 2px, 2px);
+    @include bidi-value(border-style, solid, solid);
     font-size: $base-font-size;
 }
 
@@ -49,13 +49,13 @@ $indicator-system {
 inline indicators aka badges
 -------------------------------------------------------------- */
 
-$indicator-inline {
+%indicator-inline {
     display: inline-block;
     min-width: 20px;
     vertical-align: baseline;
-    bidi-style(margin-left, ($grid-spacing / 2 ), margin-right, 0);
+    @include bidi-style(margin-left, ($grid-spacing / 2 ), margin-right, 0);
     border-radius: 2px;
-    bidi-style(border-left, 4px solid, border-right, 0 none);
+    @include bidi-style(border-left, 4px solid, border-right, 0 none);
     padding: 0.45em $inline-horizontal-padding 0.30em;
     background-color: $light-background-color;
     font-family: $tiny-font-family;
@@ -66,12 +66,12 @@ $indicator-inline {
 }
 
 /* icon styling for indicators needs to be seperate because .spec
-   extends $indicator-inline into some :before content */
-$indicator-inline-icon {
+   extend %indicator-inline into some :before content */
+%indicator-inline-icon {
     &:before {
         display: inline-block;
-        bidi-value(margin-left, ($icon-spacing * -1 + 3px), 3px);
-        bidi-value(margin-right, 3px, ($icon-spacing * -1 + 3px));
+        @include bidi-value(margin-left, ($icon-spacing * -1 + 3px), 3px);
+        @include bidi-value(margin-right, 3px, ($icon-spacing * -1 + 3px));
         font-family: 'FontAwesome';
     }
 }
@@ -81,17 +81,16 @@ $indicator-inline-icon {
 icons for both indicator types
 -------------------------------------------------------------- */
 
-$indicator-with-icon {
+%indicator-with-icon {
+    @include bidi-style(padding-left, $icon-spacing, padding-right, $inline-horizontal-padding);
 
-    bidi-style(padding-left, $icon-spacing, padding-right, $inline-horizontal-padding);
-
-    {$selector-icon} {
+    #{$selector-icon} {
         display: none;
     }
 }
 
-indicator-icon($icon) {
-    @extends $indicator-with-icon;
+@mixin indicator-icon($icon) {
+    @extend %indicator-with-icon;
 
     &:before {
         content: $icon;
@@ -102,31 +101,29 @@ indicator-icon($icon) {
 colours for both indicator types
 -------------------------------------------------------------- */
 
-$indicator-text-invert {
+%indicator-text-invert {
     color: #fff;
 }
 
-$indicator-link-invert {
+%indicator-link-invert {
     a {
-        color: #ff0;
+        color: #fff;
     }
 }
 
-$indicator-info,
-$indicator-obsolete {
-    box-theme($default);
+%indicator-info,
+%indicator-obsolete {
+    @include box-theme($default);
 }
 
-$indicator-version {
-    box-theme($neutral);
+%indicator-version {
+    @include box-theme($neutral);
 }
 
-$indicator-warning {
-    box-theme($warning);
+%indicator-warning {
+    @include box-theme($warning);
 }
 
-$indicator-danger {
-    box-theme($negative);
+%indicator-danger {
+    @include box-theme($negative);
 }
-
-

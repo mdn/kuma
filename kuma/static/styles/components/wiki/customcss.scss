@@ -1,5 +1,3 @@
-@require 'includes/vars';
-
 /*
 
 Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
@@ -71,7 +69,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* remove left margin from Font Awesome icons inside wiki
      content; this is messing up document content */
-#wikiArticle {$selector-icon} {
+#wikiArticle #{$selector-icon} {
     margin-left: 0px;
 }
 /* Iframe for live sample centered (Test) */
@@ -81,7 +79,7 @@ table#fullwidth-table td.thirdColumn {
     border: none;
 }
 /* Simulate two columns for landing page, if enough space is available    */
-@media $media-query-small-desktop-and-up {
+@media #{$media-query-small-desktop-and-up} {
     .landing {
         display: table-row;
     }
@@ -99,7 +97,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Wide column box */
 .wideColumnBox {
-    vendorize(column-width, 375px);
+   @include vendorize(column-width, 375px);
 }
 .wideColumnBoxList li {
     line-height: 1.5;
@@ -109,7 +107,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Multi-column boxes for lists of longer links; this will adapt based on screen width */
 .multiColumnList {
-    vendorize(column-width, 250px);
+   @include vendorize(column-width, 250px);
 }
 .multiColumnList li {
     line-height: 1.5;
@@ -119,7 +117,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Multi-column boxes for smaller links, such as API terms */
 .smallMultiColumnList {
-    vendorize(column-width, 120px);
+   @include vendorize(column-width, 120px);
 }
 .smallMultiColumnList li {
     list-style-type: none;
@@ -130,28 +128,28 @@ table#fullwidth-table td.thirdColumn {
 .horizFlexboxContainer {
     display: -webkit-flex;
     display: flex;
-    vendorize(flex-flow, column nowrap);
-    vendorize(justify-content, center);
-    vendorize(align-content, center);
-    vendorize(align-items, center);
-    vendorize(flex-direction, column);
+   @include vendorize(flex-flow, column nowrap);
+   @include vendorize(justify-content, center);
+   @include vendorize(align-content, center);
+   @include vendorize(align-items, center);
+   @include vendorize(flex-direction, column);
 }
 .smallTextMultiColumnBoxHeading {
     width: 75%;
     padding: 10px;
-    vendorize(flex, 0 1 auto);
+   @include vendorize(flex, 0 1 auto);
     font-weight: bold;
     background-color: #e0e2e4;
 }
 .smallTextMultiColumnBoxList {
     width: 75%;
     padding: 10px;
-    vendorize(order, 2);
-    vendorize(flex, 0 1 auto);
+   @include vendorize(order, 2);
+   @include vendorize(flex, 0 1 auto);
     background-color: $light-background-color;
 }
 .smallTextMultiColumnBoxList ul {
-    vendorize(column-width, 100px);
+   @include vendorize(column-width, 100px);
     margin-bottom: 0;
     padding-left: 0;
 }
@@ -161,7 +159,7 @@ table#fullwidth-table td.thirdColumn {
     font-size: 80%;
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .smallTextMultiColumnBoxHeading,
     .smallTextMultiColumnBoxList {
         width: 90%;
@@ -171,7 +169,7 @@ table#fullwidth-table td.thirdColumn {
 /* Fancy Table of content for main pages of tutorial*/
 .fancyTOC {
     counter-reset: fancyTOC;
-    vendorize(columns, 18em);
+   @include vendorize(columns, 18em);
     margin-bottom: 1em;
     column-gap: $grid-spacing;
 }
@@ -195,7 +193,7 @@ table#fullwidth-table td.thirdColumn {
     content: counter(fancyTOC) ". ";
 }
 .fancyTOC a::after {
-    content: ' »';
+    content: ' \00bb';
     speak: none;
 }
 .fancyTOC .button:hover,
@@ -212,7 +210,7 @@ s.nonStdElement {
 }
 /* Add widgeted index, here adding an HTML5 badge as the bullet of the li element if class="html5" */
 div.index.widgeted {
-    vendorize(columns, 10em);
+   @include vendorize(columns, 10em);
 }
 div.index.widgeted li {
     padding-left: 18px;
@@ -294,10 +292,10 @@ td.column {
 td.bottomPart {
     border-top: none;
 }
-/* Use the verticalText class on a table cell to rotate its contents 90° */
+/* Use the verticalText class on a table cell to rotate its contents 90deg */
 td.verticalText {
     width: 3em;
-    vendorize(transform, rotate(-90deg));
+    @include vendorize(transform, rotate(-90deg));
 }
 table.blockTable {
     border-collapse: collapse;
@@ -313,7 +311,7 @@ table.blockTable .verticalColumn {
 }
 /* The index page for HTML / CSS */
 div.index {
-    vendorize(columns, 18em);
+   @include vendorize(columns, 18em);
     margin-bottom: $grid-spacing;
 }
 div.index > span {
@@ -374,7 +372,7 @@ table.HTMLElmNav td {
     font-style: italic;
     margin-bottom: 7px;
 }
-.method > .name > .returns: before {
+.method > .name > .returns:before {
     content: " returns ";
     font-weight: normal;
     font-style: italic;
@@ -426,22 +424,22 @@ table.HTMLElmNav td {
 }
 /* Used to to create icon-badged APIs inline */
 .indexListRow {
-    vendorize-value(display, flex);
-    vendorize(flex-direction, row);
-    vendorize(flex-wrap, wrap);
-    vendorize(justify-content, flex-start);
-    vendorize(align-content, stretch);
-    vendorize(align-items, flex-start);
+    @include vendorize-value(display, flex);
+    @include vendorize(flex-direction, row);
+    @include vendorize(flex-wrap, wrap);
+    @include vendorize(justify-content, flex-start);
+    @include vendorize(align-content, stretch);
+    @include vendorize(align-items, flex-start);
 }
 .indexListTerm {
-    vendorize(order, 0);
-    vendorize(flex, 0 1 auto);
-    vendorize(align-self, flex-start);
+   @include vendorize(order, 0);
+   @include vendorize(flex, 0 1 auto);
+   @include vendorize(align-self, flex-start);
 }
 .indexListBadges {
-    vendorize(order, 0);
-    vendorize(flex, 0 1 auto);
-    vendorize(align-self, flex-end);
+   @include vendorize(order, 0);
+   @include vendorize(flex, 0 1 auto);
+   @include vendorize(align-self, flex-end);
     padding-left: 6px;
     margin-right: 6px;
 }
@@ -452,12 +450,14 @@ table.compat-table {
     border-collapse: collapse;
 }
 table.compat-table {
-    border-color: rgba-fallback(rgba(0,0,0,0));
+    border-color: #000;
     margin: 0;
 }
 table.compat-table td {
     padding: 5px;
-    border: 1px solid rgba-fallback(rgba(212,221,228,0.25));
+    border-width: 1px;
+    border-style: solid;
+    @include rgba-fallback(border-color, $table-blue, 0.25);
     font-size: 12px;
     background: #fff;
     vertical-align: top;
@@ -465,7 +465,7 @@ table.compat-table td {
 }
 table.compat-table th,
 table.compat-table td.header {
-    border: 1px solid rgba-fallback(rgba(212,221,228,0));
+    border: none;
     background: none;
     padding: 2px 4px 8px;
 
@@ -473,13 +473,9 @@ table.compat-table td.header {
     font-size: 16px;
     font-weight: 200;
     line-height: 100%;
-    {$selector-heading-font-fallback} {
+    #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
-/* From content.styl
-        background: rgba-fallback(rgba(212, 221, 228, 0.5));
-        font-weight: 700;
-        */
 }
 div.action-driven {
     display: inline-block;
@@ -492,7 +488,7 @@ div.action-driven {
 div.action-driven > div {
     font: 400 20px $heading-font-family;
     text-transform: uppercase;
-    {$selector-heading-font-fallback} {
+    #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
 }
@@ -513,14 +509,14 @@ dl {
 /* style for next and previous pages in tutorial */
 
 .previousPage {
-    bidi-value(float, left, right);
-    bidi-style(margin-right, ($grid-spacing), margin-left, 0);
+    @include bidi-value(float, left, right);
+    @include bidi-style(margin-right, ($grid-spacing), margin-left, 0);
     margin-bottom: $grid-spacing;
 }
 
 .nextPage {
-    bidi-value(float, right, left);
-    bidi-style(margin-left, ($grid-spacing), margin-right, 0);
+    @include bidi-value(float, right, left);
+    @include bidi-style(margin-left, ($grid-spacing), margin-right, 0);
     margin-top: $grid-spacing;
 }
 
@@ -547,16 +543,16 @@ a.liveSample:focus {
 .standardSidebar {
     background: $light-background-color;
     padding: $grid-spacing 15px;
-    bidi-value(margin, 0 0 15px 15px, 0 15px 15px 0);
+    @include bidi-value(margin, 0 0 15px 15px, 0 15px 15px 0);
     padding: 5px 15px;
-    bidi-value(float, right, left);
+    @include bidi-value(float, right, left);
     background: #eee;
     font-size: 0.85em;
     position: relative;
     z-index: 2;
 }
 
-@media $media-query-small-mobile {
+@media #{$media-query-small-mobile} {
     html .standardSidebar {
         float:none;
         margin: 0 0 15px 0;
@@ -758,11 +754,6 @@ dd.landingPageList {
     margin-top: 0px;
     padding-top: 0px;
 }
-/* 一時的なスタイル */
-[lang="ja"] #doc-contributors time[datetime*="200"]::after {
-    content: " （※最終更新日から 2 年以上経過しています）";
-    color: #f00;
-}
 
 /* Horizontal tab boxes */
 .htab {
@@ -780,7 +771,8 @@ dd.landingPageList {
 
         > li {
             background-color: #f1f6f8 !important;
-            border: 1px solid rgba-fallback(rgba(212,221,228,0), #f1f6f8);
+            border: 1px solid transparent;
+            border-top-width: 2px;
             border-radius: 0;
             color: #4d4e53;
             display: inline;
@@ -797,14 +789,13 @@ dd.landingPageList {
             font-family: $heading-font-family;
             font-size: 14px;
             font-weight: 200;
-            {$selector-heading-font-fallback} {
+            #{$selector-heading-font-fallback} {
                 font-family: $heading-font-family-fallback;
             }
 
             &.selected {
                 background-color: #eaeff2 !important;
-                border: 0 solid rgba-fallback(rgba(212,221,228,0.25));
-                border-top: 2px solid #d4dde4;
+                @include rgba-fallback(border-top-color, $table-blue, 0.25);
                 font-weight: bold;
 
                 opacity: 1 !important;
@@ -824,7 +815,7 @@ dd.landingPageList {
     > div {
         background-color: #eaeff2;
         margin-top: 0;
-        border: 0 solid rgba-fallback(rgba(212,221,228,0.25), @background-color);
+        border: none;
         padding: 12px;
         position: relative;
         z-index: 9;
@@ -832,8 +823,8 @@ dd.landingPageList {
     }
 }
 
-.htab > ul
-.htab > ul > li
+.htab > ul,
+.htab > ul > li,
 .htab > ul > li > a {
     cursor: pointer;
 
@@ -889,10 +880,10 @@ li.download-box p {
     position: absolute;
     bottom: 0;
     left: 50%;
-    vendorize(transform, translate(-50%, 0));
+   @include vendorize(transform, translate(-50%, 0));
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     .download-desc > span:first-child {
         font-weight: 700;
         display: block;

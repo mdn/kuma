@@ -1,47 +1,46 @@
 /* Styles for the new article, article edit, article translation, and page move
    templates. */
 
-@require 'includes/vars';
-@require 'includes/mixins';
-@require 'components/tagit';
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'components/tagit';
 
-@require 'components/wiki/edit/vars';
-@require 'components/wiki/edit/editing';
-@require 'components/wiki/edit/cke';
-@require 'components/wiki/edit/page-attachments';
-@require 'components/wiki/edit/save-and-edit-target';
-@require 'components/wiki/edit/guide-links';
-@require 'components/wiki/edit/ace-content';
-@require 'components/wiki/edit/draft-status';
-@require 'components/wiki/edit/first-contrib-welcome';
-@require 'components/wiki/edit/page-comment';
-@require 'components/wiki/edit/description';
+@import 'components/wiki/edit/vars';
+@import 'components/wiki/edit/editing';
+@import 'components/wiki/edit/cke';
+@import 'components/wiki/edit/page-attachments';
+@import 'components/wiki/edit/save-and-edit-target';
+@import 'components/wiki/edit/guide-links';
+@import 'components/wiki/edit/ace-content';
+@import 'components/wiki/edit/draft-status';
+@import 'components/wiki/edit/first-contrib-welcome';
+@import 'components/wiki/edit/page-comment';
+@import 'components/wiki/edit/description';
 
 
 /*
 Meta data for pages
 ====================================================================== */
 
-@require 'components/wiki/edit/metadata';
-@require 'components/wiki/edit/duration-container';
+@import 'components/wiki/edit/metadata';
+@import 'components/wiki/edit/duration-container';
 
 
 /*
 Move page
 ====================================================================== */
 
-@require 'components/wiki/edit/move-page.styl';
+@import 'components/wiki/edit/move-page';
 
 
 /*
 Translate interface.
 ====================================================================== */
 
-@require 'components/wiki/edit/translate/structure';
-@require 'components/wiki/edit/translate/translate-document.styl';
-@require 'components/wiki/edit/translate/content-fields.styl';
-@require 'components/wiki/edit/translate/translate-source.styl';
-@require 'components/wiki/edit/translate/translate-buttons.styl';
-@require 'components/wiki/edit/translate/approved-localized.styl';
-@require 'components/wiki/edit/translate/change-locale.styl';
-
+@import 'components/wiki/edit/translate/structure';
+@import 'components/wiki/edit/translate/translate-document';
+@import 'components/wiki/edit/translate/content-fields';
+@import 'components/wiki/edit/translate/translate-source';
+@import 'components/wiki/edit/translate/translate-buttons';
+@import 'components/wiki/edit/translate/approved-localized';
+@import 'components/wiki/edit/translate/change-locale';

@@ -1,6 +1,8 @@
+@import 'includes/vars';
+@import 'includes/mixins';
 /*
 Fonts for Gaia demos
 ====================================================================== */
 
-@require 'base/fonts/moztt';
-@require 'base/fonts/opensans';
+@import 'base/fonts/moztt';
+@import 'base/fonts/opensans';

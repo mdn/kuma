@@ -1,10 +1,10 @@
 #toc {
-    reverse-link-decoration();
+    @include reverse-link-decoration();
     background: $light-background-color;
     padding: 20px 15px;
 
     > ol {
-        set-smaller-font-size();
+        @include set-smaller-font-size();
     }
 
     li {
@@ -12,8 +12,8 @@
         position: relative;
 
         &:before {
-            bidi-value(text-align, left, right);
-            bidi-style(left, -($grid-spacing * 1.5), right, auto);
+            @include bidi-value(text-align, left, right);
+            @include bidi-style(left, -($grid-spacing * 1.5), right, auto);
             position: absolute;
             color: #484848;
         }

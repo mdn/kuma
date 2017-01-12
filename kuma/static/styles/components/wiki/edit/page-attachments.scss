@@ -1,8 +1,9 @@
+$border-value : 1px solid #E0E0DC;
+
 #page-attachments {
-    border-value = 1px solid #E0E0DC;
 
     table  {
-        border: border-value;
+        border: $border-value;
         border-bottom: 0;
         border-collapse: collapse;
         border-right: 0;
@@ -11,8 +12,8 @@
     }
 
     th, td {
-        border-bottom: border-value;
-        border-right: border-value;
+        border-bottom: $border-value;
+        border-right: $border-value;
         padding: 5px;
         vertical-align: top;
     }
@@ -23,12 +24,12 @@
     }
 
     td {
-        set-font-size($small-bump-font-size);
+        @include set-font-size($small-bump-font-size);
     }
 }
 
 .attachment-description {
-    set-font-size(11px);
+    @include set-font-size(11px);
     font-style: italic;
 }
 
@@ -38,7 +39,7 @@
 
 .attachment-error {
     color: #900;
-    set-font-size(11px);
+    @include set-font-size(11px);
 }
 
 #page-attachments-new-table {
@@ -56,17 +57,18 @@
 }
 
 #page-attachments {
-    h2 {$selector-icon}, h3 {$selector-icon} {
-        @extend $right-icons;
+    h2 #{$selector-icon},
+    h3 #{$selector-icon} {
+        @include right-icons();
     }
 }
 
 /* page attachments block at the bottom of the article */
 #page-attachments-button {
-    set-smaller-font-size();
+    @include set-smaller-font-size();
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     /* display the attachments table as inline */
     #page-attachments {
 

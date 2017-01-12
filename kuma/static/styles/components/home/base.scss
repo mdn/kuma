@@ -2,25 +2,25 @@
 Override MDN standard styles
 ====================================================================== */
 #home {
-    create-home-gradient-background($homepage-background-color);
-    remove-main-spacing();
-    use-white-logo();
+    @include create-home-gradient-background($homepage-background-color);
+    @include remove-main-spacing();
+    @include use-white-logo();
 
     /* general structure adjustments */
     #main-header {
         background: none;
-        border-bottom-color: rgba-fallback(rgba(255, 255, 255, 0.2));
+        @include rgba-fallback(border-bottom-color, #fff, 0.2, $homepage-background-color);
     }
 
     /* update main nav menu color */
-    override-main-header-color($blue-background-text-color);
+    @include override-main-header-color($blue-background-text-color, $homepage-background-color);
 
     /* update the homepage search size */
-    minimize-header-search();
+    @include minimize-header-search();
 
     .search-wrap {
         input {
-            set-placeholder-style(color, $blue-background-text-color);
+            @include set-placeholder-style(color, $blue-background-text-color);
         }
     }
 
@@ -29,7 +29,7 @@ Override MDN standard styles
     }
 
     h2, h3 {
-        > {$selector-icon} {
+        > #{$selector-icon} {
             display: inline-block;
             position: relative;
             background-image: url($logo-sprite-url);
@@ -40,15 +40,15 @@ Override MDN standard styles
     }
 
     h2 {
-        > {$selector-icon} {
+        > #{$selector-icon} {
             width: 64px;
             height: 64px;
             color: #0095dd;
             background-position: 0 -222px;
             background-size: 205px auto;
-            set-font-size(30px);
-            bidi-value(margin-right, ($icon-margin / 2), 0);
-            bidi-value(margin-left, 0, ($icon-margin / 2));
+            @include set-font-size(30px);
+            @include bidi-value(margin-right, ($icon-margin / 2), 0);
+            @include bidi-value(margin-left, 0, ($icon-margin / 2));
 
             &.blue {
                 background-position: 0 -340px;
@@ -64,18 +64,18 @@ Override MDN standard styles
     }
 
     .entry-meta {
-        set-smaller-font-size();
+        @include set-smaller-font-size();
         font-style: italic;
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
     #home { /* needs spcificity to over ride use of #home earlier */
         .home-contribute h2,
         .column-hacks > h2 {
-            set-font-size(20px);
+            @include set-font-size(20px);
 
-            > {$selector-icon} {
+            > #{$selector-icon} {
                 display: none;
             }
 

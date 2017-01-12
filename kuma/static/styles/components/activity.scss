@@ -1,6 +1,6 @@
 .activity {
     border-collapse: collapse;
-    set-smaller-font-size();
+    @include set-smaller-font-size();
     width: 100%;
 
     td,
@@ -9,7 +9,7 @@
     }
 
     h3 {
-        set-font-size($base-bump-font-size);
+        @include set-font-size($base-bump-font-size);
         margin: 0 0 ($grid-spacing / 4);
     }
 
@@ -46,10 +46,10 @@
 }
 
 .activity-actions {
-    set-font-size(10px);
+    @include set-font-size(10px);
 
     li {
         display: inline;
-        bidi-style(margin-right, 10px, margin-left, 0);
+        @include bidi-style(margin-right, 10px, margin-left, 0);
     }
 }

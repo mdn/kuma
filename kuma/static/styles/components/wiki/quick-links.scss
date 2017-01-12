@@ -1,4 +1,4 @@
-$see-also-outdent = 6px;
+$see-also-outdent : 6px;
 
 .quick-links {
 
@@ -6,8 +6,8 @@ $see-also-outdent = 6px;
     position: relative;
     background-color: #fff;
 
-    set-smaller-font-size();
-    {$selector-heading-font-fallback} {
+    @include set-smaller-font-size();
+    #{$selector-heading-font-fallback} {
         letter-spacing: -0.002em;
     }
 
@@ -45,11 +45,11 @@ $see-also-outdent = 6px;
     }
 
     li li {
-        bidi-style(padding-left, $grid-spacing * 1.5, padding-right, 0);
+        @include bidi-style(padding-left, $grid-spacing * 1.5, padding-right, 0);
     }
 
     li li li {
-        bidi-style(padding-left, $grid-spacing, padding-right, 0);
+        @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 
     /* don't allow empty paragraphs by CKEditor */
@@ -65,27 +65,27 @@ $see-also-outdent = 6px;
         &.see-also {
             background: $light-background-color;
             /* to left align the text in this box with the text above and below */
-            bidi-style(margin-left, ($see-also-outdent * -1), margin-right, 0);
-            bidi-value(padding, 4px $see-also-outdent 4px 0px, 4px 0px 4px $see-also-outdent);
+            @include bidi-style(margin-left, ($see-also-outdent * -1), margin-right, 0);
+            @include bidi-value(padding, 4px $see-also-outdent 4px 0px, 4px 0px 4px $see-also-outdent);
             text-indent: $see-also-outdent;
         }
     }
 
     .sidebar-icon {
-        bidi-value(margin-left, $grid-spacing * -1, 5px);
-        bidi-value(margin-right, 5px, $grid-spacing * -1);
+        @include bidi-value(margin-left, $grid-spacing * -1, 5px);
+        @include bidi-value(margin-right, 5px, $grid-spacing * -1);
         opacity: 0.3;
 
         /* only the first sidebar-icon gets pulled into the gutter */
         & + .sidebar-icon {
-            bidi-value(margin-left, 0, 5px);
-            bidi-value(margin-right, 5px, 0);
+            @include bidi-value(margin-left, 0, 5px);
+            @include bidi-value(margin-right, 5px, 0);
         }
 
-        {$selector-icon} {
-            set-font-size($base-font-size);
-            bidi-style(margin-left, 0, margin-right, 0);
-            bidi-style(margin-right, 0, margin-left, 0);
+        #{$selector-icon} {
+            @include set-font-size($base-font-size);
+            @include bidi-style(margin-left, 0, margin-right, 0);
+            @include bidi-style(margin-right, 0, margin-left, 0);
             position: realtive;
             top: 3px;
             min-width: 15px;
@@ -97,12 +97,12 @@ $see-also-outdent = 6px;
 /* items which can be clicked on to toggle */
 .quick-links .toggleable > a {
     display: inline-block;
-    bidi-style(padding-left, $grid-spacing, padding-right, 0);
+    @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
 
-    {$selector-icon} {
-        set-font-size($base-font-size);
+    #{$selector-icon} {
+        @include set-font-size($base-font-size);
         position: absolute;
         top: 1px;
-        bidi-style(left, -6px, right, auto);
+        @include bidi-style(left, -6px, right, auto);
     }
 }

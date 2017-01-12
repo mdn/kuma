@@ -1,6 +1,6 @@
 /* edit, language, settings, save, and cancel buttons */
 .page-buttons, #page-buttons {
-    bidi-value(float, right, left);
+    @include bidi-value(float, right, left);
     padding: 5px 0;
     width: auto;
 
@@ -13,11 +13,11 @@
         margin-left: ($grid-spacing / 2);
         display: inline-block;
         position: relative;
-        bidi-value(text-align, left, right);
+        @include bidi-value(text-align, left, right);
 
         a, button, input[type='submit'], input[type='button'] {
-            set-smaller-font-size();
-            {$selector-heading-font-fallback} {
+            @include set-smaller-font-size();
+            #{$selector-heading-font-fallback} {
                 letter-spacing: -0.035em;
             }
         }
@@ -27,8 +27,8 @@
             padding-right: 0;
         }
 
-        {$selector-icon} {
-            set-font-size($base-bump-font-size);
+        #{$selector-icon} {
+            @include set-font-size($base-bump-font-size);
         }
     }
 }
@@ -42,7 +42,7 @@ body:not(.zone-landing) #edit-button {
     color: $blue-background-text-color;
 }
 
-@media $media-query-small-desktop {
+@media #{$media-query-small-desktop} {
 
     .page-buttons, #page-buttons {
         &.fixed {
@@ -51,7 +51,7 @@ body:not(.zone-landing) #edit-button {
     }
 }
 
-@media $media-query-mobile {
+@media #{$media-query-mobile} {
 
     .page-buttons > li.page-buttons-edit {
         display: none;
@@ -100,7 +100,7 @@ body:not(.zone-landing) #edit-button {
 #translate-document,
 .move-page {
     .page-buttons {
-        bidi-value(text-align, right, left);
+        @include bidi-value(text-align, right, left);
         float: none;
         padding: 0;
         margin-bottom: -10px;

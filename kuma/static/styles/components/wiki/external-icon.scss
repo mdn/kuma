@@ -7,7 +7,7 @@
     html[dir='rtl'] &:after {
         content: '\f08e';
         font-family: FontAwesome;
-        set-font-size(9px);
+        @include set-font-size(9px);
         display: inline-block;
         opacity: 0.5;
         margin-right: 3px;

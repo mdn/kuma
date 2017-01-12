@@ -1,5 +1,5 @@
-@require 'includes/vars';
-@require 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 .home-search-form {
     position: relative;
@@ -7,17 +7,17 @@
 
 .search-form {
     .search-filter-wrapper {
-        big-search();
+        @include big-search();
         cursor: text;
         padding: $input-padding;
         position: relative;
         background-color: #fff;
-        clearfix();
-        bidi-style(padding-left, 35px, padding-right, 0);
+        @include clearfix();
+        @include bidi-style(padding-left, 35px, padding-right, 0);
     }
 
     .search-icon {
-    		bidi-style(left, 0, right, 0);
+    		@include bidi-style(left, 0, right, 0);
     		top: 8px;
     }
 
@@ -32,9 +32,9 @@
     }
 
     .show-topics {
-        background-color: rgba-fallback(rgba(255, 255, 255, 0)) !important;
-        bidi-style(right, 0, left, auto);
+        @include bidi-style(right, 0, left, auto);
         box-shadow: none;
+        background-color: #fff !important;
         color: $text-color !important;
         font-size: 1.2em !important;
         position: absolute;
@@ -42,7 +42,7 @@
      }
 
     .suggestions {
-        big-search();
+        @include big-search();
         border-radius: 0px;
         color: #fff;
         max-height: 300px;
@@ -78,7 +78,7 @@
                 }
 
                 span {
-                    bidi-value(float, right, left);
+                    @include bidi-value(float, right, left);
                 }
             } /* end a.search-ss */
         } /* end li */
@@ -86,12 +86,12 @@
 
     .filters {
         box-sizing: border-box;
-        bidi-style(margin-right, -5px, margin-left, 0);
+        @include bidi-style(margin-right, -5px, margin-left, 0);
         display: inline-block;
         max-width: 100%;
         max-width: calc(100% - 40px);
         vertical-align: top;
-        bidi-value(float, left, right);
+        @include bidi-value(float, left, right);
 
         span.topic {
             display: inline-block;
@@ -99,7 +99,7 @@
             box-shadow: none;
             color: #fff!important;
             cursor: default!important;
-            bidi-style(margin-right, 5px, margin-left, 0);
+            @include bidi-style(margin-right, 5px, margin-left, 0);
             padding: 2px 10px 2px 10px !important;
             text-transform: none !important;
 
@@ -107,16 +107,16 @@
                 background-color: transparent !important;
                 box-shadow: none;
                 color: #fff!important;
-                bidi-style(margin-left, 5px, margin-right, 0);
-                bidi-value(padding, 5px 0px 5px 5px  !important, 5px 5px 5px 0px  !important);
+                @include bidi-style(margin-left, 5px, margin-right, 0);
+                @include bidi-value(padding, 5px 0px 5px 5px  !important, 5px 5px 5px 0px  !important);
 
-                {$selector-icon} {
+                #{$selector-icon} {
                     margin-left: 0;
                 }
             } /* end button.close */
 
             &:last-child {
-                bidi-style(margin-right, 10px, margin-left, 0);
+                @include bidi-style(margin-right, 10px, margin-left, 0);
             }
         } /* end span.topic */
     } /* end .filters */

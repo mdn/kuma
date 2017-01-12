@@ -5,7 +5,7 @@
     min-height: 300px;
 
     .center {
-        remove-center-spacing();
+        @include remove-center-spacing();
     }
 }
 
@@ -27,12 +27,12 @@
 /* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content,
 #wiki-column-container.wiki-left-closed #wiki-content {
-    @extend $column-9;
+    @include column-9();
 }
 
 #wiki-column-container.wiki-right-closed.wiki-left-closed {
     #wiki-content {
-        @extend $column-all;
+        @include column-all();
         float: none;
         width: auto;
     }
@@ -42,7 +42,7 @@
     }
 }
 
-@media $media-query-small-desktop {
+@media #{$media-query-small-desktop} {
 
     /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
     .wiki-left-present:not(.wiki-left-closed) {
@@ -51,7 +51,7 @@
             margin-right: 0;
         }
         #wiki-right {
-            enable-toc-toggle();
+            @include enable-toc-toggle();
             padding-bottom: ($grid-spacing * 2);
         }
         #wiki-left {
@@ -60,11 +60,11 @@
     }
 }
 
-@media $media-query-tablet {
-    make-wiki-blocks-flat();
+@media #{$media-query-tablet} {
+    @include make-wiki-blocks-flat();
 
     #wiki-right {
-        enable-toc-toggle();
+        @include enable-toc-toggle();
     }
 
     #wiki-column-container, #wiki-content {

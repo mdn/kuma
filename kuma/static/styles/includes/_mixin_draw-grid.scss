@@ -1,48 +1,45 @@
 /*
-    12-column grid system.  HTML structure should be:
+12-column grid system.  HTML structure should be:
 
-        <div class="column-container">
-          <!-- any number of columns -->
-          <div class="column-x"></div>
-          <div class="column-x"></div>
-          <div class="column-x"></div>
-        </div>
+    <div class="column-container">
+      <!-- any number of columns -->
+      <div class="column-x"></div>
+      <div class="column-x"></div>
+      <div class="column-x"></div>
+    </div>
 
-    .column-x elements is automatically floated and assigned a right margin.
-    .column-container clears the .column-x floats and removes margin from the last column
-    .column-container-reverse reverses the floats so that the last visual element appears first in the child list for a11y
-*/
-
-@require '../includes/vars';
-@require '../includes/mixins';
+.column-x elements is automatically floated and assigned a right margin.
+.column-container clears the .column-x floats and removes margin from the last column
+.column-container-reverse reverses the floats so that the last visual element appears first in the child list
+====================================================================== */
 
 /* Outputs relevant grid styles once */
-draw-grid() {
+@mixin draw-grid() {
     /* this is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
     .column-container {
-        clearfix();
+        @include clearfix();
 
-        {$grid-column-selector} {
+        #{$grid-column-selector} {
             margin-right: $grid-margin;
-            bidi-value(float, left, right);
+            @include bidi-value(float, left, right);
             min-height: 1px;
 
             &:last-child {
-                bidi-value(margin-right, 0, $grid-margin);
+                @include bidi-value(margin-right, 0, $grid-margin);
             }
         }
 
         &.column-container-reverse {
 
-            {$grid-column-selector} {
-                bidi-value(float, right, left);
+            #{$grid-column-selector} {
+                @include bidi-value(float, right, left);
 
                 &:first-child {
-                    bidi-value(margin-right, 0, $grid-margin);
+                    @include bidi-value(margin-right, 0, $grid-margin);
                 }
 
                 &:last-child {
-                    bidi-value(margin-right, $grid-margin, 0);
+                    @include bidi-value(margin-right, $grid-margin, 0);
                 }
             }
         }
@@ -50,7 +47,7 @@ draw-grid() {
 
     /* adjustments to reverse the column containers in RTL */
     html[dir='rtl'] .column-container {
-        {$grid-column-selector} {
+        #{$grid-column-selector} {
             &:first-child {
                 margin-right: 0;
             }
@@ -62,44 +59,44 @@ draw-grid() {
     }
 
     .column-1 {
-        @extend $column-1;
+        @include column-1();
     }
     .column-2 {
-        @extend $column-2;
+        @include column-2();
     }
     .column-3, .column-strip, .column-quarter {
-        @extend $column-3;
+        @include column-3();
     }
     .column-4, .column-third {
-        @extend $column-4;
+        @include column-4();
     }
     .column-5 {
-        @extend $column-5;
+        @include column-5();
     }
     .column-6, .column-half {
-        @extend $column-6;
+        @include column-6();
     }
     .column-7 {
-        @extend $column-7;
+        @include column-7();
     }
     .column-8 {
-        @extend $column-8;
+        @include column-8();
     }
     .column-9, .column-main {
-        @extend $column-9;
+        @include column-9();
     }
     .column-10 {
-        @extend $column-10;
+        @include column-10();
     }
     .column-11 {
-        @extend $column-11;
+        @include column-11();
     }
     .column-12, .column-all {
-        @extend $column-12;
+        @include column-12();
     }
 
     /*  tablet grid width */
-    @media $media-query-tablet {
+    @media #{$media-query-tablet} {
         .column-container {
             &.column-container-reverse {
                 margin-left: 0;
@@ -108,13 +105,13 @@ draw-grid() {
     }
 
      /*
-         mobile (phone) - just make everything its own column
+         mobile - just make everything its own column
          preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
      */
-     @media $media-query-mobile {
+     @media #{$media-query-mobile} {
         .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11, .column-12,
-        .column-strip, .column-quarter, .column-third, .column-half, .column-9, .column-all, .column-container {$grid-column-selector} {
-            clearfix();
+        .column-strip, .column-quarter, .column-third, .column-half, .column-all, .column-container #{$grid-column-selector} {
+            @include clearfix();
             width: auto !important;
             margin-left: 0 !important;
             margin-right: 0 !important;

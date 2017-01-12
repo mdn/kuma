@@ -1,7 +1,7 @@
 /*
 Custom icon font for compat tables
 ====================================================================== */
-@require 'base/fonts/compat-icons';
+@import '../../base/fonts/compat-icons';
 
 [class^='ic-'], [class*=' ic-'] {
     font-family: 'compat-icons';
