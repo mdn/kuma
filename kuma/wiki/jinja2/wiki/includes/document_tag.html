@@ -4,7 +4,7 @@
     <strong>{{_('Tags:')}}</strong>&nbsp;
     <ul class="tags tags-small">
       {% for tag in tags %}
-        <li><a href="{{ url('wiki.tag', tag) }}">{{ tag }}</a></li>
+        <li><a href="{{ url('wiki.tag', tag) }}" rel="nofollow, noindex">{{ tag }}</a></li>
       {% endfor %}
     </ul>
   </div>

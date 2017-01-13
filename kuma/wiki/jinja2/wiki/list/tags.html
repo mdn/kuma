@@ -9,7 +9,7 @@
         <ul class="documents-list cols-3">
           {% for tag in tags.object_list %}
             <li>
-              <a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
+              <a href="{{url('wiki.tag', tag.name)}}" rel="nofollow, noindex">{{ tag.name }}</a>
             </li>
           {% endfor %}
         </ul>
