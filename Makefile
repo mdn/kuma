@@ -48,10 +48,6 @@ install:
 	@ echo "## Installing $(requirements) ##"
 	@ pip install $(requirements)
 
-# Note: this target should be run from the host machine with selenium running
-intern:
-	pushd tests/ui ; ./node_modules/.bin/intern-runner config=intern-local d=developer.allizom.org b=firefox; popd
-
 clean:
 	rm -rf .coverage build/
 	find kuma -name '*.pyc' -exec rm {} \;
@@ -151,4 +147,4 @@ compose-test:
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest intern locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
+.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
