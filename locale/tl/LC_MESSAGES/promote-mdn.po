@@ -45,7 +45,7 @@ msgstr ""
 
 #: promote-mdn.php:257
 msgid "Preview"
-msgstr ""
+msgstr "Preview"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
@@ -57,7 +57,7 @@ msgstr ""
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "E-reload ngayon"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
@@ -69,7 +69,7 @@ msgstr ""
 
 #: promote-mdn.php:266
 msgid "Exceptions"
-msgstr ""
+msgstr "Exceptions"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
