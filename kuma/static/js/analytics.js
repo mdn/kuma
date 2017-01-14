@@ -70,15 +70,15 @@
             $(target).on('click', 'a', function (e) {
                 var $this = $(this);
 
-                // If we explicitly say not to track something, don't
-                if($this.hasClass('no-track')) {
-                    return;
-                }
-
                 // bug 1222864 - prevent links to data: uris
                 if (this.href.toLowerCase().indexOf('data') === 0) {
                     e.preventDefault();
                     analytics.trackError('XSS Attempt', 'data href');
+                    return;
+                }
+
+                // If we explicitly say not to track something, don't
+                if($this.hasClass('no-track')) {
                     return;
                 }
 

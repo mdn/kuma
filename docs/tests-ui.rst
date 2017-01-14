@@ -140,7 +140,8 @@ Marks
 * ``login``
 
   These tests require the testing accounts to exist on the target site. For
-  security reasons these accounts will not be on production.
+  security reasons these accounts will not be on production. Exclude these tests
+  with ```-m 'not login'``
 
 Guidelines for writing tests
 ============================

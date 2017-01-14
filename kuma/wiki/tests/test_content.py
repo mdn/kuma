@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from urlparse import urljoin
 
-import bleach
-import pytest
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
-import mock
 from pyquery import PyQuery as pq
+import bleach
+import mock
+import pytest
 
 import kuma.wiki.content
 from kuma.core.tests import KumaTestCase, eq_, ok_
@@ -14,7 +14,7 @@ from kuma.users.tests import UserTestCase
 
 from . import document, normalize_html, revision
 
-from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_TAGS
+from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
                        H3TOCFilter, SectionIDFilter, SectionTOCFilter,
                        get_content_sections, get_seo_description)
@@ -814,17 +814,23 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
-    def test_ahref_protocol_filter_invalid_protocol(self):
+    def test_bleach_filter_invalid_protocol(self):
         doc_src = """
             <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
+            <p><a id="xss2" class="no-track" href=" data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
+            <p><a id="xss3" class="no-track" href="
+                data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
             <p><a id="ok" href="/docs/ok/test">OK link</a></p>
         """
-        result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterAHrefProtocols('^(data\:?)')
-                      .serialize())
+        result_src = bleach.clean(doc_src,
+                                  tags=ALLOWED_TAGS,
+                                  attributes=ALLOWED_ATTRIBUTES,
+                                  protocols=ALLOWED_PROTOCOLS)
         page = pq(result_src)
 
-        eq_(page.find('#xss').attr('href'), '')
+        eq_(page.find('#xss').attr('href'), None)
+        eq_(page.find('#xss2').attr('href'), None)
+        eq_(page.find('#xss3').attr('href'), None)
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
     def test_link_annotation(self):
@@ -1073,6 +1079,41 @@ class AllowedHTMLTests(KumaTestCase):
         expected = """
             <p>Hi there.</p>
             <p>Goodbye</p>
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_iframe_in_script(self):
+        """iframe in script should be filtered"""
+        content = """
+            <script><iframe src="data:text/plain,foo"></iframe></script>
+        """
+        expected = """
+            &lt;script&gt;<iframe></iframe>&lt;/script&gt;
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_iframe_in_style(self):
+        """iframe in style should be filtered"""
+        content = """
+            <style><iframe src="data:text/plain,foo"></iframe></style>
+        """
+        expected = """
+            &lt;style&gt;<iframe></iframe>&lt;/style&gt;
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_iframe_in_textarea(self):
+        """
+        iframe in textarea should not be filtered since it's not parsed as tag
+        """
+        content = """
+            <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
+        """
+        expected = """
+            <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
         """
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))

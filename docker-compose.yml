@@ -3,7 +3,7 @@ services:
   worker: &worker
     image: quay.io/mozmar/kuma_base
     command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
-    user: ${UID:-0}
+    user: ${UID:-33}
     volumes:
       - ./:/app
     depends_on:
@@ -15,13 +15,12 @@ services:
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-      - ALLOWED_HOSTS=localhost,127.0.0.1,[::1],web,api
+      - ALLOWED_HOSTS=*
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - DEBUG=True
-      - DEBUG_TOOLBAR=True
       - DOMAIN=localhost
       - ES_URLS=elasticsearch:9200
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}

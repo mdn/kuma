@@ -13,7 +13,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'nobr', 'dfn', 'caption', 'var', 's',
     'i', 'img', 'hr',
     'input', 'label', 'select', 'option', 'textarea',
-    # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
+    # Note: <iframe> is allowed, but src="" is filtered after bleach
     'iframe',
     'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'colgroup', 'col',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -193,6 +193,9 @@ ALLOWED_STYLES = [
     'text-decoration-style', '-moz-text-decoration-style', 'text-decoration',
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
+ALLOWED_PROTOCOLS = [
+    'http', 'https', 'mailto', 'irc', 'news', 'ftp', 'ssh', 'nntp'
+]
 
 DIFF_WRAP_COLUMN = 65
 TEMPLATE_TITLE_PREFIX = 'Template:'
@@ -243,7 +246,7 @@ INVALID_REV_SLUG_CHARS_RE = re.compile(r"""[\s\?\/%%]+""")
 DOCUMENT_PATH_RE = re.compile(r'[^\$]+')
 
 # how a redirect looks as rendered HTML
-REDIRECT_HTML = 'REDIRECT <a class="redirect"'
+REDIRECT_HTML = 'REDIRECT <a '
 REDIRECT_CONTENT = 'REDIRECT <a class="redirect" href="%(href)s">%(title)s</a>'
 
 DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'

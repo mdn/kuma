@@ -13,7 +13,7 @@ ARTICLE_TITLE_SUFIX = " | MDN"
 @pytest.mark.nodata
 @pytest.mark.nondestructive
 def test_is_not_found_status(base_url, selenium):
-    page = NotFoundPage(selenium, base_url).open()
+    NotFoundPage(selenium, base_url).open()
     assert_valid_url(selenium.current_url, status_code=requests.codes.not_found)
 
 

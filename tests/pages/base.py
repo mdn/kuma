@@ -34,6 +34,7 @@ class BasePage(Page):
         # locators
         _root_locator = (By.ID, 'main-header')
         _menu_locator = (By.ID, 'nav-main-menu')
+        _signin_locator = (By.CSS_SELECTOR, '#nav-sec .login-link')
         _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
         _platform_submenu_trigger_locator = (By.XPATH,
                                              'id(\'nav-platform-submenu\')/..')
@@ -54,6 +55,10 @@ class BasePage(Page):
         @property
         def is_displayed(self):
             return self.root.is_displayed()
+
+        def trigger_signin(self):
+            signin_link = self.find_element(*self._signin_locator)
+            signin_link.click()
 
         # nav is displayed?
         @property
@@ -113,8 +118,9 @@ class BasePage(Page):
 
         def open_feedback(self):
             self.find_element(*self._feedback_link_locator).click()
+            # import needs to be here to avoid circular reference
             from pages.article import ArticlePage
-            return ArticlePage(self.selenium, self.page.base_url)
+            return ArticlePage(self.selenium, self.page.base_url).wait_for_page_to_load()
 
         def localized_feedback_path(self, locale):
             link = self.find_element(*self._feedback_link_locator)
@@ -134,10 +140,9 @@ class BasePage(Page):
         def is_report_content_url_expected(self, selenium, article_url):
             current_url = selenium.current_url
             report_url = self.report_content_form_url
-            article_url_no_protocal = re.sub(r'[^http:]', '', article_url)
             # compare
             url_matches = report_url in current_url
-            url_contains_article = article_url_no_protocal in current_url
+            # TODO check url contains article url in query variable
             return url_matches
 
         def open_report_bug(self):

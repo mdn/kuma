@@ -6,8 +6,8 @@ import bleach
 from constance import config
 from django_mysql.models import QuerySet
 
-from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
-                        TEMPLATE_TITLE_PREFIX)
+from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
+                        ALLOWED_STYLES, TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 
@@ -24,13 +24,6 @@ class BaseDocumentManager(models.Manager):
         return QuerySet(self.model)
 
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
-        allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
-        blocked_protocols = config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS
-        out = (parse_content(content_in)
-               .filterIframeHosts(allowed_hosts)
-               .filterAHrefProtocols(blocked_protocols)
-               .serialize())
-
         if use_constance_bleach_whitelists:
             tags = config.BLEACH_ALLOWED_TAGS
             attributes = config.BLEACH_ALLOWED_ATTRIBUTES
@@ -39,9 +32,18 @@ class BaseDocumentManager(models.Manager):
             tags = ALLOWED_TAGS
             attributes = ALLOWED_ATTRIBUTES
             styles = ALLOWED_STYLES
+        protocols = ALLOWED_PROTOCOLS
 
-        return bleach.clean(out, attributes=attributes, tags=tags,
-                            styles=styles)
+        bleached_content = bleach.clean(content_in, attributes=attributes,
+                                        tags=tags, styles=styles,
+                                        protocols=protocols)
+
+        allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        filtered_content = (parse_content(bleached_content)
+                            .filterIframeHosts(allowed_hosts)
+                            .serialize())
+
+        return filtered_content
 
     def get_by_natural_key(self, locale, slug):
         return self.get(locale=locale, slug=slug)

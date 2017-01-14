@@ -1185,8 +1185,8 @@ CONSTANCE_CONFIG = dict(
         "are removed from the file storage"
     ),
     KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
-        '(?i)^(data\:?)',
-        'Regex for protocols that are blocked for A HREFs'
+        '(?i)^\s*(data\:?)',
+        '(Deprecated) Regex for protocols that are blocked for A HREFs'
     ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         '^https?\:\/\/(developer-local.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',

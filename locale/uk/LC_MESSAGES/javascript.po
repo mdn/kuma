@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-11-23 22:34+0000\n"
-"Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
+"PO-Revision-Date: 2016-12-30 16:36+0000\n"
+"Last-Translator: Artem Polivanchuk <a.polivanchuk@outlook.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -25,46 +25,46 @@ msgstr "Закрити сповіщення"
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "Повернути"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "Переглянути сторінку"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "Редагувати сторінку"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "Історія"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
-msgstr ""
+msgstr "Зачекайте! Оновлення фільтрів…"
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "Оновлені фільтри."
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "Надсилання..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Представлено як %(submission_type)s"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s від %(user)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
 msgid "Error submitting as %(type)s"
-msgstr ""
+msgstr "Помилка надсилання від %(type)s"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
