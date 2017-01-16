@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-30 15:54+0000\n"
+"PO-Revision-Date: 2017-01-16 00:24+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
@@ -52,7 +52,7 @@ msgstr "<a href=\"%(submit_url)s\"> অাপনার ডেমোটি<b>স�
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(login_url)s\">সাইন ইন করতে</a> অাবার চেস্টা করুন।</li>"
 
 #: jinja2/403.html:62
 msgid ""
@@ -93,7 +93,7 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:77
 msgid "Skip to main content"
-msgstr ""
+msgstr "প্রধান বিষয়বস্তু স্কিপ করুন"
 
 #: jinja2/base.html:79
 msgid "Select language"
@@ -177,7 +177,6 @@ msgid "References & Guides"
 msgstr "তথ্যসূত্র এবং নির্দেশিকা"
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learning web development"
 msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
@@ -198,9 +197,8 @@ msgid "Accessibility"
 msgstr "প্রবেশযোগ্যতা"
 
 #: jinja2/base.html:146
-#, fuzzy
 msgid "Game development"
-msgstr "ওয়েব ডেভলপমেন্ট"
+msgstr "গেম ডেভলপমেন্ট"
 
 #: jinja2/base.html:147
 msgid "...more docs"
@@ -785,9 +783,8 @@ msgid "Uploaded by"
 msgstr "আপলোড করেছেন"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
-#, fuzzy
 msgid "Linked in article"
-msgstr "উইকিপিডিয়া নিবন্ধ"
+msgstr "নিবন্ধের সাথে যুক্ত"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
@@ -1235,9 +1232,8 @@ msgid "more..."
 msgstr "আরো ..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learning"
-msgstr "আমি শিখছি"
+msgstr "শিখছি"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
@@ -3112,9 +3108,8 @@ msgid "Confirmed as Spam"
 msgstr "স্প্যাম হিসেবে নিশ্চিত করা হয়েছে"
 
 #: kuma/wiki/models.py:1947
-#, fuzzy
 msgid "Review Unavailable"
-msgstr "অনুসন্ধান পাওয়া যাচ্ছে না"
+msgstr "রিভিউ খুঁজে পাওয়া যাচ্ছে না"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
@@ -3188,9 +3183,8 @@ msgid "Last Change By"
 msgstr "পরিবর্তন সংরক্ষণ করুন"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
-#, fuzzy
 msgid "Last Change Date"
-msgstr "অ্যাভাটার পরিবর্তন করুন"
+msgstr "সর্বশেষ পরিবর্তনের তারিখ"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
@@ -3694,9 +3688,8 @@ msgstr "%(create_date)s এ লিখেছেন %(creator_link)s"
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
-#, fuzzy
 msgid "View User Profile:"
-msgstr "প্রোফাইল দেখুন"
+msgstr "ব্যবহারকারীর প্রফাইল দেখুন:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 #, fuzzy
@@ -3839,9 +3832,9 @@ msgid "Subscribe to %(title)s"
 msgstr "সাবস্ক্রাইব করুন %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "আপনাকে এখানকার নটিফিকেশন থেকে আনসাবস্ক্রাইব করা হয়েছে।"
+msgstr "%(title)s থেকে আনসাবস্ক্রাইব করুন"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
