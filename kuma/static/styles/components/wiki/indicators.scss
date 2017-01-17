@@ -133,8 +133,11 @@ icons for both types of indicators
 .experimentalBadge,
 /* es7 and harmony macros  */
 .overheadIndicator[style='background: #9CF49C;'],
-.overheadIndicator[style='background: rgb(156, 244, 156);'] // IE10 {
-    indicator-icon('\f0c3'); /* flask */
+/*
+IE 11 converts hex to rgb, so target that as well.
+*/
+.overheadIndicator[style='background: rgb(156, 244, 156);'] {
+    @include indicator-icon('\f0c3'); /* flask */
 }
 
 .warning:not(.notification) {
