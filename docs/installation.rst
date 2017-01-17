@@ -19,7 +19,7 @@ transitioning to Docker for integration testing and deployment as well.
   need to regularly reset your environment to get the current changes.
 * The Docker environment doesn't yet support everything from the Vagrant
   environment, such as local SSL development and automatic asset compiling.
-* We are documenting tips and tricks on the 
+* We are documenting tips and tricks on the
   :doc:`Troubleshooting page <troubleshooting>`.
 
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
@@ -136,7 +136,7 @@ compiled to their final form::
 
 A few thousand lines will be printed, like::
 
-    ## Compiling Stylus files to CSS ##
+    ## Compiling Sass files to CSS ##
     compiled build/assets/css/dashboards.css
     generated build/assets/css/dashboards.css.map
     ...
@@ -231,7 +231,7 @@ Enable GitHub Auth
 To enable GitHub authentication, you'll need to
 `register an OAuth application on GitHub`_, with settings like:
 
-* Application name: MDN Development for (<username>). 
+* Application name: MDN Development for (<username>).
 * Homepage URL: http://localhost:8000/.
 * Application description: My own GitHub app for MDN!
 * Authorization callback URL: http://localhost:8000/users/github/login/callback/.
