@@ -6,7 +6,7 @@
     - {name: 'clean-css', version: '2.2.16'}
     - {name: 'csslint', version: '0.10.0'}
     - {name: 'jshint', version: '2.7.0'}
-    - {name: 'stylus', version: '0.49.2'}
+    - {name: 'node-sass', version: '4.3.0'}
     - {name: 'uglify-js', version: '2.4.13'}
     - {name: 'bower-installer', version: '1.2.0'}
 
@@ -17,4 +17,4 @@
     state: link
   with_items:
     - cleancss
-    - stylus
+    - node-sass
