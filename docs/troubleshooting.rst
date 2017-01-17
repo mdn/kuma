@@ -107,7 +107,7 @@ exactly as it is listed in ``Procfile``
 -  ``worker`` - runs the celery worker process for tasks.
 -  ``camera`` - stores a snapshot of celery tasks to display in admin site.
 -  ``kumascript`` - runs the node.js process for KumaScript macros.
--  ``stylus`` - runs a process to compile all ``.styl`` changes into ``.css``.
+-  ``sass`` - runs a process to compile all ``.scss`` changes into ``.css``.
 
 An alternative is to run most processes via ``foreman``, and override one or
 more with a custom command. Open two sessions with ``vagrant ssh``. In the
@@ -169,7 +169,7 @@ running it. (See `Running individual processes`_).
 -  If you see ``Kumascript service failed unexpectedly: HTTPConnectionPool``,
    make sure you enabled :ref:`KumaScript <enable KumaScript>`.
 
--  If changes to stylesheets do not have any effect, try compiling the Stylus
+-  If changes to stylesheets do not have any effect, try compiling the Sass
    manually by running this command in the VM::
 
        compile-stylesheets
