@@ -1,6 +1,0 @@
----
-- name: Test the Node.js role
-  hosts: all
-  sudo: yes
-  roles:
-    - role: "ansible-nodejs-role"
