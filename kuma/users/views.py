@@ -429,7 +429,7 @@ def user_edit(request, username):
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
                 field_value = user_form.cleaned_data.get(field, '')
-                tags = [tag.lower() for tag in parse_tags(field_value)]
+                tags = parse_tags(field_value)
                 new_user.tags.set_ns(tag_ns, *tags)
 
             return redirect(edit_user)

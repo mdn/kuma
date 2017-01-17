@@ -51,22 +51,9 @@ class _NamespacedTaggableManager(_TaggableManager):
 
         if namespace is not None:
             # Namespace requested, so generate filtered set
-            # TODO: Do this in the DB query? Might not be worth it.
-            #
-            # On databases with case-insensitive collation, we can end
-            # up with duplicate tags (the same tag, differing only by
-            # case, like 'javascript' and 'JavaScript') in some
-            # cases. The most common instance of this is user
-            # tags, which are coerced to lowercase on save to avoid
-            # the problem, but because there are a large number of
-            # these duplicates already existing, we do a quick filter
-            # here to ensure we don't return a bunch of dupes that
-            # differ only by case.
-            seen = []
             results = []
             for tag in tags:
-                if tag.name.startswith(namespace) and tag.name.lower() not in seen:
-                    seen.append(tag.name.lower())
+                if tag.name.startswith(namespace):
                     results.append(tag)
             return results
 
