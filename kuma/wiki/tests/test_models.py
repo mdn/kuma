@@ -25,7 +25,8 @@ from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
-from ..models import Document, Revision, RevisionIP, TaggedDocument
+from ..models import (Document, DocumentTag, Revision, RevisionIP,
+                      TaggedDocument)
 from ..templatetags.jinja_helpers import absolutify
 from ..utils import tidy_content
 from ..signals import render_done
@@ -470,10 +471,10 @@ class UserDocumentTests(UserTestCase):
         assert 2 == len(grandchild_doc.parent_trees_watched_by(testuser2))
 
 
+@pytest.mark.tags
 class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""
 
-    @pytest.mark.tags
     def test_revision_tags(self):
         """Change tags on Document by creating Revisions"""
         rev = revision(is_approved=True, save=True, content='Sample document')
@@ -494,6 +495,23 @@ class TaggedDocumentTests(UserTestCase):
 
         eq_(0, Document.objects.filter(tags__name='foo').count())
         eq_(1, Document.objects.filter(tags__name='alpha').count())
+
+    def test_duplicate_tags_with_creation(self):
+        rev = revision(
+            is_approved=True, save=True, content='Sample document',
+            tags="test Test")
+        assert rev.document.tags.count() == 1
+        tag = rev.document.tags.get()
+        assert tag.name in ('test', 'Test')
+
+    def test_duplicate_tags_with_existing(self):
+        dt = DocumentTag.objects.create(name='Test')
+        rev = revision(
+            is_approved=True, save=True, content='Sample document',
+            tags="test Test")
+        assert rev.document.tags.count() == 1
+        tag = rev.document.tags.get()
+        assert tag == dt
 
 
 class RevisionTests(UserTestCase):

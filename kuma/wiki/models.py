@@ -1727,8 +1727,13 @@ class Revision(models.Model):
         self.document.current_revision = self
 
         # Since Revision stores tags as a string, we need to parse them first
-        # before setting on the Document.
-        self.document.tags.set(*parse_tags(self.tags))
+        # before setting on the Document. And since taggit has issues adding
+        # duplicated names, convert to a unique set of DocumentTags
+        doc_tags = set()
+        for name in parse_tags(self.tags):
+            doc_tag, created = DocumentTag.objects.get_or_create(name=name)
+            doc_tags.add(doc_tag)
+        self.document.tags.set(*doc_tags)
 
         self.document.save()
 
