@@ -29,9 +29,9 @@ if [ $WATCH ]; then
   # Using $STYLESHEETS directly so that node-sass only watches each stylesheet
   # once, even if it is @included multiple times.
   if [ $QUIET ]; then
-    (node-sass ${STYLESHEETS[@]} --output $CSSDIR --precision 3 --source-map true --watch &) &> /dev/null
+    (node-sass ${SASSDIR} --watch --recursive --output $CSSDIR --precision 3 --source-map true &) &> /dev/null
   else
-    node-sass ${STYLESHEETS[@]} --output $CSSDIR --precision 3 --source-map true --watch
+    node-sass ${SASSDIR} --watch --recursive --output $CSSDIR --precision 3 --source-map true
   fi
 else
   # Iterating through stylesheets so that shell output is immediate.
