@@ -34,7 +34,7 @@ locust:
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
 
 compilecss:
-	@ echo "## Compiling Stylus files to CSS ##"
+	@ echo "## Compiling Sass files to CSS ##"
 	@ ./scripts/compile-stylesheets
 
 compilejsi18n:

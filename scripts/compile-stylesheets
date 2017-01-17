@@ -26,16 +26,16 @@ STYLESHEETS=($SASSDIR/*.scss)
 if [ $WATCH ]; then
   echo Watching and automatically compiling stylesheets
 
-  # Using $STYLESHEETS directly so that sass only watches each stylesheet
+  # Using $STYLESHEETS directly so that node-sass only watches each stylesheet
   # once, even if it is @included multiple times.
   if [ $QUIET ]; then
-    (node-sass ${STYLESHEETS[@]} --output $CSSDIR --precision 3 --source-map --watch &) &> /dev/null
+    (node-sass ${STYLESHEETS[@]} --output $CSSDIR --precision 3 --source-map true --watch &) &> /dev/null
   else
-    node-sass ${STYLESHEETS[@]} --output $CSSDIR --precision 3 --source-map --watch
+    node-sass ${STYLESHEETS[@]} --output $CSSDIR --precision 3 --source-map true --watch
   fi
 else
   # Iterating through stylesheets so that shell output is immediate.
   for ss in ${STYLESHEETS[@]}; do
-    node-sass $ss --output $CSSDIR --precision 3 --source-map
+    node-sass $ss --output $CSSDIR --precision 3 --source-map true
   done
 fi
