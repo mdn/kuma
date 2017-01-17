@@ -118,11 +118,13 @@ class _NamespacedTaggableManager(_TaggableManager):
 
     def _ensure_ns(self, namespace, tags):
         """Ensure each tag name in the list starts with the given namespace"""
-        ns_tags = []
-        for t in tags:
-            if not t.startswith(namespace):
-                t = '%s%s' % (namespace, t)
-            ns_tags.append(t)
+        ns_tags = set()
+        tag_model = self.through.tag_model()
+        for name in tags:
+            if not name.startswith(namespace):
+                name = '%s%s' % (namespace, name)
+            tag, created = tag_model.objects.get_or_create(name=name)
+            ns_tags.add(tag)
         return ns_tags
 
 
