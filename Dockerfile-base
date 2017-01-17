@@ -1,4 +1,4 @@
-FROM quay.io/deis/base:0.3.0
+FROM quay.io/mozmar/base:v0.3.5
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
