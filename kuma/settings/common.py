@@ -934,9 +934,9 @@ PIPELINE = {
     'JAVASCRIPT': PIPELINE_JS,
     'DISABLE_WRAPPER': True,
     'CSS_COMPRESSOR': config('PIPELINE_CSS_COMPRESSOR',
-                             default='kuma.core.pipeline.cleancss.CleanCSSCompressor'),
+                             default='pipeline.compressors.yuglify.YuglifyCompressor'),
     'JS_COMPRESSOR': config('PIPELINE_JS_COMPRESSOR',
-                            default='pipeline.compressors.uglifyjs.UglifyJSCompressor'),
+                            default='pipeline.compressors.yuglify.YuglifyCompressor'),
     'PIPELINE_ENABLED': config('PIPELINE_ENABLED', not DEBUG, cast=bool),
     'PIPELINE_COLLECTOR_ENABLED': config('PIPELINE_COLLECTOR_ENABLED', not DEBUG, cast=bool),
 }
