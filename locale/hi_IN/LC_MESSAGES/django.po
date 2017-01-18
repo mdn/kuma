@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 21:20+0000\n"
+"PO-Revision-Date: 2017-01-18 21:41+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -2162,11 +2162,11 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "GitHub से जुड़ें"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "GitHub के साथ साइन इन करें"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
@@ -2308,15 +2308,15 @@ msgstr "वापस नहीं हो सका:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 msgid "No actions taken"
-msgstr ""
+msgstr "कोई कार्रवाई नहीं की गयी"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "नवीनतम संशोधन गैर-स्पैम है:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "पहले से ही स्पैम के रूप में पहचाना गया है:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
@@ -2324,7 +2324,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_done.html:3
 msgid "Connect Account"
-msgstr ""
+msgstr "खाते जोड़ें"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
@@ -2336,11 +2336,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
-msgstr ""
+msgstr "खाता पुनर्प्राप्ति विफल"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 msgid "This link is no longer valid."
-msgstr ""
+msgstr "इस संपर्क की वैधता समाप्त हो गई है."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
@@ -2352,11 +2352,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr ""
+msgstr "आप पर प्रतिबंध लगा दिया गया है"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "आपको निम्न कारणों के लिए प्रतिबंधित किया गया है:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
@@ -2364,11 +2364,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:11
 msgid "Delete your profile"
-msgstr ""
+msgstr "अपनी प्रोफ़ाइल हटाएँ"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "हमें खेद है कि आप जा रहे हैं."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
@@ -2392,7 +2392,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "अपने खाते को बंद करने के लिए एक बग फाइल करें"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2437,7 +2437,7 @@ msgstr "अपनी प्रोफ़ाइल संपादित करे
 
 #: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
-msgstr ""
+msgstr "पर अपना अवतार बदलें"
 
 #: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
@@ -2445,7 +2445,7 @@ msgstr "प्रोफ़ाइल देखें"
 
 #: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "आप अपनी खुद की तुलना में एक अलग प्रोफ़ाइल का संपादन कर रहे हैं। कृपया ध्यान रखें!"
 
 #: kuma/users/jinja2/users/user_edit.html:54
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
@@ -2493,7 +2493,7 @@ msgstr "अपना खाता हटाएँ."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "अपने Mozilla न्यूज़लेटर सदस्यताओं का प्रबंधन करें."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
@@ -2589,12 +2589,12 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr "एक जैसे शब्द?"
+msgstr "शब्द पसंद हैं?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr ""
+msgstr "कोड पसंद हैं?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
@@ -2610,7 +2610,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "मेलिंग सूची: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
@@ -2639,11 +2639,11 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "ब्लॉग: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "पहले से ही स्पैम के रूप में सूचित."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
@@ -2663,16 +2663,16 @@ msgstr "प्रबंधित करें"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
-msgstr ""
+msgstr "API कुंजियाँ"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:63
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "विशेषज्ञता के क्षेत्र"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:105
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "%(date_joined)s से सदस्यता"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
@@ -2685,11 +2685,11 @@ msgstr "प्रतिबंधित"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Clean Up Revisions"
-msgstr ""
+msgstr "संशोधन को साफ करें"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
-msgstr ""
+msgstr "उपयोगकर्ता को प्रतिबंधित करें"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
@@ -2935,11 +2935,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:889
 msgid "New slug:"
-msgstr ""
+msgstr "नए स्लग:"
 
 #: kuma/wiki/forms.py:890
 msgid "New article URL"
-msgstr ""
+msgstr "नया आलेख URL"
 
 #: kuma/wiki/models.py:112
 #, python-format
@@ -2948,19 +2948,19 @@ msgstr ""
 
 #: kuma/wiki/models.py:120
 msgid "Document Tag"
-msgstr ""
+msgstr "दस्तावेज़ टैग"
 
 #: kuma/wiki/models.py:121
 msgid "Document Tags"
-msgstr ""
+msgstr "दस्तावेज़ टैग"
 
 #: kuma/wiki/models.py:173
 msgid "uploaded to the document"
-msgstr ""
+msgstr "दस्तावेज़ को अपलोड किया गया"
 
 #: kuma/wiki/models.py:179
 msgid "linked in the document content"
-msgstr ""
+msgstr "दस्तावेज़ सामग्री में लिंक की गई"
 
 #: kuma/wiki/models.py:193
 #, python-format
