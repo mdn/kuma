@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 22:02+0000\n"
+"PO-Revision-Date: 2017-01-18 22:21+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -3205,40 +3205,40 @@ msgstr "हटाने के लिए कारण"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
-msgstr ""
+msgstr "इस दस्तावेज़ को पुनर्स्थापित करें"
 
 #: kuma/wiki/jinja2/wiki/document.html:176
 msgid "Previous Search Result"
-msgstr ""
+msgstr "पिछला खोज परिणाम"
 
 #: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
 msgid "No Previous Search Result"
-msgstr ""
+msgstr "कोई पिछला खोज परिणाम नहीं"
 
 #: kuma/wiki/jinja2/wiki/document.html:182
 msgid "Your Search Results"
-msgstr ""
+msgstr "आपके खोज परिणाम"
 
 #: kuma/wiki/jinja2/wiki/document.html:186
 msgid "Next Search Result"
-msgstr ""
+msgstr "अगला खोज परिणाम"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
 msgid "see all contributors"
-msgstr ""
+msgstr "सभी योगदानकर्ताओं को देखें"
 
 #: kuma/wiki/jinja2/wiki/document.html:190
 msgid "hide contributors"
-msgstr ""
+msgstr "योगदानकर्ताओं को छुपाएँ"
 
 #: kuma/wiki/jinja2/wiki/document.html:194
 #, python-format
 msgid "View profile: %(username)s"
-msgstr ""
+msgstr "प्रोफ़ाइल देखें: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:219
 msgid "In This Article"
-msgstr ""
+msgstr "इस लेख में"
 
 #: kuma/wiki/jinja2/wiki/document.html:241
 #, python-format
@@ -3276,7 +3276,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This translation is in progress."
-msgstr ""
+msgstr "यह अनुवाद प्रगति पर है."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
@@ -3300,25 +3300,25 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "दस्तावेज़ टैग और योगदानकर्ता"
 
 #: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
-msgstr ""
+msgstr "इस पृष्ठ के लिए योगदानकर्ता:"
 
 #: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
-msgstr ""
+msgstr "अंतिम अद्यतन:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
 msgid "%(title)s | Edit Template"
-msgstr ""
+msgstr "%(title)s | टेम्पलेट संपादित करें"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
 #, python-format
 msgid "%(title)s | Edit Article"
-msgstr ""
+msgstr "%(title)s | आलेख को संपादित करें"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
@@ -3328,7 +3328,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "आपके परिवर्तन"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
@@ -3337,15 +3337,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
-msgstr ""
+msgstr "वर्तमान संशोधन:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
-msgstr ""
+msgstr "खोज परिणाम सारांश:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
-msgstr ""
+msgstr "पृष्ठ शीर्षक और गुण संपादित करें"
 
 #: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
@@ -3353,27 +3353,27 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
-msgstr ""
+msgstr "दिन"
 
 #: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
-msgstr ""
+msgstr "घंटे"
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "मिनट"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
-msgstr ""
+msgstr "अनुवाद स्रोत नीचे लुकअप के साथ खोजें और उसके बाद \"प्रकाशित करें.\" क्लिक करें"
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "लुकअप:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "MDN में सुधार हेतु समय लेने के लिए धन्यवाद!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
@@ -3390,7 +3390,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "जानें कि कैसे एक आलेख को टैग करना है"
 
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
@@ -3405,17 +3405,17 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
 msgid "last modified at %(modified)s"
-msgstr ""
+msgstr "%(modified)s पर अंतिम बार संशोधित"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "%(locale)s अनुवाद संपादित करें"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "लेख ले जाएँ | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -3443,19 +3443,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "वर्तमान स्लग:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "पूर्वावलोकन URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "नया स्लग:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "दस्तावेज़ शीर्षक द्वारा लुकअप"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
@@ -3464,11 +3464,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
 msgid "Move %(count)s Pages"
-msgstr ""
+msgstr "%(count)s पृष्ठ ले जाएँ"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "पृष्ठ ले जाएँ"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
@@ -3490,44 +3490,44 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "यह न सहेजे गए दस्तावेज़ का पूर्वावलोकन है."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr ""
+msgstr "संशोधन %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "संशोधन सूचना"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr ""
+msgstr "संशोधन स्लग:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr ""
+msgstr "संशोधन शीर्षक:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
-msgstr ""
+msgstr "पुनरावलोकन आईडी:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:29
 msgid "Created:"
-msgstr ""
+msgstr "बनाया गया:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:33
 msgid "Creator:"
-msgstr ""
+msgstr "निर्माता:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
-msgstr ""
+msgstr "क्या यह वर्तमान संशोधन है?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr ""
+msgstr "पुनरावलोकन सामग्री"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
