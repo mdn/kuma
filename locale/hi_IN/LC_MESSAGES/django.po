@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 02:01+0000\n"
+"PO-Revision-Date: 2017-01-18 02:20+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -470,79 +470,79 @@ msgstr "हिन्दी (भारत)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "हंगेरियन"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
-msgstr ""
+msgstr "इग्बो"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "इंडोनेशियाई"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
-msgstr ""
+msgstr "आयरिश"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "इतालवी"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
-msgstr ""
+msgstr "जापानी"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Kabyle"
-msgstr ""
+msgstr "कबाइली"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Korean"
-msgstr ""
+msgstr "कोरियाई"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Lingala"
-msgstr ""
+msgstr "लिंगला"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Malagasy"
-msgstr ""
+msgstr "मालागासी"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malay"
-msgstr ""
+msgstr "मलय"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
-msgstr ""
+msgstr "मलयालम"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Persian"
-msgstr ""
+msgstr "फारसी"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Polish"
-msgstr ""
+msgstr "पोलिश"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "पुर्तगाली (ब्राज़िलियन)"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "पुर्तगाली (पुर्तगाल)"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Romanian"
-msgstr ""
+msgstr "रोमानियाई"
 
 #: jinja2/includes/translate_locales.html:46
 msgid "Russian"
-msgstr ""
+msgstr "रूसी"
 
 #: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
 msgid "Serbian"
-msgstr ""
+msgstr "सर्बियाई"
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
@@ -550,80 +550,80 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
-msgstr ""
+msgstr "स्पेनिश"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
-msgstr ""
+msgstr "स्वाहिली"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
-msgstr ""
+msgstr "स्वीडिश"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
-msgstr ""
+msgstr "तगालोग"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
-msgstr ""
+msgstr "तमिल"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Thai"
-msgstr ""
+msgstr "थाई"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
-msgstr ""
+msgstr "त्स्वाना"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Turkish"
-msgstr ""
+msgstr "तुर्किश"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
-msgstr ""
+msgstr "यूक्रेनियाई"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
-msgstr ""
+msgstr "वियतनामी"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
-msgstr ""
+msgstr "वोलोफ"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
-msgstr ""
+msgstr "ज़ोसा"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
-msgstr ""
+msgstr "योरूबा"
 
 #: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
-msgstr ""
+msgstr "जुलु"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "इन ईमेल से सदस्यता समाप्त करें:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "सदस्यता रद्द करें"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "क्या आप सुनिश्चित हैं कि आप सदस्यता रद्द करना चाहते हैं?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द करें"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr ""
+msgstr "त्रुटि सदस्यता समाप्त"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
@@ -633,11 +633,11 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr ""
+msgstr "सदस्यता रद्द"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "आपकी सदस्यता रद्द कर दी गयी है."
 
 #: kuma/attachments/admin.py:60
 #, python-format
@@ -646,7 +646,7 @@ msgstr ""
 
 #: kuma/attachments/admin.py:64
 msgid "and"
-msgstr ""
+msgstr "और"
 
 #: kuma/attachments/admin.py:127
 #, python-format
@@ -655,11 +655,11 @@ msgstr ""
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
-msgstr ""
+msgstr "संलग्नक"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "MDN हाल ही में फ़ाइल परिवर्तन"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
@@ -675,23 +675,23 @@ msgstr ""
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
-msgstr ""
+msgstr "अनुलग्नक संशोधन"
 
 #: kuma/attachments/models.py:141
 msgid "attachment revisions"
-msgstr ""
+msgstr "अनुलग्नक संशोधन"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "अनुलग्नक फ़ाइल जो ट्रैश किया गया था"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "वह दिनांक और समय जब अनुलग्नक ट्रैश किया गया था"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "उपयोगकर्ता का उपयोगकर्ता नाम जिसने अनुलग्नक ट्रैश किए"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -699,101 +699,101 @@ msgstr ""
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr ""
+msgstr "ट्रैश किये गये संलग्नक"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr ""
+msgstr "ट्रैश किये गये संलग्नक"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
 #, python-format
 msgid "Attachments | %(title)s"
-msgstr ""
+msgstr "अनुलग्नक | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "आलेख %(title)s के लिए फ़ाइल अपलोड करें"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
 msgid "Upload files"
-msgstr ""
+msgstr "फ़ाइलें अपलोड करें"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "अनुलग्नकों का उपयोग करना सीखें"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
-msgstr ""
+msgstr "फ़ाइलें अपलोड करें"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
-msgstr ""
+msgstr "इस दस्तावेज़ के पास कोई अनुलग्नक नहीं हैं."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
+msgstr "चित्र संलग्न किये जा सकते हैं, और फिर आलेख में लिंक किये."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "फाइल"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
 msgid "Title"
-msgstr ""
+msgstr "शीर्षक"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "विवरण"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "टिप्पणियाँ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
-msgstr ""
+msgstr "इस आलेख से जुड़ा हुआ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr ""
+msgstr "अन्य आलेख से जुड़ा हुआ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "आकार"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 msgid "Last modified"
-msgstr ""
+msgstr "अंतिम बार संशोधित"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
-msgstr ""
+msgstr "द्वारा अपलोड की गई"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
-msgstr ""
+msgstr "आलेख में लिंक किए गए"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
-msgstr ""
+msgstr "से संलग्न आलेख"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s बाइट्स"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "लुकअप कुंजी"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
@@ -805,12 +805,12 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "निर्मित"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
-msgstr ""
+msgstr "हटाएँ"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
@@ -824,7 +824,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "एक नई कुंजी बनाएँ"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
@@ -837,7 +837,7 @@ msgstr ""
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
 msgid "History (%(count)s)"
-msgstr ""
+msgstr "इतिहास (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
@@ -852,7 +852,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
-msgstr ""
+msgstr "बनाएँ"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:20
 #, python-format
@@ -863,11 +863,11 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
-msgstr ""
+msgstr "कुंजी ID"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "गुप्त"
 
 #: kuma/core/apps.py:13
 msgid "Core"
@@ -885,19 +885,19 @@ msgstr ""
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "ऐप्स"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr ""
+msgstr "मोबाइल"
 
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "वेब"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
@@ -910,15 +910,15 @@ msgstr ""
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "Yes"
-msgstr ""
+msgstr "हाँ"
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "No"
-msgstr ""
+msgstr "नहीं"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "ऐड-ऑन व एक्सटेंशन"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
