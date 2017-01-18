@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 22:28+0000\n"
+"PO-Revision-Date: 2017-01-18 23:09+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -3628,23 +3628,23 @@ msgstr ""
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "उपयोगकर्ता प्रोफ़ाइल देखें:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "MDN पर की तुलना:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "आलेख देखें:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "लेख को संपादित करें:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "लेख इतिहास:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
@@ -3662,11 +3662,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "सहेजें"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "भाषाएँ"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "No translations exist for this article."
@@ -3674,15 +3674,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:37
 msgid "Add a translation"
-msgstr ""
+msgstr "एक अनुवाद जोड़ें"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
-msgstr ""
+msgstr "देखें"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
-msgstr ""
+msgstr "नए उप-लेख"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
@@ -3690,35 +3690,35 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
-msgstr ""
+msgstr "यह आलेख ले जाएँ"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
-msgstr ""
+msgstr "व्यवस्थापक में देखें"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:82
 msgid "Delete this article"
-msgstr ""
+msgstr "इस आलेख को मिटाएँ"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
-msgstr ""
+msgstr "सामग्री क्षेत्र प्रबंधित करें"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:90
 msgid "Convert to content zone"
-msgstr ""
+msgstr "सामग्री ज़ोन में बदलें"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
-msgstr ""
+msgstr "इस आलेख को मुद्रित करें"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr ""
+msgstr "गहराईयाँ"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "इसे भी देखें"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
@@ -3727,7 +3727,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr ""
+msgstr "परिशोधन %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -3758,7 +3758,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr ""
+msgstr "%(title)s की सदस्यता लें"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, python-format
