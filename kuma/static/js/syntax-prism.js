@@ -29,7 +29,7 @@
         }
 
         // Some boxes shouldn't be numbered
-        if($pre.hasClass('syntaxbox') || $pre.hasClass('twopartsyntaxbox')) {
+        if($pre.hasClass('syntaxbox') || $pre.hasClass('twopartsyntaxbox') || $pre.hasClass('no-line-numbers')) {
           $pre.attr('data-prism-prevent-line-number', 1);
         }
         else {

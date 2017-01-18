@@ -38,3 +38,7 @@ pre.line-numbers > code {
 			padding-right: 0.8em;
 			text-align: right;
 		}
+
+.no-line-numbers .line-numbers-rows {
+    display:none;
+}
