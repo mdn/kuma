@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 03:01+0000\n"
+"PO-Revision-Date: 2017-01-18 03:08+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -2651,15 +2651,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
-msgstr ""
+msgstr "संपादित करें"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
-msgstr ""
+msgstr "उन्नत"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
-msgstr ""
+msgstr "प्रबंधित करें"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
@@ -2681,7 +2681,7 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:44
 msgid "Banned"
-msgstr ""
+msgstr "प्रतिबंधित"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Clean Up Revisions"
@@ -2697,11 +2697,11 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
-msgstr ""
+msgstr "प्रशासक"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -2734,7 +2734,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
@@ -2781,15 +2781,15 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:343
 msgid "Edit Page"
-msgstr ""
+msgstr "पृष्ठ संपादित करें"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "तुलना दर्शाएँ"
 
 #: kuma/wiki/forms.py:36
 msgid "Please provide a title."
-msgstr ""
+msgstr "कृपया शीर्षक प्रदान करें."
 
 #: kuma/wiki/forms.py:37
 #, python-format
@@ -2803,7 +2803,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:42
 msgid "Name Your Article"
-msgstr ""
+msgstr "अपने आलेख का नाम दें"
 
 #: kuma/wiki/forms.py:43
 msgid "Please provide a slug."
@@ -2825,7 +2825,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:50
 msgid "Please provide a summary."
-msgstr ""
+msgstr "कृपया एक सारांश प्रदान करें."
 
 #: kuma/wiki/forms.py:51
 #, python-format
@@ -2839,7 +2839,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:56
 msgid "Please provide content."
-msgstr ""
+msgstr "कृपया सामग्री प्रदान करें."
 
 #: kuma/wiki/forms.py:57
 #, python-format
@@ -2878,20 +2878,20 @@ msgstr ""
 #: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "शीर्षक:"
 
 #: kuma/wiki/forms.py:339 kuma/wiki/forms.py:409 kuma/wiki/forms.py:883
 msgid "Title of article"
-msgstr ""
+msgstr "लेख का शीर्षक"
 
 #: kuma/wiki/forms.py:347 kuma/wiki/forms.py:422 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "स्लग:"
 
 #: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
 msgid "Article URL"
-msgstr ""
+msgstr "आलेख URL"
 
 #: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
@@ -2899,11 +2899,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "टैग:"
 
 #: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "कुंजीशब्द:"
 
 #: kuma/wiki/forms.py:439
 msgid "Affects search results"
@@ -2919,11 +2919,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:459 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
-msgstr ""
+msgstr "सामग्री:"
 
 #: kuma/wiki/forms.py:471 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
-msgstr ""
+msgstr "टिप्पणी:"
 
 #: kuma/wiki/forms.py:475
 msgid "Tag this revision for review?"
@@ -2985,7 +2985,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1583
 msgid "No table of contents"
-msgstr ""
+msgstr "कोई सामग्री तालिका नहीं"
 
 #: kuma/wiki/models.py:1584
 msgid "All levels"
