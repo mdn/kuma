@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 21:41+0000\n"
+"PO-Revision-Date: 2017-01-18 22:02+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -2969,19 +2969,19 @@ msgstr ""
 
 #: kuma/wiki/models.py:1542
 msgid "Review Tag"
-msgstr ""
+msgstr "समीक्षा टैग"
 
 #: kuma/wiki/models.py:1543
 msgid "Review Tags"
-msgstr ""
+msgstr "समीक्षा टैग"
 
 #: kuma/wiki/models.py:1549
 msgid "Localization Tag"
-msgstr ""
+msgstr "स्थानीयकरण टैग"
 
 #: kuma/wiki/models.py:1550
 msgid "Localization Tags"
-msgstr ""
+msgstr "स्थानीयकरण टैग"
 
 #: kuma/wiki/models.py:1583
 msgid "No table of contents"
@@ -2989,19 +2989,19 @@ msgstr "कोई सामग्री तालिका नहीं"
 
 #: kuma/wiki/models.py:1584
 msgid "All levels"
-msgstr ""
+msgstr "सभी स्तर"
 
 #: kuma/wiki/models.py:1585
 msgid "H2 and higher"
-msgstr ""
+msgstr "H2 और उच्च"
 
 #: kuma/wiki/models.py:1586
 msgid "H3 and higher"
-msgstr ""
+msgstr "H3 और उच्च"
 
 #: kuma/wiki/models.py:1587
 msgid "H4 and higher"
-msgstr ""
+msgstr "H4 और उच्च"
 
 #: kuma/wiki/models.py:1691
 #, python-format
@@ -3010,67 +3010,67 @@ msgstr ""
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
-msgstr ""
+msgstr "IP पता"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
-msgstr ""
+msgstr "उपयोक्ता-प्रतिनिधि"
 
 #: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "HTTP संदर्भ"
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
 msgid "Data submitted to Akismet"
-msgstr ""
+msgstr "Akismet के लिए सबमिट किया गया डेटा"
 
 #: kuma/wiki/models.py:1870
 msgid "Akismet submission"
-msgstr ""
+msgstr "Akismet प्रस्तुतीकरण"
 
 #: kuma/wiki/models.py:1871
 msgid "Akismet submissions"
-msgstr ""
+msgstr "Akismet प्रस्तुतीकरण"
 
 #: kuma/wiki/models.py:1915
 msgid "Slug"
-msgstr ""
+msgstr "स्लग"
 
 #: kuma/wiki/models.py:1923
 msgid "Document (optional)"
-msgstr ""
+msgstr "दस्तावेज़ (वैकल्पिक)"
 
 #: kuma/wiki/models.py:1933
 msgid "reviewed"
-msgstr ""
+msgstr "पूर्वावलोकित"
 
 #: kuma/wiki/models.py:1944
 msgid "Needs Review"
-msgstr ""
+msgstr "समीक्षा की जरूरत"
 
 #: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "हैम / असत्य सकारात्मक"
 
 #: kuma/wiki/models.py:1946
 msgid "Confirmed as Spam"
-msgstr ""
+msgstr "स्पैम के रूप में की पुष्टि हुई"
 
 #: kuma/wiki/models.py:1947
 msgid "Review Unavailable"
-msgstr ""
+msgstr "समीक्षा अनुपलब्ध"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
-msgstr ""
+msgstr "Akismet त्रुटि"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
-msgstr ""
+msgstr "Akismet के वर्गीकरण की स्पैम के रूप में की समीक्षा"
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
-msgstr ""
+msgstr "स्टाफ समीक्षक"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3079,7 +3079,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
-msgstr ""
+msgstr "आप एक नया पृष्ठ बनाने के लिए प्रयास कर रहे हैं."
 
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
@@ -3098,20 +3098,20 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "संशोधन की तुलना करें | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "संशोधनों की तुलना करें"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr ""
+msgstr "इतिहास पर वापस जायें"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
 msgid "Delete Document | %(document)s"
-msgstr ""
+msgstr "दस्तावेज़ हटाएँ | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3119,19 +3119,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
-msgstr ""
+msgstr "निर्माता"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
 msgid "Creation Date"
-msgstr ""
+msgstr "निर्माण दिनांक"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
-msgstr ""
+msgstr "द्वारा अंतिम परिवर्तन"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "अंतिम परिवर्तन तिथि"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
@@ -3139,12 +3139,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "क्या आप वाकई आगे बढ़ना चाहते हैं?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "संशोधन वापस लें | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
@@ -3152,11 +3152,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
-msgstr ""
+msgstr "दस्तावेज़"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
 msgid "Content"
-msgstr ""
+msgstr "विषयवस्तु"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
@@ -3168,31 +3168,31 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr ""
+msgstr "वापस जायें"
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
-msgstr ""
+msgstr "एक नया टेम्पलेट बनाएँ"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
 msgid "Create a New Article"
-msgstr ""
+msgstr "एक नया आलेख बनाएँ"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "Create a"
-msgstr ""
+msgstr "एक बनाएँ"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
-msgstr ""
+msgstr "नया दस्तावेज़"
 
 #: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
-msgstr ""
+msgstr "URL क्षेत्र जो कि पृष्ठ की पहचान करता है"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2 kuma/wiki/jinja2/wiki/deletion_log.html:7
 msgid "Document Deleted"
-msgstr ""
+msgstr "दस्तावेज़ हटा दिया गया"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
@@ -3201,7 +3201,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
-msgstr ""
+msgstr "हटाने के लिए कारण"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
