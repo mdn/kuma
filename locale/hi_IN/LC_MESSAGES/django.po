@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 02:20+0000\n"
+"PO-Revision-Date: 2017-01-18 02:41+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -926,43 +926,43 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "APIs और DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr ""
+msgstr "उन्मुक्त वेब ऐप्स"
 
 #: kuma/core/translations/search/filter/b2g-os/name.py:4
 msgid "B2G OS"
-msgstr ""
+msgstr "B2G OS"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
-msgstr ""
+msgstr "मैं सीख रहा हूँ"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
-msgstr ""
+msgstr "कैनवास"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "कोड नमूने"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
-msgstr ""
+msgstr "डेस्कटॉप के लिए Firefox"
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
-msgstr ""
+msgstr "एंड्रॉयड के लिए Firefox"
 
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
 msgid "Firefox OS"
-msgstr ""
+msgstr "Firefox OS"
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr ""
+msgstr "खेल"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -970,115 +970,115 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
-msgstr ""
+msgstr "मध्यस्थ"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
-msgstr ""
+msgstr "मार्केटप्लेस"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr ""
+msgstr "वेब डेवलपमेंट"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
-msgstr ""
+msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
-msgstr ""
+msgstr "दस्तावेज़ का प्रकार"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
-msgstr ""
+msgstr "कौशल स्तर"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr ""
+msgstr "प्रसंग"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
-msgstr ""
+msgstr "सभी स्थान-विशेष"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
-msgstr ""
+msgstr "कोई नहीं"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
-msgstr ""
+msgstr "घंटा"
 
 #: kuma/dashboards/forms.py:12
 msgid "Day"
-msgstr ""
+msgstr "दिन"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "सप्ताह"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 दिन"
 
 #: kuma/dashboards/forms.py:23
 msgid "All Authors"
-msgstr ""
+msgstr "सभी लेखक"
 
 #: kuma/dashboards/forms.py:24
 msgid "Known Authors"
-msgstr ""
+msgstr "ज्ञात लेखक"
 
 #: kuma/dashboards/forms.py:25
 msgid "Unknown Authors"
-msgstr ""
+msgstr "अज्ञात लेखक"
 
 #: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "स्थान-विशिष्ट:"
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
-msgstr ""
+msgstr "उपयोगकर्ता:"
 
 #: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr ""
+msgstr "विषय:"
 
 #: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr ""
+msgstr "प्रारंभिक तिथि:"
 
 #: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
 msgid "End Date:"
-msgstr ""
+msgstr "समाप्ति तिथि:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "पूर्ववर्ती अवधि:"
 
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
-msgstr ""
+msgstr "लेखक"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr ""
+msgstr "संशोधन डैशबोर्ड"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
-msgstr ""
+msgstr "लेखक:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
-msgstr ""
+msgstr "फ़िल्टर करें"
 
 #: kuma/dashboards/jinja2/dashboards/spam.html:30
 #, python-format
@@ -1087,44 +1087,44 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
-msgstr ""
+msgstr "पुनरावलोकन"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
-msgstr ""
+msgstr "टिप्पणी"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Author"
-msgstr ""
+msgstr "लेखक"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "टॉगल IPs"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
-msgstr ""
+msgstr "नया"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
-msgstr ""
+msgstr "हटाया गया"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "IP संपादित करने से प्रतिबंध"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "User agent:"
-msgstr ""
+msgstr "उपयोगकर्ता एजेंट:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
 msgid "Referrer:"
-msgstr ""
+msgstr "संदर्भ:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
@@ -1143,11 +1143,11 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
-msgstr ""
+msgstr "के रूप में प्रविष्ट करें:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
-msgstr ""
+msgstr "स्पैम"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
@@ -1193,23 +1193,23 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "दस्तावेजों को खोजें"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "विषय दिखाएँ"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Technologies"
-msgstr ""
+msgstr "वेब<br />तकनीकें"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "वेब APIs &amp; DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "अधिक..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Learning"
@@ -1221,11 +1221,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
-msgstr ""
+msgstr "HTML जानें"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn CSS"
-msgstr ""
+msgstr "CSS सीखें"
 
 #: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Learn JavaScript"
@@ -1237,39 +1237,39 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
-msgstr ""
+msgstr "पृष्ठ निरीक्षक"
 
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
-msgstr ""
+msgstr "वेब नियंत्रक पट"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "JavaScript डिबगर"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
-msgstr ""
+msgstr "प्रदर्शन उपकरण"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "उन्मुक्त वेब और मोबाइल"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "गर्व से गैर लाभकारी."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "31 दिसम्बर से पहले दान करें."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
-msgstr ""
+msgstr "अभी दान करें"
 
 #: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Learn Web Development"
-msgstr ""
+msgstr "वेब डेवलपमेंट सीखें"
 
 #: kuma/landing/jinja2/landing/homepage.html:126
 msgid "Get The Browser For Developers Like You"
@@ -1285,7 +1285,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:144
 msgid "Get Involved"
-msgstr ""
+msgstr "शामिल हों"
 
 #: kuma/landing/jinja2/landing/homepage.html:146
 #, python-format
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:153 kuma/landing/jinja2/landing/homepage.html:160
 msgid "Help improve MDN"
-msgstr ""
+msgstr "MDN बेहतर बनाने में मदद करें"
 
 #: kuma/landing/jinja2/landing/homepage.html:164
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
@@ -1304,19 +1304,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Getting started"
-msgstr ""
+msgstr "प्रारंभ हो रहा है"
 
 #: kuma/landing/jinja2/landing/homepage.html:171
 msgid "Editorial review"
-msgstr ""
+msgstr "संपादकीय समीक्षा"
 
 #: kuma/landing/jinja2/landing/homepage.html:172
 msgid "Technical review"
-msgstr ""
+msgstr "तकनीकी समीक्षा"
 
 #: kuma/landing/jinja2/landing/homepage.html:177
 msgid "Translating"
-msgstr ""
+msgstr "अनुवाद"
 
 #: kuma/landing/jinja2/landing/homepage.html:178
 msgid "Promoting MDN"
@@ -1333,7 +1333,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "MDN को बढ़ावा दें"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
@@ -1348,43 +1348,43 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
-msgstr ""
+msgstr "पूर्वावलोकन"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr ""
+msgstr "एक बटन शैली चुनें"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "बेहतर दस्तावेज़"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr ""
+msgstr "डेवलपर संचालित"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "डेवलपर्स के लिए, डेवलपर्स द्वारा"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "वेब डेवलपर उपकरण बॉक्स"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "रंग चुनें"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "भूरा"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "नारंगी"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "लाल"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1396,7 +1396,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "आपका स्रोत कोड:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
@@ -1494,7 +1494,7 @@ msgstr ""
 
 #: kuma/search/admin.py:63
 msgid "Is current index?"
-msgstr ""
+msgstr "वर्तमान इंडेक्स है?"
 
 #: kuma/search/forms.py:17
 #, python-format
@@ -1511,15 +1511,15 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "नाम"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "समूहनाम"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "खोज अनुपलब्ध"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
@@ -1542,7 +1542,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "परिणाम"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1602,15 +1602,15 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "दस्तावेज़"
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
-msgstr ""
+msgstr "सभी प्रसंग"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "के द्वारा फ़िल्‍टर"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
@@ -1622,11 +1622,11 @@ msgstr ""
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "निर्मित"
 
 #: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
-msgstr ""
+msgstr "फ़र्जी"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
