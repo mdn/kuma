@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 01:45+0000\n"
+"PO-Revision-Date: 2017-01-18 02:01+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -120,23 +120,23 @@ msgstr "दस्तावेजों का पुनारावलोकन 
 
 #: jinja2/base.html:111
 msgid "Site Tools"
-msgstr ""
+msgstr "साइट उपकरण"
 
 #: jinja2/base.html:113
 msgid "Revision dashboard"
-msgstr ""
+msgstr "संशोधन डैशबोर्ड"
 
 #: jinja2/base.html:114
 msgid "Documentation status"
-msgstr ""
+msgstr "दस्तावेज़ स्थिति"
 
 #: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr ""
+msgstr "वेब तकनीकें"
 
 #: jinja2/base.html:127
 msgid "Technologies"
-msgstr ""
+msgstr "प्रौद्योगिकी"
 
 #: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
@@ -152,101 +152,101 @@ msgstr "JavaScript"
 
 #: jinja2/base.html:132
 msgid "Graphics"
-msgstr ""
+msgstr "ग्राफ़िक्स"
 
 #: jinja2/base.html:133
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: jinja2/base.html:134
 msgid "APIs / DOM"
-msgstr ""
+msgstr "APIs / DOM"
 
 #: jinja2/base.html:135
 msgid "WebExtensions"
-msgstr ""
+msgstr "WebExtensions"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:139
 msgid "References & Guides"
-msgstr ""
+msgstr "संदर्भ व गाइड"
 
 #: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Learning web development"
-msgstr ""
+msgstr "वेब डेवलपमेंट सीखना"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
-msgstr ""
+msgstr "शिक्षण पाठ"
 
 #: jinja2/base.html:143
 msgid "References"
-msgstr ""
+msgstr "संदर्भ"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
-msgstr ""
+msgstr "डेवलपर मार्गदर्शिकाएँ"
 
 #: jinja2/base.html:145
 msgid "Accessibility"
-msgstr ""
+msgstr "अभिगम्यता"
 
 #: jinja2/base.html:146
 msgid "Game development"
-msgstr ""
+msgstr "गेम डेवलपमेंट"
 
 #: jinja2/base.html:147
 msgid "...more docs"
-msgstr ""
+msgstr "...और दस्तावेज़"
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Mozilla दस्तावेज़"
 
 #: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
-msgstr ""
+msgstr "सहयुक्तियाँ"
 
 #: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
-msgstr ""
+msgstr "Firefox"
 
 #: jinja2/base.html:161
 msgid "Developer Tools"
-msgstr ""
+msgstr "डेवलपर उपकरण"
 
 #: jinja2/base.html:161
 msgid "Feedback"
-msgstr ""
+msgstr "प्रतिपुष्टि"
 
 #: jinja2/base.html:166
 msgid "Get Firefox help"
-msgstr ""
+msgstr "Firefox सहायता प्राप्त करें"
 
 #: jinja2/base.html:167
 msgid "Get web development help"
-msgstr ""
+msgstr "वेब डेवलपमेंट सहायता प्राप्त करें"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
-msgstr ""
+msgstr "MDN समुदाय में शामिल हों"
 
 #: jinja2/base.html:171
 msgid "Report a content problem"
-msgstr ""
+msgstr "सामग्री समस्या की रिपोर्ट करें"
 
 #: jinja2/base.html:172
 msgid "Report a bug"
-msgstr ""
+msgstr "त्रुटि की रिपोर्ट करें"
 
 #: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr ""
+msgstr "खोज"
 
 #: jinja2/base.html:198
 #, python-format
@@ -255,23 +255,23 @@ msgstr ""
 
 #: jinja2/base.html:203
 msgid "About MDN"
-msgstr ""
+msgstr "MDN के बारे में"
 
 #: jinja2/base.html:204
 msgid "Terms"
-msgstr ""
+msgstr "शर्तें"
 
 #: jinja2/base.html:205
 msgid "Privacy"
-msgstr ""
+msgstr "गोपनीयता"
 
 #: jinja2/base.html:206
 msgid "Cookies"
-msgstr ""
+msgstr "कुकीज़"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr ""
+msgstr "कोड में योगदान करें"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -279,20 +279,20 @@ msgstr ""
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Firefox सहायता खोजें"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr ""
+msgstr "आपका स्वागत है, <span class=\"user\">%(user)s</span>."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "प्रोफ़ाइल"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr ""
+msgstr "साइन आउट करें"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
@@ -301,35 +301,35 @@ msgstr ""
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
-msgstr ""
+msgstr "अन्य भाषाएँ:"
 
 #: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
 msgid "Go"
-msgstr ""
+msgstr "जाएँ"
 
 #: jinja2/includes/login.html:4
 msgid "Sign out"
-msgstr ""
+msgstr "साइन आउट करें"
 
 #: jinja2/includes/login.html:8
 msgid "Sign in"
-msgstr ""
+msgstr "साइन इन करें"
 
 #: jinja2/includes/newsletter.html:3
 msgid "Learn the best of web development"
-msgstr ""
+msgstr "सबसे अच्छा वेब डेवलपमेंट सीखें"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
-msgstr ""
+msgstr "हमारे न्यूज़लेटर के लिए साइन अप करें:"
 
 #: jinja2/includes/newsletter.html:11
 msgid "E-mail"
-msgstr ""
+msgstr "ई-मेल"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr ""
+msgstr "you@example.com"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
@@ -338,7 +338,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:24
 msgid "Sign up now"
-msgstr ""
+msgstr "अभी साइन अप करें"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -354,119 +354,119 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "न्यूज़लेटर साइन अप छुपाएँ"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
-msgstr ""
+msgstr "पिछला"
 
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
-msgstr ""
+msgstr "अगला"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "अफ्रीकी"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
-msgstr ""
+msgstr "अल्बानियाई"
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr ""
+msgstr "अरबी"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "अज़रबैजानी"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "बांबरा"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "बंगाली (बांग्लादेश)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
-msgstr ""
+msgstr "बंगाली (भारत)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "बर्मी"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "कातलान"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "चीनी (सरलीकृत)"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "चीनी (पारम्परिक)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
-msgstr ""
+msgstr "क्रोएशियाई"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
-msgstr ""
+msgstr "चेक"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
-msgstr ""
+msgstr "डच"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "English (US)"
-msgstr ""
+msgstr "अंग्रेज़ी (यूएस)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr ""
+msgstr "इवे"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
-msgstr ""
+msgstr "फिन्निश"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "फ़्रांसीसी"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr ""
+msgstr "फ्रीशियन"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
-msgstr ""
+msgstr "फ़लाह"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr ""
+msgstr "ज्यार्जियाई"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "जर्मन"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
-msgstr ""
+msgstr "यूनानी"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
-msgstr ""
+msgstr "हौसा"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
-msgstr ""
+msgstr "यहूदी"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
-msgstr ""
+msgstr "हिन्दी (भारत)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
