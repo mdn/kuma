@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 02:41+0000\n"
+"PO-Revision-Date: 2017-01-18 03:01+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -1638,7 +1638,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "प्रकार"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1657,7 +1657,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "उपयोगकर्ता"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1666,15 +1666,15 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "कलन विधी"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "नमक"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "हैश"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
@@ -1682,39 +1682,39 @@ msgstr ""
 
 #: kuma/users/forms.py:31 kuma/users/models.py:46
 msgid "Timezone"
-msgstr ""
+msgstr "समयक्षेत्र"
 
 #: kuma/users/forms.py:37
 msgid "Beta tester"
-msgstr ""
+msgstr "बीटा परीक्षक"
 
 #: kuma/users/forms.py:41 kuma/users/jinja2/users/includes/user_title_info.html:50
 msgid "Interests"
-msgstr ""
+msgstr "रूचियाँ"
 
 #: kuma/users/forms.py:47
 msgid "Expertise"
-msgstr ""
+msgstr "विशेषज्ञता"
 
 #: kuma/users/forms.py:53
 msgid "Username"
-msgstr ""
+msgstr "उपयोक्तानाम"
 
 #: kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
-msgstr ""
+msgstr "स्टैक ओवरफ़्लो"
 
 #: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
@@ -1722,7 +1722,7 @@ msgstr ""
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
@@ -1738,7 +1738,7 @@ msgstr ""
 
 #: kuma/users/forms.py:162
 msgid "Email"
-msgstr ""
+msgstr "ईमेल"
 
 #: kuma/users/models.py:34
 #, python-format
@@ -1752,11 +1752,11 @@ msgstr ""
 
 #: kuma/users/models.py:56
 msgid "Language"
-msgstr ""
+msgstr "भाषा"
 
 #: kuma/users/models.py:61
 msgid "Homepage"
-msgstr ""
+msgstr "होमपेज"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1764,28 +1764,28 @@ msgstr ""
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "नाम"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "संस्था"
 
 #: kuma/users/models.py:85
 msgid "Location"
-msgstr ""
+msgstr "अवस्थिति"
 
 #: kuma/users/models.py:90
 msgid "About Me"
-msgstr ""
+msgstr "मेरे बारे में"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
-msgstr ""
+msgstr "IRC उपनाम"
 
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "टैग"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
@@ -1817,11 +1817,11 @@ msgstr ""
 
 #: kuma/users/models.py:141
 msgid "Website"
-msgstr ""
+msgstr "वेबसाइट"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "प्रयोक्ता के नाम की आवश्यकता है."
 
 #: kuma/users/signup.py:10
 #, python-format
@@ -1835,11 +1835,11 @@ msgstr ""
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "आपको उपयोग की शर्तों से सहमत होना होगा."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "मैं सहमत हूँ"
 
 #: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -1847,7 +1847,7 @@ msgstr ""
 
 #: kuma/users/views.py:470
 msgid "Email address"
-msgstr ""
+msgstr "ई-मेल पता"
 
 #: kuma/users/views.py:516
 #, python-format
@@ -1861,23 +1861,23 @@ msgstr ""
 
 #: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
-msgstr ""
+msgstr "अन्य:"
 
 #: kuma/users/views.py:525
 msgid "Email:"
-msgstr ""
+msgstr "ईमेल:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "प्रोफ़ाइल निष्क्रिय"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "यह प्रोफ़ाइल निष्क्रिय है."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
-msgstr ""
+msgstr "ईमेल पते"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
@@ -1890,15 +1890,15 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "प्राथमिक बनाएँ"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "पुष्टि पुन: भेजें"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "निकालें"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
@@ -1906,15 +1906,15 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "ईमेल पता जोड़ें"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "ईमेल जोड़ें"
 
 #: kuma/users/jinja2/account/email.html:60
 msgid "Edit profile"
-msgstr ""
+msgstr "प्रालेख को संपादित करे"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
@@ -1922,7 +1922,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "ई-मेल पते की पुष्टि करें"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -1931,7 +1931,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "पुष्टि करें"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -1945,11 +1945,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "साइन इन करें"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"
-msgstr ""
+msgstr "कृपया साइन इन करें"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
@@ -1975,12 +1975,12 @@ msgstr ""
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "कूटशब्द बदलें"
 
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "कूटशब्द पुनः तैयार करें"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
@@ -1988,7 +1988,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "मेरा कूटशब्द पुनः तैयार करें"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -2000,7 +2000,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "बुरा टोकन"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
@@ -2009,7 +2009,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "कूटशब्द बदलें"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
@@ -2017,15 +2017,15 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "कूटशब्द स्थापित करें"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "साइन अप"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "साइन अप करें"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
@@ -2060,7 +2060,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "नोट"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
@@ -2069,11 +2069,11 @@ msgstr ""
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "OpenID साइन इन"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "खाता साइन इन असफल"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -2081,7 +2081,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "प्रवेश रद्द कर दिया"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2090,7 +2090,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "जारी रखने के लिए अपनी MDN प्रोफ़ाइल बनाएँ"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
@@ -2098,7 +2098,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
-msgstr ""
+msgstr "मेरी प्रोफ़ाइल पुनर्प्राप्त करें"
 
 #: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
@@ -2145,7 +2145,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "शर्तें और गोपनीयता"
 
 #: kuma/users/jinja2/socialaccount/signup.html:166
 #, python-format
@@ -2154,7 +2154,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "मेरे MDN प्रोफ़ाइल बनाएँ"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with GitHub"
@@ -2180,7 +2180,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
-msgstr ""
+msgstr "एक कारण चुनें"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
@@ -2188,7 +2188,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
-msgstr ""
+msgstr "उपयोगकर्ता को प्रतिबंधित करें"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
 #, python-format
@@ -2211,11 +2211,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
-msgstr ""
+msgstr "स्पैम सबमिट करें"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
-msgstr ""
+msgstr "स्पैम के लिए उपयोगकर्ता को प्रतिबंधित करें"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 msgid "Ban User for Spam & Submit Spam"
@@ -2231,15 +2231,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "सारांश"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
-msgstr ""
+msgstr "की गई कार्रवाई"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
-msgstr ""
+msgstr "प्रतिबंधित:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 msgid "Submitted to Akismet as spam:"
@@ -2251,7 +2251,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Deleted:"
-msgstr ""
+msgstr "हटाए गए:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 msgid "The user did not have any revisions that were deleted."
@@ -2259,7 +2259,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 msgid "Reverted:"
-msgstr ""
+msgstr "वापस लिए गये:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 msgid "The user did not have any revisions that were reverted."
@@ -2277,18 +2277,18 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
 msgid "View Page"
-msgstr ""
+msgstr "पृष्ठ देखें"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
 msgid "History"
-msgstr ""
+msgstr "इतिहास"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
 msgid "None."
-msgstr ""
+msgstr "कोई नहीं."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
@@ -2300,11 +2300,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 msgid "Could not delete:"
-msgstr ""
+msgstr "हट नहीं सका:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
-msgstr ""
+msgstr "वापस नहीं हो सका:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 msgid "No actions taken"
@@ -2344,7 +2344,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "पुनर्प्राप्ति ईमेल भेजा गया"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
@@ -2396,23 +2396,23 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "हाल की दस्तावेज़ गतिविधि"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
-msgstr ""
+msgstr "सभी गतिविधि देखें"
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
-msgstr ""
+msgstr "पृष्ठ"
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "दिनांक"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
-msgstr ""
+msgstr "पृष्ठ संपादन"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
@@ -2420,7 +2420,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
-msgstr ""
+msgstr "पृष्ठ इतिहास देखें"
 
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
@@ -2429,11 +2429,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr ""
+msgstr "इस उपयोगकर्ता की कोई गतिविधि नहीं है."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "अपनी प्रोफ़ाइल संपादित करें"
 
 #: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
@@ -2441,7 +2441,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
-msgstr ""
+msgstr "प्रोफ़ाइल देखें"
 
 #: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2453,15 +2453,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Primary Email"
-msgstr ""
+msgstr "प्राथमिक ईमेल"
 
 #: kuma/users/jinja2/users/user_edit.html:57
 msgid "Edit email"
-msgstr ""
+msgstr "ईमेल संपादित करें"
 
 #: kuma/users/jinja2/users/user_edit.html:70
 msgid "Interests (tags)"
-msgstr ""
+msgstr "रुचियाँ (टैग)"
 
 #: kuma/users/jinja2/users/user_edit.html:71
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
@@ -2469,7 +2469,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "Areas of expertise"
-msgstr ""
+msgstr "विशेषज्ञता के क्षेत्र"
 
 #: kuma/users/jinja2/users/user_edit.html:78
 msgid "Add your interests first, then declare yourself an expert in selected topics."
@@ -2477,7 +2477,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:86
 msgid "My Profiles"
-msgstr ""
+msgstr "मेरा प्रालेख"
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
@@ -2485,11 +2485,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
-msgstr ""
+msgstr "प्रकाशित करें"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 msgid "Delete your account."
-msgstr ""
+msgstr "अपना खाता हटाएँ."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
@@ -2497,7 +2497,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
-msgstr ""
+msgstr "नमस्ते MDN से!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2508,7 +2508,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
-msgstr ""
+msgstr "MDN का उपयोग करने के लिए धन्यवाद!"
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
@@ -2539,7 +2539,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "हमसे बात करें!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
@@ -2572,7 +2572,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
 #, python-format
 msgid "Hi %(username)s"
-msgstr ""
+msgstr "नमस्कार %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2589,7 +2589,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "एक जैसे शब्द?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
