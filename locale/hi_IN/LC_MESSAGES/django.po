@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-18 21:02+0000\n"
+"PO-Revision-Date: 2017-01-18 21:20+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -1584,11 +1584,11 @@ msgstr[1] ""
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
 msgstr[0] "%(count)s दस्तावेज़ मिला."
-msgstr[1] ""
+msgstr[1] "%(count)s दस्तावेज़ मिले."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "सभी परिणाम दिखाये जा रहे है."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
@@ -1630,11 +1630,11 @@ msgstr "फ़र्जी"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "हैम"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "पर भेजा गया"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1718,7 +1718,7 @@ msgstr "LinkedIn"
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
-msgstr ""
+msgstr "मोज़िल्लियंस"
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
@@ -1789,11 +1789,11 @@ msgstr "टैग"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "एक मान्य वेबसाइट URL दर्ज करें."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "एक मान्य Twitter URL दर्ज करें."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
@@ -1852,12 +1852,12 @@ msgstr "ई-मेल पता"
 #: kuma/users/views.py:516
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>सत्यापित</b>"
 
 #: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s असत्यापित"
 
 #: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
@@ -1918,7 +1918,7 @@ msgstr "प्रालेख को संपादित करे"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "आप वास्तव में चयनित ई-मेल पते को हटाना चाहते हैं?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
@@ -1969,7 +1969,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "क्या आप वाकई साइन आउट करना चाहते हैं?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
@@ -2013,7 +2013,7 @@ msgstr "कूटशब्द बदलें"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "आपका कूटशब्द अब बदल गया है."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
