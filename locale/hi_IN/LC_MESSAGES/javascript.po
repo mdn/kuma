@@ -1,17 +1,18 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2014-05-21 08:13+0000\n"
-"Last-Translator: Matjaž <m@owca.info>\n"
+"PO-Revision-Date: 2017-01-18 23:41+0000\n"
+"Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1400660019.0\n"
 
 #: kuma/static/js/components.js:75
@@ -24,19 +25,19 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "वापस जाएँ"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "पृष्ठ देखें"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "पृष्ठ संपादित करें"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "इतिहास"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
@@ -44,11 +45,11 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "अद्यतन किए गए फ़िल्टर्स."
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "दर्ज़ हो रहा है..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
@@ -71,11 +72,11 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr ""
+msgstr "हाँ"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
-msgstr ""
+msgstr "नहीं"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
@@ -115,11 +116,11 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr ""
+msgstr "कुछ और"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
-msgstr ""
+msgstr "एक का चयन करें..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
@@ -127,35 +128,35 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "धन्यवाद! हम इसे ठीक कर देंगे."
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "कोई चयन नहीं"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "चयनित: "
 
 #: kuma/static/js/users.js:108
 msgid "New interest..."
-msgstr ""
+msgstr "नई रूचि..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "खुला कार्यान्वयन नोट्स"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "खोलिए"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
-msgstr ""
+msgstr "संगतता तालिका पर वापस जाएँ."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "बंद करे"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
@@ -163,15 +164,15 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "बीटा के बारे में अधिक."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "सर्वेक्षण लें"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "त्रुटि रिपोर्ट करें."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
@@ -179,19 +180,19 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "पुराने तालिका दिखाएँ."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "प्रारूप सहेजें"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "स्वचलित सहेजना सक्षम करें."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
-msgstr ""
+msgstr "एक अज्ञात तारीख"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
@@ -203,11 +204,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "मसौदा निरस्त"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "बहाल"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -215,7 +216,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "परिवर्तन सहेजे गए."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
@@ -223,19 +224,19 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
-msgstr ""
+msgstr "ड्राफ्ट"
 
 #: kuma/static/js/wiki-edit.js:626
 msgid "saved"
-msgstr ""
+msgstr "सहेजा लिया गया"
 
 #: kuma/static/js/wiki-edit.js:645
 msgid "autosaved"
-msgstr ""
+msgstr "स्वतः सहेजा गया"
 
 #: kuma/static/js/wiki-edit.js:654
 msgid "published"
-msgstr ""
+msgstr "प्रकाशित"
 
 #: kuma/static/js/wiki-edit.js:658
 msgid "discarded"
