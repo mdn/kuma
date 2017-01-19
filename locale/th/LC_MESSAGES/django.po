@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-19 21:20+0000\n"
+"PO-Revision-Date: 2017-01-19 21:28+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -208,7 +208,7 @@ msgstr ""
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "เอกสาร Mozilla"
 
 #: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
@@ -245,9 +245,8 @@ msgid "Report a content problem"
 msgstr "รายงานปัญหาของเนื้อหา"
 
 #: jinja2/base.html:172
-#, fuzzy
 msgid "Report a bug"
-msgstr "รายงาน"
+msgstr "รายงานข้อบกพร่อง"
 
 #: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
@@ -256,9 +255,9 @@ msgid "Search"
 msgstr "ค้นหา"
 
 #: jinja2/base.html:198
-#, fuzzy, python-format
+#, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr "เนื้อหาอยู่ภายใต้<a href=\"%(copyright_url)s\">ใบอนุญาตเหล่านี้</a>"
+msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network และผู้มีส่วนร่วมแต่ละคน</p> <p>เนื้อหาใช้งานได้ภายใต้ <a href=\"%(copyright_url)s\">สัญญาอนุญาตเหล่านี้</a></p>"
 
 #: jinja2/base.html:203
 msgid "About MDN"
@@ -299,7 +298,7 @@ msgstr "ข้อมูลส่วนตัว"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr "ออกจากระบบ"
+msgstr "ลงชื่อออก"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
@@ -316,11 +315,11 @@ msgstr "ไป"
 
 #: jinja2/includes/login.html:4
 msgid "Sign out"
-msgstr "ออกจากระบบ"
+msgstr "ลงชื่อออก"
 
 #: jinja2/includes/login.html:8
 msgid "Sign in"
-msgstr "ลงชื่อเข้าใช้"
+msgstr "ลงชื่อเข้า"
 
 #: jinja2/includes/newsletter.html:3
 #, fuzzy
@@ -347,9 +346,8 @@ msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(p
 msgstr ""
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "ออกจากระบบ"
+msgstr "ลงทะเบียนตอนนี้"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
@@ -1224,7 +1222,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "ค้นหาเอกสาร"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 #, fuzzy
@@ -1333,7 +1331,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:153 kuma/landing/jinja2/landing/homepage.html:160
 msgid "Help improve MDN"
-msgstr ""
+msgstr "ช่วยปรับปรุง MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:164
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
@@ -1921,9 +1919,8 @@ msgid "This profile is inactive."
 msgstr ""
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
-#, fuzzy
 msgid "Email addresses"
-msgstr "ที่อยู่อีเมลของคุณ"
+msgstr "ที่อยู่อีเมล"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
@@ -2220,7 +2217,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "ลงชื่อเข้าด้วย GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, fuzzy, python-format
