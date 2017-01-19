@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-19 10:59+0000\n"
+"PO-Revision-Date: 2017-01-19 21:20+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -3093,9 +3093,8 @@ msgid "A revision must be based on a revision of the %(locale)s document. Revisi
 msgstr ""
 
 #: kuma/wiki/models.py:1824
-#, fuzzy
 msgid "IP address"
-msgstr "ที่อยู่อีเมลของคุณ"
+msgstr "ที่อยู่ IP"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
