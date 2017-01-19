@@ -1,44 +1,46 @@
+@Library('github.com/mozmar/jenkins-pipeline@master')
+
+def loadBranch(String branch) {
+  if (fileExists("./Jenkinsfiles/${branch}.yml")) {
+    config = readYaml file: "./Jenkinsfiles/${branch}.yml"
+    println "config ==> ${config}"
+  }
+  else {
+    config = []
+  }
+
+  if (config && config.pipeline && config.pipeline.enabled == false) {
+    println "Pipeline disabled."
+  }
+  else {
+    if (config && config.pipeline && config.pipeline.script) {
+      println "Loading ./Jenkinsfiles/${config.pipeline.script}.groovy"
+      load "./Jenkinsfiles/${config.pipeline.script}.groovy"
+    }
+    else {
+      println "Loading ./Jenkinsfiles/${branch}.groovy"
+      load "./Jenkinsfiles/${branch}.groovy"
+    }
+  }
+}
+
 node {
-    stage 'git'
+  stage("Prepare") {
     checkout scm
+    sh 'git submodule sync'
+    sh 'git submodule update --init --recursive'
+    setGitEnvironmentVariables()
 
     env.DEIS_BIN = 'deis2'
     env.DEIS_PROFILE = 'dev-usw'
 
-    switch (env.BRANCH_NAME) {
-      case 'master':
-        stage('Build base') {
-          sh 'make build-base VERSION=latest'
-        }
-
-        stage('compose-test') {
-          sh 'make compose-test TEST=noext' // "smoke" tests with no external deps
-          sh 'make compose-test TEST="noext make build-static"' // required for many tests
-          sh 'docker-compose build'
-          sh 'make compose-test'
-        }
-
-        stage('Build & push images') {
-          sh 'make build-kuma push-kuma'
-          sh 'make push-base VERSION=latest'
-        }
-
-        break
-
-      default:
-        // this assumes the latest base image from master is compatible with this branch
-        // TODO: example special case branch that builds and uses a different base image
-        stage('compose-test') {
-          sh 'make compose-test TEST=noext' // "smoke" tests with no external deps
-          sh 'make compose-test TEST="noext make build-static"' // required for many tests
-          sh 'docker-compose build'
-          sh 'make compose-test'
-        }
-
-        stage('Build & push kuma image') {
-          sh 'make build-kuma push-kuma'
-        }
-
-        break
+    // When checking in a file exists in another directory start with './' or
+    // prepare to fail.
+    if (fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.groovy") || fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.yml")) {
+      loadBranch(env.BRANCH_NAME)
     }
+    else {
+      loadBranch("default")
+    }
+  }
 }

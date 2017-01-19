@@ -119,6 +119,18 @@ don't have to type them each time.
 .. _`Signup for an account`: https://saucelabs.com/opensauce/
 .. _`in a configuration file`: http://pytest-selenium.readthedocs.io/en/latest/user_guide.html#sauce-labs
 
+Run tests on MDN CI
+-------------------
+
+If you have commit rights on mozilla/kuma GitHub repository you can run the UI
+tests using MDN CI Infrastructure. Just push to
+`mozilla/kuma@stage-integration-tests`_ to run the tests against
+https://developer.allizom.org or to `mozilla/kuma@prod-integration-tests`_ to
+run the tests against https://developer.mozilla.org.
+
+.. _`mozilla/kuma@stage-integration-tests`: https://github.com/mozilla/kuma/tree/stage-integration-tests
+.. _`mozilla/kuma@prod-integration-tests`: https://github.com/mozilla/kuma/tree/prod-integration-tests
+
 Marks
 =====
 
