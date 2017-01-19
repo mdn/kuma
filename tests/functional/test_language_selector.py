@@ -22,7 +22,7 @@ def test_footer_language_selector(base_url, selenium):
     assert home_footer_language == TEST_LOCALE, 'unexpected homepage footer locale'
 
     # open feedback link
-    feedback = page.header.open_feedback()
+    feedback = page.header.open_feedback(locale=TEST_LOCALE)
 
     # test locale in feedback url matches
     assert '/' + TEST_LOCALE + '/' in selenium.current_url, 'locale not in URL'
