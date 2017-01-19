@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-14 04:50+0000\n"
-"Last-Translator: nuttapong2539 <nuttapong2539@gmail.com>\n"
+"PO-Revision-Date: 2017-01-19 10:59+0000\n"
+"Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr "คุณต้องลงชื่อเข้าใช้เพื่อดูประวัติทั้งหมด"
+msgstr "คุณต้องลงชื่อเข้าเพื่อดูประวัติทั้งหมด"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
@@ -84,7 +84,7 @@ msgstr ""
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr ""
+msgstr "ข้อผิดพลาดเซิร์ฟเวอร์ภายใน"
 
 #: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
@@ -132,7 +132,7 @@ msgstr "สถานะเอกสาร"
 
 #: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr "เทคโนโลยีของเว็บ"
+msgstr "เทคโนโลยีเว็บ"
 
 #: jinja2/base.html:127
 msgid "Technologies"
@@ -153,7 +153,7 @@ msgstr "JavaScript"
 
 #: jinja2/base.html:132
 msgid "Graphics"
-msgstr ""
+msgstr "กราฟิก"
 
 #: jinja2/base.html:133
 msgid "HTTP"
@@ -667,7 +667,7 @@ msgstr ""
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
-msgstr ""
+msgstr "ไฟล์แนบ"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
@@ -751,7 +751,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "ไฟล์"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
@@ -779,16 +779,15 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "ขนาด"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
-#, fuzzy
 msgid "Last modified"
-msgstr "วันที่แก้ไขล่าสุด"
+msgstr "เปลี่ยนแปลงล่าสุด"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
-msgstr ""
+msgstr "อัปโหลดโดย"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 #, fuzzy
@@ -832,7 +831,7 @@ msgstr "ลบ"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr "คีย์นี้ยังไม่ได้ถูกนำมาใช้"
+msgstr "กุญแจนี้ยังไม่ถูกใช้"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
@@ -842,20 +841,20 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr "สร้างคีย์ใหม่"
+msgstr "สร้างกุญแจใหม่"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr "คุณยังไม่มี API keys"
+msgstr "คุณยังไม่มีกุญแจ API"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
-msgstr "ดูประวัติการใช้คีย์"
+msgstr "ดูประวัติการใช้กุญแจ"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "History (%(count)s)"
-msgstr "ประวัติ ({count})"
+msgstr "ประวัติ (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
@@ -881,7 +880,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
-msgstr ""
+msgstr "ID กุญแจ"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
@@ -1132,7 +1131,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
-msgstr ""
+msgstr "ใหม่"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 #, fuzzy
@@ -1141,7 +1140,7 @@ msgstr "ลบ"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "Ban IP from Editing"
@@ -1416,15 +1415,15 @@ msgstr "เลือกสี"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr "สีเทา"
+msgstr "เทา"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr "สีส้ม"
+msgstr "ส้ม"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr "สีแดง"
+msgstr "แดง"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1551,13 +1550,12 @@ msgstr ""
 
 # 88%
 #: kuma/search/views.py:94
-#, fuzzy
 msgid "name"
-msgstr "ชื่อผู้ใช้"
+msgstr "ชื่อ"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "ชื่อกลุ่ม"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
@@ -1824,12 +1822,12 @@ msgstr "เกี่ยวกับฉัน"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
-msgstr ""
+msgstr "ชื่อเล่น IRC"
 
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "ป้ายกำกับ"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
@@ -1910,9 +1908,8 @@ msgstr ""
 
 # 83%
 #: kuma/users/views.py:525
-#, fuzzy
 msgid "Email:"
-msgstr "อีเมล"
+msgstr "อีเมล:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 #, fuzzy
@@ -1946,23 +1943,20 @@ msgid "Re-send Confirmation"
 msgstr ""
 
 #: kuma/users/jinja2/account/email.html:32
-#, fuzzy
 msgid "Remove"
-msgstr "ลบการสาธิต"
+msgstr "เอาออก"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
 msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
-#, fuzzy
 msgid "Add email address"
-msgstr "ที่อยู่อีเมลของคุณ"
+msgstr "เพิ่มที่อยู่อีเมล"
 
 #: kuma/users/jinja2/account/email.html:55
-#, fuzzy
 msgid "Add Email"
-msgstr "อีเมล"
+msgstr "เพิ่มอีเมล"
 
 #: kuma/users/jinja2/account/email.html:60
 #, fuzzy
@@ -1974,9 +1968,8 @@ msgid "Do you really want to remove the selected email address?"
 msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
-#, fuzzy
 msgid "Confirm Email Address"
-msgstr "ที่อยู่อีเมลของคุณ"
+msgstr "ยืนยันที่อยู่อีเมล"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -1998,14 +1991,12 @@ msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an 
 msgstr ""
 
 #: kuma/users/jinja2/account/login.html:3
-#, fuzzy
 msgid "Sign In"
-msgstr "ออกจากระบบ"
+msgstr "ลงชื่อเข้า"
 
 #: kuma/users/jinja2/account/login.html:13
-#, fuzzy
 msgid "Please sign in"
-msgstr "โปรดรอ"
+msgstr "โปรดลงชื่อเข้า"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
@@ -2078,19 +2069,16 @@ msgstr ""
 
 # 88%
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
-#, fuzzy
 msgid "Set Password"
-msgstr "รหัสผ่าน"
+msgstr "ตั้งรหัสผ่าน"
 
 #: kuma/users/jinja2/account/signup.html:3
-#, fuzzy
 msgid "Signup"
-msgstr "ออกจากระบบ"
+msgstr "ลงทะเบียน"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
-#, fuzzy
 msgid "Sign Up"
-msgstr "ออกจากระบบ"
+msgstr "ลงทะเบียน"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
@@ -2103,9 +2091,8 @@ msgstr ""
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
-#, fuzzy
 msgid "Confirm Your Email Address"
-msgstr "โปรดยืนยันที่อยู่อีเมลของคุณ"
+msgstr "ยืนยันที่อยู่อีเมลของคุณ"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
