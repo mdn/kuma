@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 13:41+0000\n"
+"PO-Revision-Date: 2017-01-20 14:00+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -332,7 +332,7 @@ msgstr "อีเมล"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
-msgstr ""
+msgstr "you@example.com"
 
 #: jinja2/includes/newsletter.html:18
 #, python-format
@@ -349,7 +349,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "ขอบคุณ! โปรดตรวจสอบกล่องขาเข้าของคุณเพื่อยืนยันการบอกรับของคุณ"
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
@@ -369,7 +369,7 @@ msgstr "ถัดไป"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "แอฟริกา"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
@@ -381,7 +381,7 @@ msgstr "อาหรับ"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "อาเซอร์ไบจาน"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
@@ -389,15 +389,15 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "เบงกาลี (บังคลาเทศ)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
-msgstr ""
+msgstr "เบงกาลี (อินเดีย)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "พม่า"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
@@ -405,7 +405,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "จีน (ประยุกต์)"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
@@ -413,7 +413,7 @@ msgstr "จีน (ดั้งเดิม)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
-msgstr ""
+msgstr "โครเอเชีย"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
@@ -421,19 +421,19 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
-msgstr ""
+msgstr "ดัตช์"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "English (US)"
-msgstr ""
+msgstr "อังกฤษ (สหรัฐอเมริกา)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr ""
+msgstr "เอเว"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
-msgstr ""
+msgstr "ฟินแลนด์"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
@@ -449,15 +449,15 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr ""
+msgstr "จอร์เจีย"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "เยอรมัน"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
-msgstr ""
+msgstr "กรีก"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
@@ -465,88 +465,87 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
-msgstr ""
+msgstr "ฮิบรู"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
-msgstr ""
+msgstr "ฮินดี (อินเดีย)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "ฮังการี"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
-msgstr ""
+msgstr "อิกโบ"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "อินโดนีเซีย"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
-msgstr ""
+msgstr "ไอริช"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "อิตาลี"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
-msgstr ""
+msgstr "ญี่ปุ่น"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Kabyle"
-msgstr ""
+msgstr "คาบาล์ย"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Korean"
-msgstr ""
+msgstr "เกาหลี"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Lingala"
-msgstr ""
+msgstr "ลิงกาลา"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Malagasy"
-msgstr ""
+msgstr "มาลากาซี"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malay"
-msgstr ""
+msgstr "มาเลย์"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
-msgstr ""
+msgstr "มะละยาลัม"
 
 #: jinja2/includes/translate_locales.html:41
-#, fuzzy
 msgid "Persian"
-msgstr "Personas"
+msgstr "เปอร์เซีย"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Polish"
-msgstr ""
+msgstr "โปแลนด์"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "โปรตุเกส (บราซิล)"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "โปรตุเกส (โปรตุเกส)"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Romanian"
-msgstr ""
+msgstr "โรมาเนีย"
 
 #: jinja2/includes/translate_locales.html:46
 msgid "Russian"
-msgstr ""
+msgstr "รัสเซีย"
 
 #: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
 msgid "Serbian"
-msgstr ""
+msgstr "เซอร์เบีย"
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
@@ -554,23 +553,23 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
-msgstr ""
+msgstr "สเปน"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
-msgstr ""
+msgstr "สวาฮีลี"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
-msgstr ""
+msgstr "สวีเดน"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tagalog"
-msgstr ""
+msgstr "ตากาล็อก"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
-msgstr ""
+msgstr "ทมิฬ"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Thai"
@@ -578,23 +577,23 @@ msgstr "ไทย"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Tswana"
-msgstr ""
+msgstr "สวานา"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Turkish"
-msgstr ""
+msgstr "ตุรกี"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
-msgstr ""
+msgstr "ยูเครน"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
-msgstr ""
+msgstr "เวียดนาม"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Wolof"
-msgstr ""
+msgstr "โวลอฟ"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
@@ -602,11 +601,11 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
-msgstr ""
+msgstr "โยรูบา"
 
 #: jinja2/includes/translate_locales.html:63
 msgid "Zulu"
-msgstr ""
+msgstr "ซูลู"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -1322,11 +1321,11 @@ msgstr "เริ่มต้น"
 
 #: kuma/landing/jinja2/landing/homepage.html:171
 msgid "Editorial review"
-msgstr ""
+msgstr "การตรวจทานบรรณาธิการ"
 
 #: kuma/landing/jinja2/landing/homepage.html:172
 msgid "Technical review"
-msgstr "การตรวจสอบทางเทคนิค"
+msgstr "การตรวจทานทางเทคนิค"
 
 #: kuma/landing/jinja2/landing/homepage.html:177
 msgid "Translating"
@@ -1362,7 +1361,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
-msgstr ""
+msgstr "แสดงตัวอย่าง"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1414,7 +1413,7 @@ msgstr "โค้ดต้นฉบับของคุณ:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "ปุ่มของคุณจะนำผู้คนไปยัง:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
