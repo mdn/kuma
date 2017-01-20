@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 11:02+0000\n"
+"PO-Revision-Date: 2017-01-20 11:11+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -65,7 +65,7 @@ msgstr "ไม่พบ"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
-msgstr ""
+msgstr "เราขออภัย เราไม่พบสิ่งที่คุณกำลังมองหา"
 
 #: jinja2/404.html:24
 #, python-format
@@ -298,7 +298,7 @@ msgstr "ลงชื่อออก"
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "ต้องการมีส่วนร่วม?<br /> <a href=\"%(login_url)s\">ลงชื่อเข้า</a>"
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
@@ -725,9 +725,8 @@ msgid "Upload files"
 msgstr "อัปโหลดไฟล์"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
-#, fuzzy
 msgid "Learn how to use Attachments"
-msgstr "เรียนรู้วิธีการสร้างเว็บไซต์"
+msgstr "เรียนรู้วิธีใช้ไฟล์แนบ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
@@ -735,7 +734,7 @@ msgstr "อัปโหลดไฟล์"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
-msgstr ""
+msgstr "เอกสารนี้ไม่มีไฟล์แนบ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
@@ -1008,7 +1007,7 @@ msgstr "ชนิดเอกสาร"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
-msgstr ""
+msgstr "ระดับทักษะ"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
@@ -1540,9 +1539,8 @@ msgstr ""
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
-#, fuzzy
 msgid "Search Mozilla Developer Network documentation"
-msgstr "Mozilla Developer Network"
+msgstr "ค้นหาเอกสาร Mozilla Developer Network"
 
 # 82%
 # 100%
@@ -1808,32 +1806,31 @@ msgstr "ป้ายกำกับ"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "ป้อน URL เว็บไซต์ที่ถูกต้อง"
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "ป้อน URL ของ Twitter ที่ถูกต้อง"
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "ป้อน URL ของ GitHub ที่ถูกต้อง"
 
 #: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "ป้อน URL ของ Stack Overflow ที่ถูกต้อง"
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "ป้อน URL ของ LinkedIn ที่ถูกต้อง"
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "ป้อน URL ของ Mozillians ที่ถูกต้อง"
 
 #: kuma/users/models.py:134
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Facebook URL"
+msgstr "ป้อน URL ของ Facebook ที่ถูกต้อง"
 
 #: kuma/users/models.py:141
 msgid "Website"
