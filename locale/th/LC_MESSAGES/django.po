@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 14:25+0000\n"
+"PO-Revision-Date: 2017-01-20 14:34+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -461,7 +461,7 @@ msgstr "กรีก"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
-msgstr ""
+msgstr "เฮาซา"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
@@ -549,7 +549,7 @@ msgstr "เซอร์เบีย"
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Songhai"
-msgstr ""
+msgstr "ซองไฮ"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Spanish"
