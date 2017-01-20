@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 10:31+0000\n"
+"PO-Revision-Date: 2017-01-20 11:02+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -322,9 +322,8 @@ msgid "Learn the best of web development"
 msgstr "สำหรับนักพัฒนาเว็บ"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "ลงทะเบียนรับจดหมายข่าว"
+msgstr "ลงทะเบียนสำหรับจดหมายข่าวของเรา:"
 
 # 83%
 #: jinja2/includes/newsletter.html:11
@@ -358,7 +357,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "ซ่อนการลงทะเบียนจดหมายข่าว"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -932,11 +931,11 @@ msgstr "ส่วนเสริมและส่วนขยาย"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "ฉันเป็นผู้เชี่ยวชาญ"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "API และ DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
@@ -952,11 +951,11 @@ msgstr "ฉันกำลังเรียนรู้"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
-msgstr ""
+msgstr "ผืนผ้าใบ"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "ตัวอย่างโค้ด"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
@@ -1737,7 +1736,7 @@ msgstr "LinkedIn"
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
-msgstr ""
+msgstr "Mozillians"
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
@@ -2742,7 +2741,7 @@ msgstr "ผู้ดูแล"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -3361,7 +3360,7 @@ msgstr "ผู้มีส่วนร่วมกับหน้านี้:"
 
 #: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
-msgstr ""
+msgstr "อัปเดตล่าสุดโดย:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, fuzzy, python-format
@@ -3734,9 +3733,8 @@ msgid "No translations exist for this article."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:37
-#, fuzzy
 msgid "Add a translation"
-msgstr "การแปล {locale}:"
+msgstr "เพิ่มการแปล"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:52
 msgid "Watch"
@@ -3906,7 +3904,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "สร้างแม่แบบ"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
@@ -4009,7 +4007,7 @@ msgstr "แม่แบบทั้งหมด"
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
+msgstr[0] "พบ %(num)s แม่แบบ"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
@@ -4025,7 +4023,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "เอกสารทั้งหมด"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2017-01-20 10:00+0000\n"
+"PO-Revision-Date: 2017-01-20 10:55+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
-msgstr "เรียกค่าใหม่จาก URL แล้ว"
+msgstr "โหลดค่าใหม่จาก URL แล้ว"
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
-msgstr "การตั้งค่าโปรแกรมเสริมถูกบันทึกแล้ว"
+msgstr "บันทึกการตั้งค่าปลั๊กอินแล้ว"
 
 #: promote-mdn.php:245
 msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
@@ -49,19 +49,19 @@ msgstr "แสดงตัวอย่าง"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr "ใช้คำหลักและลิงก์เฉพาะสำหรับ %s"
+msgstr "ใช้คำสำคัญและลิงก์เฉพาะสำหรับ %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr "เพิ่มคำหลักหลังจาก (วินาที):"
+msgstr "โหลดคำสำคัญใหม่หลังจาก (วินาที):"
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr "เรียกใหม่เดี๋ยวนี้"
+msgstr "โหลดใหม่ตอนนี้"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr "เพิ่มลิงก์ไปยัง RSS ฟีด"
+msgstr "เพิ่มลิงก์ไปยังฟีด RSS"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
