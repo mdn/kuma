@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2017-01-20 10:55+0000\n"
+"PO-Revision-Date: 2017-01-20 14:06+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -127,7 +127,7 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "ส่งเสริม MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr ""
+msgstr "ช่วยส่งเสริม MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"

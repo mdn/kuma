@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 14:00+0000\n"
+"PO-Revision-Date: 2017-01-20 14:25+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -373,7 +373,7 @@ msgstr "แอฟริกา"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
-msgstr ""
+msgstr "แอลเบเนีย"
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
@@ -385,7 +385,7 @@ msgstr "อาเซอร์ไบจาน"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "บัมบารา"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
@@ -401,7 +401,7 @@ msgstr "พม่า"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "คาตาลัน"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
@@ -417,7 +417,7 @@ msgstr "โครเอเชีย"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
-msgstr ""
+msgstr "เช็ก"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
@@ -597,7 +597,7 @@ msgstr "โวลอฟ"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Xhosa"
-msgstr ""
+msgstr "โซซา"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Yoruba"
@@ -1333,7 +1333,7 @@ msgstr "การแปล"
 
 #: kuma/landing/jinja2/landing/homepage.html:178
 msgid "Promoting MDN"
-msgstr ""
+msgstr "การส่งเสริม MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:179
 msgid "Contributing to the MDN codebase"
@@ -1346,7 +1346,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "ส่งเสริม MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
