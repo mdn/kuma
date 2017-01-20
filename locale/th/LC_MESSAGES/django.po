@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 19:27+0000\n"
+"PO-Revision-Date: 2017-01-20 20:11+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -2451,7 +2451,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
 msgid "View page history"
-msgstr ""
+msgstr "ดูประวัติหน้า"
 
 #: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
@@ -2837,7 +2837,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:42
 msgid "Name Your Article"
-msgstr ""
+msgstr "ตั้งชื่อบทความของคุณ"
 
 #: kuma/wiki/forms.py:43
 msgid "Please provide a slug."
@@ -3460,7 +3460,7 @@ msgstr "แก้ไขการแปล %(locale)s"
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "ย้ายบทความ | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -3673,7 +3673,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "%(creator)s ได้เปลี่ยน %(document_title)s"
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
@@ -3771,7 +3771,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "ดูเพิ่มเติม"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
