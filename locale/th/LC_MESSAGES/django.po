@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 13:20+0000\n"
+"PO-Revision-Date: 2017-01-20 13:41+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -116,7 +116,7 @@ msgstr "เริ่มต้น"
 
 #: jinja2/base.html:108
 msgid "Review or localize docs"
-msgstr ""
+msgstr "ตรวจทานหรือแปลเอกสาร"
 
 #: jinja2/base.html:111
 msgid "Site Tools"
@@ -703,17 +703,17 @@ msgstr ""
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr ""
+msgstr "ไฟล์แนบที่ลบ"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr ""
+msgstr "ไฟล์แนบที่ลบ"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachments | %(title)s"
-msgstr "รายงานความคิดเห็นนี้"
+msgstr "ไฟล์แนบ | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
@@ -809,7 +809,7 @@ msgstr ""
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "คำอธิบายวัตถุประสงค์การใช้งาน"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
@@ -1051,7 +1051,7 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "ภาษา:"
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
@@ -1159,7 +1159,7 @@ msgstr "ส่งเป็น:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
-msgstr ""
+msgstr "สแปม"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
@@ -1213,18 +1213,17 @@ msgstr "แสดงหัวข้อ"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Technologies"
-msgstr ""
+msgstr "เทคโนโลยี<br />เว็บ"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Web API และ DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
 msgstr "เพิ่มเติม..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learning"
 msgstr "การเรียนรู้"
 
@@ -1247,7 +1246,7 @@ msgstr "เรียน JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "เครื่องมือ<br />นักพัฒนา"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
@@ -1271,11 +1270,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "ไม่แสวงผลกำไรอย่างภาคภูมิ"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "บริจาคก่อน 31 ธ.ค."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
@@ -1287,11 +1286,11 @@ msgstr "เรียนรู้การพัฒนาเว็บ"
 
 #: kuma/landing/jinja2/landing/homepage.html:126
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "รับเบราว์เซอร์สำหรับนักพัฒนาเช่นคุณ"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Build Open Web Apps"
-msgstr ""
+msgstr "สร้างแอปบนเว็บแบบเปิด"
 
 #: kuma/landing/jinja2/landing/homepage.html:139
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
