@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-19 21:28+0000\n"
+"PO-Revision-Date: 2017-01-20 09:40+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -191,11 +191,11 @@ msgstr "อ้างอิง"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
-msgstr ""
+msgstr "คู่มือนักพัฒนา"
 
 #: jinja2/base.html:145
 msgid "Accessibility"
-msgstr ""
+msgstr "การช่วยเข้าถึง"
 
 #: jinja2/base.html:146
 #, fuzzy
@@ -204,7 +204,7 @@ msgstr "สำหรับนักพัฒนาเว็บ"
 
 #: jinja2/base.html:147
 msgid "...more docs"
-msgstr ""
+msgstr "...เอกสารเพิ่มเติม"
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
@@ -307,7 +307,7 @@ msgstr ""
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
 msgid "Other languages:"
-msgstr "ภาษาอื่น:"
+msgstr "ภาษาอื่น ๆ:"
 
 #: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
 msgid "Go"
@@ -383,7 +383,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr "อารบิก"
+msgstr "อาหรับ"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
@@ -616,15 +616,15 @@ msgstr ""
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr "บอกเลิกสมาชิกจากอีเมลเหล่านี้:"
+msgstr "เลิกบอกรับจากอีเมลเหล่านี้:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr "บอกเลิกสมาชิก"
+msgstr "เลิกบอกรับ"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr "คุณแน่ใจหรือว่าต้องการบอกเลิกสมาชิก?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการเลิกบอกรับ?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -633,7 +633,7 @@ msgstr "ยกเลิก"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr "การบอกเลิกสมาชิกผิดพลาด"
+msgstr "ข้อผิดพลาดการเลิกบอกรับ"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
@@ -643,11 +643,11 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr "บอกเลิกสมาชิกแล้ว"
+msgstr "เลิกบอกรับแล้ว"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr "คุณได้บอกเลิกสมาชิกแล้ว"
+msgstr "คุณได้เลิกบอกรับแล้ว"
 
 #: kuma/attachments/admin.py:60
 #, python-format
@@ -3767,7 +3767,6 @@ msgstr ""
 
 # 88%
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
-#, fuzzy
 msgid "Languages"
 msgstr "ภาษา"
 
