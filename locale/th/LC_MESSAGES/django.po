@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 09:40+0000\n"
+"PO-Revision-Date: 2017-01-20 10:02+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -198,9 +198,8 @@ msgid "Accessibility"
 msgstr "การช่วยเข้าถึง"
 
 #: jinja2/base.html:146
-#, fuzzy
 msgid "Game development"
-msgstr "สำหรับนักพัฒนาเว็บ"
+msgstr "การพัฒนาเกม"
 
 #: jinja2/base.html:147
 msgid "...more docs"
@@ -724,11 +723,11 @@ msgstr "รายงานความคิดเห็นนี้"
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "อัปโหลดไฟล์ไปยังบทความ %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
 msgid "Upload files"
-msgstr ""
+msgstr "อัปโหลดไฟล์"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 #, fuzzy
@@ -737,7 +736,7 @@ msgstr "เรียนรู้วิธีการสร้างเว็บ
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
-msgstr ""
+msgstr "อัปโหลดไฟล์"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
@@ -908,7 +907,7 @@ msgstr "แอพ"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr "Mobile"
+msgstr "มือถือ"
 
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
@@ -921,7 +920,7 @@ msgstr ""
 #: kuma/core/utils.py:425
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "วันนี้เมื่อ %s"
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "Yes"
@@ -929,12 +928,11 @@ msgstr "ใช่"
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "No"
-msgstr "ไม่ใช่"
+msgstr "ไม่"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
-#, fuzzy
 msgid "Add-ons & Extensions"
-msgstr "ส่วนขยาย"
+msgstr "ส่วนเสริมและส่วนขยาย"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
@@ -981,7 +979,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr ""
+msgstr "เกม"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -993,18 +991,16 @@ msgid "Intermediate"
 msgstr "ระดับกลาง"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
-#, fuzzy
 msgid "Marketplace"
-msgstr "Firefox Aurora"
+msgstr "ร้านค้า"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
 msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
-#, fuzzy
 msgid "Web Development"
-msgstr "สำหรับนักพัฒนาเว็บ"
+msgstr "การพัฒนาเว็บ"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
@@ -1012,7 +1008,7 @@ msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 #, fuzzy
@@ -1170,9 +1166,8 @@ msgid "%(sent_date)s by %(user)s"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
-#, fuzzy
 msgid "Submit as:"
-msgstr "ส่งตอนนี้"
+msgstr "ส่งเป็น:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
@@ -1225,9 +1220,8 @@ msgid "Search the docs"
 msgstr "ค้นหาเอกสาร"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
-#, fuzzy
 msgid "Show topics"
-msgstr "แสดงการสาธิต"
+msgstr "แสดงหัวข้อ"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Technologies"
@@ -1239,7 +1233,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "เพิ่มเติม..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 #, fuzzy
@@ -1256,13 +1250,12 @@ msgid "Learn HTML"
 msgstr "เรียน HTML"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
-#, fuzzy
 msgid "Learn CSS"
-msgstr "เรียนรู้"
+msgstr "เรียน CSS"
 
 #: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Learn JavaScript"
-msgstr "ศึกษาจาวาสคริปต์"
+msgstr "เรียน JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -1695,7 +1688,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "ผู้ใช้"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1796,7 +1789,7 @@ msgstr "ภาษา"
 
 #: kuma/users/models.py:61
 msgid "Homepage"
-msgstr ""
+msgstr "หน้าแรก"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1956,9 +1949,8 @@ msgid "Add Email"
 msgstr "เพิ่มอีเมล"
 
 #: kuma/users/jinja2/account/email.html:60
-#, fuzzy
 msgid "Edit profile"
-msgstr "แก้ไขโพรไฟล์"
+msgstr "แก้ไขข้อมูลส่วนตัว"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
@@ -1975,7 +1967,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "ยืนยัน"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -2020,7 +2012,6 @@ msgstr "คุณพร้อมแล้วหรือยังที่จะ
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
-#, fuzzy
 msgid "Change Password"
 msgstr "เปลี่ยนรหัสผ่าน"
 
@@ -2213,7 +2204,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "เชื่อมต่อกับ GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
@@ -2230,9 +2221,8 @@ msgid "Why are you banning %(user)s"
 msgstr ""
 
 #: kuma/users/jinja2/users/ban_user.html:25
-#, fuzzy
 msgid "Choose a reason"
-msgstr "เลือกสี"
+msgstr "เลือกเหตุผล"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
@@ -2466,7 +2456,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
-msgstr ""
+msgstr "ดูกิจกรรมทั้งหมด"
 
 #: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
@@ -2522,9 +2512,8 @@ msgid "Primary Email"
 msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:57
-#, fuzzy
 msgid "Edit email"
-msgstr "แก้ไขการสาธิต"
+msgstr "แก้ไขอีเมล"
 
 #: kuma/users/jinja2/users/user_edit.html:70
 msgid "Interests (tags)"
@@ -2543,22 +2532,20 @@ msgid "Add your interests first, then declare yourself an expert in selected top
 msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:86
-#, fuzzy
 msgid "My Profiles"
-msgstr "ข้อมูลส่วนตัว"
+msgstr "ข้อมูลส่วนตัวของฉัน"
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "ใช้บัญชี GitHub ของคุณเพื่อลงชื่อเข้า"
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
-msgstr ""
+msgstr "เผยแพร่"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "ลบความคิดเห็นนี้?"
+msgstr "ลบบัญชีของคุณ"
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
@@ -2566,7 +2553,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
-msgstr ""
+msgstr "สวัสดีจาก MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2585,9 +2572,9 @@ msgid "Profile Recovery for %(username)s at %(domain)s"
 msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "{username}"
+msgstr "สวัสดี %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2639,9 +2626,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "{username}"
+msgstr "สวัสดี %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2725,17 +2712,16 @@ msgid "Edit"
 msgstr "แก้ไข"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "Advanced"
-msgstr "ระดับสูง"
+msgstr "ขั้นสูง"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
-msgstr ""
+msgstr "จัดการ"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
-msgstr ""
+msgstr "กุญแจ API"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:63
 msgid "Areas of Expertise"
@@ -2853,7 +2839,6 @@ msgstr ""
 
 # 88%
 #: kuma/wiki/feeds.py:343
-#, fuzzy
 msgid "Edit Page"
 msgstr "แก้ไขหน้า"
 
@@ -2965,7 +2950,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
 msgid "Article URL"
-msgstr ""
+msgstr "URL บทความ"
 
 #: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
@@ -2973,7 +2958,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "ป้ายกำกับ:"
 
 #: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
@@ -2995,15 +2980,13 @@ msgstr ""
 # 75%
 # 100%
 #: kuma/wiki/forms.py:459 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
-#, fuzzy
 msgid "Content:"
-msgstr "ความคิดเห็น"
+msgstr "เนื้อหา:"
 
 # 87%
 #: kuma/wiki/forms.py:471 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
-#, fuzzy
 msgid "Comment:"
-msgstr "ความคิดเห็น"
+msgstr "ความคิดเห็น:"
 
 #: kuma/wiki/forms.py:475
 msgid "Tag this revision for review?"
@@ -3258,23 +3241,20 @@ msgid "Revert"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "สร้างคีย์ใหม่"
+msgstr "สร้างแม่แบบใหม่"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
-#, fuzzy
 msgid "Create a New Article"
-msgstr "สร้างคีย์ใหม่"
+msgstr "สร้างบทความใหม่"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
-#, fuzzy
 msgid "Create a"
 msgstr "สร้าง"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
-msgstr ""
+msgstr "เอกสารใหม่"
 
 #: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
@@ -3689,9 +3669,9 @@ msgid "Hide %(locale)s"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:98
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s translation:"
-msgstr "การแปล {locale}:"
+msgstr "การแปล %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
@@ -3706,9 +3686,9 @@ msgid "This document has no tags."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s tags"
-msgstr "การแปล {locale}:"
+msgstr "ป้ายกำกับ %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
@@ -3734,18 +3714,16 @@ msgid "Compare on MDN:"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
-#, fuzzy
 msgid "View Article:"
-msgstr "บทความใน Wikipedia"
+msgstr "ดูบทความ:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
-#, fuzzy
 msgid "Edit Article:"
-msgstr "แก้ไขโพรไฟล์"
+msgstr "แก้ไขบทความ:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "ประวัติบทความ:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, fuzzy, python-format
@@ -3763,7 +3741,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "บันทึก"
 
 # 88%
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
@@ -3785,7 +3763,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
-msgstr ""
+msgstr "บทความย่อยใหม่"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 #, fuzzy
@@ -3793,18 +3771,16 @@ msgid "Clone this article"
 msgstr "บทความนี้มีประโยชน์หรือไม่?"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:71
-#, fuzzy
 msgid "Move this article"
-msgstr "บทความนี้มีประโยชน์หรือไม่?"
+msgstr "ย้ายบทความนี้"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:82
-#, fuzzy
 msgid "Delete this article"
-msgstr "ลบความคิดเห็นนี้"
+msgstr "ลบบทความนี้"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
@@ -3815,9 +3791,8 @@ msgid "Convert to content zone"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:92
-#, fuzzy
 msgid "Print this article"
-msgstr "บทความนี้มีประโยชน์หรือไม่?"
+msgstr "พิมพ์บทความนี้"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3953,9 +3928,8 @@ msgid "Create Template"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
-#, fuzzy
 msgid "Edit Template"
-msgstr "แก้ไขหน้า"
+msgstr "แก้ไขแม่แบบ"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
@@ -4048,7 +4022,7 @@ msgstr "การสาธิตติดป้าย {tag}"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "แม่แบบทั้งหมด"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
@@ -4109,9 +4083,9 @@ msgid "Please review these articles for technical accuracy and completeness, and
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s documents."
-msgstr "{comment_count} ความคิดเห็น"
+msgstr "พบ %(count)s เอกสาร"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, fuzzy, python-format
@@ -4140,7 +4114,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "ป้ายกำกับทั้งหมด"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
@@ -4193,7 +4167,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "โหลด"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"

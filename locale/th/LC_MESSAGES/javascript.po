@@ -1,24 +1,26 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2017-01-20 09:59+0000\n"
+"Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pontoon\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "ปิดเมนูย่อย"
 
 #: kuma/static/js/components.js:543
 msgid "Close notification"
-msgstr ""
+msgstr "ปิดการแจ้งเตือน"
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
@@ -26,15 +28,15 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "ดูหน้า"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "แก้ไขหน้า"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "ประวัติ"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
@@ -46,7 +48,7 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "กำลังส่ง..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
@@ -69,11 +71,11 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr ""
+msgstr "ใช่"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
-msgstr ""
+msgstr "ไม่"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
@@ -145,7 +147,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "เปิด"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
@@ -153,7 +155,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "ปิด"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
