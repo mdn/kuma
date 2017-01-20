@@ -79,7 +79,6 @@ class NamespacedTaggableManagerTest(TestCase):
 
         self.assert_tags_equal(apple.tags.all(), ['a:%s' % t for t in tags])
 
-    @pytest.mark.xfail
     def test_duplicate_names_to_create(self):
         apple = self.food_model.objects.create(name="apple")
         tags = ['tasty', 'Tasty']

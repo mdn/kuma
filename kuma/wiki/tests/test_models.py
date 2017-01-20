@@ -496,7 +496,6 @@ class TaggedDocumentTests(UserTestCase):
         eq_(0, Document.objects.filter(tags__name='foo').count())
         eq_(1, Document.objects.filter(tags__name='alpha').count())
 
-    @pytest.mark.xfail
     def test_duplicate_tags_with_creation(self):
         rev = revision(
             is_approved=True, save=True, content='Sample document',

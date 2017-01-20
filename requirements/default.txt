@@ -126,9 +126,9 @@ django-sundial==1.0.2 \
     --hash=sha256:3745891337d726041b37aed95005b9c70377116d232157726e48b46aefef1961
 
 # Simple tagging support
-django-taggit==0.18.0 \
-    --hash=sha256:7010a1f7597d954aaf8b8174563f2e3455520db949d9c5d360dd9e4f906dd32a \
-    --hash=sha256:4ddd61928a4fc6ba7ccb1145d8d3a6d5c2829de8d8738eea49924ade8969f0ce
+django-taggit==0.21.6 \
+    --hash=sha256:5d0a2d7c3933badb36bcbe1cdee62514fbc8949cd2b92ed1c351b724282318fd \
+    --hash=sha256:80e22fdf41fba66a3c6f4807e283f38c4557838e35766a942370fb90f21d7435
 
 # Send async emails in response to events
 django-tidings==1.1 \
