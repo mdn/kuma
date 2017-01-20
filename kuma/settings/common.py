@@ -1433,3 +1433,6 @@ if SENTRY_DSN:
 # Tell django-recaptcha we want to use "No CAPTCHA".
 # Note: The API keys are located in Django constance.
 NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
+
+# Tell django-taggit to use case-insensitive search for existing tags
+TAGGIT_CASE_INSENSITIVE = True
