@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2017-01-20 10:52+0000\n"
+"PO-Revision-Date: 2017-01-20 13:17+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -53,12 +53,12 @@ msgstr "กำลังส่ง..."
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "ส่งเป็น %(submission_type)s แล้ว"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s โดย %(user)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
@@ -99,7 +99,7 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr ""
+msgstr "เพิ่มรายละเอียดเพิ่มเติม"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "รายงานข้อผิดพลาด"
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
@@ -183,7 +183,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "บันทึกฉบับร่าง"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
@@ -203,7 +203,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "ละทิ้งฉบับร่าง"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
@@ -252,11 +252,11 @@ msgstr ""
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
-msgstr ""
+msgstr "เปิดใน %(site)s"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "ป้ายกำกับใหม่..."
 
 #: kuma/static/js/wiki.js:218
 msgid "How to read CSS syntax."
@@ -336,7 +336,7 @@ msgstr "เนื้อหา HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
-msgstr ""
+msgstr "ตัวอย่างเนื้อหา HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
@@ -344,7 +344,7 @@ msgstr "เนื้อหา CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr ""
+msgstr "ตัวอย่างเนื้อหา CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
@@ -352,11 +352,11 @@ msgstr "เนื้อหา JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
-msgstr ""
+msgstr "ตัวอย่างเนื้อหา JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "ผลลัพธ์"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
