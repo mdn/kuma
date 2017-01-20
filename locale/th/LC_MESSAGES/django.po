@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 14:57+0000\n"
+"PO-Revision-Date: 2017-01-20 19:27+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -1200,7 +1200,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "ความรู้ที่แบ่งปัน <span>สำหรับเว็บแบบเปิด</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
@@ -1227,9 +1227,8 @@ msgid "Learning"
 msgstr "การเรียนรู้"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
-#, fuzzy
 msgid "Getting started with the Web"
-msgstr "เริ่มต้นกับจาวาสคริปต์"
+msgstr "เริ่มต้นกับเว็บ"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
@@ -1315,7 +1314,6 @@ msgid "All parts of MDN (docs and the site itself) are created by an open commun
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:170
-#, fuzzy
 msgid "Getting started"
 msgstr "เริ่มต้น"
 
