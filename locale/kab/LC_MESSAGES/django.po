@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-08-30 17:27+0000\n"
+"PO-Revision-Date: 2017-01-20 05:27+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
-msgstr ""
+msgstr "Anekcum yegdel"
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
@@ -25,20 +25,20 @@ msgstr "Awiki atan deg uskar n tɣuri kan."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "Amaɣnu yinek yettwaḥwi ihi ur yezmir ara ad yesnifel."
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Amaɣnu-agi n useqdac yettwaḥwi."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "Yessefk ad tkecmeḍ akken ad twaliḍ amazray"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>Suref-aɣ%(name)s, ur nezmir ara ad t-neg.</p>"
 
 #: jinja2/403.html:43 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
