@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 10:19+0000\n"
+"PO-Revision-Date: 2017-01-20 10:31+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -46,12 +46,12 @@ msgstr ""
 #: jinja2/403.html:50
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(logout_url)s\">ลงชื่อออก</a> เพื่อลองอีกครั้ง</li>"
 
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(login_url)s\">ลงชื่อเข้า</a> เพื่อลองอีกครั้ง</li>"
 
 #: jinja2/403.html:62
 msgid ""
@@ -164,9 +164,8 @@ msgid "APIs / DOM"
 msgstr ""
 
 #: jinja2/base.html:135
-#, fuzzy
 msgid "WebExtensions"
-msgstr "ส่วนขยาย"
+msgstr "WebExtensions"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -222,17 +221,15 @@ msgstr "เครื่องมือนักพัฒนา"
 
 #: jinja2/base.html:161
 msgid "Feedback"
-msgstr "ผลตอบรับ"
+msgstr "ข้อคิดเห็น"
 
 #: jinja2/base.html:166
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Firefox 4"
+msgstr "รับความช่วยเหลือ Firefox"
 
 #: jinja2/base.html:167
-#, fuzzy
 msgid "Get web development help"
-msgstr "เครื่องมือพัฒนาเว็บทั้งหมด"
+msgstr "รับความช่วยเหลือการพัฒนาเว็บ"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
@@ -286,9 +283,9 @@ msgid "Search Firefox Help"
 msgstr "ค้นหาความช่วยเหลือ Firefox"
 
 #: jinja2/includes/common_macros.html:36
-#, fuzzy, python-format
+#, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "ยินดีต้อนรับ <span class=\"user\">{user}</span>"
+msgstr "ยินดีต้อนรับ <span class=\"user\">%(user)s</span>"
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
@@ -1059,9 +1056,8 @@ msgid "Locale:"
 msgstr ""
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
-#, fuzzy
 msgid "User:"
-msgstr "ชื่อผู้ใช้:"
+msgstr "ผู้ใช้:"
 
 #: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
@@ -1265,12 +1261,11 @@ msgstr "คอนโซลเว็บ"
 
 #: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "ตัวดีบั๊ก JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
-#, fuzzy
 msgid "Performance Tools"
-msgstr "ประสิทธิภาพ"
+msgstr "เครื่องมือประสิทธิภาพ"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
@@ -1996,9 +1991,8 @@ msgid "In order to contribute, you need to sign in to MDN. You can sign in using
 msgstr ""
 
 #: kuma/users/jinja2/account/logout.html:10
-#, fuzzy
 msgid "Are you sure you want to sign out?"
-msgstr "คุณพร้อมแล้วหรือยังที่จะทำให้การท่องเว็บดีขึ้น?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการลงชื่อออก?"
 
 # 93%
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
@@ -2102,7 +2096,7 @@ msgstr ""
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "ลงชื่อเข้า OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
@@ -2650,7 +2644,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "ต้องการแปล MDN เป็นภาษาของคุณ?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
@@ -3874,7 +3868,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
-msgstr ""
+msgstr "ต้องการความช่วยเหลือ?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
 msgid "Editor Guide"
@@ -4144,9 +4138,8 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
-#, fuzzy
 msgid "Load documents"
-msgstr "แก้ไขความคิดเห็นนี้"
+msgstr "โหลดเอกสาร"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
