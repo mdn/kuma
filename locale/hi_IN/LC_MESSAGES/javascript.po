@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2017-01-19 00:13+0000\n"
+"PO-Revision-Date: 2017-01-21 12:12+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -84,7 +84,7 @@ msgstr "मुझसे दुबारा कभी न पूछें"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "आपकी प्रतिक्रिया के लिए धन्यवाद!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
@@ -92,7 +92,7 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr ""
+msgstr "इसे मेरी भाषा में अनुवाद करें"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
@@ -385,7 +385,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "पक्ष अनुपात"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
