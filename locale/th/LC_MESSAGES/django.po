@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 17:35+0000\n"
+"PO-Revision-Date: 2017-01-21 18:02+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -686,11 +686,11 @@ msgstr ""
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "ไฟล์แนบที่ถูกลบ"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "วันที่และเวลาที่ไฟล์แนบถูกลบ"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
@@ -3787,7 +3787,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "บอกรับ %(title)s และบทความย่อยทั้งหมด"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, python-format
@@ -3809,7 +3809,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr "บอกรับไปยัง %(title)s"
+msgstr "บอกรับ %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, python-format
@@ -3827,14 +3827,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "บอกรับ"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr "บอกรับฟีดสำหรับการสาธิตของ {display_name}"
+msgstr "บอกรับรุ่นภาษา <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr "บอกรับฟีดสำหรับการสาธิตของ {display_name}"
+msgstr "เลิกบอกรับจากรุ่นภาษา <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, fuzzy, python-format
@@ -3878,7 +3878,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
+msgstr[0] "ข้อมูลเพิ่มเติมเกี่ยวกับข้อผิดพลาดเหล่านี้"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
@@ -3886,7 +3886,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr ""
+msgstr "ชนิดข้อผิดพลาด:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
@@ -4000,11 +4000,11 @@ msgstr[0] "พบ %(num)s แม่แบบ"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "เอกสารที่มีข้อผิดพลาด"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "เอกสารระดับบนสุด"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
@@ -4111,7 +4111,7 @@ msgstr "รายงานความคิดเห็นนี้"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr ""
+msgstr "หน้าแรก"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
