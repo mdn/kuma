@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 18:02+0000\n"
+"PO-Revision-Date: 2017-01-21 18:18+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -694,7 +694,7 @@ msgstr "วันที่และเวลาที่ไฟล์แนบถ
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "ชื่อผู้ใช้ของผู้ใช้ที่ลบไฟล์แนบ"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -759,13 +759,12 @@ msgid "Comments"
 msgstr "ความคิดเห็น"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
-#, fuzzy
 msgid "Attached to this article"
-msgstr "ลบความคิดเห็นนี้"
+msgstr "แนบกับบทความนี้"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr ""
+msgstr "แนบกับบทความอื่น"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
@@ -780,9 +779,8 @@ msgid "Uploaded by"
 msgstr "อัปโหลดโดย"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
-#, fuzzy
 msgid "Linked in article"
-msgstr "บทความใน Wikipedia"
+msgstr "เชื่อมโยงในบทความ"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 #, fuzzy
@@ -1401,7 +1399,7 @@ msgstr "แทนที่ &lt;FOO&gt; ด้วย"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "เพิ่มปุ่มแบบกำหนดเองของคุณไปยังเว็บไซต์ของคุณ"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
@@ -1590,7 +1588,7 @@ msgstr[0] ""
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
+msgstr[0] "พบ %(count)s เอกสาร"
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
@@ -1604,7 +1602,7 @@ msgstr "กำลังแสดงผลลัพธ์ %(start)s ถึง %(e
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "ค้นหาอีกครั้งในภาษา %(default_locale_native)s เท่านั้น"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
@@ -1837,12 +1835,12 @@ msgstr ""
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "ชื่อผู้ใช้สั้นเกินไป (%(show_value)s ตัวอักษร) ต้องมีอย่างน้อย %(limit_value)s ตัวอักษร"
 
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr ""
+msgstr "ชื่อผู้ใช้ยาวเกินไป (%(show_value)s ตัวอักษร) ต้องมี %(limit_value)s ตัวอักษรหรือน้อยกว่า"
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
@@ -1895,7 +1893,7 @@ msgstr "ที่อยู่อีเมล"
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s เป็นที่อยู่อีเมล <em>หลัก</em> ของคุณ"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
@@ -2077,12 +2075,12 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "หมายเหตุ"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "คุณได้เข้าสู่ระบบเป็น %(user_display)s อยู่แล้ว"
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -3446,9 +3444,9 @@ msgid "View %(locale)s parent"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "last modified at %(modified)s"
-msgstr "วันที่แก้ไขล่าสุด"
+msgstr "เปลี่ยนแปลงล่าสุดเมื่อ %(modified)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
