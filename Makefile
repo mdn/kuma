@@ -33,21 +33,16 @@ coveragetesthtml: coveragetest
 locust:
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
 
-compilecss:
-	@ echo "## Compiling Sass files to CSS ##"
-	@ ./scripts/compile-stylesheets
-
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"
 	@ mkdir -p build/locale
 	@ python manage.py compilejsi18n
 
 collectstatic:
-	@ echo "## Collecting and building static files ##"
-	@ mkdir -p build/assets
+	@ echo "## Compiling, collecting, and building static files ##"
 	@ python manage.py collectstatic --noinput
 
-build-static: compilecss compilejsi18n collectstatic
+build-static: compilejsi18n collectstatic
 
 install:
 	@ echo "## Installing $(requirements) ##"
@@ -60,7 +55,6 @@ intern:
 clean:
 	rm -rf .coverage build/
 	find kuma -name '*.pyc' -exec rm {} \;
-	mkdir -p build/assets
 	mkdir -p build/locale
 
 locale:
@@ -157,4 +151,4 @@ compose-test:
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic localetest localeextract localecompile localerefresh
+.PHONY: test coveragetest intern locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
