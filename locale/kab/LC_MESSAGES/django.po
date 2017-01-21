@@ -17,7 +17,7 @@ msgstr ""
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
-msgstr "Anekcum yegdel"
+msgstr ""
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
@@ -151,7 +151,7 @@ msgstr "CSS"
 
 #: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr "JavaScript"
+msgstr ""
 
 #: jinja2/base.html:132
 msgid "Graphics"
