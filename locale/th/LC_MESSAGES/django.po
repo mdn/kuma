@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 20:11+0000\n"
+"PO-Revision-Date: 2017-01-21 09:11+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -161,7 +161,7 @@ msgstr "HTTP"
 
 #: jinja2/base.html:134
 msgid "APIs / DOM"
-msgstr ""
+msgstr "API / DOM"
 
 #: jinja2/base.html:135
 msgid "WebExtensions"
