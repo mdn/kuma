@@ -449,16 +449,18 @@ MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 ROOT_URLCONF = 'kuma.urls'
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.CachedFileFinder',
     'pipeline.finders.PipelineFinder',
 )
 
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+STATICFILES_STORAGE = ('pipeline.storage.NonPackagingPipelineStorage'
+                       if DEBUG else
+                       'kuma.core.pipeline.storage.ManifestPipelineStorage')
 
 STATICFILES_DIRS = (
     path('kuma', 'static'),
-    path('build', 'assets'),
     path('build', 'locale'),
 )
 
@@ -600,8 +602,8 @@ WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 PIPELINE_CSS = {
     'mdn': {
         'source_filenames': (
-            'css/font-awesome.css',
-            'css/main.css',
+            'styles/font-awesome.scss',
+            'styles/main.scss',
         ),
         'output_filename': 'build/styles/mdn.css',
         'variant': 'datauri',
@@ -610,40 +612,40 @@ PIPELINE_CSS = {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'styles/libs/jqueryui/moz-jquery-plugins.css',
-            'css/jquery-ui-customizations.css',
+            'css/jquery-ui-customizations.scss',
         ),
         'output_filename': 'build/styles/jquery-ui.css',
     },
     'gaia': {
         'source_filenames': (
-            'css/gaia.css',
+            'styles/gaia.scss',
         ),
         'output_filename': 'build/styles/gaia.css',
     },
     'home': {
         'source_filenames': (
-            'css/home.css',
+            'styles/home.scss',
         ),
         'output_filename': 'build/styles/home.css',
         'variant': 'datauri',
     },
     'search': {
         'source_filenames': (
-            'css/search.css',
+            'styles/search.scss',
         ),
         'output_filename': 'build/styles/search.css',
     },
     'search-suggestions': {
         'source_filenames': (
-            'css/search-suggestions.css',
+            'styles/search-suggestions.scss',
         ),
         'output_filename': 'build/styles/search-suggestions.css',
     },
     'wiki': {
         'source_filenames': (
-            'css/wiki.css',
-            'css/zones.css',
-            'css/diff.css',
+            'styles/wiki.scss',
+            'styles/zones.scss',
+            'styles/diff.scss',
 
             # Custom build of our Prism theme
             'styles/libs/prism/prism.css',
@@ -651,39 +653,39 @@ PIPELINE_CSS = {
             'styles/libs/prism/prism-line-numbers.css',
 
             'js/prism-mdn/components/prism-json.css',
-            'css/wiki-syntax.css',
+            'styles/wiki-syntax.scss',
         ),
         'output_filename': 'build/styles/wiki.css',
     },
     'wiki-revisions': {
         'source_filenames': (
-            'css/wiki-revisions.css',
+            'styles/wiki-revisions.scss',
         ),
         'output_filename': 'build/styles/wiki-revisions.css',
     },
     'wiki-edit': {
         'source_filenames': (
-            'css/wiki-edit.css',
+            'styles/wiki-edit.scss',
         ),
         'output_filename': 'build/styles/wiki-edit.css',
     },
     'wiki-compat-tables': {
         'source_filenames': (
-            'css/wiki-compat-tables.css',
+            'styles/wiki-compat-tables.scss',
         ),
         'output_filename': 'build/styles/wiki-compat-tables.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
     'sphinx': {
         'source_filenames': (
-            'css/wiki.css',
-            'css/sphinx.css',
+            'styles/wiki.scss',
+            'styles/sphinx.scss',
         ),
         'output_filename': 'build/styles/sphinx.css',
     },
     'users': {
         'source_filenames': (
-            'css/users.css',
+            'styles/users.scss',
         ),
         'output_filename': 'build/styles/users.css',
     },
@@ -695,60 +697,60 @@ PIPELINE_CSS = {
     },
     'promote': {
         'source_filenames': (
-            'css/promote.css',
+            'styles/promote.scss',
         ),
         'output_filename': 'build/styles/promote.css',
     },
     'error': {
         'source_filenames': (
-            'css/error.css',
+            'styles/error.scss',
         ),
         'output_filename': 'build/styles/error.css',
     },
     'error-404': {
         'source_filenames': (
-            'css/error.css',
-            'css/error-404.css',
+            'styles/error.scss',
+            'styles/error-404.scss',
         ),
         'output_filename': 'build/styles/error-404.css',
     },
     'dashboards': {
         'source_filenames': (
-            'css/dashboards.css',
-            'css/diff.css',
+            'styles/dashboards.scss',
+            'styles/diff.scss',
         ),
         'output_filename': 'build/styles/dashboards.css',
     },
     'submission': {
         'source_filenames': (
-            'css/submission.css',
+            'styles/submission.scss',
         ),
         'output_filename': 'build/styles/submission.css',
     },
     'user-banned': {
         'source_filenames': (
-            'css/user-banned.css',
+            'styles/user-banned.scss',
         ),
         'output_filename': 'build/styles/user-banned.css',
     },
     'error-403-alternate': {
         'source_filenames': (
-            'css/error-403-alternate.css',
+            'styles/error-403-alternate.scss',
         ),
         'output_filename': 'build/styles/error-403-alternate.css',
     },
     'fellowship': {
         'source_filenames': (
-            'css/fellowship.css',
+            'styles/fellowship.scss',
         ),
         'output_filename': 'build/styles/fellowship.css',
     },
     'editor-content': {
         'source_filenames': (
-            'css/main.css',
-            'css/wiki.css',
-            'css/wiki-wysiwyg.css',
-            'css/wiki-syntax.css',
+            'styles/main.scss',
+            'styles/wiki.scss',
+            'styles/wiki-wysiwyg.scss',
+            'styles/wiki-syntax.scss',
             'styles/libs/font-awesome/css/font-awesome.min.css',
         ),
         'output_filename': 'build/styles/editor-content.css',
@@ -949,6 +951,12 @@ PIPELINE = {
     'STYLESHEETS': PIPELINE_CSS,
     'JAVASCRIPT': PIPELINE_JS,
     'DISABLE_WRAPPER': True,
+    'COMPILERS': (
+        'pipeline.compilers.sass.SASSCompiler',
+    ),
+    'SASS_BINARY': config('PIPELINE_SASS_BINARY',
+                          default='/usr/bin/env node-sass'),
+    'SASS_ARGUMENTS': config('PIPELINE_SASS_ARGUMENTS', default=''),
     'CSS_COMPRESSOR': config('PIPELINE_CSS_COMPRESSOR',
                              default='kuma.core.pipeline.cleancss.CleanCSSCompressor'),
     'JS_COMPRESSOR': config('PIPELINE_JS_COMPRESSOR',
