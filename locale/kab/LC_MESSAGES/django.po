@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 22:05+0000\n"
+"PO-Revision-Date: 2017-01-21 22:27+0000\n"
 "Last-Translator: azul-farid <azul-farid@hotmail.fr>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -397,11 +397,11 @@ msgstr "Tabengalit (Hend)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr "Tabiṛmanit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr "Tkaṭalant"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
@@ -425,11 +425,11 @@ msgstr "Tahulandit"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "English (US)"
-msgstr "Taglizit (Marikan)"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr "Tiwit"
+msgstr "Ewet"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
@@ -441,7 +441,7 @@ msgstr "Tafransist"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr "Tafrizunt"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
@@ -453,7 +453,7 @@ msgstr "Tajyuṛjit"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr "Talmanit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
@@ -473,7 +473,7 @@ msgstr "Tahendit (Hend)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr "Tahungaṛit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
@@ -481,7 +481,7 @@ msgstr "Tigbut"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr "Tandunizit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
@@ -489,7 +489,7 @@ msgstr "Tirlandit"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr "Taṭeyanit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
@@ -501,7 +501,7 @@ msgstr "Taqbaylit"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Korean"
-msgstr "Takurit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Lingala"
@@ -513,11 +513,11 @@ msgstr "Tamalgact"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malay"
-msgstr "Tamalizit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
-msgstr "Tamalayalamit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Persian"
