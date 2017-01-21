@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 09:22+0000\n"
+"PO-Revision-Date: 2017-01-21 09:50+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -1115,9 +1115,8 @@ msgid "new"
 msgstr "ใหม่"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
-#, fuzzy
 msgid "deleted"
-msgstr "ลบ"
+msgstr "ถูกลบ"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "IP:"
@@ -3151,9 +3150,9 @@ msgid "Back to History"
 msgstr "กลับสู่ประวัติ"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "ลบความคิดเห็น"
+msgstr "ลบเอกสาร | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3356,14 +3355,14 @@ msgid "Last updated by:"
 msgstr "อัปเดตล่าสุดโดย:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Template"
-msgstr "แก้ไขหน้า"
+msgstr "%(title)s | แก้ไขแม่แบบ"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Article"
-msgstr "แก้ไขโพรไฟล์"
+msgstr "%(title)s | แก้ไขบทความ"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
