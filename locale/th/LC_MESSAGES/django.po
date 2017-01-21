@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 15:56+0000\n"
+"PO-Revision-Date: 2017-01-21 17:35+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -976,9 +976,8 @@ msgid "How-To & Tutorial"
 msgstr ""
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
-#, fuzzy
 msgid "Intermediate"
-msgstr "ระดับกลาง"
+msgstr "ปานกลาง"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
@@ -3682,7 +3681,7 @@ msgstr "แก้ไขโพรไฟล์"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "เปรียบเทียบบน MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
@@ -3808,14 +3807,14 @@ msgid "Updating subscription status"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "บอกรับฟีดของการสาธิต {tag_title}"
+msgstr "บอกรับไปยัง %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "บอกรับ"
+msgstr "เลิกบอกรับจาก %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2017-01-20 20:12+0000\n"
+"PO-Revision-Date: 2017-01-21 17:36+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "ทำแบบสำรวจ"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
@@ -179,7 +179,7 @@ msgstr "รายงานแล้ว ขอบคุณ!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "แสดงตารางเก่า"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
@@ -191,7 +191,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
-msgstr ""
+msgstr "ไม่ทราบวันที่"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
