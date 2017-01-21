@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 22:27+0000\n"
+"PO-Revision-Date: 2017-01-21 22:59+0000\n"
 "Last-Translator: azul-farid <azul-farid@hotmail.fr>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -557,7 +557,7 @@ msgstr "Taspanit"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
-msgstr "Taswayilit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
@@ -569,7 +569,7 @@ msgstr "Tagalugt"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
-msgstr "Taṭamilit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Thai"
@@ -585,7 +585,7 @@ msgstr "Taṭurkit"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
-msgstr "Takrinit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
@@ -617,7 +617,7 @@ msgstr "Ffeɣ seg ujerred"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr "Tebɣiḍ ad teffreḍ seg ujerred?"
+msgstr ""
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -633,8 +633,6 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
-"Ur nuffi ara talɣut inek n ujerred. Ahat tettwasefsex yakan, neɣ yella wugur akked useɣwen n tuff qa seg ujerred. Wali ma yella tneɣleḍ akken iwata aseɣwen ɣef iminig inek. Ma yella aḥric aneggaru "
-"yedda-d deg izirig nniḍen deg imayl, ɛreḍ ad t-neɣleḍ sakin senteḍ-it ɣef iminig inek."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -656,7 +654,7 @@ msgstr "akked"
 #: kuma/attachments/admin.py:127
 #, python-format
 msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
-msgstr "Ifuyla agi i d-yeddan uɣalen ɣer tqecwalt n iḍuman \"%(filename)s\". Tzemreḍ ad ten-twaliḍ send ad ttwakksen s wudem awurman seg unagraw inek kra n %(days)s n wussan."
+msgstr ""
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
@@ -676,7 +674,7 @@ msgstr "Ifuyla s wanaw agi ur ttwasirgen ara."
 
 #: kuma/attachments/models.py:112
 msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
-msgstr "Anaw MIME yettwaseqdac di tuzna n ufaylu yeddan ɛer umsaɣ. Yettwarna s wudem awurman deg useddu n ufaylu. Ma ulac aɣilif, ur s-rennu ara ma yella ur tesrid ara."
+msgstr "Anaw MIME yettwaseqdac di tuzna n ufaylu yeddan ɣer umsaɣ. Yettwarna s wudem awurman deg useddu n ufaylu. ttxil-ek, ur s-rennu  ma yella ur tesrid ara."
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
@@ -688,7 +686,7 @@ msgstr "aɛiwed n tmuwli deg umedday"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr "Afaylu yeddan yuɣal ɣer tqecwalt n idumman"
+msgstr ""
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
