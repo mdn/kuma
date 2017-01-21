@@ -136,14 +136,45 @@ compiled to their final form::
 
 A few thousand lines will be printed, like::
 
-    ## Compiling Sass files to CSS ##
-    compiled build/assets/css/dashboards.css
-    generated build/assets/css/dashboards.css.map
+    ## Generating JavaScript translation catalogs ##
+    processing language en_US
+    processing language af
+    processing language ar
     ...
-    Post-processed 'css/zones.css' as 'css/zones.718d56a0cdc0.css'
-    Post-processed 'css/zones.css.map' as 'css/zones.css.6be0969a4847.map'
+    ## Compiling (Sass), collecting, and building static files ##
+    Copying '/app/build/locale/jsi18n/af/javascript.js'
+    Copying '/app/build/locale/jsi18n/ar/javascript.js'
+    Copying '/app/build/locale/jsi18n/az/javascript.js'
+    ...
+    Post-processed 'build/styles/wiki.css' as 'build/styles/wiki.css'
+    Post-processed 'build/styles/error-404.css' as 'build/styles/error-404.css'
+    Post-processed 'build/styles/mdn.css' as 'build/styles/mdn.css'
+    ....
+    1687 static files copied to '/app/static', 1773 post-processed
 
-    1717 static files copied to '/app/static', 1799 post-processed.
+.. _frontend-development:
+
+Frontend Development
+====================
+When doing front-end development on your local machine, you'll probably
+want to run (most likely in its own shell)::
+
+     gulp static:watch
+
+within the root directory of your local Kuma repository. It will watch for
+changes to any source files under ``./kuma/static`` (e.g., Sass files)
+and move any changed files to ``./static``, where they will be compiled
+on-demand.
+
+However, first you'll need to install `Node.js`_  and `gulp`_ on your local
+machine. First install Node.js, and then to install gulp, run::
+
+    npm install
+
+from the root directory of your local Kuma repository.
+
+.. _gulp: http://gulpjs.com/
+.. _`Node.js`: https://nodejs.org/
 
 Visit the Homepage
 ==================

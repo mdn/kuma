@@ -17,7 +17,7 @@ To clean built assets and remove pyc files:
 
 To compile and collect static files:
 
-    make compilecss compilejsi18n collectstatic
+    make build-static
 
 To update this dev environment run from the host machine:
     vagrant provision
