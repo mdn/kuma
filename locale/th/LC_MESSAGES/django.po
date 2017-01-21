@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 18:18+0000\n"
+"PO-Revision-Date: 2017-01-21 18:38+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -1558,31 +1558,31 @@ msgstr "ผลลัพธ์"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "พบ %(count)s เอกสารสำหรับ \"%(query)s\" ในภาษา %(locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
+msgstr[0] "พบ %(count)s เอกสารสำหรับ \"%(query)s\" ในภาษา %(locale_native)s และ %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "พบ %(count)s เอกสารในภาษา %(locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
+msgstr[0] "พบ %(count)s เอกสารในภาษา %(locale_native)s และ %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
+msgstr[0] "พบ %(count)s เอกสารสำหรับ \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
@@ -1592,7 +1592,7 @@ msgstr[0] "พบ %(count)s เอกสาร"
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr "แสดงผลลัพธ์ทั้งหมด"
+msgstr "กำลังแสดงผลลัพธ์ทั้งหมด"
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
@@ -1897,7 +1897,7 @@ msgstr "%(email)s เป็นที่อยู่อีเมล <em>หลั
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "นอกจากนี้คุณยังได้เพิ่มที่อยู่อีเมลดังต่อไปนี้:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
@@ -1938,7 +1938,7 @@ msgstr "ยืนยันที่อยู่อีเมล"
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "โปรดยืนยันว่า <a href=\"mailto:%(email)s\">%(email)s</a> เป็นที่อยู่อีเมลสำหรับผู้ใช้ %(user_display)s"
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1952,7 +1952,7 @@ msgstr ""
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "คุณได้ยืนยันว่า <a href=\"mailto:%(email)s\">%(email)s</a> เป็นที่อยู่อีเมลสำหรับผู้ใช้ %(user_display)s"
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
