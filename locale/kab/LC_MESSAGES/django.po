@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 22:59+0000\n"
-"Last-Translator: azul-farid <azul-farid@hotmail.fr>\n"
+"PO-Revision-Date: 2016-10-03 21:11+0000\n"
+"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -694,7 +694,7 @@ msgstr "Azemz akked wakud anida afaylu yeddan yuɣal ɣer tqecwalt n iḍumman"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr "Isem n useqdac i yerran afaylu yeddan ɣer tqecwalt niduman"
+msgstr ""
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -702,11 +702,11 @@ msgstr "Yemmal-d ma yella afaylu yeddan d aɛiwed n tmuɣli tamirant n umedday m
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr "Amedday yuɣal ɣer tqecwalt n iḍuman"
+msgstr ""
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr "Imeddayen uɣalen ɣer tqecwalt n iḍuman"
+msgstr ""
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
@@ -737,7 +737,7 @@ msgstr "Asemli agi ur igbir ara imeddayen."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr "Tugniwin zemrent ad ddun-t, udiɣ ad neṭḍen-t ɣer umagrad."
+msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
