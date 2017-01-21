@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 18:38+0000\n"
+"PO-Revision-Date: 2017-01-21 18:46+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -1059,11 +1059,11 @@ msgstr "หัวข้อ:"
 
 #: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr "วันเริ่มต้น:"
+msgstr "วันที่เริ่ม:"
 
 #: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
 msgid "End Date:"
-msgstr "วันสิ้นสุด:"
+msgstr "วันที่สิ้นสุด:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
@@ -2200,7 +2200,7 @@ msgstr "เลือกเหตุผล"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "หรือป้อนเหตุผลในกล่องข้อความด้านล่าง"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 #, fuzzy
@@ -3020,7 +3020,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1583
 msgid "No table of contents"
-msgstr ""
+msgstr "ไม่มีสารบัญ"
 
 #: kuma/wiki/models.py:1584
 msgid "All levels"
@@ -3846,7 +3846,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "สร้างสารบัญ"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
