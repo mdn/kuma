@@ -14,10 +14,9 @@
 .tox
 .vagrant
 bower_components
-static/*/*
+static/
 build.py
-build/assets/css/*
-build/locale/
+build/
 celeryev.pid
 coverage.xml
 docs/_build/
