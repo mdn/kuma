@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-20 05:27+0000\n"
-"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2017-01-21 22:05+0000\n"
+"Last-Translator: azul-farid <azul-farid@hotmail.fr>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -167,11 +167,11 @@ msgstr "APIs / DOM"
 
 #: jinja2/base.html:135
 msgid "WebExtensions"
-msgstr "Isiɣzaf Web"
+msgstr "Webisiɣzaf "
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr "MathML"
+msgstr ""
 
 #: jinja2/base.html:139
 msgid "References & Guides"
@@ -183,7 +183,7 @@ msgstr "Issin taneflit Web"
 
 #: jinja2/base.html:142
 msgid "Tutorials"
-msgstr "Atuṭuṛyel"
+msgstr "tuṭuṛyel"
 
 #: jinja2/base.html:143
 msgid "References"
@@ -191,7 +191,7 @@ msgstr "Timsisɣal"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
-msgstr "Imniren n uneflay"
+msgstr ""
 
 #: jinja2/base.html:145
 msgid "Accessibility"
@@ -215,7 +215,7 @@ msgstr "Izegrar"
 
 #: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
-msgstr "Firefox"
+msgstr ""
 
 #: jinja2/base.html:161
 msgid "Developer Tools"
@@ -369,7 +369,7 @@ msgstr "Ɣer zdat"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr "Tafrikant"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
@@ -381,15 +381,15 @@ msgstr "Taɛrabt"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr "Tazerbiǧanit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr "Tabumbrit"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr "Tebengalit (Bengladic)"
+msgstr ""
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
