@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2017-01-19 00:03+0000\n"
+"PO-Revision-Date: 2017-01-22 04:51+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
@@ -135,7 +135,7 @@ msgstr "छुपाएँ"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr ""
+msgstr "साइडबार छवि और MDN के लिए लिंक."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
@@ -159,4 +159,4 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://groovecoder.com"
-msgstr ""
+msgstr "http://groovecoder.com"
