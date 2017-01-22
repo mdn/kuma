@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-09-19 20:45+0000\n"
+"PO-Revision-Date: 2017-01-22 13:14+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
-msgstr ""
+msgstr "Anekcum yegdel"
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
@@ -151,7 +151,7 @@ msgstr "CSS"
 
 #: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: jinja2/base.html:132
 msgid "Graphics"
@@ -171,7 +171,7 @@ msgstr "Webisiɣzaf "
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:139
 msgid "References & Guides"
@@ -191,7 +191,7 @@ msgstr "Timsisɣal"
 
 #: jinja2/base.html:144
 msgid "Developer Guides"
-msgstr ""
+msgstr "Imniren  n uneflay"
 
 #: jinja2/base.html:145
 msgid "Accessibility"
@@ -215,7 +215,7 @@ msgstr "Izegrar"
 
 #: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
-msgstr ""
+msgstr "Firefox"
 
 #: jinja2/base.html:161
 msgid "Developer Tools"
@@ -369,7 +369,7 @@ msgstr "Ɣer zdat"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "Tafikant"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
@@ -381,15 +381,15 @@ msgstr "Taɛrabt"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Tazerbiǧanit"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "Tabumbrit"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "Tabengalit (Bingladic)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
@@ -397,11 +397,11 @@ msgstr "Tabengalit (Hend)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "Tabiṛmanit"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "Takaṭalant"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
@@ -425,7 +425,7 @@ msgstr "Tahulandit"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "English (US)"
-msgstr ""
+msgstr "Taglizit (Marikan)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
@@ -441,7 +441,7 @@ msgstr "Tafransist"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr ""
+msgstr "Tafrizunt"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
@@ -453,7 +453,7 @@ msgstr "Tajyuṛjit"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "Talmanit"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
@@ -473,7 +473,7 @@ msgstr "Tahendit (Hend)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "Tahungaṛit"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
@@ -481,7 +481,7 @@ msgstr "Tigbut"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "Tandunizit"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
@@ -489,7 +489,7 @@ msgstr "Tirlandit"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "Taṭeyanit"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
@@ -501,7 +501,7 @@ msgstr "Taqbaylit"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Korean"
-msgstr ""
+msgstr "Takurit"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Lingala"
@@ -513,11 +513,11 @@ msgstr "Tamalgact"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malay"
-msgstr ""
+msgstr "Tamalizit"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malayalam"
-msgstr ""
+msgstr "Tamalayalamit"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Persian"
@@ -557,7 +557,7 @@ msgstr "Taspanit"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swahili"
-msgstr ""
+msgstr "Taswayilit"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Swedish"
@@ -569,7 +569,7 @@ msgstr "Tagalugt"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Tamil"
-msgstr ""
+msgstr "Taṭamilit"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Thai"
@@ -585,7 +585,7 @@ msgstr "Taṭurkit"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Ukrainian"
-msgstr ""
+msgstr "Takrinit"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Vietnamese"
@@ -617,7 +617,7 @@ msgstr "Ffeɣ seg ujerred"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Tebɣiḍ ad teffɣeḍ seg ujerred?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -633,6 +633,8 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
+"Ur nuffi talɣut inek ujerred. Ahat tettwasefsex yakan, neɣ yella wugur akked useɣwen n tuffɣa seg ujerred. Wali ma yella tneɣleḍ akken iwata aseɣwen ɣef iminig inek. Ma yella aḥric aneggaru yedda-d "
+"deg izirig nniḍen deg imayl, ɛreḍ ad t-neɣleḍ sakin senteḍ-it ɣef iminig inek."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -654,7 +656,7 @@ msgstr "akked"
 #: kuma/attachments/admin.py:127
 #, python-format
 msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
-msgstr ""
+msgstr "Ifuyla agi i d-yeddan uɣalen ɣer tqecwalt n iḍuman \"%(filename)s\". Tzemreḍ ad ten-twaliḍ send ad ttwakksen s wudem awurman seg unagraw inek kra n %(days)s n wussan."
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
@@ -686,7 +688,7 @@ msgstr "aɛiwed n tmuwli deg umedday"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "Afaylu yeddan yuɣal ɣer tqecwalt n iḍumman"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
@@ -694,7 +696,7 @@ msgstr "Azemz akked wakud anida afaylu yeddan yuɣal ɣer tqecwalt n iḍumman"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "Isem n useqdac i yerran afaylu yeddan ɣer tqecwalt n iḍumman"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -702,11 +704,11 @@ msgstr "Yemmal-d ma yella afaylu yeddan d aɛiwed n tmuɣli tamirant n umedday m
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr ""
+msgstr "Amedday yuɣal ɣer tqecwalt n iḍumman"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr ""
+msgstr "Amedday yuɣal ɣer tqecwalt n iḍumman"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
@@ -737,7 +739,7 @@ msgstr "Asemli agi ur igbir ara imeddayen."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
+msgstr "Tugniwin zemrent ad ddun-t, udiɣ ad neṭḍent ɣer umagrad."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
