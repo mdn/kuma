@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2017-01-21 18:46+0000\n"
+"PO-Revision-Date: 2017-01-23 10:02+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -1264,7 +1264,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr "ไม่แสวงผลกำไรอย่างภาคภูมิ"
+msgstr "ไม่แสวงหาผลกำไรอย่างภาคภูมิ"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
