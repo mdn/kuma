@@ -1,0 +1,19 @@
+{
+  "name": "kuma",
+  "version": "0.1.0",
+  "description": "The project that powers MDN.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozilla/kuma.git"
+  },
+  "author": "Mozilla",
+  "license": "MPL",
+  "bugs": {
+    "url": "https://bugzilla.mozilla.org/"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-watch": "^4.3.6"
+  }
+}
