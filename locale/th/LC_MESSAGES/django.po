@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-13 08:17-0800\n"
+"POT-Creation-Date: 2017-01-23 11:44-0800\n"
 "PO-Revision-Date: 2017-01-23 10:02+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
@@ -851,8 +851,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -1190,8 +1190,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1349,8 +1349,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
@@ -1650,8 +1650,8 @@ msgstr "ประเภท"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -2155,8 +2155,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -2678,7 +2678,7 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "นี่ไม่ได้ถูกสร้างโดยผู้สร้าง"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "แก้ไข"
 
@@ -2732,19 +2732,19 @@ msgstr "ผู้ดูแล"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr ""
 
-#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr ""
 
-#: kuma/wiki/constants.py:215
+#: kuma/wiki/constants.py:218
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
-#: kuma/wiki/content.py:724
+#: kuma/wiki/content.py:725
 msgid "Edit section"
 msgstr ""
 
@@ -3122,8 +3122,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3289,15 +3289,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:276
@@ -3322,8 +3322,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
-"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
+"article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:317
@@ -4667,8 +4667,7 @@ msgstr ""
 #~ msgid ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
-#~ msgstr ""
-#~ "<p>คุณกำลังจะลบ <strong>%(demo_title)s</strong> จากห้องจัดแสดงการสาธิต</p> <p>รายการของการสาธิต โค้ดต้นฉบับ และสถิติจะถูก <strong>ลบ</strong></p> <p>การกระทำนี้ <strong>ไม่สามารถยกเลิกได้</strong>"
+#~ msgstr "<p>คุณกำลังจะลบ <strong>%(demo_title)s</strong> จากห้องจัดแสดงการสาธิต</p> <p>รายการของการสาธิต โค้ดต้นฉบับ และสถิติจะถูก <strong>ลบ</strong></p> <p>การกระทำนี้ <strong>ไม่สามารถยกเลิกได้</strong>"
 
 #~ msgid "Learn More"
 #~ msgstr "เรียนรู้เพิ่มเติม"
@@ -5345,7 +5344,8 @@ msgstr ""
 #~ msgid "Browse Thousands of Docs for <b>Web Developers</b>"
 #~ msgstr "เรียกดูเอกสารนับพันสำหรับ<b>นักพัฒนาเว็บ</b>"
 
-#~ msgid "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
+#~ msgid ""
+#~ "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 #~ msgstr "และแหล่งข้อมูลที่มากขึ้นสำหรับ: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">ส่วนเสริม Firefox</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 
 #~ msgid "See what’s new for web developers in the latest version of Firefox"
@@ -5430,21 +5430,21 @@ msgstr ""
 #~ msgstr "ยินดีต้อนรับสู่ Mozilla Developer Network"
 
 #~ msgid ""
-#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together we "
-#~ "can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
+#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together "
+#~ "we can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
 #~ msgstr ""
-#~ "เราเป็นชุมชนเปิดสำหรับนักพัฒนาโดยสร้างแหล่งข้อมูลสำหรับเว็บที่ดีกว่า โดยไม่คำนึงถึงแบรนด์ เบราว์เซอร์ หรือแพลตฟอร์ม ทุกคนสามารถมีส่วนร่วม และแต่ละคนมีส่วนทำให้เราแข็งแกร่งขึ้น "
-#~ "เราสามารถผลักดันนวัตกรรมบนเว็บได้อย่างต่อเนื่องเพื่อส่งมอบสิ่งที่ดีกว่า มันเริ่มต้นขึ้นที่นี่กับคุณ"
+#~ "เราเป็นชุมชนเปิดสำหรับนักพัฒนาโดยสร้างแหล่งข้อมูลสำหรับเว็บที่ดีกว่า โดยไม่คำนึงถึงแบรนด์ เบราว์เซอร์ หรือแพลตฟอร์ม ทุกคนสามารถมีส่วนร่วม และแต่ละคนมีส่วนทำให้เราแข็งแกร่งขึ้น เราสามารถผลักดันนวัตกรรมบนเว็บได้อย่างต่อเนื่องเพื่อส่งมอบสิ่งที่ดีกว่า "
+#~ "มันเริ่มต้นขึ้นที่นี่กับคุณ"
 
 #~ msgid "See what's new for Web developers in the latest version of Firefox."
 #~ msgstr "ดูว่ามีอะไรใหม่สำหรับนักพัฒนาเว็บใน Firefox รุ่นล่าสุด"
 
 #~ msgid ""
-#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our mailing "
-#~ "list</a> to discuss ways to help create great documentation."
+#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our "
+#~ "mailing list</a> to discuss ways to help create great documentation."
 #~ msgstr ""
-#~ "คิดอย่างไรกับ MDN โฉมใหม่? โปรด<a href=\"%(uservoice_url)s\">แบ่งปันความคิดเห็นของคุณ</a>ให้กับเรา <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-"
-#~ "mdc\">เข้าร่วมรายชื่ออีเมลของเรา</a> เพื่อหารือเกี่ยวกับหนทางที่ช่วยในการสร้างเอกสารที่เยี่ยมยอด"
+#~ "คิดอย่างไรกับ MDN โฉมใหม่? โปรด<a href=\"%(uservoice_url)s\">แบ่งปันความคิดเห็นของคุณ</a>ให้กับเรา <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">เข้าร่วมรายชื่ออีเมลของเรา</a> "
+#~ "เพื่อหารือเกี่ยวกับหนทางที่ช่วยในการสร้างเอกสารที่เยี่ยมยอด"
 
 #~ msgid "Geolocation & Camera API"
 #~ msgstr "Geolocation และ Camera API"

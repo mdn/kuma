@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-13 08:17-0800\n"
+"POT-Creation-Date: 2017-01-23 11:44-0800\n"
 "PO-Revision-Date: 2016-11-13 08:47+0000\n"
 "Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -2717,7 +2717,7 @@ msgstr "스팸으로 신고됨."
 msgid "This user has not created any revisions in the past three days."
 msgstr "이 사용자는 지난 3일간 어떤 리비전도 만들지 않았습니다."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "편집"
 
@@ -2771,19 +2771,19 @@ msgstr "관리자"
 msgid "Wiki"
 msgstr "위키"
 
-#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "기술 - 코드 샘플, API, 테크놀로지"
 
-#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "편집 - 산문, 문법, 내용"
 
-#: kuma/wiki/constants.py:215
+#: kuma/wiki/constants.py:218
 msgid "Localization in progress - not completely translated yet."
 msgstr "문서 지역화 중 - 모두 번역되지 않음을 양해바라며, 여러분의 도움이 필요합니다."
 
-#: kuma/wiki/content.py:724
+#: kuma/wiki/content.py:725
 msgid "Edit section"
 msgstr "섹션 편집"
 
@@ -3378,8 +3378,8 @@ msgstr "번역 작업 진행중입니다."
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, fuzzy, python-format
 msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a href="
-"\"%(doc_abs_url)s\">%(parent_language)s</a>."
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
+"article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr "이 문서는 아직 자원 봉사자들이 <bdi>%(locale)s</bdi>로 번역하지 않았습니다. <a href=\"%(help_link)s\">함께 해서 번역을 마치도록 도와 주세요!</a>"
 
 # 85%
