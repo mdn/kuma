@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-23 11:44-0800\n"
-"PO-Revision-Date: 2017-01-24 09:13+0000\n"
+"PO-Revision-Date: 2017-01-24 12:42+0000\n"
 "Last-Translator: Ognyan Kulev <ognyan@ognyankulev.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1301,7 +1301,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:153 kuma/landing/jinja2/landing/homepage.html:160
 msgid "Help improve MDN"
-msgstr "Помогнете да подобрим MDN"
+msgstr "Помогнете ни да подобрим MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:164
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
