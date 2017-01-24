@@ -67,14 +67,18 @@ def checkin_changes(ctx):
     ctx.local(settings.DEPLOY_SCRIPT)
 
 
-@hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
+@hostgroups(settings.KUMA_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def deploy_app(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
+
+
+@hostgroups(settings.KUMA_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
+def restart_web(ctx):
     ctx.remote("service httpd restart")
 
 
 @hostgroups(settings.KUMA_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
-def deploy_kumascript(ctx):
+def restart_kumascript(ctx):
     ctx.remote("/usr/bin/supervisorctl stop all; /usr/bin/killall nodejs; /usr/bin/supervisorctl start all")
 
 
@@ -85,8 +89,7 @@ def prime_app(ctx):
 
 
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
-def update_celery(ctx):
-    ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
+def restart_celery(ctx):
     ctx.remote('/usr/bin/supervisorctl mrestart celery\*')
 
 
@@ -165,10 +168,11 @@ def update(ctx):
 def deploy(ctx):
     checkin_changes()
     deploy_app()
-    deploy_kumascript()
+    restart_web()
+    restart_kumascript()
+    restart_celery()
     ping_newrelic()
 #    prime_app()
-    update_celery()
 
 
 @task
