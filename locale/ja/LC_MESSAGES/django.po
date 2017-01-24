@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-13 19:05+0000\n"
+"POT-Creation-Date: 2017-01-23 11:44-0800\n"
+"PO-Revision-Date: 2017-01-24 07:00+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -2696,7 +2696,7 @@ msgstr "すでにスパムとして報告されています。"
 msgid "This user has not created any revisions in the past three days."
 msgstr "このユーザーが過去 3 日間に作成したリビジョンはありません。"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "編集"
 
@@ -2750,19 +2750,19 @@ msgstr "管理者"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "技術レビュー - サンプルコード、API 、技術について"
 
-#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "編集レビュー - 表現、文法、内容について"
 
-#: kuma/wiki/constants.py:215
+#: kuma/wiki/constants.py:218
 msgid "Localization in progress - not completely translated yet."
 msgstr "翻訳途中 - まだ翻訳が完了していない"
 
-#: kuma/wiki/content.py:724
+#: kuma/wiki/content.py:725
 msgid "Edit section"
 msgstr "セクションを編集"
 
@@ -3364,9 +3364,11 @@ msgstr "この記事は翻訳作業中です。"
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
-"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "この記事はまだボランティアによって <bdi>%(locale)s</bdi> に翻訳されていません。<a href=\"%(help_link)s\">ぜひ MDN に参加して翻訳を手伝ってください！</a><br>この記事を <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> で読むこともできます。"
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
+"article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+msgstr ""
+"この記事はまだボランティアによって <bdi>%(locale)s</bdi> に翻訳されていません。<a href=\"%(help_link)s\" rel=\"nofollow, noindex\">ぜひ MDN に参加して翻訳を手伝ってください！</a><br>この記事を <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> "
+"で読むこともできます。"
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."

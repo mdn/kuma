@@ -3,5 +3,5 @@ geerlingguy.apache,1.3.1
 geerlingguy.memcached,1.0.2
 geerlingguy.mysql,1.5.0
 Mayeu.RabbitMQ,1.4.0
-nodesource.node
+geerlingguy.nodejs,3.3.1
 Stouts.elasticsearch,2.5.0

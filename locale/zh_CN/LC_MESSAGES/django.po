@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-14 09:18+0000\n"
+"POT-Creation-Date: 2017-01-23 11:44-0800\n"
+"PO-Revision-Date: 2017-01-23 21:09+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -2652,7 +2652,7 @@ msgstr "已标记为垃圾信息。"
 msgid "This user has not created any revisions in the past three days."
 msgstr "此用户在过去三天没有创建任何修订。"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "编辑"
 
@@ -2706,19 +2706,19 @@ msgstr "管理员"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "技术复核 - 代码范例、API 或技术"
 
-#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "文法 - 措辞、语法或内容"
 
-#: kuma/wiki/constants.py:215
+#: kuma/wiki/constants.py:218
 msgid "Localization in progress - not completely translated yet."
 msgstr "本地化进行中 - 还没完全翻译呢。"
 
-#: kuma/wiki/content.py:724
+#: kuma/wiki/content.py:725
 msgid "Edit section"
 msgstr "编辑段落"
 
@@ -3284,9 +3284,9 @@ msgstr "翻译正在进行中。"
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
-"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "我们的志愿者还没有将这篇文章翻译为 <bdi>%(locale)s</bdi>。<a href=\"%(help_link)s\">加入我们帮助完成翻译！</a><br>您也可以阅读此文章的<a href=\"%(doc_abs_url)s\">%(parent_language)s</a>版。"
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
+"article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+msgstr "我们的志愿者还没有将这篇文章翻译为 <bdi>%(locale)s</bdi>。<a href=\"%(help_link)s\" rel=\"nofollow, noindex\">加入我们帮助完成翻译！</a><br>您也可以阅读此文章的<a href=\"%(doc_abs_url)s\">%(parent_language)s</a>版。"
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."

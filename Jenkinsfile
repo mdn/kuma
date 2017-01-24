@@ -18,8 +18,9 @@ node {
           sh 'make compose-test'
         }
 
-        stage('Build & push kuma image') {
+        stage('Build & push images') {
           sh 'make build-kuma push-kuma'
+          sh 'make push-base VERSION=latest'
         }
 
         break

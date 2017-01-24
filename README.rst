@@ -29,18 +29,22 @@ Development
 :Code:          https://github.com/mozilla/kuma
 :Issues:        http://mzl.la/mdn_backlog (Product)
 
-                https://prs.paas.allizom.org/mozilla:kuma,kuma-lib,kumascript,mozhacks (PR Queue)
+                `Pull Request Queues`_
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
 :CI Server:     https://travis-ci.org/mozilla/kuma
 :Mailing list:  https://lists.mozilla.org/listinfo/dev-mdn
 :IRC:           irc://irc.mozilla.org/mdndev
 
                 http://logs.glob.uno/?c=mozilla%23mdndev (logs)
-:Servers:       http://mzl.la/whats-deployed (What's Deployed)
+:Servers:       `What's Deployed on MDN?`_
 
                 https://developer.allizom.org/ (stage)
 
                 https://developer.mozilla.org/ (prod)
+
+.. _`Pull Request Queues`: http://prs.mozilla.io/mozilla:kuma,kuma-lib,kumascript,mozhacks
+.. _`What's Deployed on MDN?`: https://whatsdeployed.io/?owner=mozilla&repo=kuma&name[]=Stage&url[]=https://developer.allizom.org/media/revision.txt&name[]=Prod&url[]=https://developer.mozilla.org/media/revision.txt
+
 
 Getting started
 ===============

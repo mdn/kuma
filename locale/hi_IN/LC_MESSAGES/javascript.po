@@ -1,17 +1,18 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2014-05-21 08:13+0000\n"
-"Last-Translator: Matjaž <m@owca.info>\n"
+"PO-Revision-Date: 2017-01-21 12:12+0000\n"
+"Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
 "Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1400660019.0\n"
 
 #: kuma/static/js/components.js:75
@@ -24,41 +25,41 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "वापस जाएँ"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "पृष्ठ देखें"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "पृष्ठ संपादित करें"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "इतिहास"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
-msgstr ""
+msgstr "लगे रहें! फ़िल्टर अद्यतन कर रहा है..."
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "अद्यतन किए गए फ़िल्टर्स."
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "दर्ज़ हो रहा है..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "%(submission_type)s के रूप में दर्ज़"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(user)s के द्वारा %(sent_date)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
@@ -67,23 +68,23 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
-msgstr ""
+msgstr "इस पृष्ठ से आपको मदद मिली?"
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr ""
+msgstr "हाँ"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
-msgstr ""
+msgstr "नहीं"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
-msgstr ""
+msgstr "मुझसे दुबारा कभी न पूछें"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "आपकी प्रतिक्रिया के लिए धन्यवाद!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
@@ -91,7 +92,7 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr ""
+msgstr "इसे मेरी भाषा में अनुवाद करें"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
@@ -99,15 +100,15 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr ""
+msgstr "अधिक विवरण जोड़ें"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "गलत जानकारी को ठीक करें"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr ""
+msgstr "उदाहरण जोड़ें या उन्नत करें"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
@@ -115,11 +116,11 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr ""
+msgstr "कुछ और"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
-msgstr ""
+msgstr "एक का चयन करें..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
@@ -127,35 +128,35 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "धन्यवाद! हम इसे ठीक कर देंगे."
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "कोई चयन नहीं"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "चयनित: "
 
 #: kuma/static/js/users.js:108
 msgid "New interest..."
-msgstr ""
+msgstr "नई रूचि..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "खुला कार्यान्वयन नोट्स"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "खोलिए"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
-msgstr ""
+msgstr "संगतता तालिका पर वापस जाएँ."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "बंद करे"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
@@ -163,35 +164,35 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "बीटा के बारे में अधिक."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "सर्वेक्षण लें"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "त्रुटि रिपोर्ट करें."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "रिपोर्ट की गई. धन्यवाद!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "पुराने तालिका दिखाएँ."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "प्रारूप सहेजें"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "स्वचलित सहेजना सक्षम करें."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
-msgstr ""
+msgstr "एक अज्ञात तारीख"
 
 #: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
@@ -199,15 +200,15 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
-msgstr ""
+msgstr "ड्राफ्ट सामग्री पुनर्स्थापित करें"
 
 #: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
-msgstr ""
+msgstr "मसौदा निरस्त"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "बहाल"
 
 #: kuma/static/js/wiki-edit.js:530
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -215,7 +216,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:533
 msgid "Changes saved."
-msgstr ""
+msgstr "परिवर्तन सहेजे गए."
 
 #: kuma/static/js/wiki-edit.js:561
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
@@ -223,40 +224,40 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
-msgstr ""
+msgstr "ड्राफ्ट"
 
 #: kuma/static/js/wiki-edit.js:626
 msgid "saved"
-msgstr ""
+msgstr "सहेजा लिया गया"
 
 #: kuma/static/js/wiki-edit.js:645
 msgid "autosaved"
-msgstr ""
+msgstr "स्वतः सहेजा गया"
 
 #: kuma/static/js/wiki-edit.js:654
 msgid "published"
-msgstr ""
+msgstr "प्रकाशित"
 
 #: kuma/static/js/wiki-edit.js:658
 msgid "discarded"
-msgstr ""
+msgstr "छोड़ा गया"
 
 #: kuma/static/js/wiki-edit.js:696
 msgid "Autosave enabled."
-msgstr ""
+msgstr "स्वत: सहेजना सक्षम किया गया."
 
 #: kuma/static/js/wiki-edit.js:703
 msgid "Autosave disabled."
-msgstr ""
+msgstr "स्वत: सहेजना अक्षम किया गया."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
-msgstr ""
+msgstr "%(site)s में खोलें"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "नया टैग..."
 
 #: kuma/static/js/wiki.js:218
 msgid "How to read CSS syntax."
@@ -264,7 +265,7 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:588
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "स्टैक ओवरफ़्लो खोजें"
 
 #: kuma/static/js/wiki.js:695
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
@@ -272,59 +273,59 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:910
 msgid "Details"
-msgstr ""
+msgstr "विवरण"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "अनुलग्नक का चयन करें"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "कोई अनुलग्नक नहीं उपलब्ध"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
-msgstr ""
+msgstr "संलग्नक"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:87
 msgid "Article Title Lookup / Link Text"
-msgstr ""
+msgstr "लेख शीर्षक लुकअप / लिंक पाठ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-launch/plugin.js:12
 msgid "Launch"
-msgstr ""
+msgstr "प्रमोचन"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/plugin.js:17
 msgid "Create a Redirect"
-msgstr ""
+msgstr "एक अनुप्रेषित बनाएँ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:4
 msgid "MDN Redirect"
-msgstr ""
+msgstr "MDN अनुप्रेषण"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
-msgstr ""
+msgstr "दस्तावेज़"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:65
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
-msgstr ""
+msgstr "कोड नमूना iFrame प्रविष्ट करें"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
-msgstr ""
+msgstr "नमूना खोजक"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
-msgstr ""
+msgstr "अनुभाग का चयन करें"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr ""
+msgstr "दस्तावेज़ में अनुभाग"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
@@ -332,31 +333,31 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
-msgstr ""
+msgstr "HTML अंतर्वस्तु"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
-msgstr ""
+msgstr "नमूना HTML सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
-msgstr ""
+msgstr "CSS सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr ""
+msgstr "नमूना CSS सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
-msgstr ""
+msgstr "JavaScript सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
-msgstr ""
+msgstr "नमूना JavaScript सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "परिणाम"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
@@ -368,11 +369,11 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:30
 msgid "No Highlight"
-msgstr ""
+msgstr "कोई हाइलाइट नहीं"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr ""
+msgstr "YouTube वीडियो एम्बेड करें"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
@@ -384,7 +385,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "पक्ष अनुपात"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
@@ -396,4 +397,4 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "तयशुदा"

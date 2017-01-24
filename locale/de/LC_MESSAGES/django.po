@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-12-13 08:17-0800\n"
-"PO-Revision-Date: 2016-12-13 17:36+0000\n"
+"POT-Creation-Date: 2017-01-23 11:44-0800\n"
+"PO-Revision-Date: 2017-01-23 20:45+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: German https://pontoon.mozilla.org/de/\n"
 "Language: de\n"
@@ -2717,7 +2717,7 @@ msgstr "Bereits als Spam gemeldet."
 msgid "This user has not created any revisions in the past three days."
 msgstr "Dieser Benutzer hat in den letzten drei Tagen keine Änderungen vorgenommen."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:45
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -2771,19 +2771,19 @@ msgstr "Admin"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Technisch – Quelltext-Ausschnitte, APIs oder Technologien"
 
-#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "Redaktionell – Prosa, Grammatik oder Inhalt"
 
-#: kuma/wiki/constants.py:215
+#: kuma/wiki/constants.py:218
 msgid "Localization in progress - not completely translated yet."
 msgstr "Lokalisierung läuft – noch nicht vollständig übersetzt."
 
-#: kuma/wiki/content.py:724
+#: kuma/wiki/content.py:725
 msgid "Edit section"
 msgstr "Abschnitt bearbeiten"
 
@@ -3370,11 +3370,11 @@ msgstr "Diese Übersetzung ist in Arbeit."
 #: kuma/wiki/jinja2/wiki/document.html:305
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a><br> You can also read the article in <a "
-"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
+"article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
-"Unsere Freiwilligen haben diesen Artikel noch nicht in <bdi>%(locale)s</bdi> übersetzt. <a href=\"%(help_link)s\">Machen Sie mit und helfen Sie, das zu erledigen!</a> <br> Sie können den Artikel "
-"auch auf <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> lesen."
+"Unsere Freiwilligen haben diesen Artikel noch nicht in <bdi>%(locale)s</bdi> übersetzt. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Machen Sie mit und helfen Sie, das zu erledigen!</a> <br> "
+"Sie können den Artikel auch auf <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> lesen."
 
 # 85%
 #: kuma/wiki/jinja2/wiki/document.html:317
