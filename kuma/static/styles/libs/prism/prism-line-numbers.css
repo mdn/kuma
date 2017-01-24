@@ -8,7 +8,12 @@ pre.line-numbers > code {
 	position: relative;
 }
 
+.line-numbers-rows {
+	display: none;
+}
+
 .line-numbers .line-numbers-rows {
+	display: block;
 	position: absolute;
 	pointer-events: none;
 	top: 0;

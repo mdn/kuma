@@ -28,11 +28,7 @@
             brush = $.trim(brushSearch[1].replace(';', ' ').split(' ')[0].toLowerCase());
         }
 
-        // Some boxes shouldn't be numbered
-        if($pre.hasClass('syntaxbox') || $pre.hasClass('twopartsyntaxbox')) {
-          $pre.attr('data-prism-prevent-line-number', 1);
-        }
-        else {
+        if (!$pre.hasClass('no-line-numbers')) {
             // Prism upgrade requires adding a class to use line numbering
             $pre.addClass('line-numbers');
         }
