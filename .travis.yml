@@ -2,7 +2,6 @@ sudo: required
 branches:
     only:
         - master
-        - bug-1317316
 cache:
     apt: true
     directories:
