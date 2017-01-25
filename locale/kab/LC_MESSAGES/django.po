@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-23 11:44-0800\n"
-"PO-Revision-Date: 2017-01-25 12:20+0000\n"
+"PO-Revision-Date: 2017-01-25 13:59+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -3619,7 +3619,7 @@ msgstr "Suqel agbur"
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
-msgstr "Lqem %(locale)s approuvée&nbsp;:yettwaqbel:"
+msgstr "Lqem n %(locale)s :yettwaqbel:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
