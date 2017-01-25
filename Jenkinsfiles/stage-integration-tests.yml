@@ -1,5 +1,6 @@
 pipeline:
   enabled: true
+  script: "integration-tests"
 job:
   dockerfile: "DockerfileIntegrationTests"
   selenium: "2.48.2"
