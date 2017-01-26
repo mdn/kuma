@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-23 11:44-0800\n"
-"PO-Revision-Date: 2016-08-17 13:56+0000\n"
-"Last-Translator: Lovegaming <contact@lovegaming.net>\n"
+"PO-Revision-Date: 2017-01-26 21:29+0000\n"
+"Last-Translator: Cristian Silaghi <cristian.silaghi@mozilla.ro>\n"
 "Language-Team: Romanian https://pontoon.mozilla.org/ro/\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -1100,7 +1100,7 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
-msgstr ""
+msgstr "Autori"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1108,7 +1108,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
-msgstr ""
+msgstr "Autori:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
@@ -1121,7 +1121,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
-msgstr ""
+msgstr "Revizie"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
@@ -1247,7 +1247,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "mai multe..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Learning"
@@ -1390,7 +1390,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
-msgstr ""
+msgstr "Previzualizează"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1414,19 +1414,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Alege o culoare"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Gri"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Portocaliu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Roșu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1438,11 +1438,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Codul tău sursă:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Butonul tău va trimite oamenii la:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
@@ -1553,7 +1553,7 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "nume"
 
 #: kuma/search/views.py:95
 msgid "groupname"
@@ -1691,7 +1691,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "tip"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1710,7 +1710,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Utilizator"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1719,7 +1719,7 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "algoritm"
 
 #: kuma/users/backends.py:33
 msgid "salt"
@@ -1751,7 +1751,7 @@ msgstr ""
 
 #: kuma/users/forms.py:53
 msgid "Username"
-msgstr ""
+msgstr "Nume de utilizator"
 
 #: kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
@@ -1775,7 +1775,7 @@ msgstr ""
 
 #: kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
@@ -1783,7 +1783,7 @@ msgstr ""
 
 #: kuma/users/forms.py:146
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Acest câmp nu poate fi gol."
 
 #: kuma/users/forms.py:152
 msgid "Username already in use."
@@ -1806,11 +1806,11 @@ msgstr ""
 
 #: kuma/users/models.py:56
 msgid "Language"
-msgstr ""
+msgstr "Limbă"
 
 #: kuma/users/models.py:61
 msgid "Homepage"
-msgstr ""
+msgstr "Pagina de start"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1818,19 +1818,19 @@ msgstr "This URL has an invalid format. Valid URLs look like http://example.com/
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "Nume"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "Organizație"
 
 #: kuma/users/models.py:85
 msgid "Location"
-msgstr ""
+msgstr "Locație"
 
 #: kuma/users/models.py:90
 msgid "About Me"
-msgstr ""
+msgstr "Despre mine"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
@@ -1839,7 +1839,7 @@ msgstr ""
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "Etichete"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
@@ -1893,7 +1893,7 @@ msgstr ""
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "Sunt de acord"
 
 #: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -1901,7 +1901,7 @@ msgstr ""
 
 #: kuma/users/views.py:470
 msgid "Email address"
-msgstr ""
+msgstr "Adresă de e-mail"
 
 #: kuma/users/views.py:516
 #, python-format
@@ -1924,15 +1924,15 @@ msgstr "Edit Demo"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Profil inactiv"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "Acest profil este inactiv."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
-msgstr ""
+msgstr "Adrese de e-mail"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
@@ -1962,11 +1962,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Adaugă adresa de e-mail"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Adaugă e-mail"
 
 #: kuma/users/jinja2/account/email.html:60
 #, fuzzy
@@ -1979,7 +1979,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "Confirmă adresa de e-mail"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -1988,7 +1988,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmă"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -2033,7 +2033,7 @@ msgstr "Are you ready to make browsing better?"
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "Schimbă parola"
 
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
@@ -2067,11 +2067,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Schimbă parola"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Parola ta este acum schimbată."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
@@ -2097,7 +2097,7 @@ msgstr ""
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Confirmă adresa ta de e-mail"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
@@ -2239,11 +2239,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
-msgstr ""
+msgstr "Alege un motiv"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "sau introdu un motiv în caseta text de mai jos"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
@@ -2257,7 +2257,7 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(user)s</a> a fos blocat."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
@@ -2343,12 +2343,12 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
 msgid "View Page"
-msgstr ""
+msgstr "Vezi pagina"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:65
 msgid "History"
-msgstr ""
+msgstr "Istoric"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
@@ -2477,11 +2477,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Dată"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
-msgstr ""
+msgstr "Editează pagina"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
@@ -2510,7 +2510,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
-msgstr ""
+msgstr "Vezi profilul"
 
 #: kuma/users/jinja2/users/user_edit.html:43
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2556,7 +2556,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
-msgstr ""
+msgstr "Publică"
 
 #: kuma/users/jinja2/users/user_edit.html:119
 #, fuzzy
@@ -2590,7 +2590,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Salut %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2644,7 +2644,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
 #, python-format
 msgid "Hi %(username)s"
-msgstr ""
+msgstr "Salut %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2711,7 +2711,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "Blog: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
@@ -2770,11 +2770,11 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
@@ -2807,7 +2807,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
@@ -2951,11 +2951,11 @@ msgstr ""
 #: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Titlu:"
 
 #: kuma/wiki/forms.py:339 kuma/wiki/forms.py:409 kuma/wiki/forms.py:883
 msgid "Title of article"
-msgstr ""
+msgstr "Titlul articolului"
 
 #: kuma/wiki/forms.py:347 kuma/wiki/forms.py:422 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
@@ -2964,7 +2964,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
 msgid "Article URL"
-msgstr ""
+msgstr "URL-ul articolului"
 
 #: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
