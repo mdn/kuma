@@ -94,7 +94,6 @@ services:
       - server__memcache__server=memcached:11211
       - server__template_class=EJSTemplate
       - server__autorequire__mdn=MDN:Common
-      - server__autorequire__Date=DekiScript:Date
       - server__autorequire__Page=DekiScript:Page
       - server__autorequire__String=DekiScript:String
       - server__autorequire__Uri=DekiScript:Uri
