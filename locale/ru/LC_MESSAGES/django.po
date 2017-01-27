@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-23 11:44-0800\n"
-"PO-Revision-Date: 2017-01-24 09:00+0000\n"
+"PO-Revision-Date: 2017-01-27 05:29+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -33,7 +33,7 @@ msgstr "Профиль этого пользователя был заблоки
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr "Вы должны войти, чтобы просмотреть всю историю"
+msgstr "Вы должны войти для просмотра всей истории"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
@@ -99,7 +99,7 @@ msgstr "Перейти к главному содержимому"
 
 #: jinja2/base.html:79
 msgid "Select language"
-msgstr "Выбор языка"
+msgstr "Выберите язык"
 
 #: jinja2/base.html:80
 msgid "Skip to search"
@@ -274,7 +274,7 @@ msgstr "Куки"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr "Внести вклад в код"
+msgstr "Помочь с кодом"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -349,7 +349,7 @@ msgstr "В настоящий момент новостная рассылка �
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr "Спасибо! Пожалуйста, проверьте свою папку входящих писем, чтобы подтвердить свою подписку."
+msgstr "Спасибо! Пожалуйста, проверьте свою папку \"Входящие\" для подтверждения подписки."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
@@ -2999,7 +2999,7 @@ msgstr "Метка"
 
 #: kuma/wiki/models.py:121
 msgid "Document Tags"
-msgstr "Метки"
+msgstr "Метки документа"
 
 #: kuma/wiki/models.py:173
 msgid "uploaded to the document"
@@ -3675,7 +3675,7 @@ msgstr "Данный документ не имеет меток."
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr "%(locale)s метки"
+msgstr "Русские метки"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
