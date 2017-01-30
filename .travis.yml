@@ -21,6 +21,7 @@ env:
         - DEBIAN_FRONTEND=noninteractive
         - DATABASE_URL=mysql://root:kuma@localhost:3306/kuma
         - CFLAGS=-O0
+        - PYTEST_ADDOPTS=--create-db
 matrix:
     allow_failures:
         - env: TOXENV=locales DOCKER_COMPOSE_VERSION=1.9.0

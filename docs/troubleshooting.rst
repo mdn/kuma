@@ -23,7 +23,8 @@ retaining the database::
   git submodule sync --recursive && git submodule update --init --recursive
   docker-compose pull
   docker-compose build --pull
-  docker-compose up
+  docker-compose up -d
+  docker-compose exec web bash -c "py.test --create-db kuma/core"
 
 
 Reset a corrupt database

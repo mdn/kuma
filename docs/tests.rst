@@ -37,7 +37,8 @@ Some helpful command line arguments to py.test (won't work on ``make test``):
   Drop into pdb on test failure.
 
 ``--create-db``:
-  Create a new test database.
+  Create a new test database. This is required to apply a new schema or to
+  apply migrations to the test database.
 
 ``--showlocals``:
   Shows local variables in tracebacks on errors.
@@ -97,6 +98,18 @@ The test database
 The test suite will create a new database named ``test_%s`` where ``%s`` is
 whatever value you have for ``settings.DATABASES['default']['NAME']``. Make
 sure the user has ``ALL`` on the test database as well.
+
+The first time the test database is created, the migrations are applied. This
+includes the migration needed to apply the custom collation to the tag name
+index, so the ``py.test`` option ``--no-migrations`` will cause one or more
+tag tests to fail. On later runs, the same test database is used without being
+recreated from scratch, which speeds up tests considerably.
+
+When the schema and migrations change, the database will need to be recreated.
+This command will appear to pause for one or two minutes as it recreates the
+test database::
+
+    py.test --create-db kuma/core
 
 
 Markers
