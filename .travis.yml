@@ -30,6 +30,8 @@ before_install:
 install:
     - pip install -r requirements/travis.txt
     - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+    - nvm install 6
+    - nvm use 6
 script: tox -v
 after_failure:
     - dmesg | tail
