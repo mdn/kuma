@@ -759,6 +759,12 @@ PIPELINE_CSS = {
 }
 
 PIPELINE_JS = {
+    'font-check': {
+        'source_filenames': (
+            'js/font-check.js',
+        ),
+        'output_filename': 'build/js/font-check.js',
+    },
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
@@ -766,7 +772,8 @@ PIPELINE_JS = {
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
-            'js/libs/fontfaceobserver/fontfaceobserver.js',
+            # FFO lib contains Promise polyfill
+            'js/libs/fontfaceobserver/fontfaceobserver.2.0.7.js',
             'js/fonts.js',
         ),
         'output_filename': 'build/js/main.js',

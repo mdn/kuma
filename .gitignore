@@ -14,7 +14,7 @@
 .tox
 .vagrant
 bower_components
-static/
+/static/
 build.py
 build/
 celeryev.pid
