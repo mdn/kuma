@@ -172,7 +172,7 @@ running it. (See `Running individual processes`_).
    ``DEBUG=True`` (debug mode, which is the default), then make sure you're
    also running (perhaps in a separate shell)::
 
-       gulp static:watch
+       gulp
 
 -  If changes to Sass stylesheets do not have any effect and you've got
    ``DEBUG=False`` (production mode), then you'll have to remember to do

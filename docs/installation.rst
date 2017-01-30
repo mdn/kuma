@@ -159,7 +159,7 @@ Frontend Development
 When doing front-end development on your local machine, you'll probably
 want to run (most likely in its own shell)::
 
-     gulp static:watch
+     gulp
 
 within the root directory of your local Kuma repository. It will watch for
 changes to any source files under ``./kuma/static`` (e.g., Sass files)
