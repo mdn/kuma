@@ -123,7 +123,7 @@ Install and run everything
        20:32:59 web.1        | started with pid 2244
        20:32:59 celery.1     | started with pid 2245
        20:32:59 kumascript.1 | started with pid 2246
-       20:32:59 stylus.1     | started with pid 2247
+       20:32:59 sass.1       | started with pid 2247
        ...
 
 #. Visit https://mdn-local.mozillademos.org/ and add an exception for the security certificate if prompted.

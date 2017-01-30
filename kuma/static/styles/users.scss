@@ -1,0 +1,45 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Profile shared
+====================================================================== */
+@import 'components/users/vars';
+@import 'components/users/user-title';
+
+
+/*
+Profile view
+====================================================================== */
+@import 'components/activity';
+@import 'components/banned';
+@import 'components/users/docs-activity';
+@import 'components/users/user-links';
+@import 'components/users/user-head';
+@import 'components/users/user-section';
+@import 'components/users/user-tags';
+
+
+/*
+Profile edit
+====================================================================== */
+@import 'components/tagit';
+@import 'components/users/user-edit';
+
+
+/*
+API keys page
+====================================================================== */
+@import 'components/option-list';
+
+/*
+ * Users app CSS
+ */
+
+#browser_register {
+    form {
+        button {
+            margin: 5px 0;
+        }
+    }
+}

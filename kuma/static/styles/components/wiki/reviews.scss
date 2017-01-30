@@ -1,0 +1,18 @@
+/* document review form stuff */
+.reviews {
+    @include set-message-base(false);
+    @include set-smaller-font-size();
+    @extend %review-base;
+
+    p {
+        margin: 0;
+    }
+
+    ul {
+        padding-bottom: $content-vertical-spacing;
+    }
+
+    li {
+        padding-top: $content-vertical-spacing;
+    }
+}

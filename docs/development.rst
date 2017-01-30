@@ -96,12 +96,12 @@ Kumascript tests
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript.
 
-Compiling stylus files
+Compiling Sass files
 ======================
-Stylus files need to be compiled for changes to take effect.
+Sass files need to be compiled for changes to take effect.
 
-In the Vagrant environment, the ``foreman`` task ``stylus`` will automatically
-compile Stylus files when they change, placing the generated CSS files at
+In the Vagrant environment, the ``foreman`` task ``sass`` will automatically
+compile Sass files when they change, placing the generated CSS files at
 ``build/assets/css``.
 
 In either environment, compilation can be run manually::

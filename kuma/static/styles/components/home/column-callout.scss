@@ -1,0 +1,137 @@
+/*
+colorful callouts
+====================================================================== */
+$callout-icon-spacing: 25px;
+$callout-icon-width: 90px;
+
+.column-callout {
+    @include column-4();
+    background: #00539F;
+
+    a {
+        color: $blue-background-text-color !important;
+        display: block;
+        min-height: 160px;
+        position: relative;
+        overflow: hidden;
+        @include set-larger-font-size();
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: $callout-icon-spacing;
+            @include bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
+            height: $callout-icon-width;
+            width: $callout-icon-width;
+            background-image: url($path-to-embedded-images + 'promo-sprite.png');
+        }
+
+        &:before {
+            @include bidi-style(content, '\f061', content, '\f060');
+            @include bidi-style(right, $grid-spacing, left, auto);
+            font-family: 'FontAwesome';
+            bottom: 11px;
+            position: absolute;
+            @include set-font-size(24px);
+            z-index: 4;
+        }
+    }
+
+    span {
+        position: absolute;
+        z-index: 1;
+        bottom: -2px;
+        @include bidi-value(padding, $grid-spacing 50px $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing 50px);
+        width: 75%;
+        min-width: 160px;
+        max-width: 270px;
+        box-sizing: border-box;
+    }
+}
+
+/*
+Media queries
+-------------------------------------------------------------- */
+
+@media #{$media-query-tablet} {
+    .column-callout a:after {
+        top: $grid-spacing;
+        @include bidi-style(right, $grid-spacing, left, auto);
+    }
+}
+
+@media #{$media-query-mobile} {
+
+    .column-callout {
+        margin-bottom: $grid-spacing;
+    }
+
+    .column-callout a:after {
+        top: $callout-icon-spacing;
+        @include bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
+    }
+}
+
+@media #{$media-query-small-mobile} {
+    .column-callout a:after {
+        top: $grid-spacing;
+        @include bidi-style(right, $grid-spacing, left, auto);
+    }
+}
+
+/*
+Colours and icons
+-------------------------------------------------------------- */
+.callout-foundation {
+    background: #523e53;
+
+    strong {
+        content: '';
+        display: block;
+        height: 30px;
+        width: 109px;
+        margin-bottom: 2px;
+        background-image: url($path-to-images + 'home-foundation.gif');
+        direction: ltr; // ltr should be set with negative text indent
+        text-indent: 100%;
+        overflow: hidden;
+    }
+
+    a:before {
+        display: none;
+    }
+
+    a:after {
+        height: 79px;
+        background-image: url($path-to-images + 'home-foundation.gif');
+        background-position: 0 -29px;
+    }
+
+    button {
+        margin-top: 6px;
+        border: 3px solid #fff;
+        background-color: transparent;
+        color: #fff;
+    }
+}
+
+.callout-learn {
+    background-color: #c43957;
+}
+
+.callout-deved {
+    background-color: #056b9f;
+
+    a:after {
+        background-position: 0 -300px;
+    }
+}
+
+.callout-apps {
+    background-color: #58779d;
+
+    a:after {
+        background-position: 0 -600px;
+    }
+}
