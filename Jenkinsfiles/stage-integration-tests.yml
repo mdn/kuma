@@ -1,0 +1,9 @@
+pipeline:
+  enabled: true
+  script: "integration-tests"
+job:
+  dockerfile: "DockerfileIntegrationTests"
+  selenium: "2.48.2"
+  selenium_nodes: 5
+  base_url: 'https://developer.allizom.org'
+  tests: "not login"
