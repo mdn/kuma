@@ -18,7 +18,7 @@ DB_PASS ?= kuma # default for ephemeral demo DBs
 target = kuma
 requirements = -r requirements/local.txt
 # set Django settings module if not already set as env var
-export DJANGO_SETTINGS_MODULE ?= kuma.settings.testing
+export DJANGO_SETTINGS_MODULE ?= kuma.settings.prod
 
 # Note: these targets should be run from the kuma vm
 test:
@@ -107,9 +107,16 @@ push-kuma:
 push: push-base push-kuma
 
 deis-create:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} create ${DEIS_APP} --no-remote && \
-	sleep 5 && ${DEIS_BIN} config:push -p .env-dist -a ${DEIS_APP} || \
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} create ${DEIS_APP} --no-remote || \
 	${DEIS_BIN} apps | grep -q ${DEIS_APP}
+
+deis-config:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} config:set -a ${DEIS_APP} $(shell cat .env-dist) || true
+
+deis-create-and-or-config:
+	make deis-create || echo already created
+	sleep 5
+	make deis-config
 
 deis-pull:
 	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} pull ${KUMA_IMAGE} -a ${DEIS_APP}
