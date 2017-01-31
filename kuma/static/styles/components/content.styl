@@ -276,9 +276,19 @@ p.footnote {
 /* Classes created by the WYSIWYG */
 .twocolumns {
     vendorize(column-count, 2);
+
+    body[contenteditable] & {
+        border: $editor-box-border;
+        column-rule: $editor-box-border;
+    }
 }
 .threecolumns {
     vendorize(column-count, 3);
+
+    body[contenteditable] & {
+        border: $editor-box-border;
+        column-rule: $editor-box-border;
+    }
 }
 
 @media $media-query-small-mobile {
