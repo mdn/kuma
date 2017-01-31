@@ -14,7 +14,7 @@ Setup
 
 Before you run the tests, you have to build assets::
 
-    make compilejsi18n collectstatic
+    make build-static
 
 Running the test suite
 ======================

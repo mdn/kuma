@@ -88,32 +88,43 @@ For more information, see the :doc:`test documentation <tests>`.
 
 Front-end tests
 ---------------
-To run the front-end (selenium) tests, see :doc:`Client-side Testing with
-Intern <tests-ui>`.
+To run the front-end (selenium) tests, see
+:doc:`Client-side Testing <tests-ui>`.
 
 Kumascript tests
 ----------------
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript.
 
-Compiling stylus files
-======================
-Stylus files need to be compiled for changes to take effect.
+Frontend Development and Compiling Sass files
+=============================================
+Sass files need to be compiled for changes to take effect, but don't worry,
+the compilation is done automatically by Django (specifically django-pipeline).
 
-In the Vagrant environment, the ``foreman`` task ``stylus`` will automatically
-compile Stylus files when they change, placing the generated CSS files at
-``build/assets/css``.
+When doing front-end development on your local machine, you'll probably
+want to run (most likely in its own shell)::
 
-In either environment, compilation can be run manually::
+    gulp
 
-    scripts/compile-stylesheets
+within the root directory of your local Kuma epository. It will watch for
+changes to any source files under ``./kuma/static`` and move any changed files
+to ``./static``, where they will be compiled on-demand (i.e., when requested by
+a loading page). If you haven't already installed `Node.js`_  and `gulp`_ on
+your local machine, see :ref:`frontend-development`.
 
-To watch for changes to the files and recompile::
+By default ``DEBUG = True`` in ``docker-compose.yml``, and in that mode, as
+mentioned above, source files are compiled on-demand. If for some reason you
+want to run with ``DEBUG = False``, just remember that source files will no
+longer be compiled on-demand. Instead, after every change to one or more source
+files, you'll have to do the following::
 
-    scripts/compile-stylesheets -w
+    docker-compose exec web make collectstatic
+    docker-compose restart web
 
-Watching for file changes performs well in the Vagrant environment, but can be
-slow with the host-mounted files in the Docker container.
+in order for your changes to be visible.
+
+.. _gulp: http://gulpjs.com/
+.. _`Node.js`: https://nodejs.org/
 
 Database migrations
 ===================
@@ -306,23 +317,16 @@ To connect to the database specified in ``DATABASE_URL``, use::
 
 Asset generation
 ----------------
-Kuma will automatically run in debug mode, with the ``DEBUG`` setting
-turned to ``True``. That will make it serve images and have the pages
-formatted with CSS automatically.
+Kuma will automatically run in debug mode, with the ``DEBUG`` setting turned to
+``True``. Setting ``DEBUG=False`` will put you in production mode and
+generate/use minified (compressed) and versioned (hashed) assets. To
+emulate production, and test compressed and hashed assets locally:
 
-Setting ``DEBUG=false`` file will put the installation in production mode and
-ask for minified assets.  This only works in the Vagrant environment, which
-uses Apache to serve the static files.  In Docker, static files will not be
-served and the site will be unstyled.
-
-Production assets
-*****************
-Assets are compressed on production. To emulate production and test compressed
-assets locally (*Vagrant only*):
-
-#. Set the environment variables ``DEBUG=false``.
-#. Run ``make compilejsi18n collectstatic`` in the VM or container.
-#. Restart the web process by restarting ``foreman``.
+#. Set the environment variable ``DEBUG=false``.
+#. Start (``docker-compose up -d``) or restart (``docker-compose restart`)
+   your Docker services.
+#. Run ``docker-compose exec web make build-static``.
+#. Restart the web process using ``docker-compose restart web``.
 
 Secure cookies
 --------------

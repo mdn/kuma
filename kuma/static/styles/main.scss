@@ -1,0 +1,23 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+    Main stylesheet for the site, standalone
+*/
+
+@import 'base/fonts/opensans';
+
+/* stylesheets used only in main  */
+@import 'base/elements';
+@import 'base/icons';
+
+/* components also used elsewhere */
+@import 'components/components';
+@import 'components/content';
+@import 'components/structure';
+@import 'components/form';
+@import 'components/tags';
+@import 'components/doc-title';
+@import 'components/errorlist';
+@import 'components/compact';
+@import 'components/newsletter';

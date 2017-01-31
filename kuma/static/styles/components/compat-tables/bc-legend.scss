@@ -1,0 +1,26 @@
+/*
+legend
+====================================================================== */
+
+.bc-legend {
+   @include vendorize(column-count, 2);
+    page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: $grid-spacing;
+}
+
+.bc-legend dt {
+    display: inline-block;
+    margin: 0 0 ($bc-grid-spacing / 2) 0;
+}
+
+.bc-legend dd {
+    display: inline;
+    margin: 0 $bc-grid-spacing ($bc-grid-spacing / 2) $bc-grid-spacing;
+}
+
+.bc-legend dd:after {
+  content: '\a';
+  white-space: pre;
+}
