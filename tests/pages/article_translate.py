@@ -29,7 +29,12 @@ class TranslatePage(BasePage):
         discard_button = self.find_element(*self._discard_button_locator)
         discard_button.click()
         # wait for article page to load
-        return pages.article.ArticlePage(self.selenium, self.base_url).wait_for_page_to_load()
+        article_page = pages.article.ArticlePage(
+            self.selenium,
+            self.base_url,
+            **self.url_kwargs
+        )
+        return article_page.wait_for_page_to_load()
 
     # CKEditor region
     def editor(self):
