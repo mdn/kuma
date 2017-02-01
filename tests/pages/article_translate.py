@@ -11,8 +11,7 @@ class TranslatePage(BasePage):
     CKEDITOR_READY_QUERY = "return window.CKEDITOR.instances.id_content.status === 'ready';"
 
     def wait_for_page_to_load(self):
-        el = self.find_element(By.TAG_NAME, 'html')
-        self.wait.until(lambda s: el.get_attribute('data-ffo-opensanslight'))
+        super(TranslatePage, self).wait_for_page_to_load()
         # also wait for ckeditor to load
         self.wait.until(lambda s: s.execute_script(self.CKEDITOR_READY_QUERY) is True)
         return self
