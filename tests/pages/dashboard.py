@@ -2,7 +2,6 @@ from pypom import Region
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
-from pages.regions.notification import NotificationTray, Notification
 
 
 class DashboardPage(BasePage):

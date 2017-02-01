@@ -1,7 +1,6 @@
 import pytest
 
 from pages.article_translate import TranslatePage
-from pages.article import ArticlePage
 from pages.admin import AdminLogin
 
 
