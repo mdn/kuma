@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-01-23 11:44-0800\n"
+"POT-Creation-Date: 2017-01-31 16:01-0800\n"
 "PO-Revision-Date: 2016-08-28 07:19+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
@@ -405,214 +405,218 @@ msgid "Bengali (India)"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:10
-msgid "Burmese"
+msgid "Bulgarian"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:11
-msgid "Catalan"
+msgid "Burmese"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:12
-msgid "Chinese (Simplified)"
+msgid "Catalan"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:13
-msgid "Chinese (Traditional)"
+msgid "Chinese (Simplified)"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:14
-msgid "Croatian"
+msgid "Chinese (Traditional)"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:15
-msgid "Czech"
+msgid "Croatian"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:16
-msgid "Dutch"
+msgid "Czech"
 msgstr ""
 
 #: jinja2/includes/translate_locales.html:17
+msgid "Dutch"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:18
 msgid "English (US)"
 msgstr "Bahasa Inggris (AS)"
 
-#: jinja2/includes/translate_locales.html:18
+#: jinja2/includes/translate_locales.html:19
 msgid "Ewe"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:19
+#: jinja2/includes/translate_locales.html:20
 msgid "Finnish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:20
+#: jinja2/includes/translate_locales.html:21
 msgid "French"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:21
+#: jinja2/includes/translate_locales.html:22
 msgid "Frisian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:22
+#: jinja2/includes/translate_locales.html:23
 msgid "Fulah"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:23
+#: jinja2/includes/translate_locales.html:24
 msgid "Georgian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:24
+#: jinja2/includes/translate_locales.html:25
 msgid "German"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:25
+#: jinja2/includes/translate_locales.html:26
 msgid "Greek"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:26
+#: jinja2/includes/translate_locales.html:27
 msgid "Hausa"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:27
+#: jinja2/includes/translate_locales.html:28
 msgid "Hebrew"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:28
+#: jinja2/includes/translate_locales.html:29
 msgid "Hindi (India)"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:29
+#: jinja2/includes/translate_locales.html:30
 msgid "Hungarian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:30
+#: jinja2/includes/translate_locales.html:31
 msgid "Igbo"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:31
+#: jinja2/includes/translate_locales.html:32
 msgid "Indonesian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:32
+#: jinja2/includes/translate_locales.html:33
 msgid "Irish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:33
+#: jinja2/includes/translate_locales.html:34
 msgid "Italian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:34
+#: jinja2/includes/translate_locales.html:35
 msgid "Japanese"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:35
+#: jinja2/includes/translate_locales.html:36
 msgid "Kabyle"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:36
+#: jinja2/includes/translate_locales.html:37
 msgid "Korean"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:37
+#: jinja2/includes/translate_locales.html:38
 msgid "Lingala"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:38
+#: jinja2/includes/translate_locales.html:39
 msgid "Malagasy"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:39
+#: jinja2/includes/translate_locales.html:40
 msgid "Malay"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:40
+#: jinja2/includes/translate_locales.html:41
 msgid "Malayalam"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:41
+#: jinja2/includes/translate_locales.html:42
 msgid "Persian"
 msgstr "Bahasa Persia"
 
-#: jinja2/includes/translate_locales.html:42
+#: jinja2/includes/translate_locales.html:43
 msgid "Polish"
 msgstr "Bahasa Polandia"
 
-#: jinja2/includes/translate_locales.html:43
+#: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Brazilian)"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:44
+#: jinja2/includes/translate_locales.html:45
 msgid "Portuguese (Portugal)"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:45
+#: jinja2/includes/translate_locales.html:46
 msgid "Romanian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:46
+#: jinja2/includes/translate_locales.html:47
 msgid "Russian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:47 jinja2/includes/translate_locales.html:48
+#: jinja2/includes/translate_locales.html:48 jinja2/includes/translate_locales.html:49
 msgid "Serbian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:49
+#: jinja2/includes/translate_locales.html:50
 msgid "Songhai"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:50
+#: jinja2/includes/translate_locales.html:51
 msgid "Spanish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:51
+#: jinja2/includes/translate_locales.html:52
 msgid "Swahili"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:52
+#: jinja2/includes/translate_locales.html:53
 msgid "Swedish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:53
+#: jinja2/includes/translate_locales.html:54
 msgid "Tagalog"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:54
+#: jinja2/includes/translate_locales.html:55
 msgid "Tamil"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:55
+#: jinja2/includes/translate_locales.html:56
 msgid "Thai"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:56
+#: jinja2/includes/translate_locales.html:57
 msgid "Tswana"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:57
+#: jinja2/includes/translate_locales.html:58
 msgid "Turkish"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:58
+#: jinja2/includes/translate_locales.html:59
 msgid "Ukrainian"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:59
+#: jinja2/includes/translate_locales.html:60
 msgid "Vietnamese"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:60
+#: jinja2/includes/translate_locales.html:61
 msgid "Wolof"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:61
+#: jinja2/includes/translate_locales.html:62
 msgid "Xhosa"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:62
+#: jinja2/includes/translate_locales.html:63
 msgid "Yoruba"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:63
+#: jinja2/includes/translate_locales.html:64
 msgid "Zulu"
 msgstr ""
 
@@ -2867,138 +2871,143 @@ msgid "Name Your Article"
 msgstr "Judul Artikel Anda"
 
 #: kuma/wiki/forms.py:43
+#, fuzzy, python-format
+msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
+msgstr "Judul Anda kurang dari (%(show_value)s karakter). Panjangnya paling tidak harus %(limit_value)s karakter."
+
+#: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
 msgstr "Tentukan slug."
 
-#: kuma/wiki/forms.py:44
+#: kuma/wiki/forms.py:46
 msgid "The slug provided is not valid."
 msgstr "Slug yang ditentukan tidak valid."
 
-#: kuma/wiki/forms.py:45
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Slug ini kurang dari (%(show_value)s karakter). Panjangnya paling tidak harus %(limit_value)s karakter."
 
-#: kuma/wiki/forms.py:47
+#: kuma/wiki/forms.py:49
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Batasi panjangnya slug hingga paling banyak %(limit_value)s atau kurang dari itu. Panjang slug saat ini %(show_value)s karakter."
 
-#: kuma/wiki/forms.py:50
+#: kuma/wiki/forms.py:52
 msgid "Please provide a summary."
 msgstr "Buatlah ringkasan."
 
-#: kuma/wiki/forms.py:51
+#: kuma/wiki/forms.py:53
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Ringkasan ini kurang dari (%(show_value)s karakter). Panjangnya paling tidak harus %(limit_value)s karakter."
 
-#: kuma/wiki/forms.py:53
+#: kuma/wiki/forms.py:55
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Batasi panjang ringkasan hingga paling banyak %(limit_value)s atau lebih pendek. Panjangnya saat ini %(show_value)s karakter."
 
-#: kuma/wiki/forms.py:56
+#: kuma/wiki/forms.py:58
 msgid "Please provide content."
 msgstr "Sediakan konten."
 
-#: kuma/wiki/forms.py:57
+#: kuma/wiki/forms.py:59
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Konten ini kurang dari (%(show_value)s karakter). Panjangnya paling tidak harus %(limit_value)s karakter."
 
-#: kuma/wiki/forms.py:59
+#: kuma/wiki/forms.py:61
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Batasi panjang konten hingga paling banyak %(limit_value)s atau kurang dari itu. Panjangnyai saat ini %(show_value)s karakter."
 
-#: kuma/wiki/forms.py:62
+#: kuma/wiki/forms.py:64
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Batasi panjang komentar hingga paling banyak %(limit_value)s karakter atau kurang. Panjang konten saat ini %(show_value)s karakter."
 
-#: kuma/wiki/forms.py:65
+#: kuma/wiki/forms.py:67
 msgid "Another document with this slug already exists."
 msgstr "Dokumen lain dengan slug ini sudah ada."
 
-#: kuma/wiki/forms.py:66
+#: kuma/wiki/forms.py:68
 msgid "Another document with this metadata already exists."
 msgstr "Dokumen lain dengan metadata ini sudah ada."
 
-#: kuma/wiki/forms.py:68
+#: kuma/wiki/forms.py:70
 #, python-format
 msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
 
-#: kuma/wiki/forms.py:72
+#: kuma/wiki/forms.py:74
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Mengubah slug dokumen ini memerlukan pemindahannya dan anak-anaknya."
 
-#: kuma/wiki/forms.py:338 kuma/wiki/forms.py:408 kuma/wiki/forms.py:882 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Judul:"
 
-#: kuma/wiki/forms.py:339 kuma/wiki/forms.py:409 kuma/wiki/forms.py:883
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
 msgid "Title of article"
 msgstr "Judul artikel"
 
-#: kuma/wiki/forms.py:347 kuma/wiki/forms.py:422 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "Slug:"
 
-#: kuma/wiki/forms.py:348 kuma/wiki/forms.py:423
+#: kuma/wiki/forms.py:350 kuma/wiki/forms.py:425
 msgid "Article URL"
 msgstr "URL Artikel"
 
-#: kuma/wiki/forms.py:355 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "Induk:"
 
-#: kuma/wiki/forms.py:433 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "Tag:"
 
-#: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "Kata kunci:"
 
-#: kuma/wiki/forms.py:439
+#: kuma/wiki/forms.py:445
 msgid "Affects search results"
 msgstr "Mempengaruhi hasil pencarian"
 
-#: kuma/wiki/forms.py:447
+#: kuma/wiki/forms.py:453
 msgid "Search result summary:"
 msgstr "Ringkasan hasil pencarian:"
 
-#: kuma/wiki/forms.py:448
+#: kuma/wiki/forms.py:454
 msgid "Only displayed on search results page"
 msgstr "Hanya menampilkan laman hasil pencarian"
 
-#: kuma/wiki/forms.py:459 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
 msgstr "Konten:"
 
-#: kuma/wiki/forms.py:471 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
 msgstr "Komentar:"
 
-#: kuma/wiki/forms.py:475
+#: kuma/wiki/forms.py:481
 msgid "Tag this revision for review?"
 msgstr "Tandai perubahan ini untuk ulasan?"
 
-#: kuma/wiki/forms.py:482
+#: kuma/wiki/forms.py:488
 msgid "Tag this revision for localization?"
 msgstr "Tandai perubahan ini untuk pelokalan?"
 
-#: kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:895
 msgid "New slug:"
 msgstr "Slug baru:"
 
-#: kuma/wiki/forms.py:890
+#: kuma/wiki/forms.py:896
 msgid "New article URL"
 msgstr "URL artikel baru"
 
