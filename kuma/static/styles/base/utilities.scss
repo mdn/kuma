@@ -34,6 +34,7 @@
 .hidden {
     display: none;
 
+    html.cke_panel_container &,
     body[contenteditable] & {
         position: relative;
         display: block;
