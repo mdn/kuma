@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-01 08:09+0000\n"
+"PO-Revision-Date: 2017-02-01 08:15+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -2845,9 +2845,9 @@ msgid "Name Your Article"
 msgstr "Beneam jo artikel"
 
 #: kuma/wiki/forms.py:43
-#, fuzzy, python-format
+#, python-format
 msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
-msgstr "De titel is te koart (%(show_value)s tekens). Dizze moat op syn minst %(limit_value)s tekens befetsje."
+msgstr "It labelfjild is te lang (%(show_value)s tekens). Hâld de totale lingte beheint oant %(limit_value)s tekens."
 
 #: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
@@ -3334,13 +3334,13 @@ msgid "This translation is in progress."
 msgstr "Oan dizze oersetting wurdt wurke."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
-"Us frijwilligers hawwe dit artikel noch net nei it <bdi>%(locale)s</bdi> oerset. <a href=\"%(help_link)s\">Doch mei en help dit putsje dien te krijen!</a><br> Jo kinne it artikel ek yn it <a "
-"href=\"%(doc_abs_url)s\">%(parent_language)s</a> lêze."
+"Us frijwilligers hawwe dit artikel noch net nei it <bdi>%(locale)s</bdi> oerset. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Doch mei en help it putsje dien te krijen!</a><br> Jo kinne it "
+"artikel ek yn it <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> lêze."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
@@ -3961,13 +3961,13 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Fertel ús wêrom't jo oanfollingen en wizigingen oanbrocht hawwe. Dit is opsjoneel, mar makket de sideskiednis begrypliker."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "As jo tinke dat jo dit berjocht ten ûnrjochte ûntfongen hawwe, bewarje dan in konsept fan jo ynhâld en <a href=\"%(admin_email)s\">nim kontakt op mei de websitebehearders</a>."
+msgstr "Sorry! Jo bydrage koe net bewarre wurde. Bewarje in konsept fan jo wiziging en <a href=\"%(admin_email)s\">nim kontakt op mei de websitebehearders</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
-msgstr ""
+msgstr "Wy sille probearje it probleem te ferhelpen, wêrnei jo jo bydrage opnij yntsjinje kinne."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
