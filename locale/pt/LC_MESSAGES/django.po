@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-01 00:26+0000\n"
+"PO-Revision-Date: 2017-02-01 00:37+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
@@ -3391,13 +3391,13 @@ msgid "This translation is in progress."
 msgstr "Esta tradução está em curso."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
-"Os nossos voluntários ainda não traduziram este artigo para <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Junte-se a nós para ajudar!</a><br> Pode também ler o artigo em <a "
-"href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+"Os nossos voluntários ainda não traduziram este artigo para <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Ajude-nos a concluir o trabalho!</a><br> Pode também ler o "
+"artigo em <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
@@ -4019,13 +4019,13 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Diga-nos porque fez adições e alterações. É opcional, mas irá fazer com que o histórico da página seja mais fácil de perceber."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Se pensa que recebeu esta mensagem por erro, por favor guarde um rascunho do seu conteúdo e <a href=\"%(admin_email)s\">contacte os administradores do site</a>."
+msgstr "Desculpe! Não conseguimos guardar o seu contributo. Por favor, guarde um rascunho e <a href=\"%(admin_email)s\"> contacte os administradores do site</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
-msgstr ""
+msgstr "Iremos tentar resolver o problema e, depois, poderá reenviar o seu contributo."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
