@@ -1,6 +1,6 @@
 import pytest
 
-from pages.article_translate import TranslatePage
+from pages.article_edit import EditPage
 from pages.admin import AdminLogin
 
 
@@ -10,7 +10,7 @@ from pages.admin import AdminLogin
 def test_translation(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
     admin.login_moderator_user()
-    page = TranslatePage(selenium, base_url, locale='fr').open()
+    page = EditPage(selenium, base_url, locale='fr').open()
     # CKEditor loads and is ready
     editor = page.editor()
     assert editor.ready
