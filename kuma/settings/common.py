@@ -951,6 +951,7 @@ PIPELINE = {
     'STYLESHEETS': PIPELINE_CSS,
     'JAVASCRIPT': PIPELINE_JS,
     'DISABLE_WRAPPER': True,
+    'SHOW_ERRORS_INLINE': False,  # django-pipeline issue #614
     'COMPILERS': (
         'pipeline.compilers.sass.SASSCompiler',
     ),
