@@ -8,18 +8,20 @@ from pages.regions.ckeditor import Ckeditor
 class EditPage(BasePage):
 
     URL_TEMPLATE = '/{locale}/docs/User:anonymous:uitest$edit'
-    CKEDITOR_READY_QUERY = "return window.CKEDITOR.instances.id_content.status === 'ready';"
+    CKEDITOR_READY_QUERY = (
+        "return window.CKEDITOR.instances.id_content.status === 'ready';"
+    )
 
     def wait_for_page_to_load(self):
         super(EditPage, self).wait_for_page_to_load()
         # also wait for ckeditor to load
-        self.wait.until(lambda s: s.execute_script(self.CKEDITOR_READY_QUERY) is True)
+        self.wait.until(
+            lambda s: s.execute_script(self.CKEDITOR_READY_QUERY) is True
+        )
         return self
 
-    _first_contrib_welcome_locator_ = (By.CSS_SELECTOR, '.first-contrib-welcome')
+    _first_contrib_welcome_locator = (By.CSS_SELECTOR, '.first-contrib-welcome')
     _ckeditor_wrapper_locator = (By.ID, 'editor-wrapper')
-    _draft_container_locator = (By.CSS_SELECTOR, '.draft-container')
-    _save_and_keep_editing_button_locator = (By.CSS_SELECTOR, '.btn-save-and-edi')
     _save_button_locator = (By.CSS_SELECTOR, '.btn-save')
     _discard_button_locator = (By.CSS_SELECTOR, '.btn-discard')
 
@@ -32,12 +34,19 @@ class EditPage(BasePage):
         discard_button = self.find_element(*self._discard_button_locator)
         discard_button.click()
         # wait for article page to load
-        return pages.article.ArticlePage(self.selenium, self.base_url).wait_for_page_to_load()
+        article_page = pages.article.ArticlePage(
+            self.selenium,
+            self.base_url,
+            **self.url_kwargs
+        )
+        return article_page.wait_for_page_to_load()
 
     # contributor welcome message displayed
     @property
     def is_first_contrib_welcome_displayed(self):
-        return self.find_element(*self._first_contrib_welcome_locator_).is_displayed()
+        return self.find_element(
+            *self._first_contrib_welcome_locator
+        ).is_displayed()
 
     # CKEditor region
     def editor(self):
@@ -46,5 +55,7 @@ class EditPage(BasePage):
 
     # check jQuery object has had tagit plugin functions attached
     def tagit_loaded(self):
-        tagit_exists = self.selenium.execute_script("return typeof(jQuery.fn.tagit) == 'function'")
+        tagit_exists = self.selenium.execute_script(
+            "return typeof(jQuery.fn.tagit) == 'function'"
+        )
         return tagit_exists

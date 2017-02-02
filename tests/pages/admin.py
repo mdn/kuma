@@ -1,4 +1,4 @@
-from pypom import Page, Region
+from pypom import Page
 from selenium.webdriver.common.by import By
 
 

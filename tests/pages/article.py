@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from pages.base import BasePage
 import pages.article_edit
 from pages.regions.column_container import ColumnContainer
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class ArticlePage(BasePage):
@@ -12,6 +13,7 @@ class ArticlePage(BasePage):
     # article meta
     _language_button_locator = (By.ID, 'languages-menu')
     _language_submenu_locator = (By.ID, 'languages-menu-submenu')
+    _language_add_link_locator = (By.ID, 'translations-add')
     _edit_button_locator = (By.ID, 'edit-button')
     _advanced_button_locator = (By.ID, 'advanced-menu')
     # article head
@@ -31,23 +33,31 @@ class ArticlePage(BasePage):
         article_title = self.find_element(*self._article_title_locator)
         return article_title.text
 
-    # page buttons are displayed
+    # page buttons
     @property
     def is_language_menu_displayed(self):
         return self.find_element(*self._language_button_locator).is_displayed()
+
+    def trigger_add_translation(self):
+        submenu_trigger = self.find_element(*self._language_button_locator)
+        submenu = self.find_element(*self._language_submenu_locator)
+        hover = ActionChains(self.selenium).move_to_element(submenu_trigger)
+        hover.perform()
+        self.wait.until(lambda s: submenu.is_displayed())
+        add_translation = self.find_element(*self._language_add_link_locator)
+        add_translation.click()
+        self.wait.until(lambda s: '$locale' in s.current_url)
 
     @property
     def is_edit_button_displayed(self):
         return self.find_element(*self._edit_button_locator).is_displayed()
 
     def click_edit(self, signedin):
+        edit_button = self.find_element(*self._edit_button_locator)
+        edit_button.click()
         if (signedin):
-            edit_button = self.find_element(*self._edit_button_locator)
-            edit_button.click()
             return pages.article_edit.EditPage(self.selenium, self.base_url).wait_for_page_to_load()
         else:
-            edit_button = self.find_element(*self._edit_button_locator)
-            edit_button.click()
             self.wait.until(lambda s: 'users/signin' in s.current_url)
 
     @property
