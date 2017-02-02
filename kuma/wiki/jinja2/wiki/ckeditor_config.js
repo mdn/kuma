@@ -91,7 +91,8 @@
     config.entities = false;
 
     // Enable the spell checker by default
-    config.scayt_autoStartup = true;
+    // Disabled to avoid auto-loading JS and advertisements
+    // config.scayt_autoStartup = true;
 
     // Ignore words in all caps, or in CamelCase
     config.scayt_ignoreAllCapsWords = true;
