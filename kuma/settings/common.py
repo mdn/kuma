@@ -1441,3 +1441,6 @@ if SENTRY_DSN:
 # Tell django-recaptcha we want to use "No CAPTCHA".
 # Note: The API keys are located in Django constance.
 NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
+
+# Prevent adding a tag like 'javascript' if 'JavaScript' exists
+TAGGIT_CASE_INSENSITIVE = True
