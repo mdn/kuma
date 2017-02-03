@@ -1,4 +1,7 @@
 <script type="text/javascript">
+    // make sure global mdn object exists
+    var mdn = window.mdn || {};
+
     (function(win) {
         'use strict';
 
@@ -9,39 +12,37 @@
         // This needs to be set before ckeditor.js loads
         window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
 
-        // This represents the site configuration
-        win.mdn = {
-            // Properties and settings for CKEditor will go here
-            ckeditor: {},
-            // Feature test results and methods will be placed here
-            features: {},
-            // The path to static assets (images, CSS, JS) in MDN
-            staticPath: '{{ STATIC_URL }}',
-            // Optimizely API
-            optimizely: win['optimizely'] || [],
-            // Site notifications
-            {% if messages %}notifications: [
-                {% for message in messages %}{% if 'wiki_redirect' not in message.tags or request.user.is_superuser %}{message: "{{ message }}", tags: "{{ message.tags }}", level: "{{ message|level_tag }}"}{% if not loop.last %},{% endif %}{% endif %}
-                {% endfor %}
-            ],
-            {% else %}
-            notifications: [],
-            {% endif %}
-            // Wiki-specific settings will be placed here
-            wiki: {
-                autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
+        // Site configuration
+        win.mdn.ckeditor = {};
+        win.mdn.features = {};
+        win.mdn.staticPath = '{{ STATIC_URL }}';
+        win.mdn.optimizely = win['optimizely'] || [];
+        win.mdn.wiki = {
+            autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
+        };
+        win.mdn.assets = {
+            css: {
+                'editor-content': [{% stylesheet 'editor-content' %}],
+                'wiki-compat-tables': [{% stylesheet 'wiki-compat-tables' %}]
             },
-            // Assets that need to be dynamically injected
-            assets: {
-                css: {
-                    'editor-content': [{% stylesheet 'editor-content' %}],
-                    'wiki-compat-tables': [{% stylesheet 'wiki-compat-tables' %}]
-                },
-                js: {
-                    'syntax-prism': [{% javascript 'syntax-prism' %}],
-                    'wiki-compat-tables': [{% javascript 'wiki-compat-tables' %}]
-                }
+            js: {
+                'syntax-prism': [{% javascript 'syntax-prism' %}],
+                'wiki-compat-tables': [{% javascript 'wiki-compat-tables' %}]
             }
         };
+
+        win.mdn.notifications = [];
+
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'wiki_redirect' not in message.tags or request.user.is_superuser %}
+                    win.mdn.notifications.push({
+                        message: "{{ message }}",
+                        tags: "{{ message.tags }}",
+                        level: "{{ message|level_tag }}"
+                    });
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     })(this);
 </script>

@@ -1,122 +1,53 @@
-(function(win, doc, $) {
+(function(win, $) {
     /*
         Font Loading
     */
 
-    // what fonts are we loading?
-    var fonts = [
-        {
-            'name' : 'Open Sans Light',
-            'class' : 'ffo-opensanslight',
-            'varient' : [
-                {'weight' : 'normal'},
-                {'weight' : 'bold'},
-                {'style' : 'italic'}
-            ]
-        },
-        {
-            'name' : 'Open Sans',
-            'class' : 'ffo-opensans',
-            'varient' : [
-                {'weight' : 'normal'},
-                {'weight' : 'bold'},
-                {'style' : 'italic'}
-            ]
-        }
-    ];
+    /*
+        Note that sessionStorage is checked in the <head> to avoid font flicker.
 
-    // to collect the results of the observers as they return
-    var fontsLoaded = {};
+        mdn.fonts is defined in font-check.js
+    */
 
-    // timout for all observers
+    var $html = $('html');
+
+    // time to wait for each font varient to load
     var ffoTimeout = 2000;
 
-    // run the observer plug in
-    ffoLoad();
+    // loads all varients of a font
+    // accepts a font object as defined in font-check.js
+    function loadFont(fontObj) {
+        // array to hold promises for each varient
+        var varientPromises = [];
+        // holds reference to an instance of FontFaceObserver in loop below
+        var observer;
 
-    // starts observers for all fonts in fonts array
-    function ffoLoad() {
-        // for each font
-        $.each(fonts, function() {
-            // add the class to the fontsLoaded object
-            var fontClass = this.class;
+        // loop over each varient for the given font
+        for (var i = 0, len = fontObj.varient.length; i < len; i++) {
+            // instantiate new FontFaceObserver for the varient
+            observer = new FontFaceObserver(fontObj.name, fontObj.varient[i]);
+            // add the promise from the observer to the array
+            // 1st argument is text to test font (not needed)
+            // 2nd argument is amount of time to wait for font to load
+            varientPromises.push(observer.load(null, ffoTimeout));
+        }
 
-            // get name for later use
-            var fontName = this.name;
+        // make sure all varients load
+        Promise.all(varientPromises).then(function() {
+            // add attribute to <html> to trigger CSS changes
+            $html.attr('data-' + fontObj.className, true);
 
-            fontsLoaded[fontClass] = {};
-
-            // for each varient of this font
-            $.each(this.varient, function(index) {
-                var fontVarient = this;
-                var fontVarientNumber = index;
-
-                // add observer for this varient
-                var ffObserver = new FontFaceObserver(fontName, fontVarient);
-
-                // add an object to the fontsLoaded object
-                fontsLoaded[fontClass][fontVarientNumber] = false;
-
-                // add callbacks for this observer
-                ffObserver.check(null, ffoTimeout).then(function () {
-                    // update fontsLoaded object to show it loaded
-                    fontsLoaded[fontClass][fontVarientNumber] = true;
-                    ffoCheck();
-                }, function () {
-                    // timeout
-                    ffoCheck();
-                });
-
-            });
+            // remember that this font family has been loaded (font-check.js)
+            try {
+                sessionStorage.setItem(fontObj.name, true);
+            } catch(e) {}
         });
     }
 
-    function ffoCheck(){
-        var allLoaded = true;
-
-        // loop through fontsLoaded looking to see if they've loaded
-        $.each(fontsLoaded, function(){
-            var isLoaded = true;
-            $.each(this, function(){
-                if(this == false) {
-                    isLoaded = false;
-                }
-            })
-            if(isLoaded == false) {
-                allLoaded = false;
-            }
-        });
-
-        // if all fonts are loaded swap font in
-        if(allLoaded) {
-            ffoFinished();
-
-            // set cookie so fonts are displayed automatically with the server's help
-            var expires = new Date();
-            expires.setDate(expires.getDate() + 1);
-            document.cookie = 'ffo=true; expires=' + expires + '; path=/';
+    // check each font - if not loaded, load using routing above
+    for (var i = 0, len = win.mdn.fonts.length; i < len; i++) {
+        if (!win.mdn.fonts[i].loaded) {
+            loadFont(win.mdn.fonts[i]);
         }
     }
-
-    function ffoFinished() {
-        ffoSwap();
-    }
-
-    function ffoSwap() {
-        // swaps in available fonts
-        $.each(fontsLoaded, function(index) {
-            var fontAttribute = index;
-            var fontLoaded = true;
-
-            $.each(this, function() {
-                if(this == false) {
-                    fontLoaded = false;
-                }
-            })
-            if(fontLoaded == true) {
-                $('html').attr('data-' + fontAttribute, true);
-            }
-        });
-    }
-
-})(window, document, jQuery);
+})(window, window.jQuery);

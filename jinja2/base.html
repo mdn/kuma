@@ -1,7 +1,7 @@
 {% from "includes/common_macros.html" import optimizely_script with context -%}
 
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {{ get_webfont_attributes(request) }} >
+<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" data-ffo-opensans="false" data-ffo-opensanslight="false">
 <head {%- if not is_sphinx %} prefix="og: http://ogp.me/ns#"{% endif %}>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -60,6 +60,8 @@
   <meta http-equiv="imagetoolbar" content="no">
   {% javascript 'html5shiv' %}
   <![endif]-->
+
+  {% javascript 'font-check' %}
 
   {% block extrahead %}{% endblock %}
 
