@@ -60,7 +60,7 @@
     config.toolbarGroups = [
       { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
       { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-      { name: 'editing', groups: [ 'find', 'selection', 'spellchecker'] },
+      { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
       { name: 'forms' },
       { name: 'tools' },
       { name: 'others' },
@@ -89,6 +89,42 @@
 
     // Don't use HTML entities in the output except basic ones (config.basicEntities).
     config.entities = false;
+
+    // Enable the spell checker by default
+    // Disabled to avoid auto-loading JS and advertisements
+    // config.scayt_autoStartup = true;
+
+    // Ignore words in all caps, or in CamelCase
+    config.scayt_ignoreAllCapsWords = true;
+    config.scayt_ignoreWordsWithMixedCases = true;
+
+    // Multiple language support
+    config.scayt_multiLanguageMode = true;
+    config.scayt_disableOptionsStorage = 'all';
+    var lang = document.location.toString().match(/\/\/.+\/(.+)\/docs/)[1];
+
+    // SCAYT expects underscores rather than dashes
+    lang = lang.replace(/-/g, "_");
+
+    // Also, some of the names we use are different, so fix those too
+    var langTable = {
+      'nl': 'nl_NL',
+      'fi': 'fi_FI',
+      'fr': 'fr_FR',
+      'de': 'de_DE',
+      'el': 'el_GR',
+      'it': 'it_IT',
+      'es': 'es_ES'
+    };
+
+    if (lang in langTable) {
+      lang = langTable[lang];
+    }
+
+    config.scayt_sLang = lang;
+
+    // Adjust the spell checker's items in the context menu
+    config.scayt_contextCommands = "ignore|ignoreall|add|option|language";
 
     // Allows section editing to be used immediately and not lose focus on desired element
     // http://docs.ckeditor.com/#!/guide/dev_autogrow
