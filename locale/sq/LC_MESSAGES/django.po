@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-03 19:45+0000\n"
+"PO-Revision-Date: 2017-02-03 19:59+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
 "Language: sq\n"
@@ -504,7 +504,7 @@ msgstr "Japonisht"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Kabyle"
-msgstr ""
+msgstr "Kabile"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Korean"
@@ -2844,7 +2844,7 @@ msgstr "Ju lutemi, jepni një titull."
 #: kuma/wiki/forms.py:37
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "Titulli është shumë i shkurtër (%(show_value)s characters). Duhet të jetë e pakta %(limit_value)s shenja."
+msgstr "Titulli është shumë i shkurtër (%(show_value)s shenja). Duhet të jetë e pakta %(limit_value)s shenja."
 
 #: kuma/wiki/forms.py:39
 #, python-format
@@ -2856,9 +2856,9 @@ msgid "Name Your Article"
 msgstr "Emërtoni Artikullin Tuaj"
 
 #: kuma/wiki/forms.py:43
-#, fuzzy, python-format
+#, python-format
 msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
-msgstr "Titulli është shumë i shkurtër (%(show_value)s characters). Duhet të jetë e pakta %(limit_value)s shenja."
+msgstr "Fusha e etiketave është shumë e gjatë (%(show_value)s shenja). Mbajeni gjatësinë gjithsej %(limit_value)s shenja."
 
 #: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
@@ -3345,13 +3345,13 @@ msgid "This translation is in progress."
 msgstr "Përkthimi është në kryerje e sipër."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
-"Vullnetarët tanë s’e kanë përkthyer ende në <bdi>%(locale)s</bdi> këtë artikull. <a href=\"%(help_link)s\">Merrni pjesë dhe ndihmoni të mbarohet kjo punë!</a><br> Mund ta lexoni artikullin edhe në "
-"<a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
+"Vullnetarët tanë s’e kanë përkthyer ende në <bdi>%(locale)s</bdi> këtë artikull. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Merrni pjesë dhe ndihmoni të mbarohet kjo punë!</a><br> Mund ta "
+"lexoni artikullin edhe në <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
@@ -3986,6 +3986,8 @@ msgstr "Do të përpiqemi ta zgjidhim problemin, dhe pas kësaj do të jeni në 
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
 msgstr ""
+"Nëse jeni moderator i mesazheve të padëshiruar, mund t’i <a href=\"%(akismet_submission_url)s\" target=\"_blank\">vini shenjë këtij parashtrimi si jo i padëshiruar</a> dhe të provoni ta "
+"riparashtroni."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
