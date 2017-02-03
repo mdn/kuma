@@ -446,11 +446,8 @@ table.HTMLElmNav td {
 
 /* Compatibility tables */
 table.compat-table {
-    border: 1px solid #bbb;
+    @include rgba-fallback(border-color, rgb(0, 0, 0), 0);
     border-collapse: collapse;
-}
-table.compat-table {
-    border-color: #000;
     margin: 0;
 }
 table.compat-table td {
