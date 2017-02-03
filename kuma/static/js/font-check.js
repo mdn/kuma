@@ -26,7 +26,8 @@ var mdn = window.mdn || {};
         }
     ];
 
-    for (var i = 0; i < fonts.length; i++) {
+
+    for (var i = 0, len = fonts.length; i < len; i++) {
         try {
             if (sessionStorage.getItem(fonts[i].name)) {
                 // set attribute on <html> to trigger CSS changes
