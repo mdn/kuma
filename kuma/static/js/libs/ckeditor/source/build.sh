@@ -96,7 +96,7 @@ download_plugin "scayt" $SCAYT_VERSION "https://github.com/WebSpellChecker/ckedi
 
 download_plugin "wsc" $WSC_VERSION "https://github.com/WebSpellChecker/ckeditor-plugin-wsc.git"
 
-cp -r plugins/* ckeditor/plugins/
+cp -R plugins/* ckeditor/plugins/
 
 
 echo ""
