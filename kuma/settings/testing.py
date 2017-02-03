@@ -43,7 +43,7 @@ PIPELINE['PIPELINE_ENABLED'] = True
 PIPELINE['PIPELINE_COLLECTOR_ENABLED'] = True
 
 # Testing with django-pipeline 1.6.8, PipelineStorage
-# Enabled=T, Collector=T -  482s
-# Enabled=T, Collector=F -  535s
-# Enabled=F, Collector=T - 6000s (cancelled)
-# Enabled=F, Collector=F - 2043s
+# Enabled=T, Collector=T -   482s
+# Enabled=T, Collector=F -   535s
+# Enabled=F, Collector=T - 18262s
+# Enabled=F, Collector=F -  2043s
