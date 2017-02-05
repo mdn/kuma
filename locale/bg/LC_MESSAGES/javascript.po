@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2017-02-05 16:14+0000\n"
+"PO-Revision-Date: 2017-02-05 19:05+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -277,7 +277,7 @@ msgstr "Подробности"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "Изберете прикачен файл"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
@@ -313,7 +313,7 @@ msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
-msgstr ""
+msgstr "Вмъкване на примерен код за iFrame"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
@@ -329,7 +329,7 @@ msgstr "Раздели в документ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
-msgstr ""
+msgstr "Какво трябва да е примерното заглавие?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
@@ -357,11 +357,11 @@ msgstr "Примерно съдържание в JavaScript формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "Резултат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
-msgstr ""
+msgstr "Въведете образец за примерен код"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
@@ -381,7 +381,7 @@ msgstr "Намиране на видео в YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
-msgstr ""
+msgstr "Поставете URL на видео от YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
