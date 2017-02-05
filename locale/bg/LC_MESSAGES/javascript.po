@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-11-30 06:58-0800\n"
-"PO-Revision-Date: 2016-11-09 09:21+0000\n"
+"PO-Revision-Date: 2017-02-05 16:14+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -29,11 +29,11 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
-msgstr ""
+msgstr "Преглед на страницата"
 
 #: kuma/static/js/dashboard.js:14
 msgid "Edit Page"
-msgstr ""
+msgstr "Промяна на страницата"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
-msgstr ""
+msgstr "Почакайте! Филтрите се обновяват…"
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
@@ -49,7 +49,7 @@ msgstr ""
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
-msgstr ""
+msgstr "Изпраща се..."
 
 #: kuma/static/js/dashboard.js:147
 #, python-format
