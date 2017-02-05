@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-05 06:01+0000\n"
+"PO-Revision-Date: 2017-02-05 09:03+0000\n"
 "Last-Translator: Frederick Villaluna <fv_comscie@yahoo.com>\n"
 "Language-Team: Tagalog https://pontoon.mozilla.org/tl/\n"
 "Language: tl\n"
@@ -140,35 +140,35 @@ msgstr ""
 
 #: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: jinja2/base.html:130 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: jinja2/base.html:132
 msgid "Graphics"
-msgstr ""
+msgstr "Graphics"
 
 #: jinja2/base.html:133
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: jinja2/base.html:134
 msgid "APIs / DOM"
-msgstr ""
+msgstr "APIs / DOM"
 
 #: jinja2/base.html:135
 msgid "WebExtensions"
-msgstr ""
+msgstr "WebExtensions"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:139
 msgid "References & Guides"
@@ -204,11 +204,11 @@ msgstr ""
 
 #: jinja2/base.html:151
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Mozilla Docs"
 
 #: jinja2/base.html:156 kuma/core/sections.py:6
 msgid "Add-ons"
-msgstr ""
+msgstr "Add-ons"
 
 #: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
@@ -246,7 +246,7 @@ msgstr ""
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr ""
+msgstr "Hanapin"
 
 #: jinja2/base.html:198
 #, python-format
@@ -406,207 +406,207 @@ msgstr "Catalan"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Chinese (Simplified)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Chinese (Traditional)"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Croatian"
-msgstr ""
+msgstr "Croatian"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Czech"
-msgstr ""
+msgstr "Czech"
 
 #: jinja2/includes/translate_locales.html:17
 msgid "Dutch"
-msgstr ""
+msgstr "Dutch"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "English (US)"
-msgstr ""
+msgstr "English (US)"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Ewe"
-msgstr ""
+msgstr "Ewe"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "Finnish"
-msgstr ""
+msgstr "Finnish"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "French"
-msgstr ""
+msgstr "French"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Frisian"
-msgstr ""
+msgstr "Frisian"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Fulah"
-msgstr ""
+msgstr "Fulah"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "Georgian"
-msgstr ""
+msgstr "Georgian"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "German"
-msgstr ""
+msgstr "German"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Greek"
-msgstr ""
+msgstr "Greek"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hausa"
-msgstr ""
+msgstr "Hausa"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrew"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hindi (India)"
-msgstr ""
+msgstr "Hindi (India)"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Hungarian"
-msgstr ""
+msgstr "Hungarian"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Igbo"
-msgstr ""
+msgstr "Igbo"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonesian"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Irish"
-msgstr ""
+msgstr "Irish"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Italian"
-msgstr ""
+msgstr "Italian"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Japanese"
-msgstr ""
+msgstr "Japanese"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Kabyle"
-msgstr ""
+msgstr "Kabyle"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Korean"
-msgstr ""
+msgstr "Korean"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Lingala"
-msgstr ""
+msgstr "Lingala"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malagasy"
-msgstr ""
+msgstr "Malagasy"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malay"
-msgstr ""
+msgstr "Malay"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Persian"
-msgstr ""
+msgstr "Persian"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Polish"
-msgstr ""
+msgstr "Polish"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "Portuguese (Brazilian)"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "Portuguese (Portugal)"
 
 #: jinja2/includes/translate_locales.html:46
 msgid "Romanian"
-msgstr ""
+msgstr "Romanian"
 
 #: jinja2/includes/translate_locales.html:47
 msgid "Russian"
-msgstr ""
+msgstr "Russian"
 
 #: jinja2/includes/translate_locales.html:48 jinja2/includes/translate_locales.html:49
 msgid "Serbian"
-msgstr ""
+msgstr "Serbian"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Songhai"
-msgstr ""
+msgstr "Songhai"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Spanish"
-msgstr ""
+msgstr "Spanish"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Swahili"
-msgstr ""
+msgstr "Swahili"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Swedish"
-msgstr ""
+msgstr "Swedish"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tamil"
-msgstr ""
+msgstr "Tamil"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Thai"
-msgstr ""
+msgstr "Thai"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Tswana"
-msgstr ""
+msgstr "Tswana"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Turkish"
-msgstr ""
+msgstr "Turkish"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainian"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamese"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Wolof"
-msgstr ""
+msgstr "Wolof"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Xhosa"
-msgstr ""
+msgstr "Xhosa"
 
 #: jinja2/includes/translate_locales.html:63
 msgid "Yoruba"
-msgstr ""
+msgstr "Yoruba"
 
 #: jinja2/includes/translate_locales.html:64
 msgid "Zulu"
-msgstr ""
+msgstr "Zulu"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -623,7 +623,7 @@ msgstr ""
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
-msgstr ""
+msgstr "Kanselahin"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
