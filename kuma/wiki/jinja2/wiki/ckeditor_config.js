@@ -101,7 +101,11 @@
     // Multiple language support
     config.scayt_multiLanguageMode = true;
     config.scayt_disableOptionsStorage = 'all';
-    var lang = document.location.toString().match(/\/\/.+\/(.+)\/docs/)[1];
+    var lang = 'en-US';
+    var pathname = document.location.pathname;
+    if (pathname && pathname.split('/').length >= 2) {
+        lang = pathname.split('/')[1];
+    }
 
     // SCAYT expects underscores rather than dashes
     lang = lang.replace(/-/g, "_");
