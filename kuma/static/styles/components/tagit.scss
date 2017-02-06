@@ -5,6 +5,7 @@
 
 .tagit.ui-widget-content { /* over-ride the jQuery plugin */
     @extend ul.tags;
+    background-image: none;
     font-family: $site-font-family;
     font-size: 1em;
 
