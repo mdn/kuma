@@ -87,8 +87,7 @@
     $(document).ready(function(){
 
         // Convert interests text field into a tag-it widget
-        // also lowercase to deal with database weirdness
-        var interests = $('#id_user-interests').val().toLowerCase();
+        var interests = $('#id_user-interests').val();
         $('#id_user-interests').hide()
             .val(interests)
             .after('<ul id="tagit-interests"></ul>')
@@ -108,9 +107,8 @@
         $('#tagit-interests .tagit-new input').attr('placeholder', gettext('New interest...'));
 
         // Convert the expertise text field into tag list
-        // lowercase to deal with database weirdness
         // checkboxes sync'd to interests
-        var expertise = $('#id_user-expertise').val().toLowerCase();
+        var expertise = $('#id_user-expertise').val();
         $('#id_user-expertise').hide()
         .val(expertise)
         .after('<ul id="tags-expertise" class="tags"></ul>');
