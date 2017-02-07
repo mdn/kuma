@@ -1,8 +1,12 @@
 from django.test import TestCase
 
+from taggit.models import Tag
+import pytest
+
 from .taggit_extras.models import Food
 
 
+@pytest.mark.tags
 class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
@@ -74,3 +78,19 @@ class NamespacedTaggableManagerTest(TestCase):
         apple.tags.add_ns('a:', *tags)
 
         self.assert_tags_equal(apple.tags.all(), ['a:%s' % t for t in tags])
+
+    def test_duplicate_names_to_create(self):
+        apple = self.food_model.objects.create(name="apple")
+        tags = ['tasty', 'Tasty']
+        apple.tags.add_ns('a:', *tags)
+        assert apple.tags.count() == 1
+        tag = apple.tags.get()
+        assert tag.name in ('a:tasty', 'a:Tasty')
+
+    def test_duplicate_names_existing(self):
+        apple = self.food_model.objects.create(name="apple")
+        Tag.objects.create(name='a:Red')
+        Tag.objects.create(name='a:Tasty')
+        tags = ['tasty', 'Tasty', 'Red', 'red']
+        apple.tags.add_ns('a:', *tags)
+        self.assert_tags_equal(apple.tags.all(), ['a:Tasty', 'a:Red'])
