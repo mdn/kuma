@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-08 23:27+0000\n"
+"PO-Revision-Date: 2017-02-08 23:51+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -518,7 +518,7 @@ msgstr "Малагашки"
 
 #: jinja2/includes/translate_locales.html:40
 msgid "Malay"
-msgstr ""
+msgstr "Малайски"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Malayalam"
@@ -570,7 +570,7 @@ msgstr "Шведски"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Tagalog"
-msgstr ""
+msgstr "Тагалог"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tamil"
@@ -582,7 +582,7 @@ msgstr "Тайландски"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Tswana"
-msgstr ""
+msgstr "Тсуана"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Turkish"
@@ -606,7 +606,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:63
 msgid "Yoruba"
-msgstr ""
+msgstr "Йоруба"
 
 #: jinja2/includes/translate_locales.html:64
 msgid "Zulu"
@@ -853,6 +853,7 @@ msgstr "История (%(count)s)"
 #, python-format
 msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"Трябва ви специално разрешение, за да използвате ключове за програмния интерфейс - API. Можете да направите заявка за разрешение като <a href=\"%(bugzilla_url)s\">подадете съобщение за грешка</a>."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
@@ -2402,7 +2403,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Подайте съобщение за грешка, за да закриете сметката си"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2801,12 +2802,12 @@ msgstr ""
 
 #: kuma/wiki/forms.py:36
 msgid "Please provide a title."
-msgstr ""
+msgstr "Моля, задайте заглавие."
 
 #: kuma/wiki/forms.py:37
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
+msgstr "Заглавието е твърде късо (%(show_value)s знака). То трябва да съдържа поне %(limit_value)s знака."
 
 #: kuma/wiki/forms.py:39
 #, python-format
@@ -3132,7 +3133,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
-msgstr ""
+msgstr "Не можем да изтриваме страници, които имат дъщерни страници, докато не оправим тази грешка:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
@@ -3201,7 +3202,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
-msgstr ""
+msgstr "Нов документ"
 
 #: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
@@ -3364,7 +3365,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
-msgstr ""
+msgstr "Промяна на заглавието и свойствата на страницата"
 
 #: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
@@ -3474,11 +3475,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "Търсене по заглавие на документ"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Заглавие на родителската страница"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
