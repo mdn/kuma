@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-08 17:10+0000\n"
+"PO-Revision-Date: 2017-02-08 23:06+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1283,7 +1283,7 @@ msgstr "Обучение за уеб-разработчици"
 
 #: kuma/landing/jinja2/landing/homepage.html:126
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Вземете браузърът за разработчици като вас"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Build Open Web Apps"
@@ -2422,7 +2422,7 @@ msgstr "Дата"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
 msgid "Edit page"
-msgstr "Редактиране на страницата"
+msgstr "Промяна на страницата"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
@@ -2443,7 +2443,7 @@ msgstr "Този потребител не е активен."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr "Редактиране на профила"
+msgstr "Промяна на вашия профил"
 
 #: kuma/users/jinja2/users/user_edit.html:33
 msgid "Change your avatar at"
@@ -2663,7 +2663,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:45
 msgid "Edit"
-msgstr "Редактиране"
+msgstr "Промяна"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
@@ -2729,7 +2729,7 @@ msgstr ""
 
 #: kuma/wiki/content.py:725
 msgid "Edit section"
-msgstr ""
+msgstr "Промяна на секция"
 
 #: kuma/wiki/events.py:72
 #, python-format
