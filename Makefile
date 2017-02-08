@@ -129,7 +129,10 @@ k8s-migrate:
 	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \
 	python manage.py migrate
 
-deis-migrate:
+wait-mysql:
+	bash -c "if ! kubectl -n ${DEIS_APP} get pods | grep mysql | grep -q Running; then sleep 2; make wait-mysql; fi"
+
+deis-migrate: wait-mysql
 	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} run -a ${DEIS_APP} python manage.py migrate
 
 tag-latest:
