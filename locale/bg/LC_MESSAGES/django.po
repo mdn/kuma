@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-08 23:06+0000\n"
+"PO-Revision-Date: 2017-02-08 23:27+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -127,7 +127,7 @@ msgstr "Инструменти на сайта"
 
 #: jinja2/base.html:113
 msgid "Revision dashboard"
-msgstr ""
+msgstr "Табло за преглед на промените"
 
 #: jinja2/base.html:114
 msgid "Documentation status"
@@ -1080,7 +1080,7 @@ msgstr "Автори"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr "Табло за преразглеждания"
+msgstr "Табло за преглед на промените"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
@@ -2684,7 +2684,7 @@ msgstr ""
 #: kuma/users/jinja2/users/includes/user_title_info.html:105
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Член от %(date_joined)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
@@ -3323,11 +3323,11 @@ msgstr "Етикети за документа и сътрудници"
 
 #: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
-msgstr ""
+msgstr "Допринесли за тази страница:"
 
 #: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
-msgstr ""
+msgstr "Последно обновяване от:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
@@ -3729,7 +3729,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Print this article"
-msgstr ""
+msgstr "Отпечатване на статията"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
