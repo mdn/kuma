@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-08 16:49+0000\n"
+"PO-Revision-Date: 2017-02-08 17:10+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2667,7 +2667,7 @@ msgstr "Редактиране"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:59 kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "Advanced"
-msgstr ""
+msgstr "Повече"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
@@ -3301,6 +3301,8 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
+"Доброволците ни все още не са превели статията на <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Присъединете се и помогнете да свършим тая работа!</a><br>Можете да "
+"прочетете статията и на <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
@@ -3699,11 +3701,11 @@ msgstr "Следене"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "New sub-article"
-msgstr ""
+msgstr "Нова статия тук"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "Clone this article"
-msgstr ""
+msgstr "Клониране на тази статия"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
