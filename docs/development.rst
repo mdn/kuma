@@ -350,7 +350,7 @@ You can deploy a hosted demo instance of Kuma by following these steps:
 
 #. Your demo will be accessible within about 10 minutes at::
 
-    https://mdn-<your_branch_name>.virginia.moz.works
+    https://mdn-demo-<your_branch_name>.virginia.moz.works
 
 #. Mozilla SRE's will periodically remove old instances
 
