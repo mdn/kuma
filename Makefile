@@ -156,5 +156,8 @@ compose-test:
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml run $(TEST)
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop
 
+create-demo:
+	@ ./Jenkinsfiles/create_demo_instance.sh
+
 # Those tasks don't have file targets
 .PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
