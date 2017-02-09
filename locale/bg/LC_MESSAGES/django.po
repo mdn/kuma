@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-09 00:46+0000\n"
+"PO-Revision-Date: 2017-02-09 10:48+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3186,7 +3186,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr "Връщане в предишното състояние"
+msgstr "Връщане"
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
@@ -3223,7 +3223,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
-msgstr ""
+msgstr "Възстановяване на тази статия"
 
 #: kuma/wiki/jinja2/wiki/document.html:176
 msgid "Previous Search Result"
@@ -3555,7 +3555,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Връщане до това състояние"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
