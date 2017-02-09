@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-08 23:51+0000\n"
+"PO-Revision-Date: 2017-02-09 00:11+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2722,7 +2722,7 @@ msgstr "Технически – примери с програмен код, п
 
 #: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Редакторски - изказ, граматика или съдържание"
 
 #: kuma/wiki/constants.py:218
 msgid "Localization in progress - not completely translated yet."
@@ -2816,7 +2816,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:42
 msgid "Name Your Article"
-msgstr ""
+msgstr "Дайте име на статията"
 
 #: kuma/wiki/forms.py:43
 #, fuzzy, python-format
@@ -2905,7 +2905,7 @@ msgstr ""
 #: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "Слог:"
 
 #: kuma/wiki/forms.py:350 kuma/wiki/forms.py:425
 msgid "Article URL"
@@ -2913,7 +2913,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "В страница:"
 
 #: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
@@ -2953,7 +2953,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:895
 msgid "New slug:"
-msgstr ""
+msgstr "Нов слог:"
 
 #: kuma/wiki/forms.py:896
 msgid "New article URL"
@@ -3052,7 +3052,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1915
 msgid "Slug"
-msgstr ""
+msgstr "Слог"
 
 #: kuma/wiki/models.py:1923
 msgid "Document (optional)"
@@ -3463,7 +3463,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "Текущ слог:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
@@ -3471,7 +3471,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "Нов слог:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
@@ -3833,7 +3833,7 @@ msgstr "Наръчник на редактора"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
-msgstr ""
+msgstr "Ръководство по стил"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
@@ -3913,7 +3913,7 @@ msgstr "Как се ползват коментари за промените"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
-msgstr ""
+msgstr "Напишете защо правите промени. Не е задължително, но така историята на страницата ще се разбира по-лесно."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
