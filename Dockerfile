@@ -11,5 +11,7 @@ USER root
 RUN chown -R kuma /app
 USER kuma
 
+ENV DJANGO_SETTINGS_MODULE=kuma.settings.prod
+
 RUN make localecompile
 RUN make build-static && rm -rf build
