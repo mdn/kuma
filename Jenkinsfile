@@ -31,9 +31,6 @@ node {
     sh 'git submodule update --init --recursive'
     setGitEnvironmentVariables()
 
-    env.DEIS_BIN = 'deis2'
-    env.DEIS_PROFILE = 'dev-usw'
-
     // When checking in a file exists in another directory start with './' or
     // prepare to fail.
     if (fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.groovy") || fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.yml")) {

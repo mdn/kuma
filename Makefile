@@ -107,9 +107,16 @@ push-kuma:
 push: push-base push-kuma
 
 deis-create:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} create ${DEIS_APP} --no-remote && \
-	sleep 5 && ${DEIS_BIN} config:push -p .env-dist -a ${DEIS_APP} || \
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} create ${DEIS_APP} --no-remote || \
 	${DEIS_BIN} apps | grep -q ${DEIS_APP}
+
+deis-config:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} config:set -a ${DEIS_APP} $(shell cat .env-dist) || true
+
+deis-create-and-or-config:
+	make deis-create || echo already created
+	sleep 5
+	make deis-config
 
 deis-pull:
 	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} pull ${KUMA_IMAGE} -a ${DEIS_APP}
@@ -122,7 +129,10 @@ k8s-migrate:
 	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \
 	python manage.py migrate
 
-deis-migrate:
+wait-mysql:
+	bash -c "if ! kubectl -n ${DEIS_APP} get pods | grep mysql | grep -q Running; then sleep 2; make wait-mysql; fi"
+
+deis-migrate: wait-mysql
 	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} run -a ${DEIS_APP} python manage.py migrate
 
 tag-latest:
