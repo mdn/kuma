@@ -8,6 +8,16 @@ if [ "${MY_BRANCH}" = "master" ]; then
     exit 1
 fi
 
+grep '^[a-z0-9-]*[a-z0-9]$' <<< $MY_BRANCH > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Invalid valid branch name"
+    echo "Branch name must be an acceptable Dies application name which uses the following regex:"
+    echo "^[a-z0-9-]*[a-z0-9]$"
+    echo "Note: \"mdn-demo-\" is automatically prepended to the branch name during deployment."
+    exit 1
+fi
+
+
 YAML_FILE="${PROJECT_ROOT}/Jenkinsfiles/${MY_BRANCH}.yml"
 
 cat << EOF > ${YAML_FILE}
