@@ -43,6 +43,10 @@ Docker setup
 
         cd kuma
 
+#. Copy ``.env-dist.dev`` to ``.env``. Linux users should to set the ``UID``
+   parameter in ``.env``, to avoid issues when mixing ``docker-compose`` and
+   ``docker`` commands.
+
 #. Pull the Docker images and build the containers::
 
         docker-compose pull
