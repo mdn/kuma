@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-09 10:48+0000\n"
+"PO-Revision-Date: 2017-02-11 22:05+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1145,7 +1145,7 @@ msgstr "ограничен на %(ban_date)s от %(user)s"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Изпратено като %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
 #, python-format
