@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-11 22:05+0000\n"
+"PO-Revision-Date: 2017-02-11 22:31+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1197,6 +1197,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
 " OS."
 msgstr ""
+"Мрежата на разработчиците на Мозила (MDN) предоставя информация, относно отворените уеб-технологии като HTML, CSS и начини за общуване между програми – API както за страници, така и за HTML5 "
+"приложения. Сайтът също документира продукти на Мозила като Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1463,7 +1465,7 @@ msgstr "Уеб документация от разработчици за ра�
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr ""
+msgstr "MDN е вашият набор от инструменти и документи за разработка на HTML, CSS, JavaScript и други стандарти и отворени технологии."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -1514,11 +1516,11 @@ msgstr ""
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr ""
+msgstr "Търсенето е временно изключено. Моля, опитайте отново след няколко минути."
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr ""
+msgstr "Нещо не е наред със заявката за търсене. Моля, опитайте отново след няколко минути."
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -1535,17 +1537,17 @@ msgstr "Търсенето е недостъпно"
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Търсене в документацията на Мрежата на разработчиците на Мозила"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr ""
+msgstr "Резултати от търсенето за \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr ""
+msgstr "преведено от <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
@@ -3572,6 +3574,8 @@ msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"&copy; 2005-%(this_year)s Мрежа на разработчиците на Мозила и отделни сътрудници<br /> Съдържанието е достъпно под лиценз, специфичен за този проект. &middot; <a href=\"%(about_url)s\">Относно "
+"MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Помогнете като програмист</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Политика за поверителност</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
