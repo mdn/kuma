@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-11 22:31+0000\n"
+"PO-Revision-Date: 2017-02-11 22:47+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1575,8 +1575,8 @@ msgstr[1] "%(count)s документи са намерени за \"%(query)s\"
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s документ, намерен в %(locale_native)s."
+msgstr[1] "%(count)s документа, намерени в %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
@@ -1596,26 +1596,26 @@ msgstr[1] "%(count)s документа са намерени за \"%(query)s\"
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
+msgstr[0] "%(count)s намерен документ."
 msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Всички резултати."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Резултати от %(start)s до %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Търсене отново само в %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Документация"
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
@@ -1651,7 +1651,7 @@ msgstr "изпратено на"
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "тип"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1691,7 +1691,7 @@ msgstr "хеш"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr ""
+msgstr "Потребителското име може да съдържа само букви, цифри и следните знаци: . - _ +"
 
 #: kuma/users/forms.py:31 kuma/users/models.py:46
 msgid "Timezone"
@@ -1699,15 +1699,15 @@ msgstr "Часови пояс"
 
 #: kuma/users/forms.py:37
 msgid "Beta tester"
-msgstr ""
+msgstr "Бета-тестер"
 
 #: kuma/users/forms.py:41 kuma/users/jinja2/users/includes/user_title_info.html:50
 msgid "Interests"
-msgstr ""
+msgstr "Интереси"
 
 #: kuma/users/forms.py:47
 msgid "Expertise"
-msgstr ""
+msgstr "Опит в"
 
 #: kuma/users/forms.py:53
 msgid "Username"
@@ -1739,19 +1739,19 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Областите, в които имате опит, трябва да са част от интересите ви"
 
 #: kuma/users/forms.py:146
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Това поле трябва да се попълни."
 
 #: kuma/users/forms.py:152
 msgid "Username already in use."
-msgstr ""
+msgstr "Това потребителско име вече е заето."
 
 #: kuma/users/forms.py:162
 msgid "Email"
-msgstr ""
+msgstr "Е-поща"
 
 #: kuma/users/models.py:34
 #, python-format
