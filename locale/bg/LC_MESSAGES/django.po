@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-11 22:47+0000\n"
+"PO-Revision-Date: 2017-02-11 23:05+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1773,7 +1773,7 @@ msgstr "Начална страница"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
-msgstr ""
+msgstr "Този адрес (URL) е с неправилен формат. Правилен примерен адрес е http://example.com/my_page."
 
 #: kuma/users/models.py:75
 msgid "Name"
@@ -1802,31 +1802,31 @@ msgstr "Етикети"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr "Въведете валиден адрес за сайт."
+msgstr "Въведете адрес на съществуващ сайт."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr "Въведете валиден адрес в Twitter."
+msgstr "Въведете съществуващ адрес в Twitter."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
-msgstr "Въведете валиден адрес в GitHub."
+msgstr "Въведете съществуващ адрес в GitHub."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
-msgstr "Въведете валиден адрес в Stack Overflow."
+msgstr "Въведете съществуващ адрес в Stack Overflow."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr "Въведете валиден адрес в LinkedIn."
+msgstr "Въведете съществуващ адрес в LinkedIn."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Въведете съществуващ адрес в Mozillians."
 
 #: kuma/users/models.py:134
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Въведете съществуващ адрес от Facebook."
 
 #: kuma/users/models.py:141
 msgid "Website"
