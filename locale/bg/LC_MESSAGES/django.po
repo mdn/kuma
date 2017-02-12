@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-12 17:45+0000\n"
+"PO-Revision-Date: 2017-02-12 19:07+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1436,15 +1436,15 @@ msgstr "MDN се крепи на разработчици, създаващи д
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr ""
+msgstr "MDN се крепи на разработчици, създаващи документация за HTML и много други неща."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr ""
+msgstr "MDN се крепи на разработчици, създаващи документация за JavaScript и много други неща."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr ""
+msgstr "MDN се крепи на разработчици, създаващи документация за Уеб и много други неща."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
@@ -1581,7 +1581,7 @@ msgstr[1] "%(count)s документа, намерени в %(locale_native)s."
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(count)s документа са намерени в %(locale_native)s и в %(default_locale_native)s."
 msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:104
@@ -1898,7 +1898,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "Добавихте също следните адреси за електронна поща:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
@@ -1906,7 +1906,7 @@ msgstr "Задаване като основен"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "Потвърждение за повторното изпращане"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
