@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-10 09:38+0000\n"
+"PO-Revision-Date: 2017-02-12 12:36+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -515,7 +515,7 @@ msgstr "일본어"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Kabyle"
-msgstr ""
+msgstr "카빌어"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Korean"
@@ -1302,15 +1302,15 @@ msgstr "오픈 웹 및 모바일"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "비영리 단체입니다."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "12월 31일 전에 기부하세요."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate Now"
-msgstr ""
+msgstr "지금 기부하기"
 
 #: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Learn Web Development"
@@ -2184,9 +2184,9 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr "다른 사람들이 알아보거나 문서에 표시할 이름을 입력하세요."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
-#, fuzzy, python-format
+#, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr "선택된 이메일 주소의 프로필이 이미 존재합니다. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s 계정을 연결</a>하세요."
+msgstr "선택된 이메일 주소의 프로필이 이미 존재합니다. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">%(provider_name)s 계정을 연결</a>하세요."
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
@@ -2868,9 +2868,9 @@ msgid "Name Your Article"
 msgstr "문서 이름"
 
 #: kuma/wiki/forms.py:43
-#, fuzzy, python-format
+#, python-format
 msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
-msgstr "제목이 너무 짧습니다(%(show_value)s자). 최소 %(limit_value)s자이어야 합니다."
+msgstr "태그가 너무 깁니다(%(show_value)s자). 전체 길이를 %(limit_value)s자 이내로 맞춰주세요."
 
 #: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
@@ -3367,11 +3367,11 @@ msgid "This translation is in progress."
 msgstr "번역 작업 진행중입니다."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "이 문서는 아직 자원 봉사자들이 <bdi>%(locale)s</bdi>로 번역하지 않았습니다. <a href=\"%(help_link)s\">함께 해서 번역을 마치도록 도와 주세요!</a>"
+msgstr "이 문서는 아직 자원 봉사자들이 <bdi>%(locale)s</bdi>로 번역하지 않았습니다. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">참여해서 번역을 마치도록 도와 주세요!</a><br><a href=\"%(doc_abs_url)s\">%(parent_language)s</a>의 문서도 읽어보세요."
 
 # 85%
 #: kuma/wiki/jinja2/wiki/document.html:317
@@ -3994,13 +3994,13 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "추가 및 변경 사유를 알려주세요. 이는 선택 사항이며 기록을 위한 것입니다."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "실수로 이 메시지를 받았다고 믿는다면, 작업중인 내용을 저장한 다음, <a href=\"%(admin_email)s\">사이트 관리자에게 연락</a>해 주세요."
+msgstr "죄송합니다! 작업을 저장할 수 없습니다. 작업중인 내용을 저장하고 <a href=\"%(admin_email)s\"> 사이트 관리자에게 연락</a>해 주세요."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
-msgstr ""
+msgstr "문제를 해결하도록 하겠습니다. 그 후에 작업을 다시 전송할 수 있습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
