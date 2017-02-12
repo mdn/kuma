@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-01-31 16:01-0800\n"
-"PO-Revision-Date: 2017-02-11 23:05+0000\n"
+"PO-Revision-Date: 2017-02-12 17:45+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -396,9 +396,8 @@ msgid "Bengali (India)"
 msgstr "Бенгалски (Индия)"
 
 #: jinja2/includes/translate_locales.html:10
-#, fuzzy
 msgid "Bulgarian"
-msgstr "Унгарски"
+msgstr "Български"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Burmese"
@@ -703,7 +702,7 @@ msgstr "Потребителското име на потребителя, ко�
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
-msgstr ""
+msgstr "Дали този прикачен файл е бил текуща версия по време на изхвърлянето в кошчето."
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
@@ -1270,7 +1269,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "С идеална цел."
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Donate before Dec 31."
@@ -1342,7 +1341,7 @@ msgstr "Принос към програмния код в MDN"
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr ""
+msgstr "Публикувано на %(entrydate)s от %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
@@ -1433,7 +1432,7 @@ msgstr "По-добра Уеб документация за по добър У�
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr ""
+msgstr "MDN се крепи на разработчици, създаващи документация за CSS и много други неща."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
@@ -1856,7 +1855,7 @@ msgstr "Съгласен съм"
 
 #: kuma/users/tasks.py:52 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Направете следващата крачка към участието в MDN!"
 
 #: kuma/users/views.py:470
 msgid "Email address"
