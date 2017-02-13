@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import static
 
 from kuma.core.sections import SECTION_USAGE
@@ -45,3 +45,10 @@ def promote_buttons(request):
 
 def fellowship(request):
     return render(request, 'landing/fellowship.html')
+
+
+def maintenance_mode(request):
+    if settings.MAINTENANCE_MODE:
+        return render(request, 'landing/maintenance-mode.html')
+    else:
+        return redirect('home')

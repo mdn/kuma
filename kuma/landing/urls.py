@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^contribute\.json$',
         views.contribute_json,
         name='contribute_json'),
+    url(r'^maintenance-mode/?$',
+        views.maintenance_mode,
+        name='maintenance_mode'),
 ]

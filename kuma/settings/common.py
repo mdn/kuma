@@ -45,6 +45,8 @@ PRODUCTION_URL = SITE_URL
 STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
+MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+
 MANAGERS = ADMINS
 
 DEFAULT_DATABASE = config('DATABASE_URL',
@@ -755,6 +757,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'maintenance-mode': {
+        'source_filenames': (
+            'styles/maintenance-mode.scss',
+        ),
+        'output_filename': 'build/styles/maintenance-mode.css',
     },
 }
 

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% set styles = ('maintenance-mode',) %}
+
+{% block bodyclass %}maintenance-mode{% endblock %}
+{% block title %}{{ page_title(_('Maintenance Mode')) }}{% endblock %}
+{% set meta = [('robots', 'noindex, nofollow')] %}
+
+{% block content %}
+
+<section id="content">
+    <div class="wrap">
+        <section id="content-main" class="full" role="main">
+            <h1>{{ _('Maintenance Mode') }}</h1>
+
+            <div id="beastainer">
+                <div id="servers"></div>
+                <div id="beast"></div>
+                <div class="cloud" id="cloud-large"></div>
+                <div class="cloud" id="cloud-small"></div>
+            </div>
+
+            <p>
+            {% trans %}
+                MDN is currently in maintenance mode. Content is being served
+                from a backup of the database, which means some recent changes
+                may not be reflected. Have no fear! All will be well when we
+                complete the scheduled maintenance.
+            {% endtrans %}
+            </p>
+
+            <p>
+            {% trans %}
+                While in maintenance mode, no actions that would change
+                database content are allowed. Primarily, this means no articles
+                may be edited.
+            {% endtrans %}
+            </p>
+
+            <p>
+            {% trans %}
+                Thank you for your patience.
+            {% endtrans %}
+            </p>
+        </section>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+{% endblock %}
