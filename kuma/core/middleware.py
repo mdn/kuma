@@ -6,6 +6,7 @@ from django.core import urlresolvers
 from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
+from commonware.middleware import NoVarySessionMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .utils import urlparams
@@ -147,3 +148,29 @@ class SetRemoteAddrFromForwardedFor(object):
             # The client's IP will be the first one.
             forwarded_for = forwarded_for.split(',')[0].strip()
             request.META['REMOTE_ADDR'] = forwarded_for
+
+
+class MMAwareSessionMiddleware(NoVarySessionMiddleware):
+
+    def process_request(self, request):
+        """
+        If we're in MAINTENANCE_MODE, ignore the incoming session cookie,
+        if there is one, and behave as if we don't have one at all. Otherwise,
+        it's business as usual.
+        """
+        if settings.MAINTENANCE_MODE:
+            request.session = self.SessionStore(None)
+        else:
+            super(MMAwareSessionMiddleware, self).process_request(request)
+
+    def process_response(self, request, response):
+        """
+        If we're in MAINTENANCE_MODE, don't do anything. Otherwise, it's
+        business as usual.
+        """
+        if settings.MAINTENANCE_MODE:
+            return response
+        return super(MMAwareSessionMiddleware, self).process_response(
+            request,
+            response
+        )
