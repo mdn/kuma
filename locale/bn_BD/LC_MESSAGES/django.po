@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-01-31 16:01-0800\n"
+"POT-Creation-Date: 2017-02-14 07:51-0800\n"
 "PO-Revision-Date: 2017-01-16 00:24+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -87,192 +87,193 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "অভ্যন্তরীণ সার্ভার ত্রুটির সম্মুখিন হয়েছে"
 
-#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:96 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
-#: jinja2/base.html:77
+#: jinja2/base.html:79
 msgid "Skip to main content"
 msgstr "প্রধান বিষয়বস্তু স্কিপ করুন"
 
-#: jinja2/base.html:79
+#: jinja2/base.html:81
 msgid "Select language"
 msgstr "ভাষা নির্বাচন করুন"
 
-#: jinja2/base.html:80
+#: jinja2/base.html:82
 msgid "Skip to search"
 msgstr "খোঁজা স্কিপ করুন"
 
-#: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:103 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "টুলসমূহ"
 
-#: jinja2/base.html:105
+#: jinja2/base.html:107
 msgid "Contribute to MDN"
 msgstr "MDN এ অবদান রাখুন"
 
-#: jinja2/base.html:107
+#: jinja2/base.html:109
 msgid "Get started"
 msgstr "শুরু করুন"
 
-#: jinja2/base.html:108
+#: jinja2/base.html:110
 msgid "Review or localize docs"
 msgstr "ডকগুলো পর্যালোচনা অথবা অনুবাদ করুন"
 
-#: jinja2/base.html:111
+#: jinja2/base.html:113
 msgid "Site Tools"
 msgstr "সাইটের টুলসমূহ"
 
-#: jinja2/base.html:113
+#: jinja2/base.html:115
 msgid "Revision dashboard"
 msgstr "ড্যাশবোর্ড সংশোধন করুন"
 
-#: jinja2/base.html:114
+#: jinja2/base.html:116
 msgid "Documentation status"
 msgstr "ডকুমেন্টেশনের অবস্থা"
 
-#: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:125 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
 msgstr "ওয়েব প্রযুক্তিসমূহ"
 
-#: jinja2/base.html:127
+#: jinja2/base.html:129
 msgid "Technologies"
 msgstr "প্রযুক্তিসমুহ"
 
-#: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:131 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "এইচটিএমএল"
 
-#: jinja2/base.html:130 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:132 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "সিএসএস"
 
-#: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:133 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "জাভাস্ক্রিপ্ট"
 
-#: jinja2/base.html:132
+#: jinja2/base.html:134
 msgid "Graphics"
 msgstr "গ্রাফিক্স"
 
-#: jinja2/base.html:133
+#: jinja2/base.html:135
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:134
+#: jinja2/base.html:136
 msgid "APIs / DOM"
 msgstr "APIs / DOM"
 
-#: jinja2/base.html:135
+#: jinja2/base.html:137
 #, fuzzy
 msgid "WebExtensions"
 msgstr "অ্যাড-অনস এবং এক্সটেনশন"
 
-#: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:138 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "ম্যাথএমএল"
 
-#: jinja2/base.html:139
+#: jinja2/base.html:141
 msgid "References & Guides"
 msgstr "তথ্যসূত্র এবং নির্দেশিকা"
 
-#: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
-msgid "Learning web development"
+#: jinja2/base.html:143 kuma/landing/jinja2/landing/homepage.html:84
+#, fuzzy
+msgid "Learn web development"
 msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:144
 msgid "Tutorials"
 msgstr "টিউটরিয়াল"
 
-#: jinja2/base.html:143
+#: jinja2/base.html:145
 msgid "References"
 msgstr "তথ্যসূত্র"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:146
 msgid "Developer Guides"
 msgstr "ডেভেলপার গাইড"
 
-#: jinja2/base.html:145
+#: jinja2/base.html:147
 msgid "Accessibility"
 msgstr "প্রবেশযোগ্যতা"
 
-#: jinja2/base.html:146
+#: jinja2/base.html:148
 msgid "Game development"
 msgstr "গেম ডেভলপমেন্ট"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:149
 msgid "...more docs"
 msgstr "...অারো ডক"
 
-#: jinja2/base.html:151
+#: jinja2/base.html:153
 msgid "Mozilla Docs"
 msgstr "Mozilla Docs"
 
-#: jinja2/base.html:156 kuma/core/sections.py:6
+#: jinja2/base.html:158 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "এড-অন"
 
-#: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:159 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "ফায়ারফক্স"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:163
 msgid "Developer Tools"
 msgstr "Developer Tools"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:163
 msgid "Feedback"
 msgstr "ফিডব্যাক"
 
-#: jinja2/base.html:166
+#: jinja2/base.html:168
 msgid "Get Firefox help"
 msgstr "Firefox এর সহায়তা নিন"
 
-#: jinja2/base.html:167
+#: jinja2/base.html:169
 #, fuzzy
 msgid "Get web development help"
 msgstr "ওয়েব ডেভেলপমেন্ট"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:172
 msgid "Join the MDN community"
 msgstr "MDN কমিউনিটিতে যোগ দিন"
 
-#: jinja2/base.html:171
+#: jinja2/base.html:173
 msgid "Report a content problem"
 msgstr "কনটেন্টে সমস্যা থাকলে জানান"
 
-#: jinja2/base.html:172
+#: jinja2/base.html:174
 msgid "Report a bug"
 msgstr "সমস্যাটি জানান"
 
-#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:181 jinja2/base.html:182 jinja2/base.html:184 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "খোঁজা"
 
-#: jinja2/base.html:198
+#: jinja2/base.html:200
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
 
-#: jinja2/base.html:203
+#: jinja2/base.html:205
 msgid "About MDN"
 msgstr "MDN সমন্ধে"
 
-#: jinja2/base.html:204
+#: jinja2/base.html:206
 msgid "Terms"
 msgstr "শর্তসমূহ"
 
-#: jinja2/base.html:205
+#: jinja2/base.html:207
 msgid "Privacy"
 msgstr "গোপনীয়তা"
 
-#: jinja2/base.html:206
+#: jinja2/base.html:208
 msgid "Cookies"
 msgstr "কুকিস"
 
-#: jinja2/base.html:207
+#: jinja2/base.html:209
 msgid "Contribute to the code"
 msgstr "কোড তৈরীতে অবদান রাখুন"
 
@@ -928,11 +929,11 @@ msgstr "মজ হ্যাক"
 msgid "Today at %s"
 msgstr ""
 
-#: kuma/core/templatetags/jinja_helpers.py:88
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:343
 msgid "Yes"
 msgstr "হ্যাঁ"
 
-#: kuma/core/templatetags/jinja_helpers.py:88
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:347
 msgid "No"
 msgstr "না"
 
@@ -1236,7 +1237,8 @@ msgid "more..."
 msgstr "আরো ..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-msgid "Learning"
+#, fuzzy
+msgid "Learn"
 msgstr "শিখছি"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
@@ -2455,7 +2457,7 @@ msgstr "পৃষ্ঠা"
 msgid "Date"
 msgstr "তারিখ"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:420
 msgid "Edit page"
 msgstr "পৃষ্ঠা সম্পাদন"
 
@@ -2463,7 +2465,7 @@ msgstr "পৃষ্ঠা সম্পাদন"
 msgid "View complete diff"
 msgstr "সম্পূর্ণ পরিবর্তন দেখুন"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:421
 msgid "View page history"
 msgstr "পৃষ্ঠার ইতিহাস দেখুন"
 
@@ -3362,16 +3364,25 @@ msgstr ""
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:338
+#, fuzzy
+msgid "Was this article helpful?"
+msgstr "নিবন্ধটি অপসারণ করুন"
+
+#: kuma/wiki/jinja2/wiki/document.html:352
+msgid "Thank you!"
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/document.html:362
 msgid "Document Tags and Contributors"
 msgstr "ডকুমেন্ট ট্যাগ এবং অবদানকারী"
 
-#: kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/wiki/jinja2/wiki/document.html:368
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "MDN কোডবেসে অবদান রাখা"
 
-#: kuma/wiki/jinja2/wiki/document.html:353
+#: kuma/wiki/jinja2/wiki/document.html:374
 msgid "Last updated by:"
 msgstr "সর্বশেষ হালনাগাদ করেছেন:"
 

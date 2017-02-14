@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-30 06:58-0800\n"
+"POT-Creation-Date: 2017-02-14 07:50-0800\n"
 "PO-Revision-Date: 2016-11-30 19:42+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
@@ -138,7 +138,7 @@ msgstr "没有选择"
 msgid "Selected: "
 msgstr "已选择："
 
-#: kuma/static/js/users.js:108
+#: kuma/static/js/users.js:107
 msgid "New interest..."
 msgstr "新的兴趣..."
 

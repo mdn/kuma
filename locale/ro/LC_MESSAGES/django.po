@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-01-31 16:01-0800\n"
+"POT-Creation-Date: 2017-02-14 07:51-0800\n"
 "PO-Revision-Date: 2017-01-26 21:29+0000\n"
 "Last-Translator: Cristian Silaghi <cristian.silaghi@mozilla.ro>\n"
 "Language-Team: Romanian https://pontoon.mozilla.org/ro/\n"
@@ -87,206 +87,206 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "Internal Server Error"
 
-#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:94 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:34 jinja2/base.html:39 jinja2/base.html:96 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
-#: jinja2/base.html:77
+#: jinja2/base.html:79
 msgid "Skip to main content"
 msgstr ""
 
-#: jinja2/base.html:79
+#: jinja2/base.html:81
 msgid "Select language"
 msgstr "Selectează limba"
 
-#: jinja2/base.html:80
+#: jinja2/base.html:82
 msgid "Skip to search"
 msgstr ""
 
-#: jinja2/base.html:101 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:103 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Unelte"
 
-#: jinja2/base.html:105
+#: jinja2/base.html:107
 msgid "Contribute to MDN"
 msgstr "Contribuie la MDN"
 
-#: jinja2/base.html:107
+#: jinja2/base.html:109
 #, fuzzy
 msgid "Get started"
 msgstr "Get Started Today!"
 
-#: jinja2/base.html:108
+#: jinja2/base.html:110
 msgid "Review or localize docs"
 msgstr ""
 
-#: jinja2/base.html:111
+#: jinja2/base.html:113
 #, fuzzy
 msgid "Site Tools"
 msgstr "/en/Unelte"
 
-#: jinja2/base.html:113
+#: jinja2/base.html:115
 msgid "Revision dashboard"
 msgstr ""
 
-#: jinja2/base.html:114
+#: jinja2/base.html:116
 #, fuzzy
 msgid "Documentation status"
 msgstr "Documentație MDN"
 
-#: jinja2/base.html:123 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:125 kuma/landing/jinja2/landing/homepage.html:69
 #, fuzzy
 msgid "Web Technologies"
 msgstr "Browse by Technology"
 
-#: jinja2/base.html:127
+#: jinja2/base.html:129
 msgid "Technologies"
 msgstr "Tehnologii"
 
-#: jinja2/base.html:129 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:131 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:130 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:132 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:131 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:133 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:132
+#: jinja2/base.html:134
 msgid "Graphics"
 msgstr "Grafică"
 
-#: jinja2/base.html:133
+#: jinja2/base.html:135
 msgid "HTTP"
 msgstr ""
 
-#: jinja2/base.html:134
+#: jinja2/base.html:136
 msgid "APIs / DOM"
 msgstr "API-uri / DOM"
 
-#: jinja2/base.html:135
+#: jinja2/base.html:137
 #, fuzzy
 msgid "WebExtensions"
 msgstr "Extensions"
 
-#: jinja2/base.html:136 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:138 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:139
+#: jinja2/base.html:141
 msgid "References & Guides"
 msgstr ""
 
-#: jinja2/base.html:141 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:143 kuma/landing/jinja2/landing/homepage.html:84
 #, fuzzy
-msgid "Learning web development"
+msgid "Learn web development"
 msgstr "/en/Web_Development"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:144
 msgid "Tutorials"
 msgstr "Tutoriale"
 
-#: jinja2/base.html:143
+#: jinja2/base.html:145
 msgid "References"
 msgstr "Referințe"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:146
 msgid "Developer Guides"
 msgstr "Ghiduri pentru dezvoltatori"
 
-#: jinja2/base.html:145
+#: jinja2/base.html:147
 msgid "Accessibility"
 msgstr "Accesibilitate"
 
-#: jinja2/base.html:146
+#: jinja2/base.html:148
 #, fuzzy
 msgid "Game development"
 msgstr "/en/Web_Development"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:149
 msgid "...more docs"
 msgstr "...mai multe documente"
 
-#: jinja2/base.html:151
+#: jinja2/base.html:153
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Mozilla"
 
-#: jinja2/base.html:156 kuma/core/sections.py:6
+#: jinja2/base.html:158 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Suplimente"
 
-#: jinja2/base.html:157 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:159 kuma/core/translations/search/filter/firefox/name.py:4
 #, fuzzy
 msgid "Firefox"
 msgstr "Firefox 4"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:163
 msgid "Developer Tools"
 msgstr "Unelte pentru dezvoltatori"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:163
 #, fuzzy
 msgid "Feedback"
 msgstr "Flux"
 
-#: jinja2/base.html:166
+#: jinja2/base.html:168
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Firefox 4"
 
-#: jinja2/base.html:167
+#: jinja2/base.html:169
 #, fuzzy
 msgid "Get web development help"
 msgstr "All web development tools"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:172
 msgid "Join the MDN community"
 msgstr ""
 
 # 100%
-#: jinja2/base.html:171
+#: jinja2/base.html:173
 #, fuzzy
 msgid "Report a content problem"
 msgstr "Reportar um problema"
 
 # 100%
-#: jinja2/base.html:172
+#: jinja2/base.html:174
 #, fuzzy
 msgid "Report a bug"
 msgstr "Reportar um problema"
 
-#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:181 jinja2/base.html:182 jinja2/base.html:184 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Căutare"
 
-#: jinja2/base.html:198
+#: jinja2/base.html:200
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "Conținutul este licențiat sub <a href=\"%(copyright_url)s\">aceste licențe</a>"
 
-#: jinja2/base.html:203
+#: jinja2/base.html:205
 msgid "About MDN"
 msgstr "Despre MDN"
 
-#: jinja2/base.html:204
+#: jinja2/base.html:206
 msgid "Terms"
 msgstr "Termeni"
 
-#: jinja2/base.html:205
+#: jinja2/base.html:207
 msgid "Privacy"
 msgstr "Confidențialitate"
 
-#: jinja2/base.html:206
+#: jinja2/base.html:208
 msgid "Cookies"
 msgstr "Cookie-uri"
 
-#: jinja2/base.html:207
+#: jinja2/base.html:209
 msgid "Contribute to the code"
 msgstr ""
 
@@ -941,11 +941,11 @@ msgstr ""
 msgid "Today at %s"
 msgstr "Astăzi  la %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:343
 msgid "Yes"
 msgstr "Da"
 
-#: kuma/core/templatetags/jinja_helpers.py:88
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:347
 msgid "No"
 msgstr "Nu"
 
@@ -1254,8 +1254,9 @@ msgid "more..."
 msgstr "mai multe..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-msgid "Learning"
-msgstr ""
+#, fuzzy
+msgid "Learn"
+msgstr "Învață CSS"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 #, fuzzy
@@ -2483,7 +2484,7 @@ msgstr ""
 msgid "Date"
 msgstr "Dată"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:399
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:420
 msgid "Edit page"
 msgstr "Editează pagina"
 
@@ -2491,7 +2492,7 @@ msgstr "Editează pagina"
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:400
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:421
 msgid "View page history"
 msgstr ""
 
@@ -3393,17 +3394,26 @@ msgstr ""
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:338
+#, fuzzy
+msgid "Was this article helpful?"
+msgstr "Remove this toolbar"
+
+#: kuma/wiki/jinja2/wiki/document.html:352
+msgid "Thank you!"
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/document.html:362
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Termeni pentru contributori"
 
-#: kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/wiki/jinja2/wiki/document.html:368
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Go to the first page"
 
-#: kuma/wiki/jinja2/wiki/document.html:353
+#: kuma/wiki/jinja2/wiki/document.html:374
 msgid "Last updated by:"
 msgstr ""
 

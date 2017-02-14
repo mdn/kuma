@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-11-30 06:58-0800\n"
+"POT-Creation-Date: 2017-02-14 07:50-0800\n"
 "PO-Revision-Date: 2017-01-30 01:22+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -138,7 +138,7 @@ msgstr "선택한 항목 없음"
 msgid "Selected: "
 msgstr "선택됨: "
 
-#: kuma/static/js/users.js:108
+#: kuma/static/js/users.js:107
 msgid "New interest..."
 msgstr "새로운 관심사..."
 
