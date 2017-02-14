@@ -134,7 +134,9 @@ class SocialTestMixin(object):
         {
             'email': 'octocat-private@example.com',
             'verified': True,
-            'primary': True
+            'primary': True,
+            # Added Feb 2017, bug 1339375
+            'visibility': 'private'
         }
     ]
 

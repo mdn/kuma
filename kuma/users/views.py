@@ -532,7 +532,7 @@ class SignupView(BaseSignupView):
 
     def form_valid(self, form):
         """
-        We use the selected email here and reset the social loging list of
+        We use the selected email here and reset the social logging list of
         email addresses before they get created.
 
         We send our welcome email via celery during complete_signup.
@@ -540,25 +540,26 @@ class SignupView(BaseSignupView):
         """
         selected_email = form.cleaned_data['email']
         if form.other_email_used:
-            email_address = {
+            data = {
                 'email': selected_email,
                 'verified': False,
                 'primary': True,
             }
         else:
-            email_address = self.email_addresses.get(selected_email, None)
+            data = self.email_addresses.get(selected_email, None)
 
-        if email_address:
-            email_address['primary'] = True
-            primary_email_address = EmailAddress(**email_address)
+        if data:
+            primary_email_address = EmailAddress(email=data['email'],
+                                                 verified=data['verified'],
+                                                 primary=True)
             form.sociallogin.email_addresses = \
                 self.sociallogin.email_addresses = [primary_email_address]
-            if email_address['verified']:
+            if data['verified']:
                 # we have to stash the selected email address here
                 # so that no email verification is sent again
                 # this is done by adding the email address to the session
                 get_adapter().stash_verified_email(self.request,
-                                                   email_address['email'])
+                                                   data['email'])
 
         with transaction.atomic():
             form.save(self.request)
