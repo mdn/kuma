@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-15 22:47+0000\n"
+"PO-Revision-Date: 2017-02-15 22:53+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -178,9 +178,8 @@ msgid "References & Guides"
 msgstr "Справочници и ръководства"
 
 #: jinja2/base.html:143 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learn web development"
-msgstr "Обучение на уеб-разработчици"
+msgstr "Обучение за уеб-разработчици"
 
 #: jinja2/base.html:144
 msgid "Tutorials"
@@ -949,7 +948,7 @@ msgstr "B2G ОС"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
-msgstr "Уча"
+msgstr "Уча се"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
@@ -1225,9 +1224,8 @@ msgid "more..."
 msgstr "още..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learn"
-msgstr "Уча се"
+msgstr "Учете се"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
