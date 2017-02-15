@@ -6,6 +6,7 @@ from allauth.socialaccount.providers.oauth2.views import (OAuth2LoginView,
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.decorators import redirect_in_maintenance_mode
 
 
 class KumaGitHubOAuth2Adapter(GitHubOAuth2Adapter):
@@ -38,5 +39,7 @@ class KumaOAuth2LoginView(OAuth2LoginView):
         return super(KumaOAuth2LoginView, self).dispatch(request)
 
 
-oauth2_login = KumaOAuth2LoginView.adapter_view(KumaGitHubOAuth2Adapter)
+oauth2_login = redirect_in_maintenance_mode(
+    KumaOAuth2LoginView.adapter_view(KumaGitHubOAuth2Adapter)
+)
 oauth2_callback = OAuth2CallbackView.adapter_view(KumaGitHubOAuth2Adapter)
