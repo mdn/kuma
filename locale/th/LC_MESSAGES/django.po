@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-14 19:06+0000\n"
+"PO-Revision-Date: 2017-02-15 21:05+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
 "Language: th\n"
@@ -1296,7 +1296,7 @@ msgstr "<a href=\"http://hacks.mozilla.org\">อ่านเพิ่มเต�
 
 #: kuma/landing/jinja2/landing/homepage.html:144
 msgid "Get Involved"
-msgstr ""
+msgstr "มีส่วนร่วม"
 
 #: kuma/landing/jinja2/landing/homepage.html:146
 #, python-format
