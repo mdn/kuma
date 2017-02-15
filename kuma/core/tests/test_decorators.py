@@ -1,3 +1,5 @@
+import pytest
+
 from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 
@@ -5,6 +7,7 @@ from django.test import RequestFactory
 
 from kuma.core.decorators import (block_user_agents, logout_required,
                                   login_required, never_cache,
+                                  redirect_in_maintenance_mode,
                                   permission_required)
 
 from kuma.core.tests import KumaTestCase, eq_, ok_
@@ -153,3 +156,30 @@ class TestBlockUserAgents(KumaTestCase):
         self.view = block_user_agents(simple_view)
         response = self.view(self.request)
         eq_(403, response.status_code)
+
+
+@pytest.mark.parametrize(
+    "maintenance_mode, request_method, methods, expected_status_code",
+    [(True, 'get', None, 302),
+     (True, 'post', None, 302),
+     (False, 'get', None, 200),
+     (False, 'post', None, 200),
+     (True, 'get', ('PUT', 'POST'), 200),
+     (True, 'put', ('PUT', 'POST'), 302),
+     (True, 'post', ('PUT', 'POST'), 302),
+     (False, 'get', ('PUT', 'POST'), 200),
+     (False, 'put', ('PUT', 'POST'), 200),
+     (False, 'post', ('PUT', 'POST'), 200),
+     (False, 'post', ('PUT', 'POST'), 200)]
+)
+def test_redirect_in_maintenance_mode_decorator(rf, settings, maintenance_mode,
+                                                request_method, methods,
+                                                expected_status_code):
+    request = getattr(rf, request_method)('/foo')
+    settings.MAINTENANCE_MODE = maintenance_mode
+    if methods is None:
+        deco = redirect_in_maintenance_mode
+    else:
+        deco = redirect_in_maintenance_mode(methods=methods)
+    resp = deco(simple_view)(request)
+    assert resp.status_code == expected_status_code

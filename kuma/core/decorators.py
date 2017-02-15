@@ -1,7 +1,8 @@
-from functools import wraps
 import re
+from functools import wraps, partial
 
 from django.conf import settings
+from django.shortcuts import redirect
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
@@ -136,3 +137,23 @@ def block_user_agents(view_func):
 
     return wraps(view_func,
                  assigned=available_attrs(view_func))(agent_blocked_view)
+
+
+def redirect_in_maintenance_mode(func=None, methods=None):
+    """
+    Decorator for view functions. If we're in MAINTENANCE_MODE, redirect
+    to the maintenance-mode view on requests using the given HTTP "methods"
+    (or all HTTP methods if "methods" is None). Otherwise, call the
+    wrapped view function as usual.
+    """
+    if not func:
+        return partial(redirect_in_maintenance_mode, methods=methods)
+
+    @wraps(func)
+    def wrapped(request, *args, **kwargs):
+        if (settings.MAINTENANCE_MODE and
+                ((methods is None) or (request.method in methods))):
+            return redirect('maintenance_mode')
+        return func(request, *args, **kwargs)
+
+    return wrapped
