@@ -337,3 +337,20 @@ environment variable::
 
 This is the default in Docker, which does not support local development with
 HTTPS.
+
+
+Deis Workflow Demo instances
+----------------
+You can deploy a hosted demo instance of Kuma by following these steps:
+
+#. Create a new branch, you cannot create a demo from the ``master`` branch.
+#. from the Kuma project root directory, run the following command::
+
+    make create-demo
+
+#. Your demo will be accessible within about 10 minutes at::
+
+    https://mdn-demo-<your_branch_name>.virginia.moz.works
+
+#. Mozilla SRE's will periodically remove old instances
+

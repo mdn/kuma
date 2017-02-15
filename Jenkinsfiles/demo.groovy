@@ -6,8 +6,9 @@ stage('Deploy') {
   env.KUBECONFIG = "${env.HOME}/.kube/virginia.kubeconfig"
   env.DEIS_PROFILE = 'virginia'
   env.DEIS_BIN = 'deis2'
-  env.DEIS_APP = 'mdn-' + env.BRANCH_NAME
+  env.DEIS_APP = 'mdn-demo-' + env.BRANCH_NAME
   env.DJANGO_SETTINGS_MODULE = 'kuma.settings.prod'
+  assert env.BRANCH_NAME.matches("[a-z0-9-]*[a-z0-9]")
 
   sh 'make deis-create-and-or-config'
   sh "KUBECONFIG=${env.KUBECONFIG} kubectl --namespace=${env.DEIS_APP} apply -f k8s/"
