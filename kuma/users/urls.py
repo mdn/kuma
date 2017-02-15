@@ -5,6 +5,8 @@ from django.conf.urls import include, url
 from allauth.account import views as account_views
 from allauth.socialaccount import providers, views as socialaccount_views
 
+from kuma.core.decorators import redirect_in_maintenance_mode
+
 from . import views
 
 
@@ -28,7 +30,7 @@ account_patterns = [
         account_views.email_verification_sent,
         name='account_email_verification_sent'),
     url(r'^email/confirm/(?P<key>\w+)/?$',
-        account_views.confirm_email,
+        redirect_in_maintenance_mode(account_views.confirm_email),
         name='account_confirm_email'),
     # Auth keys
     url(r'^keys', include('kuma.authkeys.urls')),
@@ -37,13 +39,13 @@ account_patterns = [
 
 users_patterns = [
     url(r'^signup/?$',
-        account_views.signup,
+        redirect_in_maintenance_mode(account_views.signup),
         name='account_signup'),
     url(r'^signin/?$',
-        account_views.login,
+        redirect_in_maintenance_mode(account_views.login),
         name='account_login'),
     url(r'^signout/?$',
-        account_views.logout,
+        redirect_in_maintenance_mode(account_views.logout),
         name='account_logout'),
     url(r'^account/', include(account_patterns)),
     url(r'^ban/(?P<username>[^/]+)$',
