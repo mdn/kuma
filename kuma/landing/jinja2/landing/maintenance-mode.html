@@ -2,52 +2,60 @@
 
 {% set styles = ('maintenance-mode',) %}
 
-{% block bodyclass %}maintenance-mode{% endblock %}
 {% block title %}{{ page_title(_('Maintenance Mode')) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 
 {% block content %}
 
 <section id="content">
-    <div class="wrap">
-        <section id="content-main" class="full" role="main">
-            <h1>{{ _('Maintenance Mode') }}</h1>
+  <div class="wrap">
+    <section id="content-main" class="full" role="main">
+      <h1>{{ _('Maintenance Mode') }}</h1>
 
-            <div id="beastainer">
-                <div id="servers"></div>
-                <div id="beast"></div>
-                <div class="cloud" id="cloud-large"></div>
-                <div class="cloud" id="cloud-small"></div>
-            </div>
+      <div id="content-wrapper">
+        <div id="copy" class="text-content">
+          <p>
+          {% trans %}
+            MDN is currently in maintenance mode. Content is being served
+            from a backup database, which means some articles may show out-of-date
+            information. Have no fear! All will be restored when maintenance has
+            concluded.
+          {% endtrans %}
+          </p>
 
-            <p>
-            {% trans %}
-                MDN is currently in maintenance mode. Content is being served
-                from a backup of the database, which means some recent changes
-                may not be reflected. Have no fear! All will be well when we
-                complete the scheduled maintenance.
-            {% endtrans %}
-            </p>
+          <p>
+          {% trans %}
+            While in maintenance mode, the following actions are unavailable:
+          {% endtrans %}
+          </p>
 
-            <p>
-            {% trans %}
-                While in maintenance mode, no actions that would change
-                database content are allowed. Primarily, this means no articles
-                may be edited.
-            {% endtrans %}
-            </p>
+          <ul>
+            <li>{{ _('editing articles') }}</li>
+            <li>{{ _('creating accounts') }}</li>
+            <li>{{ _('logging in') }}</li>
+          </ul>
 
-            <p>
-            {% trans %}
-                Thank you for your patience.
-            {% endtrans %}
-            </p>
-        </section>
-    </div>
+          <p>
+            {{ _('We apologize for the inconvenience.') }}
+          </p>
+        </div>
+
+        <div id="beastainer">
+          <div id="servers"></div>
+          <div id="beast">
+            <div id="beast-eyes"></div>
+            <div id="beast-body"></div>
+          </div>
+          <div class="cloud" id="cloud-large"></div>
+          <div class="cloud" id="cloud-small"></div>
+        </div>
+      </div>
+    </section>
+  </div>
 </section>
 
 {% endblock %}
 
 {% block site_js %}
-    {{ super() }}
+  {{ super() }}
 {% endblock %}

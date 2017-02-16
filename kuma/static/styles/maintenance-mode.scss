@@ -1,21 +1,33 @@
 @import 'includes/vars';
 @import 'includes/mixins';
 
+#content-wrapper {
+    @include clearfix();
+    position: relative;
+}
+
+#copy {
+    float: left;
+    margin-right: 40px;
+    width: 750px;
+}
+
 #beastainer {
-    background: #A0F399;
+    float: right;
+    margin-top: -60px;
     position: relative;
     width: 366px;
-    height: 400px;
+    height: 320px;
 }
 
 #servers {
     background-image: url($path-to-images + 'maintenance-mode/servers.png');
-    position: absolute;
     bottom: 0;
-    left: 0;
-    z-index: 10;
-    width: 366px;
     height: 219px;
+    left: 0;
+    position: absolute;
+    width: 366px;
+    z-index: 10;
 }
 
 #beast {
@@ -24,18 +36,41 @@
     @include vendorize(animation-duration, 15s);
     @include vendorize(animation-iteration-count, infinite);
     @include vendorize(animation-play-state, running);
-    background-image: url($path-to-images + 'maintenance-mode/beast.png');
-    position: absolute;
-    //bottom: 108px;
-    bottom: 0;
+    bottom: 3px;
+    height: 197px;
     left: 156px;
+    position: absolute;
     width: 128px;
-    height: 196px;
     z-index: 9;
 }
 
+#beast-body {
+    background-image: url($path-to-images + 'maintenance-mode/beast.png');
+    display: block;
+    height: 196px;
+    position: absolute;
+    width: 128px;
+    z-index: 1;
+}
+
+#beast-eyes {
+    @include vendorize(animation-name, beast-eyes);
+    @include vendorize(animation-duration, 15s);
+    @include vendorize(animation-iteration-count, infinite);
+    @include vendorize(animation-play-state, running);
+    background-image: url($path-to-images + 'maintenance-mode/eyes.png');
+    height: 35px;
+    left: 15px;
+    position: absolute;
+    top: 10px;
+    width: 90px;
+    z-index: 2;
+}
+
+// make sure all are on the same delay for seamless looping
 .cloud,
-#beast {
+#beast,
+#beast-eyes {
     @include vendorize(animation-delay, 3.5s);
 }
 
@@ -63,10 +98,78 @@
 #cloud-small {
     @include vendorize(animation-name, cloud-first);
     background-image: url($path-to-images + 'maintenance-mode/cloud-small.png');
-    width: 124px;
+    bottom: 180px;
     height: 94px;
     left: 28px;
-    bottom: 180px;
+    width: 124px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+    #servers {
+        background-image: url($path-to-images + 'maintenance-mode/servers-high-res.png');
+        background-size: 366px 219px;
+    }
+
+    #beast-body {
+        background-image: url($path-to-images + 'maintenance-mode/beast-high-res.png');
+        background-size: 128px 197px;
+    }
+
+    #beast-eyes {
+        background-image: url($path-to-images + 'maintenance-mode/eyes-high-res.png');
+        background-size: 90px 35px;
+    }
+
+    #cloud-large {
+        background-image: url($path-to-images + 'maintenance-mode/cloud-large-high-res.png');
+        background-size: 188px 145px;
+    }
+
+    #cloud-small  {
+        background-image: url($path-to-images + 'maintenance-mode/cloud-small-high-res.png');
+        background-size: 124px 94px;
+    }
+}
+
+@media #{$media-query-small-desktop} {
+    #copy {
+        width: 550px;
+    }
+}
+
+@media #{$media-query-tablet} {
+    #copy {
+        width: 40%;
+    }
+}
+
+@media #{$media-query-mobile} {
+    #copy {
+        float: none;
+        margin-bottom: 40px;
+        width: auto;
+    }
+
+    #beastainer {
+        float: none;
+        margin: 0 auto 40px;
+    }
+}
+
+@media #{$media-query-small-mobile} {
+    #beastainer {
+        width: 290px;
+    }
+
+    #servers {
+        background-repeat: no-repeat;
+        background-size: 290px 219px; // a little squished, but that's ok
+        width: 290px;
+    }
+
+    #beast {
+        left: 120px;
+    }
 }
 
 @keyframes cloud-first {
@@ -96,7 +199,7 @@
         opacity: 1;
         @include vendorize(transform, scale(1) translateY(-10px));
     }
-    13% {
+    15% {
         opacity: 0;
         @include vendorize(transform, scale(1.2) translateY(-30px));
     }
@@ -109,13 +212,34 @@
     0%, 15% {
         @include vendorize(transform, translateY(0));
     }
-    16% {
+    17% {
         @include vendorize(transform, translateY(-108px));
     }
-    32% {
+    35% {
         @include vendorize(transform, translateY(-108px));
     }
-    54%, 100% {
+    57%, 100% {
         @include vendorize(transform, translateY(0));
+    }
+}
+
+@keyframes beast-eyes {
+    0%, 20% {
+        @include vendorize(transform, translateX(0));
+    }
+    21% {
+        @include vendorize(transform, translateX(-6px));
+    }
+    24% {
+        @include vendorize(transform, translateX(-6px));
+    }
+    25% {
+        @include vendorize(transform, translateX(6px));
+    }
+    28% {
+        @include vendorize(transform, translateX(6px));
+    }
+    29%, 100% {
+        @include vendorize(transform, translateX(0));
     }
 }

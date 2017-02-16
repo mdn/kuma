@@ -757,11 +757,19 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
+    # for maintenance mode page
     'maintenance-mode': {
         'source_filenames': (
             'styles/maintenance-mode.scss',
         ),
         'output_filename': 'build/styles/maintenance-mode.css',
+    },
+    # global maintenance-mode-styles
+    'maintenance-mode-global': {
+        'source_filenames': (
+            'styles/maintenance-mode-global.scss',
+        ),
+        'output_filename': 'build/styles/maintenance-mode-global.css',
     },
 }
 
