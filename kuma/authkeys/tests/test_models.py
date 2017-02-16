@@ -1,28 +1,16 @@
 import pytest
 
-from django.test import TestCase
 
-from kuma.core.tests import ok_
-from kuma.users.tests import user
-
-from ..models import Key
-
-
-class KeyViewsTest(TestCase):
-
-    @pytest.mark.current
-    def test_secret_generation(self):
-        """Generated secret should be saved as a hash and pass a check"""
-        u = user(username="tester23",
-                 email="tester23@example.com",
-                 save=True)
-        key = Key(user=u)
-        secret = key.generate_secret()
-        key.save()
-        ok_(key.key)
-        ok_(key.hashed_secret)
-        ok_(len(key.hashed_secret) > 0)
-        ok_(len(secret) > 0)
-        ok_(secret != key.hashed_secret)
-        ok_(not key.check_secret("I AM A FAKE"))
-        ok_(key.check_secret(secret))
+@pytest.mark.current
+@pytest.mark.django_db
+def test_secret_generation(user_auth_key):
+    """Generated secret should be saved as a hash and pass a check"""
+    key = user_auth_key.key
+    secret = user_auth_key.secret
+    assert key.key
+    assert key.hashed_secret
+    assert len(key.hashed_secret) > 0
+    assert len(secret) > 0
+    assert secret != key.hashed_secret
+    assert not key.check_secret("I AM A FAKE")
+    assert key.check_secret(secret)
