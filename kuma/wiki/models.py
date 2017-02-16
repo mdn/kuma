@@ -703,7 +703,8 @@ class Document(NotificationsMixin, models.Model):
         if (not self._json_data) or (not stale and doc_lmod > json_lmod):
             self._json_data = self.build_json_data()
             self.json = json.dumps(self._json_data)
-            Document.objects.filter(pk=self.pk).update(json=self.json)
+            if not settings.MAINTENANCE_MODE:
+                Document.objects.filter(pk=self.pk).update(json=self.json)
 
         return self._json_data
 
