@@ -1,0 +1,17 @@
+// soapbox message
+.maintenance-mode-notice {
+    background: #fdc652;
+
+    p {
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+// hide login and edit buttons
+.maintenance-mode {
+    .login,
+    .page-buttons-edit {
+        display: none;
+    }
+}
