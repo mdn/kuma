@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-14 20:56+0000\n"
+"PO-Revision-Date: 2017-02-16 19:26+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -3269,7 +3269,7 @@ msgstr "貌似有人<abbr title=\"%(started_at)s\">此时此刻</abbr>正在修�
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
 " a few minutes."
-msgstr "<abbr title=\"%(scheduled_at)s\">已经计划</abbr>对这篇文档进行更新。如果发现下面的内容过时或者有某些错误，请用一点时间<a href=\"%(url)s\">重新载入这个页面</a>。"
+msgstr "这篇文档的更新<abbr title=\"%(scheduled_at)s\">已进入队列</abbr>。如果下面的内容似乎过时或者存在某些错误，请在几分钟后<a href=\"%(url)s\">重新载入此页面</a>。"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
