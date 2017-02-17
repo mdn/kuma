@@ -22,12 +22,22 @@ urlpatterns = [
         lambda x: redirect('https://mozilla.org/contribute/events'),
         name='events'),
 
-    # Django admin:
-    url(r'^admin/wiki/document/purge/',
-        purge_view,
-        name='wiki.admin_bulk_purge'),
-    url(r'^admin/', include(admin.site.urls)),
+]
 
+if settings.MAINTENANCE_MODE:
+    urlpatterns.append(
+        url(r'^admin/.*', lambda x: redirect('maintenance_mode'))
+    )
+else:
+    urlpatterns += [
+        # Django admin:
+        url(r'^admin/wiki/document/purge/',
+            purge_view,
+            name='wiki.admin_bulk_purge'),
+        url(r'^admin/', include(admin.site.urls)),
+    ]
+
+urlpatterns += [
     url(r'^search', include('kuma.search.urls')),
     url(r'^docs', include('kuma.wiki.urls')),
     url('', include('kuma.attachments.urls')),
