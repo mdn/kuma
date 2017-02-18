@@ -30,10 +30,14 @@ Docker setup
 ============
 
 #. Install the `Docker platform`_, following Docker's instructions for your
-   operating system (`Docker for Mac`_ for MacOS,
-   `Docker's Ubuntu packages`_ etc.).
+   operating system, such as `Docker for Mac`_ for MacOS, or for your
+   `Linux distribution`_.  Linux users will also want to install
+   `Docker Compose`_ and follow `post-install instructions`_ to confirm that
+   the development user can run Docker commmands.
 
-   .. _Docker platform: https://www.docker.com/products/overview
+   To confirm that Docker is installed correctly, run::
+
+        docker run hello-world
 
 #. Clone the kuma Git repository, if you haven't already::
 
@@ -43,9 +47,12 @@ Docker setup
 
         cd kuma
 
-#. Copy ``.env-dist.dev`` to ``.env``. Linux users should to set the ``UID``
+#. Initialize and customize ``.env``. Linux users should set the ``UID``
    parameter in ``.env``, to avoid issues when mixing ``docker-compose`` and
-   ``docker`` commands.
+   ``docker`` commands::
+
+        cp .env-dist.dev .env
+        vim .env  # Or your favorite editor
 
 #. Pull the Docker images and build the containers::
 
@@ -55,6 +62,11 @@ Docker setup
 #. Start the containers in the background::
 
         docker-compose up -d
+
+.. _Docker platform: https://www.docker.com/products/overview
+.. _Linux distribution: https://docs.docker.com/engine/installation/linux/
+.. _Docker Compose: https://docs.docker.com/compose/install/
+.. _post-install instructions: https://docs.docker.com/engine/installation/linux/linux-postinstall/
 
 The following instructions assume that you are running from a folder named
 ``kuma``, so that the containers created are named ``kuma_web_1``,
@@ -66,39 +78,16 @@ command accordingly, or force the ``kuma`` name with::
 
 .. _provision-the-database:
 
-Provision the database
-======================
-There are two options for provisioning the database. One option is to
-initialize a new, empty database, and another is to restore an existing
-database from a data dump.
+Load the Sample Database
+========================
+Download and load the sample database::
 
-Initialize a new database
--------------------------
-To initialize a fresh database, run the migrations::
+    wget -N https://mdn-downloads.s3-us-west-2.amazonaws.com/mdn_sample_db.sql.gz
+    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < mdn_sample_db.sql.gz
 
-    docker exec -it kuma_web_1 ./manage.py migrate
+It takes a few seconds to load, with this expected output::
 
-It will run the standard Django migrations, with output similar to::
-
-    Operations to perform:
-      Synchronize unmigrated apps: allauth, humans, dashboards, statici18n, captcha, django_mysql, django_extensions, rest_framework, cacheback, dbgettext, django_jinja, flat, staticfiles, landing, puente, sitemaps, github, pipeline, soapbox, messages, honeypot, constance
-      Apply all migrations: wiki, core, account, tidings, attachments, database, admin, sessions, djcelery, search, auth, feeder, sites, contenttypes, taggit, users, waffle, authkeys, socialaccount
-    Synchronizing apps without migrations:
-      Creating tables...
-    ...
-      Applying wiki.0030_add_page_creators_group... OK
-      Applying wiki.0031_add_data_to_revisionip... OK
-
-The database will be populated with empty tables.
-
-Restore an existing database
-----------------------------
-To restore a gzipped-database dump ``kuma.sql.gz``::
-
-    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < kuma.sql.gz
-
-There will be no output until the database is loaded, which may take several
-minutes depending on the size of the data dump.
+    mysql: [Warning] Using a password on the command line interface can be insecure.
 
 This command can be adjusted to restore from an uncompressed database, or
 directly from a ``mysqldump`` command.
@@ -156,33 +145,40 @@ A few thousand lines will be printed, like::
     ....
     1687 static files copied to '/app/static', 1773 post-processed
 
-.. _frontend-development:
-
-Frontend Development
-====================
-When doing front-end development on your local machine, you'll probably
-want to run (most likely in its own shell)::
-
-     gulp
-
-within the root directory of your local Kuma repository. It will watch for
-changes to any source files under ``./kuma/static`` (e.g., Sass files)
-and move any changed files to ``./static``, where they will be compiled
-on-demand.
-
-However, first you'll need to install `Node.js`_  and `gulp`_ on your local
-machine. First install Node.js, and then to install gulp, run::
-
-    npm install
-
-from the root directory of your local Kuma repository.
-
-.. _gulp: http://gulpjs.com/
-.. _`Node.js`: https://nodejs.org/
-
 Visit the Homepage
 ==================
 Open the homepage at http://localhost:8000 . You've installed Kuma!
+
+.. _frontend-development:
+
+Prepare for Front-end Development
+=================================
+When doing front-end development on your local machine, you'll probably
+want to run ``gulp``, to rebuild front-end assets as they edited, rather than
+running ``make build-static`` after each change.
+
+First, install Node.js v6, using the `install instructions for your OS`_.
+
+Next, from the root directory of your Kuma repository, install ``gulp`` and
+dependencies::
+
+    npm install
+
+Now, you can run ``gulp`` (probably from its own shell)::
+
+    node_modules/.bin/gulp
+
+Alternatively, you can install ``gulp`` globally::
+
+    sudo npm install -g
+
+And then run ``gulp`` more simply::
+
+    gulp
+
+.. _gulp: http://gulpjs.com/
+.. _`Node.js`: https://nodejs.org/
+.. _`install instructions for your OS`: https://nodejs.org/en/download/package-manager/
 
 Create an admin user
 ====================
@@ -207,62 +203,9 @@ management command. Replace ``YOUR_USERNAME`` with your username and
 With a password-enabled admin account, you can log into Django admin at
 http://localhost:8000/admin/login/
 
-.. _Disable your admin password:
 
-When social accounts are enabled, the password can be disabled with the Django
-shell::
-
-    docker exec -it kuma_web_1 ./manage.py shell_plus
-    >>> me = User.objects.get(username='admin_username')
-    >>> me.set_unusable_password()
-    >>> me.save()
-    >>> exit()
-
-Enable the wiki
-===============
-By default, the wiki is disabled with a
-:doc:`feature toggle <feature-toggles>`. To enable editing:
-
-#. Log in as an admin user.
-#. Open the `Waffle / Flags`_ section of the admin site.
-#. Click "`ADD FLAG`_", above the Filter sidebar.
-#. Enter "kumaediting" for the Name.
-#. Set "Everyone" to "Yes".
-#. Click "SAVE" at the bottom of the page.
-
-If you are using a populated database, the "kumaediting" flag may already
-exist.
-
-You can now visit http://localhost:8000/docs/new to create new wiki pages.
-
-Many contributors use a a personal page as a testing sandbox, with a title
-such as "User:myusername".
-
-.. _Waffle / Flags: http://localhost:8000/admin/waffle/flag/
-.. _ADD FLAG: http://localhost:8000/admin/waffle/flag/add/
-
-Enable KumaScript
-=================
-By default, `KumaScript`_ is disabled by the default timeout of `0.0` seconds.
-To enable KumaScript:
-
-#. Log in as the admin user.
-#. Open the `Constance / Config`_ section of the admin site.
-#. Change ``KUMASCRIPT_TIMEOUT`` to 600.
-#. Click "SAVE" at the bottom of the page.
-#. Import the `KumaScript auto-loaded modules`_:
-
-::
-
-   docker exec -it kuma_web_1 ./manage.py import_kumascript_modules
-
-.. _KumaScript: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/KumaScript
-.. _Constance / Config: http://localhost:8000/admin/constance/config/
-.. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
-
-
-Enable GitHub Auth
-==================
+Enable GitHub Auth (optional)
+=============================
 To enable GitHub authentication, you'll need to
 `register an OAuth application on GitHub`_, with settings like:
 
@@ -288,10 +231,18 @@ To associate your password-only admin account with GitHub:
 #. Click your username at the top to view your profile.
 #. Click Edit to edit your profile.
 #. Under My Profiles, click `Use your GitHub account to sign in`_.
-#. (*Optional*) `Disable your admin password`_.
 
 To create a new account with GitHub, use the regular "Sign in" widget at the
 top of any page.
+
+With social accounts are enabled, you can disable the admin password in the
+Django shell::
+
+    docker exec -it kuma_web_1 ./manage.py shell_plus
+    >>> me = User.objects.get(username='admin_username')
+    >>> me.set_unusable_password()
+    >>> me.save()
+    >>> exit()
 
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
 .. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
