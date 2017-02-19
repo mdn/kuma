@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-19 14:07+0000\n"
+"PO-Revision-Date: 2017-02-19 14:18+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2017,7 +2017,7 @@ msgstr "Грешен токън"
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
+msgstr "Връзката за промяна на паролата е недействителна, вероятно защото вече е използвана. Моля, заявете <a href=\"%(passwd_reset_url)s\">нова</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -2037,7 +2037,7 @@ msgstr "Регистриране"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "Регистриране"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
@@ -2051,7 +2051,7 @@ msgstr "Създаването на профил е изключено"
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Въведете адресът на вашата е-поща"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
@@ -3829,7 +3829,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "Създаване на \"Съдържание\"."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
@@ -3881,7 +3881,7 @@ msgstr "Създаване на Шаблон"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr ""
+msgstr "Промяна на шаблон"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
@@ -3963,13 +3963,13 @@ msgstr ""
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] ""
+msgstr[0] "Намерен е %(num)s документ."
 msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr ""
+msgstr "Отбелязани статии: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
@@ -3979,7 +3979,7 @@ msgstr "Всички шаблони"
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
+msgstr[0] "Намерен е %(num)s шаблон."
 msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
