@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-15 22:53+0000\n"
+"PO-Revision-Date: 2017-02-19 14:07+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1939,7 +1939,7 @@ msgstr ""
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "Моля, потвърдете, че <a href=\"mailto:%(email)s\">%(email)s</a> е електронната поща на %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1948,12 +1948,12 @@ msgstr "Потвърждаване"
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
 msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
-msgstr ""
+msgstr "Тази връзка за потвърждение е изтекла или недействителна. Моля, направете <a href=\"%(email_url)s\">нова заявка за потвърждаване на електронна поща</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
+msgstr "Вие потвърдихте, че <a href=\"mailto:%(email)s\">%(email)s</a> е електронната поща на %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -1961,15 +1961,15 @@ msgstr "Вход"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"
-msgstr ""
+msgstr "Моля, влезте"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Цялото съдържание на MDN е безплатно и достъпно без да влизате."
 
 #: kuma/users/jinja2/account/login.html:20
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr ""
+msgstr "За да дадете вашия принос, е необходимо да влезете със съществуващ профил в MDN."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -1977,7 +1977,7 @@ msgstr "За съжаление създаването на профил е из
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr ""
+msgstr "За да допринесете, трябва да влезете в MDN. Можете да влезете чрез GitHub, и MDN ще ви създаде профил, ако все още нямате."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -1996,19 +1996,19 @@ msgstr "Нулиране на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr ""
+msgstr "Забравили сте паролата си? Въведете своята е-поща по-долу и ние ще ви изпратим съобщение как да я промените."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr "Нулиране на парола"
+msgstr "Промяна на парола"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "Моля свържете се с нас, ако имате някакви проблеми при възстановяване на паролата."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Изпратихме ви електронна поща. Моля, свържете се с нас, ако не сте получили съобщението до няколко минути."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
