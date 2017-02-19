@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-19 16:48+0000\n"
+"PO-Revision-Date: 2017-02-19 16:59+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1581,7 +1581,7 @@ msgstr[1] "%(count)s документа, намерени в %(locale_native)s."
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "%(count)s документа са намерени в %(locale_native)s и в %(default_locale_native)s."
+msgstr[0] "%(count)s документ е намерен в %(locale_native)s и в %(default_locale_native)s."
 msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:104
@@ -2740,11 +2740,11 @@ msgstr "[MDN] Страница \"%(document_title)s\", променена от %
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
-msgstr ""
+msgstr "MDN документи"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr ""
+msgstr "Документи, създадени от потребители на MDN"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
@@ -2756,20 +2756,20 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Скоро променени документи в MDN"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr ""
+msgstr "Скорошни промени в MDN документи, отбелязани като %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Документи в MDN, нуждаещи се от преглед"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "Скоро променяни документи в MDN, нуждаещи се от преглед"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
@@ -4109,6 +4109,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          Следните документи ще бъдат окончателно премахнати от базата данни. Това действие не може да бъде отменено. За да откажете, натиснете бутона \"Назад\" във вашия браузър.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
