@@ -122,8 +122,14 @@
     <div class="column-callout callout-learn">
       <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
     </div>
-    <div class="column-callout callout-deved">
-      <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
+    <div class="column-callout callout-saucelabs">
+      <a href="https://saucelabs.com/cross-browser-testing-tutorial">
+        <span>
+          {{ _('Level up your cross-browser compatibility game.') }}
+
+          <button type="button">{{ _('Try SauceLabs Now') }}</button>
+        </span>
+      </a>
     </div>
     {% if not waffle.switch('foundation_callout') %}
     <div class="column-callout callout-apps">
