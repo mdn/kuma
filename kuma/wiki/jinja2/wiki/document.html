@@ -235,6 +235,16 @@
             <!-- center: main article content -->
             <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
 
+              {% if settings.MAINTENANCE_MODE and render_raw_fallback %}
+                <div id="doc-render-raw-fallback" class="warning">
+                {% trans url='/maintenance-mode/' %}
+                  This document has not yet been rendered, and cannot be
+                  rendered while MDN is in <a href="{{ url }}">maintenance
+                  mode</a>. Please check back when maintenance has concluded.
+                {% endtrans %}
+                </div>
+              {% endif %}
+
               {% if is_logged_in and document_html %}
                 {% if render_raw_fallback %}
                   <div id="doc-render-raw-fallback" class="warning">
