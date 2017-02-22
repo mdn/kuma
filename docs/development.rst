@@ -96,8 +96,8 @@ Kumascript tests
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript.
 
-Frontend Development and Compiling Sass files
-=============================================
+Front-end Development and Compiling Sass files
+==============================================
 Sass files need to be compiled for changes to take effect, but don't worry,
 the compilation is done automatically by Django (specifically django-pipeline).
 
