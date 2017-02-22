@@ -43,9 +43,20 @@ urlpatterns += [
     url('', include('kuma.attachments.urls')),
     url('', include('kuma.dashboards.urls')),
     url('', include('kuma.users.urls')),
+]
 
+if settings.MAINTENANCE_MODE:
+    urlpatterns.append(
+        # Redirect if we try to use the "tidings" unsubscribe.
+        url(r'^unsubscribe/.*', lambda x: redirect('maintenance_mode'))
+    )
+else:
+    urlpatterns.append(
+        url(r'^', include('tidings.urls')),
+    )
+
+urlpatterns += [
     # Services and sundry.
-    url(r'^', include('tidings.urls')),
     url(r'^humans.txt$',
         serve,
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
