@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-19 16:59+0000\n"
+"PO-Revision-Date: 2017-02-22 21:31+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1661,11 +1661,11 @@ msgstr ""
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "Адрес за електронна поща не може да се използва като потребителско име."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Потребителското име, което въведохте, вече съществува."
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -1760,7 +1760,7 @@ msgstr ""
 #: kuma/users/models.py:37
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (вече не е активен)"
 
 #: kuma/users/models.py:56
 msgid "Language"
@@ -2774,11 +2774,11 @@ msgstr "Скоро променяни документи в MDN, нуждаещ�
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr ""
+msgstr "MDN документи за %s преглед"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr ""
+msgstr "MDN документи за преглед"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
@@ -2791,7 +2791,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr ""
+msgstr "Наскоро променени документи в MDN"
 
 #: kuma/wiki/feeds.py:343
 msgid "Edit Page"
@@ -4115,7 +4115,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
-msgstr ""
+msgstr "Зареждане на документи"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
