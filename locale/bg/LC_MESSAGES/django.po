@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-22 21:31+0000\n"
+"PO-Revision-Date: 2017-02-22 21:43+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1869,7 +1869,7 @@ msgstr "%(email)s <b>потвърден</b>"
 #: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s непотвърден"
 
 #: kuma/users/views.py:523 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
@@ -1930,11 +1930,11 @@ msgstr "Промяна на профила"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "Наистина ли искате да премахнете избрания адрес за е-поща?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "Потвърждаване на адреса за е-поща"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -2102,7 +2102,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Създайте своя MDN профил, за да продължите"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
@@ -2110,7 +2110,7 @@ msgstr "В MDN има профил, съвпадащ с вашата е-поща
 
 #: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
-msgstr ""
+msgstr "Възстановяване на моя профил"
 
 #: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
@@ -2157,7 +2157,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Условия и поверителност"
 
 #: kuma/users/jinja2/socialaccount/signup.html:166
 #, python-format
@@ -2166,7 +2166,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Създаване на моя MDN профил"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with GitHub"
@@ -2196,7 +2196,7 @@ msgstr "Избор на причина"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "или въведете причина в текстовото поле по-долу"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
@@ -2392,7 +2392,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Не съм променял никакви страници, просто изтрийте профила ми."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
@@ -2553,7 +2553,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Говорете с нас!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
@@ -2603,7 +2603,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "Обичате ли думите?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
