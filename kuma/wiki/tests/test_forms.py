@@ -14,7 +14,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
                                  SPAM_SPAMMER_FLAG, SPAM_TESTING_FLAG,
                                  SPAM_CHECKS_FLAG, VERIFY_URL)
-from kuma.users.tests import UserTestCase, UserTransactionTestCase
+from kuma.users.tests import UserTestCase
 
 from ..constants import SPAM_EXEMPTED_FLAG, SPAM_TRAINING_FLAG
 from ..forms import AkismetHistoricalData, RevisionForm, TreeMoveForm
@@ -92,7 +92,7 @@ class AkismetHistoricalDataTests(UserTestCase):
         assert params == {'content': 'spammy'}
 
 
-class RevisionFormTests(UserTransactionTestCase):
+class RevisionFormTests(UserTestCase):
     """
     Generic tests for RevisionForm.
 
@@ -232,7 +232,7 @@ class RevisionFormTests(UserTransactionTestCase):
 
 
 @override_config(AKISMET_KEY='forms')
-class RevisionFormViewTests(UserTransactionTestCase):
+class RevisionFormViewTests(UserTestCase):
     """Setup tests for RevisionForm as used in views."""
     rf = RequestFactory()
     akismet_keys = [  # Keys for a new English page or new translation

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.cache import cache
-from django.test import TestCase, TransactionTestCase
+from django.test import TestCase
 from django.test.client import Client
 from django.utils.translation import trans_real
 
@@ -143,8 +143,4 @@ class KumaTestMixin(object):
 
 
 class KumaTestCase(KumaTestMixin, TestCase):
-    pass
-
-
-class KumaTransactionTestCase(KumaTestMixin, TransactionTestCase):
     pass

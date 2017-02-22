@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from django.utils.crypto import get_random_string
 from django.utils.six.moves.urllib_parse import urlparse, parse_qs
 
-from kuma.core.tests import KumaTestCase, KumaTransactionTestCase
+from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.tests import revision as create_revision, document as create_document
 from ..providers.github.provider import KumaGitHubProvider
@@ -25,10 +25,6 @@ class UserTestMixin(object):
 
 
 class UserTestCase(UserTestMixin, KumaTestCase):
-    pass
-
-
-class UserTransactionTestCase(UserTestMixin, KumaTransactionTestCase):
     pass
 
 
