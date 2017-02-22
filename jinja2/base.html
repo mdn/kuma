@@ -26,6 +26,10 @@
     {% endfor %}
   {% endblock %}
 
+  {%- if settings.MAINTENANCE_MODE %}
+    {% stylesheet 'maintenance-mode-global' %}
+  {%- endif %}
+
   {%- if not is_sphinx %}
     <!-- common social tags -->
     {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
@@ -69,11 +73,24 @@
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}"{% if request.user and request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
+<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}{% if settings.MAINTENANCE_MODE %} maintenance-mode{% endif %}"{% if request.user and request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
   {% include "includes/config.html" %}
 
-  {{ soapbox_messages(get_soapbox_messages(request.path)) }}
+  {%- if settings.MAINTENANCE_MODE %}
+    <div class="global-notice maintenance-mode-notice">
+      <div class="wrap center">
+        <p>
+          <bdi>
+            {{ _('MDN is currently in read-only maintenance mode.') }}
+            <a href="{{ url('maintenance_mode') }}">{{ _('Learn more') }}</a>.
+          </bdi>
+        </p>
+      </div>
+    </div>
+  {%- else %}
+    {{ soapbox_messages(get_soapbox_messages(request.path)) }}
+  {%- endif %}
 
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
@@ -85,73 +102,67 @@
 
   <!-- Header -->
   <header id="main-header"><div class="center">
-
     <div id="tabzilla">
-        <a href="//www.mozilla.org/" class="no-track">mozilla</a>
+      <a href="//www.mozilla.org/" class="no-track">mozilla</a>
     </div>
 
     <div class="clear header-clear"></div>
 
-
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-
     <div id="nav-sec">
-        {% if not is_sphinx %}
-                  <ul>
-                  {% if user.is_authenticated() %}
-                      <li class="nav-tools"><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Tools') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-
-                      <div class="submenu submenu-cols-2 js-submenu" id="nav-tools-submenu">
-                        <div class="submenu-column">
-                          <div class="title">{{ _('Contribute to MDN') }}</div>
-                          <ul>
-                            <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Get started') }}</a></li>
-                            <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Review or localize docs') }}</a></li>
-                          </ul>
-                        </div><div class="submenu-column last">
-                          <div class="title">{{ _('Site Tools') }}</div>
-                          <ul>
-                            <li><a href="{{ url('dashboards.revisions') }}">{{ _('Revision dashboard') }}</a></li>
-                            <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Documentation status') }}</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                   </li>{% endif %}<li>{% include "includes/login.html" %}</li>
-                </ul>
-        {% endif %}
+    {% if not is_sphinx %}
+      <ul>
+      {% if user.is_authenticated() %}
+        <li class="nav-tools"><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Tools') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+          <div class="submenu submenu-cols-2 js-submenu" id="nav-tools-submenu">
+            <div class="submenu-column">
+              <div class="title">{{ _('Contribute to MDN') }}</div>
+              <ul>
+                <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Get started') }}</a></li>
+                <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Review or localize docs') }}</a></li>
+              </ul>
+            </div><div class="submenu-column last">
+              <div class="title">{{ _('Site Tools') }}</div>
+              <ul>
+                <li><a href="{{ url('dashboards.revisions') }}">{{ _('Revision dashboard') }}</a></li>
+                <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Documentation status') }}</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>{% endif %}<li>{% include "includes/login.html" %}</li>
+      </ul>
+    {% endif %}
     </div>
 
     <nav id="main-nav" role="navigation"><ul><li><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-
-        <div class="submenu submenu-cols-2 js-submenu" id="nav-platform-submenu">
-          <div class="submenu-column">
-            <div class="title">{{ _('Technologies') }}</div>
-            <ul>
-              <li><a href="{{ wiki_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
-              <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
-              <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
-              <li><a href="{{ wiki_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
-              <li><a href="{{ wiki_url('Web/HTTP') }}">{{ _('HTTP') }}</a></li>
-              <li><a href="{{ wiki_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
-              <li><a href="{{ wiki_url('Mozilla/Add-ons/WebExtensions') }}">{{ _('WebExtensions') }}</a></li>
-              <li><a href="{{ wiki_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
-            </ul>
-          </div><div class="submenu-column last">
-            <div class="title">{{ _('References & Guides') }}</div>
-            <ul>
-              <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn web development') }}</a></li>
-              <li><a href="{{ wiki_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
-              <li><a href="{{ wiki_url('Web/Reference') }}">{{ _('References') }}</a></li>
-              <li><a href="{{ wiki_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-              <li><a href="{{ wiki_url('Web/Accessibility') }}">{{ _('Accessibility') }}</a></li>
-              <li><a href="{{ wiki_url('Games') }}">{{ _('Game development') }}</a></li>
-              <li><a href="{{ wiki_url('Web') }}">{{ _('...more docs') }}</a></li>
-            </ul>
-          </div>
+      <div class="submenu submenu-cols-2 js-submenu" id="nav-platform-submenu">
+        <div class="submenu-column">
+          <div class="title">{{ _('Technologies') }}</div>
+          <ul>
+            <li><a href="{{ wiki_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
+            <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
+            <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
+            <li><a href="{{ wiki_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
+            <li><a href="{{ wiki_url('Web/HTTP') }}">{{ _('HTTP') }}</a></li>
+            <li><a href="{{ wiki_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
+            <li><a href="{{ wiki_url('Mozilla/Add-ons/WebExtensions') }}">{{ _('WebExtensions') }}</a></li>
+            <li><a href="{{ wiki_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
+          </ul>
+        </div><div class="submenu-column last">
+          <div class="title">{{ _('References & Guides') }}</div>
+          <ul>
+            <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn web development') }}</a></li>
+            <li><a href="{{ wiki_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
+            <li><a href="{{ wiki_url('Web/Reference') }}">{{ _('References') }}</a></li>
+            <li><a href="{{ wiki_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
+            <li><a href="{{ wiki_url('Web/Accessibility') }}">{{ _('Accessibility') }}</a></li>
+            <li><a href="{{ wiki_url('Games') }}">{{ _('Game development') }}</a></li>
+            <li><a href="{{ wiki_url('Web') }}">{{ _('...more docs') }}</a></li>
+          </ul>
         </div>
+      </div>
       </li><li><a href="{{ wiki_url('Zones') }}">{{ _('Mozilla Docs') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-
         <div class="submenu js-submenu" id="nav-zones-submenu">
           <div class="submenu-column">
             <ul>
@@ -161,12 +172,11 @@
           </div>
         </div>
       </li><li><a href="{{ wiki_url('Tools') }}">{{ _('Developer Tools') }}</a></li><li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-
         <div class="submenu js-submenu" id="nav-contact-submenu">
           <div class="submenu-column">
             <ul>
-                <li><a href="https://support.mozilla.org/">{{ _('Get Firefox help') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
-                <li><a href="http://stackoverflow.com/">{{ _('Get web development help') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="https://support.mozilla.org/">{{ _('Get Firefox help') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="http://stackoverflow.com/">{{ _('Get web development help') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
             </ul>
             <ul>
               <li><a href="{{ wiki_url('MDN/Community') }}">{{ _('Join the MDN community') }}</a></li>
@@ -175,7 +185,6 @@
             </ul>
           </div>
         </div>
-
       </li><li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
