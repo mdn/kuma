@@ -26,7 +26,8 @@ from pyquery import PyQuery as pq
 import kuma.wiki.content
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (block_user_agents, login_required,
-                                  permission_required, superuser_required)
+                                  permission_required, superuser_required,
+                                  redirect_in_maintenance_mode)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.search.store import get_search_url_from_referer
@@ -524,6 +525,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
 
 @csrf_exempt
 @require_http_methods(['GET', 'PUT', 'HEAD'])
+@redirect_in_maintenance_mode(methods=['PUT'])
 @allow_CORS_GET
 @accepts_auth_key
 @process_document_path
