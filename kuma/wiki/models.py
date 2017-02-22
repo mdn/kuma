@@ -514,9 +514,12 @@ class Document(NotificationsMixin, models.Model):
         Attempt to schedule rendering. Honor the deferred_rendering field to
         decide between an immediate or a queued render.
         """
+        if settings.MAINTENANCE_MODE:
+            return
+
         # Avoid scheduling a rendering if already scheduled or in progress.
         if self.is_rendering_scheduled or self.is_rendering_in_progress:
-            return False
+            return
 
         # Note when the rendering was scheduled. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
@@ -538,6 +541,9 @@ class Document(NotificationsMixin, models.Model):
         """
         Render content using kumascript and any other services necessary.
         """
+        if settings.MAINTENANCE_MODE:
+            return
+
         if not base_url:
             base_url = settings.SITE_URL
 
