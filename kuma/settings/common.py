@@ -416,7 +416,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'kuma.core.middleware.RemoveSlashMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+)
+
+if not MAINTENANCE_MODE:
+    # We don't want this in maintence mode, as it adds "Cookie"
+    # to the Vary header, which in turn, kills caching.
+    MIDDLEWARE_CLASSES += ('django.middleware.csrf.CsrfViewMiddleware',)
+
+MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
