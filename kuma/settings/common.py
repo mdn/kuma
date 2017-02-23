@@ -1062,8 +1062,23 @@ CELERY_TRACK_STARTED = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
 
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+if MAINTENANCE_MODE:
+    # In maintenance mode, we're going to avoid using the database, and
+    # use Celery's default beat-scheduler as well as memcached for storing
+    # any results. In both normal and maintenance mode we use djcelery's
+    # loader (see djcelery.setup_loader() above) so we, among other things,
+    # acquire the Celery settings from among Django's settings.
+    CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
+    CELERY_RESULT_BACKEND = (
+        'cache+memcached://' + ';'.join(
+            config('MEMCACHE_SERVERS',
+                   default='127.0.0.1:11211',
+                   cast=Csv())
+        )
+    )
+else:
+    CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+    CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
 CELERY_ACCEPT_CONTENT = ['pickle']
 
