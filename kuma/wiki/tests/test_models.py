@@ -21,7 +21,8 @@ from . import (create_document_tree, create_template_test_users,
                create_topical_parents_docs, document, normalize_html,
                revision)
 from .. import tasks
-from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
+from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT,
+                         TEMPLATE_TITLE_PREFIX)
 from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
@@ -127,6 +128,18 @@ class DocumentTests(UserTestCase):
         d.save()
 
         assert not d.is_template
+
+    def test_document_is_experiment(self):
+        d = document(title='test', save=True)
+        assert not d.is_experiment
+
+        d.slug = EXPERIMENT_TITLE_PREFIX + "test"
+        d.save()
+        assert d.is_experiment
+
+        d.slug = 'back-to-document'
+        d.save()
+        assert not d.is_experiment
 
     def test_error_on_delete(self):
         """Ensure error-on-delete is only thrown when waffle switch active"""

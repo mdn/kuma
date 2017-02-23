@@ -29,7 +29,7 @@ def test_should_update_standard_doc(mock_doc):
 @pytest.mark.parametrize(
     'slug', ('Talk:Web' 'Web/Talk:CSS', 'User:jezdez',
              'User_talk:jezdez', 'Template_talk:anch',
-             'Project_talk:MDN'))
+             'Project_talk:MDN', 'Experiment:Blue'))
 def test_should_not_update_excluded_slug(mock_doc, slug):
     """Excluded slugs should not update the search index."""
     mock_doc.slug = slug
