@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:51-0800\n"
-"PO-Revision-Date: 2017-02-23 20:10+0000\n"
+"PO-Revision-Date: 2017-02-23 20:11+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2657,7 +2657,7 @@ msgstr "Блог: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "Вече е докладвано като спам."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
@@ -2673,7 +2673,7 @@ msgstr "Повече"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:27
 msgid "Manage"
-msgstr ""
+msgstr "Управление"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:29
 msgid "API keys"
