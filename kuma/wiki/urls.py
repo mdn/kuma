@@ -1,5 +1,4 @@
 from django.conf.urls import include, url
-from django.views.generic import TemplateView
 
 from kuma.attachments.feeds import AttachmentsFeed
 from kuma.attachments.views import edit_attachment
@@ -101,9 +100,6 @@ urlpatterns = [
     url(r'^/preview-wiki-content$',
         views.revision.preview,
         name='wiki.preview'),
-    url(r'^/move-requested$',
-        TemplateView.as_view(template_name='wiki/move_requested.html'),
-        name='wiki.move_requested'),
     url(r'^/get-documents$',
         views.misc.autosuggest_documents,
         name='wiki.autosuggest_documents'),
