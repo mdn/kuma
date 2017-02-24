@@ -9,9 +9,9 @@
   {% endif %}
 {% endblock %}
 {% if tag %}
-  {% set title = _('Articles in Need of Review Tagged: %(tag)s', tag=tag) %}
+  {% set title = _('Articles in need of review: %(tag)s', tag=tag) %}
 {% else %}
-  {% set title = _('All Articles in Need of Review') %}
+  {% set title = _('All articles in need of review') %}
 {% endif %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(None, title)] %}
