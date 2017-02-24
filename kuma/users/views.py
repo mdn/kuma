@@ -378,6 +378,7 @@ def my_edit_page(request):
     return redirect('users.user_edit', request.user.username)
 
 
+@redirect_in_maintenance_mode
 def user_edit(request, username):
     """
     View and edit user profile
@@ -444,6 +445,7 @@ def user_edit(request, username):
     return render(request, 'users/user_edit.html', context)
 
 
+@redirect_in_maintenance_mode
 def user_delete(request, username):
 
     edit_user = get_object_or_404(User, username=username)

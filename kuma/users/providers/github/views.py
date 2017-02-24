@@ -42,4 +42,6 @@ class KumaOAuth2LoginView(OAuth2LoginView):
 oauth2_login = redirect_in_maintenance_mode(
     KumaOAuth2LoginView.adapter_view(KumaGitHubOAuth2Adapter)
 )
-oauth2_callback = OAuth2CallbackView.adapter_view(KumaGitHubOAuth2Adapter)
+oauth2_callback = redirect_in_maintenance_mode(
+    OAuth2CallbackView.adapter_view(KumaGitHubOAuth2Adapter)
+)
