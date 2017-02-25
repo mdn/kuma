@@ -139,6 +139,21 @@ def block_user_agents(view_func):
                  assigned=available_attrs(view_func))(agent_blocked_view)
 
 
+def skip_in_maintenance_mode(func):
+    """
+    Decorator for Celery task functions. If we're in MAINTENANCE_MODE, skip
+    the call to the decorated function. Otherwise, call the decorated function
+    as usual.
+    """
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        if settings.MAINTENANCE_MODE:
+            return
+        return func(*args, **kwargs)
+
+    return wrapped
+
+
 def redirect_in_maintenance_mode(func=None, methods=None):
     """
     Decorator for view functions. If we're in MAINTENANCE_MODE, redirect

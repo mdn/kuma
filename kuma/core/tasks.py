@@ -8,6 +8,7 @@ from constance import config
 
 from .cache import memcache
 from .models import IPBan
+from kuma.core.decorators import skip_in_maintenance_mode
 
 
 LOCK_ID = 'clean-sessions-lock'
@@ -20,6 +21,7 @@ def get_expired_sessions(now):
 
 
 @task
+@skip_in_maintenance_mode
 def clean_sessions():
     """
     Queue deleting expired session items without breaking poor MySQL
@@ -54,5 +56,6 @@ def clean_sessions():
 
 
 @task
+@skip_in_maintenance_mode
 def delete_old_ip_bans(days=30):
     IPBan.objects.delete_old(days=days)

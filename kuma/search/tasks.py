@@ -5,11 +5,14 @@ from django.core.mail import mail_admins
 
 from celery.task import task
 
+from kuma.core.decorators import skip_in_maintenance_mode
+
 
 log = logging.getLogger('kuma.search.tasks')
 
 
 @task
+@skip_in_maintenance_mode
 def prepare_index(index_pk):
     """
     Prepare a new index for indexing documents into.
@@ -42,6 +45,7 @@ def prepare_index(index_pk):
 
 
 @task
+@skip_in_maintenance_mode
 def finalize_index(index_pk):
     """
     Finalizes the elasticsearch index.

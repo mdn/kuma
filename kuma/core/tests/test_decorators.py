@@ -7,6 +7,7 @@ from django.test import RequestFactory
 
 from kuma.core.decorators import (block_user_agents, logout_required,
                                   login_required, never_cache,
+                                  skip_in_maintenance_mode,
                                   redirect_in_maintenance_mode,
                                   permission_required)
 
@@ -156,6 +157,21 @@ class TestBlockUserAgents(KumaTestCase):
         self.view = block_user_agents(simple_view)
         response = self.view(self.request)
         eq_(403, response.status_code)
+
+
+@pytest.mark.parametrize("maintenance_mode", [False, True])
+def test_skip_in_maintenance_mode(settings, maintenance_mode):
+
+    @skip_in_maintenance_mode
+    def func(*args, **kwargs):
+        return (args, sorted(kwargs.items()))
+
+    settings.MAINTENANCE_MODE = maintenance_mode
+
+    if maintenance_mode:
+        assert func(1, 2, x=3, y=4) is None
+    else:
+        assert func(1, 2, x=3, y=4) == ((1, 2), [('x', 3), ('y', 4)])
 
 
 @pytest.mark.parametrize(
