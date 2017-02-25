@@ -1773,13 +1773,13 @@ class Revision(models.Model):
             tidied_content = self.tidied_content
         else:
             if allow_none:
-                if self.pk:
+                if self.pk and not settings.MAINTENANCE_MODE:
                     from .tasks import tidy_revision_content
                     tidy_revision_content.delay(self.pk, refresh=False)
                 tidied_content = None
             else:
                 tidied_content, errors = tidy_content(self.content)
-                if self.pk:
+                if self.pk and not settings.MAINTENANCE_MODE:
                     Revision.objects.filter(pk=self.pk).update(
                         tidied_content=tidied_content)
         self.tidied_content = tidied_content or ''
