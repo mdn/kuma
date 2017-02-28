@@ -1,12 +1,16 @@
 <div class="login">
     {% if user.is_authenticated() %}
-        <a href="{{ user.get_absolute_url() }}">{{ user_display(user) }}</a>
-        <a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a>
+        <form action="{{ url('account_logout') }}" method="post">
+            {% csrf_token %}
+            <a class='user-url' href="{{ user.get_absolute_url() }}">{{ user_display(user) }}</a>
+            <input name="next" type="hidden" value="{{ next_url }}">
+            <button class="logout" type="submit">{{ _('Sign out') }}</button>
+        </form>
     {% else %}
-      {% set github_url = provider_login_url('github', next=next_url) %}
-       <a href="{{ github_url }}" class="login-link js-login-link" data-service="GitHub">
-        {{ _('Sign in') }}
-        <i class="icon-github" aria-hidden="true"></i>
-      </a>
+        {% set github_url = provider_login_url('github', next=next_url) %}
+        <a href="{{ github_url }}" class="login-link js-login-link" data-service="GitHub">
+            {{ _('Sign in') }}
+            <i class="icon-github" aria-hidden="true"></i>
+        </a>
     {% endif %}
 </div>

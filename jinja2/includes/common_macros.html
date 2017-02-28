@@ -37,7 +37,10 @@
       <nav>
         <a href="{{ user.get_absolute_url() }}">{{ _('Profile') }}</a>
         |
-        <a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a>
+          <form action="{{ url('account_logout') }}" method="post">
+            {% csrf_token %}
+            <button class="logout" type="submit">{{ _('Sign Out') }}</button>
+          </form>
       </nav>
     {% else %}
       <p>

@@ -151,14 +151,24 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
                            locale=locale)
         logout_url = reverse('account_logout', locale=locale)
         home_url = reverse('home', locale=locale)
-        signout_url = urlparams(logout_url, next=home_url)
+        signout_url = urlparams(logout_url)
         parsed = pq(response.content)
 
         login_info = parsed.find('.login')
-        user_link, signout_link = login_info.children()
-        assert user_link.attrib['href'] == user_url
+        form = login_info.children('form')
+        # There should be signout link in the form action
         expected = signout_url.replace('%2F', '/')  # decode slashes
-        assert signout_link.attrib['href'] == expected
+        assert form.attr['action'] == expected
+        assert form.attr['method'] == 'post'
+        # Check login user url is there
+        user_link = form.children('.user-url')
+        assert user_link.attr['href'] == user_url
+        # Check next url is provided as input field
+        next_input = form.children("input[name='next']")
+        assert next_input.val() == home_url
+        # Check CSRF is added
+        csrf_input = form.children("input[name='csrfmiddlewaretoken']")
+        assert csrf_input.val() is not None
 
     def test_signin_form_present(self):
         """When not authenticated, the GitHub login link is present."""
@@ -197,14 +207,24 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
                            locale=locale)
         logout_url = reverse('account_logout', locale=locale)
         home_url = reverse('home', locale=locale)
-        signout_url = urlparams(logout_url, next=home_url)
+        signout_url = urlparams(logout_url)
         parsed = pq(response.content)
 
         login_info = parsed.find('.login')
-        user_link, signout_link = login_info.children()
-        assert user_link.attrib['href'] == user_url
-        expected = signout_url.replace('%2F', '/')
-        assert signout_link.attrib['href'] == expected
+        form = login_info.children('form')
+        # There should be signout link in the form action
+        expected = signout_url.replace('%2F', '/')  # decode slashes
+        assert form.attr['action'] == expected
+        assert form.attr['method'] == 'post'
+        # Check login user url is there
+        user_link = form.children('.user-url')
+        assert user_link.attr['href'] == user_url
+        # Check next url is provided as input field
+        next_input = form.children("input[name='next']")
+        assert next_input.val() == home_url
+        # Check CSRF is added
+        csrf_input = form.children("input[name='csrfmiddlewaretoken']")
+        assert csrf_input.val() is not None
 
 
 @pytest.mark.bans

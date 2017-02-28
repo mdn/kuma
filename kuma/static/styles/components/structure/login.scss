@@ -16,7 +16,7 @@ Header login link
         vertical-align: top; /* needed on mobile */
     }
 
-    > a:nth-child(n+2) {
+    > a, button:nth-child(n+2) {
         @include bidi-style(border-left, 1px solid #bbb, border-right, 0);
         @include bidi-style(padding-left, 6px, padding-right, 0);
         @include bidi-style(margin-left, 2px, margin-right, 0);
