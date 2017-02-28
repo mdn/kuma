@@ -113,6 +113,7 @@ Promos
     background-color: #82D1F5;
 
     a {
+        @include set-font-size(14px);
         color: #000 !important;
         font-weight: bold;
 
@@ -129,9 +130,12 @@ Promos
             display: none;
         }
 
+        p {
+            margin-bottom: 0;
+        }
+
         button {
             @include bidi-style(text-align, left, text-align, right);
-            @include set-font-size(14px);
             background: #82D1F5;
             border: 2px solid #fff;
             border-radius: 0;
@@ -140,7 +144,7 @@ Promos
             display: inline-block;
             font-weight: bold;
             margin-top: 14px;
-            padding: 9px 18px;
+            padding: 9px;
             text-transform: none;
         }
     }
@@ -171,7 +175,7 @@ Media queries
 
     .callout-saucelabs {
         a {
-            @include set-font-size(14px);
+            @include set-font-size(12px);
 
             &:after {
                 @include bidi-style(right, -70px, right, auto);
@@ -198,7 +202,7 @@ Media queries
 
     .callout-saucelabs {
         a {
-            @include set-font-size(16px);
+            @include set-font-size(14px);
 
             &:after {
                 @include bidi-style(right, 20px, right, auto);
