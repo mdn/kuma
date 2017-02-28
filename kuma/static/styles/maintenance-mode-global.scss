@@ -8,10 +8,14 @@
     }
 }
 
-// hide login and edit buttons
+// hide links/buttons to disabled functions
 .maintenance-mode {
+    .activity-actions .edit,
+    .change-revisions,
     .login,
-    .page-buttons-edit {
+    .page-buttons-edit,
+    .revert-revision,
+    #translations-add {
         display: none;
     }
 }
