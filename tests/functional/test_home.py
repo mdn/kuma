@@ -3,10 +3,12 @@ import pytest
 from pages.home import HomePage
 from utils.urls import assert_valid_url
 
+
 # homepage tests
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_masthead_displayed(base_url, selenium):
     page = HomePage(selenium, base_url).open()
     assert page.is_masthead_displayed
@@ -14,6 +16,7 @@ def test_masthead_displayed(base_url, selenium):
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_hacks_blog(base_url, selenium):
     page = HomePage(selenium, base_url).open()
     assert page.hacks_items_length == 5
@@ -23,6 +26,7 @@ def test_hacks_blog(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_callouts(base_url, selenium):
     page = HomePage(selenium, base_url).open()
     # three of them?
@@ -41,15 +45,16 @@ def test_callouts(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_header_displays(base_url, selenium):
     page = HomePage(selenium, base_url).open()
-    assert page.Header.is_displayed
-    assert page.Header.is_menu_displayed
+    assert page.header.is_displayed
 
 
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_header_platform_submenu(base_url, selenium):
     page = HomePage(selenium, base_url).open()
     assert page.header.is_platform_submenu_trigger_displayed
@@ -69,13 +74,21 @@ def test_header_signin(base_url, selenium):
     assert 'https://github.com' in str(selenium.current_url)
 
 
+@pytest.mark.maintenance_mode
+def test_header_no_signin(base_url, selenium):
+    page = HomePage(selenium, base_url).open()
+    assert page.is_maintenance_mode_banner_displayed
+    assert not page.header.is_signin_displayed
+
+
 # footer tests
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_footer_displays(base_url, selenium):
     page = HomePage(selenium, base_url).open()
-    assert page.Footer.is_displayed
-    assert page.Footer.is_privacy_displayed
-    assert page.Footer.is_license_displayed
-    assert page.Footer.is_select_language_displayed
+    assert page.footer.is_displayed
+    assert page.footer.is_privacy_displayed
+    assert page.footer.is_license_displayed
+    assert page.footer.is_select_language_displayed

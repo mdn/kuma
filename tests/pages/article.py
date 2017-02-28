@@ -10,8 +10,6 @@ class ArticlePage(BasePage):
     URL_TEMPLATE = '/{locale}/docs/User:anonymous:uitest'
 
     # article meta
-    _language_button_locator = (By.ID, 'languages-menu')
-    _language_submenu_locator = (By.ID, 'languages-menu-submenu')
     _language_add_link_locator = (By.ID, 'translations-add')
     _edit_button_locator = (By.ID, 'edit-button')
     _advanced_button_locator = (By.ID, 'advanced-menu')
@@ -39,18 +37,33 @@ class ArticlePage(BasePage):
 
     # page buttons
     @property
-    def is_language_menu_displayed(self):
-        return self.find_element(*self._language_button_locator).is_displayed()
+    def language_menu_button(self):
+        return self.find_element(By.ID, 'languages-menu')
 
-    def trigger_add_translation(self):
-        submenu_trigger = self.find_element(*self._language_button_locator)
-        submenu = self.find_element(*self._language_submenu_locator)
+    @property
+    def add_translation_link(self):
+        return self.find_element(By.ID, 'translations-add')
+
+    @property
+    def is_language_menu_displayed(self):
+        return self.language_menu_button.is_displayed()
+
+    def display_language_menu(self):
+        submenu_trigger = self.language_menu_button
+        submenu = self.find_element(By.ID, 'languages-menu-submenu')
         hover = ActionChains(self.selenium).move_to_element(submenu_trigger)
         hover.perform()
         self.wait.until(lambda s: submenu.is_displayed())
-        add_translation = self.find_element(*self._language_add_link_locator)
-        add_translation.click()
+
+    def trigger_add_translation(self):
+        self.display_language_menu()
+        self.add_translation_link.click()
         self.wait.until(lambda s: '$locale' in s.current_url)
+
+    @property
+    def is_add_translation_link_available(self):
+        self.display_language_menu()
+        self.add_translation_link.is_displayed()
 
     @property
     def is_edit_button_displayed(self):

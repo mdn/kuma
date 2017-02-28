@@ -3,8 +3,10 @@ import pytest
 from pages.dashboard import DashboardPage
 from pages.admin import AdminLogin
 
+
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_dashboard(base_url, selenium):
     page = DashboardPage(selenium, base_url).open()
     first_row = page.first_row
@@ -33,6 +35,13 @@ def test_dashboard(base_url, selenium):
     new_first_row_id = page.first_row_id
     # check first revison on page one is not on page two
     assert first_row_id is not new_first_row_id
+
+
+@pytest.mark.maintenance_mode
+def test_dashboard_in_mm(base_url, selenium):
+    page = DashboardPage(selenium, base_url).open()
+    assert page.is_maintenance_mode_banner_displayed
+    assert not page.header.is_signin_displayed
 
 
 @pytest.mark.smoke

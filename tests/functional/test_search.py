@@ -11,21 +11,25 @@ ARTICLE_PATH = 'docs/User:anonymous:uitest'
 
 
 @pytest.mark.smoke
+@pytest.mark.search
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_search_homepage(base_url, selenium):
     # open homepage
     page = HomePage(selenium, base_url).open()
     # search for CSS in big box
     search = page.search_for_term(SEARCH_TERM)
     # search term is in search box
-    assert search.search_input_value == SEARCH_TERM, 'search term not preserved'
+    assert search.search_input_value == SEARCH_TERM
     # results found
     assert search.search_result_items_length == 10
 
 
 @pytest.mark.flaky(reruns=1)
 @pytest.mark.smoke
+@pytest.mark.search
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_search_home_header(base_url, selenium):
     # open homepage
     page = HomePage(selenium, base_url).open()
@@ -33,18 +37,20 @@ def test_search_home_header(base_url, selenium):
     width_before = page.header.search_field_width
     page.header.search_field_focus()
     width_after = page.header.search_field_width
-    assert width_before < width_after, 'search field did not expand'
+    assert width_before < width_after
     # search for CSS
     search = page.header.search_for_term(SEARCH_TERM)
     # search term is in search box
-    assert search.search_input_value == SEARCH_TERM, 'search term not preserved'
+    assert search.search_input_value == SEARCH_TERM
     # results found
     assert search.search_result_items_length == 10
 
 
 @pytest.mark.flaky(reruns=1)
 @pytest.mark.smoke
+@pytest.mark.search
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_search_article_header(base_url, selenium):
     # open article page
     page = ArticlePage(selenium, base_url).open()
@@ -52,21 +58,23 @@ def test_search_article_header(base_url, selenium):
     width_before = page.header.search_field_width
     page.header.search_field_focus()
     width_after = page.header.search_field_width
-    assert width_before < width_after, 'search field did not expand'
+    assert width_before < width_after
     # search for CSS
     search = page.header.search_for_term(SEARCH_TERM)
     # search term is in search box
-    assert search.search_input_value == SEARCH_TERM, 'search term not preserved'
+    assert search.search_input_value == SEARCH_TERM
     # results found
     assert search.search_result_items_length == 10
 
 
 @pytest.mark.smoke
+@pytest.mark.search
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_search_layout(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM).open()
     # search term is in search box
-    assert page.search_input_value == SEARCH_TERM, 'search term not preserved'
+    assert page.search_input_value == SEARCH_TERM
     # results found
     assert page.search_result_items_length == 10
     # verrify layout and formatting
@@ -91,7 +99,9 @@ def test_search_layout(base_url, selenium):
 
 
 @pytest.mark.smoke
+@pytest.mark.search
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_search_zero_results(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM_ZERO).open()
     # results found
@@ -99,10 +109,19 @@ def test_search_zero_results(base_url, selenium):
 
 
 @pytest.mark.smoke
+@pytest.mark.search
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_search_filters(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM).open()
     documents_found_initial = page.documents_found
     page.search_all_topics()
     documents_found_after = page.documents_found
-    assert documents_found_after > documents_found_initial, 'all topics filter did not increase results returned'
+    assert documents_found_after > documents_found_initial
+
+
+@pytest.mark.maintenance_mode
+def test_search_in_mm(base_url, selenium):
+    page = SearchPage(selenium, base_url, term=SEARCH_TERM_ZERO).open()
+    assert page.is_maintenance_mode_banner_displayed
+    assert not page.header.is_signin_displayed
