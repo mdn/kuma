@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-02-14 07:51-0800\n"
+"POT-Creation-Date: 2017-03-01 06:32-0800\n"
 "PO-Revision-Date: 2017-01-16 00:24+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -1282,73 +1282,77 @@ msgid "Open Web and Mobile"
 msgstr "মুক্ত ওয়েব এবং মোবাইল"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
-msgid "Proudly non-profit."
-msgstr "গর্বের সহিত অলাভজনক।"
+msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:118
-msgid "Donate before Dec 31."
-msgstr "31 শে ডিসেম্বরের পূর্বে দান করুন।"
+#: kuma/landing/jinja2/landing/homepage.html:120
+msgid "Test on Sauce Labs"
+msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:118
-msgid "Donate Now"
-msgstr "দান করুন"
-
-#: kuma/landing/jinja2/landing/homepage.html:123
+#: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
 msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
-#: kuma/landing/jinja2/landing/homepage.html:126
+#: kuma/landing/jinja2/landing/homepage.html:130
+msgid "Proudly non-profit."
+msgstr "গর্বের সহিত অলাভজনক।"
+
+#: kuma/landing/jinja2/landing/homepage.html:130
+msgid "Donate before Dec 31."
+msgstr "31 শে ডিসেম্বরের পূর্বে দান করুন।"
+
+#: kuma/landing/jinja2/landing/homepage.html:130
+msgid "Donate Now"
+msgstr "দান করুন"
+
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get The Browser For Developers Like You"
 msgstr "আপনার মত ডেভেলপারদের জন্য ব্রাউজার পান"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
-msgid "Build Open Web Apps"
-msgstr "ওপেন ওয়েব অ্যাপস তৈরী করুন"
-
-#: kuma/landing/jinja2/landing/homepage.html:139
+#: kuma/landing/jinja2/landing/homepage.html:144
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">hacks.mozilla.org সাইটে বিস্তারিত দেখুন <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:144
+#: kuma/landing/jinja2/landing/homepage.html:149
 msgid "Get Involved"
 msgstr "যুক্ত হোন"
 
-#: kuma/landing/jinja2/landing/homepage.html:146
+#: kuma/landing/jinja2/landing/homepage.html:151
 #, fuzzy, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr "<span class=\"row2\">বিশ্বব্যাপি <span class=\"number\">৩১</span> টি ভাষা এবং locale</span> এর <span class=\"number\">৩,৪১৪</span> জন কন্ট্রিবিউটরদের সাথে যোগ দিন</span> ।"
 
-#: kuma/landing/jinja2/landing/homepage.html:153 kuma/landing/jinja2/landing/homepage.html:160
+#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
 msgstr "এমডিএন উন্নিতকরণে সাহায্য করুন"
 
-#: kuma/landing/jinja2/landing/homepage.html:164
+#: kuma/landing/jinja2/landing/homepage.html:169
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN (নথিসমূহ এবং সাইটটি) এর সবগুলো অংশ ডেভেলপারদের একটি ওপেন কম্যুনিটি তৈরি করেছেন। অনুগ্রহ করে আমাদের সাথে যোগ দিন! আমাদের সাহায্য করার জন্য যেকোন একটি ক্ষেত্র নির্বাচন করুন:"
 
-#: kuma/landing/jinja2/landing/homepage.html:170
+#: kuma/landing/jinja2/landing/homepage.html:175
 msgid "Getting started"
 msgstr "শুরু"
 
-#: kuma/landing/jinja2/landing/homepage.html:171
+#: kuma/landing/jinja2/landing/homepage.html:176
 msgid "Editorial review"
 msgstr "সম্পাদকীয় পর্যালোচনা"
 
-#: kuma/landing/jinja2/landing/homepage.html:172
+#: kuma/landing/jinja2/landing/homepage.html:177
 msgid "Technical review"
 msgstr "প্রযুক্তি সংক্রান্ত পর্যালোচনা"
 
-#: kuma/landing/jinja2/landing/homepage.html:177
+#: kuma/landing/jinja2/landing/homepage.html:182
 msgid "Translating"
 msgstr "অনুবাদ করা হচ্ছে"
 
-#: kuma/landing/jinja2/landing/homepage.html:178
+#: kuma/landing/jinja2/landing/homepage.html:183
 msgid "Promoting MDN"
 msgstr "MDN প্রচার করা"
 
-#: kuma/landing/jinja2/landing/homepage.html:179
+#: kuma/landing/jinja2/landing/homepage.html:184
 msgid "Contributing to the MDN codebase"
 msgstr "MDN কোডবেসে অবদান রাখা"
 
@@ -4075,13 +4079,14 @@ msgid "Documents for review"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, python-format
-msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+#, fuzzy, python-format
+msgid "Articles in need of review: %(tag)s"
+msgstr "ট্যাগকৃত ডেমো {tag}"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
-msgid "All Articles in Need of Review"
-msgstr ""
+#, fuzzy
+msgid "All articles in need of review"
+msgstr "পর্যালোচনার জন্য MDN নথিসমূহ"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
@@ -4251,6 +4256,9 @@ msgstr "আপনি এই ডকুমেন্ট অনুবাদ কর�
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "Build Open Web Apps"
+#~ msgstr "ওপেন ওয়েব অ্যাপস তৈরী করুন"
 
 #~ msgid "Sign in or create an account:"
 #~ msgstr "সাইন ইন বা অ্যাকাউন্ট তৈরি করুন:"
