@@ -1453,3 +1453,18 @@ NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
 
 # Tell django-taggit to use case-insensitive search for existing tags
 TAGGIT_CASE_INSENSITIVE = True
+
+# Content Experiments
+CONTENT_EXPERIMENTS = [{
+    'id': 'experiment-framework-test',
+    'ga_name': 'framework-test',
+    'param': 'v',
+    'pages': [{
+        'locale': 'en-US',
+        'slug': 'Web/JavaScript/Reference/Operators/Comparison_Operators',
+        'variants': [
+            ['control', 50, 'Web/JavaScript/Reference/Operators/Comparison_Operators'],
+            ['test', 50, 'Experiment:FrameworkTest/Comparison_Operators'],
+        ]
+    }]
+}]
