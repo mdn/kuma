@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-01 06:32-0800\n"
-"PO-Revision-Date: 2017-03-01 17:06+0000\n"
-"Last-Translator: Andreas Pettersson <az@kth.se>\n"
+"PO-Revision-Date: 2017-03-02 18:52+0000\n"
+"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -3328,7 +3328,7 @@ msgstr "Denna artikel är i behov av en redaktionell granskning. <a href=\"%(url
 #: kuma/wiki/jinja2/wiki/document.html:293
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr "Denna översättning är ofullständig. Hjälp till att<a href=\"%(translate_url)s\">översätta denna artikel</a> från engelska."
+msgstr "Denna översättning är ofullständig. Hjälp till att <a href=\"%(translate_url)s\">översätta denna artikel</a> från engelska."
 
 #: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This translation is in progress."
