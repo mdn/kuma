@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-01 06:32-0800\n"
-"PO-Revision-Date: 2017-03-01 19:53+0000\n"
+"PO-Revision-Date: 2017-03-01 16:14+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -4006,12 +4006,11 @@ msgid "Documents for review"
 msgstr "待复核文档"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in need of review: %(tag)s"
 msgstr "需要复核的文章：%(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
-#, fuzzy
 msgid "All articles in need of review"
 msgstr "所有需要复核的文章"
 
