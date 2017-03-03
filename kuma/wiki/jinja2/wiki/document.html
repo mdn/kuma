@@ -44,6 +44,14 @@
   {% set content_class = 'column-main' %}
 {% endif %}
 
+{% block robots_value %}
+  {%- if document.is_experiment -%}
+    noindex, nofollow
+  {%- else -%}
+    {{ super() }}
+  {%- endif -%}
+{% endblock %}
+
 {% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
 {% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu" data-search-url="{{ search_url }}"{% endblock body_attributes %}
 
@@ -263,6 +271,11 @@
                   {% endtrans %}
                   </div>
                 {% endif %}
+              {% endif %}
+              {% if document.is_experiment %}
+                <div id="doc-experiment" class="warning">
+                  {{ _("This is an experimental page.") }}
+                </div>
               {% endif %}
 
               {% if kumascript_errors %}

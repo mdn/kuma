@@ -20,7 +20,8 @@ from kuma.users.tests import UserTestCase
 
 from . import (WikiTestCase, create_topical_parents_docs, document,
                new_document_data, revision)
-from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
+from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT,
+                         TEMPLATE_TITLE_PREFIX)
 from ..events import EditDocumentEvent
 from ..models import Document, DocumentTag, Revision
 
@@ -247,6 +248,24 @@ class DocumentTests(UserTestCase, WikiTestCase):
         ok_(trans_ar.language in options[1].text)
         ok_(trans_bn_bd.language in options[2].text)
         ok_(trans_fr.language in options[3].text)
+
+    def test_experiment_document_view(self):
+        slug = EXPERIMENT_TITLE_PREFIX + 'Test'
+        r = revision(save=True, content='Experiment.', is_approved=True,
+                     slug=slug)
+        assert r.document.is_experiment
+        response = self.client.get(r.document.get_absolute_url())
+        assert response.status_code == 200
+        doc = pq(response.content)
+        doc_title = doc('main#content div.document-head h1').text()
+        assert doc_title == r.document.title
+        assert doc('article#wikiArticle').text() == r.document.html
+        metas = doc("meta[name='robots']")
+        assert len(metas) == 1
+        meta_content = metas[0].get('content')
+        assert meta_content == 'noindex, nofollow'
+        doc_experiment = doc('div#doc-experiment')
+        assert len(doc_experiment) == 1
 
 
 class RevisionTests(UserTestCase, WikiTestCase):

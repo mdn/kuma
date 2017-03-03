@@ -1,7 +1,6 @@
 from elasticsearch_dsl import query
 
 from kuma.core.tests import eq_, ok_
-from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
@@ -42,7 +41,3 @@ class WikiDocumentTypeTests(ElasticTestCase):
         title_list = WikiDocumentType.get_indexable().values_list('title',
                                                                   flat=True)
         ok_('User:jezdez' not in title_list)
-
-    def test_hidden_slugs_should_update(self):
-        jezdez_doc = Document.objects.get(slug='User:jezdez')
-        eq_(WikiDocumentType.should_update(jezdez_doc), False)

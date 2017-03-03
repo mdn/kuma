@@ -32,7 +32,8 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
-                        KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
+                        EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
+                        REDIRECT_CONTENT, REDIRECT_HTML,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
@@ -1491,6 +1492,10 @@ Full traceback:
 
     def get_full_url(self):
         return absolutify(self.get_absolute_url())
+
+    @property
+    def is_experiment(self):
+        return self.slug.startswith(EXPERIMENT_TITLE_PREFIX)
 
 
 class DocumentDeletionLog(models.Model):

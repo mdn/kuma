@@ -19,6 +19,7 @@ from elasticsearch_dsl.mapping import Mapping
 from elasticsearch_dsl.search import Search
 
 from kuma.core.utils import chord_flow, chunked
+from .constants import EXPERIMENT_TITLE_PREFIX
 
 
 log = logging.getLogger('kuma.wiki.search')
@@ -27,7 +28,7 @@ log = logging.getLogger('kuma.wiki.search')
 class WikiDocumentType(document.DocType):
     excerpt_fields = ['summary', 'content']
     exclude_slugs = ['Talk:', 'User:', 'User_talk:', 'Template_talk:',
-                     'Project_talk:']
+                     'Project_talk:', EXPERIMENT_TITLE_PREFIX]
 
     boost = field.Float(null_value=1.0)
     content = field.String(analyzer='kuma_content',
