@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-01 06:32-0800\n"
-"PO-Revision-Date: 2017-02-28 21:23+0000\n"
+"PO-Revision-Date: 2017-03-04 08:49+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -166,9 +166,8 @@ msgid "APIs / DOM"
 msgstr "API / DOM"
 
 #: jinja2/base.html:137
-#, fuzzy
 msgid "WebExtensions"
-msgstr "Dodatki i rozszerzenia"
+msgstr "WebExtensions"
 
 #: jinja2/base.html:138 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -179,9 +178,8 @@ msgid "References & Guides"
 msgstr "Materiały i przewodniki"
 
 #: jinja2/base.html:143 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learn web development"
-msgstr "Dowiedz się o Web Development"
+msgstr "Dowiedz się więcej o tworzeniu stron"
 
 #: jinja2/base.html:144
 msgid "Tutorials"
@@ -200,9 +198,8 @@ msgid "Accessibility"
 msgstr "Ułatwienia dostępu"
 
 #: jinja2/base.html:148
-#, fuzzy
 msgid "Game development"
-msgstr "Programowanie sieci"
+msgstr "Tworzenie gier"
 
 #: jinja2/base.html:149
 msgid "...more docs"
@@ -322,49 +319,45 @@ msgid "Sign in"
 msgstr "Zaloguj się"
 
 #: jinja2/includes/newsletter.html:3
-#, fuzzy
 msgid "Learn the best of web development"
-msgstr "Dowiedz się o Web Development"
+msgstr "Poznaj najlepsze metody tworzenia stron"
 
 #: jinja2/includes/newsletter.html:4
-#, fuzzy
 msgid "Sign up for our newsletter:"
-msgstr "Wyślij mi biuletyn"
+msgstr "Zapisz się na biuletyn:"
 
 #: jinja2/includes/newsletter.html:11
-#, fuzzy
 msgid "E-mail"
-msgstr "E-mail:"
+msgstr "E-mail"
 
 #: jinja2/includes/newsletter.html:12
 msgid "you@example.com"
 msgstr "ja@example.com"
 
 #: jinja2/includes/newsletter.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
-msgstr "<a href=\"%(privacy_url)s\">zasady ochrony prywatności</a>"
+msgstr "Pozwalam Mozilli wykorzystywać te informacje w sposób opisany w <a href=\"%(policy_url)s\">zasadach ochrony prywatności</a>."
 
 #: jinja2/includes/newsletter.html:24
-#, fuzzy
 msgid "Sign up now"
-msgstr "Zaloguj się"
+msgstr "Zapisz się"
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "Obecnie biuletyn jest dostępny tylko po angielsku."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Dziękujemy! W skrzynce znajdziesz wiadomość do potwierdzenia subskrypcji."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr ""
+msgstr "Jeśli jeszcze nigdy nie potwierdzono subskrypcji newslettera Mozilli, to możesz musieć to zrobić. Sprawdź, czy w skrzynce pocztowej lub spamie jest wiadomość od nas."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr ""
+msgstr "Ukryj biuletyn"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -1005,7 +998,7 @@ msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr "Programowanie sieci"
+msgstr "Tworzenie stron"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
@@ -1292,7 +1285,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
-msgstr "Dowiedz się o Web Development"
+msgstr "Dowiedz więcej się o tworzeniu stron"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Proudly non-profit."
