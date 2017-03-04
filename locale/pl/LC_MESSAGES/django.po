@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-01 06:32-0800\n"
-"PO-Revision-Date: 2017-03-04 09:09+0000\n"
+"PO-Revision-Date: 2017-03-04 09:30+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -2419,15 +2419,15 @@ msgstr "Prosimy zgłosić błąd z prośbą o usunięcie konta, i zawrzeć w�
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr ""
+msgstr "Za pomocą tego konta nie zmieniono żadnych stron. Proszę usunąć moje konto."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr ""
+msgstr "Chcę zachować uznanie autorstwa moich zmian. Proszę usunąć mój adres e-mail i zamrozić konto, aby nie można było się więcej do niego logować."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr ""
+msgstr "Proszę ustawić autorstwo moich zmian na „anonimowe” i usunąć moje konto."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
@@ -2546,6 +2546,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
+"Otrzymujesz tę wiadomość, ponieważ Ty lub ktoś inny poprosił o dostęp do konta użytkownika „%(username)s” w domenie „%(domain)s”. Możesz ją bezpiecznie zignorować. Kliknij poniższy odnośnik, aby "
+"uzyskać dostęp do konta:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
@@ -2855,7 +2857,7 @@ msgstr "Tytuł artykułu"
 #: kuma/wiki/forms.py:43
 #, python-format
 msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
-msgstr "Pole etykiet jest za długie Zawiera %(show_value)s znaków. Musi mieć co najwyżej %(limit_value)s znaków."
+msgstr "Pole etykiet jest za długie. Zawiera %(show_value)s znaków. Może mieć co najwyżej %(limit_value)s znaków."
 
 #: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
@@ -2922,8 +2924,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
-"Publikacja się nie powiodła. Wykryto sprzeczne próby modyfikacji. Należy skopiować i wkleić swoje zmiany w bezpiecznym miejcu i przejść do <a href=\"%(url)s\">historii wersji</a>, aby zobaczyć "
-"zmiany przed wprowadzeniem własnych."
+"Publikacja się nie powiodła. Wykryto sprzeczne próby modyfikacji. Należy skopiować swoje zmiany w bezpieczne miejsce i przejść do <a href=\"%(url)s\">historii wersji</a>, aby zobaczyć zmiany przed "
+"wprowadzeniem własnych."
 
 #: kuma/wiki/forms.py:74
 msgid "Changing this document's slug requires moving it and its children."
@@ -3623,13 +3625,13 @@ msgid "Select a language to translate to:"
 msgstr "Wybierz język tłumaczenia:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:35
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"Prawa autorskie: &copy; 2005-2013 Mozilla Developer Network i poszczególni autorzy<br /> Treść jest dostępna na zasadach licencji określonej w tym projekcie. &middot; <a href=\"%(about_url)s\">About"
-" MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Współtwórz kod</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Zasady ochrony prywatności</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network i poszczególni autorzy<br /> Treść jest dostępna na zasadach licencji tego projektu. &middot; <a href=\"%(about_url)s\">Informacje o MDN</a> "
+"&middot; <a href=\"//github.com/mozilla/kuma\">Współtwórz kod</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Zasady ochrony prywatności</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3978,13 +3980,13 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Napisz dlaczego zrobiłeś uzupełnienia i zmiany. Jest to opcjonalne, ale dzięki temu będzie łatwiej zrozumieć historię strony."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Jeśli uważasz, że jest to pomyłkowa wiadomość, zapisz wersję roboczą i <a href=\"%(admin_email)s\">skontaktuj się z administratorami strony</a>."
+msgstr "Zapisanie zmian się nie powiodło. Prosimy zapisać wersję roboczą i <a href=\"%(admin_email)s\">skontaktuj się z administratorami strony</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
-msgstr ""
+msgstr "Postaramy się rozwiązać problem, po czym będzie można jeszcze raz wysłać zmiany."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:16
 #, python-format
@@ -4068,12 +4070,11 @@ msgid "Documents for review"
 msgstr "Artykuły do sprawdzenia"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in need of review: %(tag)s"
-msgstr "Artykuły wymagające sprawdzenia oznaczone: %(tag)s"
+msgstr "Artykuły wymagające sprawdzenia: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
-#, fuzzy
 msgid "All articles in need of review"
 msgstr "Wszystkie artykuły wymagające sprawdzenia"
 
