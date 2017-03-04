@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-01 06:32-0800\n"
-"PO-Revision-Date: 2017-03-04 08:49+0000\n"
+"PO-Revision-Date: 2017-03-04 09:09+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -1230,14 +1230,12 @@ msgid "more..."
 msgstr "więcej…"
 
 #: kuma/landing/jinja2/landing/homepage.html:82
-#, fuzzy
 msgid "Learn"
-msgstr "Uczę się"
+msgstr "Ucz się"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
-#, fuzzy
 msgid "Getting started with the Web"
-msgstr "Pierwsze kroki w JavaScriptcie"
+msgstr "Pierwsze kroki w Internecie"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
@@ -1277,11 +1275,11 @@ msgstr "Open Web i Mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-msgstr ""
+msgstr "Testuj w Firefoksie i ponad 800 przeglądarkach/systemach dzięki Mozilli i Sauce Labs"
 
 #: kuma/landing/jinja2/landing/homepage.html:120
 msgid "Test on Sauce Labs"
-msgstr ""
+msgstr "Testuj w Sauce Labs"
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
@@ -1289,15 +1287,15 @@ msgstr "Dowiedz więcej się o tworzeniu stron"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "Dumnie non-profit."
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Donate before Dec 31."
-msgstr ""
+msgstr "Wspomóż przed 31 grudnia."
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Donate Now"
-msgstr ""
+msgstr "Wspomóż teraz"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get The Browser For Developers Like You"
@@ -1774,9 +1772,8 @@ msgid "Username already in use."
 msgstr "Nazwa użytkownika jest już zajęta."
 
 #: kuma/users/forms.py:162
-#, fuzzy
 msgid "Email"
-msgstr "E-mail:"
+msgstr "E-mail"
 
 #: kuma/users/models.py:34
 #, python-format
@@ -1994,9 +1991,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Wszystkie treści na MDN są darmowe i dostępne bez logowania."
 
 #: kuma/users/jinja2/account/login.html:20
-#, fuzzy
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr "Aby w pełni udzielać się, musisz zalogować się do MDN. Możesz zalogować się przy użyciu GitHub i jeśli nie masz profilu MDN, zostanie on utworzony."
+msgstr "Aby w pełni udzielać się, musisz zalogować się do istniejącego profilu MDN."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2135,12 +2131,11 @@ msgstr "Aby kontynuować, utwórz konto MDN"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Istniejący profil MDN pasuje do Twojego adresu e-mail w serwisie GitHub. Kliknij tutaj, aby odzyskać profil:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:32
-#, fuzzy
 msgid "Recover my Profile"
-msgstr "Zgłoś problem"
+msgstr "Odzyskaj mój profil"
 
 #: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
@@ -2174,9 +2169,9 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr "Podaj nazwę, jaką chcesz, aby była wyświetlana do identyfikacji ciebie jako autora."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
-#, fuzzy, python-format
+#, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr "Istnieje już profil z wybranym adresem e-mail. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Połącz swoje konto %(provider_name)s z nim</a>."
+msgstr "Istnieje już profil z wybranym adresem e-mail. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Połącz swoje konto %(provider_name)s z nim</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
@@ -2367,35 +2362,32 @@ msgid "Identified as not spam:"
 msgstr "Zidentyfikowane jako nie-spam:"
 
 #: kuma/users/jinja2/users/recover_done.html:3
-#, fuzzy
 msgid "Connect Account"
-msgstr "Dołącz nowe konto"
+msgstr "Połącz konto"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
-msgstr ""
+msgstr "Użyj poniższego przycisku, aby połączyć profil MDN z kontem w serwisie GitHub."
 
 #: kuma/users/jinja2/users/recover_done.html:18
 msgid "This account recovery link cannot be used to log in again."
-msgstr ""
+msgstr "Nie można będzie już używać tego odnośnika odzyskiwania konta do zalogowania."
 
 #: kuma/users/jinja2/users/recover_failed.html:3
-#, fuzzy
 msgid "Account Recovery Failed"
-msgstr "Logowanie się nie powiodło"
+msgstr "Odzyskanie konta się nie powiodło"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
-#, fuzzy
 msgid "This link is no longer valid."
-msgstr "Podany ciąg słów jest nieprawidłowy."
+msgstr "Ten odnośnik nie jest już prawidłowy."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
-msgstr ""
+msgstr "Wysłano wiadomość odzyskiwania"
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:11
 msgid "Click the link in the email to recover your existing account."
-msgstr ""
+msgstr "Kliknij odnośnik w wiadomości, aby odzyskać istniejące konto."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2410,21 +2402,20 @@ msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click her
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Kliknij tutaj</a>, by odwołać blokadę.</p>"
 
 #: kuma/users/jinja2/users/user_delete.html:11
-#, fuzzy
 msgid "Delete your profile"
-msgstr "Przejdź do swojego profilu"
+msgstr "Usuń profil"
 
 #: kuma/users/jinja2/users/user_delete.html:28
 msgid "We're sorry to see you go."
-msgstr ""
+msgstr "Przykro nam, że odchodzisz."
 
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
-msgstr ""
+msgstr "Chociaż można usunąć konto, wprowadzone zmiany nie mogą zostać usunięte, a używana przez nas licencja na treść wymaga uznania autorstwa."
 
 #: kuma/users/jinja2/users/user_delete.html:38
 msgid "Please file a bug to request closing your account, and ensure one of these options is in the the description field:"
-msgstr ""
+msgstr "Prosimy zgłosić błąd z prośbą o usunięcie konta, i zawrzeć w opisie jedną z poniższych opcji:"
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
@@ -2440,7 +2431,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Zgłoś błąd, aby zamknąć konto"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
@@ -2538,18 +2529,16 @@ msgid "Publish"
 msgstr "Opublikuj"
 
 #: kuma/users/jinja2/users/user_edit.html:119
-#, fuzzy
 msgid "Delete your account."
-msgstr "Usuń ten komentarz"
+msgstr "Usuń konto."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr ""
+msgstr "Zarządzaj subskrypcjami biuletynów Mozilli."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
-#, fuzzy
 msgid "Hello from MDN!"
-msgstr "Pomóż rozwijać MDN"
+msgstr "Witamy w MDN!"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:4
 #, python-format
@@ -2559,14 +2548,13 @@ msgid ""
 msgstr ""
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
-#, fuzzy
 msgid "Thank you for using MDN!"
-msgstr "Dziękujemy za poświęcenie czasu na udoskonalenie MDN."
+msgstr "Dziękujemy za używanie MDN."
 
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Odzyskiwanie profilu użytkownika „%(username)s” w domenie „%(domain)s”"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -2865,9 +2853,9 @@ msgid "Name Your Article"
 msgstr "Tytuł artykułu"
 
 #: kuma/wiki/forms.py:43
-#, fuzzy, python-format
+#, python-format
 msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
-msgstr "Tytuł jest za krótki. Zawiera %(show_value)s znaków. Musi mieć co najmniej %(limit_value)s znaków."
+msgstr "Pole etykiet jest za długie Zawiera %(show_value)s znaków. Musi mieć co najwyżej %(limit_value)s znaków."
 
 #: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
@@ -2934,6 +2922,8 @@ msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
 msgstr ""
+"Publikacja się nie powiodła. Wykryto sprzeczne próby modyfikacji. Należy skopiować i wkleić swoje zmiany w bezpiecznym miejcu i przejść do <a href=\"%(url)s\">historii wersji</a>, aby zobaczyć "
+"zmiany przed wprowadzeniem własnych."
 
 #: kuma/wiki/forms.py:74
 msgid "Changing this document's slug requires moving it and its children."
@@ -3352,11 +3342,13 @@ msgid "This translation is in progress."
 msgstr "Trwa tłumaczenie tego artykułu."
 
 #: kuma/wiki/jinja2/wiki/document.html:305
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "Nasi wolontariusze nie przetłumaczyli jeszcze tego artykułu na język <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Dołącz do nas i pomóż go przetłumaczyć!</a>"
+msgstr ""
+"Nasi wolontariusze nie przetłumaczyli jeszcze tego artykułu na język <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Dołącz do nas i pomóż go przetłumaczyć!</a><br>Można "
+"także przeczytać artykuł w języku <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:317
 msgid "This article doesn't have any content yet."
@@ -3372,14 +3364,12 @@ msgid "This article doesn't have approved content yet."
 msgstr "Ten artykuł nie został jeszcze zatwierdzony."
 
 #: kuma/wiki/jinja2/wiki/document.html:338
-#, fuzzy
 msgid "Was this article helpful?"
-msgstr "Przenieś ten artykuł"
+msgstr "Czy ten artykuł był pomocny?"
 
 #: kuma/wiki/jinja2/wiki/document.html:352
-#, fuzzy
 msgid "Thank you!"
-msgstr "(To ty!)"
+msgstr "Dziękujemy!"
 
 #: kuma/wiki/jinja2/wiki/document.html:362
 msgid "Document Tags and Contributors"
