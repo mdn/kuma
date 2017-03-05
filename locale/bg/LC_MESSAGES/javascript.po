@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:50-0800\n"
-"PO-Revision-Date: 2017-02-05 19:05+0000\n"
+"PO-Revision-Date: 2017-03-05 16:43+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -25,7 +25,7 @@ msgstr "Затваряне на съобщението"
 
 #: kuma/static/js/dashboard.js:12
 msgid "Revert"
-msgstr ""
+msgstr "Връщане"
 
 #: kuma/static/js/dashboard.js:13
 msgid "View Page"
@@ -37,7 +37,7 @@ msgstr "Промяна на страницата"
 
 #: kuma/static/js/dashboard.js:15
 msgid "History"
-msgstr ""
+msgstr "История"
 
 #: kuma/static/js/dashboard.js:115
 msgid "Hang on! Updating filters…"
@@ -45,7 +45,7 @@ msgstr "Почакайте! Филтрите се обновяват…"
 
 #: kuma/static/js/dashboard.js:122
 msgid "Updated filters."
-msgstr ""
+msgstr "Обновени филтри."
 
 #: kuma/static/js/dashboard.js:139
 msgid "Submitting..."
@@ -54,17 +54,17 @@ msgstr "Изпраща се..."
 #: kuma/static/js/dashboard.js:147
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Изпратено като %(submission_type)s"
 
 #: kuma/static/js/dashboard.js:148
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s от %(user)s"
 
 #: kuma/static/js/dashboard.js:158
 #, python-format
 msgid "Error submitting as %(type)s"
-msgstr ""
+msgstr "Грешка при изпращане като %(type)s"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
@@ -92,7 +92,7 @@ msgstr "Няма да ви притесняваме отново."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr ""
+msgstr "Преведете го на моя език"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
@@ -293,7 +293,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-launch/plugin.js:12
 msgid "Launch"
-msgstr ""
+msgstr "Пускане"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/plugin.js:17
 msgid "Create a Redirect"
