@@ -155,14 +155,15 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         parsed = pq(response.content)
 
         login_info = parsed.find('.login')
+        # Check login user url is there
+        user_link = login_info.children('.user-url')
+        assert user_link.attr['href'] == user_url
+
         form = login_info.children('form')
         # There should be signout link in the form action
         expected = signout_url.replace('%2F', '/')  # decode slashes
         assert form.attr['action'] == expected
         assert form.attr['method'] == 'post'
-        # Check login user url is there
-        user_link = form.children('.user-url')
-        assert user_link.attr['href'] == user_url
         # Check next url is provided as input field
         next_input = form.children("input[name='next']")
         assert next_input.val() == home_url
@@ -211,14 +212,15 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         parsed = pq(response.content)
 
         login_info = parsed.find('.login')
+        # Check login user url is there
+        user_link = login_info.children('.user-url')
+        assert user_link.attr['href'] == user_url
+
         form = login_info.children('form')
         # There should be signout link in the form action
         expected = signout_url.replace('%2F', '/')  # decode slashes
         assert form.attr['action'] == expected
         assert form.attr['method'] == 'post'
-        # Check login user url is there
-        user_link = form.children('.user-url')
-        assert user_link.attr['href'] == user_url
         # Check next url is provided as input field
         next_input = form.children("input[name='next']")
         assert next_input.val() == home_url
