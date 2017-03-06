@@ -16,10 +16,8 @@ Header login link
         vertical-align: top; /* needed on mobile */
     }
 
-    > a:nth-child(n+2) {
-        @include bidi-style(border-left, 1px solid #bbb, border-right, 0);
-        @include bidi-style(padding-left, 6px, padding-right, 0);
-        @include bidi-style(margin-left, 2px, margin-right, 0);
+    form {
+        display: inline-block;
     }
 }
 
@@ -30,4 +28,24 @@ Header login link
     #{$selector-icon} {
         @include bidi-value(float, right, left);
     }
+}
+
+.logout {
+    @include bidi-style(border-left, 1px solid #bbb, border-right, 0);
+    @include bidi-style(padding, 0 0 0 6px, padding, 0 6px 0 0);
+    @include bidi-style(margin, 0 0 0 2px, margin, 0 2px 0 0);
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: $menu-link-color;
+    line-height: inherit;
+    text-transform: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+#home .logout {
+    color: #fff;
 }
