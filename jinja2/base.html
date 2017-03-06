@@ -4,6 +4,9 @@
 <html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" data-ffo-opensans="false" data-ffo-opensanslight="false">
 <head {%- if not is_sphinx %} prefix="og: http://ogp.me/ns#"{% endif %}>
   <meta charset="utf-8">
+
+  {% block experiment_js %}{% endblock %}
+
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
   {% if not is_sphinx %}
