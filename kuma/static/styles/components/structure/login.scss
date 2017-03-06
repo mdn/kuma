@@ -37,11 +37,15 @@ Header login link
     background-color: transparent;
     border-radius: 0;
     box-shadow: none;
-    color: #fff;
+    color: $menu-link-color;
     line-height: inherit;
     text-transform: none;
 
     &:hover {
         text-decoration: underline;
     }
+}
+
+#home .logout {
+    color: #fff;
 }
