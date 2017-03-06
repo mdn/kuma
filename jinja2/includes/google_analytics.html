@@ -30,6 +30,13 @@
         ga('set', 'dimension12', '{{ analytics_page_revision }}');
     {%- endif %}
 
+    {%- if content_experiment and content_experiment.selection_is_valid %}
+        // dimension15 == “a/b test variation”, user scope
+        ga('set', 'dimension15', '{{ content_experiment.ga_name }}:{{ content_experiment.selected }}');
+        // dimension16 == "Original Path", hit scope
+        ga('set', 'dimension16', '{{ content_experiment.original_path }}');
+    {%- endif %}
+
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;

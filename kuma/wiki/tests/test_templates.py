@@ -6,6 +6,7 @@ from datetime import datetime
 import mock
 import pytest
 from constance import config
+from constance.test import override_config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
@@ -266,6 +267,48 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert meta_content == 'noindex, nofollow'
         doc_experiment = doc('div#doc-experiment')
         assert len(doc_experiment) == 1
+
+
+_TEST_CONTENT_EXPERIMENTS = [{
+    'id': 'experiment-test',
+    'ga_name': 'experiment-test',
+    'param': 'v',
+    'pages': [{
+        'locale': 'en-US',
+        'slug': 'Original',
+        'variants': [
+            ['control', 50, 'Original'],
+            ['test', 50, 'Experiment:Test/Variant'],
+        ]
+    }]
+}]
+
+
+@override_settings(CONTENT_EXPERIMENTS=_TEST_CONTENT_EXPERIMENTS)
+@override_config(GOOGLE_ANALYTICS_ACCOUNT='fake')
+class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
+    def test_no_variant_selected(self):
+        rev = revision(save=True, content='Original Content.', is_approved=True,
+                       slug='Original')
+        response = self.client.get(rev.document.get_absolute_url())
+        assert response.status_code == 200
+        assert 'Original Content.' in response.content
+        assert 'dimension15' not in response.content
+
+    def test_valid_variant_selected(self):
+        rev = revision(save=True, content='Original Content.', is_approved=True,
+                       slug='Original')
+        revision(save=True, content='Variant Content.', is_approved=True,
+                 slug='Experiment:Test/Variant')
+        response = self.client.get(rev.document.get_absolute_url(),
+                                   {'v': 'test'})
+        assert response.status_code == 200
+        assert 'Original Content.' not in response.content
+        assert 'Variant Content.' in response.content
+        expected_15 = "ga('set', 'dimension15', 'experiment-test:test')"
+        assert expected_15 in response.content
+        expected_16 = "ga('set', 'dimension16', '/en-US/docs/Original')"
+        assert expected_16 in response.content
 
 
 class RevisionTests(UserTestCase, WikiTestCase):
