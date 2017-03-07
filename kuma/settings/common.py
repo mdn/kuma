@@ -960,7 +960,16 @@ PIPELINE_JS = {
             'js/libs/mozilla.trafficcop.js',
             'js/experiment-wiki-content.js',
         ),
-        'output_filename': 'build/js/experiment-wiki-content',
+        'output_filename': 'build/js/experiment-wiki-content.js',
+    },
+    'experiment-framework-test': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+            'js/libs/mozilla.cookiehelper.js',
+            'js/libs/mozilla.trafficcop.js',
+            'js/experiment-framework-test.js',
+        ),
+        'output_filename': 'build/js/experiment-framework-test.js',
     },
 }
 
@@ -1463,6 +1472,11 @@ NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
 TAGGIT_CASE_INSENSITIVE = True
 
 # Content Experiments
+# Must be kept up to date with PIPELINE_JS setting and the JS client-side
+#  configuration. The 'id' should be a key in PIPELINE_JS, that loads
+#  Traffic Cop and a client-side configuration like
+#  kuma/static/js/experiment-wiki-content.js
+#
 CONTENT_EXPERIMENTS = [{
     'id': 'experiment-framework-test',
     'ga_name': 'framework-test',

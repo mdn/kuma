@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block experiment_js %}
-    {%- if content_experiment and content_experiment.selection_is_valid == False %}
-        {% javascript 'experiment-wiki-content' %}
+    {%- if not request.user.is_authenticated() and
+           content_experiment and
+           not content_experiment.selection_is_valid %}
+        {% javascript content_experiment.id %}
     {%- endif %}
 {% endblock %}
 
