@@ -282,20 +282,46 @@ _TEST_CONTENT_EXPERIMENTS = [{
         ]
     }]
 }]
+_PIPELINE = settings.PIPELINE
+_PIPELINE['JAVASCRIPT']['experiment-test'] = {
+    'output_filename': 'build/js/experiment-framework-test.js',
+}
 
 
-@override_settings(CONTENT_EXPERIMENTS=_TEST_CONTENT_EXPERIMENTS)
+@override_settings(CONTENT_EXPERIMENTS=_TEST_CONTENT_EXPERIMENTS,
+                   PIPELINE=_PIPELINE)
 @override_config(GOOGLE_ANALYTICS_ACCOUNT='fake')
 class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
-    def test_no_variant_selected(self):
+
+    # src attribute of the content experiment <script> tag
+    # Can't use pyquery for <head> elements
+    script_src = 'src="/static/build/js/experiment-framework-test.js"'
+
+    # Googla Analytics custom dimension calls
+    expected_15 = "ga('set', 'dimension15', 'experiment-test:test')"
+    expected_16 = "ga('set', 'dimension16', '/en-US/docs/Original')"
+
+    def test_anon_no_variant_selected(self):
+        """Anonymous users get the experiment script on the original page."""
         rev = revision(save=True, content='Original Content.', is_approved=True,
                        slug='Original')
         response = self.client.get(rev.document.get_absolute_url())
         assert response.status_code == 200
         assert 'Original Content.' in response.content
         assert 'dimension15' not in response.content
+        assert self.script_src in response.content
 
-    def test_valid_variant_selected(self):
+    def test_user_no_variant_selected(self):
+        """Users get original page without the experiment script."""
+        rev = revision(save=True, content='Original Content.', is_approved=True,
+                       slug='Original')
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(rev.document.get_absolute_url())
+        assert response.status_code == 200
+        assert self.script_src not in response.content
+
+    def test_anon_valid_variant_selected(self):
+        """Anon users are in the Google Analytics cohort on the variant."""
         rev = revision(save=True, content='Original Content.', is_approved=True,
                        slug='Original')
         revision(save=True, content='Variant Content.', is_approved=True,
@@ -305,10 +331,25 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert 'Original Content.' not in response.content
         assert 'Variant Content.' in response.content
-        expected_15 = "ga('set', 'dimension15', 'experiment-test:test')"
-        assert expected_15 in response.content
-        expected_16 = "ga('set', 'dimension16', '/en-US/docs/Original')"
-        assert expected_16 in response.content
+        assert self.expected_15 in response.content
+        assert self.expected_16 in response.content
+        assert self.script_src not in response.content
+
+    def test_user_valid_variant_selected(self):
+        """Users are not added to the Google Analytics cohort on the variant."""
+        rev = revision(save=True, content='Original Content.', is_approved=True,
+                       slug='Original')
+        revision(save=True, content='Variant Content.', is_approved=True,
+                 slug='Experiment:Test/Variant')
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(rev.document.get_absolute_url(),
+                                   {'v': 'test'})
+        assert response.status_code == 200
+        assert 'Original Content.' not in response.content
+        assert 'Variant Content.' in response.content
+        assert self.expected_15 not in response.content
+        assert self.expected_16 not in response.content
+        assert self.script_src not in response.content
 
 
 class RevisionTests(UserTestCase, WikiTestCase):
