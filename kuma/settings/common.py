@@ -1198,7 +1198,9 @@ WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_BACKEND = ('kuma.core.backends.ReadOnlyConstanceDatabaseBackend'
+                     if MAINTENANCE_MODE else
+                     'constance.backends.database.DatabaseBackend')
 # must be an entry in the CACHES setting!
 CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
