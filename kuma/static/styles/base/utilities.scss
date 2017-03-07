@@ -56,6 +56,36 @@
     }
 }
 
+/* Editorial comments; don't display these unless in the editor. */
+
+.editorial-comment {
+  display: none;
+
+  html.cke_panel_container &,
+  body[contenteditable] & {
+    position: relative;
+    display: block;
+    border: 1px solid #3e3544;
+    padding: 6px 3px 3px;
+    background-color: #e9c0ff;
+    margin-bottom: 9px;
+
+    &:before {
+      @include set-font-size(16px);
+      content: "Editorial Note";
+      position: absolute;
+      top: -25px;
+      left: -1px;
+      z-index: 10;
+      display: block;
+      padding: 0 8px;
+      background-color: #3e3544;
+      color: #e9c0ff;
+    }
+
+  }
+}
+
 .title {
     @include title-header();
 }

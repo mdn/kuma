@@ -154,7 +154,8 @@
         { name: 'Article Summary', element: 'p', attributes: { 'class': 'summary' } },
         { name: 'Syntax Box', element: 'pre', attributes: { 'class': 'syntaxbox' } },
         { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } },
-        { name: 'Hidden When Reading', element: 'div', attributes: { 'class': 'hidden' }, type: 'wrap' }
+        { name: 'Hidden When Reading', element: 'div', attributes: { 'class': 'hidden' }, type: 'wrap' },
+        { name: 'Editorial Note', element: 'div', attributes: { 'class': 'editorial-comment' }, type: 'wrap' }
       ]);
     }
     config.keystrokes = [
