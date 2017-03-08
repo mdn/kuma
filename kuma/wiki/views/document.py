@@ -323,8 +323,8 @@ def move(request, document_slug, document_locale):
 
 @block_user_agents
 @process_document_path
-@check_readonly
 @superuser_required
+@check_readonly
 def repair_breadcrumbs(request, document_slug, document_locale):
     doc = get_object_or_404(Document,
                             locale=document_locale,
