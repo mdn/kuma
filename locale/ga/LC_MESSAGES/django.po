@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-03-01 06:32-0800\n"
+"POT-Creation-Date: 2017-03-08 07:29-0800\n"
 "PO-Revision-Date: 2011-02-15 04:09+0200\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish https://pontoon.mozilla.org/ga_IE/\n"
@@ -297,37 +297,19 @@ msgstr "<li><a href=\"/logout\">Logáil amach</a> chun triail eile a bhaint as.<
 msgid "Search Firefox Help"
 msgstr "Cuardaigh Cabhair Firefox"
 
-#: jinja2/includes/common_macros.html:36
-#, fuzzy, python-format
-msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "Fáilte romhat, a <span class=\"user\">{user}</span>."
-
-#: jinja2/includes/common_macros.html:38
-msgid "Profile"
-msgstr "Próifíl"
-
-#: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
-msgid "Sign Out"
-msgstr "Logáil Amach"
-
-#: jinja2/includes/common_macros.html:44
-#, fuzzy, python-format
-msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr "Ar mhaith leat cuidiú linn?<br /> <a href=\"%(login_url)s\">Logáil Isteach</a> nó <a href=\"%(register_url)s\">Cláraigh</a>"
-
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:104
 msgid "Other languages:"
 msgstr "Teangacha eile:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:115
 msgid "Go"
 msgstr "Téigh"
 
-#: jinja2/includes/login.html:4
+#: jinja2/includes/login.html:7
 msgid "Sign out"
 msgstr "Logáil amach"
 
-#: jinja2/includes/login.html:8
+#: jinja2/includes/login.html:12
 msgid "Sign in"
 msgstr "Logáil isteach"
 
@@ -773,7 +755,7 @@ msgid "File"
 msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1916
 msgid "Title"
 msgstr "Teideal"
 
@@ -945,11 +927,11 @@ msgstr ""
 msgid "Today at %s"
 msgstr "Inniu ag %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:343
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:356
 msgid "Yes"
 msgstr "Bhí"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:360
 msgid "No"
 msgstr "Ní raibh"
 
@@ -1139,7 +1121,7 @@ msgstr ""
 msgid "Trends Over Time, Ending %(date)s"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1869
 #, fuzzy
 msgid "Revision"
 msgstr "Aitheantas an leagain:"
@@ -2091,6 +2073,10 @@ msgstr ""
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
 msgstr ""
 
+#: kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
+msgid "Sign Out"
+msgstr "Logáil Amach"
+
 #: kuma/users/jinja2/account/logout.html:10
 #, fuzzy
 msgid "Are you sure you want to sign out?"
@@ -2562,7 +2548,7 @@ msgstr "Leathanach"
 msgid "Date"
 msgstr "Dáta"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:420
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:433
 msgid "Edit page"
 msgstr "Cuir an leathanach in eagar"
 
@@ -2570,7 +2556,7 @@ msgstr "Cuir an leathanach in eagar"
 msgid "View complete diff"
 msgstr "Féach ar an difríocht iomlán"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:421
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:434
 msgid "View page history"
 msgstr "Féach ar stair an leathanaigh"
 
@@ -2866,15 +2852,15 @@ msgstr ""
 msgid "Wiki"
 msgstr "Vicí Feidhmchlár"
 
-#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Teicniúil - samplaí cóid, APIanna, nó teicneolaíochtaí"
 
-#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:214 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "Eagarthóireacht - prós, gramadach, nó ábhar"
 
-#: kuma/wiki/constants.py:218
+#: kuma/wiki/constants.py:219
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
@@ -3109,148 +3095,148 @@ msgstr ""
 msgid "New article URL"
 msgstr ""
 
-#: kuma/wiki/models.py:112
+#: kuma/wiki/models.py:113
 #, fuzzy, python-format
 msgid "Parent %s does not exist."
 msgstr "Níl cáipéis \"%s\" ann."
 
-#: kuma/wiki/models.py:120
+#: kuma/wiki/models.py:121
 msgid "Document Tag"
 msgstr "Clib Cháipéise"
 
-#: kuma/wiki/models.py:121
+#: kuma/wiki/models.py:122
 msgid "Document Tags"
 msgstr "Clibeanna Cáipéise"
 
-#: kuma/wiki/models.py:173
+#: kuma/wiki/models.py:174
 #, fuzzy
 msgid "uploaded to the document"
 msgstr "Déan tuairisc ar an nóta tráchta seo"
 
-#: kuma/wiki/models.py:179
+#: kuma/wiki/models.py:180
 #, fuzzy
 msgid "linked in the document content"
 msgstr "Léim go dtí an príomhábhar"
 
-#: kuma/wiki/models.py:193
+#: kuma/wiki/models.py:194
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr ""
 
-#: kuma/wiki/models.py:1542
+#: kuma/wiki/models.py:1547
 msgid "Review Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1543
+#: kuma/wiki/models.py:1548
 msgid "Review Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1549
+#: kuma/wiki/models.py:1554
 msgid "Localization Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1550
+#: kuma/wiki/models.py:1555
 msgid "Localization Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1583
+#: kuma/wiki/models.py:1588
 msgid "No table of contents"
 msgstr ""
 
-#: kuma/wiki/models.py:1584
+#: kuma/wiki/models.py:1589
 msgid "All levels"
 msgstr ""
 
-#: kuma/wiki/models.py:1585
+#: kuma/wiki/models.py:1590
 msgid "H2 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1586
+#: kuma/wiki/models.py:1591
 msgid "H3 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1587
+#: kuma/wiki/models.py:1592
 msgid "H4 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1691
+#: kuma/wiki/models.py:1696
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr ""
 
-#: kuma/wiki/models.py:1824
+#: kuma/wiki/models.py:1829
 #, fuzzy
 msgid "IP address"
 msgstr "Seoladh ríomhphoist"
 
-#: kuma/wiki/models.py:1832
+#: kuma/wiki/models.py:1837
 msgid "User-Agent"
 msgstr ""
 
-#: kuma/wiki/models.py:1837
+#: kuma/wiki/models.py:1842
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
+#: kuma/wiki/models.py:1850 kuma/wiki/models.py:1935
 #, fuzzy
 msgid "Data submitted to Akismet"
 msgstr "dáta ar ar seoladh é"
 
-#: kuma/wiki/models.py:1870
+#: kuma/wiki/models.py:1875
 #, fuzzy
 msgid "Akismet submission"
 msgstr "Taispeántais"
 
-#: kuma/wiki/models.py:1871
+#: kuma/wiki/models.py:1876
 #, fuzzy
 msgid "Akismet submissions"
 msgstr "Taispeántais"
 
-#: kuma/wiki/models.py:1915
+#: kuma/wiki/models.py:1920
 #, fuzzy
 msgid "Slug"
 msgstr "Sluga:"
 
-#: kuma/wiki/models.py:1923
+#: kuma/wiki/models.py:1928
 #, fuzzy
 msgid "Document (optional)"
 msgstr "Doiciméadú MDN"
 
-#: kuma/wiki/models.py:1933
+#: kuma/wiki/models.py:1938
 #, fuzzy
 msgid "reviewed"
 msgstr "Réamhamharc"
 
-#: kuma/wiki/models.py:1944
+#: kuma/wiki/models.py:1949
 #, fuzzy
 msgid "Needs Review"
 msgstr "Léirmheas Teicniúil De Dhíth"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1950
 msgid "Ham / False Positive"
 msgstr ""
 
-#: kuma/wiki/models.py:1946
+#: kuma/wiki/models.py:1951
 msgid "Confirmed as Spam"
 msgstr ""
 
-#: kuma/wiki/models.py:1947
+#: kuma/wiki/models.py:1952
 msgid "Review Unavailable"
 msgstr ""
 
-#: kuma/wiki/models.py:1948
+#: kuma/wiki/models.py:1953
 msgid "Akismet Error"
 msgstr ""
 
-#: kuma/wiki/models.py:1953
+#: kuma/wiki/models.py:1958
 msgid "Review of Akismet's classification as spam"
 msgstr ""
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:1965
 msgid "Staff reviewer"
 msgstr ""
 
-#: kuma/wiki/search.py:310
+#: kuma/wiki/search.py:311
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr ""
@@ -3394,122 +3380,126 @@ msgstr ""
 msgid "Restore this document"
 msgstr "Déan tuairisc ar an nóta tráchta seo"
 
-#: kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:184
 #, fuzzy
 msgid "Previous Search Result"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
+#: kuma/wiki/jinja2/wiki/document.html:184 kuma/wiki/jinja2/wiki/document.html:194
 #, fuzzy
 msgid "No Previous Search Result"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:182
+#: kuma/wiki/jinja2/wiki/document.html:190
 #, fuzzy
 msgid "Your Search Results"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:186
+#: kuma/wiki/jinja2/wiki/document.html:194
 #, fuzzy
 msgid "Next Search Result"
 msgstr "Torthaí an Chuardaigh"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:198
 #, fuzzy
 msgid "see all contributors"
 msgstr "Do Rannpháirtithe"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:198
 #, fuzzy
 msgid "hide contributors"
 msgstr "Do Rannpháirtithe"
 
-#: kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:202
 #, fuzzy, python-format
 msgid "View profile: %(username)s"
 msgstr "Féach ar phróifíl"
 
-#: kuma/wiki/jinja2/wiki/document.html:219
+#: kuma/wiki/jinja2/wiki/document.html:227
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:241
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:249
+#: kuma/wiki/jinja2/wiki/document.html:257
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:258
+#: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:276
+#: kuma/wiki/jinja2/wiki/document.html:277
+msgid "This is an experimental page."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:285
+#: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:293
+#: kuma/wiki/jinja2/wiki/document.html:306
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:298
+#: kuma/wiki/jinja2/wiki/document.html:311
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:305
+#: kuma/wiki/jinja2/wiki/document.html:318
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:317
+#: kuma/wiki/jinja2/wiki/document.html:330
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:320
+#: kuma/wiki/jinja2/wiki/document.html:333
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:333
+#: kuma/wiki/jinja2/wiki/document.html:346
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:338
+#: kuma/wiki/jinja2/wiki/document.html:351
 msgid "Was this article helpful?"
 msgstr "An raibh an t-alt seo úsáideach?"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:365
 msgid "Thank you!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:362
+#: kuma/wiki/jinja2/wiki/document.html:375
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Téarmaí do Rannpháirtithe"
 
-#: kuma/wiki/jinja2/wiki/document.html:368
+#: kuma/wiki/jinja2/wiki/document.html:381
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Rannpháirtithe: Leathanach Baile"
 
-#: kuma/wiki/jinja2/wiki/document.html:374
+#: kuma/wiki/jinja2/wiki/document.html:387
 msgid "Last updated by:"
 msgstr ""
 
@@ -4409,6 +4399,17 @@ msgstr "Níl cead agat an cháipéis seo a aistriú."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Welcome, <span class=\"user\">%(user)s</span>."
+#~ msgstr "Fáilte romhat, a <span class=\"user\">{user}</span>."
+
+#~ msgid "Profile"
+#~ msgstr "Próifíl"
+
+#, fuzzy
+#~ msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
+#~ msgstr "Ar mhaith leat cuidiú linn?<br /> <a href=\"%(login_url)s\">Logáil Isteach</a> nó <a href=\"%(register_url)s\">Cláraigh</a>"
 
 #, fuzzy
 #~ msgid "Learning"

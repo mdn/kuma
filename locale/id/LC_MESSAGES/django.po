@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-03-01 06:32-0800\n"
+"POT-Creation-Date: 2017-03-08 07:29-0800\n"
 "PO-Revision-Date: 2016-08-28 07:19+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
@@ -289,37 +289,19 @@ msgstr "<li><a href=\"/logout\">Keluar</a> untuk mencoba lagi.</li>"
 msgid "Search Firefox Help"
 msgstr "Cari Bantuan Firefox"
 
-#: jinja2/includes/common_macros.html:36
-#, python-format
-msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "Selamat datang, <span class=\"user\">%(user)s</span>."
-
-#: jinja2/includes/common_macros.html:38
-msgid "Profile"
-msgstr "Profil"
-
-#: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
-msgid "Sign Out"
-msgstr "Keluar"
-
-#: jinja2/includes/common_macros.html:44
-#, python-format
-msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr "Ingin berkontribusi?<br /> <a href=\"%(login_url)s\">Masuk</a>"
-
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:104
 msgid "Other languages:"
 msgstr "Bahasa lainnya:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:115
 msgid "Go"
 msgstr "Buka"
 
-#: jinja2/includes/login.html:4
+#: jinja2/includes/login.html:7
 msgid "Sign out"
 msgstr "Keluar"
 
-#: jinja2/includes/login.html:8
+#: jinja2/includes/login.html:12
 msgid "Sign in"
 msgstr "Masuk"
 
@@ -759,7 +741,7 @@ msgid "File"
 msgstr "Berkas"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1916
 msgid "Title"
 msgstr "Judul"
 
@@ -933,11 +915,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Hari ini pada %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:343
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:356
 msgid "Yes"
 msgstr "Ya"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:360
 msgid "No"
 msgstr "Tidak"
 
@@ -1110,7 +1092,7 @@ msgstr "Filter"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1869
 msgid "Revision"
 msgstr "Perubahan"
 
@@ -2007,6 +1989,10 @@ msgstr "Mohon maaf, tetapi pembuatan profil saat ini sedang dimatikan."
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
 msgstr "Untuk berkontribusi, anda harus masuk ke MDN. Anda dapat masuk menggunakan salah satu layanan di bawah ini. Profil MDN akan dibuat untuk anda jika belum memilikinya."
 
+#: kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
+msgid "Sign Out"
+msgstr "Keluar"
+
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
 msgstr "Anda yakin ingin keluar?"
@@ -2466,7 +2452,7 @@ msgstr "Laman"
 msgid "Date"
 msgstr "Tanggal"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:420
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:433
 msgid "Edit page"
 msgstr "Sunting halaman"
 
@@ -2474,7 +2460,7 @@ msgstr "Sunting halaman"
 msgid "View complete diff"
 msgstr "Tampilkan diff lengkap"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:421
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:434
 msgid "View page history"
 msgstr "Tampilkan riwayat laman"
 
@@ -2772,15 +2758,15 @@ msgstr "Admin"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Teknis - contoh kode, API, atau teknologi"
 
-#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:214 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "Editorial - prosa, tata bahasa, atau konten"
 
-#: kuma/wiki/constants.py:218
+#: kuma/wiki/constants.py:219
 msgid "Localization in progress - not completely translated yet."
 msgstr "Pelokalan sedang berlangsung - belum diterjemahkan sepenuhnya."
 
@@ -3015,138 +3001,138 @@ msgstr "Slug baru:"
 msgid "New article URL"
 msgstr "URL artikel baru"
 
-#: kuma/wiki/models.py:112
+#: kuma/wiki/models.py:113
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Induk %s tidak ada."
 
-#: kuma/wiki/models.py:120
+#: kuma/wiki/models.py:121
 msgid "Document Tag"
 msgstr "Tag Dokumen"
 
-#: kuma/wiki/models.py:121
+#: kuma/wiki/models.py:122
 msgid "Document Tags"
 msgstr "Tag Dokumen"
 
-#: kuma/wiki/models.py:173
+#: kuma/wiki/models.py:174
 msgid "uploaded to the document"
 msgstr "diunggah ke dokumen"
 
-#: kuma/wiki/models.py:179
+#: kuma/wiki/models.py:180
 msgid "linked in the document content"
 msgstr "ditautkan ke dalam konten dokumen"
 
-#: kuma/wiki/models.py:193
+#: kuma/wiki/models.py:194
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "Lampiran %(attachment_id)s tidak dapat dilampirkan beberapa kali ke dokumen %(document_id)s"
 
-#: kuma/wiki/models.py:1542
+#: kuma/wiki/models.py:1547
 msgid "Review Tag"
 msgstr "Tag Ulasan"
 
-#: kuma/wiki/models.py:1543
+#: kuma/wiki/models.py:1548
 msgid "Review Tags"
 msgstr "Tag Ulasan"
 
-#: kuma/wiki/models.py:1549
+#: kuma/wiki/models.py:1554
 msgid "Localization Tag"
 msgstr "Tag Pelokalan"
 
-#: kuma/wiki/models.py:1550
+#: kuma/wiki/models.py:1555
 msgid "Localization Tags"
 msgstr "Tag Pelokalan"
 
-#: kuma/wiki/models.py:1583
+#: kuma/wiki/models.py:1588
 msgid "No table of contents"
 msgstr "Tidak ada tabel konten"
 
-#: kuma/wiki/models.py:1584
+#: kuma/wiki/models.py:1589
 msgid "All levels"
 msgstr "Semua tingkatan"
 
-#: kuma/wiki/models.py:1585
+#: kuma/wiki/models.py:1590
 msgid "H2 and higher"
 msgstr "H2 dan lebih tinggi"
 
-#: kuma/wiki/models.py:1586
+#: kuma/wiki/models.py:1591
 msgid "H3 and higher"
 msgstr "H3 dan lebih tinggi"
 
-#: kuma/wiki/models.py:1587
+#: kuma/wiki/models.py:1592
 msgid "H4 and higher"
 msgstr "H4 dan lebih tinggi"
 
-#: kuma/wiki/models.py:1691
+#: kuma/wiki/models.py:1696
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Revisi harus dibuat berdasarkan dokumen %(locale)s . Perubahan ID %(id)s tidak memenuhi kriteria tersebut."
 
-#: kuma/wiki/models.py:1824
+#: kuma/wiki/models.py:1829
 msgid "IP address"
 msgstr "Alamat IP"
 
-#: kuma/wiki/models.py:1832
+#: kuma/wiki/models.py:1837
 msgid "User-Agent"
 msgstr "Agen-Pengguna"
 
-#: kuma/wiki/models.py:1837
+#: kuma/wiki/models.py:1842
 msgid "HTTP Referrer"
 msgstr "Perujuk HTTP"
 
-#: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
+#: kuma/wiki/models.py:1850 kuma/wiki/models.py:1935
 msgid "Data submitted to Akismet"
 msgstr "Data telah dikirim ke Akismet"
 
-#: kuma/wiki/models.py:1870
+#: kuma/wiki/models.py:1875
 msgid "Akismet submission"
 msgstr "Pendaftaran Akismet"
 
-#: kuma/wiki/models.py:1871
+#: kuma/wiki/models.py:1876
 msgid "Akismet submissions"
 msgstr "Pendaftaran Akismet"
 
-#: kuma/wiki/models.py:1915
+#: kuma/wiki/models.py:1920
 msgid "Slug"
 msgstr "Slug"
 
-#: kuma/wiki/models.py:1923
+#: kuma/wiki/models.py:1928
 msgid "Document (optional)"
 msgstr "Dokumen (opsional)"
 
-#: kuma/wiki/models.py:1933
+#: kuma/wiki/models.py:1938
 msgid "reviewed"
 msgstr "ditinjau"
 
-#: kuma/wiki/models.py:1944
+#: kuma/wiki/models.py:1949
 msgid "Needs Review"
 msgstr "Perlu Peninjauan"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1950
 msgid "Ham / False Positive"
 msgstr "Positif Palsu / Berlebihan"
 
-#: kuma/wiki/models.py:1946
+#: kuma/wiki/models.py:1951
 msgid "Confirmed as Spam"
 msgstr "Dikonfirmasi sebagai Spam"
 
-#: kuma/wiki/models.py:1947
+#: kuma/wiki/models.py:1952
 msgid "Review Unavailable"
 msgstr "Tinjauan Tidak Tersedia"
 
-#: kuma/wiki/models.py:1948
+#: kuma/wiki/models.py:1953
 msgid "Akismet Error"
 msgstr "Akismet Salah"
 
-#: kuma/wiki/models.py:1953
+#: kuma/wiki/models.py:1958
 msgid "Review of Akismet's classification as spam"
 msgstr "Tinjauan dari Akismet dikelompokan sebagai spam"
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:1965
 msgid "Staff reviewer"
 msgstr "Editor peninjau"
 
-#: kuma/wiki/search.py:310
+#: kuma/wiki/search.py:311
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr "Membuat indeks %(total)d dokumen ke dalam %(total_chunks)d potongan berukuran %(size)d ke dalam indeks %(index)s.total"
@@ -3286,45 +3272,45 @@ msgstr "Sebab Penghapusan"
 msgid "Restore this document"
 msgstr "Mengembalikan dokumen ini"
 
-#: kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:184
 msgid "Previous Search Result"
 msgstr "Hasil Pencarian Sebelumnya"
 
-#: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
+#: kuma/wiki/jinja2/wiki/document.html:184 kuma/wiki/jinja2/wiki/document.html:194
 msgid "No Previous Search Result"
 msgstr "Tidak Ada Hasil Pencarian Sebelumnya"
 
-#: kuma/wiki/jinja2/wiki/document.html:182
+#: kuma/wiki/jinja2/wiki/document.html:190
 msgid "Your Search Results"
 msgstr "Hasil Pencarian Anda"
 
-#: kuma/wiki/jinja2/wiki/document.html:186
+#: kuma/wiki/jinja2/wiki/document.html:194
 msgid "Next Search Result"
 msgstr "Hasil Pencarian Selanjutnya"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:198
 msgid "see all contributors"
 msgstr "lihat semua kontributor"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:198
 msgid "hide contributors"
 msgstr "menyembunyikan kontributor"
 
-#: kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:202
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "Lihat profil: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:219
+#: kuma/wiki/jinja2/wiki/document.html:227
 msgid "In This Article"
 msgstr "Dalam Artikel Ini"
 
-#: kuma/wiki/jinja2/wiki/document.html:241
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "Dokumen ini sedang dirender untuk pertama kalinya oleh sistem. Silakan <a href=\"%(url)s\">memuat laman ini</a> kembali dalam beberapa menit untuk melihat konten sepenuhnya."
 
-#: kuma/wiki/jinja2/wiki/document.html:249
+#: kuma/wiki/jinja2/wiki/document.html:257
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -3333,7 +3319,7 @@ msgstr ""
 "Pembaruan pada dokumen ini <abbr title=\"%(started_at)s\">tengah berlangsung</abbr>. Jika konten di bawah ini tampak basi atau sesuatu menghilang, silakan <a href=\"%(url)s\">memuat laman ini</a> "
 "dalam beberapa menit."
 
-#: kuma/wiki/jinja2/wiki/document.html:258
+#: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -3342,63 +3328,67 @@ msgstr ""
 "Pembaruan pada dokumen ini <abbr title=\"%(scheduled_at)s\">telah dijadwalkan</abbr>. Jika konten di bawah ini tampak basi atau ada yang hilang, silakan <a href=\"%(url)s\">muat kembali laman ini</"
 "a> dalam beberapa menit."
 
-#: kuma/wiki/jinja2/wiki/document.html:276
+#: kuma/wiki/jinja2/wiki/document.html:277
+msgid "This is an experimental page."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr "Artikel ini membutuhkan tinjauan teknikal. <a href=\"%(url)s\">Bagaimana Anda bisa membantu.</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:285
+#: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr "Artikel ini membutuhkan tinjauan editorial. <a href=\"%(url)s\">Bagaimana Anda bisa membantu.</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:293
+#: kuma/wiki/jinja2/wiki/document.html:306
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "Terjemahan ini belum lengkap. Mohon bantu <a href=\"%(translate_url)s\">menerjemahkan artikel ini</a> dari Bahasa Inggris."
 
-#: kuma/wiki/jinja2/wiki/document.html:298
+#: kuma/wiki/jinja2/wiki/document.html:311
 msgid "This translation is in progress."
 msgstr "Penerjemahan ini sedang berlangsung."
 
-#: kuma/wiki/jinja2/wiki/document.html:305
+#: kuma/wiki/jinja2/wiki/document.html:318
 #, fuzzy, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr "Relawan kami belum menerjemahkan artikel ini ke dalam <bdi>%(locale)s</bdi> . <a href=\"%(help_link)s\">Bergabunglah dan bantu kami menyelesaikan pekerjaan ini!</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:317
+#: kuma/wiki/jinja2/wiki/document.html:330
 msgid "This article doesn't have any content yet."
 msgstr "Artikel ini belum memiliki konten."
 
-#: kuma/wiki/jinja2/wiki/document.html:320
+#: kuma/wiki/jinja2/wiki/document.html:333
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Mencari <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">laman yang menggunakan %(title)s</a> untuk melihat contoh kasus dan berapa banyak laman menggunakan makro ini."
 
-#: kuma/wiki/jinja2/wiki/document.html:333
+#: kuma/wiki/jinja2/wiki/document.html:346
 msgid "This article doesn't have approved content yet."
 msgstr "Artikel ini belum memiliki konten yang disetujui."
 
-#: kuma/wiki/jinja2/wiki/document.html:338
+#: kuma/wiki/jinja2/wiki/document.html:351
 #, fuzzy
 msgid "Was this article helpful?"
 msgstr "Pindahkan artikel ini"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:365
 msgid "Thank you!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:362
+#: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Document Tags and Contributors"
 msgstr "Tag Dokumen dan Kontributor"
 
-#: kuma/wiki/jinja2/wiki/document.html:368
+#: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Contributors to this page:"
 msgstr "Kontributor untuk laman ini:"
 
-#: kuma/wiki/jinja2/wiki/document.html:374
+#: kuma/wiki/jinja2/wiki/document.html:387
 msgid "Last updated by:"
 msgstr "Terakhir diperbarui oleh:"
 
@@ -4256,6 +4246,15 @@ msgstr "Anda tidak dapat menerjemahkan dokumen ini."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Server elasticsearch: %(backend)s"
+
+#~ msgid "Welcome, <span class=\"user\">%(user)s</span>."
+#~ msgstr "Selamat datang, <span class=\"user\">%(user)s</span>."
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
+#~ msgstr "Ingin berkontribusi?<br /> <a href=\"%(login_url)s\">Masuk</a>"
 
 #~ msgid "Build Open Web Apps"
 #~ msgstr "Buatlah Aplikasi Web yang Terbuka"

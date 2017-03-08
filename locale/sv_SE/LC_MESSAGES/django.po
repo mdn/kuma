@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-03-01 06:32-0800\n"
+"POT-Creation-Date: 2017-03-08 07:29-0800\n"
 "PO-Revision-Date: 2017-03-02 18:52+0000\n"
 "Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
@@ -58,8 +58,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> av Matthew Inman från <a href=\"http://theoatmeal.com\" "
-"rel=\"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> av Matthew Inman från <a href=\"http://theoatmeal.com\" rel=\"nofollow"
+"\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -283,37 +283,19 @@ msgstr "<li><a href=\"/logout\">Logga ut</a> för att försöka igen.</li>"
 msgid "Search Firefox Help"
 msgstr "Sök Firefox hjälp"
 
-#: jinja2/includes/common_macros.html:36
-#, python-format
-msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "Välkommen <span class=\"user\">%(user)s</span>."
-
-#: jinja2/includes/common_macros.html:38
-msgid "Profile"
-msgstr "Profil"
-
-#: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
-msgid "Sign Out"
-msgstr "Logga ut"
-
-#: jinja2/includes/common_macros.html:44
-#, python-format
-msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr "Vill du bidra?<br /> <a href=\"%(login_url)s\">Logga in</a>"
-
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:96
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:104
 msgid "Other languages:"
 msgstr "Andra språk:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:107
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:115
 msgid "Go"
 msgstr "Gå till"
 
-#: jinja2/includes/login.html:4
+#: jinja2/includes/login.html:7
 msgid "Sign out"
 msgstr "Logga ut"
 
-#: jinja2/includes/login.html:8
+#: jinja2/includes/login.html:12
 msgid "Sign in"
 msgstr "Logga in"
 
@@ -749,7 +731,7 @@ msgid "File"
 msgstr "Fil"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1916
 msgid "Title"
 msgstr "Titel"
 
@@ -856,8 +838,8 @@ msgstr "Du behöver speciella behörigheter för att använda API-nycklar. Du ka
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 "<p>Beskriv hur nyckeln ska användas nedan. <p><strong>OBS:</strong> Detta kommer vara det enda sättet för dig att identifiera den här nyckeln i framtiden, annat än genom tid och datum för när den "
 "skapades. Var så tydlig som möjligt.</p>"
@@ -923,11 +905,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Idag vid %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:343
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:356
 msgid "Yes"
 msgstr "Ja"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:360
 msgid "No"
 msgstr "Nej"
 
@@ -1100,7 +1082,7 @@ msgstr "Filtrera"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "Trender över tid, slutdatum %(date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1869
 msgid "Revision"
 msgstr "Revision"
 
@@ -1198,8 +1180,8 @@ msgstr "Mozilla Developer Networks (MDN) Kamratskapsprogram bjuder in världskla
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 "Mozilla Developer Network (MDN) ger information om öppna webbtekniker inklusive HTML, CSS, och API:er för både webbplatser och HTML5-appar. Den dokumenterar också Mozilla-produkter, som Firefox OS."
 
@@ -1364,12 +1346,12 @@ msgstr "Sprid lite utvecklarkärlek."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>Get-knappar:</strong> Använd vårt enkla formulär nedan för att skapa en anpassad knapp och källkoden för att främja MDN på din webbplats eller blogg.</li> <li><strong>Post-"
-"knappar:</strong> Kopiera koden och klistra in den någonstans på din webbplats eller blogg för att hjälpa människor att klicka sig vidare till MDN.</li> <li><strong>Må bra:</strong> Var stolt för "
-"att du gör det enklare för utvecklare genom att dela MDN med världen.</li> </ol>"
+"<ol> <li><strong>Get-knappar:</strong> Använd vårt enkla formulär nedan för att skapa en anpassad knapp och källkoden för att främja MDN på din webbplats eller blogg.</li> <li><strong>Post-knappar:"
+"</strong> Kopiera koden och klistra in den någonstans på din webbplats eller blogg för att hjälpa människor att klicka sig vidare till MDN.</li> <li><strong>Må bra:</strong> Var stolt för att du "
+"gör det enklare för utvecklare genom att dela MDN med världen.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
@@ -1668,11 +1650,11 @@ msgstr "typ"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
-"Tyvärr, du måste ha minst ett anslutet konto för att logga in. För att byta till ett annat konto, anslut det kontot först. För att ta bort din MDN profil, <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">skicka in en felrapport</a>."
+"Tyvärr, du måste ha minst ett anslutet konto för att logga in. För att byta till ett annat konto, anslut det kontot först. För att ta bort din MDN profil, <a href=\"%(bug_form_url)s\" rel=\"nofollow"
+"\">skicka in en felrapport</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1994,6 +1976,10 @@ msgstr "Vi är ledsna, men profilskapning är inaktiverat för tillfället."
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
 msgstr "För att bidra måste du logga in på MDN. Du kan logga in med GitHub så kommer en MDN profil att skapas för dig om du inte redan har en."
 
+#: kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
+msgid "Sign Out"
+msgstr "Logga ut"
+
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
 msgstr "Är du säker på att du vill logga ut?"
@@ -2167,11 +2153,11 @@ msgstr "Det finns redan en profil med den valda e-postadressen. <a href=\"%(logi
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Vilken e-postadress ska vi använda för att skicka MDN relaterade meddelanden och aviseringar? Denna adress kommer <strong>inte</strong> att visas på MDN och används enligt vår <a "
-"href=\"%(privacy_url)s\">sekretesspolicy</a>."
+"Vilken e-postadress ska vi använda för att skicka MDN relaterade meddelanden och aviseringar? Denna adress kommer <strong>inte</strong> att visas på MDN och används enligt vår <a href="
+"\"%(privacy_url)s\">sekretesspolicy</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
@@ -2440,7 +2426,7 @@ msgstr "Sida"
 msgid "Date"
 msgstr "Datum"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:420
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:433
 msgid "Edit page"
 msgstr "Redigera sida"
 
@@ -2448,7 +2434,7 @@ msgstr "Redigera sida"
 msgid "View complete diff"
 msgstr "Visa fullständig diff"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:421
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:434
 msgid "View page history"
 msgstr "Visa sidhistorik"
 
@@ -2535,8 +2521,8 @@ msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
 msgstr ""
-"Du får detta e-postmeddelande eftersom du eller någon annan har begärt tillgång till ditt användarkonto %(username)s på %(domain)s. Det kan ignoreras om du inte gjort denna begäran. Klicka på länken"
-" nedan för att komma åt ditt konto:"
+"Du får detta e-postmeddelande eftersom du eller någon annan har begärt tillgång till ditt användarkonto %(username)s på %(domain)s. Det kan ignoreras om du inte gjort denna begäran. Klicka på "
+"länken nedan för att komma åt ditt konto:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
@@ -2568,8 +2554,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"Nu, fortsätt genom att välja en uppgift på MDN och slutföra den! Vi har en massa introaktiviteter du kan välja mellan, om du <a href=\"%(words_link)s\">gillar ord</a>, <a "
-"href=\"%(code_link)s\">gillar kod</a>, <a href=\"%(both_link)s\">gillar både ord och kod</a>eller du vill <a href=\"%(translate_link)s\">översätta MDN till ditt språk</a>."
+"Nu, fortsätt genom att välja en uppgift på MDN och slutföra den! Vi har en massa introaktiviteter du kan välja mellan, om du <a href=\"%(words_link)s\">gillar ord</a>, <a href=\"%(code_link)s"
+"\">gillar kod</a>, <a href=\"%(both_link)s\">gillar både ord och kod</a>eller du vill <a href=\"%(translate_link)s\">översätta MDN till ditt språk</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2743,15 +2729,15 @@ msgstr "Admin"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:212 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Teknisk - kodexempel, API:er eller teknologier"
 
-#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:214 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "Redaktionell - prosa, grammatik eller innehåll"
 
-#: kuma/wiki/constants.py:218
+#: kuma/wiki/constants.py:219
 msgid "Localization in progress - not completely translated yet."
 msgstr "Översättning pågår - inte helt översatt ännu."
 
@@ -2988,138 +2974,138 @@ msgstr "Ny slugg:"
 msgid "New article URL"
 msgstr "Ny artikel URL:"
 
-#: kuma/wiki/models.py:112
+#: kuma/wiki/models.py:113
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Förälder %s existerar inte."
 
-#: kuma/wiki/models.py:120
+#: kuma/wiki/models.py:121
 msgid "Document Tag"
 msgstr "Dokumenttagg"
 
-#: kuma/wiki/models.py:121
+#: kuma/wiki/models.py:122
 msgid "Document Tags"
 msgstr "Dokumenttaggar"
 
-#: kuma/wiki/models.py:173
+#: kuma/wiki/models.py:174
 msgid "uploaded to the document"
 msgstr "uppladdad till dokumentet"
 
-#: kuma/wiki/models.py:179
+#: kuma/wiki/models.py:180
 msgid "linked in the document content"
 msgstr "länkad i dokumentets innehåll"
 
-#: kuma/wiki/models.py:193
+#: kuma/wiki/models.py:194
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "Bifogad fil %(attachment_id)s kan inte bifogas flera gånger till dokument %(document_id)s"
 
-#: kuma/wiki/models.py:1542
+#: kuma/wiki/models.py:1547
 msgid "Review Tag"
 msgstr "Granskningstagg"
 
-#: kuma/wiki/models.py:1543
+#: kuma/wiki/models.py:1548
 msgid "Review Tags"
 msgstr "Granskningstagg"
 
-#: kuma/wiki/models.py:1549
+#: kuma/wiki/models.py:1554
 msgid "Localization Tag"
 msgstr "Översättningstagg"
 
-#: kuma/wiki/models.py:1550
+#: kuma/wiki/models.py:1555
 msgid "Localization Tags"
 msgstr "Översättningstagg"
 
-#: kuma/wiki/models.py:1583
+#: kuma/wiki/models.py:1588
 msgid "No table of contents"
 msgstr "Ingen innehållsförteckning"
 
-#: kuma/wiki/models.py:1584
+#: kuma/wiki/models.py:1589
 msgid "All levels"
 msgstr "Alla nivåer"
 
-#: kuma/wiki/models.py:1585
+#: kuma/wiki/models.py:1590
 msgid "H2 and higher"
 msgstr "H2 och högre"
 
-#: kuma/wiki/models.py:1586
+#: kuma/wiki/models.py:1591
 msgid "H3 and higher"
 msgstr "H3 och högre"
 
-#: kuma/wiki/models.py:1587
+#: kuma/wiki/models.py:1592
 msgid "H4 and higher"
 msgstr "H4 och högre"
 
-#: kuma/wiki/models.py:1691
+#: kuma/wiki/models.py:1696
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "En revision måste baseras på en revision av dokumentet %(locale)s. Revision-ID %(id)s passar inte in på dessa kriterier."
 
-#: kuma/wiki/models.py:1824
+#: kuma/wiki/models.py:1829
 msgid "IP address"
 msgstr "IP-adress"
 
-#: kuma/wiki/models.py:1832
+#: kuma/wiki/models.py:1837
 msgid "User-Agent"
 msgstr "Användaragent"
 
-#: kuma/wiki/models.py:1837
+#: kuma/wiki/models.py:1842
 msgid "HTTP Referrer"
 msgstr "HTTP referent"
 
-#: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
+#: kuma/wiki/models.py:1850 kuma/wiki/models.py:1935
 msgid "Data submitted to Akismet"
 msgstr "Data skickat till Akismet"
 
-#: kuma/wiki/models.py:1870
+#: kuma/wiki/models.py:1875
 msgid "Akismet submission"
 msgstr "Akismet-bidrag"
 
-#: kuma/wiki/models.py:1871
+#: kuma/wiki/models.py:1876
 msgid "Akismet submissions"
 msgstr "Akismet-bidrag"
 
-#: kuma/wiki/models.py:1915
+#: kuma/wiki/models.py:1920
 msgid "Slug"
 msgstr "Slugg"
 
-#: kuma/wiki/models.py:1923
+#: kuma/wiki/models.py:1928
 msgid "Document (optional)"
 msgstr "Dokument (valfritt)"
 
-#: kuma/wiki/models.py:1933
+#: kuma/wiki/models.py:1938
 msgid "reviewed"
 msgstr "granskad"
 
-#: kuma/wiki/models.py:1944
+#: kuma/wiki/models.py:1949
 msgid "Needs Review"
 msgstr "Kräver granskning"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1950
 msgid "Ham / False Positive"
 msgstr "Ej skräppost / Felaktig"
 
-#: kuma/wiki/models.py:1946
+#: kuma/wiki/models.py:1951
 msgid "Confirmed as Spam"
 msgstr "Bekräftad som skräppost"
 
-#: kuma/wiki/models.py:1947
+#: kuma/wiki/models.py:1952
 msgid "Review Unavailable"
 msgstr "Granskning ej tillgänglig"
 
-#: kuma/wiki/models.py:1948
+#: kuma/wiki/models.py:1953
 msgid "Akismet Error"
 msgstr "Fel Akismet"
 
-#: kuma/wiki/models.py:1953
+#: kuma/wiki/models.py:1958
 msgid "Review of Akismet's classification as spam"
 msgstr "Granskning av Akismets klassificeras som skräppost"
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:1965
 msgid "Staff reviewer"
 msgstr "Granskningspersonal"
 
-#: kuma/wiki/search.py:310
+#: kuma/wiki/search.py:311
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr "Indexerar %(total)d dokument till %(total_chunks)d delar med storleken %(size)d till index %(index)s.total"
@@ -3131,8 +3117,8 @@ msgstr "Du försöker skapa en ny sida."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 "Att skapa en ny sida är en begränsad åtgärd. För att begära en ny sida, vänligen <a href=\"%(request_page_url)s\">skicka en felrapport</a>. Om du behöver behörigheten för att skapa nya sidor, "
 "vänligen <a href=\"%(email_link)s\">kontakta oss</a>."
@@ -3259,82 +3245,86 @@ msgstr "Anledningen till borttagandet"
 msgid "Restore this document"
 msgstr "Återställ detta dokument"
 
-#: kuma/wiki/jinja2/wiki/document.html:176
+#: kuma/wiki/jinja2/wiki/document.html:184
 msgid "Previous Search Result"
 msgstr "Föregående sökresultat"
 
-#: kuma/wiki/jinja2/wiki/document.html:176 kuma/wiki/jinja2/wiki/document.html:186
+#: kuma/wiki/jinja2/wiki/document.html:184 kuma/wiki/jinja2/wiki/document.html:194
 msgid "No Previous Search Result"
 msgstr "Inga föregående sökresultat"
 
-#: kuma/wiki/jinja2/wiki/document.html:182
+#: kuma/wiki/jinja2/wiki/document.html:190
 msgid "Your Search Results"
 msgstr "Dina sökresultat"
 
-#: kuma/wiki/jinja2/wiki/document.html:186
+#: kuma/wiki/jinja2/wiki/document.html:194
 msgid "Next Search Result"
 msgstr "Nästa sökresultat"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:198
 msgid "see all contributors"
 msgstr "se alla bidragare"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:198
 msgid "hide contributors"
 msgstr "dölj bidragare"
 
-#: kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:202
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "Visa profil: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:219
+#: kuma/wiki/jinja2/wiki/document.html:227
 msgid "In This Article"
 msgstr "I denna artikel"
 
-#: kuma/wiki/jinja2/wiki/document.html:241
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "Det här dokumentet renderas för första gången av systemet. Vänligen <a href=\"%(url)s\">ladda om sidan</a> om några minuter för att se hela innehållet."
 
-#: kuma/wiki/jinja2/wiki/document.html:249
+#: kuma/wiki/jinja2/wiki/document.html:257
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
-"En uppdatering av detta dokument <abbr title=\"%(started_at)s\">pågår för närvarande</abbr>. Om innehållet nedan verkar gammal eller om något saknas, vänligen <a href=\"%(url)s\">ladda denna "
-"sidan</a> om några minuter."
+"En uppdatering av detta dokument <abbr title=\"%(started_at)s\">pågår för närvarande</abbr>. Om innehållet nedan verkar gammal eller om något saknas, vänligen <a href=\"%(url)s\">ladda denna sidan</"
+"a> om några minuter."
 
-#: kuma/wiki/jinja2/wiki/document.html:258
+#: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 "En uppdatering av detta dokument <abbr title=\"%(scheduled_at)s\">har schemalagts</abbr>. Om innehållet nedan verkar gammal eller om något saknas, vänligen <a href=\"%(url)s\">ladda denna sidan</a> "
 "om några minuter."
 
-#: kuma/wiki/jinja2/wiki/document.html:276
+#: kuma/wiki/jinja2/wiki/document.html:277
+msgid "This is an experimental page."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr "Denna artikel är i behov av en teknisk granskning. <a href=\"%(url)s\">Hur du kan hjälpa.</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:285
+#: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr "Denna artikel är i behov av en redaktionell granskning. <a href=\"%(url)s\">Hur du kan hjälpa.</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:293
+#: kuma/wiki/jinja2/wiki/document.html:306
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "Denna översättning är ofullständig. Hjälp till att <a href=\"%(translate_url)s\">översätta denna artikel</a> från engelska."
 
-#: kuma/wiki/jinja2/wiki/document.html:298
+#: kuma/wiki/jinja2/wiki/document.html:311
 msgid "This translation is in progress."
 msgstr "Den här översättningen är under uppbyggnad."
 
-#: kuma/wiki/jinja2/wiki/document.html:305
+#: kuma/wiki/jinja2/wiki/document.html:318
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3343,36 +3333,36 @@ msgstr ""
 "Våra volontärer har inte översatt denna artikel till <bdi>%(locale)s</bdi> ännu. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Gå med oss och hjälpa till att få jobbet gjort!</a><br> Du kan "
 "också läsa artikeln på <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
-#: kuma/wiki/jinja2/wiki/document.html:317
+#: kuma/wiki/jinja2/wiki/document.html:330
 msgid "This article doesn't have any content yet."
 msgstr "Denna artikel har inte något innehåll ännu."
 
-#: kuma/wiki/jinja2/wiki/document.html:320
+#: kuma/wiki/jinja2/wiki/document.html:333
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Söka efter <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">sidor som använder %(title)s</a> för att se exempel av användningsfall och hur många sidor använder makrot."
 
-#: kuma/wiki/jinja2/wiki/document.html:333
+#: kuma/wiki/jinja2/wiki/document.html:346
 msgid "This article doesn't have approved content yet."
 msgstr "Denna artikel har inget godkänt innehåll ännu."
 
-#: kuma/wiki/jinja2/wiki/document.html:338
+#: kuma/wiki/jinja2/wiki/document.html:351
 msgid "Was this article helpful?"
 msgstr "Var den här artikeln till hjälp?"
 
-#: kuma/wiki/jinja2/wiki/document.html:352
+#: kuma/wiki/jinja2/wiki/document.html:365
 msgid "Thank you!"
 msgstr "Tack!"
 
-#: kuma/wiki/jinja2/wiki/document.html:362
+#: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Document Tags and Contributors"
 msgstr "Dokumenttaggar och bidragare"
 
-#: kuma/wiki/jinja2/wiki/document.html:368
+#: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Contributors to this page:"
 msgstr "Bidragare till denna sida:"
 
-#: kuma/wiki/jinja2/wiki/document.html:374
+#: kuma/wiki/jinja2/wiki/document.html:387
 msgid "Last updated by:"
 msgstr "Senast uppdaterad av:"
 
@@ -3391,8 +3381,8 @@ msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
-"Läs igenom skillnaderna mellan dina ändringar och de förändringar som sparats sedan du började redigera. Du kan spara igen, men försök att lösa eventuella konflikter för hand så att de ändringar som"
-" gjorts sedan du började inte går förlorade."
+"Läs igenom skillnaderna mellan dina ändringar och de förändringar som sparats sedan du började redigera. Du kan spara igen, men försök att lösa eventuella konflikter för hand så att de ändringar "
+"som gjorts sedan du började inte går förlorade."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -4232,22 +4222,31 @@ msgstr "Du kan inte översätta detta dokument."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch server: %(backend)s"
 
+#~ msgid "Welcome, <span class=\"user\">%(user)s</span>."
+#~ msgstr "Välkommen <span class=\"user\">%(user)s</span>."
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
+#~ msgstr "Vill du bidra?<br /> <a href=\"%(login_url)s\">Logga in</a>"
+
 #~ msgid "Build Open Web Apps"
 #~ msgstr "Bygg öppna webbappar"
 
 #~ msgid ""
-#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 #~ msgstr ""
-#~ "Ditt bidrag innefattar innehåll som inte kanske lämpar sig för MDN. Upprepade försök att skicka in olämpliga material kan resultera i ditt konto inaktiveras. Se vår guide “<a "
-#~ "href=\"%(does_this_belong_url)s\">Hör detta hemma på MDN?</a>” för detaljer om vad som är lämpligt material."
+#~ "Ditt bidrag innefattar innehåll som inte kanske lämpar sig för MDN. Upprepade försök att skicka in olämpliga material kan resultera i ditt konto inaktiveras. Se vår guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Hör detta hemma på MDN?</a>” för detaljer om vad som är lämpligt material."
 
 #~ msgid ""
-#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you"
-#~ " can continue to sign in to MDN."
+#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
+#~ "you can continue to sign in to MDN."
 #~ msgstr ""
-#~ "Du inloggad med Persona. Den 1 November kommer du inte längre kunna logga in på MDN på detta sätt.<br> Vänligen <a href=\"%(persona_info)s\">länka ditt GitHub-konto till MDN profil nu</a> så att du "
-#~ "kan fortsätta att logga in på MDN."
+#~ "Du inloggad med Persona. Den 1 November kommer du inte längre kunna logga in på MDN på detta sätt.<br> Vänligen <a href=\"%(persona_info)s\">länka ditt GitHub-konto till MDN profil nu</a> så att "
+#~ "du kan fortsätta att logga in på MDN."
 
 #~ msgid "Sign in or create an account:"
 #~ msgstr "Logga in eller skapa ett konto:"
@@ -4286,14 +4285,14 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 #~ msgstr[0] ""
-#~ "Det finns redan en profil med en e-postadress nedan. Har du redan en MDN profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, ansluta med "
-#~ "min MDN profil</a>"
+#~ "Det finns redan en profil med en e-postadress nedan. Har du redan en MDN profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, ansluta "
+#~ "med min MDN profil</a>"
 #~ msgstr[1] ""
-#~ "Det finns redan en profil med en av dessa e-postadresser nedan. Har du redan en MDN profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, "
-#~ "ansluta med min MDN profil</a>"
+#~ "Det finns redan en profil med en av dessa e-postadresser nedan. Har du redan en MDN profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s"
+#~ "\">Ja, ansluta med min MDN profil</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "Logga in med Persona"
@@ -4356,8 +4355,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Detta dokument ändrades medan du redigerade det."
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
 #~ "Innehållet är tillgänglig under en licens som är specifik för detta projekt. &middot; <a href=\"%(about_url)s\">Om MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Bidra till koden</a> "
 #~ "&middot; <a href=\"//www.mozilla.org/en-US/privacy\">Sekretesspolicy</a>"
@@ -4585,16 +4584,17 @@ msgstr "Elasticsearch server: %(backend)s"
 
 #~ msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
 #~ msgstr ""
-#~ "CSS3-animationer låter dig ändra egenskapsvärden över tiden, för att animera utseende eller plats för element, utan eller med minimal användning av Javaskript och med större kontroll än övergångar."
+#~ "CSS3-animationer låter dig ändra egenskapsvärden över tiden, för att animera utseende eller plats för element, utan eller med minimal användning av Javaskript och med större kontroll än "
+#~ "övergångar."
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
-#~ "CSS3-animationer är en ny funktion i moderna webbläsare som Firefox, vilket ger ytterligare flexibilitet och kontroll över stil och upplevelse av webben. CSS3-animationer låter dig ändra värden över"
-#~ " tid utan eller med minimalt Javaskript, och med större kontroll än CSS-övergångar. Gå längre än statiska värden för att animera utseende och position på HTML-element. Du kan åstadkomma de här "
-#~ "effekterna utan Flash eller Silverlight, för att skapa dynamiska gränssnitt och engagerande animationer med CSS3."
+#~ "CSS3-animationer är en ny funktion i moderna webbläsare som Firefox, vilket ger ytterligare flexibilitet och kontroll över stil och upplevelse av webben. CSS3-animationer låter dig ändra värden "
+#~ "över tid utan eller med minimalt Javaskript, och med större kontroll än CSS-övergångar. Gå längre än statiska värden för att animera utseende och position på HTML-element. Du kan åstadkomma de "
+#~ "här effekterna utan Flash eller Silverlight, för att skapa dynamiska gränssnitt och engagerande animationer med CSS3."
 
 #~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
 #~ msgstr "Juli 2011 Dev Derby utmaning - HTML5 <video>"
@@ -4651,8 +4651,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "November 2011"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
-#~ " that make it easy to control and draw in."
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
 #~ msgstr ""
 #~ "Med canvas kan du måla på webben med hjälp av JavaScript för att göra 2D-former, bitmappade bilder och avancerade grafiska effekter. Varje <canvas> element ger en grafisk kontext med sitt eget "
 #~ "tillstånd och metoder som gör det lätt att kontrollera och rita i."
@@ -4748,11 +4748,11 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Juli 2012"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-#~ "input with HTML, and more. What else can you do without JavaScript?"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
 #~ msgstr ""
-#~ "Att skapa rika användarupplevelser för webben har aldrig varit enklare. Dagens öppna webbstandarder lägger en del av de mest kraftfulla funktionerna i dina händer. Animera sidor med CSS, validera "
-#~ "användarens input med HTML och mer. Vad kan du göra utan JavaScript?"
+#~ "Att skapa rika användarupplevelser för webben har aldrig varit enklare. Dagens öppna webbstandarder lägger en del av de mest kraftfulla funktionerna i dina händer. Animera sidor med CSS, "
+#~ "validera användarens input med HTML och mer. Vad kan du göra utan JavaScript?"
 
 #~ msgid "August 2012 Dev Derby Challenge - Camera API"
 #~ msgstr "Augusti 2012 Dev Derby utmaning - Kamera API"
@@ -4785,8 +4785,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Oktober 2012"
 
 #~ msgid ""
-#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-#~ "you do with Media Queries?"
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
+#~ "can you do with Media Queries?"
 #~ msgstr ""
 #~ "CSS Media Queries är nu ett gemensamt verktyg för lyhörd, mobil första webbdesign. De är nu även en W3C-rekommendation! De kan säga mycket mer om en skärm än bara dess bredd. Vad kan du göra med "
 #~ "Media Queries?"
@@ -4813,8 +4813,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "December 2012"
 
 #~ msgid ""
-#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-#~ "users, improve performance, and more."
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
+#~ "mobile users, improve performance, and more."
 #~ msgstr ""
 #~ "Med de mognande offline-kapaciten för den öppna webben, kan du bygga applikationer som fungerar med eller utan en internetanslutning. Med offline-teknik, kan du bättre stödja resande och mobila "
 #~ "användare, förbättra prestanda och mycket mer."
@@ -4841,11 +4841,11 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Februari 2013"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
-#~ " all the interactions users have come to expect."
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
 #~ msgstr ""
-#~ "Touch Events API kan du spåra flera pekningar samtidigt på enheter som stöder dem. Bygga komplexa spel, stöd för pinch-to-zoom och mycket mer. Genom att använda multi-touch, kan appen svara på alla "
-#~ "interaktioner användaren kan komma att förvänta."
+#~ "Touch Events API kan du spåra flera pekningar samtidigt på enheter som stöder dem. Bygga komplexa spel, stöd för pinch-to-zoom och mycket mer. Genom att använda multi-touch, kan appen svara på "
+#~ "alla interaktioner användaren kan komma att förvänta."
 
 #~ msgid "March 2013 Dev Derby Challenge - Mobile"
 #~ msgstr "Mars 2013 Dev Derby utmaning - Mobil"
@@ -4869,7 +4869,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ "Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
 #~ "tasks."
 #~ msgstr ""
-#~ "Web Wrokers gör det enkelt för dig att köra skript i bakgrunden. Genom att använda Web Workers, kan du skapa bländande användargränssnitt som inte hindras av de mest beräkningsintensiva uppgifterna."
+#~ "Web Wrokers gör det enkelt för dig att köra skript i bakgrunden. Genom att använda Web Workers, kan du skapa bländande användargränssnitt som inte hindras av de mest beräkningsintensiva "
+#~ "uppgifterna."
 
 #~ msgid "May 2013 Dev Derby Challenge - getUserMedia"
 #~ msgstr "Maj 2013 Dev Derby utmaning - getUserMedia"
@@ -4993,8 +4994,8 @@ msgstr "Elasticsearch server: %(backend)s"
 
 #~ msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
 #~ msgstr ""
-#~ "CSS3-teckensnitt specifikation innehåller förbättrade funktioner för teckensnitt och typografi som att bädda in egna typsnitt via @font-face eller kontrollera Opentype-teckensnitt funktioner direkt "
-#~ "via CSS."
+#~ "CSS3-teckensnitt specifikation innehåller förbättrade funktioner för teckensnitt och typografi som att bädda in egna typsnitt via @font-face eller kontrollera Opentype-teckensnitt funktioner "
+#~ "direkt via CSS."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
@@ -5008,7 +5009,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "Formulär"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr "Formulärelement och attribut i HTML5 ge en högre grad av semantisk uppmärkning än HTML4 och ta bort en stor del av behovet av tråkiga skript och styling som krävdes i HTML4."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -5396,8 +5398,8 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
 #~ msgstr ""
-#~ "<p>Du är på väg att ta bort <strong>%(demo_title)s</strong> från Demo Studio.</p> <p>Demons listning, källkod och statistik kommer att <strong>tas bort</strong>.</p> <p>Denna åtgärd <strong>kan inte"
-#~ " ångras</strong>."
+#~ "<p>Du är på väg att ta bort <strong>%(demo_title)s</strong> från Demo Studio.</p> <p>Demons listning, källkod och statistik kommer att <strong>tas bort</strong>.</p> <p>Denna åtgärd <strong>kan "
+#~ "inte ångras</strong>."
 
 #~ msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
 #~ msgstr "<button type=\"submit\" class=\"remove\"><span>Ta bort demo</span></button>"
@@ -5407,8 +5409,8 @@ msgstr "Elasticsearch server: %(backend)s"
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
 #~ "<p>Välkommen till Mozilla Demo Studio, där utvecklare som du kan utveckla, dela, demonstrera och lära sig allt om webbtekniker. Se vad som är möjligt genom att utforska Demo Studio.</p> <ul> "
 #~ "<li>Visa demon som demonstrerar vad HTML, CSS och JavaScript kan göra.</li> <li>Inspektera källkoden för de demon så att du kan se hur de fungerar.</li> <li>Läs dokumentation för att lära dig om "
@@ -5651,11 +5653,11 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Skicka in en ny demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>Om du skapar ett fantastiskt nytt sätt att uppleva webben eller bara experimenterar med de senaste teknikerna, inbjuder vi dig att skicka in dina egna demon för att dela med (eller visa upp för) "
-#~ "andra webbutvecklare.</p> <p>Fyll i formuläret nedan för att säkerställa att din demo lämnas till Demo Studio framgångsrikt.</p>"
+#~ "<p>Om du skapar ett fantastiskt nytt sätt att uppleva webben eller bara experimenterar med de senaste teknikerna, inbjuder vi dig att skicka in dina egna demon för att dela med (eller visa upp "
+#~ "för) andra webbutvecklare.</p> <p>Fyll i formuläret nedan för att säkerställa att din demo lämnas till Demo Studio framgångsrikt.</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "Beskriv din demo"
@@ -5685,15 +5687,15 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Förbereder din demo"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Källkoden för din demo ska packas i en ZIP-fil.</li> <li>Huvudsidan för din demo ska vara en fil med namnet <code>index.html</code> i roten av ZIP-filen.</li> <li>Din demo ska byggas på "
-#~ "klientsidan med teknikerna (HTML, CSS, JavaScript). På serversidan stöds inte språk som PHP och Ruby.</li> <li>Om din demo kräver externa resurser, bör den använda AJAX för att komma åt dem.</li> "
-#~ "<li>För att skicka in din demo behövs en <a href=\"%(signup_url)s\">MDN profil</a>.</li> <li>Ange i rutan för demodetaljer om den har någon tredjepartsinnehåll som inte kan licensieras under CC-BY-"
-#~ "SA licensen och inkludera länkar till författarnas webbplatser.</li> </ul>"
+#~ "klientsidan med teknikerna (HTML, CSS, JavaScript). På serversidan stöds inte språk som PHP och Ruby.</li> <li>Om din demo kräver externa resurser, bör den använda AJAX för att komma åt dem.</"
+#~ "li> <li>För att skicka in din demo behövs en <a href=\"%(signup_url)s\">MDN profil</a>.</li> <li>Ange i rutan för demodetaljer om den har någon tredjepartsinnehåll som inte kan licensieras under "
+#~ "CC-BY-SA licensen och inkludera länkar till författarnas webbplatser.</li> </ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "Erbjud källkoden"
@@ -5720,12 +5722,12 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ "<p>Share your developer interests and areas of expertise with the MDN community. We'll be able to bring you a better, more customized experience and you will have a place to show off the amazing "
 #~ "work you do.</p>"
 #~ msgstr ""
-#~ "<p>Dela dina utvecklarintressen och kompetensområden med MDN gemenskapen. Vi kommer att kunna ge dig en bättre, mer anpassad upplevelse och du kommer att ha en plats att visa upp ditt fantastiska "
-#~ "arbete du gör.</p>"
+#~ "<p>Dela dina utvecklarintressen och kompetensområden med MDN gemenskapen. Vi kommer att kunna ge dig en bättre, mer anpassad upplevelse och du kommer att ha en plats att visa upp ditt "
+#~ "fantastiska arbete du gör.</p>"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr ""
 #~ "<p>Om du skapar en häpnadsväckande nytt sätt att uppleva webben eller bara experimenterar med den senaste tekniken, vi inbjuder dig att skicka in dina egna demon för att dela med (eller visa upp "
 #~ "till) andra webbutvecklare.</p>"
@@ -5734,9 +5736,9 @@ msgstr "Elasticsearch server: %(backend)s"
 #~ msgstr "Innan du börjar"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Du måste vara beredd att <strong>tillhandahålla källkoden</strong> för din demo. Demon finns på Demo Studios servrar.</li> <li>Källkoden för din demo måste vara tillgänglig under en "
 #~ "<strong>öppen licens</strong>, till exempel MPL, GPL eller BSD.</li> <li>Din demo bör visa upp <strong>öppna webbtekniker</strong>, till exempel HTML5 och CSS3.</li> <li>Din demo bör stödja ett "
@@ -5744,14 +5746,14 @@ msgstr "Elasticsearch server: %(backend)s"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Källkoden för din demo ska packas i en <strong>ZIP-fil</strong>.</li> <li>Huvudsidan för din demo ska vara en fil med namnet <strong> <code>index.html</code></strong> i roten av ZIP-"
 #~ "filen.</li> <li>Din demo ska byggas på <strong>klientsidan med teknikerna</strong> (HTML, CSS, JavaScript). På serversidan stöds inte språk som PHP och Ruby.</li> <li>Om din demo kräver externa "
-#~ "resurser, bör den använda <strong>AJAX</strong> för att komma åt dem.</li> <li>Ange i rutan för demodetaljer om den har någon tredjepartsinnehåll som inte kan licensieras under CC-BY-SA licensen och"
-#~ " inkludera länkar till författarnas webbplatser.</li> </ul>"
+#~ "resurser, bör den använda <strong>AJAX</strong> för att komma åt dem.</li> <li>Ange i rutan för demodetaljer om den har någon tredjepartsinnehåll som inte kan licensieras under CC-BY-SA licensen "
+#~ "och inkludera länkar till författarnas webbplatser.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Om du vill skicka in din demo, behöver du en <strong><a href=\"%(signup_url)s\">MDN profil</a></strong>.</p>"
