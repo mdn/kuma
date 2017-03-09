@@ -17,6 +17,7 @@ bower_components
 /static/
 build.py
 build/
+celerybeat-schedule
 celeryev.pid
 coverage.xml
 docs/_build/
