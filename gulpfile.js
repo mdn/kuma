@@ -3,16 +3,34 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const gulp = require('gulp');
+const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 
+// compiles top-level .scss files
+gulp.task('styles', () => {
+    // only process files in /styles root
+    // all other .scss files are components/includes/libs
+    gulp.src('./kuma/static/styles/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        // send compiled files to where expected by Django Pipeline
+        .pipe(gulp.dest('./static/styles'));
+});
+
+// initiates 'styles' task above for *all* .scss file changes
+// (so if a lib file is changed, re-render all top-level .scss files that may include said lib file)
+gulp.task('styles:watch', () => {
+    gulp.watch('./kuma/static/styles/**/*.scss', ['styles']);
+});
+
+// watches all non-Sass files in /kuma/static and copies them over to /static
 gulp.task('static:watch', () => {
     return gulp.src('./kuma/static/**/*')
-        .pipe(watch('./kuma/static/**/*', {
+        .pipe(watch(['./kuma/static/**/*', '!./kuma/static/styles/**/*.scss', '!./kuma/static/styles/**/*.sass'], {
             'verbose': true
         }))
         .pipe(gulp.dest('./static'));
 });
 
 gulp.task('default', () => {
-    gulp.start('static:watch');
+    gulp.start(['static:watch', 'styles:watch']);
 });

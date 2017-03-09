@@ -961,7 +961,9 @@ PIPELINE = {
     'DISABLE_WRAPPER': True,
     'SHOW_ERRORS_INLINE': False,  # django-pipeline issue #614
     'COMPILERS': (
-        'pipeline.compilers.sass.SASSCompiler',
+        ('kuma.core.pipeline.sass.DebugSassCompiler'
+            if DEBUG else
+            'pipeline.compilers.sass.SASSCompiler'),
     ),
     'SASS_BINARY': config('PIPELINE_SASS_BINARY',
                           default='/usr/bin/env node-sass'),
