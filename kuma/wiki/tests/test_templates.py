@@ -334,6 +334,8 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert self.expected_15 in response.content
         assert self.expected_16 in response.content
         assert self.script_src not in response.content
+        doc = pq(response.content)
+        assert not doc('#edit-button')
 
     def test_user_valid_variant_selected(self):
         """Users are not added to the Google Analytics cohort on the variant."""
@@ -350,6 +352,8 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert self.expected_15 not in response.content
         assert self.expected_16 not in response.content
         assert self.script_src not in response.content
+        doc = pq(response.content)
+        assert not doc('#edit-button')
 
 
 class RevisionTests(UserTestCase, WikiTestCase):
