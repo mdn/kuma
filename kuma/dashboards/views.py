@@ -1,7 +1,6 @@
 import datetime
 import json
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
@@ -82,15 +81,11 @@ def revisions(request):
            authors_filter not in ['', str(RevisionDashboardForm.ALL_AUTHORS)]):
 
             # Get the 'Known Authors' group.
-            if settings.MAINTENANCE_MODE:
-                try:
-                    group = Group.objects.get(name="Known Authors")
-                except Group.DoesNotExist:
-                    group = None
+            try:
+                group = Group.objects.get(name="Known Authors")
+            except Group.DoesNotExist:
+                pass
             else:
-                group, _ = Group.objects.get_or_create(name="Known Authors")
-
-            if group:
                 # If the filter is 'Known Authors', then query for the
                 # 'Known Authors' group, otherwise the filter is
                 # 'Unknown Authors', so exclude the 'Known Authors' group.
