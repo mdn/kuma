@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from pages.base import BasePage
 
 
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 @pytest.mark.parametrize("method, uri", [
     ('get', 'admin/login'),

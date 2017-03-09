@@ -41,6 +41,7 @@ def test_page_buttons_displayed(base_url, selenium):
 
 
 # page buttons in maintenance mode
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 def test_page_buttons_displayed_in_mm(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()

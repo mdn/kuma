@@ -18,6 +18,7 @@ def test_is_not_found_status(base_url, selenium):
     assert_valid_url(selenium.current_url, status_code=requests.codes.not_found)
 
 
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 def test_is_not_found_status_in_mm(base_url, selenium):
     page = NotFoundPage(selenium, base_url).open()

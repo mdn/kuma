@@ -74,6 +74,7 @@ def test_header_signin(base_url, selenium):
     assert 'https://github.com' in str(selenium.current_url)
 
 
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 def test_header_no_signin(base_url, selenium):
     page = HomePage(selenium, base_url).open()

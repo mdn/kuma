@@ -27,9 +27,6 @@ def selenium(request, selenium):
 def sensitive_url(request, base_url):
     if not base_url:
         return False
-    else:
-        # developer-local and localhost are not sensitive
-        developer_local_match = str(base_url).startswith('https://developer-local')
-        localhost_match = str(base_url).startswith('http://localhost')
-        # treat it as sensitive if it's not identified as okay
-        return not (developer_local_match or localhost_match)
+    return not any(base_url.startswith(url)
+                   for url in ('http://localhost',
+                               'https://developer-local'))

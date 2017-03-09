@@ -120,6 +120,7 @@ def test_search_filters(base_url, selenium):
     assert documents_found_after > documents_found_initial
 
 
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 def test_search_in_mm(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM_ZERO).open()

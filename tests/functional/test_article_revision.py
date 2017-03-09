@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from pages.base import BasePage
 
 
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 def test_revision_in_mm(base_url, selenium):
     # Get the link for the first (could be any) revision of the test document.
@@ -24,6 +25,7 @@ def test_revision_in_mm(base_url, selenium):
     assert not page.header.is_signin_displayed
 
 
+@pytest.mark.nondestructive
 @pytest.mark.maintenance_mode
 def test_compare_revisions_in_mm(base_url, selenium):
     # Load the page that compares two revisions of a document.
