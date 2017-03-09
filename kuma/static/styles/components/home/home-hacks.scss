@@ -1,6 +1,6 @@
 /*
 hacks blog row, wrapper, entries, and get involved teaser
-====================================================================== */
+********************************************************************** */
 
 $home-involved-background-y : 50px;
 
@@ -66,7 +66,9 @@ $home-involved-background-y : 50px;
         padding-bottom: 40px;
         line-height: 40px;
 
-        .row1, .row2, .row3 {
+        .row1,
+        .row2,
+        .row3 {
             display: block;
         }
     }
@@ -77,15 +79,16 @@ $home-involved-background-y : 50px;
     }
 
     .button {
+        /* stylelint-disable declaration-no-important */
         background-color: #48ade4 !important;
         font-size: $smaller-font-size !important;
         color: $blue-background-text-color !important;
+        /* stylelint-enable */
         font-weight: bold;
     }
 }
 
 @media #{$media-query-mobile} {
-
     .column-hacks,
     .column-involved {
         float: none;

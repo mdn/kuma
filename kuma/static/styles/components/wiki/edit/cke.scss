@@ -1,4 +1,10 @@
-/* ckeditor / content area styles */
+/*
+ckeditor / content area styles
+many marked as !important to override CKEditor's issues
+********************************************************************** */
+
+/* stylelint-disable declaration-no-important  */
+
 .editor-wrapper {
     border: 1px solid #eaeff2;
     padding: $content-vertical-spacing;
@@ -17,16 +23,19 @@
     margin: 0 !important;
 }
 
-/* CKEditor adjustments, many marked as !important to override CKEditor's issues */
 .ui-autocomplete {
     z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
     max-height: 200px;
     overflow: auto;
 }
+
 .cke_combo_text {
     width: 100px !important;
 }
+
 .cke_combopanel {
     width: 250px !important;
     height: 300px !important;
 }
+
+/* stylelint-enable */

@@ -6,7 +6,9 @@
     padding-left: 0;
     padding-right: 0;
 
-    /* translation page is special */
+    /*
+    translation page is special
+    ====================================================================== */
 
     details summary + & {
         margin-top: 0;

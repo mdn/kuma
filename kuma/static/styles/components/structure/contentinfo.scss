@@ -11,7 +11,7 @@
         display: block;
         width: 65px;
         height: 60px;
-        background: transparent url($logo-sprite-url) no-repeat 0px -83px;
+        background: transparent url($logo-sprite-url) no-repeat 0 -83px;
         background-size: 205px auto;
         position: absolute;
         top: 0;
@@ -64,7 +64,7 @@
 @media #{$media-query-small-mobile} {
     .contentinfo {
         ul {
-           @include vendorize(columns, 10em);
+            @include vendorize(columns, 10em);
         }
 
         li {

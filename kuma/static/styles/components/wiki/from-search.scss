@@ -1,25 +1,32 @@
 @import '../../includes/mixin_submenu';
 
-/* search navigator near article heading */
+/*
+search navigator near article heading
+********************************************************************** */
+
 .from-search {
     padding-left: ($grid-spacing * 2);
 
-    h1, .from-search-navigate {
+    h1,
+    .from-search-navigate {
         display: inline-block;
     }
-    .from-search-previous, .from-search-next {
+
+    .from-search-previous,
+    .from-search-next {
         display: block;
     }
 }
 
-.from-search-previous, .from-search-next {
+.from-search-previous,
+.from-search-next {
     position: absolute;
     top: $grid-spacing + 8px;
     display: none;
     font-size: 24px;
 
     &.disabled {
-        opacity: 0.3;
+        opacity: .3;
     }
 }
 
@@ -41,7 +48,8 @@
     top: 4px;
 }
 
-.from-search-navigate-up, .from-search-navigate-down {
+.from-search-navigate-up,
+.from-search-navigate-down {
     @include set-smaller-font-size();
     position: absolute;
     left: 0;
@@ -64,7 +72,8 @@
     z-index: 2;
     color: #888;
 
-    &:before, &:after { /* remove submenu arrows */
+    &:before,
+    &:after { /* remove submenu arrows */
         display: none;
     }
 
@@ -84,7 +93,7 @@
     .from-search,
     .from-search-previous-box,
     .from-search-navigate-wrap,
-    .from-search-next-box  {
+    .from-search-next-box {
         padding-left: 0;
     }
 }

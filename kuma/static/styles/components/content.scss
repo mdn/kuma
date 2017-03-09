@@ -1,16 +1,19 @@
 @import 'option-list';
 
 /*
-    Additional formatting for the real page content; i.e. text in the <main> element
-    We cannot put these styles in the tags.styl file because they don't apply to the entire layout
-*/
+Additional formatting for the real page content; i.e. text in the <main> element
+We cannot put these styles in the tags.styl file because they don't apply to the entire layout
+********************************************************************** */
 
 $table-blue: #d4dde4;
 $table-cell-border: 2px solid #fff;
 
 .text-content {
 
-    /* tables */
+    /*
+    tables
+    ====================================================================== */
+
     table {
         border-collapse: collapse;
         border: solid #e0e0dc;
@@ -20,20 +23,21 @@ $table-cell-border: 2px solid #fff;
             border: $table-cell-border;
 
             td {
-                @include rgba-fallback(background-color, $table-blue, 0.15);
+                @include rgba-fallback(background-color, $table-blue, .15);
                 border: $table-cell-border;
-                box-shadow: inset 0 -1px 0 0 rgba($table-blue, 0.5);
+                box-shadow: inset 0 -1px 0 0 rgba($table-blue, .5);
             }
 
             /* alternating row colours (aka zebra or candy striping) */
             &:not(.nostripe) tr:nth-child(odd) td {
-                @include rgba-fallback(background-color, $table-blue, 0.25);
+                @include rgba-fallback(background-color, $table-blue, .25);
             }
 
-            td.header, th {
+            td.header,
+            th {
                 border: $table-cell-border;
                 border-bottom: 2px solid $table-blue;
-                @include rgba-fallback(background, $table-blue, 0.5);
+                @include rgba-fallback(background, $table-blue, .5);
                 padding: 2px 8px 4px;
 
                 font-family: $heading-font-family;
@@ -54,7 +58,7 @@ $table-cell-border: 2px solid #fff;
             background: #fff;
             border-width: 1px;
             border-style: solid;
-            @include rgba-fallback(border-color, $table-blue, 0.5);
+            @include rgba-fallback(border-color, $table-blue, .5);
             margin-bottom: $grid-spacing;
             width: 100%;
 
@@ -65,15 +69,17 @@ $table-cell-border: 2px solid #fff;
                 vertical-align: top;
             }
 
-            td.header, th {
-                @include rgba-fallback(background, $table-blue, 0.5);
+            td.header,
+            th {
+                @include rgba-fallback(background, $table-blue, .5);
                 border: 1px solid $table-blue;
                 padding: 5px;
             }
         }
     }
 
-    td, th {
+    td,
+    th {
         border: solid #e0e0dc;
         border-width: 0 1px 1px 0;
         padding: $content-vertical-spacing $content-horizontal-spacing;
@@ -81,10 +87,12 @@ $table-cell-border: 2px solid #fff;
     }
 
     thead th {
-        @include rgba-fallback(background, $table-blue, 0.5);
+        @include rgba-fallback(background, $table-blue, .5);
     }
 
-    /* lists and definitions */
+    /*
+    lists and definitions
+    ====================================================================== */
     ul {
         list-style: disc;
 
@@ -93,12 +101,16 @@ $table-cell-border: 2px solid #fff;
         }
     }
 
-    ul ul, ol ol, ul ol, ol ul {
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
         margin-bottom: 0;
         padding-top: $content-vertical-spacing;
     }
 
-    ul, ol {
+    ul,
+    ol {
         @include bidi-style(padding-left, ($grid-spacing * 2), padding-right, 0);
         margin-bottom: $content-block-margin;
 
@@ -127,6 +139,8 @@ $table-cell-border: 2px solid #fff;
         @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 
+    /* =================================================================== */
+
     span.alllinks {
         display: block;
         text-align: right;
@@ -136,6 +150,7 @@ $table-cell-border: 2px solid #fff;
         &.lwrap {
             padding: 0 20px 10px 0;
         }
+
         &.rwrap {
             padding: 0 0 10px 20px;
         }
@@ -180,8 +195,8 @@ ul.directory-tree {
             }
 
             &:before {
-                top: 0px;
-                height: 0.75em;
+                top: 0;
+                height: .75em;
                 width: 10px;
                 border-bottom: 1px solid $grey;
                 @include bidi-style(border-left, 1px solid $grey, border-right, none);
@@ -193,7 +208,7 @@ ul.directory-tree {
                 @include bidi-style(border-left, 1px solid $grey, border-right, none);
             }
 
-           &:last-child:after {
+            &:last-child:after {
                 display: none;
             }
         }
@@ -211,7 +226,7 @@ ul.directory-tree {
     cursor: default;
     padding-top: 2px;
     position: absolute;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.08);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .08);
 }
 
 .ui-menu {
@@ -236,7 +251,10 @@ ul.directory-tree {
         }
     }
 
-    .ui-state-hover, .ui-state-focus, .ui-state-highlight, .ui-state-active {
+    .ui-state-hover,
+    .ui-state-focus,
+    .ui-state-highlight,
+    .ui-state-active {
         background: $light-background-color;
     }
 }
@@ -275,7 +293,9 @@ p.footnote {
     color: #716d65;
 }
 
-/* Classes created by the WYSIWYG */
+/*
+Classes created by the WYSIWYG
+====================================================================== */
 .twocolumns {
     @include vendorize(column-count, 2);
 
@@ -284,6 +304,7 @@ p.footnote {
         column-rule: $editor-box-border;
     }
 }
+
 .threecolumns {
     @include vendorize(column-count, 3);
 
@@ -294,11 +315,13 @@ p.footnote {
 }
 
 @media #{$media-query-small-mobile} {
-   .twocolumns,
-   .threecolumns {
-       @include vendorize(column-count, 1);
+    .twocolumns,
+    .threecolumns {
+        @include vendorize(column-count, 1);
     }
 }
+
+/* =================================================================== */
 
 /* apply to any container to restrict width to 60em */
 .readable-line-length {

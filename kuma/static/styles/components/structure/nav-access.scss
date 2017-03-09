@@ -1,6 +1,6 @@
 /*
 Keyboard & screen reader skip link menu
-====================================================================== */
+********************************************************************** */
 
 #nav-access {
     width: 100%;
@@ -9,7 +9,7 @@ Keyboard & screen reader skip link menu
     z-index: 1001;
 
     a {
-        @include rgba-fallback(background, #fff, 0.9);
+        @include rgba-fallback(background, #fff, .9);
         padding: 12px 10px;
         position: absolute;
         left: 0;
@@ -17,7 +17,8 @@ Keyboard & screen reader skip link menu
         font-weight: bold;
         text-align: center;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             box-shadow: 3px 3px 5px #aaa;
             top: 20em;
             text-decoration: none;

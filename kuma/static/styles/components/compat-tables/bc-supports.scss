@@ -1,6 +1,6 @@
 /*
 Supports colouring
-====================================================================== */
+********************************************************************** */
 
 .bc-supports-yes,
 .bc-supports-partial,
@@ -27,8 +27,22 @@ Supports colouring
 .bc-supports-partial .bc-history {
     background: map-get($bc-colors, partial);
 }
+
 .bc-supports-partial {
-    background-image: linear-gradient(to bottom right, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 4px, transparent 4px, transparent 65px, rgba(0,0,0,0.15) 65px, rgba(0,0,0,0.15) 75px, transparent 75px, transparent 136px, rgba(0,0,0,0.15) 136px, rgba(0,0,0,0.15) 146px, transparent 146px);
+    background-image:
+        linear-gradient(to bottom right,
+            rgba(0, 0, 0, .15) 0,
+            rgba(0, 0, 0, .15) 4px,
+            transparent 4px,
+            transparent 65px,
+            rgba(0, 0, 0, .15) 65px,
+            rgba(0, 0, 0, .15) 75px,
+            transparent 75px,
+            transparent 136px,
+            rgba(0, 0, 0, .15) 136px,
+            rgba(0, 0, 0, .15) 146px,
+            transparent 146px
+        );
     background-size: 100px 100px;
     background-position: 50% 50%;
 }
@@ -39,7 +53,33 @@ Supports colouring
 }
 
 .bc-supports-no {
-    background-image: linear-gradient(to bottom right, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 4px, transparent 4px, transparent 65px, rgba(0,0,0,0.15) 65px, rgba(0,0,0,0.15) 75px, transparent 75px, transparent 136px, rgba(0,0,0,0.15) 136px, rgba(0,0,0,0.15) 146px, transparent 146px), linear-gradient(to bottom left, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 4px, transparent 4px, transparent 65px, rgba(0,0,0,0.15) 65px, rgba(0,0,0,0.15) 75px, transparent 75px, transparent 136px, rgba(0,0,0,0.15) 136px, rgba(0,0,0,0.15) 146px, transparent 146px);
+    background-image:
+        linear-gradient(to bottom right,
+            rgba(0, 0, 0, .15) 0,
+            rgba(0, 0, 0, .15) 4px,
+            transparent 4px,
+            transparent 65px,
+            rgba(0, 0, 0, .15) 65px,
+            rgba(0, 0, 0, .15) 75px,
+            transparent 75px,
+            transparent 136px,
+            rgba(0, 0, 0, .15) 136px,
+            rgba(0, 0, 0, .15) 146px,
+            transparent 146px
+        ),
+        linear-gradient(to bottom left,
+            rgba(0, 0, 0, .15) 0,
+            rgba(0, 0, 0, .15) 4px,
+            transparent 4px,
+            transparent 65px,
+            rgba(0, 0, 0, .15) 65px,
+            rgba(0, 0, 0, .15) 75px,
+            transparent 75px,
+            transparent 136px,
+            rgba(0, 0, 0, .15) 136px,
+            rgba(0, 0, 0, .15) 146px,
+            transparent 146px
+        );
     background-size: 100px 100px, 100px 100px;
     background-position: 50% 50%, 50% 50%;
 }

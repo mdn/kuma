@@ -1,6 +1,7 @@
 /*
 Media query detection for use with javascript
-====================================================================== */
+********************************************************************** */
+
 #feature-test-element {
     position: absolute;
     left: 0;
@@ -10,7 +11,15 @@ Media query detection for use with javascript
     overflow: hidden;
     z-index: 1;
 
-    @media #{$media-query-small-desktop} { z-index: 2; }
-    @media #{$media-query-tablet} { z-index: 3; }
-    @media #{$media-query-mobile} { z-index: 4; }
+    @media #{$media-query-small-desktop} {
+        z-index: 2;
+    }
+
+    @media #{$media-query-tablet} {
+        z-index: 3;
+    }
+
+    @media #{$media-query-mobile} {
+        z-index: 4;
+    }
 }

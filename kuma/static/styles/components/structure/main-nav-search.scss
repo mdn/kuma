@@ -1,10 +1,9 @@
 /*
 list item in #main-nav that contains the search form
-====================================================================== */
+********************************************************************** */
 
 /* needs #main-nav prefix to over-ride specificity of other declarations */
 #main-nav {
-
     .main-nav-search {
         position: relative;
         width: 73px;
@@ -12,11 +11,10 @@ list item in #main-nav that contains the search form
     }
 
     @media #{$media-query-navigation-block} {
-    /* move the search box under the nav */
-
+        /* move the search box under the nav */
         .main-nav-search {
             display: none;
-            padding: 0px;
+            padding: 0;
             @include bidi-value(margin, 10px 0 0 0, 10px 0 0 0);
             width: auto;
         }

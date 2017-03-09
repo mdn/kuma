@@ -19,9 +19,10 @@
         @include set-font-size($small-bump-font-size);
     }
 
-    input, input#id_title {
+    input,
+    input#id_title {
         float: left;
-        margin: 2px 0px;
+        margin: 2px 0;
         padding: 6px 8px;
         width: 70%;
     }
@@ -31,7 +32,8 @@
         margin: 5px 0;
     }
 
-    label, legend {
+    label,
+    legend {
         color: #888;
         display: block;
         float: left;
@@ -41,5 +43,4 @@
         text-align: right;
         width: auto;
     }
-
 }

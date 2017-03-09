@@ -1,13 +1,16 @@
 /*
-    Typography
-    - headings, blockquotes, paragraphs, links, pre, code
-*/
+Typography
+- headings, blockquotes, paragraphs, links, pre, code
+********************************************************************** */
 
 /*
 Headings
 ====================================================================== */
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     margin-bottom: ($content-block-margin / 2);
     word-wrap: break-word;
 
@@ -17,13 +20,14 @@ h1, h2, h3, h4 {
     color: $heading-color;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
-        letter-spacing: -0.04em;
+        letter-spacing: -.04em;
         line-height: 1;
-        word-spacing: 0.01em;
+        word-spacing: .01em;
     }
 }
 
-h2, h3 {
+h2,
+h3 {
     font-family: $site-font-family;
     #{$selector-site-font-fallback} {
         font-family: $site-font-family-fallback;
@@ -42,40 +46,39 @@ h1 {
 
 h2 {
     @include heading-2();
-
     font-weight: 700;
     #{$selector-site-font-fallback} {
         font-weight: normal;
         letter-spacing: 0;
-        word-spacing: -0.02em;
+        word-spacing: -.02em;
     }
 }
 
 h3 {
     @include set-font-size(24px);
-    letter-spacing: -0.021em;
+    letter-spacing: -.021em;
     #{$selector-site-font-fallback} {
         line-height: 1.01;
-        letter-spacing: 0.002em;
-        word-spacing: 0.032em;
+        letter-spacing: .002em;
+        word-spacing: .032em;
     }
 }
 
 h4 {
     @include set-font-size(18px);
-    letter-spacing: -0.014em;
+    letter-spacing: -.014em;
     #{$selector-site-font-fallback} {
-        letter-spacing: -0.044em;
-        word-spacing: 0.22em;
+        letter-spacing: -.044em;
+        word-spacing: .22em;
     }
 }
 
 h5 {
     @include set-font-size(16px);
-    letter-spacing: -0.014em;
+    letter-spacing: -.014em;
     #{$selector-site-font-fallback} {
-      letter-spacing: -0.024em;
-      word-spacing: .04em;
+        letter-spacing: -.024em;
+        word-spacing: .04em;
     }
 }
 
@@ -97,7 +100,8 @@ blockquote {
     background: #eee;
     position: relative;
 
-    &:before, &:after {
+    &:before,
+    &:after {
         color: #ccc;
         content: open-quote;
         font-size: 40px;
@@ -125,7 +129,9 @@ a {
     color: $link-color;
     text-decoration: none;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: underline;
     }
 
@@ -147,7 +153,7 @@ abbr[title] {
 sup {
     /* stops sup from messing with line height */
     position: relative;
-    top: -0.15em;
+    top: -.15em;
     vertical-align: top;
 }
 
@@ -180,7 +186,12 @@ pre code {
 }
 
 @media #{$media-query-mobile} {
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         code {
             word-break: break-all;
         }
@@ -191,14 +202,14 @@ kbd {
     background-color: $light-background-color;
     border-radius: 3px;
     border: 1px solid #b4b4b4;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 2px 0px 0px rgba(255, 255, 255, 0.7) inset;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
     display: inline-block;
     font-family: $code-inline-font-family;
-    font-size: 0.85em;
+    font-size: .85em;
     font-weight: bold;
     line-height: inherit;
     padding: 2px 4px;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 var {

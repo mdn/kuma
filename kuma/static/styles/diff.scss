@@ -2,8 +2,8 @@
 @import 'includes/mixins';
 
 /*
-    Used for revision diff'ing tables, in the wiki and the dashboards
-*/
+Used for revision diff'ing tables, in the wiki and the dashboards
+********************************************************************** */
 
 .revision-diff {
     clear: both;
@@ -14,14 +14,17 @@
         font-weight: bold;
         border-top: 1px dotted #ccc;
     }
+
     .rev-from {
         width: 49%;
         float: left;
     }
+
     .rev-to {
         width: 49%;
         float: right;
     }
+
     h3 {
         font-weight: bold;
         margin: 5px 0 0;
@@ -38,7 +41,7 @@ table.diff {
 }
 
 td.diff_header {
-    text-align:right;
+    text-align: right;
 }
 
 .diff_next {
@@ -57,7 +60,9 @@ td.diff_header {
     background-color: #ffaaaa;
 }
 
-/* Slug change callout */
+/*
+Slug change callout
+====================================================================== */
 .slug-change {
     @include set-smaller-font-size();
     background: #d4dde4;

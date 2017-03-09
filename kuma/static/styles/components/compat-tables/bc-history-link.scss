@@ -1,6 +1,6 @@
 /*
 History-link
-====================================================================== */
+********************************************************************** */
 
 .bc-history-link {
     position: absolute;
@@ -14,7 +14,7 @@ History-link
     clear: both;
     text-align: center;
     font-size: 12px;
-    border-top: 1px solid rgba($bc-color-border, 0.3);
+    border-top: 1px solid rgba($bc-color-border, .3);
     line-height: 1;
     // override MDN defaults
     box-shadow: none;
@@ -36,10 +36,9 @@ History-link
     width: 30px;
 
     /* if there are icons the text is shifted left, shift the target extention as well */
-    .bc-icons +  & {
+    .bc-icons + & {
         margin-left: -30px;
     }
-
 }
 
 .bc-history-link i {
@@ -49,7 +48,8 @@ History-link
 
 /*
 active styles
-----------------------------------------------------------------------  */
+====================================================================== */
+
 .active .bc-history-link {
     z-index: 21;
     margin-top: -8px;
@@ -63,7 +63,6 @@ td[tabindex]:focus .bc-history-link {
 }
 
 @each $support in $bc-support {
-
     .active.bc-supports-#{$support} .bc-history-link,
     td[tabindex].bc-supports-#{$support}:hover .bc-history-link,
     td[tabindex].bc-supports-#{$support}:focus .bc-history-link {
@@ -74,7 +73,7 @@ td[tabindex]:focus .bc-history-link {
 
 /*
 mobile adjustments
-----------------------------------------------------------------------  */
+====================================================================== */
 
 @media #{$media-query-small-mobile} {
     .bc-history-link {

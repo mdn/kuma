@@ -1,6 +1,7 @@
 @import 'includes/vars';
 @import 'includes/mixins';
 
+/* stylelint-disable */
 /* 404 - Animate the tumbeast's eyes. Original animation by J Zeller. */
 @keyframes crazylefteye {
     0%     { left: 125px; top: 65px; }
@@ -23,6 +24,7 @@
     70%    { left: 231px; top: 68px; }
     100%   { left: 231px; top: 68px; }
 }
+/* stylelint-enable */
 
 /* Take $grid-spacing away from the margin of .beast and (later) give it to the
    padding #beastainer instead so that the eye positions can be relative to
@@ -37,22 +39,23 @@
     position: relative;
 }
 
-#beast404re, #beast404le {
+#beast404re,
+#beast404le {
     position: absolute;
-   @include vendorize(animation-delay, 6s);
-   @include vendorize(animation-duration, 7s);
-   @include vendorize(animation-iteration-count, infinite);
-   @include vendorize(animation-play-state, running);
+    @include vendorize(animation-delay, 6s);
+    @include vendorize(animation-duration, 7s);
+    @include vendorize(animation-iteration-count, infinite);
+    @include vendorize(animation-play-state, running);
 }
 
 #beast404re {
     left: 231px;
     top: 68px;
-   @include vendorize(animation-name, crazyrighteye);
+    @include vendorize(animation-name, crazyrighteye);
 }
 
 #beast404le {
     left: 125px;
     top: 65px;
-   @include vendorize(animation-name, crazylefteye);
+    @include vendorize(animation-name, crazylefteye);
 }

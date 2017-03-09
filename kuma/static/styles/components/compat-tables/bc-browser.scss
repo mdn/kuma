@@ -1,16 +1,15 @@
 /*
 Icons in mobile view
-====================================================================== */
+********************************************************************** */
 
 @media #{$media-query-small-mobile} {
-
     [class*='bc-browser-']:before,
     [class*='bc-browser-']:after {
         position: absolute;
         top: 8px;
         height: 25px;
         width: 25px;
-        font-family: 'compat-icons';
+        font-family: compat-icons;
         speak: none;
         color: $text-color;
         font-style: normal;
@@ -23,33 +22,38 @@ Icons in mobile view
 
     /*
     vendor icons
-    ----------------------------------------------------------------------  */
+    ====================================================================== */
 
-    [class*='bc-browser-']:before{
+    [class*='bc-browser-']:before {
         left: 30px;
     }
 
     .bc-browser-#{$android-browser}:before {
         content: '\e9ca';
     }
+
     .bc-browser-#{$chrome-android}:before,
     .bc-browser-#{$chrome-desktop}:before {
         content: '\eae5';
     }
+
     .bc-browser-#{$firefox-android}:before,
     .bc-browser-#{$firefox-desktop}:before,
     .bc-browser-#{$firefox-fxos}:before {
         content: '\eae6';
     }
+
     .bc-browser-#{$ie-desktop}:before,
     .bc-browser-#{$ie-mobile}:before {
         content: '\eae7';
     }
+
     .bc-browser-#{$opera-desktop}:before,
     .bc-browser-#{$opera-mobile}:before,
     .bc-browser-#{$opera-mini}:before {
         content: '\eae8';
     }
+
     .bc-browser-#{$safari-desktop}:before,
     .bc-browser-#{$safari-ios}:before {
         content: '\e94a';
@@ -57,7 +61,7 @@ Icons in mobile view
 
     /*
     medium icons
-    ----------------------------------------------------------------------  */
+    ====================================================================== */
 
     [class*='bc-browser-']:after {
         left: 2px;
@@ -82,6 +86,7 @@ Icons in mobile view
     .bc-browser-#{$safari-ios}:after {
         content: '\f10a';
     }
+
     .bc-browser-#{$opera-mini}:after {
         content: '\f10b';
     }
@@ -89,5 +94,4 @@ Icons in mobile view
     .bc-browser-#{$firefox-fxos}:after {
         content: '\e600';
     }
-
 }

@@ -4,7 +4,8 @@
     }
 
 
-    h1, fieldset {
+    h1,
+    fieldset {
         @include clearfix();
     }
 
@@ -16,6 +17,6 @@
     #tags-expertise,
     legend {
         width: 100%;
-       @include vendorize(box-sizing, border-box);
+        @include vendorize(box-sizing, border-box);
     }
 }

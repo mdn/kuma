@@ -1,7 +1,7 @@
 /*
-    - default styles for all tags.
-    - needs qualifying ul because to pass classes to tagit widget it must be input.tags
-*/
+- default styles for all tags.
+- needs qualifying ul because to pass classes to tagit widget it must be input.tags
+********************************************************************** */
 
 %tag-item {
     background: $light-background-color;
@@ -36,8 +36,8 @@ ul.tags li {
 }
 
 /*
-    small
-*/
+small
+====================================================================== */
 
 $small-tag-spacing : 3px;
 

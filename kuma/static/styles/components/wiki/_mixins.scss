@@ -1,8 +1,13 @@
-/* mixins applying only to the wiki */
+/*
+mixins applying only to the wiki
+********************************************************************** */
+
 @mixin make-wiki-blocks-flat() {
-    #wiki-content, #wiki-right, #wiki-left {
+    #wiki-content,
+    #wiki-right,
+    #wiki-left {
         margin-right: 0;
-        width: auto !important;
+        width: auto !important; /* stylelint-disable-line declaration-no-important */
         float: none;
         padding-bottom: ($grid-spacing * 2);
     }

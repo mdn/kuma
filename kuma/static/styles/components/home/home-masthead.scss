@@ -1,6 +1,7 @@
 /*
 homepage masthead (search, feature callouts)
-====================================================================== */
+********************************************************************** */
+
 .home-masthead {
     @include clearfix();
     padding: $first-content-top-padding 0;
@@ -15,7 +16,9 @@ homepage masthead (search, feature callouts)
         }
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
         color: $blue-background-text-color;
     }
 }
@@ -27,15 +30,14 @@ homepage masthead (search, feature callouts)
     position: relative;
     width: 60%;
 
-    /* Only use the "big search" style when the search filter feature
-    is not enabled. */
+    /* Only use the "big search" style when the search filter feature is not enabled. */
     > input#home-q {
         @include big-search();
     }
 
     .search-icon {
-		position: absolute;
-		top: ($grid-spacing * 2 + 7);
+        position: absolute;
+        top: ($grid-spacing * 2 + 7);
     }
 
     input#home-q {
@@ -48,7 +50,6 @@ homepage masthead (search, feature callouts)
 }
 
 @media #{$media-query-tablet} {
-
     .home-masthead {
         h1 {
             width: 90%;
@@ -66,12 +67,13 @@ homepage masthead (search, feature callouts)
     h1 {
         @include set-font-size(34px);
     }
+
     .search-form {
         width: 100%;
         padding-top: $grid-spacing;
 
         .search-icon {
-           top: ($grid-spacing + 7);
+            top: ($grid-spacing + 7);
         }
     }
 }

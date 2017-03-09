@@ -68,7 +68,9 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
         width: $step-box-width;
     }
 
-    h3, h4, label {
+    h3,
+    h4,
+    label {
         @include set-font-size($base-bump-font-size);
     }
 
@@ -85,7 +87,8 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
         }
     }
 
-    h3, h4 {
+    h3,
+    h4 {
         /* Use the same margin that is used by images, so that the left
            edge of the image and the left edge of the heading line up. */
         margin-left: $selection-border-width;
@@ -114,16 +117,18 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
 
 
 /*
-    Every list item in #step-design contains an image. Every list item in every
-    other section contains text only. We need to keep this in mind when applying
-    shadows.
+Every list item in #step-design contains an image. Every list item in every
+other section contains text only. We need to keep this in mind when applying
+shadows.
 
-    We could just apply the shadow to list items across the board, but that
-    would make the "selected" border show up in the wrong place for
-    #step-design selections.
+We could just apply the shadow to list items across the board, but that
+would make the "selected" border show up in the wrong place for
+#step-design selections.
 */
-#step-color li, #step-topic li, #step-design img {
-    box-shadow: 2px 2px 2px rgba(0,0,0,.1);
+#step-color li,
+#step-topic li,
+#step-design img {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
 }
 
 #step-design {
@@ -139,7 +144,8 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
         padding: $img-nohover-padding;
     }
 
-    img:hover, li.selected img {
+    img:hover,
+    li.selected img {
         border-color: $box-border-hover-color;
 
         /* Swap some spacing around, so that a border can be added without
@@ -149,7 +155,8 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
     }
 }
 
-#step-color, #step-topic {
+#step-color,
+#step-topic {
     li {
         border: $box-border;
         padding: 2px;
@@ -167,11 +174,12 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
         overflow: hidden;
         padding: 8px 10px;
         text-align: center;
-        text-shadow: 0 0 3px rgba(0,0,0,.5), 1px 1px 0 #000;
+        text-shadow: 0 0 3px rgba(0, 0, 0, .5), 1px 1px 0 #000;
         text-transform: uppercase;
     }
 
-    li:hover, li.selected {
+    li:hover,
+    li.selected {
         border-color: $box-border-hover-color;
         border-width: $selection-border-width;
         width: $img-width - $selection-border-width; /* Make room for the border. */
@@ -181,19 +189,22 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
         }
     }
 
-    .gray, .Gray {
+    .gray,
+    .Gray {
         label {
             background: #443f3e;
         }
     }
 
-    .orange, .Orange {
+    .orange,
+    .Orange {
         label {
             background: #f16a22;
         }
     }
 
-    .red, .Red {
+    .red,
+    .Red {
         label {
             background: #ec2224;
         }
@@ -207,7 +218,7 @@ $preview-box-total-width: ($preview-box-width + ($box-padding * 2) + ($box-borde
 
         /* Font face and other font settings are set to resemble the fonts
            shown in the static images as closely as possible. */
-        font: normal 18px/1 "Milk", sans-serif;
+        font: normal 18px/1 Milk, sans-serif;
     }
 }
 

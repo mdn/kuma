@@ -1,6 +1,6 @@
 /*
-    Used to style the dashboard widgets in the dashboard apps
-*/
+Used to style the dashboard widgets in the dashboard apps
+********************************************************************** */
 
 @import 'includes/vars';
 @import 'includes/mixins';
@@ -22,7 +22,7 @@
         cursor: pointer;
         border-top-width: 1px;
         border-top-style: solid;
-        @include rgba-fallback(border-top-color, $text-color, 0.4);
+        @include rgba-fallback(border-top-color, $text-color, .4);
 
         &:hover {
             background: $light-background-color;
@@ -32,7 +32,10 @@
             }
         }
 
-        .new, .edit, .locale, .deleted {
+        .new,
+        .edit,
+        .locale,
+        .deleted {
             @include set-font-size(11px);
             border-radius: 8px;
             color: #fff;
@@ -40,17 +43,21 @@
             margin-right: 6px;
             padding: 2px 4px;
         }
+
         .new {
-            @include rgba-fallback(background, $green, 0.6);
+            @include rgba-fallback(background, $green, .6);
         }
+
         .edit {
             background: $blue;
         }
+
         .locale {
-            @include rgba-fallback(background, #777, 0.6);
+            @include rgba-fallback(background, #777, .6);
         }
+
         .deleted {
-            @include rgba-fallback(background, #f00, 0.6);
+            @include rgba-fallback(background, #f00, .6);
         }
     }
 
@@ -176,7 +183,7 @@ th.stat-header { // needs extra specificity to over-ride default styles
 
 .dashboard-slug {
     @include set-smaller-font-size();
-    opacity: 0.8;
+    opacity: .8;
     font-style: italic;
     display: block;
 }
@@ -213,10 +220,10 @@ td.dashboard-comment {
     max-height: 200px;
     overflow: hidden;
     overflow-y: scroll;
-    border :1px solid #000;
+    border: 1px solid #000;
 
     .diff {
-        margin-top: 0 !important;
+        margin-top: 0 !important; /* stylelint-disable-line declaration-no-important */
     }
 
     .diff thead tr {
@@ -225,13 +232,16 @@ td.dashboard-comment {
 }
 
 #revision-filter {
-    #id_start_date, #id_end_date {
+    #id_start_date,
+    #id_end_date {
         width: 100px;
     }
+
     label {
         display: inline-block;
         margin-right: $content-horizontal-spacing;
     }
+
     .revision-field {
         display: inline-block;
         margin: 0 $grid-spacing ($grid-spacing / 2) 0;

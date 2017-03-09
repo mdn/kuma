@@ -1,7 +1,7 @@
 @import 'tags';
 /*
-    overrides for tagit widget
-*/
+overrides for tagit widget
+********************************************************************** */
 
 .tagit.ui-widget-content { /* over-ride the jQuery plugin */
     @extend ul.tags;
@@ -29,7 +29,9 @@
             width: 10px;
         }
 
-        &:hover, &:focus, &:active {
+        &:hover,
+        &:focus,
+        &:active {
             .ui-icon-close {
                 background-position: center -146px;
             }

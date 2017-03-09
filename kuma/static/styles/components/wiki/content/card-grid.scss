@@ -1,4 +1,6 @@
-/* side by side calls to action */
+/*
+side by side calls to action
+********************************************************************** */
 
 .text-content .card-grid {
     margin: 0 ($grid-spacing / 2) $grid-spacing;
@@ -34,7 +36,7 @@
             flex: 1;
             min-width: calc(25% - #{($grid-spacing * 2.5)}); /* minus margin and padding */
             max-width: 200px;
-            margin: 0 ($grid-spacing * 0.75) $grid-spacing;
+            margin: 0 ($grid-spacing * .75) $grid-spacing;
         }
     }
 

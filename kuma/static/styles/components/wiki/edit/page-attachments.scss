@@ -1,8 +1,7 @@
-$border-value : 1px solid #E0E0DC;
+$border-value : 1px solid #e0e0dc;
 
 #page-attachments {
-
-    table  {
+    table {
         border: $border-value;
         border-bottom: 0;
         border-collapse: collapse;
@@ -11,7 +10,8 @@ $border-value : 1px solid #E0E0DC;
         width: 100%;
     }
 
-    th, td {
+    th,
+    td {
         border-bottom: $border-value;
         border-right: $border-value;
         padding: 5px;
@@ -71,7 +71,6 @@ $border-value : 1px solid #E0E0DC;
 @media #{$media-query-mobile} {
     /* display the attachments table as inline */
     #page-attachments {
-
         table {
             border: 0;
         }
@@ -93,12 +92,11 @@ $border-value : 1px solid #E0E0DC;
             border-bottom: 0;
             border-right: 0;
         }
-
     }
 }
 
 @media print {
-   #page-attachments {
+    #page-attachments {
         display: none;
     }
 }

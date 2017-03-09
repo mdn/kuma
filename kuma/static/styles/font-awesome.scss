@@ -1,20 +1,16 @@
 /*
-    Import Scss version of Font Awesome 4.1
-*/
+Mapping 3.2.1 icon names to 4.1
+https://github.com/FortAwesome/Font-Awesome/wiki/Upgrading-from-3.2.1-to-4
+********************************************************************** */
+
+/* Import Scss version of Font Awesome 4.1 */
 @import 'libs/font-awesome/scss/font-awesome';
-
-/*
-    Mapping 3.2.1 icon names to 4.1
-    https://github.com/FortAwesome/Font-Awesome/wiki/Upgrading-from-3.2.1-to-4
-*/
-
 
 $icon-lookup: (
     'icon-fixed-width': 'icon-fw',
     'icon-large': 'icon-lg',
     'icons-ul': 'icon-ul'
 );
-
 
 $icon-pseudo-lookup: (
     'icon-ban-circle': 'icon-ban',
@@ -162,14 +158,8 @@ $icon-pseudo-lookup: (
 );
 
 
-// @each $old-icon-name, $new-icon-name in $icon-lookup {
-//    .#{$old-icon-name}{
-//        @extend .#{$new-icon-name};
-//    }
-// }
-
 @each $old-icon-name, $new-icon-name in $icon-pseudo-lookup {
-    .#{$old-icon-name}:before{
+    .#{$old-icon-name}:before {
         @extend .#{$new-icon-name}:before;
     }
 }

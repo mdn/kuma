@@ -11,7 +11,7 @@
 .column-x elements is automatically floated and assigned a right margin.
 .column-container clears the .column-x floats and removes margin from the last column
 .column-container-reverse reverses the floats so that the last visual element appears first in the child list
-====================================================================== */
+********************************************************************** */
 
 /* Outputs relevant grid styles once */
 @mixin draw-grid() {
@@ -30,7 +30,6 @@
         }
 
         &.column-container-reverse {
-
             #{$grid-column-selector} {
                 @include bidi-value(float, right, left);
 
@@ -61,37 +60,54 @@
     .column-1 {
         @include column-1();
     }
+
     .column-2 {
         @include column-2();
     }
-    .column-3, .column-strip, .column-quarter {
+
+    .column-3,
+    .column-strip,
+    .column-quarter {
         @include column-3();
     }
-    .column-4, .column-third {
+
+    .column-4,
+    .column-third {
         @include column-4();
     }
+
     .column-5 {
         @include column-5();
     }
-    .column-6, .column-half {
+
+    .column-6,
+    .column-half {
         @include column-6();
     }
+
     .column-7 {
         @include column-7();
     }
+
     .column-8 {
         @include column-8();
     }
-    .column-9, .column-main {
+
+    .column-9,
+    .column-main {
         @include column-9();
     }
+
     .column-10 {
         @include column-10();
     }
+
     .column-11 {
         @include column-11();
     }
-    .column-12, .column-all {
+
+    .column-12,
+    .column-all {
         @include column-12();
     }
 
@@ -104,18 +120,36 @@
         }
     }
 
-     /*
-         mobile - just make everything its own column
-         preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
-     */
-     @media #{$media-query-mobile} {
-        .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11, .column-12,
-        .column-strip, .column-quarter, .column-third, .column-half, .column-all, .column-container #{$grid-column-selector} {
+    /*
+    mobile - just make everything its own column
+    preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
+    ====================================================================== */
+    @media #{$media-query-mobile} {
+        .column-1,
+        .column-2,
+        .column-3,
+        .column-4,
+        .column-5,
+        .column-6,
+        .column-7,
+        .column-8,
+        .column-9,
+        .column-10,
+        .column-11,
+        .column-12,
+        .column-strip,
+        .column-quarter,
+        .column-third,
+        .column-half,
+        .column-all,
+        .column-container #{$grid-column-selector} {
+            /* stylelint-disable declaration-no-important  */
             @include clearfix();
             width: auto !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             float: none !important;
+            /* stylelint-enable */
         }
     }
 }

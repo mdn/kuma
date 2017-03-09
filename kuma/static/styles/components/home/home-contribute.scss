@@ -1,6 +1,7 @@
 /*
 Contribute row at bottom
-====================================================================== */
+********************************************************************** */
+
 .home-contribute {
     background: #fff;
     padding: $first-content-top-padding 0;
@@ -30,7 +31,6 @@ Contribute row at bottom
 }
 
 @media #{$media-query-mobile} {
-
     .home-contribute {
         li {
             &:last-child {

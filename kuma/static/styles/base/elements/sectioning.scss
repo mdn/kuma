@@ -1,13 +1,12 @@
 /*
-    Sectioning elements - things that contribute to document outline
-    Section, article, aside, header, footer, main (main is not actually sectioning,
-    did you know that?), hr (hr is sectioning in HTML5, did you know that?)
-*/
+Sectioning elements - things that contribute to document outline
+Section, article, aside, header, footer, main (main is not actually sectioning,
+did you know that?), hr (hr is sectioning in HTML5, did you know that?)
+********************************************************************** */
 
 aside {
     @include column-half();
     @include prevent-last-child-bottom-spacing();
-
     float: right;
     border: 1px solid $header-background-color;
     background: $light-background-color;
@@ -27,12 +26,12 @@ main {
 
 footer {
     background: #fff;
-    padding:  $first-content-top-padding 0 0 0;
+    padding: $first-content-top-padding 0 0 0;
     font-style: italic;
 
     @include set-smaller-font-size();
     #{$selector-heading-font-fallback} {
-        letter-spacing: -0.01em;
+        letter-spacing: -.01em;
         word-spacing: 0;
     }
 
@@ -62,7 +61,12 @@ summary {
     cursor: pointer;
     color: $link-color;
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         display: inline-block;
         margin-bottom: 0;
         color: inherit;
@@ -103,7 +107,7 @@ hr {
 }
 
 @media #{$media-query-mobile} {
-   /* add bottom spacing to the footer */
+    /* add bottom spacing to the footer */
     footer {
         padding-bottom: $grid-spacing;
     }
@@ -111,7 +115,8 @@ hr {
 
 
 @media print {
-    header, footer {
+    header,
+    footer {
         display: none;
     }
 }

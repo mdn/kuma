@@ -1,10 +1,13 @@
-/* contributors block at the bottom of the article */
+/*
+contributors block at the bottom of the article
+********************************************************************** */
+
 .contributors {
     color: #777;
 
     @include set-smaller-font-size();
     #{$selector-heading-font-fallback} {
-        letter-spacing: -0.002em;
+        letter-spacing: -.002em;
     }
 
     #{$selector-icon} {
@@ -18,7 +21,6 @@
 }
 
 @media print {
-
     .contributors {
         display: none;
     }

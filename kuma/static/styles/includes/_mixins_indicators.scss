@@ -1,12 +1,13 @@
 /*
 Mixins for indicators
-====================================================================== */
+********************************************************************** */
+
 $icon-spacing: 30px;
-$inline-horizontal-padding: 0.35em;
+$inline-horizontal-padding: .35em;
 
 /*
 block indicators aka banners
--------------------------------------------------------------- */
+====================================================================== */
 
 %indicator-block {
     @include set-message-base(true);
@@ -21,7 +22,7 @@ block indicators aka banners
         width: 30px;
         @include bidi-value(float, left, right);
         @include bidi-value(margin, -5px 0 -5px ($icon-spacing * -1), -5px ($icon-spacing * -1) -5px 0);
-        font-family: "FontAwesome";
+        font-family: FontAwesome;
         font-size: $larger-font-size;
         font-style: normal;
         font-weight: normal;
@@ -47,7 +48,7 @@ block indicators aka banners
 
 /*
 inline indicators aka badges
--------------------------------------------------------------- */
+====================================================================== */
 
 %indicator-inline {
     display: inline-block;
@@ -56,7 +57,7 @@ inline indicators aka badges
     @include bidi-style(margin-left, ($grid-spacing / 2 ), margin-right, 0);
     border-radius: 2px;
     @include bidi-style(border-left, 4px solid, border-right, 0 none);
-    padding: 0.45em $inline-horizontal-padding 0.30em;
+    padding: .45em $inline-horizontal-padding .3em;
     background-color: $light-background-color;
     font-family: $tiny-font-family;
     font-size: $tiny-font-size;
@@ -72,14 +73,14 @@ inline indicators aka badges
         display: inline-block;
         @include bidi-value(margin-left, ($icon-spacing * -1 + 3px), 3px);
         @include bidi-value(margin-right, 3px, ($icon-spacing * -1 + 3px));
-        font-family: 'FontAwesome';
+        font-family: FontAwesome;
     }
 }
 
 
 /*
 icons for both indicator types
--------------------------------------------------------------- */
+====================================================================== */
 
 %indicator-with-icon {
     @include bidi-style(padding-left, $icon-spacing, padding-right, $inline-horizontal-padding);
@@ -99,7 +100,7 @@ icons for both indicator types
 
 /*
 colours for both indicator types
--------------------------------------------------------------- */
+====================================================================== */
 
 %indicator-text-invert {
     color: #fff;

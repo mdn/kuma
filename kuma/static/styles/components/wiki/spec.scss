@@ -1,6 +1,6 @@
 /*
 Colors and Badges for the Spec2 macro template
-====================================================================== */
+********************************************************************** */
 
 .spec-ED {
     color: #e61919;
@@ -32,7 +32,8 @@ Colors and Badges for the Spec2 macro template
 
 /*
 Badges
--------------------------------------------------------------- */
+====================================================================== */
+
 .spec-ED:before,
 .spec-WD:before,
 .spec-CR:before,
@@ -49,56 +50,56 @@ Badges
        name of the spec could be either LTR or RTL (depending on
        if it's been translated) so we add margins to both sides.
        Not perfect but good compromise.  */
-    @include bidi-value(margin, 0.2em 0.6em 0 0, 0.2em 0.6em 0);
+    @include bidi-value(margin, .2em .6em 0 0, .2em .6em 0);
     direction: ltr;
 }
 
 .spec-ED:before {
     content: 'ED';
-    background: #F4C1C2;
+    background: #f4c1c2;
 }
 
 .spec-WD:before {
     content: 'WD';
-    background: #F4D7C9;
+    background: #f4d7c9;
 }
 
 .spec-CR:before,
 .spec-RC:before {
     content: 'CR';
-    background: #BAE1E0;
+    background: #bae1e0;
 }
 
 .spec-RC:before {
-    content: "RC";
+    content: 'RC';
 }
 
 .spec-PR:before {
     content: 'PR';
-    background: #D7E6C9;
+    background: #d7e6c9;
 }
 
 .spec-REC:before {
     content: 'REC';
-    background: #C6E2CC;
+    background: #c6e2cc;
 }
 
 .spec-Living:before {
     content: 'LS';
-    background: #BAD0E4;
+    background: #bad0e4;
 }
 
 .spec-RFC:before {
     content: 'RFC';
-    background: #BAD0E4;
+    background: #bad0e4;
 }
 
 .spec-Standard:before {
     content: 'ST';
-    background: #BAD0E4;
+    background: #bad0e4;
 }
 
 .spec-Draft:before {
     content: 'D';
-    background: #F4D7C9;
+    background: #f4d7c9;
 }
