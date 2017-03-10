@@ -21,8 +21,8 @@ def ce_settings(settings):
             'locale': 'en-US',
             'slug': 'Original',
             'variants': [
-                ['control', 50, 'Original'],
-                ['test', 50, 'Experiment:Test/Variant'],
+                ['control', 'Original'],
+                ['test', 'Experiment:Test/Variant'],
             ]
         }]
     }]
@@ -58,8 +58,8 @@ def test_apply_content_experiment_has_experiment(ce_settings, rf):
         'param': 'v',
         'original_path': '/en-US/docs/Original',
         'variants': [
-            ['control', 50, 'Original'],
-            ['test', 50, 'Experiment:Test/Variant'],
+            ['control', 'Original'],
+            ['test', 'Experiment:Test/Variant'],
         ],
         'selected': None,
         'selection_is_valid': None,

@@ -274,7 +274,7 @@ def _apply_content_experiment(request, doc):
                 selected = request.GET.get(experiment['param'])
                 if selected:
                     exp_params['selection_is_valid'] = False
-                    for variant, percent, variant_slug in pages['variants']:
+                    for variant, variant_slug in pages['variants']:
                         if selected == variant:
                             try:
                                 content_doc = Document.objects.get(

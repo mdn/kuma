@@ -1486,8 +1486,8 @@ CONTENT_EXPERIMENTS = [{
         'locale': 'en-US',
         'slug': 'Web/JavaScript/Reference/Operators/Comparison_Operators',
         'variants': [
-            ['control', 50, 'Web/JavaScript/Reference/Operators/Comparison_Operators'],
-            ['test', 50, 'Experiment:FrameworkTest/Comparison_Operators'],
+            ['control', 'Web/JavaScript/Reference/Operators/Comparison_Operators'],
+            ['test', 'Experiment:FrameworkTest/Comparison_Operators'],
         ]
     }]
 }]

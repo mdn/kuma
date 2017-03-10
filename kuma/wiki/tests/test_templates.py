@@ -277,8 +277,8 @@ _TEST_CONTENT_EXPERIMENTS = [{
         'locale': 'en-US',
         'slug': 'Original',
         'variants': [
-            ['control', 50, 'Original'],
-            ['test', 50, 'Experiment:Test/Variant'],
+            ['control', 'Original'],
+            ['test', 'Experiment:Test/Variant'],
         ]
     }]
 }]
