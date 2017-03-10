@@ -1476,6 +1476,7 @@ TAGGIT_CASE_INSENSITIVE = True
 #  configuration. The 'id' should be a key in PIPELINE_JS, that loads
 #  Traffic Cop and a client-side configuration like
 #  kuma/static/js/experiment-wiki-content.js
+# Only one experiment should be active for a given locale and slug.
 #
 CONTENT_EXPERIMENTS = [{
     'id': 'experiment-framework-test',
