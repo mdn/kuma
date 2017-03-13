@@ -98,27 +98,37 @@ See https://github.com/mozilla/kumascript.
 
 Front-end Development and Compiling Sass files
 ==============================================
-Sass files need to be compiled for changes to take effect, but don't worry,
-the compilation is done automatically by Django (specifically django-pipeline).
+Sass files need to be compiled for changes to take effect, but don't worry, with
+``DEBUG=True`` (which is the default for local development), the compilation
+is done automatically by Gulp.
 
-When doing front-end development on your local machine, you'll probably
-want to run (most likely in its own shell)::
+When doing front-end development on your local machine, you'll need to run the
+following in its own shell from the root directory of your local Kuma
+repository::
 
     gulp
 
-within the root directory of your local Kuma epository. It will watch for
-changes to any source files under ``./kuma/static`` and move any changed files
-to ``./static``, where they will be compiled on-demand (i.e., when requested by
-a loading page). If you haven't already installed `Node.js`_  and `gulp`_ on
+This will watch for changes to all files under ``./kuma/static``. If the file is
+a Sass file (``.scss`` or ``.sass``), it will trigger a recompile of *all*
+top-level ``.scss`` files, which will then be copied over to ``./static`` (and
+immediately available to your local server). If the file is not a Sass file, it
+will be copied to ``./static`` with no compile step.
+
+  .. note::
+
+  It is currently faster for local development to compile Sass using
+  ``gulp-sass`` instead of Django Pipeline. This may change in the future.
+
+If you haven't already installed `Node.js`_  and `gulp`_ on
 your local machine, see :ref:`frontend-development`.
 
-By default ``DEBUG = True`` in ``docker-compose.yml``, and in that mode, as
+By default ``DEBUG=True`` in ``docker-compose.yml``, and in that mode, as
 mentioned above, source files are compiled on-demand. If for some reason you
 want to run with ``DEBUG = False``, just remember that source files will no
 longer be compiled on-demand. Instead, after every change to one or more source
 files, you'll have to do the following::
 
-    docker-compose exec web make collectstatic
+    docker-compose exec web ./manage.py collectstatic
     docker-compose restart web
 
 in order for your changes to be visible.

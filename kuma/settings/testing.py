@@ -42,6 +42,10 @@ PIPELINE['PIPELINE_ENABLED'] = True
 # testing shows that tests run faster when set to True.
 PIPELINE['PIPELINE_COLLECTOR_ENABLED'] = True
 
+# We need the real Sass compiler here instead of the pass-through used for
+# local dev.
+PIPELINE['COMPILERS'] = ('pipeline.compilers.sass.SASSCompiler',)
+
 # Testing with django-pipeline 1.6.8, PipelineStorage
 # Enabled=T, Collector=T -   482s
 # Enabled=T, Collector=F -   535s
