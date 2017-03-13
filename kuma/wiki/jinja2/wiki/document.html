@@ -312,18 +312,18 @@
                   </div>
                 {% endif %}
                 {% if document.current_revision.localization_in_progress %}
-                  {% if document.current_revision.translation_age >= 10 %}
-                      <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=document.get_edit_url() %}
-                        This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
-                      {% endtrans %}</p></div>
+                  {% if not settings.MAINTENANCE_MODE and document.current_revision.translation_age >= 10 %}
+                    <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=document.get_edit_url() %}
+                      This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
+                    {% endtrans %}</p></div>
                   {% else %}
-                      <div class="overheadIndicator translationInProgress"><p>
-                        {{ _('This translation is in progress.') }}
-                      </p></div>
+                    <div class="overheadIndicator translationInProgress"><p>
+                      {{ _('This translation is in progress.') }}
+                    </p></div>
                   {% endif %}
                 {% endif %}
               {% endif %}
-              {% if fallback_reason %}
+              {% if not settings.MAINTENANCE_MODE and fallback_reason %}
                 <div id="doc-pending-fallback" class="warning">
                   <p><bdi>{% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native, parent_language=document.language %}
                     Our volunteers haven't translated this article into <bdi>{{ locale }}</bdi> yet.
