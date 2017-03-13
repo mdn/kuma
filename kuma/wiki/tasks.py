@@ -20,6 +20,7 @@ from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.cache import memcache
+from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.utils import MemcacheLock, chord_flow, chunked
 from kuma.search.models import Index
 
@@ -36,6 +37,7 @@ render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
+@skip_in_maintenance_mode
 def render_document(pk, cache_control, base_url, force=False):
     """Simple task wrapper for the render() method of the Document model"""
     document = Document.objects.get(pk=pk)
@@ -51,6 +53,7 @@ def render_document(pk, cache_control, base_url, force=False):
 
 
 @task
+@skip_in_maintenance_mode
 def email_render_document_progress(percent_complete, total):
     """
     Task to send email for render_document progress notification.
@@ -64,6 +67,7 @@ def email_render_document_progress(percent_complete, total):
 
 
 @task
+@skip_in_maintenance_mode
 def render_document_chunk(pks, cache_control='no-cache', base_url=None,
                           force=False):
     """
@@ -84,6 +88,7 @@ def render_document_chunk(pks, cache_control='no-cache', base_url=None,
 
 
 @task(throws=(StaleDocumentsRenderingInProgress,))
+@skip_in_maintenance_mode
 def acquire_render_lock():
     """
     A task to acquire the render document lock
@@ -96,6 +101,7 @@ def acquire_render_lock():
 
 
 @task
+@skip_in_maintenance_mode
 def release_render_lock():
     """
     A task to release the render document lock
@@ -104,6 +110,7 @@ def release_render_lock():
 
 
 @task
+@skip_in_maintenance_mode
 def render_stale_documents(log=None):
     """Simple task wrapper for rendering stale documents"""
     stale_docs = Document.objects.get_by_stale_rendering().distinct()
@@ -128,6 +135,7 @@ def render_stale_documents(log=None):
 
 
 @task
+@skip_in_maintenance_mode
 def build_json_data_for_document(pk, stale):
     """Force-refresh cached JSON data after rendering."""
     document = Document.objects.get(pk=pk)
@@ -141,6 +149,7 @@ def build_json_data_for_document(pk, stale):
 
 
 @task
+@skip_in_maintenance_mode
 def move_page(locale, slug, new_slug, user_id):
     transaction.set_autocommit(False)
     User = get_user_model()
@@ -250,6 +259,7 @@ def move_page(locale, slug, new_slug, user_id):
 
 
 @task
+@skip_in_maintenance_mode
 def update_community_stats():
     cursor = connection.cursor()
     try:
@@ -292,11 +302,13 @@ def update_community_stats():
 
 
 @task
+@skip_in_maintenance_mode
 def delete_old_revision_ips(days=30):
     RevisionIP.objects.delete_old(days=days)
 
 
 @transaction_task
+@skip_in_maintenance_mode
 def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
@@ -402,6 +414,7 @@ def build_sitemaps():
 
 
 @task
+@skip_in_maintenance_mode
 def index_documents(ids, index_pk, reraise=False):
     """
     Index a list of documents into the provided index.
@@ -440,6 +453,7 @@ def index_documents(ids, index_pk, reraise=False):
 
 
 @task
+@skip_in_maintenance_mode
 def unindex_documents(ids, index_pk):
     """
     Delete a list of documents from the provided index.
@@ -455,6 +469,7 @@ def unindex_documents(ids, index_pk):
 
 
 @task(rate_limit='120/m')
+@skip_in_maintenance_mode
 def tidy_revision_content(pk, refresh=True):
     """
     Run tidy over the given revision's content and save it to the
@@ -481,6 +496,7 @@ def tidy_revision_content(pk, refresh=True):
 
 
 @task
+@skip_in_maintenance_mode
 def delete_old_documentspamattempt_data(days=30):
     """Delete old DocumentSpamAttempt.data, which contains PII.
 

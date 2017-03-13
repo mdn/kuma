@@ -354,3 +354,103 @@ You can deploy a hosted demo instance of Kuma by following these steps:
 
 #. Mozilla SRE's will periodically remove old instances
 
+
+.. _maintenance-mode:
+
+Maintenance Mode
+------------
+Maintenance mode is a special configuration for running Kuma in read-only mode,
+where all operations that would write to the database are blocked. As the name
+suggests, it's intended for those times when we'd like to continue to serve
+documents from a read-only copy of the database, while performing maintenance
+on the master database.
+
+For local Docker-based development in maintenance mode:
+
+#. If you haven't already, create a read-only user for your local MySQL
+   database::
+
+    docker-compose up -d
+    docker-compose exec web mysql -h mysql -u root -p
+    (when prompted for the password, enter "kuma")
+    mysql> source ./scripts/create_read_only_user.sql
+    mysql> quit
+
+#. Create a ``.env`` file in the repository root directory, and add these
+   settings::
+
+    MAINTENANCE_MODE=True
+    DATABASE_USER=kuma_ro
+
+   Using a read-only database user is not required in maintenance mode. You can run
+   in maintenance mode just fine with only this setting::
+
+    MAINTENANCE_MODE=True
+
+   and going with a database user that has write privileges. The read-only database
+   user simply provides a level of safety as well as notification (for example, an
+   exception will be raised if an attempt to write the database slips through).
+
+#. Update your local Docker instance::
+
+    docker-compose up -d
+
+#. You may need to recompile your static assets and then restart::
+
+    docker-compose exec web make build-static
+    docker-compose restart web
+
+You should be good to go!
+
+There is a set of integration tests for maintenance mode. If you'd like to run
+them against your local Docker instance, you must first have done the
+following:
+
+#. Loaded the latest sample database (see :ref:`provision-the-database`).
+#. Ensured that the test document "en-US/docs/User:anonymous:uitest" has been
+   rendered (all of its macros have been executed). You can check this by
+   browsing to `http://localhost:8000/en-US/docs/User:anonymous:uitest`_. If
+   there is no message about un-rendered content, you are good to go. If there
+   is a message about un-rendered content, you will have to put your local
+   Docker instance back into non-maintenance mode, and render the document:
+
+   * Configure your ``.env`` file for non-maintenance mode::
+
+       MAINTENANCE_MODE=False
+       DATABASE_USER=root
+
+   * ``docker-compose up -d``
+   * Using your browser, do a shift-reload on
+     `http://localhost:8000/en-US/docs/User:anonymous:uitest`_
+
+   and then put your local Docker instance back in maintenance mode:
+
+   * Configure your ``.env`` file for maintenance mode::
+
+       MAINTENANCE_MODE=True
+       DATABASE_USER=kuma_ro
+
+   * ``docker-compose up -d``
+
+#. Configure your environment with DEBUG=False because the maintenance-mode
+   integration tests check for the non-debug version of the not-found page::
+
+       DEBUG=False
+       MAINTENANCE_MODE=True
+       DATABASE_USER=kuma_ro
+
+   This, in turn, will also require you to recompile your static assets::
+
+       docker-compose up -d
+       docker-compose exec web ./manage.py compilejsi18n
+       docker-compose exec web ./manage.py collectstatic
+       docker-compose restart web
+
+Now you should be ready for a successful test run::
+
+    py.test -m "maintenance_mode and not search" tests/functional --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+
+Note that the "search" tests are excluded. This is because the tests marked
+"search" are not currently designed to run against the sample database.
+
+.. _http://localhost:8000/en-US/docs/User:anonymous:uitest: http://localhost:8000/en-US/docs/User:anonymous:uitest

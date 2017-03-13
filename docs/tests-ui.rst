@@ -207,6 +207,14 @@ Markers
   security reasons these accounts will not be on production. Exclude these tests
   with ``-m "not login"``
 
+* ``maintenance_mode``
+
+  These tests can be run against an instance of Kuma in maintenance mode.
+  They cover all of the key aspects, such as testing all of the endpoints that
+  should redirect to the maintenance-mode description page, as well as ensuring
+  that the buttons and links that initiate write operations (like editing a
+  document) are hidden.
+
 Guidelines for writing tests
 ============================
 

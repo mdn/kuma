@@ -514,9 +514,12 @@ class Document(NotificationsMixin, models.Model):
         Attempt to schedule rendering. Honor the deferred_rendering field to
         decide between an immediate or a queued render.
         """
+        if settings.MAINTENANCE_MODE:
+            return
+
         # Avoid scheduling a rendering if already scheduled or in progress.
         if self.is_rendering_scheduled or self.is_rendering_in_progress:
-            return False
+            return
 
         # Note when the rendering was scheduled. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
@@ -538,6 +541,9 @@ class Document(NotificationsMixin, models.Model):
         """
         Render content using kumascript and any other services necessary.
         """
+        if settings.MAINTENANCE_MODE:
+            return
+
         if not base_url:
             base_url = settings.SITE_URL
 
@@ -703,7 +709,8 @@ class Document(NotificationsMixin, models.Model):
         if (not self._json_data) or (not stale and doc_lmod > json_lmod):
             self._json_data = self.build_json_data()
             self.json = json.dumps(self._json_data)
-            Document.objects.filter(pk=self.pk).update(json=self.json)
+            if not settings.MAINTENANCE_MODE:
+                Document.objects.filter(pk=self.pk).update(json=self.json)
 
         return self._json_data
 
@@ -1766,13 +1773,13 @@ class Revision(models.Model):
             tidied_content = self.tidied_content
         else:
             if allow_none:
-                if self.pk:
+                if self.pk and not settings.MAINTENANCE_MODE:
                     from .tasks import tidy_revision_content
                     tidy_revision_content.delay(self.pk, refresh=False)
                 tidied_content = None
             else:
                 tidied_content, errors = tidy_content(self.content)
-                if self.pk:
+                if self.pk and not settings.MAINTENANCE_MODE:
                     Revision.objects.filter(pk=self.pk).update(
                         tidied_content=tidied_content)
         self.tidied_content = tidied_content or ''

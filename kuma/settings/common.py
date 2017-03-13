@@ -45,6 +45,8 @@ PRODUCTION_URL = SITE_URL
 STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
+MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+
 MANAGERS = ADMINS
 
 DEFAULT_DATABASE = config('DATABASE_URL',
@@ -404,16 +406,24 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
+     if MAINTENANCE_MODE else
+     'django.contrib.sessions.middleware.SessionMiddleware'),
     'kuma.core.middleware.LocaleURLMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'kuma.core.middleware.RemoveSlashMiddleware',
-    'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+)
+
+if not MAINTENANCE_MODE:
+    # We don't want this in maintence mode, as it adds "Cookie"
+    # to the Vary header, which in turn, kills caching.
+    MIDDLEWARE_CLASSES += ('django.middleware.csrf.CsrfViewMiddleware',)
+
+MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
@@ -756,6 +766,20 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
+    # for maintenance mode page
+    'maintenance-mode': {
+        'source_filenames': (
+            'styles/maintenance-mode.scss',
+        ),
+        'output_filename': 'build/styles/maintenance-mode.css',
+    },
+    # global maintenance-mode-styles
+    'maintenance-mode-global': {
+        'source_filenames': (
+            'styles/maintenance-mode-global.scss',
+        ),
+        'output_filename': 'build/styles/maintenance-mode-global.css',
+    },
 }
 
 PIPELINE_JS = {
@@ -1045,8 +1069,23 @@ CELERY_TRACK_STARTED = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
 
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+if MAINTENANCE_MODE:
+    # In maintenance mode, we're going to avoid using the database, and
+    # use Celery's default beat-scheduler as well as memcached for storing
+    # any results. In both normal and maintenance mode we use djcelery's
+    # loader (see djcelery.setup_loader() above) so we, among other things,
+    # acquire the Celery settings from among Django's settings.
+    CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
+    CELERY_RESULT_BACKEND = (
+        'cache+memcached://' + ';'.join(
+            config('MEMCACHE_SERVERS',
+                   default='127.0.0.1:11211',
+                   cast=Csv())
+        )
+    )
+else:
+    CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+    CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
 CELERY_ACCEPT_CONTENT = ['pickle']
 
@@ -1159,7 +1198,9 @@ WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_BACKEND = ('kuma.core.backends.ReadOnlyConstanceDatabaseBackend'
+                     if MAINTENANCE_MODE else
+                     'constance.backends.database.DatabaseBackend')
 # must be an entry in the CACHES setting!
 CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 

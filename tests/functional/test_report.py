@@ -8,6 +8,7 @@ ARTICLE_TITLE_SUFIX = " | MDN"
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_report_content(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.header.is_feedback_submenu_trigger_displayed
@@ -25,6 +26,7 @@ def test_report_content(base_url, selenium):
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_report_bug(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.header.is_feedback_submenu_trigger_displayed

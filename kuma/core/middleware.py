@@ -6,6 +6,7 @@ from django.core import urlresolvers
 from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
+from django.contrib.sessions.middleware import SessionMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .utils import urlparams
@@ -147,3 +148,18 @@ class SetRemoteAddrFromForwardedFor(object):
             # The client's IP will be the first one.
             forwarded_for = forwarded_for.split(',')[0].strip()
             request.META['REMOTE_ADDR'] = forwarded_for
+
+
+class ForceAnonymousSessionMiddleware(SessionMiddleware):
+
+    def process_request(self, request):
+        """
+        Always create an anonymous session.
+        """
+        request.session = self.SessionStore(None)
+
+    def process_response(self, request, response):
+        """
+        Override the base-class method to ensure we do nothing.
+        """
+        return response

@@ -1,23 +1,25 @@
+import re
 import pytest
 from utils.urls import assert_valid_url
 from pages.article import ArticlePage
 
-ARTICLE_NAME = 'Send feedback on MDN'
-ARTICLE_TITLE_SUFIX = " - The MDN project | MDN"
+ARTICLE_NAME = 'Send feedback (about|on) MDN'
 
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_location(base_url, selenium):
     article_page = ArticlePage(selenium, base_url).open()
     page = article_page.header.open_feedback()
-    assert (ARTICLE_NAME + ARTICLE_TITLE_SUFIX) == selenium.title, 'page title does not match expected'
-    assert page.article_title_text == ARTICLE_NAME, 'article title is not expected'
-    assert page.article_title_text in selenium.title, 'article title not in page title'
+    assert re.match(ARTICLE_NAME + ' - The MDN project \| MDN', selenium.title)
+    assert re.match(ARTICLE_NAME, page.article_title_text)
+    assert page.article_title_text in selenium.title
 
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_feedback_layout(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.is_article_displayed
@@ -30,6 +32,7 @@ def test_feedback_layout(base_url, selenium):
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@pytest.mark.maintenance_mode
 def test_page_links(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     # get all page links

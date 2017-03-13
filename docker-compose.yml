@@ -19,7 +19,7 @@ services:
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
       - CSRF_COOKIE_SECURE=False
-      - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
+      - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=localhost
       - ES_URLS=elasticsearch:9200
@@ -32,6 +32,7 @@ services:
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
+      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:

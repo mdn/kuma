@@ -31,7 +31,9 @@ from django.utils.http import urlsafe_base64_decode
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
-from kuma.core.decorators import login_required, never_cache
+
+from kuma.core.decorators import (
+    login_required, never_cache, redirect_in_maintenance_mode)
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import Document, DocumentDeletionLog, Revision, RevisionAkismetSubmission
 
@@ -376,6 +378,7 @@ def my_edit_page(request):
     return redirect('users.user_edit', request.user.username)
 
 
+@redirect_in_maintenance_mode
 def user_edit(request, username):
     """
     View and edit user profile
@@ -442,6 +445,7 @@ def user_edit(request, username):
     return render(request, 'users/user_edit.html', context)
 
 
+@redirect_in_maintenance_mode
 def user_delete(request, username):
 
     edit_user = get_object_or_404(User, username=username)
@@ -596,10 +600,11 @@ class SignupView(BaseSignupView):
         return super(SignupView, self).dispatch(request, *args, **kwargs)
 
 
-signup = SignupView.as_view()
+signup = redirect_in_maintenance_mode(SignupView.as_view())
 
 
 @require_POST
+@redirect_in_maintenance_mode
 def send_recovery_email(request):
     """
     Send a recovery email to a user.
@@ -612,6 +617,7 @@ def send_recovery_email(request):
         return HttpResponseBadRequest('Invalid request.')
 
 
+@redirect_in_maintenance_mode
 def recover(request, uidb64=None, token=None):
     """
     Login via an account recovery link.

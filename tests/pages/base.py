@@ -11,6 +11,8 @@ from pypom import Page, Region
 class BasePage(Page):
 
     URL_TEMPLATE = '/{locale}'
+    MM_BANNER_TEXT = 'MDN is currently in read-only maintenance mode.'
+    MM_BANNER_SELECTOR = 'div.maintenance-mode-notice bdi'
 
     def __init__(self, selenium, base_url, locale='en-US', **url_kwargs):
         super(BasePage, self).__init__(selenium, base_url, locale=locale, **url_kwargs)
@@ -29,13 +31,18 @@ class BasePage(Page):
     def footer(self):
         return self.Footer(self)
 
+    @property
+    def is_maintenance_mode_banner_displayed(self):
+        mmb = self.find_element(By.CSS_SELECTOR, self.MM_BANNER_SELECTOR)
+        return mmb.is_displayed() and (self.MM_BANNER_TEXT in mmb.text)
+
     class Header(Region):
         report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
         report_bug_form_url = 'https://bugzilla.mozilla.org/form.mdn'
         # locators
+        SIGNIN_SELECTOR = '#nav-sec .login-link'
+
         _root_locator = (By.ID, 'main-header')
-        _menu_locator = (By.ID, 'nav-main-menu')
-        _signin_locator = (By.CSS_SELECTOR, '#nav-sec .login-link')
         _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
         _platform_submenu_trigger_locator = (By.XPATH,
                                              'id(\'nav-platform-submenu\')/..')
@@ -57,14 +64,17 @@ class BasePage(Page):
         def is_displayed(self):
             return self.root.is_displayed()
 
-        def trigger_signin(self):
-            signin_link = self.find_element(*self._signin_locator)
-            signin_link.click()
-
-        # nav is displayed?
         @property
-        def is_menu_displayed(self):
-            return self.find_element(*self._menu_locator).is_displayed()
+        def signin_link(self):
+            return self.find_element(By.CSS_SELECTOR, self.SIGNIN_SELECTOR)
+
+        def trigger_signin(self):
+            self.signin_link.click()
+
+        # is the sign-in button displayed?
+        @property
+        def is_signin_displayed(self):
+            return self.signin_link.is_displayed()
 
         # top level links from navigation menu
         @property
@@ -174,13 +184,13 @@ class BasePage(Page):
             return SearchPage(self.selenium, self.page.base_url, term=term).wait_for_page_to_load()
 
     class Footer(Region):
-        privacy_url = 'https://www.mozilla.org/privacy/websites/'
+        privacy_url = '//www.mozilla.org/privacy/websites/'
         copyright_url = '/docs/MDN/About#Copyrights_and_licenses'
         # locators
         _root_locator = (By.CSS_SELECTOR, 'body > footer')
         _language_locator = (By.ID, 'language')
         _privacy_locator = (By.CSS_SELECTOR, 'a[href^="' + privacy_url + '"]')
-        _license_locator = (By.CSS_SELECTOR, 'a[href="' + copyright_url + '"]')
+        _license_locator = (By.CSS_SELECTOR, 'a[href$="' + copyright_url + '"]')
 
         # is displayed?
         @property

@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.shortcuts import redirect
 from django.views.static import serve
+from django.views.generic import RedirectView
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
@@ -18,24 +18,61 @@ handler500 = core_views.handler500
 
 urlpatterns = [
     url('', include('kuma.landing.urls')),
-    url(r'^events',
-        lambda x: redirect('https://mozilla.org/contribute/events'),
-        name='events'),
+    url(
+        r'^events',
+        RedirectView.as_view(
+            url='https://mozilla.org/contribute/events',
+            permanent=False
+        ),
+        name='events'
+    ),
+]
 
-    # Django admin:
-    url(r'^admin/wiki/document/purge/',
-        purge_view,
-        name='wiki.admin_bulk_purge'),
-    url(r'^admin/', include(admin.site.urls)),
+if settings.MAINTENANCE_MODE:
+    urlpatterns.append(
+        url(
+            r'^admin/.*',
+            RedirectView.as_view(
+                pattern_name='maintenance_mode',
+                permanent=False
+            )
+        )
+    )
+else:
+    urlpatterns += [
+        # Django admin:
+        url(r'^admin/wiki/document/purge/',
+            purge_view,
+            name='wiki.admin_bulk_purge'),
+        url(r'^admin/', include(admin.site.urls)),
+    ]
 
+urlpatterns += [
     url(r'^search', include('kuma.search.urls')),
     url(r'^docs', include('kuma.wiki.urls')),
     url('', include('kuma.attachments.urls')),
     url('', include('kuma.dashboards.urls')),
     url('', include('kuma.users.urls')),
+]
 
+if settings.MAINTENANCE_MODE:
+    urlpatterns.append(
+        # Redirect if we try to use the "tidings" unsubscribe.
+        url(
+            r'^unsubscribe/.*',
+            RedirectView.as_view(
+                pattern_name='maintenance_mode',
+                permanent=False
+            )
+        )
+    )
+else:
+    urlpatterns.append(
+        url(r'^', include('tidings.urls')),
+    )
+
+urlpatterns += [
     # Services and sundry.
-    url(r'^', include('tidings.urls')),
     url(r'^humans.txt$',
         serve,
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),

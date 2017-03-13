@@ -2,65 +2,67 @@ import base64
 
 import pytest
 
-from django.contrib.auth.models import AnonymousUser
-from django.test import TestCase
 from django.http import HttpRequest
+from django.contrib.auth.models import AnonymousUser
 
-from kuma.core.tests import eq_, ok_
-from kuma.users.tests import user
-
-from ..models import Key
-from ..decorators import accepts_auth_key
+from kuma.authkeys.decorators import accepts_auth_key
 
 
-class KeyDecoratorsTest(TestCase):
+@accepts_auth_key
+def fake_view(request, foo, bar):
+    return (foo, bar)
 
-    @pytest.mark.current
-    def test_key_auth_decorator(self):
 
-        u = user(username="test23", email="test23@example.com", save=True)
+@pytest.mark.current
+@pytest.mark.django_db
+@pytest.mark.parametrize("maintenance_mode", [False, True])
+@pytest.mark.parametrize(
+    "use_valid_key, use_valid_secret",
+    [(True, True), (True, False), (False, True), (False, False)]
+)
+def test_auth_key_decorator(user_auth_key, settings, use_valid_key,
+                            use_valid_secret, maintenance_mode):
+    request = HttpRequest()
+    request.user = AnonymousUser()
 
-        key = Key(user=u)
-        secret = key.generate_secret()
-        key.save()
+    auth = '%s:%s' % (
+        user_auth_key.key.key if use_valid_key else 'FAKE',
+        user_auth_key.secret if use_valid_secret else 'FAKE'
+    )
 
-        @accepts_auth_key
-        def fake_view(request, foo, bar):
-            return (foo, bar)
+    b64_auth = base64.encodestring(auth)
+    request.META['HTTP_AUTHORIZATION'] = 'Basic %s' % b64_auth
 
-        cases = ((key.key, secret, True),
-                 (key.key, 'FAKE', False),
-                 ('FAKE', secret, False),
-                 ('FAKE', 'FAKE', False))
+    settings.MAINTENANCE_MODE = maintenance_mode
 
-        for k, s, success in cases:
+    foo, bar = fake_view(request, 'foo', 'bar')
 
-            request = HttpRequest()
-            request.user = AnonymousUser()
+    assert foo == 'foo'
+    assert bar == 'bar'
 
-            auth = '%s:%s' % (k, s)
-            b64_auth = base64.encodestring(auth)
-            request.META['HTTP_AUTHORIZATION'] = 'Basic %s' % b64_auth
+    if maintenance_mode or not (use_valid_key and use_valid_secret):
+        assert not request.user.is_authenticated()
+        assert request.authkey is None
+    else:
+        assert request.user.is_authenticated()
+        assert request.user == user_auth_key.user
+        assert request.authkey
+        assert request.authkey == user_auth_key.key
 
-            foo, bar = fake_view(request, 'foo', 'bar')
-            eq_('foo', foo)
-            eq_('bar', bar)
 
-            if not success:
-                ok_(not request.user.is_authenticated())
-            else:
-                ok_(request.user.is_authenticated())
-                ok_(request.user == u)
-                ok_(request.authkey)
-                ok_(request.authkey == key)
+@pytest.mark.current
+@pytest.mark.django_db
+def test_auth_key_decorator_with_invalid_header(user_auth_key, settings):
+    # Test with incorrect auth header
+    request = HttpRequest()
+    request.user = AnonymousUser()
+    request.META['HTTP_AUTHORIZATION'] = "Basic bad_auth_string"
 
-        # Test with incorrect auth header
-        request = HttpRequest()
-        request.user = AnonymousUser()
-        request.META['HTTP_AUTHORIZATION'] = "Basic bad_auth_string"
+    settings.MAINTENANCE_MODE = False
 
-        # Make a request to the view
-        fake_view(request, 'foo', 'bar')
+    # Make a request to the view
+    fake_view(request, 'foo', 'bar')
 
-        # The user should not be authonticated and no server error should raise
-        ok_(not request.user.is_authenticated())
+    # The user should not be authenticated and no error should be raised.
+    assert not request.user.is_authenticated()
+    assert request.authkey is None

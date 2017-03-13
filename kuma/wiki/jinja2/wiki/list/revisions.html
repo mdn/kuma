@@ -67,7 +67,7 @@
               </div>
               {% if document.current_revision.id != rev.id and user_can_delete %}
               <div class="revision-list-cell">
-                <a href="{{ url('wiki.revert_document', document.slug, rev.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
+                <a href="{{ url('wiki.revert_document', document.slug, rev.id) }}" class="button revert-revision" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
               </div>
               {% endif %}
             </li>

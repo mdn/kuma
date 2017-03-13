@@ -10,6 +10,7 @@ from djcelery_transactions import task as transaction_task
 
 from kuma.core.email_utils import render_email
 from kuma.core.utils import strings_are_translated
+from kuma.core.decorators import skip_in_maintenance_mode
 
 
 log = logging.getLogger('kuma.users.tasks')
@@ -22,6 +23,7 @@ WELCOME_EMAIL_STRINGS = [
 
 
 @transaction_task
+@skip_in_maintenance_mode
 def send_recovery_email(user_pk, email, locale=None):
     user = get_user_model().objects.get(pk=user_pk)
     locale = locale or settings.WIKI_DEFAULT_LANGUAGE
@@ -36,6 +38,7 @@ def send_recovery_email(user_pk, email, locale=None):
 
 
 @transaction_task
+@skip_in_maintenance_mode
 def send_welcome_email(user_pk, locale):
     user = get_user_model().objects.get(pk=user_pk)
     if (locale == settings.WIKI_DEFAULT_LANGUAGE or
