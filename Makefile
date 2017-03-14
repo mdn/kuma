@@ -132,6 +132,10 @@ k8s-migrate:
 	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \
 	python manage.py migrate
 
+render-k8s-templates:
+	k8s/api-svc.yaml.template.sh > k8s/api-svc.yaml
+	rm k8s/api-svc.yaml.template.sh
+
 wait-mysql:
 	bash -c "if ! kubectl -n ${DEIS_APP} get pods | grep mysql | grep -q Running; then sleep 2; make wait-mysql; fi"
 

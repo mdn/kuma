@@ -21,10 +21,10 @@ spec:
         - name: log__console
           value: "true"
         - name: server__document_url_template
-          value: http://api:8000/en-US/docs/{path}?raw=1
+          value: http://api/en-US/docs/{path}?raw=1
           #TODO: API backend
         - name: server__template_url_template
-          value: http://api:8000/en-US/docs/Template:{name}?raw=1
+          value: http://api/en-US/docs/Template:{name}?raw=1
         - name: server__memcache__server
           value: memcached:11211
         - name: server__template_class
