@@ -124,6 +124,9 @@ deis-pull:
 deis-scale-worker:
 	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} ps:scale worker=${WORKERS} -a ${DEIS_APP}
 
+demo-db-import:
+	Jenkinsfiles/import-demo-db.sh
+
 k8s-migrate:
 	kubectl --namespace ${DEIS_APP} exec \
 	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \

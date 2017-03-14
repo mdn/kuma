@@ -14,5 +14,6 @@ stage('Deploy') {
   sh "KUBECONFIG=${env.KUBECONFIG} kubectl --namespace=${env.DEIS_APP} apply -f k8s/"
   sh 'make deis-pull'
   sh 'make deis-migrate'
+  sh 'make demo-db-import'
   sh 'make deis-scale-worker'
 }
