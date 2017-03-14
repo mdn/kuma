@@ -12,7 +12,8 @@ TEST ?= test #other options in docker-compose.test.yml
 DEIS_PROFILE ?= dev-usw
 DEIS_APP ?= mdn-dev
 DEIS_BIN ?= deis
-WORKERS ?= 1
+WORKER_SCALE ?= 1
+API_SCALE ?= 1
 DB_PASS ?= kuma # default for ephemeral demo DBs
 
 target = kuma
@@ -121,8 +122,9 @@ deis-create-and-or-config:
 deis-pull:
 	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} pull ${KUMA_IMAGE} -a ${DEIS_APP}
 
-deis-scale-worker:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} ps:scale worker=${WORKERS} -a ${DEIS_APP}
+deis-scale-api-and-worker:
+	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} ps:scale \
+	    api=${API_SCALE} worker=${WORKER_SCALE} -a ${DEIS_APP}
 
 demo-db-import:
 	Jenkinsfiles/import-demo-db.sh
@@ -131,6 +133,9 @@ k8s-migrate:
 	kubectl --namespace ${DEIS_APP} exec \
 	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \
 	python manage.py migrate
+
+render-k8s-templates:
+	k8s/api-svc.yaml.template.sh ${DEIS_APP} > k8s/api-svc.yaml
 
 wait-mysql:
 	bash -c "if ! kubectl -n ${DEIS_APP} get pods | grep mysql | grep -q Running; then sleep 2; make wait-mysql; fi"
