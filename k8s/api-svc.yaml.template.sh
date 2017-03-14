@@ -14,7 +14,6 @@ spec:
     targetPort: 8000
   selector:
     app: ${APP}
-    heritage: deis
     type: api
   type: ClusterIP
 EOF"
