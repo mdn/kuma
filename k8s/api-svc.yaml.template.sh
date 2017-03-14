@@ -1,12 +1,11 @@
-export APP=mdn-demo-$(git rev-parse --abbrev-ref HEAD)
+APP=$1
 eval "cat <<EOF
 apiVersion: v1
 kind: Service
 metadata:
+  name: api
   labels:
     app: ${APP}
-  name: api
-  namespace: ${APP}
 spec:
   ports:
   - name: http
@@ -17,6 +16,5 @@ spec:
     app: ${APP}
     heritage: deis
     type: api
-  sessionAffinity: None
   type: ClusterIP
 EOF"

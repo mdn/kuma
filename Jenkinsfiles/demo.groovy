@@ -16,5 +16,5 @@ stage('Deploy') {
   sh 'make deis-pull'
   sh 'make deis-migrate'
   sh 'make demo-db-import'
-  sh 'make deis-scale-worker'
+  sh 'make deis-scale-api-and-worker'
 }
