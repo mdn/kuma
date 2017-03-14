@@ -364,6 +364,22 @@ You can deploy a hosted demo instance of Kuma by following these steps:
 
 #. Mozilla SRE's will periodically remove old instances
 
+#. Connecting to the demo database instance
+
+If you have access to Kubernetes, you can run the following command to connect 
+to the MySQL instance::
+
+    MY_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    DEMO_MYSQL_POD=$(kubectl -n "mdn-demo-${MY_GIT_BRANCH}" get pods | grep "^mysql" | awk '{ print $1 }')
+    kubectl -n "mdn-demo-${MY_GIT_BRANCH}" exec -it ${DEMO_MYSQL_POD} bash
+
+    mysql -p developer_mozilla_org
+
+**Note**: if you copy and paste the code above into a bash terminal and are
+wondering why the commands don't appear in your bash history, it's because there's
+whitespace at the beginning of the line.
+
+
 
 .. _maintenance-mode:
 
