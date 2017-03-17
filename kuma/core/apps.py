@@ -17,5 +17,6 @@ class CoreConfig(AppConfig):
         """
         a static mapping of lower case language names and their native names
         """
-        return {lang.lower(): settings.LOCALES[lang].native
-                for lang in settings.MDN_LANGUAGES}
+        # LANGUAGES settings return a list of tuple with language code and their native name
+        # Make the language code lower and convert the tuple to dictionary
+        return {lang[0].lower(): lang[1] for lang in settings.LANGUAGES}
