@@ -40,14 +40,14 @@ from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
                       get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
-                         SlugCollision, UniqueCollision)
+                         SlugCollision, UniqueCollision, NotDocumentView)
 from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
-from .utils import tidy_content
+from .utils import tidy_content, get_doc_components_from_url
 
 
 def cache_with_field(field_name):
@@ -379,6 +379,47 @@ class Document(NotificationsMixin, models.Model):
     @cache_with_field('summary_text')
     def get_summary_text(self, *args, **kwargs):
         return self.get_summary(strip_markup=True)
+
+    @classmethod
+    def from_url(cls, url, required_locale=None, id_only=False,
+                 check_host=True):
+        """Return the approved Document the URL represents, None if there isn't
+        one.
+        Return None if the URL is a 404, the URL doesn't point to the right
+        view, or the indicated document doesn't exist.
+        To limit the universe of discourse to a certain locale, pass in a
+        `required_locale`. To fetch only the ID of the returned Document, set
+        `id_only` to True.
+        If the URL has a host component, we assume it does not point to this
+        host and thus does not point to a Document, because that would be a
+        needlessly verbose way to specify an internal link. However, if you
+        pass check_host=False, we assume the URL's host is the one serving
+        Documents, which comes in handy for analytics whose metrics return
+        host-having URLs.
+        """
+        try:
+            components = get_doc_components_from_url(
+                url, required_locale=required_locale, check_host=check_host)
+        except NotDocumentView:
+            return None
+        if not components:
+            return None
+        locale, path, slug = components
+
+        doc = cls.objects
+        if id_only:
+            doc = doc.only('id')
+        try:
+            doc = doc.get(locale=locale, slug=slug)
+        except cls.DoesNotExist:
+            try:
+                doc = doc.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+                translation = doc.translated_to(locale)
+                if translation:
+                    return translation
+            except cls.DoesNotExist:
+                return None
+        return doc
 
     def regenerate_cache_with_fields(self):
         """Regenerate fresh content for all the cached fields"""
@@ -1358,6 +1399,14 @@ Full traceback:
                         return url
                 elif len(url) == 1 and url[0] == '/':
                     return url
+
+    def get_redirect_document(self, id_only=False):
+        """If I am a redirect to a Document, return that Document.
+        Otherwise, return None.
+        """
+        url = self.get_redirect_url()
+        if url:
+            return self.from_url(url, id_only=id_only)
 
     def get_topic_parents(self):
         """Build a list of parent topics from self to root"""

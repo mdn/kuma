@@ -43,3 +43,7 @@ class ReadOnlyException(Exception):
     """
     A special exception to signal the wiki is read-only
     """
+
+
+class NotDocumentView(Exception):
+    """A URL not pointing to the document view"""

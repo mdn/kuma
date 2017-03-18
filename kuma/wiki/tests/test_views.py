@@ -1208,6 +1208,22 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            locale=locale))
         eq_(302, response.status_code)
 
+    def test_creating_child_of_redirect(self):
+        """While try to create a child of a redirect,
+        the parent of the child should be redirect's parent"""
+        self.client.login(username='admin', password='testpass')
+        rev = revision(is_approved=True, save=True)
+        doc = rev.document
+        child_full_slug = doc.slug + "/" + "children_document"
+        doc._move_tree(new_slug="moved_doc")
+        doc.refresh_from_db()
+        url = reverse('wiki.document', args=[child_full_slug])
+        response = self.client.get(url, follow=True)
+
+        # The parent id of the query should be same because while moving, a new document is created with old slug
+        # and make redirect to the old document
+        eq_(response.request['QUERY_STRING'], 'slug=children_document&parent={}'.format(doc.id))
+
     def test_new_document_comment(self):
         """Creating a new document with a revision comment saves the comment"""
         self.client.login(username='admin', password='testpass')

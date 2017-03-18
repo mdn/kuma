@@ -525,6 +525,9 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
                                        locale=document_locale,
                                        slug=slug_dict['parent'],
                                        is_template=0)
+        if parent_doc.is_redirect:
+            parent_doc = parent_doc.get_redirect_document(id_only=True)
+
         url = urlparams(url, parent=parent_doc.id,
                         slug=slug_dict['specific'])
     else:
