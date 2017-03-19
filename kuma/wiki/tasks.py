@@ -404,10 +404,9 @@ def build_index_sitemap(results):
 def build_sitemaps():
     """
     Build and save sitemap files for every MDN language and as a
-    callback save the sitempa index file as well.
+    callback save the sitemap index file as well.
     """
-    tasks = [build_locale_sitemap.si(locale)
-             for locale in settings.MDN_LANGUAGES]
+    tasks = [build_locale_sitemap.si(lang[0]) for lang in settings.LANGUAGES]
     post_task = build_index_sitemap.s()
     # we retry the chord unlock 300 times, so 5 mins with an interval of 1s
     chord(header=tasks, body=post_task).apply_async(max_retries=300, interval=1)
