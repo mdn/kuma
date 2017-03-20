@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-08 07:29-0800\n"
-"PO-Revision-Date: 2017-03-20 19:08+0000\n"
+"PO-Revision-Date: 2017-03-20 19:27+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -331,15 +331,15 @@ msgstr "Новинарската емисия се предлага само н�
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr "Благодарим! Моля проверете електронната си поща, за да потвърдите абонамента си."
+msgstr "Благодарим! Моля проверете електронната си поща, за да потвърдите записването си."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
-msgstr "Ако не сте потвърждавали абонамент за някоя от новинарските емисии на Мозила, може би трябва да го направите. Моля, проверете пощенската си кутия или спам-филтрите си за писмо от нас."
+msgstr "Ако не сте потвърждавали записване за някоя от новинарските емисии на Мозила, може би трябва да го направите. Моля, проверете пощенската си кутия или спам-филтрите си за писмо от нас."
 
 #: jinja2/includes/newsletter.html:39
 msgid "Hide Newsletter Sign-up"
-msgstr "Скриване на възможността за абониране за новинарската емисия"
+msgstr "Скриване на възможността за записване за новинарската емисия"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -2495,7 +2495,7 @@ msgstr "Изтриване на вашата сметка."
 
 #: kuma/users/jinja2/users/user_edit.html:129
 msgid "Manage your Mozilla Newsletter Subscriptions."
-msgstr "Управление на абонамента за новините от Мозила"
+msgstr "Управление на записването за новините от Мозила."
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:2
 msgid "Hello from MDN!"
@@ -2619,7 +2619,7 @@ msgstr "Пощенски списък: %(list_link)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
 msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr "Абонирайте се, за да ни кажете какво очаквате от MDN и да задавате въпроси за сайта."
+msgstr "Запишете се, за да ни казвате какво очаквате от MDN и да задавате въпроси за сайта."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
@@ -3675,12 +3675,12 @@ msgstr "История на статията:"
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr ""
+msgstr "Записани сте за промените в %(title)s и всички нейни подстатии."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Записани сте за промените в %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
@@ -3762,64 +3762,64 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr "Абонирайте се за %(title)s и всичките ѝ дъщерни статии"
+msgstr "Запишете се за %(title)s и всичките ѝ дъщерни статии"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Отписване от %(title)s и всички нейни под-статии"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr "Сега сте абонирани за тази статия и нейните подстатии."
+msgstr "Сега сте записани за тази статия и нейните под-статии."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr ""
+msgstr "Бяхте отписани от тази статия и всичките нейни под-статии."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
-msgstr "Обновяване състоянието на абонамента"
+msgstr "Обновяване състоянието на записването"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Абонирайте се за %(title)s"
+msgstr "Запишете се за %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr ""
+msgstr "Отписване от %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr ""
+msgstr "Сега сте записани за %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr ""
+msgstr "Бяхте отписани от %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr "Абонирайте се за изданието на <bdi>%(language)s</bdi>"
+msgstr "Записване се за изданието на <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Отписване от изданието <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr ""
+msgstr "Сега сте записани за изданието на %(language)s на тази статия."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr ""
+msgstr "Бяхте отписани от изданието на тази статия на %(language)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
