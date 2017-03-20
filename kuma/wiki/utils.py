@@ -18,8 +18,7 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
     redirect to a more canonical path. In any case, produce a locale and
     slug derived from the given path."""
     locale, slug, needs_redirect = '', path, False
-    mdn_languages_lower = dict((x.lower(), x)
-                               for x in settings.MDN_LANGUAGES)
+    mdn_locales = {lang[0].lower(): lang[0] for lang in settings.LANGUAGES}
 
     # If there's a slash in the path, then the first segment could be a
     # locale. And, that locale could even be a legacy MindTouch locale.
@@ -33,10 +32,10 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
             locale = settings.MT_TO_KUMA_LOCALE_MAP[l_locale]
             slug = maybe_slug
 
-        elif l_locale in mdn_languages_lower:
+        elif l_locale in mdn_locales:
             # The first segment looks like an MDN locale, redirect.
             needs_redirect = True
-            locale = mdn_languages_lower[l_locale]
+            locale = mdn_locales[l_locale]
             slug = maybe_slug
 
     # No locale yet? Try the locale detected by the request or in path
