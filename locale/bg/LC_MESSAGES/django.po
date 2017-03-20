@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-08 07:29-0800\n"
-"PO-Revision-Date: 2017-03-19 23:47+0000\n"
+"PO-Revision-Date: 2017-03-20 19:08+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3658,19 +3658,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Сравнение в MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Преглед на статията:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Промяна на статията:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "История на статията:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
@@ -3684,7 +3684,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
-msgstr ""
+msgstr "Тази статия се нуждае от следните проверки:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
@@ -3716,7 +3716,7 @@ msgstr "Клониране на тази статия"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Move this article"
-msgstr ""
+msgstr "Преместване на тази статия"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 msgid "View in admin"
@@ -3724,7 +3724,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:82
 msgid "Delete this article"
-msgstr ""
+msgstr "Изтриване на тази статия"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:87
 msgid "Manage content zone"
@@ -3740,7 +3740,7 @@ msgstr "Отпечатване на статията"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr ""
+msgstr "трохи"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
@@ -3748,12 +3748,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr ""
+msgstr "Промяна на версии"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr ""
+msgstr "Версия %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -3771,7 +3771,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr ""
+msgstr "Сега сте абонирани за тази статия и нейните подстатии."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
@@ -3779,7 +3779,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
-msgstr ""
+msgstr "Обновяване състоянието на абонамента"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, python-format
