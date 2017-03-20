@@ -19,6 +19,7 @@ Disallow: /*docs/new
 Disallow: /*docs/get-documents
 Disallow: /*docs/submit_akismet_spam
 Disallow: /*docs/load*
+Disallow: /*docs/Experiment:*
 Disallow: /*$compare
 Disallow: /*$revision
 Disallow: /*$history

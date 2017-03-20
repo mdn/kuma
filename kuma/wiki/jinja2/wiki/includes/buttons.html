@@ -41,7 +41,13 @@
         </div>
       </li>{% endif %}
 
-      {% if (not document.is_template) or (user.has_perm('wiki.change_template_document')) %}
+      {%- set is_experiment = (
+            content_experiment and
+            content_experiment.selection_is_valid) %}
+      {%- set can_edit_template = (
+            (not document.is_template) or
+            user.has_perm('wiki.change_template_document')) %}
+      {% if (not is_experiment) and can_edit_template %}
       <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button" rel="nofollow, noindex">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
       {% endif %}
 

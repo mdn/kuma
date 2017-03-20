@@ -977,6 +977,24 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/ace.js',
     },
+    'experiment-wiki-content': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+            'js/libs/mozilla.cookiehelper.js',
+            'js/libs/mozilla.trafficcop.js',
+            'js/experiment-wiki-content.js',
+        ),
+        'output_filename': 'build/js/experiment-wiki-content.js',
+    },
+    'experiment-framework-test': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+            'js/libs/mozilla.cookiehelper.js',
+            'js/libs/mozilla.trafficcop.js',
+            'js/experiment-framework-test.js',
+        ),
+        'output_filename': 'build/js/experiment-framework-test.js',
+    },
 }
 
 PIPELINE = {
@@ -1495,3 +1513,23 @@ NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
 
 # Tell django-taggit to use case-insensitive search for existing tags
 TAGGIT_CASE_INSENSITIVE = True
+
+# Content Experiments
+# Must be kept up to date with PIPELINE_JS setting and the JS client-side
+#  configuration. The 'id' should be a key in PIPELINE_JS, that loads
+#  Traffic Cop and a client-side configuration like
+#  kuma/static/js/experiment-wiki-content.js
+#
+CONTENT_EXPERIMENTS = [{
+    'id': 'experiment-framework-test',
+    'ga_name': 'framework-test',
+    'param': 'v',
+    'pages': [{
+        'locale': 'en-US',
+        'slug': 'Web/JavaScript/Reference/Operators/Comparison_Operators',
+        'variants': [
+            ['control', 50, 'Web/JavaScript/Reference/Operators/Comparison_Operators'],
+            ['test', 50, 'Experiment:FrameworkTest/Comparison_Operators'],
+        ]
+    }]
+}]

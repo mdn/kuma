@@ -244,6 +244,54 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     return doc, fallback_reason
 
 
+def _apply_content_experiment(request, doc):
+    """
+    Get Document and rendering parameters changed by the content experiment.
+
+    If the page is under a content experiment and the selected variant is
+    valid, the return is (the variant Document, the experiment params).
+
+    If the page is under a content experiment but the variant is invalid or
+    not selected, the return is (original Document, the experiment params).
+
+    If the page is not under a content experiment, the return is
+    (original Document, None).
+    """
+    for experiment in settings.CONTENT_EXPERIMENTS:
+        for pages in experiment['pages']:
+            if (pages['locale'] == doc.locale and pages['slug'] == doc.slug):
+                # This page is under a content experiment
+                exp_params = {
+                    'id': experiment['id'],
+                    'ga_name': experiment['ga_name'],
+                    'param': experiment['param'],
+                    'original_path': request.path,
+                    'variants': pages['variants'],
+                    'selected': None,
+                    'selection_is_valid': None,
+                }
+
+                # Which variant was selected?
+                selected = request.GET.get(experiment['param'])
+                if selected:
+                    exp_params['selection_is_valid'] = False
+                    for variant, percent, variant_slug in pages['variants']:
+                        if selected == variant:
+                            try:
+                                content_doc = Document.objects.get(
+                                    locale=pages['locale'],
+                                    slug=variant_slug)
+                            except Document.DoesNotExist:
+                                pass
+                            else:
+                                # Valid variant selected
+                                exp_params['selected'] = selected
+                                exp_params['selection_is_valid'] = True
+                                return content_doc, exp_params
+                return doc, exp_params  # No (valid) variant selected
+    return doc, None  # Not a content experiment
+
+
 @block_user_agents
 @require_GET
 @allow_CORS_GET
@@ -617,9 +665,15 @@ def document(request, document_slug, document_locale):
         rendering_params[param] = request.GET.get(param, False) is not False
     rendering_params['section'] = request.GET.get('section', None)
     rendering_params['render_raw_fallback'] = False
-    rendering_params['use_rendered'] = kumascript.should_use_rendered(doc, request.GET)
+
+    # Are we in a content experiment?
+    original_doc = doc
+    doc, exp_params = _apply_content_experiment(request, doc)
+    rendering_params['experiment'] = exp_params
 
     # Get us some HTML to play with.
+    rendering_params['use_rendered'] = (
+        kumascript.should_use_rendered(doc, request.GET))
     doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(
         request, doc, rendering_params)
     rendering_params['render_raw_fallback'] = render_raw_fallback
@@ -663,7 +717,7 @@ def document(request, document_slug, document_locale):
 
     # Bundle it all up and, finally, return.
     context = {
-        'document': doc,
+        'document': original_doc,
         'document_html': doc_html,
         'toc_html': toc_html,
         'quick_links_html': quick_links_html,
@@ -681,6 +735,7 @@ def document(request, document_slug, document_locale):
         'share_text': share_text,
         'search_url': get_search_url_from_referer(request) or '',
         'analytics_page_revision': doc.current_revision_id,
+        'content_experiment': rendering_params['experiment'],
     }
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
