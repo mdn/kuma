@@ -56,7 +56,7 @@ server.
 
 In the virtual environment run::
 
-   $ py.test -m "not login" tests/functional/ --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login and not maintenance_mode" tests/functional/ --driver Chrome --driver-path /path/to/chromedriver
 
 You will be prompted "Do you want the application 'python' to accept incoming
 network connections?" The tests seem to run fine no matter how you answer.
@@ -71,7 +71,7 @@ Only running tests in one file
 
 Add the name of the file to the test location::
 
-   $ py.test -m "not login" tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login and not maintenance_mode" tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
 
 Run the tests against a different url
 -------------------------------------
@@ -80,7 +80,7 @@ By default the tests will run against the staging server. If you'd like to run
 the tests against a different URL (e.g., your local environment) pass the
 desired URL to the command with ``--base-url``::
 
-   $ py.test -m "not login" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login and not maintenance_mode" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
 
 Run the tests in parallel
 -------------------------
@@ -88,7 +88,7 @@ Run the tests in parallel
 By default the tests will run one after the other but you can run several at
 the same time by specifying a value for ``-n``::
 
-   $ py.test -m "not login" tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login and not maintenance_mode" tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
 
 Run tests on SauceLabs
 ----------------------
@@ -103,7 +103,7 @@ machine.
 #. Run a test specifying ``SauceLabs`` as your driver, and pass your credentials
    and the browser to test::
 
-   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 py.test -m "not login" tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
+   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 py.test -m "not login and not maintenance_mode" tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
 
 Alternatively you can save your credentials `in a configuration file`_ so you
 don't have to type them each time.
