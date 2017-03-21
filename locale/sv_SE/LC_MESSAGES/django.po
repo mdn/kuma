@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-20 22:07+0000\n"
+"PO-Revision-Date: 2017-03-21 22:22+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -1340,17 +1340,19 @@ msgstr "Bidra till MDN kodbas"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:5 kuma/landing/jinja2/landing/maintenance-mode.html:13
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "Underhållningsläge"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:18
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
 msgstr ""
+"MDN finner sig för närvarande i underhållsläge. Innehåll kommer från en backup databas, vilket innebär att vissa artiklar kan visa gammal information. Var inte rädd! Allt kommer att återställas när "
+"underhållet har avslutats."
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "I underhållsläge, är följande åtgärder inte tillgängliga:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
 msgid "editing articles"
@@ -1362,11 +1364,11 @@ msgstr "skapar konton"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
-msgstr ""
+msgstr "logga in"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "Vi ber om ursäkt för besväret."
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -3319,7 +3321,7 @@ msgstr "I denna artikel"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Detta dokument har ännu inte skapats, och kan inte skapas medan MDN är i <a href=\"%(url)s\">underhållsläge</a>. Kom tillbaka när underhållet har avslutats."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
