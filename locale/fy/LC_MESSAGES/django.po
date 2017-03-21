@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 10:29+0000\n"
+"PO-Revision-Date: 2017-03-21 10:31+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -3324,7 +3324,7 @@ msgstr "Yn dit artikel"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Dit dokumint is noch net rendere en kin net rendere wurde wylst MDN yn <a href=\"%(url)s\">ûnderhâldsmodus</a> is. Kontrolearje nochris as it ûnderhâld foltôge is."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
