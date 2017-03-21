@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 22:01+0000\n"
+"PO-Revision-Date: 2017-03-21 22:30+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3334,7 +3334,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:321
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Този превод все още се прави."
 
 #: kuma/wiki/jinja2/wiki/document.html:328
 #, python-format
@@ -3685,7 +3685,7 @@ msgstr "етикети на %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
-msgstr ""
+msgstr "Бележки по версията"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
@@ -3876,7 +3876,7 @@ msgstr "Съдържание:"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
-msgstr "Искате помощ?"
+msgstr "Нужна ви е помощ?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
 msgid "Editor Guide"
@@ -3996,7 +3996,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr ""
+msgstr "Намерете източник за превод чрез търсенето горе и после натиснете \"Запис\"."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
