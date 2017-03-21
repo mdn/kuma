@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 01:47+0000\n"
+"PO-Revision-Date: 2017-03-21 09:09+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -96,7 +96,7 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "MDN は現在、読み取り専用のメンテナンスモードになっています。"
 
 #: jinja2/base.html:87
 msgid "Learn more"
@@ -1361,36 +1361,33 @@ msgstr "MDNのコードに貢献する"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:5 kuma/landing/jinja2/landing/maintenance-mode.html:13
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "メンテナンスモード"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:18
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
-msgstr ""
+msgstr "MDN は現在メンテナンスモードになっています。コンテンツはバックアップデータベースから配信されており、そのため一部の記事は古い情報を表示している可能性があります。心配はありません。メンテナンスが終了次第すべて復旧します。"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "メンテナンスモード中、以下のアクションは実行できません:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "記事内でリンクされています"
+msgstr "記事を編集中"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
-#, fuzzy
 msgid "creating accounts"
-msgstr "ログインするかアカウントを新規作成:"
+msgstr "アカウント作成中"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
-#, fuzzy
 msgid "logging in"
-msgstr "ログイン"
+msgstr "ログイン中"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "ご不便をおかけして申し訳ありません。"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
