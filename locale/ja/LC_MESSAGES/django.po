@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 09:09+0000\n"
+"PO-Revision-Date: 2017-03-21 09:12+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -3357,7 +3357,7 @@ msgstr "この記事内"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "このドキュメントはまだ出力されておらず、また MDN が <a href=\"%(url)s\">メンテナンスモード</a> の間は出力できません。メンテナンス終了後に再度確認しに来てください。"
 
 # 「このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全なコンテンツを表示するには数分たってから<a
 # href="%(url)s">このページを再度読み込む</a>か、スーパーリロード (<kbd><kbd>ctlr</kbd> +
