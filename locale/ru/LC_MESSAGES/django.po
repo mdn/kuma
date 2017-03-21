@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 05:40+0000\n"
+"PO-Revision-Date: 2017-03-21 05:44+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -1372,7 +1372,7 @@ msgstr "вход на сайт"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "Мы приносим извинения за причинённые неудобства."
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -3334,7 +3334,7 @@ msgstr "В этой статье"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Этот документ не был обработан, и не может быть показан, пока MDN находится в <a href=\"%(url)s\">режиме обслуживания</a>. Пожалуйста, попробуйте снова, когда обслуживание завершится."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
