@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 01:30+0000\n"
+"PO-Revision-Date: 2017-03-21 01:36+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -95,7 +95,7 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "MDN jest obecnie w trakcie konserwacji i jest dostępne tylko do odczytu."
 
 #: jinja2/base.html:87
 msgid "Learn more"
@@ -1342,31 +1342,29 @@ msgstr "Współtworzenie kodu źródłowego MDN"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:5 kuma/landing/jinja2/landing/maintenance-mode.html:13
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "Konserwacja"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:18
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
-msgstr ""
+msgstr "MDN jest obecnie w trakcie konserwacji. Artykuły pochodzą z kopii zapasowej, więc część informacji może być nieaktualna. Po ukończeniu konserwacji wszystko wróci do normy."
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "W trakcie konserwacji nie można:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "Podlinkowany w artykule"
+msgstr "redagować artykułów"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
-#, fuzzy
 msgid "creating accounts"
-msgstr "Zaloguj się lub utwórz konto:"
+msgstr "zakładać kont"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
-msgstr ""
+msgstr "logować się"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
@@ -3330,7 +3328,7 @@ msgstr "W tym artykule"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Ten dokument nie był jeszcze renderowany, a nie można renderować w trakcie <a href=\"%(url)s\">konserwacji</a> MDN. Wróć po ukończeniu konserwacji."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
