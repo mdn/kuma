@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 22:47+0000\n"
+"PO-Revision-Date: 2017-03-21 22:57+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -3649,7 +3649,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Изходен код"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
@@ -3659,7 +3659,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
-msgstr ""
+msgstr "Скриване на %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
@@ -3894,7 +3894,7 @@ msgstr[1] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "Скриване на информацията за грешката"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
