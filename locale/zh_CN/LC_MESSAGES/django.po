@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 02:49+0000\n"
+"PO-Revision-Date: 2017-03-21 02:52+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -1335,11 +1335,11 @@ msgstr "维护模式"
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
-msgstr ""
+msgstr "MDN 目前处于维护模式。内容目前从备份数据库提供，因此部分文章显示的信息可能陈旧。无需恐惧！所有信息将在维护结束后恢复。"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "在处于维护模式时，下列操作不可用："
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
 msgid "editing articles"
@@ -1355,7 +1355,7 @@ msgstr "登录"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "我们对造成的不便深表抱歉。"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -3283,7 +3283,7 @@ msgstr "在本文章中"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "此文档尚未渲染，并且不能在 MDN 处于<a href=\"%(url)s\">维护模式</a>时渲染。请在维护结束后检查。"
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
