@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 22:30+0000\n"
+"PO-Revision-Date: 2017-03-21 22:47+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2757,7 +2757,7 @@ msgstr "Редакторски - изказ, граматика или съдъ�
 
 #: kuma/wiki/constants.py:219
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Преводът все още се прави - не е напълно завършен."
 
 #: kuma/wiki/content.py:725
 msgid "Edit section"
@@ -3356,7 +3356,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:356
 msgid "This article doesn't have approved content yet."
-msgstr ""
+msgstr "Тази статия все още няма одобрено съдържание."
 
 #: kuma/wiki/jinja2/wiki/document.html:361
 #, fuzzy
@@ -3636,12 +3636,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Превод на текста"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
-msgstr ""
+msgstr "Одобрена версия на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
@@ -3681,7 +3681,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr "етикети на %(locale)s"
+msgstr "Етикети на %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
@@ -3689,7 +3689,7 @@ msgstr "Бележки по версията"
 
 #: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
-msgstr ""
+msgstr "Бележки по превода"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
