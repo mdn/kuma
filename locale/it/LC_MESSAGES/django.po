@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-22 10:13+0000\n"
-"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
+"PO-Revision-Date: 2017-03-22 11:04+0000\n"
+"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -97,10 +97,9 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "Al momento MDN è disponibile in sola lettura a causa della manutenzione del sito."
 
 #: jinja2/base.html:87
-#, fuzzy
 msgid "Learn more"
 msgstr "Ulteriori informazioni"
 
@@ -3345,7 +3344,7 @@ msgstr "Indice dell’articolo"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Impossibile eseguire il rendering di questo documento finché MDN è in <a href=\"%(url)s\">modalità manutenzione</a>. Ricontrolla quando le operazioni di manutenzione saranno concluse."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
