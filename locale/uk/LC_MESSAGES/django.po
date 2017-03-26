@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-23 12:55+0000\n"
+"PO-Revision-Date: 2017-03-26 09:20+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
@@ -97,7 +97,7 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "В даний момент MDN обслуговується в режимі для читання."
 
 #: jinja2/base.html:87
 msgid "Learn more"
@@ -1345,35 +1345,35 @@ msgstr "Вклад в кодову базу MDN"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:5 kuma/landing/jinja2/landing/maintenance-mode.html:13
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "Режим обслуговування"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:18
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
 msgstr ""
+"MDN знаходиться в режимі обслуговування. Вміст надається з резервної копії бази даних, що означає, що деякі статті можуть показувати застарілу інформацію. Не бійтеся! Все буде відновлено, як "
+"закінчиться обслуговування."
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "Наступні дії не доступні в режимі обслуговування:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "Вбудовано у статтю"
+msgstr "редагування статей"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
-#, fuzzy
 msgid "creating accounts"
-msgstr "Увійдіть або створіть обліковий запис:"
+msgstr "створення облікових записів"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
-msgstr ""
+msgstr "вхід на сайт"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "Просимо вибачення за незручності."
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -3337,7 +3337,7 @@ msgstr "У цій статті"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Цей документ не був оброблений, і не може бути показаний, поки MDN знаходиться в <a href=\"%(url)s\">режимі обслуговування</a>. Будь ласка, спробуйте знову, коли обслуговування завершиться."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
