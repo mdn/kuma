@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-27 08:56+0000\n"
+"PO-Revision-Date: 2017-03-27 13:54+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -1348,6 +1348,7 @@ msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
 msgstr ""
+"MDN a yettuseggam akka tura. Agbur yettali-d su taffa n isefka n uḥraz, ayen d-immalen d akken kra n imagraden zemren ad ilin d iqbuṛen. Ur ttaggad ara! Yal amagrad ad d-yali ticki ifuk useggem."
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
@@ -3319,7 +3320,7 @@ msgstr "Deg umagrad agi"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Isemli(agi ur d-iban ara yakan, ihi ur d-yettban ara skud  MDN yella deg <a href=\"%(url)s\">uskar n useggem</a>. Ma ulac aɣilif, uɣal-d tikelt-nniḍen ticki ifuk useggem."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
