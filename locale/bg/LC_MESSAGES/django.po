@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-21 22:57+0000\n"
+"PO-Revision-Date: 2017-03-27 22:50+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -95,12 +95,11 @@ msgstr "Мрежа на разработчиците на Мозила"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "MDN е в режим само за четене."
 
 #: jinja2/base.html:87
-#, fuzzy
 msgid "Learn more"
-msgstr "Учете се"
+msgstr "Учете повече"
 
 #: jinja2/base.html:97
 msgid "Skip to main content"
@@ -1208,7 +1207,7 @@ msgstr "Уеб<br />Технологии"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Web APIs и DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
@@ -1348,9 +1347,8 @@ msgid "While in maintenance mode, the following actions are unavailable:"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "С връзка в статията"
+msgstr "променяне на статии"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
 msgid "creating accounts"
@@ -1358,7 +1356,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
-msgstr ""
+msgstr "влизане"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
@@ -2588,7 +2586,7 @@ msgstr "Говорете с нас!"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
 msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
-msgstr ""
+msgstr "Искате да разкажете някому за MDN? Има няколко начина:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
@@ -2711,7 +2709,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:63
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Умения"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:105
 #, python-format
@@ -2782,7 +2780,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "Скоро променени документи в MDN"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
@@ -2850,9 +2848,9 @@ msgid "Name Your Article"
 msgstr "Дайте име на статията"
 
 #: kuma/wiki/forms.py:43
-#, fuzzy, python-format
+#, python-format
 msgid "The tags field is too long (%(show_value)s characters). Keep the total length to %(limit_value)s characters."
-msgstr "Потребителското име е твърде късо (%(show_value)s знака). То трябва да съдържа поне %(limit_value)s знака."
+msgstr "Потребителското име е твърде дълго (%(show_value)s знака). Спазвайте дължина на низа до %(limit_value)s знака."
 
 #: kuma/wiki/forms.py:45
 msgid "Please provide a slug."
@@ -3359,9 +3357,8 @@ msgid "This article doesn't have approved content yet."
 msgstr "Тази статия все още няма одобрено съдържание."
 
 #: kuma/wiki/jinja2/wiki/document.html:361
-#, fuzzy
 msgid "Was this article helpful?"
-msgstr "Клониране на тази статия"
+msgstr "Беше ли полезна тази статия?"
 
 #: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Thank you!"
@@ -4055,14 +4052,13 @@ msgid "Documents for review"
 msgstr "Документи за преглед"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in need of review: %(tag)s"
-msgstr "Всички Статии, Нуждаещи се от Преглед, Означени с %(tag)s"
+msgstr "Статии, нуждаещи се от преглед: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
-#, fuzzy
 msgid "All articles in need of review"
-msgstr "Всички Статии, Нуждаещи се от Преглед"
+msgstr "Всички статии, нуждаещи се от преглед"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
