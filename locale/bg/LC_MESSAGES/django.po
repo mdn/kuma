@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-27 22:50+0000\n"
+"PO-Revision-Date: 2017-03-27 22:58+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2925,11 +2925,11 @@ msgstr ""
 #: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Заглавие:"
 
 #: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
 msgid "Title of article"
-msgstr ""
+msgstr "Заглавие на статия"
 
 #: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
@@ -2938,7 +2938,7 @@ msgstr "Слог:"
 
 #: kuma/wiki/forms.py:350 kuma/wiki/forms.py:425
 msgid "Article URL"
-msgstr ""
+msgstr "URL на статията"
 
 #: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
@@ -2950,7 +2950,7 @@ msgstr "Етикети:"
 
 #: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "Ключови думи:"
 
 #: kuma/wiki/forms.py:445
 msgid "Affects search results"
@@ -2974,7 +2974,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:481
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Да се обозначи ли тази промяна като нуждаеща се от преглед?"
 
 #: kuma/wiki/forms.py:488
 msgid "Tag this revision for localization?"
@@ -3101,11 +3101,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1958
 msgid "Confirmed as Spam"
-msgstr ""
+msgstr "Потвърдено като спам"
 
 #: kuma/wiki/models.py:1959
 msgid "Review Unavailable"
-msgstr ""
+msgstr "Прегледът не работи"
 
 #: kuma/wiki/models.py:1960
 msgid "Akismet Error"
