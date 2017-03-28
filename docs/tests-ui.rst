@@ -9,11 +9,12 @@ the /tests/ directory.
 The tests directory comprises of:
 
 * ``/functional`` contains pytest tests.
-* ``/pages`` contains Python pypom page objects.
+* ``/pages`` contains Python `PyPOM`_ page objects.
 * ``/utils`` contains helper functions.
 
 .. _`Selenium`: http://docs.seleniumhq.org/
 .. _`pytest`: http://pytest.org/latest/
+.. _`PyPOM`: https://pypom.readthedocs.io/en/latest/
 
 Setting up test virtual environment
 ===================================
