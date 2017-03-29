@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-02-14 07:50-0800\n"
-"PO-Revision-Date: 2016-12-11 18:52+0000\n"
-"Last-Translator: apurbamajumder258 <apurbamajumder258@gmail.com>\n"
+"PO-Revision-Date: 2017-03-29 04:41+0000\n"
+"Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
 "Language: bn_BD\n"
 "MIME-Version: 1.0\n"
@@ -172,7 +172,7 @@ msgstr "জরিপে অংশ নিন"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr "ত্রুটি রিপোর্ট করুন।"
+msgstr "ভুলটি রিপোর্ট করুন।"
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
@@ -224,7 +224,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:607
 msgid "Draft"
-msgstr ""
+msgstr "খসড়া"
 
 #: kuma/static/js/wiki-edit.js:626
 msgid "saved"
@@ -333,7 +333,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
-msgstr ""
+msgstr "HTML কনটেন্ট"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
@@ -357,7 +357,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:35
 msgid "Result"
-msgstr ""
+msgstr "ফলাফল"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
@@ -397,4 +397,4 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "স্বাভাবিক"
