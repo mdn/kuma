@@ -2,11 +2,13 @@ import pytest
 
 from pages.article_edit import EditPage
 from pages.admin import AdminLogin
+from utils.decorators import skip_if_maintenance_mode
 
 
 @pytest.mark.smoke
 @pytest.mark.login
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_translation(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
     admin.login_moderator_user()

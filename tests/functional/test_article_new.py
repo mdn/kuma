@@ -2,10 +2,12 @@ import pytest
 
 from pages.article_new import NewPage
 from pages.admin import AdminLogin
+from utils.decorators import skip_if_maintenance_mode
 
 
 @pytest.mark.smoke
 @pytest.mark.login
+@skip_if_maintenance_mode
 def test_new(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
     admin.login_moderator_user()

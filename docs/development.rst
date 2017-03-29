@@ -366,7 +366,7 @@ You can deploy a hosted demo instance of Kuma by following these steps:
 
 #. Connecting to the demo database instance
 
-If you have access to Kubernetes, you can run the following command to connect 
+If you have access to Kubernetes, you can run the following command to connect
 to the MySQL instance::
 
     MY_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -429,7 +429,7 @@ For local Docker-based development in maintenance mode:
 You should be good to go!
 
 There is a set of integration tests for maintenance mode. If you'd like to run
-them against your local Docker instance, you must first have done the
+them against your local Docker instance, you will first have to do the
 following:
 
 #. Loaded the latest sample database (see :ref:`provision-the-database`).
@@ -474,7 +474,7 @@ following:
 
 Now you should be ready for a successful test run::
 
-    py.test -m "maintenance_mode and not search" tests/functional --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+    py.test --maintenance-mode -m "not search" tests/functional --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
 
 Note that the "search" tests are excluded. This is because the tests marked
 "search" are not currently designed to run against the sample database.

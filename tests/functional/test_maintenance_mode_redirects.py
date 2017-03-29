@@ -6,10 +6,11 @@ from pyquery import PyQuery
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+from utils.decorators import skip_if_not_maintenance_mode
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 @pytest.mark.parametrize("method, uri", [
     ('get', 'admin/login'),
     ('post', 'admin/login'),

@@ -2,10 +2,12 @@ import pytest
 
 from pages.article import ArticlePage
 from pages.admin import AdminLogin
+from utils.decorators import skip_if_maintenance_mode
 
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_edit_sign_in(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     # click edit
@@ -17,6 +19,7 @@ def test_edit_sign_in(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.login
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_edit(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
     admin.login_new_user()

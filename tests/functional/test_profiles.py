@@ -2,10 +2,11 @@ import pytest
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+from utils.decorators import skip_if_not_maintenance_mode
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_user_profile_in_mm(base_url, selenium):
     # Check that the edit button is not displayed for a user profile.
     page = BasePage(selenium, base_url)

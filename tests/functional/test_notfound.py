@@ -3,6 +3,7 @@ import requests
 
 from pages.notfound import NotFoundPage
 from utils.urls import assert_valid_url
+from utils.decorators import skip_if_not_maintenance_mode
 
 ARTICLE_NAME = 'Not Found'
 ARTICLE_TITLE_SUFIX = " | MDN"
@@ -12,14 +13,13 @@ ARTICLE_TITLE_SUFIX = " | MDN"
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_is_not_found_status(base_url, selenium):
     NotFoundPage(selenium, base_url).open()
     assert_valid_url(selenium.current_url, status_code=requests.codes.not_found)
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_is_not_found_status_in_mm(base_url, selenium):
     page = NotFoundPage(selenium, base_url).open()
     assert page.is_maintenance_mode_banner_displayed
@@ -29,7 +29,6 @@ def test_is_not_found_status_in_mm(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_is_expected_content(base_url, selenium):
     page = NotFoundPage(selenium, base_url).open()
     assert (ARTICLE_NAME + ARTICLE_TITLE_SUFIX) == selenium.title

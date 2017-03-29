@@ -1,6 +1,10 @@
 import pytest
 
 from pages.article import ArticlePage
+from utils.decorators import (
+    skip_if_maintenance_mode,
+    skip_if_not_maintenance_mode,
+)
 
 ARTICLE_NAME = 'User:anonymous:uitest'
 ARTICLE_TITLE_SUFIX = " | MDN"
@@ -8,7 +12,6 @@ ARTICLE_TITLE_SUFIX = " | MDN"
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_title(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert (ARTICLE_NAME + ARTICLE_TITLE_SUFIX) == selenium.title
@@ -19,7 +22,6 @@ def test_title(base_url, selenium):
 # layout
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_article_layout(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.is_article_displayed
@@ -33,6 +35,7 @@ def test_article_layout(base_url, selenium):
 # page buttons
 @pytest.mark.smoke
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_page_buttons_displayed(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.is_language_menu_displayed
@@ -42,7 +45,7 @@ def test_page_buttons_displayed(base_url, selenium):
 
 # page buttons in maintenance mode
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_page_buttons_displayed_in_mm(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.is_language_menu_displayed
@@ -56,7 +59,6 @@ def test_page_buttons_displayed_in_mm(base_url, selenium):
 # header tests
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_header_displays(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.header.is_displayed
@@ -65,6 +67,7 @@ def test_header_displays(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_header_signin(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     # click on sign in widget
@@ -75,7 +78,6 @@ def test_header_signin(base_url, selenium):
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_header_platform_submenu(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.header.is_platform_submenu_trigger_displayed
@@ -86,7 +88,6 @@ def test_header_platform_submenu(base_url, selenium):
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_header_feedback_submenu(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.header.is_feedback_submenu_trigger_displayed
@@ -98,7 +99,6 @@ def test_header_feedback_submenu(base_url, selenium):
 # footer tests
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_footer_displays(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
     assert page.footer.is_displayed
