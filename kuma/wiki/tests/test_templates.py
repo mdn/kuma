@@ -8,6 +8,7 @@ import pytest
 from constance import config
 from constance.test import override_config
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.test.utils import override_settings
@@ -17,6 +18,7 @@ from pyquery import PyQuery as pq
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.users.models import User
 from kuma.users.tests import UserTestCase
 
 from . import (WikiTestCase, create_topical_parents_docs, document,
@@ -360,7 +362,10 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
 class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
 
     ga_create = "ga('create', 'fake', 'mozilla.org');"
+    dim1 = "ga('set', 'dimension1', 'Yes');"
+    dim2 = "ga('set', 'dimension2', 'Yes');"
     dim17_tmpl = "ga('set', 'dimension17', '%s');"
+    dim18_tmpl = "ga('set', 'dimension18', '%s');"
 
     def test_en_doc(self):
         doc = _create_document()
@@ -392,6 +397,48 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert self.ga_create in content
         dim17 = "ga('set', 'dimension17',"
         assert dim17 not in content
+
+    def test_anon_user(self):
+        response = self.client.get('/en-US/')
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        assert self.dim1 not in response.content.decode('utf8')
+        assert self.dim2 not in response.content.decode('utf8')
+        assert "ga('set', 'dimension18'," not in content
+
+    def test_regular_user(self):
+        assert self.client.login(username='testuser', password='testpass')
+        response = self.client.get('/en-US/')
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        assert self.dim1 in response.content.decode('utf8')
+        assert self.dim2 not in response.content.decode('utf8')
+        assert (self.dim18_tmpl % 'No') in content
+
+    def test_beta_user(self):
+        testuser = User.objects.get(username='testuser')
+        beta = Group.objects.get(name='Beta Testers')
+        testuser.groups.add(beta)
+        assert self.client.login(username='testuser', password='testpass')
+        response = self.client.get('/en-US/')
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        assert self.dim1 in response.content.decode('utf8')
+        assert self.dim2 in response.content.decode('utf8')
+        assert (self.dim18_tmpl % 'No') in content
+
+    def test_staff_user(self):
+        assert self.client.login(username='admin', password='testpass')
+        response = self.client.get('/en-US/')
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        assert self.dim1 in response.content.decode('utf8')
+        assert self.dim2 not in response.content.decode('utf8')
+        assert (self.dim18_tmpl % 'Yes') in content
 
 
 class RevisionTests(UserTestCase, WikiTestCase):

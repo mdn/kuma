@@ -18,6 +18,9 @@
         {% if request.user.is_beta_tester %}
             ga('set', 'dimension2', 'Yes');
         {% endif %}
+
+        // dimension18 == "Staff"
+        ga('set', 'dimension18', '{{ request.user.is_staff | yesno }}');
     {% endif %}
 
     // dimension9 == "Section editing"
