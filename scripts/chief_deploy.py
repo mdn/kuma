@@ -81,12 +81,6 @@ def restart_kumascript(ctx):
     ctx.remote("/usr/bin/supervisorctl stop all; /usr/bin/killall nodejs; /usr/bin/supervisorctl start all")
 
 
-@hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
-def prime_app(ctx):
-    for http_port in range(80, 82):
-        ctx.remote("for i in {1..10}; do curl -so /dev/null -H 'Host: %s' -I http://localhost:%s/ & sleep 1; done" % (settings.REMOTE_HOSTNAME, http_port))
-
-
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def restart_celery(ctx):
     ctx.remote('/usr/bin/supervisorctl mrestart celery\*')
@@ -171,7 +165,6 @@ def deploy(ctx):
     restart_kumascript()
     restart_celery()
     ping_newrelic()
-#    prime_app()
 
 
 @task
