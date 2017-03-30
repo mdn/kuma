@@ -107,6 +107,8 @@ def update_info(ctx):
         ctx.local("git submodule status")
         ctx.local("python2.7 ./manage.py migrate --list")
         ctx.local("git rev-parse HEAD > media/revision.txt")
+    with ctx.lcd(os.path.join(settings.SRC_DIR, 'kumascript')):
+        ctx.local("git rev-parse HEAD > ../media/kumascript-revision.txt")
 
 
 @task
