@@ -210,7 +210,11 @@ def revisions(request, document_slug, document_locale):
     # The parent revision should stay at last page in order to compare. So insert only if there are no next page or
     # all revisions are showing
     if (not page or not page.has_next()) and document.parent:
-        revisions.append(all_revisions.last().based_on)
+        # *all_revisions are in descending order. so call last() in order to get first revision
+        first_rev_based_on = all_revisions.last().based_on
+        # Translation can be orphan so that first revision does not have any english based on. So handle the situation.
+        if first_rev_based_on:
+            revisions.append(first_rev_based_on)
 
     context = {
         'revisions': revisions,
