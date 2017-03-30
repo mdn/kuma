@@ -39,6 +39,11 @@
         ga('set', 'dimension16', '{{ content_experiment.original_path }}');
     {%- endif %}
 
+    {%- if analytics_en_slug %}
+        // dimension17 == 'English Slug'
+        ga('set', 'dimension17', '{{analytics_en_slug}}');
+    {%- endif %}
+
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;

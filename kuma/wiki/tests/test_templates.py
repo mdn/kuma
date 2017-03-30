@@ -356,6 +356,44 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert not doc('#edit-button')
 
 
+@override_config(GOOGLE_ANALYTICS_ACCOUNT='fake')
+class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
+
+    ga_create = "ga('create', 'fake', 'mozilla.org');"
+    dim17_tmpl = "ga('set', 'dimension17', '%s');"
+
+    def test_en_doc(self):
+        doc = _create_document()
+        assert doc.slug
+        response = self.client.get(doc.get_absolute_url())
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        dim17 = self.dim17_tmpl % doc.slug
+        assert dim17 in content
+
+    def test_fr_doc(self):
+        en_doc = _create_document(title='English Document')
+        fr_doc = _create_document(title=u'Document Français',
+                                  parent=en_doc, locale='fr')
+        assert en_doc.slug != fr_doc.slug
+        response = self.client.get(fr_doc.get_absolute_url())
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        dim17 = self.dim17_tmpl % en_doc.slug
+        assert dim17 in content
+
+    def test_orphan_doc(self):
+        orphan_doc = _create_document(title=u'Huérfano', locale='es')
+        response = self.client.get(orphan_doc.get_absolute_url())
+        assert response.status_code == 200
+        content = response.content.decode('utf8')
+        assert self.ga_create in content
+        dim17 = "ga('set', 'dimension17',"
+        assert dim17 not in content
+
+
 class RevisionTests(UserTestCase, WikiTestCase):
     """Tests for the Revision template"""
     localizing_client = True
