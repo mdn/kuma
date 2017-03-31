@@ -6,8 +6,11 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 class ArticlePage(BasePage):
+    """A non-zone MDN wiki page."""
 
-    URL_TEMPLATE = '/{locale}/docs/User:anonymous:uitest'
+    URL_TEMPLATE = '/{locale}/docs/{slug}'
+    DEFAULT_LOCALE = 'en-US'
+    DEFAULT_SLUG = 'User:anonymous:uitest'
 
     # article meta
     _language_add_link_locator = (By.ID, 'translations-add')
@@ -28,6 +31,12 @@ class ArticlePage(BasePage):
     _editorial_review_link_locator = (By.CSS_SELECTOR, 'a[href$=Do_an_editorial_review]')
     # table of contents
     _toc_locator = (By.ID, 'toc')
+
+    def __init__(self, *args, **kwargs):
+        locale = kwargs.pop('locale', self.DEFAULT_LOCALE)
+        slug = kwargs.pop('slug', self.DEFAULT_SLUG)
+        super(ArticlePage, self).__init__(locale=locale, slug=slug,
+                                          *args, **kwargs)
 
     # article title
     @property
@@ -64,6 +73,10 @@ class ArticlePage(BasePage):
     def is_add_translation_link_available(self):
         self.display_language_menu()
         self.add_translation_link.is_displayed()
+
+    @property
+    def has_edit_button(self):
+        return len(self.find_elements(*self._edit_button_locator)) > 0
 
     @property
     def is_edit_button_displayed(self):
