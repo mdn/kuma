@@ -13,7 +13,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--maintenance-mode",
         action="store_true",
-        help="run tests assuming target server is in maintenance mode",
+        help="run tests against a server in maintenance mode",
     )
 
 

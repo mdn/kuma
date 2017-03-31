@@ -429,11 +429,10 @@ For local Docker-based development in maintenance mode:
 You should be good to go!
 
 There is a set of integration tests for maintenance mode. If you'd like to run
-them against your local Docker instance, you will first have to do the
-following:
+them against your local Docker instance, first do the following:
 
-#. Loaded the latest sample database (see :ref:`provision-the-database`).
-#. Ensured that the test document "en-US/docs/User:anonymous:uitest" has been
+#. Load the latest sample database (see :ref:`provision-the-database`).
+#. Ensure that the test document "en-US/docs/User:anonymous:uitest" has been
    rendered (all of its macros have been executed). You can check this by
    browsing to `http://localhost:8000/en-US/docs/User:anonymous:uitest`_. If
    there is no message about un-rendered content, you are good to go. If there
