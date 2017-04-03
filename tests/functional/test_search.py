@@ -4,6 +4,7 @@ from utils.urls import assert_valid_url
 from pages.home import HomePage
 from pages.article import ArticlePage
 from pages.search import SearchPage
+from utils.decorators import skip_if_not_maintenance_mode
 
 SEARCH_TERM = 'css'
 SEARCH_TERM_ZERO = 'skwiz'
@@ -13,7 +14,6 @@ ARTICLE_PATH = 'docs/User:anonymous:uitest'
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_search_homepage(base_url, selenium):
     # open homepage
     page = HomePage(selenium, base_url).open()
@@ -29,7 +29,6 @@ def test_search_homepage(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_search_home_header(base_url, selenium):
     # open homepage
     page = HomePage(selenium, base_url).open()
@@ -50,7 +49,6 @@ def test_search_home_header(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_search_article_header(base_url, selenium):
     # open article page
     page = ArticlePage(selenium, base_url).open()
@@ -70,7 +68,6 @@ def test_search_article_header(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_search_layout(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM).open()
     # search term is in search box
@@ -101,7 +98,6 @@ def test_search_layout(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_search_zero_results(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM_ZERO).open()
     # results found
@@ -111,7 +107,6 @@ def test_search_zero_results(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_search_filters(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM).open()
     documents_found_initial = page.documents_found
@@ -121,7 +116,7 @@ def test_search_filters(base_url, selenium):
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_search_in_mm(base_url, selenium):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM_ZERO).open()
     assert page.is_maintenance_mode_banner_displayed

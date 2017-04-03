@@ -2,11 +2,14 @@ import pytest
 
 from pages.dashboard import DashboardPage
 from pages.admin import AdminLogin
+from utils.decorators import (
+    skip_if_maintenance_mode,
+    skip_if_not_maintenance_mode,
+)
 
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 def test_dashboard(base_url, selenium):
     page = DashboardPage(selenium, base_url).open()
     first_row = page.first_row
@@ -38,7 +41,7 @@ def test_dashboard(base_url, selenium):
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_dashboard_in_mm(base_url, selenium):
     page = DashboardPage(selenium, base_url).open()
     assert page.is_maintenance_mode_banner_displayed
@@ -48,6 +51,7 @@ def test_dashboard_in_mm(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.login
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_dashboard_moderator(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
     admin.login_moderator_user()
@@ -64,6 +68,7 @@ def test_dashboard_moderator(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.login
 @pytest.mark.nondestructive
+@skip_if_maintenance_mode
 def test_dashboard_super(base_url, selenium):
     admin = AdminLogin(selenium, base_url).open()
     admin.login_super_user()

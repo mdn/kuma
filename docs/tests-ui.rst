@@ -57,7 +57,7 @@ server.
 
 In the virtual environment run::
 
-   $ py.test -m "not login and not maintenance_mode" tests/functional/ --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login" tests/functional/ --driver Chrome --driver-path /path/to/chromedriver
 
 You will be prompted "Do you want the application 'python' to accept incoming
 network connections?" The tests seem to run fine no matter how you answer.
@@ -72,7 +72,7 @@ Only running tests in one file
 
 Add the name of the file to the test location::
 
-   $ py.test -m "not login and not maintenance_mode" tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login" tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
 
 Run the tests against a different url
 -------------------------------------
@@ -81,7 +81,7 @@ By default the tests will run against the staging server. If you'd like to run
 the tests against a different URL (e.g., your local environment) pass the
 desired URL to the command with ``--base-url``::
 
-   $ py.test -m "not login and not maintenance_mode" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
 
 Run the tests in parallel
 -------------------------
@@ -89,7 +89,28 @@ Run the tests in parallel
 By default the tests will run one after the other but you can run several at
 the same time by specifying a value for ``-n``::
 
-   $ py.test -m "not login and not maintenance_mode" tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
+   $ py.test -m "not login" tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
+
+Run the tests against a server configured in maintenance mode
+-------------------------------------------------------------
+
+By default the tests will run against a server assumed to be configured
+normally. If you'd like to run them against a server configured in
+maintenance mode, simply add ``--maintenance-mode`` to the ``py.test`` command
+line. For example, if you've configured your local environment to run in
+maintenance mode::
+
+   $ py.test --maintenance-mode -m "not search" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+
+Note that the tests marked "search" were excluded assuming you've loaded the
+sample database. If you've loaded a full copy of the production database, you
+can drop the ``-m "not search"``.
+
+The ``--maintenance-mode`` command-line switch does two things. It will skip
+any tests that don't make sense in maintenance mode (e.g., making sure the
+signin link works), and include the tests that only make sense in maintenance
+mode (e.g., making sure that endpoints related to editing redirect to the
+maintenance-mode page).
 
 Run tests on SauceLabs
 ----------------------
@@ -104,7 +125,7 @@ machine.
 #. Run a test specifying ``SauceLabs`` as your driver, and pass your credentials
    and the browser to test::
 
-   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 py.test -m "not login and not maintenance_mode" tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
+   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 py.test -m "not login" tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
 
 Alternatively you can save your credentials `in a configuration file`_ so you
 don't have to type them each time.
@@ -207,14 +228,6 @@ Markers
   These tests require the testing accounts to exist on the target site. For
   security reasons these accounts will not be on production. Exclude these tests
   with ``-m "not login"``
-
-* ``maintenance_mode``
-
-  These tests can be run against an instance of Kuma in maintenance mode.
-  They cover all of the key aspects, such as testing all of the endpoints that
-  should redirect to the maintenance-mode description page, as well as ensuring
-  that the buttons and links that initiate write operations (like editing a
-  document) are hidden.
 
 Guidelines for writing tests
 ============================

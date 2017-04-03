@@ -9,6 +9,14 @@ VIEWPORT = {
     'small': {'width': 320, 'height': 480}}
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--maintenance-mode",
+        action="store_true",
+        help="run tests against a server in maintenance mode",
+    )
+
+
 @pytest.fixture(scope='session')
 def base_url(base_url, request):
     return base_url or 'https://developer.allizom.org'

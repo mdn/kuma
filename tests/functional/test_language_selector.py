@@ -5,7 +5,6 @@ from pages.home import HomePage
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
 @pytest.mark.parametrize('locale', ['fr'])
 def test_footer_language_selector(base_url, selenium, locale):
     # open homepge

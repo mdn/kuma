@@ -2,10 +2,11 @@ import pytest
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
+from utils.decorators import skip_if_not_maintenance_mode
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_revision_in_mm(base_url, selenium):
     # Get the link for the first (could be any) revision of the test document.
     page = BasePage(selenium, base_url)
@@ -26,7 +27,7 @@ def test_revision_in_mm(base_url, selenium):
 
 
 @pytest.mark.nondestructive
-@pytest.mark.maintenance_mode
+@skip_if_not_maintenance_mode
 def test_compare_revisions_in_mm(base_url, selenium):
     # Load the page that compares two revisions of a document.
     page = BasePage(selenium, base_url)
