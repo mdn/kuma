@@ -708,6 +708,14 @@ def document(request, document_slug, document_locale):
         zone_subnav_html = doc.get_zone_subnav_html()
         body_html = doc.get_body_html()
 
+    # Record the English slug in Google Analytics, to associate translations
+    if original_doc.locale == 'en-US':
+        en_slug = original_doc.slug
+    elif original_doc.parent and original_doc.parent.locale == 'en-US':
+        en_slug = original_doc.parent.slug
+    else:
+        en_slug = ''
+
     share_text = ugettext(
         'I learned about %(title)s on MDN.') % {"title": doc.title}
 
@@ -735,6 +743,7 @@ def document(request, document_slug, document_locale):
         'share_text': share_text,
         'search_url': get_search_url_from_referer(request) or '',
         'analytics_page_revision': doc.current_revision_id,
+        'analytics_en_slug': en_slug,
         'content_experiment': rendering_params['experiment'],
     }
     response = render(request, 'wiki/document.html', context)
