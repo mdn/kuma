@@ -131,6 +131,7 @@ MDN_LANGUAGES = (
     'af',       # Akrikaans
     'ar',       # Arabic
     'az',       # Azerbaijani
+    'bg',       # Bulgarian
     'bm',       # Bambara
     'bn-BD',    # Bengali (Bangladesh)
     'bn-IN',    # Bengali (India)
@@ -194,7 +195,6 @@ MDN_LANGUAGES = (
 # localization in Pontoon, but pages can not be translated into this language.
 # https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
 CANDIDATE_LANGUAGES = [
-    'bg',       # Bulgarian
 ]
 
 RTL_LANGUAGES = (
