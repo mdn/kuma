@@ -1,4 +1,7 @@
-/* wiki article cookie crumbs */
+/*
+wiki article cookie crumbs
+********************************************************************** */
+
 .crumbs {
     margin-bottom: ($grid-spacing / 2);
 
@@ -27,7 +30,6 @@
 }
 
 @media print {
-
     .crumbs {
         display: none;
     }

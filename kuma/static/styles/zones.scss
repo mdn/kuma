@@ -1,6 +1,6 @@
 /*
-    These styles compliment the wiki styles when the page is a zone landing page or is simply in the zone.
-*/
+These styles compliment the wiki styles when the page is a zone landing page or is simply in the zone.
+********************************************************************** */
 
 @import 'includes/vars';
 @import 'includes/mixins';
@@ -13,7 +13,7 @@
     @include override-main-header-color($blue-background-text-color, $homepage-background-color);
 
     #main-header {
-         @include rgba-fallback(border-bottom-color, #fff, 0.2, $homepage-background-color);
+        @include rgba-fallback(border-bottom-color, #fff, .2, $homepage-background-color);
     }
 
     /* zone content area needs to be adjusted for zone pages */
@@ -22,7 +22,7 @@
     }
 
     .wiki-main-content {
-        padding-top: $first-content-top-padding !important;
+        padding-top: $first-content-top-padding !important; /* stylelint-disable-line declaration-no-important */
 
         .center {
             @include add-center-spacing();
@@ -32,7 +32,6 @@
 
 /* zone landing pages only */
 .zone-landing {
-
     h1 {
         @include column-6();
         color: $blue-background-text-color;
@@ -61,7 +60,7 @@
         color: $blue-background-text-color;
 
         a {
-            @include rgba-fallback(color, $blue-background-text-color, 0.7, $homepage-background-color);
+            @include rgba-fallback(color, $blue-background-text-color, .7, $homepage-background-color);
         }
     }
 
@@ -102,10 +101,12 @@
         background-position: 95% 0;
     }
 
-    a.button, button {
+    a.button,
+    button {
         color: $blue-background-text-color;
+
         &:not(.transparent) {
-            @include rgba-fallback(background-color, #000, 0.1);
+            @include rgba-fallback(background-color, #000, .1);
             box-shadow: inset 0 -1px rgba(0, 0, 0, .1);
         }
     }
@@ -115,7 +116,6 @@
     padding: $content-vertical-spacing 0;
     @include prevent-last-child-spacing(padding-bottom);
 }
-
 
 
 /*    Basic zone article pages */
@@ -150,7 +150,7 @@
 
 .zone-content {
     padding-top: 38px;
-    @include reverse-link-decoration()
+    @include reverse-link-decoration();
 }
 
 .zone-subnav-container {
@@ -169,6 +169,7 @@
     table {
         width: 100%;
     }
+
     td {
         vertical-align: bottom;
         padding-right: $grid-spacing;
@@ -268,7 +269,6 @@
 
         .zone-landing-header-preview .column-strip,
         .zone-landing-header-preview .masthead-text {
-
             .zone-landing-header-preview-base {
                 position: static;
             }
@@ -276,22 +276,22 @@
     }
 
     .zone-landing-header-preview {
-    .column-strip, .masthead-text {
+        .column-strip,
+        .masthead-text {
             width: 48%;
         }
     }
 
     .zone-landing-header .zone-image,
     .zone-article-header .zone-image {
-        opacity: 0.2;
+        opacity: .2;
     }
-
 }
 
 
-
 @media #{$media-query-mobile} {
-    .zone-landing-header .zone-image, .zone-article-header .zone-image {
+    .zone-landing-header .zone-image,
+    .zone-article-header .zone-image {
         display: none;
     }
 

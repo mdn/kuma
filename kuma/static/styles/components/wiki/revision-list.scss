@@ -1,4 +1,7 @@
-/* used only by document_revisons */
+/*
+used only by document_revisons
+
+********************************************************************** */
 
 .revision-list-head {
     margin: $grid-spacing 0;
@@ -25,7 +28,7 @@
     display: inline-block;
     height: 20px;
     width: 48px;
-    background: url($path-to-images + "compare.arrows.png") 100% 0 no-repeat;
+    background: url($path-to-images + 'compare.arrows.png') 100% 0 no-repeat;
     vertical-align: top;
 }
 
@@ -35,6 +38,7 @@ html[dir=rtl] .revision-list-controls:before {
 
 .revision-list-controls-top {
     padding-bottom: 5px;
+
     &:before {
         top: 5px;
     }
@@ -42,6 +46,7 @@ html[dir=rtl] .revision-list-controls:before {
 
 .revision-list-controls-bottom {
     padding-top: 10px;
+
     &:before {
         background-position: 100% 100%;
         top: -5px;

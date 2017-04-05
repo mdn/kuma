@@ -1,7 +1,6 @@
-
 /*
 Property definition boxes
-====================================================================== */
+********************************************************************** */
 
 $properties-item-spacing: $content-horizontal-spacing;
 $properties-spacing: ($grid-spacing) - $properties-item-spacing;
@@ -13,7 +12,6 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
 .htmlelt,
 .summary-box-js,
 .summary-box-events {
-
     .text-content & {
         /* could be defined one level up but that creates duplicate classes in output */
         display: table;
@@ -34,8 +32,7 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
     }
 
     /* writing team is transitioning to use table element only - bug 1207344 */
-
-   li {
+    li {
         display: table-row;
         margin: 0;
     }
@@ -85,11 +82,13 @@ because we can be sure that is implemented with a table element */
     .properties {
         th,
         td {
-            display:block;
+            display: block;
         }
+
         th {
             padding-bottom: 0;
         }
+
         td {
             padding-top: 0;
             padding-left: $grid-spacing * 2;

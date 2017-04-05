@@ -15,7 +15,9 @@
 }
 
 /* set minimum heights on main columns */
-#wiki-right, #wiki-left, #wiki-content {
+#wiki-right,
+#wiki-left,
+#wiki-content {
     min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
 }
 
@@ -46,14 +48,17 @@
 
     /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
     .wiki-left-present:not(.wiki-left-closed) {
-        #wiki-right, #wiki-content {
+        #wiki-right,
+        #wiki-content {
             width: $grid-width-column-main;
             margin-right: 0;
         }
+
         #wiki-right {
             @include enable-toc-toggle();
             padding-bottom: ($grid-spacing * 2);
         }
+
         #wiki-left {
             float: none;
         }
@@ -67,8 +72,9 @@
         @include enable-toc-toggle();
     }
 
-    #wiki-column-container, #wiki-content {
-        width: auto !important;
+    #wiki-column-container,
+    #wiki-content {
+        width: auto !important; /* stylelint-disable-line declaration-no-important */
     }
 }
 
@@ -76,7 +82,8 @@
 @media print {
 
     /* hide sections not important to the article */
-    #wiki-left, #wiki-right {
+    #wiki-left,
+    #wiki-right {
         display: none;
     }
 }

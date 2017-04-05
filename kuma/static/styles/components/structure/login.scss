@@ -1,12 +1,12 @@
 /*
 Header login link
-====================================================================== */
+********************************************************************** */
 
 .login {
     position: relative;
     border-radius: 8px;
     padding: $content-vertical-spacing $content-horizontal-spacing;
-    @include rgba-fallback(background, #000, 0.1);
+    @include rgba-fallback(background, #000, .1);
 
     #{$selector-icon} {
         @include set-font-size($small-bump-font-size * 1.2);

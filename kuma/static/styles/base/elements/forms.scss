@@ -1,24 +1,37 @@
 /*
-    Styles for form elements
-*/
+Styles for form elements
+********************************************************************** */
 
-input, button, textarea, select, optgroup, option {
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
     font-family: inherit;
     @include set-font-size(inherit);
     font-style: inherit;
     font-weight: inherit;
 }
 
-input[type=text], input[type=password], input[type=search], input[type=email], input[type=url], textarea {
+input[type=text],
+input[type=password],
+input[type=search],
+input[type=email],
+input[type=url],
+textarea {
     background: #fff;
     border: 1px solid #cbc8b9;
     padding: $content-vertical-spacing $content-horizontal-spacing;
 }
 
 input[type='search'] {
-   @include vendorize(appearance, textfield);
+    @include vendorize(appearance, textfield);
 
-    &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration {
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
         display: none;
     }
 }
@@ -28,17 +41,21 @@ label {
 }
 
 /* disabling of elements */
-.disabled, [disabled] {
+.disabled,
+[disabled] {
     pointer-events: none;
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: .5;
 }
 
 /*
     buttons
 */
 
-.button, button, input[type='submit'], input[type='button'] {
+.button,
+button,
+input[type='submit'],
+input[type='button'] {
     border: 0;
     cursor: pointer;
     display: inline-block;
@@ -53,11 +70,14 @@ label {
     color: $button-color;
     text-decoration: none;
 
-    &.disabled, &[disabled] {
-        box-shadow: inset 0 -1px rgba($button-shadow-color, 0.5);
+    &.disabled,
+    &[disabled] {
+        box-shadow: inset 0 -1px rgba($button-shadow-color, .5);
     }
 
-    &.neutral, &.negative, &.positive {
+    &.neutral,
+    &.negative,
+    &.positive {
         color: #fff;
     }
 

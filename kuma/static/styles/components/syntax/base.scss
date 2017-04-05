@@ -1,12 +1,10 @@
 /*
-    This file modifies <pre> and <code> with the class 'language-' which is added by prism.js
-    This is complicated by the fact that we don't know the configuration of the HTML
-        - it could be <pre> or <code> or <pre><code> or or <pre><code><code> or <pre><em><code> (just to name a few)
-*/
-
-/*
 prism.css problem fixing
-====================================================================== */
+This file modifies <pre> and <code> with the class 'language-' which is added by prism.js
+This is complicated by the fact that we don't know the configuration of the HTML
+    - it could be <pre> or <code> or <pre><code> or or <pre><code><code> or
+      <pre><em><code> (just to name a few)
+********************************************************************** */
 
 /* prism.css incorrectly double styles code > code, but only with a backround color */
 code[class*='language-'] > code[class*='language-'] {
@@ -32,7 +30,8 @@ pre[class*='language-'] {
 /*
 Enhancements!
 ====================================================================== */
-:not(pre):not(code)>code[class*='language-'],
+
+:not(pre):not(code) > code[class*='language-'],
 pre[class*='language-'] {
     @extend %code-block;
 }
@@ -46,6 +45,7 @@ pre em code[class*='language-'] {
 /*
 Line Highlight
 ====================================================================== */
+
 .line-highlight {
     padding: 0;
 

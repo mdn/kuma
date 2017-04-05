@@ -6,12 +6,13 @@ Indicators
 - one to indicate what colour and icons it should halve
 - in practice there are multiple classes that indicate these things
   and a few indicators that only have one class to serve both purposes
-====================================================================== */
+********************************************************************** */
+
 
 /*
 block indicators aka banners
 - full width, left border, optional icon
--------------------------------------------------------------- */
+====================================================================== */
 
 .blockIndicator,
 .overheadIndicator,
@@ -59,11 +60,12 @@ block indicators aka banners
     }
 }
 
+
 /*
 modifications for 'system' indicators
 - border goes all the way around, meant to indicate info is
   seperate from content
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+-------------------------------------------------------------- */
 
 .draft,
 .notice:not(.experimental),
@@ -84,7 +86,7 @@ modifications for 'system' indicators
 /*
 inline indicators aka badges
 - inline-block, smaller font
--------------------------------------------------------------- */
+====================================================================== */
 
 .inlineIndicator,
 .indicatorInHeadline,
@@ -98,14 +100,20 @@ inline indicators aka badges
     cursor: help;
 }
 
+
 /*
 inline in a heading
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+-------------------------------------------------------------- */
 
 .headingWithIndicator {
     @include clearfix();
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         @include bidi-value(float, left, right);
     }
 }
@@ -117,7 +125,7 @@ inline in a heading
 
 /*
 icons for both types of indicators
--------------------------------------------------------------- */
+====================================================================== */
 
 #kserrors.warning {
     @extend %indicator-with-icon;
@@ -158,7 +166,7 @@ IE 11 converts hex to rgb, so target that as well.
     @include indicator-icon('\f016'); /* file icon rotated */
 
     &:before {
-       @include vendorize(transform, scaleY(-0.8) scaleX(0.8));
+        @include vendorize(transform, scaleY(-.8) scaleX(.8));
     }
 }
 
@@ -172,7 +180,7 @@ IE 11 converts hex to rgb, so target that as well.
 }
 
 .privilegedBadge,
-.install{
+.install {
     @include indicator-icon('\f132'); /* shield */
 }
 
@@ -183,7 +191,7 @@ IE 11 converts hex to rgb, so target that as well.
 
 /*
 Colours for both types
--------------------------------------------------------------- */
+====================================================================== */
 
 /* don't use */
 .warning,
@@ -242,16 +250,17 @@ Colours for both types
     @extend %indicator-info;
 }
 
+
 /*
 Special snowflakes
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+-------------------------------------------------------------- */
 
 /* kumascript warnings get brigther red */
 #kserrors.warning,
 #doc-rendering-in-progress.warning,
 #doc-rendering-scheduled.warning {
-    border-color: #B54D48;
-    background-color: #CA5651;
+    border-color: #b54d48;
+    background-color: #ca5651;
     @extend %indicator-link-invert;
     @extend %indicator-text-invert;
 }

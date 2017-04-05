@@ -1,4 +1,6 @@
-/* contributor avatars at top of articles */
+/*
+contributor avatars at top of articles
+********************************************************************** */
 
 $avatar-max-width: 20px;
 $avatar-margin: 5px;
@@ -29,8 +31,8 @@ $avatar-limit: 6;
 
     ul {
         display: inline-block;
-        opacity: 0.7;
-       @include vendorize(transition, opacity .3s ease-in-out);
+        opacity: .7;
+        @include vendorize(transition, opacity .3s ease-in-out);
 
         &.contributor-avatars-open,
         &:hover,
@@ -52,12 +54,12 @@ $avatar-limit: 6;
 
     a {
         display: inline-block;
-       @include vendorize(transition, all .2s);
+        @include vendorize(transition, all .2s);
 
         &:hover,
         &:focus {
             outline: none;
-           @include vendorize(transform, scale(1.7));
+            @include vendorize(transform, scale(1.7));
         }
     }
 

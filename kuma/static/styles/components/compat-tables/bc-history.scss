@@ -1,6 +1,6 @@
 /*
 History
-====================================================================== */
+********************************************************************** */
 
 .bc-history {
     z-index: 20;
@@ -12,30 +12,30 @@ History
     cursor: default;
 }
 
-    .bc-table .bc-history{
-        position: absolute;
-        top: 100%;
-        display: none;
-        visibility: hidden;
-        box-shadow: inset 200px 0 0 0 $bc-color-border;
-    }
+.bc-table .bc-history {
+    position: absolute;
+    top: 100%;
+    display: none;
+    visibility: hidden;
+    box-shadow: inset 200px 0 0 0 $bc-color-border;
+}
 
-    .active .bc-history {
-        display: block;
-        visibility: visible;
-        height: 0;
-    }
+.active .bc-history {
+    display: block;
+    visibility: visible;
+    height: 0;
+}
 
-    /* creates a block to fill the space under the absolutely
-       positioned .bc-history-button so text doesn't overlap
-       the button */
-    .bc-history:before {
-        content: '';
-        display: block;
-        height: 45px;
-        width: 60px;
-        float: right;
-    }
+/* creates a block to fill the space under the absolutely
+   positioned .bc-history-button so text doesn't overlap
+   the button */
+.bc-history:before {
+    content: '';
+    display: block;
+    height: 45px;
+    width: 60px;
+    float: right;
+}
 
 .bc-history-head {
     padding-top: $bc-grid-spacing;
@@ -108,18 +108,17 @@ History
 
 @media all and (min-width: 769px) {
     .wiki-right-present.wiki-left-present {
-        @include bc-history-tablet-display()
+        @include bc-history-tablet-display();
     }
 }
 
 @media #{$media-query-mobile} {
-    @include bc-history-tablet-display()
+    @include bc-history-tablet-display();
 }
 
 @media #{$media-query-small-mobile} {
-
     .bc-history dl {
-       margin-left: $bc-grid-spacing;
+        margin-left: $bc-grid-spacing;
     }
 
     .bc-history dt {

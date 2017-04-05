@@ -1,10 +1,11 @@
 /*
 Main CSS file for MDN.  Holds the site structure and key styles.
+********************************************************************** */
 
+
+/*
 Classes which should be mirror extensions and mixins - mixins.styl
-These classes are used within wiki content so
-we must have them available as classes as well.
-
+These classes are used within wiki content sowe must have them available as classes as well.
 ====================================================================== */
 
 /* grid setup for direct class uses */
@@ -13,6 +14,7 @@ we must have them available as classes as well.
 
 /* columns */
 @import 'structure/cols';
+
 
 /*
 Pre-header
@@ -54,11 +56,13 @@ Main Navigation
 @import 'structure/main-nav-search';
 @import 'structure/search-wrap';
 
+
 /*
 Footer
 ====================================================================== */
 
 @import 'structure/contentinfo';
+
 
 /*
 Misc - needs sorting
@@ -88,9 +92,7 @@ p.field-explanation {
 }
 
 @media #{$media-query-mobile} {
-
     .header-clear {
         display: none;
     }
-
 }

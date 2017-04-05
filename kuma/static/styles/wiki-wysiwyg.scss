@@ -2,12 +2,15 @@
 @import 'includes/mixins';
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
-html, body {
+html,
+body {
     background: #fff;
 }
+
 html.maximized {
-    overflow-y: auto !important;
+    overflow-y: auto !important; /* stylelint-disable-line declaration-no-important */
 }
+
 body {
     padding: $grid-spacing;
 
@@ -34,7 +37,7 @@ body {
         border: 1px dotted #fc0;
         background: #fffea1;
         display: block;
-        opacity: 0.8;
+        opacity: .8;
         cursor: default;
     }
 }
@@ -54,6 +57,7 @@ body {
 pre {
     position: relative;
 }
+
 pre:before {
     @include set-smaller-font-size();
     font-family: arial, sans-serif;
@@ -94,7 +98,7 @@ $languages: (
     $space: unquote('pre[class^="brush: ')+unquote($key)+unquote('"]:before');
 
     #{$nospace},
-    #{$space}{
+    #{$space} {
         content: $value;
     }
 }

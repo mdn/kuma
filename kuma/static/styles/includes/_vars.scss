@@ -14,7 +14,7 @@ colors
 ====================================================================== */
 $text-color : #3b3c40;
 $heading-color : #4d4e53;
-$link-color : #217AC0;
+$link-color : #217ac0;
 $menu-link-color : $text-color;
 $blue-background-text-color : #fff;
 $header-background-color : #eaeff2;
@@ -50,13 +50,13 @@ $text-light : #fff;
 typography
 ====================================================================== */
 $light-font-weight : 200;
-$site-font-family : 'Open Sans', Arial, sans-serif;
-$site-font-family-fallback : Arial, sans-serif;
-$heading-font-family : 'Open Sans Light', 'Helvetica', Arial, sans-serif;
-$heading-font-family-fallback : 'Helvetica', Arial, sans-serif;
-$tiny-font-family : 'Helvetica', Arial, sans-serif;
-$code-block-font-family : Consolas, Monaco, 'Andale Mono', monospace; /* prism */
-$code-inline-font-family : Consolas, "Liberation Mono", Courier, monospace; /* inline */
+$site-font-family : 'Open Sans', arial, sans-serif;
+$site-font-family-fallback : arial, sans-serif;
+$heading-font-family : 'Open Sans Light', 'Helvetica', arial, sans-serif;
+$heading-font-family-fallback : 'Helvetica', arial, sans-serif;
+$tiny-font-family : 'Helvetica', arial, sans-serif;
+$code-block-font-family : consolas, monaco, 'Andale Mono', monospace; /* prism */
+$code-inline-font-family : consolas, 'Liberation Mono', courier, monospace; /* inline */
 $diff-font-family : $code-inline-font-family;
 
 /*
@@ -145,7 +145,7 @@ $media-query-break-and-up : 'all and (min-width: #{$navigation-break-starts})';
 animation
 ====================================================================== */
 $default-animation-duration : .5s;
-$slide-timing-function : cubic-bezier(0, 1, 0.5, 1);
+$slide-timing-function : cubic-bezier(0, 1, .5, 1);
 
 
 /*
@@ -190,4 +190,4 @@ $logo-sprite-url : $path-to-images + 'logo_sprite.svg';
 /*
 edit-mode customizations - applied to blocks only in edit mode
 ====================================================================== */
-$editor-box-border : 2px dotted #ADF;
+$editor-box-border : 2px dotted #adf;

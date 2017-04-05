@@ -1,6 +1,8 @@
-/* configurable declarations for the submenu extend */
-@mixin submenu-set($menu-width, $border-width, $background-color, $arrow-border-color) {
+/*
+configurable declarations for the submenu extend
+********************************************************************** */
 
+@mixin submenu-set($menu-width, $border-width, $background-color, $arrow-border-color) {
     & {
         width: $menu-width;
         border-top: $border-width solid $arrow-border-color;
@@ -11,6 +13,7 @@
         border-bottom-color: $background-color;
         top: -18px;
     }
+
     &:after {
         border-bottom-color: $arrow-border-color;
         top: (-19px - $border-width);
@@ -47,16 +50,17 @@
     }
 }
 
-/* submenu */
+/*
+submenu
+====================================================================== */
 @mixin submenu() {
-
     position: absolute;
     top: 40px;
     @include bidi-style(left, auto, right, 0);
     @include bidi-style(right, 0, left, auto);
     z-index: 3;
     display: none;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, .4);
     padding: $grid-spacing;
 
     /* text should be text coloured, this could be moved
@@ -93,11 +97,14 @@
         padding: 5px 0;
         display: block;
 
-        &:link, &:visited, &:hover, &:active {
+        &:link,
+        &:visited,
+        &:hover,
+        &:active {
             /* links should be link coloured, this could be moved
                into submenu-set if we ever need them to be something
                that stands out better on the configurable background */
-            color: $link-color !important;
+            color: $link-color !important; /* stylelint-disable-line declaration-no-important */
         }
     }
 
@@ -131,7 +138,7 @@
            I don't feel too bad about using it here though
            since this button should have a bit of size and the
            rabbit hole that lead me here is pleanty deep enough */
-        padding: 10px !important;
+        padding: 10px !important; /* stylelint-disable-line declaration-no-important */
         @include bidi-style(right, 0, left, auto);
         color: inherit;
 

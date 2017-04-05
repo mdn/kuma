@@ -9,55 +9,70 @@ This file was added to by the contributors as part of the redesign migration, it
 In a perfect world we go through the contents of this file and integrate it with the dev team's CSS files
 eventually emptying this file.
 
- */
-/* Used for footnotes in {{PricePointTable}} (footnotes styles should be unified) */
+********************************************************************** */
+
+/* Used for footnotes in {{PricePointTable}}
+ (footnotes styles should be unified) */
+
 .footnote {
     vertical-align: super;
     font-size: 60%;
 }
+
 /* Make the 2nd breadcrumbs disappear, only if the page has been regenerated with a modern template */
 .column-container #wikiArticle .themeUpdated {
     display: none;
 }
+
 /* Used to wrap columns that should all be the same height */
 .equalColumnHeights {
     display: table;
     border-collapse: separate;
     border-spacing: 20px;
 }
+
 .equalColumnHeights div {
     display: table-cell;
     width: 50%;
     height: 100%;
 }
+
 /* Use for large table (.thirdColumn + .***Bg) */
 table#fullwidth-table td.thirdColumn {
     width: 30%;
 }
+
 .greenBg {
     width: 30%;
     background-color: #80ff80;
 }
+
 .lightGreenBg {
     background-color: #dcffdc;
 }
+
 .yellowBg {
     background-color: #ffffdc;
 }
+
 .orangeBg {
     background-color: #ffa064;
 }
+
 .redBg {
     background-color: #f66;
 }
+
 /* highlighted (bottom) link in call-out boxes */
 .callout-link-container {
     position: relative;
     height: 100%;
 }
+
 .callout-link-wrapper {
     padding-top: 32px;
 }
+
 .callout-link {
     font-style: italic;
     font-size: 14px;
@@ -67,97 +82,114 @@ table#fullwidth-table td.thirdColumn {
     bottom: 0;
     right: 0;
 }
+
 /* remove left margin from Font Awesome icons inside wiki
      content; this is messing up document content */
 #wikiArticle #{$selector-icon} {
-    margin-left: 0px;
+    margin-left: 0;
 }
+
 /* Iframe for live sample centered (Test) */
 .centered iframe {
     display: block;
     margin: 0 auto;
     border: none;
 }
+
 /* Simulate two columns for landing page, if enough space is available    */
 @media #{$media-query-small-desktop-and-up} {
     .landing {
         display: table-row;
     }
 }
+
 /* For Landing page boxes; these are boxes displayed within columns on landing
      pages, such as the Community and Related boxes. */
 .landingPageBox {
     width: 100%;
-    padding: 0px;
+    padding: 0;
     border-bottom: 1px solid #bbb;
     margin-bottom: 3px;
 }
+
 .landingPageBox ul {
     padding-left: 44px;
 }
+
 /* Wide column box */
 .wideColumnBox {
-   @include vendorize(column-width, 375px);
+    @include vendorize(column-width, 375px);
 }
+
 .wideColumnBoxList li {
     line-height: 1.5;
     list-style-type: none;
     padding-left: 0;
     page-break-inside: avoid;
 }
+
 /* Multi-column boxes for lists of longer links; this will adapt based on screen width */
 .multiColumnList {
-   @include vendorize(column-width, 250px);
+    @include vendorize(column-width, 250px);
 }
+
 .multiColumnList li {
     line-height: 1.5;
     list-style-type: none;
     padding-left: 0;
     page-break-inside: avoid;
 }
+
 /* Multi-column boxes for smaller links, such as API terms */
 .smallMultiColumnList {
-   @include vendorize(column-width, 120px);
+    @include vendorize(column-width, 120px);
 }
+
 .smallMultiColumnList li {
     list-style-type: none;
     padding-left: 0;
     page-break-inside: avoid;
 }
+
 /* Multi-column box for smaller text */
 .horizFlexboxContainer {
     display: -webkit-flex;
     display: flex;
-   @include vendorize(flex-flow, column nowrap);
-   @include vendorize(justify-content, center);
-   @include vendorize(align-content, center);
-   @include vendorize(align-items, center);
-   @include vendorize(flex-direction, column);
+    @include vendorize(flex-flow, column nowrap);
+    @include vendorize(justify-content, center);
+    @include vendorize(align-content, center);
+    @include vendorize(align-items, center);
+    @include vendorize(flex-direction, column);
 }
+
 .smallTextMultiColumnBoxHeading {
     width: 75%;
     padding: 10px;
-   @include vendorize(flex, 0 1 auto);
+    @include vendorize(flex, 0 1 auto);
     font-weight: bold;
     background-color: #e0e2e4;
 }
+
 .smallTextMultiColumnBoxList {
     width: 75%;
     padding: 10px;
-   @include vendorize(order, 2);
-   @include vendorize(flex, 0 1 auto);
+    @include vendorize(order, 2);
+    @include vendorize(flex, 0 1 auto);
     background-color: $light-background-color;
 }
+
 .smallTextMultiColumnBoxList ul {
-   @include vendorize(column-width, 100px);
+    @include vendorize(column-width, 100px);
     margin-bottom: 0;
     padding-left: 0;
 }
+
 .smallTextMultiColumnBoxList li {
     list-style-type: none;
     padding-left: 0;
     font-size: 80%;
 }
+
 
 @media #{$media-query-mobile} {
     .smallTextMultiColumnBoxHeading,
@@ -166,93 +198,113 @@ table#fullwidth-table td.thirdColumn {
     }
 }
 
+
 /* Fancy Table of content for main pages of tutorial*/
 .fancyTOC {
-    counter-reset: fancyTOC;
-   @include vendorize(columns, 18em);
+    counter-reset: fancytoc;
+    @include vendorize(columns, 18em);
     margin-bottom: 1em;
     column-gap: $grid-spacing;
 }
+
 .fancyTOC .button {
     display: block;
     margin-right: 0;
-    margin-bottom: 0.25em;
+    margin-bottom: .25em;
     background-color: #a24c4c;
     color: #fff;
     font-size: 1.5em;
     line-height: 1.5;
     overflow: hidden; /* Fix for firefox and IE 10-11  */
+    /* stylelint-disable indentation */
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-            column-break-inside: avoid;
-    page-break-inside: avoid; /* Deprecated Firefox */
-         break-inside: avoid; /* IE 10+ */
-         break-inside: avoid-column;
+              page-break-inside: avoid; /* Deprecated Firefox */
+                   break-inside: avoid; /* IE 10+ */
+                   break-inside: avoid-column;
+    /* stylelint-enable */
 }
+
 .fancyTOC a::before {
-    counter-increment: fancyTOC;
-    content: counter(fancyTOC) ". ";
+    counter-increment: fancytoc;
+    content: counter(fancytoc) '. ';
 }
+
 .fancyTOC a::after {
     content: ' \00bb';
     speak: none;
 }
+
 .fancyTOC .button:hover,
 .fancyTOC .button:focus,
 .fancyTOC .button:active {
     background-color: #c26c6c;
 }
+
 /* In index, dim obsolete, deprecated or non-standard element instead of striking through them */
 s.deprecatedElement,
 s.obsoleteElement,
 s.nonStdElement {
     text-decoration: none;
-    opacity: 0.3;
+    opacity: .3;
 }
+
 /* Add widgeted index, here adding an HTML5 badge as the bullet of the li element if class="html5" */
 div.index.widgeted {
-   @include vendorize(columns, 10em);
+    @include vendorize(columns, 10em);
 }
+
 div.index.widgeted li {
     padding-left: 18px;
 }
+
 div.index.widgeted li.html5 {
-    background-image: url("https://developer.mozilla.org/files/3855/HTML5_Badge_16.png");
+    background-image: url('https://developer.mozilla.org/files/3855/HTML5_Badge_16.png');
     background-repeat: no-repeat;
     background-position: left 4px;
 }
-[dir="rtl"] div.index.widgeted li {
+
+[dir='rtl'] div.index.widgeted li {
     padding-right: 18px;
 }
-[dir="rtl"] div.index.widgeted li.html5 {
-    background-image: url("https://developer.mozilla.org/files/3855/HTML5_Badge_16.png");
+
+[dir='rtl'] div.index.widgeted li.html5 {
+    background-image: url('https://developer.mozilla.org/files/3855/HTML5_Badge_16.png');
     background-repeat: no-repeat;
     background-position: right 4px;
 }
-[dir="rtl"] div.index.widgeted span {
+
+[dir='rtl'] div.index.widgeted span {
     padding-right: 24px;
 }
+
 /* Add widgeted index, adding a Webcomponent badge of the li element if class="webcomp" */
 div.index.widgeted li.webcomp::after {
     font-family: FontAwesome;
-    content: " \f085";
+    content: ' \f085';
 }
-/* */
+
+/* --- */
 .cleared {
     clear: both;
 }
+
 /* This style has problem ! Style attribute of BR element is not work in Kuma */
 .clearLeft {
     clear: left;
 }
+
 /* ltr page only ? */
-/* span.comment { display:none; } */
+/* span.comment { display:none; }
+ */
 #wikiArticle .breadcrumbs {
     display: block;
     margin-bottom: 1em;
 }
+
 /* The HTML5 landing page has some special-case stuff, handled here */
 /*
-table.html5ArticleToc { border-width: 5px }*/
+table.html5ArticleToc { border-width: 5px }
+*/
 table.html5ArticleToc {
     border-style: none;
     border-width: 0;
@@ -260,20 +312,25 @@ table.html5ArticleToc {
     border-color: transparent;
     width: 100%;
 }
+
 .html5ArticleToc thead th {
-    padding: 0.5em 1em;
+    padding: .5em 1em;
 }
+
 .html5ArticleToc tbody td {
     vertical-align: middle;
 }
+
 .html5ArticleToc ul {
     margin: 0;
     padding: 0;
 }
+
 .html5ArticleToc ul li {
     display: inline;
-    margin: 0 0.25em;
+    margin: 0 .25em;
 }
+
 
 /* -- */
 
@@ -283,41 +340,51 @@ table.withoutBorder tr,
 table.withoutBorder th {
     border: none;
 }
+
 td.horizontalLine {
     border-left: none;
 }
+
 td.column {
     border-bottom: none;
 }
+
 td.bottomPart {
     border-top: none;
 }
+
 /* Use the verticalText class on a table cell to rotate its contents 90deg */
 td.verticalText {
     width: 3em;
     @include vendorize(transform, rotate(-90deg));
 }
+
 table.blockTable {
     border-collapse: collapse;
 }
+
 table.blockTable,
 table.blockTable td {
     margin: 1px;
     padding: 1px;
 }
+
 table.blockTable .verticalColumn {
     border-left: none;
     border-right: none;
 }
+
 /* The index page for HTML / CSS */
 div.index {
-   @include vendorize(columns, 18em);
+    @include vendorize(columns, 18em);
     margin-bottom: $grid-spacing;
 }
+
 div.index > span {
     font-family: Georgia, Times, 'Times New Roman', serif;
     font-size: 1.6em;
 }
+
 div.index ul,
 div.index ol {
     margin-left: 0;
@@ -331,40 +398,50 @@ table.HTMLElmNav {
     margin: 1em auto;
     border-width: 5px;
 }
+
 table.HTMLElmNav th,
 table.HTMLElmNav td {
     text-align: center;
 }
+
 .method {
     margin-left: 10px;
     margin-bottom: 2em;
     margin-top: 1em;
 }
+
 .method > .name {
     display: block;
     font-size: 13pt;
-    margin-bottom: 0.2em;
+    margin-bottom: .2em;
 }
+
 .method > .name > .param:after {
-    content: ",";
-    padding-right: 0.5em;
+    content: ',';
+    padding-right: .5em;
 }
+
 .method > .name > .param:last-of-type:after {
-    content: "";
+    content: '';
 }
+
 .method > .name > .param > .name:after {
-    content: " as ";
+    content: ' as ';
     font-weight: normal;
 }
+
 .method > .name > .param:not(.required) {
     font-style: italic;
 }
+
 .method > .name > .param:not(.required):before {
-    content: "[";
+    content: '[';
 }
+
 .method > .name > .param:not(.required):after {
-    content: "]";
+    content: ']';
 }
+
 .method > .description {
     display: block;
     font-size: 10pt;
@@ -372,56 +449,67 @@ table.HTMLElmNav td {
     font-style: italic;
     margin-bottom: 7px;
 }
+
 .method > .name > .returns:before {
-    content: " returns ";
+    content: ' returns ';
     font-weight: normal;
     font-style: italic;
 }
+
 .method > .name > .returns {
     font-weight: 700;
 }
+
 .method > .params {
     display: block;
     color: #555;
 }
+
 .method > .params > .param {
     display: block;
     margin-bottom: 5px;
 }
+
 .method > .params > .param > .name {
     font-weight: 700;
-    margin-right: 0.5em;
+    margin-right: .5em;
     min-width: 80px;
     display: inline-block;
 }
+
 .method > .params > .param > .description {
     display: inline-block;
     width: 300px;
     vertical-align: top;
     margin-right: 30px;
 }
+
 .method > .params > .param > .type {
     display: inline-block;
     width: 150px;
     vertical-align: top;
     font-weight: 700;
 }
+
 .method > .params > .param > .type:before {
-    content: "Type ";
+    content: 'Type ';
     color: #888;
     font-weight: normal;
 }
+
 .method > .params > .param > .default {
     display: inline-block;
     width: 150px;
     vertical-align: top;
     font-weight: 700;
 }
+
 .method > .params > .param > .default:before {
-    content: "Default ";
+    content: 'Default ';
     color: #888;
     font-weight: normal;
 }
+
 /* Used to to create icon-badged APIs inline */
 .indexListRow {
     @include vendorize-value(display, flex);
@@ -431,18 +519,21 @@ table.HTMLElmNav td {
     @include vendorize(align-content, stretch);
     @include vendorize(align-items, flex-start);
 }
+
 .indexListTerm {
-   @include vendorize(order, 0);
-   @include vendorize(flex, 0 1 auto);
-   @include vendorize(align-self, flex-start);
+    @include vendorize(order, 0);
+    @include vendorize(flex, 0 1 auto);
+    @include vendorize(align-self, flex-start);
 }
+
 .indexListBadges {
-   @include vendorize(order, 0);
-   @include vendorize(flex, 0 1 auto);
-   @include vendorize(align-self, flex-end);
+    @include vendorize(order, 0);
+    @include vendorize(flex, 0 1 auto);
+    @include vendorize(align-self, flex-end);
     padding-left: 6px;
     margin-right: 6px;
 }
+
 
 /* Compatibility tables */
 table.compat-table {
@@ -450,22 +541,25 @@ table.compat-table {
     border-collapse: collapse;
     margin: 0;
 }
+
 table.compat-table td {
     padding: 5px;
     border-width: 1px;
     border-style: solid;
-    @include rgba-fallback(border-color, $table-blue, 0.25);
+    @include rgba-fallback(border-color, $table-blue, .25);
     font-size: 12px;
     background: #fff;
     vertical-align: top;
     word-wrap: break-word;
 }
+
 table.compat-table th,
 table.compat-table td.header {
     border: none;
     background: none;
     padding: 2px 4px 8px;
 
+    /* typography */
     font-family: $heading-font-family;
     font-size: 16px;
     font-weight: 200;
@@ -474,14 +568,16 @@ table.compat-table td.header {
         font-family: $heading-font-family-fallback;
     }
 }
+
 div.action-driven {
     display: inline-block;
     float: none;
     min-height: 8.5em;
-    margin: 0.8em;
-    box-shadow: 0.2em 0.1em 0.1em #808080;
+    margin: .8em;
+    box-shadow: .2em .1em .1em #808080;
     vertical-align: top;
 }
+
 div.action-driven > div {
     font: 400 20px $heading-font-family;
     text-transform: uppercase;
@@ -490,18 +586,21 @@ div.action-driven > div {
     }
 }
 
-/* */
+
+/* --- */
 
 dl {
     margin-bottom: 20px;
 }
-/* */
+
+/* --- */
 .renamedMethod,
 .noscriptMethod,
 .deprecatedMethod,
 .unimplementedMethod {
     font-weight: 700;
 }
+
 
 /* style for next and previous pages in tutorial */
 
@@ -511,11 +610,13 @@ dl {
     margin-bottom: $grid-spacing;
 }
 
+
 .nextPage {
     @include bidi-value(float, right, left);
     @include bidi-style(margin-left, ($grid-spacing), margin-right, 0);
     margin-top: $grid-spacing;
 }
+
 
 /* styles for liveSample link : https://developer.mozilla.org/en-US/docs/Template:LiveSample */
 a.liveSample {
@@ -524,18 +625,22 @@ a.liveSample {
     font-size: 1.25em;
     color: #fff;
 }
+
 a.liveSample:link,
 a.liveSample:visited {
     background-color: #069;
 }
+
 a.liveSample:hover,
 a.liveSample:focus {
     background-color: #0099e6;
 }
-[dir="rtl"] a.liveSample {
-    background-position: left 40% !important;
-    padding: 0.35em 0.75em 0.2em !important;
+
+[dir='rtl'] a.liveSample {
+    background-position: left 40% !important; /* stylelint-disable-line declaration-no-important */
+    padding: .35em .75em .2em !important; /* stylelint-disable-line declaration-no-important */
 }
+
 /* callout boxes etc */
 .standardSidebar {
     background: $light-background-color;
@@ -544,49 +649,59 @@ a.liveSample:focus {
     padding: 5px 15px;
     @include bidi-value(float, right, left);
     background: #eee;
-    font-size: 0.85em;
+    font-size: .85em;
     position: relative;
     z-index: 2;
 }
 
+
 @media #{$media-query-small-mobile} {
     html .standardSidebar {
-        float:none;
+        float: none;
         margin: 0 0 15px 0;
     }
 }
+
 
 /* Colored text for INCORRECT/BAD and CORRECT/GOOD values (and BEST)*/
 .correct {
     color: #008000;
 }
+
 .incorrect {
     color: #f00;
 }
+
 .best {
     color: #396;
 }
+
 /* Item in a list of item that has been done */
 .done {
     text-decoration: line-through;
 }
+
 /* Specific items for tutorials */
 .tuto_details,
 .tuto_example {
     border: 1px solid #36b;
-    padding: 0.5em;
+    padding: .5em;
     margin-bottom: 1em;
 }
+
 .tuto_details {
     background: #f4f4f4;
 }
+
 .tuto_example {
     background: #fffff4;
 }
+
 .tuto_type {
     font-weight: 700;
     text-align: left;
 }
+
 /* TODO */
 /* This is a specific item for the CSS tutorial: https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Selectors */
 /* To be removed once we have Live Examples */
@@ -597,37 +712,44 @@ a.tutospecial:visited {
     background: #555;
     border-radius: 3px;
     border: 1px outset #333;
-/* fallback for next line */
-    border: 1px outset rgba(50,50,50,0.5);
+    /* fallback for next line */
+    border: 1px outset rgba(50, 50, 50, .5);
     font-family: georgia, serif;
     font-size: 14px;
     font-style: italic;
     text-decoration: none;
 }
+
 a.tutospecial:hover,
 a.tutospecial:focus,
 a.tutospecial:active {
     background-color: #666;
 }
+
 #tutochallenge {
     display: none;
 }
+
 #tutochallenge a.hideAnswer {
     font-size: 12px;
     text-align: right;
     display: block;
 }
+
 #tutochallenge:target {
     display: block;
 }
+
 #tutochallenge + a {
     font-size: 12px;
     text-align: right;
     display: block;
 }
+
 #tutochallenge:target + a {
     display: none;
 }
+
 
 /* for B2G docs, to allow use of B2G lookalike UX elements */
 /* For display of Firefox OS UX screenshots in a grid */
@@ -635,12 +757,14 @@ table.fxosScreenGrid,
 table.fxosScreenGrid tr {
     border: none;
 }
+
 table.fxosScreenGrid td,
 table.fxosScreenGrid th {
     border: none;
     width: 340px;
     vertical-align: top;
 }
+
 div.fxosLiveSampleWrapper {
     width: 328px;
     padding: 6px 4px;
@@ -649,6 +773,7 @@ div.fxosLiveSampleWrapper {
     background-color: #f3ecdd;
 }
 
+
 /* -- */
 .rightButtonBox {
     float: right;
@@ -656,10 +781,12 @@ div.fxosLiveSampleWrapper {
     position: relative;
     z-index: 2;
 }
-[dir="rtl"] .rightButtonBox {
+
+[dir='rtl'] .rightButtonBox {
     margin: 0 15px 15px 0;
     float: left;
 }
+
 /* ----------------------------------
 * Buttons
 * ---------------------------------- */
@@ -669,11 +796,13 @@ div.fxosLiveSampleWrapper {
     text-decoration: line-through;
 }
 
+
 /* Template link style */
 .templateLink {
     border: 1px solid #ccc;
     padding: 1px;
 }
+
 /*
  * Colorized icons
  */
@@ -685,43 +814,53 @@ div.fxosLiveSampleWrapper {
 #wikiArticle i.icon-trash {
     cursor: default;
 }
+
 #wikiArticle i.icon-beaker {
     color: #09d;
 }
+
 /* experimental */
 #wikiArticle i.icon-warning-sign {
     color: #db0;
 }
+
 /* non-standard */
 #wikiArticle i.icon-thumbs-down-alt {
     color: #000;
 }
+
 /* deprecated */
 #wikiArticle i.icon-trash {
     color: #d00;
 }
+
 /* obsolete */
 #wikiArticle i.icon-stethoscope {
     color: #483d8b;
 }
+
 /* unimplemented */
 /*
  * Landing page lists
  */
+
 dt.landingPageList,
 dd.landingPageList {
     page-break-after: avoid;
 }
+
 /*
  * "Mozilla only" banners
  */
+
 .bannerWrapper {
     overflow: hidden;
     padding-right: 2px;
 }
+
 .mozOnlyBanner {
     background-color: #c33b1d;
-    background-image: url("https://developer.mozilla.org/files/5429/firefox.png"), radial-gradient(circle 16px at 18px 18px, rgba(0,0,0,0.7) 0, rgba(0,0,0,0.5) 11px, rgba(0,0,0,0) 18px), linear-gradient(to right, #c33b1d 40%, #dda820);
+    background-image: url('https://developer.mozilla.org/files/5429/firefox.png'), radial-gradient(circle 16px at 18px 18px, rgba(0, 0, 0, .7) 0, rgba(0, 0, 0, .5) 11px, rgba(0, 0, 0, 0) 18px), linear-gradient(to right, #c33b1d 40%, #dda820);
     background-repeat: no-repeat;
     background-size: contain;
     border-top-left-radius: 18px;
@@ -732,25 +871,28 @@ dd.landingPageList {
     overflow: hidden;
     color: #fff;
     box-shadow: 0 0 3px #111;
-    font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', Lucida, Arial, Helvetica, sans-serif;
 }
+
 .mozOnlyBanner dt {
     font-weight: bold;
     font-size: 16px;
     text-shadow: 1px 1px 0 #222;
     padding-left: 42px;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
+    margin-left: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
+
 .mozOnlyBanner dd {
     font-size: 11px;
     text-shadow: 1px 1px 0 #222;
     padding-left: 42px;
-    margin-left: 0px;
-    margin-top: 0px;
-    padding-top: 0px;
+    margin-left: 0;
+    margin-top: 0;
+    padding-top: 0;
 }
+
 
 /* Horizontal tab boxes */
 .htab {
@@ -767,7 +909,7 @@ dd.landingPageList {
         top: 0;
 
         > li {
-            background-color: #f1f6f8 !important;
+            background-color: #f1f6f8 !important; /* stylelint-disable-line declaration-no-important */
             border: 1px solid transparent;
             border-top-width: 2px;
             border-radius: 0;
@@ -776,9 +918,8 @@ dd.landingPageList {
             height: 32px;
             list-style-type: none;
             margin: auto;
-            opacity: 0.75;
-            -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=75)");
-                filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=75)");
+            opacity: .75;
+            -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=75)';
             position: relative;
             padding: 5px 6px 3px 6px;
             text-align: left;
@@ -791,13 +932,12 @@ dd.landingPageList {
             }
 
             &.selected {
-                background-color: #eaeff2 !important;
-                @include rgba-fallback(border-top-color, $table-blue, 0.25);
+                background-color: #eaeff2 !important; /* stylelint-disable-line declaration-no-important */
+                @include rgba-fallback(border-top-color, $table-blue, .25);
                 font-weight: bold;
 
-                opacity: 1 !important;
-                -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=100)");
-                    filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=100)");
+                opacity: 1 !important; /* stylelint-disable-line declaration-no-important */
+                -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
                 padding-top: 4px;
                 position: relative;
                 z-index: 10;
@@ -808,6 +948,7 @@ dd.landingPageList {
             }
         }
     }
+
 
     > div {
         background-color: #eaeff2;
@@ -820,20 +961,24 @@ dd.landingPageList {
     }
 }
 
+
 .htab > ul,
 .htab > ul > li,
 .htab > ul > li > a {
     cursor: pointer;
-
 }
+
+
 .htab > ul > li > a {
     padding: 2px 18px 4px;
     text-decoration: none;
 }
+
 .htab > ul > li > a:hover,
 .htab > ul > li > a:focus {
     text-decoration: underline;
 }
+
 
 /* download buttons */
 
@@ -846,39 +991,47 @@ a.download-button {
     background-color: #81bc2e;
     white-space: nowrap;
     color: #fff;
-    text-shadow: 0px 1px 0px rgba(0,0,0,0.25);
-    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2), 0px -1px 0px 0px rgba(0,0,0,0.3) inset;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, .2), 0 -1px 0 0 rgba(0, 0, 0, .3) inset;
 }
+
 a.download-button:hover {
     color: #c8c8c8;
 }
+
 a.download-button:visited {
     color: #fff;
 }
+
 a.download-button:link {
     color: #fff;
 }
+
 
 /* download box stuff */
 
 li.download-box {
     position: relative;
     text-align: center;
+
     img {
         float: none;
     }
 }
 
+
 li.download-box p {
     padding-bottom: 3em;
 }
+
 
 .download-box .download-button {
     position: absolute;
     bottom: 0;
     left: 50%;
-   @include vendorize(transform, translate(-50%, 0));
+    @include vendorize(transform, translate(-50%, 0));
 }
+
 
 @media #{$media-query-mobile} {
     .download-desc > span:first-child {
@@ -887,13 +1040,16 @@ li.download-box p {
     }
 }
 
+
 /* -- */
 
 span.comment {
     display: none;
 }
+
 pre span.comment {
     display: inline;
 }
+
 
 /*end!*/

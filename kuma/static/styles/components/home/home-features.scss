@@ -1,7 +1,11 @@
-/* List of four feature columns within the masthead */
+/*
+List of four feature columns within the masthead
+********************************************************************** */
+
 .home-features {
-    &, a {
-        color: $blue-background-text-color !important;
+    &,
+    a {
+        color: $blue-background-text-color !important; /* stylelint-disable-line declaration-no-important */
     }
 
     a {
@@ -91,7 +95,6 @@
 }
 
 @media #{$media-query-mobile} {
-
     .column-feature {
         ul {
             margin-bottom: $grid-spacing;

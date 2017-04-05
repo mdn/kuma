@@ -1,7 +1,7 @@
 /*
 List of social account providers MDN has implemented displayed as
 a call to action to "Sign up with..." or "Connect account..."
-====================================================================== */
+********************************************************************** */
 
 .socialaccount-providers li {
     margin: 0 $grid-spacing 0 0;
@@ -18,8 +18,8 @@ a.github-button {
     display: inline-block;
     font-weight: bold;
 
-    &:focus{
-        span{
+    &:focus {
+        span {
             text-decoration: underline;
         }
     }
@@ -30,7 +30,7 @@ a.github-button {
         float: left;
         @include set-font-size($base-font-size);
         line-height: 24px;
-        color: white;
+        color: #fff;
         padding: 0 10px 0 20px;
         position: relative;
 
@@ -42,7 +42,7 @@ a.github-button {
             width: 24px;
             height: 24px;
             z-index: 1;
-           @include vendorize(transform, scale(0.707) rotate(45deg));
+            @include vendorize(transform, scale(.707) rotate(45deg));
             border-radius: 0 3px 0 50px;
         }
 
@@ -67,7 +67,7 @@ a.github-button {
         }
 
         &.signin {
-            text-shadow: 0px 1.5px 1px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 1.5px 1px rgba(0, 0, 0, .35);
             line-height: 23px;
             padding-bottom: 1px;
 

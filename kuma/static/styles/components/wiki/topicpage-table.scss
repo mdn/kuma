@@ -1,5 +1,8 @@
-/* clear table styles, this class is mostly applied to divs now,
-   need the extra specificity of body to over-ride .textcontent table {} declaration */
+/*
+Clear table styles, this class is mostly applied to divs now
+- need the extra specificity of body to over-ride .textcontent table {} declaration
+********************************************************************** */
+
 body .topicpage-table {
     clear: both;
     width: auto;
@@ -60,5 +63,3 @@ body .topicpage-table {
         }
     }
 }
-
-

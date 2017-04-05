@@ -1,6 +1,6 @@
 /*
-    Table styles
-*/
+Table styles
+********************************************************************** */
 
 table {
     margin-bottom: $content-block-margin;
@@ -10,6 +10,7 @@ caption {
     font-weight: bold;
 }
 
-caption, th {
+caption,
+th {
     @include bidi-value(text-align, left, right);
 }

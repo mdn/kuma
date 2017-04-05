@@ -1,4 +1,6 @@
-/* document review form stuff */
+/*
+document review form stuff
+********************************************************************** */
 .reviews {
     @include set-message-base(false);
     @include set-smaller-font-size();

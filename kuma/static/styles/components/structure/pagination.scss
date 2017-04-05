@@ -1,6 +1,6 @@
 /*
 Pagination
-====================================================================== */
+********************************************************************** */
 
 ol.pagination {
     margin: $grid-spacing 0;
@@ -10,7 +10,8 @@ ol.pagination {
         @include bidi-value(float, left, right);
         padding: 0 2px;
 
-        &.prev, &.prev a {
+        &.prev,
+        &.prev a {
             @include bidi-style(padding-left, 0, padding-right, inherit);
         }
 

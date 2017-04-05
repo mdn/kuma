@@ -1,6 +1,6 @@
 /*
 Provides main mixins for use within the MDN theme.
-====================================================================== */
+********************************************************************** */
 
 @function -remify($value) {
     $u : unit($value);
@@ -8,8 +8,9 @@ Provides main mixins for use within the MDN theme.
 
     @if $u == 'px' {
         $v : $value/$base-font-size * 1rem;
-    } @else {
-        $v : unit($value, u)
+    }
+    @else {
+        $v : unit($value, u);
     }
 
     @return $v;
@@ -49,17 +50,18 @@ Vendor prefixes
 
     @if (map-has-key($prefix-properties, $property)) {
         @each $prefix in map-get($prefix-properties, $property) {
-          #{$prefix + $property}: $value;
+            #{$prefix + $property}: $value;
         }
         // warn if we're vendorizing something unneccisarily
-        @if(map-get($prefix-properties, $property)  == '') {
+        @if (map-get($prefix-properties, $property)  == '') {
             @warn 'Warning in vendorize() ' + $property + ' does not need to be vendorized anymore.';
         }
-    } @else {
+    }
+    @else {
         // warn if we're prefixing something unrecognized.
         @warn 'Warning in vendorize(): ' + $property + ' not listed in prefixes map';
         // provide unprefixed value as fallback
-         #{$property}: $value;
+        #{$property}: $value;
     }
 }
 
@@ -70,7 +72,6 @@ Vendor prefixes
     }
     #{$property}: unquote($value + $more);
 }
-
 
 
 /*
@@ -102,7 +103,10 @@ Links
 @mixin reverse-link-decoration() {
     a {
         text-decoration: none;
-        &:hover, &:active, &:focus {
+
+        &:hover,
+        &:active,
+        &:focus {
             text-decoration: underline;
         }
     }
@@ -133,10 +137,11 @@ Colours
 @mixin create-gradient($start-color, $end-color, $direction : false) {
     @if $direction {
         @include vendorize-value(background, linear-gradient, '(' + $direction + ', ' + $start-color + ', ' + $end-color + ')');
-    } @else {
+    }
+    @else {
         @include vendorize-value(background, linear-gradient, '(' + $start-color + ', ' + $end-color + ')');
     }
-    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + $start-color + "', endColorstr='" + $end-color + "', GradientType=1)"); /* IE6-9 */
+    -ms-filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#{$start-color}", endColorstr="#{$end-color}", GradientType=1)'; /* IE8-9 */
 }
 
 /* uses the white logo instead of color logo */
@@ -146,7 +151,8 @@ Colours
     }
 }
 
-/* functions to transform the base colors into variations of themselves
+/*
+functions to transform the base colors into variations of themselves
 -------------------------------------------------------------- */
 
 @function -theme-pale-light($color) {
@@ -161,30 +167,34 @@ Colours
     @return mix(white, $color, 45%);
 }
 
-/* functions to get correct text colors for variations of theme colors
+/*
+functions to get correct text colors for variations of theme colors
 -------------------------------------------------------------- */
 
 @function -theme-pale-text($color) {
     $color : -theme-pale-light($color);
-    $color : mix(black, $color, 60%);;
+    $color : mix(#000, $color, 60%);
     @return $color;
 }
 
-@function -theme-pale-contrast-text($color){
+@function -theme-pale-contrast-text($color) {
     $hu : hue($color);
     $lite : lightness($color);
     $sat : saturation($color);
     @if (($hu < 20deg or $hu > 199deg) and $sat > 30% and $lite < 70%) {
         $color : $text-light;
-    } @else if ($lite < 50%) {
+    }
+    @else if ($lite < 50%) {
         $color : $text-light;
-    } @else {
+    }
+    @else {
         $color : $text-dark;
     }
     @return $color;
 }
 
-/* function to apply all the generated colors to a notification to theme it
+/*
+function to apply all the generated colors to a notification to theme it
 -------------------------------------------------------------- */
 
 @mixin notification-theme($color) {
@@ -196,9 +206,10 @@ Colours
         background-color: -theme-pale-medium($color);
         color: -theme-pale-text($color);
 
-        &:hover, &:focus {
-          background: transparent;
-          text-decoration: none;
+        &:hover,
+        &:focus {
+            background: transparent;
+            text-decoration: none;
         }
     }
 
@@ -209,14 +220,15 @@ Colours
     button.close {
         color: -theme-pale-medium($color);
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             color: -theme-pale-dark($color);
         }
     }
-
 }
 
-/* coloured boxes
+/*
+coloured boxes
 -------------------------------------------------------------- */
 
 @mixin box-theme($color) {
@@ -225,13 +237,13 @@ Colours
 }
 
 
-/*
-====================================================================== */
+/* =================================================================== */
 
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
 @mixin generate-arrow($arrow-width : 10px) {
-    &:before, &:after {
+    &:before,
+    &:after {
         content: ' ';
         height: 0;
         position: absolute;
@@ -241,8 +253,7 @@ Colours
 }
 
 
-/*
-====================================================================== */
+/* =================================================================== */
 
 /* used to create sliding animations */
 @mixin slider($duration : $default-animation-duration, $maximum-height : 10000px) {
@@ -258,8 +269,7 @@ Colours
 }
 
 
-/*
-====================================================================== */
+/* =================================================================== */
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
 @mixin set-message-base($remove-last-spacing : true) {
@@ -270,7 +280,7 @@ Colours
     padding: ($grid-spacing / 2);
     @include set-smaller-font-size();
 
-    @if($remove-last-spacing) {
+    @if ($remove-last-spacing) {
         @include prevent-last-child-bottom-spacing();
     }
 }
@@ -308,7 +318,8 @@ Home & Zones
     @if ($use-gradient) {
         background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'mdn-header-gradient.png');
         background-repeat: repeat, repeat-x;
-    } @else {
+    }
+    @else {
         background-image: url($path-to-images + 'header-background.png');
         background-repeat: repeat;
     }
@@ -320,7 +331,6 @@ Home & Zones
 
 /* overrides the navigation menu color - zones and homepage */
 @mixin override-main-header-color($hex, $bg) {
-
     #tabzilla:before {
         background-color: transparent;
     }
@@ -332,10 +342,12 @@ Home & Zones
     }
 
     .search-wrap {
-        @include rgba-fallback(background-color, #fff, 0.4, $bg);
+        @include rgba-fallback(background-color, #fff, .4, $bg);
 
-        input, i, .search-trigger {
-            color: $hex !important;
+        input,
+        i,
+        .search-trigger {
+            color: $hex !important; /* stylelint-disable-line declaration-no-important */
         }
 
         input {
@@ -369,17 +381,18 @@ Home & Zones
 }
 
 
-/*
-====================================================================== */
+/* =================================================================== */
 
 /* sets an input tag's placeholder styles */
 @mixin set-placeholder-style($prop, $value) {
     &::-webkit-input-placeholder {
         #{$prop}: $value;
     }
+
     &::-moz-placeholder {
         #{$prop}: $value;
     }
+
     &:-ms-input-placeholder { // IE 9 & 10, Edge suppoerts -webkit-
         #{$prop}: $value;
     }
@@ -420,7 +433,7 @@ Bidi / l10n
 
 @mixin right-icons() {
     @include bidi-value(margin-left, 0 !important, 10px !important);
-    @include bidi-value(margin-right, 10px !important, 0px !important);
+    @include bidi-value(margin-right, 10px !important, 0 !important);
 }
 
 
@@ -440,7 +453,7 @@ These are not dynamic but serve as mixins
 }
 
 @mixin big-search() {
-    @include rgba-fallback(background, #fff, 0.2);
+    @include rgba-fallback(background, #fff, .2);
     @include set-larger-font-size();
     display: block;
     margin: 0 auto;
@@ -455,7 +468,7 @@ These are not dynamic but serve as mixins
 }
 
 @mixin clearfix() {
-    clear:both;
+    clear: both;
 
     &:after {
         content: ' ';
@@ -531,7 +544,7 @@ Placeholders
 %code-block {
     background: $code-block-background-color;
     border-left: $code-block-border-width $code-block-border-style $code-block-border-color;
-    background-image:  url($path-to-images + 'blueprint-dark.png');
+    background-image: url($path-to-images + 'blueprint-dark.png');
     background-position: top center;
     background-repeat: repeat;
     color: $text-color;
@@ -540,8 +553,8 @@ Placeholders
     direction: ltr;
     text-align: left;
 
-   @include vendorize(tab-size, 4);
-   @include vendorize(hyphens, none);
+    @include vendorize(tab-size, 4);
+    @include vendorize(hyphens, none);
 }
 
 
@@ -562,54 +575,54 @@ grid - 12 columns assuming a 3% margin
 }
 
 @mixin column-1() {
-    width: -calc-col-width(1) ; // 5.583%;
+    width: -calc-col-width(1); // 5.583%;
 }
 @mixin column-2() {
-    width: -calc-col-width(2) ; // 14.167%;
+    width: -calc-col-width(2); // 14.167%;
 }
 @mixin column-3() {
-    width: -calc-col-width(3) ; // 22.75%;
+    width: -calc-col-width(3); // 22.75%;
 }
 @mixin column-strip() {
-    width: -calc-col-width(3) ; // 22.75%;
+    width: -calc-col-width(3); // 22.75%;
 }
 @mixin column-quarter() {
-    width: -calc-col-width(3) ; // 22.75%;
+    width: -calc-col-width(3); // 22.75%;
 }
-@mixin column-4(){
-    width: -calc-col-width(4) ; // 31.333%;
+@mixin column-4() {
+    width: -calc-col-width(4); // 31.333%;
 }
 @mixin column-third() {
-    width: -calc-col-width(4) ; // 31.333%;
+    width: -calc-col-width(4); // 31.333%;
 }
 @mixin column-5() {
-    width: -calc-col-width(5) ; // 39.917%;
+    width: -calc-col-width(5); // 39.917%;
 }
-@mixin column-6(){
-    width: -calc-col-width(6) ; // 48.5%;
+@mixin column-6() {
+    width: -calc-col-width(6); // 48.5%;
 }
 @mixin column-half() {
-    width: -calc-col-width(6) ; // 48.5%;
+    width: -calc-col-width(6); // 48.5%;
 }
 @mixin column-7() {
-    width: -calc-col-width(7) ; // 57.083%;
+    width: -calc-col-width(7); // 57.083%;
 }
 @mixin column-8() {
-    width: -calc-col-width(8) ; // 65.667%;
+    width: -calc-col-width(8); // 65.667%;
 }
-@mixin column-9(){
+@mixin column-9() {
     width: $grid-width-column-main; // 74.25%
 }
 @mixin column-main() {
     width: $grid-width-column-main; // 74.25%
 }
 @mixin column-10() {
-    width: -calc-col-width(10) ; // 82.833%;
+    width: -calc-col-width(10); // 82.833%;
 }
 @mixin column-11() {
-    width: -calc-col-width(11) ; // 91.417%;
+    width: -calc-col-width(11); // 91.417%;
 }
-@mixin column-12(){
+@mixin column-12() {
     width: auto;
     margin: 0;
     float: none;

@@ -20,7 +20,8 @@ main {
 }
 
 /* block mentioning the number of results returned */
-h3 #{$selector-icon}, fieldset #{$selector-icon} {
+h3 #{$selector-icon},
+fieldset #{$selector-icon} {
     @include bidi-style(margin-right, ($grid-spacing * .75), margin-left, 0);
 }
 
@@ -37,16 +38,16 @@ h3 #{$selector-icon}, fieldset #{$selector-icon} {
 .results-search-form {
     margin: 0 auto ($grid-spacing * 2);
     position: relative;
-		width: 60%;
+    width: 60%;
 
-		.search-icon {
-				position: absolute;
-				top: 7px;
-		}
+    .search-icon {
+        position: absolute;
+        top: 7px;
+    }
 
     input {
         @include big-search();
-        @include rgba-fallback(background, #fff, 0.5);
+        @include rgba-fallback(background, #fff, .5);
         @include bidi-style(padding-left, 30px, padding-right, 0);
     }
 }
@@ -76,7 +77,8 @@ h3 #{$selector-icon}, fieldset #{$selector-icon} {
         @include set-larger-font-size();
     }
 
-    h4, #{$selector-icon} { /* bug #938074 */
+    h4,
+    #{$selector-icon} { /* bug #938074 */
         line-height: 30px;
         margin-bottom: 0;
     }
@@ -110,7 +112,7 @@ h3 #{$selector-icon}, fieldset #{$selector-icon} {
     font-style: italic;
 
     #{$selector-icon} {
-        margin-right: 6px !important;
+        margin-right: 6px !important; /* stylelint-disable-line declaration-no-important */
         margin-left: 0;
     }
 
@@ -131,13 +133,15 @@ h3 #{$selector-icon}, fieldset #{$selector-icon} {
 /* sidebar topic listings */
 .search-results-filters {
     @include reverse-link-decoration();
+
     fieldset {
         fieldset {
             margin-bottom: 30px;
         }
+
         legend {
             @include set-font-size(24px);
-            letter-spacing: -0.5px;
+            letter-spacing: -.5px;
             margin: -7px 0 ($grid-spacing / 2);
 
             i {
@@ -157,8 +161,9 @@ h3 #{$selector-icon}, fieldset #{$selector-icon} {
         .icon-check-empty {
             margin-right: 7px;
         }
+
         &:hover .filter-name,
-        input[type='checkbox']:focus+ .filter-name{
+        input[type='checkbox']:focus + .filter-name {
             color: $link-color;
         }
 
@@ -166,12 +171,10 @@ h3 #{$selector-icon}, fieldset #{$selector-icon} {
             color: #999;
         }
 
-        .filter-count{
-            @include bidi-value(float, right, left)
+        .filter-count {
+            @include bidi-value(float, right, left);
         }
-
     }
-
 }
 
 input.filter-button {
@@ -188,6 +191,7 @@ input.filter-button {
         .column-strip {
             display: none;
         }
+
         .result-list-item {
             @include column-11();
         }

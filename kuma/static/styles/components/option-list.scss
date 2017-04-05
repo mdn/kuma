@@ -3,11 +3,11 @@
 - list is as narrow as possible given with width of the text on the left
 - on large screens the options will drop below the text if the text is long
 - on mobile screens the options are placed below intentionally
-*/
+********************************************************************** */
 
 ul.option-list {
     @include clearfix();
-    float:left;
+    float: left;
     list-style-type: none;
     max-width: 100%;
     overflow: hidden;

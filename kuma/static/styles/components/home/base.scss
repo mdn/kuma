@@ -1,6 +1,7 @@
 /*
-Override MDN standard styles
-====================================================================== */
+    Override MDN standard styles
+*/
+
 #home {
     @include create-home-gradient-background($homepage-background-color);
     @include remove-main-spacing();
@@ -9,7 +10,7 @@ Override MDN standard styles
     /* general structure adjustments */
     #main-header {
         background: none;
-        @include rgba-fallback(border-bottom-color, #fff, 0.2, $homepage-background-color);
+        @include rgba-fallback(border-bottom-color, #fff, .2, $homepage-background-color);
     }
 
     /* update main nav menu color */
@@ -28,7 +29,8 @@ Override MDN standard styles
         background: transparent;
     }
 
-    h2, h3 {
+    h2,
+    h3 {
         > #{$selector-icon} {
             display: inline-block;
             position: relative;
@@ -78,14 +80,12 @@ Override MDN standard styles
             > #{$selector-icon} {
                 display: none;
             }
-
         }
     }
 }
 
 /* right to left */
 html[dir='rtl'] #home {
-
     .icon-arrow-right:before {
         content: '\f060';
     }

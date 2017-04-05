@@ -2,7 +2,7 @@
 
 /*
 Main navigation menu
-====================================================================== */
+********************************************************************** */
 
 #main-nav {
     > ul {
@@ -17,9 +17,9 @@ Main navigation menu
             opacity: 1;
             max-width: 1000px;
             display: inline-block;
-           @include vendorize(transition-property, width);
-           @include vendorize(transition-duration, $default-animation-duration);
-           @include vendorize(transition-delay, $default-animation-duration);
+            @include vendorize(transition-property, width);
+            @include vendorize(transition-duration, $default-animation-duration);
+            @include vendorize(transition-delay, $default-animation-duration);
             @include bidi-value(text-align, left, right);
 
             &:first-child {
@@ -27,10 +27,11 @@ Main navigation menu
             }
 
             > a i {
-                opacity: 0.85;
+                opacity: .85;
             }
 
-            > a, .search-trigger {
+            > a,
+            .search-trigger {
                 text-transform: uppercase;
                 font-weight: bold;
                 #{$selector-site-font-fallback} & {
@@ -39,12 +40,16 @@ Main navigation menu
             }
 
             > a {
-                &:link, &:visited, &:hover, &:active {
+                &:link,
+                &:visited,
+                &:hover,
+                &:active {
                     text-decoration: none;
                 }
             }
 
-            > a, .search-wrap {
+            > a,
+            .search-wrap {
                 padding: 4px 8px;
             }
         }
@@ -57,7 +62,7 @@ Main navigation menu
             max-width: 0;
             overflow: hidden;
             padding: 0;
-           @include vendorize(transition-delay, 0);
+            @include vendorize(transition-delay, 0);
         }
     }
 
@@ -78,39 +83,38 @@ Main navigation menu
             @include bidi-value(right, 50%, auto);
             margin-right: (($submenu-width / 2 ) + $grid-spacing) * -1;
 
-            &:before, &:after {
+            &:before,
+            &:after {
                 @include bidi-style(left, 98px, right, auto);
             }
 
             &.submenu-cols-2 {
                 margin-right: ($submenu-width + $grid-spacing) * -1;
 
-                &:before, &:after {
+                &:before,
+                &:after {
                     @include bidi-style(left, 200px, right, auto);
                 }
             }
         }
 
         @media #{$media-query-mobile} {
-
             & {
                 @include bidi-style(left, auto, right, auto);
                 @include bidi-style(right, auto, left, auto);
 
-                &:before, &:after {
+                &:before,
+                &:after {
                     @include bidi-style(left, 10px, right, auto);
                 }
             }
         }
-
     }
-
 }
 
 
 /* custom nav menu movement */
 @media #{$media-query-navigation-break} {
-
     #main-nav {
         > ul {
             /* drop under logo, take full width */
@@ -118,7 +122,7 @@ Main navigation menu
             clear: both;
 
             > li {
-               @include vendorize(transition-property, none);
+                @include vendorize(transition-property, none);
                 @include bidi-style(margin-left, 21px, margin-right, 0);
 
                 &:first-child {
@@ -132,7 +136,6 @@ Main navigation menu
 
 /* break nav into blocks (own line) */
 @media #{$media-query-navigation-block} {
-
     #main-nav {
         > ul {
             float: none;
@@ -156,7 +159,6 @@ Main navigation menu
 
 /* tablet updates */
 @media #{$media-query-tablet} {
-
     #main-nav {
         > ul {
             > li {
@@ -172,13 +174,12 @@ Main navigation menu
 
 
 @media #{$media-query-small-mobile} {
-
     #main-nav.expand {
         ul {
             > li:not(:last-child) {
                 width: auto;
                 max-width: none;
-               @include vendorize(transition-property, none);
+                @include vendorize(transition-property, none);
                 overflow: visible;
             }
         }

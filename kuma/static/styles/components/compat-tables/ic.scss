@@ -1,10 +1,12 @@
 /*
 Custom icon font for compat tables
-====================================================================== */
+********************************************************************** */
+
 @import '../../base/fonts/compat-icons';
 
-[class^='ic-'], [class*=' ic-'] {
-    font-family: 'compat-icons';
+[class^='ic-'],
+[class*=' ic-'] {
+    font-family: compat-icons;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -53,8 +55,9 @@ Custom icon font for compat tables
     content: '\f132';
 }
 
-/* platform icons
-----------------------------------------------------------------------  */
+/*
+platform icons
+====================================================================== */
 
 .ic-desktop:before {
     content: '\f108';
@@ -76,8 +79,9 @@ Custom icon font for compat tables
     content: '\e600';
 }
 
-/* vendor icons
-----------------------------------------------------------------------  */
+/*
+vendor icons
+====================================================================== */
 
 .ic-safari:before {
     content: '\e94a';

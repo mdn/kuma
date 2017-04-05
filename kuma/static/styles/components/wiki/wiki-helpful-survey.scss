@@ -10,12 +10,12 @@
 }
 
 .helpful-survey-buttons {
-    @include vendorize(transition, opacity 0.2s ease);
+    @include vendorize(transition, opacity .2s ease);
     z-index: 2;
 }
 
 .helpful-survey-thankyou {
-    @include vendorize(transition, opacity 0.2s ease 0.25s);
+    @include vendorize(transition, opacity .2s ease .25s);
     line-height: 40px; // vertically center the text
     opacity: 0;
     z-index: 1;
@@ -28,7 +28,7 @@
     &:hover {
         @include vendorize(transform, translateY(-3px));
         background: #fff;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
     }
 }
 

@@ -1,4 +1,6 @@
-/* on the move page these styles govern the UI widget "Lookup by Document Title" next to "new slug" */
+/*
+on the move page these styles govern the UI widget "Lookup by Document Title" next to "new slug"
+********************************************************************** */
 
 .parent-suggest-container {
     position: relative;
@@ -14,7 +16,7 @@
             top: -22px;
             left: 0;
 
-           @include vendorize(transition, unquote('opacity, top .4s'));
+            @include vendorize(transition, unquote('opacity, top .4s'));
         }
     }
 }
@@ -39,6 +41,7 @@
         left: -7px;
         top: 20px;
     }
+
     &:after {
         border-right: 6px solid #dfe6eb;
         border-left: 0;
@@ -60,6 +63,6 @@
 }
 
 /* this is the input itself */
-#parent-suggestion  {
+#parent-suggestion {
     width: 300px;
 }

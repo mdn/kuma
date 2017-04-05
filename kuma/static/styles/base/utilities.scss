@@ -1,6 +1,6 @@
 /*
-    Utility classes
-*/
+Utility classes
+********************************************************************** */
 
 .offscreen {
     @extend %offscreen-placeholder;
@@ -63,7 +63,7 @@
 .smaller {
     @include set-smaller-font-size();
     #{$selector-heading-font-fallback} {
-        letter-spacing: -0.01em;
+        letter-spacing: -.01em;
     }
 }
 
@@ -100,6 +100,7 @@
     http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
     add .media-reverse to .media if you want the defined width stuff on the right (it still has to come first in the source)
     add .media-mobile-stack or .media-small-mobile-stack to stack the stuff on mobile */
+
 .media,
 .media-body {
     overflow: hidden;
@@ -138,11 +139,11 @@
         .media-side {
             display: table-cell;
         }
+
         .media-body {
             display: table-caption;
         }
     }
-
 }
 
 /* triggers for stacking */
@@ -161,9 +162,11 @@
 /* elements with this class move spans off screen and only display icons */
 .only-icon {
     #{$selector-icon} {
+        /* stylelint-disable declaration-no-important */
         margin-left: 0 !important;
         margin-right: 0 !important;
         margin-top: -1px !important;
+        /* stylelint-enable */
     }
 
     span {

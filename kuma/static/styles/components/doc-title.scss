@@ -1,6 +1,8 @@
-/* page titles on doc/move/edit/translate/new pages
-   except we can't call them page titles because demos already has
-   a class with that name */
+/*
+page titles on doc/move/edit/translate/new pages
+except we can't call them page titles because demos already has a class with that name
+********************************************************************** */
+
 .doc-title {
     @include clearfix();
     @include title-header();
