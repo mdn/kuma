@@ -1,9 +1,0 @@
-version: '2.1'
-services:
-  stylelint:
-    #run stlyelint recursivly on .scss files
-    image: quay.io/mozmar/kuma_base
-    user: ${UID:-0}
-    volumes:
-      - ./:/app
-    command: stylelint "kuma/static/styles/**/*.scss"

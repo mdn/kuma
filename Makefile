@@ -164,10 +164,6 @@ compose-test:
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml run $(TEST)
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop
 
-stylelint:
-	docker-compose -f docker-compose.stylelint.yml run stylelint
-	docker-compose -f docker-compose.stylelint.yml stop
-
 create-demo:
 	@ ./Jenkinsfiles/create_demo_instance.sh
 
