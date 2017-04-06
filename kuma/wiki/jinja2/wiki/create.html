@@ -9,7 +9,7 @@
 {% endif %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'new' %}
-{% block bodyclass %}new{% if is_template %} is-template{% endif %}{% endblock %}
+{% block bodyclass %}new{% endblock %}
 
 {% block site_css %}
     {{ super() }}
@@ -58,10 +58,7 @@
 
 
       {% if is_template %}
-        {{ revision_form.content|safe }}
-        <div id="editor-wrapper" class="editor-wrapper">
-          <div id="ace_content" class="editor-container"></div>
-        </div>
+        Templates are now being stored and edited on <a target="_blank" href="https://github.com/mozilla/kumascript/tree/master/macros">GitHub</a>.
       {% else %}
         <div id="editor-wrapper" class="editor-wrapper">
           <div class="ckeditor-container editor-container">
@@ -99,11 +96,8 @@
 
     {% include 'wiki/includes/tag_suggestions.html' %}
 
-    {% if is_template %}
-      {% include 'wiki/includes/ace_scripts.html' %}
-    {% else %}
-      {% include 'wiki/includes/ckeditor_scripts.html' %}
-    {% endif %}
+    {% include 'wiki/includes/ckeditor_scripts.html' %}
+
     {% javascript 'wiki-edit' %}
 
 {% endblock %}
