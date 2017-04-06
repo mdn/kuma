@@ -339,7 +339,9 @@
                   {% if not document_html %}
                     {{ _("This article doesn't have any content yet.") }}
                   {% elif document.is_template %}
-                    <pre class="brush: js">{{ document_html }}</pre>
+                    <p>
+                      Templates are now being stored and edited on <a target="_blank" href="https://github.com/mozilla/kumascript/tree/master/macros">GitHub</a>.
+                    </p>
                     {% trans search_link=template_search_link, title=document.title %}
                       Search for
                       <a href="{{ search_link }}" rel="nofollow, noindex">pages that use {{ title }}</a>

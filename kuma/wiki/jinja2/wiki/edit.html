@@ -10,7 +10,7 @@
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% set classes = 'edit' %}
-{% block bodyclass %}edit{% if document.is_template %} is-template{% endif %}{% endblock %}
+{% block bodyclass %}edit{% endblock %}
 
 {% block site_css %}
     {{ super() }}
@@ -173,10 +173,7 @@
             {% include 'wiki/includes/guide_links.html' %}
 
             {% if document.is_template %}
-              {{ revision_form.content | safe }}
-              <div id="editor-wrapper" class="editor-wrapper">
-                <div id="ace_content" class="editor-container"></div>
-              </div>
+              Templates are now being stored and edited on <a target="_blank" href="https://github.com/mozilla/kumascript/tree/master/macros">GitHub</a>.
             {% else %}
               <div id="editor-wrapper" class="editor-wrapper">
                 <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
@@ -226,33 +223,29 @@
     {% javascript 'framebuster' %}
     {% include 'wiki/includes/tag_suggestions.html' %}
 
-    {% if document.is_template %}
-      {% include 'wiki/includes/ace_scripts.html' %}
-    {% else %}
-      {% include 'wiki/includes/ckeditor_scripts.html' %}
-      <script type="text/javascript">
-        if(window.waffle.flag_is_active('section_edit')) CKEDITOR.on('instanceReady', function(evt) {
-            var hash = window.location.hash.replace('#', '');
-            if(!hash) return;
+    {% include 'wiki/includes/ckeditor_scripts.html' %}
+    <script type="text/javascript">
+    if(window.waffle.flag_is_active('section_edit')) CKEDITOR.on('instanceReady', function(evt) {
+        var hash = window.location.hash.replace('#', '');
+        if(!hash) return;
 
-            var element = evt.editor.document.getById(hash);
-            var range;
+        var element = evt.editor.document.getById(hash);
+        var range;
 
-            if(element) {
-                element.scrollIntoView();
+        if(element) {
+            element.scrollIntoView();
 
-                // Thank you S/O
-                // http://stackoverflow.com/questions/16835365/set-cursor-to-specific-position-in-ckeditor
-                range = evt.editor.createRange();
-                range.setStart(element, 0);
-                range.setEnd(element, 0);
-                evt.editor.getSelection().selectRanges([range]);
-            }
+            // Thank you S/O
+            // http://stackoverflow.com/questions/16835365/set-cursor-to-specific-position-in-ckeditor
+            range = evt.editor.createRange();
+            range.setStart(element, 0);
+            range.setEnd(element, 0);
+            evt.editor.getSelection().selectRanges([range]);
+        }
 
-            return false;
-        });
-      </script>
-    {% endif %}
+        return false;
+    });
+    </script>
     {% javascript 'wiki-edit' %}
 
 {% endblock %}

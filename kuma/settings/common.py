@@ -968,15 +968,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'ace': {
-        'source_filenames': (
-            'js/libs/ace/ace.js',
-            'js/libs/ace/mode-javascript.js',
-            'js/libs/ace/theme-dreamweaver.js',
-            'js/libs/ace/worker-javascript.js',
-        ),
-        'output_filename': 'build/js/ace.js',
-    },
     'experiment-wiki-content': {
         'source_filenames': (
             'js/libs/mozilla.dnthelper.js',

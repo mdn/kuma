@@ -71,11 +71,9 @@
 
       // Renders the WYSIWYG editor
       $textarea.each(function () {
-        if (!$('body').is('.is-template')) {
-          $(this).removeAttr('required').ckeditor(setup, {
-            customConfig : '/en-US/docs/ckeditor_config.js'
-          });
-        }
+        $(this).removeAttr('required').ckeditor(setup, {
+          customConfig : '/en-US/docs/ckeditor_config.js'
+        });
       });
     })();
 
@@ -192,7 +190,6 @@
     var supportsLocalStorage = win.mdn.features.localStorage;
     var $form = $('#wiki-page-edit');
     var isTranslation;
-    var isTemplate;
 
     function init() {
         var $body = $('body');
@@ -207,10 +204,6 @@
             isTranslation = true;
         }
 
-        if($body.hasClass('is-template')) {
-            isTemplate = 1;
-        }
-
         if ($body.is('.new')) {
             initPrepopulatedSlugs();
         }
@@ -218,34 +211,12 @@
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
-            if(!$body.is('.is-template')) {
-                initDirtinessTracking();
-            }
+            initDirtinessTracking();
             initArticlePreview();
             initAttachmentsActions();
-            if(!isTemplate) {
-                initDrafting();
-            }
-            initMetadataParentTranslation();
-        }
-        if ($body.is('.edit.is-template') || $body.is('.new.is-template')) {
-
-            var textarea = $('textarea#id_content').hide();
-
-            var editor = win.ace_editor = ace.edit('ace_content');
-            editor.setTheme('ace/theme/dreamweaver');
-            editor.setBehavioursEnabled(false);
-
-            var JavaScriptMode = require('ace/mode/javascript').Mode;
-
-            var session = editor.getSession();
-            session.setMode(new JavaScriptMode());
-            session.setValue(textarea.val());
-            session.on('change', function(){
-              textarea.val(editor.getSession().getValue());
-            });
-            $('.ace_text-input').focus();
             initDrafting();
+
+            initMetadataParentTranslation();
         }
     }
 
@@ -281,9 +252,6 @@
 
             if(CKEDITOR.instances['id_content']) {
                 data = $.trim(CKEDITOR.instances['id_content'].getSnapshot());
-            }
-            else if(ace_editor && ace_editor) {
-                data = $.trim(ace_editor.getSession().getValue());
             }
             else {
                 return;
@@ -385,11 +353,6 @@
             finalKey = 'draft/new';
         }
 
-        // Add another identifier for templates
-        if(isTemplate) {
-            finalKey += '/template';
-        }
-
         finalKey = $.trim(finalKey);
         return finalKey;
     }
@@ -429,15 +392,8 @@
         $draftDiv.find('.js-restoreLink').on('click', function(e) {
             e.preventDefault();
             $contentNode.val(content);
-
-            if(isTemplate) {
-                editor = ace_editor;
-                ace_editor.session.setValue(content);
-            }
-            else {
-                editor = $contentNode.ckeditorGet();
-                editor.setData(content);
-            }
+            editor = $contentNode.ckeditorGet();
+            editor.setData(content);
             editor.focus();
             updateDraftState(gettext('restored'));
             enableAutoSave(true);
@@ -762,21 +718,15 @@
                 // unsaved changes, enable button
                 $draftButton.removeAttr('disabled');
             };
-            if(isTemplate) {
-                if (ace_editor.on) {
-                    ace_editor.on('change', callback);
+
+            try {
+                var $content = $('#id_content');
+                if($content.ckeditorGet) {
+                    $content.ckeditorGet().on('key', callback);
                 }
             }
-            else {
-                try {
-                    var $content = $('#id_content');
-                    if($content.ckeditorGet) {
-                        $content.ckeditorGet().on('key', callback);
-                    }
-                }
-                catch(e) {
-                    console.log(e);
-                }
+            catch(e) {
+                console.log(e);
             }
 
             // Clear draft upon discard
