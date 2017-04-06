@@ -14,67 +14,66 @@
 
         // CKEditor setup method
         var setup = function() {
-          var $appBoxes = $('.approved .boxed');
-          var $tools = $('div.cke_toolbox');
-          var $container = $('.ckeditor-container');
-          var $content = $('#cke_id_content');
-          var contentTop = $container.offset().top;
-          var fixed = false;
+            var $tools = $('div.cke_toolbox');
+            var $container = $('.ckeditor-container');
+            var $content = $('#cke_id_content');
+            var contentTop = $container.offset().top;
+            var fixed = false;
 
-          // Switch header and toolbar styles on scroll to keep them on screen
-          $(doc).on('scroll', function() {
+            // Switch header and toolbar styles on scroll to keep them on screen
+            $(doc).on('scroll', function() {
 
-            // If top of the window is betwen top of #content and bottom of content + 200, the header is fixed
-            var scrollTop = $(this).scrollTop();
-            if (scrollTop >= contentTop) {
+                // If top of the window is betwen top of #content and bottom of content + 200, the header is fixed
+                var scrollTop = $(this).scrollTop();
+                if (scrollTop >= contentTop) {
 
-              // Need to display or hide the toolbar depending on scroll position
-               if(scrollTop > $container.height() + contentTop - 200 /* offset to ensure toolbar doesn't reach content bottom */) {
-                $tools.css('display', 'none');
-                return; // Cut off at some point
-               }
-               else {
-                $tools.css('display', '');
-               }
+                    // Need to display or hide the toolbar depending on scroll position
+                    if(scrollTop > $container.height() + contentTop - 200 /* offset to ensure toolbar doesn't reach content bottom */) {
+                        $tools.css('display', 'none');
+                        return; // Cut off at some point
+                    }
+                    else {
+                        $tools.css('display', '');
+                    }
 
-               // Fixed position toolbar if scrolled down to the editor
-               // Wrapped in IF to cut down on processing
-              if (!fixed) {
-                fixed = true;
-                $tools.css({
-                  position: 'fixed',
-                  top: 0,
-                  width: $content.width() - 11
-                });
-              }
+                    // Fixed position toolbar if scrolled down to the editor
+                    // Wrapped in IF to cut down on processing
+                    if (!fixed) {
+                        fixed = true;
+                        $tools.css({
+                            position: 'fixed',
+                            top: 0,
+                            width: $content.width() - 11
+                        });
+                    }
 
-            } else { // If not, header is relative, put it back
-              if (fixed) {
-                fixed = false;
-                $tools.css({
-                  position: 'relative',
-                  top: 'auto',
-                  width: 'auto'
-                });
-              }
-            }
-          });
+                } else { // If not, header is relative, put it back
+                    if (fixed) {
+                        fixed = false;
+                        $tools.css({
+                            position: 'relative',
+                            top: 'auto',
+                            width: 'auto'
+                        });
+                    }
+                }
+            });
 
-          $(win).resize(function() { // Recalculate box width on resize
-            if (fixed) {
-              $tools.css({
-                width: $container.width() - 10
-              }); // Readjust toolbox to fit
-            }
-          });
-       };
+            $(win).resize(function() { // Recalculate box width on resize
+                if (fixed) {
+                    $tools.css({
+                        width: $container.width() - 10
+                    }); // Readjust toolbox to fit
+                }
+            });
+        };
 
-      // Renders the WYSIWYG editor
-      $textarea.each(function () {
-        $(this).removeAttr('required').ckeditor(setup, {
-          customConfig : '/en-US/docs/ckeditor_config.js'
+        // Renders the WYSIWYG editor
+        $textarea.each(function () {
+            $(this).removeAttr('required').ckeditor(setup, {
+                customConfig : '/en-US/docs/ckeditor_config.js'
+            });
         });
-      });
     })();
 
     /*
@@ -83,7 +82,7 @@
     (function() {
         var seconds = $('#id_render_max_age').val();
         var getValue = function(selector) {
-             return parseInt($(selector).val()) || 0;
+            return parseInt($(selector).val()) || 0;
         };
 
         var setAge = function() {
@@ -124,10 +123,10 @@
 
             // Get height of textarea content, first time doc source is viewed
             if(!$source.data('height')){
-                 $source.height(function(){
+                $source.height(function(){
                     return $(this).get(0).scrollHeight;
-                 });
-                 $source.data('height', true);
+                });
+                $source.data('height', true);
             }
         });
 
@@ -141,50 +140,52 @@
   /*
     Plugin for prepopulating the slug fields
   */
-  $.fn.prepopulate = function(dependencies, maxLength) {
-      var _changed = '_changed';
+    $.fn.prepopulate = function(dependencies, maxLength) {
+        var _changed = '_changed';
 
-      return this.each(function() {
-          var $field = $(this);
+        return this.each(function() {
+            var $field = $(this);
 
-          $field.data(_changed, false);
-          $field.on(_changed, function() {
-              $field.data(_changed, true);
-          });
+            $field.data(_changed, false);
+            $field.on(_changed, function() {
+                $field.data(_changed, true);
+            });
 
-          var populate = function () {
-              // Bail if the fields value has changed
-              if ($field.data(_changed) == true) return;
+            var populate = function () {
+                // Bail if the fields value has changed
+                if ($field.data(_changed) === true) {
+                    return;
+                }
 
-              var values = [], field_val, field_val_raw, split;
-              dependencies.each(function() {
-                  if ($(this).val().length > 0) {
-                      values.push($(this).val());
-                  }
-              });
+                var values = [];
+                var split;
+                dependencies.each(function() {
+                    if ($(this).val().length > 0) {
+                        values.push($(this).val());
+                    }
+                });
 
-              var s = values.join(' ');
-              s = $.slugifyString(s, false, true);
+                var s = values.join(' ');
+                s = $.slugifyString(s, false, true);
 
-              // Trim to first num_chars chars
-              s = s.substring(0, maxLength);
+                // Trim to first num_chars chars
+                s = s.substring(0, maxLength);
 
-              // Only replace the last piece (don't replace slug heirarchy)
-              split = $field.val().split('/');
-              split[split.length - 1] = s;
-              $field.val(split.join('/'));
-          };
+                // Only replace the last piece (don't replace slug heirarchy)
+                split = $field.val().split('/');
+                split[split.length - 1] = s;
+                $field.val(split.join('/'));
+            };
 
-          dependencies.on('keyup change focus', populate);
-      });
-  };
+            dependencies.on('keyup change focus', populate);
+        });
+    };
 
   /*
     Functionality to set up the new, edit, and translate pages
   */
     var DRAFT_NAME;
-    var DRAFT_TIMEOUT_ID;
-    var draftingEnabled = false;
+    var draftTimeOutId;
     var draftAutoSaveEnabled = true;
 
     var supportsLocalStorage = win.mdn.features.localStorage;
@@ -193,7 +194,6 @@
 
     function init() {
         var $body = $('body');
-        var HEADERS = [ 'HGROUP', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ];
 
         $('select.enable-if-js').removeAttr('disabled');
 
@@ -224,16 +224,16 @@
         var fields = {
             title: {
                 id: '#id_slug',
-                dependency_ids: ['#id_title'],
-                dependency_list: ['#id_title'],
+                dependencyIds: ['#id_title'],
+                dependencyList: ['#id_title'],
                 maxLength: 50
             }
         };
 
         $.each(fields, function(i, field) {
             $(field.id).addClass('prepopulated_field');
-            $(field.id).data('dependency_list', field.dependency_list)
-                   .prepopulate($(field.dependency_ids.join(',')),
+            $(field.id).data('dependencyList', field.dependencyList)
+                   .prepopulate($(field.dependencyIds.join(',')),
                                 field.maxLength);
         });
     }
@@ -250,8 +250,8 @@
             var $titleNode = $('#id_title');
             var data;
 
-            if(CKEDITOR.instances['id_content']) {
-                data = $.trim(CKEDITOR.instances['id_content'].getSnapshot());
+            if(CKEDITOR.instances.id_content) {
+                data = $.trim(CKEDITOR.instances.id_content.getSnapshot());
             }
             else {
                 return;
@@ -263,9 +263,9 @@
             // Since we have content, we can launch!
             if(data) {
                 // Create and inject form for preview submission
-                var $form = $("<form action='" + $(this).attr("data-preview-url") + "' target='previewWin' method='POST' />").appendTo(document.body);
-                $("<input type='hidden' name='content' />").val(data).appendTo($form);
-                $("<input type='hidden' name='title' />").val(title).appendTo($form);
+                var $form = $('<form action="' + $(this).attr('data-preview-url') + '" target="previewWin" method="POST" />').appendTo(document.body);
+                $('<input type="hidden" name="content" />').val(data).appendTo($form);
+                $('<input type="hidden" name="title" />').val(title).appendTo($form);
 
                 // Add the CSRF ?
                 $('#wiki-page-edit, #translate-document').find('input[name=csrfmiddlewaretoken]').clone().appendTo($form);
@@ -284,20 +284,20 @@
     function initMetadataEditButton () {
 
         if ($('#article-head .metadata').length) {
-            var show_meta = function () {
+            var showMeta = function () {
                 $('#article-head .doc-title').hide();
                 $('#article-head .metadata').show();
                 $('#article-head .metadata #id_title').focus();
-            }
+            };
 
             // Properties button reveals the metadata fields
             $('#btn-properties').on('click', function (ev) {
                 ev.preventDefault();
-                show_meta();
+                showMeta();
             });
             // Form errors reveal the metadata fields, since they're the most
             // likely culprits
-            $('#edit-document .errorlist').each(show_meta);
+            $('#edit-document .errorlist').each(showMeta);
 
         } else {
             $('#btn-properties').hide();
@@ -311,7 +311,7 @@
         var $parentLis = $('.metadata-choose-parent');
         var $parentInput = $('#parent_id');
 
-        $parentLis.each(function(index) {
+        $parentLis.each(function() {
             $(this).css('display', 'block');
             $('#parent_text').mozillaAutocomplete({
                 minLength: 1,
@@ -322,10 +322,10 @@
                     req.locale = 'en-US';
                     return req;
                 },
-                onSelect: function(item, isSilent) {
+                onSelect: function(item) {
                     $parentInput.val(item.id);
                 },
-                onDeselect: function(item) {
+                onDeselect: function() {
                     $parentInput.val('');
                 }
             });
@@ -373,13 +373,13 @@
     var startingContent;
 
     // show restore and discard links for old draft
-    function displayRestoreDraft(content, draft_time) {
-        var draft_time_str = draft_time ? draft_time : gettext('an unknown date');
+    function displayRestoreDraft(content, draftTime) {
+        var draftTimeStr = draftTime ? draftTime : gettext('an unknown date');
         var draft = gettext('You have a draft from:');
         var restore = gettext('Restore the draft content');
         var discard = gettext('Discard the draft');
 
-        var text = draft + ' ' + draft_time_str + '. <a href="" class="js-restoreLink">' + restore + '</a>. <a href="" class="js-discardLink">'+ discard +'</a>.';
+        var text = draft + ' ' + draftTimeStr + '. <a href="" class="js-restoreLink">' + restore + '</a>. <a href="" class="js-discardLink">'+ discard +'</a>.';
         var $contentNode = $('#id_content');
         var editor;
 
@@ -416,7 +416,7 @@
     function initSaveAndEditButtons () {
         var $form = $('#wiki-page-edit');
         // Handle edits on the translate page
-        if ($form.length == 0 && $('#translate-document').length == 1) {
+        if ($form.length === 0 && $('#translate-document').length === 1) {
             $form = $('#translate-document');
         }
 
@@ -424,13 +424,13 @@
         $form.on('submit', function () {
             if (supportsLocalStorage) {
                 enableAutoSave(false);
-                clearTimeout(DRAFT_TIMEOUT_ID);
+                clearTimeout(draftTimeOutId);
             }
             return true;
         });
 
         // save and edit attempts ajax submit
-        $('.btn-save-and-edit').on('click', function(event) {
+        $('.btn-save-and-edit').on('click', function() {
             // disable form
             $('#wiki-page-edit').attr('disabled', true);
 
@@ -442,16 +442,16 @@
 
             // record event
             mdn.analytics.trackEvent({
-                    category: 'Wiki',
-                    action: 'Button', // now "Publish and keep editing" but keeping label for analytics continuity
-                    label: 'Save and Keep Editing'
-                });
+                category: 'Wiki',
+                action: 'Button', // now "Publish and keep editing" but keeping label for analytics continuity
+                label: 'Save and Keep Editing'
+            });
 
             // Preserve editor content incase something goes wrong
             var savedTa = $form.find('textarea[name=content]').val();
             if (supportsLocalStorage) {
                 saveDraft(savedTa);
-                clearTimeout(DRAFT_TIMEOUT_ID);
+                clearTimeout(draftTimeOutId);
             }
 
             // get form data
@@ -460,7 +460,7 @@
 
             $.ajax({
                 url : formURL + '?async',
-                type: "POST",
+                type: 'POST',
                 data : formData,
                 dataType : 'html',
                 success: function(data, textStatus, jqXHR) {
@@ -469,10 +469,11 @@
                     var $parsedData = $($.parseHTML(data));
                     var $responseErrors = $parsedData.find('.errorlist');
                     var $responseLoginRequired = $parsedData.find('#login');
+                    var jsonErrorMessage;
                     try {
-                      var jsonErrorMessage = JSON.parse(jqXHR['responseText'])['error_message'];
+                        jsonErrorMessage = JSON.parse(jqXHR.responseText).error_message;
                     } catch (err) {
-                      var jsonErrorMessage = undefined;
+                        jsonErrorMessage = undefined;
                     }
                     // If there are errors, saveNotification() for them
                     if ($responseErrors.length) {
@@ -492,11 +493,11 @@
                         // avoid triggering a conflict, since we just saved in
                         // the background.
                         var responseData = JSON.parse(data);
-                        if (responseData['error'] === true) {
-                            saveNotification.error(responseData['error_message']);
+                        if (responseData.error === true) {
+                            saveNotification.error(responseData.error_message);
                         } else {
-                            var responseRevision = JSON.parse(data)['new_revision_id'];
-                            $("input[id=id_current_rev]").val(responseRevision);
+                            var responseRevision = JSON.parse(data).new_revision_id;
+                            $('input[id=id_current_rev]').val(responseRevision);
 
                             // Clear the review comment
                             $('#id_comment').val('');
@@ -509,12 +510,13 @@
                     // Re-enable the form; it gets disabled to prevent double-POSTs
                     $form.attr('disabled', false);
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR) {
+                    var errorMessage;
                     // Try to display the error that comes back from the server
                     try {
-                        var errorMessage = JSON.parse(jqXHR['responseText'])['error_message'];
+                        errorMessage = JSON.parse(jqXHR.responseText).error_message;
                     } catch (err) {
-                        errorMessage = gettext("Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.");
+                        errorMessage = gettext('Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the "Publish" button.');
                     }
                     saveNotification.error(errorMessage);
                     // Re-enable the form; it gets disabled to prevent double-POSTs
@@ -576,7 +578,7 @@
         $draftButton.attr('disabled', 'disabled');
     }
 
-    function manualSaveDraft(val) {
+    function manualSaveDraft() {
         var currentContent = $form.find('textarea[name=content]').val();
         // save draft
         saveDraft(currentContent, gettext('saved'));
@@ -584,10 +586,9 @@
         enableAutoSave(false);
     }
 
-    function autoSaveDraft(val) {
+    function autoSaveDraft() {
         if(draftAutoSaveEnabled) {
             var currentContent = $form.find('textarea[name=content]').val();
-            var saveContent = val || currentContent;
             var oldDraft = localStorage.getItem(DRAFT_NAME);
 
             // it looks a little weird to save a draft when no changes are made
@@ -606,7 +607,7 @@
     function clearDraft(notify) {
         localStorage.removeItem(DRAFT_NAME);
         localStorage.removeItem(DRAFT_NAME + '#save-time');
-        if (notify == 'publish') {
+        if (notify === 'publish') {
             updateDraftState(gettext('published'));
             enableAutoSave(false);
         }
@@ -632,7 +633,7 @@
         var treated1 = treatContent(trim1);
         var trim2 = $.trim(ver2);
         var treated2 = treatContent(trim2);
-        if (treated1 == treated2) {
+        if (treated1 === treated2) {
             return true;
         }
         else {
@@ -663,9 +664,7 @@
 
     // sets up drafting functionality
     function initDrafting() {
-        var editor;
         if (supportsLocalStorage) {
-            draftingEnabled = true;
             DRAFT_NAME = getStorageKey();
             // save starting content for comparison
             startingContent = $form.find('textarea[name=content]').val();
@@ -701,10 +700,10 @@
             var draftMatchesStart = contentMatches(prevDraft, startingContent);
             if (prevDraft && !draftMatchesStart) {
                 // display option to restore
-                var draft_time = localStorage.getItem(DRAFT_NAME + '#save-time');
-                displayRestoreDraft(prevDraft, draft_time);
+                var draftTime = localStorage.getItem(DRAFT_NAME + '#save-time');
+                displayRestoreDraft(prevDraft, draftTime);
             }
-            else if (prevDraft && matchesStart) {
+            else if (prevDraft && draftMatchesStart) {
                 // don't need draft if it's a copy of the starting content
                 clearDraft(false);
             }
@@ -712,9 +711,9 @@
             // Add key listener for CKEditor and drafting
             var callback = function() {
                 // don't save if still typing
-                clearTimeout(DRAFT_TIMEOUT_ID);
+                clearTimeout(draftTimeOutId);
                 // begin countdown to auto save
-                DRAFT_TIMEOUT_ID = setTimeout(autoSaveDraft, 3000);
+                draftTimeOutId = setTimeout(autoSaveDraft, 3000);
                 // unsaved changes, enable button
                 $draftButton.removeAttr('disabled');
             };
@@ -726,14 +725,15 @@
                 }
             }
             catch(e) {
-                console.log(e);
+                // console.log(e);
             }
 
+
             // Clear draft upon discard
-           $('.btn-discard').on('click', function() {
-                clearTimeout(DRAFT_TIMEOUT_ID);
+            $('.btn-discard').on('click', function() {
+                clearTimeout(draftTimeOutId);
                 clearDraft(true);
-           });
+            });
         }
     }
 
@@ -764,7 +764,7 @@
         $('#page-attachments-more').on('click', function() {
             // Don't add boxes during submission
             if (running) {
-              return;
+                return;
             }
             function clone() {
                 // Create and insert clone
@@ -782,10 +782,10 @@
         $attachmentsForm.on('submit', function(e) {
             // Stop concurrent submissions
             if (running) {
-              e.preventDefault();
-              return;
+                e.preventDefault();
+                return;
             } else {
-              running = true;
+                running = true;
             }
         });
     }
@@ -795,116 +795,124 @@
     // So far three sections contribute to dirtiness: Metadata, editor content and tags
     //
     function initDirtinessTracking() {
-      // These are all fields that count towards an edit, excluding the editor and tags
-      var metaSelector = 'input:not([type="hidden"]), textarea, select';
-      var $metaDataFields = $form.find(metaSelector);
-      var editor = CKEDITOR.instances['id_content'];
+        // These are all fields that count towards an edit, excluding the editor and tags
+        var metaSelector = 'input:not([type="hidden"]), textarea, select';
+        var $metaDataFields = $form.find(metaSelector);
+        var editor = CKEDITOR.instances.id_content;
 
-      function setEditorButtonsEnabled(enabled) {
-        var saveContinue = editor.getCommand('mdn-buttons-save');
-        var saveEdit = editor.getCommand('mdn-buttons-save-exit');
+        function setEditorButtonsEnabled(enabled) {
+            var saveContinue = editor.getCommand('mdn-buttons-save');
+            var saveEdit = editor.getCommand('mdn-buttons-save-exit');
 
-        var state = CKEDITOR.TRISTATE_OFF;
-        if (!enabled)
-            state = CKEDITOR.TRISTATE_DISABLED;
+            var state = CKEDITOR.TRISTATE_OFF;
+            if (!enabled) {
+                state = CKEDITOR.TRISTATE_DISABLED;
+            }
+            if (saveContinue) {
+                saveContinue.setState(state);
+            }
+            if (saveEdit) {
+                saveEdit.setState(state);
+            }
+        }
 
-        if (saveContinue)
-            saveContinue.setState(state);
-        if (saveEdit)
-            saveEdit.setState(state);
-      }
+        function onDirty() {
+            $('.btn-save-and-edit').attr('disabled', false);
+            $('.btn-save').attr('disabled', false);
+            setEditorButtonsEnabled(true);
+        }
+        // Called when everything is clean
+        function onClean() {
+            $('.btn-save-and-edit').attr('disabled', true);
+            $('.btn-save').attr('disabled', true);
+            setEditorButtonsEnabled(false);
+        }
 
-      function onDirty() {
-        $('.btn-save-and-edit').attr('disabled', false);
-        $('.btn-save').attr('disabled', false);
-        setEditorButtonsEnabled(true);
-      }
-      // Called when everything is clean
-      function onClean() {
-        $('.btn-save-and-edit').attr('disabled', true);
-        $('.btn-save').attr('disabled', true);
-        setEditorButtonsEnabled(false);
-      }
+        function resetDirty() {
+            editor.resetDirty();
+            $metaDataFields.each(function() {
+                var $this = $(this);
+                var value = $this.val();
 
-      function resetDirty() {
-        editor.resetDirty();
-        $metaDataFields.each(function() {
-          var $this = $(this);
-          var value = $this.val();
+                if($this.attr('type') === 'checkbox') {
+                    value = this.checked;
+                }
 
-          if($this.attr('type') == 'checkbox') {
-            value = this.checked;
-          }
+                $this.data('original', value);
+            });
+            $form.find('.dirty').removeClass('dirty');
+            $form.trigger('mdn:clean');
+        }
 
-          $this.data('original', value);
-        })
-        $form.find('.dirty').removeClass('dirty');
-        $form.trigger('mdn:clean');
-      }
-
-      // Three custom events are used to track changes throughout the page
-      // Dirtiness is marked by the class `dirty`, cleanliness by `clean`
-      $form.on('mdn:save-success', resetDirty)
-      .on('mdn:dirty', onDirty)
-      .on('mdn:clean', function() { // Gets triggered when a section is clean, others may still be dirty
-        if (!$('.dirty').length)
-          onClean();
-      });
+        // Three custom events are used to track changes throughout the page
+        // Dirtiness is marked by the class `dirty`, cleanliness by `clean`
+        $form.on('mdn:save-success', resetDirty)
+        .on('mdn:dirty', onDirty)
+        .on('mdn:clean', function() { // Gets triggered when a section is clean, others may still be dirty
+            if (!$('.dirty').length) {
+                onClean();
+            }
+        });
 
       // Keep track of editor dirtiness
-      function checkEditorDirtiness() {
-        var editorDirty = editor.checkDirty();
+        function checkEditorDirtiness() {
+            var editorDirty = editor.checkDirty();
 
-        if (editorDirty) {
-          $form.find('.editor-container').addClass('dirty').trigger('mdn:dirty');
-        } else {
-          $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
-        }
-      }
-
-      var interval;
-      editor.on('contentDom', function() {
-        // Basic events we know trigger a change
-        editor.document.on('keyup', checkEditorDirtiness);
-        editor.on('paste setData', checkEditorDirtiness);
-
-        // Since CKE doesn't provide us a change event yet, a constant check is still the best way to
-        // determine if the editor has changed.
-        if(interval) clearInterval(interval);
-        interval = setInterval(checkEditorDirtiness, 1500); // 1 seconds is arbitrary, we can update as desired
-      });
-      editor.on('instanceReady', function(e) {
-        if (e.editor == editor)
-            setEditorButtonsEnabled(false);
-      });
-
-      $(win).on('beforeunload', function() {
-        if(interval) clearInterval(interval);
-      });
-
-
-      // Keep track of metadata dirtiness
-      $form.on('change input', metaSelector, function() {
-        var $this = $(this);
-        var value = $this.val();
-        var typeAttr = $this.attr('type');
-
-        if(typeAttr && typeAttr.toLowerCase() == 'checkbox') {
-            value = this.checked;
+            if (editorDirty) {
+                $form.find('.editor-container').addClass('dirty').trigger('mdn:dirty');
+            } else {
+                $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
+            }
         }
 
-        if (value !== $this.data('original')) {
-          if (!$this.hasClass('dirty')) {
-            $this.addClass('dirty').trigger('mdn:dirty');
-          }
-        } else {
-          $this.removeClass('dirty').trigger('mdn:clean');
-        }
-      });
+        var interval;
+        editor.on('contentDom', function() {
+            // Basic events we know trigger a change
+            editor.document.on('keyup', checkEditorDirtiness);
+            editor.on('paste setData', checkEditorDirtiness);
 
-      resetDirty();
+            // Since CKE doesn't provide us a change event yet, a constant check is still the best way to
+            // determine if the editor has changed.
+            if(interval) {
+                clearInterval(interval);
+            }
+            interval = setInterval(checkEditorDirtiness, 1500); // 1 seconds is arbitrary, we can update as desired
+        });
+        editor.on('instanceReady', function(e) {
+            if (e.editor === editor) {
+                setEditorButtonsEnabled(false);
+            }
+        });
+
+        $(win).on('beforeunload', function() {
+            if(interval) {
+                clearInterval(interval);
+            }
+        });
+
+
+        // Keep track of metadata dirtiness
+        $form.on('change input', metaSelector, function() {
+            var $this = $(this);
+            var value = $this.val();
+            var typeAttr = $this.attr('type');
+
+            if(typeAttr && typeAttr.toLowerCase() === 'checkbox') {
+                value = this.checked;
+            }
+
+            if (value !== $this.data('original')) {
+                if (!$this.hasClass('dirty')) {
+                    $this.addClass('dirty').trigger('mdn:dirty');
+                }
+            } else {
+                $this.removeClass('dirty').trigger('mdn:clean');
+            }
+        });
+
+        resetDirty();
     }
 
     $(doc).ready(init);
 
- }(jQuery, window, document));
+}(jQuery, window, document));
