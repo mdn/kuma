@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-04-05 12:29+0000\n"
-"Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
+"PO-Revision-Date: 2017-04-06 20:49+0000\n"
+"Last-Translator: jlG <jlg.l10n.es@gmail.com>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1374,19 +1374,16 @@ msgid "While in maintenance mode, the following actions are unavailable:"
 msgstr "Mientras el modo de mantenimiento esté activo, no podrás hacer lo siguiente:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "Enlazado en el artículo"
+msgstr "editar artículos"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
-#, fuzzy
 msgid "creating accounts"
-msgstr "Inicia sesión o crea una cuenta:"
+msgstr "crear cuentas"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
-#, fuzzy
 msgid "logging in"
-msgstr "Conectar"
+msgstr "iniciar sesión"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
@@ -3368,7 +3365,7 @@ msgstr "En este artículo"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "Este documento no se ha renderizado todavía y no podrá generarse mientras MDN esté en <a href=\"%(url)s\">modo de mantenimiento</a>. Vuelve a consultarlo cuando termine el mantenimiento."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
