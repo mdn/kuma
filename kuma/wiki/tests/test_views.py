@@ -215,6 +215,24 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(all_url)
         eq_(200, resp.status_code)
 
+    def test_translation_history_has_based_on_revision_to_compare(self):
+        """In the history of a translation, there should be based on revision
+           So that its possible to compare a new translation with its based on"""
+
+        eng_rev = revision(is_approved=True, save=True)
+        trans_doc = document(locale='bn-BD', parent=eng_rev.document, save=True)
+        revision(document=trans_doc, based_on=eng_rev, save=True)
+
+        url = reverse('wiki.document_revisions', args=(trans_doc.slug,), locale=trans_doc.locale)
+        resp = self.client.get(url)
+        eq_(200, resp.status_code)
+        data = pq(resp.content)
+        list_content = data('.revision-list-contain').find('li')
+        # Check there are 2 revision in the list
+        eq_(2, len(list_content))
+        # Check parent_revision id is below to compare from
+        eq_(str(eng_rev.id), list_content.find('input[name=from]')[1].attrib['value'])
+
     def test_toc_view(self):
         slug = 'toc_test_doc'
         html = '<h2>Head 2</h2><h3>Head 3</h3>'

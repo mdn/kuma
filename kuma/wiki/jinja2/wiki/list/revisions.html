@@ -63,6 +63,9 @@
                 <a href="{{ rev.creator.get_absolute_url() }}">{{ rev.creator }}</a>
               </div>
               <div class="revision-list-cell revision-list-comment">
+                {% if rev.document.locale != document.locale %}
+                  <em>{{ get_locale_localized(rev.document.locale) }}</em>
+                {% endif %}
                 {{ format_comment(rev) }}
               </div>
               {% if document.current_revision.id != rev.id and user_can_delete %}
