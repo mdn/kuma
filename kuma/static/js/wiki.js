@@ -582,6 +582,15 @@
     }
 
     /*
+        Track untranslated pages
+    */
+    // is there an translation banner?
+    var $docPending = $('#doc-pending-fallback');
+    if($docPending.length){
+        mdn.analytics.trackError('Translation Pending', 'displayed');
+    }
+
+    /*
         Stack overflow search form, used for dev program
         ex: http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+foobar
     */
