@@ -293,24 +293,6 @@
               {% endif %}
 
               {% if document.current_revision %}
-                {% if document.current_revision.needs_technical_review %}
-                  <div class="warning warning-review">
-                    <p>
-                      {% trans url="/docs/MDN/Contribute/HowTo/Do_a_technical_review" %}
-                        This article needs a technical review. <a href="{{ url }}">How you can help.</a>
-                      {% endtrans %}
-                    </p>
-                  </div>
-                {% endif %}
-                {% if document.current_revision.needs_editorial_review %}
-                  <div class="warning warning-review">
-                    <p>
-                      {% trans url="/docs/MDN/Contribute/Howto/Do_an_editorial_review" %}
-                        This article needs an editorial review. <a href="{{ url }}">How you can help.</a>
-                      {% endtrans %}
-                    </p>
-                  </div>
-                {% endif %}
                 {% if document.current_revision.localization_in_progress %}
                   {% if not settings.MAINTENANCE_MODE and document.current_revision.translation_age >= 10 %}
                     <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=document.get_edit_url() %}

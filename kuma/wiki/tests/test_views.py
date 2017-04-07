@@ -2158,11 +2158,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         review_tags.sort()
         eq_(['editorial', 'technical'], review_tags)
 
-        # Now, ensure that warning boxes appear for the review tags.
+        # Now, ensure that review form appears for the review tags.
         response = self.client.get(reverse('wiki.document',
                                            args=[doc.slug]), data)
         page = pq(response.content)
-        eq_(2, page.find('.warning.warning-review').length)
+        eq_(1, page.find('.page-meta.reviews').length)
+        eq_(1, page.find('#id_request_technical').length)
+        eq_(1, page.find('#id_request_editorial').length)
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
@@ -2189,7 +2191,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
-        # Post an edit that removes one of the tags.
+        # Post an edit that removes the technical review tag.
         data.update({
             'form-type': 'rev',
             'review_tags': ['editorial', ]
@@ -2201,7 +2203,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.document',
                                            args=[doc.slug]), data)
         page = pq(response.content)
-        eq_(1, page.find('.warning.warning-review').length)
+        eq_(1, page.find('.page-meta.reviews').length)
+        eq_(0, page.find('#id_request_technical').length)
+        eq_(1, page.find('#id_request_editorial').length)
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))

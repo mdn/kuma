@@ -10,13 +10,21 @@
         {% if document.current_revision.needs_technical_review %}
           <li>
             <input type="checkbox" value="request_technical" id="id_request_technical" name="request_technical" checked="checked">
-            <label for="id_request_technical">{{ _('Technical - code samples, APIs, or technologies') }}</label>
+            <label for="id_request_technical">
+              {% trans url="/docs/MDN/Contribute/HowTo/Do_a_technical_review" %}
+                Technical - code samples, APIs, or technologies. <a href="{{ url }}">Can you help?</a>
+              {% endtrans %}
+            </label>
           </li>
         {% endif %}
         {% if document.current_revision.needs_editorial_review %}
           <li>
             <input type="checkbox" value="request_editorial" id="id_request_editorial" name="request_editorial" checked="checked">
-            <label for="id_request_editorial">{{ _('Editorial - prose, grammar, or content') }}</label>
+            <label for="id_request_editorial">
+              {% trans url="/docs/MDN/Contribute/Howto/Do_an_editorial_review" %}
+              Editorial - prose, grammar, or content. <a href="{{ url }}">Can you help?</a>
+              {% endtrans %}
+            </label>
           </li>
         {% endif %}
         </ul>
