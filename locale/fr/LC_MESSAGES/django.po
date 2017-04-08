@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-25 07:19+0000\n"
+"PO-Revision-Date: 2017-04-08 11:23+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -1290,7 +1290,7 @@ msgstr "Web ouvert et mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-msgstr "Tester pour Firefox et plus de 800 combinaisons de systèmes d'exploitation et de navigateurs grâce à Mozilla et Sauce Labs"
+msgstr "Tester pour Firefox et d'autres navigateurs et systèmes grâce à Mozilla et Sauce Labs"
 
 #: kuma/landing/jinja2/landing/homepage.html:120
 msgid "Test on Sauce Labs"
