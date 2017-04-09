@@ -351,11 +351,11 @@ msgstr "Ffer ajerred ɣer tebratt n isallen"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
-msgstr "Ɣeṛ deffir"
+msgstr "Γeṛ deffir"
 
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
-msgstr "Ɣer zdat"
+msgstr "Γer zdat"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
