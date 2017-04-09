@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-27 13:54+0000\n"
-"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2017-04-09 13:31+0000\n"
+"Last-Translator: Slimane Amiri <slimane.amiri@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Amaɣnu yinek yettwaḥwi ihi ur yezmir ara ad yesnifel."
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr "Amaɣnu-agi n useqdac yettwaḥwi."
+msgstr "Amaγnu-agi n useqdac yettwaḥwi."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
@@ -266,7 +266,7 @@ msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network akked ittekkiyen i
 
 #: jinja2/base.html:215
 msgid "About MDN"
-msgstr "Ɣef MDN"
+msgstr "Γef MDN"
 
 #: jinja2/base.html:216
 msgid "Terms"
