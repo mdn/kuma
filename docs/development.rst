@@ -98,26 +98,35 @@ See https://github.com/mozilla/kumascript.
 
 Front-end Development and Compiling Sass files
 ==============================================
-Sass files need to be compiled for changes to take effect, but don't worry, with
-``DEBUG=True`` (which is the default for local development), the compilation
-is done automatically by Gulp.
+Sass files need to be compiled for changes to take effect, but don’t worry,
+with DEBUG=True (which is the default for local development), the compilation
+can be done automatically by Gulp.
 
-When doing front-end development on your local machine, you'll need to run the
-following in its own shell from the root directory of your local Kuma
-repository::
+When doing front-end development on your local machine, run the following in its
+own shell from the root directory of your local Kuma repository::
 
     gulp
 
-This will watch for changes to all files under ``./kuma/static``. If the file is
-a Sass file (``.scss`` or ``.sass``), it will trigger a recompile of *all*
-top-level ``.scss`` files, which will then be copied over to ``./static`` (and
-immediately available to your local server). If the file is not a Sass file, it
-will be copied to ``./static`` with no compile step.
+This ``gulp`` command will do two things. First, it will watch *all* files
+under ``./kuma/static``, and any changed file that is *not* a Sass file
+(``.scss`` or ``.sass``) under ``./kuma/static/styles``, will be copied to
+``./static`` as is (no compilation will be done).
 
-  .. note::
+Second, it will watch *all* files with a ``.scss`` extension under
+``./kuma/static/styles``, and any change will trigger a ``stylelint``
+of the changed file, as well as a recompile of *all* top-level ``.scss`` files.
+All of the resulting compiled files will then be copied to ``./static``, and
+immediately available to your local server.
+
+.. note::
 
   It is currently faster for local development to compile Sass using
   ``gulp-sass`` instead of Django Pipeline. This may change in the future.
+
+If you'd like to manually run ``stylelint`` locally on all ``.scss`` files under
+``./kuma/static/styles``, do this::
+
+    gulp css:lint
 
 If you haven't already installed `Node.js`_  and `gulp`_ on
 your local machine, see :ref:`frontend-development`.
