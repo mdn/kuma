@@ -8,8 +8,8 @@ from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
 from ..decorators import process_document_path, prevent_indexing
-from ..models import (Document, DocumentTag, ReviewTag,
-                      LocalizationTag)
+from ..kumascript import macro_usage
+from ..models import Document, DocumentTag, ReviewTag, LocalizationTag
 
 
 @block_user_agents
@@ -52,6 +52,19 @@ def templates(request):
         'is_templates': True,
     }
     return render(request, 'wiki/list/documents.html', context)
+
+
+@block_user_agents
+@require_GET
+def macros(request):
+    """Returns table of active macros and their page counts."""
+    macros = macro_usage()
+    total = sum(val['count'] for val in macros.values())
+    context = {
+        'macros': macros,
+        'has_counts': total != 0
+    }
+    return render(request, 'wiki/list/macros.html', context)
 
 
 @block_user_agents

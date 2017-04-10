@@ -3,6 +3,7 @@ import re
 import bleach
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from urlparse import urlparse, urlunparse
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
@@ -206,6 +207,9 @@ KUMASCRIPT_TIMEOUT_ERROR = [
      "message": "Request to Kumascript service timed out",
      "args": ["TimeoutError"]}
 ]
+_ks_urlbits = urlparse(settings.KUMASCRIPT_URL_TEMPLATE)
+KUMASCRIPT_BASE_URL = urlunparse((_ks_urlbits.scheme, _ks_urlbits.netloc,
+                                  '', '', '', ''))
 
 # TODO: Put this under the control of Constance / Waffle?
 # Flags used to signify revisions in need of review

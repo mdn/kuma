@@ -1331,3 +1331,46 @@ def _translation_data():
         'content': 'loremo ipsumo doloro sito ameto',
         'toc_depth': Revision.TOC_DEPTH_H4,
     }
+
+
+@mock.patch('kuma.wiki.views.list.macro_usage')
+def test_list_macros(mock_usage, client, db):
+    """The normal macro page is a three-column table."""
+    mock_usage.return_value = {
+        'A11yRoleQuicklinks': {
+            'github_subpath': 'A11yRoleQuicklinks.ejs',
+            'count': 100,
+            'en_count': 50,
+        }
+    }
+
+    response = client.get(reverse('wiki.list_macros'), follow=True)
+    assert response.status_code == 200
+    assert "Found 1 active macro." in response.content
+    page = pq(response.content)
+    assert len(page("table.macros-table")) == 1
+    assert len(page("th.stat-header")) == 2
+
+
+@mock.patch('kuma.wiki.views.list.macro_usage')
+def test_list_macros_no_counts(mock_usage, client, db):
+    """The macro page is a one-column table when counts are unavailable."""
+    mock_usage.return_value = {
+        'A11yRoleQuicklinks': {
+            'github_subpath': 'A11yRoleQuicklinks.ejs',
+            'count': 0,
+            'en_count': 0,
+        },
+        'CSSRef': {
+            'github_subpath': 'CSSRef.ejs',
+            'count': 0,
+            'en_count': 0,
+        }
+    }
+
+    response = client.get(reverse('wiki.list_macros'), follow=True)
+    assert response.status_code == 200
+    assert "Found 2 active macros." in response.content
+    page = pq(response.content)
+    assert len(page("table.macros-table")) == 1
+    assert len(page("th.stat-header")) == 0

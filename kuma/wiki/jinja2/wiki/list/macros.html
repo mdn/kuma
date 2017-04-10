@@ -1,0 +1,71 @@
+{% extends "wiki/base.html" %}
+{% set styles = ("dashboards",) %}
+{% set title = _("Active macros") %}
+{% set github_url = "https://github.com/mozilla/kumascript/tree/master/macros/" %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="wiki-column text-content">
+  <p>
+    {% if macros %}
+      {{ ngettext("Found %(num)s active macro.", "Found %(num)s active macros.", macros|length) }}
+    {% else %}
+      {{ _("See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros.", url=github_url) }}
+    {% endif %}
+    {{ _("You can also <a href=\"%(url)s\">manually search for macros</a>.", url="#macro-search") }}
+  </p>
+  {% if macros %}
+    <table class="macros-table">
+      <caption>
+        {% if has_counts %}
+          {{ _("Active macros and their usage counts") }}
+        {% else %}
+          {{ _("Active macros") }}
+        {% endif %}
+      </caption>
+      <thead>
+        <tr>
+          <th>{{ _("Macro Name") }}</th>
+          {% if has_counts %}
+            <th class="stat-header">{{ _("English Page Count") }}</th>
+            <th class="stat-header">{{ _("All Page Count") }}</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for name, params in macros | dictsort(false) %}
+          <tr>
+            <th scope="row">
+              <a href="https://github.com/mozilla/kumascript/tree/master/macros/{{params['github_subpath']}}">
+                {{ name }}
+              </a>
+            </td>
+            {% if has_counts %}
+              <td class="data">
+                <a href="{{ url("search") + "?locale=en-US&kumascript_macros=" + name + "&topic=none" }}">
+                  {{ params["en_count"] | default(0)}}
+                </a>
+              </td>
+              <td class="data">
+                <a href="{{ url("search") + "?locale=*&kumascript_macros=" + name + "&topic=none" }}">
+                  {{ params["count"] | default(0) }}
+                </a>
+              </td>
+           {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  <form id="macro-search" method="GET" action="{{url("search")}}">
+    <input type="hidden" name="topic" value="none" />
+    <label for="name">{{ _("Search for macro usage:") }}</label>
+    <input id="name" name="kumascript_macros" type="text" placeholder="{{_("Macro Name") }}" />
+    <br/>
+    <button type="submit" name="locale" value="*">{{ ("Search All Pages") }}</button>
+    <button type="submit" name="locale" value="en-US">{{ ("Search English Pages") }}</button>
+  </form>
+</div>
+
+{% endblock %}
