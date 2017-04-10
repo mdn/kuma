@@ -1,5 +1,6 @@
 from pypom import Region
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.base import BasePage
 
@@ -62,19 +63,24 @@ class DashboardPage(BasePage):
         return first_details_diff.is_displayed()
 
     def click_page_two(self):
-        revsion_filter_form = self.find_element(*self._revision_filter_form_locator)
+        revision_filter_form = self.find_element(*self._revision_filter_form_locator)
         page_two_link = self.find_element(*self._page_two_link)
         page_two_link.click()
         # revsion-page updates to not 1
         self.wait.until(lambda s: int(self.find_element(*self._revision_page_input).get_attribute('value')) is not 1)
         # form is disabled when ajax request made
-        self.wait.until(lambda s: 'disabled' in revsion_filter_form.get_attribute('class'))
+        self.wait.until(lambda s: 'disabled' in revision_filter_form.get_attribute('class'))
         # wait for tray to be added
         self.wait.until(lambda s: len(self.find_elements(*self._notification_tray_locator)) > 0)
         # wait for notification in tray
         self.wait.until(lambda s: len(self.find_elements(*self._first_notification_locator)) > 0)
+
         # form editable when ajax response arrives
-        self.wait.until(lambda s: 'disabled' not in revsion_filter_form.get_attribute('class'))
+        # This fails 40% of the time w/ default timeout of 10s
+        # bug 1246164 - Redesign revision pagination for performance
+        # http://selenium-python.readthedocs.io/waits.html#explicit-waits
+        WebDriverWait(self.selenium, 30).until(lambda s: 'disabled' not in revision_filter_form.get_attribute('class'))
+
         # wait for notification to close
         self.wait.until(lambda s: 'closed' in self.find_element(*self._first_notification_locator).get_attribute('class'))
         # revsion-page-value updates to 1
