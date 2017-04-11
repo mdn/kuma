@@ -8,9 +8,8 @@ from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
 from ..decorators import process_document_path, prevent_indexing
-from ..models import (Document, DocumentTag, Revision, ReviewTag,
+from ..models import (Document, DocumentTag, ReviewTag,
                       LocalizationTag)
-from ..queries import MultiQuerySet
 
 
 @block_user_agents
@@ -190,33 +189,35 @@ def revisions(request, document_slug, document_locale):
 
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
-    revisions = MultiQuerySet(
-        (Revision.objects.filter(pk=document.current_revision.pk)
-                         .prefetch_related('creator', 'document')
-                         .transform(get_previous)),
-        (Revision.objects.filter(document=document)
-                         .order_by('-created', '-id')
-                         .exclude(pk=document.current_revision.pk)
-                         .prefetch_related('creator', 'document')
-                         .transform(get_previous))
-    )
+    all_revisions = (document.revisions.defer('summary', 'content').order_by('created', 'id')
+                     .select_related('creator').reverse().transform(get_previous))
 
-    if not revisions.exists():
+    if not all_revisions.exists():
         raise Http404
 
     if per_page == 'all':
         page = None
+        all_revisions = list(all_revisions)
     else:
         try:
             per_page = int(per_page)
         except ValueError:
             per_page = DOCUMENTS_PER_PAGE
 
-        page = paginate(request, revisions, per_page)
-        revisions = page.object_list
+        page = paginate(request, all_revisions, per_page)
+        all_revisions = list(page.object_list)
+    # In order to compare the first revision of a translation, need to insert its parent revision to the list
+    # The parent revision should stay at last page in order to compare. So insert only if there are no next page or
+    # all revisions are showing
+    if (not page or not page.has_next()) and document.parent:
+        # *all_revisions are in descending order. so call last() in order to get first revision
+        first_rev_based_on = all_revisions[-1].based_on
+        # Translation can be orphan so that first revision does not have any english based on. So handle the situation.
+        if first_rev_based_on:
+            all_revisions.append(first_rev_based_on)
 
     context = {
-        'revisions': revisions,
+        'revisions': all_revisions,
         'document': document,
         'page': page,
     }

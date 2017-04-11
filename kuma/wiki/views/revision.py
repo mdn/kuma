@@ -94,7 +94,12 @@ def compare(request, document_slug, document_locale):
     to_id = smart_int(request.GET.get('to'))
 
     revisions = Revision.objects.prefetch_related('document')
-    revision_from = get_object_or_404(revisions, id=from_id, document=doc)
+    # It should also be possible to compare from the parent document revision
+    try:
+        revision_from = revisions.get(id=from_id, document=doc)
+    except Revision.DoesNotExist:
+        revision_from = get_object_or_404(revisions, id=from_id, document=doc.parent)
+
     revision_to = get_object_or_404(revisions, id=to_id, document=doc)
 
     context = {
