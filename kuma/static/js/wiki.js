@@ -373,13 +373,21 @@
         var $thisLink = $(this);
         var url = $thisLink.attr('href');
 
-        var data = {
+        var linkData = {
             category: 'TOC Links',
             action: $thisLink.text(),
             label: $thisLink.attr('href')
         };
 
-        mdn.analytics.trackLink(event, url, data);
+        mdn.analytics.trackLink(event, url, linkData);
+
+        var fixed = $('#toc.fixed').length > 0 ? 'fixed' : 'not fixed';
+        var clickData = {
+            category: 'TOC Click',
+            action: fixed
+        };
+
+        mdn.analytics.trackLink(event, url, clickData);
     });
 
     /*
