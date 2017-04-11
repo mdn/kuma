@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-28 18:08+0000\n"
+"PO-Revision-Date: 2017-04-11 08:40+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1283,7 +1283,7 @@ msgstr "Дарете сега"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get The Browser For Developers Like You"
-msgstr "Вземете браузърът за разработчици като вас"
+msgstr "Вземете браузъра за разработчици като вас"
 
 #: kuma/landing/jinja2/landing/homepage.html:144
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
