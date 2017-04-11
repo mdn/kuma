@@ -16,6 +16,7 @@ env:
         - TOXENV=docs
         - TOXENV=locales DOCKER_COMPOSE_VERSION=1.9.0
         - TOXENV=docker DOCKER_COMPOSE_VERSION=1.9.0 UID=0
+        - TOXENV=stylelint
     global:
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DEBIAN_FRONTEND=noninteractive

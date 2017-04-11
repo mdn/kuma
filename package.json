@@ -15,6 +15,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
+    "gulp-stylelint": "^3.9.0",
     "gulp-watch": "^4.3.6"
   }
 }
