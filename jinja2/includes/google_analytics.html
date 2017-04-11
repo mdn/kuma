@@ -20,7 +20,7 @@
         {% endif %}
 
         // dimension18 == "Staff"
-        ga('set', 'dimension18', '{{ request.user.is_staff | yesno }}');
+        ga('set', 'dimension18', '{% if request.user.is_staff %}Yes{% else %}No{% endif %}');
     {% endif %}
 
     // dimension9 == "Section editing"
