@@ -58,13 +58,13 @@
       </tbody>
     </table>
   {% endif %}
-  <form id="macro-search" method="GET" action="{{url("search")}}">
+  <form id="macro-search" class="nodisable" method="GET" action="{{url("search")}}">
     <input type="hidden" name="topic" value="none" />
     <label for="name">{{ _("Search for macro usage:") }}</label>
     <input id="name" name="kumascript_macros" type="text" placeholder="{{_("Macro Name") }}" />
     <br/>
-    <button type="submit" name="locale" value="*">{{ ("Search All Pages") }}</button>
-    <button type="submit" name="locale" value="en-US">{{ ("Search English Pages") }}</button>
+    <button type="submit" name="locale" value="*">{{ _("Search All Pages") }}</button>
+    <button type="submit" name="locale" value="en-US">{{ _("Search English Pages") }}</button>
   </form>
 </div>
 
