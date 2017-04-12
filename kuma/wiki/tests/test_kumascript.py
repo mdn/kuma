@@ -244,3 +244,19 @@ def test_macro_usage_elasticsearch_exception(mock_sources, mock_page_count):
         }
     }
     assert macros == expected
+
+
+@mock.patch('kuma.wiki.kumascript.macro_page_count')
+@mock.patch('kuma.wiki.kumascript.macro_sources')
+def test_macro_usage_2nd_es_exception(mock_sources, mock_page_count):
+    """When follow-on ElasticSearch call raises, reraise exception."""
+    mock_sources.return_value = {
+        'A11yRoleQuicklinks': 'A11yRoleQuicklinks.ejs'
+    }
+    mock_page_count.side_effect = [
+        {'a11yrolequicklinks': 200, 'othermacro': 50},
+        TransportError("Can't reach ElasticSearch")
+    ]
+
+    with pytest.raises(TransportError):
+        kumascript.macro_usage()
