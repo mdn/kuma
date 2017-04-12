@@ -1,6 +1,8 @@
 import pytest
+from selenium.webdriver.common.by import By
 
-from pages.dashboard import DashboardPage
+from pages.article import ArticlePage
+from pages.dashboard import DashboardPage, MacroDashboardPage
 from pages.admin import AdminLogin
 from utils.decorators import (
     skip_if_maintenance_mode,
@@ -80,3 +82,13 @@ def test_dashboard_super(base_url, selenium):
     assert first_row.is_ip_ban_present
     # spam ham button present
     assert first_row.is_spam_ham_button_present
+
+
+@pytest.mark.nondestructive
+def test_macros(base_url, selenium):
+    """/en-US/dashboards/macros returns the macros list."""
+    page = MacroDashboardPage(selenium, base_url).open()
+    assert selenium.title == "Active macros | MDN"
+    assert len(page.find_elements(By.CSS_SELECTOR, "table.macros-table")) == 1
+    # 2 = ElasticSearch is available and populated, 0 = not
+    assert len(page.find_elements(By.CSS_SELECTOR, "th.stat-header")) in (0, 2)

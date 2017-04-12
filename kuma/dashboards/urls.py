@@ -22,4 +22,7 @@ urlpatterns = [
     url(r'^dashboards/spam$',
         views.spam,
         name='dashboards.spam'),
+    url(r'^dashboards/macros$',
+        views.macros,
+        name='dashboards.macros'),
 ]

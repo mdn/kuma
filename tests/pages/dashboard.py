@@ -125,3 +125,8 @@ class DashboardDetail(Region):
     _page_buttons_locator = (By.CSS_SELECTOR, '.page-buttons li a')
     _diff_locator = (By.CSS_SELECTOR, '.diff')
     _diff_rows_locator = (By.CSS_SELECTOR, '.diff tbody tr')
+
+
+class MacroDashboardPage(BasePage):
+    """The macro dashboard with names, source links, and usage counts."""
+    URL_TEMPLATE = '/{locale}/dashboards/macros'
