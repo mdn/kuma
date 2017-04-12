@@ -94,6 +94,9 @@ def test_macro_sources(mock_requests):
             'filename': 'A11yRoleQuicklinks.ejs', 'name': 'A11yRoleQuicklinks'
         }, {
             'filename': 'APIFeatureList.ejs', 'name': 'APIFeatureList'
+        }, {
+            # Normal form D, common on OSX
+            'filename': u'traduccio\u0301n.ejs', 'name': u'traduccio\u0301n'
         }]
     }
     mock_requests.get(macros_url, json=response)
@@ -101,6 +104,8 @@ def test_macro_sources(mock_requests):
     expected = {
         'A11yRoleQuicklinks': 'A11yRoleQuicklinks.ejs',
         'APIFeatureList': 'APIFeatureList.ejs',
+        # Normal form C, used on GitHub, ElasticSearch
+        u'traducci\xf3n': u'traducci\xf3n.ejs',
     }
     assert macros == expected
 

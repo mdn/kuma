@@ -3,6 +3,7 @@ from collections import defaultdict
 import json
 import hashlib
 import time
+import unicodedata
 from urlparse import urljoin
 
 from django.conf import settings
@@ -298,7 +299,11 @@ def macro_sources():
     response = requests.get(ks_macro_url)
     if response.status_code == 200:
         macros_raw = response.json()['macros']
-        return {md['name']: md['filename'] for md in macros_raw}
+        # Ensure Normal Form C used on GitHub
+        return {
+            unicodedata.normalize('NFC', md['name']):
+            unicodedata.normalize('NFC', md['filename'])
+            for md in macros_raw}
     else:
         return {}
 
