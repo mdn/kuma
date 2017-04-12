@@ -130,3 +130,48 @@ class DashboardDetail(Region):
 class MacroDashboardPage(BasePage):
     """The macro dashboard with names, source links, and usage counts."""
     URL_TEMPLATE = '/{locale}/dashboards/macros'
+    TITLE = "Active macros | MDN"
+
+    _table_locator = (By.CSS_SELECTOR, "table.macros-table")
+    _count_headers_locator = (By.CSS_SELECTOR, "th.stat-header")
+    _source_link_locator = (By.CSS_SELECTOR, "tbody tr th a")
+    _search_link_locator = (By.CSS_SELECTOR, "tbody tr td.data a")
+    _search_name_input_locator = (By.ID, 'macro-search-name')
+    _search_all_btn_locator = (By.ID, 'macro-search-all')
+    _search_en_btn_locator = (By.ID, 'macro-search-en')
+
+    @property
+    def has_table(self):
+        return len(self.find_elements(*self._table_locator)) == 1
+
+    @property
+    def has_usage_counts(self):
+        count = len(self.find_elements(*self._count_headers_locator))
+        assert count in (0, 2)
+        return count == 2
+
+    @property
+    def first_source_link(self):
+        return self.find_element(*self._source_link_locator)
+
+    def click_first_en_search(self):
+        en_link = self.find_element(*self._search_link_locator)
+        en_link.click()
+        self.wait.until(lambda selenium: selenium.title != self.TITLE)
+
+    def click_first_all_search(self):
+        all_link = self.find_elements(*self._search_link_locator)[1]
+        all_link.click()
+        self.wait.until(lambda selenium: selenium.title != self.TITLE)
+
+    def manual_search(self, macro_name, locale='*'):
+        name_input = self.find_element(*self._search_name_input_locator)
+        name_input.send_keys(macro_name)
+
+        assert locale in ('*', 'en-US')
+        if locale == '*':
+            btn = self.find_element(*self._search_all_btn_locator)
+        else:
+            btn = self.find_element(*self._search_en_btn_locator)
+        btn.click()
+        self.wait.until(lambda selenium: selenium.title != self.TITLE)
