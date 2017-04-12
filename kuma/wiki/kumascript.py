@@ -344,7 +344,6 @@ def macro_usage():
         return {}
 
     # Convert macro sources to fuller dict
-    macro_paths = macro_sources()
     lowercase_names = {}
     macros = {}
     for name, github_subpath in macro_paths.items():
