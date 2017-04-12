@@ -139,6 +139,13 @@ Used to style the dashboard widgets in the dashboard apps
     }
 }
 
+.macros-table {
+    .data {
+        font-family: monospace;
+        text-align: right;
+    }
+}
+
 .spam-events-table {
     width: 100%;
     table-layout: fixed;

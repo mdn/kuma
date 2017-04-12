@@ -1,6 +1,7 @@
 import pytest
+from urlparse import urlparse, parse_qs
 
-from pages.dashboard import DashboardPage
+from pages.dashboard import DashboardPage, MacroDashboardPage
 from pages.admin import AdminLogin
 from utils.decorators import (
     skip_if_maintenance_mode,
@@ -80,3 +81,90 @@ def test_dashboard_super(base_url, selenium):
     assert first_row.is_ip_ban_present
     # spam ham button present
     assert first_row.is_spam_ham_button_present
+
+
+@pytest.mark.nondestructive
+def test_macros(base_url, selenium):
+    """/en-US/dashboards/macros returns the active macros list."""
+    # Open and check macros dashboard
+    page = MacroDashboardPage(selenium, base_url).open()
+    assert selenium.title == page.TITLE
+    assert page.has_table
+    first_source_link = page.first_source_link
+    name = first_source_link.text
+    href = first_source_link.get_attribute('href')
+    assert href.startswith(
+        'https://github.com/mozilla/kumascript/blob/master/macros/' + name)
+
+    # Click link to Github
+    first_source_link.click()
+    page.wait.until(lambda s: selenium.title != page.TITLE)
+    assert selenium.current_url == href
+
+
+@pytest.mark.nondestructive
+def test_macros_search_en_by_click(base_url, selenium):
+    """/en-US/dashboards/macros links to the English search results."""
+    page = MacroDashboardPage(selenium, base_url).open()
+    if not page.has_usage_counts:
+        # ElasticSearch not ready, no search link to click
+        return
+
+    name = page.first_source_link.text
+    page.click_first_en_search()
+    page.wait.until(lambda s: selenium.title != page.TITLE)
+    url_bits = urlparse(selenium.current_url)
+    query = parse_qs(url_bits.query)
+    assert query == {
+        'locale': ['en-US'],
+        'topic': ['none'],
+        'kumascript_macros': [name]
+    }
+
+
+@pytest.mark.nondestructive
+def test_macros_search_all_by_click(base_url, selenium):
+    """/en-US/dashboards/macros links to complete search results."""
+    page = MacroDashboardPage(selenium, base_url).open()
+    if not page.has_usage_counts:
+        # ElasticSearch not ready, no search link to click
+        return
+
+    name = page.first_source_link.text
+    page.click_first_all_search()
+    page.wait.until(lambda s: selenium.title != page.TITLE)
+    url_bits = urlparse(selenium.current_url)
+    query = parse_qs(url_bits.query)
+    assert query == {
+        'locale': ['*'],
+        'topic': ['none'],
+        'kumascript_macros': [name]
+    }
+
+
+@pytest.mark.nondestructive
+def test_macros_search_en_by_form(base_url, selenium):
+    """Manual search form can search all English pages."""
+    page = MacroDashboardPage(selenium, base_url).open()
+    page.manual_search('CSSRef', 'en-US')
+    url_bits = urlparse(selenium.current_url)
+    query = parse_qs(url_bits.query)
+    assert query == {
+        'locale': ['en-US'],
+        'topic': ['none'],
+        'kumascript_macros': ['CSSRef']
+    }
+
+
+@pytest.mark.nondestructive
+def test_macros_search_all_by_form(base_url, selenium):
+    """Manual search form can search all pages."""
+    page = MacroDashboardPage(selenium, base_url).open()
+    page.manual_search('CSSRef')
+    url_bits = urlparse(selenium.current_url)
+    query = parse_qs(url_bits.query)
+    assert query == {
+        'locale': ['*'],
+        'topic': ['none'],
+        'kumascript_macros': ['CSSRef']
+    }

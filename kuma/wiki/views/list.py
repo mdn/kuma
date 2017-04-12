@@ -8,8 +8,7 @@ from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
 from ..decorators import process_document_path, prevent_indexing
-from ..models import (Document, DocumentTag, ReviewTag,
-                      LocalizationTag)
+from ..models import Document, DocumentTag, ReviewTag, LocalizationTag
 
 
 @block_user_agents

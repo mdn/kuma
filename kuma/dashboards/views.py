@@ -13,6 +13,7 @@ import waffle
 from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
 from kuma.wiki.models import Document, Revision
+from kuma.wiki.kumascript import macro_usage
 
 from .forms import RevisionDashboardForm
 from .jobs import SpamDashboardHistoricalStats
@@ -172,3 +173,15 @@ def spam(request):
         return render(request, 'dashboards/spam.html', {'processing': True})
 
     return render(request, 'dashboards/spam.html', data)
+
+
+@require_GET
+def macros(request):
+    """Returns table of active macros and their page counts."""
+    macros = macro_usage()
+    total = sum(val['count'] for val in macros.values())
+    context = {
+        'macros': macros,
+        'has_counts': total != 0
+    }
+    return render(request, 'dashboards/macros.html', context)
