@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-03-26 19:21+0000\n"
+"PO-Revision-Date: 2017-04-13 12:26+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -660,7 +660,7 @@ msgstr "Συνημμένα"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "Πρόσφατες αλλαγές αρχείων MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
@@ -933,7 +933,7 @@ msgstr "APIs και DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr ""
+msgstr "Ανοικτές διαδικτυακές εφαρμογές"
 
 #: kuma/core/translations/search/filter/b2g-os/name.py:4
 msgid "B2G OS"
@@ -1091,7 +1091,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1876
 msgid "Revision"
-msgstr ""
+msgstr "Αναθεώρηση"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
@@ -1100,15 +1100,15 @@ msgstr "Σχόλιο"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Author"
-msgstr ""
+msgstr "Δημιουργός"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "Εναλλαγή IPs"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:37 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
-msgstr ""
+msgstr "νέο"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
@@ -1327,7 +1327,7 @@ msgstr "Τεχνική αξιολόγηση"
 
 #: kuma/landing/jinja2/landing/homepage.html:182
 msgid "Translating"
-msgstr ""
+msgstr "Μετάφραση"
 
 #: kuma/landing/jinja2/landing/homepage.html:183
 msgid "Promoting MDN"
@@ -2476,7 +2476,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
-msgstr ""
+msgstr "Ο χρήστης δεν έχει καμία δραστηριότητα."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
@@ -2947,7 +2947,7 @@ msgstr "URL άρθρου"
 
 #: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Γονέας:"
 
 #: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
@@ -2959,7 +2959,7 @@ msgstr "Λέξεις-κλειδιά:"
 
 #: kuma/wiki/forms.py:445
 msgid "Affects search results"
-msgstr ""
+msgstr "Επηρεάζει τα αποτελέσματα αναζήτησης"
 
 #: kuma/wiki/forms.py:453
 msgid "Search result summary:"
@@ -2987,16 +2987,16 @@ msgstr ""
 
 #: kuma/wiki/forms.py:895
 msgid "New slug:"
-msgstr ""
+msgstr "Νέο slug:"
 
 #: kuma/wiki/forms.py:896
 msgid "New article URL"
-msgstr ""
+msgstr "Νέο URL άρθρου"
 
 #: kuma/wiki/models.py:113
 #, python-format
 msgid "Parent %s does not exist."
-msgstr ""
+msgstr "Ο γονέας %s δεν υπάρχει."
 
 #: kuma/wiki/models.py:121
 msgid "Document Tag"
@@ -3357,15 +3357,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:356
 msgid "This article doesn't have approved content yet."
-msgstr ""
+msgstr "Αυτό το άρθρο δεν έχει εγκεκριμένο περιεχόμενο ακόμα."
 
 #: kuma/wiki/jinja2/wiki/document.html:361
 msgid "Was this article helpful?"
-msgstr ""
+msgstr "Ήταν χρήσιμο αυτό το άρθρο;"
 
 #: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Thank you!"
-msgstr ""
+msgstr "Σάς ευχαριστούμε!"
 
 #: kuma/wiki/jinja2/wiki/document.html:385
 msgid "Document Tags and Contributors"
@@ -3373,7 +3373,7 @@ msgstr "Εθελοντές και ετικέτες εγγράφου"
 
 #: kuma/wiki/jinja2/wiki/document.html:391
 msgid "Contributors to this page:"
-msgstr ""
+msgstr "Συνεισφέροντες σε αυτή τη σελίδα:"
 
 #: kuma/wiki/jinja2/wiki/document.html:397
 msgid "Last updated by:"
@@ -3469,7 +3469,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "Προβολή γονέα στα %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
@@ -3479,7 +3479,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "Επεξεργασία μετάφρασης για τα %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
@@ -3528,7 +3528,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Τίτλος γονέα"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
@@ -3572,7 +3572,7 @@ msgstr "Πληροφορίες αναθεώρησης"
 
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr ""
+msgstr "Slug αναθεώρησης:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
@@ -3639,7 +3639,7 @@ msgstr "Μετάφραση περιεχομένου"
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
-msgstr ""
+msgstr "Εγκεκριμένη έκδοση για τα %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
@@ -3692,7 +3692,7 @@ msgstr "Σημαίες μετάφρασης"
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "Ο χρήστης %(creator)s άλλαξε το %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
@@ -3763,7 +3763,7 @@ msgstr "Μετακίνηση άρθρου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:80
 msgid "View in admin"
-msgstr ""
+msgstr "Προβολή ως διαχειριστής"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Delete this article"
@@ -3771,11 +3771,11 @@ msgstr "Διαγραφή άρθρου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:93
 msgid "Manage content zone"
-msgstr ""
+msgstr "Διαχείριση ζώνης περιεχομένου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:96
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Μετατροπή σε ζώνη περιεχομένου"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:98
 msgid "Print this article"
@@ -3897,8 +3897,8 @@ msgstr "Απόκρυψη πληροφοριών σφάλματος"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Περισσότερες πληροφορίες σχετικά με αυτό το σφάλμα"
+msgstr[1] "Περισσότερες πληροφορίες σχετικά με αυτά τα σφάλματα"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
@@ -3950,7 +3950,7 @@ msgstr "Απόρριψη"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Χρειάζεται αξιολόγηση;"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
@@ -4029,7 +4029,7 @@ msgstr "Κορυφαία έγγραφα"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Έγγραφα χωρίς γονέα"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
