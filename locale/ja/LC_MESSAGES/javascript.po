@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:15-0700\n"
-"PO-Revision-Date: 2016-11-30 22:42+0000\n"
+"PO-Revision-Date: 2017-04-13 20:14+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -100,15 +100,15 @@ msgstr "説明をより明確にする"
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr "さらなる詳細を追加する"
+msgstr "さらなる詳細を追加"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
-msgstr "間違った情報を訂正する"
+msgstr "間違った情報を訂正"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr "例を追加もしくは改善する"
+msgstr "例を追加もしくは改善"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"

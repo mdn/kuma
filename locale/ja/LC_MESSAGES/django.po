@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-13 20:11+0000\n"
+"PO-Revision-Date: 2017-04-13 20:17+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -120,7 +120,7 @@ msgstr "ツール"
 
 #: jinja2/base.html:121
 msgid "Contribute to MDN"
-msgstr "MDN に貢献する"
+msgstr "MDN に貢献"
 
 #: jinja2/base.html:123
 msgid "Get started"
@@ -256,11 +256,11 @@ msgstr "MDN コミュニティに参加"
 
 #: jinja2/base.html:184
 msgid "Report a content problem"
-msgstr "コンテンツの問題を報告する"
+msgstr "コンテンツの問題を報告"
 
 #: jinja2/base.html:185
 msgid "Report a bug"
-msgstr "バグを報告する"
+msgstr "バグを報告"
 
 # 検索ボタン
 #: jinja2/base.html:191 jinja2/base.html:192 jinja2/base.html:194 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
@@ -293,7 +293,7 @@ msgstr "Cookie"
 
 #: jinja2/base.html:219
 msgid "Contribute to the code"
-msgstr "MDN のコードに貢献する"
+msgstr "MDN のコードに貢献"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -1094,31 +1094,31 @@ msgstr "著者"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
 msgid "Active macros"
-msgstr ""
+msgstr "使用中のマクロ"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
 #, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "%(num)s 件の使用中マクロが見つかりました"
+msgstr[0] "%(num)s 件の使用中のマクロが見つかりました。"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "マクロの一覧は <a href=\"%(url)s\">GitHub レポジトリ</a> を見てください。"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "<a href=\"%(url)s\">手作業でマクロを検索する</a> こともできます。"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "使用中のマクロとそれらの使用回数"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "マクロ名"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
 msgid "English Page Count"
@@ -1126,11 +1126,11 @@ msgstr "英語のページ内容"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "全ページ数"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "マクロの使用例を検索:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
@@ -1377,7 +1377,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
-msgstr "MDN の改善に貢献する"
+msgstr "MDN の改善に貢献"
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
@@ -2009,7 +2009,7 @@ msgstr "主要メールアドレスにする"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr "確認メールを再送信する"
+msgstr "確認メールを再送信"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
@@ -2023,7 +2023,7 @@ msgstr "<strong>警告:</strong>\"このアカウントにはメールアドレ�
 # 100%
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr "メールアドレスを追加する"
+msgstr "メールアドレスを追加"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
@@ -3952,9 +3952,8 @@ msgid "Subscribe to this article"
 msgstr "この記事を購読"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "これらのメール通知を停止:"
+msgstr "この記事の購読を中止"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3967,14 +3966,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "%(title)s の購読を中止しました。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "<bdi>%(language)s</bdi> 版を購読する"
+msgstr "%(language)s 版を購読"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "<bdi>%(language)s</bdi> 版の購読を中止する"
+msgstr "%(language)s 版の購読を中止"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
@@ -3988,7 +3987,7 @@ msgstr "この記事の %(language)s 版の編集通知を停止しました。"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr "目次を生成する"
+msgstr "目次を生成"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
