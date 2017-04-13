@@ -1,4 +1,5 @@
 import datetime
+import time
 from selenium.webdriver.common.by import By
 
 from pages.article_edit import EditPage
@@ -13,6 +14,9 @@ class NewPage(EditPage):
     _slug_input_locator = (By.ID, 'id_slug')
 
     def publish(self):
+        # short wait to allow save button to be enabled
+        # dirtiness tracking only fires every 1.5 seconds
+        time.sleep(1.6)
         from pages.article import ArticlePage
         publish_button = self.find_element(*self._save_button_locator)
         publish_button.click()
@@ -20,9 +24,10 @@ class NewPage(EditPage):
         published_page = ArticlePage(
             self.selenium,
             self.base_url,
-            **self.url_kwargs
+            locale=self.DEFAULT_LOCALE,
+            slug=self.DOC_SLUG,
+            # **self.url_kwargs
         )
-        published_page.URL_TEMPLATE = '/{locale}/docs/' + self.DOC_SLUG
         return published_page.wait_for_page_to_load()
 
     def write_title(self):

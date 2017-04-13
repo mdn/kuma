@@ -1089,7 +1089,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         data['content'] = 'loremo ipsumo doloro sito ameto nuevo'
         response = self.client.post(translate_uri, data)
         eq_(302, response.status_code)
-        eq_('http://testserver/es/docs/un-test-articulo',
+        eq_('http://testserver/es/docs/un-test-articulo?rev_saved=',
             response['location'])
         doc = Document.objects.get(slug=data['slug'])
         rev = doc.revisions.filter(content=data['content'])[0]
@@ -1153,7 +1153,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         data['form'] = 'rev'
         response = self.client.post(translate_uri, data)
         eq_(302, response.status_code)
-        eq_('http://testserver/es/docs/un-test-articulo',
+        eq_('http://testserver/es/docs/un-test-articulo?rev_saved=',
             response['location'])
         revisions = rev_es.document.revisions.all()
         eq_(2, revisions.count())  # New revision is created
