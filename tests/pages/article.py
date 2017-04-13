@@ -31,6 +31,8 @@ class ArticlePage(BasePage):
     _editorial_review_link_locator = (By.CSS_SELECTOR, 'a[href$=Do_an_editorial_review]')
     # table of contents
     _toc_locator = (By.ID, 'toc')
+    # error list
+    _error_list = (By.CSS_SELECTOR, '.errorlist')
 
     def __init__(self, *args, **kwargs):
         locale = kwargs.pop('locale', self.DEFAULT_LOCALE)
@@ -83,15 +85,16 @@ class ArticlePage(BasePage):
         return self.find_element(*self._edit_button_locator).is_displayed()
 
     def click_edit(self, signedin):
+        from pages.article_edit import EditPage
         edit_button = self.find_element(*self._edit_button_locator)
         edit_button.click()
         if (signedin):
-            from pages.article_edit import EditPage
-            return EditPage(
+            edit_page = EditPage(
                 self.selenium,
                 self.base_url,
                 **self.url_kwargs
-            ).wait_for_page_to_load()
+            )
+            return edit_page.wait_for_page_to_load()
         else:
             self.wait.until(lambda s: 'users/signin' in s.current_url)
 
@@ -167,3 +170,9 @@ class ArticlePage(BasePage):
         heading_three_link = self.find_element(By.CSS_SELECTOR, 'a[href="#Heading_Three"]').is_displayed()
         heading_three_anchor = self.find_element(By.ID, 'Heading_Three').is_displayed()
         return heading_two_link and heading_two_anchor and heading_three_link and heading_three_anchor
+
+    # error list
+    @property
+    def is_error_list_displayed(self):
+        error_list = self.find_element(*self._error_list)
+        return error_list.is_displayed()

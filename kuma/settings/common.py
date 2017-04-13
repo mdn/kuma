@@ -956,6 +956,7 @@ PIPELINE_JS = {
     'wiki-edit': {
         'source_filenames': (
             'js/wiki-edit.js',
+            'js/wiki-edit-draft.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
         ),

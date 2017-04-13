@@ -1,4 +1,5 @@
 import pytest
+import time
 
 from pages.article_new import NewPage
 from pages.admin import AdminLogin
@@ -26,9 +27,10 @@ def test_new(base_url, selenium):
     assert 'iframe' not in content
     # content edit remains
     assert 'Pumpkin' in content
-    # check contents of draft
-    draft_content = editor.draft_content(selenium.current_url)
-    assert 'Pumpkin' in draft_content
+    # wait for throttled draft function to activate (hopefully not)
+    time.sleep(0.6)
+    # check save draft not activated
+    assert not page.is_draft_container_displayed
     # save button enabled
     assert not page.is_save_button_disabled
     # write title
