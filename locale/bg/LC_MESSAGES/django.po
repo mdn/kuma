@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-03-20 13:40-0700\n"
-"PO-Revision-Date: 2017-04-11 08:40+0000\n"
+"PO-Revision-Date: 2017-04-13 09:49+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -1010,7 +1010,7 @@ msgstr "Всички езици"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
-msgstr ""
+msgstr "Нищо"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
@@ -1334,7 +1334,7 @@ msgstr "Принос към програмния код в MDN"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:5 kuma/landing/jinja2/landing/maintenance-mode.html:13
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "Режим на поддръжка"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:18
 msgid ""
@@ -1344,7 +1344,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "В режим на поддръжка са невъзможни следните действия:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
 msgid "editing articles"
@@ -1352,7 +1352,7 @@ msgstr "променяне на статии"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
 msgid "creating accounts"
-msgstr ""
+msgstr "създаване на сметки"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
@@ -1360,7 +1360,7 @@ msgstr "влизане"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "Извиняваме се за неудобството."
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -2113,7 +2113,7 @@ msgstr "Влизане с OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Влизането в сметката се провали"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -2121,7 +2121,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Влизането е отказано"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2275,7 +2275,7 @@ msgstr "Обобщение"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
-msgstr ""
+msgstr "Предприети действия"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
@@ -2340,7 +2340,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 msgid "Could not delete:"
-msgstr ""
+msgstr "Не можа да изтрие:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
