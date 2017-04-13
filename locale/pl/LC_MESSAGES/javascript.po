@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-02-14 07:50-0800\n"
+"POT-Creation-Date: 2017-04-13 10:15-0700\n"
 "PO-Revision-Date: 2017-03-04 09:20+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
@@ -182,71 +182,71 @@ msgstr "Zgłoszono. Dziękujemy!"
 msgid "Show old table."
 msgstr "Pokaż starą tabelę."
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Zapisz wersję roboczą"
 
-#: kuma/static/js/wiki-edit.js:406
+#: kuma/static/js/wiki-edit.js:369
 msgid "Enable autosave."
 msgstr "Włącz automatyczny zapis."
 
-#: kuma/static/js/wiki-edit.js:414
+#: kuma/static/js/wiki-edit.js:377
 msgid "an unknown date"
 msgstr "nieznana data"
 
-#: kuma/static/js/wiki-edit.js:415
+#: kuma/static/js/wiki-edit.js:378
 msgid "You have a draft from:"
 msgstr "Masz szkic od:"
 
-#: kuma/static/js/wiki-edit.js:416
+#: kuma/static/js/wiki-edit.js:379
 msgid "Restore the draft content"
 msgstr "Przywróć zawartość szkicu"
 
-#: kuma/static/js/wiki-edit.js:417
+#: kuma/static/js/wiki-edit.js:380
 msgid "Discard the draft"
 msgstr "Odrzuć szkic"
 
-#: kuma/static/js/wiki-edit.js:442
+#: kuma/static/js/wiki-edit.js:398
 msgid "restored"
 msgstr "przywrócono"
 
-#: kuma/static/js/wiki-edit.js:530
+#: kuma/static/js/wiki-edit.js:486
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
 msgstr "Publikacja się nie powiodła, ponieważ nie zalogowano. Prosimy zalogować się w innej karcie i opublikować ponownie."
 
-#: kuma/static/js/wiki-edit.js:533
+#: kuma/static/js/wiki-edit.js:489
 msgid "Changes saved."
 msgstr "Zapisano zmiany."
 
-#: kuma/static/js/wiki-edit.js:561
+#: kuma/static/js/wiki-edit.js:517
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
 msgstr "Publikacja się nie powiodła. Należy skopiować zmiany w bezpieczne miejsce i jeszcze raz wysłać formularz za pomocą przycisku „Opublikuj”."
 
-#: kuma/static/js/wiki-edit.js:607
+#: kuma/static/js/wiki-edit.js:563
 msgid "Draft"
 msgstr "Wersja robocza"
 
-#: kuma/static/js/wiki-edit.js:626
+#: kuma/static/js/wiki-edit.js:582
 msgid "saved"
 msgstr "zapisano"
 
-#: kuma/static/js/wiki-edit.js:645
+#: kuma/static/js/wiki-edit.js:601
 msgid "autosaved"
 msgstr "zapisano"
 
-#: kuma/static/js/wiki-edit.js:654
+#: kuma/static/js/wiki-edit.js:610
 msgid "published"
 msgstr "opublikowano"
 
-#: kuma/static/js/wiki-edit.js:658
+#: kuma/static/js/wiki-edit.js:614
 msgid "discarded"
 msgstr "odrzucono"
 
-#: kuma/static/js/wiki-edit.js:696
+#: kuma/static/js/wiki-edit.js:652
 msgid "Autosave enabled."
 msgstr "Automatyczny zapis włączony."
 
-#: kuma/static/js/wiki-edit.js:703
+#: kuma/static/js/wiki-edit.js:659
 msgid "Autosave disabled."
 msgstr "Automatyczny zapis wyłączony."
 
@@ -263,15 +263,15 @@ msgstr "Nowa etykieta..."
 msgid "How to read CSS syntax."
 msgstr "Jak czytać CSS."
 
-#: kuma/static/js/wiki.js:588
+#: kuma/static/js/wiki.js:605
 msgid "Search Stack Overflow"
 msgstr "Przeszukaj Stack Overflow"
 
-#: kuma/static/js/wiki.js:695
+#: kuma/static/js/wiki.js:712
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Twoja przeglądarka nie obsługuje MathML. Zamiast tego korzystasz z alternatywnej wersji CSS."
 
-#: kuma/static/js/wiki.js:910
+#: kuma/static/js/wiki.js:927
 msgid "Details"
 msgstr "Szczegóły"
 

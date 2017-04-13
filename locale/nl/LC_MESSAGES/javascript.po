@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-02-14 07:50-0800\n"
+"POT-Creation-Date: 2017-04-13 10:15-0700\n"
 "PO-Revision-Date: 2016-11-30 20:50+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
@@ -183,71 +183,71 @@ msgstr "Gemeld. Bedankt!"
 msgid "Show old table."
 msgstr "Oude tabel tonen"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Concept opslaan"
 
-#: kuma/static/js/wiki-edit.js:406
+#: kuma/static/js/wiki-edit.js:369
 msgid "Enable autosave."
 msgstr "Automatisch opslaan inschakelen."
 
-#: kuma/static/js/wiki-edit.js:414
+#: kuma/static/js/wiki-edit.js:377
 msgid "an unknown date"
 msgstr "een onbekende datum"
 
-#: kuma/static/js/wiki-edit.js:415
+#: kuma/static/js/wiki-edit.js:378
 msgid "You have a draft from:"
 msgstr "U hebt een concept van:"
 
-#: kuma/static/js/wiki-edit.js:416
+#: kuma/static/js/wiki-edit.js:379
 msgid "Restore the draft content"
 msgstr "De conceptinhoud herstellen"
 
-#: kuma/static/js/wiki-edit.js:417
+#: kuma/static/js/wiki-edit.js:380
 msgid "Discard the draft"
 msgstr "Het concept verwijderen"
 
-#: kuma/static/js/wiki-edit.js:442
+#: kuma/static/js/wiki-edit.js:398
 msgid "restored"
 msgstr "hersteld"
 
-#: kuma/static/js/wiki-edit.js:530
+#: kuma/static/js/wiki-edit.js:486
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
 msgstr "Publiceren is mislukt. U bent momenteel niet aangemeld. Gebruik een nieuw tabblad om u aan te melden en probeer opnieuw te publiceren."
 
-#: kuma/static/js/wiki-edit.js:533
+#: kuma/static/js/wiki-edit.js:489
 msgid "Changes saved."
 msgstr "Wijzigingen opgeslagen."
 
-#: kuma/static/js/wiki-edit.js:561
+#: kuma/static/js/wiki-edit.js:517
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
 msgstr "Publiceren is mislukt. Kopieer en plak uw wijzigingen naar een veilige plek en probeer het formulier in te dienen met behulp van de knop ‘Publiceren’."
 
-#: kuma/static/js/wiki-edit.js:607
+#: kuma/static/js/wiki-edit.js:563
 msgid "Draft"
 msgstr "Concept"
 
-#: kuma/static/js/wiki-edit.js:626
+#: kuma/static/js/wiki-edit.js:582
 msgid "saved"
 msgstr "opgeslagen"
 
-#: kuma/static/js/wiki-edit.js:645
+#: kuma/static/js/wiki-edit.js:601
 msgid "autosaved"
 msgstr "automatisch opgeslagen"
 
-#: kuma/static/js/wiki-edit.js:654
+#: kuma/static/js/wiki-edit.js:610
 msgid "published"
 msgstr "gepubliceerd"
 
-#: kuma/static/js/wiki-edit.js:658
+#: kuma/static/js/wiki-edit.js:614
 msgid "discarded"
 msgstr "verworpen"
 
-#: kuma/static/js/wiki-edit.js:696
+#: kuma/static/js/wiki-edit.js:652
 msgid "Autosave enabled."
 msgstr "Automatisch opslaan ingeschakeld."
 
-#: kuma/static/js/wiki-edit.js:703
+#: kuma/static/js/wiki-edit.js:659
 msgid "Autosave disabled."
 msgstr "Automatisch opslaan uitgeschakeld."
 
@@ -264,15 +264,15 @@ msgstr "Nieuw label…"
 msgid "How to read CSS syntax."
 msgstr "CSS-syntaxis lezen."
 
-#: kuma/static/js/wiki.js:588
+#: kuma/static/js/wiki.js:605
 msgid "Search Stack Overflow"
 msgstr "Zoeken bij Stack Overflow"
 
-#: kuma/static/js/wiki.js:695
+#: kuma/static/js/wiki.js:712
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Uw browser ondersteunt geen MathML. Daarom is een CSS-terugvalversie gebruikt."
 
-#: kuma/static/js/wiki.js:910
+#: kuma/static/js/wiki.js:927
 msgid "Details"
 msgstr "Details"
 

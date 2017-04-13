@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-02-14 07:50-0800\n"
+"POT-Creation-Date: 2017-04-13 10:15-0700\n"
 "PO-Revision-Date: 2016-11-30 19:42+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
@@ -182,71 +182,71 @@ msgstr "已报告。谢谢您！"
 msgid "Show old table."
 msgstr "显示旧式表格。"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "保存草稿"
 
-#: kuma/static/js/wiki-edit.js:406
+#: kuma/static/js/wiki-edit.js:369
 msgid "Enable autosave."
 msgstr "启用自动保存。"
 
-#: kuma/static/js/wiki-edit.js:414
+#: kuma/static/js/wiki-edit.js:377
 msgid "an unknown date"
 msgstr "未知日期"
 
-#: kuma/static/js/wiki-edit.js:415
+#: kuma/static/js/wiki-edit.js:378
 msgid "You have a draft from:"
 msgstr "您有一个草稿："
 
-#: kuma/static/js/wiki-edit.js:416
+#: kuma/static/js/wiki-edit.js:379
 msgid "Restore the draft content"
 msgstr "恢复草稿内容"
 
-#: kuma/static/js/wiki-edit.js:417
+#: kuma/static/js/wiki-edit.js:380
 msgid "Discard the draft"
 msgstr "放弃该草稿"
 
-#: kuma/static/js/wiki-edit.js:442
+#: kuma/static/js/wiki-edit.js:398
 msgid "restored"
 msgstr "已恢复"
 
-#: kuma/static/js/wiki-edit.js:530
+#: kuma/static/js/wiki-edit.js:486
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
 msgstr "发布失败。您当前未登录。请使用新的标签页登录并再次尝试发布。"
 
-#: kuma/static/js/wiki-edit.js:533
+#: kuma/static/js/wiki-edit.js:489
 msgid "Changes saved."
 msgstr "更改已保存。"
 
-#: kuma/static/js/wiki-edit.js:561
+#: kuma/static/js/wiki-edit.js:517
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
 msgstr "发布失败。请将您所做的修改复制并粘贴到一个安全的地方，并尝试使用‘发布’按钮提交表单。"
 
-#: kuma/static/js/wiki-edit.js:607
+#: kuma/static/js/wiki-edit.js:563
 msgid "Draft"
 msgstr "草稿"
 
-#: kuma/static/js/wiki-edit.js:626
+#: kuma/static/js/wiki-edit.js:582
 msgid "saved"
 msgstr "已保存"
 
-#: kuma/static/js/wiki-edit.js:645
+#: kuma/static/js/wiki-edit.js:601
 msgid "autosaved"
 msgstr "自动保存"
 
-#: kuma/static/js/wiki-edit.js:654
+#: kuma/static/js/wiki-edit.js:610
 msgid "published"
 msgstr "已发布"
 
-#: kuma/static/js/wiki-edit.js:658
+#: kuma/static/js/wiki-edit.js:614
 msgid "discarded"
 msgstr "放弃"
 
-#: kuma/static/js/wiki-edit.js:696
+#: kuma/static/js/wiki-edit.js:652
 msgid "Autosave enabled."
 msgstr "自动保存已启用。"
 
-#: kuma/static/js/wiki-edit.js:703
+#: kuma/static/js/wiki-edit.js:659
 msgid "Autosave disabled."
 msgstr "自动保存已禁用。"
 
@@ -263,15 +263,15 @@ msgstr "新建标签..."
 msgid "How to read CSS syntax."
 msgstr "如何阅读 CSS 语法。"
 
-#: kuma/static/js/wiki.js:588
+#: kuma/static/js/wiki.js:605
 msgid "Search Stack Overflow"
 msgstr "搜索 Stack Overflow"
 
-#: kuma/static/js/wiki.js:695
+#: kuma/static/js/wiki.js:712
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "您的浏览器不支持 MathML。已使用后备的 CSS 代替。"
 
-#: kuma/static/js/wiki.js:910
+#: kuma/static/js/wiki.js:927
 msgid "Details"
 msgstr "详细信息"
 

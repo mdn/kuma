@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-02-14 07:50-0800\n"
+"POT-Creation-Date: 2017-04-13 10:15-0700\n"
 "PO-Revision-Date: 2016-12-01 20:46+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
@@ -182,71 +182,71 @@ msgstr "C'est rapporté. Merci !"
 msgid "Show old table."
 msgstr "Afficher l'ancien tableau."
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Enregistrer le brouillon"
 
-#: kuma/static/js/wiki-edit.js:406
+#: kuma/static/js/wiki-edit.js:369
 msgid "Enable autosave."
 msgstr "Activer l'enregistrement automatique."
 
-#: kuma/static/js/wiki-edit.js:414
+#: kuma/static/js/wiki-edit.js:377
 msgid "an unknown date"
 msgstr "une date inconnue"
 
-#: kuma/static/js/wiki-edit.js:415
+#: kuma/static/js/wiki-edit.js:378
 msgid "You have a draft from:"
 msgstr "Vous avez un brouillon enregistré depuis :"
 
-#: kuma/static/js/wiki-edit.js:416
+#: kuma/static/js/wiki-edit.js:379
 msgid "Restore the draft content"
 msgstr "Appliquer le contenu du brouillon"
 
-#: kuma/static/js/wiki-edit.js:417
+#: kuma/static/js/wiki-edit.js:380
 msgid "Discard the draft"
 msgstr "Supprimer le brouillon"
 
-#: kuma/static/js/wiki-edit.js:442
+#: kuma/static/js/wiki-edit.js:398
 msgid "restored"
 msgstr "restauré"
 
-#: kuma/static/js/wiki-edit.js:530
+#: kuma/static/js/wiki-edit.js:486
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
 msgstr "Échec de la publication. Vous n’êtes pas connecté-e actuellement. Veuillez ouvrir un nouvel onglet afin de vous connecter puis essayez de publier à nouveau."
 
-#: kuma/static/js/wiki-edit.js:533
+#: kuma/static/js/wiki-edit.js:489
 msgid "Changes saved."
 msgstr "Modifications enregistrées."
 
-#: kuma/static/js/wiki-edit.js:561
+#: kuma/static/js/wiki-edit.js:517
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
 msgstr "La publication a échoué. Veuillez copier-coller vos modifications dans un endroit sûr et essayer de soumettre le formulaire en utilisant le bouton « Publier »."
 
-#: kuma/static/js/wiki-edit.js:607
+#: kuma/static/js/wiki-edit.js:563
 msgid "Draft"
 msgstr "Brouillon"
 
-#: kuma/static/js/wiki-edit.js:626
+#: kuma/static/js/wiki-edit.js:582
 msgid "saved"
 msgstr "enregistré"
 
-#: kuma/static/js/wiki-edit.js:645
+#: kuma/static/js/wiki-edit.js:601
 msgid "autosaved"
 msgstr "enregistré automatiquement"
 
-#: kuma/static/js/wiki-edit.js:654
+#: kuma/static/js/wiki-edit.js:610
 msgid "published"
 msgstr "publié"
 
-#: kuma/static/js/wiki-edit.js:658
+#: kuma/static/js/wiki-edit.js:614
 msgid "discarded"
 msgstr "supprimé"
 
-#: kuma/static/js/wiki-edit.js:696
+#: kuma/static/js/wiki-edit.js:652
 msgid "Autosave enabled."
 msgstr "Sauvegarde automatique activée."
 
-#: kuma/static/js/wiki-edit.js:703
+#: kuma/static/js/wiki-edit.js:659
 msgid "Autosave disabled."
 msgstr "Sauvegarde automatique désactivée."
 
@@ -263,15 +263,15 @@ msgstr "Nouvelle étiquette…"
 msgid "How to read CSS syntax."
 msgstr "Comment lire la syntaxe CSS."
 
-#: kuma/static/js/wiki.js:588
+#: kuma/static/js/wiki.js:605
 msgid "Search Stack Overflow"
 msgstr "Rechercher sur Stack Overflow"
 
-#: kuma/static/js/wiki.js:695
+#: kuma/static/js/wiki.js:712
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Votre navigateur ne supporte pas MathML. Un contenu de remplacement avec CSS a été utilisé."
 
-#: kuma/static/js/wiki.js:910
+#: kuma/static/js/wiki.js:927
 msgid "Details"
 msgstr "Détails"
 

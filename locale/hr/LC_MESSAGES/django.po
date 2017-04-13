@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-03-20 13:40-0700\n"
+"POT-Creation-Date: 2017-04-13 10:17-0700\n"
 "PO-Revision-Date: 2016-09-20 10:14+0000\n"
 "Last-Translator: Stjepan Treger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian https://pontoon.mozilla.org/hr/\n"
@@ -934,11 +934,11 @@ msgstr ""
 msgid "Today at %s"
 msgstr "Danas u %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:366
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:368
 msgid "Yes"
 msgstr ""
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:370
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:372
 msgid "No"
 msgstr ""
 
@@ -1104,6 +1104,59 @@ msgstr ""
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
 msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
+#, fuzzy
+msgid "Active macros"
+msgstr "Najaktivniji Dokumenti"
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:13
+#, fuzzy, python-format
+msgid "Found %(num)s active macro."
+msgid_plural "Found %(num)s active macros."
+msgstr[0] "{comment_count} komentara"
+msgstr[1] "{comment_count} komentara"
+msgstr[2] "{comment_count} komentara"
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:15
+#, python-format
+msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:17
+#, python-format
+msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:23
+msgid "Active macros and their usage counts"
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
+msgid "Macro Name"
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:32
+msgid "English Page Count"
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:33
+msgid "All Page Count"
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:64
+msgid "Search for macro usage:"
+msgstr ""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:67
+#, fuzzy
+msgid "Search All Pages"
+msgstr "Pretraži demo za \"{q}\""
+
+#: kuma/dashboards/jinja2/dashboards/macros.html:68
+#, fuzzy
+msgid "Search English Pages"
+msgstr "Priključci tražilica"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1879,8 +1932,8 @@ msgstr ""
 msgid "IRC nickname"
 msgstr ""
 
-#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
-#: kuma/wiki/jinja2/wiki/edit.html:191
+#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:76
+#: kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Tags"
 msgstr ""
 
@@ -2393,7 +2446,7 @@ msgid "View Page"
 msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:71
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:68
 msgid "History"
 msgstr ""
 
@@ -2526,7 +2579,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:443
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:445
 msgid "Edit page"
 msgstr ""
 
@@ -2534,7 +2587,7 @@ msgstr ""
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:444
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:446
 msgid "View page history"
 msgstr ""
 
@@ -2769,12 +2822,12 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "Autor nije kreirao ovo"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:51
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Edit"
 msgstr "Uredi"
 
 # 100%
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:65 kuma/wiki/jinja2/wiki/includes/buttons.html:69
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:62 kuma/wiki/jinja2/wiki/includes/buttons.html:66
 #, fuzzy
 msgid "Advanced"
 msgstr "Napredna razina"
@@ -2825,15 +2878,15 @@ msgstr ""
 msgid "Wiki"
 msgstr ""
 
-#: kuma/wiki/constants.py:213 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:217 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr ""
 
-#: kuma/wiki/constants.py:214 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:218 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr ""
 
-#: kuma/wiki/constants.py:219
+#: kuma/wiki/constants.py:223
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
@@ -3438,35 +3491,35 @@ msgstr ""
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:343
+#: kuma/wiki/jinja2/wiki/document.html:345
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:356
+#: kuma/wiki/jinja2/wiki/document.html:358
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:361
+#: kuma/wiki/jinja2/wiki/document.html:363
 #, fuzzy
 msgid "Was this article helpful?"
 msgstr "Ukloni ovu alatnu traku"
 
-#: kuma/wiki/jinja2/wiki/document.html:375
+#: kuma/wiki/jinja2/wiki/document.html:377
 msgid "Thank you!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:385
+#: kuma/wiki/jinja2/wiki/document.html:387
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Uvjeti za suradnike"
 
-#: kuma/wiki/jinja2/wiki/document.html:391
+#: kuma/wiki/jinja2/wiki/document.html:393
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Idi na prvu stranicu"
 
-#: kuma/wiki/jinja2/wiki/document.html:397
+#: kuma/wiki/jinja2/wiki/document.html:399
 msgid "Last updated by:"
 msgstr ""
 
@@ -3548,12 +3601,12 @@ msgstr ""
 msgid "Have fun and be proud of your contribution!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:191
+#: kuma/wiki/jinja2/wiki/edit.html:188
 #, fuzzy
 msgid "Learn how to tag an article"
 msgstr "Ovdje je kako možete započeti"
 
-#: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
+#: kuma/wiki/jinja2/wiki/edit.html:190 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr ""
@@ -3694,7 +3747,7 @@ msgstr ""
 msgid "Revision Source"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
+#: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:73
 msgid "Revert to this revision"
 msgstr ""
 
@@ -3843,41 +3896,41 @@ msgstr ""
 msgid "Add a translation"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:58
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:52 kuma/wiki/jinja2/wiki/includes/buttons.html:55
 msgid "Watch"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:73
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "New sub-article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
 msgid "Clone this article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:77
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
 #, fuzzy
 msgid "Move this article"
 msgstr "Ukloni ovu alatnu traku"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:80
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:77
 msgid "View in admin"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:88
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:85
 #, fuzzy
 msgid "Delete this article"
 msgstr "Obriši ovaj komentar"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:93
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
 msgid "Manage content zone"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:96
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:93
 msgid "Convert to content zone"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:98
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:95
 msgid "Print this article"
 msgstr ""
 
@@ -3902,15 +3955,17 @@ msgstr ""
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
+# 100%
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, python-format
-msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+#, fuzzy
+msgid "Subscribe to this article and all its sub-articles"
+msgstr "Pretplatite se na tok {tag_title} demoa"
 
+# 100%
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, python-format
-msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr ""
+#, fuzzy
+msgid "Unsubscribe from this article and all its sub-articles"
+msgstr "Pretplatite se na tok {tag_title} demoa"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3926,13 +3981,13 @@ msgstr ""
 
 # 100%
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy, python-format
-msgid "Subscribe to %(title)s"
+#, fuzzy
+msgid "Subscribe to this article"
 msgstr "Pretplatite se na tok {tag_title} demoa"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy, python-format
-msgid "Unsubscribe from %(title)s"
+#, fuzzy
+msgid "Unsubscribe from this article"
 msgstr "Pretplatite se"
 
 # 100%
@@ -3949,13 +4004,13 @@ msgstr "Pretplatite se"
 # 100%
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, fuzzy, python-format
-msgid "Subscribe to <bdi>%(language)s</bdi> version"
+msgid "Subscribe to the %(language)s version"
 msgstr "Pretplati se na tok demoa od {display_name}"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, fuzzy, python-format
-msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
+msgid "Unsubscribe from the %(language)s version"
 msgstr "Pretplati se na tok demoa od {display_name}"
 
 # 100%
@@ -4214,7 +4269,7 @@ msgstr ""
 msgid "Compare Selected Revisions"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:78
+#: kuma/wiki/jinja2/wiki/list/revisions.html:81
 msgid "This document has no revisions."
 msgstr ""
 
@@ -4308,22 +4363,22 @@ msgstr ""
 msgid "Redirected from %(url)s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:711
+#: kuma/wiki/views/document.py:719
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr ""
 
-#: kuma/wiki/views/document.py:783
+#: kuma/wiki/views/document.py:792
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:790
+#: kuma/wiki/views/document.py:799
 #, python-format
 msgid "Request parsing error: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:810
+#: kuma/wiki/views/document.py:819
 msgid "ETag precondition failed"
 msgstr ""
 
@@ -4335,7 +4390,7 @@ msgstr ""
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr ""
 
-#: kuma/wiki/views/revision.py:140
+#: kuma/wiki/views/revision.py:145
 msgid "Document has been edited; please re-review."
 msgstr ""
 
@@ -4939,9 +4994,6 @@ msgstr ""
 #~ msgid "Launch"
 #~ msgstr "Pokreni demo"
 
-#~ msgid "Search demos"
-#~ msgstr "Pretraži demo za \"{q}\""
-
 #~ msgid "Browse by Technology"
 #~ msgstr "Pretražite po tehnologiji"
 
@@ -5258,9 +5310,6 @@ msgstr ""
 #~ msgid "Themes"
 #~ msgstr "Teme"
 
-#~ msgid "Search engine plugins"
-#~ msgstr "Priključci tražilica"
-
 #~ msgid "Participating in the Mozilla project"
 #~ msgstr "Sudjelovanje u Mozilla projektu"
 
@@ -5272,9 +5321,6 @@ msgstr ""
 
 #~ msgid "Quality Assurance"
 #~ msgstr "Osiguranje kvalitete"
-
-#~ msgid "Most Active Docs"
-#~ msgstr "Najaktivniji Dokumenti"
 
 #~ msgid "Last edited by:"
 #~ msgstr "Zadnji uredio/la:"
