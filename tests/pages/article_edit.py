@@ -1,3 +1,4 @@
+import time
 from selenium.webdriver.common.by import By
 
 from pages.base import BasePage
@@ -6,15 +7,24 @@ from pages.regions.ckeditor import Ckeditor
 
 class EditPage(BasePage):
 
-    URL_TEMPLATE = '/{locale}/docs/User:anonymous:uitest$edit'
+    URL_TEMPLATE = '/{locale}/docs/{slug}$edit'
+    DEFAULT_LOCALE = 'en-US'
+    DEFAULT_SLUG = 'User:anonymous:uitest'
     CKEDITOR_READY_QUERY = (
         "return window.CKEDITOR.instances.id_content.status === 'ready';"
     )
 
     _first_contrib_welcome_locator = (By.CSS_SELECTOR, '.first-contrib-welcome')
+    _revision_id = (By.ID, 'id_current_rev')
     _ckeditor_wrapper_locator = (By.ID, 'editor-wrapper')
     _save_button_locator = (By.CSS_SELECTOR, '.btn-save')
     _discard_button_locator = (By.CSS_SELECTOR, '.btn-discard')
+
+    def __init__(self, *args, **kwargs):
+        locale = kwargs.pop('locale', self.DEFAULT_LOCALE)
+        slug = kwargs.pop('slug', self.DEFAULT_SLUG)
+        super(EditPage, self).__init__(locale=locale, slug=slug,
+                                       *args, **kwargs)
 
     @property
     def is_save_button_disabled(self):
@@ -44,10 +54,29 @@ class EditPage(BasePage):
         )
         return self
 
+    @property
+    def current_revision_id(self):
+        revision_id = self.find_element(*self._revision_id)
+        return revision_id.get_attribute('value')
+
     # CKEditor region
     def editor(self):
         editor_wrapper = self.find_element(*self._ckeditor_wrapper_locator)
         return Ckeditor(self, root=editor_wrapper)
+
+    def save(self):
+        # short wait to allow save button to be enabled
+        # dirtiness tracking only fires every 1.5 seconds
+        time.sleep(1.6)
+        from pages.article import ArticlePage
+        save_button = self.find_element(*self._save_button_locator)
+        save_button.click()
+        # wait for article page to load
+        return ArticlePage(
+            self.selenium,
+            self.base_url,
+            **self.url_kwargs
+        ).wait_for_page_to_load()
 
     def discard(self):
         from pages.article import ArticlePage

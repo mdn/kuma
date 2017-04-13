@@ -83,16 +83,6 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
-
-  {#  if this document was saved, we need to clear out the cached draft in wiki.js, need to get the value from the request if it exists #}
-  <script type="text/javascript">
-    {% if request.GET.document_saved %}
-      var document_saved = 1;
-    {% else %}
-      var document_saved = 0;
-    {% endif %}
-  </script>
-
 {% endblock %}
 
 {% block lang_switcher %}

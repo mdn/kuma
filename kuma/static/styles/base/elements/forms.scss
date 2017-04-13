@@ -101,6 +101,22 @@ input[type='button'] {
         background-color: transparent;
     }
 
+    &.link {
+        @include vendorize(appearance, none);
+        font-weight: inherit;
+        letter-spacing: inherit;
+        background-color: transparent;
+        text-transform: inherit;
+        padding: 0;
+        box-shadow: none;
+        color: $link-color;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
+
     &::-moz-focus-inner {
         margin-top: -1px;
         margin-bottom: -1px;

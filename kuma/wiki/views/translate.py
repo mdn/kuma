@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from urllib import urlencode
 
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
@@ -219,7 +220,14 @@ def translate(request, document_slug, document_locale, revision_id=None):
                     }
 
                     return JsonResponse(data)
-                return redirect(doc)
+
+                # Construct the redirect URL, adding any needed parameters
+                url = doc.get_absolute_url()
+                params = {}
+                # Parameter for the document saved, so that we can delete the cached draft on load
+                params['rev_saved'] = request.POST.get('current_rev', '')
+                url = '%s?%s' % (url, urlencode(params))
+                return redirect(url)
             else:
                 # If this is an Ajax POST, then return a JsonResponse with error
                 if request.is_ajax():
