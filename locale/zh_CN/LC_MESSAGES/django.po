@@ -3758,14 +3758,14 @@ msgid "This article needs these reviews:"
 msgstr "这篇文章需要如下复核："
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "技术复核 - 代码范例、API 或技术"
+msgstr "技术 - 代码范例、API 或技术。<a href=\"%(url)s\">能来帮忙吗？</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "文法 - 措辞、语法或内容"
+msgstr "文法 - 措辞、语法或内容。<a href=\"%(url)s\">能来帮忙吗？</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
