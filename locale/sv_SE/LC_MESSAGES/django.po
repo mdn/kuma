@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:17-0700\n"
+"POT-Creation-Date: 2017-04-13 10:40-0700\n"
 "PO-Revision-Date: 2017-03-21 22:22+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
@@ -913,11 +913,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Idag vid %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:368
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
 msgid "Yes"
 msgstr "Ja"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:372
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
 msgid "No"
 msgstr "Nej"
 
@@ -2518,7 +2518,7 @@ msgstr "Sida"
 msgid "Date"
 msgstr "Datum"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:445
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:427
 msgid "Edit page"
 msgstr "Redigera sida"
 
@@ -2526,7 +2526,7 @@ msgstr "Redigera sida"
 msgid "View complete diff"
 msgstr "Visa fullständig diff"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:446
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
 msgid "View page history"
 msgstr "Visa sidhistorik"
 
@@ -2821,11 +2821,11 @@ msgstr "Admin"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:217 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:217
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Teknisk - kodexempel, API:er eller teknologier"
 
-#: kuma/wiki/constants.py:218 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:218
 msgid "Editorial - prose, grammar, or content"
 msgstr "Redaktionell - prosa, grammatik eller innehåll"
 
@@ -3402,26 +3402,16 @@ msgstr ""
 msgid "This is an experimental page."
 msgstr "Detta är en experimentell sida."
 
-#: kuma/wiki/jinja2/wiki/document.html:299
-#, python-format
-msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Denna artikel är i behov av en teknisk granskning. <a href=\"%(url)s\">Hur du kan hjälpa.</a>"
-
-#: kuma/wiki/jinja2/wiki/document.html:308
-#, python-format
-msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Denna artikel är i behov av en redaktionell granskning. <a href=\"%(url)s\">Hur du kan hjälpa.</a>"
-
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "Denna översättning är ofullständig. Hjälp till att <a href=\"%(translate_url)s\">översätta denna artikel</a> från engelska."
 
-#: kuma/wiki/jinja2/wiki/document.html:321
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This translation is in progress."
 msgstr "Den här översättningen är under uppbyggnad."
 
-#: kuma/wiki/jinja2/wiki/document.html:328
+#: kuma/wiki/jinja2/wiki/document.html:310
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3430,36 +3420,36 @@ msgstr ""
 "Våra volontärer har inte översatt denna artikel till <bdi>%(locale)s</bdi> ännu. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Gå med oss och hjälpa till att få jobbet gjort!</a><br> Du kan "
 "också läsa artikeln på <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr "Denna artikel har inte något innehåll ännu."
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:327
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Söka efter <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">sidor som använder %(title)s</a> för att se exempel av användningsfall och hur många sidor använder makrot."
 
-#: kuma/wiki/jinja2/wiki/document.html:358
+#: kuma/wiki/jinja2/wiki/document.html:340
 msgid "This article doesn't have approved content yet."
 msgstr "Denna artikel har inget godkänt innehåll ännu."
 
-#: kuma/wiki/jinja2/wiki/document.html:363
+#: kuma/wiki/jinja2/wiki/document.html:345
 msgid "Was this article helpful?"
 msgstr "Var den här artikeln till hjälp?"
 
-#: kuma/wiki/jinja2/wiki/document.html:377
+#: kuma/wiki/jinja2/wiki/document.html:359
 msgid "Thank you!"
 msgstr "Tack!"
 
-#: kuma/wiki/jinja2/wiki/document.html:387
+#: kuma/wiki/jinja2/wiki/document.html:369
 msgid "Document Tags and Contributors"
 msgstr "Dokumenttaggar och bidragare"
 
-#: kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Contributors to this page:"
 msgstr "Bidragare till denna sida:"
 
-#: kuma/wiki/jinja2/wiki/document.html:399
+#: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Last updated by:"
 msgstr "Senast uppdaterad av:"
 
@@ -3817,7 +3807,17 @@ msgstr "Du prenumererar på redigeringar på: %(title)s."
 msgid "This article needs these reviews:"
 msgstr "Denna artikel är i behov av en teknisk granskning:"
 
+#: kuma/wiki/jinja2/wiki/includes/approvals.html:14
+#, fuzzy, python-format
+msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
+msgstr "Teknisk - kodexempel, API:er eller teknologier"
+
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
+#, fuzzy, python-format
+msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
+msgstr "Redaktionell - prosa, grammatik eller innehåll"
+
+#: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
 msgstr "Spara"
 
@@ -4318,6 +4318,12 @@ msgstr "Du kan inte översätta detta dokument."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch server: %(backend)s"
+
+#~ msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
+#~ msgstr "Denna artikel är i behov av en teknisk granskning. <a href=\"%(url)s\">Hur du kan hjälpa.</a>"
+
+#~ msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
+#~ msgstr "Denna artikel är i behov av en redaktionell granskning. <a href=\"%(url)s\">Hur du kan hjälpa.</a>"
 
 #~ msgid "Unsubscribe from %(title)s"
 #~ msgstr "Avsluta prenumeration från %(title)s"

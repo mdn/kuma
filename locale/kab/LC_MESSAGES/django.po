@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:17-0700\n"
+"POT-Creation-Date: 2017-04-13 10:40-0700\n"
 "PO-Revision-Date: 2017-04-09 13:31+0000\n"
 "Last-Translator: Slimane Amiri <slimane.amiri@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
@@ -914,11 +914,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Ass-a di %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:368
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
 msgid "Yes"
 msgstr "Ih"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:372
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
 msgid "No"
 msgstr "Ala"
 
@@ -2517,7 +2517,7 @@ msgstr "Asebter"
 msgid "Date"
 msgstr "Azemz"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:445
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:427
 msgid "Edit page"
 msgstr "Ẓreg asebter"
 
@@ -2525,7 +2525,7 @@ msgstr "Ẓreg asebter"
 msgid "View complete diff"
 msgstr "Wali akk amgired"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:446
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
 msgid "View page history"
 msgstr "Wali amazray n usebter"
 
@@ -2821,11 +2821,11 @@ msgstr "Anebdal"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:217 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:217
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Atiknikan - imedyaten n tengalt, API neɣ tatiknulujit"
 
-#: kuma/wiki/constants.py:218 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:218
 msgid "Editorial - prose, grammar, or content"
 msgstr "Tira - aḍris, tajeṛṛumt, neɣ agbur"
 
@@ -3401,26 +3401,16 @@ msgstr ""
 msgid "This is an experimental page."
 msgstr "Wagi d asebter anaruman"
 
-#: kuma/wiki/jinja2/wiki/document.html:299
-#, python-format
-msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Amagrad agi yesra taɣuṛi nniḍen tatiknikant. <a href=\"%(url)s\">Hata wamek tzemreḍ ad muddeḍ tallelt.</a>"
-
-#: kuma/wiki/jinja2/wiki/document.html:308
-#, python-format
-msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Amagrad agi yesra taɣuṛi nniḍen. <a href=\"%(url)s\">Hata wamek tzemreḍ ad muddeḍ tallelt.</a>"
-
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "Tasuqilt agi ur temmid ara. Ma ulac aɣilif, mudd afus di <a href=\"%(translate_url)s\">tsuqilt n umagrad agi</a> si teglizit."
 
-#: kuma/wiki/jinja2/wiki/document.html:321
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This translation is in progress."
 msgstr "Tasuqilt agi tetteddu."
 
-#: kuma/wiki/jinja2/wiki/document.html:328
+#: kuma/wiki/jinja2/wiki/document.html:310
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3429,36 +3419,36 @@ msgstr ""
 "Iwiziwen-nneɣ ur suqlen ara amagrad-agi yakan ar <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Ddu-d yid-neɣ udiɣ mudd-d afus akken ad tettwag tsuqilt!</a><br> Tzemreḍ "
 "daɣen ad teɣreḍ amagrad-agi s <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr "Amargad agi ur ɣur-s ara yakan agbur."
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:327
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Nadi <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">isebtar iseqdacen %(title)s</a> i yimedyaten n usemres akken umḍan n isebtar yedduyen amakṛu agi."
 
-#: kuma/wiki/jinja2/wiki/document.html:358
+#: kuma/wiki/jinja2/wiki/document.html:340
 msgid "This article doesn't have approved content yet."
 msgstr "Amagrad agi ur igbir ara yakan agbur yettwasentmen."
 
-#: kuma/wiki/jinja2/wiki/document.html:363
+#: kuma/wiki/jinja2/wiki/document.html:345
 msgid "Was this article helpful?"
 msgstr "Amgrad-agi infeɛ-ik?"
 
-#: kuma/wiki/jinja2/wiki/document.html:377
+#: kuma/wiki/jinja2/wiki/document.html:359
 msgid "Thank you!"
 msgstr "Tanemmirt-ik!"
 
-#: kuma/wiki/jinja2/wiki/document.html:387
+#: kuma/wiki/jinja2/wiki/document.html:369
 msgid "Document Tags and Contributors"
 msgstr "Tibzimin akked imttekkiyen icuddden ɣer isemli"
 
-#: kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Contributors to this page:"
 msgstr "Imttekiyen deg usebter agi:"
 
-#: kuma/wiki/jinja2/wiki/document.html:399
+#: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Last updated by:"
 msgstr "Asnifel anneggaru sɣur:"
 
@@ -3816,7 +3806,17 @@ msgstr "Tettwajerdeḍ akka tura ɣer teẓrigt n %(title)s."
 msgid "This article needs these reviews:"
 msgstr "Amagrad agi yesra aɛided agi n tmuɣli:"
 
+#: kuma/wiki/jinja2/wiki/includes/approvals.html:14
+#, fuzzy, python-format
+msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
+msgstr "Atiknikan - imedyaten n tengalt, API neɣ tatiknulujit"
+
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
+#, fuzzy, python-format
+msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
+msgstr "Tira - aḍris, tajeṛṛumt, neɣ agbur"
+
+#: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
 msgstr "Sekles"
 
@@ -4319,6 +4319,12 @@ msgstr "Ur tezmireḍ ara ad tessuqleḍ isemli agi."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Aqeddac Elasticsearch : %(backend)s"
+
+#~ msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
+#~ msgstr "Amagrad agi yesra taɣuṛi nniḍen tatiknikant. <a href=\"%(url)s\">Hata wamek tzemreḍ ad muddeḍ tallelt.</a>"
+
+#~ msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
+#~ msgstr "Amagrad agi yesra taɣuṛi nniḍen. <a href=\"%(url)s\">Hata wamek tzemreḍ ad muddeḍ tallelt.</a>"
 
 #~ msgid "Unsubscribe from %(title)s"
 #~ msgstr "Ffeɣ seg ujerred n %(title)s"

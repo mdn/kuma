@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:17-0700\n"
+"POT-Creation-Date: 2017-04-13 10:40-0700\n"
 "PO-Revision-Date: 2017-03-21 10:30+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
@@ -911,11 +911,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "今天 %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:368
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
 msgid "Yes"
 msgstr "是"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:372
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
 msgid "No"
 msgstr "否"
 
@@ -2505,7 +2505,7 @@ msgstr "頁面"
 msgid "Date"
 msgstr "日期"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:445
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:427
 msgid "Edit page"
 msgstr "編輯頁面"
 
@@ -2513,7 +2513,7 @@ msgstr "編輯頁面"
 msgid "View complete diff"
 msgstr "檢視完整比對"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:446
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
 msgid "View page history"
 msgstr "檢視頁面歷史紀錄"
 
@@ -2803,11 +2803,11 @@ msgstr "管理"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:217 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:217
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "技術 - 程式碼範本、API 或技術內容"
 
-#: kuma/wiki/constants.py:218 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:218
 msgid "Editorial - prose, grammar, or content"
 msgstr "編輯 - 篇章結構、文法或內容"
 
@@ -3383,26 +3383,16 @@ msgstr "此文件的更新作業 <abbr title=\"%(scheduled_at)s\">已經排程�
 msgid "This is an experimental page."
 msgstr "這是實驗中的頁面。"
 
-#: kuma/wiki/jinja2/wiki/document.html:299
-#, python-format
-msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "此文件需要技術審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
-
-#: kuma/wiki/jinja2/wiki/document.html:308
-#, python-format
-msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "此文件需要編輯審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
-
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "翻譯不完整。請協助 <a href=\"%(translate_url)s\">翻譯此英文文件</a>。"
 
-#: kuma/wiki/jinja2/wiki/document.html:321
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This translation is in progress."
 msgstr "正在翻譯中。"
 
-#: kuma/wiki/jinja2/wiki/document.html:328
+#: kuma/wiki/jinja2/wiki/document.html:310
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3411,36 +3401,36 @@ msgstr ""
 "我們的志工尚未將本文翻譯為 <bdi>%(locale)s</bdi> 版本。<a href=\"%(help_link)s\"  rel=\"nofollow, noindex\">加入我們，幫忙翻譯！</a><br>您也可以閱讀本文的 <a href=\"%(doc_abs_url)s\">"
 "%(parent_language)s</a> 版本。"
 
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr "這篇文章還沒有任何內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:327
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "搜尋 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">標題為 %(title)s 的頁面</a>，了解用法以及使用此巨集的頁面數量。"
 
-#: kuma/wiki/jinja2/wiki/document.html:358
+#: kuma/wiki/jinja2/wiki/document.html:340
 msgid "This article doesn't have approved content yet."
 msgstr "這篇文章還沒有任何通過審核的內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:363
+#: kuma/wiki/jinja2/wiki/document.html:345
 msgid "Was this article helpful?"
 msgstr "這份文件有幫助嗎？"
 
-#: kuma/wiki/jinja2/wiki/document.html:377
+#: kuma/wiki/jinja2/wiki/document.html:359
 msgid "Thank you!"
 msgstr "感謝您！"
 
-#: kuma/wiki/jinja2/wiki/document.html:387
+#: kuma/wiki/jinja2/wiki/document.html:369
 msgid "Document Tags and Contributors"
 msgstr "文件標籤與貢獻者"
 
-#: kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Contributors to this page:"
 msgstr "此頁面的貢獻者:"
 
-#: kuma/wiki/jinja2/wiki/document.html:399
+#: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Last updated by:"
 msgstr "最近更新:"
 
@@ -3796,7 +3786,17 @@ msgstr "您已訂閱: %(title)s 的編輯。"
 msgid "This article needs these reviews:"
 msgstr "此文件需要下列審查:"
 
+#: kuma/wiki/jinja2/wiki/includes/approvals.html:14
+#, fuzzy, python-format
+msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
+msgstr "技術 - 程式碼範本、API 或技術內容"
+
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
+#, fuzzy, python-format
+msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
+msgstr "編輯 - 篇章結構、文法或內容"
+
+#: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
 msgstr "儲存"
 
@@ -4292,6 +4292,12 @@ msgstr "您不能翻譯這份文件。"
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 伺服器: %(backend)s"
+
+#~ msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
+#~ msgstr "此文件需要技術審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
+
+#~ msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
+#~ msgstr "此文件需要編輯審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
 
 #~ msgid "Unsubscribe from %(title)s"
 #~ msgstr "取消訂閱 %(title)s"
