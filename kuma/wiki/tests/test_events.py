@@ -1,27 +1,139 @@
+# -*- coding: utf-8 -*-
+"""Tests for kuma.wiki.events."""
+from __future__ import unicode_literals
+from datetime import datetime
+
 import mock
+import pytest
 
-from kuma.core.tests import eq_, get_user
-from kuma.users.tests import UserTestCase
-from . import WikiTestCase, revision
-from ..events import context_dict, EditDocumentEvent
+from ..events import EditDocumentEvent, context_dict
+from ..models import Document, Revision
 
 
-class NotificationEmailTests(UserTestCase, WikiTestCase):
+@pytest.fixture
+def wiki_user(db, django_user_model):
+    """A test user."""
+    return django_user_model.objects.create(
+        username='wiki_user',
+        email='wiki_user@example.com',
+        date_joined=datetime(2017, 4, 14, 12, 0))
 
-    def test_context_dict_no_previous_revision(self):
-        rev = revision(save=True)
-        try:
-            cd = context_dict(rev)
-        except AttributeError:
-            self.fail("Should not throw AttributeError")
-        eq_(cd, cd)
 
-    @mock.patch('tidings.events.EventUnion.fire')
-    def test_edit_document_event_fires_union(self, mock_union_fire):
-        rev = revision(save=True)
-        testuser2 = get_user(username='testuser2')
-        EditDocumentEvent.notify(testuser2, rev.document)
+@pytest.fixture
+def root_doc(wiki_user):
+    """A newly-created top-level English document."""
+    root_doc = Document.objects.create(
+        locale='en-US', slug='Root', title='Root Document')
+    Revision.objects.create(
+        document=root_doc,
+        creator=wiki_user,
+        content='<p>Getting started...</p>',
+        title='Root Document',
+        created=datetime(2017, 4, 14, 12, 15))
+    return root_doc
 
-        EditDocumentEvent(rev).fire()
 
-        assert mock_union_fire.called
+@pytest.fixture
+def create_revision(root_doc):
+    """A revision that created an English document."""
+    return root_doc.revisions.first()
+
+
+@pytest.fixture
+def edit_revision(root_doc, wiki_user):
+    """A revision that edits an English document."""
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc,
+        creator=wiki_user,
+        content='<p>The root document.</p>',
+        comment='Done with initial version.',
+        created=datetime(2017, 4, 14, 12, 30))
+    root_doc.save()
+    return root_doc.current_revision
+
+
+def test_context_dict_for_create(create_revision):
+    """Test the context for a created English page."""
+    context = context_dict(create_revision)
+    utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
+                    '&utm_source=developer.mozilla.org')
+    url = '/en-US/docs/Root'
+    expected = {
+        'compare_url': utm_campaign,
+        'creator': create_revision.creator,
+        'diff': 'Diff is unavailable.',
+        'document_title': 'Root Document',
+        'edit_url': url + '$edit' + utm_campaign,
+        'history_url': url + '$history' + utm_campaign,
+        'user_url': '/profiles/wiki_user' + utm_campaign,
+        'view_url': url + utm_campaign
+    }
+    assert context == expected
+
+
+def test_context_dict_for_edit(create_revision, edit_revision):
+    """Test the context for an edited English page."""
+    context = context_dict(edit_revision)
+    utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
+                    '&utm_source=developer.mozilla.org')
+    url = '/en-US/docs/Root'
+    compare_url = (url +
+                   "$compare?to=%d" % edit_revision.id +
+                   "&from=%d" % create_revision.id +
+                   utm_campaign.replace("?", "&"))
+    diff = """\
+--- [en-US] #%d
+
++++ [en-US] #%d
+
+@@ -5,7 +5,7 @@
+
+   </head>
+   <body>
+     <p>
+-      Getting started...
++      The root document.
+     </p>
+   </body>
+ </html>""" % (create_revision.id, edit_revision.id)
+    expected = {
+        'compare_url': compare_url,
+        'creator': edit_revision.creator,
+        'diff': diff,
+        'document_title': 'Root Document',
+        'edit_url': url + '$edit' + utm_campaign,
+        'history_url': url + '$history' + utm_campaign,
+        'user_url': '/profiles/wiki_user' + utm_campaign,
+        'view_url': url + utm_campaign
+    }
+    assert context == expected
+
+
+@mock.patch('tidings.events.EventUnion.fire')
+def test_edit_document_event_fires_union(mock_fire, create_revision,
+                                         wiki_user):
+    """Test that EditDocumentEvent also notifies for the tree."""
+    EditDocumentEvent.notify(wiki_user, create_revision.document)
+    EditDocumentEvent(create_revision).fire()
+    mock_fire.assert_called_once_with()
+
+
+@mock.patch('kuma.wiki.events.emails_with_users_and_watches')
+def test_edit_document_event_emails_on_create(mock_emails, create_revision):
+    """Test event email parameters for creation of an English page."""
+    users_and_watches = [('fake_user', [None])]
+    EditDocumentEvent(create_revision)._mails(users_and_watches)
+    assert mock_emails.call_count == 1
+    args, kwargs = mock_emails.call_args
+    assert not args
+    assert kwargs == {
+        'subject': mock.ANY,
+        'text_template': 'wiki/email/edited.ltxt',
+        'html_template': None,
+        'context_vars': context_dict(create_revision),
+        'users_and_watches': users_and_watches,
+        'default_locale': 'en-US'
+    }
+    subject = kwargs['subject'] % kwargs['context_vars']
+    expected = '[MDN] Page "Root Document" changed by wiki_user'
+    assert subject == expected
