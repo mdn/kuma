@@ -153,10 +153,21 @@ def test_edit_document_event_emails_on_change(mock_emails, edit_revision):
     assert subject == expected
 
 
+def test_first_edit_email_on_create(create_revision):
+    """A first edit email is formatted for a new English page."""
+    mail = first_edit_email(create_revision)
+    assert mail.subject == ('[MDN][en-US][New] wiki_user made their first edit,'
+                            ' creating: Root Document')
+    assert mail.extra_headers == {
+        'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
+        'X-Kuma-Editor-Username': u'wiki_user'
+    }
+
+
 def test_first_edit_email_on_change(edit_revision):
     """A first edit email is formatted for an English change."""
     mail = first_edit_email(edit_revision)
-    assert mail.subject == ('[MDN] [en-US] wiki_user made their first edit,'
+    assert mail.subject == ('[MDN][en-US] wiki_user made their first edit,'
                             ' to: Root Document')
     assert mail.extra_headers == {
         'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
@@ -167,8 +178,8 @@ def test_first_edit_email_on_change(edit_revision):
 def test_first_edit_email_on_translate(trans_revision):
     """A first edit email is formatted for a first translation."""
     mail = first_edit_email(trans_revision)
-    assert mail.subject == ('[MDN] [fr] wiki_user made their first edit,'
-                            ' to: Racine du Document')
+    assert mail.subject == ('[MDN][fr][New] wiki_user made their first edit,'
+                            ' creating: Racine du Document')
     assert mail.extra_headers == {
         'X-Kuma-Document-Url': u'https://example.com/fr/docs/Racine',
         'X-Kuma-Editor-Username': u'wiki_user'

@@ -695,7 +695,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         first_edit_email = mail.outbox[0]
         expected_to = [config.EMAIL_LIST_SPAM_WATCH]
         expected_subject = (
-            u'[MDN] [%(loc)s] %(user)s made their first edit, to: %(title)s' %
+            u'[MDN][%(loc)s] %(user)s made their first edit, to: %(title)s' %
             {'loc': self.d.locale,
              'user': new_rev.creator.username,
              'title': self.d.title}

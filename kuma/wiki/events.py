@@ -119,8 +119,14 @@ class EditDocumentInTreeEvent(InstanceEvent):
 def first_edit_email(revision):
     """Create a notification email for first-time editors."""
     user, doc = revision.creator, revision.document
-    subject = ("[MDN] [%(loc)s] %(user)s made their first edit, to: %(doc)s" %
-               {'loc': doc.locale, 'user': user.username, 'doc': doc.title})
+    if doc.revisions.only('id').first().id == revision.id:
+        subject_tmpl = ("[MDN][%(loc)s][New] %(user)s made their first edit,"
+                        " creating: %(doc)s")
+    else:
+        subject_tmpl = ("[MDN][%(loc)s] %(user)s made their first edit,"
+                        " to: %(doc)s")
+    subject = subject_tmpl % {'loc': doc.locale, 'user': user.username,
+                              'doc': doc.title}
     message = render_to_string('wiki/email/edited.ltxt',
                                notification_context(revision))
     email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
