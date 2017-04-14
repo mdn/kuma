@@ -71,6 +71,8 @@ def extra_headers(user, document=None):
     }
     if document:
         headers['X-Kuma-Document-Url'] = document.get_full_url()
+        headers['X-Kuma-Document-Title'] = document.title
+        headers['X-Kuma-Document-Locale'] = document.locale
     return headers
 
 
