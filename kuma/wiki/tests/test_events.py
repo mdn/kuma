@@ -7,8 +7,8 @@ import mock
 import pytest
 
 from ..events import (EditDocumentEvent, first_edit_email,
-                      notification_context)
-from ..models import Document, Revision
+                      notification_context, spam_attempt_email)
+from ..models import Document, DocumentSpamAttempt, Revision
 
 
 @pytest.fixture
@@ -149,3 +149,41 @@ def test_first_edit_email_on_change(edit_revision):
         'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
         'X-Kuma-Editor-Username': u'wiki_user'
     }
+
+
+def test_spam_attempt_email_on_create(wiki_user):
+    """A spam attempt email is formatted for a new English page."""
+    spam_attempt = DocumentSpamAttempt(
+        user=wiki_user,
+        title='My new spam page',
+        slug='my-new-spam-page',
+        created=datetime(2017, 4, 14, 15, 13)
+    )
+    mail = spam_attempt_email(spam_attempt)
+    assert mail.subject == ('[MDN] Wiki spam attempt recorded with title'
+                            ' My new spam page')
+
+
+def test_spam_attempt_email_on_change(wiki_user, root_doc):
+    """A spam attempt email is formatted for an English change."""
+    spam_attempt = DocumentSpamAttempt(
+        user=wiki_user,
+        title='A spam revision',
+        slug=root_doc.slug,
+        document=root_doc,
+        created=datetime(2017, 4, 14, 15, 14)
+    )
+    mail = spam_attempt_email(spam_attempt)
+    assert mail.subject == ('[MDN] Wiki spam attempt recorded for document'
+                            ' /en-US/docs/Root (Root Document)')
+
+
+def test_spam_attempt_email_partial_model(wiki_user):
+    """A spam attempt email is formatted with partial information."""
+    spam_attempt = DocumentSpamAttempt(
+        user=wiki_user,
+        slug='my-new-spam-page',
+        created=datetime(2017, 4, 14, 15, 13)
+    )
+    mail = spam_attempt_email(spam_attempt)
+    assert mail.subject == ('[MDN] Wiki spam attempt recorded')

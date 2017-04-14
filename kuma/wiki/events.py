@@ -118,3 +118,21 @@ def first_edit_email(revision):
                          headers={'X-Kuma-Document-Url': doc.get_full_url(),
                                   'X-Kuma-Editor-Username': user.username})
     return email
+
+
+def spam_attempt_email(spam_attempt):
+    """
+    Create a notification email for a spam attempt.
+
+    Because the spam may be on document creation, the document might be null.
+    """
+    subject = '[MDN] Wiki spam attempt recorded'
+    if spam_attempt.document:
+        subject = '%s for document %s' % (subject, spam_attempt.document)
+    elif spam_attempt.title:
+        subject = '%s with title %s' % (subject, spam_attempt.title)
+    body = render_to_string('wiki/email/spam.ltxt',
+                            {'spam_attempt': spam_attempt})
+    email = EmailMessage(subject, body, settings.DEFAULT_FROM_EMAIL,
+                         to=[config.EMAIL_LIST_SPAM_WATCH])
+    return email

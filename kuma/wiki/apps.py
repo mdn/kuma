@@ -1,11 +1,7 @@
-from constance import config
-
 from django.apps import AppConfig
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
 from django.db.models import signals
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from elasticsearch_dsl.connections import connections as es_connections
@@ -144,12 +140,5 @@ class WikiConfig(AppConfig):
         if raw or not created:
             # Only send for new instances, not fixtures or edits
             return
-        subject = u'[MDN] Wiki spam attempt recorded'
-        if instance.document:
-            subject = u'%s for document %s' % (subject, instance.document)
-        elif instance.title:
-            subject = u'%s with title %s' % (subject, instance.title)
-        body = render_to_string('wiki/email/spam.ltxt',
-                                {'spam_attempt': instance})
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
-                  [config.EMAIL_LIST_SPAM_WATCH])
+        from .events import spam_attempt_email
+        spam_attempt_email(instance).send()
