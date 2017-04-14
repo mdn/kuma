@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
+"""Send notification emails for editing events."""
+from __future__ import unicode_literals
 import logging
 
+from constance import config
+from django.conf import settings
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from tidings.events import EventUnion, InstanceEvent
 
@@ -14,7 +21,7 @@ from .templatetags.jinja_helpers import get_compare_url, revisions_unified_diff
 log = logging.getLogger('kuma.wiki.events')
 
 
-def context_dict(revision):
+def notification_context(revision):
     """
     Return a dict that fills in the blanks in notification templates.
     """
@@ -70,8 +77,8 @@ class EditDocumentEvent(InstanceEvent):
         log.debug('Sending edited notification email for document (id=%s)' %
                   document.id)
         subject = ugettext(
-            u'[MDN] Page "%(document_title)s" changed by %(creator)s')
-        context = context_dict(revision)
+            '[MDN] Page "%(document_title)s" changed by %(creator)s')
+        context = notification_context(revision)
 
         return emails_with_users_and_watches(
             subject=subject,
@@ -97,3 +104,17 @@ class EditDocumentInTreeEvent(InstanceEvent):
     """
     event_type = 'wiki edit document in tree'
     content_type = Document
+
+
+def first_edit_email(revision):
+    """Create a notification email for first-time editors."""
+    user, doc = revision.creator, revision.document
+    subject = ("[MDN] [%(loc)s] %(user)s made their first edit, to: %(doc)s" %
+               {'loc': doc.locale, 'user': user.username, 'doc': doc.title})
+    message = render_to_string('wiki/email/edited.ltxt',
+                               notification_context(revision))
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
+                         to=[config.EMAIL_LIST_SPAM_WATCH],
+                         headers={'X-Kuma-Document-Url': doc.get_full_url(),
+                                  'X-Kuma-Editor-Username': user.username})
+    return email

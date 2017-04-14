@@ -6,7 +6,8 @@ from datetime import datetime
 import mock
 import pytest
 
-from ..events import EditDocumentEvent, context_dict
+from ..events import (EditDocumentEvent, first_edit_email,
+                      notification_context)
 from ..models import Document, Revision
 
 
@@ -52,9 +53,9 @@ def edit_revision(root_doc, wiki_user):
     return root_doc.current_revision
 
 
-def test_context_dict_for_create(create_revision):
-    """Test the context for a created English page."""
-    context = context_dict(create_revision)
+def test_notification_context_for_create(create_revision):
+    """Test the notification context for a created English page."""
+    context = notification_context(create_revision)
     utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
                     '&utm_source=developer.mozilla.org')
     url = '/en-US/docs/Root'
@@ -71,9 +72,9 @@ def test_context_dict_for_create(create_revision):
     assert context == expected
 
 
-def test_context_dict_for_edit(create_revision, edit_revision):
-    """Test the context for an edited English page."""
-    context = context_dict(edit_revision)
+def test_notification_context_for_edit(create_revision, edit_revision):
+    """Test the notification context for an edited English page."""
+    context = notification_context(edit_revision)
     utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
                     '&utm_source=developer.mozilla.org')
     url = '/en-US/docs/Root'
@@ -130,10 +131,21 @@ def test_edit_document_event_emails_on_create(mock_emails, create_revision):
         'subject': mock.ANY,
         'text_template': 'wiki/email/edited.ltxt',
         'html_template': None,
-        'context_vars': context_dict(create_revision),
+        'context_vars': notification_context(create_revision),
         'users_and_watches': users_and_watches,
         'default_locale': 'en-US'
     }
     subject = kwargs['subject'] % kwargs['context_vars']
     expected = '[MDN] Page "Root Document" changed by wiki_user'
     assert subject == expected
+
+
+def test_first_edit_email_on_change(edit_revision):
+    """A first edit email is formatted for an English change."""
+    mail = first_edit_email(edit_revision)
+    assert mail.subject == ('[MDN] [en-US] wiki_user made their first edit,'
+                            ' to: Root Document')
+    assert mail.extra_headers == {
+        'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
+        'X-Kuma-Editor-Username': u'wiki_user'
+    }
