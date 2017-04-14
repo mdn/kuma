@@ -272,6 +272,25 @@ class DocumentTests(UserTestCase):
         doc = document()
         eq_(doc.get_full_url(), absolutify(doc.get_absolute_url()))
 
+    def test_from_url(self):
+        created_doc = document(save=True)
+        doc_url = created_doc.get_absolute_url()
+
+        get_doc = Document.from_url(doc_url)
+        assert get_doc.id == created_doc.id
+
+    def test_get_redirect_document(self):
+        rev = revision(save=True)
+        doc = rev.document
+        doc_first_slug = doc.slug
+
+        # Move the document to new slug
+        doc._move_tree(new_slug="moved_doc")
+
+        old_slug_document = Document.objects.get(slug=doc_first_slug)
+
+        assert old_slug_document.get_redirect_document().id == doc.id
+
 
 class PermissionTests(KumaTestCase):
 

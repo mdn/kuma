@@ -5,6 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 from constance.test import override_config
 import mock
+import pytest
 from googleapiclient.http import HttpMockSequence
 from googleapiclient.errors import HttpError
 
@@ -12,7 +13,8 @@ from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 
 from . import revision
-from ..utils import analytics_upageviews, analytics_upageviews_by_revisions
+from ..exceptions import NotDocumentView
+from ..utils import analytics_upageviews, analytics_upageviews_by_revisions, get_doc_components_from_url
 
 
 GA_TEST_CREDS = r"""{
@@ -308,3 +310,52 @@ class AnalyticsUpageviewsByRevisionsTests(UserTestCase):
 
         mock_pageviews.assert_called_once_with([self.rev1.id, self.rev2.id],
                                                min(self.rev1.created, self.rev2.created))
+
+
+class DocComponentsFromURLTests(UserTestCase):
+    def setUp(self):
+        self.rev = revision(save=True)
+        self.doc = self.rev.document
+
+    def test_with_url(self):
+        url = self.doc.get_absolute_url()
+        locale, path, slug = get_doc_components_from_url(url)
+
+        # Check slug is same
+        assert slug == self.doc.slug
+        # Check locale is also same
+        assert locale == self.doc.locale
+
+    def test_required_locale(self):
+        self.doc.locale = 'bn-BD'
+        self.doc.save()
+
+        url = self.doc.get_absolute_url()
+
+        # Pass a wrong locale to the required_locale parameter
+        components = get_doc_components_from_url(url, required_locale='de')
+
+        # The return value should be False
+        assert components is False
+
+        # Passing correct locale code should work
+        components = get_doc_components_from_url(url, required_locale='bn-BD')
+
+        assert components is not False
+
+    def test_check_host(self):
+        url = "http://testserver" + self.doc.get_absolute_url()
+
+        # Passing url starting with http:// + hostname will return False if
+        # set `check_host` parameter to True
+        components = get_doc_components_from_url(url, check_host=True)
+
+        # The return value should be False
+        assert components is False
+
+    def test_exception_raise_if_not_document(self):
+        rev_url = self.rev.get_absolute_url()
+
+        # Check NotDocumentView Exception is raises because we passed revision url
+        with pytest.raises(NotDocumentView):
+            get_doc_components_from_url(rev_url)

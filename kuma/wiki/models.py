@@ -381,25 +381,21 @@ class Document(NotificationsMixin, models.Model):
         return self.get_summary(strip_markup=True)
 
     @classmethod
-    def from_url(cls, url, required_locale=None, id_only=False,
-                 check_host=True):
-        """Return the approved Document the URL represents, None if there isn't
-        one.
+    def from_url(cls, url, id_only=True):
+        """
+        Return the approved Document the URL represents, None if there isn't one.
+
+        Taken from:
+        https://github.com/mozilla/kitsune/blob/dd944c9ebb126cc1e660fba569cd68a6c7e88430/kitsune/wiki/models.py#L388
+
         Return None if the URL is a 404, the URL doesn't point to the right
         view, or the indicated document doesn't exist.
-        To limit the universe of discourse to a certain locale, pass in a
-        `required_locale`. To fetch only the ID of the returned Document, set
-        `id_only` to True.
-        If the URL has a host component, we assume it does not point to this
-        host and thus does not point to a Document, because that would be a
-        needlessly verbose way to specify an internal link. However, if you
-        pass check_host=False, we assume the URL's host is the one serving
-        Documents, which comes in handy for analytics whose metrics return
-        host-having URLs.
+        To fetch all values of the returned Document not only ID,
+        set `id_only` to True.
         """
+
         try:
-            components = get_doc_components_from_url(
-                url, required_locale=required_locale, check_host=check_host)
+            components = get_doc_components_from_url(url)
         except NotDocumentView:
             return None
         if not components:
@@ -413,6 +409,7 @@ class Document(NotificationsMixin, models.Model):
             doc = doc.get(locale=locale, slug=slug)
         except cls.DoesNotExist:
             try:
+                # Check if the slug belongs to any default language document
                 doc = doc.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
                 translation = doc.translated_to(locale)
                 if translation:
@@ -1400,7 +1397,7 @@ Full traceback:
                 elif len(url) == 1 and url[0] == '/':
                     return url
 
-    def get_redirect_document(self, id_only=False):
+    def get_redirect_document(self, id_only=True):
         """If I am a redirect to a Document, return that Document.
         Otherwise, return None.
         """
