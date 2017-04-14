@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-13 19:02+0000\n"
+"PO-Revision-Date: 2017-04-14 16:29+0000\n"
 "Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
@@ -281,7 +281,7 @@ msgstr "Pesquisar"
 #: jinja2/base.html:210
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr "<p>&copy; 2005-%(thisyear)s Rede de Programadores da Mozilla (MDN) e colaboradores individuais</p><p>Conteúdo disponível sob <a href=\"%(copyright_url)s\">estas licenças</a>.</p>"
+msgstr "<p>&copy; 2005-%(thisyear)s Rede de Programadores da Mozilla (MDN) e contribuidores individuais</p> <p>Conteúdo disponível sob <a href=\"%(copyright_url)s\">estas licenças</a>.</p>"
 
 #: jinja2/base.html:215
 msgid "About MDN"
@@ -3412,11 +3412,11 @@ msgstr "Próximo resultado da pesquisa"
 
 #: kuma/wiki/jinja2/wiki/document.html:198
 msgid "see all contributors"
-msgstr "ver todos os colaboradores"
+msgstr "ver todos os contribuidores"
 
 #: kuma/wiki/jinja2/wiki/document.html:198
 msgid "hide contributors"
-msgstr "ocultar colaboradores"
+msgstr "ocultar contribuidores"
 
 #: kuma/wiki/jinja2/wiki/document.html:202
 #, python-format
@@ -3502,11 +3502,11 @@ msgstr "Obrigado!"
 
 #: kuma/wiki/jinja2/wiki/document.html:369
 msgid "Document Tags and Contributors"
-msgstr "Etiquetas do documento e colaboradores"
+msgstr "Etiquetas do documento e contribuidores"
 
 #: kuma/wiki/jinja2/wiki/document.html:375
 msgid "Contributors to this page:"
-msgstr "Colaboradores para esta página:"
+msgstr "Contribuidores para esta página:"
 
 #: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Last updated by:"
@@ -3759,8 +3759,8 @@ msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-%(this_year)s Rede de Programadores da Mozilla (MDN) e colaboradores individuais<br /> Conteúdo disponível sob uma licença específica para este projeto. &middot; <a "
-"href=\"%(about_url)s\">Sobre a MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribua para o código</a> &middot; <a href=\"//www.mozilla.org/pt-PT/privacy\">Política de privacidade</a>"
+"&copy; 2005-%(this_year)s Rede de Programadores da Mozilla (MDN) e contribuidores individuais<br /> Conteúdo disponível sob uma licença específica para este projeto. &middot; <a "
+"href=\"%(about_url)s\">Acerca da MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribua para o código</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Política de privacidade</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
