@@ -64,6 +64,16 @@ def notification_context(revision):
     return context
 
 
+def extra_headers(user, document=None):
+    """Get extra headers for filtering notification emails."""
+    headers = {
+        'X-Kuma-Editor-Username': user.username
+    }
+    if document:
+        headers['X-Kuma-Document-Url'] = document.get_full_url()
+    return headers
+
+
 class EditDocumentEvent(InstanceEvent):
     """
     Event fired when a certain document is edited
@@ -96,7 +106,8 @@ class EditDocumentEvent(InstanceEvent):
             html_template=None,
             context_vars=context,
             users_and_watches=users_and_watches,
-            default_locale=document.locale)
+            default_locale=document.locale,
+            headers=extra_headers(revision.creator, document))
 
     def fire(self, **kwargs):
         parent_events = [EditDocumentInTreeEvent(doc) for doc in
@@ -131,8 +142,7 @@ def first_edit_email(revision):
                                notification_context(revision))
     email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
                          to=[config.EMAIL_LIST_SPAM_WATCH],
-                         headers={'X-Kuma-Document-Url': doc.get_full_url(),
-                                  'X-Kuma-Editor-Username': user.username})
+                         headers=extra_headers(user, doc))
     return email
 
 
@@ -143,12 +153,14 @@ def spam_attempt_email(spam_attempt):
     Because the spam may be on document creation, the document might be null.
     """
     subject = '[MDN] Wiki spam attempt recorded'
-    if spam_attempt.document:
-        subject = '%s for document %s' % (subject, spam_attempt.document)
+    document = spam_attempt.document
+    if document:
+        subject = '%s for document %s' % (subject, document)
     elif spam_attempt.title:
         subject = '%s with title %s' % (subject, spam_attempt.title)
     body = render_to_string('wiki/email/spam.ltxt',
                             {'spam_attempt': spam_attempt})
     email = EmailMessage(subject, body, settings.DEFAULT_FROM_EMAIL,
-                         to=[config.EMAIL_LIST_SPAM_WATCH])
+                         to=[config.EMAIL_LIST_SPAM_WATCH],
+                         headers=extra_headers(spam_attempt.user, document))
     return email

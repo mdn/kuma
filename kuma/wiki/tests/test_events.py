@@ -131,7 +131,11 @@ def test_edit_document_event_emails_on_create(mock_emails, create_revision):
         'html_template': None,
         'context_vars': notification_context(create_revision),
         'users_and_watches': users_and_watches,
-        'default_locale': 'en-US'
+        'default_locale': 'en-US',
+        'headers': {
+            'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
+            'X-Kuma-Editor-Username': u'wiki_user'
+        }
     }
     subject = kwargs['subject'] % kwargs['context_vars']
     expected = '[MDN][en-US][New] Page "Root Document" created by wiki_user'
@@ -197,6 +201,9 @@ def test_spam_attempt_email_on_create(wiki_user):
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded with title'
                             ' My new spam page')
+    assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': u'wiki_user'
+    }
 
 
 def test_spam_attempt_email_on_change(wiki_user, root_doc):
@@ -211,6 +218,10 @@ def test_spam_attempt_email_on_change(wiki_user, root_doc):
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded for document'
                             ' /en-US/docs/Root (Root Document)')
+    assert mail.extra_headers == {
+        'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
+        'X-Kuma-Editor-Username': u'wiki_user'
+    }
 
 
 def test_spam_attempt_email_on_translate(wiki_user, trans_doc):
@@ -235,3 +246,6 @@ def test_spam_attempt_email_partial_model(wiki_user):
     )
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded')
+    assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': u'wiki_user'
+    }
