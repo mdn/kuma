@@ -55,7 +55,10 @@ def notification_context(revision):
     }
 
     for name, url in link_urls.items():
-        context[name] = add_utm(url, 'Wiki Doc Edits')
+        if url:
+            context[name] = add_utm(url, 'Wiki Doc Edits')
+        else:
+            context[name] = url
 
     return context
 
