@@ -7,7 +7,7 @@ from constance import config
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from tidings.events import EventUnion, InstanceEvent
 
 from kuma.core.email_utils import emails_with_users_and_watches
@@ -35,6 +35,7 @@ def notification_context(revision):
         'document_title': document.title,
         'creator': revision.creator,
         'diff': diff,
+        'locale': document.locale
     }
 
     if from_revision:
@@ -79,8 +80,14 @@ class EditDocumentEvent(InstanceEvent):
         document = revision.document
         log.debug('Sending edited notification email for document (id=%s)' %
                   document.id)
-        subject = ugettext(
-            '[MDN] Page "%(document_title)s" changed by %(creator)s')
+        if document.revisions.only('id').first().id == revision.id:
+            subject = _(
+                '[MDN][%(locale)s][New] Page "%(document_title)s"'
+                ' created by %(creator)s')
+        else:
+            subject = _(
+                '[MDN][%(locale)s] Page "%(document_title)s"'
+                ' changed by %(creator)s')
         context = notification_context(revision)
 
         return emails_with_users_and_watches(

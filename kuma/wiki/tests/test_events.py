@@ -23,6 +23,7 @@ def test_notification_context_for_create(create_revision):
         'document_title': 'Root Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
+        'locale': 'en-US',
         'user_url': '/profiles/wiki_user' + utm_campaign,
         'view_url': url + utm_campaign
     }
@@ -61,6 +62,7 @@ def test_notification_context_for_edit(create_revision, edit_revision):
         'document_title': 'Root Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
+        'locale': 'en-US',
         'user_url': '/profiles/wiki_user' + utm_campaign,
         'view_url': url + utm_campaign
     }
@@ -99,6 +101,7 @@ def test_notification_context_for_translation(trans_revision, create_revision):
         'document_title': 'Racine du Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
+        'locale': 'fr',
         'user_url': '/profiles/wiki_user' + utm_campaign,
         'view_url': url + utm_campaign
     }
@@ -131,7 +134,22 @@ def test_edit_document_event_emails_on_create(mock_emails, create_revision):
         'default_locale': 'en-US'
     }
     subject = kwargs['subject'] % kwargs['context_vars']
-    expected = '[MDN] Page "Root Document" changed by wiki_user'
+    expected = '[MDN][en-US][New] Page "Root Document" created by wiki_user'
+    assert subject == expected
+
+
+@mock.patch('kuma.wiki.events.emails_with_users_and_watches')
+def test_edit_document_event_emails_on_change(mock_emails, edit_revision):
+    """Test event email parameters for changing an English page."""
+    users_and_watches = [('fake_user', [None])]
+    EditDocumentEvent(edit_revision)._mails(users_and_watches)
+    assert mock_emails.call_count == 1
+    args, kwargs = mock_emails.call_args
+    assert not args
+    context = notification_context(edit_revision)
+    assert kwargs['context_vars'] == context
+    subject = kwargs['subject'] % context
+    expected = '[MDN][en-US] Page "Root Document" changed by wiki_user'
     assert subject == expected
 
 
