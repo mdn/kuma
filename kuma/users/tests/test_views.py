@@ -160,12 +160,12 @@ class BanTestCase(UserTestCase):
 
         # User not viewable if banned
         response = self.client.get(url, follow=True)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 404)
 
         # Admin can view banned user
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url, follow=True)
-        self.assertNotEqual(response.status_code, 403)
+        self.assertNotEqual(response.status_code, 404)
 
     def test_get_ban_user_view(self):
         # For an unbanned user get the ban_user view
