@@ -609,10 +609,16 @@ class RevisionTests(UserTestCase):
         last_rev = revision(document=rev.document, content="Finally",
                             is_approved=True,
                             created=datetime(2017, 4, 15, 9, 25), save=True)
+        trans = Document.objects.create(parent=rev.document, locale='fr',
+                                        title='In French')
+        trans_rev = revision(document=trans, is_approved=True,
+                             based_on=last_rev,
+                             created=datetime(2017, 4, 15, 9, 56), save=True)
 
         assert rev.previous is None
         assert next_rev.previous == rev
         assert last_rev.previous == next_rev
+        assert trans_rev.previous is None
 
     @pytest.mark.toc
     def test_show_toc(self):

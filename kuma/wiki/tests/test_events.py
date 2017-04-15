@@ -53,6 +53,29 @@ def edit_revision(root_doc, wiki_user):
     return root_doc.current_revision
 
 
+@pytest.fixture
+def trans_doc(create_revision, wiki_user):
+    """Translate the root document into French."""
+    trans_doc = Document.objects.create(
+        locale='fr',
+        parent=create_revision.document,
+        slug='Racine',
+        title='Racine du Document')
+    Revision.objects.create(
+        document=trans_doc,
+        creator=wiki_user,
+        based_on=create_revision,
+        content='<p>Mise en route...</p>',
+        title='Racine du Document',
+        created=datetime(2017, 4, 14, 12, 20))
+    return trans_doc
+
+
+@pytest.fixture
+def trans_revision(trans_doc):
+    return trans_doc.current_revision
+
+
 def test_notification_context_for_create(create_revision):
     """Test the notification context for a created English page."""
     context = notification_context(create_revision)
@@ -110,6 +133,25 @@ def test_notification_context_for_edit(create_revision, edit_revision):
     assert context == expected
 
 
+def test_notification_context_for_translation(trans_revision):
+    """Test the notification context for a created English page."""
+    context = notification_context(trans_revision)
+    utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
+                    '&utm_source=developer.mozilla.org')
+    url = '/fr/docs/Racine'
+    expected = {
+        'compare_url': utm_campaign,
+        'creator': trans_revision.creator,
+        'diff': 'Diff is unavailable.',
+        'document_title': 'Racine du Document',
+        'edit_url': url + '$edit' + utm_campaign,
+        'history_url': url + '$history' + utm_campaign,
+        'user_url': '/profiles/wiki_user' + utm_campaign,
+        'view_url': url + utm_campaign
+    }
+    assert context == expected
+
+
 @mock.patch('tidings.events.EventUnion.fire')
 def test_edit_document_event_fires_union(mock_fire, create_revision,
                                          wiki_user):
@@ -151,6 +193,17 @@ def test_first_edit_email_on_change(edit_revision):
     }
 
 
+def test_first_edit_email_on_translate(trans_revision):
+    """A first edit email is formatted for a first translation."""
+    mail = first_edit_email(trans_revision)
+    assert mail.subject == ('[MDN] [fr] wiki_user made their first edit,'
+                            ' to: Racine du Document')
+    assert mail.extra_headers == {
+        'X-Kuma-Document-Url': u'https://example.com/fr/docs/Racine',
+        'X-Kuma-Editor-Username': u'wiki_user'
+    }
+
+
 def test_spam_attempt_email_on_create(wiki_user):
     """A spam attempt email is formatted for a new English page."""
     spam_attempt = DocumentSpamAttempt(
@@ -176,6 +229,19 @@ def test_spam_attempt_email_on_change(wiki_user, root_doc):
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded for document'
                             ' /en-US/docs/Root (Root Document)')
+
+
+def test_spam_attempt_email_on_translate(wiki_user, trans_doc):
+    """A spam attempt email is formatted for a new translation."""
+    spam_attempt = DocumentSpamAttempt(
+        user=wiki_user,
+        title='Ma nouvelle page de spam',
+        slug='ma-nouvelle-page-de-spam',
+        created=datetime(2017, 4, 15, 10, 54)
+    )
+    mail = spam_attempt_email(spam_attempt)
+    assert mail.subject == ('[MDN] Wiki spam attempt recorded with title'
+                            ' Ma nouvelle page de spam')
 
 
 def test_spam_attempt_email_partial_model(wiki_user):
