@@ -601,19 +601,18 @@ class RevisionTests(UserTestCase):
     def test_previous(self):
         """Revision.previous should return this revision's document's
         most recent approved revision."""
-        rev = revision(is_approved=True, save=True)
-        eq_(None, rev.previous)
-        # wait a second so next revision is a different datetime
-        time.sleep(1)
+        rev = revision(is_approved=True, created=datetime(2017, 4, 15, 9, 23),
+                       save=True)
         next_rev = revision(document=rev.document, content="Updated",
-                            is_approved=True)
-        next_rev.save()
-        eq_(rev, next_rev.previous)
-        time.sleep(1)
+                            is_approved=True,
+                            created=datetime(2017, 4, 15, 9, 24), save=True)
         last_rev = revision(document=rev.document, content="Finally",
-                            is_approved=True)
-        last_rev.save()
-        eq_(next_rev, last_rev.previous)
+                            is_approved=True,
+                            created=datetime(2017, 4, 15, 9, 25), save=True)
+
+        assert rev.previous is None
+        assert next_rev.previous == rev
+        assert last_rev.previous == next_rev
 
     @pytest.mark.toc
     def test_show_toc(self):
