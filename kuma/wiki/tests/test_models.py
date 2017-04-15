@@ -618,7 +618,7 @@ class RevisionTests(UserTestCase):
         assert rev.previous is None
         assert next_rev.previous == rev
         assert last_rev.previous == next_rev
-        assert trans_rev.previous is None
+        assert trans_rev.previous == last_rev
 
     @pytest.mark.toc
     def test_show_toc(self):

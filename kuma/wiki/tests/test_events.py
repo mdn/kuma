@@ -133,16 +133,35 @@ def test_notification_context_for_edit(create_revision, edit_revision):
     assert context == expected
 
 
-def test_notification_context_for_translation(trans_revision):
+def test_notification_context_for_translation(trans_revision, create_revision):
     """Test the notification context for a created English page."""
     context = notification_context(trans_revision)
     utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
                     '&utm_source=developer.mozilla.org')
     url = '/fr/docs/Racine'
+    compare_url = (url +
+                   "$compare?to=%d" % trans_revision.id +
+                   "&from=%d" % create_revision.id +
+                   utm_campaign.replace("?", "&"))
+    diff = """\
+--- [en-US] #%d
+
++++ [fr] #%d
+
+@@ -5,7 +5,7 @@
+
+   </head>
+   <body>
+     <p>
+-      Getting started...
++      Mise en route...
+     </p>
+   </body>
+ </html>""" % (create_revision.id, trans_revision.id)
     expected = {
-        'compare_url': utm_campaign,
+        'compare_url': compare_url,
         'creator': trans_revision.creator,
-        'diff': 'Diff is unavailable.',
+        'diff': diff,
         'document_title': 'Racine du Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
