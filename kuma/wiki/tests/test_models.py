@@ -13,6 +13,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from kuma.core.exceptions import ProgrammingError
+from kuma.core.urlresolvers import reverse
 from kuma.core.tests import KumaTestCase, eq_, get_user, ok_
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.users.tests import UserTestCase
@@ -278,6 +279,45 @@ class DocumentTests(UserTestCase):
 
         get_doc = Document.from_url(doc_url)
         assert get_doc.id == created_doc.id
+
+    def test_from_url_with_default_locale_slug(self):
+        """It should be possible to get the localized document
+           even though the url of default locale document is passed"""
+
+        en_doc = document(save=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        bn_doc = document(parent=en_doc, locale='bn-BD', save=True)
+
+        # Generate a url with `bn-BD` locale, but default locale document slug
+        url = reverse('wiki.document', locale=bn_doc.locale, args=[en_doc.slug])
+
+        get_doc = Document.from_url(url)
+        assert get_doc.id == bn_doc.id
+
+        # passing wrong default locale document slug should return None
+        # Generate a url with bad default locale document slug
+        url = reverse('wiki.document', locale=bn_doc.locale, args=[en_doc.slug + 'bad_slug'])
+        get_doc = Document.from_url(url)
+        assert get_doc is None
+
+    def test_from_url_with_wrong_url(self):
+        """If wrong url is passed to the ``from_url``, It should return None"""
+        rev = revision(save=True)
+        # Generate a url of revision
+        url = rev.get_absolute_url()
+
+        # Passing url of revision should return None as its not documen
+        get_doc = Document.from_url(url)
+        assert get_doc is None
+
+    def test_from_url_with_full_url(self):
+        """If url with host is passed, the from_url should return None"""
+        doc = document(save=True)
+        full_url = doc.get_full_url()
+
+        # Passing the full_url to get_doc
+        get_doc = Document.from_url(full_url)
+
+        assert get_doc is None
 
     def test_get_redirect_document(self):
         rev = revision(save=True)
