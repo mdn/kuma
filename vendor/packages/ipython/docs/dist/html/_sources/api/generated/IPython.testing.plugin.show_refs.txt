@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.plugin.show_refs
+========================
+
+Module: :mod:`testing.plugin.show_refs`
+---------------------------------------
+Inheritance diagram for ``IPython.testing.plugin.show_refs``:
+
+.. inheritance-diagram:: IPython.testing.plugin.show_refs 
+   :parts: 3
+
+.. automodule:: IPython.testing.plugin.show_refs
+
+.. currentmodule:: IPython.testing.plugin.show_refs
+
+:class:`C`
+----------
+
+
+.. autoclass:: C
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

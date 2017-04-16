@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="Dealing with Request Data" href="request_data.html">
+    <link rel="prev" title="Important Terms" href="terms.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="terms.html">&laquo; Important Terms</a></li>
+        <li class="active"><a href="">Unicode</a></li>
+        <li><a href="request_data.html">Dealing with Request Data &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Unicode</a><ul>
+<li><a class="reference external" href="#unicode-in-python">Unicode in Python</a></li>
+<li><a class="reference external" href="#unicode-in-http">Unicode in HTTP</a></li>
+<li><a class="reference external" href="#error-handling">Error Handling</a></li>
+<li><a class="reference external" href="#request-and-response-objects">Request and Response Objects</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<span id="unicode"></span><h1>Unicode<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>Since early Python 2 days unicode was part of all default Python builds.  It
+allows developers to write applications that deal with non-ASCII characters
+in a straightforward way.  But working with unicode requires a basic knowledge
+about that matter, especially when working with libraries that do not support
+it.</p>
+<p>Werkzeug uses unicode internally everywhere text data is assumed, even if the
+HTTP standard is not unicode aware as it.  Basically all incoming data is
+decoded from the charset specified (per default <cite>utf-8</cite>) so that you don&#8217;t
+operate on bytestrings any more.  Outgoing unicode data is then encoded into
+the target charset again.</p>
+<div class="section" id="unicode-in-python">
+<h2>Unicode in Python<a class="headerlink" href="#unicode-in-python" title="Permalink to this headline">¶</a></h2>
+<p>In Python 2 there are two basic string types: <cite>str</cite> and <cite>unicode</cite>.  <cite>str</cite> may
+carry encoded unicode data but it&#8217;s always represented in bytes whereas the
+<cite>unicode</cite> type does not contain bytes but charpoints.  What does this mean?
+Imagine you have the German Umlaut <cite>ö</cite>.  In ASCII you cannot represent that
+character, but in the <cite>latin-1</cite> and <cite>utf-8</cite> character sets you can represent
+it, but they look differently when encoded:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">u&#39;ö&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;latin1&#39;</span><span class="p">)</span>
+<span class="go">&#39;\xf6&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">u&#39;ö&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="go">&#39;\xc3\xb6&#39;</span>
+</pre></div>
+</div>
+<p>So an <cite>ö</cite> might look totally different depending on the encoding which makes
+it hard to work with it.  The solution is using the <cite>unicode</cite> type (as we did
+above, note the <cite>u</cite> prefix before the string).  The unicode type does not
+store the bytes for <cite>ö</cite> but the information, that this is a
+<tt class="docutils literal"><span class="pre">LATIN</span> <span class="pre">SMALL</span> <span class="pre">LETTER</span> <span class="pre">O</span> <span class="pre">WITH</span> <span class="pre">DIAERESIS</span></tt>.</p>
+<p>Doing <tt class="docutils literal"><span class="pre">len(u'ö')</span></tt> will always give us the expected &#8220;1&#8221; but <tt class="docutils literal"><span class="pre">len('ö')</span></tt>
+might give different results depending on the encoding of <tt class="docutils literal"><span class="pre">'ö'</span></tt>.</p>
+</div>
+<div class="section" id="unicode-in-http">
+<h2>Unicode in HTTP<a class="headerlink" href="#unicode-in-http" title="Permalink to this headline">¶</a></h2>
+<p>The problem with unicode is that HTTP does not know what unicode is.  HTTP
+is limited to bytes but this is not a big problem as Werkzeug decodes and
+encodes for us automatically all incoming and outgoing data.  Basically what
+this means is that data sent from the browser to the web application is per
+default decoded from an utf-8 bytestring into a <cite>unicode</cite> string.  Data sent
+from the application back to the browser that is not yet a bytestring is then
+encoded back to utf-8.</p>
+<p>Usually this &#8220;just works&#8221; and we don&#8217;t have to worry about it, but there are
+situations where this behavior is problematic.  For example the Python 2 IO
+layer is not unicode aware.  This means that whenever you work with data from
+the file system you have to properly decode it.  The correct way to load
+a text file from the file system looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="s">&#39;/path/to/the_file.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>    <span class="c"># assuming the file is utf-8 encoded</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>There is also the codecs module which provides an open function that decodes
+automatically from the given encoding.</p>
+</div>
+<div class="section" id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>With Werkzeug 0.3 onwards you can further control the way Werkzeug works with
+unicode.  In the past Werkzeug ignored encoding errors silently on incoming
+data.  This decision was made to avoid internal server errors if the user
+tampered with the submitted data.  However there are situations where you
+want to abort with a <cite>400 BAD REQUEST</cite> instead of silently ignoring the error.</p>
+<p>All the functions that do internal decoding now accept an <cite>errors</cite> keyword
+argument that behaves like the <cite>errors</cite> parameter of the builtin string method
+<cite>decode</cite>.  The following values are possible:</p>
+<dl class="docutils">
+<dt><cite>ignore</cite></dt>
+<dd>This is the default behavior and tells the codec to ignore characters that
+it doesn&#8217;t understand silently.</dd>
+<dt><cite>replace</cite></dt>
+<dd>The codec will replace unknown characters with a replacement character
+(<cite>U+FFFD</cite> <tt class="docutils literal"><span class="pre">REPLACEMENT</span> <span class="pre">CHARACTER</span></tt>)</dd>
+<dt><cite>strict</cite></dt>
+<dd>Raise an exception if decoding fails.</dd>
+</dl>
+<p>Unlike the regular python decoding Werkzeug does not raise an
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.UnicodeDecodeError"><tt class="xref docutils literal"><span class="pre">UnicodeDecodeError</span></tt></a> if the decoding failed but an
+<a title="werkzeug.exceptions.HTTPUnicodeError" class="reference external" href="exceptions.html#werkzeug.exceptions.HTTPUnicodeError"><tt class="xref docutils literal"><span class="pre">HTTPUnicodeError</span></tt></a> which
+is a direct subclass of <cite>UnicodeError</cite> and the <cite>BadRequest</cite> HTTP exception.
+The reason is that if this exception is not caught by the application but
+a catch-all for HTTP exceptions exists a default <cite>400 BAD REQUEST</cite> error
+page is displayed.</p>
+<p>There is additional error handling available which is a Werkzeug extension
+to the regular codec error handling which is called <cite>fallback</cite>.  Often you
+want to use utf-8 but support latin1 as legacy encoding too if decoding
+failed.  For this case you can use the <cite>fallback</cite> error handling.  For
+example you can specify <tt class="docutils literal"><span class="pre">'fallback:iso-8859-15'</span></tt> to tell Werkzeug it should
+try with <cite>iso-8859-15</cite> if <cite>utf-8</cite> failed.  If this decoding fails too (which
+should not happen for most legacy charsets such as <cite>iso-8859-15</cite>) the error
+is silently ignored as if the error handling was <cite>ignore</cite>.</p>
+<p>Further details are available as part of the API documentation of the concrete
+implementations of the functions or classes working with unicode.</p>
+</div>
+<div class="section" id="request-and-response-objects">
+<h2>Request and Response Objects<a class="headerlink" href="#request-and-response-objects" title="Permalink to this headline">¶</a></h2>
+<p>As request and response objects usually are the central entities of Werkzeug
+powered applications you can change the default encoding Werkzeug operates on
+by subclassing these two classes.  For example you can easily set the
+application to utf-7 and strict error handling:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">BaseRequest</span><span class="p">,</span> <span class="n">BaseResponse</span>
+
+<span class="k">class</span> <span class="nc">Request</span><span class="p">(</span><span class="n">BaseRequest</span><span class="p">):</span>
+    <span class="n">charset</span> <span class="o">=</span> <span class="s">&#39;utf-7&#39;</span>
+    <span class="n">encoding_errors</span> <span class="o">=</span> <span class="s">&#39;strict&#39;</span>
+
+<span class="k">class</span> <span class="nc">Response</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+    <span class="n">charset</span> <span class="o">=</span> <span class="s">&#39;utf-7&#39;</span>
+</pre></div>
+</div>
+<p>Keep in mind that the error handling is only customizable for all decoding
+but not encoding.  If Werkzeug encounters an encoding error it will raise a
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.UnicodeEncodeError"><tt class="xref docutils literal"><span class="pre">UnicodeEncodeError</span></tt></a>.  It&#8217;s your responsibility to not create data that is
+not present in the target charset (a non issue with all unicode encodings
+such as utf-8).</p>
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="WSGI Application Profiler" href="profiler.html">
+    <link rel="prev" title="Iter IO" href="iterio.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="iterio.html">&laquo; Iter IO</a></li>
+        <li class="active"><a href="">Fixers</a></li>
+        <li><a href="profiler.html">WSGI Application Profiler &raquo;</a></li>
+      </ul>
+      <div class="body">
+        
+  <div class="section" id="module-werkzeug.contrib.fixers">
+<h1>Fixers<a class="headerlink" href="#module-werkzeug.contrib.fixers" title="Permalink to this headline">¶</a></h1>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>This module includes various helpers that fix bugs in web servers.  They may
+be necessary for some versions of a buggy web server but not others.  We try
+to stay updated with the status of the bugs as good as possible but you have
+to make sure whether they fix the problem you encounter.</p>
+<p>If you notice bugs in webservers not fixed in this module consider
+contributing a patch.</p>
+<dl class="class">
+<dt id="werkzeug.contrib.fixers.LighttpdCGIRootFix">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.fixers.</tt><tt class="descname">LighttpdCGIRootFix</tt><big>(</big><em>app</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.fixers.LighttpdCGIRootFix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap the application in this middleware if you are using lighttpd
+with FastCGI or CGI and the application is mounted on the URL root.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>app</em> &#8211; the WSGI application</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.fixers.PathInfoFromRequestUriFix">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.fixers.</tt><tt class="descname">PathInfoFromRequestUriFix</tt><big>(</big><em>app</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.fixers.PathInfoFromRequestUriFix" title="Permalink to this definition">¶</a></dt>
+<dd><p>On windows environment variables are limited to the system charset
+which makes it impossible to store the <cite>PATH_INFO</cite> variable in the
+environment without loss of information on some systems.</p>
+<p>This is for example a problem for CGI scripts on a Windows Apache.</p>
+<p>This fixer works by recreating the <cite>PATH_INFO</cite> from <cite>REQUEST_URI</cite>,
+<cite>REQUEST_URL</cite>, or <cite>UNENCODED_URL</cite> (whatever is available).  Thus the
+fix can only be applied if the webserver supports either of these
+variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>app</em> &#8211; the WSGI application</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.fixers.ProxyFix">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.fixers.</tt><tt class="descname">ProxyFix</tt><big>(</big><em>app</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.fixers.ProxyFix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware can be applied to add HTTP proxy support to an
+application that was not designed with HTTP proxies in mind.  It
+sets <cite>REMOTE_ADDR</cite>, <cite>HTTP_HOST</cite> from <cite>X-Forwarded</cite> headers.</p>
+<p>Werkzeug wrappers have builtin support for this by setting the
+<a title="werkzeug.BaseRequest.is_behind_proxy" class="reference external" href="../wrappers.html#werkzeug.BaseRequest.is_behind_proxy"><tt class="xref docutils literal"><span class="pre">is_behind_proxy</span></tt></a> attribute to <cite>True</cite>.</p>
+<p>Do not use this middleware in non-proxy setups for security reasons.</p>
+<p>The original values of <cite>REMOTE_ADDR</cite> and <cite>HTTP_HOST</cite> are stored in
+the WSGI environment as <cite>werkzeug.proxy_fix.orig_remote_addr</cite> and
+<cite>werkzeug.proxy_fix.orig_http_host</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>app</em> &#8211; the WSGI application</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.fixers.HeaderRewriterFix">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.fixers.</tt><tt class="descname">HeaderRewriterFix</tt><big>(</big><em>app</em>, <em>remove_headers=None</em>, <em>add_headers=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.fixers.HeaderRewriterFix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware can remove response headers and add others.  This
+is for example useful to remove the <cite>Date</cite> header from responses if you
+are using a server that adds that header, no matter if it&#8217;s present or
+not or to add <cite>X-Powered-By</cite> headers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">app</span> <span class="o">=</span> <span class="n">HeaderRewriterFix</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">remove_headers</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Date&#39;</span><span class="p">],</span>
+                        <span class="n">add_headers</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;X-Powered-By&#39;</span><span class="p">,</span> <span class="s">&#39;WSGI&#39;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>app</em> &#8211; the WSGI application</li>
+<li><em>remove_headers</em> &#8211; a sequence of header keys that should be
+removed.</li>
+<li><em>add_headers</em> &#8211; a sequence of <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> tuples that should
+be added.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.fixers.InternetExplorerFix">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.fixers.</tt><tt class="descname">InternetExplorerFix</tt><big>(</big><em>app</em>, <em>fix_vary=True</em>, <em>fix_attach=True</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.fixers.InternetExplorerFix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware fixes a couple of bugs with Microsoft Internet
+Explorer.  Currently the following fixes are applied:</p>
+<ul class="simple">
+<li>removing of <cite>Vary</cite> headers for unsupported mimetypes which
+causes troubles with caching.  Can be disabled by passing
+<tt class="docutils literal"><span class="pre">fix_vary=False</span></tt> to the constructor.
+see: <a class="reference external" href="http://support.microsoft.com/kb/824847/en-us">http://support.microsoft.com/kb/824847/en-us</a></li>
+<li>removes offending headers to work around caching bugs in
+Internet Explorer if <cite>Content-Disposition</cite> is set.  Can be
+disabled by passing <tt class="docutils literal"><span class="pre">fix_attach=False</span></tt> to the constructor.</li>
+</ul>
+<p>If it does not detect affected Internet Explorer versions it won&#8217;t touch
+the request / response.</p>
+</dd></dl>
+
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.iptest
+==============
+
+Module: :mod:`testing.iptest`
+-----------------------------
+Inheritance diagram for ``IPython.testing.iptest``:
+
+.. inheritance-diagram:: IPython.testing.iptest 
+   :parts: 3
+
+.. automodule:: IPython.testing.iptest
+
+.. currentmodule:: IPython.testing.iptest
+
+Class
+-----
+
+:class:`IPTester`
+-----------------
+
+
+.. autoclass:: IPTester
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.iptest.main
+
+
+.. autofunction:: IPython.testing.iptest.make_runners
+
+
+.. autofunction:: IPython.testing.iptest.run_iptest
+
+
+.. autofunction:: IPython.testing.iptest.run_iptestall
+
+
+.. autofunction:: IPython.testing.iptest.test_for
+

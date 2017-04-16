@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="po_files" id="po_files">PO Files</a></h1>
+<div class="level1">
+
+<p>
+<acronym title="Gettext Portable Object">PO</acronym> files use the file format of the Gettext tools. See <a href="http://www.gnu.org/software/gettext/" class="urlextern" title="http://www.gnu.org/software/gettext/">http://www.gnu.org/software/gettext/</a>
+</p>
+
+<p>
+For information on KDE style <acronym title="Gettext Portable Object">PO</acronym> files, see <a href="http://public.planetmirror.com/pub/kde/devel/gettext-kde/" class="urlextern" title="http://public.planetmirror.com/pub/kde/devel/gettext-kde/">http://public.planetmirror.com/pub/kde/devel/gettext-kde/</a>
+</p>
+
+</div>
+<!-- SECTION "PO Files" [1-219] -->
+<h2><a name="supported_features" id="supported_features">Supported Features</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Headers</div>
+</li>
+<li class="level1"><div class="li"> Plural forms and plural form handling</div>
+</li>
+<li class="level1"><div class="li"> Obsolete messages</div>
+</li>
+<li class="level1"><div class="li"> Message Context (msgctxt)</div>
+</li>
+<li class="level1"><div class="li"> Language header (since gettext version 0.17)</div>
+</li>
+<li class="level1"><div class="li"> Previous message ID and context (#| msgid and #| msgctxt)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Supported Features" [220-469] -->
+<h2><a name="supported_comments" id="supported_comments">Supported comments</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> normal comments <pre class="code"># this is another comment</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> automatic comments <pre class="code">#. comment extracted from the source code</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> source location comments <pre class="code">#: sourcefile.xxx:35</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> typecomments <pre class="code">#, fuzzy</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> msgidcomments <pre class="code">magid &quot;_: within msgid\n&quot;</pre>
+
+<p>
+Also know as KDE style comments as they are used by KDE for message disambiguation and comments to translators. (support for this is being phased out)
+</p>
+</div>
+</li>
+<li class="level1"><div class="li"> obsolete messages <pre class="code">#~ msgid &quot;Blah&quot;
+#~ msgstr &quot;Bleeh&quot;</pre>
+</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> previous msgid and msgctxt <pre class="code"> #| msgid &quot;previous message&quot;</pre>
+</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Supported comments" [470-1091] -->
+<h2><a name="unsupported_features" id="unsupported_features">Unsupported Features</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Unsupported Features" [1092-1125] -->
+<h3><a name="alternate_language" id="alternate_language">Alternate language</a></h3>
+<div class="level3">
+<pre class="code">msgid &quot;English&quot;
+msgid[af] &quot;Engels&quot;</pre>
+
+<p>
+
+(This was proposed but not yet accepted in a released version of Gettext.)
+
+</p>
+
+</div>
+<!-- SECTION "Alternate language" [1126-] --></body>
+</html>

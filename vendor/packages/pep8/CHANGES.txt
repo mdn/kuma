@@ -1,0 +1,92 @@
+Changelog
+=========
+
+
+0.5.0 (2010-02-17)
+------------------
+
+* Changed the ``--count`` switch to print to sys.stderr and set
+  exit code to 1 if any error or warning is found.
+
+* E241 and E242 are removed from the standard checks. If you want to
+  include these checks, use switch ``--select=E,W``. (Issue #4)
+
+* Blank line is not mandatory before the first class method or nested
+  function definition, even if there's a docstring. (Issue #1)
+
+* Add the switch ``--version``.
+
+* Fix decoding errors with Python 3. (Issue #13 [1]_)
+
+* Add ``--select`` option which is mirror of ``--ignore``.
+
+* Add checks E261 and E262 for spaces before inline comments.
+
+* New check W604 warns about deprecated usage of backticks.
+
+* New check W603 warns about the deprecated operator ``<>``.
+
+* Performance improvement, due to rewriting of E225.
+
+* E225 now accepts:
+
+  - no whitespace after unary operator or similar. (Issue #9 [1]_)
+
+  - lambda function with argument unpacking or keyword defaults.
+
+* Reserve "2 blank lines" for module-level logical blocks. (E303)
+
+* Allow multi-line comments. (E302, issue #10 [1]_)
+
+
+0.4.2 (2009-10-22)
+------------------
+
+* Decorators on classes and class methods are OK now.
+
+
+0.4 (2009-10-20)
+----------------
+
+* Support for all versions of Python from 2.3 to 3.1.
+
+* New and greatly expanded self tests.
+
+* Added ``--count`` option to print the total number of errors and warnings.
+
+* Further improvements to the handling of comments and blank lines.
+  (Issue #1 [1]_ and others changes.)
+
+* Check all py files in directory when passed a directory (Issue
+  #2 [1]_). This also prevents an exception when traversing directories
+  with non ``*.py`` files.
+
+* E231 should allow commas to be followed by ``)``. (Issue #3 [1]_)
+
+* Spaces are not longer required around the equals sign for keyword
+  arguments or default parameter values.
+
+
+.. [1] These issues refer to the `previous issue tracker`__.
+.. __:  http://github.com/cburroughs/pep8.py/issues
+
+
+0.3.1 (2009-09-14)
+------------------
+
+* Fixes for comments: do not count them when checking for blank lines between
+  items.
+
+* Added setup.py for pypi upload and easy_installability.
+
+
+0.2 (2007-10-16)
+----------------
+
+* Loads of fixes and improvements.
+
+
+0.1 (2006-10-01)
+----------------
+
+* First release.

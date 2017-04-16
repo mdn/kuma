@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>irunner &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.client" href="IPython.kernel.client.html" />
+    <link rel="prev" title="ipstruct" href="IPython.ipstruct.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.client.html" title="kernel.client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipstruct.html" title="ipstruct"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="irunner">
+<h1>irunner<a class="headerlink" href="#irunner" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.irunner">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">irunner</span></tt><a class="headerlink" href="#module-IPython.irunner" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.irunner</span></tt>:</p>
+<img src="../../_images/inheritance6139bb4d7a.png" usemap="#inheritance6139bb4d7a" class="inheritance"/><map id="inheritance6139bb4d7a" name="inheritance6139bb4d7a">
+<area shape="rect" href="#IPython.irunner.IPythonRunner" title="IPython.irunner.IPythonRunner" alt="" coords="287,5,497,32"/>
+<area shape="rect" href="#IPython.irunner.InteractiveRunner" title="IPython.irunner.InteractiveRunner" alt="" coords="5,56,237,83"/>
+<area shape="rect" href="#IPython.irunner.SAGERunner" title="IPython.irunner.SAGERunner" alt="" coords="292,56,492,83"/>
+<area shape="rect" href="#IPython.irunner.PythonRunner" title="IPython.irunner.PythonRunner" alt="" coords="288,107,496,133"/>
+<area shape="rect" href="#IPython.irunner.RunnerFactory" title="IPython.irunner.RunnerFactory" alt="" coords="16,5,227,32"/>
+</map>
+<p>Module for interactively running scripts.</p>
+<p>This module implements classes for interactively running scripts written for
+any system with a prompt which can be matched by a regexp suitable for
+pexpect.  It can be used to run as if they had been typed up interactively, an
+arbitrary series of commands for the target system.</p>
+<p>The module includes classes ready for IPython (with the default prompts),
+plain Python and SAGE, but making a new one is trivial.  To see how to use it,
+simply run the module as a script:</p>
+<p>./irunner.py &#8211;help</p>
+<p>This is an extension of Ken Schutte &lt;kschutte-AT-csail.mit.edu&gt;&#8217;s script
+contributed on the ipython-user list:</p>
+<p><a class="reference external" href="http://scipy.net/pipermail/ipython-user/2006-May/001705.html">http://scipy.net/pipermail/ipython-user/2006-May/001705.html</a></p>
+<p>NOTES:</p>
+<blockquote>
+<ul class="simple">
+<li>This module requires pexpect, available in most linux distros, or which can</li>
+</ul>
+<p>be downloaded from</p>
+<blockquote>
+<a class="reference external" href="http://pexpect.sourceforge.net">http://pexpect.sourceforge.net</a></blockquote>
+<ul class="simple">
+<li>Because pexpect only works under Unix or Windows-Cygwin, this has the same</li>
+</ul>
+<p>limitations.  This means that it will NOT work under native windows Python.</p>
+</blockquote>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ipythonrunner">
+<h3><a title="IPython.irunner.IPythonRunner" class="reference internal" href="#IPython.irunner.IPythonRunner"><tt class="xref docutils literal"><span class="pre">IPythonRunner</span></tt></a><a class="headerlink" href="#ipythonrunner" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.irunner.IPythonRunner">
+<!--[IPython.irunner.IPythonRunner]-->class <tt class="descclassname">IPython.irunner.</tt><tt class="descname">IPythonRunner</tt><big>(</big><em>program='ipython'</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.IPythonRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.irunner.InteractiveRunner" class="reference internal" href="#IPython.irunner.InteractiveRunner"><tt class="xref docutils literal"><span class="pre">IPython.irunner.InteractiveRunner</span></tt></a></p>
+<p>Interactive IPython runner.</p>
+<p>This initalizes IPython in &#8216;nocolor&#8217; mode for simplicity.  This lets us
+avoid having to write a regexp that matches ANSI sequences, though pexpect
+does support them.  If anyone contributes patches for ANSI color support,
+they will be welcome.</p>
+<p>It also sets the prompts manually, since the prompt regexps for
+pexpect need to be matched to the actual prompts, so user-customized
+prompts would break this.</p>
+<dl class="method">
+<dt id="IPython.irunner.IPythonRunner.__init__">
+<!--[IPython.irunner.IPythonRunner.__init__]--><tt class="descname">__init__</tt><big>(</big><em>program='ipython'</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.IPythonRunner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>New runner, optionally passing the ipython command to use.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interactiverunner">
+<h3><a title="IPython.irunner.InteractiveRunner" class="reference internal" href="#IPython.irunner.InteractiveRunner"><tt class="xref docutils literal"><span class="pre">InteractiveRunner</span></tt></a><a class="headerlink" href="#interactiverunner" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.irunner.InteractiveRunner">
+<!--[IPython.irunner.InteractiveRunner]-->class <tt class="descclassname">IPython.irunner.</tt><tt class="descname">InteractiveRunner</tt><big>(</big><em>program</em>, <em>prompts</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.InteractiveRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Class to run a sequence of commands through an interactive program.</p>
+<dl class="method">
+<dt id="IPython.irunner.InteractiveRunner.__init__">
+<!--[IPython.irunner.InteractiveRunner.__init__]--><tt class="descname">__init__</tt><big>(</big><em>program</em>, <em>prompts</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.InteractiveRunner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a runner.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>program: command to execute the given program.</li>
+<li>prompts: a list of patterns to match as valid prompts, in the</li>
+</ul>
+<p>format used by pexpect.  This basically means that it can be either
+a string (to be compiled as a regular expression) or a list of such
+(it must be a true list, as pexpect does type checks).</p>
+<p>If more than one prompt is given, the first is treated as the main
+program prompt and the others as &#8216;continuation&#8217; prompts, like
+python&#8217;s.  This means that blank lines in the input source are
+ommitted when the first prompt is matched, but are NOT ommitted when
+the continuation one matches, since this is how python signals the
+end of multiline input interactively.</p>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>args(None): optional list of strings to pass as arguments to the</li>
+</ul>
+<p>child program.</p>
+<ul class="simple">
+<li>out(sys.stdout): if given, an output stream to be used when writing</li>
+</ul>
+<p>output.  The only requirement is that it must have a .write() method.</p>
+</blockquote>
+<p>Public members not parameterized in the constructor:</p>
+<blockquote>
+<ul class="simple">
+<li>delaybeforesend(0): Newer versions of pexpect have a delay before</li>
+</ul>
+<p>sending each new input.  For our purposes here, it&#8217;s typically best
+to just set this to zero, but if you encounter reliability problems
+or want an interactive run to pause briefly at each prompt, just
+increase this value (it is measured in seconds).  Note that this
+variable is not honored at all by older versions of pexpect.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.irunner.InteractiveRunner.close">
+<!--[IPython.irunner.InteractiveRunner.close]--><tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.irunner.InteractiveRunner.close" title="Permalink to this definition">¶</a></dt>
+<dd>close child process</dd></dl>
+
+<dl class="method">
+<dt id="IPython.irunner.InteractiveRunner.main">
+<!--[IPython.irunner.InteractiveRunner.main]--><tt class="descname">main</tt><big>(</big><em>argv=None</em><big>)</big><a class="headerlink" href="#IPython.irunner.InteractiveRunner.main" title="Permalink to this definition">¶</a></dt>
+<dd>Run as a command-line script.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.irunner.InteractiveRunner.run_file">
+<!--[IPython.irunner.InteractiveRunner.run_file]--><tt class="descname">run_file</tt><big>(</big><em>fname</em>, <em>interact=False</em>, <em>get_output=False</em><big>)</big><a class="headerlink" href="#IPython.irunner.InteractiveRunner.run_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the given file interactively.</p>
+<p>Inputs:</p>
+<blockquote>
+-fname: name of the file to execute.</blockquote>
+<p>See the run_source docstring for the meaning of the optional
+arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.irunner.InteractiveRunner.run_source">
+<!--[IPython.irunner.InteractiveRunner.run_source]--><tt class="descname">run_source</tt><big>(</big><em>source</em>, <em>interact=False</em>, <em>get_output=False</em><big>)</big><a class="headerlink" href="#IPython.irunner.InteractiveRunner.run_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the given source code interactively.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>source: a string of code to be executed, or an open file object we</li>
+</ul>
+<p>can iterate over.</p>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>interact(False): if true, start to interact with the running</li>
+</ul>
+<p>program at the end of the script.  Otherwise, just exit.</p>
+<ul class="simple">
+<li>get_output(False): if true, capture the output of the child process</li>
+</ul>
+<p>(filtering the input commands out) and return it as a string.</p>
+</blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>A string containing the process output, but only if requested.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pythonrunner">
+<h3><a title="IPython.irunner.PythonRunner" class="reference internal" href="#IPython.irunner.PythonRunner"><tt class="xref docutils literal"><span class="pre">PythonRunner</span></tt></a><a class="headerlink" href="#pythonrunner" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.irunner.PythonRunner">
+<!--[IPython.irunner.PythonRunner]-->class <tt class="descclassname">IPython.irunner.</tt><tt class="descname">PythonRunner</tt><big>(</big><em>program='python'</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.PythonRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.irunner.InteractiveRunner" class="reference internal" href="#IPython.irunner.InteractiveRunner"><tt class="xref docutils literal"><span class="pre">IPython.irunner.InteractiveRunner</span></tt></a></p>
+<p>Interactive Python runner.</p>
+<dl class="method">
+<dt id="IPython.irunner.PythonRunner.__init__">
+<!--[IPython.irunner.PythonRunner.__init__]--><tt class="descname">__init__</tt><big>(</big><em>program='python'</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.PythonRunner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>New runner, optionally passing the python command to use.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="runnerfactory">
+<h3><a title="IPython.irunner.RunnerFactory" class="reference internal" href="#IPython.irunner.RunnerFactory"><tt class="xref docutils literal"><span class="pre">RunnerFactory</span></tt></a><a class="headerlink" href="#runnerfactory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.irunner.RunnerFactory">
+<!--[IPython.irunner.RunnerFactory]-->class <tt class="descclassname">IPython.irunner.</tt><tt class="descname">RunnerFactory</tt><big>(</big><em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.irunner.RunnerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Code runner factory.</p>
+<p>This class provides an IPython code runner, but enforces that only one
+runner is ever instantiated.  The runner is created based on the extension
+of the first file to run, and it raises an exception if a runner is later
+requested for a different extension type.</p>
+<p>This ensures that we don&#8217;t generate example files for doctest with a mix of
+python and ipython syntax.</p>
+<dl class="method">
+<dt id="IPython.irunner.RunnerFactory.__init__">
+<!--[IPython.irunner.RunnerFactory.__init__]--><tt class="descname">__init__</tt><big>(</big><em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.irunner.RunnerFactory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Instantiate a code runner.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="sagerunner">
+<h3><a title="IPython.irunner.SAGERunner" class="reference internal" href="#IPython.irunner.SAGERunner"><tt class="xref docutils literal"><span class="pre">SAGERunner</span></tt></a><a class="headerlink" href="#sagerunner" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.irunner.SAGERunner">
+<!--[IPython.irunner.SAGERunner]-->class <tt class="descclassname">IPython.irunner.</tt><tt class="descname">SAGERunner</tt><big>(</big><em>program='sage'</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.SAGERunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.irunner.InteractiveRunner" class="reference internal" href="#IPython.irunner.InteractiveRunner"><tt class="xref docutils literal"><span class="pre">IPython.irunner.InteractiveRunner</span></tt></a></p>
+<p>Interactive SAGE runner.</p>
+<p>WARNING: this runner only works if you manually configure your SAGE copy
+to use &#8216;colors NoColor&#8217; in the ipythonrc config file, since currently the
+prompt matching regexp does not identify color sequences.</p>
+<dl class="method">
+<dt id="IPython.irunner.SAGERunner.__init__">
+<!--[IPython.irunner.SAGERunner.__init__]--><tt class="descname">__init__</tt><big>(</big><em>program='sage'</em>, <em>args=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>echo=True</em><big>)</big><a class="headerlink" href="#IPython.irunner.SAGERunner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>New runner, optionally passing the sage command to use.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.irunner.main">
+<!--[IPython.irunner.main]--><tt class="descclassname">IPython.irunner.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.irunner.main" title="Permalink to this definition">¶</a></dt>
+<dd>Run as a command-line script.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.irunner.pexpect_monkeypatch">
+<!--[IPython.irunner.pexpect_monkeypatch]--><tt class="descclassname">IPython.irunner.</tt><tt class="descname">pexpect_monkeypatch</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.irunner.pexpect_monkeypatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Patch pexpect to prevent unhandled exceptions at VM teardown.</p>
+<p>Calling this function will monkeypatch the pexpect.spawn class and modify
+its __del__ method to make it more robust in the face of failures that can
+occur if it is called when the Python VM is shutting down.</p>
+<p>Since Python may fire __del__ methods arbitrarily late, it&#8217;s possible for
+them to execute during the teardown of the Python VM itself.  At this
+point, various builtin modules have been reset to None.  Thus, the call to
+self.close() will trigger an exception because it tries to call os.close(),
+and os is now None.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">irunner</a><ul>
+<li><a class="reference external" href="#module-IPython.irunner">Module: <tt class="docutils literal"><span class="pre">irunner</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#ipythonrunner"><tt class="docutils literal"><span class="pre">IPythonRunner</span></tt></a></li>
+<li><a class="reference external" href="#interactiverunner"><tt class="docutils literal"><span class="pre">InteractiveRunner</span></tt></a></li>
+<li><a class="reference external" href="#pythonrunner"><tt class="docutils literal"><span class="pre">PythonRunner</span></tt></a></li>
+<li><a class="reference external" href="#runnerfactory"><tt class="docutils literal"><span class="pre">RunnerFactory</span></tt></a></li>
+<li><a class="reference external" href="#sagerunner"><tt class="docutils literal"><span class="pre">SAGERunner</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.ipstruct.html" title="previous chapter">ipstruct</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.client.html" title="next chapter">kernel.client</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.irunner.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.client.html" title="kernel.client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipstruct.html" title="ipstruct"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

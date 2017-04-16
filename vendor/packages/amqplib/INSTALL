@@ -1,0 +1,5 @@
+INSTALLATION:
+
+From the command-line run:
+
+    python setup.py install

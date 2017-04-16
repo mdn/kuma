@@ -1,0 +1,614 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ipapi &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="iplib" href="IPython.iplib.html" />
+    <link rel="prev" title="hooks" href="IPython.hooks.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.iplib.html" title="iplib"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.hooks.html" title="hooks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipapi">
+<h1>ipapi<a class="headerlink" href="#ipapi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.ipapi">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">ipapi</span></tt><a class="headerlink" href="#module-IPython.ipapi" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.ipapi</span></tt>:</p>
+<img src="../../_images/inheritance3b193f10c8.png" usemap="#inheritance3b193f10c8" class="inheritance"/><map id="inheritance3b193f10c8" name="inheritance3b193f10c8">
+<area shape="rect" href="#IPython.ipapi.UsageError" title="IPython.ipapi.UsageError" alt="" coords="29,259,208,285"/>
+<area shape="rect" href="#IPython.ipapi.DebugTools" title="IPython.ipapi.DebugTools" alt="" coords="29,208,208,235"/>
+<area shape="rect" href="#IPython.ipapi.IPythonNotRunning" title="IPython.ipapi.IPythonNotRunning" alt="" coords="5,157,232,184"/>
+<area shape="rect" href="#IPython.ipapi.TryNext" title="IPython.ipapi.TryNext" alt="" coords="43,107,195,133"/>
+<area shape="rect" href="#IPython.ipapi.IPApi" title="IPython.ipapi.IPApi" alt="" coords="51,56,187,83"/>
+<area shape="rect" href="#IPython.ipapi.IPyAutocall" title="IPython.ipapi.IPyAutocall" alt="" coords="31,5,207,32"/>
+</map>
+<p>IPython customization API</p>
+<p>Your one-stop module for configuring &amp; extending ipython</p>
+<p>The API will probably break when ipython 1.0 is released, but so 
+will the other configuration method (rc files).</p>
+<p>All names prefixed by underscores are for internal use, not part 
+of the public api.</p>
+<p>Below is an example that you can just put to a module and import from ipython.</p>
+<p>A good practice is to install the config script below as e.g.</p>
+<p>~/.ipython/my_private_conf.py</p>
+<p>And do</p>
+<p>import_mod my_private_conf</p>
+<p>in ~/.ipython/ipythonrc</p>
+<p>That way the module is imported at startup and you can have all your
+personal configuration (as opposed to boilerplate ipythonrc-PROFILENAME 
+stuff) in there.</p>
+<p>import IPython.ipapi
+ip = IPython.ipapi.get()</p>
+<dl class="docutils">
+<dt>def ankka_f(self, arg):</dt>
+<dd>print &#8216;Ankka&#8217;,self,&#8217;says uppercase:&#8217;,arg.upper()</dd>
+</dl>
+<p>ip.expose_magic(&#8216;ankka&#8217;,ankka_f)</p>
+<p>ip.magic(&#8216;alias sayhi echo &#8220;Testing, hi ok&#8221;&#8217;)
+ip.magic(&#8216;alias helloworld echo &#8220;Hello world&#8221;&#8217;)
+ip.system(&#8216;pwd&#8217;)</p>
+<p>ip.ex(&#8216;import re&#8217;)
+ip.ex(&#8216;&#8217;&#8217;
+def funcci(a,b):</p>
+<blockquote>
+print a+b</blockquote>
+<p>print funcci(3,4)
+&#8216;&#8217;&#8216;)
+ip.ex(&#8216;funcci(348,9)&#8217;)</p>
+<dl class="docutils">
+<dt>def jed_editor(self,filename, linenum=None):</dt>
+<dd>print &#8216;Calling my own editor, jed ... via hook!&#8217;
+import os
+if linenum is None: linenum = 0
+os.system(&#8216;jed +%d %s&#8217; % (linenum, filename))
+print &#8216;exiting jed&#8217;</dd>
+</dl>
+<p>ip.set_hook(&#8216;editor&#8217;,jed_editor)</p>
+<p>o = ip.options
+o.autocall = 2  # FULL autocall mode</p>
+<p>print &#8216;done!&#8217;</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="debugtools">
+<h3><a title="IPython.ipapi.DebugTools" class="reference internal" href="#IPython.ipapi.DebugTools"><tt class="xref docutils literal"><span class="pre">DebugTools</span></tt></a><a class="headerlink" href="#debugtools" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ipapi.DebugTools">
+<!--[IPython.ipapi.DebugTools]-->class <tt class="descclassname">IPython.ipapi.</tt><tt class="descname">DebugTools</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.ipapi.DebugTools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for debugging mishaps in api usage</p>
+<p>So far, tracing redefinitions is supported.</p>
+<dl class="method">
+<dt id="IPython.ipapi.DebugTools.__init__">
+<!--[IPython.ipapi.DebugTools.__init__]--><tt class="descname">__init__</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.ipapi.DebugTools.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.DebugTools.check_hotname">
+<!--[IPython.ipapi.DebugTools.check_hotname]--><tt class="descname">check_hotname</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#IPython.ipapi.DebugTools.check_hotname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.DebugTools.debug_stack">
+<!--[IPython.ipapi.DebugTools.debug_stack]--><tt class="descname">debug_stack</tt><big>(</big><em>msg=None</em><big>)</big><a class="headerlink" href="#IPython.ipapi.DebugTools.debug_stack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.DebugTools.hotname">
+<!--[IPython.ipapi.DebugTools.hotname]--><tt class="descname">hotname</tt><big>(</big><em>name_to_catch</em><big>)</big><a class="headerlink" href="#IPython.ipapi.DebugTools.hotname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h3><a title="IPython.ipapi.IPApi" class="reference internal" href="#IPython.ipapi.IPApi"><tt class="xref docutils literal"><span class="pre">IPApi</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ipapi.IPApi">
+<!--[IPython.ipapi.IPApi]-->class <tt class="descclassname">IPython.ipapi.</tt><tt class="descname">IPApi</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>The actual API class for configuring IPython</p>
+<p>You should do all of the IPython configuration by getting an IPApi object
+with IPython.ipapi.get() and using the attributes and methods of the
+returned object.</p>
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.__init__">
+<!--[IPython.ipapi.IPApi.__init__]--><tt class="descname">__init__</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.ipapi.IPApi.db">
+<!--[IPython.ipapi.IPApi.db]--><tt class="descname">db</tt><a class="headerlink" href="#IPython.ipapi.IPApi.db" title="Permalink to this definition">¶</a></dt>
+<dd>A handle to persistent dict-like database (a PickleShareDB object)</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.defalias">
+<!--[IPython.ipapi.IPApi.defalias]--><tt class="descname">defalias</tt><big>(</big><em>name</em>, <em>cmd</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.defalias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a new alias</p>
+<p>_ip.defalias(&#8216;bb&#8217;,&#8217;bldmake bldfiles&#8217;)</p>
+<p>Creates a new alias named &#8216;bb&#8217; in ipython user namespace</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.defmacro">
+<!--[IPython.ipapi.IPApi.defmacro]--><tt class="descname">defmacro</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.defmacro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a new macro</p>
+<blockquote>
+<p>2 forms of calling:</p>
+<p>mac = _ip.defmacro(&#8216;print &#8220;hello&#8221;</p>
+</blockquote>
+<p>print &#8220;world&#8221;&#8217;)</p>
+<blockquote>
+<p>(doesn&#8217;t put the created macro on user namespace)</p>
+<p>_ip.defmacro(&#8216;build&#8217;, &#8216;bldmake bldfiles</p>
+</blockquote>
+<p>abld build winscw udeb&#8217;)</p>
+<blockquote>
+(creates a macro named &#8216;build&#8217; in user namespace)</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.ev">
+<!--[IPython.ipapi.IPApi.ev]--><tt class="descname">ev</tt><big>(</big><em>expr</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate python expression expr in user namespace</p>
+<p>Returns the result of evaluation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.ex">
+<!--[IPython.ipapi.IPApi.ex]--><tt class="descname">ex</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.ex" title="Permalink to this definition">¶</a></dt>
+<dd>Execute a normal python statement in user namespace</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.expand_alias">
+<!--[IPython.ipapi.IPApi.expand_alias]--><tt class="descname">expand_alias</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.expand_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand an alias in the command line</p>
+<p>Returns the provided command line, possibly with the first word 
+(command) translated according to alias expansion rules.</p>
+<dl class="docutils">
+<dt>[ipython]|16&gt; _ip.expand_aliases(&#8220;np myfile.txt&#8221;)</dt>
+<dd>&lt;16&gt; &#8216;q:/opt/np/notepad++.exe myfile.txt&#8217;</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.expose_magic">
+<!--[IPython.ipapi.IPApi.expose_magic]--><tt class="descname">expose_magic</tt><big>(</big><em>magicname</em>, <em>func</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.expose_magic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expose own function as magic function for ipython</p>
+<dl class="docutils">
+<dt>def foo_impl(self,parameter_s=&#8217;&#8216;):</dt>
+<dd>&#8216;My very own magic!. (Use docstrings, IPython reads them).&#8217;
+print &#8216;Magic function. Passed parameter is between &lt; &gt;:&#8217;
+print &#8216;&lt;%s&gt;&#8217; % parameter_s
+print &#8216;The self object is:&#8217;,self</dd>
+</dl>
+<p>ipapi.expose_magic(&#8216;foo&#8217;,foo_impl)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.get_db">
+<!--[IPython.ipapi.IPApi.get_db]--><tt class="descname">get_db</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.get_db" title="Permalink to this definition">¶</a></dt>
+<dd>A handle to persistent dict-like database (a PickleShareDB object)</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.get_options">
+<!--[IPython.ipapi.IPApi.get_options]--><tt class="descname">get_options</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.get_options" title="Permalink to this definition">¶</a></dt>
+<dd>All configurable variables.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.itpl">
+<!--[IPython.ipapi.IPApi.itpl]--><tt class="descname">itpl</tt><big>(</big><em>s</em>, <em>depth=1</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.itpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand Itpl format string s.</p>
+<p>Only callable from command line (i.e. prefilter results);
+If you use in your scripts, you need to use a bigger depth!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.load">
+<!--[IPython.ipapi.IPApi.load]--><tt class="descname">load</tt><big>(</big><em>mod</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an extension.</p>
+<p>Some modules should (or must) be &#8216;load()&#8217;:ed, rather than just imported.</p>
+<p>Loading will do:</p>
+<ul class="simple">
+<li>run init_ipython(ip)</li>
+<li>run ipython_firstrun(ip)</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.ipapi.IPApi.options">
+<!--[IPython.ipapi.IPApi.options]--><tt class="descname">options</tt><a class="headerlink" href="#IPython.ipapi.IPApi.options" title="Permalink to this definition">¶</a></dt>
+<dd>All configurable variables.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.runlines">
+<!--[IPython.ipapi.IPApi.runlines]--><tt class="descname">runlines</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.runlines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the specified lines in interpreter, honoring ipython directives.</p>
+<p>This allows %magic and !shell escape notations.</p>
+<p>Takes either all lines in one string or list of lines.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.set_next_input">
+<!--[IPython.ipapi.IPApi.set_next_input]--><tt class="descname">set_next_input</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.set_next_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the &#8216;default&#8217; input string for the next command line.</p>
+<p>Requires readline.</p>
+<p>Example:</p>
+<p>[D:ipython]|1&gt; _ip.set_next_input(&#8220;Hello Word&#8221;)
+[D:ipython]|2&gt; Hello <a href="#id2"><span class="problematic" id="id3">Word_</span></a>  # cursor is here</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipapi.IPApi.to_user_ns">
+<!--[IPython.ipapi.IPApi.to_user_ns]--><tt class="descname">to_user_ns</tt><big>(</big><em>vars</em>, <em>interactive=True</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPApi.to_user_ns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inject a group of variables into the IPython user namespace.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>vars: string with variable names separated by whitespace, or a</li>
+</ul>
+<p>dict with name/value pairs.</p>
+<ul class="simple">
+<li>interactive: if True (default), the var will be listed with</li>
+</ul>
+</blockquote>
+<p>%whos et. al.</p>
+<p>This utility routine is meant to ease interactive debugging work,
+where you want to easily propagate some internal variable in your code
+up to the interactive namespace for further exploration.</p>
+<p>When you run code via %run, globals in your script become visible at
+the interactive prompt, but this doesn&#8217;t happen for locals inside your
+own functions and methods.  Yet when debugging, it is common to want
+to explore some internal variables further at the interactive propmt.</p>
+<p>Examples:</p>
+<p>To use this, you first must obtain a handle on the ipython object as
+indicated above, via:</p>
+<p>import IPython.ipapi
+ip = IPython.ipapi.get()</p>
+<p>Once this is done, inside a routine foo() where you want to expose
+variables x and y, you do the following:</p>
+<dl class="docutils">
+<dt>def foo():</dt>
+<dd><p class="first">...
+x = your_computation()
+y = something_else()</p>
+<p># This pushes x and y to the interactive prompt immediately, even
+# if this routine crashes on the next line after:
+ip.to_user_ns(&#8216;x y&#8217;)
+...</p>
+<p># To expose <em>ALL</em> the local variables from the function, use:
+ip.to_user_ns(locals())</p>
+<p class="last">...
+# return</p>
+</dd>
+</dl>
+<p>If you need to rename variables, the dict input makes it easy.  For
+example, this call exposes variables &#8216;foo&#8217; as &#8216;x&#8217; and &#8216;bar&#8217; as &#8216;y&#8217;
+in IPython user namespace:</p>
+<p>ip.to_user_ns(dict(x=foo,y=bar))</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipyautocall">
+<h3><a title="IPython.ipapi.IPyAutocall" class="reference internal" href="#IPython.ipapi.IPyAutocall"><tt class="xref docutils literal"><span class="pre">IPyAutocall</span></tt></a><a class="headerlink" href="#ipyautocall" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ipapi.IPyAutocall">
+<!--[IPython.ipapi.IPyAutocall]-->class <tt class="descclassname">IPython.ipapi.</tt><tt class="descname">IPyAutocall</tt><a class="headerlink" href="#IPython.ipapi.IPyAutocall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instances of this class are always autocalled</p>
+<p>This happens regardless of &#8216;autocall&#8217; variable state. Use this to
+develop macro-like mechanisms.</p>
+<dl class="method">
+<dt id="IPython.ipapi.IPyAutocall.set_ip">
+<!--[IPython.ipapi.IPyAutocall.set_ip]--><tt class="descname">set_ip</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPyAutocall.set_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will be used to set _ip point to current ipython instance b/f call</p>
+<p>Override this method if you don&#8217;t want this to happen.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipythonnotrunning">
+<h3><a title="IPython.ipapi.IPythonNotRunning" class="reference internal" href="#IPython.ipapi.IPythonNotRunning"><tt class="xref docutils literal"><span class="pre">IPythonNotRunning</span></tt></a><a class="headerlink" href="#ipythonnotrunning" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ipapi.IPythonNotRunning">
+<!--[IPython.ipapi.IPythonNotRunning]-->class <tt class="descclassname">IPython.ipapi.</tt><tt class="descname">IPythonNotRunning</tt><big>(</big><em>warn=True</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPythonNotRunning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dummy do-nothing class.</p>
+<p>Instances of this class return a dummy attribute on all accesses, which
+can be called and warns.  This makes it easier to write scripts which use
+the ipapi.get() object for informational purposes to operate both with and
+without ipython.  Obviously code which uses the ipython object for
+computations will not work, but this allows a wider range of code to
+transparently work whether ipython is being used or not.</p>
+<dl class="method">
+<dt id="IPython.ipapi.IPythonNotRunning.__init__">
+<!--[IPython.ipapi.IPythonNotRunning.__init__]--><tt class="descname">__init__</tt><big>(</big><em>warn=True</em><big>)</big><a class="headerlink" href="#IPython.ipapi.IPythonNotRunning.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="trynext">
+<h3><a title="IPython.ipapi.TryNext" class="reference internal" href="#IPython.ipapi.TryNext"><tt class="xref docutils literal"><span class="pre">TryNext</span></tt></a><a class="headerlink" href="#trynext" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ipapi.TryNext">
+<!--[IPython.ipapi.TryNext]-->class <tt class="descclassname">IPython.ipapi.</tt><tt class="descname">TryNext</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.ipapi.TryNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Try next hook exception.</p>
+<p>Raise this in your hook function to indicate that the next hook handler
+should be used to handle the operation.  If you pass arguments to the
+constructor those arguments will be used by the next hook instead of the
+original ones.</p>
+<dl class="method">
+<dt id="IPython.ipapi.TryNext.__init__">
+<!--[IPython.ipapi.TryNext.__init__]--><tt class="descname">__init__</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.ipapi.TryNext.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="usageerror">
+<h3><a title="IPython.ipapi.UsageError" class="reference internal" href="#IPython.ipapi.UsageError"><tt class="xref docutils literal"><span class="pre">UsageError</span></tt></a><a class="headerlink" href="#usageerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ipapi.UsageError">
+<!--[IPython.ipapi.UsageError]-->class <tt class="descclassname">IPython.ipapi.</tt><tt class="descname">UsageError</tt><a class="headerlink" href="#IPython.ipapi.UsageError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Error in magic function arguments, etc.</p>
+<p>Something that probably won&#8217;t warrant a full traceback, but should
+nevertheless interrupt a macro / batch file.</p>
+<dl class="method">
+<dt id="IPython.ipapi.UsageError.__init__">
+<!--[IPython.ipapi.UsageError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipapi.UsageError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.ipapi.get">
+<!--[IPython.ipapi.get]--><tt class="descclassname">IPython.ipapi.</tt><tt class="descname">get</tt><big>(</big><em>allow_dummy=False</em>, <em>dummy_warn=True</em><big>)</big><a class="headerlink" href="#IPython.ipapi.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an IPApi object.</p>
+<p>If allow_dummy is true, returns an instance of IPythonNotRunning 
+instead of None if not running under IPython.</p>
+<p>If dummy_warn is false, the dummy instance will be completely silent.</p>
+<p>Running this should be the first thing you do when writing extensions that
+can be imported as normal modules. You can then direct all the
+configuration operations against the returned object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ipapi.launch_new_instance">
+<!--[IPython.ipapi.launch_new_instance]--><tt class="descclassname">IPython.ipapi.</tt><tt class="descname">launch_new_instance</tt><big>(</big><em>user_ns=None</em>, <em>shellclass=None</em><big>)</big><a class="headerlink" href="#IPython.ipapi.launch_new_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make and start a new ipython instance.</p>
+<p>This can be called even without having an already initialized 
+ipython session running.</p>
+<p>This is also used as the egg entry point for the &#8216;ipython&#8217; script.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ipapi.make_session">
+<!--[IPython.ipapi.make_session]--><tt class="descclassname">IPython.ipapi.</tt><tt class="descname">make_session</tt><big>(</big><em>user_ns=None</em>, <em>shellclass=None</em><big>)</big><a class="headerlink" href="#IPython.ipapi.make_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes, but does not launch an IPython session.</p>
+<p>Later on you can call obj.mainloop() on the returned object.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>user_ns(None): a dict to be used as the user&#8217;s namespace with initial</li>
+</ul>
+<p>data.</p>
+</blockquote>
+<p>WARNING: This should <em>not</em> be run when a session exists already.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ipapi.make_user_global_ns">
+<!--[IPython.ipapi.make_user_global_ns]--><tt class="descclassname">IPython.ipapi.</tt><tt class="descname">make_user_global_ns</tt><big>(</big><em>ns=None</em><big>)</big><a class="headerlink" href="#IPython.ipapi.make_user_global_ns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a valid user global namespace.</p>
+<p>Similar to make_user_ns(), but global namespaces are really only needed in
+embedded applications, where there is a distinction between the user&#8217;s
+interactive namespace and the global one where ipython is running.</p>
+<p>This API is currently deprecated. Use ipapi.make_user_namespaces() instead
+to make both the local and global namespace objects simultaneously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
+<dd><p class="first last">The current user global namespace. The items in this namespace
+should be included in the output. If None, an appropriate blank
+namespace should be created.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A true dict to be used as the global namespace of the interpreter.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ipapi.make_user_namespaces">
+<!--[IPython.ipapi.make_user_namespaces]--><tt class="descclassname">IPython.ipapi.</tt><tt class="descname">make_user_namespaces</tt><big>(</big><em>user_ns=None</em>, <em>user_global_ns=None</em><big>)</big><a class="headerlink" href="#IPython.ipapi.make_user_namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a valid local and global user interactive namespaces.</p>
+<p>This builds a dict with the minimal information needed to operate as a
+valid IPython user namespace, which you can pass to the various embedding
+classes in ipython.  The default implementation returns the same dict for
+both the locals and the globals to allow functions to refer to variables in
+the namespace.  Customized implementations can return different dicts.  The
+locals dictionary can actually be anything following the basic mapping
+protocol of a dict, but the globals dict must be a true dict, not even
+a subclass.  It is recommended that any custom object for the locals
+namespace synchronize with the globals dict somehow.</p>
+<p>Raises TypeError if the provided globals namespace is not a true dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>user_ns <span class="classifier-delimiter">:</span> <span class="classifier">dict-like, optional</span></dt>
+<dd><p class="first last">The current user namespace. The items in this namespace should be
+included in the output. If None, an appropriate blank namespace
+should be created.</p>
+</dd>
+<dt>user_global_ns <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
+<dd><p class="first last">The current user global namespace. The items in this namespace
+should be included in the output. If None, an appropriate blank
+namespace should be created.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tuple pair of dictionary-like object to be used as the local namespace
+of the interpreter and a dict to be used as the global namespace.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ipapi.make_user_ns">
+<!--[IPython.ipapi.make_user_ns]--><tt class="descclassname">IPython.ipapi.</tt><tt class="descname">make_user_ns</tt><big>(</big><em>user_ns=None</em><big>)</big><a class="headerlink" href="#IPython.ipapi.make_user_ns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a valid user interactive namespace.</p>
+<p>This builds a dict with the minimal information needed to operate as a
+valid IPython user namespace, which you can pass to the various embedding
+classes in ipython.</p>
+<p>This API is currently deprecated. Use ipapi.make_user_namespaces() instead
+to make both the local and global namespace objects simultaneously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>user_ns <span class="classifier-delimiter">:</span> <span class="classifier">dict-like, optional</span></dt>
+<dd><p class="first last">The current user namespace. The items in this namespace should be
+included in the output. If None, an appropriate blank namespace
+should be created.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary-like object to be used as the local namespace of the
+interpreter.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">ipapi</a><ul>
+<li><a class="reference external" href="#module-IPython.ipapi">Module: <tt class="docutils literal"><span class="pre">ipapi</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#debugtools"><tt class="docutils literal"><span class="pre">DebugTools</span></tt></a></li>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">IPApi</span></tt></a></li>
+<li><a class="reference external" href="#ipyautocall"><tt class="docutils literal"><span class="pre">IPyAutocall</span></tt></a></li>
+<li><a class="reference external" href="#ipythonnotrunning"><tt class="docutils literal"><span class="pre">IPythonNotRunning</span></tt></a></li>
+<li><a class="reference external" href="#trynext"><tt class="docutils literal"><span class="pre">TryNext</span></tt></a></li>
+<li><a class="reference external" href="#usageerror"><tt class="docutils literal"><span class="pre">UsageError</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.hooks.html" title="previous chapter">hooks</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.iplib.html" title="next chapter">iplib</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.ipapi.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.iplib.html" title="iplib"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.hooks.html" title="hooks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

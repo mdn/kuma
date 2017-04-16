@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="psyco_mode" id="psyco_mode">--psyco=MODE</a></h1>
+<div class="level1">
+
+<p>
+
+Psyco is an optimiser for Python programs.  It takes the sections that are run often or that could benefit from being compiled and compiles them into machine language.  This machine code is executed instead of the Python code.
+</p>
+
+<p>
+If you didn&#039;t understand any of that then simply understand that it makes you program run faster if it is installed.
+</p>
+
+<p>
+By default it is switched on, so you can safely ignore this option and benefit from psyco optimisations anyway.
+</p>
+
+<p>
+Note psyco only works on i386 architectures. 
+</p>
+
+<p>
+To install psyco, you can look for it in your distribution&#039;s packages, or obtain it here: <a href="http://psyco.sourceforge.net/" class="urlextern" title="http://psyco.sourceforge.net/">http://psyco.sourceforge.net/</a>
+</p>
+
+</div>
+<!-- SECTION "--psyco=MODE" [1-655] -->
+<h2><a name="none" id="none">none</a></h2>
+<div class="level2">
+
+<p>
+
+Switch psyco optimisation off.
+</p>
+
+</div>
+<!-- SECTION "none" [656-705] -->
+<h2><a name="full_default" id="full_default">full (default)</a></h2>
+<div class="level2">
+
+<p>
+
+This is the default option, even if no --psyco command line options is specified. It will try to optimise everything, so potentially it might consume more memory.
+</p>
+
+</div>
+<!-- SECTION "full (default)" [706-897] -->
+<h2><a name="profile" id="profile">profile</a></h2>
+<div class="level2">
+
+<p>
+
+This tries to selectively compile certain program parts, and therefore should consume less memory.
+
+</p>
+
+</div>
+<!-- SECTION "profile" [898-] --></body>
+</html>

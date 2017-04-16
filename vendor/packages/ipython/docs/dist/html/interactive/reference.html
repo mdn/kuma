@@ -1,0 +1,1651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython reference &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for interactive work" href="index.html" />
+    <link rel="next" title="IPython as a system shell" href="shell.html" />
+    <link rel="prev" title="Quick IPython tutorial" href="tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="shell.html" title="IPython as a system shell"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Quick IPython tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for interactive work</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-reference">
+<h1>IPython reference<a class="headerlink" href="#ipython-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="command-line-usage">
+<span id="command-line-options"></span><h2>Command-line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline">¶</a></h2>
+<p>You start IPython with the command:</p>
+<div class="highlight-python"><pre>$ ipython [options] files</pre>
+</div>
+<p>If invoked with no options, it executes all the files listed in sequence
+and drops you into the interpreter while still acknowledging any options
+you may have set in your ipythonrc file. This behavior is different from
+standard Python, which when called as python -i will only execute one
+file and ignore your configuration setup.</p>
+<p>Please note that some of the configuration options are not available at
+the command line, simply because they are not practical here. Look into
+your ipythonrc configuration file for details on those. This file
+typically installed in the $HOME/.ipython directory. For Windows users,
+$HOME resolves to C:\Documents and Settings\YourUserName in most
+instances. In the rest of this text, we will refer to this directory as
+IPYTHONDIR.</p>
+<div class="section" id="special-threading-options">
+<span id="threading-options"></span><h3>Special Threading Options<a class="headerlink" href="#special-threading-options" title="Permalink to this headline">¶</a></h3>
+<p>The following special options are ONLY valid at the beginning of the
+command line, and not later. This is because they control the initial-
+ization of ipython itself, before the normal option-handling mechanism
+is active.</p>
+<blockquote>
+<dl class="docutils">
+<dt>-gthread, -qthread, -q4thread, -wthread, -pylab:</dt>
+<dd><p class="first">Only one of these can be given, and it can only be given as
+the first option passed to IPython (it will have no effect in
+any other position).  They provide threading support for the
+GTK, Qt (versions 3 and 4) and WXPython toolkits, and for the
+matplotlib library.</p>
+<p>With any of the first four options, IPython starts running a
+separate thread for the graphical toolkit&#8217;s operation, so that
+you can open and control graphical elements from within an
+IPython command line, without blocking. All four provide
+essentially the same functionality, respectively for GTK, Qt3,
+Qt4 and WXWidgets (via their Python interfaces).</p>
+<p>Note that with -wthread, you can additionally use the
+-wxversion option to request a specific version of wx to be
+used.  This requires that you have the wxversion Python module
+installed, which is part of recent wxPython distributions.</p>
+<p class="last">If -pylab is given, IPython loads special support for the mat
+plotlib library (<a class="reference external" href="http://matplotlib.sourceforge.net">http://matplotlib.sourceforge.net</a>), allowing
+interactive usage of any of its backends as defined in the
+user&#8217;s ~/.matplotlib/matplotlibrc file. It automatically
+activates GTK, Qt or WX threading for IPyhton if the choice of
+matplotlib backend requires it. It also modifies the %run
+command to correctly execute (without blocking) any
+matplotlib-based script which calls show() at the end.</p>
+</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-t<var>k</var></span></kbd></td>
+<td><p class="first">The -g/q/q4/wthread options, and -pylab (if matplotlib is
+configured to use GTK, Qt3, Qt4 or WX), will normally block Tk
+graphical interfaces. This means that when either GTK, Qt or WX
+threading is active, any attempt to open a Tk GUI will result in a
+dead window, and possibly cause the Python interpreter to crash.
+An extra option, -tk, is available to address this issue. It can
+only be given as a second option after any of the above (-gthread,
+-wthread or -pylab).</p>
+<p>If -tk is given, IPython will try to coordinate Tk threading
+with GTK, Qt or WX. This is however potentially unreliable, and
+you will have to test on your platform and Python configuration to
+determine whether it works for you. Debian users have reported
+success, apparently due to the fact that Debian builds all of Tcl,
+Tk, Tkinter and Python with pthreads support. Under other Linux
+environments (such as Fedora Core 2/3), this option has caused
+random crashes and lockups of the Python interpreter. Under other
+operating systems (Mac OSX and Windows), you&#8217;ll need to try it to
+find out, since currently no user reports are available.</p>
+<p class="last">There is unfortunately no way for IPython to determine at run time
+whether -tk will work reliably or not, so you will need to do some
+experiments before relying on it for regular work.</p>
+</td></tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+<div class="section" id="regular-options">
+<h3>Regular Options<a class="headerlink" href="#regular-options" title="Permalink to this headline">¶</a></h3>
+<p>After the above threading options have been given, regular options can
+follow in any order. All options can be abbreviated to their shortest
+non-ambiguous form and are case-sensitive. One or two dashes can be
+used. Some options have an alternate short form, indicated after a <tt class="docutils literal"><span class="pre">|</span></tt>.</p>
+<p>Most options can also be set from your ipythonrc configuration file. See
+the provided example for more details on what the options do. Options
+given at the command line override the values set in the ipythonrc file.</p>
+<p>All options with a [no] prepended can be specified in negated form
+(-nooption instead of -option) to turn the feature off.</p>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-h<var>elp</var></span></kbd></td>
+<td>print a help message and exit.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-p<var>ylab</var></span></kbd></td>
+<td>this can only be given as the first option passed to IPython
+(it will have no effect in any other position). It adds
+special support for the matplotlib library
+(<a class="reference external" href="http://matplotlib.sourceforge.ne">http://matplotlib.sourceforge.ne</a>), allowing interactive usage
+of any of its backends as defined in the user&#8217;s .matplotlibrc
+file.  It automatically activates GTK or WX threading for
+IPyhton if the choice of matplotlib backend requires it. It
+also modifies the %run command to correctly execute (without
+blocking) any matplotlib-based script which calls show() at
+the end. See <a class="reference internal" href="#matplotlib-support">Matplotlib support</a> for more details.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>-autocall &lt;val&gt;</dt>
+<dd>Make IPython automatically call any callable object even if you
+didn&#8217;t type explicit parentheses. For example, &#8216;str 43&#8217; becomes
+&#8216;str(43)&#8217; automatically. The value can be &#8216;0&#8217; to disable the feature,
+&#8216;1&#8217; for smart autocall, where it is not applied if there are no more
+arguments on the line, and &#8216;2&#8217; for full autocall, where all callable
+objects are automatically called (even if no arguments are
+present). The default is &#8216;1&#8217;.</dd>
+<dt>-[no]autoindent</dt>
+<dd>Turn automatic indentation on/off.</dd>
+<dt>-[no]automagic</dt>
+<dd>make magic commands automatic (without needing their first character
+to be %). Type %magic at the IPython prompt for more information.</dd>
+<dt>-[no]autoedit_syntax</dt>
+<dd>When a syntax error occurs after editing a file, automatically
+open the file to the trouble causing line for convenient
+fixing.</dd>
+</dl>
+<p>-[no]banner         Print the initial information banner (default on).</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-c <var>&lt;command&gt;</var></span></kbd></td>
+<td>execute the given command string. This is similar to the -c
+option in the normal Python interpreter.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>-cache_size, cs &lt;n&gt;</dt>
+<dd>size of the output cache (maximum number of entries to hold in
+memory). The default is 1000, you can change it permanently in your
+config file. Setting it to 0 completely disables the caching system,
+and the minimum value accepted is 20 (if you provide a value less than
+20, it is reset to 0 and a warning is issued) This limit is defined
+because otherwise you&#8217;ll spend more time re-flushing a too small cache
+than working.</dd>
+<dt>-classic, cl</dt>
+<dd>Gives IPython a similar feel to the classic Python
+prompt.</dd>
+<dt>-colors &lt;scheme&gt;</dt>
+<dd>Color scheme for prompts and exception reporting. Currently
+implemented: NoColor, Linux and LightBG.</dd>
+<dt>-[no]color_info</dt>
+<dd><p class="first">IPython can display information about objects via a set of functions,
+and optionally can use colors for this, syntax highlighting source
+code and various other elements.  However, because this information is
+passed through a pager (like &#8216;less&#8217;) and many pagers get confused with
+color codes, this option is off by default. You can test it and turn
+it on permanently in your ipythonrc file if it works for you. As a
+reference, the &#8216;less&#8217; pager supplied with Mandrake 8.2 works ok, but
+that in RedHat 7.2 doesn&#8217;t.</p>
+<p class="last">Test it and turn it on permanently if it works with your
+system. The magic function %color_info allows you to toggle this
+interactively for testing.</p>
+</dd>
+<dt>-[no]debug</dt>
+<dd>Show information about the loading process. Very useful to pin down
+problems with your configuration files or to get details about
+session restores.</dd>
+<dt>-[no]deep_reload:</dt>
+<dd><p class="first">IPython can use the deep_reload module which reloads changes in
+modules recursively (it replaces the reload() function, so you don&#8217;t
+need to change anything to use it).  deep_reload() forces a full
+reload of modules whose code may have changed, which the default
+reload() function does not.</p>
+<p class="last">When deep_reload is off, IPython will use the normal reload(),
+but deep_reload will still be available as dreload(). This
+feature is off by default [which means that you have both
+normal reload() and dreload()].</p>
+</dd>
+<dt>-editor &lt;name&gt;</dt>
+<dd>Which editor to use with the %edit command. By default,
+IPython will honor your EDITOR environment variable (if not
+set, vi is the Unix default and notepad the Windows one).
+Since this editor is invoked on the fly by IPython and is
+meant for editing small code snippets, you may want to use a
+small, lightweight editor here (in case your default EDITOR is
+something like Emacs).</dd>
+<dt>-ipythondir &lt;name&gt;</dt>
+<dd>name of your IPython configuration directory IPYTHONDIR. This
+can also be specified through the environment variable
+IPYTHONDIR.</dd>
+<dt>-log, l</dt>
+<dd>generate a log file of all input. The file is named
+ipython_log.py in your current directory (which prevents logs
+from multiple IPython sessions from trampling each other). You
+can use this to later restore a session by loading your
+logfile as a file to be executed with option -logplay (see
+below).</dd>
+</dl>
+<p>-logfile, lf &lt;name&gt;   specify the name of your logfile.</p>
+<p>-logplay, lp &lt;name&gt;</p>
+<blockquote>
+<p>you can replay a previous log. For restoring a session as close as
+possible to the state you left it in, use this option (don&#8217;t just run
+the logfile). With -logplay, IPython will try to reconstruct the
+previous working environment in full, not just execute the commands in
+the logfile.</p>
+<p>When a session is restored, logging is automatically turned on
+again with the name of the logfile it was invoked with (it is
+read from the log header). So once you&#8217;ve turned logging on for
+a session, you can quit IPython and reload it as many times as
+you want and it will continue to log its history and restore
+from the beginning every time.</p>
+<p>Caveats: there are limitations in this option. The history
+variables _i*,_* and _dh don&#8217;t get restored properly. In the
+future we will try to implement full session saving by writing
+and retrieving a &#8216;snapshot&#8217; of the memory state of IPython. But
+our first attempts failed because of inherent limitations of
+Python&#8217;s Pickle module, so this may have to wait.</p>
+</blockquote>
+<dl class="docutils">
+<dt>-[no]messages</dt>
+<dd>Print messages which IPython collects about its startup
+process (default on).</dd>
+<dt>-[no]pdb</dt>
+<dd>Automatically call the pdb debugger after every uncaught
+exception. If you are used to debugging using pdb, this puts
+you automatically inside of it after any call (either in
+IPython or in code called by it) which triggers an exception
+which goes uncaught.</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-p<var>ydb</var></span></kbd></td>
+<td>Makes IPython use the third party &#8220;pydb&#8221; package as debugger,
+instead of pdb. Requires that pydb is installed.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>-[no]pprint</dt>
+<dd>ipython can optionally use the pprint (pretty printer) module
+for displaying results. pprint tends to give a nicer display
+of nested data structures. If you like it, you can turn it on
+permanently in your config file (default off).</dd>
+</dl>
+<p>-profile, p &lt;name&gt;</p>
+<blockquote>
+<p>assume that your config file is ipythonrc-&lt;name&gt; or
+ipy_profile_&lt;name&gt;.py (looks in current dir first, then in
+IPYTHONDIR).  This is a quick way to keep and load multiple
+config files for different tasks, especially if you use the
+include option of config files. You can keep a basic
+IPYTHONDIR/ipythonrc file and then have other &#8216;profiles&#8217; which
+include this one and load extra things for particular
+tasks. For example:</p>
+<ol class="arabic simple">
+<li>$HOME/.ipython/ipythonrc : load basic things you always want.</li>
+<li>$HOME/.ipython/ipythonrc-math : load (1) and basic math-related modules.</li>
+<li>$HOME/.ipython/ipythonrc-numeric : load (1) and Numeric and plotting modules.</li>
+</ol>
+<p>Since it is possible to create an endless loop by having
+circular file inclusions, IPython will stop if it reaches 15
+recursive inclusions.</p>
+</blockquote>
+<p>-prompt_in1, pi1 &lt;string&gt;</p>
+<blockquote>
+Specify the string used for input prompts. Note that if you are using
+numbered prompts, the number is represented with a &#8216;#&#8217; in the
+string. Don&#8217;t forget to quote strings with spaces embedded in
+them. Default: &#8216;In [#]:&#8217;.  The <a class="reference external" href="../config/customization.html#prompts"><em>prompts section</em></a>
+discusses in detail all the available escapes to customize your
+prompts.</blockquote>
+<dl class="docutils">
+<dt>-prompt_in2, pi2 &lt;string&gt;</dt>
+<dd>Similar to the previous option, but used for the continuation
+prompts. The special sequence &#8216;D&#8217; is similar to &#8216;#&#8217;, but
+with all digits replaced dots (so you can have your
+continuation prompt aligned with your input prompt).  Default:
+&#8216; .D.:&#8217; (note three spaces at the start for alignment with
+&#8216;In [#]&#8217;).</dd>
+<dt>-prompt_out,po &lt;string&gt;</dt>
+<dd>String used for output prompts, also uses numbers like
+prompt_in1. Default: &#8216;Out[#]:&#8217;</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-q<var>uick</var></span></kbd></td>
+<td>start in bare bones mode (no config file loaded).</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>-rcfile &lt;name&gt;</dt>
+<dd><p class="first">name of your IPython resource configuration file. Normally
+IPython loads ipythonrc (from current directory) or
+IPYTHONDIR/ipythonrc.</p>
+<p class="last">If the loading of your config file fails, IPython starts with
+a bare bones configuration (no modules loaded at all).</p>
+</dd>
+<dt>-[no]readline</dt>
+<dd><p class="first">use the readline library, which is needed to support name
+completion and command history, among other things.  It is
+enabled by default, but may cause problems for users of
+X/Emacs in Python comint or shell buffers.</p>
+<p class="last">Note that X/Emacs &#8216;eterm&#8217; buffers (opened with M-x term) support
+IPython&#8217;s readline and syntax coloring fine, only &#8216;emacs&#8217; (M-x
+shell and C-c !) buffers do not.</p>
+</dd>
+<dt>-screen_length, sl &lt;n&gt;</dt>
+<dd><p class="first">number of lines of your screen. This is used to control
+printing of very long strings. Strings longer than this number
+of lines will be sent through a pager instead of directly
+printed.</p>
+<p class="last">The default value for this is 0, which means IPython will
+auto-detect your screen size every time it needs to print certain
+potentially long strings (this doesn&#8217;t change the behavior of the
+&#8216;print&#8217; keyword, it&#8217;s only triggered internally). If for some
+reason this isn&#8217;t working well (it needs curses support), specify
+it yourself. Otherwise don&#8217;t change the default.</p>
+</dd>
+</dl>
+<p>-separate_in, si &lt;string&gt;</p>
+<blockquote>
+separator before input prompts.
+Default: &#8216;n&#8217;</blockquote>
+<dl class="docutils">
+<dt>-separate_out, so &lt;string&gt;</dt>
+<dd>separator before output prompts.
+Default: nothing.</dd>
+<dt>-separate_out2, so2</dt>
+<dd>separator after output prompts.
+Default: nothing.
+For these three options, use the value 0 to specify no separator.</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-n<var>osep</var></span></kbd></td>
+<td>shorthand for &#8216;-SeparateIn 0 -SeparateOut 0 -SeparateOut2
+0&#8217;. Simply removes all input/output separators.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-u<var>pgrade</var></span></kbd></td>
+<td>allows you to upgrade your IPYTHONDIR configuration when you
+install a new version of IPython. Since new versions may
+include new command line options or example files, this copies
+updated ipythonrc-type files. However, it backs up (with a
+.old extension) all files which it overwrites so that you can
+merge back any customizations you might have in your personal
+files. Note that you should probably use %upgrade instead,
+it&#8217;s a safer alternative.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-V<var>ersion</var></span></kbd></td>
+<td>print version information and exit.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>-wxversion &lt;string&gt;</dt>
+<dd>Select a specific version of wxPython (used in conjunction
+with -wthread). Requires the wxversion module, part of recent
+wxPython distributions</dd>
+</dl>
+<p>-xmode &lt;modename&gt;</p>
+<blockquote>
+<p>Mode for exception reporting.</p>
+<p>Valid modes: Plain, Context and Verbose.</p>
+<ul class="simple">
+<li>Plain: similar to python&#8217;s normal traceback printing.</li>
+<li>Context: prints 5 lines of context source code around each
+line in the traceback.</li>
+<li>Verbose: similar to Context, but additionally prints the
+variables currently visible where the exception happened
+(shortening their strings if too long). This can potentially be
+very slow, if you happen to have a huge data structure whose
+string representation is complex to compute. Your computer may
+appear to freeze for a while with cpu usage at 100%. If this
+occurs, you can cancel the traceback with Ctrl-C (maybe hitting it
+more than once).</li>
+</ul>
+</blockquote>
+</blockquote>
+</div>
+</div>
+<div class="section" id="interactive-use">
+<h2>Interactive use<a class="headerlink" href="#interactive-use" title="Permalink to this headline">¶</a></h2>
+<p>Warning: IPython relies on the existence of a global variable called
+_ip which controls the shell itself. If you redefine _ip to anything,
+bizarre behavior will quickly occur.</p>
+<p>Other than the above warning, IPython is meant to work as a drop-in
+replacement for the standard interactive interpreter. As such, any code
+which is valid python should execute normally under IPython (cases where
+this is not true should be reported as bugs). It does, however, offer
+many features which are not available at a standard python prompt. What
+follows is a list of these.</p>
+<div class="section" id="caution-for-windows-users">
+<h3>Caution for Windows users<a class="headerlink" href="#caution-for-windows-users" title="Permalink to this headline">¶</a></h3>
+<p>Windows, unfortunately, uses the &#8216;&#8217; character as a path
+separator. This is a terrible choice, because &#8216;&#8217; also represents the
+escape character in most modern programming languages, including
+Python. For this reason, using &#8216;/&#8217; character is recommended if you
+have problems with <tt class="docutils literal"><span class="pre">\</span></tt>.  However, in Windows commands &#8216;/&#8217; flags
+options, so you can not use it for the root directory. This means that
+paths beginning at the root must be typed in a contrived manner like:
+<tt class="docutils literal"><span class="pre">%copy</span> <span class="pre">\opt/foo/bar.txt</span> <span class="pre">\tmp</span></tt></p>
+</div>
+<div class="section" id="magic-command-system">
+<span id="magic"></span><h3>Magic command system<a class="headerlink" href="#magic-command-system" title="Permalink to this headline">¶</a></h3>
+<p>IPython will treat any line whose first character is a % as a special
+call to a &#8216;magic&#8217; function. These allow you to control the behavior of
+IPython itself, plus a lot of system-type features. They are all
+prefixed with a % character, but parameters are given without
+parentheses or quotes.</p>
+<p>Example: typing &#8216;%cd mydir&#8217; (without the quotes) changes you working
+directory to &#8216;mydir&#8217;, if it exists.</p>
+<p>If you have &#8216;automagic&#8217; enabled (in your ipythonrc file, via the command
+line option -automagic or with the %automagic function), you don&#8217;t need
+to type in the % explicitly. IPython will scan its internal list of
+magic functions and call one if it exists. With automagic on you can
+then just type &#8216;cd mydir&#8217; to go to directory &#8216;mydir&#8217;. The automagic
+system has the lowest possible precedence in name searches, so defining
+an identifier with the same name as an existing magic function will
+shadow it for automagic use. You can still access the shadowed magic
+function by explicitly using the % character at the beginning of the line.</p>
+<p>An example (with automagic on) should clarify all this:</p>
+<div class="highlight-python"><pre>In [1]: cd ipython # %cd is called by automagic
+
+/home/fperez/ipython
+
+In [2]: cd=1 # now cd is just a variable
+
+In [3]: cd .. # and doesn't work as a function anymore
+
+------------------------------
+
+    File "&lt;console&gt;", line 1
+
+      cd ..
+
+          ^
+
+SyntaxError: invalid syntax
+
+In [4]: %cd .. # but %cd always works
+
+/home/fperez
+
+In [5]: del cd # if you remove the cd variable
+
+In [6]: cd ipython # automagic can work again
+
+/home/fperez/ipython</pre>
+</div>
+<p>You can define your own magic functions to extend the system. The
+following example defines a new magic command, %impall:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">import</span> <span class="nn">IPython.ipapi</span>
+
+<span class="n">ip</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">ipapi</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">doimp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+
+    <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span>
+
+    <span class="n">ip</span><span class="o">.</span><span class="n">ex</span><span class="p">(</span><span class="s">&quot;import </span><span class="si">%s</span><span class="s">; reload(</span><span class="si">%s</span><span class="s">); from </span><span class="si">%s</span><span class="s"> import *&quot;</span> <span class="o">%</span> <span class="p">(</span>
+
+    <span class="n">arg</span><span class="p">,</span><span class="n">arg</span><span class="p">,</span><span class="n">arg</span><span class="p">)</span>
+
+    <span class="p">)</span>
+
+<span class="n">ip</span><span class="o">.</span><span class="n">expose_magic</span><span class="p">(</span><span class="s">&#39;impall&#39;</span><span class="p">,</span> <span class="n">doimp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also define your own aliased names for magic functions. In your
+ipythonrc file, placing a line like:</p>
+<div class="highlight-python"><pre>execute __IP.magic_cl = __IP.magic_clear</pre>
+</div>
+<p>will define %cl as a new name for %clear.</p>
+<p>Type %magic for more information, including a list of all available
+magic functions at any time and their docstrings. You can also type
+%magic_function_name? (see sec. 6.4 &lt;#sec:dyn-object-info&gt; for
+information on the &#8216;?&#8217; system) to get information about any particular
+magic function you are interested in.</p>
+<p>The API documentation for the <a title="" class="reference external" href="../api/generated/IPython.Magic.html#module-IPython.Magic"><tt class="xref docutils literal"><span class="pre">IPython.Magic</span></tt></a> module contains the full
+docstrings of all currently available magic commands.</p>
+</div>
+<div class="section" id="access-to-the-standard-python-help">
+<h3>Access to the standard Python help<a class="headerlink" href="#access-to-the-standard-python-help" title="Permalink to this headline">¶</a></h3>
+<p>As of Python 2.1, a help system is available with access to object docstrings
+and the Python manuals. Simply type &#8216;help&#8217; (no quotes) to access it. You can
+also type help(object) to obtain information about a given object, and
+help(&#8216;keyword&#8217;) for information on a keyword. As noted <a class="reference external" href="../config/initial_config.html#accessing-help"><em>here</em></a>, you need to properly configure your environment variable
+PYTHONDOCS for this feature to work correctly.</p>
+</div>
+<div class="section" id="dynamic-object-information">
+<span id="dynamic-object-info"></span><h3>Dynamic object information<a class="headerlink" href="#dynamic-object-information" title="Permalink to this headline">¶</a></h3>
+<p>Typing ?word or word? prints detailed information about an object. If
+certain strings in the object are too long (docstrings, code, etc.) they
+get snipped in the center for brevity. This system gives access variable
+types and values, full source code for any object (if available),
+function prototypes and other useful information.</p>
+<p>Typing ??word or word?? gives access to the full information without
+snipping long strings. Long strings are sent to the screen through the
+less pager if longer than the screen and printed otherwise. On systems
+lacking the less command, IPython uses a very basic internal pager.</p>
+<p>The following magic functions are particularly useful for gathering
+information about your working environment. You can get more details by
+typing %magic or querying them individually (use %function_name? with or
+without the %), this is just a summary:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>%pdoc &lt;object&gt;</strong>: Print (or run through a pager if too long) the
+docstring for an object. If the given object is a class, it will
+print both the class and the constructor docstrings.</li>
+<li><strong>%pdef &lt;object&gt;</strong>: Print the definition header for any callable
+object. If the object is a class, print the constructor information.</li>
+<li><strong>%psource &lt;object&gt;</strong>: Print (or run through a pager if too long)
+the source code for an object.</li>
+<li><strong>%pfile &lt;object&gt;</strong>: Show the entire source file where an object was
+defined via a pager, opening it at the line where the object
+definition begins.</li>
+<li><strong>%who/%whos</strong>: These functions give information about identifiers
+you have defined interactively (not things you loaded or defined
+in your configuration files). %who just prints a list of
+identifiers and %whos prints a table with some basic details about
+each identifier.</li>
+</ul>
+</blockquote>
+<p>Note that the dynamic object information functions (?/??, %pdoc, %pfile,
+%pdef, %psource) give you access to documentation even on things which
+are not really defined as separate identifiers. Try for example typing
+{}.get? or after doing import os, type os.path.abspath??.</p>
+</div>
+<div class="section" id="readline-based-features">
+<span id="readline"></span><h3>Readline-based features<a class="headerlink" href="#readline-based-features" title="Permalink to this headline">¶</a></h3>
+<p>These features require the GNU readline library, so they won&#8217;t work if
+your Python installation lacks readline support. We will first describe
+the default behavior IPython uses, and then how to change it to suit
+your preferences.</p>
+<div class="section" id="command-line-completion">
+<h4>Command line completion<a class="headerlink" href="#command-line-completion" title="Permalink to this headline">¶</a></h4>
+<p>At any time, hitting TAB will complete any available python commands or
+variable names, and show you a list of the possible completions if
+there&#8217;s no unambiguous one. It will also complete filenames in the
+current directory if no python names match what you&#8217;ve typed so far.</p>
+</div>
+<div class="section" id="search-command-history">
+<h4>Search command history<a class="headerlink" href="#search-command-history" title="Permalink to this headline">¶</a></h4>
+<p>IPython provides two ways for searching through previous input and thus
+reduce the need for repetitive typing:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Start typing, and then use Ctrl-p (previous,up) and Ctrl-n
+(next,down) to search through only the history items that match
+what you&#8217;ve typed so far. If you use Ctrl-p/Ctrl-n at a blank
+prompt, they just behave like normal arrow keys.</li>
+<li>Hit Ctrl-r: opens a search prompt. Begin typing and the system
+searches your history for lines that contain what you&#8217;ve typed so
+far, completing as much as it can.</li>
+</ol>
+</blockquote>
+</div>
+<div class="section" id="persistent-command-history-across-sessions">
+<h4>Persistent command history across sessions<a class="headerlink" href="#persistent-command-history-across-sessions" title="Permalink to this headline">¶</a></h4>
+<p>IPython will save your input history when it leaves and reload it next
+time you restart it. By default, the history file is named
+$IPYTHONDIR/history, but if you&#8217;ve loaded a named profile,
+&#8216;-PROFILE_NAME&#8217; is appended to the name. This allows you to keep
+separate histories related to various tasks: commands related to
+numerical work will not be clobbered by a system shell history, for
+example.</p>
+</div>
+<div class="section" id="autoindent">
+<h4>Autoindent<a class="headerlink" href="#autoindent" title="Permalink to this headline">¶</a></h4>
+<p>IPython can recognize lines ending in &#8216;:&#8217; and indent the next line,
+while also un-indenting automatically after &#8216;raise&#8217; or &#8216;return&#8217;.</p>
+<p>This feature uses the readline library, so it will honor your ~/.inputrc
+configuration (or whatever file your INPUTRC variable points to). Adding
+the following lines to your .inputrc file can make indenting/unindenting
+more convenient (M-i indents, M-u unindents):</p>
+<div class="highlight-python"><pre>$if Python
+"\M-i": "    "
+"\M-u": "\d\d\d\d"
+$endif</pre>
+</div>
+<p>Note that there are 4 spaces between the quote marks after &#8220;M-i&#8221; above.</p>
+<p>Warning: this feature is ON by default, but it can cause problems with
+the pasting of multi-line indented code (the pasted code gets
+re-indented on each line). A magic function %autoindent allows you to
+toggle it on/off at runtime. You can also disable it permanently on in
+your ipythonrc file (set autoindent 0).</p>
+</div>
+<div class="section" id="customizing-readline-behavior">
+<h4>Customizing readline behavior<a class="headerlink" href="#customizing-readline-behavior" title="Permalink to this headline">¶</a></h4>
+<p>All these features are based on the GNU readline library, which has an
+extremely customizable interface. Normally, readline is configured via a
+file which defines the behavior of the library; the details of the
+syntax for this can be found in the readline documentation available
+with your system or on the Internet. IPython doesn&#8217;t read this file (if
+it exists) directly, but it does support passing to readline valid
+options via a simple interface. In brief, you can customize readline by
+setting the following options in your ipythonrc configuration file (note
+that these options can not be specified at the command line):</p>
+<blockquote>
+<ul>
+<li><p class="first"><strong>readline_parse_and_bind</strong>: this option can appear as many times as
+you want, each time defining a string to be executed via a
+readline.parse_and_bind() command. The syntax for valid commands
+of this kind can be found by reading the documentation for the GNU
+readline library, as these commands are of the kind which readline
+accepts in its configuration file.</p>
+</li>
+<li><p class="first"><strong>readline_remove_delims</strong>: a string of characters to be removed
+from the default word-delimiters list used by readline, so that
+completions may be performed on strings which contain them. Do not
+change the default value unless you know what you&#8217;re doing.</p>
+</li>
+<li><p class="first"><strong>readline_omit__names</strong>: when tab-completion is enabled, hitting
+&lt;tab&gt; after a &#8216;.&#8217; in a name will complete all attributes of an
+object, including all the special methods whose names include
+double underscores (like __getitem__ or __class__). If you&#8217;d
+rather not see these names by default, you can set this option to
+1. Note that even when this option is set, you can still see those
+names by explicitly typing a _ after the period and hitting &lt;tab&gt;:
+&#8216;name._&lt;tab&gt;&#8217; will always complete attribute names starting with &#8216;_&#8217;.</p>
+<p>This option is off by default so that new users see all
+attributes of any objects they are dealing with.</p>
+</li>
+</ul>
+</blockquote>
+<p>You will find the default values along with a corresponding detailed
+explanation in your ipythonrc file.</p>
+</div>
+</div>
+<div class="section" id="session-logging-and-restoring">
+<h3>Session logging and restoring<a class="headerlink" href="#session-logging-and-restoring" title="Permalink to this headline">¶</a></h3>
+<p>You can log all input from a session either by starting IPython with the
+command line switches -log or -logfile (see <a class="reference internal" href="#command-line-options"><em>here</em></a>)
+or by activating the logging at any moment with the magic function %logstart.</p>
+<p>Log files can later be reloaded with the -logplay option and IPython
+will attempt to &#8216;replay&#8217; the log by executing all the lines in it, thus
+restoring the state of a previous session. This feature is not quite
+perfect, but can still be useful in many cases.</p>
+<p>The log files can also be used as a way to have a permanent record of
+any code you wrote while experimenting. Log files are regular text files
+which you can later open in your favorite text editor to extract code or
+to &#8216;clean them up&#8217; before using them to replay a session.</p>
+<p>The %logstart function for activating logging in mid-session is used as
+follows:</p>
+<p>%logstart [log_name [log_mode]]</p>
+<p>If no name is given, it defaults to a file named &#8216;log&#8217; in your
+IPYTHONDIR directory, in &#8216;rotate&#8217; mode (see below).</p>
+<p>&#8216;%logstart name&#8217; saves to file &#8216;name&#8217; in &#8216;backup&#8217; mode. It saves your
+history up to that point and then continues logging.</p>
+<p>%logstart takes a second optional parameter: logging mode. This can be
+one of (note that the modes are given unquoted):</p>
+<blockquote>
+<ul class="simple">
+<li>[over:] overwrite existing log_name.</li>
+<li>[backup:] rename (if exists) to log_name~ and start log_name.</li>
+<li>[append:] well, that says it.</li>
+<li>[rotate:] create rotating logs log_name.1~, log_name.2~, etc.</li>
+</ul>
+</blockquote>
+<p>The %logoff and %logon functions allow you to temporarily stop and
+resume logging to a file which had previously been started with
+%logstart. They will fail (with an explanation) if you try to use them
+before logging has been started.</p>
+</div>
+<div class="section" id="id1">
+<span id="system-shell-access"></span><h3>System shell access<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Any input line beginning with a ! character is passed verbatim (minus
+the !, of course) to the underlying operating system. For example,
+typing !ls will run &#8216;ls&#8217; in the current directory.</p>
+</div>
+<div class="section" id="manual-capture-of-command-output">
+<h3>Manual capture of command output<a class="headerlink" href="#manual-capture-of-command-output" title="Permalink to this headline">¶</a></h3>
+<p>If the input line begins with two exclamation marks, !!, the command is
+executed but its output is captured and returned as a python list, split
+on newlines. Any output sent by the subprocess to standard error is
+printed separately, so that the resulting list only captures standard
+output. The !! syntax is a shorthand for the %sx magic command.</p>
+<p>Finally, the %sc magic (short for &#8216;shell capture&#8217;) is similar to %sx,
+but allowing more fine-grained control of the capture details, and
+storing the result directly into a named variable. The direct use of
+%sc is now deprecated, and you should ise the <tt class="docutils literal"><span class="pre">var</span> <span class="pre">=</span> <span class="pre">!cmd</span></tt> syntax
+instead.</p>
+<p>IPython also allows you to expand the value of python variables when
+making system calls. Any python variable or expression which you prepend
+with $ will get expanded before the system call is made:</p>
+<div class="highlight-python"><pre>In [1]: pyvar='Hello world'
+In [2]: !echo "A python variable: $pyvar"
+A python variable: Hello world</pre>
+</div>
+<p>If you want the shell to actually see a literal $, you need to type it
+twice:</p>
+<div class="highlight-python"><pre>In [3]: !echo "A system variable: $$HOME"
+A system variable: /home/fperez</pre>
+</div>
+<p>You can pass arbitrary expressions, though you&#8217;ll need to delimit them
+with {} if there is ambiguity as to the extent of the expression:</p>
+<div class="highlight-python"><pre>In [5]: x=10
+In [6]: y=20
+In [13]: !echo $x+y
+10+y
+In [7]: !echo ${x+y}
+30</pre>
+</div>
+<p>Even object attributes can be expanded:</p>
+<div class="highlight-python"><pre>In [12]: !echo $sys.argv
+[/home/fperez/usr/bin/ipython]</pre>
+</div>
+</div>
+<div class="section" id="system-command-aliases">
+<h3>System command aliases<a class="headerlink" href="#system-command-aliases" title="Permalink to this headline">¶</a></h3>
+<p>The %alias magic function and the alias option in the ipythonrc
+configuration file allow you to define magic functions which are in fact
+system shell commands. These aliases can have parameters.</p>
+<p>&#8216;%alias alias_name cmd&#8217; defines &#8216;alias_name&#8217; as an alias for &#8216;cmd&#8217;</p>
+<p>Then, typing &#8216;%alias_name params&#8217; will execute the system command &#8216;cmd
+params&#8217; (from your underlying operating system).</p>
+<p>You can also define aliases with parameters using %s specifiers (one per
+parameter). The following example defines the %parts function as an
+alias to the command &#8216;echo first %s second %s&#8217; where each %s will be
+replaced by a positional parameter to the call to %parts:</p>
+<div class="highlight-python"><pre>In [1]: alias parts echo first %s second %s
+In [2]: %parts A B
+first A second B
+In [3]: %parts A
+Incorrect number of arguments: 2 expected.
+parts is an alias to: 'echo first %s second %s'</pre>
+</div>
+<p>If called with no parameters, %alias prints the table of currently
+defined aliases.</p>
+<p>The %rehash/rehashx magics allow you to load your entire $PATH as
+ipython aliases. See their respective docstrings (or sec. 6.2
+&lt;#sec:magic&gt; for further details).</p>
+</div>
+<div class="section" id="recursive-reload">
+<span id="dreload"></span><h3>Recursive reload<a class="headerlink" href="#recursive-reload" title="Permalink to this headline">¶</a></h3>
+<p>The dreload function does a recursive reload of a module: changes made
+to the module since you imported will actually be available without
+having to exit.</p>
+</div>
+<div class="section" id="verbose-and-colored-exception-traceback-printouts">
+<h3>Verbose and colored exception traceback printouts<a class="headerlink" href="#verbose-and-colored-exception-traceback-printouts" title="Permalink to this headline">¶</a></h3>
+<p>IPython provides the option to see very detailed exception tracebacks,
+which can be especially useful when debugging large programs. You can
+run any Python file with the %run function to benefit from these
+detailed tracebacks. Furthermore, both normal and verbose tracebacks can
+be colored (if your terminal supports it) which makes them much easier
+to parse visually.</p>
+<p>See the magic xmode and colors functions for details (just type %magic).</p>
+<p>These features are basically a terminal version of Ka-Ping Yee&#8217;s cgitb
+module, now part of the standard Python library.</p>
+</div>
+<div class="section" id="input-caching-system">
+<span id="input-caching"></span><h3>Input caching system<a class="headerlink" href="#input-caching-system" title="Permalink to this headline">¶</a></h3>
+<p>IPython offers numbered prompts (In/Out) with input and output caching
+(also referred to as &#8216;input history&#8217;). All input is saved and can be
+retrieved as variables (besides the usual arrow key recall), in
+addition to the %rep magic command that brings a history entry
+up for editing on the next  command line.</p>
+<p>The following GLOBAL variables always exist (so don&#8217;t overwrite them!):
+_i: stores previous input. _ii: next previous. _iii: next-next previous.
+_ih : a list of all input _ih[n] is the input from line n and this list
+is aliased to the global variable In. If you overwrite In with a
+variable of your own, you can remake the assignment to the internal list
+with a simple &#8216;In=_ih&#8217;.</p>
+<p>Additionally, global variables named _i&lt;n&gt; are dynamically created (&lt;n&gt;
+being the prompt counter), such that
+_i&lt;n&gt; == _ih[&lt;n&gt;] == In[&lt;n&gt;].</p>
+<p>For example, what you typed at prompt 14 is available as _i14, _ih[14]
+and In[14].</p>
+<p>This allows you to easily cut and paste multi line interactive prompts
+by printing them out: they print like a clean string, without prompt
+characters. You can also manipulate them like regular variables (they
+are strings), modify or exec them (typing &#8216;exec _i9&#8217; will re-execute the
+contents of input prompt 9, &#8216;exec In[9:14]+In[18]&#8217; will re-execute lines
+9 through 13 and line 18).</p>
+<p>You can also re-execute multiple lines of input easily by using the
+magic %macro function (which automates the process and allows
+re-execution without having to type &#8216;exec&#8217; every time). The macro system
+also allows you to re-execute previous lines which include magic
+function calls (which require special processing). Type %macro? or see
+sec. 6.2 &lt;#sec:magic&gt; for more details on the macro system.</p>
+<p>A history function %hist allows you to see any part of your input
+history by printing a range of the _i variables.</p>
+<p>You can also search (&#8216;grep&#8217;) through your history by typing
+&#8216;%hist -g somestring&#8217;. This also searches through the so called <em>shadow history</em>,
+which remembers all the commands (apart from multiline code blocks)
+you have ever entered. Handy for searching for svn/bzr URL&#8217;s, IP adrresses
+etc. You can bring shadow history entries listed by &#8216;%hist -g&#8217; up for editing
+(or re-execution by just pressing ENTER) with %rep command. Shadow history
+entries are not available as _iNUMBER variables, and they are identified by
+the &#8216;0&#8217; prefix in %hist -g output. That is, history entry 12 is a normal
+history entry, but 0231 is a shadow history entry.</p>
+<p>Shadow history was added because the readline history is inherently very
+unsafe - if you have multiple IPython sessions open, the last session
+to close will overwrite the history of previountly closed session. Likewise,
+if a crash occurs, history is never saved, whereas shadow history entries
+are added after entering every command (so a command executed
+in another IPython session is immediately available in other IPython
+sessions that are open).</p>
+<p>To conserve space, a command can exist in shadow history only once - it doesn&#8217;t
+make sense to store a common line like &#8220;cd ..&#8221; a thousand times. The idea is
+mainly to provide a reliable place where valuable, hard-to-remember commands can
+always be retrieved, as opposed to providing an exact sequence of commands
+you have entered in actual order.</p>
+<p>Because shadow history has all the commands you have ever executed,
+time taken by %hist -g will increase oven time. If it ever starts to take
+too long (or it ends up containing sensitive information like passwords),
+clear the shadow history by <cite>%clear shadow_nuke</cite>.</p>
+<p>Time taken to add entries to shadow history should be negligible, but
+in any case, if you start noticing performance degradation after using
+IPython for a long time (or running a script that floods the shadow history!),
+you can &#8216;compress&#8217; the shadow history by executing
+<cite>%clear shadow_compress</cite>. In practice, this should never be necessary
+in normal use.</p>
+</div>
+<div class="section" id="output-caching-system">
+<span id="output-caching"></span><h3>Output caching system<a class="headerlink" href="#output-caching-system" title="Permalink to this headline">¶</a></h3>
+<p>For output that is returned from actions, a system similar to the input
+cache exists but using _ instead of _i. Only actions that produce a
+result (NOT assignments, for example) are cached. If you are familiar
+with Mathematica, IPython&#8217;s _ variables behave exactly like
+Mathematica&#8217;s % variables.</p>
+<p>The following GLOBAL variables always exist (so don&#8217;t overwrite them!):</p>
+<blockquote>
+<ul class="simple">
+<li>[_] (a single underscore) : stores previous output, like Python&#8217;s
+default interpreter.</li>
+<li>[__] (two underscores): next previous.</li>
+<li>[___] (three underscores): next-next previous.</li>
+</ul>
+</blockquote>
+<p>Additionally, global variables named _&lt;n&gt; are dynamically created (&lt;n&gt;
+being the prompt counter), such that the result of output &lt;n&gt; is always
+available as _&lt;n&gt; (don&#8217;t use the angle brackets, just the number, e.g.
+_21).</p>
+<p>These global variables are all stored in a global dictionary (not a
+list, since it only has entries for lines which returned a result)
+available under the names _oh and Out (similar to _ih and In). So the
+output from line 12 can be obtained as _12, Out[12] or _oh[12]. If you
+accidentally overwrite the Out variable you can recover it by typing
+&#8216;Out=_oh&#8217; at the prompt.</p>
+<p>This system obviously can potentially put heavy memory demands on your
+system, since it prevents Python&#8217;s garbage collector from removing any
+previously computed results. You can control how many results are kept
+in memory with the option (at the command line or in your ipythonrc
+file) cache_size. If you set it to 0, the whole system is completely
+disabled and the prompts revert to the classic &#8216;&gt;&gt;&gt;&#8217; of normal Python.</p>
+</div>
+<div class="section" id="directory-history">
+<h3>Directory history<a class="headerlink" href="#directory-history" title="Permalink to this headline">¶</a></h3>
+<p>Your history of visited directories is kept in the global list _dh, and
+the magic %cd command can be used to go to any entry in that list. The
+%dhist command allows you to view this history. Do <tt class="docutils literal"><span class="pre">cd</span> <span class="pre">-&lt;TAB</span></tt> to
+conventiently view the directory history.</p>
+</div>
+<div class="section" id="automatic-parentheses-and-quotes">
+<h3>Automatic parentheses and quotes<a class="headerlink" href="#automatic-parentheses-and-quotes" title="Permalink to this headline">¶</a></h3>
+<p>These features were adapted from Nathan Gray&#8217;s LazyPython. They are
+meant to allow less typing for common situations.</p>
+</div>
+<div class="section" id="automatic-parentheses">
+<h3>Automatic parentheses<a class="headerlink" href="#automatic-parentheses" title="Permalink to this headline">¶</a></h3>
+<p>Callable objects (i.e. functions, methods, etc) can be invoked like this
+(notice the commas between the arguments):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">callable_ob</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span>
+</pre></div>
+</div>
+<p>and the input will be translated to this:</p>
+<div class="highlight-python"><pre>-&gt; callable_ob(arg1, arg2, arg3)</pre>
+</div>
+<p>You can force automatic parentheses by using &#8216;/&#8217; as the first character
+of a line. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="o">/</span><span class="nb">globals</span> <span class="c"># becomes &#39;globals()&#39;</span>
+</pre></div>
+</div>
+<p>Note that the &#8216;/&#8217; MUST be the first character on the line! This won&#8217;t work:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="o">/</span><span class="nb">globals</span> <span class="c"># syntax error</span>
+</pre></div>
+</div>
+<p>In most cases the automatic algorithm should work, so you should rarely
+need to explicitly invoke /. One notable exception is if you are trying
+to call a function with a list of tuples as arguments (the parenthesis
+will confuse IPython):</p>
+<div class="highlight-python"><pre>In [1]: zip (1,2,3),(4,5,6) # won't work</pre>
+</div>
+<p>but this will work:</p>
+<div class="highlight-python"><pre>In [2]: /zip (1,2,3),(4,5,6)
+---&gt; zip ((1,2,3),(4,5,6))
+Out[2]= [(1, 4), (2, 5), (3, 6)]</pre>
+</div>
+<p>IPython tells you that it has altered your command line by displaying
+the new command line preceded by -&gt;. e.g.:</p>
+<div class="highlight-python"><pre>In [18]: callable list
+----&gt; callable (list)</pre>
+</div>
+</div>
+<div class="section" id="automatic-quoting">
+<h3>Automatic quoting<a class="headerlink" href="#automatic-quoting" title="Permalink to this headline">¶</a></h3>
+<p>You can force automatic quoting of a function&#8217;s arguments by using &#8216;,&#8217;
+or &#8216;;&#8217; as the first character of a line. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">,</span><span class="n">my_function</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span> <span class="c"># becomes my_function(&quot;/home/me&quot;)</span>
+</pre></div>
+</div>
+<p>If you use &#8216;;&#8217; instead, the whole argument is quoted as a single string
+(while &#8216;,&#8217; splits on whitespace):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">,</span><span class="n">my_function</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="c"># becomes my_function(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="p">;</span><span class="n">my_function</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="c"># becomes my_function(&quot;a b c&quot;)</span>
+</pre></div>
+</div>
+<p>Note that the &#8216;,&#8217; or &#8216;;&#8217; MUST be the first character on the line! This
+won&#8217;t work:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">,</span><span class="n">my_function</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span> <span class="c"># syntax error</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ipython-as-your-default-python-environment">
+<h2>IPython as your default Python environment<a class="headerlink" href="#ipython-as-your-default-python-environment" title="Permalink to this headline">¶</a></h2>
+<p>Python honors the environment variable PYTHONSTARTUP and will execute at
+startup the file referenced by this variable. If you put at the end of
+this file the following two lines of code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">import</span> <span class="nn">IPython</span>
+<span class="n">IPython</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">IPShell</span><span class="p">()</span><span class="o">.</span><span class="n">mainloop</span><span class="p">(</span><span class="n">sys_exit</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>then IPython will be your working environment anytime you start Python.
+The sys_exit=1 is needed to have IPython issue a call to sys.exit() when
+it finishes, otherwise you&#8217;ll be back at the normal Python &#8216;&gt;&gt;&gt;&#8217;
+prompt.</p>
+<p>This is probably useful to developers who manage multiple Python
+versions and don&#8217;t want to have correspondingly multiple IPython
+versions. Note that in this mode, there is no way to pass IPython any
+command-line options, as those are trapped first by Python itself.</p>
+</div>
+<div class="section" id="embedding-ipython">
+<span id="embedding"></span><h2>Embedding IPython<a class="headerlink" href="#embedding-ipython" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to start an IPython instance inside your own Python
+programs. This allows you to evaluate dynamically the state of your
+code, operate with your variables, analyze them, etc. Note however that
+any changes you make to values while in the shell do not propagate back
+to the running code, so it is safe to modify your values because you
+won&#8217;t break your code in bizarre ways by doing so.</p>
+<p>This feature allows you to easily have a fully functional python
+environment for doing object introspection anywhere in your code with a
+simple function call. In some cases a simple print statement is enough,
+but if you need to do more detailed analysis of a code fragment this
+feature can be very valuable.</p>
+<p>It can also be useful in scientific computing situations where it is
+common to need to do some automatic, computationally intensive part and
+then stop to look at data, plots, etc.
+Opening an IPython instance will give you full access to your data and
+functions, and you can resume program execution once you are done with
+the interactive part (perhaps to stop again later, as many times as
+needed).</p>
+<p>The following code snippet is the bare minimum you need to include in
+your Python programs for this to work (detailed examples follow later):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">IPython.Shell</span> <span class="k">import</span> <span class="n">IPShellEmbed</span>
+
+<span class="n">ipshell</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">()</span>
+
+<span class="n">ipshell</span><span class="p">()</span> <span class="c"># this call anywhere in your program will start IPython</span>
+</pre></div>
+</div>
+<p>You can run embedded instances even in code which is itself being run at
+the IPython interactive prompt with &#8216;%run &lt;filename&gt;&#8217;. Since it&#8217;s easy
+to get lost as to where you are (in your top-level IPython or in your
+embedded one), it&#8217;s a good idea in such cases to set the in/out prompts
+to something different for the embedded instances. The code examples
+below illustrate this.</p>
+<p>You can also have multiple IPython instances in your program and open
+them separately, for example with different options for data
+presentation. If you close and open the same instance multiple times,
+its prompt counters simply continue from each execution to the next.</p>
+<p>Please look at the docstrings in the Shell.py module for more details on
+the use of this system.</p>
+<p>The following sample file illustrating how to use the embedding
+functionality is provided in the examples directory as example-embed.py.
+It should be fairly self-explanatory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;An example of how to embed an IPython shell into a running program.</span>
+
+<span class="sd">Please see the documentation in the IPython.Shell module for more details.</span>
+
+<span class="sd">The accompanying file example-embed-short.py has quick code fragments for</span>
+<span class="sd">embedding which you can cut and paste in your code once you understand how</span>
+<span class="sd">things work.</span>
+
+<span class="sd">The code in this file is deliberately extra-verbose, meant for learning.&quot;&quot;&quot;</span>
+
+<span class="c"># The basics to get you going:</span>
+
+<span class="c"># IPython sets the __IPYTHON__ variable so you can know if you have nested</span>
+<span class="c"># copies running.</span>
+
+<span class="c"># Try running this code both at the command line and from inside IPython (with</span>
+<span class="c"># %run example-embed.py)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">__IPYTHON__</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">nested</span> <span class="o">=</span> <span class="mf">0</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Running nested copies of IPython.&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;The prompts for the nested copy have been modified&quot;</span>
+    <span class="n">nested</span> <span class="o">=</span> <span class="mf">1</span>
+    <span class="c"># what the embedded instance will see as sys.argv:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-pi1&#39;</span><span class="p">,</span><span class="s">&#39;In &lt;</span><span class="se">\\</span><span class="s">#&gt;: &#39;</span><span class="p">,</span><span class="s">&#39;-pi2&#39;</span><span class="p">,</span><span class="s">&#39;   .</span><span class="se">\\</span><span class="s">D.: &#39;</span><span class="p">,</span>
+            <span class="s">&#39;-po&#39;</span><span class="p">,</span><span class="s">&#39;Out&lt;</span><span class="se">\\</span><span class="s">#&gt;: &#39;</span><span class="p">,</span><span class="s">&#39;-nosep&#39;</span><span class="p">]</span>
+
+<span class="c"># First import the embeddable shell class</span>
+<span class="k">from</span> <span class="nn">IPython.Shell</span> <span class="k">import</span> <span class="n">IPShellEmbed</span>
+
+<span class="c"># Now create an instance of the embeddable shell. The first argument is a</span>
+<span class="c"># string with options exactly as you would type them if you were starting</span>
+<span class="c"># IPython at the system command line. Any parameters you want to define for</span>
+<span class="c"># configuration can thus be specified here.</span>
+<span class="n">ipshell</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">(</span><span class="n">args</span><span class="p">,</span>
+                       <span class="n">banner</span> <span class="o">=</span> <span class="s">&#39;Dropping into IPython&#39;</span><span class="p">,</span>
+                       <span class="n">exit_msg</span> <span class="o">=</span> <span class="s">&#39;Leaving Interpreter, back to program.&#39;</span><span class="p">)</span>
+
+<span class="c"># Make a second instance, you can have as many as you want.</span>
+<span class="k">if</span> <span class="n">nested</span><span class="p">:</span>
+    <span class="n">args</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;In2&lt;</span><span class="se">\\</span><span class="s">#&gt;&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-pi1&#39;</span><span class="p">,</span><span class="s">&#39;In2&lt;</span><span class="se">\\</span><span class="s">#&gt;: &#39;</span><span class="p">,</span><span class="s">&#39;-pi2&#39;</span><span class="p">,</span><span class="s">&#39;   .</span><span class="se">\\</span><span class="s">D.: &#39;</span><span class="p">,</span>
+            <span class="s">&#39;-po&#39;</span><span class="p">,</span><span class="s">&#39;Out&lt;</span><span class="se">\\</span><span class="s">#&gt;: &#39;</span><span class="p">,</span><span class="s">&#39;-nosep&#39;</span><span class="p">]</span>
+<span class="n">ipshell2</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">banner</span> <span class="o">=</span> <span class="s">&#39;Second IPython instance.&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Hello. This is printed from the main controller program.</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="c"># You can then call ipshell() anywhere you need it (with an optional</span>
+<span class="c"># message):</span>
+<span class="n">ipshell</span><span class="p">(</span><span class="s">&#39;***Called from top level. &#39;</span>
+        <span class="s">&#39;Hit Ctrl-D to exit interpreter and continue program.</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="s">&#39;Note that if you use %kill_embedded, you can fully deactivate</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="s">&#39;This embedded instance so it will never turn on again&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Back in caller program, moving along...</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="c"># More details:</span>
+
+<span class="c"># IPShellEmbed instances don&#39;t print the standard system banner and</span>
+<span class="c"># messages. The IPython banner (which actually may contain initialization</span>
+<span class="c"># messages) is available as &lt;instance&gt;.IP.BANNER in case you want it.</span>
+
+<span class="c"># IPShellEmbed instances print the following information everytime they</span>
+<span class="c"># start:</span>
+
+<span class="c"># - A global startup banner.</span>
+
+<span class="c"># - A call-specific header string, which you can use to indicate where in the</span>
+<span class="c"># execution flow the shell is starting.</span>
+
+<span class="c"># They also print an exit message every time they exit.</span>
+
+<span class="c"># Both the startup banner and the exit message default to None, and can be set</span>
+<span class="c"># either at the instance constructor or at any other time with the</span>
+<span class="c"># set_banner() and set_exit_msg() methods.</span>
+
+<span class="c"># The shell instance can be also put in &#39;dummy&#39; mode globally or on a per-call</span>
+<span class="c"># basis. This gives you fine control for debugging without having to change</span>
+<span class="c"># code all over the place.</span>
+
+<span class="c"># The code below illustrates all this.</span>
+
+
+<span class="c"># This is how the global banner and exit_msg can be reset at any point</span>
+<span class="n">ipshell</span><span class="o">.</span><span class="n">set_banner</span><span class="p">(</span><span class="s">&#39;Entering interpreter - New Banner&#39;</span><span class="p">)</span>
+<span class="n">ipshell</span><span class="o">.</span><span class="n">set_exit_msg</span><span class="p">(</span><span class="s">&#39;Leaving interpreter - New exit_msg&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;spam&#39;</span>
+    <span class="n">ipshell</span><span class="p">(</span><span class="s">&#39;***In foo(). Try @whos, or print s or m:&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;foo says m = &#39;</span><span class="p">,</span><span class="n">m</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;eggs&#39;</span>
+    <span class="n">ipshell</span><span class="p">(</span><span class="s">&#39;***In bar(). Try @whos, or print s or n:&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;bar says n = &#39;</span><span class="p">,</span><span class="n">n</span>
+
+<span class="c"># Some calls to the above functions which will trigger IPython:</span>
+<span class="k">print</span> <span class="s">&#39;Main program calling foo(&quot;eggs&quot;)</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">foo</span><span class="p">(</span><span class="s">&#39;eggs&#39;</span><span class="p">)</span>
+
+<span class="c"># The shell can be put in &#39;dummy&#39; mode where calls to it silently return. This</span>
+<span class="c"># allows you, for example, to globally turn off debugging for a program with a</span>
+<span class="c"># single call.</span>
+<span class="n">ipshell</span><span class="o">.</span><span class="n">set_dummy_mode</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Trying to call IPython which is now &quot;dummy&quot;:&#39;</span>
+<span class="n">ipshell</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Nothing happened...&#39;</span>
+<span class="c"># The global &#39;dummy&#39; mode can still be overridden for a single call</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Overriding dummy mode manually:&#39;</span>
+<span class="n">ipshell</span><span class="p">(</span><span class="n">dummy</span><span class="o">=</span><span class="mf">0</span><span class="p">)</span>
+
+<span class="c"># Reactivate the IPython shell</span>
+<span class="n">ipshell</span><span class="o">.</span><span class="n">set_dummy_mode</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;You can even have multiple embedded instances:&#39;</span>
+<span class="n">ipshell2</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Main program calling bar(&quot;spam&quot;)</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">bar</span><span class="p">(</span><span class="s">&#39;spam&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Main program finished. Bye!&#39;</span>
+
+<span class="c">#********************** End of file &lt;example-embed.py&gt; ***********************</span>
+</pre></div>
+</div>
+<p>Once you understand how the system functions, you can use the following
+code fragments in your programs which are ready for cut and paste:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Quick code snippets for embedding IPython into other programs.</span>
+
+<span class="sd">See example-embed.py for full details, this file has the bare minimum code for</span>
+<span class="sd">cut and paste use once you understand how to use the system.&quot;&quot;&quot;</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="c"># This code loads IPython but modifies a few things if it detects it&#39;s running</span>
+<span class="c"># embedded in another IPython session (helps avoid confusion)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">__IPYTHON__</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+    <span class="n">banner</span> <span class="o">=</span> <span class="n">exit_msg</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># Command-line options for IPython (a list like sys.argv)</span>
+    <span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-pi1&#39;</span><span class="p">,</span><span class="s">&#39;In &lt;</span><span class="se">\\</span><span class="s">#&gt;:&#39;</span><span class="p">,</span><span class="s">&#39;-pi2&#39;</span><span class="p">,</span><span class="s">&#39;   .</span><span class="se">\\</span><span class="s">D.:&#39;</span><span class="p">,</span><span class="s">&#39;-po&#39;</span><span class="p">,</span><span class="s">&#39;Out&lt;</span><span class="se">\\</span><span class="s">#&gt;:&#39;</span><span class="p">]</span>
+    <span class="n">banner</span> <span class="o">=</span> <span class="s">&#39;*** Nested interpreter ***&#39;</span>
+    <span class="n">exit_msg</span> <span class="o">=</span> <span class="s">&#39;*** Back in main IPython ***&#39;</span>
+
+<span class="c"># First import the embeddable shell class</span>
+<span class="k">from</span> <span class="nn">IPython.Shell</span> <span class="k">import</span> <span class="n">IPShellEmbed</span>
+<span class="c"># Now create the IPython shell instance. Put ipshell() anywhere in your code</span>
+<span class="c"># where you want it to open.</span>
+<span class="n">ipshell</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span><span class="n">banner</span><span class="o">=</span><span class="n">banner</span><span class="p">,</span><span class="n">exit_msg</span><span class="o">=</span><span class="n">exit_msg</span><span class="p">)</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="c"># This code will load an embeddable IPython shell always with no changes for</span>
+<span class="c"># nested embededings.</span>
+
+<span class="k">from</span> <span class="nn">IPython.Shell</span> <span class="k">import</span> <span class="n">IPShellEmbed</span>
+<span class="n">ipshell</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">()</span>
+<span class="c"># Now ipshell() will open IPython anywhere in the code.</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="c"># This code loads an embeddable shell only if NOT running inside</span>
+<span class="c"># IPython. Inside IPython, the embeddable shell variable ipshell is just a</span>
+<span class="c"># dummy function.</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">__IPYTHON__</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">from</span> <span class="nn">IPython.Shell</span> <span class="k">import</span> <span class="n">IPShellEmbed</span>
+    <span class="n">ipshell</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">()</span>
+    <span class="c"># Now ipshell() will open IPython anywhere in the code</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># Define a dummy ipshell() so the same code doesn&#39;t crash inside an</span>
+    <span class="c"># interactive IPython</span>
+    <span class="k">def</span> <span class="nf">ipshell</span><span class="p">():</span> <span class="k">pass</span>
+
+<span class="c">#******************* End of file &lt;example-embed-short.py&gt; ********************</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-python-debugger-pdb">
+<h2>Using the Python debugger (pdb)<a class="headerlink" href="#using-the-python-debugger-pdb" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-entire-programs-via-pdb">
+<h3>Running entire programs via pdb<a class="headerlink" href="#running-entire-programs-via-pdb" title="Permalink to this headline">¶</a></h3>
+<p>pdb, the Python debugger, is a powerful interactive debugger which
+allows you to step through code, set breakpoints, watch variables,
+etc.  IPython makes it very easy to start any script under the control
+of pdb, regardless of whether you have wrapped it into a &#8216;main()&#8217;
+function or not. For this, simply type &#8216;%run -d myscript&#8217; at an
+IPython prompt. See the %run command&#8217;s documentation (via &#8216;%run?&#8217; or
+in Sec. <a class="reference internal" href="#magic">magic</a> for more details, including how to control where pdb
+will stop execution first.</p>
+<p>For more information on the use of the pdb debugger, read the included
+pdb.doc file (part of the standard Python distribution). On a stock
+Linux system it is located at /usr/lib/python2.3/pdb.doc, but the
+easiest way to read it is by using the help() function of the pdb module
+as follows (in an IPython prompt):</p>
+<p>In [1]: import pdb
+In [2]: pdb.help()</p>
+<p>This will load the pdb.doc document in a file viewer for you automatically.</p>
+</div>
+<div class="section" id="automatic-invocation-of-pdb-on-exceptions">
+<h3>Automatic invocation of pdb on exceptions<a class="headerlink" href="#automatic-invocation-of-pdb-on-exceptions" title="Permalink to this headline">¶</a></h3>
+<p>IPython, if started with the -pdb option (or if the option is set in
+your rc file) can call the Python pdb debugger every time your code
+triggers an uncaught exception. This feature
+can also be toggled at any time with the %pdb magic command. This can be
+extremely useful in order to find the origin of subtle bugs, because pdb
+opens up at the point in your code which triggered the exception, and
+while your program is at this point &#8216;dead&#8217;, all the data is still
+available and you can walk up and down the stack frame and understand
+the origin of the problem.</p>
+<p>Furthermore, you can use these debugging facilities both with the
+embedded IPython mode and without IPython at all. For an embedded shell
+(see sec. <a class="reference internal" href="#embedding">Embedding</a>), simply call the constructor with
+&#8216;-pdb&#8217; in the argument string and automatically pdb will be called if an
+uncaught exception is triggered by your code.</p>
+<p>For stand-alone use of the feature in your programs which do not use
+IPython at all, put the following lines toward the top of your &#8216;main&#8217;
+routine:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">IPython.ultraTB</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">ultraTB</span><span class="o">.</span><span class="n">FormattedTB</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;Verbose&#39;</span><span class="p">,</span>
+<span class="n">color_scheme</span><span class="o">=</span><span class="s">&#39;Linux&#39;</span><span class="p">,</span> <span class="n">call_pdb</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The mode keyword can be either &#8216;Verbose&#8217; or &#8216;Plain&#8217;, giving either very
+detailed or normal tracebacks respectively. The color_scheme keyword can
+be one of &#8216;NoColor&#8217;, &#8216;Linux&#8217; (default) or &#8216;LightBG&#8217;. These are the same
+options which can be set in IPython with -colors and -xmode.</p>
+<p>This will give any of your programs detailed, colored tracebacks with
+automatic invocation of pdb.</p>
+</div>
+</div>
+<div class="section" id="extensions-for-syntax-processing">
+<h2>Extensions for syntax processing<a class="headerlink" href="#extensions-for-syntax-processing" title="Permalink to this headline">¶</a></h2>
+<p>This isn&#8217;t for the faint of heart, because the potential for breaking
+things is quite high. But it can be a very powerful and useful feature.
+In a nutshell, you can redefine the way IPython processes the user input
+line to accept new, special extensions to the syntax without needing to
+change any of IPython&#8217;s own code.</p>
+<p>In the IPython/Extensions directory you will find some examples
+supplied, which we will briefly describe now. These can be used &#8216;as is&#8217;
+(and both provide very useful functionality), or you can use them as a
+starting point for writing your own extensions.</p>
+<div class="section" id="pasting-of-code-starting-with-or">
+<h3>Pasting of code starting with &#8216;&gt;&gt;&gt; &#8216; or &#8216;... &#8216;<a class="headerlink" href="#pasting-of-code-starting-with-or" title="Permalink to this headline">¶</a></h3>
+<p>In the python tutorial it is common to find code examples which have
+been taken from real python sessions. The problem with those is that all
+the lines begin with either &#8216;&gt;&gt;&gt; &#8216; or &#8216;... &#8216;, which makes it impossible
+to paste them all at once. One must instead do a line by line manual
+copying, carefully removing the leading extraneous characters.</p>
+<p>This extension identifies those starting characters and removes them
+from the input automatically, so that one can paste multi-line examples
+directly into IPython, saving a lot of time. Please look at the file
+InterpreterPasteInput.py in the IPython/Extensions directory for details
+on how this is done.</p>
+<p>IPython comes with a special profile enabling this feature, called
+tutorial. Simply start IPython via &#8216;ipython -p tutorial&#8217; and the feature
+will be available. In a normal IPython session you can activate the
+feature by importing the corresponding module with:
+In [1]: import IPython.Extensions.InterpreterPasteInput</p>
+<p>The following is a &#8216;screenshot&#8217; of how things work when this extension
+is on, copying an example from the standard tutorial:</p>
+<div class="highlight-python"><pre>IPython profile: tutorial
+
+*** Pasting of code with "&gt;&gt;&gt;" or "..." has been enabled.
+
+In [1]: &gt;&gt;&gt; def fib2(n): # return Fibonacci series up to n
+   ...: ...     """Return a list containing the Fibonacci series up to
+n."""
+   ...: ...     result = []
+   ...: ...     a, b = 0, 1
+   ...: ...     while b &lt; n:
+   ...: ...         result.append(b)    # see below
+   ...: ...         a, b = b, a+b
+   ...: ...     return result
+   ...:
+
+In [2]: fib2(10)
+Out[2]: [1, 1, 2, 3, 5, 8]</pre>
+</div>
+<p>Note that as currently written, this extension does not recognize
+IPython&#8217;s prompts for pasting. Those are more complicated, since the
+user can change them very easily, they involve numbers and can vary in
+length. One could however extract all the relevant information from the
+IPython instance and build an appropriate regular expression. This is
+left as an exercise for the reader.</p>
+</div>
+<div class="section" id="input-of-physical-quantities-with-units">
+<h3>Input of physical quantities with units<a class="headerlink" href="#input-of-physical-quantities-with-units" title="Permalink to this headline">¶</a></h3>
+<p>The module PhysicalQInput allows a simplified form of input for physical
+quantities with units. This file is meant to be used in conjunction with
+the PhysicalQInteractive module (in the same directory) and
+Physics.PhysicalQuantities from Konrad Hinsen&#8217;s ScientificPython
+(<a class="reference external" href="http://dirac.cnrs-orleans.fr/ScientificPython/">http://dirac.cnrs-orleans.fr/ScientificPython/</a>).</p>
+<p>The Physics.PhysicalQuantities module defines PhysicalQuantity objects,
+but these must be declared as instances of a class. For example, to
+define v as a velocity of 3 m/s, normally you would write:</p>
+<div class="highlight-python"><pre>In [1]: v = PhysicalQuantity(3,'m/s')</pre>
+</div>
+<p>Using the PhysicalQ_Input extension this can be input instead as:
+In [1]: v = 3 m/s
+which is much more convenient for interactive use (even though it is
+blatantly invalid Python syntax).</p>
+<p>The physics profile supplied with IPython (enabled via &#8216;ipython -p
+physics&#8217;) uses these extensions, which you can also activate with:</p>
+<p>from math import * # math MUST be imported BEFORE PhysicalQInteractive
+from IPython.Extensions.PhysicalQInteractive import *
+import IPython.Extensions.PhysicalQInput</p>
+</div>
+</div>
+<div class="section" id="threading-support">
+<h2>Threading support<a class="headerlink" href="#threading-support" title="Permalink to this headline">¶</a></h2>
+<p>WARNING: The threading support is still somewhat experimental, and it
+has only seen reasonable testing under Linux. Threaded code is
+particularly tricky to debug, and it tends to show extremely
+platform-dependent behavior. Since I only have access to Linux machines,
+I will have to rely on user&#8217;s experiences and assistance for this area
+of IPython to improve under other platforms.</p>
+<p>IPython, via the -gthread , -qthread, -q4thread and -wthread options
+(described in Sec. <a class="reference internal" href="#threading-options">Threading options</a>), can run in
+multithreaded mode to support pyGTK, Qt3, Qt4 and WXPython applications
+respectively. These GUI toolkits need to control the python main loop of
+execution, so under a normal Python interpreter, starting a pyGTK, Qt3,
+Qt4 or WXPython application will immediately freeze the shell.</p>
+<p>IPython, with one of these options (you can only use one at a time),
+separates the graphical loop and IPython&#8217;s code execution run into
+different threads. This allows you to test interactively (with %run, for
+example) your GUI code without blocking.</p>
+<p>A nice mini-tutorial on using IPython along with the Qt Designer
+application is available at the SciPy wiki:
+<a class="reference external" href="http://www.scipy.org/Cookbook/Matplotlib/Qt_with_IPython_and_Designer">http://www.scipy.org/Cookbook/Matplotlib/Qt_with_IPython_and_Designer</a>.</p>
+<div class="section" id="tk-issues">
+<h3>Tk issues<a class="headerlink" href="#tk-issues" title="Permalink to this headline">¶</a></h3>
+<p>As indicated in Sec. <a class="reference internal" href="#threading-options">Threading options</a>, a special -tk option is
+provided to try and allow Tk graphical applications to coexist
+interactively with WX, Qt or GTK ones. Whether this works at all,
+however, is very platform and configuration dependent. Please
+experiment with simple test cases before committing to using this
+combination of Tk and GTK/Qt/WX threading in a production environment.</p>
+</div>
+<div class="section" id="i-o-pitfalls">
+<h3>I/O pitfalls<a class="headerlink" href="#i-o-pitfalls" title="Permalink to this headline">¶</a></h3>
+<p>Be mindful that the Python interpreter switches between threads every
+$N$ bytecodes, where the default value as of Python 2.3 is $N=100.$ This
+value can be read by using the sys.getcheckinterval() function, and it
+can be reset via sys.setcheckinterval(N). This switching of threads can
+cause subtly confusing effects if one of your threads is doing file I/O.
+In text mode, most systems only flush file buffers when they encounter a
+&#8216;n&#8217;. An instruction as simple as:</p>
+<div class="highlight-python"><pre>print &gt;&gt; filehandle, ''hello world''</pre>
+</div>
+<p>actually consists of several bytecodes, so it is possible that the
+newline does not reach your file before the next thread switch.
+Similarly, if you are writing to a file in binary mode, the file won&#8217;t
+be flushed until the buffer fills, and your other thread may see
+apparently truncated files.</p>
+<p>For this reason, if you are using IPython&#8217;s thread support and have (for
+example) a GUI application which will read data generated by files
+written to from the IPython thread, the safest approach is to open all
+of your files in unbuffered mode (the third argument to the file/open
+function is the buffering value):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">filehandle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">mode</span><span class="p">,</span><span class="mf">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is obviously a brute force way of avoiding race conditions with the
+file buffering. If you want to do it cleanly, and you have a resource
+which is being shared by the interactive IPython loop and your GUI
+thread, you should really handle it with thread locking and
+syncrhonization properties. The Python documentation discusses these.</p>
+</div>
+</div>
+<div class="section" id="interactive-demos-with-ipython">
+<span id="interactive-demos"></span><h2>Interactive demos with IPython<a class="headerlink" href="#interactive-demos-with-ipython" title="Permalink to this headline">¶</a></h2>
+<p>IPython ships with a basic system for running scripts interactively in
+sections, useful when presenting code to audiences. A few tags embedded
+in comments (so that the script remains valid Python code) divide a file
+into separate blocks, and the demo can be run one block at a time, with
+IPython printing (with syntax highlighting) the block before executing
+it, and returning to the interactive prompt after each block. The
+interactive namespace is updated after each block is run with the
+contents of the demo&#8217;s namespace.</p>
+<p>This allows you to show a piece of code, run it and then execute
+interactively commands based on the variables just created. Once you
+want to continue, you simply execute the next block of the demo. The
+following listing shows the markup necessary for dividing a script into
+sections for execution as a demo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;A simple interactive demo to illustrate the use of IPython&#39;s Demo class.</span>
+
+<span class="sd">Any python script can be run as a demo, but that does little more than showing</span>
+<span class="sd">it on-screen, syntax-highlighted in one shot.  If you add a little simple</span>
+<span class="sd">markup, you can stop at specified intervals and return to the ipython prompt,</span>
+<span class="sd">resuming execution later.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">print</span> <span class="s">&#39;Hello, welcome to an interactive IPython demo.&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Executing this block should require confirmation before proceeding,&#39;</span>
+<span class="k">print</span> <span class="s">&#39;unless auto_all has been set to true in the demo object&#39;</span>
+
+<span class="c"># The mark below defines a block boundary, which is a point where IPython will</span>
+<span class="c"># stop execution and return to the interactive prompt.</span>
+<span class="c"># Note that in actual interactive execution,</span>
+<span class="c"># &lt;demo&gt; --- stop ---</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mf">1</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">2</span>
+
+<span class="c"># &lt;demo&gt; --- stop ---</span>
+
+<span class="c"># the mark below makes this block as silent</span>
+<span class="c"># &lt;demo&gt; silent</span>
+
+<span class="k">print</span> <span class="s">&#39;This is a silent block, which gets executed but not printed.&#39;</span>
+
+<span class="c"># &lt;demo&gt; --- stop ---</span>
+<span class="c"># &lt;demo&gt; auto</span>
+<span class="k">print</span> <span class="s">&#39;This is an automatic block.&#39;</span>
+<span class="k">print</span> <span class="s">&#39;It is executed without asking for confirmation, but printed.&#39;</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+
+<span class="k">print</span> <span class="s">&#39;z=&#39;</span><span class="p">,</span><span class="n">x</span>
+
+<span class="c"># &lt;demo&gt; --- stop ---</span>
+<span class="c"># This is just another normal block.</span>
+<span class="k">print</span> <span class="s">&#39;z is now:&#39;</span><span class="p">,</span> <span class="n">z</span>
+
+<span class="k">print</span> <span class="s">&#39;bye!&#39;</span>
+</pre></div>
+</div>
+<p>In order to run a file as a demo, you must first make a Demo object out
+of it. If the file is named myscript.py, the following code will make a
+demo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">IPython.demo</span> <span class="k">import</span> <span class="n">Demo</span>
+
+<span class="n">mydemo</span> <span class="o">=</span> <span class="n">Demo</span><span class="p">(</span><span class="s">&#39;myscript.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates the mydemo object, whose blocks you run one at a time by
+simply calling the object with no arguments. If you have autocall active
+in IPython (the default), all you need to do is type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mydemo</span>
+</pre></div>
+</div>
+<p>and IPython will call it, executing each block. Demo objects can be
+restarted, you can move forward or back skipping blocks, re-execute the
+last block, etc. Simply use the Tab key on a demo object to see its
+methods, and call &#8216;?&#8217; on them to see their docstrings for more usage
+details. In addition, the demo module itself contains a comprehensive
+docstring, which you can access via:</p>
+<div class="highlight-python"><pre>from IPython import demo
+
+demo?</pre>
+</div>
+<p>Limitations: It is important to note that these demos are limited to
+fairly simple uses. In particular, you can not put division marks in
+indented code (loops, if statements, function definitions, etc.)
+Supporting something like this would basically require tracking the
+internal execution state of the Python interpreter, so only top-level
+divisions are allowed. If you want to be able to open an IPython
+instance at an arbitrary point in a program, you can use IPython&#8217;s
+embedding facilities, described in detail in Sec. 9</p>
+</div>
+<div class="section" id="plotting-with-matplotlib">
+<span id="matplotlib-support"></span><h2>Plotting with matplotlib<a class="headerlink" href="#plotting-with-matplotlib" title="Permalink to this headline">¶</a></h2>
+<p>The matplotlib library (<a class="reference external" href="http://matplotlib.sourceforge.net">http://matplotlib.sourceforge.net</a>
+<a class="reference external" href="http://matplotlib.sourceforge.net">http://matplotlib.sourceforge.net</a>) provides high quality 2D plotting for
+Python. Matplotlib can produce plots on screen using a variety of GUI
+toolkits, including Tk, GTK and WXPython. It also provides a number of
+commands useful for scientific computing, all with a syntax compatible
+with that of the popular Matlab program.</p>
+<p>IPython accepts the special option -pylab (see <a class="reference internal" href="#command-line-options"><em>here</em></a>). This configures it to support matplotlib, honoring
+the settings in the .matplotlibrc file. IPython will detect the user&#8217;s choice
+of matplotlib GUI backend, and automatically select the proper threading model
+to prevent blocking. It also sets matplotlib in interactive mode and modifies
+%run slightly, so that any matplotlib-based script can be executed using %run
+and the final show() command does not block the interactive shell.</p>
+<p>The -pylab option must be given first in order for IPython to configure its
+threading mode. However, you can still issue other options afterwards. This
+allows you to have a matplotlib-based environment customized with additional
+modules using the standard IPython profile mechanism (see <a class="reference external" href="../config/customization.html#profiles"><em>here</em></a>): <tt class="docutils literal"><span class="pre">ipython</span> <span class="pre">-pylab</span> <span class="pre">-p</span> <span class="pre">myprofile</span></tt> will load the profile defined in
+ipythonrc-myprofile after configuring matplotlib.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">IPython reference</a><ul>
+<li><a class="reference external" href="#command-line-usage">Command-line usage</a><ul>
+<li><a class="reference external" href="#special-threading-options">Special Threading Options</a></li>
+<li><a class="reference external" href="#regular-options">Regular Options</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#interactive-use">Interactive use</a><ul>
+<li><a class="reference external" href="#caution-for-windows-users">Caution for Windows users</a></li>
+<li><a class="reference external" href="#magic-command-system">Magic command system</a></li>
+<li><a class="reference external" href="#access-to-the-standard-python-help">Access to the standard Python help</a></li>
+<li><a class="reference external" href="#dynamic-object-information">Dynamic object information</a></li>
+<li><a class="reference external" href="#readline-based-features">Readline-based features</a><ul>
+<li><a class="reference external" href="#command-line-completion">Command line completion</a></li>
+<li><a class="reference external" href="#search-command-history">Search command history</a></li>
+<li><a class="reference external" href="#persistent-command-history-across-sessions">Persistent command history across sessions</a></li>
+<li><a class="reference external" href="#autoindent">Autoindent</a></li>
+<li><a class="reference external" href="#customizing-readline-behavior">Customizing readline behavior</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#session-logging-and-restoring">Session logging and restoring</a></li>
+<li><a class="reference external" href="#id1">System shell access</a></li>
+<li><a class="reference external" href="#manual-capture-of-command-output">Manual capture of command output</a></li>
+<li><a class="reference external" href="#system-command-aliases">System command aliases</a></li>
+<li><a class="reference external" href="#recursive-reload">Recursive reload</a></li>
+<li><a class="reference external" href="#verbose-and-colored-exception-traceback-printouts">Verbose and colored exception traceback printouts</a></li>
+<li><a class="reference external" href="#input-caching-system">Input caching system</a></li>
+<li><a class="reference external" href="#output-caching-system">Output caching system</a></li>
+<li><a class="reference external" href="#directory-history">Directory history</a></li>
+<li><a class="reference external" href="#automatic-parentheses-and-quotes">Automatic parentheses and quotes</a></li>
+<li><a class="reference external" href="#automatic-parentheses">Automatic parentheses</a></li>
+<li><a class="reference external" href="#automatic-quoting">Automatic quoting</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#ipython-as-your-default-python-environment">IPython as your default Python environment</a></li>
+<li><a class="reference external" href="#embedding-ipython">Embedding IPython</a></li>
+<li><a class="reference external" href="#using-the-python-debugger-pdb">Using the Python debugger (pdb)</a><ul>
+<li><a class="reference external" href="#running-entire-programs-via-pdb">Running entire programs via pdb</a></li>
+<li><a class="reference external" href="#automatic-invocation-of-pdb-on-exceptions">Automatic invocation of pdb on exceptions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#extensions-for-syntax-processing">Extensions for syntax processing</a><ul>
+<li><a class="reference external" href="#pasting-of-code-starting-with-or">Pasting of code starting with &#8216;&gt;&gt;&gt; &#8216; or &#8216;... &#8216;</a></li>
+<li><a class="reference external" href="#input-of-physical-quantities-with-units">Input of physical quantities with units</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#threading-support">Threading support</a><ul>
+<li><a class="reference external" href="#tk-issues">Tk issues</a></li>
+<li><a class="reference external" href="#i-o-pitfalls">I/O pitfalls</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#interactive-demos-with-ipython">Interactive demos with IPython</a></li>
+<li><a class="reference external" href="#plotting-with-matplotlib">Plotting with matplotlib</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tutorial.html" title="previous chapter">Quick IPython tutorial</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="shell.html" title="next chapter">IPython as a system shell</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/interactive/reference.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="shell.html" title="IPython as a system shell"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Quick IPython tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for interactive work</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+config.api
+==========
+
+Module: :mod:`config.api`
+-------------------------
+Inheritance diagram for ``IPython.config.api``:
+
+.. inheritance-diagram:: IPython.config.api 
+   :parts: 3
+
+.. automodule:: IPython.config.api
+
+.. currentmodule:: IPython.config.api
+
+:class:`ConfigObjManager`
+-------------------------
+
+
+.. autoclass:: ConfigObjManager
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

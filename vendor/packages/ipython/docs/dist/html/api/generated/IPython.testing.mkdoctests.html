@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.mkdoctests &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.parametric" href="IPython.testing.parametric.html" />
+    <link rel="prev" title="testing.iptest" href="IPython.testing.iptest.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.parametric.html" title="testing.parametric"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.iptest.html" title="testing.iptest"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-mkdoctests">
+<h1>testing.mkdoctests<a class="headerlink" href="#testing-mkdoctests" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.mkdoctests">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.mkdoctests</span></tt><a class="headerlink" href="#module-IPython.testing.mkdoctests" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.testing.mkdoctests</span></tt>:</p>
+<img src="../../_images/inheritance40d133a724.png" usemap="#inheritance40d133a724" class="inheritance"/><map id="inheritance40d133a724" name="inheritance40d133a724">
+<area shape="rect" href="#IPython.testing.mkdoctests.IndentOut" title="testing.mkdoctests.IndentOut" alt="" coords="20,56,231,83"/>
+<area shape="rect" href="#IPython.testing.mkdoctests.RunnerFactory" title="testing.mkdoctests.RunnerFactory" alt="" coords="7,5,244,32"/>
+</map>
+<p>Utility for making a doctest file out of Python or IPython input.</p>
+<blockquote>
+%prog [options] input_file [output_file]</blockquote>
+<p>This script is a convenient generator of doctest files that uses IPython&#8217;s
+irunner script to execute valid Python or IPython input in a separate process,
+capture all of the output, and write it to an output file.</p>
+<p>It can be used in one of two ways:</p>
+<ol class="arabic">
+<li><p class="first">With a plain Python or IPython input file (denoted by extensions &#8216;.py&#8217; or
+&#8216;.ipy&#8217;.  In this case, the output is an auto-generated reST file with a
+basic header, and the captured Python input and output contained in an
+indented code block.</p>
+<p>If no output filename is given, the input name is used, with the extension
+replaced by &#8216;.txt&#8217;.</p>
+</li>
+<li><p class="first">With an input template file.  Template files are simply plain text files
+with special directives of the form</p>
+<p>%run filename</p>
+<p>to include the named file at that point.</p>
+<p>If no output filename is given and the input filename is of the form
+&#8216;base.tpl.txt&#8217;, the output will be automatically named &#8216;base.txt&#8217;.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="indentout">
+<h3><a title="IPython.testing.mkdoctests.IndentOut" class="reference internal" href="#IPython.testing.mkdoctests.IndentOut"><tt class="xref docutils literal"><span class="pre">IndentOut</span></tt></a><a class="headerlink" href="#indentout" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.testing.mkdoctests.IndentOut">
+<!--[IPython.testing.mkdoctests.IndentOut]-->class <tt class="descclassname">IPython.testing.mkdoctests.</tt><tt class="descname">IndentOut</tt><big>(</big><em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>indent=4</em><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.IndentOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A simple output stream that indents all output by a fixed amount.</p>
+<p>Instances of this class trap output to a given stream and first reformat it
+to indent every input line.</p>
+<dl class="method">
+<dt id="IPython.testing.mkdoctests.IndentOut.__init__">
+<!--[IPython.testing.mkdoctests.IndentOut.__init__]--><tt class="descname">__init__</tt><big>(</big><em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em>, <em>indent=4</em><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.IndentOut.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an indented writer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Keywords:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>out</cite> : stream (sys.stdout)
+Output stream to actually write to after indenting.</li>
+<li><cite>indent</cite> : int
+Number of spaces to indent every input line by.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.testing.mkdoctests.IndentOut.close">
+<!--[IPython.testing.mkdoctests.IndentOut.close]--><tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.IndentOut.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.testing.mkdoctests.IndentOut.flush">
+<!--[IPython.testing.mkdoctests.IndentOut.flush]--><tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.IndentOut.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.testing.mkdoctests.IndentOut.write">
+<!--[IPython.testing.mkdoctests.IndentOut.write]--><tt class="descname">write</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.IndentOut.write" title="Permalink to this definition">¶</a></dt>
+<dd>Write a string to the output stream.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="runnerfactory">
+<h3><a title="IPython.testing.mkdoctests.RunnerFactory" class="reference internal" href="#IPython.testing.mkdoctests.RunnerFactory"><tt class="xref docutils literal"><span class="pre">RunnerFactory</span></tt></a><a class="headerlink" href="#runnerfactory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.testing.mkdoctests.RunnerFactory">
+<!--[IPython.testing.mkdoctests.RunnerFactory]-->class <tt class="descclassname">IPython.testing.mkdoctests.</tt><tt class="descname">RunnerFactory</tt><big>(</big><em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.RunnerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Code runner factory.</p>
+<p>This class provides an IPython code runner, but enforces that only one
+runner is every instantiated.  The runner is created based on the extension
+of the first file to run, and it raises an exception if a runner is later
+requested for a different extension type.</p>
+<p>This ensures that we don&#8217;t generate example files for doctest with a mix of
+python and ipython syntax.</p>
+<dl class="method">
+<dt id="IPython.testing.mkdoctests.RunnerFactory.__init__">
+<!--[IPython.testing.mkdoctests.RunnerFactory.__init__]--><tt class="descname">__init__</tt><big>(</big><em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.RunnerFactory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Instantiate a code runner.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.mkdoctests.main">
+<!--[IPython.testing.mkdoctests.main]--><tt class="descclassname">IPython.testing.mkdoctests.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.mkdoctests.main" title="Permalink to this definition">¶</a></dt>
+<dd>Run as a script.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.mkdoctests</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.mkdoctests">Module: <tt class="docutils literal"><span class="pre">testing.mkdoctests</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#indentout"><tt class="docutils literal"><span class="pre">IndentOut</span></tt></a></li>
+<li><a class="reference external" href="#runnerfactory"><tt class="docutils literal"><span class="pre">RunnerFactory</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.iptest.html" title="previous chapter">testing.iptest</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.parametric.html" title="next chapter">testing.parametric</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.mkdoctests.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.parametric.html" title="testing.parametric"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.iptest.html" title="testing.iptest"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

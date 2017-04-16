@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Distutils/Setuptools Integration</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="distutils-setuptools-integration">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Distutils/Setuptools Integration</h1>
+<p>Babel provides commands for integration into <tt class="docutils literal"><span class="pre">setup.py</span></tt> scripts, based on
+either the <tt class="docutils literal"><span class="pre">distutils</span></tt> package that is part of the Python standard library,
+or the third-party <tt class="docutils literal"><span class="pre">setuptools</span></tt> package.</p>
+<p>These commands are available by default when Babel has been properly installed,
+and <tt class="docutils literal"><span class="pre">setup.py</span></tt> is using <tt class="docutils literal"><span class="pre">setuptools</span></tt>. For projects that use plain old
+<tt class="docutils literal"><span class="pre">distutils</span></tt>, the commands need to be registered explicitly, for example:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">babel.messages</span> <span class="kn">import</span> <span class="n">frontend</span> <span class="k">as</span> <span class="n">babel</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="o">...</span>
+    <span class="n">cmdclass</span> <span class="o">=</span> <span class="p">{</span><span class="s">'compile_catalog'</span><span class="p">:</span> <span class="n">babel</span><span class="o">.</span><span class="n">compile_catalog</span><span class="p">,</span>
+                <span class="s">'extract_messages'</span><span class="p">:</span> <span class="n">babel</span><span class="o">.</span><span class="n">extract_messages</span><span class="p">,</span>
+                <span class="s">'init_catalog'</span><span class="p">:</span> <span class="n">babel</span><span class="o">.</span><span class="n">init_catalog</span><span class="p">,</span>
+                <span class="s">'update_catalog'</span><span class="p">:</span> <span class="n">babel</span><span class="o">.</span><span class="n">update_catalog</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#compile-catalog" id="id4">1   compile_catalog</a><ul class="auto-toc">
+<li><a class="reference internal" href="#options" id="id5">1.1   Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extract-messages" id="id6">2   extract_messages</a><ul class="auto-toc">
+<li><a class="reference internal" href="#method-mapping" id="id7">2.1   Method Mapping</a></li>
+<li><a class="reference internal" href="#id1" id="id8">2.2   Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#init-catalog" id="id9">3   init_catalog</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id2" id="id10">3.1   Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#update-catalog" id="id11">4   update_catalog</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id3" id="id12">4.1   Options</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="compile-catalog">
+<h1>1   compile_catalog</h1>
+<p>The <tt class="docutils literal"><span class="pre">compile_catalog</span></tt> command is similar to the GNU <tt class="docutils literal"><span class="pre">msgfmt</span></tt> tool, in that
+it takes a message catalog from a PO file and compiles it to a binary MO file.</p>
+<p>If the command has been correctly installed or registered, a project's
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> script should allow you to use the command:</p>
+<pre class="literal-block">
+$ ./setup.py compile_catalog --help
+Global options:
+  --verbose (-v)  run verbosely (default)
+  --quiet (-q)    run quietly (turns verbosity off)
+  --dry-run (-n)  don't actually do anything
+  --help (-h)     show detailed help message
+
+Options for 'compile_catalog' command:
+   ...
+</pre>
+<p>Running the command will produce a PO template file:</p>
+<pre class="literal-block">
+$ ./setup.py compile_catalog --directory foobar/locale --locale pt_BR
+running compile_catalog
+compiling catalog to to foobar/locale/pt_BR/LC_MESSAGES/messages.mo
+</pre>
+<div class="section" id="options">
+<h2>1.1   Options</h2>
+<p>The <tt class="docutils literal"><span class="pre">compile_catalog</span></tt> command accepts the following options:</p>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%">
+<col width="61%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">--domain</span></tt></td>
+<td>domain of the PO file (defaults to
+lower-cased project name)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--directory</span></tt> (<tt class="docutils literal"><span class="pre">-d</span></tt>)</td>
+<td>name of the base directory</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--input-file</span></tt> (<tt class="docutils literal"><span class="pre">-i</span></tt>)</td>
+<td>name of the input file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--output-file</span></tt> (<tt class="docutils literal"><span class="pre">-o</span></tt>)</td>
+<td>name of the output file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--locale</span></tt> (<tt class="docutils literal"><span class="pre">-l</span></tt>)</td>
+<td>locale for the new localized string</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--use-fuzzy</span></tt> (<tt class="docutils literal"><span class="pre">-f</span></tt>)</td>
+<td>also include "fuzzy" translations</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--statistics</span></tt></td>
+<td>print statistics about translations</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>If <tt class="docutils literal"><span class="pre">directory</span></tt> is specified, but <tt class="docutils literal"><span class="pre">output-file</span></tt> is not, the default filename
+of the output file will be:</p>
+<pre class="literal-block">
+&lt;directory&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.mo
+</pre>
+<p>If neither the <tt class="docutils literal"><span class="pre">input_file</span></tt> nor the <tt class="docutils literal"><span class="pre">locale</span></tt> option is set, this command
+looks for all catalog files in the base directory that match the given domain,
+and compiles each of them to MO files in the same directory.</p>
+<p>These options can either be specified on the command-line, or in the
+<tt class="docutils literal"><span class="pre">setup.cfg</span></tt> file.</p>
+</div>
+</div>
+<div class="section" id="extract-messages">
+<h1>2   extract_messages</h1>
+<p>The <tt class="docutils literal"><span class="pre">extract_messages</span></tt> command is comparable to the GNU <tt class="docutils literal"><span class="pre">xgettext</span></tt> program:
+it can extract localizable messages from a variety of difference source files,
+and generate a PO (portable object) template file from the collected messages.</p>
+<p>If the command has been correctly installed or registered, a project's
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> script should allow you to use the command:</p>
+<pre class="literal-block">
+$ ./setup.py extract_messages --help
+Global options:
+  --verbose (-v)  run verbosely (default)
+  --quiet (-q)    run quietly (turns verbosity off)
+  --dry-run (-n)  don't actually do anything
+  --help (-h)     show detailed help message
+
+Options for 'extract_messages' command:
+   ...
+</pre>
+<p>Running the command will produce a PO template file:</p>
+<pre class="literal-block">
+$ ./setup.py extract_messages --output-file foobar/locale/messages.pot
+running extract_messages
+extracting messages from foobar/__init__.py
+extracting messages from foobar/core.py
+...
+writing PO template file to foobar/locale/messages.pot
+</pre>
+<div class="section" id="method-mapping">
+<h2>2.1   Method Mapping</h2>
+<p>The mapping of file patterns to extraction methods (and options) can be
+specified using a configuration file that is pointed to using the
+<tt class="docutils literal"><span class="pre">--mapping-file</span></tt> option shown above. Alternatively, you can configure the
+mapping directly in <tt class="docutils literal"><span class="pre">setup.py</span></tt> using a keyword argument to the <tt class="docutils literal"><span class="pre">setup()</span></tt>
+function:</p>
+<div class="highlight"><pre><span class="n">setup</span><span class="p">(</span><span class="o">...</span>
+
+    <span class="n">message_extractors</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'foobar'</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s">'**.py'</span><span class="p">,</span>                <span class="s">'python'</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">'**/templates/**.html'</span><span class="p">,</span> <span class="s">'genshi'</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">'**/templates/**.txt'</span><span class="p">,</span>  <span class="s">'genshi'</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s">'template_class'</span><span class="p">:</span> <span class="s">'genshi.template:TextTemplate'</span>
+            <span class="p">})</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h2>2.2   Options</h2>
+<p>The <tt class="docutils literal"><span class="pre">extract_messages</span></tt> command accepts the following options:</p>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%">
+<col width="61%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">--charset</span></tt></td>
+<td>charset to use in the output file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--keywords</span></tt> (<tt class="docutils literal"><span class="pre">-k</span></tt>)</td>
+<td>space-separated list of keywords to look for
+in addition to the defaults</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--no-default-keywords</span></tt></td>
+<td>do not include the default keywords</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--mapping-file</span></tt> (<tt class="docutils literal"><span class="pre">-F</span></tt>)</td>
+<td>path to the mapping configuration file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--no-location</span></tt></td>
+<td>do not include location comments with
+filename and line number</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--omit-header</span></tt></td>
+<td>do not include msgid "" entry in header</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--output-file</span></tt> (<tt class="docutils literal"><span class="pre">-o</span></tt>)</td>
+<td>name of the output file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--width</span></tt> (<tt class="docutils literal"><span class="pre">-w</span></tt>)</td>
+<td>set output line width (default 76)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--no-wrap</span></tt></td>
+<td>do not break long message lines, longer than
+the output line width, into several lines</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--input-dirs</span></tt></td>
+<td>directories that should be scanned for
+messages</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--sort-output</span></tt></td>
+<td>generate sorted output (default False)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--sort-by-file</span></tt></td>
+<td>sort output by file location (default False)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--msgid-bugs-address</span></tt></td>
+<td>set email address for message bug reports</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--copyright-holder</span></tt></td>
+<td>set copyright holder in output</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--add-comments</span> <span class="pre">(-c)</span></tt></td>
+<td>place comment block with TAG (or those
+preceding keyword lines) in output file.
+Separate multiple TAGs with commas(,)</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>These options can either be specified on the command-line, or in the
+<tt class="docutils literal"><span class="pre">setup.cfg</span></tt> file. In the latter case, the options above become entries of the
+section <tt class="docutils literal"><span class="pre">[extract_messages]</span></tt>, and the option names are changed to use
+underscore characters instead of dashes, for example:</p>
+<div class="highlight"><pre><span class="k">[extract_messages]</span>
+<span class="na">keywords</span> <span class="o">=</span> <span class="s">_, gettext, ngettext</span>
+<span class="na">mapping_file</span> <span class="o">=</span> <span class="s">babel.cfg</span>
+<span class="na">width</span> <span class="o">=</span> <span class="s">80</span>
+</pre></div>
+<p>This would be equivalent to invoking the command from the command-line as
+follows:</p>
+<pre class="literal-block">
+$ setup.py extract_messages -k _ -k gettext -k ngettext -F mapping.cfg -w 80
+</pre>
+<p>Any path names are interpreted relative to the location of the <tt class="docutils literal"><span class="pre">setup.py</span></tt>
+file. For boolean options, use "true" or "false" values.</p>
+</div>
+</div>
+<div class="section" id="init-catalog">
+<h1>3   init_catalog</h1>
+<p>The <tt class="docutils literal"><span class="pre">init_catalog</span></tt> command is basically equivalent to the GNU <tt class="docutils literal"><span class="pre">msginit</span></tt>
+program: it creates a new translation catalog based on a PO template file (POT).</p>
+<p>If the command has been correctly installed or registered, a project's
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> script should allow you to use the command:</p>
+<pre class="literal-block">
+$ ./setup.py init_catalog --help
+Global options:
+  --verbose (-v)  run verbosely (default)
+  --quiet (-q)    run quietly (turns verbosity off)
+  --dry-run (-n)  don't actually do anything
+  --help (-h)     show detailed help message
+
+Options for 'init_catalog' command:
+  ...
+</pre>
+<p>Running the command will produce a PO file:</p>
+<pre class="literal-block">
+$ ./setup.py init_catalog -l fr -i foobar/locales/messages.pot \
+                         -o foobar/locales/fr/messages.po
+running init_catalog
+creating catalog 'foobar/locales/fr/messages.po' based on 'foobar/locales/messages.pot'
+</pre>
+<div class="section" id="id2">
+<h2>3.1   Options</h2>
+<p>The <tt class="docutils literal"><span class="pre">init_catalog</span></tt> command accepts the following options:</p>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%">
+<col width="61%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">--domain</span></tt></td>
+<td>domain of the PO file (defaults to
+lower-cased project name)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--input-file</span></tt> (<tt class="docutils literal"><span class="pre">-i</span></tt>)</td>
+<td>name of the input file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--output-dir</span></tt> (<tt class="docutils literal"><span class="pre">-d</span></tt>)</td>
+<td>name of the output directory</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--output-file</span></tt> (<tt class="docutils literal"><span class="pre">-o</span></tt>)</td>
+<td>name of the output file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--locale</span></tt></td>
+<td>locale for the new localized string</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>If <tt class="docutils literal"><span class="pre">output-dir</span></tt> is specified, but <tt class="docutils literal"><span class="pre">output-file</span></tt> is not, the default filename
+of the output file will be:</p>
+<pre class="literal-block">
+&lt;output_dir&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.po
+</pre>
+<p>These options can either be specified on the command-line, or in the
+<tt class="docutils literal"><span class="pre">setup.cfg</span></tt> file.</p>
+</div>
+</div>
+<div class="section" id="update-catalog">
+<h1>4   update_catalog</h1>
+<p>The <tt class="docutils literal"><span class="pre">update_catalog</span></tt> command is basically equivalent to the GNU <tt class="docutils literal"><span class="pre">msgmerge</span></tt>
+program: it updates an existing translations catalog based on a PO template
+file (POT).</p>
+<p>If the command has been correctly installed or registered, a project's
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> script should allow you to use the command:</p>
+<pre class="literal-block">
+$ ./setup.py update_catalog --help
+Global options:
+  --verbose (-v)  run verbosely (default)
+  --quiet (-q)    run quietly (turns verbosity off)
+  --dry-run (-n)  don't actually do anything
+  --help (-h)     show detailed help message
+
+Options for 'update_catalog' command:
+  ...
+</pre>
+<p>Running the command will update a PO file:</p>
+<pre class="literal-block">
+$ ./setup.py update_catalog -l fr -i foobar/locales/messages.pot \
+                            -o foobar/locales/fr/messages.po
+running update_catalog
+updating catalog 'foobar/locales/fr/messages.po' based on 'foobar/locales/messages.pot'
+</pre>
+<div class="section" id="id3">
+<h2>4.1   Options</h2>
+<p>The <tt class="docutils literal"><span class="pre">update_catalog</span></tt> command accepts the following options:</p>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">--domain</span></tt></td>
+<td>domain of the PO file (defaults to
+lower-cased project name)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--input-file</span></tt> (<tt class="docutils literal"><span class="pre">-i</span></tt>)</td>
+<td>name of the input file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--output-dir</span></tt> (<tt class="docutils literal"><span class="pre">-d</span></tt>)</td>
+<td>name of the output directory</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--output-file</span></tt> (<tt class="docutils literal"><span class="pre">-o</span></tt>)</td>
+<td>name of the output file</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--locale</span></tt></td>
+<td>locale for the new localized string</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--ignore-obsolete</span></tt></td>
+<td>do not include obsolete messages in
+the output</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--no-fuzzy-matching</span></tt> (<tt class="docutils literal"><span class="pre">-N</span></tt>)</td>
+<td>do not use fuzzy matching</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">--previous</span></tt></td>
+<td>keep previous msgids of translated
+messages</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>If <tt class="docutils literal"><span class="pre">output-dir</span></tt> is specified, but <tt class="docutils literal"><span class="pre">output-file</span></tt> is not, the default filename
+of the output file will be:</p>
+<pre class="literal-block">
+&lt;output_dir&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.po
+</pre>
+<p>If neither the <tt class="docutils literal"><span class="pre">input_file</span></tt> nor the <tt class="docutils literal"><span class="pre">locale</span></tt> option is set, this command
+looks for all catalog files in the base directory that match the given domain,
+and updates each of them.</p>
+<p>These options can either be specified on the command-line, or in the
+<tt class="docutils literal"><span class="pre">setup.cfg</span></tt> file.</p>
+</div>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

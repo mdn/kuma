@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>config.api &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="config.cutils" href="IPython.config.cutils.html" />
+    <link rel="prev" title="completer" href="IPython.completer.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.config.cutils.html" title="config.cutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.completer.html" title="completer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="config-api">
+<h1>config.api<a class="headerlink" href="#config-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.config.api">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">config.api</span></tt><a class="headerlink" href="#module-IPython.config.api" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.config.api</span></tt>:</p>
+<img src="../../_images/inheritance8778c83369.png" usemap="#inheritance8778c83369" class="inheritance"/><map id="inheritance8778c83369" name="inheritance8778c83369">
+<area shape="rect" href="#IPython.config.api.ConfigObjManager" title="config.api.ConfigObjManager" alt="" coords="7,5,209,32"/>
+</map>
+<p>This is the official entry point to IPython&#8217;s configuration system.</p>
+</div>
+<div class="section" id="configobjmanager">
+<h2><a title="IPython.config.api.ConfigObjManager" class="reference internal" href="#IPython.config.api.ConfigObjManager"><tt class="xref docutils literal"><span class="pre">ConfigObjManager</span></tt></a><a class="headerlink" href="#configobjmanager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.config.api.ConfigObjManager">
+<!--[IPython.config.api.ConfigObjManager]-->class <tt class="descclassname">IPython.config.api.</tt><tt class="descname">ConfigObjManager</tt><big>(</big><em>configObj</em>, <em>filename</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.__init__">
+<!--[IPython.config.api.ConfigObjManager.__init__]--><tt class="descname">__init__</tt><big>(</big><em>configObj</em>, <em>filename</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.get_config_obj">
+<!--[IPython.config.api.ConfigObjManager.get_config_obj]--><tt class="descname">get_config_obj</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.get_config_obj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.resolve_file_path">
+<!--[IPython.config.api.ConfigObjManager.resolve_file_path]--><tt class="descname">resolve_file_path</tt><big>(</big><em>filename</em>, <em>ipythondir=None</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.resolve_file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve filenames into absolute paths.</p>
+<p>This function looks in the following directories in order:</p>
+<ol class="arabic simple">
+<li>In the current working directory or by absolute path with ~ expanded</li>
+<li>In ipythondir if that is set</li>
+<li>In the IPYTHONDIR environment variable if it exists</li>
+<li>In the ~/.ipython directory</li>
+</ol>
+<dl class="docutils">
+<dt>Note: The IPYTHONDIR is also used by the trunk version of IPython so</dt>
+<dd>changing it will also affect it was well.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.update_config_obj">
+<!--[IPython.config.api.ConfigObjManager.update_config_obj]--><tt class="descname">update_config_obj</tt><big>(</big><em>newConfig</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.update_config_obj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.update_config_obj_from_default_file">
+<!--[IPython.config.api.ConfigObjManager.update_config_obj_from_default_file]--><tt class="descname">update_config_obj_from_default_file</tt><big>(</big><em>ipythondir=None</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.update_config_obj_from_default_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.update_config_obj_from_file">
+<!--[IPython.config.api.ConfigObjManager.update_config_obj_from_file]--><tt class="descname">update_config_obj_from_file</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.update_config_obj_from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.write_config_obj_to_file">
+<!--[IPython.config.api.ConfigObjManager.write_config_obj_to_file]--><tt class="descname">write_config_obj_to_file</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.write_config_obj_to_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.config.api.ConfigObjManager.write_default_config_file">
+<!--[IPython.config.api.ConfigObjManager.write_default_config_file]--><tt class="descname">write_default_config_file</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.config.api.ConfigObjManager.write_default_config_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">config.api</a><ul>
+<li><a class="reference external" href="#module-IPython.config.api">Module: <tt class="docutils literal"><span class="pre">config.api</span></tt></a></li>
+<li><a class="reference external" href="#configobjmanager"><tt class="docutils literal"><span class="pre">ConfigObjManager</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.completer.html" title="previous chapter">completer</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.config.cutils.html" title="next chapter">config.cutils</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.config.api.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.config.cutils.html" title="config.cutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.completer.html" title="completer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

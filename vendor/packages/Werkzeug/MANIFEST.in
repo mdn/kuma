@@ -1,0 +1,8 @@
+include Makefile THANKS CHANGES LICENSE AUTHORS TODO
+recursive-include werkzeug/debug/shared *
+recursive-include werkzeug/debug/templates *
+recursive-include tests *
+recursive-include docs *
+recursive-include examples *
+recursive-include artwork *
+prune docs/_build/doctrees

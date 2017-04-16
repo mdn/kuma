@@ -1,0 +1,251 @@
+Werkzeug Changelog
+==================
+
+Version 0.5.1
+-------------
+(bugfix release for 0.5, released on July 9th 2009)
+
+- fixed boolean check of :class:`FileStorage`
+- url routing system properly supports unicode URL rules now.
+- file upload streams no longer have to provide a truncate()
+  method.
+- implemented :meth:`BaseRequest._form_parsing_failed`.
+- fixed #394 
+- :meth:`ImmutableDict.copy`, :meth:`ImmutableMultiDict.copy` and
+  :meth:`ImmutableTypeConversionDict.copy` return mutable shallow
+  copies.
+- fixed a bug with the `make_runserver` script action.
+- :meth:`MultiDict.items` and :meth:`MutiDict.iteritems` now accept an
+  argument to return a pair for each value of each key.
+- the multipart parser works better with hand-crafted multipart
+  requests now that have extra newlines added.  This fixes a bug
+  with setuptools uploades not handled properly (#390)
+- fixed some minor bugs in the atom feed generator.
+- fixed a bug with client cookie header parsing being case sensitive.
+- fixed a not-working deprecation warning.
+- fixed package loading for :class:`SharedDataMiddleware`.
+- fixed a bug in the secure cookie that made server-side expiration
+  on servers with a local time that was not set to UTC impossible.
+- fixed console of the interactive debugger.
+
+
+Version 0.5
+-----------
+(codename Schlagbohrer, released on April 24th 2009)
+
+- requires Python 2.4 now
+- fixed a bug in :class:`~contrib.IterIO`
+- added :class:`MIMEAccept` and :class:`CharsetAccept` that work like the
+  regular :class:`Accept` but have extra special normalization for mimetypes
+  and charsets and extra convenience methods.
+- switched the serving system from wsgiref to something homebrew.
+- the :class:`Client` now supports cookies.
+- added the :mod:`~werkzeug.contrib.fixers` module with various
+  fixes for webserver bugs and hosting setup side-effects.
+- added :mod:`werkzeug.contrib.wrappers`
+- added :func:`is_hop_by_hop_header`
+- added :func:`is_entity_header`
+- added :func:`remove_hop_by_hop_headers`
+- added :func:`pop_path_info`
+- added :func:`peek_path_info`
+- added :func:`wrap_file` and :class:`FileWrapper`
+- moved `LimitedStream` from the contrib package into the regular
+  werkzeug one and changed the default behavior to raise exceptions
+  rather than stopping without warning.  The old class will stick in
+  the module until 0.6.
+- implemented experimental multipart parser that replaces the old CGI hack.
+- added :func:`dump_options_header` and :func:`parse_options_header`
+- added :func:`quote_header_value` and :func:`unquote_header_value`
+- :func:`url_encode` and :func:`url_decode` now accept a separator
+  argument to switch between `&` and `;` as pair separator.  The magic
+  switch is no longer in place.
+- all form data parsing functions as well as the :class:`BaseRequest`
+  object have parameters (or attributes) to limit the number of
+  incoming bytes (either totally or per field).
+- added :class:`LanguageAccept`
+- request objects are now enforced to be read only for all collections.
+- added many new collection classes, refactored collections in general.
+- test support was refactored, semi-undocumented `werkzeug.test.File`
+  was replaced by :class:`werkzeug.FileStorage`.
+- :class:`EnvironBuilder` was added and unifies the previous distinct
+  :func:`create_environ`, :class:`Client` and
+  :meth:`BaseRequest.from_values`.  They all work the same now which
+  is less confusing.
+- officially documented imports from the internal modules as undefined
+  behavior.  These modules were never exposed as public interfaces.
+- removed `FileStorage.__len__` which previously made the object
+  falsy for browsers not sending the content length which all browsers
+  do.
+- :class:`SharedDataMiddleware` uses `wrap_file` now and has a
+  configurable cache timeout.
+- added :class:`CommonRequestDescriptorsMixin`
+- added :attr:`CommonResponseDescriptorsMixin.mimetype_params`
+- added :mod:`werkzeug.contrib.lint`
+- added `passthrough_errors` to `run_simple`.
+- added `secure_filename`
+- added :func:`make_line_iter` 
+- :class:`MultiDict` copies now instead of revealing internal
+  lists to the caller for `getlist` and iteration functions that
+  return lists.
+- added :attr:`follow_redirect` to the :func:`open` of :class:`Client`.
+- added support for `extra_files` in
+  :func:`~werkzeug.script.make_runserver`
+
+Version 0.4.1
+-------------
+(Bugfix release, released on January 11th 2009)
+
+- `werkzeug.contrib.cache.Memcached` accepts now objects that
+  implement the memcache.Client interface as alternative to a list of
+  strings with server addresses.
+  There is also now a `GAEMemcachedCache` that connects to the Google
+  appengine cache.
+- explicitly convert secret keys to bytestrings now because Python
+  2.6 no longer does that.
+- `url_encode` and all interfaces that call it, support ordering of
+  options now which however is disabled by default.
+- the development server no longer resolves the addresses of clients.
+- Fixed a typo in `werkzeug.test` that broke `File`.
+- `Map.bind_to_environ` uses the `Host` header now if available.
+- Fixed `BaseCache.get_dict` (#345)
+- `werkzeug.test.Client` can now run the application buffered in which
+  case the application is properly closed automatically.
+- Fixed `Headers.set` (#354).  Caused header duplication before.
+- Fixed `Headers.pop` (#349).  default parameter was not properly
+  handled.
+- Fixed UnboundLocalError in `create_environ` (#351)
+- `Headers` is more compatible with wsgiref now.
+- `Template.render` accepts multidicts now.
+- dropped support for Python 2.3
+
+Version 0.4
+-----------
+(codename Schraubenzieher, released on November 23rd 2008)
+
+- `Client` supports an empty `data` argument now.
+- fixed a bug in `Response.application` that made it impossible to use it
+  as method decorator.
+- the session system should work on appengine now
+- the secure cookie works properly in load balanced environments with
+  different cpu architectures now.
+- `CacheControl.no_cache` and `CacheControl.private` behavior changed to
+  reflect the possibilities of the HTTP RFC.  Setting these attributes to
+  `None` or `True` now sets the value to "the empty value".
+  More details in the documentation.
+- fixed `werkzeug.contrib.atom.AtomFeed.__call__`. (#338)
+- `BaseResponse.make_conditional` now always returns `self`.  Previously
+  it didn't for post requests and such.
+- fixed a bug in boolean attribute handling of `html` and `xhtml`.
+- added graceful error handling to the debugger pastebin feature.
+- added a more list like interface to `Headers` (slicing and indexing
+  works now)
+- fixed a bug with the `__setitem__` method of `Headers` that didn't
+  properly remove all keys on replacing.
+- added `remove_entity_headers` which removes all entity headers from
+  a list of headers (or a `Headers` object)
+- the responses now automatically call `remove_entity_headers` if the
+  status code is 304.
+- fixed a bug with `Href` query parameter handling.  Previously the last
+  item of a call to `Href` was not handled properly if it was a dict.
+- headers now support a `pop` operation to better work with environ
+  properties.
+
+
+Version 0.3.1
+-------------
+(released on June 24th 2008)
+
+- fixed a security problem with `werkzeug.contrib.SecureCookie`.
+  More details available in the `release announcement`_.
+
+.. _release announcement: http://lucumr.pocoo.org/cogitations/2008/06/24/werkzeug-031-released/
+
+Version 0.3
+-----------
+(codename EUR325CAT6, released on June 14th 2008)
+
+- added support for redirecting in url routing.
+- added `Authorization` and `AuthorizationMixin`
+- added `WWWAuthenticate` and `WWWAuthenticateMixin`
+- added `parse_list_header`
+- added `parse_dict_header`
+- added `parse_authorization_header`
+- added `parse_www_authenticate_header`
+- added `_get_current_object` method to `LocalProxy` objects
+- added `parse_form_data`
+- `MultiDict`, `CombinedMultiDict`, `Headers`, and `EnvironHeaders` raise
+  special key errors now that are subclasses of `BadRequest` so if you
+  don't catch them they give meaningful HTTP responses.
+- added support for alternative encoding error handling and the new
+  `HTTPUnicodeError` which (if not caught) behaves like a `BadRequest`.
+- added `BadRequest.wrap`.
+- added ETag support to the SharedDataMiddleware and added an option
+  to disable caching.
+- fixed `is_xhr` on the request objects.
+- fixed error handling of the url adapter's `dispatch` method. (#318)
+- fixed bug with `SharedDataMiddleware`.
+- fixed `Accept.values`.
+- `EnvironHeaders` contain content-type and content-length now
+- `url_encode` treats lists and tuples in dicts passed to it as multiple
+  values for the same key so that one doesn't have to pass a `MultiDict`
+  to the function.
+- added `validate_arguments`
+- added `BaseRequest.application`
+- improved Python 2.3 support
+- `run_simple` accepts `use_debugger` and `use_evalex` parameters now,
+  like the `make_runserver` factory function from the script module.
+- the `environ_property` is now read-only by default
+- it's now possible to initialize requests as "shallow" requests which
+  causes runtime errors if the request object tries to consume the
+  input stream.
+
+
+Version 0.2
+-----------
+(codename Faustkeil, released Feb 14th 2008)
+
+- Added `AnyConverter` to the routing system.
+- Added `werkzeug.contrib.securecookie`
+- Exceptions have a ``get_response()`` method that return a response object
+- fixed the path ordering bug (#293), thanks Thomas Johansson
+- `BaseReporterStream` is now part of the werkzeug contrib module.  From
+  Werkzeug 0.3 onwards you will have to import it from there.
+- added `DispatcherMiddleware`.
+- `RequestRedirect` is now a subclass of `HTTPException` and uses a
+  301 status code instead of 302.
+- `url_encode` and `url_decode` can optionally treat keys as unicode strings
+  now, too.
+- `werkzeug.script` has a different caller format for boolean arguments now.
+- renamed `lazy_property` to `cached_property`.
+- added `import_string`.
+- added is_* properties to request objects.
+- added `empty()` method to routing rules.
+- added `werkzeug.contrib.profiler`.
+- added `extends` to `Headers`.
+- added `dump_cookie` and `parse_cookie`.
+- added `as_tuple` to the `Client`.
+- added `werkzeug.contrib.testtools`.
+- added `werkzeug.unescape`
+- added `BaseResponse.freeze`
+- added `werkzeug.contrib.atom`
+- the HTTPExceptions accept an argument `description` now which overrides the
+  default description.
+- the `MapAdapter` has a default for path info now.  If you use
+  `bind_to_environ` you don't have to pass the path later.
+- the wsgiref subclass werkzeug uses for the dev server does not use direct
+  sys.stderr logging any more but a logger called "werkzeug".
+- implemented `Href`.
+- implemented `find_modules`
+- refactored request and response objects into base objects, mixins and
+  full featured subclasses that implement all mixins.
+- added simple user agent parser
+- werkzeug's routing raises `MethodNotAllowed` now if it matches a
+  rule but for a different method.
+- many fixes and small improvements
+
+
+Version 0.1
+-----------
+(codename Wictorinoxger, released Dec 9th 2007)
+
+- Initial release

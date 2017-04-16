@@ -1,0 +1,589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>external.argparse &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="external.configobj" href="IPython.external.configobj.html" />
+    <link rel="prev" title="external.Itpl" href="IPython.external.Itpl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.configobj.html" title="external.configobj"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.Itpl.html" title="external.Itpl"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="external-argparse">
+<h1>external.argparse<a class="headerlink" href="#external-argparse" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.external.argparse">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">external.argparse</span></tt><a class="headerlink" href="#module-IPython.external.argparse" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.external.argparse</span></tt>:</p>
+<img src="../../_images/inheritancedd88f50245.png" usemap="#inheritancedd88f50245" class="inheritance"/><map id="inheritancedd88f50245" name="inheritancedd88f50245">
+<area shape="rect" href="#IPython.external.argparse.Action" title="external.argparse.Action" alt="" coords="231,196,336,212"/>
+<area shape="rect" href="#IPython.external.argparse.RawDescriptionHelpFormatter" title="external.argparse.RawDescriptionHelpFormatter" alt="" coords="188,48,380,63"/>
+<area shape="rect" href="#IPython.external.argparse.RawTextHelpFormatter" title="external.argparse.RawTextHelpFormatter" alt="" coords="419,48,583,63"/>
+<area shape="rect" href="#IPython.external.argparse.HelpFormatter" title="external.argparse.HelpFormatter" alt="" coords="10,63,146,78"/>
+<area shape="rect" href="#IPython.external.argparse.ArgumentDefaultsHelpFormatter" title="external.argparse.ArgumentDefaultsHelpFormatter" alt="" coords="182,77,386,93"/>
+<area shape="rect" href="#IPython.external.argparse.ArgumentParser" title="external.argparse.ArgumentParser" alt="" coords="213,267,355,282"/>
+<area shape="rect" href="#IPython.external.argparse.Namespace" title="external.argparse.Namespace" alt="" coords="221,230,347,246"/>
+<area shape="rect" href="#IPython.external.argparse.FileType" title="external.argparse.FileType" alt="" coords="23,33,133,48"/>
+<area shape="rect" href="#IPython.external.argparse.ArgumentError" title="external.argparse.ArgumentError" alt="" coords="10,3,146,19"/>
+</map>
+<p>Command-line parsing library</p>
+<p>This module is an optparse-inspired command-line parsing library that:</p>
+<blockquote>
+<ul class="simple">
+<li>handles both optional and positional arguments</li>
+<li>produces highly informative usage messages</li>
+<li>supports parsers that dispatch to sub-parsers</li>
+</ul>
+</blockquote>
+<p>The following is a simple usage example that sums integers from the
+command-line and writes the result to a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s">&#39;sum the integers at the command line&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s">&#39;integers&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&#39;int&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s">&#39;an integer to be summed&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s">&#39;--log&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s">&#39;w&#39;</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s">&#39;the file where the sum should be written&#39;</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="n">args</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">integers</span><span class="p">))</span>
+<span class="n">args</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The module contains the following public classes:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>ArgumentParser &#8211; The main entry point for command-line parsing. As the</dt>
+<dd><p class="first last">example above shows, the add_argument() method is used to populate
+the parser with actions for optional and positional arguments. Then
+the parse_args() method is invoked to convert the args at the
+command-line into an object with attributes.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ArgumentError &#8211; The exception raised by ArgumentParser objects when</dt>
+<dd><p class="first last">there are errors with the parser&#8217;s actions. Errors raised while
+parsing the command-line are caught by ArgumentParser and emitted
+as command-line messages.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>FileType &#8211; A factory for defining types of files to be created. As the</dt>
+<dd><p class="first last">example above shows, instances of FileType are typically passed as
+the type= argument of add_argument() calls.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Action &#8211; The base class for parser actions. Typically actions are</dt>
+<dd><p class="first last">selected by passing strings like &#8216;store_true&#8217; or &#8216;append_const&#8217; to
+the action= argument of add_argument(). However, for greater
+customization of ArgumentParser actions, subclasses of Action may
+be defined and passed as the action= argument.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HelpFormatter, RawDescriptionHelpFormatter, RawTextHelpFormatter,</dt>
+<dd><p class="first last">ArgumentDefaultsHelpFormatter &#8211; Formatter classes which
+may be passed as the formatter_class= argument to the
+ArgumentParser constructor. HelpFormatter is the default,
+RawDescriptionHelpFormatter and RawTextHelpFormatter tell the parser
+not to change the formatting for help text, and
+ArgumentDefaultsHelpFormatter adds information about argument defaults
+to the help.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>All other classes in this module are considered implementation details.
+(Also note that HelpFormatter and RawDescriptionHelpFormatter are only
+considered public as object names &#8211; the API of the formatter objects is
+still considered an implementation detail.)</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="action">
+<h3><a title="IPython.external.argparse.Action" class="reference internal" href="#IPython.external.argparse.Action"><tt class="xref docutils literal"><span class="pre">Action</span></tt></a><a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.Action">
+<!--[IPython.external.argparse.Action]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">Action</tt><big>(</big><em>option_strings</em>, <em>dest</em>, <em>nargs=None</em>, <em>const=None</em>, <em>default=None</em>, <em>type=None</em>, <em>choices=None</em>, <em>required=False</em>, <em>help=None</em>, <em>metavar=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">IPython.external.argparse._AttributeHolder</span></tt></p>
+<p>Information about how to convert command line strings to Python objects.</p>
+<p>Action objects are used by an ArgumentParser to represent the information
+needed to parse a single argument from one or more strings from the
+command line. The keyword arguments to the Action constructor are also
+all attributes of Action instances.</p>
+<p>Keyword Arguments:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>option_strings &#8211; A list of command-line option strings which</dt>
+<dd><p class="first last">should be associated with this action.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">dest &#8211; The name of the attribute to hold the created object(s)</p>
+</li>
+<li><dl class="first docutils">
+<dt>nargs &#8211; The number of command-line arguments that should be</dt>
+<dd><p class="first">consumed. By default, one argument will be consumed and a single
+value will be produced.  Other values include:</p>
+<blockquote>
+<ul class="simple">
+<li>N (an integer) consumes N arguments (and produces a list)</li>
+<li>&#8216;?&#8217; consumes zero or one arguments</li>
+<li>&#8216;*&#8217; consumes zero or more arguments (and produces a list)</li>
+<li>&#8216;+&#8217; consumes one or more arguments (and produces a list)</li>
+</ul>
+</blockquote>
+<p class="last">Note that the difference between the default and nargs=1 is that
+with the default, a single value will be produced, while with
+nargs=1, a list containing a single value will be produced.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>const &#8211; The value to be produced if the option is specified and the</dt>
+<dd><p class="first last">option uses an action that takes no values.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">default &#8211; The value to be produced if the option is not specified.</p>
+</li>
+<li><dl class="first docutils">
+<dt>type &#8211; The type which the command-line arguments should be converted</dt>
+<dd><p class="first last">to, should be one of &#8216;string&#8217;, &#8216;int&#8217;, &#8216;float&#8217;, &#8216;complex&#8217; or a
+callable object that accepts a single string argument. If None,
+&#8216;string&#8217; is assumed.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>choices &#8211; A container of values that should be allowed. If not None,</dt>
+<dd><p class="first last">after a command-line argument has been converted to the appropriate
+type, an exception will be raised if it is not a member of this
+collection.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>required &#8211; True if the action must always be specified at the</dt>
+<dd><p class="first last">command line. This is only meaningful for optional command-line
+arguments.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">help &#8211; The help string describing the argument.</p>
+</li>
+<li><dl class="first docutils">
+<dt>metavar &#8211; The name to be used for the option&#8217;s argument with the</dt>
+<dd><p class="first last">help string. If None, the &#8216;dest&#8217; value will be used as the name.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<dl class="method">
+<dt id="IPython.external.argparse.Action.__init__">
+<!--[IPython.external.argparse.Action.__init__]--><tt class="descname">__init__</tt><big>(</big><em>option_strings</em>, <em>dest</em>, <em>nargs=None</em>, <em>const=None</em>, <em>default=None</em>, <em>type=None</em>, <em>choices=None</em>, <em>required=False</em>, <em>help=None</em>, <em>metavar=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.Action.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="argumentdefaultshelpformatter">
+<h3><a title="IPython.external.argparse.ArgumentDefaultsHelpFormatter" class="reference internal" href="#IPython.external.argparse.ArgumentDefaultsHelpFormatter"><tt class="xref docutils literal"><span class="pre">ArgumentDefaultsHelpFormatter</span></tt></a><a class="headerlink" href="#argumentdefaultshelpformatter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.ArgumentDefaultsHelpFormatter">
+<!--[IPython.external.argparse.ArgumentDefaultsHelpFormatter]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">ArgumentDefaultsHelpFormatter</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentDefaultsHelpFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.argparse.HelpFormatter" class="reference internal" href="#IPython.external.argparse.HelpFormatter"><tt class="xref docutils literal"><span class="pre">IPython.external.argparse.HelpFormatter</span></tt></a></p>
+<p>Help message formatter which adds default values to argument help.</p>
+<p>Only the name of this class is considered a public API. All the methods
+provided by the class are considered an implementation detail.</p>
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentDefaultsHelpFormatter.__init__">
+<!--[IPython.external.argparse.ArgumentDefaultsHelpFormatter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentDefaultsHelpFormatter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="argumenterror">
+<h3><a title="IPython.external.argparse.ArgumentError" class="reference internal" href="#IPython.external.argparse.ArgumentError"><tt class="xref docutils literal"><span class="pre">ArgumentError</span></tt></a><a class="headerlink" href="#argumenterror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.ArgumentError">
+<!--[IPython.external.argparse.ArgumentError]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">ArgumentError</tt><big>(</big><em>argument</em>, <em>message</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>An error from creating or using an argument (optional or positional).</p>
+<p>The string value of this exception is the message, augmented with
+information about the argument that caused it.</p>
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentError.__init__">
+<!--[IPython.external.argparse.ArgumentError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argument</em>, <em>message</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="argumentparser">
+<h3><a title="IPython.external.argparse.ArgumentParser" class="reference internal" href="#IPython.external.argparse.ArgumentParser"><tt class="xref docutils literal"><span class="pre">ArgumentParser</span></tt></a><a class="headerlink" href="#argumentparser" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.ArgumentParser">
+<!--[IPython.external.argparse.ArgumentParser]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">ArgumentParser</tt><big>(</big><em>prog=None</em>, <em>usage=None</em>, <em>description=None</em>, <em>epilog=None</em>, <em>version=None</em>, <em>parents=</em><span class="optional">[</span><span class="optional">]</span>, <em>formatter_class=&lt;class 'IPython.external.argparse.HelpFormatter'&gt;</em>, <em>prefix_chars='-'</em>, <em>fromfile_prefix_chars=None</em>, <em>argument_default=None</em>, <em>conflict_handler='error'</em>, <em>add_help=True</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">IPython.external.argparse._AttributeHolder</span></tt>, <tt class="xref docutils literal"><span class="pre">IPython.external.argparse._ActionsContainer</span></tt></p>
+<p>Object for parsing command line strings into Python objects.</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><ul class="first last">
+<li><p class="first">prog &#8211; The name of the program (default: sys.argv[0])</p>
+</li>
+<li><p class="first">usage &#8211; A usage message (default: auto-generated from arguments)</p>
+</li>
+<li><p class="first">description &#8211; A description of what the program does</p>
+</li>
+<li><p class="first">epilog &#8211; Text following the argument descriptions</p>
+</li>
+<li><p class="first">version &#8211; Add a -v/&#8211;version option with the given version string</p>
+</li>
+<li><p class="first">parents &#8211; Parsers whose arguments should be copied into this one</p>
+</li>
+<li><p class="first">formatter_class &#8211; HelpFormatter class for printing help messages</p>
+</li>
+<li><p class="first">prefix_chars &#8211; Characters that prefix optional arguments</p>
+</li>
+<li><dl class="first docutils">
+<dt>fromfile_prefix_chars &#8211; Characters that prefix files containing</dt>
+<dd><p class="first last">additional arguments</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">argument_default &#8211; The default value for all arguments</p>
+</li>
+<li><p class="first">conflict_handler &#8211; String indicating how to handle conflicts</p>
+</li>
+<li><p class="first">add_help &#8211; Add a -h/-help option</p>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.__init__">
+<!--[IPython.external.argparse.ArgumentParser.__init__]--><tt class="descname">__init__</tt><big>(</big><em>prog=None</em>, <em>usage=None</em>, <em>description=None</em>, <em>epilog=None</em>, <em>version=None</em>, <em>parents=</em><span class="optional">[</span><span class="optional">]</span>, <em>formatter_class=&lt;class 'IPython.external.argparse.HelpFormatter'&gt;</em>, <em>prefix_chars='-'</em>, <em>fromfile_prefix_chars=None</em>, <em>argument_default=None</em>, <em>conflict_handler='error'</em>, <em>add_help=True</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.add_subparsers">
+<!--[IPython.external.argparse.ArgumentParser.add_subparsers]--><tt class="descname">add_subparsers</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.add_subparsers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.error">
+<!--[IPython.external.argparse.ArgumentParser.error]--><tt class="descname">error</tt><big>(</big><em>message: string</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a usage message incorporating the message to stderr and
+exits.</p>
+<p>If you override this in a subclass, it should not return &#8211; it
+should either exit or raise an exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.exit">
+<!--[IPython.external.argparse.ArgumentParser.exit]--><tt class="descname">exit</tt><big>(</big><em>status=0</em>, <em>message=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.exit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.format_help">
+<!--[IPython.external.argparse.ArgumentParser.format_help]--><tt class="descname">format_help</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.format_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.format_usage">
+<!--[IPython.external.argparse.ArgumentParser.format_usage]--><tt class="descname">format_usage</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.format_usage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.format_version">
+<!--[IPython.external.argparse.ArgumentParser.format_version]--><tt class="descname">format_version</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.format_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.parse_args">
+<!--[IPython.external.argparse.ArgumentParser.parse_args]--><tt class="descname">parse_args</tt><big>(</big><em>args=None</em>, <em>namespace=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.parse_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.parse_known_args">
+<!--[IPython.external.argparse.ArgumentParser.parse_known_args]--><tt class="descname">parse_known_args</tt><big>(</big><em>args=None</em>, <em>namespace=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.parse_known_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.print_help">
+<!--[IPython.external.argparse.ArgumentParser.print_help]--><tt class="descname">print_help</tt><big>(</big><em>file=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.print_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.print_usage">
+<!--[IPython.external.argparse.ArgumentParser.print_usage]--><tt class="descname">print_usage</tt><big>(</big><em>file=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.print_usage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.ArgumentParser.print_version">
+<!--[IPython.external.argparse.ArgumentParser.print_version]--><tt class="descname">print_version</tt><big>(</big><em>file=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.ArgumentParser.print_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="filetype">
+<h3><a title="IPython.external.argparse.FileType" class="reference internal" href="#IPython.external.argparse.FileType"><tt class="xref docutils literal"><span class="pre">FileType</span></tt></a><a class="headerlink" href="#filetype" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.FileType">
+<!--[IPython.external.argparse.FileType]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">FileType</tt><big>(</big><em>mode='r'</em>, <em>bufsize=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.FileType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Factory for creating file object types</p>
+<p>Instances of FileType are typically passed as type= arguments to the
+ArgumentParser add_argument() method.</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>mode &#8211; A string indicating how the file is to be opened. Accepts the</dt>
+<dd><p class="first last">same values as the builtin open() function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>bufsize &#8211; The file&#8217;s desired buffer size. Accepts the same values as</dt>
+<dd><p class="first last">the builtin open() function.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.external.argparse.FileType.__init__">
+<!--[IPython.external.argparse.FileType.__init__]--><tt class="descname">__init__</tt><big>(</big><em>mode='r'</em>, <em>bufsize=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.FileType.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="helpformatter">
+<h3><a title="IPython.external.argparse.HelpFormatter" class="reference internal" href="#IPython.external.argparse.HelpFormatter"><tt class="xref docutils literal"><span class="pre">HelpFormatter</span></tt></a><a class="headerlink" href="#helpformatter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.HelpFormatter">
+<!--[IPython.external.argparse.HelpFormatter]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">HelpFormatter</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Formatter for generating usage messages and argument help strings.</p>
+<p>Only the name of this class is considered a public API. All the methods
+provided by the class are considered an implementation detail.</p>
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.__init__">
+<!--[IPython.external.argparse.HelpFormatter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.add_argument">
+<!--[IPython.external.argparse.HelpFormatter.add_argument]--><tt class="descname">add_argument</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.add_argument" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.add_arguments">
+<!--[IPython.external.argparse.HelpFormatter.add_arguments]--><tt class="descname">add_arguments</tt><big>(</big><em>actions</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.add_text">
+<!--[IPython.external.argparse.HelpFormatter.add_text]--><tt class="descname">add_text</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.add_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.add_usage">
+<!--[IPython.external.argparse.HelpFormatter.add_usage]--><tt class="descname">add_usage</tt><big>(</big><em>usage</em>, <em>actions</em>, <em>groups</em>, <em>prefix=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.add_usage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.end_section">
+<!--[IPython.external.argparse.HelpFormatter.end_section]--><tt class="descname">end_section</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.end_section" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.format_help">
+<!--[IPython.external.argparse.HelpFormatter.format_help]--><tt class="descname">format_help</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.format_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.argparse.HelpFormatter.start_section">
+<!--[IPython.external.argparse.HelpFormatter.start_section]--><tt class="descname">start_section</tt><big>(</big><em>heading</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.HelpFormatter.start_section" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="namespace">
+<h3><a title="IPython.external.argparse.Namespace" class="reference internal" href="#IPython.external.argparse.Namespace"><tt class="xref docutils literal"><span class="pre">Namespace</span></tt></a><a class="headerlink" href="#namespace" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.Namespace">
+<!--[IPython.external.argparse.Namespace]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">Namespace</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.Namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">IPython.external.argparse._AttributeHolder</span></tt></p>
+<p>Simple object for storing attributes.</p>
+<p>Implements equality by attribute names and values, and provides a simple
+string representation.</p>
+<dl class="method">
+<dt id="IPython.external.argparse.Namespace.__init__">
+<!--[IPython.external.argparse.Namespace.__init__]--><tt class="descname">__init__</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.Namespace.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rawdescriptionhelpformatter">
+<h3><a title="IPython.external.argparse.RawDescriptionHelpFormatter" class="reference internal" href="#IPython.external.argparse.RawDescriptionHelpFormatter"><tt class="xref docutils literal"><span class="pre">RawDescriptionHelpFormatter</span></tt></a><a class="headerlink" href="#rawdescriptionhelpformatter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.RawDescriptionHelpFormatter">
+<!--[IPython.external.argparse.RawDescriptionHelpFormatter]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">RawDescriptionHelpFormatter</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.RawDescriptionHelpFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.argparse.HelpFormatter" class="reference internal" href="#IPython.external.argparse.HelpFormatter"><tt class="xref docutils literal"><span class="pre">IPython.external.argparse.HelpFormatter</span></tt></a></p>
+<p>Help message formatter which retains any formatting in descriptions.</p>
+<p>Only the name of this class is considered a public API. All the methods
+provided by the class are considered an implementation detail.</p>
+<dl class="method">
+<dt id="IPython.external.argparse.RawDescriptionHelpFormatter.__init__">
+<!--[IPython.external.argparse.RawDescriptionHelpFormatter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.RawDescriptionHelpFormatter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rawtexthelpformatter">
+<h3><a title="IPython.external.argparse.RawTextHelpFormatter" class="reference internal" href="#IPython.external.argparse.RawTextHelpFormatter"><tt class="xref docutils literal"><span class="pre">RawTextHelpFormatter</span></tt></a><a class="headerlink" href="#rawtexthelpformatter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.argparse.RawTextHelpFormatter">
+<!--[IPython.external.argparse.RawTextHelpFormatter]-->class <tt class="descclassname">IPython.external.argparse.</tt><tt class="descname">RawTextHelpFormatter</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.RawTextHelpFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.argparse.RawDescriptionHelpFormatter" class="reference internal" href="#IPython.external.argparse.RawDescriptionHelpFormatter"><tt class="xref docutils literal"><span class="pre">IPython.external.argparse.RawDescriptionHelpFormatter</span></tt></a></p>
+<p>Help message formatter which retains formatting of all help text.</p>
+<p>Only the name of this class is considered a public API. All the methods
+provided by the class are considered an implementation detail.</p>
+<dl class="method">
+<dt id="IPython.external.argparse.RawTextHelpFormatter.__init__">
+<!--[IPython.external.argparse.RawTextHelpFormatter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>prog</em>, <em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#IPython.external.argparse.RawTextHelpFormatter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">external.argparse</a><ul>
+<li><a class="reference external" href="#module-IPython.external.argparse">Module: <tt class="docutils literal"><span class="pre">external.argparse</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#action"><tt class="docutils literal"><span class="pre">Action</span></tt></a></li>
+<li><a class="reference external" href="#argumentdefaultshelpformatter"><tt class="docutils literal"><span class="pre">ArgumentDefaultsHelpFormatter</span></tt></a></li>
+<li><a class="reference external" href="#argumenterror"><tt class="docutils literal"><span class="pre">ArgumentError</span></tt></a></li>
+<li><a class="reference external" href="#argumentparser"><tt class="docutils literal"><span class="pre">ArgumentParser</span></tt></a></li>
+<li><a class="reference external" href="#filetype"><tt class="docutils literal"><span class="pre">FileType</span></tt></a></li>
+<li><a class="reference external" href="#helpformatter"><tt class="docutils literal"><span class="pre">HelpFormatter</span></tt></a></li>
+<li><a class="reference external" href="#namespace"><tt class="docutils literal"><span class="pre">Namespace</span></tt></a></li>
+<li><a class="reference external" href="#rawdescriptionhelpformatter"><tt class="docutils literal"><span class="pre">RawDescriptionHelpFormatter</span></tt></a></li>
+<li><a class="reference external" href="#rawtexthelpformatter"><tt class="docutils literal"><span class="pre">RawTextHelpFormatter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.external.Itpl.html" title="previous chapter">external.Itpl</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.external.configobj.html" title="next chapter">external.configobj</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.external.argparse.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.configobj.html" title="external.configobj"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.Itpl.html" title="external.Itpl"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

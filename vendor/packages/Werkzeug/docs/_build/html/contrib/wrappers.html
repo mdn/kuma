@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="Iter IO" href="iterio.html">
+    <link rel="prev" title="Cache" href="cache.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="cache.html">&laquo; Cache</a></li>
+        <li class="active"><a href="">Extra Wrappers</a></li>
+        <li><a href="iterio.html">Iter IO &raquo;</a></li>
+      </ul>
+      <div class="body">
+        
+  <div class="section" id="module-werkzeug.contrib.wrappers">
+<h1>Extra Wrappers<a class="headerlink" href="#module-werkzeug.contrib.wrappers" title="Permalink to this headline">¶</a></h1>
+<p>Extra wrappers or mixins contributed by the community.  These wrappers can
+be mixed in into request objects to add extra functionality.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Request</span> <span class="k">as</span> <span class="n">RequestBase</span>
+<span class="kn">from</span> <span class="nn">werkzeug.contrib.wrappers</span> <span class="kn">import</span> <span class="n">JSONRequestMixin</span>
+
+<span class="k">class</span> <span class="nc">Request</span><span class="p">(</span><span class="n">RequestBase</span><span class="p">,</span> <span class="n">JSONRequestMixin</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Afterwards this request object provides the extra functionality of the
+<a title="werkzeug.contrib.wrappers.JSONRequestMixin" class="reference internal" href="#werkzeug.contrib.wrappers.JSONRequestMixin"><tt class="xref docutils literal"><span class="pre">JSONRequestMixin</span></tt></a>.</p>
+<dl class="class">
+<dt id="werkzeug.contrib.wrappers.JSONRequestMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.wrappers.</tt><tt class="descname">JSONRequestMixin</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.JSONRequestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add json method to a request object.  This will parse the input data
+through simplejson if possible.</p>
+<p><a title="werkzeug.exceptions.BadRequest" class="reference external" href="../exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> will be raised if the content-type
+is not json or if the data itself cannot be parsed as json.</p>
+<dl class="attribute">
+<dt id="werkzeug.contrib.wrappers.JSONRequestMixin.json">
+<tt class="descname">json</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.JSONRequestMixin.json" title="Permalink to this definition">¶</a></dt>
+<dd>Get the result of simplejson.loads if possible.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.wrappers.ProtobufRequestMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.wrappers.</tt><tt class="descname">ProtobufRequestMixin</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.ProtobufRequestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add protobuf parsing method to a request object.  This will parse the
+input data through <a class="reference external" href="http://code.google.com/p/protobuf/">protobuf</a> if possible.</p>
+<p><a title="werkzeug.exceptions.BadRequest" class="reference external" href="../exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> will be raised if the content-type
+is not protobuf or if the data itself cannot be parsed property.</p>
+<dl class="method">
+<dt id="werkzeug.contrib.wrappers.ProtobufRequestMixin.parse_protobuf">
+<tt class="descname">parse_protobuf</tt><big>(</big><em>proto_type</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.wrappers.ProtobufRequestMixin.parse_protobuf" title="Permalink to this definition">¶</a></dt>
+<dd>Parse the data into an instance of proto_type.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.wrappers.ProtobufRequestMixin.protobuf_check_initialization">
+<tt class="descname">protobuf_check_initialization</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.ProtobufRequestMixin.protobuf_check_initialization" title="Permalink to this definition">¶</a></dt>
+<dd>by default the <a title="werkzeug.contrib.wrappers.ProtobufRequestMixin" class="reference internal" href="#werkzeug.contrib.wrappers.ProtobufRequestMixin"><tt class="xref docutils literal"><span class="pre">ProtobufRequestMixin</span></tt></a> will raise a
+<a title="werkzeug.exceptions.BadRequest" class="reference external" href="../exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> if the object is not
+initialized.  You can bypass that check by setting this
+attribute to <cite>False</cite>.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.wrappers.RoutingArgsRequestMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.wrappers.</tt><tt class="descname">RoutingArgsRequestMixin</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.RoutingArgsRequestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>This request mixin adds support for the wsgiorg routing args
+<a class="reference external" href="http://www.wsgi.org/wsgi/Specifications/routing_args">specification</a>.</p>
+<dl class="attribute">
+<dt id="werkzeug.contrib.wrappers.RoutingArgsRequestMixin.routing_args">
+<tt class="descname">routing_args</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.RoutingArgsRequestMixin.routing_args" title="Permalink to this definition">¶</a></dt>
+<dd>The positional URL arguments as <cite>tuple</cite>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.wrappers.RoutingArgsRequestMixin.routing_vars">
+<tt class="descname">routing_vars</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.RoutingArgsRequestMixin.routing_vars" title="Permalink to this definition">¶</a></dt>
+<dd>The keyword URL arguments as <cite>dict</cite>.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.wrappers.</tt><tt class="descname">ReverseSlashBehaviorRequestMixin</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>This mixin reverses the trailing slash behavior of <a title="werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.script_root" class="reference internal" href="#werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.script_root"><tt class="xref docutils literal"><span class="pre">script_root</span></tt></a>
+and <a title="werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.path" class="reference internal" href="#werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a>.  This makes it possible to use <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/urlparse.html#urlparse.urljoin"><tt class="xref docutils literal"><span class="pre">urljoin</span></tt></a>
+directly on the paths.</p>
+<p>Because it changes the behavior or <tt class="xref docutils literal"><span class="pre">Request</span></tt> this class has to be
+mixed in <em>before</em> the actual request class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyRequest</span><span class="p">(</span><span class="n">ReverseSlashBehaviorRequestMixin</span><span class="p">,</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This example shows the differences (for an application mounted on
+<cite>/application</cite> and the request going to <cite>/application/foo/bar</cite>):</p>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="35%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">&nbsp;</th>
+<th class="head">normal behavior</th>
+<th class="head">reverse behavior</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><cite>script_root</cite></td>
+<td><tt class="docutils literal"><span class="pre">/application</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">/application/</span></tt></td>
+</tr>
+<tr><td><cite>path</cite></td>
+<td><tt class="docutils literal"><span class="pre">/foo/bar</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">foo/bar</span></tt></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<dl class="attribute">
+<dt id="werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.path">
+<tt class="descname">path</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.path" title="Permalink to this definition">¶</a></dt>
+<dd>Requested path as unicode.  This works a bit like the regular path
+info in the WSGI environment but will not include a leading slash.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.script_root">
+<tt class="descname">script_root</tt><a class="headerlink" href="#werkzeug.contrib.wrappers.ReverseSlashBehaviorRequestMixin.script_root" title="Permalink to this definition">¶</a></dt>
+<dd>The root path of the script includling a trailing slash.</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Notes on the IPython configuration system &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="IPython Developer&#8217;s Guide" href="index.html" />
+    <link rel="next" title="The IPython API" href="../api/index.html" />
+    <link rel="prev" title="IPython.kernel.core.notification blueprint" href="notification_blueprint.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../api/index.html" title="The IPython API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="notification_blueprint.html" title="IPython.kernel.core.notification blueprint"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="notes-on-the-ipython-configuration-system">
+<h1>Notes on the IPython configuration system<a class="headerlink" href="#notes-on-the-ipython-configuration-system" title="Permalink to this headline">¶</a></h1>
+<p>This document has some random notes on the configuration system.</p>
+<p>To start, an IPython process needs:</p>
+<ul class="simple">
+<li>Configuration files</li>
+<li>Command line options</li>
+<li>Additional files (FURL files, extra scripts, etc.)</li>
+</ul>
+<p>It feeds these things into the core logic of the process, and as output,
+produces:</p>
+<ul class="simple">
+<li>Log files</li>
+<li>Security files</li>
+</ul>
+<p>There are a number of things that complicate this:</p>
+<ul class="simple">
+<li>A process may need to be started on a different host that doesn&#8217;t have
+any of the config files or additional files.  Those files need to be
+moved over and put in a staging area.  The process then needs to be told
+about them.</li>
+<li>The location of the output files should somehow be set by config files or
+command line options.</li>
+<li>Our config files are very hierarchical, but command line options are flat,
+making it difficult to relate command line options to config files.</li>
+<li>Some processes (like ipcluster and the daemons) have to manage the input and
+output files for multiple different subprocesses, each possibly on a
+different host.  Ahhhh!</li>
+<li>Our configurations are not singletons.  A given user will likely have
+many different configurations for different clusters.</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="notification_blueprint.html" title="previous chapter">IPython.kernel.core.notification blueprint</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../api/index.html" title="next chapter">The IPython API</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/config_blueprint.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../api/index.html" title="The IPython API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="notification_blueprint.html" title="IPython.kernel.core.notification blueprint"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

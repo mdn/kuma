@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.notification &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.output_trap" href="IPython.kernel.core.output_trap.html" />
+    <link rel="prev" title="kernel.core.message_cache" href="IPython.kernel.core.message_cache.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.output_trap.html" title="kernel.core.output_trap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.message_cache.html" title="kernel.core.message_cache"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-notification">
+<h1>kernel.core.notification<a class="headerlink" href="#kernel-core-notification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.notification">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.notification</span></tt><a class="headerlink" href="#module-IPython.kernel.core.notification" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.notification</span></tt>:</p>
+<img src="../../_images/inheritance693b7dcbb3.png" usemap="#inheritance693b7dcbb3" class="inheritance"/><map id="inheritance693b7dcbb3" name="inheritance693b7dcbb3">
+<area shape="rect" href="#IPython.kernel.core.notification.NotificationCenter" title="core.notification.NotificationCenter" alt="" coords="5,5,248,32"/>
+</map>
+<p>The IPython Core Notification Center.</p>
+<p>See docs/source/development/notification_blueprint.txt for an overview of the
+notification module.</p>
+</div>
+<div class="section" id="notificationcenter">
+<h2><a title="IPython.kernel.core.notification.NotificationCenter" class="reference internal" href="#IPython.kernel.core.notification.NotificationCenter"><tt class="xref docutils literal"><span class="pre">NotificationCenter</span></tt></a><a class="headerlink" href="#notificationcenter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.kernel.core.notification.NotificationCenter">
+<!--[IPython.kernel.core.notification.NotificationCenter]-->class <tt class="descclassname">IPython.kernel.core.notification.</tt><tt class="descname">NotificationCenter</tt><a class="headerlink" href="#IPython.kernel.core.notification.NotificationCenter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Synchronous notification center</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">import</span> <span class="nn">IPython.kernel.core.notification</span> <span class="k">as</span> <span class="nn">notification</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">theType</span><span class="p">,</span> <span class="n">theSender</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">{}):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">theType</span><span class="p">,</span><span class="n">theSender</span><span class="p">,</span><span class="n">args</span>
+<span class="gp">... </span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notification</span><span class="o">.</span><span class="n">sharedCenter</span><span class="o">.</span><span class="n">add_observer</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="s">&#39;NOTIFICATION_TYPE&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notification</span><span class="o">.</span><span class="n">sharedCenter</span><span class="o">.</span><span class="n">post_notification</span><span class="p">(</span><span class="s">&#39;NOTIFICATION_TYPE&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="p">())</span> <span class="c"># doctest:+ELLIPSIS</span>
+<span class="go">NOTIFICATION_TYPE ...</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="IPython.kernel.core.notification.NotificationCenter.__init__">
+<!--[IPython.kernel.core.notification.NotificationCenter.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.notification.NotificationCenter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.notification.NotificationCenter.add_observer">
+<!--[IPython.kernel.core.notification.NotificationCenter.add_observer]--><tt class="descname">add_observer</tt><big>(</big><em>callback</em>, <em>theType</em>, <em>sender</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.notification.NotificationCenter.add_observer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an observer callback to this notification center.</p>
+<p>The given callback will be called upon posting of notifications of
+the given type/sender and will receive any additional kwargs passed
+to post_notification.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>observerCallback</strong> : callable</p>
+<blockquote>
+<dl class="docutils">
+<dt>Callable. Must take at least two arguments::</dt>
+<dd><p class="first last">observerCallback(type, sender, args={})</p>
+</dd>
+</dl>
+</blockquote>
+<p><strong>theType</strong> : hashable</p>
+<blockquote>
+<p>The notification type. If None, all notifications from sender
+will be posted.</p>
+</blockquote>
+<p><strong>sender</strong> : hashable</p>
+<blockquote class="last">
+<p>The notification sender. If None, all notifications of theType
+will be posted.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.notification.NotificationCenter.post_notification">
+<!--[IPython.kernel.core.notification.NotificationCenter.post_notification]--><tt class="descname">post_notification</tt><big>(</big><em>theType</em>, <em>sender</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.notification.NotificationCenter.post_notification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post notification (type,sender,**kwargs) to all registered
+observers.</p>
+<p>Implementation notes:</p>
+<ul class="simple">
+<li>If no registered observers, performance is O(1).</li>
+<li>Notificaiton order is undefined.</li>
+<li>Notifications are posted synchronously.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.notification.NotificationCenter.remove_all_observers">
+<!--[IPython.kernel.core.notification.NotificationCenter.remove_all_observers]--><tt class="descname">remove_all_observers</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.notification.NotificationCenter.remove_all_observers" title="Permalink to this definition">¶</a></dt>
+<dd>Removes all observers from this notification center</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.notification</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.notification">Module: <tt class="docutils literal"><span class="pre">kernel.core.notification</span></tt></a></li>
+<li><a class="reference external" href="#notificationcenter"><tt class="docutils literal"><span class="pre">NotificationCenter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.message_cache.html" title="previous chapter">kernel.core.message_cache</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.output_trap.html" title="next chapter">kernel.core.output_trap</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.notification.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.output_trap.html" title="kernel.core.output_trap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.message_cache.html" title="kernel.core.message_cache"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

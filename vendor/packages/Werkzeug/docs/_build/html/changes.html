@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="prev" title="Dealing with Request Data" href="request_data.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="request_data.html">&laquo; Dealing with Request Data</a></li>
+        <li class="active"><a href="">Werkzeug Changelog</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Werkzeug Changelog</a><ul>
+<li><a class="reference external" href="#id1">Werkzeug Changelog</a><ul>
+<li><a class="reference external" href="#version-0-5-1">Version 0.5.1</a></li>
+<li><a class="reference external" href="#version-0-5">Version 0.5</a></li>
+<li><a class="reference external" href="#version-0-4-1">Version 0.4.1</a></li>
+<li><a class="reference external" href="#version-0-4">Version 0.4</a></li>
+<li><a class="reference external" href="#version-0-3-1">Version 0.3.1</a></li>
+<li><a class="reference external" href="#version-0-3">Version 0.3</a></li>
+<li><a class="reference external" href="#version-0-2">Version 0.2</a></li>
+<li><a class="reference external" href="#version-0-1">Version 0.1</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#api-changes">API Changes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Werkzeug Changelog<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>This file lists all major changes in Werkzeug over the versions.
+For API breaking changes have a look at <a class="reference internal" href="#api-changes"><em>API Changes</em></a>, they
+are listed there in detail.</p>
+<div class="section" id="id1">
+<h2>Werkzeug Changelog<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="version-0-5-1">
+<h3>Version 0.5.1<a class="headerlink" href="#version-0-5-1" title="Permalink to this headline">¶</a></h3>
+<p>(bugfix release for 0.5, release date yet unknown)</p>
+<ul class="simple">
+<li>fixed boolean check of <a title="werkzeug.FileStorage" class="reference external" href="datastructures.html#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a></li>
+<li>url routing system properly supports unicode URL rules now.</li>
+<li>file upload streams no longer have to provide a truncate()
+method.</li>
+<li>implemented <a title="werkzeug.BaseRequest._form_parsing_failed" class="reference external" href="wrappers.html#werkzeug.BaseRequest._form_parsing_failed"><tt class="xref docutils literal"><span class="pre">BaseRequest._form_parsing_failed</span></tt></a>.</li>
+<li>fixed #394</li>
+<li><a title="werkzeug.ImmutableDict.copy" class="reference external" href="datastructures.html#werkzeug.ImmutableDict.copy"><tt class="xref docutils literal"><span class="pre">ImmutableDict.copy</span></tt></a>, <a title="werkzeug.ImmutableMultiDict.copy" class="reference external" href="datastructures.html#werkzeug.ImmutableMultiDict.copy"><tt class="xref docutils literal"><span class="pre">ImmutableMultiDict.copy</span></tt></a> and
+<a title="werkzeug.ImmutableTypeConversionDict.copy" class="reference external" href="datastructures.html#werkzeug.ImmutableTypeConversionDict.copy"><tt class="xref docutils literal"><span class="pre">ImmutableTypeConversionDict.copy</span></tt></a> return mutable shallow
+copies.</li>
+<li>fixed a bug with the <cite>make_runserver</cite> script action.</li>
+<li><a title="werkzeug.MultiDict.items" class="reference external" href="datastructures.html#werkzeug.MultiDict.items"><tt class="xref docutils literal"><span class="pre">MultiDict.items</span></tt></a> and <tt class="xref docutils literal"><span class="pre">MutiDict.iteritems</span></tt> now accept an
+argument to return a pair for each value of each key.</li>
+<li>the multipart parser works better with hand-crafted multipart
+requests now that have extra newlines added.  This fixes a bug
+with setuptools uploades not handled properly (#390)</li>
+<li>fixed some minor bugs in the atom feed generator.</li>
+<li>fixed a bug with client cookie header parsing being case sensitive.</li>
+<li>fixed a not-working deprecation warning.</li>
+<li>fixed package loading for <a title="werkzeug.SharedDataMiddleware" class="reference external" href="utils.html#werkzeug.SharedDataMiddleware"><tt class="xref docutils literal"><span class="pre">SharedDataMiddleware</span></tt></a>.</li>
+<li>fixed a bug in the secure cookie that made server-side expiration
+on servers with a local time that was not set to UTC impossible.</li>
+<li>fixed console of the interactive debugger.</li>
+</ul>
+</div>
+<div class="section" id="version-0-5">
+<h3>Version 0.5<a class="headerlink" href="#version-0-5" title="Permalink to this headline">¶</a></h3>
+<p>(codename Schlagbohrer, released on April 24th 2009)</p>
+<ul class="simple">
+<li>requires Python 2.4 now</li>
+<li>fixed a bug in <tt class="xref docutils literal"><span class="pre">IterIO</span></tt></li>
+<li>added <a title="werkzeug.MIMEAccept" class="reference external" href="datastructures.html#werkzeug.MIMEAccept"><tt class="xref docutils literal"><span class="pre">MIMEAccept</span></tt></a> and <a title="werkzeug.CharsetAccept" class="reference external" href="datastructures.html#werkzeug.CharsetAccept"><tt class="xref docutils literal"><span class="pre">CharsetAccept</span></tt></a> that work like the
+regular <a title="werkzeug.Accept" class="reference external" href="datastructures.html#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> but have extra special normalization for mimetypes
+and charsets and extra convenience methods.</li>
+<li>switched the serving system from wsgiref to something homebrew.</li>
+<li>the <a title="werkzeug.Client" class="reference external" href="test.html#werkzeug.Client"><tt class="xref docutils literal"><span class="pre">Client</span></tt></a> now supports cookies.</li>
+<li>added the <a title="" class="reference external" href="contrib/fixers.html#module-werkzeug.contrib.fixers"><tt class="xref docutils literal"><span class="pre">fixers</span></tt></a> module with various
+fixes for webserver bugs and hosting setup side-effects.</li>
+<li>added <a title="" class="reference external" href="contrib/wrappers.html#module-werkzeug.contrib.wrappers"><tt class="xref docutils literal"><span class="pre">werkzeug.contrib.wrappers</span></tt></a></li>
+<li>added <a title="werkzeug.is_hop_by_hop_header" class="reference external" href="utils.html#werkzeug.is_hop_by_hop_header"><tt class="xref docutils literal"><span class="pre">is_hop_by_hop_header</span></tt></a></li>
+<li>added <a title="werkzeug.is_entity_header" class="reference external" href="utils.html#werkzeug.is_entity_header"><tt class="xref docutils literal"><span class="pre">is_entity_header</span></tt></a></li>
+<li>added <a title="werkzeug.remove_hop_by_hop_headers" class="reference external" href="utils.html#werkzeug.remove_hop_by_hop_headers"><tt class="xref docutils literal"><span class="pre">remove_hop_by_hop_headers</span></tt></a></li>
+<li>added <a title="werkzeug.pop_path_info" class="reference external" href="utils.html#werkzeug.pop_path_info"><tt class="xref docutils literal"><span class="pre">pop_path_info</span></tt></a></li>
+<li>added <a title="werkzeug.peek_path_info" class="reference external" href="utils.html#werkzeug.peek_path_info"><tt class="xref docutils literal"><span class="pre">peek_path_info</span></tt></a></li>
+<li>added <a title="werkzeug.wrap_file" class="reference external" href="utils.html#werkzeug.wrap_file"><tt class="xref docutils literal"><span class="pre">wrap_file</span></tt></a> and <a title="werkzeug.FileWrapper" class="reference external" href="utils.html#werkzeug.FileWrapper"><tt class="xref docutils literal"><span class="pre">FileWrapper</span></tt></a></li>
+<li>moved <cite>LimitedStream</cite> from the contrib package into the regular
+werkzeug one and changed the default behavior to raise exceptions
+rather than stopping without warning.  The old class will stick in
+the module until 0.6.</li>
+<li>implemented experimental multipart parser that replaces the old CGI hack.</li>
+<li>added <tt class="xref docutils literal"><span class="pre">dump_options_header</span></tt> and <a title="werkzeug.parse_options_header" class="reference external" href="utils.html#werkzeug.parse_options_header"><tt class="xref docutils literal"><span class="pre">parse_options_header</span></tt></a></li>
+<li>added <a title="werkzeug.quote_header_value" class="reference external" href="utils.html#werkzeug.quote_header_value"><tt class="xref docutils literal"><span class="pre">quote_header_value</span></tt></a> and <a title="werkzeug.unquote_header_value" class="reference external" href="utils.html#werkzeug.unquote_header_value"><tt class="xref docutils literal"><span class="pre">unquote_header_value</span></tt></a></li>
+<li><a title="werkzeug.url_encode" class="reference external" href="utils.html#werkzeug.url_encode"><tt class="xref docutils literal"><span class="pre">url_encode</span></tt></a> and <a title="werkzeug.url_decode" class="reference external" href="utils.html#werkzeug.url_decode"><tt class="xref docutils literal"><span class="pre">url_decode</span></tt></a> now accept a separator
+argument to switch between <cite>&amp;</cite> and <cite>;</cite> as pair separator.  The magic
+switch is no longer in place.</li>
+<li>all form data parsing functions as well as the <a title="werkzeug.BaseRequest" class="reference external" href="wrappers.html#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a>
+object have parameters (or attributes) to limit the number of
+incoming bytes (either totally or per field).</li>
+<li>added <a title="werkzeug.LanguageAccept" class="reference external" href="datastructures.html#werkzeug.LanguageAccept"><tt class="xref docutils literal"><span class="pre">LanguageAccept</span></tt></a></li>
+<li>request objects are now enforced to be read only for all collections.</li>
+<li>added many new collection classes, refactored collections in general.</li>
+<li>test support was refactored, semi-undocumented <cite>werkzeug.test.File</cite>
+was replaced by <a title="werkzeug.FileStorage" class="reference external" href="datastructures.html#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">werkzeug.FileStorage</span></tt></a>.</li>
+<li><a title="werkzeug.EnvironBuilder" class="reference external" href="test.html#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a> was added and unifies the previous distinct
+<a title="werkzeug.create_environ" class="reference external" href="test.html#werkzeug.create_environ"><tt class="xref docutils literal"><span class="pre">create_environ</span></tt></a>, <a title="werkzeug.Client" class="reference external" href="test.html#werkzeug.Client"><tt class="xref docutils literal"><span class="pre">Client</span></tt></a> and
+<a title="werkzeug.BaseRequest.from_values" class="reference external" href="wrappers.html#werkzeug.BaseRequest.from_values"><tt class="xref docutils literal"><span class="pre">BaseRequest.from_values</span></tt></a>.  They all work the same now which
+is less confusing.</li>
+<li>officially documented imports from the internal modules as undefined
+behavior.  These modules were never exposed as public interfaces.</li>
+<li>removed <cite>FileStorage.__len__</cite> which previously made the object
+falsy for browsers not sending the content length which all browsers
+do.</li>
+<li><a title="werkzeug.SharedDataMiddleware" class="reference external" href="utils.html#werkzeug.SharedDataMiddleware"><tt class="xref docutils literal"><span class="pre">SharedDataMiddleware</span></tt></a> uses <cite>wrap_file</cite> now and has a
+configurable cache timeout.</li>
+<li>added <a title="werkzeug.CommonRequestDescriptorsMixin" class="reference external" href="wrappers.html#werkzeug.CommonRequestDescriptorsMixin"><tt class="xref docutils literal"><span class="pre">CommonRequestDescriptorsMixin</span></tt></a></li>
+<li>added <a title="werkzeug.CommonResponseDescriptorsMixin.mimetype_params" class="reference external" href="wrappers.html#werkzeug.CommonResponseDescriptorsMixin.mimetype_params"><tt class="xref docutils literal"><span class="pre">CommonResponseDescriptorsMixin.mimetype_params</span></tt></a></li>
+<li>added <a title="" class="reference external" href="contrib/lint.html#module-werkzeug.contrib.lint"><tt class="xref docutils literal"><span class="pre">werkzeug.contrib.lint</span></tt></a></li>
+<li>added <cite>passthrough_errors</cite> to <cite>run_simple</cite>.</li>
+<li>added <cite>secure_filename</cite></li>
+<li>added <a title="werkzeug.make_line_iter" class="reference external" href="utils.html#werkzeug.make_line_iter"><tt class="xref docutils literal"><span class="pre">make_line_iter</span></tt></a></li>
+<li><a title="werkzeug.MultiDict" class="reference external" href="datastructures.html#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> copies now instead of revealing internal
+lists to the caller for <cite>getlist</cite> and iteration functions that
+return lists.</li>
+<li>added <tt class="xref docutils literal"><span class="pre">follow_redirect</span></tt> to the <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#open"><tt class="xref docutils literal"><span class="pre">open</span></tt></a> of <a title="werkzeug.Client" class="reference external" href="test.html#werkzeug.Client"><tt class="xref docutils literal"><span class="pre">Client</span></tt></a>.</li>
+<li>added support for <cite>extra_files</cite> in
+<a title="werkzeug.script.make_runserver" class="reference external" href="script.html#werkzeug.script.make_runserver"><tt class="xref docutils literal"><span class="pre">make_runserver</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="version-0-4-1">
+<h3>Version 0.4.1<a class="headerlink" href="#version-0-4-1" title="Permalink to this headline">¶</a></h3>
+<p>(Bugfix release, released on January 11th 2009)</p>
+<ul class="simple">
+<li><cite>werkzeug.contrib.cache.Memcached</cite> accepts now objects that
+implement the memcache.Client interface as alternative to a list of
+strings with server addresses.
+There is also now a <cite>GAEMemcachedCache</cite> that connects to the Google
+appengine cache.</li>
+<li>explicitly convert secret keys to bytestrings now because Python
+2.6 no longer does that.</li>
+<li><cite>url_encode</cite> and all interfaces that call it, support ordering of
+options now which however is disabled by default.</li>
+<li>the development server no longer resolves the addresses of clients.</li>
+<li>Fixed a typo in <cite>werkzeug.test</cite> that broke <cite>File</cite>.</li>
+<li><cite>Map.bind_to_environ</cite> uses the <cite>Host</cite> header now if available.</li>
+<li>Fixed <cite>BaseCache.get_dict</cite> (#345)</li>
+<li><cite>werkzeug.test.Client</cite> can now run the application buffered in which
+case the application is properly closed automatically.</li>
+<li>Fixed <cite>Headers.set</cite> (#354).  Caused header duplication before.</li>
+<li>Fixed <cite>Headers.pop</cite> (#349).  default parameter was not properly
+handled.</li>
+<li>Fixed UnboundLocalError in <cite>create_environ</cite> (#351)</li>
+<li><cite>Headers</cite> is more compatible with wsgiref now.</li>
+<li><cite>Template.render</cite> accepts multidicts now.</li>
+<li>dropped support for Python 2.3</li>
+</ul>
+</div>
+<div class="section" id="version-0-4">
+<h3>Version 0.4<a class="headerlink" href="#version-0-4" title="Permalink to this headline">¶</a></h3>
+<p>(codename Schraubenzieher, released on November 23rd 2008)</p>
+<ul class="simple">
+<li><cite>Client</cite> supports an empty <cite>data</cite> argument now.</li>
+<li>fixed a bug in <cite>Response.application</cite> that made it impossible to use it
+as method decorator.</li>
+<li>the session system should work on appengine now</li>
+<li>the secure cookie works properly in load balanced environments with
+different cpu architectures now.</li>
+<li><cite>CacheControl.no_cache</cite> and <cite>CacheControl.private</cite> behavior changed to
+reflect the possibilities of the HTTP RFC.  Setting these attributes to
+<cite>None</cite> or <cite>True</cite> now sets the value to &#8220;the empty value&#8221;.
+More details in the documentation.</li>
+<li>fixed <cite>werkzeug.contrib.atom.AtomFeed.__call__</cite>. (#338)</li>
+<li><cite>BaseResponse.make_conditional</cite> now always returns <cite>self</cite>.  Previously
+it didn&#8217;t for post requests and such.</li>
+<li>fixed a bug in boolean attribute handling of <cite>html</cite> and <cite>xhtml</cite>.</li>
+<li>added graceful error handling to the debugger pastebin feature.</li>
+<li>added a more list like interface to <cite>Headers</cite> (slicing and indexing
+works now)</li>
+<li>fixed a bug with the <cite>__setitem__</cite> method of <cite>Headers</cite> that didn&#8217;t
+properly remove all keys on replacing.</li>
+<li>added <cite>remove_entity_headers</cite> which removes all entity headers from
+a list of headers (or a <cite>Headers</cite> object)</li>
+<li>the responses now automatically call <cite>remove_entity_headers</cite> if the
+status code is 304.</li>
+<li>fixed a bug with <cite>Href</cite> query parameter handling.  Previously the last
+item of a call to <cite>Href</cite> was not handled properly if it was a dict.</li>
+<li>headers now support a <cite>pop</cite> operation to better work with environ
+properties.</li>
+</ul>
+</div>
+<div class="section" id="version-0-3-1">
+<h3>Version 0.3.1<a class="headerlink" href="#version-0-3-1" title="Permalink to this headline">¶</a></h3>
+<p>(released on June 24th 2008)</p>
+<ul class="simple">
+<li>fixed a security problem with <cite>werkzeug.contrib.SecureCookie</cite>.
+More details available in the <a class="reference external" href="http://lucumr.pocoo.org/cogitations/2008/06/24/werkzeug-031-released/">release announcement</a>.</li>
+</ul>
+</div>
+<div class="section" id="version-0-3">
+<h3>Version 0.3<a class="headerlink" href="#version-0-3" title="Permalink to this headline">¶</a></h3>
+<p>(codename EUR325CAT6, released on June 14th 2008)</p>
+<ul class="simple">
+<li>added support for redirecting in url routing.</li>
+<li>added <cite>Authorization</cite> and <cite>AuthorizationMixin</cite></li>
+<li>added <cite>WWWAuthenticate</cite> and <cite>WWWAuthenticateMixin</cite></li>
+<li>added <cite>parse_list_header</cite></li>
+<li>added <cite>parse_dict_header</cite></li>
+<li>added <cite>parse_authorization_header</cite></li>
+<li>added <cite>parse_www_authenticate_header</cite></li>
+<li>added <cite>_get_current_object</cite> method to <cite>LocalProxy</cite> objects</li>
+<li>added <cite>parse_form_data</cite></li>
+<li><cite>MultiDict</cite>, <cite>CombinedMultiDict</cite>, <cite>Headers</cite>, and <cite>EnvironHeaders</cite> raise
+special key errors now that are subclasses of <cite>BadRequest</cite> so if you
+don&#8217;t catch them they give meaningful HTTP responses.</li>
+<li>added support for alternative encoding error handling and the new
+<cite>HTTPUnicodeError</cite> which (if not caught) behaves like a <cite>BadRequest</cite>.</li>
+<li>added <cite>BadRequest.wrap</cite>.</li>
+<li>added ETag support to the SharedDataMiddleware and added an option
+to disable caching.</li>
+<li>fixed <cite>is_xhr</cite> on the request objects.</li>
+<li>fixed error handling of the url adapter&#8217;s <cite>dispatch</cite> method. (#318)</li>
+<li>fixed bug with <cite>SharedDataMiddleware</cite>.</li>
+<li>fixed <cite>Accept.values</cite>.</li>
+<li><cite>EnvironHeaders</cite> contain content-type and content-length now</li>
+<li><cite>url_encode</cite> treats lists and tuples in dicts passed to it as multiple
+values for the same key so that one doesn&#8217;t have to pass a <cite>MultiDict</cite>
+to the function.</li>
+<li>added <cite>validate_arguments</cite></li>
+<li>added <cite>BaseRequest.application</cite></li>
+<li>improved Python 2.3 support</li>
+<li><cite>run_simple</cite> accepts <cite>use_debugger</cite> and <cite>use_evalex</cite> parameters now,
+like the <cite>make_runserver</cite> factory function from the script module.</li>
+<li>the <cite>environ_property</cite> is now read-only by default</li>
+<li>it&#8217;s now possible to initialize requests as &#8220;shallow&#8221; requests which
+causes runtime errors if the request object tries to consume the
+input stream.</li>
+</ul>
+</div>
+<div class="section" id="version-0-2">
+<h3>Version 0.2<a class="headerlink" href="#version-0-2" title="Permalink to this headline">¶</a></h3>
+<p>(codename Faustkeil, released Feb 14th 2008)</p>
+<ul class="simple">
+<li>Added <cite>AnyConverter</cite> to the routing system.</li>
+<li>Added <cite>werkzeug.contrib.securecookie</cite></li>
+<li>Exceptions have a <tt class="docutils literal"><span class="pre">get_response()</span></tt> method that return a response object</li>
+<li>fixed the path ordering bug (#293), thanks Thomas Johansson</li>
+<li><cite>BaseReporterStream</cite> is now part of the werkzeug contrib module.  From
+Werkzeug 0.3 onwards you will have to import it from there.</li>
+<li>added <cite>DispatcherMiddleware</cite>.</li>
+<li><cite>RequestRedirect</cite> is now a subclass of <cite>HTTPException</cite> and uses a
+301 status code instead of 302.</li>
+<li><cite>url_encode</cite> and <cite>url_decode</cite> can optionally treat keys as unicode strings
+now, too.</li>
+<li><cite>werkzeug.script</cite> has a different caller format for boolean arguments now.</li>
+<li>renamed <cite>lazy_property</cite> to <cite>cached_property</cite>.</li>
+<li>added <cite>import_string</cite>.</li>
+<li>added is_* properties to request objects.</li>
+<li>added <cite>empty()</cite> method to routing rules.</li>
+<li>added <cite>werkzeug.contrib.profiler</cite>.</li>
+<li>added <cite>extends</cite> to <cite>Headers</cite>.</li>
+<li>added <cite>dump_cookie</cite> and <cite>parse_cookie</cite>.</li>
+<li>added <cite>as_tuple</cite> to the <cite>Client</cite>.</li>
+<li>added <cite>werkzeug.contrib.testtools</cite>.</li>
+<li>added <cite>werkzeug.unescape</cite></li>
+<li>added <cite>BaseResponse.freeze</cite></li>
+<li>added <cite>werkzeug.contrib.atom</cite></li>
+<li>the HTTPExceptions accept an argument <cite>description</cite> now which overrides the
+default description.</li>
+<li>the <cite>MapAdapter</cite> has a default for path info now.  If you use
+<cite>bind_to_environ</cite> you don&#8217;t have to pass the path later.</li>
+<li>the wsgiref subclass werkzeug uses for the dev server does not use direct
+sys.stderr logging any more but a logger called &#8220;werkzeug&#8221;.</li>
+<li>implemented <cite>Href</cite>.</li>
+<li>implemented <cite>find_modules</cite></li>
+<li>refactored request and response objects into base objects, mixins and
+full featured subclasses that implement all mixins.</li>
+<li>added simple user agent parser</li>
+<li>werkzeug&#8217;s routing raises <cite>MethodNotAllowed</cite> now if it matches a
+rule but for a different method.</li>
+<li>many fixes and small improvements</li>
+</ul>
+</div>
+<div class="section" id="version-0-1">
+<h3>Version 0.1<a class="headerlink" href="#version-0-1" title="Permalink to this headline">¶</a></h3>
+<p>(codename Wictorinoxger, released Dec 9th 2007)</p>
+<ul class="simple">
+<li>Initial release</li>
+</ul>
+</div>
+</div>
+<div class="section" id="api-changes">
+<span id="id2"></span><h2>API Changes<a class="headerlink" href="#api-changes" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><cite>0.5</cite></dt>
+<dd><ul class="first last simple">
+<li>Werkzeug switched away from wsgiref as library for the builtin
+webserver.</li>
+<li>The <cite>encoding</cite> parameter for <a title="werkzeug.Template" class="reference external" href="templates.html#werkzeug.Template"><tt class="xref docutils literal"><span class="pre">Template</span></tt></a>s is now called
+<cite>charset</cite>.  The older one will work for another two versions
+but warn with a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.DeprecationWarning"><tt class="xref docutils literal"><span class="pre">DeprecationWarning</span></tt></a>.</li>
+<li>The <a title="werkzeug.Client" class="reference external" href="test.html#werkzeug.Client"><tt class="xref docutils literal"><span class="pre">Client</span></tt></a> has cookie support now which is enabled
+by default.</li>
+<li><tt class="xref docutils literal"><span class="pre">BaseResponse._get_file_stream</span></tt> is now passed more parameters
+to make the function more useful.  In 0.6 the old way to invoke
+the method will no longer work.  To support both newer and older
+Werkzeug versions you can add all arguments to the signature and
+provide default values for each of them.</li>
+<li><a title="werkzeug.url_decode" class="reference external" href="utils.html#werkzeug.url_decode"><tt class="xref docutils literal"><span class="pre">url_decode</span></tt></a> no longer supports both <cite>&amp;</cite> and <cite>;</cite> as
+separator.  This has to be specified explicitly now.</li>
+<li>The request object is now enforced to be read-only for all
+attributes.  If your code relies on modifications of some values
+makes sure to create copies of them using the mutable counterparts!</li>
+<li>Some data structures that were only used on request objects are
+now immutable as well.  (<a title="werkzeug.Authorization" class="reference external" href="datastructures.html#werkzeug.Authorization"><tt class="xref docutils literal"><span class="pre">Authorization</span></tt></a> / <a title="werkzeug.Accept" class="reference external" href="datastructures.html#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a>
+and subclasses)</li>
+<li><cite>CacheControl</cite> was splitted up into <a title="werkzeug.RequestCacheControl" class="reference external" href="datastructures.html#werkzeug.RequestCacheControl"><tt class="xref docutils literal"><span class="pre">RequestCacheControl</span></tt></a>
+and <a title="werkzeug.ResponseCacheControl" class="reference external" href="datastructures.html#werkzeug.ResponseCacheControl"><tt class="xref docutils literal"><span class="pre">ResponseCacheControl</span></tt></a>, the former being immutable.
+The old class will go away in 0.6</li>
+<li>undocumented <cite>werkzeug.test.File</cite> was replaced by
+<a title="werkzeug.FileWrapper" class="reference external" href="utils.html#werkzeug.FileWrapper"><tt class="xref docutils literal"><span class="pre">FileWrapper</span></tt></a>.</li>
+<li>it&#8217;s not longer possible to pass dicts inside the <cite>data</cite> dict
+in <a title="werkzeug.Client" class="reference external" href="test.html#werkzeug.Client"><tt class="xref docutils literal"><span class="pre">Client</span></tt></a>.  Use tuples instead.</li>
+<li>It&#8217;s save to modify the return value of <a title="werkzeug.MultiDict.getlist" class="reference external" href="datastructures.html#werkzeug.MultiDict.getlist"><tt class="xref docutils literal"><span class="pre">MultiDict.getlist</span></tt></a>
+and methods that return lists in the <a title="werkzeug.MultiDict" class="reference external" href="datastructures.html#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> now.  The
+class creates copies instead of revealing the internal lists.
+However <a title="werkzeug.MultiDict.setlistdefault" class="reference external" href="datastructures.html#werkzeug.MultiDict.setlistdefault"><tt class="xref docutils literal"><span class="pre">MultiDict.setlistdefault</span></tt></a> still (and intentionally)
+returns the internal list for modifications.</li>
+</ul>
+</dd>
+<dt><cite>0.3</cite></dt>
+<dd><ul class="first last simple">
+<li>Werkzeug 0.3 will be the last release with Python 2.3 compatibility.</li>
+<li>The <cite>environ_property</cite> is now read-only by default.  This decision was
+made because the request in general should be considered read-only.</li>
+</ul>
+</dd>
+<dt><cite>0.2</cite></dt>
+<dd><ul class="first last simple">
+<li>The <cite>BaseReporterStream</cite> is now part of the contrib module, the
+new module is <cite>werkzeug.contrib.reporterstream</cite>.  Starting with
+<cite>0.3</cite>, the old import will not work any longer.</li>
+<li><cite>RequestRedirect</cite> now uses a 301 status code.  Previously a 302
+status code was used incorrectly.  If you want to continue using
+this 302 code, use <tt class="docutils literal"><span class="pre">response</span> <span class="pre">=</span> <span class="pre">redirect(e.new_url,</span> <span class="pre">302)</span></tt>.</li>
+<li><cite>lazy_property</cite> is now called <cite>cached_property</cite>.  The alias for
+the old name will disappear in Werkzeug 0.3.</li>
+<li><cite>match</cite> can now raise <cite>MethodNotAllowed</cite> if configured for
+methods and there was no method for that request.</li>
+<li>The <cite>response_body</cite> attribute on the response object is now called
+<cite>data</cite>.  With Werkzeug 0.3 the old name will not work any longer.</li>
+<li>The file-like methods on the response object are deprecated.  If
+you want to use the response object as file like object use the
+<cite>Response</cite> class or a subclass of <cite>BaseResponse</cite> and mix the new
+<cite>ResponseStreamMixin</cite> class and use <cite>response.stream</cite>.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

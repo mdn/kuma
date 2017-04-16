@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    SQLite
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="Dialects" href="index.html" />
+        <link rel="next" title="Sybase" href="sybase.html" />
+        <link rel="prev" title="PostgreSQL" href="postgresql.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/dialects/sqlite.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="Dialects">Dialects</a>
+                » 
+    SQLite
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="postgresql.html" title="previous chapter">PostgreSQL</a>
+        Next:
+        <a href="sybase.html" title="next chapter">Sybase</a>
+</div>
+
+                <h2>
+                    
+    SQLite
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">SQLite</a><ul>
+<li><a class="reference internal" href="#date-and-time-types">Date and Time Types</a></li>
+<li><a class="reference internal" href="#auto-incrementing-behavior">Auto Incrementing Behavior</a></li>
+<li><a class="reference internal" href="#transaction-isolation-level">Transaction Isolation Level</a></li>
+<li><a class="reference internal" href="#sqlite-data-types">SQLite Data Types</a></li>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.sqlite.pysqlite">Pysqlite</a><ul>
+<li><a class="reference internal" href="#driver">Driver</a></li>
+<li><a class="reference internal" href="#connect-strings">Connect Strings</a></li>
+<li><a class="reference internal" href="#compatibility-with-sqlite3-native-date-and-datetime-types">Compatibility with sqlite3 &#8220;native&#8221; date and datetime types</a></li>
+<li><a class="reference internal" href="#threading-behavior">Threading Behavior</a></li>
+<li><a class="reference internal" href="#unicode">Unicode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.dialects.sqlite.base">
+<span id="sqlite"></span><h1>SQLite<a class="headerlink" href="#module-sqlalchemy.dialects.sqlite.base" title="Permalink to this headline">¶</a></h1>
+<p>Support for the SQLite database.</p>
+<p>For information on connecting using a specific driver, see the documentation
+section regarding that driver.</p>
+<div class="section" id="date-and-time-types">
+<h2>Date and Time Types<a class="headerlink" href="#date-and-time-types" title="Permalink to this headline">¶</a></h2>
+<p>SQLite does not have built-in DATE, TIME, or DATETIME types, and pysqlite does not provide 
+out of the box functionality for translating values between Python <cite>datetime</cite> objects
+and a SQLite-supported format.  SQLAlchemy&#8217;s own <a class="reference internal" href="../core/types.html#sqlalchemy.types.DateTime" title="sqlalchemy.types.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a>
+and related types provide date formatting and parsing functionality when SQlite is used.
+The implementation classes are <tt class="xref py py-class docutils literal"><span class="pre">DATETIME</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">DATE</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">TIME</span></tt>.
+These types represent dates and times as ISO formatted strings, which also nicely
+support ordering.   There&#8217;s no reliance on typical &#8220;libc&#8221; internals for these functions
+so historical dates are fully supported.</p>
+</div>
+<div class="section" id="auto-incrementing-behavior">
+<h2>Auto Incrementing Behavior<a class="headerlink" href="#auto-incrementing-behavior" title="Permalink to this headline">¶</a></h2>
+<p>Background on SQLite&#8217;s autoincrement is at: <a class="reference external" href="http://sqlite.org/autoinc.html">http://sqlite.org/autoinc.html</a></p>
+<p>Two things to note:</p>
+<ul class="simple">
+<li>The AUTOINCREMENT keyword is <strong>not</strong> required for SQLite tables to
+generate primary key values automatically. AUTOINCREMENT only means that
+the algorithm used to generate ROWID values should be slightly different.</li>
+<li>SQLite does <strong>not</strong> generate primary key (i.e. ROWID) values, even for
+one column, if the table has a composite (i.e. multi-column) primary key.
+This is regardless of the AUTOINCREMENT keyword being present or not.</li>
+</ul>
+<p>To specifically render the AUTOINCREMENT keyword on the primary key
+column when rendering DDL, add the flag <tt class="docutils literal"><span class="pre">sqlite_autoincrement=True</span></tt> 
+to the Table construct:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Table</span><span class="p">(</span><span class="s">&#39;sometable&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> 
+        <span class="n">sqlite_autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="transaction-isolation-level">
+<h2>Transaction Isolation Level<a class="headerlink" href="#transaction-isolation-level" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt> accepts an <tt class="docutils literal"><span class="pre">isolation_level</span></tt> parameter which results in 
+the command <tt class="docutils literal"><span class="pre">PRAGMA</span> <span class="pre">read_uncommitted</span> <span class="pre">&lt;level&gt;</span></tt> being invoked for every new 
+connection.   Valid values for this parameter are <tt class="docutils literal"><span class="pre">SERIALIZABLE</span></tt> and 
+<tt class="docutils literal"><span class="pre">READ</span> <span class="pre">UNCOMMITTED</span></tt> corresponding to a value of 0 and 1, respectively.</p>
+</div>
+<div class="section" id="sqlite-data-types">
+<h2>SQLite Data Types<a class="headerlink" href="#sqlite-data-types" title="Permalink to this headline">¶</a></h2>
+<p>As with all SQLAlchemy dialects, all UPPERCASE types that are known to be
+valid with SQLite are importable from the top level dialect, whether
+they originate from <a class="reference internal" href="../core/types.html#module-sqlalchemy.types"><tt class="xref py py-mod docutils literal"><span class="pre">sqlalchemy.types</span></tt></a> or from the local dialect:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.dialects.sqlite</span> <span class="kn">import</span> \
+            <span class="n">BLOB</span><span class="p">,</span> <span class="n">BOOLEAN</span><span class="p">,</span> <span class="n">CHAR</span><span class="p">,</span> <span class="n">DATE</span><span class="p">,</span> <span class="n">DATETIME</span><span class="p">,</span> <span class="n">DECIMAL</span><span class="p">,</span> <span class="n">FLOAT</span><span class="p">,</span> \
+            <span class="n">INTEGER</span><span class="p">,</span> <span class="n">NUMERIC</span><span class="p">,</span> <span class="n">SMALLINT</span><span class="p">,</span> <span class="n">TEXT</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">TIMESTAMP</span><span class="p">,</span> \
+            <span class="n">VARCHAR</span></pre></div>
+</div>
+</div>
+<div class="section" id="module-sqlalchemy.dialects.sqlite.pysqlite">
+<span id="pysqlite"></span><h2>Pysqlite<a class="headerlink" href="#module-sqlalchemy.dialects.sqlite.pysqlite" title="Permalink to this headline">¶</a></h2>
+<p>Support for the SQLite database via pysqlite.</p>
+<p>Note that pysqlite is the same driver as the <tt class="docutils literal"><span class="pre">sqlite3</span></tt>
+module included with the Python distribution.</p>
+<div class="section" id="driver">
+<h3>Driver<a class="headerlink" href="#driver" title="Permalink to this headline">¶</a></h3>
+<p>When using Python 2.5 and above, the built in <tt class="docutils literal"><span class="pre">sqlite3</span></tt> driver is 
+already installed and no additional installation is needed.  Otherwise,
+the <tt class="docutils literal"><span class="pre">pysqlite2</span></tt> driver needs to be present.  This is the same driver as
+<tt class="docutils literal"><span class="pre">sqlite3</span></tt>, just with a different name.</p>
+<p>The <tt class="docutils literal"><span class="pre">pysqlite2</span></tt> driver will be loaded first, and if not found, <tt class="docutils literal"><span class="pre">sqlite3</span></tt>
+is loaded.  This allows an explicitly installed pysqlite driver to take
+precedence over the built in one.   As with all dialects, a specific 
+DBAPI module may be provided to <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> to control 
+this explicitly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">dbapi2</span> <span class="k">as</span> <span class="n">sqlite</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite+pysqlite:///file.db&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="n">sqlite</span><span class="p">)</span></pre></div>
+</div>
+<p>Full documentation on pysqlite is available at:
+<a class="reference external" href="http://www.initd.org/pub/software/pysqlite/doc/usage-guide.html">http://www.initd.org/pub/software/pysqlite/doc/usage-guide.html</a></p>
+</div>
+<div class="section" id="connect-strings">
+<h3>Connect Strings<a class="headerlink" href="#connect-strings" title="Permalink to this headline">¶</a></h3>
+<p>The file specification for the SQLite database is taken as the &#8220;database&#8221; portion of
+the URL.  Note that the format of a url is:</p>
+<div class="highlight-python"><pre>driver://user:pass@host/database</pre>
+</div>
+<p>This means that the actual filename to be used starts with the characters to the
+<strong>right</strong> of the third slash.   So connecting to a relative filepath looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># relative path</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:///path/to/database.db&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>An absolute path, which is denoted by starting with a slash, means you need <strong>four</strong>
+slashes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># absolute path</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:////path/to/database.db&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>To use a Windows path, regular drive specifications and backslashes can be used.  
+Double backslashes are probably needed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># absolute path on Windows</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:///C:</span><span class="se">\\</span><span class="s">path</span><span class="se">\\</span><span class="s">to</span><span class="se">\\</span><span class="s">database.db&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>The sqlite <tt class="docutils literal"><span class="pre">:memory:</span></tt> identifier is the default if no filepath is present.  Specify
+<tt class="docutils literal"><span class="pre">sqlite://</span></tt> and nothing else:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># in-memory database</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite://&#39;</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="compatibility-with-sqlite3-native-date-and-datetime-types">
+<h3>Compatibility with sqlite3 &#8220;native&#8221; date and datetime types<a class="headerlink" href="#compatibility-with-sqlite3-native-date-and-datetime-types" title="Permalink to this headline">¶</a></h3>
+<p>The pysqlite driver includes the sqlite3.PARSE_DECLTYPES and 
+sqlite3.PARSE_COLNAMES options, which have the effect of any column
+or expression explicitly cast as &#8220;date&#8221; or &#8220;timestamp&#8221; will be converted
+to a Python date or datetime object.  The date and datetime types provided 
+with the pysqlite dialect are not currently compatible with these options, 
+since they render the ISO date/datetime including microseconds, which 
+pysqlite&#8217;s driver does not.   Additionally, SQLAlchemy does not at
+this time automatically render the &#8220;cast&#8221; syntax required for the 
+freestanding functions &#8220;current_timestamp&#8221; and &#8220;current_date&#8221; to return
+datetime/date types natively.   Unfortunately, pysqlite 
+does not provide the standard DBAPI types in <cite>cursor.description</cite>,
+leaving SQLAlchemy with no way to detect these types on the fly 
+without expensive per-row type checks.</p>
+<p>Usage of PARSE_DECLTYPES can be forced if one configures 
+&#8220;native_datetime=True&#8221; on create_engine():</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite://&#39;</span><span class="p">,</span> 
+                <span class="n">connect_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;detect_types&#39;</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">PARSE_DECLTYPES</span><span class="o">|</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">PARSE_COLNAMES</span><span class="p">},</span>
+                <span class="n">native_datetime</span><span class="o">=</span><span class="bp">True</span>
+                <span class="p">)</span></pre></div>
+</div>
+<p>With this flag enabled, the DATE and TIMESTAMP types (but note - not the DATETIME
+or TIME types...confused yet ?) will not perform any bind parameter or result
+processing. Execution of &#8220;func.current_date()&#8221; will return a string.
+&#8220;func.current_timestamp()&#8221; is registered as returning a DATETIME type in
+SQLAlchemy, so this function still receives SQLAlchemy-level result processing.</p>
+</div>
+<div class="section" id="threading-behavior">
+<h3>Threading Behavior<a class="headerlink" href="#threading-behavior" title="Permalink to this headline">¶</a></h3>
+<p>Pysqlite connections do not support being moved between threads, unless
+the <tt class="docutils literal"><span class="pre">check_same_thread</span></tt> Pysqlite flag is set to <tt class="xref docutils literal"><span class="pre">False</span></tt>.  In addition,
+when using an in-memory SQLite database, the full database exists only within 
+the scope of a single connection.  It is reported that an in-memory
+database does not support being shared between threads regardless of the 
+<tt class="docutils literal"><span class="pre">check_same_thread</span></tt> flag - which means that a multithreaded
+application <strong>cannot</strong> share data from a <tt class="docutils literal"><span class="pre">:memory:</span></tt> database across threads
+unless access to the connection is limited to a single worker thread which communicates
+through a queueing mechanism to concurrent threads.</p>
+<p>To provide a default which accomodates SQLite&#8217;s default threading capabilities
+somewhat reasonably, the SQLite dialect will specify that the <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.SingletonThreadPool" title="sqlalchemy.pool.SingletonThreadPool"><tt class="xref py py-class docutils literal"><span class="pre">SingletonThreadPool</span></tt></a>
+be used by default.  This pool maintains a single SQLite connection per thread
+that is held open up to a count of five concurrent threads.  When more than five threads
+are used, a cleanup mechanism will dispose of excess unused connections.</p>
+<p>Two optional pool implementations that may be appropriate for particular SQLite usage scenarios:</p>
+<blockquote>
+<ul class="simple">
+<li>the <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.StaticPool" title="sqlalchemy.pool.StaticPool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.StaticPool</span></tt></a> might be appropriate for a multithreaded
+application using an in-memory database, assuming the threading issues inherent in 
+pysqlite are somehow accomodated for.  This pool holds persistently onto a single connection
+which is never closed, and is returned for all requests.</li>
+<li>the <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.NullPool</span></tt></a> might be appropriate for an application that
+makes use of a file-based sqlite database.  This pool disables any actual &#8220;pooling&#8221;
+behavior, and simply opens and closes real connections corresonding to the <tt class="xref py py-func docutils literal"><span class="pre">connect()</span></tt>
+and <tt class="xref py py-func docutils literal"><span class="pre">close()</span></tt> methods.  SQLite can &#8220;connect&#8221; to a particular file with very high 
+efficiency, so this option may actually perform better without the extra overhead
+of <tt class="xref py py-class docutils literal"><span class="pre">SingletonThreadPool</span></tt>.  NullPool will of course render a <tt class="docutils literal"><span class="pre">:memory:</span></tt> connection
+useless since the database would be lost as soon as the connection is &#8220;returned&#8221; to the pool.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="unicode">
+<h3>Unicode<a class="headerlink" href="#unicode" title="Permalink to this headline">¶</a></h3>
+<p>In contrast to SQLAlchemy&#8217;s active handling of date and time types for pysqlite, pysqlite&#8217;s 
+default behavior regarding Unicode is that all strings are returned as Python unicode objects
+in all cases.  So even if the <a class="reference internal" href="../core/types.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><tt class="xref py py-class docutils literal"><span class="pre">Unicode</span></tt></a> type is 
+<em>not</em> used, you will still always receive unicode data back from a result set.  It is 
+<strong>strongly</strong> recommended that you do use the <a class="reference internal" href="../core/types.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><tt class="xref py py-class docutils literal"><span class="pre">Unicode</span></tt></a> type
+to represent strings, since it will raise a warning if a non-unicode Python string is 
+passed from the user application.  Mixing the usage of non-unicode objects with returned unicode objects can
+quickly create confusion, particularly when using the ORM as internal data is not 
+always represented by an actual database result string.</p>
+</div>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="postgresql.html" title="previous chapter">PostgreSQL</a>
+        Next:
+        <a href="sybase.html" title="next chapter">Sybase</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

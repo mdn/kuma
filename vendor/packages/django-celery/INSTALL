@@ -1,0 +1,19 @@
+Installing django-celery
+========================
+
+You can install ``django-celery`` either via the Python Package Index (PyPI)
+or from source.
+
+To install using ``pip``,::
+
+    $ pip install django-celery
+
+To install using ``easy_install``,::
+
+    $ easy_install django-celery
+
+If you have downloaded a source tarball you can install it
+by doing the following,::
+
+    $ python setup.py build
+    # python setup.py install # as root

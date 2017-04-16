@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# Copyright 2004, 2007 Zuza Software Foundation
+#
+# This file is part of The Translate Toolkit.
+#
+# The Translate Toolkit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# translate is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with translate; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# posplit - takes any po file, usually a compendium PO file,
+# and converts it into 3 distinct files named:
+#	compendium-translated.po
+#	compendium-fuzzy.po
+#	compendium-untranslated.po
+# and removes the original. A simple msgcat can recombine the PO
+
+
+if [ $# -ne 1 ]; then
+	echo "Usage: `basename $0` compendium.po"
+	exit 1
+fi
+
+compendium=$1
+
+if [ ! -f $compendium ]; then
+	echo "Problem with compendium '$compendium'"
+	exit 1
+fi
+
+dir=`echo $compendium | sed 's/\/[^\/]*$//'`
+prefix=$dir/`basename $compendium .po`
+translated=${prefix}-translated.po
+fuzzy=${prefix}-fuzzy.po
+untranslated=${prefix}-untranslated.po
+
+rm -f $translated $fuzzy $untranslated
+
+msgattrib --output-file=$translated --translated --no-fuzzy $compendium
+msgattrib --output-file=$fuzzy --only-fuzzy $compendium
+msgattrib --output-file=$untranslated --untranslated $compendium
+
+rm $compendium

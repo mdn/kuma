@@ -1,0 +1,51 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.history
+===================
+
+Module: :mod:`kernel.core.history`
+----------------------------------
+Inheritance diagram for ``IPython.kernel.core.history``:
+
+.. inheritance-diagram:: IPython.kernel.core.history 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.history
+
+.. currentmodule:: IPython.kernel.core.history
+
+Classes
+-------
+
+:class:`FrontEndHistory`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FrontEndHistory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`History`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: History
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InterpreterHistory`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InterpreterHistory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

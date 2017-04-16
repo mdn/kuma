@@ -1,0 +1,1051 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    SQL Expression Language Tutorial
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Core" href="index.html" />
+        <link rel="next" title="SQL Statements and Expressions" href="expression_api.html" />
+        <link rel="prev" title="SQLAlchemy Core" href="index.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/core/tutorial.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+                » 
+    SQL Expression Language Tutorial
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="index.html" title="previous chapter">SQLAlchemy Core</a>
+        Next:
+        <a href="expression_api.html" title="next chapter">SQL Statements and Expressions</a>
+</div>
+
+                <h2>
+                    
+    SQL Expression Language Tutorial
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">SQL Expression Language Tutorial</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#version-check">Version Check</a></li>
+<li><a class="reference internal" href="#connecting">Connecting</a></li>
+<li><a class="reference internal" href="#define-and-create-tables">Define and Create Tables</a></li>
+<li><a class="reference internal" href="#insert-expressions">Insert Expressions</a></li>
+<li><a class="reference internal" href="#executing">Executing</a></li>
+<li><a class="reference internal" href="#executing-multiple-statements">Executing Multiple Statements</a></li>
+<li><a class="reference internal" href="#connectionless-implicit-execution">Connectionless / Implicit Execution</a></li>
+<li><a class="reference internal" href="#selecting">Selecting</a></li>
+<li><a class="reference internal" href="#operators">Operators</a></li>
+<li><a class="reference internal" href="#conjunctions">Conjunctions</a></li>
+<li><a class="reference internal" href="#using-text">Using Text</a></li>
+<li><a class="reference internal" href="#using-aliases">Using Aliases</a></li>
+<li><a class="reference internal" href="#using-joins">Using Joins</a></li>
+<li><a class="reference internal" href="#intro-to-generative-selects-and-transformations">Intro to Generative Selects and Transformations</a></li>
+<li><a class="reference internal" href="#everything-else">Everything Else</a><ul>
+<li><a class="reference internal" href="#bind-parameter-objects">Bind Parameter Objects</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#unions-and-other-set-operations">Unions and Other Set Operations</a></li>
+<li><a class="reference internal" href="#scalar-selects">Scalar Selects</a></li>
+<li><a class="reference internal" href="#correlated-subqueries">Correlated Subqueries</a></li>
+<li><a class="reference internal" href="#ordering-grouping-limiting-offset-ing">Ordering, Grouping, Limiting, Offset...ing...</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inserts-and-updates">Inserts and Updates</a><ul>
+<li><a class="reference internal" href="#correlated-updates">Correlated Updates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deletes">Deletes</a></li>
+<li><a class="reference internal" href="#further-reference">Further Reference</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="sql-expression-language-tutorial">
+<span id="sqlexpression-toplevel"></span><h1>SQL Expression Language Tutorial<a class="headerlink" href="#sql-expression-language-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The SQLAlchemy Expression Language presents a system of representing
+relational database structures and expressions using Python constructs. These
+constructs are modeled to resemble those of the underlying database as closely
+as possible, while providing a modicum of abstraction of the various
+implementation differences between database backends. While the constructs
+attempt to represent equivalent concepts between backends with consistent
+structures, they do not conceal useful concepts that are unique to particular
+subsets of backends. The Expression Language therefore presents a method of
+writing backend-neutral SQL expressions, but does not attempt to enforce that
+expressions are backend-neutral.</p>
+<p>The Expression Language is in contrast to the Object Relational Mapper, which
+is a distinct API that builds on top of the Expression Language. Whereas the
+ORM, introduced in <a class="reference internal" href="../orm/tutorial.html"><em>Object Relational Tutorial</em></a>, presents a high level and
+abstracted pattern of usage, which itself is an example of applied usage of
+the Expression Language, the Expression Language presents a system of
+representing the primitive constructs of the relational database directly
+without opinion.</p>
+<p>While there is overlap among the usage patterns of the ORM and the Expression
+Language, the similarities are more superficial than they may at first appear.
+One approaches the structure and content of data from the perspective of a
+user-defined <a class="reference external" href="http://en.wikipedia.org/wiki/Domain_model">domain model</a> which is transparently
+persisted and refreshed from its underlying storage model. The other
+approaches it from the perspective of literal schema and SQL expression
+representations which are explicitly composed into messages consumed
+individually by the database.</p>
+<p>A successful application may be constructed using the Expression Language
+exclusively, though the application will need to define its own system of
+translating application concepts into individual database messages and from
+individual database result sets. Alternatively, an application constructed
+with the ORM may, in advanced scenarios, make occasional usage of the
+Expression Language directly in certain areas where specific database
+interactions are required.</p>
+<p>The following tutorial is in doctest format, meaning each <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt> line
+represents something you can type at a Python command prompt, and the
+following text represents the expected return value. The tutorial has no
+prerequisites.</p>
+</div>
+<div class="section" id="version-check">
+<h2>Version Check<a class="headerlink" href="#version-check" title="Permalink to this headline">¶</a></h2>
+<p>A quick check to verify that we are on at least <strong>version 0.6</strong> of SQLAlchemy:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sqlalchemy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">__version__</span> 
+<span class="go">0.6.0</span></pre></div>
+</div>
+</div>
+<div class="section" id="connecting">
+<h2>Connecting<a class="headerlink" href="#connecting" title="Permalink to this headline">¶</a></h2>
+<p>For this tutorial we will use an in-memory-only SQLite database.   This is an easy way to test things without needing to have an actual database defined anywhere.  To connect we use <a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">echo</span></tt> flag is a shortcut to setting up SQLAlchemy logging, which is accomplished via Python&#8217;s standard <tt class="docutils literal"><span class="pre">logging</span></tt> module.  With it enabled, we&#8217;ll see all the generated SQL produced.  If you are working through this tutorial and want less output generated, set it to <tt class="xref docutils literal"><span class="pre">False</span></tt>.   This tutorial will format the SQL behind a popup window so it doesn&#8217;t get in our way; just click the &#8220;SQL&#8221; links to see what&#8217;s being generated.</p>
+</div>
+<div class="section" id="define-and-create-tables">
+<h2>Define and Create Tables<a class="headerlink" href="#define-and-create-tables" title="Permalink to this headline">¶</a></h2>
+<p>The SQL Expression Language constructs its expressions in most cases against table columns.  In SQLAlchemy, a column is most often represented by an object called <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a>, and in all cases a <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> is associated with a <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a>.  A collection of <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> objects and their associated child objects is referred to as <strong>database metadata</strong>.  In this tutorial we will explicitly lay out several <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> objects, but note that SA can also &#8220;import&#8221; whole sets of <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> objects automatically from an existing database (this process is called <strong>table reflection</strong>).</p>
+<p>We define our tables all within a catalog called <a class="reference internal" href="schema.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><tt class="xref py py-class docutils literal"><span class="pre">MetaData</span></tt></a>, using the <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> construct, which resembles regular SQL CREATE TABLE statements.  We&#8217;ll make two tables, one of which represents &#8220;users&#8221; in an application, and another which represents zero or more &#8220;email addreses&#8221; for each row in the &#8220;users&#8221; table:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">ForeignKey</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">users</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s">&#39;users&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">Column</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">Column</span><span class="p">(</span><span class="s">&#39;fullname&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addresses</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s">&#39;addresses&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+<span class="gp">... </span>  <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+<span class="gp">... </span>  <span class="n">Column</span><span class="p">(</span><span class="s">&#39;user_id&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;users.id&#39;</span><span class="p">)),</span>
+<span class="gp">... </span>  <span class="n">Column</span><span class="p">(</span><span class="s">&#39;email_address&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">... </span> <span class="p">)</span></pre></div>
+</div>
+<p>All about how to define <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> objects, as well as how to create them from an existing database automatically, is described in <a class="reference internal" href="schema.html"><em>Schema Definition Language</em></a>.</p>
+<p>Next, to tell the <a class="reference internal" href="schema.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><tt class="xref py py-class docutils literal"><span class="pre">MetaData</span></tt></a> we&#8217;d actually like to create our selection of tables for real inside the SQLite database, we use <a class="reference internal" href="schema.html#sqlalchemy.schema.MetaData.create_all" title="sqlalchemy.schema.MetaData.create_all"><tt class="xref py py-func docutils literal"><span class="pre">create_all()</span></tt></a>, passing it the <tt class="docutils literal"><span class="pre">engine</span></tt> instance which points to our database.  This will check for the presence of each table first before creating, so it&#8217;s safe to call multiple times:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> 
+<div class='popup_sql'>PRAGMA table_info("users")
+()
+PRAGMA table_info("addresses")
+()
+CREATE TABLE users (
+    id INTEGER NOT NULL,
+    name VARCHAR,
+    fullname VARCHAR,
+    PRIMARY KEY (id)
+)
+()
+COMMIT
+CREATE TABLE addresses (
+    id INTEGER NOT NULL,
+    user_id INTEGER,
+    email_address VARCHAR NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY(user_id) REFERENCES users (id)
+)
+()
+COMMIT</div></pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Users familiar with the syntax of CREATE TABLE may notice that the
+VARCHAR columns were generated without a length; on SQLite and Postgresql,
+this is a valid datatype, but on others, it&#8217;s not allowed. So if running
+this tutorial on one of those databases, and you wish to use SQLAlchemy to
+issue CREATE TABLE, a &#8220;length&#8221; may be provided to the <a class="reference internal" href="types.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><tt class="xref py py-class docutils literal"><span class="pre">String</span></tt></a> type as
+below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Column</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span></pre></div>
+</div>
+<p>The length field on <a class="reference internal" href="types.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><tt class="xref py py-class docutils literal"><span class="pre">String</span></tt></a>, as well as similar precision/scale fields
+available on <a class="reference internal" href="types.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><tt class="xref py py-class docutils literal"><span class="pre">Integer</span></tt></a>, <a class="reference internal" href="types.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><tt class="xref py py-class docutils literal"><span class="pre">Numeric</span></tt></a>, etc. are not referenced by
+SQLAlchemy other than when creating tables.</p>
+<p>Additionally, Firebird and Oracle require sequences to generate new
+primary key identifiers, and SQLAlchemy doesn&#8217;t generate or assume these
+without being instructed. For that, you use the <a class="reference internal" href="schema.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><tt class="xref py py-class docutils literal"><span class="pre">Sequence</span></tt></a> construct:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">(</span><span class="s">&#39;user_id_seq&#39;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></pre></div>
+</div>
+<p>A full, foolproof <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> is therefore:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">users</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s">&#39;users&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">(</span><span class="s">&#39;user_id_seq&#39;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">)),</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s">&#39;fullname&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">)),</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">12</span><span class="p">))</span>
+<span class="p">)</span></pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="insert-expressions">
+<h2>Insert Expressions<a class="headerlink" href="#insert-expressions" title="Permalink to this headline">¶</a></h2>
+<p>The first SQL expression we&#8217;ll create is the <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> construct, which represents an INSERT statement.   This is typically created relative to its target table:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ins</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span></pre></div>
+</div>
+<p>To see a sample of the SQL this construct produces, use the <tt class="docutils literal"><span class="pre">str()</span></tt> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span>
+<span class="go">&#39;INSERT INTO users (id, name, fullname) VALUES (:id, :name, :fullname)&#39;</span></pre></div>
+</div>
+<p>Notice above that the INSERT statement names every column in the <tt class="docutils literal"><span class="pre">users</span></tt> table.  This can be limited by using the <tt class="docutils literal"><span class="pre">values()</span></tt> method, which establishes the VALUES clause of the INSERT explicitly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ins</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;jack&#39;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s">&#39;Jack Jones&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span>
+<span class="go">&#39;INSERT INTO users (name, fullname) VALUES (:name, :fullname)&#39;</span></pre></div>
+</div>
+<p>Above, while the <tt class="docutils literal"><span class="pre">values</span></tt> method limited the VALUES clause to just two columns, the actual data we placed in <tt class="docutils literal"><span class="pre">values</span></tt> didn&#8217;t get rendered into the string; instead we got named bind parameters.  As it turns out, our data <em>is</em> stored within our <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> construct, but it typically only comes out when the statement is actually executed; since the data consists of literal values, SQLAlchemy automatically generates bind parameters for them.  We can peek at this data for now by looking at the compiled form of the statement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ins</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span><span class="o">.</span><span class="n">params</span> 
+<span class="go">{&#39;fullname&#39;: &#39;Jack Jones&#39;, &#39;name&#39;: &#39;jack&#39;}</span></pre></div>
+</div>
+</div>
+<div class="section" id="executing">
+<h2>Executing<a class="headerlink" href="#executing" title="Permalink to this headline">¶</a></h2>
+<p>The interesting part of an <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> is executing it.  In this tutorial, we will generally focus on the most explicit method of executing a SQL construct, and later touch upon some &#8220;shortcut&#8221; ways to do it.  The <tt class="docutils literal"><span class="pre">engine</span></tt> object we created is a repository for database connections capable of issuing SQL to the database.  To acquire a connection, we use the <tt class="docutils literal"><span class="pre">connect()</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> 
+<span class="go">&lt;sqlalchemy.engine.base.Connection object at 0x...&gt;</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Connection" title="sqlalchemy.engine.base.Connection"><tt class="xref py py-class docutils literal"><span class="pre">Connection</span></tt></a> object represents an actively checked out DBAPI connection resource.  Lets feed it our <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> object and see what happens:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span>
+<div class='show_sql'>INSERT INTO users (name, fullname) VALUES (?, ?)
+('jack', 'Jack Jones')
+COMMIT</div></pre></div>
+</div>
+<p>So the INSERT statement was now issued to the database.  Although we got positional &#8220;qmark&#8221; bind parameters instead of &#8220;named&#8221; bind parameters in the output.  How come ?  Because when executed, the <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Connection" title="sqlalchemy.engine.base.Connection"><tt class="xref py py-class docutils literal"><span class="pre">Connection</span></tt></a> used the SQLite <strong>dialect</strong> to help generate the statement; when we use the <tt class="docutils literal"><span class="pre">str()</span></tt> function, the statement isn&#8217;t aware of this dialect, and falls back onto a default which uses named parameters. We can view this manually as follows:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ins</span><span class="o">.</span><span class="n">bind</span> <span class="o">=</span> <span class="n">engine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span>
+<span class="go">&#39;INSERT INTO users (name, fullname) VALUES (?, ?)&#39;</span></pre></div>
+</div>
+<p>What about the <tt class="docutils literal"><span class="pre">result</span></tt> variable we got when we called <tt class="docutils literal"><span class="pre">execute()</span></tt> ?  As the SQLAlchemy <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Connection" title="sqlalchemy.engine.base.Connection"><tt class="xref py py-class docutils literal"><span class="pre">Connection</span></tt></a> object references a DBAPI connection, the result, known as a <a class="reference internal" href="connections.html#sqlalchemy.engine.base.ResultProxy" title="sqlalchemy.engine.base.ResultProxy"><tt class="xref py py-class docutils literal"><span class="pre">ResultProxy</span></tt></a> object, is analogous to the DBAPI cursor object.  In the case of an INSERT, we can get important information from it, such as the primary key values which were generated from our statement:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">inserted_primary_key</span>
+<span class="go">[1]</span></pre></div>
+</div>
+<p>The value of <tt class="docutils literal"><span class="pre">1</span></tt> was automatically generated by SQLite, but only because we did not specify the <tt class="docutils literal"><span class="pre">id</span></tt> column in our <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> statement; otherwise, our explicit value would have been used.   In either case, SQLAlchemy always knows how to get at a newly generated primary key value, even though the method of generating them is different across different databases; each database&#8217;s <tt class="xref py py-class docutils literal"><span class="pre">Dialect</span></tt> knows the specific steps needed to determine the correct value (or values; note that <tt class="docutils literal"><span class="pre">inserted_primary_key</span></tt> returns a list so that it supports composite primary keys).</p>
+</div>
+<div class="section" id="executing-multiple-statements">
+<h2>Executing Multiple Statements<a class="headerlink" href="#executing-multiple-statements" title="Permalink to this headline">¶</a></h2>
+<p>Our insert example above was intentionally a little drawn out to show some various behaviors of expression language constructs.  In the usual case, an <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> statement is usually compiled against the parameters sent to the <tt class="docutils literal"><span class="pre">execute()</span></tt> method on <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Connection" title="sqlalchemy.engine.base.Connection"><tt class="xref py py-class docutils literal"><span class="pre">Connection</span></tt></a>, so that there&#8217;s no need to use the <tt class="docutils literal"><span class="pre">values</span></tt> keyword with <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a>.  Lets create a generic <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> statement again and use it in the &#8220;normal&#8221; way:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ins</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;wendy&#39;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s">&#39;Wendy Williams&#39;</span><span class="p">)</span> 
+<div class='show_sql'>INSERT INTO users (id, name, fullname) VALUES (?, ?, ?)
+(2, 'wendy', 'Wendy Williams')
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span></pre></div>
+</div>
+<p>Above, because we specified all three columns in the the <tt class="docutils literal"><span class="pre">execute()</span></tt> method, the compiled <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> included all three columns.  The <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> statement is compiled at execution time based on the parameters we specified; if we specified fewer parameters, the <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> would have fewer entries in its VALUES clause.</p>
+<p>To issue many inserts using DBAPI&#8217;s <tt class="docutils literal"><span class="pre">executemany()</span></tt> method, we can send in a list of dictionaries each containing a distinct set of parameters to be inserted, as we do here to add some email addresses:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span> <span class="p">[</span> 
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;user_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;email_address&#39;</span> <span class="p">:</span> <span class="s">&#39;jack@yahoo.com&#39;</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;user_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;email_address&#39;</span> <span class="p">:</span> <span class="s">&#39;jack@msn.com&#39;</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;user_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;email_address&#39;</span> <span class="p">:</span> <span class="s">&#39;www@www.org&#39;</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;user_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;email_address&#39;</span> <span class="p">:</span> <span class="s">&#39;wendy@aol.com&#39;</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">])</span>
+<div class='show_sql'>INSERT INTO addresses (user_id, email_address) VALUES (?, ?)
+((1, 'jack@yahoo.com'), (1, 'jack@msn.com'), (2, 'www@www.org'), (2, 'wendy@aol.com'))
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span></pre></div>
+</div>
+<p>Above, we again relied upon SQLite&#8217;s automatic generation of primary key identifiers for each <tt class="docutils literal"><span class="pre">addresses</span></tt> row.</p>
+<p>When executing multiple sets of parameters, each dictionary must have the <strong>same</strong> set of keys; i.e. you cant have fewer keys in some dictionaries than others.  This is because the <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> statement is compiled against the <strong>first</strong> dictionary in the list, and it&#8217;s assumed that all subsequent argument dictionaries are compatible with that statement.</p>
+</div>
+<div class="section" id="connectionless-implicit-execution">
+<h2>Connectionless / Implicit Execution<a class="headerlink" href="#connectionless-implicit-execution" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re executing our <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> using a <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Connection" title="sqlalchemy.engine.base.Connection"><tt class="xref py py-class docutils literal"><span class="pre">Connection</span></tt></a>.  There&#8217;s two options that allow you to not have to deal with the connection part.  You can execute in the <strong>connectionless</strong> style, using the engine, which checks out from the connection pool a connection for you, performs the execute operation with that connection, and then checks the connection back into the pool upon completion of the operation:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;fred&#39;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s">&quot;Fred Flintstone&quot;</span><span class="p">)</span>
+<div class='popup_sql'>INSERT INTO users (name, fullname) VALUES (?, ?)
+('fred', 'Fred Flintstone')
+COMMIT</div></pre></div>
+</div>
+<p>and you can save even more steps than that, if you connect the <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> to the <a class="reference internal" href="schema.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><tt class="xref py py-class docutils literal"><span class="pre">MetaData</span></tt></a> object we created earlier.  When this is done, all SQL expressions which involve tables within the <a class="reference internal" href="schema.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><tt class="xref py py-class docutils literal"><span class="pre">MetaData</span></tt></a> object will be automatically <strong>bound</strong> to the <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>.  In this case, we call it  <strong>implicit execution</strong>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">bind</span> <span class="o">=</span> <span class="n">engine</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;mary&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s">&quot;Mary Contrary&quot;</span><span class="p">)</span>
+<div class='popup_sql'>INSERT INTO users (name, fullname) VALUES (?, ?)
+('mary', 'Mary Contrary')
+COMMIT</div></pre></div>
+</div>
+<p>When the <a class="reference internal" href="schema.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><tt class="xref py py-class docutils literal"><span class="pre">MetaData</span></tt></a> is bound, statements will also compile against the engine&#8217;s dialect.  Since a lot of the examples here assume the default dialect, we&#8217;ll detach the engine from the metadata which we just attached:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">bind</span> <span class="o">=</span> <span class="bp">None</span></pre></div>
+</div>
+<p>Detailed examples of connectionless and implicit execution are available in the &#8220;Engines&#8221; chapter: <a class="reference internal" href="connections.html#dbengine-implicit"><em>Connectionless Execution, Implicit Execution</em></a>.</p>
+</div>
+<div class="section" id="selecting">
+<h2>Selecting<a class="headerlink" href="#selecting" title="Permalink to this headline">¶</a></h2>
+<p>We began with inserts just so that our test database had some data in it.  The more interesting part of the data is selecting it !  We&#8217;ll cover UPDATE and DELETE statements later.  The primary construct used to generate SELECT statements is the <tt class="docutils literal"><span class="pre">select()</span></tt> function:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  
+<div class='show_sql'>SELECT users.id, users.name, users.fullname
+FROM users
+()</div></pre></div>
+</div>
+<p>Above, we issued a basic <tt class="docutils literal"><span class="pre">select()</span></tt> call, placing the <tt class="docutils literal"><span class="pre">users</span></tt> table within the COLUMNS clause of the select, and then executing.  SQLAlchemy expanded the <tt class="docutils literal"><span class="pre">users</span></tt> table into the set of each of its columns, and also generated a FROM clause for us.  The result returned is again a <a class="reference internal" href="connections.html#sqlalchemy.engine.base.ResultProxy" title="sqlalchemy.engine.base.ResultProxy"><tt class="xref py py-class docutils literal"><span class="pre">ResultProxy</span></tt></a> object, which acts much like a DBAPI cursor, including methods such as <a class="reference internal" href="connections.html#sqlalchemy.engine.base.ResultProxy.fetchone" title="sqlalchemy.engine.base.ResultProxy.fetchone"><tt class="xref py py-func docutils literal"><span class="pre">fetchone()</span></tt></a> and <a class="reference internal" href="connections.html#sqlalchemy.engine.base.ResultProxy.fetchall" title="sqlalchemy.engine.base.ResultProxy.fetchall"><tt class="xref py py-func docutils literal"><span class="pre">fetchall()</span></tt></a>.  The easiest way to get rows from it is to just iterate:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">row</span>
+<span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;)</span>
+<span class="go">(3, u&#39;fred&#39;, u&#39;Fred Flintstone&#39;)</span>
+<span class="go">(4, u&#39;mary&#39;, u&#39;Mary Contrary&#39;)</span></pre></div>
+</div>
+<p>Above, we see that printing each row produces a simple tuple-like result.  We have more options at accessing the data in each row.  One very common way is through dictionary access, using the string names of columns:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname
+FROM users
+()</div><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;name:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="s">&quot;; fullname:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;fullname&#39;</span><span class="p">]</span>
+<span class="go">name: jack ; fullname: Jack Jones</span></pre></div>
+</div>
+<p>Integer indexes work as well:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;name:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&quot;; fullname:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">name: wendy ; fullname: Wendy Williams</span></pre></div>
+</div>
+<p>But another way, whose usefulness will become apparent later on, is to use the <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> objects directly as keys:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>  
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;name:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="s">&quot;; fullname:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">]</span>
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname
+FROM users
+()</div><span class="go">name: jack ; fullname: Jack Jones</span>
+<span class="go">name: wendy ; fullname: Wendy Williams</span>
+<span class="go">name: fred ; fullname: Fred Flintstone</span>
+<span class="go">name: mary ; fullname: Mary Contrary</span></pre></div>
+</div>
+<p>Result sets which have pending rows remaining should be explicitly closed before discarding.  While the cursor and connection resources referenced by the <a class="reference internal" href="connections.html#sqlalchemy.engine.base.ResultProxy" title="sqlalchemy.engine.base.ResultProxy"><tt class="xref py py-class docutils literal"><span class="pre">ResultProxy</span></tt></a> will be respectively closed and returned to the connection pool when the object is garbage collected, it&#8217;s better to make it explicit as some database APIs are very picky about such things:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+</div>
+<p>If we&#8217;d like to more carefully control the columns which are placed in the COLUMNS clause of the select, we reference individual <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> objects from our <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a>.  These are available as named attributes off the <tt class="docutils literal"><span class="pre">c</span></tt> attribute of the <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> object:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">])</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  
+<div class='popup_sql'>SELECT users.name, users.fullname
+FROM users
+()</div><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>  
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">row</span>
+<span class="go">(u&#39;jack&#39;, u&#39;Jack Jones&#39;)</span>
+<span class="go">(u&#39;wendy&#39;, u&#39;Wendy Williams&#39;)</span>
+<span class="go">(u&#39;fred&#39;, u&#39;Fred Flintstone&#39;)</span>
+<span class="go">(u&#39;mary&#39;, u&#39;Mary Contrary&#39;)</span></pre></div>
+</div>
+<p>Lets observe something interesting about the FROM clause.  Whereas the generated statement contains two distinct sections, a &#8220;SELECT columns&#8221; part and a &#8220;FROM table&#8221; part, our <tt class="docutils literal"><span class="pre">select()</span></tt> construct only has a list containing columns.  How does this work ?  Let&#8217;s try putting <em>two</em> tables into our <tt class="docutils literal"><span class="pre">select()</span></tt> statement:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">,</span> <span class="n">addresses</span><span class="p">])):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">row</span>  
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address
+FROM users, addresses
+()</div><span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 1, 1, u&#39;jack@yahoo.com&#39;)</span>
+<span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 2, 1, u&#39;jack@msn.com&#39;)</span>
+<span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 3, 2, u&#39;www@www.org&#39;)</span>
+<span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 4, 2, u&#39;wendy@aol.com&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;, 1, 1, u&#39;jack@yahoo.com&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;, 2, 1, u&#39;jack@msn.com&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;, 3, 2, u&#39;www@www.org&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;, 4, 2, u&#39;wendy@aol.com&#39;)</span>
+<span class="go">(3, u&#39;fred&#39;, u&#39;Fred Flintstone&#39;, 1, 1, u&#39;jack@yahoo.com&#39;)</span>
+<span class="go">(3, u&#39;fred&#39;, u&#39;Fred Flintstone&#39;, 2, 1, u&#39;jack@msn.com&#39;)</span>
+<span class="go">(3, u&#39;fred&#39;, u&#39;Fred Flintstone&#39;, 3, 2, u&#39;www@www.org&#39;)</span>
+<span class="go">(3, u&#39;fred&#39;, u&#39;Fred Flintstone&#39;, 4, 2, u&#39;wendy@aol.com&#39;)</span>
+<span class="go">(4, u&#39;mary&#39;, u&#39;Mary Contrary&#39;, 1, 1, u&#39;jack@yahoo.com&#39;)</span>
+<span class="go">(4, u&#39;mary&#39;, u&#39;Mary Contrary&#39;, 2, 1, u&#39;jack@msn.com&#39;)</span>
+<span class="go">(4, u&#39;mary&#39;, u&#39;Mary Contrary&#39;, 3, 2, u&#39;www@www.org&#39;)</span>
+<span class="go">(4, u&#39;mary&#39;, u&#39;Mary Contrary&#39;, 4, 2, u&#39;wendy@aol.com&#39;)</span></pre></div>
+</div>
+<p>It placed <strong>both</strong> tables into the FROM clause.  But also, it made a real mess.  Those who are familiar with SQL joins know that this is a <strong>Cartesian product</strong>; each row from the <tt class="docutils literal"><span class="pre">users</span></tt> table is produced against each row from the <tt class="docutils literal"><span class="pre">addresses</span></tt> table.  So to put some sanity into this statement, we need a WHERE clause.  Which brings us to the second argument of <tt class="docutils literal"><span class="pre">select()</span></tt>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">,</span> <span class="n">addresses</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">row</span>  
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address
+FROM users, addresses
+WHERE users.id = addresses.user_id
+()</div><span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 1, 1, u&#39;jack@yahoo.com&#39;)</span>
+<span class="go">(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 2, 1, u&#39;jack@msn.com&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;, 3, 2, u&#39;www@www.org&#39;)</span>
+<span class="go">(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;, 4, 2, u&#39;wendy@aol.com&#39;)</span></pre></div>
+</div>
+<p>So that looks a lot better, we added an expression to our <tt class="docutils literal"><span class="pre">select()</span></tt> which had the effect of adding <tt class="docutils literal"><span class="pre">WHERE</span> <span class="pre">users.id</span> <span class="pre">=</span> <span class="pre">addresses.user_id</span></tt> to our statement, and our results were managed down so that the join of <tt class="docutils literal"><span class="pre">users</span></tt> and <tt class="docutils literal"><span class="pre">addresses</span></tt> rows made sense.  But let&#8217;s look at that expression?  It&#8217;s using just a Python equality operator between two different <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> objects.  It should be clear that something is up.  Saying <tt class="docutils literal"><span class="pre">1==1</span></tt> produces <tt class="xref docutils literal"><span class="pre">True</span></tt>, and <tt class="docutils literal"><span class="pre">1==2</span></tt> produces <tt class="xref docutils literal"><span class="pre">False</span></tt>, not a WHERE clause.  So lets see exactly what that expression is doing:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> 
+<span class="go">&lt;sqlalchemy.sql.expression._BinaryExpression object at 0x...&gt;</span></pre></div>
+</div>
+<p>Wow, surprise !  This is neither a <tt class="xref docutils literal"><span class="pre">True</span></tt> nor a <tt class="xref docutils literal"><span class="pre">False</span></tt>.  Well what is it ?</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+<span class="go">&#39;users.id = addresses.user_id&#39;</span></pre></div>
+</div>
+<p>As you can see, the <tt class="docutils literal"><span class="pre">==</span></tt> operator is producing an object that is very much like the <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> and <tt class="docutils literal"><span class="pre">select()</span></tt> objects we&#8217;ve made so far, thanks to Python&#8217;s <tt class="docutils literal"><span class="pre">__eq__()</span></tt> builtin; you call <tt class="docutils literal"><span class="pre">str()</span></tt> on it and it produces SQL.  By now, one can see that everything we are working with is ultimately the same type of object.  SQLAlchemy terms the base class of all of these expressions as <tt class="docutils literal"><span class="pre">sqlalchemy.sql.ClauseElement</span></tt>.</p>
+</div>
+<div class="section" id="operators">
+<h2>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h2>
+<p>Since we&#8217;ve stumbled upon SQLAlchemy&#8217;s operator paradigm, let&#8217;s go through some of its capabilities.  We&#8217;ve seen how to equate two columns to each other:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span>
+<span class="go">users.id = addresses.user_id</span></pre></div>
+</div>
+<p>If we use a literal value (a literal meaning, not a SQLAlchemy clause object), we get a bind parameter:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="mi">7</span>
+<span class="go">users.id = :id_1</span></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">7</span></tt> literal is embedded in <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><tt class="xref py py-class docutils literal"><span class="pre">ClauseElement</span></tt></a>; we can use the same trick we did with the <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><tt class="xref py py-class docutils literal"><span class="pre">Insert</span></tt></a> object to see it:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span><span class="o">.</span><span class="n">params</span>
+<span class="go">{u&#39;id_1&#39;: 7}</span></pre></div>
+</div>
+<p>Most Python operators, as it turns out, produce a SQL expression here, like equals, not equals, etc.:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="mi">7</span>
+<span class="go">users.id != :id_1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># None converts to IS NULL</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">None</span>
+<span class="go">users.name IS NULL</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># reverse works too</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;fred&#39;</span> <span class="o">&gt;</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span>
+<span class="go">users.name &lt; :name_1</span></pre></div>
+</div>
+<p>If we add two integer columns together, we get an addition expression:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">+</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span>
+<span class="go">users.id + addresses.id</span></pre></div>
+</div>
+<p>Interestingly, the type of the <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> is important !  If we use <tt class="docutils literal"><span class="pre">+</span></tt> with two string based columns (recall we put types like <a class="reference internal" href="types.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><tt class="xref py py-class docutils literal"><span class="pre">Integer</span></tt></a> and <a class="reference internal" href="types.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><tt class="xref py py-class docutils literal"><span class="pre">String</span></tt></a> on our <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> objects at the beginning), we get something different:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span>
+<span class="go">users.name || users.fullname</span></pre></div>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">||</span></tt> is the string concatenation operator used on most databases.  But not all of them.  MySQL users, fear not:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mysql://&#39;</span><span class="p">))</span>
+<span class="go">concat(users.name, users.fullname)</span></pre></div>
+</div>
+<p>The above illustrates the SQL that&#8217;s generated for an <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> that&#8217;s connected to a MySQL database; the <tt class="docutils literal"><span class="pre">||</span></tt> operator now compiles as MySQL&#8217;s <tt class="docutils literal"><span class="pre">concat()</span></tt> function.</p>
+<p>If you have come across an operator which really isn&#8217;t available, you can always use the <tt class="docutils literal"><span class="pre">op()</span></tt> method; this generates whatever operator you need:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s">&#39;tiddlywinks&#39;</span><span class="p">)(</span><span class="s">&#39;foo&#39;</span><span class="p">)</span>
+<span class="go">users.name tiddlywinks :name_1</span></pre></div>
+</div>
+<p>This function can also be used to make bitwise operators explicit. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">somecolumn</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s">&#39;&amp;&#39;</span><span class="p">)(</span><span class="mh">0xff</span><span class="p">)</span></pre></div>
+</div>
+<p>is a bitwise AND of the value in <cite>somecolumn</cite>.</p>
+</div>
+<div class="section" id="conjunctions">
+<h2>Conjunctions<a class="headerlink" href="#conjunctions" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;d like to show off some of our operators inside of <tt class="docutils literal"><span class="pre">select()</span></tt> constructs.  But we need to lump them together a little more, so let&#8217;s first introduce some conjunctions.  Conjunctions are those little words like AND and OR that put things together.  We&#8217;ll also hit upon NOT.  AND, OR and NOT can work from the corresponding functions SQLAlchemy provides (notice we also throw in a LIKE):</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">and_</span><span class="p">,</span> <span class="n">or_</span><span class="p">,</span> <span class="n">not_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">and_</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;j%&#39;</span><span class="p">),</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> 
+<span class="gp">... </span>    <span class="n">or_</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;wendy@aol.com&#39;</span><span class="p">,</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;jack@yahoo.com&#39;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">not_</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">users.name LIKE :name_1 AND users.id = addresses.user_id AND</span>
+<span class="go">(addresses.email_address = :email_address_1 OR addresses.email_address = :email_address_2)</span>
+<span class="go">AND users.id &lt;= :id_1</span></pre></div>
+</div>
+<p>And you can also use the re-jiggered bitwise AND, OR and NOT operators, although because of Python operator precedence you have to watch your parenthesis:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;j%&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span> <span class="o">&amp;</span>  \
+<span class="gp">... </span>    <span class="p">((</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;wendy@aol.com&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;jack@yahoo.com&#39;</span><span class="p">))</span> \
+<span class="gp">... </span>    <span class="o">&amp;</span> <span class="o">~</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)</span> 
+<span class="go">users.name LIKE :name_1 AND users.id = addresses.user_id AND</span>
+<span class="go">(addresses.email_address = :email_address_1 OR addresses.email_address = :email_address_2)</span>
+<span class="go">AND users.id &lt;= :id_1</span></pre></div>
+</div>
+<p>So with all of this vocabulary, let&#8217;s select all users who have an email address at AOL or MSN, whose name starts with a letter between &#8220;m&#8221; and &#8220;z&#8221;, and we&#8217;ll also generate a column containing their full name combined with their email address.  We will add two new constructs to this statement, <tt class="docutils literal"><span class="pre">between()</span></tt> and <tt class="docutils literal"><span class="pre">label()</span></tt>.  <tt class="docutils literal"><span class="pre">between()</span></tt> produces a BETWEEN clause, and <tt class="docutils literal"><span class="pre">label()</span></tt> is used in a column expression to produce labels using the <tt class="docutils literal"><span class="pre">AS</span></tt> keyword; it&#8217;s recommended when selecting from expressions that otherwise would not have a name:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>       <span class="n">and_</span><span class="p">(</span>
+<span class="gp">... </span>           <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="s">&#39;z&#39;</span><span class="p">),</span>
+<span class="gp">... </span>          <span class="n">or_</span><span class="p">(</span>
+<span class="gp">... </span>             <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@aol.com&#39;</span><span class="p">),</span>
+<span class="gp">... </span>             <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">)</span>
+<span class="gp">... </span>          <span class="p">)</span>
+<span class="gp">... </span>       <span class="p">)</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<span class="go">SELECT users.fullname || ? || addresses.email_address AS title</span>
+<span class="go">FROM users, addresses</span>
+<span class="go">WHERE users.id = addresses.user_id AND users.name BETWEEN ? AND ? AND</span>
+<span class="go">(addresses.email_address LIKE ? OR addresses.email_address LIKE ?)</span>
+<span class="go">(&#39;, &#39;, &#39;m&#39;, &#39;z&#39;, &#39;%@aol.com&#39;, &#39;%@msn.com&#39;)</span>
+<span class="go">[(u&#39;Wendy Williams, wendy@aol.com&#39;,)]</span></pre></div>
+</div>
+<p>Once again, SQLAlchemy figured out the FROM clause for our statement.  In fact it will determine the FROM clause based on all of its other bits; the columns clause, the where clause, and also some other elements which we haven&#8217;t covered yet, which include ORDER BY, GROUP BY, and HAVING.</p>
+</div>
+<div class="section" id="using-text">
+<span id="sqlexpression-text"></span><h2>Using Text<a class="headerlink" href="#using-text" title="Permalink to this headline">¶</a></h2>
+<p>Our last example really became a handful to type.  Going from what one understands to be a textual SQL expression into a Python construct which groups components together in a programmatic style can be hard.  That&#8217;s why SQLAlchemy lets you just use strings too.  The <tt class="docutils literal"><span class="pre">text()</span></tt> construct represents any textual statement.  To use bind parameters with <tt class="docutils literal"><span class="pre">text()</span></tt>, always use the named colon format.  Such as below, we create a <tt class="docutils literal"><span class="pre">text()</span></tt> and execute it, feeding in the bind parameters to the <tt class="docutils literal"><span class="pre">execute()</span></tt> method:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">text</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">text</span><span class="p">(</span><span class="s">&quot;&quot;&quot;SELECT users.fullname || &#39;, &#39; || addresses.email_address AS title</span>
+<span class="gp">... </span>           <span class="n">FROM</span> <span class="n">users</span><span class="p">,</span> <span class="n">addresses</span>
+<span class="gp">... </span>           <span class="n">WHERE</span> <span class="n">users</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">user_id</span> <span class="n">AND</span> <span class="n">users</span><span class="o">.</span><span class="n">name</span> <span class="n">BETWEEN</span> <span class="p">:</span><span class="n">x</span> <span class="n">AND</span> <span class="p">:</span><span class="n">y</span> <span class="n">AND</span>
+<span class="gp">... </span>           <span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">email_address</span> <span class="n">LIKE</span> <span class="p">:</span><span class="n">e1</span> <span class="n">OR</span> <span class="n">addresses</span><span class="o">.</span><span class="n">email_address</span> <span class="n">LIKE</span> <span class="p">:</span><span class="n">e2</span><span class="p">)</span>
+<span class="gp">... </span>       <span class="s">&quot;&quot;&quot;)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">&#39;z&#39;</span><span class="p">,</span> <span class="n">e1</span><span class="o">=</span><span class="s">&#39;%@aol.com&#39;</span><span class="p">,</span> <span class="n">e2</span><span class="o">=</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT users.fullname || ', ' || addresses.email_address AS title
+FROM users, addresses
+WHERE users.id = addresses.user_id AND users.name BETWEEN ? AND ? AND
+(addresses.email_address LIKE ? OR addresses.email_address LIKE ?)
+('m', 'z', '%@aol.com', '%@msn.com')</div><span class="go">[(u&#39;Wendy Williams, wendy@aol.com&#39;,)]</span></pre></div>
+</div>
+<p>To gain a &#8220;hybrid&#8221; approach, the <cite>select()</cite> construct accepts strings for most of its arguments.  Below we combine the usage of strings with our constructed <tt class="docutils literal"><span class="pre">select()</span></tt> object, by using the <tt class="docutils literal"><span class="pre">select()</span></tt> object to structure the statement, and strings to provide all the content within the structure.  For this example, SQLAlchemy is not given any <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> or <a class="reference internal" href="schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> objects in any of its expressions, so it cannot generate a FROM clause.  So we also give it the <tt class="docutils literal"><span class="pre">from_obj</span></tt> keyword argument, which is a list of <tt class="docutils literal"><span class="pre">ClauseElements</span></tt> (or strings) to be placed within the FROM clause:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="s">&quot;users.fullname || &#39;, &#39; || addresses.email_address AS title&quot;</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="n">and_</span><span class="p">(</span>
+<span class="gp">... </span>           <span class="s">&quot;users.id = addresses.user_id&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="s">&quot;users.name BETWEEN &#39;m&#39; AND &#39;z&#39;&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="s">&quot;(addresses.email_address LIKE :x OR addresses.email_address LIKE :y)&quot;</span>
+<span class="gp">... </span>       <span class="p">),</span>
+<span class="gp">... </span>        <span class="n">from_obj</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;users&#39;</span><span class="p">,</span> <span class="s">&#39;addresses&#39;</span><span class="p">]</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&#39;%@aol.com&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT users.fullname || ', ' || addresses.email_address AS title
+FROM users, addresses
+WHERE users.id = addresses.user_id AND users.name BETWEEN 'm' AND 'z' AND (addresses.email_address LIKE ? OR addresses.email_address LIKE ?)
+('%@aol.com', '%@msn.com')</div><span class="go">[(u&#39;Wendy Williams, wendy@aol.com&#39;,)]</span></pre></div>
+</div>
+<p>Going from constructed SQL to text, we lose some capabilities.  We lose the capability for SQLAlchemy to compile our expression to a specific target database; above, our expression won&#8217;t work with MySQL since it has no <tt class="docutils literal"><span class="pre">||</span></tt> construct.  It also becomes more tedious for SQLAlchemy to be made aware of the datatypes in use; for example, if our bind parameters required UTF-8 encoding before going in, or conversion from a Python <tt class="docutils literal"><span class="pre">datetime</span></tt> into a string (as is required with SQLite), we would have to add extra information to our <tt class="docutils literal"><span class="pre">text()</span></tt> construct.  Similar issues arise on the result set side, where SQLAlchemy also performs type-specific data conversion in some cases; still more information can be added to <tt class="docutils literal"><span class="pre">text()</span></tt> to work around this.  But what we really lose from our statement is the ability to manipulate it, transform it, and analyze it.  These features are critical when using the ORM, which makes heavy usage of relational transformations.  To show off what we mean, we&#8217;ll first introduce the ALIAS construct and the JOIN construct, just so we have some juicier bits to play with.</p>
+</div>
+<div class="section" id="using-aliases">
+<h2>Using Aliases<a class="headerlink" href="#using-aliases" title="Permalink to this headline">¶</a></h2>
+<p>The alias corresponds to a &#8220;renamed&#8221; version of a table or arbitrary relationship, which occurs anytime you say &#8220;SELECT  .. FROM sometable AS someothername&#8221;.  The <tt class="docutils literal"><span class="pre">AS</span></tt> creates a new name for the table.  Aliases are super important in SQL as they allow you to reference the same table more than once.  Scenarios where you need to do this include when you self-join a table to itself, or more commonly when you need to join from a parent table to a child table multiple times.  For example, we know that our user <tt class="docutils literal"><span class="pre">jack</span></tt> has two email addresses.  How can we locate jack based on the combination of those two addresses?  We need to join twice to it.  Let&#8217;s construct two distinct aliases for the <tt class="docutils literal"><span class="pre">addresses</span></tt> table and join:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s">&#39;a1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s">&#39;a2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">],</span> <span class="n">and_</span><span class="p">(</span>
+<span class="gp">... </span>       <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">a1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">a2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">a1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;jack@msn.com&#39;</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">a2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;jack@yahoo.com&#39;</span>
+<span class="gp">... </span>  <span class="p">))</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>  
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname
+FROM users, addresses AS a1, addresses AS a2
+WHERE users.id = a1.user_id AND users.id = a2.user_id AND a1.email_address = ? AND a2.email_address = ?
+('jack@msn.com', 'jack@yahoo.com')</div><span class="go">[(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;)]</span></pre></div>
+</div>
+<p>Easy enough.  One thing that we&#8217;re going for with the SQL Expression Language is the melding of programmatic behavior with SQL generation.  Coming up with names like <tt class="docutils literal"><span class="pre">a1</span></tt> and <tt class="docutils literal"><span class="pre">a2</span></tt> is messy; we really didn&#8217;t need to use those names anywhere, it&#8217;s just the database that needed them.  Plus, we might write some code that uses alias objects that came from several different places, and it&#8217;s difficult to ensure that they all have unique names.  So instead, we just let SQLAlchemy make the names for us, using &#8220;anonymous&#8221; aliases:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">],</span> <span class="n">and_</span><span class="p">(</span>
+<span class="gp">... </span>       <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">a1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">a2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">a1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;jack@msn.com&#39;</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">a2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;jack@yahoo.com&#39;</span>
+<span class="gp">... </span>  <span class="p">))</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>  
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname
+FROM users, addresses AS addresses_1, addresses AS addresses_2
+WHERE users.id = addresses_1.user_id AND users.id = addresses_2.user_id AND addresses_1.email_address = ? AND addresses_2.email_address = ?
+('jack@msn.com', 'jack@yahoo.com')</div><span class="go">[(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;)]</span></pre></div>
+</div>
+<p>One super-huge advantage of anonymous aliases is that not only did we not have to guess up a random name, but we can also be guaranteed that the above SQL string is <strong>deterministically</strong> generated to be the same every time.  This is important for databases such as Oracle which cache compiled &#8220;query plans&#8221; for their statements, and need to see the same SQL string in order to make use of it.</p>
+<p>Aliases can of course be used for anything which you can SELECT from, including SELECT statements themselves.  We can self-join the <tt class="docutils literal"><span class="pre">users</span></tt> table back to the <tt class="docutils literal"><span class="pre">select()</span></tt> we&#8217;ve created by making an alias of the entire statement.  The <tt class="docutils literal"><span class="pre">correlate(None)</span></tt> directive is to avoid SQLAlchemy&#8217;s attempt to &#8220;correlate&#8221; the inner <tt class="docutils literal"><span class="pre">users</span></tt> table with the outer one:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">a1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>  
+<div class='popup_sql'>SELECT users.name
+FROM users, (SELECT users.id AS id, users.name AS name, users.fullname AS fullname
+FROM users, addresses AS addresses_1, addresses AS addresses_2
+WHERE users.id = addresses_1.user_id AND users.id = addresses_2.user_id AND addresses_1.email_address = ? AND addresses_2.email_address = ?) AS anon_1
+WHERE users.id = anon_1.id
+('jack@msn.com', 'jack@yahoo.com')</div><span class="go">[(u&#39;jack&#39;,)]</span></pre></div>
+</div>
+</div>
+<div class="section" id="using-joins">
+<h2>Using Joins<a class="headerlink" href="#using-joins" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re halfway along to being able to construct any SELECT expression.  The next cornerstone of the SELECT is the JOIN expression.  We&#8217;ve already been doing joins in our examples, by just placing two tables in either the columns clause or the where clause of the <tt class="docutils literal"><span class="pre">select()</span></tt> construct.  But if we want to make a real &#8220;JOIN&#8221; or &#8220;OUTERJOIN&#8221; construct, we use the <tt class="docutils literal"><span class="pre">join()</span></tt> and <tt class="docutils literal"><span class="pre">outerjoin()</span></tt> methods, most commonly accessed from the left table in the join:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span>
+<span class="go">users JOIN addresses ON users.id = addresses.user_id</span></pre></div>
+</div>
+<p>The alert reader will see more surprises; SQLAlchemy figured out how to JOIN the two tables !  The ON condition of the join, as it&#8217;s called, was automatically generated based on the <a class="reference internal" href="schema.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><tt class="xref py py-class docutils literal"><span class="pre">ForeignKey</span></tt></a> object which we placed on the <tt class="docutils literal"><span class="pre">addresses</span></tt> table way at the beginning of this tutorial.  Already the <tt class="docutils literal"><span class="pre">join()</span></tt> construct is looking like a much better way to join tables.</p>
+<p>Of course you can join on whatever expression you want, such as if we want to join on all users who use the same name in their email address as their username:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">users</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;%&#39;</span><span class="p">))</span>
+<span class="go">users JOIN addresses ON addresses.email_address LIKE users.name || :name_1</span></pre></div>
+</div>
+<p>When we create a <tt class="docutils literal"><span class="pre">select()</span></tt> construct, SQLAlchemy looks around at the tables we&#8217;ve mentioned and then places them in the FROM clause of the statement.  When we use JOINs however, we know what FROM clause we want, so here we make usage of the <tt class="docutils literal"><span class="pre">from_obj</span></tt> keyword argument:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">],</span> <span class="n">from_obj</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>   <span class="n">users</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;%&#39;</span><span class="p">))</span>
+<span class="gp">... </span>   <span class="p">])</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>  
+<div class='popup_sql'>SELECT users.fullname
+FROM users JOIN addresses ON addresses.email_address LIKE users.name || ?
+('%',)</div><span class="go">[(u&#39;Jack Jones&#39;,), (u&#39;Jack Jones&#39;,), (u&#39;Wendy Williams&#39;,)]</span></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">outerjoin()</span></tt> function just creates <tt class="docutils literal"><span class="pre">LEFT</span> <span class="pre">OUTER</span> <span class="pre">JOIN</span></tt> constructs.  It&#8217;s used just like <tt class="docutils literal"><span class="pre">join()</span></tt>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">],</span> <span class="n">from_obj</span><span class="o">=</span><span class="p">[</span><span class="n">users</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">addresses</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span>  
+<span class="go">SELECT users.fullname</span>
+<span class="go">FROM users LEFT OUTER JOIN addresses ON users.id = addresses.user_id</span></pre></div>
+</div>
+<p>That&#8217;s the output <tt class="docutils literal"><span class="pre">outerjoin()</span></tt> produces, unless, of course, you&#8217;re stuck in a gig using Oracle prior to version 9, and you&#8217;ve set up your engine (which would be using <tt class="docutils literal"><span class="pre">OracleDialect</span></tt>) to use Oracle-specific SQL:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects.oracle</span> <span class="kn">import</span> <span class="n">dialect</span> <span class="k">as</span> <span class="n">OracleDialect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">OracleDialect</span><span class="p">(</span><span class="n">use_ansi</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>  
+<span class="go">SELECT users.fullname</span>
+<span class="go">FROM users, addresses</span>
+<span class="go">WHERE users.id = addresses.user_id(+)</span></pre></div>
+</div>
+<p>If you don&#8217;t know what that SQL means, don&#8217;t worry !  The secret tribe of Oracle DBAs don&#8217;t want their black magic being found out ;).</p>
+</div>
+<div class="section" id="intro-to-generative-selects-and-transformations">
+<h2>Intro to Generative Selects and Transformations<a class="headerlink" href="#intro-to-generative-selects-and-transformations" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve now gained the ability to construct very sophisticated statements.  We can use all kinds of operators, table constructs, text, joins, and aliases.  The point of all of this, as mentioned earlier, is not that it&#8217;s an &#8220;easier&#8221; or &#8220;better&#8221; way to write SQL than just writing a SQL statement yourself; the point is that it&#8217;s better for writing <em>programmatically generated</em> SQL which can be morphed and adapted as needed in automated scenarios.</p>
+<p>To support this, the <tt class="docutils literal"><span class="pre">select()</span></tt> construct we&#8217;ve been working with supports piecemeal construction, in addition to the &#8220;all at once&#8221; method we&#8217;ve been doing.  Suppose you&#8217;re writing a search function, which receives criterion and then must construct a select from it.  To accomplish this, upon each criterion encountered, you apply &#8220;generative&#8221; criterion to an existing <tt class="docutils literal"><span class="pre">select()</span></tt> construct with new elements, one at a time.  We start with a basic <tt class="docutils literal"><span class="pre">select()</span></tt> constructed with the shortcut method available on the <tt class="docutils literal"><span class="pre">users</span></tt> table:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">query</span>  
+<span class="go">SELECT users.id, users.name, users.fullname</span>
+<span class="go">FROM users</span></pre></div>
+</div>
+<p>We encounter search criterion of &#8220;name=&#8217;jack&#8217;&#8221;.  So we apply WHERE criterion stating such:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="s">&#39;jack&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>Next, we encounter that they&#8217;d like the results in descending order by full name.  We apply ORDER BY, using an extra modifier <tt class="docutils literal"><span class="pre">desc</span></tt>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span></pre></div>
+</div>
+<p>We also come across that they&#8217;d like only users who have an address at MSN.  A quick way to tack this on is by using an EXISTS clause, which we correlate to the <tt class="docutils literal"><span class="pre">users</span></tt> table in the enclosing SELECT:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">exists</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">exists</span><span class="p">([</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="n">and_</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="o">==</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">))</span>
+<span class="gp">... </span>   <span class="p">)</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">users</span><span class="p">))</span></pre></div>
+</div>
+<p>And finally, the application also wants to see the listing of email addresses at once; so to save queries, we outerjoin the <tt class="docutils literal"><span class="pre">addresses</span></tt> table (using an outer join so that users with no addresses come back as well; since we&#8217;re programmatic, we might not have kept track that we used an EXISTS clause against the <tt class="docutils literal"><span class="pre">addresses</span></tt> table too...).  Additionally, since the <tt class="docutils literal"><span class="pre">users</span></tt> and <tt class="docutils literal"><span class="pre">addresses</span></tt> table both have a column named <tt class="docutils literal"><span class="pre">id</span></tt>, let&#8217;s isolate their names from each other in the COLUMNS clause by using labels:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">addresses</span><span class="p">))</span><span class="o">.</span><span class="n">apply_labels</span><span class="p">()</span></pre></div>
+</div>
+<p>Let&#8217;s bake for .0001 seconds and see what rises:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>  
+<div class='show_sql'>SELECT users.id AS users_id, users.name AS users_name, users.fullname AS users_fullname, addresses.id AS addresses_id, addresses.user_id AS addresses_user_id, addresses.email_address AS addresses_email_address
+FROM users LEFT OUTER JOIN addresses ON users.id = addresses.user_id
+WHERE users.name = ? AND (EXISTS (SELECT addresses.id
+FROM addresses
+WHERE addresses.user_id = users.id AND addresses.email_address LIKE ?)) ORDER BY users.fullname DESC
+('jack', '%@msn.com')</div><span class="go">[(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 1, 1, u&#39;jack@yahoo.com&#39;), (1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 2, 1, u&#39;jack@msn.com&#39;)]</span></pre></div>
+</div>
+<p>So we started small, added one little thing at a time, and at the end we have a huge statement..which actually works.  Now let&#8217;s do one more thing; the searching function wants to add another <tt class="docutils literal"><span class="pre">email_address</span></tt> criterion on, however it doesn&#8217;t want to construct an alias of the <tt class="docutils literal"><span class="pre">addresses</span></tt> table; suppose many parts of the application are written to deal specifically with the <tt class="docutils literal"><span class="pre">addresses</span></tt> table, and to change all those functions to support receiving an arbitrary alias of the address would be cumbersome.  We can actually <em>convert</em> the <tt class="docutils literal"><span class="pre">addresses</span></tt> table within the <em>existing</em> statement to be an alias of itself, using <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.FromClause.replace_selectable" title="sqlalchemy.sql.expression.FromClause.replace_selectable"><tt class="xref py py-func docutils literal"><span class="pre">replace_selectable()</span></tt></a>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">replace_selectable</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="n">a1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">query</span>  
+<div class='show_sql'>SELECT users.id AS users_id, users.name AS users_name, users.fullname AS users_fullname, addresses_1.id AS addresses_1_id, addresses_1.user_id AS addresses_1_user_id, addresses_1.email_address AS addresses_1_email_address
+FROM users LEFT OUTER JOIN addresses AS addresses_1 ON users.id = addresses_1.user_id
+WHERE users.name = :name_1 AND (EXISTS (SELECT addresses_1.id
+FROM addresses AS addresses_1
+WHERE addresses_1.user_id = users.id AND addresses_1.email_address LIKE :email_address_1)) ORDER BY users.fullname DESC</div></pre></div>
+</div>
+<p>One more thing though, with automatic labeling applied as well as anonymous aliasing, how do we retrieve the columns from the rows for this thing ?  The label for the <tt class="docutils literal"><span class="pre">email_addresses</span></tt> column is now the generated name <tt class="docutils literal"><span class="pre">addresses_1_email_address</span></tt>; and in another statement might be something different !  This is where accessing by result columns by <a class="reference internal" href="schema.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><tt class="xref py py-class docutils literal"><span class="pre">Column</span></tt></a> object becomes very useful:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;Name:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="s">&quot;; Email Address&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="n">a1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">]</span>  
+<div class='popup_sql'>SELECT users.id AS users_id, users.name AS users_name, users.fullname AS users_fullname, addresses_1.id AS addresses_1_id, addresses_1.user_id AS addresses_1_user_id, addresses_1.email_address AS addresses_1_email_address
+FROM users LEFT OUTER JOIN addresses AS addresses_1 ON users.id = addresses_1.user_id
+WHERE users.name = ? AND (EXISTS (SELECT addresses_1.id
+FROM addresses AS addresses_1
+WHERE addresses_1.user_id = users.id AND addresses_1.email_address LIKE ?)) ORDER BY users.fullname DESC
+('jack', '%@msn.com')</div><span class="go">Name: jack ; Email Address jack@yahoo.com</span>
+<span class="go">Name: jack ; Email Address jack@msn.com</span></pre></div>
+</div>
+<p>The above example, by its end, got significantly more intense than the typical end-user constructed SQL will usually be.  However when writing higher-level tools such as ORMs, they become more significant.  SQLAlchemy&#8217;s ORM relies very heavily on techniques like this.</p>
+</div>
+<div class="section" id="everything-else">
+<h2>Everything Else<a class="headerlink" href="#everything-else" title="Permalink to this headline">¶</a></h2>
+<p>The concepts of creating SQL expressions have been introduced.  What&#8217;s left are more variants of the same themes.  So now we&#8217;ll catalog the rest of the important things we&#8217;ll need to know.</p>
+<div class="section" id="bind-parameter-objects">
+<h3>Bind Parameter Objects<a class="headerlink" href="#bind-parameter-objects" title="Permalink to this headline">¶</a></h3>
+<p>Throughout all these examples, SQLAlchemy is busy creating bind parameters wherever literal expressions occur.  You can also specify your own bind parameters with your own names, and use the same statement repeatedly.  The database dialect converts to the appropriate named or positional style, as here where it converts to positional for SQLite:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">bindparam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">))</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;wendy&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname
+FROM users
+WHERE users.name = ?
+('wendy',)</div><span class="go">[(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;)]</span></pre></div>
+</div>
+<p>Another important aspect of bind parameters is that they may be assigned a type.  The type of the bind parameter will determine its behavior within expressions and also how the data bound to it is processed before being sent off to the database:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">String</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">(</span><span class="s">&quot;&#39;%&#39;&quot;</span><span class="p">)))</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;wendy&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname
+FROM users
+WHERE users.name LIKE ? || '%'
+('wendy',)</div><span class="go">[(2, u&#39;wendy&#39;, u&#39;Wendy Williams&#39;)]</span></pre></div>
+</div>
+<p>Bind parameters of the same name can also be used multiple times, where only a single named value is needed in the execute parameters:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">,</span> <span class="n">addresses</span><span class="p">],</span>
+<span class="gp">... </span>   <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">String</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">(</span><span class="s">&quot;&#39;%&#39;&quot;</span><span class="p">))</span> <span class="o">|</span>
+<span class="gp">... </span>   <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">String</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">(</span><span class="s">&quot;&#39;@%&#39;&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>   <span class="n">from_obj</span><span class="o">=</span><span class="p">[</span><span class="n">users</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">addresses</span><span class="p">)])</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;jack&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT users.id, users.name, users.fullname, addresses.id, addresses.user_id, addresses.email_address
+FROM users LEFT OUTER JOIN addresses ON users.id = addresses.user_id
+WHERE users.name LIKE ? || '%' OR addresses.email_address LIKE ? || '@%'
+('jack', 'jack')</div><span class="go">[(1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 1, 1, u&#39;jack@yahoo.com&#39;), (1, u&#39;jack&#39;, u&#39;Jack Jones&#39;, 2, 1, u&#39;jack@msn.com&#39;)]</span></pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<p>SQL functions are created using the <tt class="docutils literal"><span class="pre">func</span></tt> keyword, which generates functions using attribute access:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">func</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="go">now()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">func</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;y&#39;</span><span class="p">)</span>
+<span class="go">concat(:param_1, :param_2)</span></pre></div>
+</div>
+<p>By &#8220;generates&#8221;, we mean that <strong>any</strong> SQL function is created based on the word you choose:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">func</span><span class="o">.</span><span class="n">xyz_my_goofy_function</span><span class="p">()</span> 
+<span class="go">xyz_my_goofy_function()</span></pre></div>
+</div>
+<p>Certain function names are known by SQLAlchemy, allowing special behavioral rules to be applied.   Some for example are &#8220;ANSI&#8221; functions, which mean they don&#8217;t get the parenthesis added after them, such as CURRENT_TIMESTAMP:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">func</span><span class="o">.</span><span class="n">current_timestamp</span><span class="p">()</span>
+<span class="go">CURRENT_TIMESTAMP</span></pre></div>
+</div>
+<p>Functions are most typically used in the columns clause of a select statement, and can also be labeled as well as given a type.  Labeling a function is recommended so that the result can be targeted in a result row based on a string name, and assigning it a type is required when you need result-set processing to occur, such as for Unicode conversion and date conversions.  Below, we use the result function <tt class="docutils literal"><span class="pre">scalar()</span></tt> to just read the first column of the first row and then close the result; the label, even though present, is not important in this case:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">([</span><span class="n">func</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">String</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s">&#39;maxemail&#39;</span><span class="p">)])</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span> 
+<div class='show_sql'>SELECT max(addresses.email_address) AS maxemail
+FROM addresses
+()</div><span class="go">www@www.org</span></pre></div>
+</div>
+<p>Databases such as PostgreSQL and Oracle which support functions that return whole result sets can be assembled into selectable units, which can be used in statements.   Such as, a database function <tt class="docutils literal"><span class="pre">calculate()</span></tt> which takes the parameters <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt>, and returns three columns which we&#8217;d like to name <tt class="docutils literal"><span class="pre">q</span></tt>, <tt class="docutils literal"><span class="pre">z</span></tt> and <tt class="docutils literal"><span class="pre">r</span></tt>, we can construct using &#8220;lexical&#8221; column objects as well as bind parameters:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">column</span><span class="p">(</span><span class="s">&#39;q&#39;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s">&#39;z&#39;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">from_obj</span><span class="o">=</span><span class="p">[</span><span class="n">func</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">),</span> <span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">))])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">&gt;</span> <span class="n">calculate</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> 
+<span class="go">SELECT users.id, users.name, users.fullname</span>
+<span class="go">FROM users, (SELECT q, z, r</span>
+<span class="go">FROM calculate(:x, :y))</span>
+<span class="go">WHERE users.id &gt; z</span></pre></div>
+</div>
+<p>If we wanted to use our <tt class="docutils literal"><span class="pre">calculate</span></tt> statement twice with different bind parameters, the <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.ClauseElement.unique_params" title="sqlalchemy.sql.expression.ClauseElement.unique_params"><tt class="xref py py-func docutils literal"><span class="pre">unique_params()</span></tt></a> function will create copies for us, and mark the bind parameters as &#8220;unique&#8221; so that conflicting names are isolated.  Note we also make two separate aliases of our selectable:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">between</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">calculate</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s">&#39;c1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">unique_params</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">calculate</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s">&#39;c2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">unique_params</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span> 
+<span class="go">SELECT users.id, users.name, users.fullname</span>
+<span class="go">FROM users, (SELECT q, z, r</span>
+<span class="go">FROM calculate(:x_1, :y_1)) AS c1, (SELECT q, z, r</span>
+<span class="go">FROM calculate(:x_2, :y_2)) AS c2</span>
+<span class="go">WHERE users.id BETWEEN c1.z AND c2.z</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span><span class="o">.</span><span class="n">params</span>
+<span class="go">{u&#39;x_2&#39;: 5, u&#39;y_2&#39;: 12, u&#39;y_1&#39;: 45, u&#39;x_1&#39;: 17}</span></pre></div>
+</div>
+<p>See also <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><tt class="xref py py-attr docutils literal"><span class="pre">sqlalchemy.sql.expression.func</span></tt></a>.</p>
+</div>
+<div class="section" id="unions-and-other-set-operations">
+<h3>Unions and Other Set Operations<a class="headerlink" href="#unions-and-other-set-operations" title="Permalink to this headline">¶</a></h3>
+<p>Unions come in two flavors, UNION and UNION ALL, which are available via module level functions:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">union</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">union</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">==</span><span class="s">&#39;foo@bar.com&#39;</span><span class="p">),</span>
+<span class="gp">... </span>   <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@yahoo.com&#39;</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span>
+
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT addresses.id, addresses.user_id, addresses.email_address
+FROM addresses
+WHERE addresses.email_address = ? UNION SELECT addresses.id, addresses.user_id, addresses.email_address
+FROM addresses
+WHERE addresses.email_address LIKE ? ORDER BY addresses.email_address
+('foo@bar.com', '%@yahoo.com')</div><span class="go">[(1, 1, u&#39;jack@yahoo.com&#39;)]</span></pre></div>
+</div>
+<p>Also available, though not supported on all databases, are <tt class="docutils literal"><span class="pre">intersect()</span></tt>, <tt class="docutils literal"><span class="pre">intersect_all()</span></tt>, <tt class="docutils literal"><span class="pre">except_()</span></tt>, and <tt class="docutils literal"><span class="pre">except_all()</span></tt>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">except_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">except_</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@%.com&#39;</span><span class="p">)),</span>
+<span class="gp">... </span>   <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">))</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT addresses.id, addresses.user_id, addresses.email_address
+FROM addresses
+WHERE addresses.email_address LIKE ? EXCEPT SELECT addresses.id, addresses.user_id, addresses.email_address
+FROM addresses
+WHERE addresses.email_address LIKE ?
+('%@%.com', '%@msn.com')</div><span class="go">[(1, 1, u&#39;jack@yahoo.com&#39;), (4, 2, u&#39;wendy@aol.com&#39;)]</span></pre></div>
+</div>
+<p>A common issue with so-called &#8220;compound&#8221; selectables arises due to the fact that they nest with parenthesis.  SQLite in particular doesn&#8217;t like a statement that starts with parenthesis.  So when nesting a &#8220;compound&#8221; inside a &#8220;compound&#8221;, it&#8217;s often necessary to apply
+<tt class="docutils literal"><span class="pre">.alias().select()</span></tt> to the first element of the outermost compound, if that element is also a compound.  For example, to nest a &#8220;union&#8221; and a &#8220;select&#8221; inside of &#8220;except_&#8221;, SQLite will want
+the &#8220;union&#8221; to be stated as a subquery:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">except_</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">union</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@yahoo.com&#39;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(),</span>   <span class="c"># apply subquery here</span>
+<span class="gp">... </span>   <span class="n">addresses</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s">&#39;%@msn.com&#39;</span><span class="p">))</span>
+<span class="gp">... </span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>   
+<div class='popup_sql'>SELECT anon_1.id, anon_1.user_id, anon_1.email_address
+FROM (SELECT addresses.id AS id, addresses.user_id AS user_id,
+addresses.email_address AS email_address FROM addresses
+WHERE addresses.email_address LIKE ? UNION SELECT addresses.id AS id,
+addresses.user_id AS user_id, addresses.email_address AS email_address
+FROM addresses WHERE addresses.email_address LIKE ?) AS anon_1 EXCEPT
+SELECT addresses.id, addresses.user_id, addresses.email_address
+FROM addresses
+WHERE addresses.email_address LIKE ?
+('%@yahoo.com', '%@msn.com', '%@msn.com')</div><span class="go">[(1, 1, u&#39;jack@yahoo.com&#39;)]</span></pre></div>
+</div>
+</div>
+<div class="section" id="scalar-selects">
+<h3>Scalar Selects<a class="headerlink" href="#scalar-selects" title="Permalink to this headline">¶</a></h3>
+<p>To embed a SELECT in a column expression, use <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression._SelectBaseMixin.as_scalar" title="sqlalchemy.sql.expression._SelectBaseMixin.as_scalar"><tt class="xref py py-func docutils literal"><span class="pre">as_scalar()</span></tt></a>:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">([</span>   
+<span class="gp">... </span>      <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="n">select</span><span class="p">([</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">as_scalar</span><span class="p">()</span>
+<span class="gp">... </span>   <span class="p">]))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<div class='popup_sql'>SELECT users.name, (SELECT count(addresses.id) AS count_1
+FROM addresses
+WHERE users.id = addresses.user_id) AS anon_1
+FROM users
+()</div><span class="go">[(u&#39;jack&#39;, 2), (u&#39;wendy&#39;, 2), (u&#39;fred&#39;, 0), (u&#39;mary&#39;, 0)]</span></pre></div>
+</div>
+<p>Alternatively, applying a <tt class="docutils literal"><span class="pre">label()</span></tt> to a select evaluates it as a scalar as well:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">([</span>    
+<span class="gp">... </span>      <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="n">select</span><span class="p">([</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s">&#39;address_count&#39;</span><span class="p">)</span>
+<span class="gp">... </span>   <span class="p">]))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<div class='popup_sql'>SELECT users.name, (SELECT count(addresses.id) AS count_1
+FROM addresses
+WHERE users.id = addresses.user_id) AS address_count
+FROM users
+()</div><span class="go">[(u&#39;jack&#39;, 2), (u&#39;wendy&#39;, 2), (u&#39;fred&#39;, 0), (u&#39;mary&#39;, 0)]</span></pre></div>
+</div>
+</div>
+<div class="section" id="correlated-subqueries">
+<h3>Correlated Subqueries<a class="headerlink" href="#correlated-subqueries" title="Permalink to this headline">¶</a></h3>
+<p>Notice in the examples on &#8220;scalar selects&#8221;, the FROM clause of each embedded select did not contain the <tt class="docutils literal"><span class="pre">users</span></tt> table in its FROM clause.  This is because SQLAlchemy automatically attempts to correlate embedded FROM objects to that of an enclosing query.  To disable this, or to specify explicit FROM clauses to be correlated, use <tt class="docutils literal"><span class="pre">correlate()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">])</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="bp">None</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span> 
+<span class="go">SELECT users.name</span>
+<span class="go">FROM users</span>
+<span class="go">WHERE users.id = (SELECT users.id</span>
+<span class="go">FROM users)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span>
+<span class="gp">... </span>       <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">],</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span> 
+<span class="go">SELECT users.name, addresses.email_address</span>
+<span class="go">FROM users, addresses</span>
+<span class="go">WHERE users.id = (SELECT users.id</span>
+<span class="go">FROM users</span>
+<span class="go">WHERE users.id = addresses.user_id)</span></pre></div>
+</div>
+</div>
+<div class="section" id="ordering-grouping-limiting-offset-ing">
+<h3>Ordering, Grouping, Limiting, Offset...ing...<a class="headerlink" href="#ordering-grouping-limiting-offset-ing" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">select()</span></tt> function can take keyword arguments <tt class="docutils literal"><span class="pre">order_by</span></tt>, <tt class="docutils literal"><span class="pre">group_by</span></tt> (as well as <tt class="docutils literal"><span class="pre">having</span></tt>), <tt class="docutils literal"><span class="pre">limit</span></tt>, and <tt class="docutils literal"><span class="pre">offset</span></tt>.  There&#8217;s also <tt class="docutils literal"><span class="pre">distinct=True</span></tt>.  These are all also available as generative functions.  <tt class="docutils literal"><span class="pre">order_by()</span></tt> expressions can use the modifiers <tt class="docutils literal"><span class="pre">asc()</span></tt> or <tt class="docutils literal"><span class="pre">desc()</span></tt> to indicate ascending or descending.</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)])</span><span class="o">.</span>\
+<span class="gp">... </span>    <span class="n">group_by</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">having</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT addresses.user_id, count(addresses.id) AS count_1
+FROM addresses GROUP BY addresses.user_id
+HAVING count(addresses.id) > ?
+(1,)</div><span class="go">[(1, 2), (2, 2)]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">,</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">])</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span>\
+<span class="gp">... </span>    <span class="n">order_by</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">desc</span><span class="p">(),</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT DISTINCT addresses.email_address, addresses.id
+FROM addresses ORDER BY addresses.email_address DESC, addresses.id
+()</div><span class="go">[(u&#39;www@www.org&#39;, 3), (u&#39;wendy@aol.com&#39;, 4), (u&#39;jack@yahoo.com&#39;, 1), (u&#39;jack@msn.com&#39;, 2)]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">addresses</span><span class="p">])</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT addresses.id, addresses.user_id, addresses.email_address
+FROM addresses
+LIMIT 1 OFFSET 1
+()</div><span class="go">[(2, 1, u&#39;jack@msn.com&#39;)]</span></pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="inserts-and-updates">
+<h2>Inserts and Updates<a class="headerlink" href="#inserts-and-updates" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we&#8217;re back to INSERT for some more detail. The <a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><tt class="xref py py-func docutils literal"><span class="pre">insert()</span></tt></a> construct provides a <tt class="docutils literal"><span class="pre">values()</span></tt> method which can be used to send any value or clause expression to the VALUES portion of the INSERT:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># insert from a function</span>
+<span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">upper</span><span class="p">(</span><span class="s">&#39;jack&#39;</span><span class="p">))</span>
+
+<span class="c"># insert from a concatenation expression</span>
+<span class="n">addresses</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">email_address</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;@&#39;</span> <span class="o">+</span> <span class="n">host</span><span class="p">)</span></pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">values()</span></tt> can be mixed with per-execution values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">upper</span><span class="p">(</span><span class="s">&#39;jack&#39;</span><span class="p">)),</span>
+    <span class="n">fullname</span><span class="o">=</span><span class="s">&#39;Jack Jones&#39;</span>
+<span class="p">)</span></pre></div>
+</div>
+<p><a class="reference internal" href="expression_api.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><tt class="xref py py-func docutils literal"><span class="pre">bindparam()</span></tt></a> constructs can be passed, however the names of the table&#8217;s columns are reserved for the &#8220;automatic&#8221; generation of bind names:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;_id&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">bindaparam</span><span class="p">(</span><span class="s">&#39;_name&#39;</span><span class="p">))</span>
+
+<span class="c"># insert many rows at once:</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">users</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;_id&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">bindaparam</span><span class="p">(</span><span class="s">&#39;_name&#39;</span><span class="p">)),</span>
+    <span class="p">[</span>
+        <span class="p">{</span><span class="s">&#39;_id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;_name&#39;</span><span class="p">:</span><span class="s">&#39;name1&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">&#39;_id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;_name&#39;</span><span class="p">:</span><span class="s">&#39;name2&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">&#39;_id&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;_name&#39;</span><span class="p">:</span><span class="s">&#39;name3&#39;</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>Updates work a lot like INSERTS, except there is an additional WHERE clause that can be specified:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># change &#39;jack&#39; to &#39;ed&#39;</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="o">.</span>
+<span class="gp">... </span>                   <span class="n">where</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="s">&#39;jack&#39;</span><span class="p">)</span><span class="o">.</span>
+<span class="gp">... </span>                   <span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;ed&#39;</span><span class="p">)</span>
+<span class="gp">... </span>               <span class="p">)</span> 
+<div class='popup_sql'>UPDATE users SET name=? WHERE users.name = ?
+('ed', 'jack')
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># use bind parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="o">.</span>\
+<span class="gp">... </span>            <span class="n">where</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;oldname&#39;</span><span class="p">))</span><span class="o">.</span>\
+<span class="gp">... </span>            <span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">bindparam</span><span class="p">(</span><span class="s">&#39;newname&#39;</span><span class="p">))</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">oldname</span><span class="o">=</span><span class="s">&#39;jack&#39;</span><span class="p">,</span> <span class="n">newname</span><span class="o">=</span><span class="s">&#39;ed&#39;</span><span class="p">)</span> 
+<div class='popup_sql'>UPDATE users SET name=? WHERE users.name = ?
+('ed', 'jack')
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># with binds, you can also update many rows at once</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">u</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s">&#39;oldname&#39;</span><span class="p">:</span><span class="s">&#39;jack&#39;</span><span class="p">,</span> <span class="s">&#39;newname&#39;</span><span class="p">:</span><span class="s">&#39;ed&#39;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s">&#39;oldname&#39;</span><span class="p">:</span><span class="s">&#39;wendy&#39;</span><span class="p">,</span> <span class="s">&#39;newname&#39;</span><span class="p">:</span><span class="s">&#39;mary&#39;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s">&#39;oldname&#39;</span><span class="p">:</span><span class="s">&#39;jim&#39;</span><span class="p">,</span> <span class="s">&#39;newname&#39;</span><span class="p">:</span><span class="s">&#39;jake&#39;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">)</span> 
+<div class='popup_sql'>UPDATE users SET name=? WHERE users.name = ?
+[('ed', 'jack'), ('mary', 'wendy'), ('jake', 'jim')]
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># update a column to an expression.:</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="o">.</span>
+<span class="gp">... </span>                    <span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s">&quot;Fullname: &quot;</span> <span class="o">+</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span>                <span class="p">)</span> 
+<div class='popup_sql'>UPDATE users SET fullname=(? || users.name)
+('Fullname: ',)
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span></pre></div>
+</div>
+<div class="section" id="correlated-updates">
+<h3>Correlated Updates<a class="headerlink" href="#correlated-updates" title="Permalink to this headline">¶</a></h3>
+<p>A correlated update lets you update a table using selection from another table, or the same table:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">],</span> <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="o">==</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="n">s</span><span class="p">))</span> 
+<div class='popup_sql'>UPDATE users SET fullname=(SELECT addresses.email_address
+FROM addresses
+WHERE addresses.user_id = users.id
+LIMIT 1 OFFSET 0)
+()
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span></pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="deletes">
+<h2>Deletes<a class="headerlink" href="#deletes" title="Permalink to this headline">¶</a></h2>
+<p>Finally, a delete.  Easy enough:</p>
+<div class="highlight-pycon+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">delete</span><span class="p">())</span> 
+<div class='popup_sql'>DELETE FROM addresses
+()
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span>
+
+<a href='#' class='sql_link'>sql</a><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">&gt;</span> <span class="s">&#39;m&#39;</span><span class="p">))</span> 
+<div class='popup_sql'>DELETE FROM users WHERE users.name > ?
+('m',)
+COMMIT</div><span class="go">&lt;sqlalchemy.engine.base.ResultProxy object at 0x...&gt;</span></pre></div>
+</div>
+</div>
+<div class="section" id="further-reference">
+<h2>Further Reference<a class="headerlink" href="#further-reference" title="Permalink to this headline">¶</a></h2>
+<p>API docs: <a class="reference internal" href="expression_api.html#module-sqlalchemy.sql.expression"><tt class="xref py py-mod docutils literal"><span class="pre">sqlalchemy.sql.expression</span></tt></a></p>
+<p>Table Metadata Reference: <a class="reference internal" href="schema.html"><em>Schema Definition Language</em></a></p>
+<p>Engine/Connection/Execution Reference: <a class="reference internal" href="engines.html"><em>Engine Configuration</em></a></p>
+<p>SQL Types: <a class="reference internal" href="types.html#types"><em>Column and Data Types</em></a></p>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="index.html" title="previous chapter">SQLAlchemy Core</a>
+        Next:
+        <a href="expression_api.html" title="next chapter">SQL Statements and Expressions</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

@@ -1,0 +1,13 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+config.cutils
+=============
+
+Module: :mod:`config.cutils`
+----------------------------
+.. automodule:: IPython.config.cutils
+
+.. currentmodule:: IPython.config.cutils
+
+.. autofunction:: IPython.config.cutils.import_item
+

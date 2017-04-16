@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using MPI with IPython &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for parallel computing" href="index.html" />
+    <link rel="next" title="Security details of IPython" href="parallel_security.html" />
+    <link rel="prev" title="The IPython task interface" href="parallel_task.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_security.html" title="Security details of IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_task.html" title="The IPython task interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="using-mpi-with-ipython">
+<span id="parallelmpi"></span><h1>Using MPI with IPython<a class="headerlink" href="#using-mpi-with-ipython" title="Permalink to this headline">¶</a></h1>
+<p>Often, a parallel algorithm will require moving data between the engines.  One way of accomplishing this is by doing a pull and then a push using the multiengine client.  However, this will be slow as all the data has to go through the controller to the client and then back through the controller, to its final destination.</p>
+<p>A much better way of moving data between engines is to use a message passing library, such as the Message Passing Interface (MPI) <a class="reference internal" href="#mpi">[MPI]</a>.  IPython&#8217;s parallel computing architecture has been designed from the ground up to integrate with MPI.  This document describes how to use MPI with IPython.</p>
+<div class="section" id="additional-installation-requirements">
+<h2>Additional installation requirements<a class="headerlink" href="#additional-installation-requirements" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use MPI with IPython, you will need to install:</p>
+<ul class="simple">
+<li>A standard MPI implementation such as OpenMPI <a class="reference internal" href="#openmpi">[OpenMPI]</a> or MPICH.</li>
+<li>The mpi4py <a class="reference internal" href="#mpi4py">[mpi4py]</a> package.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The mpi4py package is not a strict requirement. However, you need to
+have <em>some</em> way of calling MPI from Python. You also need some way of
+making sure that <tt class="xref docutils literal"><span class="pre">MPI_Init()</span></tt> is called when the IPython engines start
+up. There are a number of ways of doing this and a good number of
+associated subtleties. We highly recommend just using mpi4py as it
+takes care of most of these problems. If you want to do something
+different, let us know and we can help you get started.</p>
+</div>
+</div>
+<div class="section" id="starting-the-engines-with-mpi-enabled">
+<h2>Starting the engines with MPI enabled<a class="headerlink" href="#starting-the-engines-with-mpi-enabled" title="Permalink to this headline">¶</a></h2>
+<p>To use code that calls MPI, there are typically two things that MPI requires.</p>
+<ol class="arabic simple">
+<li>The process that wants to call MPI must be started using
+<strong>mpiexec</strong> or a batch system (like PBS) that has MPI support.</li>
+<li>Once the process starts, it must call <tt class="xref docutils literal"><span class="pre">MPI_Init()</span></tt>.</li>
+</ol>
+<p>There are a couple of ways that you can start the IPython engines and get these things to happen.</p>
+<div class="section" id="automatic-starting-using-mpiexec-and-ipcluster">
+<h3>Automatic starting using <strong>mpiexec</strong> and <strong>ipcluster</strong><a class="headerlink" href="#automatic-starting-using-mpiexec-and-ipcluster" title="Permalink to this headline">¶</a></h3>
+<p>The easiest approach is to use the <cite>mpiexec</cite> mode of <strong>ipcluster</strong>, which will first start a controller and then a set of engines using <strong>mpiexec</strong>:</p>
+<div class="highlight-python"><pre>$ ipcluster mpiexec -n 4</pre>
+</div>
+<p>This approach is best as interrupting <strong>ipcluster</strong> will automatically
+stop and clean up the controller and engines.</p>
+</div>
+<div class="section" id="manual-starting-using-mpiexec">
+<h3>Manual starting using <strong>mpiexec</strong><a class="headerlink" href="#manual-starting-using-mpiexec" title="Permalink to this headline">¶</a></h3>
+<p>If you want to start the IPython engines using the <strong>mpiexec</strong>, just do:</p>
+<div class="highlight-python"><pre>$ mpiexec -n 4 ipengine --mpi=mpi4py</pre>
+</div>
+<p>This requires that you already have a controller running and that the FURL
+files for the engines are in place. We also have built in support for
+PyTrilinos <a class="reference internal" href="#pytrilinos">[PyTrilinos]</a>, which can be used (assuming is installed) by
+starting the engines with:</p>
+<div class="highlight-python"><pre>mpiexec -n 4 ipengine --mpi=pytrilinos</pre>
+</div>
+</div>
+<div class="section" id="automatic-starting-using-pbs-and-ipcluster">
+<h3>Automatic starting using PBS and <strong>ipcluster</strong><a class="headerlink" href="#automatic-starting-using-pbs-and-ipcluster" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>ipcluster</strong> command also has built-in integration with PBS. For more information on this approach, see our documentation on <a class="reference external" href="parallel_process.html#parallel-process"><em>ipcluster</em></a>.</p>
+</div>
+</div>
+<div class="section" id="actually-using-mpi">
+<h2>Actually using MPI<a class="headerlink" href="#actually-using-mpi" title="Permalink to this headline">¶</a></h2>
+<p>Once the engines are running with MPI enabled, you are ready to go.  You can now call any code that uses MPI in the IPython engines.  And, all of this can be done interactively.  Here we show a simple example that uses mpi4py <a class="reference internal" href="#mpi4py">[mpi4py]</a>.</p>
+<p>First, lets define a simply function that uses MPI to calculate the sum of a distributed array.  Save the following text in a file called <tt class="docutils literal"><span class="pre">psum.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">mpi4py</span> <span class="k">import</span> <span class="n">MPI</span>
+<span class="k">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">psum</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">Allreduce</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">MPI</span><span class="o">.</span><span class="n">SUM</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, start an IPython cluster in the same directory as <tt class="docutils literal"><span class="pre">psum.py</span></tt>:</p>
+<div class="highlight-python"><pre>$ ipcluster mpiexec -n 4</pre>
+</div>
+<p>Finally, connect to the cluster and use this function interactively.  In this case, we create a random array on each engine and sum up all the random arrays using our <tt class="xref docutils literal"><span class="pre">psum()</span></tt> function:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">from</span> <span class="nn">IPython.kernel</span> <span class="k">import</span> <span class="n">client</span>
+
+<span class="gp">In [2]: </span><span class="n">mec</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">MultiEngineClient</span><span class="p">()</span>
+
+<span class="gp">In [3]: </span><span class="n">mec</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+
+<span class="gp">In [4]: </span><span class="n">px</span> <span class="k">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="go">Parallel execution on engines: all</span>
+<span class="go">Out[4]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [13]: import numpy as np</span>
+<span class="go">[1] In [13]: import numpy as np</span>
+<span class="go">[2] In [13]: import numpy as np</span>
+<span class="go">[3] In [13]: import numpy as np</span>
+
+<span class="gp">In [6]: </span><span class="n">px</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mf">100</span><span class="p">)</span>
+<span class="go">Parallel execution on engines: all</span>
+<span class="go">Out[6]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [15]: a = np.random.rand(100)</span>
+<span class="go">[1] In [15]: a = np.random.rand(100)</span>
+<span class="go">[2] In [15]: a = np.random.rand(100)</span>
+<span class="go">[3] In [15]: a = np.random.rand(100)</span>
+
+<span class="gp">In [7]: </span><span class="n">px</span> <span class="k">from</span> <span class="nn">psum</span> <span class="k">import</span> <span class="n">psum</span>
+<span class="go">Parallel execution on engines: all</span>
+<span class="go">Out[7]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [16]: from psum import psum</span>
+<span class="go">[1] In [16]: from psum import psum</span>
+<span class="go">[2] In [16]: from psum import psum</span>
+<span class="go">[3] In [16]: from psum import psum</span>
+
+<span class="gp">In [8]: </span><span class="n">px</span> <span class="n">s</span> <span class="o">=</span> <span class="n">psum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">Parallel execution on engines: all</span>
+<span class="go">Out[8]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [17]: s = psum(a)</span>
+<span class="go">[1] In [17]: s = psum(a)</span>
+<span class="go">[2] In [17]: s = psum(a)</span>
+<span class="go">[3] In [17]: s = psum(a)</span>
+
+<span class="gp">In [9]: </span><span class="n">px</span> <span class="k">print</span> <span class="n">s</span>
+<span class="go">Parallel execution on engines: all</span>
+<span class="go">Out[9]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [18]: print s</span>
+<span class="go">[0] Out[18]: 187.451545803</span>
+
+<span class="go">[1] In [18]: print s</span>
+<span class="go">[1] Out[18]: 187.451545803</span>
+
+<span class="go">[2] In [18]: print s</span>
+<span class="go">[2] Out[18]: 187.451545803</span>
+
+<span class="go">[3] In [18]: print s</span>
+<span class="go">[3] Out[18]: 187.451545803</span>
+</pre></div>
+</div>
+<p>Any Python code that makes calls to MPI can be used in this manner, including
+compiled C, C++ and Fortran libraries that have been exposed to Python.</p>
+<table class="docutils citation" frame="void" id="mpi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[MPI]</a></td><td>Message Passing Interface.  <a class="reference external" href="http://www-unix.mcs.anl.gov/mpi/">http://www-unix.mcs.anl.gov/mpi/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="mpi4py" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[mpi4py]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id5">2</a>)</em> MPI for Python. mpi4py: <a class="reference external" href="http://mpi4py.scipy.org/">http://mpi4py.scipy.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="openmpi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[OpenMPI]</a></td><td>Open MPI. <a class="reference external" href="http://www.open-mpi.org/">http://www.open-mpi.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="pytrilinos" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[PyTrilinos]</a></td><td>PyTrilinos. <a class="reference external" href="http://trilinos.sandia.gov/packages/pytrilinos/">http://trilinos.sandia.gov/packages/pytrilinos/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Using MPI with IPython</a><ul>
+<li><a class="reference external" href="#additional-installation-requirements">Additional installation requirements</a></li>
+<li><a class="reference external" href="#starting-the-engines-with-mpi-enabled">Starting the engines with MPI enabled</a><ul>
+<li><a class="reference external" href="#automatic-starting-using-mpiexec-and-ipcluster">Automatic starting using <strong>mpiexec</strong> and <strong>ipcluster</strong></a></li>
+<li><a class="reference external" href="#manual-starting-using-mpiexec">Manual starting using <strong>mpiexec</strong></a></li>
+<li><a class="reference external" href="#automatic-starting-using-pbs-and-ipcluster">Automatic starting using PBS and <strong>ipcluster</strong></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#actually-using-mpi">Actually using MPI</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="parallel_task.html" title="previous chapter">The IPython task interface</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="parallel_security.html" title="next chapter">Security details of IPython</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/parallel_mpi.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_security.html" title="Security details of IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_task.html" title="The IPython task interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

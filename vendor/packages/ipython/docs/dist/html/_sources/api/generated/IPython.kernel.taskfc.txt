@@ -1,0 +1,51 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.taskfc
+=============
+
+Module: :mod:`kernel.taskfc`
+----------------------------
+Inheritance diagram for ``IPython.kernel.taskfc``:
+
+.. inheritance-diagram:: IPython.kernel.taskfc 
+   :parts: 3
+
+.. automodule:: IPython.kernel.taskfc
+
+.. currentmodule:: IPython.kernel.taskfc
+
+Classes
+-------
+
+:class:`FCTaskClient`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FCTaskClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FCTaskControllerFromTaskController`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FCTaskControllerFromTaskController
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFCTaskController`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFCTaskController
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,94 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.newserialized
+====================
+
+Module: :mod:`kernel.newserialized`
+-----------------------------------
+Inheritance diagram for ``IPython.kernel.newserialized``:
+
+.. inheritance-diagram:: IPython.kernel.newserialized 
+   :parts: 3
+
+.. automodule:: IPython.kernel.newserialized
+
+.. currentmodule:: IPython.kernel.newserialized
+
+Classes
+-------
+
+:class:`ISerialized`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ISerialized
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IUnSerialized`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IUnSerialized
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SerializeIt`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SerializeIt
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Serialized`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Serialized
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UnSerializeIt`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UnSerializeIt
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UnSerialized`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UnSerialized
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.newserialized.serialize
+
+
+.. autofunction:: IPython.kernel.newserialized.unserialize
+

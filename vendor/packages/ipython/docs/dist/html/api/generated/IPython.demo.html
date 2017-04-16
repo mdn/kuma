@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>demo &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="dtutils" href="IPython.dtutils.html" />
+    <link rel="prev" title="deep_reload" href="IPython.deep_reload.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.dtutils.html" title="dtutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.deep_reload.html" title="deep_reload"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="demo">
+<h1>demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.demo">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">demo</span></tt><a class="headerlink" href="#module-IPython.demo" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.demo</span></tt>:</p>
+<img src="../../_images/inheritance9a60a74ccf.png" usemap="#inheritance9a60a74ccf" class="inheritance"/><map id="inheritance9a60a74ccf" name="inheritance9a60a74ccf">
+<area shape="rect" href="#IPython.demo.IPythonLineDemo" title="IPython.demo.IPythonLineDemo" alt="" coords="487,169,711,196"/>
+<area shape="rect" href="#IPython.demo.IPythonDemo" title="IPython.demo.IPythonDemo" alt="" coords="237,132,437,159"/>
+<area shape="rect" href="#IPython.demo.ClearIPDemo" title="IPython.demo.ClearIPDemo" alt="" coords="501,107,696,133"/>
+<area shape="rect" href="#IPython.demo.LineDemo" title="IPython.demo.LineDemo" alt="" coords="248,183,427,209"/>
+<area shape="rect" href="#IPython.demo.Demo" title="IPython.demo.Demo" alt="" coords="21,132,173,159"/>
+<area shape="rect" href="#IPython.demo.ClearDemo" title="IPython.demo.ClearDemo" alt="" coords="245,81,429,108"/>
+<area shape="rect" href="#IPython.demo.ClearMixin" title="IPython.demo.ClearMixin" alt="" coords="8,56,187,83"/>
+<area shape="rect" href="#IPython.demo.DemoError" title="IPython.demo.DemoError" alt="" coords="5,5,189,32"/>
+</map>
+<p>Module for interactive demos using IPython.</p>
+<p>This module implements a few classes for running Python scripts interactively
+in IPython for demonstrations.  With very simple markup (a few tags in
+comments), you can control points where the script stops executing and returns
+control to IPython.</p>
+<div class="section" id="provided-classes">
+<h3>Provided classes<a class="headerlink" href="#provided-classes" title="Permalink to this headline">¶</a></h3>
+<p>The classes are (see their docstrings for further details):</p>
+<blockquote>
+<ul class="simple">
+<li>Demo: pure python demos</li>
+<li>IPythonDemo: demos with input to be processed by IPython as if it had been</li>
+</ul>
+<p>typed interactively (so magics work, as well as any other special syntax you
+may have added via input prefilters).</p>
+<ul class="simple">
+<li>LineDemo: single-line version of the Demo class.  These demos are executed</li>
+</ul>
+<p>one line at a time, and require no markup.</p>
+<ul class="simple">
+<li>IPythonLineDemo: IPython version of the LineDemo class (the demo is</li>
+</ul>
+<p>executed a line at a time, but processed via IPython).</p>
+<ul class="simple">
+<li>ClearMixin: mixin to make Demo classes with less visual clutter.  It
+declares an empty marquee and a pre_cmd that clears the screen before each
+block (see Subclassing below).</li>
+<li>ClearDemo, ClearIPDemo: mixin-enabled versions of the Demo and IPythonDemo
+classes.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="subclassing">
+<h3>Subclassing<a class="headerlink" href="#subclassing" title="Permalink to this headline">¶</a></h3>
+<p>The classes here all include a few methods meant to make customization by
+subclassing more convenient.  Their docstrings below have some more details:</p>
+<blockquote>
+<ul class="simple">
+<li>marquee(): generates a marquee to provide visible on-screen markers at each
+block start and end.</li>
+<li>pre_cmd(): run right before the execution of each block.</li>
+<li>post_cmd(): run right after the execution of each block.  If the block
+raises an exception, this is NOT called.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="operation">
+<h3>Operation<a class="headerlink" href="#operation" title="Permalink to this headline">¶</a></h3>
+<p>The file is run in its own empty namespace (though you can pass it a string of
+arguments as if in a command line environment, and it will see those as
+sys.argv).  But at each stop, the global IPython namespace is updated with the
+current internal demo namespace, so you can work interactively with the data
+accumulated so far.</p>
+<p>By default, each block of code is printed (with syntax highlighting) before
+executing it and you have to confirm execution.  This is intended to show the
+code to an audience first so you can discuss it, and only proceed with
+execution once you agree.  There are a few tags which allow you to modify this
+behavior.</p>
+<p>The supported tags are:</p>
+<p># &lt;demo&gt; stop</p>
+<blockquote>
+<p>Defines block boundaries, the points where IPython stops execution of the
+file and returns to the interactive prompt.</p>
+<p>You can optionally mark the stop tag with extra dashes before and after the
+word &#8216;stop&#8217;, to help visually distinguish the blocks in a text editor:</p>
+<p># &lt;demo&gt; &#8212; stop &#8212;</p>
+</blockquote>
+<p># &lt;demo&gt; silent</p>
+<blockquote>
+Make a block execute silently (and hence automatically).  Typically used in
+cases where you have some boilerplate or initialization code which you need
+executed but do not want to be seen in the demo.</blockquote>
+<p># &lt;demo&gt; auto</p>
+<blockquote>
+Make a block execute automatically, but still being printed.  Useful for
+simple code which does not warrant discussion, since it avoids the extra
+manual confirmation.</blockquote>
+<p># &lt;demo&gt; auto_all</p>
+<blockquote>
+This tag can _only_ be in the first block, and if given it overrides the
+individual auto tags to make the whole demo fully automatic (no block asks
+for confirmation).  It can also be given at creation time (or the attribute
+set later) to override what&#8217;s in the file.</blockquote>
+<p>While _any_ python file can be run as a Demo instance, if there are no stop
+tags the whole file will run in a single block (no different that calling
+first %pycat and then %run).  The minimal markup to make this useful is to
+place a set of stop tags; the other tags are only there to let you fine-tune
+the execution.</p>
+<p>This is probably best explained with the simple example file below.  You can
+copy this into a file named ex_demo.py, and try running it via:</p>
+<p>from IPython.demo import Demo
+d = Demo(&#8216;ex_demo.py&#8217;)
+d()  &lt;&#8212; Call the d object (omit the parens if you have autocall set to 2).</p>
+<p>Each time you call the demo object, it runs the next block.  The demo object
+has a few useful methods for navigation, like again(), edit(), jump(), seek()
+and back().  It can be reset for a new run via reset() or reloaded from disk
+(in case you&#8217;ve edited the source) via reload().  See their docstrings below.</p>
+<p>Note: To make this simpler to explore, a file called &#8220;demo-exercizer.py&#8221; has
+been added to the &#8220;docs/examples/core&#8221; directory.  Just cd to this directory in
+an IPython session, and type:</p>
+<div class="highlight-python"><pre>%run demo-exercizer.py</pre>
+</div>
+<p>and then follow the directions.</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>The following is a very simple example of a valid demo file.</p>
+<p>#################### EXAMPLE DEMO &lt;ex_demo.py&gt; ###############################
+&#8216;&#8217;&#8216;A simple interactive demo to illustrate the use of IPython&#8217;s Demo class.&#8217;&#8216;&#8217;</p>
+<p>print &#8216;Hello, welcome to an interactive IPython demo.&#8217;</p>
+<p># The mark below defines a block boundary, which is a point where IPython will
+# stop execution and return to the interactive prompt. The dashes are actually
+# optional and used only as a visual aid to clearly separate blocks while
+# editing the demo code.
+# &lt;demo&gt; stop</p>
+<p>x = 1
+y = 2</p>
+<p># &lt;demo&gt; stop</p>
+<p># the mark below makes this block as silent
+# &lt;demo&gt; silent</p>
+<p>print &#8216;This is a silent block, which gets executed but not printed.&#8217;</p>
+<p># &lt;demo&gt; stop
+# &lt;demo&gt; auto
+print &#8216;This is an automatic block.&#8217;
+print &#8216;It is executed without asking for confirmation, but printed.&#8217;
+z = x+y</p>
+<p>print &#8216;z=&#8217;,x</p>
+<p># &lt;demo&gt; stop
+# This is just another normal block.
+print &#8216;z is now:&#8217;, z</p>
+<p>print &#8216;bye!&#8217;
+################### END EXAMPLE DEMO &lt;ex_demo.py&gt; ############################</p>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cleardemo">
+<h3><a title="IPython.demo.ClearDemo" class="reference internal" href="#IPython.demo.ClearDemo"><tt class="xref docutils literal"><span class="pre">ClearDemo</span></tt></a><a class="headerlink" href="#cleardemo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.ClearDemo">
+<!--[IPython.demo.ClearDemo]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">ClearDemo</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.ClearDemo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.demo.ClearMixin" class="reference internal" href="#IPython.demo.ClearMixin"><tt class="xref docutils literal"><span class="pre">IPython.demo.ClearMixin</span></tt></a>, <a title="IPython.demo.Demo" class="reference internal" href="#IPython.demo.Demo"><tt class="xref docutils literal"><span class="pre">IPython.demo.Demo</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.demo.ClearDemo.__init__">
+<!--[IPython.demo.ClearDemo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.ClearDemo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new demo object.  To run the demo, simply call the object.</p>
+<p>See the module docstring for full details and an example (you can use
+IPython.Demo? in IPython to see it).</p>
+<p>Inputs:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>src is either a file, or file-like object, or a</dt>
+<dd><p class="first last">string that can be resolved to a filename.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>title: a string to use as the demo name.  Of most use when the demo</li>
+</ul>
+<p>you are making comes from an object that has no filename, or if you 
+want an alternate denotation distinct from the filename.</p>
+<ul class="simple">
+<li>arg_str(&#8216;&#8217;): a string of arguments, internally converted to a list</li>
+</ul>
+<p>just like sys.argv, so the demo script can see a similar
+environment.</p>
+<ul class="simple">
+<li>auto_all(None): global flag to run all blocks automatically without</li>
+</ul>
+<p>confirmation.  This attribute overrides the block-level tags and
+applies to the whole demo.  It is an attribute of the object, and
+can be changed at runtime simply by reassigning it to a boolean
+value.</p>
+</blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="clearipdemo">
+<h3><a title="IPython.demo.ClearIPDemo" class="reference internal" href="#IPython.demo.ClearIPDemo"><tt class="xref docutils literal"><span class="pre">ClearIPDemo</span></tt></a><a class="headerlink" href="#clearipdemo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.ClearIPDemo">
+<!--[IPython.demo.ClearIPDemo]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">ClearIPDemo</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.ClearIPDemo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.demo.ClearMixin" class="reference internal" href="#IPython.demo.ClearMixin"><tt class="xref docutils literal"><span class="pre">IPython.demo.ClearMixin</span></tt></a>, <a title="IPython.demo.IPythonDemo" class="reference internal" href="#IPython.demo.IPythonDemo"><tt class="xref docutils literal"><span class="pre">IPython.demo.IPythonDemo</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.demo.ClearIPDemo.__init__">
+<!--[IPython.demo.ClearIPDemo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.ClearIPDemo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new demo object.  To run the demo, simply call the object.</p>
+<p>See the module docstring for full details and an example (you can use
+IPython.Demo? in IPython to see it).</p>
+<p>Inputs:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>src is either a file, or file-like object, or a</dt>
+<dd><p class="first last">string that can be resolved to a filename.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>title: a string to use as the demo name.  Of most use when the demo</li>
+</ul>
+<p>you are making comes from an object that has no filename, or if you 
+want an alternate denotation distinct from the filename.</p>
+<ul class="simple">
+<li>arg_str(&#8216;&#8217;): a string of arguments, internally converted to a list</li>
+</ul>
+<p>just like sys.argv, so the demo script can see a similar
+environment.</p>
+<ul class="simple">
+<li>auto_all(None): global flag to run all blocks automatically without</li>
+</ul>
+<p>confirmation.  This attribute overrides the block-level tags and
+applies to the whole demo.  It is an attribute of the object, and
+can be changed at runtime simply by reassigning it to a boolean
+value.</p>
+</blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="clearmixin">
+<h3><a title="IPython.demo.ClearMixin" class="reference internal" href="#IPython.demo.ClearMixin"><tt class="xref docutils literal"><span class="pre">ClearMixin</span></tt></a><a class="headerlink" href="#clearmixin" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.ClearMixin">
+<!--[IPython.demo.ClearMixin]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">ClearMixin</tt><a class="headerlink" href="#IPython.demo.ClearMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Use this mixin to make Demo classes with less visual clutter.</p>
+<p>Demos using this mixin will clear the screen before every block and use
+blank marquees.</p>
+<p>Note that in order for the methods defined here to actually override those
+of the classes it&#8217;s mixed with, it must go /first/ in the inheritance
+tree.  For example:</p>
+<blockquote>
+class ClearIPDemo(ClearMixin,IPythonDemo): pass</blockquote>
+<p>will provide an IPythonDemo class with the mixin&#8217;s features.</p>
+<dl class="method">
+<dt id="IPython.demo.ClearMixin.__init__">
+<!--[IPython.demo.ClearMixin.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.ClearMixin.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.ClearMixin.marquee">
+<!--[IPython.demo.ClearMixin.marquee]--><tt class="descname">marquee</tt><big>(</big><em>txt=''</em>, <em>width=78</em>, <em>mark='*'</em><big>)</big><a class="headerlink" href="#IPython.demo.ClearMixin.marquee" title="Permalink to this definition">¶</a></dt>
+<dd>Blank marquee that returns &#8216;&#8217; no matter what the input.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.ClearMixin.pre_cmd">
+<!--[IPython.demo.ClearMixin.pre_cmd]--><tt class="descname">pre_cmd</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.ClearMixin.pre_cmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method called before executing each block.</p>
+<p>This one simply clears the screen.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h3><a title="IPython.demo.Demo" class="reference internal" href="#IPython.demo.Demo"><tt class="xref docutils literal"><span class="pre">Demo</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.Demo">
+<!--[IPython.demo.Demo]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">Demo</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.demo.Demo.__init__">
+<!--[IPython.demo.Demo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new demo object.  To run the demo, simply call the object.</p>
+<p>See the module docstring for full details and an example (you can use
+IPython.Demo? in IPython to see it).</p>
+<p>Inputs:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>src is either a file, or file-like object, or a</dt>
+<dd><p class="first last">string that can be resolved to a filename.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>title: a string to use as the demo name.  Of most use when the demo</li>
+</ul>
+<p>you are making comes from an object that has no filename, or if you 
+want an alternate denotation distinct from the filename.</p>
+<ul class="simple">
+<li>arg_str(&#8216;&#8217;): a string of arguments, internally converted to a list</li>
+</ul>
+<p>just like sys.argv, so the demo script can see a similar
+environment.</p>
+<ul class="simple">
+<li>auto_all(None): global flag to run all blocks automatically without</li>
+</ul>
+<p>confirmation.  This attribute overrides the block-level tags and
+applies to the whole demo.  It is an attribute of the object, and
+can be changed at runtime simply by reassigning it to a boolean
+value.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.again">
+<!--[IPython.demo.Demo.again]--><tt class="descname">again</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.Demo.again" title="Permalink to this definition">¶</a></dt>
+<dd>Move the seek pointer back one block and re-execute.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.back">
+<!--[IPython.demo.Demo.back]--><tt class="descname">back</tt><big>(</big><em>num=1</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.back" title="Permalink to this definition">¶</a></dt>
+<dd>Move the seek pointer back num blocks (default is 1).</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.edit">
+<!--[IPython.demo.Demo.edit]--><tt class="descname">edit</tt><big>(</big><em>index=None</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit a block.</p>
+<p>If no number is given, use the last block executed.</p>
+<p>This edits the in-memory copy of the demo, it does NOT modify the
+original source file.  If you want to do that, simply open the file in
+an editor and use reload() when you make changes to the file.  This
+method is meant to let you change a block during a demonstration for
+explanatory purposes, without damaging your original script.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.jump">
+<!--[IPython.demo.Demo.jump]--><tt class="descname">jump</tt><big>(</big><em>num=1</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.jump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jump a given number of blocks relative to the current one.</p>
+<p>The offset can be positive or negative, defaults to 1.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.marquee">
+<!--[IPython.demo.Demo.marquee]--><tt class="descname">marquee</tt><big>(</big><em>txt=''</em>, <em>width=78</em>, <em>mark='*'</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.marquee" title="Permalink to this definition">¶</a></dt>
+<dd>Return the input string centered in a &#8216;marquee&#8217;.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.post_cmd">
+<!--[IPython.demo.Demo.post_cmd]--><tt class="descname">post_cmd</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.Demo.post_cmd" title="Permalink to this definition">¶</a></dt>
+<dd>Method called after executing each block.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.pre_cmd">
+<!--[IPython.demo.Demo.pre_cmd]--><tt class="descname">pre_cmd</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.Demo.pre_cmd" title="Permalink to this definition">¶</a></dt>
+<dd>Method called before executing each block.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.reload">
+<!--[IPython.demo.Demo.reload]--><tt class="descname">reload</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.Demo.reload" title="Permalink to this definition">¶</a></dt>
+<dd>Reload source from disk and initialize state.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.reset">
+<!--[IPython.demo.Demo.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.Demo.reset" title="Permalink to this definition">¶</a></dt>
+<dd>Reset the namespace and seek pointer to restart the demo</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.runlines">
+<!--[IPython.demo.Demo.runlines]--><tt class="descname">runlines</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.runlines" title="Permalink to this definition">¶</a></dt>
+<dd>Execute a string with one or more lines of code</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.seek">
+<!--[IPython.demo.Demo.seek]--><tt class="descname">seek</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.seek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the current seek pointer to the given block.</p>
+<p>You can use negative indices to seek from the end, with identical
+semantics to those of Python lists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.show">
+<!--[IPython.demo.Demo.show]--><tt class="descname">show</tt><big>(</big><em>index=None</em><big>)</big><a class="headerlink" href="#IPython.demo.Demo.show" title="Permalink to this definition">¶</a></dt>
+<dd>Show a single block on screen</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.Demo.show_all">
+<!--[IPython.demo.Demo.show_all]--><tt class="descname">show_all</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.Demo.show_all" title="Permalink to this definition">¶</a></dt>
+<dd>Show entire demo on screen, block by block</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="demoerror">
+<h3><a title="IPython.demo.DemoError" class="reference internal" href="#IPython.demo.DemoError"><tt class="xref docutils literal"><span class="pre">DemoError</span></tt></a><a class="headerlink" href="#demoerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.DemoError">
+<!--[IPython.demo.DemoError]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">DemoError</tt><a class="headerlink" href="#IPython.demo.DemoError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<dl class="method">
+<dt id="IPython.demo.DemoError.__init__">
+<!--[IPython.demo.DemoError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.DemoError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipythondemo">
+<h3><a title="IPython.demo.IPythonDemo" class="reference internal" href="#IPython.demo.IPythonDemo"><tt class="xref docutils literal"><span class="pre">IPythonDemo</span></tt></a><a class="headerlink" href="#ipythondemo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.IPythonDemo">
+<!--[IPython.demo.IPythonDemo]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">IPythonDemo</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.IPythonDemo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.demo.Demo" class="reference internal" href="#IPython.demo.Demo"><tt class="xref docutils literal"><span class="pre">IPython.demo.Demo</span></tt></a></p>
+<p>Class for interactive demos with IPython&#8217;s input processing applied.</p>
+<p>This subclasses Demo, but instead of executing each block by the Python
+interpreter (via exec), it actually calls IPython on it, so that any input
+filters which may be in place are applied to the input block.</p>
+<p>If you have an interactive environment which exposes special input
+processing, you can use this class instead to write demo scripts which
+operate exactly as if you had typed them interactively.  The default Demo
+class requires the input to be valid, pure Python code.</p>
+<dl class="method">
+<dt id="IPython.demo.IPythonDemo.__init__">
+<!--[IPython.demo.IPythonDemo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.IPythonDemo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new demo object.  To run the demo, simply call the object.</p>
+<p>See the module docstring for full details and an example (you can use
+IPython.Demo? in IPython to see it).</p>
+<p>Inputs:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>src is either a file, or file-like object, or a</dt>
+<dd><p class="first last">string that can be resolved to a filename.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>title: a string to use as the demo name.  Of most use when the demo</li>
+</ul>
+<p>you are making comes from an object that has no filename, or if you 
+want an alternate denotation distinct from the filename.</p>
+<ul class="simple">
+<li>arg_str(&#8216;&#8217;): a string of arguments, internally converted to a list</li>
+</ul>
+<p>just like sys.argv, so the demo script can see a similar
+environment.</p>
+<ul class="simple">
+<li>auto_all(None): global flag to run all blocks automatically without</li>
+</ul>
+<p>confirmation.  This attribute overrides the block-level tags and
+applies to the whole demo.  It is an attribute of the object, and
+can be changed at runtime simply by reassigning it to a boolean
+value.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.IPythonDemo.runlines">
+<!--[IPython.demo.IPythonDemo.runlines]--><tt class="descname">runlines</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#IPython.demo.IPythonDemo.runlines" title="Permalink to this definition">¶</a></dt>
+<dd>Execute a string with one or more lines of code</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipythonlinedemo">
+<h3><a title="IPython.demo.IPythonLineDemo" class="reference internal" href="#IPython.demo.IPythonLineDemo"><tt class="xref docutils literal"><span class="pre">IPythonLineDemo</span></tt></a><a class="headerlink" href="#ipythonlinedemo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.IPythonLineDemo">
+<!--[IPython.demo.IPythonLineDemo]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">IPythonLineDemo</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.IPythonLineDemo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.demo.IPythonDemo" class="reference internal" href="#IPython.demo.IPythonDemo"><tt class="xref docutils literal"><span class="pre">IPython.demo.IPythonDemo</span></tt></a>, <a title="IPython.demo.LineDemo" class="reference internal" href="#IPython.demo.LineDemo"><tt class="xref docutils literal"><span class="pre">IPython.demo.LineDemo</span></tt></a></p>
+<p>Variant of the LineDemo class whose input is processed by IPython.</p>
+<dl class="method">
+<dt id="IPython.demo.IPythonLineDemo.__init__">
+<!--[IPython.demo.IPythonLineDemo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.IPythonLineDemo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new demo object.  To run the demo, simply call the object.</p>
+<p>See the module docstring for full details and an example (you can use
+IPython.Demo? in IPython to see it).</p>
+<p>Inputs:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>src is either a file, or file-like object, or a</dt>
+<dd><p class="first last">string that can be resolved to a filename.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>title: a string to use as the demo name.  Of most use when the demo</li>
+</ul>
+<p>you are making comes from an object that has no filename, or if you 
+want an alternate denotation distinct from the filename.</p>
+<ul class="simple">
+<li>arg_str(&#8216;&#8217;): a string of arguments, internally converted to a list</li>
+</ul>
+<p>just like sys.argv, so the demo script can see a similar
+environment.</p>
+<ul class="simple">
+<li>auto_all(None): global flag to run all blocks automatically without</li>
+</ul>
+<p>confirmation.  This attribute overrides the block-level tags and
+applies to the whole demo.  It is an attribute of the object, and
+can be changed at runtime simply by reassigning it to a boolean
+value.</p>
+</blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="linedemo">
+<h3><a title="IPython.demo.LineDemo" class="reference internal" href="#IPython.demo.LineDemo"><tt class="xref docutils literal"><span class="pre">LineDemo</span></tt></a><a class="headerlink" href="#linedemo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.demo.LineDemo">
+<!--[IPython.demo.LineDemo]-->class <tt class="descclassname">IPython.demo.</tt><tt class="descname">LineDemo</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.LineDemo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.demo.Demo" class="reference internal" href="#IPython.demo.Demo"><tt class="xref docutils literal"><span class="pre">IPython.demo.Demo</span></tt></a></p>
+<p>Demo where each line is executed as a separate block.</p>
+<p>The input script should be valid Python code.</p>
+<p>This class doesn&#8217;t require any markup at all, and it&#8217;s meant for simple
+scripts (with no nesting or any kind of indentation) which consist of
+multiple lines of input to be executed, one at a time, as if they had been
+typed in the interactive prompt.</p>
+<dl class="method">
+<dt id="IPython.demo.LineDemo.__init__">
+<!--[IPython.demo.LineDemo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>src</em>, <em>title=''</em>, <em>arg_str=''</em>, <em>auto_all=None</em><big>)</big><a class="headerlink" href="#IPython.demo.LineDemo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new demo object.  To run the demo, simply call the object.</p>
+<p>See the module docstring for full details and an example (you can use
+IPython.Demo? in IPython to see it).</p>
+<p>Inputs:</p>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>src is either a file, or file-like object, or a</dt>
+<dd><p class="first last">string that can be resolved to a filename.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>title: a string to use as the demo name.  Of most use when the demo</li>
+</ul>
+<p>you are making comes from an object that has no filename, or if you 
+want an alternate denotation distinct from the filename.</p>
+<ul class="simple">
+<li>arg_str(&#8216;&#8217;): a string of arguments, internally converted to a list</li>
+</ul>
+<p>just like sys.argv, so the demo script can see a similar
+environment.</p>
+<ul class="simple">
+<li>auto_all(None): global flag to run all blocks automatically without</li>
+</ul>
+<p>confirmation.  This attribute overrides the block-level tags and
+applies to the whole demo.  It is an attribute of the object, and
+can be changed at runtime simply by reassigning it to a boolean
+value.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.demo.LineDemo.reload">
+<!--[IPython.demo.LineDemo.reload]--><tt class="descname">reload</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.demo.LineDemo.reload" title="Permalink to this definition">¶</a></dt>
+<dd>Reload source from disk and initialize state.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.demo.re_mark">
+<!--[IPython.demo.re_mark]--><tt class="descclassname">IPython.demo.</tt><tt class="descname">re_mark</tt><big>(</big><em>mark</em><big>)</big><a class="headerlink" href="#IPython.demo.re_mark" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">demo</a><ul>
+<li><a class="reference external" href="#module-IPython.demo">Module: <tt class="docutils literal"><span class="pre">demo</span></tt></a><ul>
+<li><a class="reference external" href="#provided-classes">Provided classes</a></li>
+<li><a class="reference external" href="#subclassing">Subclassing</a></li>
+<li><a class="reference external" href="#operation">Operation</a></li>
+<li><a class="reference external" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#cleardemo"><tt class="docutils literal"><span class="pre">ClearDemo</span></tt></a></li>
+<li><a class="reference external" href="#clearipdemo"><tt class="docutils literal"><span class="pre">ClearIPDemo</span></tt></a></li>
+<li><a class="reference external" href="#clearmixin"><tt class="docutils literal"><span class="pre">ClearMixin</span></tt></a></li>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">Demo</span></tt></a></li>
+<li><a class="reference external" href="#demoerror"><tt class="docutils literal"><span class="pre">DemoError</span></tt></a></li>
+<li><a class="reference external" href="#ipythondemo"><tt class="docutils literal"><span class="pre">IPythonDemo</span></tt></a></li>
+<li><a class="reference external" href="#ipythonlinedemo"><tt class="docutils literal"><span class="pre">IPythonLineDemo</span></tt></a></li>
+<li><a class="reference external" href="#linedemo"><tt class="docutils literal"><span class="pre">LineDemo</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.deep_reload.html" title="previous chapter">deep_reload</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.dtutils.html" title="next chapter">dtutils</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.demo.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.dtutils.html" title="dtutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.deep_reload.html" title="deep_reload"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

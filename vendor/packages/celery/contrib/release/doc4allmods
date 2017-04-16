@@ -1,0 +1,55 @@
+#!/bin/bash
+
+PACKAGE="$1"
+SKIP_PACKAGES="$PACKAGE tests management urls"
+SKIP_FILES="celery.backends.pyredis.rst
+            celery.bin.rst
+            celery.bin.celeryd_detach.rst
+            celery.concurrency.processes.forking.rst
+            celery.concurrency.processes.process.rst
+            celery.concurrency.processes._win.rst
+            celery.contrib.rst
+            celery.contrib.bundles.rst
+            celery.worker.control.rst
+            celery.worker.control.builtins.rst
+            celery.worker.control.registry.rst
+            celery.task.schedules.rst
+            celery.local.rst
+            celery.models.rst
+            celery.app.base.rst
+            celery.apps.rst
+            celery.db.rst
+            celery.messaging.rst
+            celery.execute.rst
+            celery.conf.rst
+            celery.decorators.rst
+            celery.db.a805d4bd.rst
+            celery.db.dfd042c7.rst"
+
+modules=$(find "$PACKAGE" -name "*.py")
+
+failed=0
+for module in $modules; do
+    dotted=$(echo $module | sed 's/\//\./g')
+    name=${dotted%.__init__.py}
+    name=${name%.py}
+    rst=$name.rst
+    skip=0
+    for skip_package in $SKIP_PACKAGES; do
+        [ $(echo "$name" | cut -d. -f 2) == "$skip_package" ] && skip=1
+    done
+    for skip_file in $SKIP_FILES; do
+        [ "$skip_file" == "$rst" ] && skip=1
+    done
+
+    if [ $skip -eq 0 ]; then
+        if [ ! -f "docs/reference/$rst" ]; then
+            if [ ! -f "docs/internals/reference/$rst" ]; then
+                echo $rst :: FAIL
+                failed=1
+            fi
+        fi
+    fi
+done
+
+exit $failed

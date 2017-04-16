@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="stopword_file_format" id="stopword_file_format">Stopword file format</a></h1>
+<div class="level1">
+
+<p>
+
+The default stopword file for <a href="toolkit-poterminology.html" class="wikilink1" title="toolkit-poterminology.html">poterminology</a> describes the syntax of these files and provides a good default for most applications using English source text.  You can find the location of the default stopword file by looking at the output of poterminology --help, or using the following command:
+
+</p>
+<pre class="code">poterminology --manpage | sed -n &#039;/STOPFILE/s/.*(\(.*\)).*/\1/p&#039;</pre>
+
+<p>
+
+<p><div class="noteclassic">New in v1.2
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Stopword file format" [1-430] -->
+<h2><a name="overview" id="overview">Overview</a></h2>
+<div class="level2">
+
+<p>
+
+The basic syntax of this file is line-oriented, with the first character of each line determining its function.  The order of the lines is generally not significant (with one exception noted below), and the selection of function characters was made so that an <acronym title="American Standard Code for Information Interchange">ASCII</acronym> sort of the file would leave it in a generally logical order (except for comment lines).
+</p>
+
+<p>
+Apart from comment lines (which begin with &#039;#&#039;) and empty lines (which are also ignored), there are three general types of lines, which may appear in any order:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> case mapping specifiers</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> stoplist regular expressions</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> stoplist words</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Overview" [431-1053] -->
+<h3><a name="case_mapping_specifiers" id="case_mapping_specifiers">Case mapping specifiers</a></h3>
+<div class="level3">
+
+<p>
+
+A line beginning with a &#039;<strong>!</strong>&#039; specifies upper-/lower-case mapping for words or phrases before comparison with this stoplist (no mapping is applied to the words or regular expressions in this file, only to the source messages).  The second character on this line must be one of the following:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>C</strong> no uppercase / lowercase mapping is performed</div>
+</li>
+<li class="level1"><div class="li"> <strong>F</strong> &#039;Title Case” words / terms are folded to lower case (default)</div>
+</li>
+<li class="level1"><div class="li"> <strong>I</strong> all words are mapped to lowercase</div>
+</li>
+</ul>
+
+<p>
+
+These correspond to the equivalent --preserve-case / --fold-titlecase / --ignore-case options to poterminology, but are completely independent and only apply to stoplist matching.  You can run poterminology with -I to map all terms to lowercase, and if the case mapping specifier in the stopword file is &#039;<strong>!C</strong>&#039; a stoplist with “pootle” in it will not prevent a term containing “Pootle” from passing the stoplist (and then being mapped to “pootle”).
+</p>
+
+<p>
+There should only be one case mapping specifier in a stoplist file; if more than one are present, the last one will take precedence over the others, and its mapping will apply to all entries.  If multiple stoplist files are used, the last case mapping specifier processed will apply to all entries <strong>in all files</strong>.
+</p>
+
+</div>
+<!-- SECTION "Case mapping specifiers" [1054-2325] -->
+<h3><a name="stoplist_regular_expressions" id="stoplist_regular_expressions">Stoplist regular expressions</a></h3>
+<div class="level3">
+
+<p>
+
+Lines beginning with a &#039;<strong>/</strong>&#039; are regular expression patterns - any word that matches will be ignored by itself, and any phrase containing it will be excluded as well.  The regular expression consists of all characters on the line following the initial &#039;/&#039; - these are extended regular expressions, so grouping, alternation, and such are available.
+</p>
+
+<p>
+Regular expression patterns are only checked if the word itself does not appear in the stoplist file as a word entry.  The regular expression patterns are always applied to individual words, not phrases, and must match the entire word (i.e. they are anchored both at the start and end).
+</p>
+
+<p>
+Use regular expressions sparingly, as evaluating them for every word in the source files can be expensive.  In addition to stoplist regular expressions, poterminology has precompiled patterns for C and Python format specifiers (e.g. %d) and <acronym title="Extensible Markup Language">XML</acronym>/<acronym title="HyperText Markup Language">HTML</acronym> &lt;elements&gt; and &amp;entities; - these are removed before stoplist processing and it is not possible to override this. 
+</p>
+
+</div>
+<!-- SECTION "Stoplist regular expressions" [2326-3370] -->
+<h3><a name="stoplist_words" id="stoplist_words">Stoplist words</a></h3>
+<div class="level3">
+
+<p>
+
+All other lines should begin with one of the following characters, which indicate whether the word should be <strong>ignored</strong> (as a word alone), <strong>disregarded</strong> in a phrase (i.e. a phrase containing it is allowed, and the word does not count against the --term-words length limit), or any phrase containing it should be <strong>excluded</strong>.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>+</strong> allow word alone, allow phrases containing it</div>
+</li>
+<li class="level1"><div class="li"> <strong>:</strong> allow word alone, disregarded (for --term-word-length) inside phrase</div>
+</li>
+<li class="level1"><div class="li"> <strong>&lt;</strong> allow word alone, but exclude any phrase containing it</div>
+</li>
+<li class="level1"><div class="li"> <strong>=</strong> ignore word alone, but allow phrases containing it</div>
+</li>
+<li class="level1"><div class="li"> <strong>&gt;</strong> ignore word alone, disregarded (for --term-word-length) inside phrase</div>
+</li>
+<li class="level1"><div class="li"> <strong>@</strong> ignore word alone, and exclude any phrase containing it</div>
+</li>
+</ul>
+
+<p>
+
+Generally &#039;+&#039; is only needed for exceptions to regular expression patterns, but it may also be used to override an entry in a previous stoplist if you are using multiple stoplists.
+</p>
+
+<p>
+Note that if a word appears multiple times in a stoplist file with different function characters preceding it, the <em class="u">last entry will take precedence</em> over the others.  This is the only exception to the general rule that order is not important in stopword files. 
+</p>
+
+</div>
+<!-- SECTION "Stoplist words" [3371-4581] -->
+<h2><a name="default_file_example" id="default_file_example">Default file example</a></h2>
+<div class="level2">
+<pre class="code"># apply title-case folding to words before comparing with this stoplist
+!F</pre>
+
+<p>
+
+The fold-titlecase setting is the default, even if it were not explicitly specified.  This allows capitalized words at the start of a sentence (e.g. “Who”) to match a stopword “who” but allows acronyms like WHO (World Health Organization) to be included in the terminology.  If you are using poterminology with source files that contain large amounts of ALL UPPERCASE TEXT you may find the ignore-case setting to be preferable. 
+
+</p>
+<pre class="code"># override regex match below for phrases with &#039;no&#039;
++no</pre>
+
+<p>
+
+The regular expression /..? below would normally match the word &#039;no&#039; and both ignore it as a term and exclude any phrases containing it.  The above will allow it to appear as a term and in phrases.
+
+</p>
+<pre class="code"># ignore all one or two-character words (unless =word appears below)
+/..?
+# ignore words with parenthesis, typically function() calls and the like
+/.*\(.*
+# ignore numbers, both cardinal (e.g. 1,234.0) and ordinal (e.g. 1st, 22nd)
+/[0-9,.]+(st|nd|rd|th)?</pre>
+
+<p>
+
+These regular expressions ignore a lot of uninteresting terms that are typically code or other things that shouldn&#039;t be translated anyhow.  There are many exceptions to the one or two-character word pattern in the default stoplist file, not only with = like &#039;=in&#039; but also &#039;+no&#039; and &#039;:on&#039; and &#039;&lt;ok&#039; and &#039;&gt;of&#039;.
+
+</p>
+<pre class="code"># allow these words by themselves and don&#039;t count against length for phrases
+:off
+:on</pre>
+
+<p>
+
+These prepositions are common as button text and thus useful to have as terms; they also form an important part of phrases so are disregarded for term word count to allow for slightly longer phrases including them.
+
+</p>
+<pre class="code"># allow these words by themselves, but ignore any phrases containing them
+&lt;first
+&lt;hello
+&lt;last</pre>
+
+<p>
+
+These are words that are worth including in a terminology, as they are common in applications, but which aren&#039;t generally part of idiomatic phrases.
+
+</p>
+<pre class="code"># ignore these words by themselves, but allow phrases containing them
+=able
+=about
+=actually
+=ad
+=as
+=at</pre>
+
+<p>
+
+This is the largest category of stoplist words, and these are all just rather common words.  The purpose of a terminology list is to provide specific translation suggestions for the harder words or phrases, not provide a general dictionary, so these words are not of interest by themselves, but may well be part of an interesting phrase.
+
+</p>
+<pre class="code"># ignore these words by themselves, but allow phrases containing them,   and
+# don&#039;t count against length for phrases
+#
+# (possible additions to this list for multi-lingual text: &gt;di &gt;el &gt;le)
+#
+&gt;a
+&gt;an
+&gt;and</pre>
+
+<p>
+
+These very common words aren&#039;t of interest by themselves, but often form an important part of phrases so are disregarded for term word count to allow for slightly longer phrases including them.
+
+</p>
+<pre class="code"># ignore these words and any phrases containing them
+@ain&#039;t
+@aint
+@al
+@are</pre>
+
+<p>
+
+These are “junk” words that are not only uninteresting by themselves, they generally do not contribute anything to the phrases containing them.
+</p>
+
+</div>
+<!-- SECTION "Default file example" [4582-] --></body>
+</html>

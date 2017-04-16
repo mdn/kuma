@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tools.utils &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="twshell" href="IPython.twshell.html" />
+    <link rel="prev" title="tools.growl" href="IPython.tools.growl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.twshell.html" title="twshell"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.tools.growl.html" title="tools.growl"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="tools-utils">
+<h1>tools.utils<a class="headerlink" href="#tools-utils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.tools.utils">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">tools.utils</span></tt><a class="headerlink" href="#module-IPython.tools.utils" title="Permalink to this headline">¶</a></h2>
+<p>Generic utilities for use by IPython&#8217;s various subsystems.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.tools.utils.extractVars">
+<!--[IPython.tools.utils.extractVars]--><tt class="descclassname">IPython.tools.utils.</tt><tt class="descname">extractVars</tt><big>(</big><em>*names</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.tools.utils.extractVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract a set of variables by name from another frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><cite>*names</cite>: strings
+One or more variable names which will be extracted from the caller&#8217;s</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Keywords:</th><td class="field-body"><ul class="first last simple">
+<li><cite>depth</cite>: integer (0)
+How many frames in the stack to walk when looking for your variables.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<blockquote>
+<dl class="docutils">
+<dt>In [2]: def func(x):</dt>
+<dd>...:     y = 1
+...:     print extractVars(&#8216;x&#8217;,&#8217;y&#8217;)
+...:</dd>
+</dl>
+<p>In [3]: func(&#8216;hello&#8217;)
+{&#8216;y&#8217;: 1, &#8216;x&#8217;: &#8216;hello&#8217;}</p>
+</blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.tools.utils.extractVarsAbove">
+<!--[IPython.tools.utils.extractVarsAbove]--><tt class="descclassname">IPython.tools.utils.</tt><tt class="descname">extractVarsAbove</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#IPython.tools.utils.extractVarsAbove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract a set of variables by name from another frame.</p>
+<p>Similar to extractVars(), but with a specified depth of 1, so that names
+are exctracted exactly from above the caller.</p>
+<p>This is simply a convenience function so that the very common case (for us)
+of skipping exactly 1 frame doesn&#8217;t have to construct a special dict for
+keyword passing.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.tools.utils.list_strings">
+<!--[IPython.tools.utils.list_strings]--><tt class="descclassname">IPython.tools.utils.</tt><tt class="descname">list_strings</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.tools.utils.list_strings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Always return a list of strings, given a string or list of strings
+as input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Examples:</th><td class="field-body"><p class="first">In [7]: list_strings(&#8216;A single string&#8217;)
+Out[7]: [&#8216;A single string&#8217;]</p>
+<p>In [8]: list_strings([&#8216;A single string in a list&#8217;])
+Out[8]: [&#8216;A single string in a list&#8217;]</p>
+<p class="last">In [9]: list_strings([&#8216;A&#8217;,&#8217;list&#8217;,&#8217;of&#8217;,&#8217;strings&#8217;])
+Out[9]: [&#8216;A&#8217;, &#8216;list&#8217;, &#8216;of&#8217;, &#8216;strings&#8217;]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.tools.utils.marquee">
+<!--[IPython.tools.utils.marquee]--><tt class="descclassname">IPython.tools.utils.</tt><tt class="descname">marquee</tt><big>(</big><em>txt=''</em>, <em>width=78</em>, <em>mark='*'</em><big>)</big><a class="headerlink" href="#IPython.tools.utils.marquee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the input string centered in a &#8216;marquee&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Examples:</th><td class="field-body"><p class="first">In [16]: marquee(&#8216;A test&#8217;,40)
+Out[16]: &#8216;<strong>************</strong> A test <strong>************</strong>&#8216;</p>
+<p>In [17]: marquee(&#8216;A test&#8217;,40,&#8217;-&#8216;)
+Out[17]: &#8216;&#8212;&#8212;&#8212;&#8212;&#8212;- A test &#8212;&#8212;&#8212;&#8212;&#8212;-&#8216;</p>
+<p class="last">In [18]: marquee(&#8216;A test&#8217;,40,&#8217; &#8216;)
+Out[18]: &#8216;                 A test                 &#8216;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.tools.utils.shexp">
+<!--[IPython.tools.utils.shexp]--><tt class="descclassname">IPython.tools.utils.</tt><tt class="descname">shexp</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.tools.utils.shexp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand $VARS and ~names in a string, like a shell</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Examples:</th><td class="field-body"><p class="first">In [2]: os.environ[&#8216;FOO&#8217;]=&#8217;test&#8217;</p>
+<p class="last">In [3]: shexp(&#8216;variable FOO is $FOO&#8217;)
+Out[3]: &#8216;variable FOO is test&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">tools.utils</a><ul>
+<li><a class="reference external" href="#module-IPython.tools.utils">Module: <tt class="docutils literal"><span class="pre">tools.utils</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.tools.growl.html" title="previous chapter">tools.growl</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.twshell.html" title="next chapter">twshell</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.tools.utils.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.twshell.html" title="twshell"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.tools.growl.html" title="tools.growl"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+Metadata-Version: 1.0
+Name: South
+Version: 0.8.2
+Summary: South: Migrations for Django
+Home-page: http://south.aeracode.org/
+Author: Andrew Godwin & Andy McCurdy
+Author-email: south@aeracode.org
+License: UNKNOWN
+Download-URL: http://south.aeracode.org/wiki/Download
+Description: South is an intelligent database migrations library for the Django web framework. It is database-independent and DVCS-friendly, as well as a whole host of other features.
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7

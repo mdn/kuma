@@ -1,0 +1,69 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+ColorANSI
+=========
+
+Module: :mod:`ColorANSI`
+------------------------
+Inheritance diagram for ``IPython.ColorANSI``:
+
+.. inheritance-diagram:: IPython.ColorANSI 
+   :parts: 3
+
+.. automodule:: IPython.ColorANSI
+
+.. currentmodule:: IPython.ColorANSI
+
+Classes
+-------
+
+:class:`ColorScheme`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ColorScheme
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ColorSchemeTable`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ColorSchemeTable
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InputTermColors`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InputTermColors
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TermColors`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TermColors
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Function
+--------
+
+
+.. autofunction:: IPython.ColorANSI.make_color_table
+

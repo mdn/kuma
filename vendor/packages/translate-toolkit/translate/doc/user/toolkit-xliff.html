@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="xliff" id="xliff">XLIFF</a></h1>
+<div class="level1">
+
+<p>
+
+<acronym title="XML Localization Interchange File Format">XLIFF</acronym> is the OASIS standard for translation. See <a href="http://www.oasis-open.org/committees/xliff/documents/xliff-specification.htm" class="urlextern" title="http://www.oasis-open.org/committees/xliff/documents/xliff-specification.htm">http://www.oasis-open.org/committees/xliff/documents/xliff-specification.htm</a>. 
+</p>
+
+</div>
+<!-- SECTION "XLIFF" [1-153] -->
+<h2><a name="flavours" id="flavours">Flavours</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="XML Localization Interchange File Format">XLIFF</acronym> also had documents that specify the conversion from various standard source documents and localisation formats.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Gettext Portable Object">PO</acronym> - For conformance to the po2xliff <acronym title="specification">spec</acronym>, see <a href="toolkit-xliff2po.html" class="wikilink1" title="toolkit-xliff2po.html">xliff2po</a>.</div>
+<ul>
+<li class="level2"><div class="li"> Draft <a href="http://docs.oasis-open.org/xliff/v1.2/xliff-profile-po/xliff-profile-po-1.2.html" class="urlextern" title="http://docs.oasis-open.org/xliff/v1.2/xliff-profile-po/xliff-profile-po-1.2.html">XLIFF 1.2 Representation Guide for Gettext PO</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <acronym title="HyperText Markup Language">HTML</acronym> - not implemented</div>
+<ul>
+<li class="level2"><div class="li"> Draft <a href="http://docs.oasis-open.org/xliff/v1.2/xliff-profile-html/xliff-profile-html-1.2.html" class="urlextern" title="http://docs.oasis-open.org/xliff/v1.2/xliff-profile-html/xliff-profile-html-1.2.html">XLIFF 1.2 Representation Guide for HTML</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Java (includes .properties and Java resource bundles) - not implemented</div>
+<ul>
+<li class="level2"><div class="li"> Draft <a href="http://docs.oasis-open.org/xliff/v1.2/xliff-profile-java/xliff-profile-java-v1.2.html" class="urlextern" title="http://docs.oasis-open.org/xliff/v1.2/xliff-profile-java/xliff-profile-java-v1.2.html">XLIFF 1.2 Representation Guide for Java Resource Bundles</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> ICU Resource Bundles - not officially being developed by <acronym title="XML Localization Interchange File Format">XLIFF</acronym> - Proposed <a href="http://www.icu-project.org/repos/icu/icuhtml/trunk/design/locale/xliff-profile-icuresourcebundle-1.2.htm" class="urlextern" title="http://www.icu-project.org/repos/icu/icuhtml/trunk/design/locale/xliff-profile-icuresourcebundle-1.2.htm">representation guide</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Flavours" [154-1114] -->
+<h2><a name="standard_conformance" id="standard_conformance">Standard conformance</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Standard conformance" [1115-1149] -->
+<h3><a name="done" id="done">Done</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> File creation and parsing</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Application Programming Interface">API</acronym> can create multiple files in one <acronym title="XML Localization Interchange File Format">XLIFF</acronym> (some tools only read the first file)</div>
+</li>
+<li class="level1"><div class="li"> source-language attribute</div>
+</li>
+<li class="level1"><div class="li"> trans-unit with</div>
+<ul>
+<li class="level2"><div class="li"> note: addnote() and getnotes()</div>
+</li>
+<li class="level2"><div class="li"> state</div>
+<ul>
+<li class="level4"><div class="li"> fuzzy: isfuzzy() and markfuzzy()</div>
+</li>
+<li class="level4"><div class="li"> translated: marktranslated()</div>
+</li>
+<li class="level4"><div class="li"> approved</div>
+</li>
+<li class="level4"><div class="li"> needs-review-transaltion: isreview(), markreviewneeded()</div>
+</li>
+</ul>
+</li>
+<li class="level2"><div class="li"> id: setid()</div>
+</li>
+<li class="level2"><div class="li"> context-group: createcontextgroup()</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> context groups</div>
+</li>
+<li class="level1"><div class="li"> alt-trans</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Done" [1150-1644] -->
+<h2><a name="xliff_and_other_tools" id="xliff_and_other_tools">XLIFF and other tools</a></h2>
+<div class="level2">
+
+<p>
+
+Here is a small report on the <a href="guide-tools-xliff_support_by_ms_windows_programs.html" class="wikilink1" title="guide-tools-xliff_support_by_ms_windows_programs.html">XLIFF support by MS Windows programs</a>.
+</p>
+
+</div>
+<!-- SECTION "XLIFF and other tools" [1645-] --></body>
+</html>

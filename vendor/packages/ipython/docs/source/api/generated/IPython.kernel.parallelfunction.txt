@@ -1,0 +1,62 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.parallelfunction
+=======================
+
+Module: :mod:`kernel.parallelfunction`
+--------------------------------------
+Inheritance diagram for ``IPython.kernel.parallelfunction``:
+
+.. inheritance-diagram:: IPython.kernel.parallelfunction 
+   :parts: 3
+
+.. automodule:: IPython.kernel.parallelfunction
+
+.. currentmodule:: IPython.kernel.parallelfunction
+
+Classes
+-------
+
+:class:`IMultiEngineParallelDecorator`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMultiEngineParallelDecorator
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IParallelFunction`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IParallelFunction
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ITaskParallelDecorator`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ITaskParallelDecorator
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ParallelFunction`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ParallelFunction
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,243 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.configobj
+==================
+
+Module: :mod:`external.configobj`
+---------------------------------
+Inheritance diagram for ``IPython.external.configobj``:
+
+.. inheritance-diagram:: IPython.external.configobj 
+   :parts: 3
+
+.. automodule:: IPython.external.configobj
+
+.. currentmodule:: IPython.external.configobj
+
+Classes
+-------
+
+:class:`Builder`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Builder
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ConfigObj`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConfigObj
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ConfigObjError`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConfigObjError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ConfigParserInterpolation`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConfigParserInterpolation
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ConfigspecError`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConfigspecError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`DuplicateError`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: DuplicateError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InterpolationEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InterpolationEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InterpolationError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InterpolationError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InterpolationLoopError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InterpolationLoopError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MissingInterpolationOption`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MissingInterpolationOption
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NestingError`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NestingError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ParseError`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ParseError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ReloadError`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ReloadError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RepeatSectionError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RepeatSectionError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Section`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Section
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SimpleVal`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SimpleVal
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TemplateInterpolation`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TemplateInterpolation
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UnknownType`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UnknownType
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UnreprError`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UnreprError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.configobj.flatten_errors
+
+
+.. autofunction:: IPython.external.configobj.getObj
+
+
+.. autofunction:: IPython.external.configobj.match_utf8
+
+
+.. autofunction:: IPython.external.configobj.unrepr
+

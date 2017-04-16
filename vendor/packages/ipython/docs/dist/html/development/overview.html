@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython development guidelines &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="IPython Developer&#8217;s Guide" href="index.html" />
+    <link rel="next" title="Coding guide" href="coding_guide.html" />
+    <link rel="prev" title="IPython Developer&#8217;s Guide" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="coding_guide.html" title="Coding guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="IPython Developer&#8217;s Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-development-guidelines">
+<span id="development"></span><h1>IPython development guidelines<a class="headerlink" href="#ipython-development-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This document describes IPython from the perspective of developers. Most
+importantly, it gives information for people who want to contribute to the
+development of IPython. So if you want to help out, read on!</p>
+</div>
+<div class="section" id="how-to-contribute-to-ipython">
+<h2>How to contribute to IPython<a class="headerlink" href="#how-to-contribute-to-ipython" title="Permalink to this headline">¶</a></h2>
+<p>IPython development is done using Bazaar <a class="reference internal" href="#bazaar">[Bazaar]</a> and Launchpad <a class="reference internal" href="#launchpad">[Launchpad]</a>.
+This makes it easy for people to contribute to the development of IPython.
+There are several ways in which you can join in.</p>
+<p>If you have a small change that you want to send to the team, you can edit your
+bazaar checkout of IPython (see below) in-place, and ask bazaar for the
+differences:</p>
+<div class="highlight-python"><pre>$ cd /path/to/your/copy/of/ipython
+$ bzr diff &gt; my_fixes.diff</pre>
+</div>
+<p>This produces a patch file with your fixes, which we can apply to the source
+tree.  This file should then be attached to a ticket in our <a class="reference external" href="https://bugs.launchpad.net/ipython">bug tracker</a>, indicating what it does.</p>
+<p>This model of creating small, self-contained patches works very well and there
+are open source projects that do their entire development this way.  However,
+in IPython we have found that for tracking larger changes, making use of
+bazaar&#8217;s full capabilities in conjunction with Launchpad&#8217;s code hosting
+services makes for a much better experience.</p>
+<p>Making your own branch of IPython allows you to refine your changes over time,
+track the development of the main team, and propose your own full version of
+the code for others to use and review, with a minimum amount of fuss.  The next
+parts of this document will explain how to do this.</p>
+<div class="section" id="install-bazaar-and-create-a-launchpad-account">
+<h3>Install Bazaar and create a Launchpad account<a class="headerlink" href="#install-bazaar-and-create-a-launchpad-account" title="Permalink to this headline">¶</a></h3>
+<p>First make sure you have installed Bazaar (see their <a class="reference external" href="http://bazaar-vcs.org/">website</a>). To see that Bazaar is installed and knows about
+you, try the following:</p>
+<div class="highlight-python"><pre>$ bzr whoami
+Joe Coder &lt;jcoder@gmail.com&gt;</pre>
+</div>
+<p>This should display your name and email. Next, you will want to create an
+account on the <a class="reference external" href="http://www.launchpad.net">Launchpad website</a> and setup your
+ssh keys. For more information of setting up your ssh keys, see <a class="reference external" href="https://help.launchpad.net/YourAccount/CreatingAnSSHKeyPair">this link</a>.</p>
+</div>
+<div class="section" id="get-the-main-ipython-branch-from-launchpad">
+<h3>Get the main IPython branch from Launchpad<a class="headerlink" href="#get-the-main-ipython-branch-from-launchpad" title="Permalink to this headline">¶</a></h3>
+<p>Now, you can get a copy of the main IPython development branch (we call this
+the &#8220;trunk&#8221;):</p>
+<div class="highlight-python"><pre>$ bzr branch lp:ipython</pre>
+</div>
+</div>
+<div class="section" id="create-a-working-branch">
+<h3>Create a working branch<a class="headerlink" href="#create-a-working-branch" title="Permalink to this headline">¶</a></h3>
+<p>When working on IPython, you won&#8217;t actually make edits directly to the
+<tt class="docutils literal"><span class="pre">lp:ipython</span></tt> branch. Instead, you will create a separate branch for your
+changes. For now, let&#8217;s assume you want to do your work in a branch named
+&#8220;ipython-mybranch&#8221;. Create this branch by doing:</p>
+<div class="highlight-python"><pre>$ bzr branch ipython ipython-mybranch</pre>
+</div>
+<p>When you actually create a branch, you will want to give it a name that
+reflects the nature of the work that you will be doing in it, like
+&#8220;install-docs-update&#8221;.</p>
+</div>
+<div class="section" id="make-edits-in-your-working-branch">
+<h3>Make edits in your working branch<a class="headerlink" href="#make-edits-in-your-working-branch" title="Permalink to this headline">¶</a></h3>
+<p>Now you are ready to actually make edits in your <tt class="docutils literal"><span class="pre">ipython-mybranch</span></tt>
+branch. Before doing this, it is helpful to install this branch so you can
+test your changes as you work. This is easiest if you have setuptools
+installed. Then, just do:</p>
+<div class="highlight-python"><pre>$ cd ipython-mybranch
+$ python setupegg.py develop</pre>
+</div>
+<p>Now, make some changes. After a while, you will want to commit your changes.
+This let&#8217;s Bazaar know that you like the changes you have made and gives you
+an opportunity to keep a nice record of what you have done. This looks like
+this:</p>
+<div class="highlight-python"><pre>$ ...do work in ipython-mybranch...
+$ bzr commit -m "the commit message goes here"</pre>
+</div>
+<p>Please note that since we now don&#8217;t use an old-style linear ChangeLog (that
+tends to cause problems with distributed version control systems), you should
+ensure that your log messages are reasonably detailed.  Use a docstring-like
+approach in the commit messages (including the second line being left
+<em>blank</em>):</p>
+<div class="highlight-python"><pre>Single line summary of  changes being committed.
+
+* more details when warranted ...
+* including crediting outside contributors if they sent the
+  code/bug/idea!</pre>
+</div>
+<p>As you work, you will repeat this edit/commit cycle many times. If you work on
+your branch for a long time, you will also want to get the latest changes from
+the <tt class="docutils literal"><span class="pre">lp:ipython</span></tt> branch. This can be done with the following sequence of
+commands:</p>
+<div class="highlight-python"><pre>$ ls
+ipython
+ipython-mybranch
+
+$ cd ipython
+$ bzr pull
+$ cd ../ipython-mybranch
+$ bzr merge ../ipython
+$ bzr commit -m "Merging changes from trunk"</pre>
+</div>
+<p>Along the way, you should also run the IPython test suite.  You can do this
+using the <strong>iptest</strong> command (which is basically a customized version of
+<strong>nosetests</strong>):</p>
+<div class="highlight-python"><pre>$ cd
+$ iptest</pre>
+</div>
+<p>The <strong>iptest</strong> command will also pick up and run any tests you have
+written.  See <em class="xref">_devel_testing</em> for further details on the testing system.</p>
+</div>
+<div class="section" id="post-your-branch-and-request-a-code-review">
+<h3>Post your branch and request a code review<a class="headerlink" href="#post-your-branch-and-request-a-code-review" title="Permalink to this headline">¶</a></h3>
+<p>Once you are done with your edits, you should post your branch on Launchpad so
+that other IPython developers can review the changes and help you merge your
+changes into the main development branch. To post your branch on Launchpad,
+do:</p>
+<div class="highlight-python"><pre>$ cd ipython-mybranch
+$ bzr push lp:~yourusername/ipython/ipython-mybranch</pre>
+</div>
+<p>Then, go to the <a class="reference external" href="www.launchpad.net/ipython">IPython Launchpad site</a>, and you
+should see your branch under the &#8220;Code&#8221; tab. If you click on your branch, you
+can provide a short description of the branch as well as mark its status. Most
+importantly, you should click the link that reads &#8220;Propose for merging into
+another branch&#8221;. What does this do?</p>
+<p>This let&#8217;s the other IPython developers know that your branch is ready to be
+reviewed and merged into the main development branch. During this review
+process, other developers will give you feedback and help you get your code
+ready to be merged. What types of things will we be looking for:</p>
+<ul class="simple">
+<li>All code is documented.</li>
+<li>All code has tests.</li>
+<li>The entire IPython test suite passes.</li>
+</ul>
+<p>Once your changes have been reviewed and approved, someone will merge them
+into the main development branch.</p>
+</div>
+</div>
+<div class="section" id="some-notes-for-core-developers-when-merging-third-party-contributions">
+<h2>Some notes for core developers when merging third-party contributions<a class="headerlink" href="#some-notes-for-core-developers-when-merging-third-party-contributions" title="Permalink to this headline">¶</a></h2>
+<p>Core developers, who ultimately merge any approved branch (from themselves,
+another developer, or any third-party contribution) will typically use
+<strong>bzr merge</strong> to merge the branch into the trunk and push it to the main
+Launcphad site.  This is a short list of things to keep in mind when doing this
+process, so that the project history is easy to understand in the long run, and
+that generating release notes is as painless and accurate as possible.</p>
+<ul>
+<li><p class="first">When you merge any non-trivial functionality (from one small bug fix to a big
+feature branch), please remember to always edit the <a href="#id6"><span class="problematic" id="id7">changes_</span></a> file
+accordingly.  This file has one main section for each release, and if you
+edit it as you go, noting what new features, bug fixes or API changes you
+have made, the release notes will be almost finished when they are needed
+later.  This is much easier if done when you merge the work, rather than
+weeks or months later by re-reading a massive Bazaar log.</p>
+</li>
+<li><p class="first">When big merges are done, the practice of putting a summary commit message in
+the merge is <em>extremely</em> useful.  It makes this kind of job much nicer,
+because that summary log message can be almost copy/pasted without changes,
+if it was well written, rather than dissecting the next-level messages from
+the individual commits.</p>
+</li>
+<li><p class="first">It&#8217;s important that we remember to always credit who gave us something if
+it&#8217;s not the committer.  In general, we have been fairly good on this front,
+this is just a reminder to keep things up.  As a note, if you are ever
+committing something that is completely (or almost so) a third-party
+contribution, do the commit as:</p>
+<div class="highlight-python"><pre>$ bzr commit --author="Someone Else"</pre>
+</div>
+<p>This way it will show that name separately in the log, which makes it even
+easier to spot.  Obviously we often rework third party contributions
+extensively, but this is still good to keep in mind for cases when we don&#8217;t
+touch the code too much.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="standalone-documentation">
+<h3>Standalone documentation<a class="headerlink" href="#standalone-documentation" title="Permalink to this headline">¶</a></h3>
+<p>All standalone documentation should be written in plain text (<tt class="docutils literal"><span class="pre">.txt</span></tt>) files
+using reStructuredText <a class="reference internal" href="#restructuredtext">[reStructuredText]</a> for markup and formatting. All such
+documentation should be placed in directory <tt class="docutils literal"><span class="pre">docs/source</span></tt> of the IPython
+source tree. The documentation in this location will serve as the main source
+for IPython documentation and all existing documentation should be converted
+to this format.</p>
+<p>To build the final documentation, we use Sphinx <a class="reference internal" href="#sphinx">[Sphinx]</a>.  Once you have
+Sphinx installed, you can build the html docs yourself by doing:</p>
+<div class="highlight-python"><pre>$ cd ipython-mybranch/docs
+$ make html</pre>
+</div>
+</div>
+<div class="section" id="docstring-format">
+<h3>Docstring format<a class="headerlink" href="#docstring-format" title="Permalink to this headline">¶</a></h3>
+<p>Good docstrings are very important. All new code should have docstrings that
+are formatted using reStructuredText for markup and formatting, since it is
+understood by a wide variety of tools. Details about using reStructuredText
+for docstrings can be found <a class="reference external" href="http://epydoc.sourceforge.net/manual-othermarkup.html">here</a>.</p>
+<p>Additional PEPs of interest regarding documentation of code:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.python.org/peps/pep-0257.html">Docstring Conventions</a></li>
+<li><a class="reference external" href="http://www.python.org/peps/pep-0256.html">Docstring Processing System Framework</a></li>
+<li><a class="reference external" href="http://www.python.org/peps/pep-0258.html">Docutils Design Specification</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="coding-conventions">
+<h2>Coding conventions<a class="headerlink" href="#coding-conventions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p>In general, we&#8217;ll try to follow the standard Python style conventions as
+described here:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.python.org/peps/pep-0008.html">Style Guide for Python Code</a></li>
+</ul>
+<p>Other comments:</p>
+<ul class="simple">
+<li>In a large file, top level classes and functions should be
+separated by 2-3 lines to make it easier to separate them visually.</li>
+<li>Use 4 spaces for indentation.</li>
+<li>Keep the ordering of methods the same in classes that have the same
+methods.  This is particularly true for classes that implement an interface.</li>
+</ul>
+</div>
+<div class="section" id="naming-conventions">
+<h3>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h3>
+<p>In terms of naming conventions, we&#8217;ll follow the guidelines from the <a class="reference external" href="http://www.python.org/peps/pep-0008.html">Style
+Guide for Python Code</a>.</p>
+<p>For all new IPython code (and much existing code is being refactored), we&#8217;ll
+use:</p>
+<ul class="simple">
+<li>All <tt class="docutils literal"><span class="pre">lowercase</span></tt> module names.</li>
+<li><tt class="docutils literal"><span class="pre">CamelCase</span></tt> for class names.</li>
+<li><tt class="docutils literal"><span class="pre">lowercase_with_underscores</span></tt> for methods, functions, variables and
+attributes.</li>
+</ul>
+<p>There are, however, some important exceptions to these rules. In some cases,
+IPython code will interface with packages (Twisted, Wx, Qt) that use other
+conventions. At some level this makes it impossible to adhere to our own
+standards at all times. In particular, when subclassing classes that use other
+naming conventions, you must follow their naming conventions. To deal with
+cases like this, we propose the following policy:</p>
+<ul class="simple">
+<li>If you are subclassing a class that uses different conventions, use its
+naming conventions throughout your subclass.  Thus, if you are creating a
+Twisted Protocol class, used Twisted&#8217;s
+<tt class="docutils literal"><span class="pre">namingSchemeForMethodsAndAttributes.</span></tt></li>
+<li>All IPython&#8217;s official interfaces should use our conventions.  In some cases
+this will mean that you need to provide shadow names (first implement
+<tt class="docutils literal"><span class="pre">fooBar</span></tt> and then <tt class="docutils literal"><span class="pre">foo_bar</span> <span class="pre">=</span> <span class="pre">fooBar</span></tt>).  We want to avoid this at all
+costs, but it will probably be necessary at times.  But, please use this
+sparingly!</li>
+</ul>
+<p>Implementation-specific <em>private</em> methods will use
+<tt class="docutils literal"><span class="pre">_single_underscore_prefix</span></tt>. Names with a leading double underscore will
+<em>only</em> be used in special cases, as they makes subclassing difficult (such
+names are not easily seen by child classes).</p>
+<p>Occasionally some run-in lowercase names are used, but mostly for very short
+names or where we are implementing methods very similar to existing ones in a
+base class (like <tt class="docutils literal"><span class="pre">runlines()</span></tt> where <tt class="docutils literal"><span class="pre">runsource()</span></tt> and <tt class="docutils literal"><span class="pre">runcode()</span></tt> had
+established precedent).</p>
+<p>The old IPython codebase has a big mix of classes and modules prefixed with an
+explicit <tt class="docutils literal"><span class="pre">IP</span></tt>. In Python this is mostly unnecessary, redundant and frowned
+upon, as namespaces offer cleaner prefixing. The only case where this approach
+is justified is for classes which are expected to be imported into external
+namespaces and a very generic name (like Shell) is too likely to clash with
+something else. We&#8217;ll need to revisit this issue as we clean up and refactor
+the code, but in general we should remove as many unnecessary <tt class="docutils literal"><span class="pre">IP</span></tt>/<tt class="docutils literal"><span class="pre">ip</span></tt>
+prefixes as possible. However, if a prefix seems absolutely necessary the more
+specific <tt class="docutils literal"><span class="pre">IPY</span></tt> or <tt class="docutils literal"><span class="pre">ipy</span></tt> are preferred.</p>
+</div>
+</div>
+<div class="section" id="testing-system">
+<span id="devel-testing"></span><h2>Testing system<a class="headerlink" href="#testing-system" title="Permalink to this headline">¶</a></h2>
+<p>It is extremely important that all code contributed to IPython has tests.
+Tests should be written as unittests, doctests or as entities that the Nose
+<a class="reference internal" href="#nose">[Nose]</a> testing package will find. Regardless of how the tests are written, we
+will use Nose for discovering and running the tests. Nose will be required to
+run the IPython test suite, but will not be required to simply use IPython.</p>
+<p>Tests of Twisted using code need to follow two additional guidelines:</p>
+<ol class="arabic simple">
+<li>Twisted using tests should be written by subclassing the <tt class="xref docutils literal"><span class="pre">TestCase</span></tt>
+class that comes with <tt class="xref docutils literal"><span class="pre">twisted.trial.unittest</span></tt>.</li>
+<li>All <tt class="xref docutils literal"><span class="pre">Deferred</span></tt> instances that are created in the test must be
+properly chained and the final one <em>must</em> be the return value of the test
+method.</li>
+</ol>
+<p>When these two things are done, Nose will be able to run the tests and the
+twisted reactor will be handled correctly.</p>
+<p>Each subpackage in IPython should have its own <tt class="docutils literal"><span class="pre">tests</span></tt> directory that
+contains all of the tests for that subpackage. This allows each subpackage to
+be self-contained.  A good convention to follow is to have a file named
+<tt class="docutils literal"><span class="pre">test_foo.py</span></tt> for each module <tt class="docutils literal"><span class="pre">foo.py</span></tt> in the package.  This makes
+it easy to organize the tests, though like most conventions, it&#8217;s OK to break
+it if logic and common sense dictate otherwise.</p>
+<p>If a subpackage has any dependencies beyond the Python standard library, the
+tests for that subpackage should be skipped if the dependencies are not
+found. This is very important so users don&#8217;t get tests failing simply because
+they don&#8217;t have dependencies.  We ship a set of decorators in the
+<tt class="xref docutils literal"><span class="pre">IPython.testing</span></tt> package to tag tests that may be platform-specific or
+otherwise may have restrictions; if the existing ones don&#8217;t fit your needs, add
+a new decorator in that location so other tests can reuse it.</p>
+<p>To run the IPython test suite, use the <strong>iptest</strong> command that is
+installed with IPython (if you are using IPython in-place, without installing
+it, you can find this script in the <tt class="docutils literal"><span class="pre">scripts</span></tt> directory):</p>
+<div class="highlight-python"><pre>$ iptest</pre>
+</div>
+<p>This command colects all IPython tests into separate groups, and then calls
+either Nose with the proper options and extensions, or Twisted&#8217;s
+<strong>trial</strong>.  This ensures that tests that need the Twisted reactor
+management facilities execute separate of Nose.  If any individual test group
+fails, <strong>iptest</strong> will print what you need to type so you can rerun that
+particular test group alone for debugging.</p>
+<p>By default, <strong>iptest</strong> runs the entire IPython test
+suite (skipping tests that may be platform-specific or which depend on tools
+you may not have).  But you can also use it to run only one specific test file,
+or a specific test function.  For example, this will run only the
+<tt class="docutils literal"><span class="pre">test_magic</span></tt> file from the test suite:</p>
+<div class="highlight-python"><pre>$ iptest IPython.tests.test_magic
+----------------------------------------------------------------------
+Ran 10 tests in 0.348s
+
+OK (SKIP=3)
+Deleting object: second_pass</pre>
+</div>
+<p>while the <tt class="docutils literal"><span class="pre">path:function</span></tt> syntax allows you to select a specific function in
+that file to run:</p>
+<div class="highlight-python"><pre>$ iptest IPython.tests.test_magic:test_obj_del
+----------------------------------------------------------------------
+Ran 1 test in 0.204s
+
+OK</pre>
+</div>
+<p>Since <strong>iptest</strong> is based on nosetests, you can pass it any regular
+nosetests option.  For example, you can use <tt class="docutils literal"><span class="pre">--pdb</span></tt> or <tt class="docutils literal"><span class="pre">--pdb-failures</span></tt> to
+automatically activate the interactive Pdb debugger on errors or failures.  See
+the nosetests documentation for further details.</p>
+<div class="section" id="a-few-tips-for-writing-tests">
+<h3>A few tips for writing tests<a class="headerlink" href="#a-few-tips-for-writing-tests" title="Permalink to this headline">¶</a></h3>
+<p>You can write tests either as normal test files, using all the conventions that
+Nose recognizes, or as doctests.  Note that <em>all</em> IPython functions should have
+at least one example that serves as a doctest, whenever technically feasible.
+However, example doctests should only be in the main docstring if they are <em>a
+good example</em>, i.e. if they convey useful information about the function.  If
+you simply would like to write a test as a doctest, put it in a separate test
+file and write a no-op function whose only purpose is its docstring.</p>
+<p>Note, however, that in a file named <tt class="docutils literal"><span class="pre">test_X</span></tt>, functions whose only test
+is their docstring (as a doctest) and which have no test functionality of their
+own, should be called <em>doctest_foo</em> instead of <em>test_foo</em>, otherwise they get
+double-counted (the empty function call is counted as a test, which just
+inflates tests numbers artificially).  This restriction does not apply to
+functions in files with other names, due to how Nose discovers tests.</p>
+<p>You can use IPython examples in your docstrings.  Those can make full use of
+IPython functionality (magics, variable substitution, etc), but be careful to
+keep them generic enough that they run identically on all Operating Systems.</p>
+<p>The prompts in your doctests can be either of the plain Python <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt> variety
+or <tt class="docutils literal"><span class="pre">In</span> <span class="pre">[1]:</span></tt> IPython style.  Since this is the IPython system, after all, we
+encourage you to use IPython prompts throughout, unless you are illustrating a
+specific aspect of the normal prompts (such as the <tt class="docutils literal"><span class="pre">%doctest_mode</span></tt> magic).</p>
+<p>If a test isn&#8217;t safe to run inside the main nose process (e.g. because it loads
+a GUI toolkit), consider running it in a subprocess and capturing its output
+for evaluation and test decision later.  Here is an example of how to do it, by
+relying on the builtin <tt class="docutils literal"><span class="pre">_ip</span></tt> object that contains the public IPython api as
+defined in <a title="" class="reference external" href="../api/generated/IPython.ipapi.html#module-IPython.ipapi"><tt class="xref docutils literal"><span class="pre">IPython.ipapi</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_obj_del</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test that object&#39;s __del__ methods are called on exit.&quot;&quot;&quot;</span>
+    <span class="n">test_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="n">del_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">test_dir</span><span class="p">,</span><span class="s">&#39;obj_del.py&#39;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">_ip</span><span class="o">.</span><span class="n">IP</span><span class="o">.</span><span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;ipython </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">del_file</span><span class="p">)</span>
+    <span class="n">nt</span><span class="o">.</span><span class="n">assert_equals</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&#39;object A deleted&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a doctest contains input whose output you don&#8217;t want to verify identically
+via doctest (random output, an object id, etc), you can mark a docstring with
+<tt class="docutils literal"><span class="pre">#random</span></tt>.  All of these test will have their code executed but no output
+checking will be done:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">3</span>
+<span class="go">junk goes here...  # random</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go">again,  anything goes #random</span>
+<span class="go">if multiline, the random mark is only needed once.</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go">You can also put the random marker at the end:</span>
+<span class="go"># random</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go"># random</span>
+<span class="go">.. or at the beginning.</span>
+</pre></div>
+</div>
+<p>In a case where you want an <em>entire</em> docstring to be executed but not verified
+(this only serves to check that the code runs without crashing, so it should be
+used very sparingly), you can put <tt class="docutils literal"><span class="pre">#</span> <span class="pre">all-random</span></tt> in the docstring.</p>
+</div>
+</div>
+<div class="section" id="release-checklist">
+<span id="devel-config"></span><h2>Release checklist<a class="headerlink" href="#release-checklist" title="Permalink to this headline">¶</a></h2>
+<p>Most of the release process is automated by the <tt class="docutils literal"><span class="pre">release</span></tt> script in the
+<tt class="docutils literal"><span class="pre">tools</span></tt> directory.  This is just a handy reminder for the release manager.</p>
+<ol class="arabic simple">
+<li>First, run <tt class="docutils literal"><span class="pre">build_release</span></tt>, which does all the file checking and
+building that the real release script will do.  This will let you do test
+installations, check that the build procedure runs OK, etc.  You may want to
+disable a few things like multi-version RPM building while testing, because
+otherwise the build takes really long.</li>
+<li>Run the release script, which makes the tar.gz, eggs and Win32 .exe
+installer.  It posts them to the site and registers the release with PyPI.</li>
+<li>Updating the website with announcements and links to the updated
+changes.txt in html form. Remember to put a short note both on the news
+page of the site and on Launcphad.</li>
+<li>Drafting a short release announcement with i) highlights and ii) a link to
+the html changes.txt.</li>
+<li>Make sure that the released version of the docs is live on the site.</li>
+<li>Celebrate!</li>
+</ol>
+</div>
+<div class="section" id="porting-to-3-0">
+<h2>Porting to 3.0<a class="headerlink" href="#porting-to-3-0" title="Permalink to this headline">¶</a></h2>
+<p>There are no definite plans for porting of IPython to python 3. The major
+issue is the dependency on twisted framework for the networking/threading
+stuff. It is possible that it the traditional IPython interactive console
+could be ported more easily since it has no such dependency. Here are a few
+things that will need to be considered when doing such a port especially
+if we want to have a codebase that works directly on both 2.x and 3.x.</p>
+<blockquote>
+<ol class="arabic simple">
+<li>The syntax for exceptions changed (PEP 3110). The old
+<cite>except exc, var</cite> changed to <cite>except exc as var</cite>. At last
+count there was 78 occurences of this usage in the codebase.  This
+is  a particularly problematic issue, because it&#8217;s not easy to
+implement it in a 2.5-compatible way.</li>
+</ol>
+</blockquote>
+<p>Because it is quite difficult to support simultaneously Python 2.5 and 3.x, we
+will likely at some point put out a release that requires strictly 2.6 and
+abandons 2.5 compatibility.  This will then allow us to port the code to using
+<tt class="xref docutils literal"><span class="pre">print()</span></tt> as a function, <cite>except exc as var</cite> syntax, etc.  But as of
+version 0.11 at least, we will retain Python 2.5 compatibility.</p>
+<table class="docutils citation" frame="void" id="bazaar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[Bazaar]</a></td><td>Bazaar. <a class="reference external" href="http://bazaar-vcs.org/">http://bazaar-vcs.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="launchpad" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[Launchpad]</a></td><td>Launchpad. <a class="reference external" href="http://www.launchpad.net/ipython">http://www.launchpad.net/ipython</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="restructuredtext" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[reStructuredText]</a></td><td>reStructuredText.  <a class="reference external" href="http://docutils.sourceforge.net/rst.html">http://docutils.sourceforge.net/rst.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="sphinx" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[Sphinx]</a></td><td>Sphinx. <a class="reference external" href="http://sphinx.pocoo.org/">http://sphinx.pocoo.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="nose" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[Nose]</a></td><td>Nose: a discovery based unittest extension. <a class="reference external" href="http://code.google.com/p/python-nose/">http://code.google.com/p/python-nose/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">IPython development guidelines</a><ul>
+<li><a class="reference external" href="#overview">Overview</a></li>
+<li><a class="reference external" href="#how-to-contribute-to-ipython">How to contribute to IPython</a><ul>
+<li><a class="reference external" href="#install-bazaar-and-create-a-launchpad-account">Install Bazaar and create a Launchpad account</a></li>
+<li><a class="reference external" href="#get-the-main-ipython-branch-from-launchpad">Get the main IPython branch from Launchpad</a></li>
+<li><a class="reference external" href="#create-a-working-branch">Create a working branch</a></li>
+<li><a class="reference external" href="#make-edits-in-your-working-branch">Make edits in your working branch</a></li>
+<li><a class="reference external" href="#post-your-branch-and-request-a-code-review">Post your branch and request a code review</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#some-notes-for-core-developers-when-merging-third-party-contributions">Some notes for core developers when merging third-party contributions</a></li>
+<li><a class="reference external" href="#documentation">Documentation</a><ul>
+<li><a class="reference external" href="#standalone-documentation">Standalone documentation</a></li>
+<li><a class="reference external" href="#docstring-format">Docstring format</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#coding-conventions">Coding conventions</a><ul>
+<li><a class="reference external" href="#general">General</a></li>
+<li><a class="reference external" href="#naming-conventions">Naming conventions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#testing-system">Testing system</a><ul>
+<li><a class="reference external" href="#a-few-tips-for-writing-tests">A few tips for writing tests</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#release-checklist">Release checklist</a></li>
+<li><a class="reference external" href="#porting-to-3-0">Porting to 3.0</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">IPython Developer&#8217;s Guide</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="coding_guide.html" title="next chapter">Coding guide</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/overview.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="coding_guide.html" title="Coding guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="IPython Developer&#8217;s Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

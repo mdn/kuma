@@ -1,0 +1,73 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.error
+=================
+
+Module: :mod:`kernel.core.error`
+--------------------------------
+Inheritance diagram for ``IPython.kernel.core.error``:
+
+.. inheritance-diagram:: IPython.kernel.core.error 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.error
+
+.. currentmodule:: IPython.kernel.core.error
+
+Classes
+-------
+
+:class:`ControllerCreationError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ControllerCreationError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ControllerError`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ControllerError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`EngineCreationError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EngineCreationError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`EngineError`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EngineError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPythonError`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

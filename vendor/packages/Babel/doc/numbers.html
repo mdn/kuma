@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Number Formatting</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="number-formatting">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Number Formatting</h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#pattern-syntax" id="id1">1   Pattern Syntax</a></li>
+<li><a class="reference internal" href="#parsing-numbers" id="id2">2   Parsing Numbers</a></li>
+</ul>
+</div>
+<p>Support for locale-specific formatting and parsing of numbers is provided by
+the <tt class="docutils literal"><span class="pre">babel.numbers</span></tt> module:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel.numbers</span> <span class="kn">import</span> <span class="n">format_number</span><span class="p">,</span> <span class="n">format_decimal</span><span class="p">,</span> <span class="n">format_percent</span>
+</pre></div>
+<p>Examples:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">format_decimal</span><span class="p">(</span><span class="mf">1.2345</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en_US'</span><span class="p">)</span>
+<span class="go">u'1.234'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_decimal</span><span class="p">(</span><span class="mf">1.2345</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'sv_SE'</span><span class="p">)</span>
+<span class="go">u'1,234'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_decimal</span><span class="p">(</span><span class="mi">12345</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'de_DE'</span><span class="p">)</span>
+<span class="go">u'12.345'</span>
+</pre></div>
+<div class="section" id="pattern-syntax">
+<h1>1   Pattern Syntax</h1>
+<p>While Babel makes it simple to use the appropriate number format for a given
+locale, you can also force it to use custom patterns. As with date/time
+formatting patterns, the patterns Babel supports for number formatting are
+based on the <a class="reference external" href="http://unicode.org/reports/tr35/#Number_Format_Patterns">Locale Data Markup Language specification</a> (LDML).</p>
+<p>Examples:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">format_decimal</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2345</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'#,##0.##;-#'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'-1.23'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_decimal</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2345</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'#,##0.##;(#)'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'(1.23)'</span>
+</pre></div>
+<p>The syntax for custom number format patterns is described in detail in the
+the specification. The following table is just a relatively brief overview.</p>
+<blockquote>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%">
+<col width="87%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Symbol</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">0</span></tt></td>
+<td>Digit</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">1-9</span></tt></td>
+<td>'1' through '9' indicate rounding.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">@</span></tt></td>
+<td>Significant digit</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">#</span></tt></td>
+<td>Digit, zero shows as absent</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">.</span></tt></td>
+<td>Decimal separator or monetary decimal separator</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">-</span></tt></td>
+<td>Minus sign</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">,</span></tt></td>
+<td>Grouping separator</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">E</span></tt></td>
+<td>Separates mantissa and exponent in scientific notation</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">+</span></tt></td>
+<td>Prefix positive exponents with localized plus sign</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">;</span></tt></td>
+<td>Separates positive and negative subpatterns</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">%</span></tt></td>
+<td>Multiply by 100 and show as percentage</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">‰</span></tt></td>
+<td>Multiply by 1000 and show as per mille</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">¤</span></tt></td>
+<td>Currency sign, replaced by currency symbol. If doubled,
+replaced by international currency symbol. If tripled, uses the
+long form of the decimal symbol.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'</span></tt></td>
+<td>Used to quote special characters in a prefix or suffix</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">*</span></tt></td>
+<td>Pad escape, precedes pad character</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</blockquote>
+</div>
+<div class="section" id="parsing-numbers">
+<h1>2   Parsing Numbers</h1>
+<p>Babel can also parse numeric data in a locale-sensitive manner:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel.numbers</span> <span class="kn">import</span> <span class="n">parse_decimal</span><span class="p">,</span> <span class="n">parse_number</span>
+</pre></div>
+<p>Examples:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_decimal</span><span class="p">(</span><span class="s">'1,099.98'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en_US'</span><span class="p">)</span>
+<span class="go">1099.98</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_decimal</span><span class="p">(</span><span class="s">'1.099,98'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'de'</span><span class="p">)</span>
+<span class="go">1099.98</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_decimal</span><span class="p">(</span><span class="s">'2,109,998'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'de'</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  <span class="c">...</span>
+<span class="nc">NumberFormatError</span>: <span class="n-Identifier">'2,109,998' is not a valid decimal number</span>
+</pre></div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Number parsing is not properly implemented yet</p>
+</div>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

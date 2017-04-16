@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Logger
+======
+
+Module: :mod:`Logger`
+---------------------
+Inheritance diagram for ``IPython.Logger``:
+
+.. inheritance-diagram:: IPython.Logger 
+   :parts: 3
+
+.. automodule:: IPython.Logger
+
+.. currentmodule:: IPython.Logger
+
+:class:`Logger`
+---------------
+
+
+.. autoclass:: Logger
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,163 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.engineservice
+====================
+
+Module: :mod:`kernel.engineservice`
+-----------------------------------
+Inheritance diagram for ``IPython.kernel.engineservice``:
+
+.. inheritance-diagram:: IPython.kernel.engineservice 
+   :parts: 3
+
+.. automodule:: IPython.kernel.engineservice
+
+.. currentmodule:: IPython.kernel.engineservice
+
+Classes
+-------
+
+:class:`Command`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Command
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`EngineAPI`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EngineAPI
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`EngineService`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EngineService
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IEngineBase`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IEngineCore`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineCore
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IEngineProperties`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineProperties
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IEngineQueued`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineQueued
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IEngineSerialized`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineSerialized
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IEngineThreaded`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineThreaded
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`QueuedEngine`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: QueuedEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`StrictDict`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: StrictDict
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ThreadedEngineService`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ThreadedEngineService
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.engineservice.drop_engine
+
+
+.. autofunction:: IPython.kernel.engineservice.get_engine
+
+
+.. autofunction:: IPython.kernel.engineservice.queue
+

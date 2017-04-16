@@ -1,0 +1,1535 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The IPython API &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="next" title="ColorANSI" href="generated/IPython.ColorANSI.html" />
+    <link rel="prev" title="Notes on the IPython configuration system" href="../development/config_blueprint.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="generated/IPython.ColorANSI.html" title="ColorANSI"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../development/config_blueprint.html" title="Notes on the IPython configuration system"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="the-ipython-api">
+<span id="api-index"></span><h1>The IPython API<a class="headerlink" href="#the-ipython-api" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Release:</th><td class="field-body">0.10</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body">August 04, 2009</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.ColorANSI.html">ColorANSI</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ColorANSI.html#module-IPython.ColorANSI">Module: <tt class="docutils literal"><span class="pre">ColorANSI</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ColorANSI.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ColorANSI.html#colorscheme"><tt class="docutils literal"><span class="pre">ColorScheme</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ColorANSI.html#colorschemetable"><tt class="docutils literal"><span class="pre">ColorSchemeTable</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ColorANSI.html#inputtermcolors"><tt class="docutils literal"><span class="pre">InputTermColors</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ColorANSI.html#termcolors"><tt class="docutils literal"><span class="pre">TermColors</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ColorANSI.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.ConfigLoader.html">ConfigLoader</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ConfigLoader.html#module-IPython.ConfigLoader">Module: <tt class="docutils literal"><span class="pre">ConfigLoader</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ConfigLoader.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ConfigLoader.html#id1"><tt class="docutils literal"><span class="pre">ConfigLoader</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ConfigLoader.html#configloadererror"><tt class="docutils literal"><span class="pre">ConfigLoaderError</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.CrashHandler.html">CrashHandler</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.CrashHandler.html#module-IPython.CrashHandler">Module: <tt class="docutils literal"><span class="pre">CrashHandler</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.CrashHandler.html#authors">Authors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.CrashHandler.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.CrashHandler.html#id1"><tt class="docutils literal"><span class="pre">CrashHandler</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.CrashHandler.html#ipythoncrashhandler"><tt class="docutils literal"><span class="pre">IPythonCrashHandler</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.DPyGetOpt.html">DPyGetOpt</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.DPyGetOpt.html#module-IPython.DPyGetOpt">Module: <tt class="docutils literal"><span class="pre">DPyGetOpt</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.DPyGetOpt.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.DPyGetOpt.html#argumenterror"><tt class="docutils literal"><span class="pre">ArgumentError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.DPyGetOpt.html#id1"><tt class="docutils literal"><span class="pre">DPyGetOpt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.DPyGetOpt.html#error"><tt class="docutils literal"><span class="pre">Error</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.DPyGetOpt.html#specificationerror"><tt class="docutils literal"><span class="pre">SpecificationError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.DPyGetOpt.html#terminationerror"><tt class="docutils literal"><span class="pre">TerminationError</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.Debugger.html">Debugger</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Debugger.html#module-IPython.Debugger">Module: <tt class="docutils literal"><span class="pre">Debugger</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Debugger.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Debugger.html#pdb"><tt class="docutils literal"><span class="pre">Pdb</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Debugger.html#tracer"><tt class="docutils literal"><span class="pre">Tracer</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Debugger.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.Itpl.html">Itpl</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Itpl.html#module-IPython.Itpl">Module: <tt class="docutils literal"><span class="pre">Itpl</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Itpl.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Itpl.html#id1"><tt class="docutils literal"><span class="pre">Itpl</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Itpl.html#itplerror"><tt class="docutils literal"><span class="pre">ItplError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Itpl.html#itplfile"><tt class="docutils literal"><span class="pre">ItplFile</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Itpl.html#itplns"><tt class="docutils literal"><span class="pre">ItplNS</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Itpl.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.Logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Logger.html#module-IPython.Logger">Module: <tt class="docutils literal"><span class="pre">Logger</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Logger.html#id1"><tt class="docutils literal"><span class="pre">Logger</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.Magic.html">Magic</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Magic.html#module-IPython.Magic">Module: <tt class="docutils literal"><span class="pre">Magic</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Magic.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Magic.html#bunch"><tt class="docutils literal"><span class="pre">Bunch</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Magic.html#id1"><tt class="docutils literal"><span class="pre">Magic</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Magic.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.OInspect.html">OInspect</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.OInspect.html#module-IPython.OInspect">Module: <tt class="docutils literal"><span class="pre">OInspect</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.OInspect.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.OInspect.html#inspector"><tt class="docutils literal"><span class="pre">Inspector</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.OInspect.html#mystringio"><tt class="docutils literal"><span class="pre">myStringIO</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.OInspect.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.OutputTrap.html">OutputTrap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.OutputTrap.html#module-IPython.OutputTrap">Module: <tt class="docutils literal"><span class="pre">OutputTrap</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.OutputTrap.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.OutputTrap.html#id1"><tt class="docutils literal"><span class="pre">OutputTrap</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.OutputTrap.html#outputtraperror"><tt class="docutils literal"><span class="pre">OutputTrapError</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.Prompts.html">Prompts</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Prompts.html#module-IPython.Prompts">Module: <tt class="docutils literal"><span class="pre">Prompts</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Prompts.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Prompts.html#baseprompt"><tt class="docutils literal"><span class="pre">BasePrompt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Prompts.html#cachedoutput"><tt class="docutils literal"><span class="pre">CachedOutput</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Prompts.html#prompt1"><tt class="docutils literal"><span class="pre">Prompt1</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Prompts.html#prompt2"><tt class="docutils literal"><span class="pre">Prompt2</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Prompts.html#promptout"><tt class="docutils literal"><span class="pre">PromptOut</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Prompts.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.PyColorize.html">PyColorize</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.PyColorize.html#module-IPython.PyColorize">Module: <tt class="docutils literal"><span class="pre">PyColorize</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.PyColorize.html#parser"><tt class="docutils literal"><span class="pre">Parser</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.Shell.html">Shell</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Shell.html#module-IPython.Shell">Module: <tt class="docutils literal"><span class="pre">Shell</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Shell.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshell"><tt class="docutils literal"><span class="pre">IPShell</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellembed"><tt class="docutils literal"><span class="pre">IPShellEmbed</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellgtk"><tt class="docutils literal"><span class="pre">IPShellGTK</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellmatplotlib"><tt class="docutils literal"><span class="pre">IPShellMatplotlib</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellmatplotlibgtk"><tt class="docutils literal"><span class="pre">IPShellMatplotlibGTK</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellmatplotlibqt"><tt class="docutils literal"><span class="pre">IPShellMatplotlibQt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellmatplotlibqt4"><tt class="docutils literal"><span class="pre">IPShellMatplotlibQt4</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellmatplotlibwx"><tt class="docutils literal"><span class="pre">IPShellMatplotlibWX</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellqt"><tt class="docutils literal"><span class="pre">IPShellQt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellqt4"><tt class="docutils literal"><span class="pre">IPShellQt4</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipshellwx"><tt class="docutils literal"><span class="pre">IPShellWX</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#ipthread"><tt class="docutils literal"><span class="pre">IPThread</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#mtinteractiveshell"><tt class="docutils literal"><span class="pre">MTInteractiveShell</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#matplotlibmtshell"><tt class="docutils literal"><span class="pre">MatplotlibMTShell</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#matplotlibshell"><tt class="docutils literal"><span class="pre">MatplotlibShell</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.Shell.html#matplotlibshellbase"><tt class="docutils literal"><span class="pre">MatplotlibShellBase</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.Shell.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.UserConfig.ipy_user_conf.html">UserConfig.ipy_user_conf</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.UserConfig.ipy_user_conf.html#module-userconfig-ipy-user-conf">Module: <tt class="docutils literal"><span class="pre">UserConfig.ipy_user_conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.UserConfig.ipy_user_conf.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.background_jobs.html">background_jobs</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.background_jobs.html#module-IPython.background_jobs">Module: <tt class="docutils literal"><span class="pre">background_jobs</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.background_jobs.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.background_jobs.html#backgroundjobbase"><tt class="docutils literal"><span class="pre">BackgroundJobBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.background_jobs.html#backgroundjobexpr"><tt class="docutils literal"><span class="pre">BackgroundJobExpr</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.background_jobs.html#backgroundjobfunc"><tt class="docutils literal"><span class="pre">BackgroundJobFunc</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.background_jobs.html#backgroundjobmanager"><tt class="docutils literal"><span class="pre">BackgroundJobManager</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.clipboard.html">clipboard</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.clipboard.html#module-IPython.clipboard">Module: <tt class="docutils literal"><span class="pre">clipboard</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.clipboard.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.completer.html">completer</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.completer.html#module-IPython.completer">Module: <tt class="docutils literal"><span class="pre">completer</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.completer.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.completer.html#id1"><tt class="docutils literal"><span class="pre">Completer</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.completer.html#ipcompleter"><tt class="docutils literal"><span class="pre">IPCompleter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.config.api.html">config.api</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.config.api.html#module-IPython.config.api">Module: <tt class="docutils literal"><span class="pre">config.api</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.config.api.html#configobjmanager"><tt class="docutils literal"><span class="pre">ConfigObjManager</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.config.cutils.html">config.cutils</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.config.cutils.html#module-IPython.config.cutils">Module: <tt class="docutils literal"><span class="pre">config.cutils</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.deep_reload.html">deep_reload</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.deep_reload.html#module-IPython.deep_reload">Module: <tt class="docutils literal"><span class="pre">deep_reload</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.deep_reload.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.demo.html">demo</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.demo.html#module-IPython.demo">Module: <tt class="docutils literal"><span class="pre">demo</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#provided-classes">Provided classes</a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#subclassing">Subclassing</a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#operation">Operation</a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.demo.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#cleardemo"><tt class="docutils literal"><span class="pre">ClearDemo</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#clearipdemo"><tt class="docutils literal"><span class="pre">ClearIPDemo</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#clearmixin"><tt class="docutils literal"><span class="pre">ClearMixin</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#id1"><tt class="docutils literal"><span class="pre">Demo</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#demoerror"><tt class="docutils literal"><span class="pre">DemoError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#ipythondemo"><tt class="docutils literal"><span class="pre">IPythonDemo</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#ipythonlinedemo"><tt class="docutils literal"><span class="pre">IPythonLineDemo</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.demo.html#linedemo"><tt class="docutils literal"><span class="pre">LineDemo</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.demo.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.dtutils.html">dtutils</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.dtutils.html#module-IPython.dtutils">Module: <tt class="docutils literal"><span class="pre">dtutils</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.dtutils.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.excolors.html">excolors</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.excolors.html#module-IPython.excolors">Module: <tt class="docutils literal"><span class="pre">excolors</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.Itpl.html">external.Itpl</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.Itpl.html#module-IPython.external.Itpl">Module: <tt class="docutils literal"><span class="pre">external.Itpl</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.Itpl.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.Itpl.html#itpl"><tt class="docutils literal"><span class="pre">Itpl</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.Itpl.html#itplerror"><tt class="docutils literal"><span class="pre">ItplError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.Itpl.html#itplfile"><tt class="docutils literal"><span class="pre">ItplFile</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.Itpl.html#itplns"><tt class="docutils literal"><span class="pre">ItplNS</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.Itpl.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.argparse.html">external.argparse</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.argparse.html#module-IPython.external.argparse">Module: <tt class="docutils literal"><span class="pre">external.argparse</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.argparse.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#action"><tt class="docutils literal"><span class="pre">Action</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#argumentdefaultshelpformatter"><tt class="docutils literal"><span class="pre">ArgumentDefaultsHelpFormatter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#argumenterror"><tt class="docutils literal"><span class="pre">ArgumentError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#argumentparser"><tt class="docutils literal"><span class="pre">ArgumentParser</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#filetype"><tt class="docutils literal"><span class="pre">FileType</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#helpformatter"><tt class="docutils literal"><span class="pre">HelpFormatter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#namespace"><tt class="docutils literal"><span class="pre">Namespace</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#rawdescriptionhelpformatter"><tt class="docutils literal"><span class="pre">RawDescriptionHelpFormatter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.argparse.html#rawtexthelpformatter"><tt class="docutils literal"><span class="pre">RawTextHelpFormatter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.configobj.html">external.configobj</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.configobj.html#module-IPython.external.configobj">Module: <tt class="docutils literal"><span class="pre">external.configobj</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.configobj.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#builder"><tt class="docutils literal"><span class="pre">Builder</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#configobj"><tt class="docutils literal"><span class="pre">ConfigObj</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#configobjerror"><tt class="docutils literal"><span class="pre">ConfigObjError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#configparserinterpolation"><tt class="docutils literal"><span class="pre">ConfigParserInterpolation</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#configspecerror"><tt class="docutils literal"><span class="pre">ConfigspecError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#duplicateerror"><tt class="docutils literal"><span class="pre">DuplicateError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#interpolationengine"><tt class="docutils literal"><span class="pre">InterpolationEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#interpolationerror"><tt class="docutils literal"><span class="pre">InterpolationError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#interpolationlooperror"><tt class="docutils literal"><span class="pre">InterpolationLoopError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#missinginterpolationoption"><tt class="docutils literal"><span class="pre">MissingInterpolationOption</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#nestingerror"><tt class="docutils literal"><span class="pre">NestingError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#parseerror"><tt class="docutils literal"><span class="pre">ParseError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#reloaderror"><tt class="docutils literal"><span class="pre">ReloadError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#repeatsectionerror"><tt class="docutils literal"><span class="pre">RepeatSectionError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#section"><tt class="docutils literal"><span class="pre">Section</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#simpleval"><tt class="docutils literal"><span class="pre">SimpleVal</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#templateinterpolation"><tt class="docutils literal"><span class="pre">TemplateInterpolation</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#unknowntype"><tt class="docutils literal"><span class="pre">UnknownType</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.configobj.html#unreprerror"><tt class="docutils literal"><span class="pre">UnreprError</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.configobj.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.guid.html">external.guid</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.guid.html#module-IPython.external.guid">Module: <tt class="docutils literal"><span class="pre">external.guid</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.guid.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.mglob.html">external.mglob</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.mglob.html#module-IPython.external.mglob">Module: <tt class="docutils literal"><span class="pre">external.mglob</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.mglob.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.path.html">external.path</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.path.html#module-IPython.external.path">Module: <tt class="docutils literal"><span class="pre">external.path</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.path.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.path.html#treewalkwarning"><tt class="docutils literal"><span class="pre">TreeWalkWarning</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.path.html#path"><tt class="docutils literal"><span class="pre">path</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.pretty.html">external.pretty</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.pretty.html#module-IPython.external.pretty">Module: <tt class="docutils literal"><span class="pre">external.pretty</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#example-usage">Example Usage</a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#extending">Extending</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.pretty.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#breakable"><tt class="docutils literal"><span class="pre">Breakable</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#group"><tt class="docutils literal"><span class="pre">Group</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#groupqueue"><tt class="docutils literal"><span class="pre">GroupQueue</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#prettyprinter"><tt class="docutils literal"><span class="pre">PrettyPrinter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#printable"><tt class="docutils literal"><span class="pre">Printable</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#representationprinter"><tt class="docutils literal"><span class="pre">RepresentationPrinter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.pretty.html#text"><tt class="docutils literal"><span class="pre">Text</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.pretty.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.simplegeneric.html">external.simplegeneric</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.simplegeneric.html#module-IPython.external.simplegeneric">Module: <tt class="docutils literal"><span class="pre">external.simplegeneric</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.simplegeneric.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.external.validate.html">external.validate</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.validate.html#module-IPython.external.validate">Module: <tt class="docutils literal"><span class="pre">external.validate</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.validate.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#validateerror"><tt class="docutils literal"><span class="pre">ValidateError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#validator"><tt class="docutils literal"><span class="pre">Validator</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtmissingvalue"><tt class="docutils literal"><span class="pre">VdtMissingValue</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtparamerror"><tt class="docutils literal"><span class="pre">VdtParamError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdttypeerror"><tt class="docutils literal"><span class="pre">VdtTypeError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtunknowncheckerror"><tt class="docutils literal"><span class="pre">VdtUnknownCheckError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtvalueerror"><tt class="docutils literal"><span class="pre">VdtValueError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtvaluetoobigerror"><tt class="docutils literal"><span class="pre">VdtValueTooBigError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtvaluetoolongerror"><tt class="docutils literal"><span class="pre">VdtValueTooLongError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtvaluetooshorterror"><tt class="docutils literal"><span class="pre">VdtValueTooShortError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.external.validate.html#vdtvaluetoosmallerror"><tt class="docutils literal"><span class="pre">VdtValueTooSmallError</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.external.validate.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.asyncfrontendbase.html">frontend.asyncfrontendbase</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.asyncfrontendbase.html#module-IPython.frontend.asyncfrontendbase">Module: <tt class="docutils literal"><span class="pre">frontend.asyncfrontendbase</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.asyncfrontendbase.html#asyncfrontendbase"><tt class="docutils literal"><span class="pre">AsyncFrontEndBase</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.frontendbase.html">frontend.frontendbase</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.frontendbase.html#module-IPython.frontend.frontendbase">Module: <tt class="docutils literal"><span class="pre">frontend.frontendbase</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.frontendbase.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.frontend.frontendbase.html#frontendbase"><tt class="docutils literal"><span class="pre">FrontEndBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.frontend.frontendbase.html#ifrontend"><tt class="docutils literal"><span class="pre">IFrontEnd</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.frontend.frontendbase.html#ifrontendfactory"><tt class="docutils literal"><span class="pre">IFrontEndFactory</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.linefrontendbase.html">frontend.linefrontendbase</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.linefrontendbase.html#module-IPython.frontend.linefrontendbase">Module: <tt class="docutils literal"><span class="pre">frontend.linefrontendbase</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.linefrontendbase.html#linefrontendbase"><tt class="docutils literal"><span class="pre">LineFrontEndBase</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.prefilterfrontend.html">frontend.prefilterfrontend</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.prefilterfrontend.html#module-IPython.frontend.prefilterfrontend">Module: <tt class="docutils literal"><span class="pre">frontend.prefilterfrontend</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.prefilterfrontend.html#prefilterfrontend"><tt class="docutils literal"><span class="pre">PrefilterFrontEnd</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.process.pipedprocess.html">frontend.process.pipedprocess</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.process.pipedprocess.html#module-IPython.frontend.process.pipedprocess">Module: <tt class="docutils literal"><span class="pre">frontend.process.pipedprocess</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.process.pipedprocess.html#pipedprocess"><tt class="docutils literal"><span class="pre">PipedProcess</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.wx.console_widget.html">frontend.wx.console_widget</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.console_widget.html#module-IPython.frontend.wx.console_widget">Module: <tt class="docutils literal"><span class="pre">frontend.wx.console_widget</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.console_widget.html#consolewidget"><tt class="docutils literal"><span class="pre">ConsoleWidget</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.wx.ipythonx.html">frontend.wx.ipythonx</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.ipythonx.html#module-IPython.frontend.wx.ipythonx">Module: <tt class="docutils literal"><span class="pre">frontend.wx.ipythonx</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.ipythonx.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.frontend.wx.ipythonx.html#ipythonx"><tt class="docutils literal"><span class="pre">IPythonX</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.frontend.wx.ipythonx.html#ipythonxcontroller"><tt class="docutils literal"><span class="pre">IPythonXController</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.ipythonx.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.frontend.wx.wx_frontend.html">frontend.wx.wx_frontend</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.wx_frontend.html#module-IPython.frontend.wx.wx_frontend">Module: <tt class="docutils literal"><span class="pre">frontend.wx.wx_frontend</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.frontend.wx.wx_frontend.html#wxcontroller"><tt class="docutils literal"><span class="pre">WxController</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.generics.html">generics</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.generics.html#module-IPython.generics">Module: <tt class="docutils literal"><span class="pre">generics</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.generics.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.genutils.html">genutils</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.genutils.html#module-IPython.genutils">Module: <tt class="docutils literal"><span class="pre">genutils</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.genutils.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#error"><tt class="docutils literal"><span class="pre">Error</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#evaldict"><tt class="docutils literal"><span class="pre">EvalDict</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#homedirerror"><tt class="docutils literal"><span class="pre">HomeDirError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#iostream"><tt class="docutils literal"><span class="pre">IOStream</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#ioterm"><tt class="docutils literal"><span class="pre">IOTerm</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#lsstring"><tt class="docutils literal"><span class="pre">LSString</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#nlprinter"><tt class="docutils literal"><span class="pre">NLprinter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#notgiven"><tt class="docutils literal"><span class="pre">NotGiven</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#slist"><tt class="docutils literal"><span class="pre">SList</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.genutils.html#systemexec"><tt class="docutils literal"><span class="pre">SystemExec</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.genutils.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.gui.wx.ipshell_nonblocking.html">gui.wx.ipshell_nonblocking</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.ipshell_nonblocking.html#module-IPython.gui.wx.ipshell_nonblocking">Module: <tt class="docutils literal"><span class="pre">gui.wx.ipshell_nonblocking</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.ipshell_nonblocking.html#nonblockingipshell"><tt class="docutils literal"><span class="pre">NonBlockingIPShell</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.gui.wx.ipython_history.html">gui.wx.ipython_history</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.ipython_history.html#module-IPython.gui.wx.ipython_history">Module: <tt class="docutils literal"><span class="pre">gui.wx.ipython_history</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.ipython_history.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.ipython_history.html#ipythonhistorypanel"><tt class="docutils literal"><span class="pre">IPythonHistoryPanel</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.ipython_history.html#pythonstc"><tt class="docutils literal"><span class="pre">PythonSTC</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.gui.wx.ipython_view.html">gui.wx.ipython_view</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.ipython_view.html#module-IPython.gui.wx.ipython_view">Module: <tt class="docutils literal"><span class="pre">gui.wx.ipython_view</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.ipython_view.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.ipython_view.html#ipshellwidget"><tt class="docutils literal"><span class="pre">IPShellWidget</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.ipython_view.html#wxconsoleview"><tt class="docutils literal"><span class="pre">WxConsoleView</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.ipython_view.html#wxnonblockingipshell"><tt class="docutils literal"><span class="pre">WxNonBlockingIPShell</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.gui.wx.thread_ex.html">gui.wx.thread_ex</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.thread_ex.html#module-IPython.gui.wx.thread_ex">Module: <tt class="docutils literal"><span class="pre">gui.wx.thread_ex</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.thread_ex.html#threadex"><tt class="docutils literal"><span class="pre">ThreadEx</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.gui.wx.wxIPython.html">gui.wx.wxIPython</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.wxIPython.html#module-IPython.gui.wx.wxIPython">Module: <tt class="docutils literal"><span class="pre">gui.wx.wxIPython</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.wxIPython.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.wxIPython.html#myapp"><tt class="docutils literal"><span class="pre">MyApp</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.gui.wx.wxIPython.html#myframe"><tt class="docutils literal"><span class="pre">MyFrame</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.gui.wx.wxIPython.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.history.html">history</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.history.html#module-IPython.history">Module: <tt class="docutils literal"><span class="pre">history</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.history.html#class">Class</a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.history.html#shadowhist"><tt class="docutils literal"><span class="pre">ShadowHist</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.history.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.hooks.html">hooks</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.hooks.html#module-IPython.hooks">Module: <tt class="docutils literal"><span class="pre">hooks</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.hooks.html#class">Class</a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.hooks.html#commandchaindispatcher"><tt class="docutils literal"><span class="pre">CommandChainDispatcher</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.hooks.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.ipapi.html">ipapi</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipapi.html#module-IPython.ipapi">Module: <tt class="docutils literal"><span class="pre">ipapi</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipapi.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ipapi.html#debugtools"><tt class="docutils literal"><span class="pre">DebugTools</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ipapi.html#id1"><tt class="docutils literal"><span class="pre">IPApi</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ipapi.html#ipyautocall"><tt class="docutils literal"><span class="pre">IPyAutocall</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ipapi.html#ipythonnotrunning"><tt class="docutils literal"><span class="pre">IPythonNotRunning</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ipapi.html#trynext"><tt class="docutils literal"><span class="pre">TryNext</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ipapi.html#usageerror"><tt class="docutils literal"><span class="pre">UsageError</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipapi.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.iplib.html">iplib</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.iplib.html#module-IPython.iplib">Module: <tt class="docutils literal"><span class="pre">iplib</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.iplib.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#bunch"><tt class="docutils literal"><span class="pre">Bunch</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#inputlist"><tt class="docutils literal"><span class="pre">InputList</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#interactiveshell"><tt class="docutils literal"><span class="pre">InteractiveShell</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#quitter"><tt class="docutils literal"><span class="pre">Quitter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#spaceininput"><tt class="docutils literal"><span class="pre">SpaceInInput</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#syntaxtb"><tt class="docutils literal"><span class="pre">SyntaxTB</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.iplib.html#undefined"><tt class="docutils literal"><span class="pre">Undefined</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.iplib.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.ipmaker.html">ipmaker</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipmaker.html#module-IPython.ipmaker">Module: <tt class="docutils literal"><span class="pre">ipmaker</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipmaker.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.ipstruct.html">ipstruct</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipstruct.html#module-IPython.ipstruct">Module: <tt class="docutils literal"><span class="pre">ipstruct</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ipstruct.html#struct"><tt class="docutils literal"><span class="pre">Struct</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.irunner.html">irunner</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.irunner.html#module-IPython.irunner">Module: <tt class="docutils literal"><span class="pre">irunner</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.irunner.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.irunner.html#ipythonrunner"><tt class="docutils literal"><span class="pre">IPythonRunner</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.irunner.html#interactiverunner"><tt class="docutils literal"><span class="pre">InteractiveRunner</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.irunner.html#pythonrunner"><tt class="docutils literal"><span class="pre">PythonRunner</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.irunner.html#runnerfactory"><tt class="docutils literal"><span class="pre">RunnerFactory</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.irunner.html#sagerunner"><tt class="docutils literal"><span class="pre">SAGERunner</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.irunner.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.client.html">kernel.client</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.client.html#module-IPython.kernel.client">Module: <tt class="docutils literal"><span class="pre">kernel.client</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.client.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.clientconnector.html">kernel.clientconnector</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.clientconnector.html#module-IPython.kernel.clientconnector">Module: <tt class="docutils literal"><span class="pre">kernel.clientconnector</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.clientconnector.html#clientconnector"><tt class="docutils literal"><span class="pre">ClientConnector</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.clientinterfaces.html">kernel.clientinterfaces</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.clientinterfaces.html#module-IPython.kernel.clientinterfaces">Module: <tt class="docutils literal"><span class="pre">kernel.clientinterfaces</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.clientinterfaces.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.clientinterfaces.html#iblockingclientadaptor"><tt class="docutils literal"><span class="pre">IBlockingClientAdaptor</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.clientinterfaces.html#ifcclientinterfaceprovider"><tt class="docutils literal"><span class="pre">IFCClientInterfaceProvider</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.codeutil.html">kernel.codeutil</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.codeutil.html#module-IPython.kernel.codeutil">Module: <tt class="docutils literal"><span class="pre">kernel.codeutil</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.codeutil.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.contexts.html">kernel.contexts</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.contexts.html#module-IPython.kernel.contexts">Module: <tt class="docutils literal"><span class="pre">kernel.contexts</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.contexts.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.contexts.html#remotecontextbase"><tt class="docutils literal"><span class="pre">RemoteContextBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.contexts.html#remotemultiengine"><tt class="docutils literal"><span class="pre">RemoteMultiEngine</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.contexts.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.controllerservice.html">kernel.controllerservice</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.controllerservice.html#module-IPython.kernel.controllerservice">Module: <tt class="docutils literal"><span class="pre">kernel.controllerservice</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.controllerservice.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.controllerservice.html#controlleradapterbase"><tt class="docutils literal"><span class="pre">ControllerAdapterBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.controllerservice.html#controllerservice"><tt class="docutils literal"><span class="pre">ControllerService</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.controllerservice.html#icontrollerbase"><tt class="docutils literal"><span class="pre">IControllerBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.controllerservice.html#icontrollercore"><tt class="docutils literal"><span class="pre">IControllerCore</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.display_formatter.html">kernel.core.display_formatter</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.display_formatter.html#module-IPython.kernel.core.display_formatter">Module: <tt class="docutils literal"><span class="pre">kernel.core.display_formatter</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.display_formatter.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.display_formatter.html#idisplayformatter"><tt class="docutils literal"><span class="pre">IDisplayFormatter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.display_formatter.html#pprintdisplayformatter"><tt class="docutils literal"><span class="pre">PPrintDisplayFormatter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.display_formatter.html#reprdisplayformatter"><tt class="docutils literal"><span class="pre">ReprDisplayFormatter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.display_trap.html">kernel.core.display_trap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.display_trap.html#module-IPython.kernel.core.display_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.display_trap</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.display_trap.html#displaytrap"><tt class="docutils literal"><span class="pre">DisplayTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.error.html">kernel.core.error</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.error.html#module-IPython.kernel.core.error">Module: <tt class="docutils literal"><span class="pre">kernel.core.error</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.error.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.error.html#controllercreationerror"><tt class="docutils literal"><span class="pre">ControllerCreationError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.error.html#controllererror"><tt class="docutils literal"><span class="pre">ControllerError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.error.html#enginecreationerror"><tt class="docutils literal"><span class="pre">EngineCreationError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.error.html#engineerror"><tt class="docutils literal"><span class="pre">EngineError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.error.html#ipythonerror"><tt class="docutils literal"><span class="pre">IPythonError</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.fd_redirector.html">kernel.core.fd_redirector</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.fd_redirector.html#module-IPython.kernel.core.fd_redirector">Module: <tt class="docutils literal"><span class="pre">kernel.core.fd_redirector</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.fd_redirector.html#fdredirector"><tt class="docutils literal"><span class="pre">FDRedirector</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.file_like.html">kernel.core.file_like</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.file_like.html#module-IPython.kernel.core.file_like">Module: <tt class="docutils literal"><span class="pre">kernel.core.file_like</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.file_like.html#filelike"><tt class="docutils literal"><span class="pre">FileLike</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.history.html">kernel.core.history</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.history.html#module-IPython.kernel.core.history">Module: <tt class="docutils literal"><span class="pre">kernel.core.history</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.history.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.history.html#frontendhistory"><tt class="docutils literal"><span class="pre">FrontEndHistory</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.history.html#history"><tt class="docutils literal"><span class="pre">History</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.history.html#interpreterhistory"><tt class="docutils literal"><span class="pre">InterpreterHistory</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.interpreter.html">kernel.core.interpreter</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.interpreter.html#module-IPython.kernel.core.interpreter">Module: <tt class="docutils literal"><span class="pre">kernel.core.interpreter</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.interpreter.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.interpreter.html#interpreter"><tt class="docutils literal"><span class="pre">Interpreter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.interpreter.html#notdefined"><tt class="docutils literal"><span class="pre">NotDefined</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.interpreter.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.macro.html">kernel.core.macro</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.macro.html#module-IPython.kernel.core.macro">Module: <tt class="docutils literal"><span class="pre">kernel.core.macro</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.macro.html#macro"><tt class="docutils literal"><span class="pre">Macro</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.magic.html">kernel.core.magic</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.magic.html#module-IPython.kernel.core.magic">Module: <tt class="docutils literal"><span class="pre">kernel.core.magic</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.magic.html#magic"><tt class="docutils literal"><span class="pre">Magic</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.message_cache.html">kernel.core.message_cache</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.message_cache.html#module-IPython.kernel.core.message_cache">Module: <tt class="docutils literal"><span class="pre">kernel.core.message_cache</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.message_cache.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.message_cache.html#imessagecache"><tt class="docutils literal"><span class="pre">IMessageCache</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.message_cache.html#simplemessagecache"><tt class="docutils literal"><span class="pre">SimpleMessageCache</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.notification.html">kernel.core.notification</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.notification.html#module-IPython.kernel.core.notification">Module: <tt class="docutils literal"><span class="pre">kernel.core.notification</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.notification.html#notificationcenter"><tt class="docutils literal"><span class="pre">NotificationCenter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.output_trap.html">kernel.core.output_trap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.output_trap.html#module-IPython.kernel.core.output_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.output_trap</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.output_trap.html#outputtrap"><tt class="docutils literal"><span class="pre">OutputTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.prompts.html">kernel.core.prompts</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#module-IPython.kernel.core.prompts">Module: <tt class="docutils literal"><span class="pre">kernel.core.prompts</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#authors">Authors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#baseprompt"><tt class="docutils literal"><span class="pre">BasePrompt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#cachedoutput"><tt class="docutils literal"><span class="pre">CachedOutput</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#prompt1"><tt class="docutils literal"><span class="pre">Prompt1</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#prompt2"><tt class="docutils literal"><span class="pre">Prompt2</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#promptout"><tt class="docutils literal"><span class="pre">PromptOut</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.prompts.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.redirector_output_trap.html">kernel.core.redirector_output_trap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.redirector_output_trap.html#module-IPython.kernel.core.redirector_output_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.redirector_output_trap</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.redirector_output_trap.html#redirectoroutputtrap"><tt class="docutils literal"><span class="pre">RedirectorOutputTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.sync_traceback_trap.html">kernel.core.sync_traceback_trap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.sync_traceback_trap.html#module-IPython.kernel.core.sync_traceback_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.sync_traceback_trap</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.sync_traceback_trap.html#synctracebacktrap"><tt class="docutils literal"><span class="pre">SyncTracebackTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.traceback_formatter.html">kernel.core.traceback_formatter</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.traceback_formatter.html#module-IPython.kernel.core.traceback_formatter">Module: <tt class="docutils literal"><span class="pre">kernel.core.traceback_formatter</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.traceback_formatter.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.traceback_formatter.html#itracebackformatter"><tt class="docutils literal"><span class="pre">ITracebackFormatter</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.traceback_formatter.html#plaintracebackformatter"><tt class="docutils literal"><span class="pre">PlainTracebackFormatter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.traceback_trap.html">kernel.core.traceback_trap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.traceback_trap.html#module-IPython.kernel.core.traceback_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.traceback_trap</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.traceback_trap.html#tracebacktrap"><tt class="docutils literal"><span class="pre">TracebackTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.core.util.html">kernel.core.util</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.util.html#module-IPython.kernel.core.util">Module: <tt class="docutils literal"><span class="pre">kernel.core.util</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.util.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.util.html#bunch"><tt class="docutils literal"><span class="pre">Bunch</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.core.util.html#inputlist"><tt class="docutils literal"><span class="pre">InputList</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.core.util.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.engineconnector.html">kernel.engineconnector</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.engineconnector.html#module-IPython.kernel.engineconnector">Module: <tt class="docutils literal"><span class="pre">kernel.engineconnector</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.engineconnector.html#engineconnector"><tt class="docutils literal"><span class="pre">EngineConnector</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.enginefc.html">kernel.enginefc</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.enginefc.html#module-IPython.kernel.enginefc">Module: <tt class="docutils literal"><span class="pre">kernel.enginefc</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.enginefc.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.enginefc.html#enginefromreference"><tt class="docutils literal"><span class="pre">EngineFromReference</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.enginefc.html#fcenginereferencefromservice"><tt class="docutils literal"><span class="pre">FCEngineReferenceFromService</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.enginefc.html#fcremoteenginereffromservice"><tt class="docutils literal"><span class="pre">FCRemoteEngineRefFromService</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.enginefc.html#ifccontrollerbase"><tt class="docutils literal"><span class="pre">IFCControllerBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.enginefc.html#ifcengine"><tt class="docutils literal"><span class="pre">IFCEngine</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.engineservice.html">kernel.engineservice</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.engineservice.html#module-IPython.kernel.engineservice">Module: <tt class="docutils literal"><span class="pre">kernel.engineservice</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.engineservice.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#command"><tt class="docutils literal"><span class="pre">Command</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#engineapi"><tt class="docutils literal"><span class="pre">EngineAPI</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#engineservice"><tt class="docutils literal"><span class="pre">EngineService</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#ienginebase"><tt class="docutils literal"><span class="pre">IEngineBase</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#ienginecore"><tt class="docutils literal"><span class="pre">IEngineCore</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#iengineproperties"><tt class="docutils literal"><span class="pre">IEngineProperties</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#ienginequeued"><tt class="docutils literal"><span class="pre">IEngineQueued</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#iengineserialized"><tt class="docutils literal"><span class="pre">IEngineSerialized</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#ienginethreaded"><tt class="docutils literal"><span class="pre">IEngineThreaded</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#queuedengine"><tt class="docutils literal"><span class="pre">QueuedEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#strictdict"><tt class="docutils literal"><span class="pre">StrictDict</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.engineservice.html#threadedengineservice"><tt class="docutils literal"><span class="pre">ThreadedEngineService</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.engineservice.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.error.html">kernel.error</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.error.html#module-IPython.kernel.error">Module: <tt class="docutils literal"><span class="pre">kernel.error</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.error.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#abortedpendingdeferrederror"><tt class="docutils literal"><span class="pre">AbortedPendingDeferredError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#clienterror"><tt class="docutils literal"><span class="pre">ClientError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#compositeerror"><tt class="docutils literal"><span class="pre">CompositeError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#connectionerror"><tt class="docutils literal"><span class="pre">ConnectionError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#filetimeouterror"><tt class="docutils literal"><span class="pre">FileTimeoutError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#idinuse"><tt class="docutils literal"><span class="pre">IdInUse</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#invalidclientid"><tt class="docutils literal"><span class="pre">InvalidClientID</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#invaliddeferredid"><tt class="docutils literal"><span class="pre">InvalidDeferredID</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#invalidengineid"><tt class="docutils literal"><span class="pre">InvalidEngineID</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#invalidproperty"><tt class="docutils literal"><span class="pre">InvalidProperty</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#kernelerror"><tt class="docutils literal"><span class="pre">KernelError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#messagesizeerror"><tt class="docutils literal"><span class="pre">MessageSizeError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#missingblockargument"><tt class="docutils literal"><span class="pre">MissingBlockArgument</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#noenginesregistered"><tt class="docutils literal"><span class="pre">NoEnginesRegistered</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#notapendingresult"><tt class="docutils literal"><span class="pre">NotAPendingResult</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#notdefined"><tt class="docutils literal"><span class="pre">NotDefined</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#pbmessagesizeerror"><tt class="docutils literal"><span class="pre">PBMessageSizeError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#protocolerror"><tt class="docutils literal"><span class="pre">ProtocolError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#queuecleared"><tt class="docutils literal"><span class="pre">QueueCleared</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#resultalreadyretrieved"><tt class="docutils literal"><span class="pre">ResultAlreadyRetrieved</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#resultnotcompleted"><tt class="docutils literal"><span class="pre">ResultNotCompleted</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#securityerror"><tt class="docutils literal"><span class="pre">SecurityError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#serializationerror"><tt class="docutils literal"><span class="pre">SerializationError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#stoplocalexecution"><tt class="docutils literal"><span class="pre">StopLocalExecution</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#taskaborted"><tt class="docutils literal"><span class="pre">TaskAborted</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#taskrejecterror"><tt class="docutils literal"><span class="pre">TaskRejectError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#tasktimeout"><tt class="docutils literal"><span class="pre">TaskTimeout</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.error.html#unpickleableexception"><tt class="docutils literal"><span class="pre">UnpickleableException</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.error.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.fcutil.html">kernel.fcutil</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.fcutil.html#module-IPython.kernel.fcutil">Module: <tt class="docutils literal"><span class="pre">kernel.fcutil</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.fcutil.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.magic.html">kernel.magic</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.magic.html#module-IPython.kernel.magic">Module: <tt class="docutils literal"><span class="pre">kernel.magic</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.magic.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.map.html">kernel.map</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.map.html#module-IPython.kernel.map">Module: <tt class="docutils literal"><span class="pre">kernel.map</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.map.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.map.html#map"><tt class="docutils literal"><span class="pre">Map</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.map.html#roundrobinmap"><tt class="docutils literal"><span class="pre">RoundRobinMap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.mapper.html">kernel.mapper</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.mapper.html#module-IPython.kernel.mapper">Module: <tt class="docutils literal"><span class="pre">kernel.mapper</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.mapper.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.mapper.html#imapper"><tt class="docutils literal"><span class="pre">IMapper</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.mapper.html#imultienginemapperfactory"><tt class="docutils literal"><span class="pre">IMultiEngineMapperFactory</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.mapper.html#itaskmapperfactory"><tt class="docutils literal"><span class="pre">ITaskMapperFactory</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.mapper.html#multienginemapper"><tt class="docutils literal"><span class="pre">MultiEngineMapper</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.mapper.html#synchronoustaskmapper"><tt class="docutils literal"><span class="pre">SynchronousTaskMapper</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.mapper.html#taskmapper"><tt class="docutils literal"><span class="pre">TaskMapper</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.multiengine.html">kernel.multiengine</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multiengine.html#module-IPython.kernel.multiengine">Module: <tt class="docutils literal"><span class="pre">kernel.multiengine</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multiengine.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#ienginemultiplexer"><tt class="docutils literal"><span class="pre">IEngineMultiplexer</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#ifullmultiengine"><tt class="docutils literal"><span class="pre">IFullMultiEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#ifullsynchronousmultiengine"><tt class="docutils literal"><span class="pre">IFullSynchronousMultiEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#imultiengine"><tt class="docutils literal"><span class="pre">IMultiEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#imultienginecoordinator"><tt class="docutils literal"><span class="pre">IMultiEngineCoordinator</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#imultiengineextras"><tt class="docutils literal"><span class="pre">IMultiEngineExtras</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#isynchronousenginemultiplexer"><tt class="docutils literal"><span class="pre">ISynchronousEngineMultiplexer</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#isynchronousmultiengine"><tt class="docutils literal"><span class="pre">ISynchronousMultiEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#isynchronousmultienginecoordinator"><tt class="docutils literal"><span class="pre">ISynchronousMultiEngineCoordinator</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#isynchronousmultiengineextras"><tt class="docutils literal"><span class="pre">ISynchronousMultiEngineExtras</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#multiengine"><tt class="docutils literal"><span class="pre">MultiEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengine.html#synchronousmultiengine"><tt class="docutils literal"><span class="pre">SynchronousMultiEngine</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html">kernel.multiengineclient</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#module-IPython.kernel.multiengineclient">Module: <tt class="docutils literal"><span class="pre">kernel.multiengineclient</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#fullblockingmultiengineclient"><tt class="docutils literal"><span class="pre">FullBlockingMultiEngineClient</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#ifullblockingmultiengineclient"><tt class="docutils literal"><span class="pre">IFullBlockingMultiEngineClient</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#ipendingresult"><tt class="docutils literal"><span class="pre">IPendingResult</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#interactivemultiengineclient"><tt class="docutils literal"><span class="pre">InteractiveMultiEngineClient</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#pendingresult"><tt class="docutils literal"><span class="pre">PendingResult</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#queuestatuslist"><tt class="docutils literal"><span class="pre">QueueStatusList</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#resultlist"><tt class="docutils literal"><span class="pre">ResultList</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multiengineclient.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.multienginefc.html">kernel.multienginefc</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multienginefc.html#module-IPython.kernel.multienginefc">Module: <tt class="docutils literal"><span class="pre">kernel.multienginefc</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multienginefc.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multienginefc.html#fcfullsynchronousmultiengineclient"><tt class="docutils literal"><span class="pre">FCFullSynchronousMultiEngineClient</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multienginefc.html#fcsynchronousmultienginefrommultiengine"><tt class="docutils literal"><span class="pre">FCSynchronousMultiEngineFromMultiEngine</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.multienginefc.html#ifcsynchronousmultiengine"><tt class="docutils literal"><span class="pre">IFCSynchronousMultiEngine</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.multienginefc.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.newserialized.html">kernel.newserialized</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.newserialized.html#module-IPython.kernel.newserialized">Module: <tt class="docutils literal"><span class="pre">kernel.newserialized</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.newserialized.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.newserialized.html#iserialized"><tt class="docutils literal"><span class="pre">ISerialized</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.newserialized.html#iunserialized"><tt class="docutils literal"><span class="pre">IUnSerialized</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.newserialized.html#serializeit"><tt class="docutils literal"><span class="pre">SerializeIt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.newserialized.html#serialized"><tt class="docutils literal"><span class="pre">Serialized</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.newserialized.html#unserializeit"><tt class="docutils literal"><span class="pre">UnSerializeIt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.newserialized.html#unserialized"><tt class="docutils literal"><span class="pre">UnSerialized</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.newserialized.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html">kernel.parallelfunction</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html#module-IPython.kernel.parallelfunction">Module: <tt class="docutils literal"><span class="pre">kernel.parallelfunction</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html#imultiengineparalleldecorator"><tt class="docutils literal"><span class="pre">IMultiEngineParallelDecorator</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html#iparallelfunction"><tt class="docutils literal"><span class="pre">IParallelFunction</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html#itaskparalleldecorator"><tt class="docutils literal"><span class="pre">ITaskParallelDecorator</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.parallelfunction.html#parallelfunction"><tt class="docutils literal"><span class="pre">ParallelFunction</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.pbutil.html">kernel.pbutil</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pbutil.html#module-IPython.kernel.pbutil">Module: <tt class="docutils literal"><span class="pre">kernel.pbutil</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pbutil.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.pendingdeferred.html">kernel.pendingdeferred</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pendingdeferred.html#module-IPython.kernel.pendingdeferred">Module: <tt class="docutils literal"><span class="pre">kernel.pendingdeferred</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pendingdeferred.html#pendingdeferredmanager"><tt class="docutils literal"><span class="pre">PendingDeferredManager</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.pickleutil.html">kernel.pickleutil</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pickleutil.html#module-IPython.kernel.pickleutil">Module: <tt class="docutils literal"><span class="pre">kernel.pickleutil</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pickleutil.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.pickleutil.html#cannedfunction"><tt class="docutils literal"><span class="pre">CannedFunction</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.pickleutil.html#cannedobject"><tt class="docutils literal"><span class="pre">CannedObject</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.pickleutil.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html">kernel.scripts.ipcluster</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#module-IPython.kernel.scripts.ipcluster">Module: <tt class="docutils literal"><span class="pre">kernel.scripts.ipcluster</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#batchengineset"><tt class="docutils literal"><span class="pre">BatchEngineSet</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#controllerlauncher"><tt class="docutils literal"><span class="pre">ControllerLauncher</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#enginelauncher"><tt class="docutils literal"><span class="pre">EngineLauncher</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#launcherprocessprotocol"><tt class="docutils literal"><span class="pre">LauncherProcessProtocol</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#localengineset"><tt class="docutils literal"><span class="pre">LocalEngineSet</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#pbsengineset"><tt class="docutils literal"><span class="pre">PBSEngineSet</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#processlauncher"><tt class="docutils literal"><span class="pre">ProcessLauncher</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#processstateerror"><tt class="docutils literal"><span class="pre">ProcessStateError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#sshengineset"><tt class="docutils literal"><span class="pre">SSHEngineSet</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#unknownstatus"><tt class="docutils literal"><span class="pre">UnknownStatus</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipcluster.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.scripts.ipcontroller.html">kernel.scripts.ipcontroller</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipcontroller.html#module-IPython.kernel.scripts.ipcontroller">Module: <tt class="docutils literal"><span class="pre">kernel.scripts.ipcontroller</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipcontroller.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.scripts.ipengine.html">kernel.scripts.ipengine</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipengine.html#module-IPython.kernel.scripts.ipengine">Module: <tt class="docutils literal"><span class="pre">kernel.scripts.ipengine</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.scripts.ipengine.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.task.html">kernel.task</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.task.html#module-IPython.kernel.task">Module: <tt class="docutils literal"><span class="pre">kernel.task</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.task.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#basetask"><tt class="docutils literal"><span class="pre">BaseTask</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#fifoscheduler"><tt class="docutils literal"><span class="pre">FIFOScheduler</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#ischeduler"><tt class="docutils literal"><span class="pre">IScheduler</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#itask"><tt class="docutils literal"><span class="pre">ITask</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#itaskcontroller"><tt class="docutils literal"><span class="pre">ITaskController</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#iworker"><tt class="docutils literal"><span class="pre">IWorker</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#lifoscheduler"><tt class="docutils literal"><span class="pre">LIFOScheduler</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#maptask"><tt class="docutils literal"><span class="pre">MapTask</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#resultns"><tt class="docutils literal"><span class="pre">ResultNS</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#stringtask"><tt class="docutils literal"><span class="pre">StringTask</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#taskcontroller"><tt class="docutils literal"><span class="pre">TaskController</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#taskresult"><tt class="docutils literal"><span class="pre">TaskResult</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.task.html#workerfromqueuedengine"><tt class="docutils literal"><span class="pre">WorkerFromQueuedEngine</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.taskclient.html">kernel.taskclient</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.taskclient.html#module-IPython.kernel.taskclient">Module: <tt class="docutils literal"><span class="pre">kernel.taskclient</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.taskclient.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.taskclient.html#blockingtaskclient"><tt class="docutils literal"><span class="pre">BlockingTaskClient</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.taskclient.html#iblockingtaskclient"><tt class="docutils literal"><span class="pre">IBlockingTaskClient</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.taskfc.html">kernel.taskfc</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.taskfc.html#module-IPython.kernel.taskfc">Module: <tt class="docutils literal"><span class="pre">kernel.taskfc</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.taskfc.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.taskfc.html#fctaskclient"><tt class="docutils literal"><span class="pre">FCTaskClient</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.taskfc.html#fctaskcontrollerfromtaskcontroller"><tt class="docutils literal"><span class="pre">FCTaskControllerFromTaskController</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.taskfc.html#ifctaskcontroller"><tt class="docutils literal"><span class="pre">IFCTaskController</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.twistedutil.html">kernel.twistedutil</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.twistedutil.html#module-IPython.kernel.twistedutil">Module: <tt class="docutils literal"><span class="pre">kernel.twistedutil</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.twistedutil.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.twistedutil.html#deferredlist"><tt class="docutils literal"><span class="pre">DeferredList</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.kernel.twistedutil.html#reactorinthread"><tt class="docutils literal"><span class="pre">ReactorInThread</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.twistedutil.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.kernel.util.html">kernel.util</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.util.html#module-IPython.kernel.util">Module: <tt class="docutils literal"><span class="pre">kernel.util</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.kernel.util.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.macro.html">macro</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.macro.html#module-IPython.macro">Module: <tt class="docutils literal"><span class="pre">macro</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.macro.html#id1"><tt class="docutils literal"><span class="pre">Macro</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.numutils.html">numutils</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.numutils.html#module-IPython.numutils">Module: <tt class="docutils literal"><span class="pre">numutils</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.numutils.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.platutils.html">platutils</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils.html#module-IPython.platutils">Module: <tt class="docutils literal"><span class="pre">platutils</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils.html#class">Class</a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils.html#findcmderror"><tt class="docutils literal"><span class="pre">FindCmdError</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.platutils_dummy.html">platutils_dummy</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils_dummy.html#module-IPython.platutils_dummy">Module: <tt class="docutils literal"><span class="pre">platutils_dummy</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.platutils_dummy.html#authors">Authors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils_dummy.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.platutils_posix.html">platutils_posix</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils_posix.html#module-IPython.platutils_posix">Module: <tt class="docutils literal"><span class="pre">platutils_posix</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils_posix.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.platutils_win32.html">platutils_win32</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils_win32.html#module-platutils-win32">Module: <tt class="docutils literal"><span class="pre">platutils_win32</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.platutils_win32.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.prefilter.html">prefilter</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.prefilter.html#module-IPython.prefilter">Module: <tt class="docutils literal"><span class="pre">prefilter</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.prefilter.html#class">Class</a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.prefilter.html#lineinfo"><tt class="docutils literal"><span class="pre">LineInfo</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.prefilter.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.shellglobals.html">shellglobals</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.shellglobals.html#module-IPython.shellglobals">Module: <tt class="docutils literal"><span class="pre">shellglobals</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.strdispatch.html">strdispatch</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.strdispatch.html#module-IPython.strdispatch">Module: <tt class="docutils literal"><span class="pre">strdispatch</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.strdispatch.html#id1"><tt class="docutils literal"><span class="pre">StrDispatch</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.decorator_msim.html">testing.decorator_msim</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorator_msim.html#module-IPython.testing.decorator_msim">Module: <tt class="docutils literal"><span class="pre">testing.decorator_msim</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorator_msim.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.decorators.html">testing.decorators</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorators.html#module-IPython.testing.decorators">Module: <tt class="docutils literal"><span class="pre">testing.decorators</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorators.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.decorators_numpy.html">testing.decorators_numpy</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorators_numpy.html#module-IPython.testing.decorators_numpy">Module: <tt class="docutils literal"><span class="pre">testing.decorators_numpy</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorators_numpy.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.decorators_trial.html">testing.decorators_trial</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorators_trial.html#module-IPython.testing.decorators_trial">Module: <tt class="docutils literal"><span class="pre">testing.decorators_trial</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.decorators_trial.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.iptest.html">testing.iptest</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.iptest.html#module-IPython.testing.iptest">Module: <tt class="docutils literal"><span class="pre">testing.iptest</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.iptest.html#class">Class</a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.iptest.html#iptester"><tt class="docutils literal"><span class="pre">IPTester</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.iptest.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.mkdoctests.html">testing.mkdoctests</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.mkdoctests.html#module-IPython.testing.mkdoctests">Module: <tt class="docutils literal"><span class="pre">testing.mkdoctests</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.mkdoctests.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.testing.mkdoctests.html#indentout"><tt class="docutils literal"><span class="pre">IndentOut</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.testing.mkdoctests.html#runnerfactory"><tt class="docutils literal"><span class="pre">RunnerFactory</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.mkdoctests.html#function">Function</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.parametric.html">testing.parametric</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.parametric.html#module-IPython.testing.parametric">Module: <tt class="docutils literal"><span class="pre">testing.parametric</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.parametric.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.plugin.dtexample.html">testing.plugin.dtexample</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.dtexample.html#module-IPython.testing.plugin.dtexample">Module: <tt class="docutils literal"><span class="pre">testing.plugin.dtexample</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.dtexample.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.plugin.show_refs.html">testing.plugin.show_refs</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.show_refs.html#module-IPython.testing.plugin.show_refs">Module: <tt class="docutils literal"><span class="pre">testing.plugin.show_refs</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.show_refs.html#c"><tt class="docutils literal"><span class="pre">C</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.plugin.simple.html">testing.plugin.simple</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.simple.html#module-IPython.testing.plugin.simple">Module: <tt class="docutils literal"><span class="pre">testing.plugin.simple</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.simple.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.plugin.test_ipdoctest.html">testing.plugin.test_ipdoctest</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.test_ipdoctest.html#module-IPython.testing.plugin.test_ipdoctest">Module: <tt class="docutils literal"><span class="pre">testing.plugin.test_ipdoctest</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.test_ipdoctest.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.plugin.test_refs.html">testing.plugin.test_refs</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.test_refs.html#module-IPython.testing.plugin.test_refs">Module: <tt class="docutils literal"><span class="pre">testing.plugin.test_refs</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.plugin.test_refs.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.tools.html">testing.tools</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.tools.html#module-IPython.testing.tools">Module: <tt class="docutils literal"><span class="pre">testing.tools</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.testing.tools.html#authors">Authors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.tools.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.testing.util.html">testing.util</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.util.html#module-IPython.testing.util">Module: <tt class="docutils literal"><span class="pre">testing.util</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.testing.util.html#deferredtestcase"><tt class="docutils literal"><span class="pre">DeferredTestCase</span></tt></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.tools.growl.html">tools.growl</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.tools.growl.html#module-IPython.tools.growl">Module: <tt class="docutils literal"><span class="pre">tools.growl</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.tools.growl.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.tools.growl.html#ipythongrowlerror"><tt class="docutils literal"><span class="pre">IPythonGrowlError</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.tools.growl.html#notifier"><tt class="docutils literal"><span class="pre">Notifier</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.tools.growl.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.tools.utils.html">tools.utils</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.tools.utils.html#module-IPython.tools.utils">Module: <tt class="docutils literal"><span class="pre">tools.utils</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.tools.utils.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.twshell.html">twshell</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.twshell.html#module-IPython.twshell">Module: <tt class="docutils literal"><span class="pre">twshell</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.twshell.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.twshell.html#ipshelltwisted"><tt class="docutils literal"><span class="pre">IPShellTwisted</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.twshell.html#twistedinteractiveshell"><tt class="docutils literal"><span class="pre">TwistedInteractiveShell</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.twshell.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.ultraTB.html">ultraTB</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ultraTB.html#module-IPython.ultraTB">Module: <tt class="docutils literal"><span class="pre">ultraTB</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ultraTB.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ultraTB.html#autoformattedtb"><tt class="docutils literal"><span class="pre">AutoFormattedTB</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ultraTB.html#colortb"><tt class="docutils literal"><span class="pre">ColorTB</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ultraTB.html#formattedtb"><tt class="docutils literal"><span class="pre">FormattedTB</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ultraTB.html#listtb"><tt class="docutils literal"><span class="pre">ListTB</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ultraTB.html#tbtools"><tt class="docutils literal"><span class="pre">TBTools</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.ultraTB.html#verbosetb"><tt class="docutils literal"><span class="pre">VerboseTB</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.ultraTB.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.upgrade_dir.html">upgrade_dir</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.upgrade_dir.html#module-IPython.upgrade_dir">Module: <tt class="docutils literal"><span class="pre">upgrade_dir</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.upgrade_dir.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.wildcard.html">wildcard</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.wildcard.html#module-IPython.wildcard">Module: <tt class="docutils literal"><span class="pre">wildcard</span></tt></a><ul>
+<li class="toctree-l3"><a class="reference external" href="generated/IPython.wildcard.html#authors">Authors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.wildcard.html#class">Class</a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.wildcard.html#namespace"><tt class="docutils literal"><span class="pre">NameSpace</span></tt></a></li>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.wildcard.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="generated/IPython.winconsole.html">winconsole</a><ul>
+<li class="toctree-l2"><a class="reference external" href="generated/IPython.winconsole.html#module-IPython.winconsole">Module: <tt class="docutils literal"><span class="pre">winconsole</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../development/config_blueprint.html" title="previous chapter">Notes on the IPython configuration system</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="generated/IPython.ColorANSI.html" title="next chapter">ColorANSI</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/api/index.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="generated/IPython.ColorANSI.html" title="ColorANSI"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../development/config_blueprint.html" title="Notes on the IPython configuration system"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

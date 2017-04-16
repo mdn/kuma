@@ -1,0 +1,188 @@
+=======
+CHANGES
+=======
+
+0.1.7
+=======
+This is a bugfix release and the last of its kind in 0.1.X, as 0.2.X will receive
+a major redesign that will change the API.
+
+Bugfixes
+--------
+* Paths in Tree objects can now handle whitespace
+* Blob.blame was returning incorrect results which has been fixed.
+
+General
+-------
+* The test suite now supports Mock 0.5 and above. The transition between Mock 0.4
+  0.5 changed the API which required adjustments.
+* Many small enhancements done to the method documentation
+
+
+0.1.6
+=====
+
+General
+-------
+* Added in Sphinx documentation.
+
+* Removed ambiguity between paths and treeishs. When calling commands that
+  accept treeish and path arguments and there is a path with the same name as
+  a treeish git cowardly refuses to pick one and asks for the command to use
+  the unambiguous syntax where '--' seperates the treeish from the paths.
+
+* ``Repo.commits``, ``Repo.commits_between``, ``Reop.commits_since``,
+  ``Repo.commit_count``, ``Repo.commit``, ``Commit.count`` and
+  ``Commit.find_all`` all now optionally take a path argument which
+  constrains the lookup by path.  This changes the order of the positional
+  arguments in ``Repo.commits`` and ``Repo.commits_since``.
+
+Commit
+------
+* ``Commit.message`` now contains the full commit message (rather than just
+  the first line) and a new property ``Commit.summary`` contains the first
+  line of the commit message.
+
+* Fixed a failure when trying to lookup the stats of a parentless commit from
+  a bare repo.
+
+Diff
+----
+* The diff parser is now far faster and also addresses a bug where
+  sometimes b_mode was not set.
+
+* Added support for parsing rename info to the diff parser. Addition of new
+  properties ``Diff.renamed``, ``Diff.rename_from``, and ``Diff.rename_to``.
+
+Head
+----
+* Corrected problem where branches was only returning the last path component
+  instead of the entire path component following refs/heads/.
+
+Repo
+----
+* Modified the gzip archive creation to use the python gzip module.
+
+* Corrected ``commits_between`` always returning None instead of the reversed
+  list.
+
+
+0.1.5
+=====
+
+General
+-------
+* upgraded to Mock 0.4 dependency.
+
+* Replace GitPython with git in repr() outputs.
+
+* Fixed packaging issue caused by ez_setup.py.
+
+Blob
+----
+* No longer strip newlines from Blob data.
+
+Commit
+------
+* Corrected problem with git-rev-list --bisect-all. See
+  http://groups.google.com/group/git-python/browse_thread/thread/aed1d5c4b31d5027
+
+Repo
+----
+* Corrected problems with creating bare repositories.
+
+* Repo.tree no longer accepts a path argument. Use:
+
+    >>> dict(k, o for k, o in tree.items() if k in paths)
+
+* Made daemon export a property of Repo. Now you can do this:
+
+    >>> exported = repo.daemon_export
+    >>> repo.daemon_export = True
+
+* Allows modifying the project description. Do this:
+
+    >>> repo.description = "Foo Bar"
+    >>> repo.description
+    'Foo Bar'
+
+* Added a read-only property Repo.is_dirty which reflects the status of the
+  working directory.
+
+* Added a read-only Repo.active_branch property which returns the name of the
+  currently active branch.
+
+
+Tree
+----
+* Switched to using a dictionary for Tree contents since you will usually want
+  to access them by name and order is unimportant.
+
+* Implemented a dictionary protocol for Tree objects. The following:
+
+    child = tree.contents['grit']
+
+  becomes:
+
+    child = tree['grit']
+
+* Made Tree.content_from_string a static method.
+
+0.1.4.1
+=======
+
+* removed ``method_missing`` stuff and replaced with a ``__getattr__``
+  override in ``Git``.
+
+0.1.4
+=====
+
+* renamed ``git_python`` to ``git``. Be sure to delete all pyc files before
+  testing.
+
+Commit
+------
+* Fixed problem with commit stats not working under all conditions.
+
+Git
+---
+* Renamed module to cmd.
+
+* Removed shell escaping completely.
+
+* Added support for ``stderr``, ``stdin``, and ``with_status``.
+
+* ``git_dir`` is now optional in the constructor for ``git.Git``.  Git now
+  falls back to ``os.getcwd()`` when git_dir is not specified.
+
+* add a ``with_exceptions`` keyword argument to git commands.
+  ``GitCommandError`` is raised when the exit status is non-zero.
+
+* add support for a ``GIT_PYTHON_TRACE`` environment variable.
+  ``GIT_PYTHON_TRACE`` allows us to debug GitPython's usage of git through
+  the use of an environment variable.
+
+Tree
+----
+* Fixed up problem where ``name`` doesn't exist on root of tree.
+
+Repo
+----
+* Corrected problem with creating bare repo.  Added ``Repo.create`` alias.
+
+0.1.2
+=====
+
+Tree
+----
+* Corrected problem with ``Tree.__div__`` not working with zero length files.
+  Removed ``__len__`` override and replaced with size instead. Also made size
+  cach properly. This is a breaking change.
+
+0.1.1
+=====
+Fixed up some urls because I'm a moron
+
+0.1.0
+=====
+initial release

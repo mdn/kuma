@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.plugin.test_ipdoctest &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.plugin.test_refs" href="IPython.testing.plugin.test_refs.html" />
+    <link rel="prev" title="testing.plugin.simple" href="IPython.testing.plugin.simple.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.test_refs.html" title="testing.plugin.test_refs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.simple.html" title="testing.plugin.simple"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-plugin-test-ipdoctest">
+<h1>testing.plugin.test_ipdoctest<a class="headerlink" href="#testing-plugin-test-ipdoctest" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.plugin.test_ipdoctest">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.plugin.test_ipdoctest</span></tt><a class="headerlink" href="#module-IPython.testing.plugin.test_ipdoctest" title="Permalink to this headline">¶</a></h2>
+<p>Tests for the ipdoctest machinery itself.</p>
+<p>Note: in a file named test_X, functions whose only test is their docstring (as
+a doctest) and which have no test functionality of their own, should be called
+&#8216;doctest_foo&#8217; instead of &#8216;test_foo&#8217;, otherwise they get double-counted (the
+empty function call is counted as a test, which just inflates tests numbers
+artificially).</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.plugin.test_ipdoctest.doctest_multiline1">
+<!--[IPython.testing.plugin.test_ipdoctest.doctest_multiline1]--><tt class="descclassname">IPython.testing.plugin.test_ipdoctest.</tt><tt class="descname">doctest_multiline1</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.test_ipdoctest.doctest_multiline1" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ipdoctest machinery must handle multiline examples gracefully.</p>
+<dl class="docutils">
+<dt>In [2]: for i in range(10):</dt>
+<dd>...:     print i,
+...:</dd>
+</dl>
+<p>0 1 2 3 4 5 6 7 8 9</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.test_ipdoctest.doctest_multiline2">
+<!--[IPython.testing.plugin.test_ipdoctest.doctest_multiline2]--><tt class="descclassname">IPython.testing.plugin.test_ipdoctest.</tt><tt class="descname">doctest_multiline2</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.test_ipdoctest.doctest_multiline2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiline examples that define functions and print output.</p>
+<dl class="docutils">
+<dt>In [7]: def f(x):</dt>
+<dd>...:     return x+1
+...:</dd>
+</dl>
+<p>In [8]: f(1)
+Out[8]: 2</p>
+<dl class="docutils">
+<dt>In [9]: def g(x):</dt>
+<dd>...:     print &#8216;x is:&#8217;,x
+...:</dd>
+</dl>
+<p>In [10]: g(1)
+x is: 1</p>
+<p>In [11]: g(&#8216;hello&#8217;)
+x is: hello</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.test_ipdoctest.doctest_multiline3">
+<!--[IPython.testing.plugin.test_ipdoctest.doctest_multiline3]--><tt class="descclassname">IPython.testing.plugin.test_ipdoctest.</tt><tt class="descname">doctest_multiline3</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.test_ipdoctest.doctest_multiline3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiline examples with blank lines.</p>
+<dl class="docutils">
+<dt>In [12]: def h(x):</dt>
+<dd>....:     if x&gt;1:
+....:         return x**2
+....:     # To leave a blank line in the input, you must mark it
+....:     # with a comment character:
+....:     #
+....:     # otherwise the doctest parser gets confused.
+....:     else:
+....:         return -1
+....:</dd>
+</dl>
+<p>In [13]: h(5)
+Out[13]: 25</p>
+<p>In [14]: h(1)
+Out[14]: -1</p>
+<p>In [15]: h(0)
+Out[15]: -1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.test_ipdoctest.doctest_run_builtins">
+<!--[IPython.testing.plugin.test_ipdoctest.doctest_run_builtins]--><tt class="descclassname">IPython.testing.plugin.test_ipdoctest.</tt><tt class="descname">doctest_run_builtins</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.test_ipdoctest.doctest_run_builtins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that %run doesn&#8217;t damage __builtins__ via a doctest.</p>
+<p>This is similar to the test_run_builtins, but I want <em>both</em> forms of the
+test to catch any possible glitches in our testing machinery, since that
+modifies %run somewhat.  So for this, we have both a normal test (below)
+and a doctest (this one).</p>
+<p>In [1]: import tempfile</p>
+<p>In [3]: f = tempfile.NamedTemporaryFile()</p>
+<p>In [4]: f.write(&#8216;passn&#8217;)</p>
+<p>In [5]: f.flush()</p>
+<p>In [7]: %run $f.name</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.test_ipdoctest.doctest_simple">
+<!--[IPython.testing.plugin.test_ipdoctest.doctest_simple]--><tt class="descclassname">IPython.testing.plugin.test_ipdoctest.</tt><tt class="descname">doctest_simple</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.test_ipdoctest.doctest_simple" title="Permalink to this definition">¶</a></dt>
+<dd><p>ipdoctest must handle simple inputs</p>
+<p>In [1]: 1
+Out[1]: 1</p>
+<p>In [2]: print 1
+1</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.plugin.test_ipdoctest</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.plugin.test_ipdoctest">Module: <tt class="docutils literal"><span class="pre">testing.plugin.test_ipdoctest</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.plugin.simple.html" title="previous chapter">testing.plugin.simple</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.plugin.test_refs.html" title="next chapter">testing.plugin.test_refs</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.plugin.test_ipdoctest.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.test_refs.html" title="testing.plugin.test_refs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.simple.html" title="testing.plugin.simple"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

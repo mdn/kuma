@@ -1,0 +1,47 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.mkdoctests
+==================
+
+Module: :mod:`testing.mkdoctests`
+---------------------------------
+Inheritance diagram for ``IPython.testing.mkdoctests``:
+
+.. inheritance-diagram:: IPython.testing.mkdoctests 
+   :parts: 3
+
+.. automodule:: IPython.testing.mkdoctests
+
+.. currentmodule:: IPython.testing.mkdoctests
+
+Classes
+-------
+
+:class:`IndentOut`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IndentOut
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RunnerFactory`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RunnerFactory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Function
+--------
+
+
+.. autofunction:: IPython.testing.mkdoctests.main
+

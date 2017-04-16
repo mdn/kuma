@@ -1,0 +1,42 @@
+--update option
+  make recursive methods only run if input is newer than output
+--force option
+  only overwrite files if this is given (work out which tools its applicable to)
+
+detect whether producing a .po or a .pot (make -P / --pot unneccessary)
+
+moz2po
+  make strings fuzzy if original == translation
+
+headers
+  charset=UTF-8
+
+copyright
+  need to insert the standard copyright text unitialised
+
+csv2po
+  * change order of columns: original, translation, other stuff
+  * It does not currently reflow text to create a newline around literal \n
+  making it difficult to check files
+  * allow a --no-wrap option so that we remove PO line breaks that mess with 
+  translators segmentation tools.
+  * We do not handle languages with N != 2 plural forms
+
+oo2po / po2oo
+  fix problem with OOO_VENDOR and \" quoting in offmgr.po (see help - about)
+  make oo output order the same as in input file...
+
+pot2po discussion with pavel:
+  pot2po should be as simple as using pot as one arg and po as the second ;-)
+  pot2po pot po -t po warns me for every file: pot2po: warning: writing to temporary output...
+  pot2po pot po -t po does not merge existing translations from old POs that have more then one comment and thus are duplicated in the new POs
+
+docs
+  not sure where else to put this!
+    docs are installed in /usr/lib/python2.3/site-packages/translate/doc
+    should be /usr/share/docs/translate-toolkit-0.8
+    Not sure what's needed on Windows - non critical
+
+po2dtd
+  when reporting ampersand check failures should tell you the file not just the
+    name of the bad PO file not just the command line output name

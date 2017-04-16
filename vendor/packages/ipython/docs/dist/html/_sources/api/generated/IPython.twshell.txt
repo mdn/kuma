@@ -1,0 +1,50 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+twshell
+=======
+
+Module: :mod:`twshell`
+----------------------
+Inheritance diagram for ``IPython.twshell``:
+
+.. inheritance-diagram:: IPython.twshell 
+   :parts: 3
+
+.. automodule:: IPython.twshell
+
+.. currentmodule:: IPython.twshell
+
+Classes
+-------
+
+:class:`IPShellTwisted`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellTwisted
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TwistedInteractiveShell`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TwistedInteractiveShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.twshell.hijack_reactor
+
+
+.. autofunction:: IPython.twshell.install_gtk2
+

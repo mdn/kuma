@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="po2tmx" id="po2tmx">po2tmx</a></h1>
+<div class="level1">
+
+<p>
+
+Convert Gettext <acronym title="Gettext Portable Object">PO</acronym> files to a <acronym title="Translation Memory eXchange">TMX</acronym> translation memory file.  <acronym title="Translation Memory eXchange">TMX</acronym> is the Translation Memory 
+eXchange format developed by <a href="http://lisa.org/" class="urlextern" title="http://lisa.org/">LISA</a> (Localization Industry Standards Association)
+</p>
+
+</div>
+<!-- SECTION "po2tmx" [1-215] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">po2tmx [options] --language &lt;target&gt; &lt;po&gt; &lt;tmx&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;po&gt;  </td><td class="col1 leftalign"> is a <acronym title="Gettext Portable Object">PO</acronym> file  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;tmx&gt;  </td><td class="col1 leftalign"> is a <acronym title="Translation Memory eXchange">TMX</acronym> file  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in tmx format  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -lLANG, --language=LANG  </td><td class="col1 leftalign"> set target language code (e.g. af-ZA) [required]   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --source-language=LANG   </td><td class="col1 leftalign"> set source language code (default: en)  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [216-1200] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<pre class="code">po2tmx -l xh browser.po browser.tmx</pre>
+
+<p>
+
+Use the Xhosa (<em>xh</em>) translations in the <acronym title="Gettext Portable Object">PO</acronym> file <em>browser.po</em> to create a <acronym title="Translation Memory eXchange">TMX</acronym> file called <em>browser.tmx</em>
+</p>
+
+</div>
+<!-- SECTION "Examples" [1201-1372] -->
+<h2><a name="bugs_and_issues" id="bugs_and_issues">Bugs and issues</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Bugs and issues" [1373-1401] -->
+<h3><a name="markup_stripping" id="markup_stripping">Markup stripping</a></h3>
+<div class="level3">
+
+<p>
+
+po2tmx conforms to <acronym title="Translation Memory eXchange">TMX</acronym> v1.4 without stripping markup.  See the <a href="toolkit-tmx.html" class="wikilink1" title="toolkit-tmx.html">tmx</a> conformance page for more details.
+</p>
+
+<p>
+It has not been widely tested so your mileage may vary.
+</p>
+
+</div>
+<!-- SECTION "Markup stripping" [1402-1593] -->
+<h3><a name="tmx_and_po_in_omegat" id="tmx_and_po_in_omegat">TMX and PO in OmegaT</a></h3>
+<div class="level3">
+
+<p>
+
+In some tools, like OmegaT, <acronym title="Gettext Portable Object">PO</acronym> files are parsed without expanding escaped sequences, even though such tools use <acronym title="Translation Memory eXchange">TMX</acronym> for translation memory.  Keep this in mind when using po2tmx, because po2tmx converts \n and \t to newlines and tabs in the <acronym title="Translation Memory eXchange">TMX</acronym> file.  If such a <acronym title="Translation Memory eXchange">TMX</acronym> file is used while translating <acronym title="Gettext Portable Object">PO</acronym> files in OmegaT, matching will be less than 100%.
+</p>
+
+<p>
+In other tools, such as Swordfish, the <acronym title="Gettext Portable Object">PO</acronym> comment “no-wrap” is interpreted in the same way as the equivalent function in <acronym title="Extensible Markup Language">XML</acronym>, which may also lead to mismatches if TMXes from po2tmx are used.
+</p>
+
+<p>
+There is nothing wrong with po2tmx, but if used in conjunction with tools that handle <acronym title="Gettext Portable Object">PO</acronym> files differently, it may lead to less than perfect matching.
+</p>
+
+</div>
+<!-- SECTION "TMX and PO in OmegaT" [1594-2319] -->
+<h2><a name="tips" id="tips">Tips</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Tips" [2320-2337] -->
+<h3><a name="tmx_with_only_unique_segments" id="tmx_with_only_unique_segments">TMX with only unique segments</a></h3>
+<div class="level3">
+
+<p>
+
+To create a <acronym title="Translation Memory eXchange">TMX</acronym> with no duplicates (in other words, only unique strings), use msgcat to first create a large <acronym title="Gettext Portable Object">PO</acronym> file with non-uniques removed.
+</p>
+
+<p>
+Steps for <acronym title="Microsoft">MS</acronym> Windows:
+</p>
+
+<p>
+1. Create a text file (say, allfiles.txt) that contains the paths of all the <acronym title="Gettext Portable Object">PO</acronym> files (in Linux just use the “find” command).  The file should contain one path per line (relative or absolute).  In <acronym title="Microsoft">MS</acronym> Windows, you can use <a href="toolkit-pikybasket.html" class="wikilink2" title="toolkit-pikybasket.html">PikyBasket</a>.  In <acronym title="Microsoft">MS</acronym> Windows, make sure the file has no BOM.
+</p>
+
+<p>
+2. Do: msgcat -f allfiles.txt -u -o bigpofile.po
+</p>
+
+<p>
+3. Now do po2tmx on that bigpofile.po
+</p>
+
+</div>
+<!-- SECTION "TMX with only unique segments" [2338-2919] -->
+<h2><a name="the_toolkit_s_tmx_versus_other_tools" id="the_toolkit_s_tmx_versus_other_tools">The Toolkit&#039;s TMX versus other tools</a></h2>
+<div class="level2">
+
+<p>
+
+Here is a page on <a href="toolkit-support_for_toolkit_tmx.html" class="wikilink1" title="toolkit-support_for_toolkit_tmx.html">support for toolkit tmx</a> by other tools (mostly <acronym title="Microsoft">MS</acronym> Windows).
+
+</p>
+
+</div>
+<!-- SECTION "The Toolkit's TMX versus other tools" [2920-] --></body>
+</html>

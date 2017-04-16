@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Sybase
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="Dialects" href="index.html" />
+        <link rel="next" title="Microsoft Access" href="access.html" />
+        <link rel="prev" title="SQLite" href="sqlite.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/dialects/sybase.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="Dialects">Dialects</a>
+                » 
+    Sybase
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="sqlite.html" title="previous chapter">SQLite</a>
+        Next:
+        <a href="access.html" title="next chapter">Microsoft Access</a>
+</div>
+
+                <h2>
+                    
+    Sybase
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Sybase</a><ul>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.sybase.pysybase">python-sybase notes</a><ul>
+<li><a class="reference internal" href="#unicode-support">Unicode Support</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.sybase.pyodbc">pyodbc notes</a><ul>
+<li><a class="reference internal" href="#id1">Unicode Support</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.sybase.mxodbc">mxodbc notes</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.dialects.sybase.base">
+<span id="sybase"></span><h1>Sybase<a class="headerlink" href="#module-sqlalchemy.dialects.sybase.base" title="Permalink to this headline">¶</a></h1>
+<p>Support for Sybase Adaptive Server Enterprise (ASE).</p>
+<p>Note that this dialect is no longer specific to Sybase iAnywhere.
+ASE is the primary support platform.</p>
+<div class="section" id="module-sqlalchemy.dialects.sybase.pysybase">
+<span id="python-sybase-notes"></span><h2>python-sybase notes<a class="headerlink" href="#module-sqlalchemy.dialects.sybase.pysybase" title="Permalink to this headline">¶</a></h2>
+<p>Support for Sybase via the python-sybase driver.</p>
+<p><a class="reference external" href="http://python-sybase.sourceforge.net/">http://python-sybase.sourceforge.net/</a></p>
+<p>Connect strings are of the form:</p>
+<div class="highlight-python"><pre>sybase+pysybase://&lt;username&gt;:&lt;password&gt;@&lt;dsn&gt;/[database name]</pre>
+</div>
+<div class="section" id="unicode-support">
+<h3>Unicode Support<a class="headerlink" href="#unicode-support" title="Permalink to this headline">¶</a></h3>
+<p>The python-sybase driver does not appear to support non-ASCII strings of any
+kind at this time.</p>
+</div>
+</div>
+<div class="section" id="module-sqlalchemy.dialects.sybase.pyodbc">
+<span id="pyodbc-notes"></span><h2>pyodbc notes<a class="headerlink" href="#module-sqlalchemy.dialects.sybase.pyodbc" title="Permalink to this headline">¶</a></h2>
+<p>Support for Sybase via pyodbc.</p>
+<p><a class="reference external" href="http://pypi.python.org/pypi/pyodbc/">http://pypi.python.org/pypi/pyodbc/</a></p>
+<p>Connect strings are of the form:</p>
+<div class="highlight-python"><pre>sybase+pyodbc://&lt;username&gt;:&lt;password&gt;@&lt;dsn&gt;/
+sybase+pyodbc://&lt;username&gt;:&lt;password&gt;@&lt;host&gt;/&lt;database&gt;</pre>
+</div>
+<div class="section" id="id1">
+<h3>Unicode Support<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The pyodbc driver currently supports usage of these Sybase types with 
+Unicode or multibyte strings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CHAR</span>
+<span class="n">NCHAR</span>
+<span class="n">NVARCHAR</span>
+<span class="n">TEXT</span>
+<span class="n">VARCHAR</span></pre></div>
+</div>
+<p>Currently <em>not</em> supported are:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">UNICHAR</span>
+<span class="n">UNITEXT</span>
+<span class="n">UNIVARCHAR</span></pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="module-sqlalchemy.dialects.sybase.mxodbc">
+<span id="mxodbc-notes"></span><h2>mxodbc notes<a class="headerlink" href="#module-sqlalchemy.dialects.sybase.mxodbc" title="Permalink to this headline">¶</a></h2>
+<p>Support for Sybase via mxodbc.</p>
+<p>This dialect is a stub only and is likely non functional at this time.</p>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="sqlite.html" title="previous chapter">SQLite</a>
+        Next:
+        <a href="access.html" title="next chapter">Microsoft Access</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

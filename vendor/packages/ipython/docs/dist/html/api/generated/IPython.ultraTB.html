@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ultraTB &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="upgrade_dir" href="IPython.upgrade_dir.html" />
+    <link rel="prev" title="twshell" href="IPython.twshell.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.upgrade_dir.html" title="upgrade_dir"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.twshell.html" title="twshell"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ultratb">
+<h1>ultraTB<a class="headerlink" href="#ultratb" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.ultraTB">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">ultraTB</span></tt><a class="headerlink" href="#module-IPython.ultraTB" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.ultraTB</span></tt>:</p>
+<img src="../../_images/inheritance66590ab664.png" usemap="#inheritance66590ab664" class="inheritance"/><map id="inheritance66590ab664" name="inheritance66590ab664">
+<area shape="rect" href="#IPython.ultraTB.AutoFormattedTB" title="IPython.ultraTB.AutoFormattedTB" alt="" coords="574,4,764,26"/>
+<area shape="rect" href="#IPython.ultraTB.FormattedTB" title="IPython.ultraTB.FormattedTB" alt="" coords="371,25,535,46"/>
+<area shape="rect" href="#IPython.ultraTB.ColorTB" title="IPython.ultraTB.ColorTB" alt="" coords="600,45,738,67"/>
+<area shape="rect" href="#IPython.ultraTB.VerboseTB" title="IPython.ultraTB.VerboseTB" alt="" coords="179,4,331,26"/>
+<area shape="rect" href="#IPython.ultraTB.TBTools" title="IPython.ultraTB.TBTools" alt="" coords="4,25,140,46"/>
+<area shape="rect" href="#IPython.ultraTB.ListTB" title="IPython.ultraTB.ListTB" alt="" coords="190,45,319,67"/>
+</map>
+<p>ultraTB.py &#8211; Spice up your tracebacks!</p>
+<ul class="simple">
+<li>ColorTB</li>
+</ul>
+<p>I&#8217;ve always found it a bit hard to visually parse tracebacks in Python.  The
+ColorTB class is a solution to that problem.  It colors the different parts of a
+traceback in a manner similar to what you would expect from a syntax-highlighting
+text editor.</p>
+<dl class="docutils">
+<dt>Installation instructions for ColorTB:</dt>
+<dd>import sys,ultraTB
+sys.excepthook = ultraTB.ColorTB()</dd>
+</dl>
+<ul class="simple">
+<li>VerboseTB</li>
+</ul>
+<p>I&#8217;ve also included a port of Ka-Ping Yee&#8217;s &#8220;cgitb.py&#8221; that produces all kinds
+of useful info when a traceback occurs.  Ping originally had it spit out HTML
+and intended it for CGI programmers, but why should they have all the fun?  I
+altered it to spit out colored text to the terminal.  It&#8217;s a bit overwhelming,
+but kind of neat, and maybe useful for long-running programs that you believe
+are bug-free.  If a crash <em>does</em> occur in that type of program you want details.
+Give it a shot&#8211;you&#8217;ll love it or you&#8217;ll hate it.</p>
+<p>Note:</p>
+<blockquote>
+<p>The Verbose mode prints the variables currently visible where the exception
+happened (shortening their strings if too long). This can potentially be
+very slow, if you happen to have a huge data structure whose string
+representation is complex to compute. Your computer may appear to freeze for
+a while with cpu usage at 100%. If this occurs, you can cancel the traceback
+with Ctrl-C (maybe hitting it more than once).</p>
+<p>If you encounter this kind of situation often, you may want to use the
+Verbose_novars mode instead of the regular Verbose, which avoids formatting
+variables (but otherwise includes the information and context given by
+Verbose).</p>
+</blockquote>
+<dl class="docutils">
+<dt>Installation instructions for ColorTB:</dt>
+<dd>import sys,ultraTB
+sys.excepthook = ultraTB.VerboseTB()</dd>
+</dl>
+<p>Note:  Much of the code in this module was lifted verbatim from the standard
+library module &#8216;traceback.py&#8217; and Ka-Ping Yee&#8217;s &#8216;cgitb.py&#8217;.</p>
+<ul class="simple">
+<li>Color schemes</li>
+</ul>
+<p>The colors are defined in the class TBTools through the use of the
+ColorSchemeTable class. Currently the following exist:</p>
+<blockquote>
+<ul class="simple">
+<li>NoColor: allows all of this module to be used in any terminal (the color</li>
+</ul>
+<p>escapes are just dummy blank strings).</p>
+<ul class="simple">
+<li>Linux: is meant to look good in a terminal like the Linux console (black</li>
+</ul>
+<p>or very dark background).</p>
+<ul class="simple">
+<li>LightBG: similar to Linux but swaps dark/light colors to be more readable</li>
+</ul>
+<p>in light background terminals.</p>
+</blockquote>
+<p>You can implement other color schemes easily, the syntax is fairly
+self-explanatory. Please send back new schemes you develop to the author for
+possible inclusion in future releases.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="autoformattedtb">
+<h3><a title="IPython.ultraTB.AutoFormattedTB" class="reference internal" href="#IPython.ultraTB.AutoFormattedTB"><tt class="xref docutils literal"><span class="pre">AutoFormattedTB</span></tt></a><a class="headerlink" href="#autoformattedtb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ultraTB.AutoFormattedTB">
+<!--[IPython.ultraTB.AutoFormattedTB]-->class <tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">AutoFormattedTB</tt><big>(</big><em>mode='Plain'</em>, <em>color_scheme='Linux'</em>, <em>tb_offset=0</em>, <em>long_header=0</em>, <em>call_pdb=0</em>, <em>include_vars=0</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.AutoFormattedTB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.ultraTB.FormattedTB" class="reference internal" href="#IPython.ultraTB.FormattedTB"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.FormattedTB</span></tt></a></p>
+<p>A traceback printer which can be called on the fly.</p>
+<p>It will find out about exceptions by itself.</p>
+<p>A brief example:</p>
+<p>AutoTB = AutoFormattedTB(mode = &#8216;Verbose&#8217;,color_scheme=&#8217;Linux&#8217;)
+try:</p>
+<blockquote>
+...</blockquote>
+<dl class="docutils">
+<dt>except:</dt>
+<dd>AutoTB()  # or AutoTB(out=logfile) where logfile is an open file object</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.ultraTB.AutoFormattedTB.__init__">
+<!--[IPython.ultraTB.AutoFormattedTB.__init__]--><tt class="descname">__init__</tt><big>(</big><em>mode='Plain'</em>, <em>color_scheme='Linux'</em>, <em>tb_offset=0</em>, <em>long_header=0</em>, <em>call_pdb=0</em>, <em>include_vars=0</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.AutoFormattedTB.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.AutoFormattedTB.text">
+<!--[IPython.ultraTB.AutoFormattedTB.text]--><tt class="descname">text</tt><big>(</big><em>etype=None</em>, <em>value=None</em>, <em>tb=None</em>, <em>context=5</em>, <em>mode=None</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.AutoFormattedTB.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="colortb">
+<h3><a title="IPython.ultraTB.ColorTB" class="reference internal" href="#IPython.ultraTB.ColorTB"><tt class="xref docutils literal"><span class="pre">ColorTB</span></tt></a><a class="headerlink" href="#colortb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ultraTB.ColorTB">
+<!--[IPython.ultraTB.ColorTB]-->class <tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">ColorTB</tt><big>(</big><em>color_scheme='Linux'</em>, <em>call_pdb=0</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.ColorTB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.ultraTB.FormattedTB" class="reference internal" href="#IPython.ultraTB.FormattedTB"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.FormattedTB</span></tt></a></p>
+<p>Shorthand to initialize a FormattedTB in Linux colors mode.</p>
+<dl class="method">
+<dt id="IPython.ultraTB.ColorTB.__init__">
+<!--[IPython.ultraTB.ColorTB.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_scheme='Linux'</em>, <em>call_pdb=0</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.ColorTB.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="formattedtb">
+<h3><a title="IPython.ultraTB.FormattedTB" class="reference internal" href="#IPython.ultraTB.FormattedTB"><tt class="xref docutils literal"><span class="pre">FormattedTB</span></tt></a><a class="headerlink" href="#formattedtb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ultraTB.FormattedTB">
+<!--[IPython.ultraTB.FormattedTB]-->class <tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">FormattedTB</tt><big>(</big><em>mode='Plain'</em>, <em>color_scheme='Linux'</em>, <em>tb_offset=0</em>, <em>long_header=0</em>, <em>call_pdb=0</em>, <em>include_vars=0</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.ultraTB.VerboseTB" class="reference internal" href="#IPython.ultraTB.VerboseTB"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.VerboseTB</span></tt></a>, <a title="IPython.ultraTB.ListTB" class="reference internal" href="#IPython.ultraTB.ListTB"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.ListTB</span></tt></a></p>
+<p>Subclass ListTB but allow calling with a traceback.</p>
+<p>It can thus be used as a sys.excepthook for Python &gt; 2.1.</p>
+<p>Also adds &#8216;Context&#8217; and &#8216;Verbose&#8217; modes, not available in ListTB.</p>
+<p>Allows a tb_offset to be specified. This is useful for situations where
+one needs to remove a number of topmost frames from the traceback (such as
+occurs with python programs that themselves execute other python code,
+like Python shells).</p>
+<dl class="method">
+<dt id="IPython.ultraTB.FormattedTB.__init__">
+<!--[IPython.ultraTB.FormattedTB.__init__]--><tt class="descname">__init__</tt><big>(</big><em>mode='Plain'</em>, <em>color_scheme='Linux'</em>, <em>tb_offset=0</em>, <em>long_header=0</em>, <em>call_pdb=0</em>, <em>include_vars=0</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.FormattedTB.context">
+<!--[IPython.ultraTB.FormattedTB.context]--><tt class="descname">context</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB.context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.FormattedTB.plain">
+<!--[IPython.ultraTB.FormattedTB.plain]--><tt class="descname">plain</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB.plain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.FormattedTB.set_mode">
+<!--[IPython.ultraTB.FormattedTB.set_mode]--><tt class="descname">set_mode</tt><big>(</big><em>mode=None</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to the desired mode.</p>
+<p>If mode is not specified, cycles through the available modes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.FormattedTB.text">
+<!--[IPython.ultraTB.FormattedTB.text]--><tt class="descname">text</tt><big>(</big><em>etype</em>, <em>value</em>, <em>tb</em>, <em>context=5</em>, <em>mode=None</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return formatted traceback.</p>
+<p>If the optional mode parameter is given, it overrides the current
+mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.FormattedTB.verbose">
+<!--[IPython.ultraTB.FormattedTB.verbose]--><tt class="descname">verbose</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ultraTB.FormattedTB.verbose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="listtb">
+<h3><a title="IPython.ultraTB.ListTB" class="reference internal" href="#IPython.ultraTB.ListTB"><tt class="xref docutils literal"><span class="pre">ListTB</span></tt></a><a class="headerlink" href="#listtb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ultraTB.ListTB">
+<!--[IPython.ultraTB.ListTB]-->class <tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">ListTB</tt><big>(</big><em>color_scheme='NoColor'</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.ListTB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.ultraTB.TBTools" class="reference internal" href="#IPython.ultraTB.TBTools"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.TBTools</span></tt></a></p>
+<p>Print traceback information from a traceback list, with optional color.</p>
+<dl class="docutils">
+<dt>Calling: requires 3 arguments:</dt>
+<dd>(etype, evalue, elist)</dd>
+<dt>as would be obtained by:</dt>
+<dd><p class="first">etype, evalue, tb = sys.exc_info()
+if tb:</p>
+<blockquote>
+elist = traceback.extract_tb(tb)</blockquote>
+<dl class="last docutils">
+<dt>else:</dt>
+<dd>elist = None</dd>
+</dl>
+</dd>
+</dl>
+<p>It can thus be used by programs which need to process the traceback before
+printing (such as console replacements based on the code module from the
+standard library).</p>
+<p>Because they are meant to be called without a full traceback (only a
+list), instances of this class can&#8217;t call the interactive pdb debugger.</p>
+<dl class="method">
+<dt id="IPython.ultraTB.ListTB.__init__">
+<!--[IPython.ultraTB.ListTB.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_scheme='NoColor'</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.ListTB.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.ListTB.text">
+<!--[IPython.ultraTB.ListTB.text]--><tt class="descname">text</tt><big>(</big><em>etype</em>, <em>value</em>, <em>elist</em>, <em>context=5</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.ListTB.text" title="Permalink to this definition">¶</a></dt>
+<dd>Return a color formatted string with the traceback info.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tbtools">
+<h3><a title="IPython.ultraTB.TBTools" class="reference internal" href="#IPython.ultraTB.TBTools"><tt class="xref docutils literal"><span class="pre">TBTools</span></tt></a><a class="headerlink" href="#tbtools" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ultraTB.TBTools">
+<!--[IPython.ultraTB.TBTools]-->class <tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">TBTools</tt><big>(</big><em>color_scheme='NoColor'</em>, <em>call_pdb=False</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.TBTools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic tools used by all traceback printer classes.</p>
+<dl class="method">
+<dt id="IPython.ultraTB.TBTools.__init__">
+<!--[IPython.ultraTB.TBTools.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_scheme='NoColor'</em>, <em>call_pdb=False</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.TBTools.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.TBTools.color_toggle">
+<!--[IPython.ultraTB.TBTools.color_toggle]--><tt class="descname">color_toggle</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ultraTB.TBTools.color_toggle" title="Permalink to this definition">¶</a></dt>
+<dd>Toggle between the currently active color scheme and NoColor.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.TBTools.set_colors">
+<!--[IPython.ultraTB.TBTools.set_colors]--><tt class="descname">set_colors</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.TBTools.set_colors" title="Permalink to this definition">¶</a></dt>
+<dd>Shorthand access to the color table scheme selector method.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="verbosetb">
+<h3><a title="IPython.ultraTB.VerboseTB" class="reference internal" href="#IPython.ultraTB.VerboseTB"><tt class="xref docutils literal"><span class="pre">VerboseTB</span></tt></a><a class="headerlink" href="#verbosetb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ultraTB.VerboseTB">
+<!--[IPython.ultraTB.VerboseTB]-->class <tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">VerboseTB</tt><big>(</big><em>color_scheme='Linux'</em>, <em>tb_offset=0</em>, <em>long_header=0</em>, <em>call_pdb=0</em>, <em>include_vars=1</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.VerboseTB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.ultraTB.TBTools" class="reference internal" href="#IPython.ultraTB.TBTools"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.TBTools</span></tt></a></p>
+<p>A port of Ka-Ping Yee&#8217;s cgitb.py module that outputs color text instead
+of HTML.  Requires inspect and pydoc.  Crazy, man.</p>
+<p>Modified version which optionally strips the topmost entries from the
+traceback, to be used with alternate interpreters (because their own code
+would appear in the traceback).</p>
+<dl class="method">
+<dt id="IPython.ultraTB.VerboseTB.__init__">
+<!--[IPython.ultraTB.VerboseTB.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_scheme='Linux'</em>, <em>tb_offset=0</em>, <em>long_header=0</em>, <em>call_pdb=0</em>, <em>include_vars=1</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.VerboseTB.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify traceback offset, headers and color scheme.</p>
+<p>Define how many frames to drop from the tracebacks. Calling it with
+tb_offset=1 allows use of this handler in interpreters which will have
+their own code at the top of the traceback (VerboseTB will first
+remove that frame before printing the traceback info).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.VerboseTB.debugger">
+<!--[IPython.ultraTB.VerboseTB.debugger]--><tt class="descname">debugger</tt><big>(</big><em>force=False</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.VerboseTB.debugger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call up the pdb debugger if desired, always clean up the tb
+reference.</p>
+<p>Keywords:</p>
+<blockquote>
+<ul class="simple">
+<li>force(False): by default, this routine checks the instance call_pdb</li>
+</ul>
+<p>flag and does not actually invoke the debugger if the flag is false.
+The &#8216;force&#8217; option forces the debugger to activate even if the flag
+is false.</p>
+</blockquote>
+<p>If the call_pdb flag is set, the pdb interactive debugger is
+invoked. In all cases, the self.tb reference to the current traceback
+is deleted to prevent lingering references which hamper memory
+management.</p>
+<p>Note that each call to pdb() does an &#8216;import readline&#8217;, so if your app
+requires a special setup for the readline completers, you&#8217;ll have to
+fix that by hand after invoking the exception handler.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.VerboseTB.handler">
+<!--[IPython.ultraTB.VerboseTB.handler]--><tt class="descname">handler</tt><big>(</big><em>info=None</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.VerboseTB.handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ultraTB.VerboseTB.text">
+<!--[IPython.ultraTB.VerboseTB.text]--><tt class="descname">text</tt><big>(</big><em>etype</em>, <em>evalue</em>, <em>etb</em>, <em>context=5</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.VerboseTB.text" title="Permalink to this definition">¶</a></dt>
+<dd>Return a nice text document describing the traceback.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.ultraTB.findsource">
+<!--[IPython.ultraTB.findsource]--><tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">findsource</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.findsource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the entire source file and starting line number for an object.</p>
+<p>The argument may be a module, class, method, function, traceback, frame,
+or code object.  The source code is returned as a list of all the lines
+in the file and the line number indexes a line in that list.  An IOError
+is raised if the source code cannot be retrieved.</p>
+<p>FIXED version with which we monkeypatch the stdlib to work around a bug.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ultraTB.fix_frame_records_filenames">
+<!--[IPython.ultraTB.fix_frame_records_filenames]--><tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">fix_frame_records_filenames</tt><big>(</big><em>records</em><big>)</big><a class="headerlink" href="#IPython.ultraTB.fix_frame_records_filenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to fix the filenames in each record from inspect.getinnerframes().</p>
+<p>Particularly, modules loaded from within zip files have useless filenames
+attached to their code object, and inspect.getinnerframes() just uses it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.ultraTB.inspect_error">
+<!--[IPython.ultraTB.inspect_error]--><tt class="descclassname">IPython.ultraTB.</tt><tt class="descname">inspect_error</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ultraTB.inspect_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a message about internal inspect errors.</p>
+<p>These are unfortunately quite common.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">ultraTB</a><ul>
+<li><a class="reference external" href="#module-IPython.ultraTB">Module: <tt class="docutils literal"><span class="pre">ultraTB</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#autoformattedtb"><tt class="docutils literal"><span class="pre">AutoFormattedTB</span></tt></a></li>
+<li><a class="reference external" href="#colortb"><tt class="docutils literal"><span class="pre">ColorTB</span></tt></a></li>
+<li><a class="reference external" href="#formattedtb"><tt class="docutils literal"><span class="pre">FormattedTB</span></tt></a></li>
+<li><a class="reference external" href="#listtb"><tt class="docutils literal"><span class="pre">ListTB</span></tt></a></li>
+<li><a class="reference external" href="#tbtools"><tt class="docutils literal"><span class="pre">TBTools</span></tt></a></li>
+<li><a class="reference external" href="#verbosetb"><tt class="docutils literal"><span class="pre">VerboseTB</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.twshell.html" title="previous chapter">twshell</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.upgrade_dir.html" title="next chapter">upgrade_dir</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.ultraTB.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.upgrade_dir.html" title="upgrade_dir"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.twshell.html" title="twshell"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

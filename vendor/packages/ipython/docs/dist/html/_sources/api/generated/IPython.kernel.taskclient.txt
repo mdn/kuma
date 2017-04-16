@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.taskclient
+=================
+
+Module: :mod:`kernel.taskclient`
+--------------------------------
+Inheritance diagram for ``IPython.kernel.taskclient``:
+
+.. inheritance-diagram:: IPython.kernel.taskclient 
+   :parts: 3
+
+.. automodule:: IPython.kernel.taskclient
+
+.. currentmodule:: IPython.kernel.taskclient
+
+Classes
+-------
+
+:class:`BlockingTaskClient`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: BlockingTaskClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IBlockingTaskClient`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IBlockingTaskClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

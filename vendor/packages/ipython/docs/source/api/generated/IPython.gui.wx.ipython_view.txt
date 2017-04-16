@@ -1,0 +1,51 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+gui.wx.ipython_view
+===================
+
+Module: :mod:`gui.wx.ipython_view`
+----------------------------------
+Inheritance diagram for ``IPython.gui.wx.ipython_view``:
+
+.. inheritance-diagram:: IPython.gui.wx.ipython_view 
+   :parts: 3
+
+.. automodule:: IPython.gui.wx.ipython_view
+
+.. currentmodule:: IPython.gui.wx.ipython_view
+
+Classes
+-------
+
+:class:`IPShellWidget`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellWidget
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`WxConsoleView`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: WxConsoleView
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`WxNonBlockingIPShell`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: WxNonBlockingIPShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

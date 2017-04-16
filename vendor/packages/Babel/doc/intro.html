@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Introduction</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="introduction">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Introduction</h1>
+<p>The functionality Babel provides for internationalization (I18n) and
+localization (L10N) can be separated into two different aspects:</p>
+<blockquote>
+<ul class="simple">
+<li>tools to build and work with <tt class="docutils literal"><span class="pre">gettext</span></tt> message catalogs, and</li>
+<li>a Python interface to the CLDR (Common Locale Data Repository), providing
+access to various locale display names, localized number and date
+formatting, etc.</li>
+</ul>
+</blockquote>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#message-catalogs" id="id1">1   Message Catalogs</a></li>
+<li><a class="reference internal" href="#locale-data" id="id2">2   Locale Data</a></li>
+</ul>
+</div>
+<div class="section" id="message-catalogs">
+<h1>1   Message Catalogs</h1>
+<p>While the Python standard library includes a
+<a class="reference external" href="http://docs.python.org/lib/module-gettext.html">gettext</a> module that enables
+applications to use message catalogs, it requires developers to build these
+catalogs using GNU tools such as <tt class="docutils literal"><span class="pre">xgettext</span></tt>, <tt class="docutils literal"><span class="pre">msgmerge</span></tt>, and <tt class="docutils literal"><span class="pre">msgfmt</span></tt>.
+And while <tt class="docutils literal"><span class="pre">xgettext</span></tt> does have support for extracting messages from Python
+files, it does not know how to deal with other kinds of files commonly found
+in Python web-applications, such as templates, nor does it provide an easy
+extensibility mechanism to add such support.</p>
+<p>Babel addresses this by providing a framework where various extraction methods
+can be plugged in to a larger message extraction framework, and also removes
+the dependency on the GNU <tt class="docutils literal"><span class="pre">gettext</span></tt> tools for common tasks, as these aren't
+necessarily available on all platforms. See <a class="reference external" href="messages.html">Working with Message Catalogs</a>
+for details on this aspect of Babel.</p>
+</div>
+<div class="section" id="locale-data">
+<h1>2   Locale Data</h1>
+<p>Furthermore, while the Python standard library does include support for basic
+localization with respect to the formatting of numbers and dates (the
+<a class="reference external" href="http://docs.python.org/lib/module-locale.html">locale</a> module, among others),
+this support is based on the assumption that there will be only one specific
+locale used per process (at least simultaneously.) Also, it doesn't provide
+access to other kinds of locale data, such as the localized names of countries,
+languages, or time-zones, which are frequently needed in web-based applications.</p>
+<p>For these requirements, Babel includes data extracted from the <a class="reference external" href="http://unicode.org/cldr/">Common Locale
+Data Repository (CLDR)</a>, and provides a number of
+convenient methods for accessing and using this data. See <a class="reference external" href="display.html">Locale Display
+Names</a>, <a class="reference external" href="dates.html">Date Formatting</a>, and <a class="reference external" href="numbers.html">Number Formatting</a> for more information on
+this aspect of Babel.</p>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

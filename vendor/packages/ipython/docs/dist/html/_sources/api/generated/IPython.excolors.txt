@@ -1,0 +1,13 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+excolors
+========
+
+Module: :mod:`excolors`
+-----------------------
+.. automodule:: IPython.excolors
+
+.. currentmodule:: IPython.excolors
+
+.. autofunction:: IPython.excolors.exception_colors
+

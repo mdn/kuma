@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="icalendar" id="icalendar">iCalendar</a></h1>
+<div class="level1">
+
+<p>
+
+Support for <a href="http://en.wikipedia.org/wiki/iCalendar" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/iCalendar">iCalendar</a> (*.ics) files.  This allows calendars to be localised.
+</p>
+
+<p>
+The format extracts certain properties from VEVENT objects.  The properties are limited to textual entries that would need to be localised, it does not include entries such as dates and durations that would indeed change for various locales.
+</p>
+
+</div>
+<!-- SECTION "iCalendar" [1-353] -->
+<h2><a name="resources" id="resources">Resources</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://tools.ietf.org/html/rfc2445" class="urlextern" title="http://tools.ietf.org/html/rfc2445">rfc2445</a> - Internet Calendaring and Scheduling Core Object Specification (iCalendar)</div>
+</li>
+<li class="level1"><div class="li"> iCal <a href="http://www.kanzaki.com/docs/ical/" class="urlextern" title="http://www.kanzaki.com/docs/ical/">spec</a> in a simple adaptation of the rfc that makes it easy to refer to all sections, items and attributes.</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://vobject.skyhouseconsulting.com/" class="urlextern" title="http://vobject.skyhouseconsulting.com/">VObject</a> - the python library used to read the iCal file.</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://severinghaus.org/projects/icv/" class="urlextern" title="http://severinghaus.org/projects/icv/">iCalender validator</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://en.wikipedia.org/wiki/iCalendar" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/iCalendar">iCalendar</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://upload.wikimedia.org/wikipedia/en/c/c0/ICalendarSpecification.png" class="urlextern" title="http://upload.wikimedia.org/wikipedia/en/c/c0/ICalendarSpecification.png">Components and their properties</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Resources" [354-961] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+
+<p>
+
+We are not creating iCal files, simply extracting localisable information and rebuilding the file.  We rely on VObject to ensure correctness.
+</p>
+
+<p>
+The following data is extracted:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> VEVENT:</div>
+<ul>
+<li class="level2"><div class="li"> SUMMARY</div>
+</li>
+<li class="level2"><div class="li"> DESCRIPTION</div>
+</li>
+<li class="level2"><div class="li"> LOCATION</div>
+</li>
+<li class="level2"><div class="li"> COMMENTS</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+No other sections are extracted.
+</p>
+
+</div>
+<!-- SECTION "Conformance" [962-1272] -->
+<h2><a name="notes" id="notes">Notes</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Notes" [1273-1291] -->
+<h3><a name="languagenot_a_multilingual_solution" id="languagenot_a_multilingual_solution">LANGUAGE: not a multilingual solution</a></h3>
+<div class="level3">
+
+<p>
+
+It is possible to set the language attribute on an entry e.g.
+
+</p>
+<pre class="code">SUMMARY:LANGUAGE=af;New Year&#039;s Day</pre>
+
+<p>
+
+However since only one SUMMARY entry is allowed this does not allow you to specify multiple entries which would allow a single multilingual file.  With that in mind it is not clear why the LANGUAGE attribute is allowed, the examples they give are for LOCATION entries but that is still not clearly useful.
+</p>
+
+</div>
+<!-- SECTION "LANGUAGE: not a multilingual solution" [1292-1748] -->
+<h3><a name="broken_lotus_notes" id="broken_lotus_notes">Broken Lotus Notes</a></h3>
+<div class="level3">
+
+<p>
+
+Lotus notes creates broken iCalendar files.  They include _ (underscore) is some of the property names, [A-Z0-9\-] are the only valid chars.  Therefore, we require vobject &gt;= v0.6.5 (but there is unfortunately no way to check for the version of vobject).  See vobject bug <a href="https://bugzilla.osafoundation.org/show_bug.cgi?id=12008" class="urlextern" title="https://bugzilla.osafoundation.org/show_bug.cgi?id=12008">#12008</a> for further details.
+</p>
+
+</div>
+<!-- SECTION "Broken Lotus Notes" [1749-2140] -->
+<h2><a name="development_notes" id="development_notes">Development Notes</a></h2>
+<div class="level2">
+
+<p>
+
+If we use LANGUAGE at all it will be to ensure that we specify that an entry is in a given language.
+</p>
+
+</div>
+<!-- SECTION "Development Notes" [2141-] --></body>
+</html>

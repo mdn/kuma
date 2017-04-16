@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="podebug" id="podebug">podebug</a></h1>
+<div class="level1">
+
+<p>
+
+Insert <a href="http://en.wikipedia.org/wiki/pseudo-translation" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/pseudo-translation">pseudo-translations</a> (also called <a href="http://en.wikipedia.org/wiki/pseudolocalization" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/pseudolocalization">pseudolocalization</a>) or debug markers into target text in <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, Gettex <acronym title="Gettext Portable Object">PO</acronym> and other localization files.
+</p>
+
+<p>
+The pseudo translation or debug markers make it easy to reference and locate strings when your translated application is running.
+</p>
+
+<p>
+Use it to:
+</p>
+<ul>
+<li class="level1"><div class="li"> Target your translations: see what files are being referenced for string appearing in your programs.</div>
+</li>
+<li class="level1"><div class="li"> Debug translations: if you know in what file the message occurs then you can quickly find it and fix it.</div>
+</li>
+<li class="level1"><div class="li"> Check that everything is translatable: any English only text needs to be analysed so that it can be localised.</div>
+</li>
+<li class="level1"><div class="li"> Check for Unicode compliance: by inserting Unicode text outside of the Latin range it allows you to check that your program can handle non-Latin correctly.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "podebug" [1-833] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">podebug [options] [-f format] &lt;in&gt; &lt;out&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> -f     </td><td class="col1 leftalign"> is an optional format strings  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;in&gt;   </td><td class="col1 leftalign"> is an input directory or localisation file file  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> &lt;out&gt;  </td><td class="col1 leftalign"> is an output directory or localisation file, if missing output will be to standard out.   </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>   </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT    </td><td class="col1 leftalign"> read from INPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -P, --pot            </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -fFORMAT, --format=FORMAT   </td><td class="col1 leftalign"> specify format string   </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> <a href="toolkit-rewrite_style.html" class="wikilink1" title="toolkit-rewrite_style.html">--rewrite=STYLE</a>      </td><td class="col1"> the translation rewrite style: xxx, en, blank, chef  (v1.2), unicode (v1.2) </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> --ignore=APPLICATION  </td><td class="col1 leftalign"> apply tagging ignore rules for the given application: kde, gtk, openoffice, mozilla  </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> --hash=LENGTH        </td><td class="col1"> add an md5 hash to translations (only until version 1.3.0 - see %h below) </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [834-2293] -->
+<h2><a name="formats" id="formats">Formats</a></h2>
+<div class="level2">
+
+<p>
+
+A format string can have these various options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> f </td><td class="col1 leftalign"> full filename including directory   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> F </td><td class="col1 leftalign"> as %f but with .po file extension   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> b </td><td class="col1 leftalign"> base of filename   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> B </td><td class="col1 leftalign"> base of filename with .po file extension   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> d </td><td class="col1 leftalign"> directory name   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> s </td><td class="col1 leftalign"> preset OpenOffice.org modifier   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> c </td><td class="col1 leftalign"> use only consonants   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> h </td><td class="col1 leftalign"> hash value (since version 1.4 - see notes below)   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"> N </td><td class="col1 leftalign"> a set number of characters   </td>
+	</tr>
+</table>
+
+<p>
+
+A format string may look like this:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> ”%cf” - the full filename without vowels</div>
+</li>
+<li class="level1"><div class="li"> ”[%10cb] ” - the first ten character after compressing the base of the filename and place it in square brackets with a space before the real message</div>
+</li>
+<li class="level1"><div class="li"> ”[%5cd - %cB] ” - the first 5 consonants of the directory, followed by a dash then the consonants of the filename with a .po extension.  All surrounded by square brackets with a space before the translations.</div>
+</li>
+<li class="level1"><div class="li"> ”%4h.” - insert a hash value of length 4</div>
+</li>
+</ul>
+
+<p>
+
+Complex format strings may make it too difficult to actually read the translation, so you are probably best served using as short a string as possible.
+</p>
+
+</div>
+<!-- SECTION "Formats" [2294-3375] -->
+<h2><a name="rewriting_style" id="rewriting_style">Rewriting (style)</a></h2>
+<div class="level2">
+
+<p>
+
+The rewriting options are designed to change the target text in various ways (c.f. the various <a href="toolkit-rewrite_style.html" class="wikilink1" title="toolkit-rewrite_style.html">rewriting styles</a> available).  This is mostly valuable for debugging English text.  The &#039;xxx&#039; rewriter is useful in that it allows you to identify text that has not localisable as that text will lack the xxx characters.
+</p>
+
+<p>
+The &#039;en&#039; rewriter can be used to prepare English hashed (see below) files for quickly finding strings that have spelling or other errors.  It can also be used to create a translated English file which can then be used for other purposes such as British English translation.
+</p>
+
+</div>
+<!-- SECTION "Rewriting (style)" [3376-4015] -->
+<h2><a name="ignoring_messages" id="ignoring_messages">Ignoring messages</a></h2>
+<div class="level2">
+
+<p>
+
+In some applications their are translations that should not be translated (usually these are configuration options).  If you do translate them then the application will fail to compile or run.
+</p>
+
+<p>
+The <code>--ignore</code> option allows you to specify the application for which you are producing <acronym title="Gettext Portable Object">PO</acronym> debug files.  In this case it will then not mark certain of the <acronym title="Gettext Portable Object">PO</acronym> entries with debug messages.
+</p>
+
+<p>
+In Mozilla we do not mark lone <code>.accesskey</code>, <code>.width</code>, <code>.height</code>, etc since these can really be thought of as configuration options.
+</p>
+
+</div>
+<!-- SECTION "Ignoring messages" [4016-4570] -->
+<h2><a name="hashing" id="hashing">Hashing</a></h2>
+<div class="level2">
+
+<p>
+
+Sometimes you find an error in a string.  But it is difficult to search for the occurance of the error.  In order to make 
+it easy to find a string in your files we can produce a hash on the strings location and other data.  This produces 
+unique alphanumeric sequences which are prepended to the target text.  Thus now in your application you have your translated
+text and a alphanumeric value.  Its is then easy to search for that value and find your problem string.
+</p>
+
+</div>
+<!-- SECTION "Hashing" [4571-5061] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [5062-] --></body>
+</html>

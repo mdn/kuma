@@ -1,0 +1,35 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.scripts.ipcontroller
+===========================
+
+Module: :mod:`kernel.scripts.ipcontroller`
+------------------------------------------
+.. automodule:: IPython.kernel.scripts.ipcontroller
+
+.. currentmodule:: IPython.kernel.scripts.ipcontroller
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.get_temp_furlfile
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.init_config
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.main
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.make_client_service
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.make_engine_service
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.make_tub
+
+
+.. autofunction:: IPython.kernel.scripts.ipcontroller.start_controller
+

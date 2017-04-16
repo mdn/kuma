@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.decorators
+==================
+
+Module: :mod:`testing.decorators`
+---------------------------------
+.. automodule:: IPython.testing.decorators
+
+.. currentmodule:: IPython.testing.decorators
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.decorators.apply_wrapper
+
+
+.. autofunction:: IPython.testing.decorators.make_label_dec
+
+
+.. autofunction:: IPython.testing.decorators.numpy_not_available
+
+
+.. autofunction:: IPython.testing.decorators.skip
+
+
+.. autofunction:: IPython.testing.decorators.skipif
+

@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>frontend.wx.ipythonx &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="frontend.wx.wx_frontend" href="IPython.frontend.wx.wx_frontend.html" />
+    <link rel="prev" title="frontend.wx.console_widget" href="IPython.frontend.wx.console_widget.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.wx_frontend.html" title="frontend.wx.wx_frontend"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.console_widget.html" title="frontend.wx.console_widget"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frontend-wx-ipythonx">
+<h1>frontend.wx.ipythonx<a class="headerlink" href="#frontend-wx-ipythonx" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.frontend.wx.ipythonx">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">frontend.wx.ipythonx</span></tt><a class="headerlink" href="#module-IPython.frontend.wx.ipythonx" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.frontend.wx.ipythonx</span></tt>:</p>
+<img src="../../_images/inheritancefa2646ae9d.png" usemap="#inheritancefa2646ae9d" class="inheritance"/><map id="inheritancefa2646ae9d" name="inheritancefa2646ae9d">
+<area shape="rect" href="#IPython.frontend.wx.ipythonx.IPythonX" title="wx.ipythonx.IPythonX" alt="" coords="400,19,452,28"/>
+<area shape="rect" href="IPython.frontend.frontendbase.html#IPython.frontend.frontendbase.FrontEndBase" title="frontend.frontendbase.FrontEndBase" alt="" coords="272,2,358,11"/>
+<area shape="rect" href="IPython.frontend.linefrontendbase.html#IPython.frontend.linefrontendbase.LineFrontEndBase" title="frontend.linefrontendbase.LineFrontEndBase" alt="" coords="375,2,477,11"/>
+<area shape="rect" href="IPython.frontend.wx.console_widget.html#IPython.frontend.wx.console_widget.ConsoleWidget" title="wx.console_widget.ConsoleWidget" alt="" coords="503,27,583,36"/>
+<area shape="rect" href="IPython.frontend.wx.wx_frontend.html#IPython.frontend.wx.wx_frontend.WxController" title="wx.wx_frontend.WxController" alt="" coords="609,17,677,26"/>
+<area shape="rect" href="IPython.frontend.prefilterfrontend.html#IPython.frontend.prefilterfrontend.PrefilterFrontEnd" title="frontend.prefilterfrontend.PrefilterFrontEnd" alt="" coords="494,6,592,15"/>
+<area shape="rect" href="#IPython.frontend.wx.ipythonx.IPythonXController" title="wx.ipythonx.IPythonXController" alt="" coords="693,17,766,26"/>
+</map>
+<p>Entry point for a simple application giving a graphical frontend to
+ipython.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ipythonx">
+<h3><a title="IPython.frontend.wx.ipythonx.IPythonX" class="reference internal" href="#IPython.frontend.wx.ipythonx.IPythonX"><tt class="xref docutils literal"><span class="pre">IPythonX</span></tt></a><a class="headerlink" href="#ipythonx" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.frontend.wx.ipythonx.IPythonX">
+<!--[IPython.frontend.wx.ipythonx.IPythonX]-->class <tt class="descclassname">IPython.frontend.wx.ipythonx.</tt><tt class="descname">IPythonX</tt><big>(</big><em>parent</em>, <em>id</em>, <em>title</em>, <em>debug=False</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">wx._windows.Frame</span></tt></p>
+<p>Main frame of the IPythonX app.</p>
+<dl class="method">
+<dt id="IPython.frontend.wx.ipythonx.IPythonX.__init__">
+<!--[IPython.frontend.wx.ipythonx.IPythonX.__init__]--><tt class="descname">__init__</tt><big>(</big><em>parent</em>, <em>id</em>, <em>title</em>, <em>debug=False</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonX.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.ipythonx.IPythonX.on_close">
+<!--[IPython.frontend.wx.ipythonx.IPythonX.on_close]--><tt class="descname">on_close</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonX.on_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on closing the windows.</p>
+<p>Stops the event loop, to close all the child windows.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipythonxcontroller">
+<h3><a title="IPython.frontend.wx.ipythonx.IPythonXController" class="reference internal" href="#IPython.frontend.wx.ipythonx.IPythonXController"><tt class="xref docutils literal"><span class="pre">IPythonXController</span></tt></a><a class="headerlink" href="#ipythonxcontroller" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.frontend.wx.ipythonx.IPythonXController">
+<!--[IPython.frontend.wx.ipythonx.IPythonXController]-->class <tt class="descclassname">IPython.frontend.wx.ipythonx.</tt><tt class="descname">IPythonXController</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonXController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.frontend.wx.wx_frontend.WxController" class="reference external" href="IPython.frontend.wx.wx_frontend.html#IPython.frontend.wx.wx_frontend.WxController"><tt class="xref docutils literal"><span class="pre">IPython.frontend.wx.wx_frontend.WxController</span></tt></a></p>
+<p>Sub class of WxController that adds some application-specific
+bindings.</p>
+<dl class="method">
+<dt id="IPython.frontend.wx.ipythonx.IPythonXController.__init__">
+<!--[IPython.frontend.wx.ipythonx.IPythonXController.__init__]--><tt class="descname">__init__</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonXController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.ipythonx.IPythonXController.ask_exit">
+<!--[IPython.frontend.wx.ipythonx.IPythonXController.ask_exit]--><tt class="descname">ask_exit</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonXController.ask_exit" title="Permalink to this definition">¶</a></dt>
+<dd>Ask the user whether to exit.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.ipythonx.IPythonXController.do_exit">
+<!--[IPython.frontend.wx.ipythonx.IPythonXController.do_exit]--><tt class="descname">do_exit</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.IPythonXController.do_exit" title="Permalink to this definition">¶</a></dt>
+<dd>Exits the interpreter, kills the windows.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.frontend.wx.ipythonx.main">
+<!--[IPython.frontend.wx.ipythonx.main]--><tt class="descclassname">IPython.frontend.wx.ipythonx.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.ipythonx.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">frontend.wx.ipythonx</a><ul>
+<li><a class="reference external" href="#module-IPython.frontend.wx.ipythonx">Module: <tt class="docutils literal"><span class="pre">frontend.wx.ipythonx</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#ipythonx"><tt class="docutils literal"><span class="pre">IPythonX</span></tt></a></li>
+<li><a class="reference external" href="#ipythonxcontroller"><tt class="docutils literal"><span class="pre">IPythonXController</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.frontend.wx.console_widget.html" title="previous chapter">frontend.wx.console_widget</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.frontend.wx.wx_frontend.html" title="next chapter">frontend.wx.wx_frontend</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.frontend.wx.ipythonx.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.wx_frontend.html" title="frontend.wx.wx_frontend"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.console_widget.html" title="frontend.wx.console_widget"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.message_cache
+=========================
+
+Module: :mod:`kernel.core.message_cache`
+----------------------------------------
+Inheritance diagram for ``IPython.kernel.core.message_cache``:
+
+.. inheritance-diagram:: IPython.kernel.core.message_cache 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.message_cache
+
+.. currentmodule:: IPython.kernel.core.message_cache
+
+Classes
+-------
+
+:class:`IMessageCache`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMessageCache
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SimpleMessageCache`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SimpleMessageCache
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

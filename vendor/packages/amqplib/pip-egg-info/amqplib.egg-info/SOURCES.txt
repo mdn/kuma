@@ -1,0 +1,15 @@
+README
+amqplib/__init__.py
+amqplib/client_0_8/__init__.py
+amqplib/client_0_8/abstract_channel.py
+amqplib/client_0_8/basic_message.py
+amqplib/client_0_8/channel.py
+amqplib/client_0_8/connection.py
+amqplib/client_0_8/exceptions.py
+amqplib/client_0_8/method_framing.py
+amqplib/client_0_8/serialization.py
+amqplib/client_0_8/transport.py
+pip-egg-info/amqplib.egg-info/PKG-INFO
+pip-egg-info/amqplib.egg-info/SOURCES.txt
+pip-egg-info/amqplib.egg-info/dependency_links.txt
+pip-egg-info/amqplib.egg-info/top_level.txt

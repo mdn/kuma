@@ -1,0 +1,45 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+wildcard
+========
+
+Module: :mod:`wildcard`
+-----------------------
+Inheritance diagram for ``IPython.wildcard``:
+
+.. inheritance-diagram:: IPython.wildcard 
+   :parts: 3
+
+.. automodule:: IPython.wildcard
+
+.. currentmodule:: IPython.wildcard
+
+Class
+-----
+
+:class:`NameSpace`
+------------------
+
+
+.. autoclass:: NameSpace
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.wildcard.create_typestr2type_dicts
+
+
+.. autofunction:: IPython.wildcard.is_type
+
+
+.. autofunction:: IPython.wildcard.list_namespace
+
+
+.. autofunction:: IPython.wildcard.show_hidden
+

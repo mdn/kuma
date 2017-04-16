@@ -1,0 +1,73 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+DPyGetOpt
+=========
+
+Module: :mod:`DPyGetOpt`
+------------------------
+Inheritance diagram for ``IPython.DPyGetOpt``:
+
+.. inheritance-diagram:: IPython.DPyGetOpt 
+   :parts: 3
+
+.. automodule:: IPython.DPyGetOpt
+
+.. currentmodule:: IPython.DPyGetOpt
+
+Classes
+-------
+
+:class:`ArgumentError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ArgumentError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`DPyGetOpt`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: DPyGetOpt
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Error`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Error
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SpecificationError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SpecificationError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TerminationError`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TerminationError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

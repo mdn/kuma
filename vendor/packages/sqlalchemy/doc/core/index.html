@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    SQLAlchemy Core
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="next" title="SQL Expression Language Tutorial" href="tutorial.html" />
+        <link rel="prev" title="Examples" href="../orm/examples.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/core/index.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                » 
+    SQLAlchemy Core
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="../orm/examples.html" title="previous chapter">Examples</a>
+        Next:
+        <a href="tutorial.html" title="next chapter">SQL Expression Language Tutorial</a>
+</div>
+
+                <h2>
+                    
+    SQLAlchemy Core
+ 
+                </h2>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="sqlalchemy-core">
+<span id="core-toplevel"></span><h1>SQLAlchemy Core<a class="headerlink" href="#sqlalchemy-core" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">SQL Expression Language Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#version-check">Version Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#connecting">Connecting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#define-and-create-tables">Define and Create Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#insert-expressions">Insert Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#executing">Executing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#executing-multiple-statements">Executing Multiple Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#connectionless-implicit-execution">Connectionless / Implicit Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#selecting">Selecting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#operators">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#conjunctions">Conjunctions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#using-text">Using Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#using-aliases">Using Aliases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#using-joins">Using Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#intro-to-generative-selects-and-transformations">Intro to Generative Selects and Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#everything-else">Everything Else</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#inserts-and-updates">Inserts and Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#deletes">Deletes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#further-reference">Further Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expression_api.html">SQL Statements and Expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="expression_api.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expression_api.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expression_api.html#generic-functions">Generic Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="engines.html">Engine Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#supported-databases">Supported Databases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#database-engine-options">Database Engine Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#database-urls">Database Urls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#custom-dbapi-connect-arguments">Custom DBAPI connect() arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#configuring-logging">Configuring Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="connections.html">Working with Engines and Connections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#using-transactions">Using Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#understanding-autocommit">Understanding Autocommit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#connectionless-execution-implicit-execution">Connectionless Execution, Implicit Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#using-the-threadlocal-execution-strategy">Using the Threadlocal Execution Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">Connection Pooling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#connection-pool-configuration">Connection Pool Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#switching-pool-implementations">Switching Pool Implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#using-a-custom-connection-function">Using a Custom Connection Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#constructing-a-pool">Constructing a Pool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-event-listeners">Pool Event Listeners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#builtin-pool-implementations">Builtin Pool Implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pooling-plain-db-api-connections">Pooling Plain DB-API Connections</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema.html">Schema Definition Language</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema.html#describing-databases-with-metadata">Describing Databases with MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema.html#reflecting-database-objects">Reflecting Database Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema.html#column-insert-update-defaults">Column Insert/Update Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema.html#defining-constraints-and-indexes">Defining Constraints and Indexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema.html#customizing-ddl">Customizing DDL</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Column and Data Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="types.html#generic-types">Generic Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#sql-standard-types">SQL Standard Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#vendor-specific-types">Vendor-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#custom-types">Custom Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#base-type-api">Base Type API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Core Event Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interfaces.html#execution-connection-and-cursor-events">Execution, Connection and Cursor Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces.html#connection-pool-events">Connection Pool Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="compiler.html">Custom SQL Constructs and Compilation Extension</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html#dialect-specific-compilation-rules">Dialect-specific compilation rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html#compiling-sub-elements-of-a-custom-expression-construct">Compiling sub-elements of a custom expression construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html#changing-the-default-compilation-of-existing-constructs">Changing the default compilation of existing constructs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html#changing-compilation-of-types">Changing Compilation of Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html#subclassing-guidelines">Subclassing Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="serializer.html">Expression Serializer Extension</a></li>
+</ul>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="../orm/examples.html" title="previous chapter">Examples</a>
+        Next:
+        <a href="tutorial.html" title="next chapter">SQL Expression Language Tutorial</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

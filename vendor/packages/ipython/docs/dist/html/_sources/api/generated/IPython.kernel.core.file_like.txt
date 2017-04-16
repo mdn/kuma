@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.file_like
+=====================
+
+Module: :mod:`kernel.core.file_like`
+------------------------------------
+Inheritance diagram for ``IPython.kernel.core.file_like``:
+
+.. inheritance-diagram:: IPython.kernel.core.file_like 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.file_like
+
+.. currentmodule:: IPython.kernel.core.file_like
+
+:class:`FileLike`
+-----------------
+
+
+.. autoclass:: FileLike
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

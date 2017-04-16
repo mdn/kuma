@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython as a system shell &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for interactive work" href="index.html" />
+    <link rel="next" title="IPython extension API" href="extension_api.html" />
+    <link rel="prev" title="IPython reference" href="reference.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="extension_api.html" title="IPython extension API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="IPython reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for interactive work</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-as-a-system-shell">
+<span id="ipython-as-shell"></span><h1>IPython as a system shell<a class="headerlink" href="#ipython-as-a-system-shell" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The &#8216;sh&#8217; profile optimizes IPython for system shell usage. Apart from
+certain job control functionality that is present in unix (ctrl+z does
+&#8220;suspend&#8221;), the sh profile should provide you with most of the
+functionality you use daily in system shell, and more. Invoke IPython
+in &#8216;sh&#8217; profile by doing &#8216;ipython -p sh&#8217;, or (in win32) by launching
+the &#8220;pysh&#8221; shortcut in start menu.</p>
+<p>If you want to use the features of sh profile as your defaults (which
+might be a good idea if you use other profiles a lot of the time but
+still want the convenience of sh profile), add <tt class="docutils literal"><span class="pre">import</span> <span class="pre">ipy_profile_sh</span></tt>
+to your ~/.ipython/ipy_user_conf.py.</p>
+<p>The &#8216;sh&#8217; profile is different from the default profile in that:</p>
+<blockquote>
+<ul class="simple">
+<li>Prompt shows the current directory</li>
+<li>Spacing between prompts and input is more compact (no padding with
+empty lines). The startup banner is more compact as well.</li>
+<li>System commands are directly available (in alias table) without
+requesting %rehashx - however, if you install new programs along
+your PATH, you might want to run %rehashx to update the persistent
+alias table</li>
+<li>Macros are stored in raw format by default. That is, instead of
+&#8216;_ip.system(&#8220;cat foo&#8221;), the macro will contain text &#8216;cat foo&#8217;)</li>
+<li>Autocall is in full mode</li>
+<li>Calling &#8220;up&#8221; does &#8220;cd ..&#8221;</li>
+</ul>
+</blockquote>
+<p>The &#8216;sh&#8217; profile is different from the now-obsolete (and unavailable)
+&#8216;pysh&#8217; profile in that:</p>
+<blockquote>
+<ul class="simple">
+<li>&#8216;$$var = command&#8217; and &#8216;$var = command&#8217; syntax is not supported</li>
+<li>anymore. Use &#8216;var = !command&#8217; instead (incidentally, this is</li>
+<li>available in all IPython profiles). Note that !!command <em>will</em></li>
+<li>work.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="aliases">
+<h2>Aliases<a class="headerlink" href="#aliases" title="Permalink to this headline">¶</a></h2>
+<p>All of your $PATH has been loaded as IPython aliases, so you should be
+able to type any normal system command and have it executed. See
+%alias?  and %unalias? for details on the alias facilities. See also
+%rehashx? for details on the mechanism used to load $PATH.</p>
+</div>
+<div class="section" id="directory-management">
+<h2>Directory management<a class="headerlink" href="#directory-management" title="Permalink to this headline">¶</a></h2>
+<p>Since each command passed by ipython to the underlying system is executed
+in a subshell which exits immediately, you can NOT use !cd to navigate
+the filesystem.</p>
+<p>IPython provides its own builtin &#8216;%cd&#8217; magic command to move in the
+filesystem (the % is not required with automagic on). It also maintains
+a list of visited directories (use %dhist to see it) and allows direct
+switching to any of them. Type &#8216;cd?&#8217; for more details.</p>
+<p>%pushd, %popd and %dirs are provided for directory stack handling.</p>
+</div>
+<div class="section" id="enabled-extensions">
+<h2>Enabled extensions<a class="headerlink" href="#enabled-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Some extensions, listed below, are enabled as default in this profile.</p>
+<div class="section" id="envpersist">
+<h3>envpersist<a class="headerlink" href="#envpersist" title="Permalink to this headline">¶</a></h3>
+<p>%env can be used to &#8220;remember&#8221; environment variable manipulations. Examples:</p>
+<div class="highlight-python"><pre>%env - Show all environment variables
+%env VISUAL=jed  - set VISUAL to jed
+%env PATH+=;/foo - append ;foo to PATH
+%env PATH+=;/bar - also append ;bar to PATH
+%env PATH-=/wbin; - prepend /wbin; to PATH
+%env -d VISUAL   - forget VISUAL persistent val
+%env -p          - print all persistent env modifications</pre>
+</div>
+</div>
+<div class="section" id="ipy-which">
+<h3>ipy_which<a class="headerlink" href="#ipy-which" title="Permalink to this headline">¶</a></h3>
+<p>%which magic command. Like &#8216;which&#8217; in unix, but knows about ipython aliases.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>[C:/ipython]|14&gt; %which st
+st -&gt; start .
+[C:/ipython]|15&gt; %which d
+d -&gt; dir /w /og /on
+[C:/ipython]|16&gt; %which cp
+cp -&gt; cp
+  == c:\bin\cp.exe
+c:\bin\cp.exe</pre>
+</div>
+</div>
+<div class="section" id="ipy-app-completers">
+<h3>ipy_app_completers<a class="headerlink" href="#ipy-app-completers" title="Permalink to this headline">¶</a></h3>
+<p>Custom tab completers for some apps like svn, hg, bzr, apt-get. Try &#8216;apt-get install &lt;TAB&gt;&#8217; in debian/ubuntu.</p>
+</div>
+<div class="section" id="ipy-rehashdir">
+<h3>ipy_rehashdir<a class="headerlink" href="#ipy-rehashdir" title="Permalink to this headline">¶</a></h3>
+<p>Allows you to add system command aliases for commands that are not along your path. Let&#8217;s say that you just installed Putty and want to be able to invoke it without adding it to path, you can create the alias for it with rehashdir:</p>
+<div class="highlight-python"><pre>[~]|22&gt; cd c:/opt/PuTTY/
+[c:opt/PuTTY]|23&gt; rehashdir .
+             &lt;23&gt; ['pageant', 'plink', 'pscp', 'psftp', 'putty', 'puttygen', 'unins000']</pre>
+</div>
+<p>Now, you can execute any of those commams directly:</p>
+<div class="highlight-python"><pre>[c:opt/PuTTY]|24&gt; cd
+[~]|25&gt; putty</pre>
+</div>
+<p>(the putty window opens).</p>
+<p>If you want to store the alias so that it will always be available, do &#8216;%store putty&#8217;. If you want to %store all these aliases persistently, just do it in a for loop:</p>
+<div class="highlight-python"><pre>[~]|27&gt; for a in _23:
+   |..&gt;     %store $a
+   |..&gt;
+   |..&gt;
+Alias stored: pageant (0, 'c:\\opt\\PuTTY\\pageant.exe')
+Alias stored: plink (0, 'c:\\opt\\PuTTY\\plink.exe')
+Alias stored: pscp (0, 'c:\\opt\\PuTTY\\pscp.exe')
+Alias stored: psftp (0, 'c:\\opt\\PuTTY\\psftp.exe')
+...</pre>
+</div>
+</div>
+<div class="section" id="mglob">
+<h3>mglob<a class="headerlink" href="#mglob" title="Permalink to this headline">¶</a></h3>
+<p>Provide the magic function %mglob, which makes it easier (than the &#8216;find&#8217; command) to collect (possibly recursive) file lists. Examples:</p>
+<div class="highlight-python"><pre>[c:/ipython]|9&gt; mglob *.py
+[c:/ipython]|10&gt; mglob *.py rec:*.txt
+[c:/ipython]|19&gt; workfiles = %mglob !.svn/ !.hg/ !*_Data/ !*.bak rec:.</pre>
+</div>
+<p>Note that the first 2 calls will put the file list in result history (_, _9, _10), and the last one will assign it to &#8216;workfiles&#8217;.</p>
+</div>
+</div>
+<div class="section" id="prompt-customization">
+<h2>Prompt customization<a class="headerlink" href="#prompt-customization" title="Permalink to this headline">¶</a></h2>
+<p>The sh profile uses the following prompt configurations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">o</span><span class="o">.</span><span class="n">prompt_in1</span><span class="o">=</span> <span class="s">r&#39;\C_LightBlue[\C_LightCyan\Y2\C_LightBlue]\C_Green|\#&gt;&#39;</span>
+<span class="n">o</span><span class="o">.</span><span class="n">prompt_in2</span><span class="o">=</span> <span class="s">r&#39;\C_Green|\C_LightGreen\D\C_Green&gt;&#39;</span>
+</pre></div>
+</div>
+<p>You can change the prompt configuration to your liking by editing
+ipy_user_conf.py.</p>
+</div>
+<div class="section" id="string-lists">
+<h2>String lists<a class="headerlink" href="#string-lists" title="Permalink to this headline">¶</a></h2>
+<p>String lists (IPython.genutils.SList) are handy way to process output
+from system commands. They are produced by <tt class="docutils literal"><span class="pre">var</span> <span class="pre">=</span> <span class="pre">!cmd</span></tt> syntax.</p>
+<p>First, we acquire the output of &#8216;ls -l&#8217;:</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|2&gt; lines = !ls -l
+ ==
+['total 23',
+ '-rw-rw-rw- 1 ville None 1163 Sep 30  2006 example-demo.py',
+ '-rw-rw-rw- 1 ville None 1927 Sep 30  2006 example-embed-short.py',
+ '-rwxrwxrwx 1 ville None 4606 Sep  1 17:15 example-embed.py',
+ '-rwxrwxrwx 1 ville None 1017 Sep 30  2006 example-gnuplot.py',
+ '-rwxrwxrwx 1 ville None  339 Jun 11 18:01 extension.py',
+ '-rwxrwxrwx 1 ville None  113 Dec 20  2006 seteditor.py',
+ '-rwxrwxrwx 1 ville None  245 Dec 12  2006 seteditor.pyc']</pre>
+</div>
+<p>Now, let&#8217;s take a look at the contents of &#8216;lines&#8217; (the first number is
+the list element number):</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|3&gt; lines
+                &lt;3&gt; SList (.p, .n, .l, .s, .grep(), .fields() available). Value:
+
+0: total 23
+1: -rw-rw-rw- 1 ville None 1163 Sep 30  2006 example-demo.py
+2: -rw-rw-rw- 1 ville None 1927 Sep 30  2006 example-embed-short.py
+3: -rwxrwxrwx 1 ville None 4606 Sep  1 17:15 example-embed.py
+4: -rwxrwxrwx 1 ville None 1017 Sep 30  2006 example-gnuplot.py
+5: -rwxrwxrwx 1 ville None  339 Jun 11 18:01 extension.py
+6: -rwxrwxrwx 1 ville None  113 Dec 20  2006 seteditor.py
+7: -rwxrwxrwx 1 ville None  245 Dec 12  2006 seteditor.pyc</pre>
+</div>
+<p>Now, let&#8217;s filter out the &#8216;embed&#8217; lines:</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|4&gt; l2 = lines.grep('embed',prune=1)
+[Q:doc/examples]|5&gt; l2
+                &lt;5&gt; SList (.p, .n, .l, .s, .grep(), .fields() available). Value:
+
+0: total 23
+1: -rw-rw-rw- 1 ville None 1163 Sep 30  2006 example-demo.py
+2: -rwxrwxrwx 1 ville None 1017 Sep 30  2006 example-gnuplot.py
+3: -rwxrwxrwx 1 ville None  339 Jun 11 18:01 extension.py
+4: -rwxrwxrwx 1 ville None  113 Dec 20  2006 seteditor.py
+5: -rwxrwxrwx 1 ville None  245 Dec 12  2006 seteditor.pyc</pre>
+</div>
+<p>Now, we want strings having just file names and permissions:</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|6&gt; l2.fields(8,0)
+                &lt;6&gt; SList (.p, .n, .l, .s, .grep(), .fields() available). Value:
+
+0: total
+1: example-demo.py -rw-rw-rw-
+2: example-gnuplot.py -rwxrwxrwx
+3: extension.py -rwxrwxrwx
+4: seteditor.py -rwxrwxrwx
+5: seteditor.pyc -rwxrwxrwx</pre>
+</div>
+<p>Note how the line with &#8216;total&#8217; does not raise IndexError.</p>
+<p>If you want to split these (yielding lists), call fields() without
+arguments:</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|7&gt; _.fields()
+                &lt;7&gt;
+[['total'],
+ ['example-demo.py', '-rw-rw-rw-'],
+ ['example-gnuplot.py', '-rwxrwxrwx'],
+ ['extension.py', '-rwxrwxrwx'],
+ ['seteditor.py', '-rwxrwxrwx'],
+ ['seteditor.pyc', '-rwxrwxrwx']]</pre>
+</div>
+<p>If you want to pass these separated with spaces to a command (typical
+for lists if files), use the .s property:</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|13&gt; files = l2.fields(8).s
+[Q:doc/examples]|14&gt; files
+                &lt;14&gt; 'example-demo.py example-gnuplot.py extension.py seteditor.py seteditor.pyc'
+[Q:doc/examples]|15&gt; ls $files
+example-demo.py  example-gnuplot.py  extension.py  seteditor.py  seteditor.pyc</pre>
+</div>
+<p>SLists are inherited from normal python lists, so every list method is
+available:</p>
+<div class="highlight-python"><pre>[Q:doc/examples]|21&gt; lines.append('hey')</pre>
+</div>
+</div>
+<div class="section" id="real-world-example-remove-all-files-outside-version-control">
+<h2>Real world example: remove all files outside version control<a class="headerlink" href="#real-world-example-remove-all-files-outside-version-control" title="Permalink to this headline">¶</a></h2>
+<p>First, capture output of &#8220;hg status&#8221;:</p>
+<div class="highlight-python"><pre>[Q:/ipython]|28&gt; out = !hg status
+ ==
+['M IPython\\Extensions\\ipy_kitcfg.py',
+ 'M IPython\\Extensions\\ipy_rehashdir.py',
+...
+ '? build\\lib\\IPython\\Debugger.py',
+ '? build\\lib\\IPython\\Extensions\\InterpreterExec.py',
+ '? build\\lib\\IPython\\Extensions\\InterpreterPasteInput.py',
+...</pre>
+</div>
+<p>(lines starting with ? are not under version control).</p>
+<div class="highlight-python"><pre>[Q:/ipython]|35&gt; junk = out.grep(r'^\?').fields(1)
+[Q:/ipython]|36&gt; junk
+            &lt;36&gt; SList (.p, .n, .l, .s, .grep(), .fields() availab
+...
+10: build\bdist.win32\winexe\temp\_ctypes.py
+11: build\bdist.win32\winexe\temp\_hashlib.py
+12: build\bdist.win32\winexe\temp\_socket.py</pre>
+</div>
+<p>Now we can just remove these files by doing &#8216;rm $junk.s&#8217;.</p>
+</div>
+<div class="section" id="the-s-n-p-properties">
+<h2>The .s, .n, .p properties<a class="headerlink" href="#the-s-n-p-properties" title="Permalink to this headline">¶</a></h2>
+<p>The &#8216;.s&#8217; property returns one string where lines are separated by
+single space (for convenient passing to system commands). The &#8216;.n&#8217;
+property return one string where the lines are separated by &#8216;n&#8217;
+(i.e. the original output of the function). If the items in string
+list are file names, &#8216;.p&#8217; can be used to get a list of &#8220;path&#8221; objects
+for convenient file manipulation.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">IPython as a system shell</a><ul>
+<li><a class="reference external" href="#overview">Overview</a></li>
+<li><a class="reference external" href="#aliases">Aliases</a></li>
+<li><a class="reference external" href="#directory-management">Directory management</a></li>
+<li><a class="reference external" href="#enabled-extensions">Enabled extensions</a><ul>
+<li><a class="reference external" href="#envpersist">envpersist</a></li>
+<li><a class="reference external" href="#ipy-which">ipy_which</a></li>
+<li><a class="reference external" href="#ipy-app-completers">ipy_app_completers</a></li>
+<li><a class="reference external" href="#ipy-rehashdir">ipy_rehashdir</a></li>
+<li><a class="reference external" href="#mglob">mglob</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#prompt-customization">Prompt customization</a></li>
+<li><a class="reference external" href="#string-lists">String lists</a></li>
+<li><a class="reference external" href="#real-world-example-remove-all-files-outside-version-control">Real world example: remove all files outside version control</a></li>
+<li><a class="reference external" href="#the-s-n-p-properties">The .s, .n, .p properties</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="reference.html" title="previous chapter">IPython reference</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="extension_api.html" title="next chapter">IPython extension API</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/interactive/shell.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="extension_api.html" title="IPython extension API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="IPython reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for interactive work</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

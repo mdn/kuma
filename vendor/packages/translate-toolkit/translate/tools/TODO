@@ -1,0 +1,32 @@
+pomerge
+	* allow status of input PO to override destination ie if input is not fuzzy
+    and destination is fuzzy that is you corrected it then make merged message
+    not fuzzy
+    - A header is currently skipped.  When we can handle header merging
+      a header should be merged to indicates last translators info, etc but merging 
+      should be optional with ignoring being the default.
+    - msgblock headers ie #: should remain unchanged.  There seems to be a bug
+      that adds entries on one line when the output templates have them on
+	  separate lines.
+    - Allow merge without a template and thus us the output as a template.  Or
+      at least don't complain when you don't find the templates.
+
+New tools
+	Some ideas for tools that would be helpful
+	podiff - normal diff show too much spurious data.  We need something that
+		can ignore the location and just shaw the changes in text.  So you
+		could receive an updated PO file but the diff would not show spurious
+		changes in the header and could match strings in different location.
+		The output could then be something like diff -u
+	glossary_creator - take input text or PO file and extract a) the most
+		frequent words and b) the most frequent word pairs.  So things like
+		"Proxy Server" are extracted. The idea being that you can create a
+		glossary for a single PO file or for the whole project like KDE.
+		Translators get to define important words before beginning to translate
+	pomigrate - need a python based tool that takes an input file the new
+		template and outputs the new migrated PO files. Initialising as needed
+		and merging if possible.
+
+pocount
+	- Fix po class so that it handles KDE style plurals there not in pocount
+    - Count word\nword and word<tag>word as 2 words

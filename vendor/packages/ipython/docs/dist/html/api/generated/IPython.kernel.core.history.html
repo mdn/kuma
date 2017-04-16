@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.history &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.interpreter" href="IPython.kernel.core.interpreter.html" />
+    <link rel="prev" title="kernel.core.file_like" href="IPython.kernel.core.file_like.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.interpreter.html" title="kernel.core.interpreter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.file_like.html" title="kernel.core.file_like"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-history">
+<h1>kernel.core.history<a class="headerlink" href="#kernel-core-history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.history">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.history</span></tt><a class="headerlink" href="#module-IPython.kernel.core.history" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.history</span></tt>:</p>
+<img src="../../_images/inheritancefd8c8829bf.png" usemap="#inheritancefd8c8829bf" class="inheritance"/><map id="inheritancefd8c8829bf" name="inheritancefd8c8829bf">
+<area shape="rect" href="#IPython.kernel.core.history.History" title="core.history.History" alt="" coords="5,31,149,57"/>
+<area shape="rect" href="#IPython.kernel.core.history.InterpreterHistory" title="core.history.InterpreterHistory" alt="" coords="199,5,409,32"/>
+<area shape="rect" href="#IPython.kernel.core.history.FrontEndHistory" title="core.history.FrontEndHistory" alt="" coords="204,56,404,83"/>
+</map>
+<p>Manage the input and output history of the interpreter and the
+frontend.</p>
+<p>There are 2 different history objects, one that lives in the interpreter,
+and one that lives in the frontend. They are synced with a diff at each
+execution of a command, as the interpreter history is a real stack, its
+existing entries are not mutable.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="frontendhistory">
+<h3><a title="IPython.kernel.core.history.FrontEndHistory" class="reference internal" href="#IPython.kernel.core.history.FrontEndHistory"><tt class="xref docutils literal"><span class="pre">FrontEndHistory</span></tt></a><a class="headerlink" href="#frontendhistory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.history.FrontEndHistory">
+<!--[IPython.kernel.core.history.FrontEndHistory]-->class <tt class="descclassname">IPython.kernel.core.history.</tt><tt class="descname">FrontEndHistory</tt><big>(</big><em>input_cache=None</em>, <em>output_cache=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.FrontEndHistory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.history.History" class="reference internal" href="#IPython.kernel.core.history.History"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.history.History</span></tt></a></p>
+<p>An object managing the input and output history at the frontend.
+It is used as a local cache to reduce network latency problems
+and multiple users editing the same thing.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.history.FrontEndHistory.__init__">
+<!--[IPython.kernel.core.history.FrontEndHistory.__init__]--><tt class="descname">__init__</tt><big>(</big><em>input_cache=None</em>, <em>output_cache=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.FrontEndHistory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.FrontEndHistory.add_items">
+<!--[IPython.kernel.core.history.FrontEndHistory.add_items]--><tt class="descname">add_items</tt><big>(</big><em>item_list</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.FrontEndHistory.add_items" title="Permalink to this definition">¶</a></dt>
+<dd>Adds the given command list to the stack of executed
+commands.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="history">
+<h3><a title="IPython.kernel.core.history.History" class="reference internal" href="#IPython.kernel.core.history.History"><tt class="xref docutils literal"><span class="pre">History</span></tt></a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.history.History">
+<!--[IPython.kernel.core.history.History]-->class <tt class="descclassname">IPython.kernel.core.history.</tt><tt class="descname">History</tt><big>(</big><em>input_cache=None</em>, <em>output_cache=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.History" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>An object managing the input and output history.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.history.History.__init__">
+<!--[IPython.kernel.core.history.History.__init__]--><tt class="descname">__init__</tt><big>(</big><em>input_cache=None</em>, <em>output_cache=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.History.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.History.get_history_item">
+<!--[IPython.kernel.core.history.History.get_history_item]--><tt class="descname">get_history_item</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.History.get_history_item" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the history string at index, where index is the
+distance from the end (positive).</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interpreterhistory">
+<h3><a title="IPython.kernel.core.history.InterpreterHistory" class="reference internal" href="#IPython.kernel.core.history.InterpreterHistory"><tt class="xref docutils literal"><span class="pre">InterpreterHistory</span></tt></a><a class="headerlink" href="#interpreterhistory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.history.InterpreterHistory">
+<!--[IPython.kernel.core.history.InterpreterHistory]-->class <tt class="descclassname">IPython.kernel.core.history.</tt><tt class="descname">InterpreterHistory</tt><big>(</big><em>input_cache=None</em>, <em>output_cache=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.history.History" class="reference internal" href="#IPython.kernel.core.history.History"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.history.History</span></tt></a></p>
+<p>An object managing the input and output history at the interpreter
+level.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.history.InterpreterHistory.__init__">
+<!--[IPython.kernel.core.history.InterpreterHistory.__init__]--><tt class="descname">__init__</tt><big>(</big><em>input_cache=None</em>, <em>output_cache=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.InterpreterHistory.get_history_item">
+<!--[IPython.kernel.core.history.InterpreterHistory.get_history_item]--><tt class="descname">get_history_item</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory.get_history_item" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the history string at index, where index is the
+distance from the end (positive).</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.InterpreterHistory.get_input_after">
+<!--[IPython.kernel.core.history.InterpreterHistory.get_input_after]--><tt class="descname">get_input_after</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory.get_input_after" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the list of the commands entered after index.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.InterpreterHistory.get_input_cache">
+<!--[IPython.kernel.core.history.InterpreterHistory.get_input_cache]--><tt class="descname">get_input_cache</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory.get_input_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.InterpreterHistory.setup_namespace">
+<!--[IPython.kernel.core.history.InterpreterHistory.setup_namespace]--><tt class="descname">setup_namespace</tt><big>(</big><em>namespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory.setup_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the input and output caches into the interpreter&#8217;s namespace
+with IPython-conventional names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>namespace</strong> : dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.history.InterpreterHistory.update_history">
+<!--[IPython.kernel.core.history.InterpreterHistory.update_history]--><tt class="descname">update_history</tt><big>(</big><em>interpreter</em>, <em>python</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.history.InterpreterHistory.update_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the history objects that this object maintains and the
+interpreter&#8217;s namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>interpreter</strong> : Interpreter</p>
+<p><strong>python</strong> : str</p>
+<blockquote class="last">
+<p>The real Python code that was translated and actually executed.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.history</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.history">Module: <tt class="docutils literal"><span class="pre">kernel.core.history</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#frontendhistory"><tt class="docutils literal"><span class="pre">FrontEndHistory</span></tt></a></li>
+<li><a class="reference external" href="#history"><tt class="docutils literal"><span class="pre">History</span></tt></a></li>
+<li><a class="reference external" href="#interpreterhistory"><tt class="docutils literal"><span class="pre">InterpreterHistory</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.file_like.html" title="previous chapter">kernel.core.file_like</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.interpreter.html" title="next chapter">kernel.core.interpreter</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.history.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.interpreter.html" title="kernel.core.interpreter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.file_like.html" title="kernel.core.file_like"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

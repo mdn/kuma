@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ipstruct &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="irunner" href="IPython.irunner.html" />
+    <link rel="prev" title="ipmaker" href="IPython.ipmaker.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.irunner.html" title="irunner"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipmaker.html" title="ipmaker"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipstruct">
+<h1>ipstruct<a class="headerlink" href="#ipstruct" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.ipstruct">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">ipstruct</span></tt><a class="headerlink" href="#module-IPython.ipstruct" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.ipstruct</span></tt>:</p>
+<img src="../../_images/inheritance476209c6f2.png" usemap="#inheritance476209c6f2" class="inheritance"/><map id="inheritance476209c6f2" name="inheritance476209c6f2">
+<area shape="rect" href="#IPython.ipstruct.Struct" title="IPython.ipstruct.Struct" alt="" coords="7,5,169,32"/>
+</map>
+<p>Mimic C structs with lots of extra functionality.</p>
+</div>
+<div class="section" id="struct">
+<h2><a title="IPython.ipstruct.Struct" class="reference internal" href="#IPython.ipstruct.Struct"><tt class="xref docutils literal"><span class="pre">Struct</span></tt></a><a class="headerlink" href="#struct" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.ipstruct.Struct">
+<!--[IPython.ipstruct.Struct]-->class <tt class="descclassname">IPython.ipstruct.</tt><tt class="descname">Struct</tt><big>(</big><em>dict=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to mimic C structs but also provide convenient dictionary-like
+functionality.</p>
+<p>Instances can be initialized with a dictionary, a list of key=value pairs
+or both. If both are present, the dictionary must come first.</p>
+<p>Because Python classes provide direct assignment to their members, it&#8217;s
+easy to overwrite normal methods (S.copy = 1 would destroy access to
+S.copy()). For this reason, all builtin method names are protected and
+can&#8217;t be assigned to. An attempt to do s.copy=1 or s[&#8216;copy&#8217;]=1 will raise
+a KeyError exception. If you really want to, you can bypass this
+protection by directly assigning to __dict__: s.__dict__[&#8216;copy&#8217;]=1 will
+still work. Doing this will break functionality, though. As in most of
+Python, namespace protection is weakly enforced, so feel free to shoot
+yourself if you really want to.</p>
+<p>Note that this class uses more memory and is <em>much</em> slower than a regular
+dictionary, so be careful in situations where memory or performance are
+critical. But for day to day use it should behave fine. It is particularly
+convenient for storing configuration data in programs.</p>
+<p>+,+=,- and -= are implemented. +/+= do merges (non-destructive updates),
+-/-= remove keys from the original. See the method descripitions.</p>
+<p>This class allows a quick access syntax: both s.key and s[&#8216;key&#8217;] are
+valid.  This syntax has a limitation: each &#8216;key&#8217; has to be explicitly
+accessed by its original name. The normal s.key syntax doesn&#8217;t provide
+access to the keys via variables whose values evaluate to the desired
+keys. An example should clarify this:</p>
+<p>Define a dictionary and initialize both with dict and k=v pairs:
+&gt;&gt;&gt; d={&#8216;a&#8217;:1,&#8217;b&#8217;:2}
+&gt;&gt;&gt; s=Struct(d,hi=10,ho=20)</p>
+<p>The return of __repr__ can be used to create a new instance:
+&gt;&gt;&gt; s
+Struct({&#8216;__allownew&#8217;: True, &#8216;a&#8217;: 1, &#8216;b&#8217;: 2, &#8216;hi&#8217;: 10, &#8216;ho&#8217;: 20})</p>
+<p>Note: the special &#8216;__allownew&#8217; key is used for internal purposes.</p>
+<p>__str__ (called by print) shows it&#8217;s not quite a regular dictionary:
+&gt;&gt;&gt; print s
+Struct({&#8216;__allownew&#8217;: True, &#8216;a&#8217;: 1, &#8216;b&#8217;: 2, &#8216;hi&#8217;: 10, &#8216;ho&#8217;: 20})</p>
+<p>Access by explicitly named key with dot notation:
+&gt;&gt;&gt; s.a
+1</p>
+<p>Or like a dictionary:
+&gt;&gt;&gt; s[&#8216;a&#8217;]
+1</p>
+<p>If you want a variable to hold the key value, only dictionary access works:
+&gt;&gt;&gt; key=&#8217;hi&#8217;
+&gt;&gt;&gt; s.key
+Traceback (most recent call last):</p>
+<blockquote>
+File &#8220;&lt;stdin&gt;&#8221;, line 1, in ?</blockquote>
+<p>AttributeError: Struct instance has no attribute &#8216;key&#8217;</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Another limitation of the s.key syntax (and Struct(key=val)
+initialization): keys can&#8217;t be numbers. But numeric keys can be used and
+accessed using the dictionary syntax. Again, an example:</p>
+<p>This doesn&#8217;t work (prompt changed to avoid confusing the test system):
+-&gt;&gt; s=Struct(4=&#8217;hi&#8217;)
+Traceback (most recent call last):</p>
+<blockquote>
+...</blockquote>
+<p>SyntaxError: keyword can&#8217;t be an expression</p>
+<p>But this does:
+&gt;&gt;&gt; s=Struct()
+&gt;&gt;&gt; s[4]=&#8217;hi&#8217;
+&gt;&gt;&gt; s
+Struct({4: &#8216;hi&#8217;, &#8216;__allownew&#8217;: True})
+&gt;&gt;&gt; s[4]
+&#8216;hi&#8217;</p>
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.__init__">
+<!--[IPython.ipstruct.Struct.__init__]--><tt class="descname">__init__</tt><big>(</big><em>dict=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize with a dictionary, another Struct, or by giving
+explicitly the list of attributes.</p>
+<p>Both can be used, but the dictionary must come first:
+Struct(dict), Struct(k1=v1,k2=v2) or Struct(dict,k1=v1,k2=v2).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.allow_new_attr">
+<!--[IPython.ipstruct.Struct.allow_new_attr]--><tt class="descname">allow_new_attr</tt><big>(</big><em>allow=True</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.allow_new_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether new attributes can be created inside struct</p>
+<p>This can be used to catch typos by verifying that the attribute user
+tries to change already exists in this Struct.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.clear">
+<!--[IPython.ipstruct.Struct.clear]--><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Clear all attributes.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.copy">
+<!--[IPython.ipstruct.Struct.copy]--><tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a (shallow) copy of a Struct.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.dict">
+<!--[IPython.ipstruct.Struct.dict]--><tt class="descname">dict</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.dict" title="Permalink to this definition">¶</a></dt>
+<dd>Return the Struct&#8217;s dictionary.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.dictcopy">
+<!--[IPython.ipstruct.Struct.dictcopy]--><tt class="descname">dictcopy</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.dictcopy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a (shallow) copy of the Struct&#8217;s dictionary.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.get">
+<!--[IPython.ipstruct.Struct.get]--><tt class="descname">get</tt><big>(</big><em>attr</em>, <em>val=None</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.get" title="Permalink to this definition">¶</a></dt>
+<dd>S.get(k[,d]) -&gt; S[k] if k in S, else d.  d defaults to None.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.has_key">
+<!--[IPython.ipstruct.Struct.has_key]--><tt class="descname">has_key</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.has_key" title="Permalink to this definition">¶</a></dt>
+<dd>Like has_key() dictionary method.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.hasattr">
+<!--[IPython.ipstruct.Struct.hasattr]--><tt class="descname">hasattr</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.hasattr" title="Permalink to this definition">¶</a></dt>
+<dd><p>hasattr function available as a method.</p>
+<p>Implemented like has_key, to make sure that all available keys in the
+internal dictionary of the Struct appear also as attributes (even
+numeric keys).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.items">
+<!--[IPython.ipstruct.Struct.items]--><tt class="descname">items</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.items" title="Permalink to this definition">¶</a></dt>
+<dd>Return the items in the Struct&#8217;s dictionary, in the same format
+as a call to {}.items().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.keys">
+<!--[IPython.ipstruct.Struct.keys]--><tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.keys" title="Permalink to this definition">¶</a></dt>
+<dd>Return the keys in the Struct&#8217;s dictionary, in the same format
+as a call to {}.keys().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.merge">
+<!--[IPython.ipstruct.Struct.merge]--><tt class="descname">merge</tt><big>(</big><em>__loc_data__=None</em>, <em>_Struct__conflict_solve=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>S.merge(data,conflict,k=v1,k=v2,...) -&gt; merge data and k=v into S.</p>
+<p>This is similar to update(), but much more flexible.  First, a dict is
+made from data+key=value pairs. When merging this dict with the Struct
+S, the optional dictionary &#8216;conflict&#8217; is used to decide what to do.</p>
+<p>If conflict is not given, the default behavior is to preserve any keys
+with their current value (the opposite of the update method&#8217;s
+behavior).</p>
+<p>conflict is a dictionary of binary functions which will be used to
+solve key conflicts. It must have the following structure:</p>
+<blockquote>
+conflict == { fn1 : [Skey1,Skey2,...], fn2 : [Skey3], etc }</blockquote>
+<p>Values must be lists or whitespace separated strings which are
+automatically converted to lists of strings by calling string.split().</p>
+<p>Each key of conflict is a function which defines a policy for
+resolving conflicts when merging with the input data. Each fn must be
+a binary function which returns the desired outcome for a key
+conflict. These functions will be called as fn(old,new).</p>
+<p>An example is probably in order. Suppose you are merging the struct S
+with a dict D and the following conflict policy dict:</p>
+<blockquote>
+S.merge(D,{fn1:[&#8216;a&#8217;,&#8217;b&#8217;,4], fn2:&#8217;key_c key_d&#8217;})</blockquote>
+<p>If the key &#8216;a&#8217; is found in both S and D, the merge method will call:</p>
+<blockquote>
+S[&#8216;a&#8217;] = fn1(S[&#8216;a&#8217;],D[&#8216;a&#8217;])</blockquote>
+<p>As a convenience, merge() provides five (the most commonly needed)
+pre-defined policies: preserve, update, add, add_flip and add_s. The
+easiest explanation is their implementation:</p>
+<blockquote>
+preserve = lambda old,new: old
+update   = lambda old,new: new
+add      = lambda old,new: old + new
+add_flip = lambda old,new: new + old  # note change of order!
+add_s    = lambda old,new: old + &#8216; &#8216; + new  # only works for strings!</blockquote>
+<p>You can use those four words (as strings) as keys in conflict instead
+of defining them as functions, and the merge method will substitute
+the appropriate functions for you. That is, the call</p>
+<blockquote>
+S.merge(D,{&#8216;preserve&#8217;:&#8217;a b c&#8217;,&#8217;add&#8217;:[4,5,&#8217;d&#8217;],my_function:[6]})</blockquote>
+<p>will automatically substitute the functions preserve and add for the
+names &#8216;preserve&#8217; and &#8216;add&#8217; before making any function calls.</p>
+<p>For more complicated conflict resolution policies, you still need to
+construct your own functions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.popitem">
+<!--[IPython.ipstruct.Struct.popitem]--><tt class="descname">popitem</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.popitem" title="Permalink to this definition">¶</a></dt>
+<dd>S.popitem() -&gt; (k, v), remove and return some (key, value) pair as
+a 2-tuple; but raise KeyError if S is empty.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.setdefault">
+<!--[IPython.ipstruct.Struct.setdefault]--><tt class="descname">setdefault</tt><big>(</big><em>attr</em>, <em>val=None</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd>S.setdefault(k[,d]) -&gt; S.get(k,d), also set S[k]=d if k not in S</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.update">
+<!--[IPython.ipstruct.Struct.update]--><tt class="descname">update</tt><big>(</big><em>__loc_data__=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.update" title="Permalink to this definition">¶</a></dt>
+<dd>Update (merge) with data from another Struct or from a dictionary.
+Optionally, one or more key=value pairs can be given at the end for
+direct update.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ipstruct.Struct.values">
+<!--[IPython.ipstruct.Struct.values]--><tt class="descname">values</tt><big>(</big><em>keys=None</em><big>)</big><a class="headerlink" href="#IPython.ipstruct.Struct.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the values in the Struct&#8217;s dictionary, in the same format
+as a call to {}.values().</p>
+<p>Can be called with an optional argument keys, which must be a list or
+tuple of keys. In this case it returns only the values corresponding
+to those keys (allowing a form of &#8216;slicing&#8217; for Structs).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">ipstruct</a><ul>
+<li><a class="reference external" href="#module-IPython.ipstruct">Module: <tt class="docutils literal"><span class="pre">ipstruct</span></tt></a></li>
+<li><a class="reference external" href="#struct"><tt class="docutils literal"><span class="pre">Struct</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.ipmaker.html" title="previous chapter">ipmaker</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.irunner.html" title="next chapter">irunner</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.ipstruct.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.irunner.html" title="irunner"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipmaker.html" title="ipmaker"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Installation" href="index.html" />
+    <link rel="next" title="Using IPython for interactive work" href="../interactive/index.html" />
+    <link rel="prev" title="Installation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../interactive/index.html" title="Using IPython for interactive work"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Installation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the steps required to install IPython.  IPython is
+organized into a number of subpackages, each of which has its own dependencies.
+All of the subpackages come with IPython, so you don&#8217;t need to download and
+install them separately.  However, to use a given subpackage, you will need to
+install all of its dependencies.</p>
+<p>Please let us know if you have problems installing IPython or any of its
+dependencies. Officially, IPython requires Python version 2.5 or 2.6.  We
+have <em>not</em> yet started to port IPython to Python 3.0.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Officially, IPython supports Python versions 2.5 and 2.6.</p>
+<p class="last">IPython 0.10 has only been well tested with Python 2.5 and 2.6.  Parts of
+it may work with Python 2.4, but we do not officially support Python 2.4
+anymore.  If you need to use 2.4, you can still run IPython 0.9.</p>
+</div>
+<p>Some of the installation approaches use the <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> package and its
+<strong>easy_install</strong> command line program.  In many scenarios, this provides
+the most simple method of installing IPython and its dependencies.  It is not
+required though.  More information about <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> can be found on its
+website.</p>
+<p>More general information about installing Python packages can be found in
+Python&#8217;s documentation at <a class="reference external" href="http://www.python.org/doc/">http://www.python.org/doc/</a>.</p>
+</div>
+<div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>If you have <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> installed and you are on OS X or Linux (not
+Windows), the following will download and install IPython <em>and</em> the main
+optional dependencies:</p>
+<div class="highlight-python"><pre>$ easy_install ipython[kernel,security,test]</pre>
+</div>
+<p>This will get Twisted, zope.interface and Foolscap, which are needed for
+IPython&#8217;s parallel computing features as well as the nose package, which will
+enable you to run IPython&#8217;s test suite.  To run IPython&#8217;s test suite, use the
+<strong>iptest</strong> command:</p>
+<div class="highlight-python"><pre>$ iptest</pre>
+</div>
+<p>Read on for more specific details and instructions for Windows.</p>
+</div>
+<div class="section" id="installing-ipython-itself">
+<h1>Installing IPython itself<a class="headerlink" href="#installing-ipython-itself" title="Permalink to this headline">¶</a></h1>
+<p>Given a properly built Python, the basic interactive IPython shell will work
+with no external dependencies.  However, some Python distributions
+(particularly on Windows and OS X), don&#8217;t come with a working <tt class="xref docutils literal"><span class="pre">readline</span></tt>
+module.  The IPython shell will work without <tt class="xref docutils literal"><span class="pre">readline</span></tt>, but will lack
+many features that users depend on, such as tab completion and command line
+editing.  See below for details of how to make sure you have a working
+<tt class="xref docutils literal"><span class="pre">readline</span></tt>.</p>
+<div class="section" id="installation-using-easy-install">
+<h2>Installation using easy_install<a class="headerlink" href="#installation-using-easy-install" title="Permalink to this headline">¶</a></h2>
+<p>If you have <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> installed, the easiest way of getting IPython is
+to simple use <strong>easy_install</strong>:</p>
+<div class="highlight-python"><pre>$ easy_install ipython</pre>
+</div>
+<p>That&#8217;s it.</p>
+</div>
+<div class="section" id="installation-from-source">
+<h2>Installation from source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t want to use <strong>easy_install</strong>, or don&#8217;t have it installed,
+just grab the latest stable build of IPython from <a class="reference external" href="http://ipython.scipy.org/dist/">here</a>.  Then do the following:</p>
+<div class="highlight-python"><pre>$ tar -xzf ipython.tar.gz
+$ cd ipython
+$ python setup.py install</pre>
+</div>
+<p>If you are installing to a location (like <tt class="docutils literal"><span class="pre">/usr/local</span></tt>) that requires higher
+permissions, you may need to run the last command with <strong>sudo</strong>.</p>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>There are a few caveats for Windows users.  The main issue is that a basic
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt> approach won&#8217;t create <tt class="docutils literal"><span class="pre">.bat</span></tt> file or Start Menu
+shortcuts, which most users want.  To get an installation with these, you can
+use any of the following alternatives:</p>
+<ol class="arabic simple">
+<li>Install using <strong>easy_install</strong>.</li>
+<li>Install using our binary <tt class="docutils literal"><span class="pre">.exe</span></tt> Windows installer, which can be found at
+<a class="reference external" href="http://ipython.scipy.org/dist/">here</a></li>
+<li>Install from source, but using <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> (<tt class="docutils literal"><span class="pre">python</span> <span class="pre">setupegg.py</span>
+<span class="pre">install</span></tt>).</li>
+</ol>
+<p>IPython by default runs in a termninal window, but the normal terminal
+application supplied by Microsoft Windows is very primitive.  You may want to
+download the excellent and free <a class="reference external" href="http://sourceforge.net/projects/console">Console</a> application instead, which is a far
+superior tool.  You can even configure Console to give you by default an
+IPython tab, which is very convenient to create new IPython sessions directly
+from the working terminal.</p>
+</div>
+<div class="section" id="installing-the-development-version">
+<h2>Installing the development version<a class="headerlink" href="#installing-the-development-version" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to install the development version of IPython from our
+<a class="reference external" href="http://bazaar-vcs.org/">Bazaar</a> source code repository.  To do this you will
+need to have Bazaar installed on your system.  Then just do:</p>
+<div class="highlight-python"><pre>$ bzr branch lp:ipython
+$ cd ipython
+$ python setup.py install</pre>
+</div>
+<p>Again, this last step on Windows won&#8217;t create <tt class="docutils literal"><span class="pre">.bat</span></tt> files or Start Menu
+shortcuts, so you will have to use one of the other approaches listed above.</p>
+<p>Some users want to be able to follow the development branch as it changes.  If
+you have <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> installed, this is easy. Simply replace the last
+step by:</p>
+<div class="highlight-python"><pre>$ python setupegg.py develop</pre>
+</div>
+<p>This creates links in the right places and installs the command line script to
+the appropriate places.  Then, if you want to update your IPython at any time,
+just do:</p>
+<div class="highlight-python"><pre>$ bzr pull</pre>
+</div>
+</div>
+</div>
+<div class="section" id="basic-optional-dependencies">
+<h1>Basic optional dependencies<a class="headerlink" href="#basic-optional-dependencies" title="Permalink to this headline">¶</a></h1>
+<p>There are a number of basic optional dependencies that most users will want to
+get.  These are:</p>
+<ul class="simple">
+<li>readline (for command line editing, tab completion, etc.)</li>
+<li>nose (to run the IPython test suite)</li>
+<li>pexpect (to use things like irunner)</li>
+</ul>
+<p>If you are comfortable installing these things yourself, have at it, otherwise
+read on for more details.</p>
+<div class="section" id="readline">
+<h2>readline<a class="headerlink" href="#readline" title="Permalink to this headline">¶</a></h2>
+<p>In principle, all Python distributions should come with a working
+<tt class="xref docutils literal"><span class="pre">readline</span></tt> module.  But, reality is not quite that simple.  There are two
+common situations where you won&#8217;t have a working <tt class="xref docutils literal"><span class="pre">readline</span></tt> module:</p>
+<ul class="simple">
+<li>If you are using the built-in Python on Mac OS X.</li>
+<li>If you are running Windows, which doesn&#8217;t have a <tt class="xref docutils literal"><span class="pre">readline</span></tt> module.</li>
+</ul>
+<p>On OS X, the built-in Python doesn&#8217;t not have <tt class="xref docutils literal"><span class="pre">readline</span></tt> because of
+license issues.  Starting with OS X 10.5 (Leopard), Apple&#8217;s built-in Python has
+a BSD-licensed not-quite-compatible readline replacement. As of IPython 0.9,
+many of the issues related to the differences between readline and libedit have
+been resolved.  For many users, libedit may be sufficient.</p>
+<p>Most users on OS X will want to get the full <tt class="xref docutils literal"><span class="pre">readline</span></tt> module.  To get a
+working <tt class="xref docutils literal"><span class="pre">readline</span></tt> module, just do (with <tt class="xref docutils literal"><span class="pre">setuptools</span></tt> installed):</p>
+<div class="highlight-python"><pre>$ easy_install readline</pre>
+</div>
+<p>If needed, the readline egg can be build and installed from source (see the
+wiki page at <a class="reference external" href="http://ipython.scipy.org/moin/InstallationOSXLeopard">http://ipython.scipy.org/moin/InstallationOSXLeopard</a>).</p>
+<p>On Windows, you will need the PyReadline module. PyReadline is a separate,
+Windows only implementation of readline that uses native Windows calls through
+<tt class="xref docutils literal"><span class="pre">ctypes</span></tt>. The easiest way of installing PyReadline is you use the binary
+installer available <a class="reference external" href="http://ipython.scipy.org/dist/">here</a>. The <tt class="xref docutils literal"><span class="pre">ctypes</span></tt>
+module, which comes with Python 2.5 and greater, is required by PyReadline. It
+is available for Python 2.4 at <a class="reference external" href="http://python.net/crew/theller/ctypes">http://python.net/crew/theller/ctypes</a>.</p>
+</div>
+<div class="section" id="nose">
+<h2>nose<a class="headerlink" href="#nose" title="Permalink to this headline">¶</a></h2>
+<p>To run the IPython test suite you will need the <tt class="xref docutils literal"><span class="pre">nose</span></tt> package.  Nose
+provides a great way of sniffing out and running all of the IPython tests.  The
+simplest way of getting nose, is to use <strong>easy_install</strong>:</p>
+<div class="highlight-python"><pre>$ easy_install nose</pre>
+</div>
+<p>Another way of getting this is to do:</p>
+<div class="highlight-python"><pre>$ easy_install ipython[test]</pre>
+</div>
+<p>For more installation options, see the <a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/">nose website</a>.  Once you have nose
+installed, you can run IPython&#8217;s test suite using the iptest command:</p>
+<div class="highlight-python"><pre>$ iptest</pre>
+</div>
+</div>
+<div class="section" id="pexpect">
+<h2>pexpect<a class="headerlink" href="#pexpect" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://www.noah.org/wiki/Pexpect">pexpect</a> package is used in IPython&#8217;s
+<strong>irunner</strong> script.  On Unix platforms (including OS X), just do:</p>
+<div class="highlight-python"><pre>$ easy_install pexpect</pre>
+</div>
+<p>Windows users are out of luck as pexpect does not run there.</p>
+</div>
+</div>
+<div class="section" id="dependencies-for-ipython-kernel-parallel-computing">
+<h1>Dependencies for IPython.kernel (parallel computing)<a class="headerlink" href="#dependencies-for-ipython-kernel-parallel-computing" title="Permalink to this headline">¶</a></h1>
+<p>The IPython kernel provides a nice architecture for parallel computing.  The
+main focus of this architecture is on interactive parallel computing.  These
+features require a number of additional packages:</p>
+<ul class="simple">
+<li>zope.interface (yep, we use interfaces)</li>
+<li>Twisted (asynchronous networking framework)</li>
+<li>Foolscap (a nice, secure network protocol)</li>
+<li>pyOpenSSL (security for network connections)</li>
+</ul>
+<p>On a Unix style platform (including OS X), if you want to use <tt class="xref docutils literal"><span class="pre">setuptools</span></tt>, you can just do:</p>
+<div class="highlight-python"><pre>$ easy_install ipython[kernel]    # the first three
+$ easy_install ipython[security]  # pyOpenSSL</pre>
+</div>
+<div class="section" id="zope-interface-and-twisted">
+<h2>zope.interface and Twisted<a class="headerlink" href="#zope-interface-and-twisted" title="Permalink to this headline">¶</a></h2>
+<p>Twisted <a class="reference internal" href="#twisted">[Twisted]</a> and zope.interface <a class="reference internal" href="#zopeinterface">[ZopeInterface]</a> are used for networking
+related things. On Unix style platforms (including OS X), the simplest way of
+getting the these is to use <strong>easy_install</strong>:</p>
+<div class="highlight-python"><pre>$ easy_install zope.interface
+$ easy_install Twisted</pre>
+</div>
+<p>Of course, you can also download the source tarballs from the <a class="reference external" href="twistedmatrix.org">Twisted website</a> and the <a class="reference external" href="http://pypi.python.org/pypi/zope.interface">zope.interface page at PyPI</a> and do the usual <tt class="docutils literal"><span class="pre">python</span>
+<span class="pre">setup.py</span> <span class="pre">install</span></tt> if you prefer.</p>
+<p>Windows is a bit different.  For zope.interface and Twisted, simply get the latest binary <tt class="docutils literal"><span class="pre">.exe</span></tt> installer from the Twisted website.  This installer includes both zope.interface and Twisted and should just work.</p>
+</div>
+<div class="section" id="foolscap">
+<h2>Foolscap<a class="headerlink" href="#foolscap" title="Permalink to this headline">¶</a></h2>
+<p>Foolscap <a class="reference internal" href="#id8">[Foolscap]</a> uses Twisted to provide a very nice secure RPC protocol that we use to implement our parallel computing features.</p>
+<p>On all platforms a simple:</p>
+<div class="highlight-python"><pre>$ easy_install foolscap</pre>
+</div>
+<p>should work.  You can also download the source tarballs from the <a class="reference external" href="http://foolscap.lothar.com/trac">Foolscap
+website</a> and do <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt>
+if you prefer.</p>
+</div>
+<div class="section" id="pyopenssl">
+<h2>pyOpenSSL<a class="headerlink" href="#pyopenssl" title="Permalink to this headline">¶</a></h2>
+<p>IPython requires an older version of pyOpenSSL <a class="reference internal" href="#id9">[pyOpenSSL]</a> (0.6 rather than
+the current 0.7).  There are a couple of options for getting this:</p>
+<ol class="arabic simple">
+<li>Most Linux distributions have packages for pyOpenSSL.</li>
+<li>The built-in Python 2.5 on OS X 10.5 already has it installed.</li>
+<li>There are source tarballs on the pyOpenSSL website.  On Unix-like
+platforms, these can be built using <tt class="docutils literal"><span class="pre">python</span> <span class="pre">seutp.py</span> <span class="pre">install</span></tt>.</li>
+<li>There is also a binary <tt class="docutils literal"><span class="pre">.exe</span></tt> Windows installer on the <a class="reference external" href="http://pyopenssl.sourceforge.net/">pyOpenSSL website</a>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="dependencies-for-ipython-frontend-the-ipython-gui">
+<h1>Dependencies for IPython.frontend (the IPython GUI)<a class="headerlink" href="#dependencies-for-ipython-frontend-the-ipython-gui" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="wxpython">
+<h2>wxPython<a class="headerlink" href="#wxpython" title="Permalink to this headline">¶</a></h2>
+<p>Starting with IPython 0.9, IPython has a new IPython.frontend package that has
+a nice wxPython based IPython GUI.  As you would expect, this GUI requires
+wxPython.  Most Linux distributions have wxPython packages available and the
+built-in Python on OS X comes with wxPython preinstalled.  For Windows, a
+binary installer is available on the <a class="reference external" href="http://www.wxpython.org/">wxPython website</a>.</p>
+<table class="docutils citation" frame="void" id="twisted" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[Twisted]</a></td><td>Twisted matrix.  <a class="reference external" href="http://twistedmatrix.org">http://twistedmatrix.org</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="zopeinterface" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[ZopeInterface]</a></td><td><a class="reference external" href="http://pypi.python.org/pypi/zope.interface">http://pypi.python.org/pypi/zope.interface</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[Foolscap]</a></td><td>Foolscap network protocol.  <a class="reference external" href="http://foolscap.lothar.com/trac">http://foolscap.lothar.com/trac</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[pyOpenSSL]</a></td><td>pyOpenSSL.  <a class="reference external" href="http://pyopenssl.sourceforge.net">http://pyopenssl.sourceforge.net</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Overview</a></li>
+<li><a class="reference external" href="#quickstart">Quickstart</a></li>
+<li><a class="reference external" href="#installing-ipython-itself">Installing IPython itself</a><ul>
+<li><a class="reference external" href="#installation-using-easy-install">Installation using easy_install</a></li>
+<li><a class="reference external" href="#installation-from-source">Installation from source</a></li>
+<li><a class="reference external" href="#windows">Windows</a></li>
+<li><a class="reference external" href="#installing-the-development-version">Installing the development version</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#basic-optional-dependencies">Basic optional dependencies</a><ul>
+<li><a class="reference external" href="#readline">readline</a></li>
+<li><a class="reference external" href="#nose">nose</a></li>
+<li><a class="reference external" href="#pexpect">pexpect</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#dependencies-for-ipython-kernel-parallel-computing">Dependencies for IPython.kernel (parallel computing)</a><ul>
+<li><a class="reference external" href="#zope-interface-and-twisted">zope.interface and Twisted</a></li>
+<li><a class="reference external" href="#foolscap">Foolscap</a></li>
+<li><a class="reference external" href="#pyopenssl">pyOpenSSL</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#dependencies-for-ipython-frontend-the-ipython-gui">Dependencies for IPython.frontend (the IPython GUI)</a><ul>
+<li><a class="reference external" href="#wxpython">wxPython</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">Installation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../interactive/index.html" title="next chapter">Using IPython for interactive work</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/install/install.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../interactive/index.html" title="Using IPython for interactive work"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Installation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

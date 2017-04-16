@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.newserialized &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.parallelfunction" href="IPython.kernel.parallelfunction.html" />
+    <link rel="prev" title="kernel.multienginefc" href="IPython.kernel.multienginefc.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.parallelfunction.html" title="kernel.parallelfunction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multienginefc.html" title="kernel.multienginefc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-newserialized">
+<h1>kernel.newserialized<a class="headerlink" href="#kernel-newserialized" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.newserialized">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.newserialized</span></tt><a class="headerlink" href="#module-IPython.kernel.newserialized" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.newserialized</span></tt>:</p>
+<img src="../../_images/inheritancec9c4f04a48.png" usemap="#inheritancec9c4f04a48" class="inheritance"/><map id="inheritancec9c4f04a48" name="inheritancec9c4f04a48">
+<area shape="rect" href="#IPython.kernel.newserialized.SerializeIt" title="kernel.newserialized.SerializeIt" alt="" coords="15,183,231,209"/>
+<area shape="rect" href="#IPython.kernel.newserialized.ISerialized" title="kernel.newserialized.ISerialized" alt="" coords="297,107,516,133"/>
+<area shape="rect" href="#IPython.kernel.newserialized.IUnSerialized" title="kernel.newserialized.IUnSerialized" alt="" coords="289,157,524,184"/>
+<area shape="rect" href="#IPython.kernel.newserialized.UnSerializeIt" title="kernel.newserialized.UnSerializeIt" alt="" coords="291,56,523,83"/>
+<area shape="rect" href="#IPython.kernel.newserialized.UnSerialized" title="kernel.newserialized.UnSerialized" alt="" coords="7,56,239,83"/>
+<area shape="rect" href="#IPython.kernel.newserialized.Serialized" title="kernel.newserialized.Serialized" alt="" coords="15,5,231,32"/>
+</map>
+<p>Refactored serialization classes and interfaces.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="iserialized">
+<h3><a title="IPython.kernel.newserialized.ISerialized" class="reference internal" href="#IPython.kernel.newserialized.ISerialized"><tt class="xref docutils literal"><span class="pre">ISerialized</span></tt></a><a class="headerlink" href="#iserialized" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.newserialized.ISerialized">
+<!--[IPython.kernel.newserialized.ISerialized]-->class <tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">ISerialized</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.ISerialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.newserialized.ISerialized.__init__">
+<!--[IPython.kernel.newserialized.ISerialized.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.ISerialized.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iunserialized">
+<h3><a title="IPython.kernel.newserialized.IUnSerialized" class="reference internal" href="#IPython.kernel.newserialized.IUnSerialized"><tt class="xref docutils literal"><span class="pre">IUnSerialized</span></tt></a><a class="headerlink" href="#iunserialized" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.newserialized.IUnSerialized">
+<!--[IPython.kernel.newserialized.IUnSerialized]-->class <tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">IUnSerialized</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.IUnSerialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.newserialized.IUnSerialized.__init__">
+<!--[IPython.kernel.newserialized.IUnSerialized.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.IUnSerialized.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="serializeit">
+<h3><a title="IPython.kernel.newserialized.SerializeIt" class="reference internal" href="#IPython.kernel.newserialized.SerializeIt"><tt class="xref docutils literal"><span class="pre">SerializeIt</span></tt></a><a class="headerlink" href="#serializeit" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.newserialized.SerializeIt">
+<!--[IPython.kernel.newserialized.SerializeIt]-->class <tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">SerializeIt</tt><big>(</big><em>unSerialized</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.SerializeIt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.newserialized.SerializeIt.__init__">
+<!--[IPython.kernel.newserialized.SerializeIt.__init__]--><tt class="descname">__init__</tt><big>(</big><em>unSerialized</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.SerializeIt.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.SerializeIt.getData">
+<!--[IPython.kernel.newserialized.SerializeIt.getData]--><tt class="descname">getData</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.SerializeIt.getData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.SerializeIt.getDataSize">
+<!--[IPython.kernel.newserialized.SerializeIt.getDataSize]--><tt class="descname">getDataSize</tt><big>(</big><em>units=1000000.0</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.SerializeIt.getDataSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.SerializeIt.getMetadata">
+<!--[IPython.kernel.newserialized.SerializeIt.getMetadata]--><tt class="descname">getMetadata</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.SerializeIt.getMetadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.SerializeIt.getTypeDescriptor">
+<!--[IPython.kernel.newserialized.SerializeIt.getTypeDescriptor]--><tt class="descname">getTypeDescriptor</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.SerializeIt.getTypeDescriptor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="serialized">
+<h3><a title="IPython.kernel.newserialized.Serialized" class="reference internal" href="#IPython.kernel.newserialized.Serialized"><tt class="xref docutils literal"><span class="pre">Serialized</span></tt></a><a class="headerlink" href="#serialized" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.newserialized.Serialized">
+<!--[IPython.kernel.newserialized.Serialized]-->class <tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">Serialized</tt><big>(</big><em>data</em>, <em>typeDescriptor</em>, <em>metadata={}</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.Serialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.newserialized.Serialized.__init__">
+<!--[IPython.kernel.newserialized.Serialized.__init__]--><tt class="descname">__init__</tt><big>(</big><em>data</em>, <em>typeDescriptor</em>, <em>metadata={}</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.Serialized.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.Serialized.getData">
+<!--[IPython.kernel.newserialized.Serialized.getData]--><tt class="descname">getData</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.Serialized.getData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.Serialized.getDataSize">
+<!--[IPython.kernel.newserialized.Serialized.getDataSize]--><tt class="descname">getDataSize</tt><big>(</big><em>units=1000000.0</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.Serialized.getDataSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.Serialized.getMetadata">
+<!--[IPython.kernel.newserialized.Serialized.getMetadata]--><tt class="descname">getMetadata</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.Serialized.getMetadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.Serialized.getTypeDescriptor">
+<!--[IPython.kernel.newserialized.Serialized.getTypeDescriptor]--><tt class="descname">getTypeDescriptor</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.Serialized.getTypeDescriptor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unserializeit">
+<h3><a title="IPython.kernel.newserialized.UnSerializeIt" class="reference internal" href="#IPython.kernel.newserialized.UnSerializeIt"><tt class="xref docutils literal"><span class="pre">UnSerializeIt</span></tt></a><a class="headerlink" href="#unserializeit" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.newserialized.UnSerializeIt">
+<!--[IPython.kernel.newserialized.UnSerializeIt]-->class <tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">UnSerializeIt</tt><big>(</big><em>serialized</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.UnSerializeIt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.newserialized.UnSerialized" class="reference internal" href="#IPython.kernel.newserialized.UnSerialized"><tt class="xref docutils literal"><span class="pre">IPython.kernel.newserialized.UnSerialized</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.newserialized.UnSerializeIt.__init__">
+<!--[IPython.kernel.newserialized.UnSerializeIt.__init__]--><tt class="descname">__init__</tt><big>(</big><em>serialized</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.UnSerializeIt.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.UnSerializeIt.getObject">
+<!--[IPython.kernel.newserialized.UnSerializeIt.getObject]--><tt class="descname">getObject</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.UnSerializeIt.getObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unserialized">
+<h3><a title="IPython.kernel.newserialized.UnSerialized" class="reference internal" href="#IPython.kernel.newserialized.UnSerialized"><tt class="xref docutils literal"><span class="pre">UnSerialized</span></tt></a><a class="headerlink" href="#unserialized" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.newserialized.UnSerialized">
+<!--[IPython.kernel.newserialized.UnSerialized]-->class <tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">UnSerialized</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.UnSerialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.newserialized.UnSerialized.__init__">
+<!--[IPython.kernel.newserialized.UnSerialized.__init__]--><tt class="descname">__init__</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.UnSerialized.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.newserialized.UnSerialized.getObject">
+<!--[IPython.kernel.newserialized.UnSerialized.getObject]--><tt class="descname">getObject</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.UnSerialized.getObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.newserialized.serialize">
+<!--[IPython.kernel.newserialized.serialize]--><tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">serialize</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.newserialized.unserialize">
+<!--[IPython.kernel.newserialized.unserialize]--><tt class="descclassname">IPython.kernel.newserialized.</tt><tt class="descname">unserialize</tt><big>(</big><em>serialized</em><big>)</big><a class="headerlink" href="#IPython.kernel.newserialized.unserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.newserialized</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.newserialized">Module: <tt class="docutils literal"><span class="pre">kernel.newserialized</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#iserialized"><tt class="docutils literal"><span class="pre">ISerialized</span></tt></a></li>
+<li><a class="reference external" href="#iunserialized"><tt class="docutils literal"><span class="pre">IUnSerialized</span></tt></a></li>
+<li><a class="reference external" href="#serializeit"><tt class="docutils literal"><span class="pre">SerializeIt</span></tt></a></li>
+<li><a class="reference external" href="#serialized"><tt class="docutils literal"><span class="pre">Serialized</span></tt></a></li>
+<li><a class="reference external" href="#unserializeit"><tt class="docutils literal"><span class="pre">UnSerializeIt</span></tt></a></li>
+<li><a class="reference external" href="#unserialized"><tt class="docutils literal"><span class="pre">UnSerialized</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.multienginefc.html" title="previous chapter">kernel.multienginefc</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.parallelfunction.html" title="next chapter">kernel.parallelfunction</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.newserialized.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.parallelfunction.html" title="kernel.parallelfunction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multienginefc.html" title="kernel.multienginefc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

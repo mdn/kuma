@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+gui.wx.ipshell_nonblocking
+==========================
+
+Module: :mod:`gui.wx.ipshell_nonblocking`
+-----------------------------------------
+Inheritance diagram for ``IPython.gui.wx.ipshell_nonblocking``:
+
+.. inheritance-diagram:: IPython.gui.wx.ipshell_nonblocking 
+   :parts: 3
+
+.. automodule:: IPython.gui.wx.ipshell_nonblocking
+
+.. currentmodule:: IPython.gui.wx.ipshell_nonblocking
+
+:class:`NonBlockingIPShell`
+---------------------------
+
+
+.. autoclass:: NonBlockingIPShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

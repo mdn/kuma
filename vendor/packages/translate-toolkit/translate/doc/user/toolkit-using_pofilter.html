@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="checking_your_files_with_po_filter" id="checking_your_files_with_po_filter">Checking your files with PO filter</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> allows you to check your <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files for certain common errors.  This quick-start guide takes 
+you through the process of using this tool, making corrections and merging your correction back into your translations.
+</p>
+
+<p>
+Other tools that can help with quality assurance are listed <a href="toolkit-index.html#quality_assurance" class="wikilink1" title="toolkit-index.html">here</a>.
+</p>
+
+</div>
+<!-- SECTION "Checking your files with PO filter" [1-380] -->
+<h2><a name="quickstart" id="quickstart">Quickstart</a></h2>
+<div class="level2">
+
+<p>
+<em>Use any preferred text editor wherever <code>vim</code> is used.</em>
+</p>
+<ol>
+<li class="level1"><div class="li"> Select filter(s): <code>pofilter -l</code></div>
+</li>
+<li class="level1"><div class="li"> Run filter(s): <code>pofilter -i existing_files/ -o errors/ [-t specific tests] [--excludefilter don&#039;t perform specific tests]</code></div>
+</li>
+<li class="level1"><div class="li"> Delete items you don&#039;t want changed, set fuzzy if needed, delete if not needed: <code>vim errors/*.po</code></div>
+</li>
+<li class="level1"><div class="li"> Merge changes back: <code>pomerge -i errors/ -o existing_files/ -t existing_files/</code> (will overwrite existing files)</div>
+</li>
+<li class="level1"><div class="li"> Create a patch for the changes: <code>cvs diff -u existing_files/ &gt; x.diff</code></div>
+</li>
+<li class="level1"><div class="li"> Check to see that the updates are what you want: <code>vim x.diff</code></div>
+</li>
+<li class="level1"><div class="li"> Commit changes: <code>cvs ci existing_files/</code></div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Quickstart" [381-1044] -->
+<h2><a name="detailed_description" id="detailed_description">Detailed Description</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> runs a number of checks against your translation files.  Any messages that fail are output to a set of new files (in the same structure as the source/input files).  You then edit these new/output files to correct any errors.  Once you are satisfied with your corrections these corrected files are then merged back into the original files using <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+</p>
+
+</div>
+<!-- SECTION "Detailed Description" [1045-1449] -->
+<h3><a name="extracting_errors" id="extracting_errors">Extracting Errors</a></h3>
+<div class="level3">
+
+<p>
+
+pofilter will run all tests unless you use the -t or --excludefilter options. There are over <a href="toolkit-pofilter_tests.html" class="wikilink1" title="toolkit-pofilter_tests.html">38 tests</a> and pofilter 
+can itself provide you with a current list of all the available checks:
+
+</p>
+<pre class="code">pofilter -l</pre>
+
+<p>
+
+We want to run the: accelerators, escapes, variables and xmltags tests as these are the ones most likely to break programs at runtime.  We are also working with OpenOffice.org <acronym title="Gettext Portable Object">PO</acronym> files created using <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a> so we want to ensure that we set the accelerator key marker and variables definitions correctly.
+
+</p>
+<pre class="code">pofilter -t accelerators -t escapes -t variables -t xmltags --openoffice existing_files errors</pre>
+
+<p>
+
+Any messages that fail one of the 4 checks will be placed in files in <em>errors</em>.  We also used the <em>--openoffice</em> option to ensure that the tool is aware of the OpenOffice.org accelerator marker (<em>~</em>) and the OpenOffice.org variable styles (OpenOffice.org has over 10 variable styles).  You can also specify other styles of project including GNOME, KDE or Mozilla.
+</p>
+
+<p>
+You can also specify whether you want fuzzy entries included and checked, by specifying the --fuzzy parameter. By default this is off because fuzzy strings are usually known to be broken and
+will be reviewed by translators anyway.
+</p>
+
+<p>
+Similarly you can include items marked for review by specifying --review or --ingnorereview.
+By default review items are included.  This is not part of the standard Gettext
+format. We have allowed entries like this when we want to communicate to someone
+what error we have picked up:
+
+</p>
+<pre class="code"># (review) - wrong word for gallery chosen</pre>
+
+<p>
+
+You can run pofilter without the -t option.  This runs all the checks. This
+can be confusing if you have a lot of errors as you easily lose focus.  One strategy 
+is to run each test individually.  This allows you to
+focus on one problem at a time across a number of files.  It is much easier to
+correct end punctuation on its own then to correct many different types of
+errors.  For a small file it is probably best to run all of the test together.
+</p>
+
+<p>
+By using the <em>--autocorrect</em> option you can automatically correct some very common errors.  Use with caution though. This option assumes you use the same punctuation style as the source text.
+</p>
+
+</div>
+<!-- SECTION "Extracting Errors" [1450-3685] -->
+<h3><a name="edit_the_files" id="edit_the_files">Edit the files</a></h3>
+<div class="level3">
+
+<p>
+
+Once the errors have been marked you can edit them with any text editor or <acronym title="Gettext Portable Object">PO</acronym> editor eg. <a href="guide-kbabel.html" class="wikilink1" title="guide-kbabel.html">KBabel</a> or vi.  
+You will be editing the files in the <em>errors</em> directory.  Only messages that failed 
+one of the tests will be present.  If no messages failed then there will be no error <acronym title="Gettext Portable Object">PO</acronym> file for the source <acronym title="Gettext Portable Object">PO</acronym> file.
+Only critical errors are marked fuzzy - all others are simply marked with the pofilter marker.
+Critical errors are marked fuzzy as this allows you to simply merge them back into you <acronym title="Gettext Portable Object">PO</acronym> files and then rely on the fact that
+all po2* tools will ignore a message marked fuzzy.  This allows you to quickly eliminate messages that can break builds.
+</p>
+
+<p>
+To edit run:
+
+</p>
+<pre class="code">vi `find errors -name &quot;*.po&quot;`
+kbabel `find errors -name &quot;*.po&quot;`</pre>
+
+<p>
+
+or similar command.
+</p>
+
+<p>
+The pofilter marker helps you determine what error was discovered:
+
+</p>
+<pre class="code"># (pofilter) &lt;test&gt; - &lt;explanation of test error&gt;</pre>
+
+<p>
+
+Use the test description to help you determine what is wrong with the message.  Remember that all your changes will
+be ported back into the <acronym title="Gettext Portable Object">PO</acronym> files.  So if you leave a string fuzzy in the error
+files, it will become fuzzy in the main files when you merge the corrected file back into the main file.  Therefore
+delete anything you do not want to migrate back when you merge the files.  Delete the test comments and fuzzy markings
+as needed.  Leave them in if you want another translator to see them.
+</p>
+
+<p>
+The computer can get it wrong, so an error that pofilter finds may in fact not be an error.  We&#039;d like
+to hear about these false positives so that we can improve the checks.  Also if you have some checks that
+you have added or ideas for better checks, then let us know.
+</p>
+
+</div>
+<!-- SECTION "Edit the files" [3686-5371] -->
+<h3><a name="merging_your_corrections_back_into_the_originals" id="merging_your_corrections_back_into_the_originals">Merging your corrections back into the originals</a></h3>
+<div class="level3">
+
+<p>
+
+After correcting the errors in the <acronym title="Gettext Portable Object">PO</acronym> files its time to merge these corrections
+back into the originals using <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+
+</p>
+<pre class="code">pomerge -t existing_files -i errors -o files_without_errors</pre>
+
+<p>
+
+If -t and -o are the same directory, the corrections will be merged into the 
+existing files.  Do this only if you are using some kind of version control system
+so that you can check the changes made by <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+</p>
+
+</div>
+<!-- SECTION "Merging your corrections back into the originals" [5372-5835] -->
+<h3><a name="checking_the_corrections" id="checking_the_corrections">Checking the corrections</a></h3>
+<div class="level3">
+
+<p>
+
+We have done this against <acronym title="Concurrent Versions System">CVS</acronym> but you could run a normal diff between a good
+copy and your modifications.  Thus we assume in the last step that we merged
+the corrections into the existing translations:
+
+</p>
+<pre class="code">pomerge -t existing_files -i errors -o existing_files</pre>
+
+<p>
+
+Now we check the changes using <em>cvs diff</em>:
+
+</p>
+<pre class="code">cvs diff -u existing_files &gt; x.diff</pre>
+
+<p>
+
+This creates a unified diff (one with + and - lines so you can see what was
+added and what was removed) in the file x.diff
+
+</p>
+<pre class="code">vim x.diff</pre>
+
+<p>
+
+Check the diff file in any editor, here we use vim.  You should check to see
+that the changes you requested are going in and that something major did not go
+wrong.  Also look to see if you haven&#039;t left any lines with ”# (pofilter): test description”
+which should have been deleted from the error checking <acronym title="Gettext Portable Object">PO</acronym> files.  Also check
+for stray fuzzy markers that shouldn&#039;t have been added.  You will have to make 
+corrections in the files in <em>existing_files</em> not in <em>errors</em>.
+</p>
+
+<p>
+When you are happy that the changes are correct run:
+
+</p>
+<pre class="code">cvs ci existing_files</pre>
+
+<p>
+
+Congratulations you have helped eliminate a number of errors that could give problems
+when running the application.  Now you might want to look at
+running some of the other tests that check for style and uniformity in translation.
+
+</p>
+
+</div>
+<!-- SECTION "Checking the corrections" [5836-] --></body>
+</html>

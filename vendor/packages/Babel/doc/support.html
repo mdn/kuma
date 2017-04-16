@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Support Classes and Functions</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="support-classes-and-functions">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Support Classes and Functions</h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#lazy-evaluation" id="id1">1   Lazy Evaluation</a></li>
+<li><a class="reference internal" href="#extended-translations-class" id="id2">2   Extended Translations Class</a></li>
+</ul>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">babel.support</span></tt> modules contains a number of classes and functions that
+can help with integrating Babel, and internationalization in general, into your
+application or framework. The code in this module is not used by Babel itself,
+but instead is provided to address common requirements of applications that
+should handle internationalization.</p>
+<div class="section" id="lazy-evaluation">
+<h1>1   Lazy Evaluation</h1>
+<p>One such requirement is lazy evaluation of translations. Many web-based
+applications define some localizable message at the module level, or in general
+at some level where the locale of the remote user is not yet known. For such
+cases, web frameworks generally provide a "lazy" variant of the <tt class="docutils literal"><span class="pre">gettext</span></tt>
+functions, which basically translates the message not when the <tt class="docutils literal"><span class="pre">gettext</span></tt>
+function is invoked, but when the string is accessed in some manner.</p>
+</div>
+<div class="section" id="extended-translations-class">
+<h1>2   Extended Translations Class</h1>
+<p>Many web-based applications are composed of a variety of different components
+(possibly using some kind of plugin system), and some of those components may
+provide their own message catalogs that need to be integrated into the larger
+system.</p>
+<p>To support this usage pattern, Babel provides a <tt class="docutils literal"><span class="pre">Translations</span></tt> class that is
+derived from the <tt class="docutils literal"><span class="pre">GNUTranslations</span></tt> class in the <tt class="docutils literal"><span class="pre">gettext</span></tt> module. This
+class adds a <tt class="docutils literal"><span class="pre">merge()</span></tt> method that takes another <tt class="docutils literal"><span class="pre">Translations</span></tt> instance,
+and merges the content of the latter into the main catalog:</p>
+<div class="highlight"><pre><span class="n">translations</span> <span class="o">=</span> <span class="n">Translations</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">'main'</span><span class="p">)</span>
+<span class="n">translations</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Translations</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">'plugin1'</span><span class="p">))</span>
+</pre></div>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

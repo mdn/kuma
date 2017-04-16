@@ -1,0 +1,150 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.multiengine
+==================
+
+Module: :mod:`kernel.multiengine`
+---------------------------------
+Inheritance diagram for ``IPython.kernel.multiengine``:
+
+.. inheritance-diagram:: IPython.kernel.multiengine 
+   :parts: 3
+
+.. automodule:: IPython.kernel.multiengine
+
+.. currentmodule:: IPython.kernel.multiengine
+
+Classes
+-------
+
+:class:`IEngineMultiplexer`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IEngineMultiplexer
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFullMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFullMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFullSynchronousMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFullSynchronousMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IMultiEngineCoordinator`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMultiEngineCoordinator
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IMultiEngineExtras`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMultiEngineExtras
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ISynchronousEngineMultiplexer`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ISynchronousEngineMultiplexer
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ISynchronousMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ISynchronousMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ISynchronousMultiEngineCoordinator`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ISynchronousMultiEngineCoordinator
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ISynchronousMultiEngineExtras`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ISynchronousMultiEngineExtras
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MultiEngine`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SynchronousMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SynchronousMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

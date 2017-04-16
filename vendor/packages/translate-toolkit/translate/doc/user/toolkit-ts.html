@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="qt_.ts" id="qt_.ts">Qt .ts</a></h1>
+<div class="level1">
+
+<p>
+
+The Qt toolkit uses a .ts file format to store translations which are traditionally edited using Qt Linguist.
+</p>
+
+</div>
+<!-- SECTION "Qt .ts" [1-133] -->
+<h2><a name="references" id="references">References</a></h2>
+<div class="level2">
+
+<p>
+
+The format is <acronym title="Extensible Markup Language">XML</acronym> and seems to only have been documented properly in Qt 4.3
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://doc.trolltech.com/4.5/linguist-ts-file-format.html" class="urlextern" title="http://doc.trolltech.com/4.5/linguist-ts-file-format.html">Current DTD Specification</a> for Qt 4.5, older versions; <a href="http://doc.trolltech.com/4.3/linguist-ts-file-format.html" class="urlextern" title="http://doc.trolltech.com/4.3/linguist-ts-file-format.html">Qt 4.3</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://svn.ez.no/svn/ezcomponents/trunk/Translation/docs/linguist-format.txt" class="urlextern" title="http://svn.ez.no/svn/ezcomponents/trunk/Translation/docs/linguist-format.txt">http://svn.ez.no/svn/ezcomponents/trunk/Translation/docs/linguist-format.txt</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "References" [134-509] -->
+<h2><a name="complete" id="complete">Complete</a></h2>
+<div class="level2">
+
+<p>
+
+Note that <a href="toolkit-ts2po.html" class="wikilink1" title="toolkit-ts2po.html">ts2po</a> uses and older version and does not support all of these features.  <a href="virtaal-index.html" class="wikilink2" title="virtaal-index.html">Virtaal</a> and other users of the new ts class support the following:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Context</div>
+</li>
+<li class="level1"><div class="li"> Message: status (unfinished, finished), source, translation</div>
+</li>
+<li class="level1"><div class="li"> Plurals: numerusform</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Complete" [510-807] -->
+<h2><a name="todo" id="todo">TODO</a></h2>
+<div class="level2">
+
+<p>
+
+<p><div class="noteclassic">A new parser has been added to the toolkit in v1.2. This allows <a href="virtaal-index.html" class="wikilink2" title="virtaal-index.html">Virtaal</a>, <a href="toolkit-pocount.html" class="wikilink1" title="toolkit-pocount.html">pocount</a> and other users to work with v1.1 of the .ts format.  This corrects almost all of the issues listed below.  The converters po2ts and ts2po continue to use the older storage class and thus continue to experience some of these problems.
+</div></p>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Compliance with above <acronym title="Document Type Definition">DTD</acronym></div>
+</li>
+<li class="level1"><div class="li"> byte: within various text areas</div>
+</li>
+<li class="level1"><div class="li"> translation: obsolete (currently handled with comments in conversion to <acronym title="Gettext Portable Object">PO</acronym>.  But should be able to convert Obsolete <acronym title="Gettext Portable Object">PO</acronym> back into obsolete TS.  This might mean moving this format properly onto the base class).</div>
+</li>
+<li class="level1"><div class="li"> lengthvariants</div>
+</li>
+<li class="level1"><div class="li"> *comment: various new comment fields</div>
+</li>
+<li class="level1"><div class="li"> old*: ability to store previous source and comments</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "TODO" [808-1573] -->
+<h2><a name="validate" id="validate">Validate</a></h2>
+<div class="level2">
+
+<p>
+
+These might work but need validation
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Encoding handling for non-UTF-8 file encodings</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Validate" [1574-] --></body>
+</html>

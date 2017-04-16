@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="omegat_glossary" id="omegat_glossary">OmegaT glossary</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteclassic">New in 1.5.1
+</div></p>
+</p>
+
+<p>
+OmegaT allows a translator to create a terminology list of glossary files.  It uses this file to provide its glossary matches to the OmegaT users.
+</p>
+
+</div>
+<!-- SECTION "OmegaT glossary" [1-206] -->
+<h2><a name="format_specifications" id="format_specifications">Format specifications</a></h2>
+<div class="level2">
+
+<p>
+
+The glossary files is a tab delimeted files with three columns:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> source</div>
+</li>
+<li class="level1"><div class="li"> target</div>
+</li>
+<li class="level1"><div class="li"> comment</div>
+</li>
+</ol>
+
+<p>
+
+The files is stored in the system locale if the files extension is <code>.txt</code> or in UTF-8 if the file extension is <code>.utf8</code>.
+</p>
+
+</div>
+<!-- SECTION "Format specifications" [207-466] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+
+<p>
+
+The implementation can load files in UTF-8 or the system encoding.
+</p>
+
+</div>
+<!-- SECTION "Conformance" [467-559] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> There has not been extensive testing on system encoded files and there are likely to be issues in these files for encodings that fall outside of common <acronym title="American Standard Code for Information Interchange">ASCII</acronym> characters.</div>
+</li>
+<li class="level1"><div class="li"> Files with additional columns are read correctly but cannot be written.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Issues" [560-] --></body>
+</html>

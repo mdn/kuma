@@ -1,0 +1,1201 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="URL Routing" href="routing.html">
+    <link rel="prev" title="Management Script Utilities" href="script.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="script.html">&laquo; Management Script Utilities</a></li>
+        <li class="active"><a href="">Wrappers</a></li>
+        <li><a href="routing.html">URL Routing &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Wrappers</a><ul>
+<li><a class="reference external" href="#how-they-work">How they Work</a></li>
+<li><a class="reference external" href="#base-wrappers">Base Wrappers</a></li>
+<li><a class="reference external" href="#mixin-classes">Mixin Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Wrappers<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>You can import all these objects directly from <tt class="xref docutils literal"><span class="pre">werkzeug</span></tt>.  Wrappers wrap
+the WSGI environment or the return value from a WSGI application so that it
+is another WSGI application (wraps a whole application).</p>
+<div class="section" id="how-they-work">
+<h2>How they Work<a class="headerlink" href="#how-they-work" title="Permalink to this headline">¶</a></h2>
+<p>Your WSGI application is always passed two arguments.  The WSGI &#8220;environment&#8221;
+and the WSGI <cite>start_response</cite> function that is used to start the response
+phase.  The <a title="werkzeug.Request" class="reference internal" href="#werkzeug.Request"><tt class="xref docutils literal"><span class="pre">Request</span></tt></a> class wraps the <cite>environ</cite> for easier access to
+request variables (form data, request headers etc.).</p>
+<p>The <a title="werkzeug.Response" class="reference internal" href="#werkzeug.Response"><tt class="xref docutils literal"><span class="pre">Response</span></tt></a> on the other hand is a standard WSGI application that
+you can create.  The simple hello world in Werkzeug looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello World!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To make it more useful you can replace it with a function and do some
+processing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="s">&quot;Hello </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;World!&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">response</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because this is a very common task the <a title="werkzeug.Request" class="reference internal" href="#werkzeug.Request"><tt class="xref docutils literal"><span class="pre">Request</span></tt></a> object provides
+a helper for that.  The above code can be rewritten like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span>
+
+<span class="nd">@Request</span><span class="o">.</span><span class="n">application</span>
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&quot;Hello </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;World!&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <cite>application</cite> is still a valid WSGI application that accepts the
+environment and <cite>start_response</cite> callable.</p>
+</div>
+<div class="section" id="base-wrappers">
+<h2>Base Wrappers<a class="headerlink" href="#base-wrappers" title="Permalink to this headline">¶</a></h2>
+<p>These objects implement a common set of operations.  They are missing fancy
+addon functionality like user agent parsing or etag handling.  These features
+are available by mixing in various mixin classes or using <a title="werkzeug.Request" class="reference internal" href="#werkzeug.Request"><tt class="xref docutils literal"><span class="pre">Request</span></tt></a> and
+<a title="werkzeug.Response" class="reference internal" href="#werkzeug.Response"><tt class="xref docutils literal"><span class="pre">Response</span></tt></a>.</p>
+<dl class="class">
+<dt id="werkzeug.BaseRequest">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">BaseRequest</tt><big>(</big><em>environ</em>, <em>populate_request=True</em>, <em>shallow=False</em><big>)</big><a class="headerlink" href="#werkzeug.BaseRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Very basic request object.  This does not implement advanced stuff like
+entity tag parsing or cache controls.  The request object is created with
+the WSGI environment as first argument and will add itself to the WSGI
+environment as <tt class="docutils literal"><span class="pre">'werkzeug.request'</span></tt> unless it&#8217;s created with
+<cite>populate_request</cite> set to False.</p>
+<p>There are a couple of mixins available that add additional functionality
+to the request object, there is also a class called <cite>Request</cite> which
+subclasses <cite>BaseRequest</cite> and all the important mixins.</p>
+<p>It&#8217;s a good idea to create a custom subclass of the <a title="werkzeug.BaseRequest" class="reference internal" href="#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a>
+and add missing functionality either via mixins or direct implementation.
+Here an example for such subclasses:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">BaseRequest</span><span class="p">,</span> <span class="n">ETagRequestMixin</span>
+
+<span class="k">class</span> <span class="nc">Request</span><span class="p">(</span><span class="n">BaseRequest</span><span class="p">,</span> <span class="n">ETagRequestMixin</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Request objects are <strong>read only</strong>.  As of 0.5 modifications are not
+allowed in any place.  Unlike the lower level parsing functions the
+request object will use immutable objects everywhere possible.</p>
+<p>Per default the request object will assume all the text data is <cite>utf-8</cite>
+encoded.  Please refer to <a class="reference external" href="unicode.txt">the unicode chapter</a> for more
+details about customizing the behavior.</p>
+<p>Per default the request object will be added to the WSGI
+environment as <cite>werkzeug.request</cite> to support the debugging system.
+If you don&#8217;t want that, set <cite>populate_request</cite> to <cite>False</cite>.</p>
+<p>If <cite>shallow</cite> is <cite>True</cite> the environment is initialized as shallow
+object around the environ.  Every operation that would modify the
+environ in any way (such as consuming form data) raises an exception
+unless the <cite>shallow</cite> attribute is explicitly set to <cite>False</cite>.  This
+is useful for middlewares where you don&#8217;t want to consume the form
+data by accident.  A shallow request is not populated to the WSGI
+environment.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>read-only mode was enforced by using immutables classes for all
+data.</p>
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.environ">
+<tt class="descname">environ</tt><a class="headerlink" href="#werkzeug.BaseRequest.environ" title="Permalink to this definition">¶</a></dt>
+<dd>The WSGI environment that the request object uses for data retrival.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.shallow">
+<tt class="descname">shallow</tt><a class="headerlink" href="#werkzeug.BaseRequest.shallow" title="Permalink to this definition">¶</a></dt>
+<dd><cite>True</cite> if this request object is shallow (does not modify <a title="werkzeug.BaseRequest.environ" class="reference internal" href="#werkzeug.BaseRequest.environ"><tt class="xref docutils literal"><span class="pre">environ</span></tt></a>),
+<cite>False</cite> otherwise.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseRequest._get_file_stream">
+<tt class="descname">_get_file_stream</tt><big>(</big><em>total_content_length</em>, <em>content_type</em>, <em>filename=None</em>, <em>content_length=None</em><big>)</big><a class="headerlink" href="#werkzeug.BaseRequest._get_file_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called to get a stream for the file upload.</p>
+<p>This must provide a file-like class with <cite>read()</cite>, <cite>readline()</cite>
+and <cite>seek()</cite> methods that is both writeable and readable.</p>
+<p>The default implementation returns a temporary file if the total
+content length is higher than 500KB.  Because many browsers do not
+provide a content length for the files only the total content
+length matters.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>Previously this function was not passed any arguments.  In 0.5 older
+functions not accepting any arguments are still supported for
+backwards compatibility.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>total_content_length</em> &#8211; the total content length of all the
+data in the request combined.  This value
+is guaranteed to be there.</li>
+<li><em>content_type</em> &#8211; the mimetype of the uploaded file.</li>
+<li><em>filename</em> &#8211; the filename of the uploaded file.  May be <cite>None</cite>.</li>
+<li><em>content_length</em> &#8211; the length of this file.  This value is usually
+not provided because webbrowsers do not provide
+this value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseRequest._form_parsing_failed">
+<tt class="descname">_form_parsing_failed</tt><big>(</big><em>error</em><big>)</big><a class="headerlink" href="#werkzeug.BaseRequest._form_parsing_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called if parsing of form data failed.  This is currently only
+invoked for failed multipart uploads.  By default this method does
+nothing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>error</em> &#8211; a <cite>ValueError</cite> object with a message why the
+parsing failed.</td>
+</tr>
+</tbody>
+</table>
+<p>
+<span class="versionmodified">New in version 0.5.1.</span></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.access_route">
+<tt class="descname">access_route</tt><a class="headerlink" href="#werkzeug.BaseRequest.access_route" title="Permalink to this definition">¶</a></dt>
+<dd>If a forwarded header exists this is a list of all ip addresses
+from the client ip to the last proxy server.</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.BaseRequest.application">
+<em class="property">
+classmethod </em><tt class="descname">application</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#werkzeug.BaseRequest.application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorate a function as responder that accepts the request as first
+argument.  This works like the <a title="werkzeug.responder" class="reference external" href="utils.html#werkzeug.responder"><tt class="xref docutils literal"><span class="pre">responder</span></tt></a> decorator but the
+function is passed the request object as first argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Request</span><span class="o">.</span><span class="n">application</span>
+<span class="k">def</span> <span class="nf">my_wsgi_app</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello World!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>f</em> &#8211; the WSGI callable to decorate</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a new WSGI callable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.args">
+<tt class="descname">args</tt><a class="headerlink" href="#werkzeug.BaseRequest.args" title="Permalink to this definition">¶</a></dt>
+<dd>The parsed URL parameters as <a title="werkzeug.ImmutableMultiDict" class="reference external" href="datastructures.html#werkzeug.ImmutableMultiDict"><tt class="xref docutils literal"><span class="pre">ImmutableMultiDict</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.base_url">
+<tt class="descname">base_url</tt><a class="headerlink" href="#werkzeug.BaseRequest.base_url" title="Permalink to this definition">¶</a></dt>
+<dd>Like <a title="werkzeug.BaseRequest.url" class="reference internal" href="#werkzeug.BaseRequest.url"><tt class="xref docutils literal"><span class="pre">url</span></tt></a> but without the querystring</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.charset">
+<tt class="descname">charset</tt><a class="headerlink" href="#werkzeug.BaseRequest.charset" title="Permalink to this definition">¶</a></dt>
+<dd>the charset for the request, defaults to utf-8</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.cookies">
+<tt class="descname">cookies</tt><a class="headerlink" href="#werkzeug.BaseRequest.cookies" title="Permalink to this definition">¶</a></dt>
+<dd>The retrieved cookie values as regular dictionary.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.data">
+<tt class="descname">data</tt><a class="headerlink" href="#werkzeug.BaseRequest.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This reads the buffered incoming data from the client into the
+string.  Usually it&#8217;s a bad idea to access <a title="werkzeug.BaseRequest.data" class="reference internal" href="#werkzeug.BaseRequest.data"><tt class="xref docutils literal"><span class="pre">data</span></tt></a> because a client
+could send dozens of megabytes or more to cause memory problems on the
+server.</p>
+<p>To circumvent that make sure to check the content length first.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.encoding_errors">
+<tt class="descname">encoding_errors</tt><a class="headerlink" href="#werkzeug.BaseRequest.encoding_errors" title="Permalink to this definition">¶</a></dt>
+<dd>the error handling procedure for errors, defaults to &#8216;ignore&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.files">
+<tt class="descname">files</tt><a class="headerlink" href="#werkzeug.BaseRequest.files" title="Permalink to this definition">¶</a></dt>
+<dd><p><a title="werkzeug.MultiDict" class="reference external" href="datastructures.html#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> object containing all uploaded files.  Each key in
+<a title="werkzeug.BaseRequest.files" class="reference internal" href="#werkzeug.BaseRequest.files"><tt class="xref docutils literal"><span class="pre">files</span></tt></a> is the name from the <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;file&quot;</span> <span class="pre">name=&quot;&quot;&gt;</span></tt>.  Each
+value in <a title="werkzeug.BaseRequest.files" class="reference internal" href="#werkzeug.BaseRequest.files"><tt class="xref docutils literal"><span class="pre">files</span></tt></a> is a Werkzeug <a title="werkzeug.FileStorage" class="reference external" href="datastructures.html#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a> object.</p>
+<p>Note that <a title="werkzeug.BaseRequest.files" class="reference internal" href="#werkzeug.BaseRequest.files"><tt class="xref docutils literal"><span class="pre">files</span></tt></a> will only contain data if the request method was
+POST or PUT and the <tt class="docutils literal"><span class="pre">&lt;form&gt;</span></tt> that posted to the request had
+<tt class="docutils literal"><span class="pre">enctype=&quot;multipart/form-data&quot;</span></tt>.  It will be empty otherwise.</p>
+<p>See the <a title="werkzeug.MultiDict" class="reference external" href="datastructures.html#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> / <a title="werkzeug.FileStorage" class="reference external" href="datastructures.html#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a> documentation for more
+details about the used data structure.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.form">
+<tt class="descname">form</tt><a class="headerlink" href="#werkzeug.BaseRequest.form" title="Permalink to this definition">¶</a></dt>
+<dd>Form parameters.  Currently it&#8217;s not guaranteed that the
+<a title="werkzeug.ImmutableMultiDict" class="reference external" href="datastructures.html#werkzeug.ImmutableMultiDict"><tt class="xref docutils literal"><span class="pre">ImmutableMultiDict</span></tt></a> returned by this function is ordered in
+the same way as the submitted form data.</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.BaseRequest.from_values">
+<em class="property">
+classmethod </em><tt class="descname">from_values</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#werkzeug.BaseRequest.from_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new request object based on the values provided.  If
+environ is given missing values are filled from there.  This method is
+useful for small scripts when you need to simulate a request from an URL.
+Do not use this method for unittesting, there is a full featured client
+object (<a title="werkzeug.Client" class="reference external" href="test.html#werkzeug.Client"><tt class="xref docutils literal"><span class="pre">Client</span></tt></a>) that allows to create multipart requests,
+support for cookies etc.</p>
+<p>This accepts the same options as the <a title="werkzeug.EnvironBuilder" class="reference external" href="test.html#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a>.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>This method now accepts the same arguments as
+<a title="werkzeug.EnvironBuilder" class="reference external" href="test.html#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a>.  Because of this the <cite>environ</cite> parameter
+is now called <cite>environ_overrides</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">request object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#werkzeug.BaseRequest.headers" title="Permalink to this definition">¶</a></dt>
+<dd>The headers from the WSGI environ as immutable
+<a title="werkzeug.EnvironHeaders" class="reference external" href="datastructures.html#werkzeug.EnvironHeaders"><tt class="xref docutils literal"><span class="pre">EnvironHeaders</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.host">
+<tt class="descname">host</tt><a class="headerlink" href="#werkzeug.BaseRequest.host" title="Permalink to this definition">¶</a></dt>
+<dd>Just the host including the port if available.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.host_url">
+<tt class="descname">host_url</tt><a class="headerlink" href="#werkzeug.BaseRequest.host_url" title="Permalink to this definition">¶</a></dt>
+<dd>Just the host with scheme.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.is_behind_proxy">
+<tt class="descname">is_behind_proxy</tt><a class="headerlink" href="#werkzeug.BaseRequest.is_behind_proxy" title="Permalink to this definition">¶</a></dt>
+<dd>set to True if the application runs behind an HTTP proxy</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.is_multiprocess">
+<tt class="descname">is_multiprocess</tt><a class="headerlink" href="#werkzeug.BaseRequest.is_multiprocess" title="Permalink to this definition">¶</a></dt>
+<dd>boolean that is <cite>True</cite> if the application is served by
+a WSGI server that spawns multiple processes.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.is_multithread">
+<tt class="descname">is_multithread</tt><a class="headerlink" href="#werkzeug.BaseRequest.is_multithread" title="Permalink to this definition">¶</a></dt>
+<dd>boolean that is <cite>True</cite> if the application is served by
+a multithreaded WSGI server.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.is_run_once">
+<tt class="descname">is_run_once</tt><a class="headerlink" href="#werkzeug.BaseRequest.is_run_once" title="Permalink to this definition">¶</a></dt>
+<dd>boolean that is <cite>True</cite> if the application will be executed only
+once in a process lifetime.  This is the case for CGI for example,
+but it&#8217;s not guaranteed that the exeuction only happens one time.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.is_secure">
+<tt class="descname">is_secure</tt><a class="headerlink" href="#werkzeug.BaseRequest.is_secure" title="Permalink to this definition">¶</a></dt>
+<dd><cite>True</cite> if the request is secure.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.is_xhr">
+<tt class="descname">is_xhr</tt><a class="headerlink" href="#werkzeug.BaseRequest.is_xhr" title="Permalink to this definition">¶</a></dt>
+<dd>True if the request was triggered via a JavaScript XMLHttpRequest.
+This only works with libraries that support the <cite>X-Requested-With</cite>
+header and set it to &#8220;XMLHttpRequest&#8221;.  Libraries that do that are
+prototype, jQuery and Mochikit and probably some more.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.max_content_length">
+<tt class="descname">max_content_length</tt><a class="headerlink" href="#werkzeug.BaseRequest.max_content_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>the maximum content length.  This is forwarded to the form data
+parsing function (<a title="werkzeug.parse_form_data" class="reference external" href="utils.html#werkzeug.parse_form_data"><tt class="xref docutils literal"><span class="pre">parse_form_data</span></tt></a>).  When set and the
+<a title="werkzeug.BaseRequest.form" class="reference internal" href="#werkzeug.BaseRequest.form"><tt class="xref docutils literal"><span class="pre">form</span></tt></a> or <a title="werkzeug.BaseRequest.files" class="reference internal" href="#werkzeug.BaseRequest.files"><tt class="xref docutils literal"><span class="pre">files</span></tt></a> attribute is accessed and the
+parsing fails because more than the specified value is transmitted
+a <a title="werkzeug.exceptions.RequestEntityTooLarge" class="reference external" href="exceptions.html#werkzeug.exceptions.RequestEntityTooLarge"><tt class="xref docutils literal"><span class="pre">RequestEntityTooLarge</span></tt></a> exception is raised.</p>
+<p>Have a look at <a class="reference external" href="request_data.html#dealing-with-request-data"><em>Dealing with Request Data</em></a> for more details.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.max_form_memory_size">
+<tt class="descname">max_form_memory_size</tt><a class="headerlink" href="#werkzeug.BaseRequest.max_form_memory_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>the maximum form field size.  This is forwarded to the form data
+parsing function (<a title="werkzeug.parse_form_data" class="reference external" href="utils.html#werkzeug.parse_form_data"><tt class="xref docutils literal"><span class="pre">parse_form_data</span></tt></a>).  When set and the
+<a title="werkzeug.BaseRequest.form" class="reference internal" href="#werkzeug.BaseRequest.form"><tt class="xref docutils literal"><span class="pre">form</span></tt></a> or <a title="werkzeug.BaseRequest.files" class="reference internal" href="#werkzeug.BaseRequest.files"><tt class="xref docutils literal"><span class="pre">files</span></tt></a> attribute is accessed and the
+data in memory for post data is longer than the specified value a
+<a title="werkzeug.exceptions.RequestEntityTooLarge" class="reference external" href="exceptions.html#werkzeug.exceptions.RequestEntityTooLarge"><tt class="xref docutils literal"><span class="pre">RequestEntityTooLarge</span></tt></a> exception is raised.</p>
+<p>Have a look at <a class="reference external" href="request_data.html#dealing-with-request-data"><em>Dealing with Request Data</em></a> for more details.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.method">
+<tt class="descname">method</tt><a class="headerlink" href="#werkzeug.BaseRequest.method" title="Permalink to this definition">¶</a></dt>
+<dd>The transmission method. (For example <tt class="docutils literal"><span class="pre">'GET'</span></tt> or <tt class="docutils literal"><span class="pre">'POST'</span></tt>).</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.path">
+<tt class="descname">path</tt><a class="headerlink" href="#werkzeug.BaseRequest.path" title="Permalink to this definition">¶</a></dt>
+<dd>Requested path as unicode.  This works a bit like the regular path
+info in the WSGI environment but will always include a leading slash,
+even if the URL root is accessed.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.query_string">
+<tt class="descname">query_string</tt><a class="headerlink" href="#werkzeug.BaseRequest.query_string" title="Permalink to this definition">¶</a></dt>
+<dd>The URL parameters as raw bytestring.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.remote_addr">
+<tt class="descname">remote_addr</tt><a class="headerlink" href="#werkzeug.BaseRequest.remote_addr" title="Permalink to this definition">¶</a></dt>
+<dd>The remote address of the client.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.remote_user">
+<tt class="descname">remote_user</tt><a class="headerlink" href="#werkzeug.BaseRequest.remote_user" title="Permalink to this definition">¶</a></dt>
+<dd>If the server supports user authentication, and the script is
+protected, this attribute contains the username the user has
+authenticated as.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.script_root">
+<tt class="descname">script_root</tt><a class="headerlink" href="#werkzeug.BaseRequest.script_root" title="Permalink to this definition">¶</a></dt>
+<dd>The root path of the script without the trailing slash.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.stream">
+<tt class="descname">stream</tt><a class="headerlink" href="#werkzeug.BaseRequest.stream" title="Permalink to this definition">¶</a></dt>
+<dd>The parsed stream if the submitted data was not multipart or
+urlencoded form data.  This stream is the stream left by the form data
+parser module after parsing.  This is <em>not</em> the WSGI input stream but
+a wrapper around it that ensures the caller does not accidentally
+read past <cite>Content-Length</cite>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.url">
+<tt class="descname">url</tt><a class="headerlink" href="#werkzeug.BaseRequest.url" title="Permalink to this definition">¶</a></dt>
+<dd>The reconstructed current URL</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.url_root">
+<tt class="descname">url_root</tt><a class="headerlink" href="#werkzeug.BaseRequest.url_root" title="Permalink to this definition">¶</a></dt>
+<dd>The full URL root (with hostname), this is the application root.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseRequest.values">
+<tt class="descname">values</tt><a class="headerlink" href="#werkzeug.BaseRequest.values" title="Permalink to this definition">¶</a></dt>
+<dd>Combined multi dict for <a title="werkzeug.BaseRequest.args" class="reference internal" href="#werkzeug.BaseRequest.args"><tt class="xref docutils literal"><span class="pre">args</span></tt></a> and <a title="werkzeug.BaseRequest.form" class="reference internal" href="#werkzeug.BaseRequest.form"><tt class="xref docutils literal"><span class="pre">form</span></tt></a>.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.BaseResponse">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">BaseResponse</tt><big>(</big><em>response=None</em>, <em>status=None</em>, <em>headers=None</em>, <em>mimetype=None</em>, <em>content_type=None</em>, <em>direct_passthrough=False</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base response class.  The most important fact about a response object
+is that it&#8217;s a regular WSGI application.  It&#8217;s initialized with a couple
+of response parameters (headers, body, status code etc.) and will start a
+valid WSGI response when called with the environ and start response
+callable.</p>
+<p>Because it&#8217;s a WSGI application itself processing usually ends before the
+actual response is sent to the server.  This helps debugging systems
+because they can catch all the exceptions before responses are started.</p>
+<p>Here a small example WSGI application that takes advantage of the
+response objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">BaseResponse</span> <span class="k">as</span> <span class="n">Response</span>
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Index page&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;PATH_INFO&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s">&#39;/&#39;</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">index</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Not Found&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mf">404</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like <a title="werkzeug.BaseRequest" class="reference internal" href="#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a> which object is lacking a lot of functionality
+implemented in mixins.  This gives you a better control about the actual
+API of your response objects, so you can create subclasses and add custom
+functionality.  A full featured response object is available as
+<a title="werkzeug.Response" class="reference internal" href="#werkzeug.Response"><tt class="xref docutils literal"><span class="pre">Response</span></tt></a> which implements a couple of useful mixins.</p>
+<p>To enforce a new type of already existing responses you can use the
+<a title="werkzeug.BaseResponse.force_type" class="reference internal" href="#werkzeug.BaseResponse.force_type"><tt class="xref docutils literal"><span class="pre">force_type</span></tt></a> method.  This is useful if you&#8217;re working with different
+subclasses of response objects and you want to post process them with a
+know interface.</p>
+<p>Per default the request object will assume all the text data is <cite>utf-8</cite>
+encoded.  Please refer to <a class="reference external" href="unicode.txt">the unicode chapter</a> for more
+details about customizing the behavior.</p>
+<p>Response can be any kind of iterable or string.  If it&#8217;s a string
+it&#8217;s considered being an iterable with one item which is the string
+passed.  Headers can be a list of tuples or a <a title="werkzeug.Headers" class="reference external" href="datastructures.html#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object.</p>
+<p>Special note for <cite>mimetype</cite> and <cite>content_type</cite>:  For most mime types
+<cite>mimetype</cite> and <cite>content_type</cite> work the same, the difference affects
+only &#8216;text&#8217; mimetypes.  If the mimetype passed with <cite>mimetype</cite> is a
+mimetype starting with <cite>text/</cite> it becomes a charset parameter defined
+with the charset of the response object.  In contrast the
+<cite>content_type</cite> parameter is always added as header unmodified.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>the <cite>direct_passthrough</cite> parameter was added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>response</em> &#8211; a string or response iterable.</li>
+<li><em>status</em> &#8211; a string with a status or an integer with the status code.</li>
+<li><em>headers</em> &#8211; a list of headers or an <a title="werkzeug.Headers" class="reference external" href="datastructures.html#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object.</li>
+<li><em>mimetype</em> &#8211; the mimetype for the request.  See notice above.</li>
+<li><em>content_type</em> &#8211; the content type for the request.  See notice above.</li>
+<li><em>direct_passthrough</em> &#8211; if set to <cite>True</cite> <a title="werkzeug.BaseResponse.iter_encoded" class="reference internal" href="#werkzeug.BaseResponse.iter_encoded"><tt class="xref docutils literal"><span class="pre">iter_encoded</span></tt></a> is not
+called before iteration which makes it
+possible to pass special iterators though
+unchanged (see <a title="werkzeug.wrap_file" class="reference external" href="utils.html#werkzeug.wrap_file"><tt class="xref docutils literal"><span class="pre">wrap_file</span></tt></a> for more
+details.)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.response">
+<tt class="descname">response</tt><a class="headerlink" href="#werkzeug.BaseResponse.response" title="Permalink to this definition">¶</a></dt>
+<dd>The application iterator.  If constructed from a string this will be a
+list, otherwise the object provided as application iterator.  (The first
+argument passed to <a title="werkzeug.BaseResponse" class="reference internal" href="#werkzeug.BaseResponse"><tt class="xref docutils literal"><span class="pre">BaseResponse</span></tt></a>)</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#werkzeug.BaseResponse.headers" title="Permalink to this definition">¶</a></dt>
+<dd>A <a title="werkzeug.Headers" class="reference external" href="datastructures.html#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object representing the response headers.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.status_code">
+<tt class="descname">status_code</tt><a class="headerlink" href="#werkzeug.BaseResponse.status_code" title="Permalink to this definition">¶</a></dt>
+<dd>The response status as integer.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.direct_passthrough">
+<tt class="descname">direct_passthrough</tt><a class="headerlink" href="#werkzeug.BaseResponse.direct_passthrough" title="Permalink to this definition">¶</a></dt>
+<dd>If <tt class="docutils literal"><span class="pre">direct_passthrough=True</span></tt> was passed to the response object or if
+this attribute was set to <cite>True</cite> before using the response object as
+WSGI application, the wrapped iterator is returned unchanged.  This
+makes it possible to pass a special <cite>wsgi.file_wrapper</cite> to the response
+object.  See <a title="werkzeug.wrap_file" class="reference external" href="utils.html#werkzeug.wrap_file"><tt class="xref docutils literal"><span class="pre">wrap_file</span></tt></a> for more details.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>environ</em>, <em>start_response</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process this response as WSGI application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>environ</em> &#8211; the WSGI environment.</li>
+<li><em>start_response</em> &#8211; the response callable provided by the WSGI
+server.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.close" title="Permalink to this definition">¶</a></dt>
+<dd>Close the wrapped response if possible.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.data">
+<tt class="descname">data</tt><a class="headerlink" href="#werkzeug.BaseResponse.data" title="Permalink to this definition">¶</a></dt>
+<dd>The string representation of the request body.  Whenever you access
+this property the request iterable is encoded and flattened.  This
+can lead to unwanted behavior if you stream big data.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.delete_cookie">
+<tt class="descname">delete_cookie</tt><big>(</big><em>key</em>, <em>path='/'</em>, <em>domain=None</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.delete_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a cookie.  Fails silently if key doesn&#8217;t exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key (name) of the cookie to be deleted.</li>
+<li><em>path</em> &#8211; if the cookie that should be deleted was limited to a
+path, the path has to be defined here.</li>
+<li><em>domain</em> &#8211; if the cookie that should be deleted was limited to a
+domain, that domain has to be defined here.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.fix_headers">
+<tt class="descname">fix_headers</tt><big>(</big><em>environ</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.fix_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is automatically called right before the response is started
+and should fix common mistakes in headers.  For example location
+headers are joined with the root URL here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>environ</em> &#8211; the WSGI environment of the request to be used for
+the applied fixes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.BaseResponse.force_type">
+<em class="property">
+classmethod </em><tt class="descname">force_type</tt><big>(</big><em>response</em>, <em>environ=None</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.force_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enforce that the WSGI response is a response object of the current
+type.  Werkzeug will use the <a title="werkzeug.BaseResponse" class="reference internal" href="#werkzeug.BaseResponse"><tt class="xref docutils literal"><span class="pre">BaseResponse</span></tt></a> internally in many
+situations like the exceptions.  If you call <tt class="xref docutils literal"><span class="pre">get_response</span></tt> on an
+exception you will get back a regular <a title="werkzeug.BaseResponse" class="reference internal" href="#werkzeug.BaseResponse"><tt class="xref docutils literal"><span class="pre">BaseResponse</span></tt></a> object, even
+if you are using a custom subclass.</p>
+<p>This method can enforce a given response type, and it will also
+convert arbitrary WSGI callables into response objects if an environ
+is provided:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># convert a Werkzeug response object into an instance of the</span>
+<span class="c"># MyResponseClass subclass.</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">MyResponseClass</span><span class="o">.</span><span class="n">force_type</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="c"># convert any WSGI application into a response object</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">MyResponseClass</span><span class="o">.</span><span class="n">force_type</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">environ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is especially useful if you want to post-process responses in
+the main dispatcher and use functionality provided by your subclass.</p>
+<p>Keep in mind that this will modify response objects in place if
+possible!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>response</em> &#8211; a response object or wsgi application.</li>
+<li><em>environ</em> &#8211; a WSGI environment object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a response object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.freeze">
+<tt class="descname">freeze</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.freeze" title="Permalink to this definition">¶</a></dt>
+<dd>Call this method if you want to make your response object ready for
+being pickled.  This buffers the generator if there is one.</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.BaseResponse.from_app">
+<em class="property">
+classmethod </em><tt class="descname">from_app</tt><big>(</big><em>app</em>, <em>environ</em>, <em>buffered=False</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.from_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new response object from an application output.  This
+works best if you pass it an application that returns a generator all
+the time.  Sometimes applications may use the <cite>write()</cite> callable
+returned by the <cite>start_response</cite> function.  This tries to resolve such
+edge cases automatically.  But if you don&#8217;t get the expected output
+you should set <cite>buffered</cite> to <cite>True</cite> which enforces buffering.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>app</em> &#8211; the WSGI application to execute.</li>
+<li><em>environ</em> &#8211; the WSGI environment to execute against.</li>
+<li><em>buffered</em> &#8211; set to <cite>True</cite> to enforce buffering.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a response object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.header_list">
+<tt class="descname">header_list</tt><a class="headerlink" href="#werkzeug.BaseResponse.header_list" title="Permalink to this definition">¶</a></dt>
+<dd>This returns the headers in the target charset as list.  It&#8217;s used
+in __call__ to get the headers for the response.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.BaseResponse.is_streamed">
+<tt class="descname">is_streamed</tt><a class="headerlink" href="#werkzeug.BaseResponse.is_streamed" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the response is streamed (the response is not a sequence) this
+property is <cite>True</cite>.  In this case streamed means that there is no
+information about the number of iterations.  This is usully <cite>True</cite>
+if a generator is passed to the response object.</p>
+<p>This is useful for checking before applying some sort of post
+filtering that should not take place for streamed responses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.iter_encoded">
+<tt class="descname">iter_encoded</tt><big>(</big><em>charset=None</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.iter_encoded" title="Permalink to this definition">¶</a></dt>
+<dd>Iter the response encoded with the encoding specified.  If no
+encoding is given the encoding from the class is used.  Note that
+this does not encode data that is already a bytestring.  If the
+response object is invoked as WSGI application the return value
+of this method is used as application iterator except if
+<a title="werkzeug.BaseResponse.direct_passthrough" class="reference internal" href="#werkzeug.BaseResponse.direct_passthrough"><tt class="xref docutils literal"><span class="pre">direct_passthrough</span></tt></a> was activated.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.BaseResponse.set_cookie">
+<tt class="descname">set_cookie</tt><big>(</big><em>key</em>, <em>value=''</em>, <em>max_age=None</em>, <em>expires=None</em>, <em>path='/'</em>, <em>domain=None</em>, <em>secure=None</em>, <em>httponly=False</em><big>)</big><a class="headerlink" href="#werkzeug.BaseResponse.set_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a cookie. The parameters are the same as in the cookie <cite>Morsel</cite>
+object in the Python standard library but it accepts unicode data, too.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key (name) of the cookie to be set.</li>
+<li><em>value</em> &#8211; the value of the cookie.</li>
+<li><em>max_age</em> &#8211; should be a number of seconds, or <cite>None</cite> (default) if
+the cookie should last only as long as the client&#8217;s
+browser session.</li>
+<li><em>expires</em> &#8211; should be a <cite>datetime</cite> object or UNIX timestamp.</li>
+<li><em>domain</em> &#8211; if you want to set a cross-domain cookie.  For example,
+<tt class="docutils literal"><span class="pre">domain=&quot;.example.com&quot;</span></tt> will set a cookie that is
+readable by the domain <tt class="docutils literal"><span class="pre">www.example.com</span></tt>,
+<tt class="docutils literal"><span class="pre">foo.example.com</span></tt> etc.  Otherwise, a cookie will only
+be readable by the domain that set it.</li>
+<li><em>path</em> &#8211; limits the cookie to a given path, per default it will
+span the whole domain.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mixin-classes">
+<h2>Mixin Classes<a class="headerlink" href="#mixin-classes" title="Permalink to this headline">¶</a></h2>
+<p>Werkzeug also provides helper mixins for various HTTP related functionality
+such as etags, cache control, user agents etc.  When subclassing you can
+mix those classes in to extend the functionality of the <a title="werkzeug.BaseRequest" class="reference internal" href="#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a>
+or <a title="werkzeug.BaseResponse" class="reference internal" href="#werkzeug.BaseResponse"><tt class="xref docutils literal"><span class="pre">BaseResponse</span></tt></a> object.  Here a small example for a request object
+that parses accept headers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">BaseRequest</span><span class="p">,</span> <span class="n">AcceptMixin</span>
+
+<span class="k">class</span> <span class="nc">Request</span><span class="p">(</span><span class="n">BaseRequest</span><span class="p">,</span> <span class="n">AcceptMixin</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>The <a title="werkzeug.Request" class="reference internal" href="#werkzeug.Request"><tt class="xref docutils literal"><span class="pre">Request</span></tt></a> and <a title="werkzeug.Response" class="reference internal" href="#werkzeug.Response"><tt class="xref docutils literal"><span class="pre">Response</span></tt></a> classes subclass the <a title="werkzeug.BaseRequest" class="reference internal" href="#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a>
+and <a title="werkzeug.BaseResponse" class="reference internal" href="#werkzeug.BaseResponse"><tt class="xref docutils literal"><span class="pre">BaseResponse</span></tt></a> classes and implement all the mixins Werkzeug provides:</p>
+<dl class="class">
+<dt id="werkzeug.Request">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Request</tt><big>(</big><em>environ</em>, <em>populate_request=True</em>, <em>shallow=False</em><big>)</big><a class="headerlink" href="#werkzeug.Request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Full featured request object implementing the following mixins:</p>
+<ul class="simple">
+<li><a title="werkzeug.AcceptMixin" class="reference internal" href="#werkzeug.AcceptMixin"><tt class="xref docutils literal"><span class="pre">AcceptMixin</span></tt></a> for accept header parsing</li>
+<li><a title="werkzeug.ETagRequestMixin" class="reference internal" href="#werkzeug.ETagRequestMixin"><tt class="xref docutils literal"><span class="pre">ETagRequestMixin</span></tt></a> for etag and cache control handling</li>
+<li><a title="werkzeug.UserAgentMixin" class="reference internal" href="#werkzeug.UserAgentMixin"><tt class="xref docutils literal"><span class="pre">UserAgentMixin</span></tt></a> for user agent introspection</li>
+<li><a title="werkzeug.AuthorizationMixin" class="reference internal" href="#werkzeug.AuthorizationMixin"><tt class="xref docutils literal"><span class="pre">AuthorizationMixin</span></tt></a> for http auth handling</li>
+<li><a title="werkzeug.CommonRequestDescriptorsMixin" class="reference internal" href="#werkzeug.CommonRequestDescriptorsMixin"><tt class="xref docutils literal"><span class="pre">CommonRequestDescriptorsMixin</span></tt></a> for common headers</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.Response">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Response</tt><big>(</big><em>response=None</em>, <em>status=None</em>, <em>headers=None</em>, <em>mimetype=None</em>, <em>content_type=None</em>, <em>direct_passthrough=False</em><big>)</big><a class="headerlink" href="#werkzeug.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Full featured response object implementing the following mixins:</p>
+<ul class="simple">
+<li><a title="werkzeug.ETagResponseMixin" class="reference internal" href="#werkzeug.ETagResponseMixin"><tt class="xref docutils literal"><span class="pre">ETagResponseMixin</span></tt></a> for etag and cache control handling</li>
+<li><a title="werkzeug.ResponseStreamMixin" class="reference internal" href="#werkzeug.ResponseStreamMixin"><tt class="xref docutils literal"><span class="pre">ResponseStreamMixin</span></tt></a> to add support for the <cite>stream</cite> property</li>
+<li><a title="werkzeug.CommonResponseDescriptorsMixin" class="reference internal" href="#werkzeug.CommonResponseDescriptorsMixin"><tt class="xref docutils literal"><span class="pre">CommonResponseDescriptorsMixin</span></tt></a> for various HTTP descriptors</li>
+<li><a title="werkzeug.WWWAuthenticateMixin" class="reference internal" href="#werkzeug.WWWAuthenticateMixin"><tt class="xref docutils literal"><span class="pre">WWWAuthenticateMixin</span></tt></a> for HTTP authentication support</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.AcceptMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">AcceptMixin</tt><a class="headerlink" href="#werkzeug.AcceptMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mixin for classes with an <tt class="xref docutils literal"><span class="pre">environ</span></tt> attribute to
+get all the HTTP accept headers as <a title="werkzeug.Accept" class="reference external" href="datastructures.html#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> objects (or subclasses
+thereof).</p>
+<dl class="attribute">
+<dt id="werkzeug.AcceptMixin.accept_charsets">
+<tt class="descname">accept_charsets</tt><a class="headerlink" href="#werkzeug.AcceptMixin.accept_charsets" title="Permalink to this definition">¶</a></dt>
+<dd>List of charsets this client supports as <a title="werkzeug.CharsetAccept" class="reference external" href="datastructures.html#werkzeug.CharsetAccept"><tt class="xref docutils literal"><span class="pre">CharsetAccept</span></tt></a>
+object.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.AcceptMixin.accept_encodings">
+<tt class="descname">accept_encodings</tt><a class="headerlink" href="#werkzeug.AcceptMixin.accept_encodings" title="Permalink to this definition">¶</a></dt>
+<dd>List of encodings this client accepts.  Encodings in a HTTP term
+are compression encodings such as gzip.  For charsets have a look at
+<tt class="xref docutils literal"><span class="pre">accept_charset</span></tt>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.AcceptMixin.accept_languages">
+<tt class="descname">accept_languages</tt><a class="headerlink" href="#werkzeug.AcceptMixin.accept_languages" title="Permalink to this definition">¶</a></dt>
+<dd>List of languages this client accepts as <a title="werkzeug.LanguageAccept" class="reference external" href="datastructures.html#werkzeug.LanguageAccept"><tt class="xref docutils literal"><span class="pre">LanguageAccept</span></tt></a>
+object.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.AcceptMixin.accept_mimetypes">
+<tt class="descname">accept_mimetypes</tt><a class="headerlink" href="#werkzeug.AcceptMixin.accept_mimetypes" title="Permalink to this definition">¶</a></dt>
+<dd>List of mimetypes this client supports as <a title="werkzeug.MIMEAccept" class="reference external" href="datastructures.html#werkzeug.MIMEAccept"><tt class="xref docutils literal"><span class="pre">MIMEAccept</span></tt></a>
+object.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.AuthorizationMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">AuthorizationMixin</tt><a class="headerlink" href="#werkzeug.AuthorizationMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an <a title="werkzeug.AuthorizationMixin.authorization" class="reference internal" href="#werkzeug.AuthorizationMixin.authorization"><tt class="xref docutils literal"><span class="pre">authorization</span></tt></a> property that represents the parsed value
+of the <cite>Authorization</cite> header as <a title="werkzeug.Authorization" class="reference external" href="datastructures.html#werkzeug.Authorization"><tt class="xref docutils literal"><span class="pre">Authorization</span></tt></a> object.</p>
+<dl class="attribute">
+<dt id="werkzeug.AuthorizationMixin.authorization">
+<tt class="descname">authorization</tt><a class="headerlink" href="#werkzeug.AuthorizationMixin.authorization" title="Permalink to this definition">¶</a></dt>
+<dd>The <cite>Authorization</cite> object in parsed form.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ETagRequestMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ETagRequestMixin</tt><a class="headerlink" href="#werkzeug.ETagRequestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add entity tag and cache descriptors to a request object or object with
+a WSGI environment available as <a title="werkzeug.BaseRequest.environ" class="reference internal" href="#werkzeug.BaseRequest.environ"><tt class="xref docutils literal"><span class="pre">environ</span></tt></a>.  This not
+only provides access to etags but also to the cache control header.</p>
+<dl class="attribute">
+<dt id="werkzeug.ETagRequestMixin.cache_control">
+<tt class="descname">cache_control</tt><a class="headerlink" href="#werkzeug.ETagRequestMixin.cache_control" title="Permalink to this definition">¶</a></dt>
+<dd>A <a title="werkzeug.RequestCacheControl" class="reference external" href="datastructures.html#werkzeug.RequestCacheControl"><tt class="xref docutils literal"><span class="pre">RequestCacheControl</span></tt></a> object for the incoming cache control
+headers.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ETagRequestMixin.if_match">
+<tt class="descname">if_match</tt><a class="headerlink" href="#werkzeug.ETagRequestMixin.if_match" title="Permalink to this definition">¶</a></dt>
+<dd>An object containing all the etags in the <cite>If-Match</cite> header.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ETagRequestMixin.if_modified_since">
+<tt class="descname">if_modified_since</tt><a class="headerlink" href="#werkzeug.ETagRequestMixin.if_modified_since" title="Permalink to this definition">¶</a></dt>
+<dd>The parsed <cite>If-Modified-Since</cite> header as datetime object.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ETagRequestMixin.if_none_match">
+<tt class="descname">if_none_match</tt><a class="headerlink" href="#werkzeug.ETagRequestMixin.if_none_match" title="Permalink to this definition">¶</a></dt>
+<dd>An object containing all the etags in the <cite>If-None-Match</cite> header.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ETagRequestMixin.if_unmodified_since">
+<tt class="descname">if_unmodified_since</tt><a class="headerlink" href="#werkzeug.ETagRequestMixin.if_unmodified_since" title="Permalink to this definition">¶</a></dt>
+<dd>The parsed <cite>If-Unmodified-Since</cite> header as datetime object.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ETagResponseMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ETagResponseMixin</tt><a class="headerlink" href="#werkzeug.ETagResponseMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds extra functionality to a response object for etag and cache
+handling.  This mixin requires an object with at least a <cite>headers</cite>
+object that implements a dict like interface similar to <a title="werkzeug.Headers" class="reference external" href="datastructures.html#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a>.</p>
+<dl class="method">
+<dt id="werkzeug.ETagResponseMixin.add_etag">
+<tt class="descname">add_etag</tt><big>(</big><em>overwrite=False</em>, <em>weak=False</em><big>)</big><a class="headerlink" href="#werkzeug.ETagResponseMixin.add_etag" title="Permalink to this definition">¶</a></dt>
+<dd>Add an etag for the current response if there is none yet.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ETagResponseMixin.cache_control">
+<tt class="descname">cache_control</tt><a class="headerlink" href="#werkzeug.ETagResponseMixin.cache_control" title="Permalink to this definition">¶</a></dt>
+<dd>The Cache-Control general-header field is used to specify
+directives that MUST be obeyed by all caching mechanisms along the
+request/response chain.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETagResponseMixin.freeze">
+<tt class="descname">freeze</tt><big>(</big><em>no_etag=False</em><big>)</big><a class="headerlink" href="#werkzeug.ETagResponseMixin.freeze" title="Permalink to this definition">¶</a></dt>
+<dd>Call this method if you want to make your response object ready for
+pickeling.  This buffers the generator if there is one.  This also
+sets the etag unless <cite>no_etag</cite> is set to <cite>True</cite>.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETagResponseMixin.get_etag">
+<tt class="descname">get_etag</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.ETagResponseMixin.get_etag" title="Permalink to this definition">¶</a></dt>
+<dd>Return a tuple in the form <tt class="docutils literal"><span class="pre">(etag,</span> <span class="pre">is_weak)</span></tt>.  If there is no
+ETag the return value is <tt class="docutils literal"><span class="pre">(None,</span> <span class="pre">None)</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETagResponseMixin.make_conditional">
+<tt class="descname">make_conditional</tt><big>(</big><em>request_or_environ</em><big>)</big><a class="headerlink" href="#werkzeug.ETagResponseMixin.make_conditional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the response conditional to the request.  This method works
+best if an etag was defined for the response already.  The <cite>add_etag</cite>
+method can be used to do that.  If called without etag just the date
+header is set.</p>
+<p>This does nothing if the request method in the request or environ is
+anything but GET or HEAD.</p>
+<p>It does not remove the body of the response because that&#8217;s something
+the <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/reference/datamodel.html#object.__call__"><tt class="xref docutils literal"><span class="pre">__call__</span></tt></a> function does for us automatically.</p>
+<p>Returns self so that you can do <tt class="docutils literal"><span class="pre">return</span> <span class="pre">resp.make_conditional(req)</span></tt>
+but modifies the object in-place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>request_or_environ</em> &#8211; a request object or WSGI environment to be
+used to make the response conditional
+against.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETagResponseMixin.set_etag">
+<tt class="descname">set_etag</tt><big>(</big><em>etag</em>, <em>weak=False</em><big>)</big><a class="headerlink" href="#werkzeug.ETagResponseMixin.set_etag" title="Permalink to this definition">¶</a></dt>
+<dd>Set the etag, and override the old one if there was one.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ResponseStreamMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ResponseStreamMixin</tt><a class="headerlink" href="#werkzeug.ResponseStreamMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mixin for <a title="werkzeug.BaseRequest" class="reference internal" href="#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a> subclasses.  Classes that inherit from
+this mixin will automatically get a <a title="werkzeug.ResponseStreamMixin.stream" class="reference internal" href="#werkzeug.ResponseStreamMixin.stream"><tt class="xref docutils literal"><span class="pre">stream</span></tt></a> property that provides
+a write-only interface to the response iterable.</p>
+<dl class="attribute">
+<dt id="werkzeug.ResponseStreamMixin.stream">
+<tt class="descname">stream</tt><a class="headerlink" href="#werkzeug.ResponseStreamMixin.stream" title="Permalink to this definition">¶</a></dt>
+<dd>The response iterable as write-only stream.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.CommonRequestDescriptorsMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">CommonRequestDescriptorsMixin</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mixin for <a title="werkzeug.BaseRequest" class="reference internal" href="#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a> subclasses.  Request objects that
+mix this class in will automatically get descriptors for a coupl eof
+HTTP headers with automatic type conversion.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.content_length">
+<tt class="descname">content_length</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.content_length" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Length entity-header field indicates the size of the
+entity-body in bytes or, in the case of the HEAD method, the size of
+the entity-body that would have been sent had the request been a
+GET.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.content_type">
+<tt class="descname">content_type</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.content_type" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Type entity-header field indicates the media type of
+the entity-body sent to the recipient or, in the case of the HEAD
+method, the media type that would have been sent had the request
+been a GET.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.date">
+<tt class="descname">date</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.date" title="Permalink to this definition">¶</a></dt>
+<dd>The Date general-header field represents the date and time at which
+the message was originated, having the same semantics as orig-date
+in RFC 822.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.max_forwards">
+<tt class="descname">max_forwards</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.max_forwards" title="Permalink to this definition">¶</a></dt>
+<dd>The Max-Forwards request-header field provides a mechanism with the
+TRACE and OPTIONS methods to limit the number of proxies or gateways
+that can forward the request to the next inbound server.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.mimetype">
+<tt class="descname">mimetype</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.mimetype" title="Permalink to this definition">¶</a></dt>
+<dd>Like <a title="werkzeug.CommonRequestDescriptorsMixin.content_type" class="reference internal" href="#werkzeug.CommonRequestDescriptorsMixin.content_type"><tt class="xref docutils literal"><span class="pre">content_type</span></tt></a> but without parameters (eg, without
+charset, type etc.).  For example if the content
+type is <tt class="docutils literal"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></tt> the mimetype would be
+<tt class="docutils literal"><span class="pre">'text/html'</span></tt>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.mimetype_params">
+<tt class="descname">mimetype_params</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.mimetype_params" title="Permalink to this definition">¶</a></dt>
+<dd>The mimetype parameters as dict.  For example if the content
+type is <tt class="docutils literal"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></tt> the params would be
+<tt class="docutils literal"><span class="pre">{'charset':</span> <span class="pre">'utf-8'}</span></tt>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.pragma">
+<tt class="descname">pragma</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.pragma" title="Permalink to this definition">¶</a></dt>
+<dd>The Pragma general-header field is used to include
+implementation-specific directives that might apply to any recipient
+along the request/response chain.  All pragma directives specify
+optional behavior from the viewpoint of the protocol; however, some
+systems MAY require that behavior be consistent with the directives.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonRequestDescriptorsMixin.referrer">
+<tt class="descname">referrer</tt><a class="headerlink" href="#werkzeug.CommonRequestDescriptorsMixin.referrer" title="Permalink to this definition">¶</a></dt>
+<dd>The Referer[sic] request-header field allows the client to specify,
+for the server&#8217;s benefit, the address (URI) of the resource from which
+the Request-URI was obtained (the &#8220;referrer&#8221;, although the header
+field is misspelled).</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.CommonResponseDescriptorsMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">CommonResponseDescriptorsMixin</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mixin for <a title="werkzeug.BaseResponse" class="reference internal" href="#werkzeug.BaseResponse"><tt class="xref docutils literal"><span class="pre">BaseResponse</span></tt></a> subclasses.  Response objects that
+mix this class in will automatically get descriptors for a couple of
+HTTP headers with automatic type conversion.</p>
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.age">
+<tt class="descname">age</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.age" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Age response-header field conveys the sender&#8217;s estimate of the
+amount of time since the response (or its revalidation) was
+generated at the origin server.</p>
+<p>Age values are non-negative decimal integers, representing time in
+seconds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.allow">
+<tt class="descname">allow</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.allow" title="Permalink to this definition">¶</a></dt>
+<dd>The Allow entity-header field lists the set of methods supported
+by the resource identified by the Request-URI. The purpose of this
+field is strictly to inform the recipient of valid methods
+associated with the resource. An Allow header field MUST be
+present in a 405 (Method Not Allowed) response.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.content_encoding">
+<tt class="descname">content_encoding</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.content_encoding" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Encoding entity-header field is used as a modifier to the
+media-type.  When present, its value indicates what additional content
+codings have been applied to the entity-body, and thus what decoding
+mechanisms must be applied in order to obtain the media-type
+referenced by the Content-Type header field.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.content_language">
+<tt class="descname">content_language</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.content_language" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Language entity-header field describes the natural
+language(s) of the intended audience for the enclosed entity.  Note
+that this might not be equivalent to all the languages used within
+the entity-body.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.content_length">
+<tt class="descname">content_length</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.content_length" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Length entity-header field indicates the size of the
+entity-body, in decimal number of OCTETs, sent to the recipient or,
+in the case of the HEAD method, the size of the entity-body that would
+have been sent had the request been a GET.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.content_location">
+<tt class="descname">content_location</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.content_location" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Location entity-header field MAY be used to supply the
+resource location for the entity enclosed in the message when that
+entity is accessible from a location separate from the requested
+resource&#8217;s URI.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.content_md5">
+<tt class="descname">content_md5</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.content_md5" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-MD5 entity-header field, as defined in RFC 1864, is an
+MD5 digest of the entity-body for the purpose of providing an
+end-to-end message integrity check (MIC) of the entity-body.  (Note:
+a MIC is good for detecting accidental modification of the
+entity-body in transit, but is not proof against malicious attacks.)</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.content_type">
+<tt class="descname">content_type</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.content_type" title="Permalink to this definition">¶</a></dt>
+<dd>The Content-Type entity-header field indicates the media type of the
+entity-body sent to the recipient or, in the case of the HEAD method,
+the media type that would have been sent had the request been a GET.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.date">
+<tt class="descname">date</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.date" title="Permalink to this definition">¶</a></dt>
+<dd>The Date general-header field represents the date and time at which
+the message was originated, having the same semantics as orig-date
+in RFC 822.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.expires">
+<tt class="descname">expires</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.expires" title="Permalink to this definition">¶</a></dt>
+<dd>The Expires entity-header field gives the date/time after which the
+response is considered stale. A stale cache entry may not normally be
+returned by a cache.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.last_modified">
+<tt class="descname">last_modified</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.last_modified" title="Permalink to this definition">¶</a></dt>
+<dd>The Last-Modified entity-header field indicates the date and time at
+which the origin server believes the variant was last modified.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.location">
+<tt class="descname">location</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.location" title="Permalink to this definition">¶</a></dt>
+<dd>The Location response-header field is used to redirect the recipient
+to a location other than the Request-URI for completion of the request
+or identification of a new resource.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.mimetype">
+<tt class="descname">mimetype</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.mimetype" title="Permalink to this definition">¶</a></dt>
+<dd>The mimetype (content type without charset etc.)</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.mimetype_params">
+<tt class="descname">mimetype_params</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.mimetype_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mimetype parameters as dict.  For example if the content
+type is <tt class="docutils literal"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></tt> the params would be
+<tt class="docutils literal"><span class="pre">{'charset':</span> <span class="pre">'utf-8'}</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.retry_after">
+<tt class="descname">retry_after</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.retry_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Retry-After response-header field can be used with a 503 (Service
+Unavailable) response to indicate how long the service is expected
+to be unavailable to the requesting client.</p>
+<p>Time in seconds until expiration or date.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.CommonResponseDescriptorsMixin.vary">
+<tt class="descname">vary</tt><a class="headerlink" href="#werkzeug.CommonResponseDescriptorsMixin.vary" title="Permalink to this definition">¶</a></dt>
+<dd>The Vary field value indicates the set of request-header fields that
+fully determines, while the response is fresh, whether a cache is
+permitted to use the response to reply to a subsequent request
+without revalidation.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.WWWAuthenticateMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">WWWAuthenticateMixin</tt><a class="headerlink" href="#werkzeug.WWWAuthenticateMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a <a title="werkzeug.WWWAuthenticateMixin.www_authenticate" class="reference internal" href="#werkzeug.WWWAuthenticateMixin.www_authenticate"><tt class="xref docutils literal"><span class="pre">www_authenticate</span></tt></a> property to a response object.</p>
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticateMixin.www_authenticate">
+<tt class="descname">www_authenticate</tt><a class="headerlink" href="#werkzeug.WWWAuthenticateMixin.www_authenticate" title="Permalink to this definition">¶</a></dt>
+<dd>The <cite>WWW-Authenticate</cite> header in a parsed form.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.UserAgentMixin">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">UserAgentMixin</tt><a class="headerlink" href="#werkzeug.UserAgentMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a <cite>user_agent</cite> attribute to the request object which contains the
+parsed user agent of the browser that triggered the request as <cite>UserAgent</cite>
+object.</p>
+<dl class="attribute">
+<dt id="werkzeug.UserAgentMixin.user_agent">
+<tt class="descname">user_agent</tt><a class="headerlink" href="#werkzeug.UserAgentMixin.user_agent" title="Permalink to this definition">¶</a></dt>
+<dd>The current user agent.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

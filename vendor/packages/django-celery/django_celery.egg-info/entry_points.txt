@@ -1,0 +1,3 @@
+[console_scripts]
+djcelerymon = djcelery.mon:main
+

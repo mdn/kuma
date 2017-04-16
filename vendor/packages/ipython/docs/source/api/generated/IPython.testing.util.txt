@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.util
+============
+
+Module: :mod:`testing.util`
+---------------------------
+Inheritance diagram for ``IPython.testing.util``:
+
+.. inheritance-diagram:: IPython.testing.util 
+   :parts: 3
+
+.. automodule:: IPython.testing.util
+
+.. currentmodule:: IPython.testing.util
+
+:class:`DeferredTestCase`
+-------------------------
+
+
+.. autoclass:: DeferredTestCase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

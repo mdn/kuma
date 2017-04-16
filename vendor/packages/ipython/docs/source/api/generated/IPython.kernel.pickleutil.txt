@@ -1,0 +1,65 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.pickleutil
+=================
+
+Module: :mod:`kernel.pickleutil`
+--------------------------------
+Inheritance diagram for ``IPython.kernel.pickleutil``:
+
+.. inheritance-diagram:: IPython.kernel.pickleutil 
+   :parts: 3
+
+.. automodule:: IPython.kernel.pickleutil
+
+.. currentmodule:: IPython.kernel.pickleutil
+
+Classes
+-------
+
+:class:`CannedFunction`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: CannedFunction
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`CannedObject`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: CannedObject
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.pickleutil.can
+
+
+.. autofunction:: IPython.kernel.pickleutil.canDict
+
+
+.. autofunction:: IPython.kernel.pickleutil.canSequence
+
+
+.. autofunction:: IPython.kernel.pickleutil.rebindFunctionGlobals
+
+
+.. autofunction:: IPython.kernel.pickleutil.uncan
+
+
+.. autofunction:: IPython.kernel.pickleutil.uncanDict
+
+
+.. autofunction:: IPython.kernel.pickleutil.uncanSequence
+

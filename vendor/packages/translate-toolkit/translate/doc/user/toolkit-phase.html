@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="phase" id="phase">phase</a></h1>
+<div class="level1">
+
+<p>
+
+phase is a script that allows you to perform a number of tasks on a set of <acronym title="Gettext Portable Object">PO</acronym> files that have been broken into phases.
+You can create a ZIP file for a phase, run checks against a phase, review a phase, edit files in a phase, etc.  All
+the tasks that would be involved in sending work to various translators, receiving work, checking it and committing to
+<acronym title="Concurrent Versions System">CVS</acronym>.
+</p>
+
+</div>
+<!-- SECTION "phase" [1-382] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> An environment that will run <a href="http://man.cx/bash" class="interwiki iw_man" title="http://man.cx/bash">bash</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/diff" class="interwiki iw_man" title="http://man.cx/diff">diff</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/cvs" class="interwiki iw_man" title="http://man.cx/cvs">cvs</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Prerequisites" [383-491] -->
+<h2><a name="latest_version" id="latest_version">Latest Version</a></h2>
+<div class="level2">
+
+<p>
+
+phase is not currently distributed as part of the toolkit.  You can get the <a href="http://translate.svn.sourceforge.net/viewvc/*checkout*/translate/src//trunk/tools/phase" class="interwiki iw_svn" title="http://translate.svn.sourceforge.net/viewvc/*checkout*/translate/src//trunk/tools/phase">latest version from Subversion</a>
+</p>
+
+</div>
+<!-- SECTION "Latest Version" [492-654] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">phase &lt;command&gt; [options]</pre>
+
+<p>
+
+Mostly the usage follows the format of:
+</p>
+<pre class="code">phase &lt;command&gt; &lt;language-dir&gt; &lt;phaselist&gt; &lt;phase-name&gt;
+phase &lt;command&gt; &lt;language-dir&gt; &lt;phase-name&gt;</pre>
+
+<p>
+
+A full list of commands and options can be seen by running
+</p>
+<pre class="code">phase --help</pre>
+
+</div>
+<!-- SECTION "Usage" [655-922] -->
+<h2><a name="commands" id="commands">Commands</a></h2>
+<div class="level2">
+
+<p>
+
+These are the commands that you can use:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> makephaselist &lt;new-phase-list-name&gt; -- creates a phase list</div>
+</li>
+<li class="level1"><div class="li"> listphases &lt;phase-list&gt; -- lists the different phases that appear in the phase-list file</div>
+</li>
+<li class="level1"><div class="li"> listfiles &lt;phase-list&gt; &lt;phase-name&gt; -- list all files for the given phase in the phase-list file</div>
+</li>
+<li class="level1"><div class="li"> checkphaselist &lt;language-dir&gt; &lt;phase-list&gt; -- checks to see which files are not included in the phaselist</div>
+</li>
+<li class="level1"><div class="li"> countpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- counts <acronym title="Gettext Portable Object">PO</acronym> file in the given phase</div>
+</li>
+<li class="level1"><div class="li"> countpot &lt;template-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- counts <acronym title="Gettext Portable Object Template">POT</acronym> file in the given phase</div>
+</li>
+<li class="level1"><div class="li"> missingpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- lists files that have not been returned for a phase</div>
+</li>
+<li class="level1"><div class="li"> packpot &lt;template-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- packs all <acronym title="Gettext Portable Object Template">POT</acronym> files for a given phase into a ZIP file</div>
+</li>
+<li class="level1"><div class="li"> packpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- packs all <acronym title="Gettext Portable Object">PO</acronym> files for a given phase into a ZIP file</div>
+</li>
+<li class="level1"><div class="li"> packall &lt;template-dir&gt; &lt;phase-list&gt; -- packs all phases found in the phase list</div>
+</li>
+<li class="level1"><div class="li"> packallpo &lt;language-dir&gt; &lt;phase-list&gt; -- packs all phases found in the phase list for the given language</div>
+</li>
+<li class="level1"><div class="li"> countmismatch &lt;language-dir&gt; &lt;template-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- compares the source word count between <acronym title="Gettext Portable Object">PO</acronym> and <acronym title="Gettext Portable Object Template">POT</acronym> to determine if there are any file errors.</div>
+</li>
+<li class="level1"><div class="li"> editpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- edit the <acronym title="Gettext Portable Object">PO</acronym> files in a phase</div>
+</li>
+<li class="level1"><div class="li"> editpochecks &lt;language&gt; &lt;phase-name&gt; -- edit the <acronym title="Gettext Portable Object">PO</acronym> checks output by checkpo</div>
+</li>
+<li class="level1"><div class="li"> editconflicts &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- edit the extracted conflict items</div>
+</li>
+<li class="level1"><div class="li"> checkpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; [pofilter options] -- run pofilter checks against the given phase</div>
+</li>
+<li class="level1"><div class="li"> mergepo &lt;language&gt; &lt;phase-name&gt; -- merge the checks back into the main language directory</div>
+</li>
+<li class="level1"><div class="li"> conflictpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; [poconflict options] -- run poconflict checks against the given phase</div>
+</li>
+<li class="level1"><div class="li"> diffpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- perform a cvs diff for the phase</div>
+</li>
+<li class="level1"><div class="li"> cvslog &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- perform a cvs log against files in the phase</div>
+</li>
+<li class="level1"><div class="li"> lastlog &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- retrieves the last cvs log entry for each file in a phase</div>
+</li>
+<li class="level1"><div class="li"> cvsadd &lt;languages-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- <acronym title="Concurrent Versions System">CVS</acronym> adds files and directories that are not already in <acronym title="Concurrent Versions System">CVS</acronym></div>
+</li>
+<li class="level1"><div class="li"> diffpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- perform a cvs diff for the phase</div>
+</li>
+<li class="level1"><div class="li"> reviewpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; [pofilter options] -- extract items marked for review for the given phase</div>
+</li>
+<li class="level1"><div class="li"> editreviews &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- edit the extracted review items</div>
+</li>
+<li class="level1"><div class="li"> countreviews &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- count the number of strings and words under review</div>
+</li>
+<li class="level1"><div class="li"> checkinpo &lt;language-dir&gt; &lt;phase-list&gt; &lt;phase-name&gt; -- cvs checkin the files in the given phase</div>
+</li>
+<li class="level1"><div class="li"> creategsi &lt;language-dir&gt; &lt;en-US.gsi&gt; &lt;traget-language&gt; -- creates a BZ2 GSI/SDF file for the language against the en-US GSI file</div>
+</li>
+<li class="level1"><div class="li"> reviewsinout &lt;language&gt; &lt;phase-name&gt; -- counts the number of review files returned vs sent and shows which are missing</div>
+</li>
+<li class="level1"><div class="li"> reviewsdiff &lt;language&gt; &lt;phase-name&gt; -- create a diff between what was sent for review and what was returned</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Commands" [923-4132] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+There are probably lots mostly the bug is that the command line options are pretty inconsistent
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [4133-] --></body>
+</html>

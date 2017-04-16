@@ -1,0 +1,13 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+winconsole
+==========
+
+Module: :mod:`winconsole`
+-------------------------
+.. automodule:: IPython.winconsole
+
+.. currentmodule:: IPython.winconsole
+
+.. autofunction:: IPython.winconsole.get_console_size
+

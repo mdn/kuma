@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.linefrontendbase
+=========================
+
+Module: :mod:`frontend.linefrontendbase`
+----------------------------------------
+Inheritance diagram for ``IPython.frontend.linefrontendbase``:
+
+.. inheritance-diagram:: IPython.frontend.linefrontendbase 
+   :parts: 3
+
+.. automodule:: IPython.frontend.linefrontendbase
+
+.. currentmodule:: IPython.frontend.linefrontendbase
+
+:class:`LineFrontEndBase`
+-------------------------
+
+
+.. autoclass:: LineFrontEndBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+.. autofunction:: IPython.frontend.linefrontendbase.common_prefix
+

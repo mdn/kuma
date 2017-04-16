@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.clientinterfaces &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.codeutil" href="IPython.kernel.codeutil.html" />
+    <link rel="prev" title="kernel.clientconnector" href="IPython.kernel.clientconnector.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.codeutil.html" title="kernel.codeutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.clientconnector.html" title="kernel.clientconnector"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-clientinterfaces">
+<h1>kernel.clientinterfaces<a class="headerlink" href="#kernel-clientinterfaces" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.clientinterfaces">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.clientinterfaces</span></tt><a class="headerlink" href="#module-IPython.kernel.clientinterfaces" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.clientinterfaces</span></tt>:</p>
+<img src="../../_images/inheritance1e02d72c2b.png" usemap="#inheritance1e02d72c2b" class="inheritance"/><map id="inheritance1e02d72c2b" name="inheritance1e02d72c2b">
+<area shape="rect" href="#IPython.kernel.clientinterfaces.IBlockingClientAdaptor" title="kernel.clientinterfaces.IBlockingClientAdaptor" alt="" coords="237,5,544,32"/>
+<area shape="rect" href="#IPython.kernel.clientinterfaces.IFCClientInterfaceProvider" title="kernel.clientinterfaces.IFCClientInterfaceProvider" alt="" coords="227,56,555,83"/>
+</map>
+<p>General client interfaces.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="iblockingclientadaptor">
+<h3><a title="IPython.kernel.clientinterfaces.IBlockingClientAdaptor" class="reference internal" href="#IPython.kernel.clientinterfaces.IBlockingClientAdaptor"><tt class="xref docutils literal"><span class="pre">IBlockingClientAdaptor</span></tt></a><a class="headerlink" href="#iblockingclientadaptor" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.clientinterfaces.IBlockingClientAdaptor">
+<!--[IPython.kernel.clientinterfaces.IBlockingClientAdaptor]-->class <tt class="descclassname">IPython.kernel.clientinterfaces.</tt><tt class="descname">IBlockingClientAdaptor</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.clientinterfaces.IBlockingClientAdaptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.clientinterfaces.IBlockingClientAdaptor.__init__">
+<!--[IPython.kernel.clientinterfaces.IBlockingClientAdaptor.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.clientinterfaces.IBlockingClientAdaptor.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifcclientinterfaceprovider">
+<h3><a title="IPython.kernel.clientinterfaces.IFCClientInterfaceProvider" class="reference internal" href="#IPython.kernel.clientinterfaces.IFCClientInterfaceProvider"><tt class="xref docutils literal"><span class="pre">IFCClientInterfaceProvider</span></tt></a><a class="headerlink" href="#ifcclientinterfaceprovider" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.clientinterfaces.IFCClientInterfaceProvider">
+<!--[IPython.kernel.clientinterfaces.IFCClientInterfaceProvider]-->class <tt class="descclassname">IPython.kernel.clientinterfaces.</tt><tt class="descname">IFCClientInterfaceProvider</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.clientinterfaces.IFCClientInterfaceProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.clientinterfaces.IFCClientInterfaceProvider.__init__">
+<!--[IPython.kernel.clientinterfaces.IFCClientInterfaceProvider.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.clientinterfaces.IFCClientInterfaceProvider.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.clientinterfaces</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.clientinterfaces">Module: <tt class="docutils literal"><span class="pre">kernel.clientinterfaces</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#iblockingclientadaptor"><tt class="docutils literal"><span class="pre">IBlockingClientAdaptor</span></tt></a></li>
+<li><a class="reference external" href="#ifcclientinterfaceprovider"><tt class="docutils literal"><span class="pre">IFCClientInterfaceProvider</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.clientconnector.html" title="previous chapter">kernel.clientconnector</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.codeutil.html" title="next chapter">kernel.codeutil</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.clientinterfaces.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.codeutil.html" title="kernel.codeutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.clientconnector.html" title="kernel.clientconnector"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

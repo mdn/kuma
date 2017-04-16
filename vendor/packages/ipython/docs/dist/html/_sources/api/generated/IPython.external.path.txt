@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.path
+=============
+
+Module: :mod:`external.path`
+----------------------------
+Inheritance diagram for ``IPython.external.path``:
+
+.. inheritance-diagram:: IPython.external.path 
+   :parts: 3
+
+.. automodule:: IPython.external.path
+
+.. currentmodule:: IPython.external.path
+
+Classes
+-------
+
+:class:`TreeWalkWarning`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TreeWalkWarning
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`path`
+~~~~~~~~~~~~~
+
+
+.. autoclass:: path
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

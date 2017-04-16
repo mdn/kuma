@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CrashHandler &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="DPyGetOpt" href="IPython.DPyGetOpt.html" />
+    <link rel="prev" title="ConfigLoader" href="IPython.ConfigLoader.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.DPyGetOpt.html" title="DPyGetOpt"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ConfigLoader.html" title="ConfigLoader"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="crashhandler">
+<h1>CrashHandler<a class="headerlink" href="#crashhandler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.CrashHandler">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">CrashHandler</span></tt><a class="headerlink" href="#module-IPython.CrashHandler" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.CrashHandler</span></tt>:</p>
+<img src="../../_images/inheritance4626574b3b.png" usemap="#inheritance4626574b3b" class="inheritance"/><map id="inheritance4626574b3b" name="inheritance4626574b3b">
+<area shape="rect" href="#IPython.CrashHandler.CrashHandler" title="IPython.CrashHandler.CrashHandler" alt="" coords="7,5,255,32"/>
+<area shape="rect" href="#IPython.CrashHandler.IPythonCrashHandler" title="IPython.CrashHandler.IPythonCrashHandler" alt="" coords="304,5,600,32"/>
+</map>
+<p>sys.excepthook for IPython itself, leaves a detailed report on disk.</p>
+<div class="section" id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fernando Perez &lt;<a class="reference external" href="mailto:Fernando&#46;Perez&#37;&#52;&#48;berkeley&#46;edu">Fernando<span>&#46;</span>Perez<span>&#64;</span>berkeley<span>&#46;</span>edu</a>&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3><a title="IPython.CrashHandler.CrashHandler" class="reference internal" href="#IPython.CrashHandler.CrashHandler"><tt class="xref docutils literal"><span class="pre">CrashHandler</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.CrashHandler.CrashHandler">
+<!--[IPython.CrashHandler.CrashHandler]-->class <tt class="descclassname">IPython.CrashHandler.</tt><tt class="descname">CrashHandler</tt><big>(</big><em>IP</em>, <em>app_name</em>, <em>contact_name</em>, <em>contact_email</em>, <em>bug_tracker</em>, <em>crash_report_fname</em>, <em>show_crash_traceback=True</em><big>)</big><a class="headerlink" href="#IPython.CrashHandler.CrashHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Customizable crash handlers for IPython-based systems.</p>
+<p>Instances of this class provide a __call__ method which can be used as a
+sys.excepthook, i.e., the __call__ signature is:</p>
+<blockquote>
+def __call__(self,etype, evalue, etb)</blockquote>
+<dl class="method">
+<dt id="IPython.CrashHandler.CrashHandler.__init__">
+<!--[IPython.CrashHandler.CrashHandler.__init__]--><tt class="descname">__init__</tt><big>(</big><em>IP</em>, <em>app_name</em>, <em>contact_name</em>, <em>contact_email</em>, <em>bug_tracker</em>, <em>crash_report_fname</em>, <em>show_crash_traceback=True</em><big>)</big><a class="headerlink" href="#IPython.CrashHandler.CrashHandler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>New crash handler.</p>
+<p>Inputs:</p>
+<ul class="simple">
+<li>IP: a running IPython instance, which will be queried at crash time</li>
+</ul>
+<p>for internal information.</p>
+<ul class="simple">
+<li>app_name: a string containing the name of your application.</li>
+<li>contact_name: a string with the name of the person to contact.</li>
+<li>contact_email: a string with the email address of the contact.</li>
+<li>bug_tracker: a string with the URL for your project&#8217;s bug tracker.</li>
+<li>crash_report_fname: a string with the filename for the crash report</li>
+</ul>
+<p>to be saved in.  These reports are left in the ipython user directory
+as determined by the running IPython instance.</p>
+<p>Optional inputs:</p>
+<ul class="simple">
+<li>show_crash_traceback(True): if false, don&#8217;t print the crash</li>
+</ul>
+<p>traceback on stderr, only generate the on-disk report</p>
+<p>Non-argument instance attributes:</p>
+<p>These instances contain some non-argument attributes which allow for 
+further customization of the crash handler&#8217;s behavior.  Please see the
+source for further details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.CrashHandler.CrashHandler.make_report">
+<!--[IPython.CrashHandler.CrashHandler.make_report]--><tt class="descname">make_report</tt><big>(</big><em>traceback</em><big>)</big><a class="headerlink" href="#IPython.CrashHandler.CrashHandler.make_report" title="Permalink to this definition">¶</a></dt>
+<dd>Return a string containing a crash report.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipythoncrashhandler">
+<h3><a title="IPython.CrashHandler.IPythonCrashHandler" class="reference internal" href="#IPython.CrashHandler.IPythonCrashHandler"><tt class="xref docutils literal"><span class="pre">IPythonCrashHandler</span></tt></a><a class="headerlink" href="#ipythoncrashhandler" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.CrashHandler.IPythonCrashHandler">
+<!--[IPython.CrashHandler.IPythonCrashHandler]-->class <tt class="descclassname">IPython.CrashHandler.</tt><tt class="descname">IPythonCrashHandler</tt><big>(</big><em>IP</em><big>)</big><a class="headerlink" href="#IPython.CrashHandler.IPythonCrashHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.CrashHandler.CrashHandler" class="reference internal" href="#IPython.CrashHandler.CrashHandler"><tt class="xref docutils literal"><span class="pre">IPython.CrashHandler.CrashHandler</span></tt></a></p>
+<p>sys.excepthook for IPython itself, leaves a detailed report on disk.</p>
+<dl class="method">
+<dt id="IPython.CrashHandler.IPythonCrashHandler.__init__">
+<!--[IPython.CrashHandler.IPythonCrashHandler.__init__]--><tt class="descname">__init__</tt><big>(</big><em>IP</em><big>)</big><a class="headerlink" href="#IPython.CrashHandler.IPythonCrashHandler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.CrashHandler.IPythonCrashHandler.make_report">
+<!--[IPython.CrashHandler.IPythonCrashHandler.make_report]--><tt class="descname">make_report</tt><big>(</big><em>traceback</em><big>)</big><a class="headerlink" href="#IPython.CrashHandler.IPythonCrashHandler.make_report" title="Permalink to this definition">¶</a></dt>
+<dd>Return a string containing a crash report.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">CrashHandler</a><ul>
+<li><a class="reference external" href="#module-IPython.CrashHandler">Module: <tt class="docutils literal"><span class="pre">CrashHandler</span></tt></a><ul>
+<li><a class="reference external" href="#authors">Authors</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">CrashHandler</span></tt></a></li>
+<li><a class="reference external" href="#ipythoncrashhandler"><tt class="docutils literal"><span class="pre">IPythonCrashHandler</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.ConfigLoader.html" title="previous chapter">ConfigLoader</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.DPyGetOpt.html" title="next chapter">DPyGetOpt</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.CrashHandler.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.DPyGetOpt.html" title="DPyGetOpt"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ConfigLoader.html" title="ConfigLoader"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

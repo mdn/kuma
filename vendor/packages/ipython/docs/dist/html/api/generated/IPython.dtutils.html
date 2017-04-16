@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dtutils &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="excolors" href="IPython.excolors.html" />
+    <link rel="prev" title="demo" href="IPython.demo.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.excolors.html" title="excolors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.demo.html" title="demo"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="dtutils">
+<h1>dtutils<a class="headerlink" href="#dtutils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.dtutils">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">dtutils</span></tt><a class="headerlink" href="#module-IPython.dtutils" title="Permalink to this headline">¶</a></h2>
+<p>Doctest-related utilities for IPython.</p>
+<p>For most common uses, all you should need to run is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">IPython.dtutils</span> <span class="k">import</span> <span class="n">idoctest</span>
+</pre></div>
+</div>
+<p>See the idoctest docstring below for usage details.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.dtutils.idoctest">
+<!--[IPython.dtutils.idoctest]--><tt class="descclassname">IPython.dtutils.</tt><tt class="descname">idoctest</tt><big>(</big><em>ns=None</em>, <em>eraise=False</em><big>)</big><a class="headerlink" href="#IPython.dtutils.idoctest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interactively prompt for input and run it as a doctest.</p>
+<p>To finish entering input, enter two blank lines or Ctrl-D (EOF).  If you
+use Ctrl-C, the example is aborted and all input discarded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Keywords:</th><td class="field-body"><dl class="first last docutils">
+<dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">dict (None)</span></dt>
+<dd><p class="first last">Namespace where the code should be executed.  If not given, the IPython
+interactive namespace is used.</p>
+</dd>
+<dt>eraise <span class="classifier-delimiter">:</span> <span class="classifier">bool (False)</span></dt>
+<dd><p class="first last">If true, immediately raise any exceptions instead of reporting them at
+the end.  This allows you to then do interactive debugging via
+IPython&#8217;s facilities (use %debug after the fact, or with %pdb for
+automatic activation).</p>
+</dd>
+<dt>end_mark <span class="classifier-delimiter">:</span> <span class="classifier">str (&#8216;&#8211;&#8217;)</span></dt>
+<dd><p class="first last">String to explicitly indicate the end of input.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.dtutils.rundoctest">
+<!--[IPython.dtutils.rundoctest]--><tt class="descclassname">IPython.dtutils.</tt><tt class="descname">rundoctest</tt><big>(</big><em>text</em>, <em>ns=None</em>, <em>eraise=False</em><big>)</big><a class="headerlink" href="#IPython.dtutils.rundoctest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a the input source as a doctest, in the caller&#8217;s namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>text <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Source to execute.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Keywords:</th><td class="field-body"><dl class="first last docutils">
+<dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">dict (None)</span></dt>
+<dd><p class="first last">Namespace where the code should be executed.  If not given, the
+caller&#8217;s locals and globals are used.</p>
+</dd>
+<dt>eraise <span class="classifier-delimiter">:</span> <span class="classifier">bool (False)</span></dt>
+<dd><p class="first last">If true, immediately raise any exceptions instead of reporting them at
+the end.  This allows you to then do interactive debugging via
+IPython&#8217;s facilities (use %debug after the fact, or with %pdb for
+automatic activation).</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">dtutils</a><ul>
+<li><a class="reference external" href="#module-IPython.dtutils">Module: <tt class="docutils literal"><span class="pre">dtutils</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.demo.html" title="previous chapter">demo</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.excolors.html" title="next chapter">excolors</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.dtutils.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.excolors.html" title="excolors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.demo.html" title="demo"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

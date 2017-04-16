@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.task &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.taskclient" href="IPython.kernel.taskclient.html" />
+    <link rel="prev" title="kernel.scripts.ipengine" href="IPython.kernel.scripts.ipengine.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.taskclient.html" title="kernel.taskclient"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipengine.html" title="kernel.scripts.ipengine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-task">
+<h1>kernel.task<a class="headerlink" href="#kernel-task" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.task">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.task</span></tt><a class="headerlink" href="#module-IPython.kernel.task" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.task</span></tt>:</p>
+<img src="../../_images/inheritance0febb568d3.png" usemap="#inheritance0febb568d3" class="inheritance"/><map id="inheritance0febb568d3" name="inheritance0febb568d3">
+<area shape="rect" href="#IPython.kernel.task.MapTask" title="kernel.task.MapTask" alt="" coords="276,197,371,214"/>
+<area shape="rect" href="#IPython.kernel.task.BaseTask" title="kernel.task.BaseTask" alt="" coords="56,213,155,230"/>
+<area shape="rect" href="#IPython.kernel.task.StringTask" title="kernel.task.StringTask" alt="" coords="273,229,375,246"/>
+<area shape="rect" href="#IPython.kernel.task.TaskController" title="kernel.task.TaskController" alt="" coords="265,165,382,182"/>
+<area shape="rect" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.ControllerAdapterBase" title="kernel.controllerservice.ControllerAdapterBase" alt="" coords="4,165,206,182"/>
+<area shape="rect" href="#IPython.kernel.task.WorkerFromQueuedEngine" title="kernel.task.WorkerFromQueuedEngine" alt="" coords="21,133,189,150"/>
+<area shape="rect" href="#IPython.kernel.task.IWorker" title="kernel.task.IWorker" alt="" coords="279,36,369,53"/>
+<area shape="rect" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.IControllerCore" title="kernel.controllerservice.IControllerCore" alt="" coords="239,68,409,85"/>
+<area shape="rect" href="#IPython.kernel.task.ITask" title="kernel.task.ITask" alt="" coords="284,100,364,117"/>
+<area shape="rect" href="#IPython.kernel.task.IScheduler" title="kernel.task.IScheduler" alt="" coords="272,133,376,150"/>
+<area shape="rect" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.IControllerBase" title="kernel.controllerservice.IControllerBase" alt="" coords="441,68,613,85"/>
+<area shape="rect" href="#IPython.kernel.task.ITaskController" title="kernel.task.ITaskController" alt="" coords="645,68,764,85"/>
+<area shape="rect" href="#IPython.kernel.task.TaskResult" title="kernel.task.TaskResult" alt="" coords="54,68,156,85"/>
+<area shape="rect" href="#IPython.kernel.task.ResultNS" title="kernel.task.ResultNS" alt="" coords="57,36,154,53"/>
+<area shape="rect" href="#IPython.kernel.task.LIFOScheduler" title="kernel.task.LIFOScheduler" alt="" coords="264,3,383,20"/>
+<area shape="rect" href="#IPython.kernel.task.FIFOScheduler" title="kernel.task.FIFOScheduler" alt="" coords="46,3,165,20"/>
+</map>
+<p>Task farming representation of the ControllerService.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="basetask">
+<h3><a title="IPython.kernel.task.BaseTask" class="reference internal" href="#IPython.kernel.task.BaseTask"><tt class="xref docutils literal"><span class="pre">BaseTask</span></tt></a><a class="headerlink" href="#basetask" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.BaseTask">
+<!--[IPython.kernel.task.BaseTask]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">BaseTask</tt><big>(</big><em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Common fuctionality for all objects implementing <cite>ITask</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.__init__">
+<!--[IPython.kernel.task.BaseTask.__init__]--><tt class="descname">__init__</tt><big>(</big><em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a generic task.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>clear_before <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should the engines namespace be cleared before the task
+is run</p>
+</dd>
+<dt>clear_after <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should the engines namespace be clear after the task is run</p>
+</dd>
+<dt>retries <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The number of times a task should be retries upon failure</p>
+</dd>
+<dt>recovery_task <span class="classifier-delimiter">:</span> <span class="classifier">any task object</span></dt>
+<dd><p class="first last">If a task fails and it has a recovery_task, that is run
+upon a retry</p>
+</dd>
+<dt>depend <span class="classifier-delimiter">:</span> <span class="classifier">FunctionType</span></dt>
+<dd><p class="first last">A function that is called to test for properties.  This function
+must take one argument, the properties dict and return a boolean</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.can_task">
+<!--[IPython.kernel.task.BaseTask.can_task]--><tt class="descname">can_task</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.can_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.check_depend">
+<!--[IPython.kernel.task.BaseTask.check_depend]--><tt class="descname">check_depend</tt><big>(</big><em>properties</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.check_depend" title="Permalink to this definition">¶</a></dt>
+<dd>Calls self.depend(properties) to see if a task should be run.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.post_task">
+<!--[IPython.kernel.task.BaseTask.post_task]--><tt class="descname">post_task</tt><big>(</big><em>d</em>, <em>queued_engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.post_task" title="Permalink to this definition">¶</a></dt>
+<dd>Clear the engine after running the task if clear_after is set.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.pre_task">
+<!--[IPython.kernel.task.BaseTask.pre_task]--><tt class="descname">pre_task</tt><big>(</big><em>d</em>, <em>queued_engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.pre_task" title="Permalink to this definition">¶</a></dt>
+<dd>Clear the engine before running the task if clear_before is set.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.process_result">
+<!--[IPython.kernel.task.BaseTask.process_result]--><tt class="descname">process_result</tt><big>(</big><em>result</em>, <em>engine_id</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.process_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a task result.</p>
+<p>This is the default <cite>process_result</cite> that just returns the raw
+result or a <cite>Failure</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.start_time">
+<!--[IPython.kernel.task.BaseTask.start_time]--><tt class="descname">start_time</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.start_time" title="Permalink to this definition">¶</a></dt>
+<dd>Start the basic timers.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.stop_time">
+<!--[IPython.kernel.task.BaseTask.stop_time]--><tt class="descname">stop_time</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.stop_time" title="Permalink to this definition">¶</a></dt>
+<dd>Stop the basic timers.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.submit_task">
+<!--[IPython.kernel.task.BaseTask.submit_task]--><tt class="descname">submit_task</tt><big>(</big><em>d</em>, <em>queued_engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.submit_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.BaseTask.uncan_task">
+<!--[IPython.kernel.task.BaseTask.uncan_task]--><tt class="descname">uncan_task</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.BaseTask.uncan_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fifoscheduler">
+<h3><a title="IPython.kernel.task.FIFOScheduler" class="reference internal" href="#IPython.kernel.task.FIFOScheduler"><tt class="xref docutils literal"><span class="pre">FIFOScheduler</span></tt></a><a class="headerlink" href="#fifoscheduler" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.FIFOScheduler">
+<!--[IPython.kernel.task.FIFOScheduler]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">FIFOScheduler</tt><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A basic First-In-First-Out (Queue) Scheduler.</p>
+<p>This is the default Scheduler for the <cite>TaskController</cite>.
+See the docstrings for <cite>IScheduler</cite> for interface details.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.FIFOScheduler.__init__">
+<!--[IPython.kernel.task.FIFOScheduler.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.FIFOScheduler.add_task">
+<!--[IPython.kernel.task.FIFOScheduler.add_task]--><tt class="descname">add_task</tt><big>(</big><em>task</em>, <em>**flags</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.add_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.FIFOScheduler.add_worker">
+<!--[IPython.kernel.task.FIFOScheduler.add_worker]--><tt class="descname">add_worker</tt><big>(</big><em>worker</em>, <em>**flags</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.add_worker" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.task.FIFOScheduler.ntasks">
+<!--[IPython.kernel.task.FIFOScheduler.ntasks]--><tt class="descname">ntasks</tt><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.ntasks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.task.FIFOScheduler.nworkers">
+<!--[IPython.kernel.task.FIFOScheduler.nworkers]--><tt class="descname">nworkers</tt><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.nworkers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.FIFOScheduler.pop_task">
+<!--[IPython.kernel.task.FIFOScheduler.pop_task]--><tt class="descname">pop_task</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.pop_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.FIFOScheduler.pop_worker">
+<!--[IPython.kernel.task.FIFOScheduler.pop_worker]--><tt class="descname">pop_worker</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.pop_worker" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.FIFOScheduler.schedule">
+<!--[IPython.kernel.task.FIFOScheduler.schedule]--><tt class="descname">schedule</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.task.FIFOScheduler.taskids">
+<!--[IPython.kernel.task.FIFOScheduler.taskids]--><tt class="descname">taskids</tt><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.taskids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.task.FIFOScheduler.workerids">
+<!--[IPython.kernel.task.FIFOScheduler.workerids]--><tt class="descname">workerids</tt><a class="headerlink" href="#IPython.kernel.task.FIFOScheduler.workerids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ischeduler">
+<h3><a title="IPython.kernel.task.IScheduler" class="reference internal" href="#IPython.kernel.task.IScheduler"><tt class="xref docutils literal"><span class="pre">IScheduler</span></tt></a><a class="headerlink" href="#ischeduler" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.IScheduler">
+<!--[IPython.kernel.task.IScheduler]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">IScheduler</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.IScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>The interface for a Scheduler.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.task.IScheduler.__init__">
+<!--[IPython.kernel.task.IScheduler.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.IScheduler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itask">
+<h3><a title="IPython.kernel.task.ITask" class="reference internal" href="#IPython.kernel.task.ITask"><tt class="xref docutils literal"><span class="pre">ITask</span></tt></a><a class="headerlink" href="#itask" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.ITask">
+<!--[IPython.kernel.task.ITask]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">ITask</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.ITask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>This interface provides a generic definition of what constitutes a task.</p>
+<p>There are two sides to a task.  First a task needs to take input from
+a user to determine what work is performed by the task.  Second, the
+task needs to have the logic that knows how to turn that information
+info specific calls to a worker, through the <cite>IQueuedEngine</cite> interface.</p>
+<p>Many method in this class get two things passed to them: a Deferred
+and an IQueuedEngine implementer.  Such methods should register callbacks
+on the Deferred that use the IQueuedEngine to accomplish something.  See
+the existing task objects for examples.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.task.ITask.__init__">
+<!--[IPython.kernel.task.ITask.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.ITask.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itaskcontroller">
+<h3><a title="IPython.kernel.task.ITaskController" class="reference internal" href="#IPython.kernel.task.ITaskController"><tt class="xref docutils literal"><span class="pre">ITaskController</span></tt></a><a class="headerlink" href="#itaskcontroller" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.ITaskController">
+<!--[IPython.kernel.task.ITaskController]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">ITaskController</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.ITaskController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.controllerservice.IControllerBase" class="reference external" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.IControllerBase"><tt class="xref docutils literal"><span class="pre">IPython.kernel.controllerservice.IControllerBase</span></tt></a></p>
+<p>The Task based interface to a <cite>ControllerService</cite> object</p>
+<p>This adapts a <cite>ControllerService</cite> to the ITaskController interface.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.task.ITaskController.__init__">
+<!--[IPython.kernel.task.ITaskController.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.ITaskController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iworker">
+<h3><a title="IPython.kernel.task.IWorker" class="reference internal" href="#IPython.kernel.task.IWorker"><tt class="xref docutils literal"><span class="pre">IWorker</span></tt></a><a class="headerlink" href="#iworker" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.IWorker">
+<!--[IPython.kernel.task.IWorker]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">IWorker</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.IWorker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>The Basic Worker Interface.</p>
+<p>A worked is a representation of an Engine that is ready to run tasks.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.task.IWorker.__init__">
+<!--[IPython.kernel.task.IWorker.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.IWorker.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lifoscheduler">
+<h3><a title="IPython.kernel.task.LIFOScheduler" class="reference internal" href="#IPython.kernel.task.LIFOScheduler"><tt class="xref docutils literal"><span class="pre">LIFOScheduler</span></tt></a><a class="headerlink" href="#lifoscheduler" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.LIFOScheduler">
+<!--[IPython.kernel.task.LIFOScheduler]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">LIFOScheduler</tt><a class="headerlink" href="#IPython.kernel.task.LIFOScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.task.FIFOScheduler" class="reference internal" href="#IPython.kernel.task.FIFOScheduler"><tt class="xref docutils literal"><span class="pre">IPython.kernel.task.FIFOScheduler</span></tt></a></p>
+<p>A Last-In-First-Out (Stack) Scheduler.</p>
+<p>This scheduler should naively reward fast engines by giving 
+them more jobs.  This risks starvation, but only in cases with 
+low load, where starvation does not really matter.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.LIFOScheduler.__init__">
+<!--[IPython.kernel.task.LIFOScheduler.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.LIFOScheduler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.LIFOScheduler.add_task">
+<!--[IPython.kernel.task.LIFOScheduler.add_task]--><tt class="descname">add_task</tt><big>(</big><em>task</em>, <em>**flags</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.LIFOScheduler.add_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.LIFOScheduler.add_worker">
+<!--[IPython.kernel.task.LIFOScheduler.add_worker]--><tt class="descname">add_worker</tt><big>(</big><em>worker</em>, <em>**flags</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.LIFOScheduler.add_worker" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="maptask">
+<h3><a title="IPython.kernel.task.MapTask" class="reference internal" href="#IPython.kernel.task.MapTask"><tt class="xref docutils literal"><span class="pre">MapTask</span></tt></a><a class="headerlink" href="#maptask" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.MapTask">
+<!--[IPython.kernel.task.MapTask]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">MapTask</tt><big>(</big><em>function</em>, <em>args=None</em>, <em>kwargs=None</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.MapTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.task.BaseTask" class="reference internal" href="#IPython.kernel.task.BaseTask"><tt class="xref docutils literal"><span class="pre">IPython.kernel.task.BaseTask</span></tt></a></p>
+<p>A task that consists of a function and arguments.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.MapTask.__init__">
+<!--[IPython.kernel.task.MapTask.__init__]--><tt class="descname">__init__</tt><big>(</big><em>function</em>, <em>args=None</em>, <em>kwargs=None</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.MapTask.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a task based on a function, args and kwargs.</p>
+<p>This is a simple type of task that consists of calling:
+function(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) and wrapping the result in a <cite>TaskResult</cite>.</p>
+<p>The return value of the function, or a <cite>Failure</cite> wrapping an 
+exception is the task result for this type of task.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.MapTask.can_task">
+<!--[IPython.kernel.task.MapTask.can_task]--><tt class="descname">can_task</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.MapTask.can_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.MapTask.submit_task">
+<!--[IPython.kernel.task.MapTask.submit_task]--><tt class="descname">submit_task</tt><big>(</big><em>d</em>, <em>queued_engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.MapTask.submit_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.MapTask.uncan_task">
+<!--[IPython.kernel.task.MapTask.uncan_task]--><tt class="descname">uncan_task</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.MapTask.uncan_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="resultns">
+<h3><a title="IPython.kernel.task.ResultNS" class="reference internal" href="#IPython.kernel.task.ResultNS"><tt class="xref docutils literal"><span class="pre">ResultNS</span></tt></a><a class="headerlink" href="#resultns" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.ResultNS">
+<!--[IPython.kernel.task.ResultNS]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">ResultNS</tt><big>(</big><em>dikt</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.ResultNS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A dict like object for holding the results of a task.</p>
+<p>The result namespace object for use in <cite>TaskResult</cite> objects as tr.ns.
+It builds an object from a dictionary, such that it has attributes
+according to the key,value pairs of the dictionary.</p>
+<p>This works by calling setattr on ALL key,value pairs in the dict.  If a user
+chooses to overwrite the <cite>__repr__</cite> or <cite>__getattr__</cite> attributes, they can.
+This can be a bad idea, as it may corrupt standard behavior of the
+ns object.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ns</span> <span class="o">=</span> <span class="n">ResultNS</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mf">17</span><span class="p">,</span><span class="s">&#39;foo&#39;</span><span class="p">:</span><span class="nb">range</span><span class="p">(</span><span class="mf">3</span><span class="p">)})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">ns</span>
+<span class="go">NS{&#39;a&#39;: 17, &#39;foo&#39;: [0, 1, 2]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ns</span><span class="o">.</span><span class="n">a</span>
+<span class="go">17</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">]</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="IPython.kernel.task.ResultNS.__init__">
+<!--[IPython.kernel.task.ResultNS.__init__]--><tt class="descname">__init__</tt><big>(</big><em>dikt</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.ResultNS.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="stringtask">
+<h3><a title="IPython.kernel.task.StringTask" class="reference internal" href="#IPython.kernel.task.StringTask"><tt class="xref docutils literal"><span class="pre">StringTask</span></tt></a><a class="headerlink" href="#stringtask" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.StringTask">
+<!--[IPython.kernel.task.StringTask]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">StringTask</tt><big>(</big><em>expression</em>, <em>pull=None</em>, <em>push=None</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.StringTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.task.BaseTask" class="reference internal" href="#IPython.kernel.task.BaseTask"><tt class="xref docutils literal"><span class="pre">IPython.kernel.task.BaseTask</span></tt></a></p>
+<p>A task that consists of a string of Python code to run.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.StringTask.__init__">
+<!--[IPython.kernel.task.StringTask.__init__]--><tt class="descname">__init__</tt><big>(</big><em>expression</em>, <em>pull=None</em>, <em>push=None</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.StringTask.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a task based on a Python expression and variables</p>
+<p>This type of task lets you push a set of variables to the engines
+namespace, run a Python string in that namespace and then bring back
+a different set of Python variables as the result.</p>
+<p>Because this type of task can return many results (through the
+<cite>pull</cite> keyword argument) it returns a special <cite>TaskResult</cite> object
+that wraps the pulled variables, statistics about the run and
+any exceptions raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.StringTask.process_result">
+<!--[IPython.kernel.task.StringTask.process_result]--><tt class="descname">process_result</tt><big>(</big><em>result</em>, <em>engine_id</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.StringTask.process_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.StringTask.submit_task">
+<!--[IPython.kernel.task.StringTask.submit_task]--><tt class="descname">submit_task</tt><big>(</big><em>d</em>, <em>queued_engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.StringTask.submit_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="taskcontroller">
+<h3><a title="IPython.kernel.task.TaskController" class="reference internal" href="#IPython.kernel.task.TaskController"><tt class="xref docutils literal"><span class="pre">TaskController</span></tt></a><a class="headerlink" href="#taskcontroller" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.TaskController">
+<!--[IPython.kernel.task.TaskController]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">TaskController</tt><big>(</big><em>controller</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.controllerservice.ControllerAdapterBase" class="reference external" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.ControllerAdapterBase"><tt class="xref docutils literal"><span class="pre">IPython.kernel.controllerservice.ControllerAdapterBase</span></tt></a></p>
+<p>The Task based interface to a Controller object.</p>
+<p>If you want to use a different scheduler, just subclass this and set
+the <cite>SchedulerClass</cite> member to the <em>class</em> of your chosen scheduler.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.__init__">
+<!--[IPython.kernel.task.TaskController.__init__]--><tt class="descname">__init__</tt><big>(</big><em>controller</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.SchedulerClass">
+<!--[IPython.kernel.task.TaskController.SchedulerClass]--><tt class="descname">SchedulerClass</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.SchedulerClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>A basic First-In-First-Out (Queue) Scheduler.</p>
+<p>This is the default Scheduler for the <cite>TaskController</cite>.
+See the docstrings for <cite>IScheduler</cite> for interface details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.abort">
+<!--[IPython.kernel.task.TaskController.abort]--><tt class="descname">abort</tt><big>(</big><em>taskid</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.abort" title="Permalink to this definition">¶</a></dt>
+<dd>Remove a task from the queue if it has not been run already.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.barrier">
+<!--[IPython.kernel.task.TaskController.barrier]--><tt class="descname">barrier</tt><big>(</big><em>taskids</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.barrier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.checkIdle">
+<!--[IPython.kernel.task.TaskController.checkIdle]--><tt class="descname">checkIdle</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.checkIdle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.clear">
+<!--[IPython.kernel.task.TaskController.clear]--><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all previously run tasks from the task controller.</p>
+<p>This is needed because the task controller keep all task results
+in memory.  This can be a problem is there are many completed
+tasks.  Users should call this periodically to clean out these
+cached task results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.distributeTasks">
+<!--[IPython.kernel.task.TaskController.distributeTasks]--><tt class="descname">distributeTasks</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.distributeTasks" title="Permalink to this definition">¶</a></dt>
+<dd>Distribute tasks while self.scheduler has things to do.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.failIdle">
+<!--[IPython.kernel.task.TaskController.failIdle]--><tt class="descname">failIdle</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.failIdle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.get_task_result">
+<!--[IPython.kernel.task.TaskController.get_task_result]--><tt class="descname">get_task_result</tt><big>(</big><em>taskid</em>, <em>block=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.get_task_result" title="Permalink to this definition">¶</a></dt>
+<dd>Returns a <cite>Deferred</cite> to the task result, or None.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.queue_status">
+<!--[IPython.kernel.task.TaskController.queue_status]--><tt class="descname">queue_status</tt><big>(</big><em>verbose=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.readmitWorker">
+<!--[IPython.kernel.task.TaskController.readmitWorker]--><tt class="descname">readmitWorker</tt><big>(</big><em>workerid</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.readmitWorker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Readmit a worker to the scheduler.</p>
+<p>This is outside <cite>taskCompleted</cite> because of the <cite>failurePenalty</cite> being 
+implemented through <cite>reactor.callLater</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.registerWorker">
+<!--[IPython.kernel.task.TaskController.registerWorker]--><tt class="descname">registerWorker</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.registerWorker" title="Permalink to this definition">¶</a></dt>
+<dd>Called by controller.register_engine.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.run">
+<!--[IPython.kernel.task.TaskController.run]--><tt class="descname">run</tt><big>(</big><em>task</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.run" title="Permalink to this definition">¶</a></dt>
+<dd>Run a task and return <cite>Deferred</cite> to its taskid.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.spin">
+<!--[IPython.kernel.task.TaskController.spin]--><tt class="descname">spin</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.spin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.taskCompleted">
+<!--[IPython.kernel.task.TaskController.taskCompleted]--><tt class="descname">taskCompleted</tt><big>(</big><em>success_and_result</em>, <em>taskid</em>, <em>workerid</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.taskCompleted" title="Permalink to this definition">¶</a></dt>
+<dd>This is the err/callback for a completed task.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskController.unregisterWorker">
+<!--[IPython.kernel.task.TaskController.unregisterWorker]--><tt class="descname">unregisterWorker</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskController.unregisterWorker" title="Permalink to this definition">¶</a></dt>
+<dd>Called by controller.unregister_engine</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="taskresult">
+<h3><a title="IPython.kernel.task.TaskResult" class="reference internal" href="#IPython.kernel.task.TaskResult"><tt class="xref docutils literal"><span class="pre">TaskResult</span></tt></a><a class="headerlink" href="#taskresult" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.TaskResult">
+<!--[IPython.kernel.task.TaskResult]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">TaskResult</tt><big>(</big><em>results</em>, <em>engineid</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>An object for returning task results for certain types of tasks.</p>
+<p>This object encapsulates the results of a task.  On task
+success it will have a keys attribute that will have a list
+of the variables that have been pulled back.  These variables
+are accessible as attributes of this class as well.  On 
+success the failure attribute will be None.</p>
+<p>In task failure, keys will be empty, but failure will contain
+the failure object that encapsulates the remote exception.
+One can also simply call the <cite>raise_exception</cite> method of 
+this class to re-raise any remote exception in the local
+session.</p>
+<p>The <cite>TaskResult</cite> has a <cite>.ns</cite> member, which is a property for access
+to the results.  If the Task had pull=[&#8216;a&#8217;, &#8216;b&#8217;], then the 
+Task Result will have attributes <cite>tr.ns.a</cite>, <cite>tr.ns.b</cite> for those values.
+Accessing <cite>tr.ns</cite> will raise the remote failure if the task failed.</p>
+<p>The <cite>engineid</cite> attribute should have the <cite>engineid</cite> of the engine
+that ran the task.  But, because engines can come and go, 
+the <cite>engineid</cite> may not continue to be
+valid or accurate.</p>
+<p>The <cite>taskid</cite> attribute simply gives the <cite>taskid</cite> that the task
+is tracked under.</p>
+<dl class="method">
+<dt id="IPython.kernel.task.TaskResult.__init__">
+<!--[IPython.kernel.task.TaskResult.__init__]--><tt class="descname">__init__</tt><big>(</big><em>results</em>, <em>engineid</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskResult.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.task.TaskResult.ns">
+<!--[IPython.kernel.task.TaskResult.ns]--><tt class="descname">ns</tt><a class="headerlink" href="#IPython.kernel.task.TaskResult.ns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.TaskResult.raise_exception">
+<!--[IPython.kernel.task.TaskResult.raise_exception]--><tt class="descname">raise_exception</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.task.TaskResult.raise_exception" title="Permalink to this definition">¶</a></dt>
+<dd>Re-raise any remote exceptions in the local python session.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="workerfromqueuedengine">
+<h3><a title="IPython.kernel.task.WorkerFromQueuedEngine" class="reference internal" href="#IPython.kernel.task.WorkerFromQueuedEngine"><tt class="xref docutils literal"><span class="pre">WorkerFromQueuedEngine</span></tt></a><a class="headerlink" href="#workerfromqueuedengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.task.WorkerFromQueuedEngine">
+<!--[IPython.kernel.task.WorkerFromQueuedEngine]-->class <tt class="descclassname">IPython.kernel.task.</tt><tt class="descname">WorkerFromQueuedEngine</tt><big>(</big><em>qe</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.WorkerFromQueuedEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Adapt an <cite>IQueuedEngine</cite> to an <cite>IWorker</cite> object</p>
+<dl class="method">
+<dt id="IPython.kernel.task.WorkerFromQueuedEngine.__init__">
+<!--[IPython.kernel.task.WorkerFromQueuedEngine.__init__]--><tt class="descname">__init__</tt><big>(</big><em>qe</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.WorkerFromQueuedEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.task.WorkerFromQueuedEngine.properties">
+<!--[IPython.kernel.task.WorkerFromQueuedEngine.properties]--><tt class="descname">properties</tt><a class="headerlink" href="#IPython.kernel.task.WorkerFromQueuedEngine.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.task.WorkerFromQueuedEngine.run">
+<!--[IPython.kernel.task.WorkerFromQueuedEngine.run]--><tt class="descname">run</tt><big>(</big><em>task</em><big>)</big><a class="headerlink" href="#IPython.kernel.task.WorkerFromQueuedEngine.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run task in worker&#8217;s namespace.</p>
+<p>This takes a task and calls methods on the task that actually
+cause <cite>self.queuedEngine</cite> to do the task.  See the methods of
+<cite>ITask</cite> for more information about how these methods are called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body">task : a <cite>Task</cite> object</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><cite>Deferred</cite> to a tuple of (success, result) where
+success if a boolean that signifies success or failure
+and result is the task result.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.task</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.task">Module: <tt class="docutils literal"><span class="pre">kernel.task</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#basetask"><tt class="docutils literal"><span class="pre">BaseTask</span></tt></a></li>
+<li><a class="reference external" href="#fifoscheduler"><tt class="docutils literal"><span class="pre">FIFOScheduler</span></tt></a></li>
+<li><a class="reference external" href="#ischeduler"><tt class="docutils literal"><span class="pre">IScheduler</span></tt></a></li>
+<li><a class="reference external" href="#itask"><tt class="docutils literal"><span class="pre">ITask</span></tt></a></li>
+<li><a class="reference external" href="#itaskcontroller"><tt class="docutils literal"><span class="pre">ITaskController</span></tt></a></li>
+<li><a class="reference external" href="#iworker"><tt class="docutils literal"><span class="pre">IWorker</span></tt></a></li>
+<li><a class="reference external" href="#lifoscheduler"><tt class="docutils literal"><span class="pre">LIFOScheduler</span></tt></a></li>
+<li><a class="reference external" href="#maptask"><tt class="docutils literal"><span class="pre">MapTask</span></tt></a></li>
+<li><a class="reference external" href="#resultns"><tt class="docutils literal"><span class="pre">ResultNS</span></tt></a></li>
+<li><a class="reference external" href="#stringtask"><tt class="docutils literal"><span class="pre">StringTask</span></tt></a></li>
+<li><a class="reference external" href="#taskcontroller"><tt class="docutils literal"><span class="pre">TaskController</span></tt></a></li>
+<li><a class="reference external" href="#taskresult"><tt class="docutils literal"><span class="pre">TaskResult</span></tt></a></li>
+<li><a class="reference external" href="#workerfromqueuedengine"><tt class="docutils literal"><span class="pre">WorkerFromQueuedEngine</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.scripts.ipengine.html" title="previous chapter">kernel.scripts.ipengine</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.taskclient.html" title="next chapter">kernel.taskclient</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.task.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.taskclient.html" title="kernel.taskclient"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipengine.html" title="kernel.scripts.ipengine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

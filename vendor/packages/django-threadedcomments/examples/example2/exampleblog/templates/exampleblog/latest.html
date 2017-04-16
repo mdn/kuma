@@ -1,0 +1,55 @@
+{% extends "exampleblog_base.html" %}
+{% load threadedcommentstags %}
+{% load voting_tags %}
+
+{% block head %}
+<script type="text/javascript">
+    var _POSTER = '{{ user.username }}';
+    var _FORM = '{{ form.comment|oneline }}';
+    var _FORM_URL = '{% get_comment_url_json post %}';
+    var _REGISTER_URL = '{% url exampleblog_register %}';
+    var _CHECK_EXISTS_URL = '{% url exampleblog_checkexists %}';
+    var _LOGIN_URL = '{% url exampleblog_login %}';
+    var _IS_FOCUSED = null;
+    var _ARROW_IMG_BASE = '{{ MEDIA_URL }}img/arrow_';
+    var _VOTE_BASE = '/vote/';
+</script>
+{% endblock %}
+
+{% block content %}
+    <div id="blogpost">
+        <h1>{{ post.title }}</h1>
+        <div id="date_posted">Posted on {{ post.date_posted|date }} at {{ post.date_posted|time }}</div>
+        {{ post.body|linebreaks }}
+    </div>
+    {% if user.is_authenticated %}
+        <span id="logged_in_as">Logged in as {{ user.username }}</span>
+    {% else %}
+        <div id="login_register_links">
+            <a href="javascript:show_registration_form()" id="register">Register</a>
+            <span>or</span>
+            <a href="javascript:show_login_form()" id="login">Login</a>
+        </div>
+    {% endif %}
+    <div id="comments">
+        {% for comment,score,vote in comments_and_scores %}
+        {% with comment.depth as depth %}
+            {% include "exampleblog/comment_partial.html" %}
+        {% endwith %}
+        {% endfor %}
+    </div>
+    {% if user.is_authenticated %}
+        <ul id="messages">
+            {% for message in messages %}
+            {# <li>{{ message }}</li> #}
+            {% endfor %}
+        </ul>
+        <p class="reply_to">Reply to original blog entry:</p>
+        <form method="POST" action="{% get_comment_url_json post %}" class="responseform">
+            <ul>
+                <li>{{ form.comment }}</li>
+                <li><input type="submit" value="Post Response" /></li>
+            </ul>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,117 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.argparse
+=================
+
+Module: :mod:`external.argparse`
+--------------------------------
+Inheritance diagram for ``IPython.external.argparse``:
+
+.. inheritance-diagram:: IPython.external.argparse 
+   :parts: 3
+
+.. automodule:: IPython.external.argparse
+
+.. currentmodule:: IPython.external.argparse
+
+Classes
+-------
+
+:class:`Action`
+~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Action
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ArgumentDefaultsHelpFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ArgumentDefaultsHelpFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ArgumentError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ArgumentError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ArgumentParser`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ArgumentParser
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FileType`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FileType
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`HelpFormatter`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: HelpFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Namespace`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Namespace
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RawDescriptionHelpFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RawDescriptionHelpFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RawTextHelpFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RawTextHelpFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

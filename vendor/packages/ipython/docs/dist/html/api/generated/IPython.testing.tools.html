@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.tools &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.util" href="IPython.testing.util.html" />
+    <link rel="prev" title="testing.plugin.test_refs" href="IPython.testing.plugin.test_refs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.util.html" title="testing.util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.test_refs.html" title="testing.plugin.test_refs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-tools">
+<h1>testing.tools<a class="headerlink" href="#testing-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.tools">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.tools</span></tt><a class="headerlink" href="#module-IPython.testing.tools" title="Permalink to this headline">¶</a></h2>
+<p>Generic testing tools that do NOT depend on Twisted.</p>
+<p>In particular, this module exposes a set of top-level assert* functions that
+can be used in place of nose.tools.assert* in method generators (the ones in
+nose can not, at least as of nose 0.10.4).</p>
+<p>Note: our testing package contains testing.util, which does depend on Twisted
+and provides utilities for tests that manage Deferreds.  All testing support
+tools that only depend on nose, IPython or the standard library should go here
+instead.</p>
+<div class="section" id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fernando Perez &lt;<a class="reference external" href="mailto:Fernando&#46;Perez&#37;&#52;&#48;berkeley&#46;edu">Fernando<span>&#46;</span>Perez<span>&#64;</span>berkeley<span>&#46;</span>edu</a>&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.tools.full_path">
+<!--[IPython.testing.tools.full_path]--><tt class="descclassname">IPython.testing.tools.</tt><tt class="descname">full_path</tt><big>(</big><em>startPath</em>, <em>files</em><big>)</big><a class="headerlink" href="#IPython.testing.tools.full_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make full paths for all the listed files, based on startPath.</p>
+<p>Only the base part of startPath is kept, since this routine is typically
+used with a script&#8217;s __file__ variable as startPath.  The base of startPath
+is then prepended to all the listed files, forming the output list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>startPath</strong> : string</p>
+<blockquote class="last">
+<blockquote>
+<p>Initial path to use as the base for the results.  This path is split</p>
+</blockquote>
+<p>using os.path.split() and only its first component is kept.</p>
+<dl class="docutils">
+<dt>files <span class="classifier-delimiter">:</span> <span class="classifier">string or list</span></dt>
+<dd><p class="first last">One or more files.</p>
+</dd>
+</dl>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">full_path</span><span class="p">(</span><span class="s">&#39;/foo/bar.py&#39;</span><span class="p">,[</span><span class="s">&#39;a.txt&#39;</span><span class="p">,</span><span class="s">&#39;b.txt&#39;</span><span class="p">])</span>
+<span class="go">[&#39;/foo/a.txt&#39;, &#39;/foo/b.txt&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">full_path</span><span class="p">(</span><span class="s">&#39;/foo&#39;</span><span class="p">,[</span><span class="s">&#39;a.txt&#39;</span><span class="p">,</span><span class="s">&#39;b.txt&#39;</span><span class="p">])</span>
+<span class="go">[&#39;/a.txt&#39;, &#39;/b.txt&#39;]</span>
+</pre></div>
+</div>
+<p>If a single file is given, the output is still a list:
+&gt;&gt;&gt; full_path(&#8216;/foo&#8217;,&#8217;a.txt&#8217;)
+[&#8216;/a.txt&#8217;]</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.tools</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.tools">Module: <tt class="docutils literal"><span class="pre">testing.tools</span></tt></a><ul>
+<li><a class="reference external" href="#authors">Authors</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.plugin.test_refs.html" title="previous chapter">testing.plugin.test_refs</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.util.html" title="next chapter">testing.util</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.tools.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.util.html" title="testing.util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.test_refs.html" title="testing.plugin.test_refs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

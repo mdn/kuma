@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.pendingdeferred
+======================
+
+Module: :mod:`kernel.pendingdeferred`
+-------------------------------------
+Inheritance diagram for ``IPython.kernel.pendingdeferred``:
+
+.. inheritance-diagram:: IPython.kernel.pendingdeferred 
+   :parts: 3
+
+.. automodule:: IPython.kernel.pendingdeferred
+
+.. currentmodule:: IPython.kernel.pendingdeferred
+
+:class:`PendingDeferredManager`
+-------------------------------
+
+
+.. autoclass:: PendingDeferredManager
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+.. autofunction:: IPython.kernel.pendingdeferred.two_phase
+

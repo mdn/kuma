@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>frontend.frontendbase &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="frontend.linefrontendbase" href="IPython.frontend.linefrontendbase.html" />
+    <link rel="prev" title="frontend.asyncfrontendbase" href="IPython.frontend.asyncfrontendbase.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.linefrontendbase.html" title="frontend.linefrontendbase"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.asyncfrontendbase.html" title="frontend.asyncfrontendbase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frontend-frontendbase">
+<h1>frontend.frontendbase<a class="headerlink" href="#frontend-frontendbase" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.frontend.frontendbase">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">frontend.frontendbase</span></tt><a class="headerlink" href="#module-IPython.frontend.frontendbase" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.frontend.frontendbase</span></tt>:</p>
+<img src="../../_images/inheritanced45c5e1d74.png" usemap="#inheritanced45c5e1d74" class="inheritance"/><map id="inheritanced45c5e1d74" name="inheritanced45c5e1d74">
+<area shape="rect" href="#IPython.frontend.frontendbase.IFrontEnd" title="frontend.frontendbase.IFrontEnd" alt="" coords="333,31,560,57"/>
+<area shape="rect" href="#IPython.frontend.frontendbase.IFrontEndFactory" title="frontend.frontendbase.IFrontEndFactory" alt="" coords="311,81,583,108"/>
+<area shape="rect" href="#IPython.frontend.frontendbase.FrontEndBase" title="frontend.frontendbase.FrontEndBase" alt="" coords="5,5,261,32"/>
+</map>
+<p>frontendbase provides an interface and base class for GUI frontends for 
+IPython.kernel/IPython.kernel.core.</p>
+<p>Frontend implementations will likely want to subclass FrontEndBase.</p>
+<p>Author: Barry Wark</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="frontendbase">
+<h3><a title="IPython.frontend.frontendbase.FrontEndBase" class="reference internal" href="#IPython.frontend.frontendbase.FrontEndBase"><tt class="xref docutils literal"><span class="pre">FrontEndBase</span></tt></a><a class="headerlink" href="#frontendbase" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.frontend.frontendbase.FrontEndBase">
+<!--[IPython.frontend.frontendbase.FrontEndBase]-->class <tt class="descclassname">IPython.frontend.frontendbase.</tt><tt class="descname">FrontEndBase</tt><big>(</big><em>shell=None</em>, <em>history=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="docutils">
+<dt>FrontEndBase manages the state tasks for a CLI frontend:</dt>
+<dd><ul class="first last simple">
+<li>Input and output history management</li>
+<li>Input/continuation and output prompt generation</li>
+</ul>
+</dd>
+<dt>Some issues (due to possibly unavailable engine):</dt>
+<dd><ul class="first last simple">
+<li>How do we get the current cell number for the engine?</li>
+<li>How do we handle completions?</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.__init__">
+<!--[IPython.frontend.frontendbase.FrontEndBase.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shell=None</em>, <em>history=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.continuation_prompt">
+<!--[IPython.frontend.frontendbase.FrontEndBase.continuation_prompt]--><tt class="descname">continuation_prompt</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.continuation_prompt" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the current continuation prompt</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.execute">
+<!--[IPython.frontend.frontendbase.FrontEndBase.execute]--><tt class="descname">execute</tt><big>(</big><em>block</em>, <em>blockID=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the block and return the result.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><p class="first">block : {str, AST}
+blockID : any</p>
+<blockquote class="last">
+Caller may provide an ID to identify this block. 
+result[&#8216;blockID&#8217;] := blockID</blockquote>
+</dd>
+<dt>Result:</dt>
+<dd>Deferred result of self.interpreter.execute</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.get_history_next">
+<!--[IPython.frontend.frontendbase.FrontEndBase.get_history_next]--><tt class="descname">get_history_next</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.get_history_next" title="Permalink to this definition">¶</a></dt>
+<dd>Returns next history string and increment history cursor.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.get_history_previous">
+<!--[IPython.frontend.frontendbase.FrontEndBase.get_history_previous]--><tt class="descname">get_history_previous</tt><big>(</big><em>current_block</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.get_history_previous" title="Permalink to this definition">¶</a></dt>
+<dd>Returns previous history string and decrement history cursor.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.input_prompt">
+<!--[IPython.frontend.frontendbase.FrontEndBase.input_prompt]--><tt class="descname">input_prompt</tt><big>(</big><em>number=''</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.input_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current input prompt</p>
+<p>It would be great to use ipython1.core.prompts.Prompt1 here</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.is_complete">
+<!--[IPython.frontend.frontendbase.FrontEndBase.is_complete]--><tt class="descname">is_complete</tt><big>(</big><em>block</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.is_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if block is complete.</p>
+<p>Parameters
+block : string</p>
+<p>Result 
+True if block can be sent to the engine without compile errors.
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.output_prompt">
+<!--[IPython.frontend.frontendbase.FrontEndBase.output_prompt]--><tt class="descname">output_prompt</tt><big>(</big><em>number=''</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.output_prompt" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the output prompt for result</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.render_error">
+<!--[IPython.frontend.frontendbase.FrontEndBase.render_error]--><tt class="descname">render_error</tt><big>(</big><em>failure</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.render_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclasses must override to render the failure.</p>
+<p>In asynchronous frontends, this method will be called as a
+twisted.internet.defer.Deferred&#8217;s callback. Implementations
+should thus return result when finished.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.render_result">
+<!--[IPython.frontend.frontendbase.FrontEndBase.render_result]--><tt class="descname">render_result</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.render_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclasses must override to render result.</p>
+<p>In asynchronous frontends, this method will be called as a
+twisted.internet.defer.Deferred&#8217;s callback. Implementations
+should thus return result when finished.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.frontendbase.FrontEndBase.update_cell_prompt">
+<!--[IPython.frontend.frontendbase.FrontEndBase.update_cell_prompt]--><tt class="descname">update_cell_prompt</tt><big>(</big><em>result</em>, <em>blockID=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.FrontEndBase.update_cell_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass may override to update the input prompt for a block.</p>
+<p>This method only really makes sens in asyncrhonous frontend.
+Since this method will be called as a 
+twisted.internet.defer.Deferred&#8217;s callback, implementations should 
+return result when finished.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifrontend">
+<h3><a title="IPython.frontend.frontendbase.IFrontEnd" class="reference internal" href="#IPython.frontend.frontendbase.IFrontEnd"><tt class="xref docutils literal"><span class="pre">IFrontEnd</span></tt></a><a class="headerlink" href="#ifrontend" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.frontend.frontendbase.IFrontEnd">
+<!--[IPython.frontend.frontendbase.IFrontEnd]-->class <tt class="descclassname">IPython.frontend.frontendbase.</tt><tt class="descname">IFrontEnd</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.IFrontEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Interface for frontends. All methods return t.i.d.Deferred</p>
+<dl class="staticmethod">
+<dt id="IPython.frontend.frontendbase.IFrontEnd.__init__">
+<!--[IPython.frontend.frontendbase.IFrontEnd.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.IFrontEnd.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifrontendfactory">
+<h3><a title="IPython.frontend.frontendbase.IFrontEndFactory" class="reference internal" href="#IPython.frontend.frontendbase.IFrontEndFactory"><tt class="xref docutils literal"><span class="pre">IFrontEndFactory</span></tt></a><a class="headerlink" href="#ifrontendfactory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.frontend.frontendbase.IFrontEndFactory">
+<!--[IPython.frontend.frontendbase.IFrontEndFactory]-->class <tt class="descclassname">IPython.frontend.frontendbase.</tt><tt class="descname">IFrontEndFactory</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.IFrontEndFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Factory interface for frontends.</p>
+<dl class="staticmethod">
+<dt id="IPython.frontend.frontendbase.IFrontEndFactory.__init__">
+<!--[IPython.frontend.frontendbase.IFrontEndFactory.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.frontendbase.IFrontEndFactory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">frontend.frontendbase</a><ul>
+<li><a class="reference external" href="#module-IPython.frontend.frontendbase">Module: <tt class="docutils literal"><span class="pre">frontend.frontendbase</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#frontendbase"><tt class="docutils literal"><span class="pre">FrontEndBase</span></tt></a></li>
+<li><a class="reference external" href="#ifrontend"><tt class="docutils literal"><span class="pre">IFrontEnd</span></tt></a></li>
+<li><a class="reference external" href="#ifrontendfactory"><tt class="docutils literal"><span class="pre">IFrontEndFactory</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.frontend.asyncfrontendbase.html" title="previous chapter">frontend.asyncfrontendbase</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.frontend.linefrontendbase.html" title="next chapter">frontend.linefrontendbase</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.frontend.frontendbase.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.linefrontendbase.html" title="frontend.linefrontendbase"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.asyncfrontendbase.html" title="frontend.asyncfrontendbase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

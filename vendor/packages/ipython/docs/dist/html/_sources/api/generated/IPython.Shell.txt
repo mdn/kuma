@@ -1,0 +1,225 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Shell
+=====
+
+Module: :mod:`Shell`
+--------------------
+Inheritance diagram for ``IPython.Shell``:
+
+.. inheritance-diagram:: IPython.Shell 
+   :parts: 3
+
+.. automodule:: IPython.Shell
+
+.. currentmodule:: IPython.Shell
+
+Classes
+-------
+
+:class:`IPShell`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellEmbed`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellEmbed
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellGTK`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellGTK
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellMatplotlib`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellMatplotlib
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellMatplotlibGTK`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellMatplotlibGTK
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellMatplotlibQt`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellMatplotlibQt
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellMatplotlibQt4`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellMatplotlibQt4
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellMatplotlibWX`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellMatplotlibWX
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellQt`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellQt
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellQt4`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellQt4
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPShellWX`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPShellWX
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPThread`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPThread
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MTInteractiveShell`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MTInteractiveShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MatplotlibMTShell`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MatplotlibMTShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MatplotlibShell`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MatplotlibShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MatplotlibShellBase`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MatplotlibShellBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.Shell.get_tk
+
+
+.. autofunction:: IPython.Shell.hijack_gtk
+
+
+.. autofunction:: IPython.Shell.hijack_qt
+
+
+.. autofunction:: IPython.Shell.hijack_qt4
+
+
+.. autofunction:: IPython.Shell.hijack_tk
+
+
+.. autofunction:: IPython.Shell.hijack_wx
+
+
+.. autofunction:: IPython.Shell.kill_embedded
+
+
+.. autofunction:: IPython.Shell.start
+
+
+.. autofunction:: IPython.Shell.update_tk
+

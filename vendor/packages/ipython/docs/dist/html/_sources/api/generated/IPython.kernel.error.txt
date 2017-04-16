@@ -1,0 +1,333 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.error
+============
+
+Module: :mod:`kernel.error`
+---------------------------
+Inheritance diagram for ``IPython.kernel.error``:
+
+.. inheritance-diagram:: IPython.kernel.error 
+   :parts: 3
+
+.. automodule:: IPython.kernel.error
+
+.. currentmodule:: IPython.kernel.error
+
+Classes
+-------
+
+:class:`AbortedPendingDeferredError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: AbortedPendingDeferredError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ClientError`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ClientError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`CompositeError`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: CompositeError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ConnectionError`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConnectionError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FileTimeoutError`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FileTimeoutError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IdInUse`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IdInUse
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InvalidClientID`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InvalidClientID
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InvalidDeferredID`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InvalidDeferredID
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InvalidEngineID`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InvalidEngineID
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InvalidProperty`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InvalidProperty
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`KernelError`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: KernelError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MessageSizeError`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MessageSizeError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MissingBlockArgument`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MissingBlockArgument
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NoEnginesRegistered`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NoEnginesRegistered
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NotAPendingResult`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NotAPendingResult
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NotDefined`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NotDefined
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PBMessageSizeError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PBMessageSizeError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ProtocolError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ProtocolError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`QueueCleared`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: QueueCleared
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ResultAlreadyRetrieved`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ResultAlreadyRetrieved
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ResultNotCompleted`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ResultNotCompleted
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SecurityError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SecurityError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SerializationError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SerializationError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`StopLocalExecution`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: StopLocalExecution
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TaskAborted`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TaskAborted
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TaskRejectError`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TaskRejectError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TaskTimeout`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TaskTimeout
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UnpickleableException`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UnpickleableException
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Function
+--------
+
+
+.. autofunction:: IPython.kernel.error.collect_exceptions
+

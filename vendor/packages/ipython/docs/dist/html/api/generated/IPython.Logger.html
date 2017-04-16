@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Logger &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="Magic" href="IPython.Magic.html" />
+    <link rel="prev" title="Itpl" href="IPython.Itpl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Magic.html" title="Magic"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Itpl.html" title="Itpl"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="logger">
+<h1>Logger<a class="headerlink" href="#logger" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.Logger">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">Logger</span></tt><a class="headerlink" href="#module-IPython.Logger" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.Logger</span></tt>:</p>
+<img src="../../_images/inheritancefc617353ed.png" usemap="#inheritancefc617353ed" class="inheritance"/><map id="inheritancefc617353ed" name="inheritancefc617353ed">
+<area shape="rect" href="#IPython.Logger.Logger" title="IPython.Logger.Logger" alt="" coords="7,5,169,32"/>
+</map>
+<p>Logger class for IPython&#8217;s logging facilities.</p>
+</div>
+<div class="section" id="id1">
+<h2><a title="IPython.Logger.Logger" class="reference internal" href="#IPython.Logger.Logger"><tt class="xref docutils literal"><span class="pre">Logger</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.Logger.Logger">
+<!--[IPython.Logger.Logger]-->class <tt class="descclassname">IPython.Logger.</tt><tt class="descname">Logger</tt><big>(</big><em>shell</em>, <em>logfname='Logger.log'</em>, <em>loghead=''</em>, <em>logmode='over'</em><big>)</big><a class="headerlink" href="#IPython.Logger.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A Logfile class with different policies for file creation</p>
+<dl class="method">
+<dt id="IPython.Logger.Logger.__init__">
+<!--[IPython.Logger.Logger.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shell</em>, <em>logfname='Logger.log'</em>, <em>loghead=''</em>, <em>logmode='over'</em><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.close_log">
+<!--[IPython.Logger.Logger.close_log]--><tt class="descname">close_log</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.close_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fully stop logging and close log file.</p>
+<p>In order to start logging again, a new logstart() call needs to be
+made, possibly (though not necessarily) with a new filename, mode and
+other options.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.log">
+<!--[IPython.Logger.Logger.log]--><tt class="descname">log</tt><big>(</big><em>line_ori</em>, <em>line_mod</em>, <em>continuation=None</em><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the line to a log and create input cache variables _i*.</p>
+<p>Inputs:</p>
+<ul class="simple">
+<li>line_ori: unmodified input line from the user.  This is not</li>
+</ul>
+<p>necessarily valid Python.</p>
+<ul class="simple">
+<li>line_mod: possibly modified input, such as the transformations made</li>
+</ul>
+<p>by input prefilters or input handlers of various kinds.  This should
+always be valid Python.</p>
+<ul class="simple">
+<li>continuation: if True, indicates this is part of multi-line input.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.log_write">
+<!--[IPython.Logger.Logger.log_write]--><tt class="descname">log_write</tt><big>(</big><em>data</em>, <em>kind='input'</em><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.log_write" title="Permalink to this definition">¶</a></dt>
+<dd>Write data to the log file, if active</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.Logger.Logger.logmode">
+<!--[IPython.Logger.Logger.logmode]--><tt class="descname">logmode</tt><a class="headerlink" href="#IPython.Logger.Logger.logmode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.logstart">
+<!--[IPython.Logger.Logger.logstart]--><tt class="descname">logstart</tt><big>(</big><em>logfname=None</em>, <em>loghead=None</em>, <em>logmode=None</em>, <em>log_output=False</em>, <em>timestamp=False</em>, <em>log_raw_input=False</em><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.logstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a new log-file with a default header.</p>
+<p>Raises RuntimeError if the log has already been started</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.logstate">
+<!--[IPython.Logger.Logger.logstate]--><tt class="descname">logstate</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.logstate" title="Permalink to this definition">¶</a></dt>
+<dd>Print a status message about the logger.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.logstop">
+<!--[IPython.Logger.Logger.logstop]--><tt class="descname">logstop</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.logstop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fully stop logging and close log file.</p>
+<p>In order to start logging again, a new logstart() call needs to be
+made, possibly (though not necessarily) with a new filename, mode and
+other options.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Logger.Logger.switch_log">
+<!--[IPython.Logger.Logger.switch_log]--><tt class="descname">switch_log</tt><big>(</big><em>val</em><big>)</big><a class="headerlink" href="#IPython.Logger.Logger.switch_log" title="Permalink to this definition">¶</a></dt>
+<dd>Switch logging on/off. val should be ONLY a boolean.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Logger</a><ul>
+<li><a class="reference external" href="#module-IPython.Logger">Module: <tt class="docutils literal"><span class="pre">Logger</span></tt></a></li>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">Logger</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.Itpl.html" title="previous chapter">Itpl</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.Magic.html" title="next chapter">Magic</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.Logger.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Magic.html" title="Magic"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Itpl.html" title="Itpl"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

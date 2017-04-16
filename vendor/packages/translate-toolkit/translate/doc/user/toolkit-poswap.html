@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="poswap" id="poswap">poswap</a></h1>
+<div class="level1">
+
+<p>
+
+This tool builds a new translation file with the target text (translation) of the input file(s) as source language of the output file it creates.
+</p>
+
+<p>
+This makes it possible to have French as the source file for translation, rather than English.  Note that this requires no change in the software project and is only a manipulation of the strings in the existing files. The only requirement for this tool is a French translation.
+</p>
+
+<p>
+It can also be used to convert translatable files that use logical IDs instead of source text into a format usable by human localisers.
+</p>
+
+</div>
+<!-- SECTION "poswap" [1-586] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">poswap [options] &lt;newsource&gt; [-t current] &lt;new&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> &lt;newsource&gt; </td><td class="col1"> is the translations (preferably 100% translated) of the preferred source language (like French) </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;current&gt;   </td><td class="col1"> is the (optional) current English based translation in your intended target language </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> &lt;new&gt;       </td><td class="col1"> is the intended output file / directory </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in pot format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in po, pot formats  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --reverse  </td><td class="col1 leftalign"> Do the inverse operation (converting back to a normal English based file). See the examples.  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [587-1830] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+Ensure that the two po files / directories correspond 100% to the same pot file before using
+this.
+</p>
+
+<p>
+To start a fresh Afrikaans (af) translation from Dutch (nl):
+</p>
+<pre class="code">  poswap nl.po nl-af.po</pre>
+
+<p>
+This initialises a new, empty file nl-af.po with Dutch as the source language.
+</p>
+
+<p>
+To change the nl-af.po file back to the expected English based af.po:
+</p>
+<pre class="code">  poswap --reverse nl.po -t nl-af.po af.po</pre>
+
+<p>
+
+To translate Kurdish (ku) through French (fr):
+</p>
+<pre class="code">  poswap -i fr/ -t ku/ -o fr-ku/</pre>
+
+<p>
+
+This will take the existing (English based) Kurdish translation in ku/ and produce files in fr-ku with French as the source language and Kurdish as the target language.
+</p>
+
+<p>
+To convert the fr-ku files back to en-ku:
+</p>
+<pre class="code">  poswap --reverse -i fr/ -t fr-ku/ -o en-ku/</pre>
+
+<p>
+This recreates the English based Kurdish translation from the French based files previously created in fr-ku/.
+</p>
+
+</div>
+<!-- SECTION "Examples" [1831-2690] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Behaviour is undetermined if the two files don&#039;t match 100%. If <acronym title="Gettext Portable Object">PO</acronym> files are based in the same template, there should be no problem.</div>
+</li>
+<li class="level1"><div class="li"> We should probably be doing fuzzy matching in future to ease the migration over the lifetime of a changing French translation.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Issues" [2691-] --></body>
+</html>

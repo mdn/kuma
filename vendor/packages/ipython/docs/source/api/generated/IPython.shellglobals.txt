@@ -1,0 +1,13 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+shellglobals
+============
+
+Module: :mod:`shellglobals`
+---------------------------
+.. automodule:: IPython.shellglobals
+
+.. currentmodule:: IPython.shellglobals
+
+.. autofunction:: IPython.shellglobals.run_in_frontend
+

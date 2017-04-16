@@ -1,0 +1,27 @@
+# redis transport
+redis
+
+# MongoDB transport
+pymongo
+
+# CouchDB transport
+couchdb
+
+# Pika transport
+pika==0.5.2
+
+# Beanstalk transport
+beanstalkc
+
+# Zookeeper transport
+kazoo
+
+# SQLAlchemy transport
+kombu-sqlalchemy
+
+# Django ORM transport
+Django
+django-kombu
+
+# SQS transport
+boto

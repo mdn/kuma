@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>external.pretty &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="external.simplegeneric" href="IPython.external.simplegeneric.html" />
+    <link rel="prev" title="external.path" href="IPython.external.path.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.simplegeneric.html" title="external.simplegeneric"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.path.html" title="external.path"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="external-pretty">
+<h1>external.pretty<a class="headerlink" href="#external-pretty" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.external.pretty">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">external.pretty</span></tt><a class="headerlink" href="#module-IPython.external.pretty" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.external.pretty</span></tt>:</p>
+<img src="../../_images/inheritance7529eac084.png" usemap="#inheritance7529eac084" class="inheritance"/><map id="inheritance7529eac084" name="inheritance7529eac084">
+<area shape="rect" href="#IPython.external.pretty.Printable" title="external.pretty.Printable" alt="" coords="36,152,203,177"/>
+<area shape="rect" href="#IPython.external.pretty.Breakable" title="external.pretty.Breakable" alt="" coords="288,103,462,128"/>
+<area shape="rect" href="#IPython.external.pretty.Group" title="external.pretty.Group" alt="" coords="301,152,449,177"/>
+<area shape="rect" href="#IPython.external.pretty.Text" title="external.pretty.Text" alt="" coords="307,200,443,226"/>
+<area shape="rect" href="#IPython.external.pretty.PrettyPrinter" title="external.pretty.PrettyPrinter" alt="" coords="280,54,470,80"/>
+<area shape="rect" href="#IPython.external.pretty.RepresentationPrinter" title="external.pretty.RepresentationPrinter" alt="" coords="516,54,763,80"/>
+<area shape="rect" href="#IPython.external.pretty.GroupQueue" title="external.pretty.GroupQueue" alt="" coords="24,5,214,31"/>
+</map>
+<p>pretty
+~~</p>
+<p>Python advanced pretty printer.  This pretty printer is intended to
+replace the old <cite>pprint</cite> python module which does not allow developers
+to provide their own pretty print callbacks.</p>
+<p>This module is based on ruby&#8217;s <cite>prettyprint.rb</cite> library by <cite>Tanaka Akira</cite>.</p>
+<div class="section" id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>To directly print the representation of an object use <cite>pprint</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">pretty</span> <span class="k">import</span> <span class="n">pprint</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">complex_object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To get a string of the output use <cite>pretty</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">pretty</span> <span class="k">import</span> <span class="n">pretty</span>
+<span class="n">string</span> <span class="o">=</span> <span class="n">pretty</span><span class="p">(</span><span class="n">complex_object</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extending">
+<h3>Extending<a class="headerlink" href="#extending" title="Permalink to this headline">¶</a></h3>
+<p>The pretty library allows developers to add pretty printing rules for their
+own objects.  This process is straightforward.  All you have to do is to
+add a <cite>__pretty__</cite> method to your object and call the methods on the
+pretty printer passed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__pretty__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Depending on the python version you want to support you have two
+possibilities.  The following list shows the python 2.5 version and the
+compatibility one.</p>
+<p>Here the example implementation of a <cite>__pretty__</cite> method for a list
+subclass for python 2.5 and higher (python 2.5 requires the with statement
+__future__ import):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__pretty__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cycle</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s">&#39;MyList(...)&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">p</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mf">8</span><span class="p">,</span> <span class="s">&#39;MyList([&#39;</span><span class="p">,</span> <span class="s">&#39;])&#39;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">idx</span><span class="p">:</span>
+                        <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+                        <span class="n">p</span><span class="o">.</span><span class="n">breakable</span><span class="p">()</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">pretty</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <cite>cycle</cite> parameter is <cite>True</cite> if pretty detected a cycle.  You <em>have</em> to
+react to that or the result is an infinite loop.  <cite>p.text()</cite> just adds
+non breaking text to the output, <cite>p.breakable()</cite> either adds a whitespace
+or breaks here.  If you pass it an argument it&#8217;s used instead of the
+default space.  <cite>p.pretty</cite> prettyprints another object using the pretty print
+method.</p>
+<p>The first parameter to the <cite>group</cite> function specifies the extra indentation
+of the next line.  In this example the next item will either be not
+breaked (if the items are short enough) or aligned with the right edge of
+the opening bracked of <cite>MyList</cite>.</p>
+<p>If you want to support python 2.4 and lower you can use this code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__pretty__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cycle</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s">&#39;MyList(...)&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">begin_group</span><span class="p">(</span><span class="mf">8</span><span class="p">,</span> <span class="s">&#39;MyList([&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">idx</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">breakable</span><span class="p">()</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">pretty</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">end_group</span><span class="p">(</span><span class="mf">8</span><span class="p">,</span> <span class="s">&#39;])&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you just want to indent something you can use the group function
+without open / close parameters.  Under python 2.5 you can also use this
+code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">p</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="mf">2</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Or under python2.4 you might want to modify <tt class="docutils literal"><span class="pre">p.indentation</span></tt> by hand but
+this is rather ugly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">2007 by Armin Ronacher.
+Portions (c) 2009 by Robert Kern.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD License.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="breakable">
+<h3><a title="IPython.external.pretty.Breakable" class="reference internal" href="#IPython.external.pretty.Breakable"><tt class="xref docutils literal"><span class="pre">Breakable</span></tt></a><a class="headerlink" href="#breakable" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.Breakable">
+<!--[IPython.external.pretty.Breakable]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">Breakable</tt><big>(</big><em>seq</em>, <em>width</em>, <em>pretty</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Breakable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.pretty.Printable" class="reference internal" href="#IPython.external.pretty.Printable"><tt class="xref docutils literal"><span class="pre">IPython.external.pretty.Printable</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.external.pretty.Breakable.__init__">
+<!--[IPython.external.pretty.Breakable.__init__]--><tt class="descname">__init__</tt><big>(</big><em>seq</em>, <em>width</em>, <em>pretty</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Breakable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.Breakable.output">
+<!--[IPython.external.pretty.Breakable.output]--><tt class="descname">output</tt><big>(</big><em>stream</em>, <em>output_width</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Breakable.output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="group">
+<h3><a title="IPython.external.pretty.Group" class="reference internal" href="#IPython.external.pretty.Group"><tt class="xref docutils literal"><span class="pre">Group</span></tt></a><a class="headerlink" href="#group" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.Group">
+<!--[IPython.external.pretty.Group]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">Group</tt><big>(</big><em>depth</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.pretty.Printable" class="reference internal" href="#IPython.external.pretty.Printable"><tt class="xref docutils literal"><span class="pre">IPython.external.pretty.Printable</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.external.pretty.Group.__init__">
+<!--[IPython.external.pretty.Group.__init__]--><tt class="descname">__init__</tt><big>(</big><em>depth</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Group.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="groupqueue">
+<h3><a title="IPython.external.pretty.GroupQueue" class="reference internal" href="#IPython.external.pretty.GroupQueue"><tt class="xref docutils literal"><span class="pre">GroupQueue</span></tt></a><a class="headerlink" href="#groupqueue" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.GroupQueue">
+<!--[IPython.external.pretty.GroupQueue]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">GroupQueue</tt><big>(</big><em>*groups</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.GroupQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.external.pretty.GroupQueue.__init__">
+<!--[IPython.external.pretty.GroupQueue.__init__]--><tt class="descname">__init__</tt><big>(</big><em>*groups</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.GroupQueue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.GroupQueue.deq">
+<!--[IPython.external.pretty.GroupQueue.deq]--><tt class="descname">deq</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.pretty.GroupQueue.deq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.GroupQueue.enq">
+<!--[IPython.external.pretty.GroupQueue.enq]--><tt class="descname">enq</tt><big>(</big><em>group</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.GroupQueue.enq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.GroupQueue.remove">
+<!--[IPython.external.pretty.GroupQueue.remove]--><tt class="descname">remove</tt><big>(</big><em>group</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.GroupQueue.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="prettyprinter">
+<h3><a title="IPython.external.pretty.PrettyPrinter" class="reference internal" href="#IPython.external.pretty.PrettyPrinter"><tt class="xref docutils literal"><span class="pre">PrettyPrinter</span></tt></a><a class="headerlink" href="#prettyprinter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.PrettyPrinter">
+<!--[IPython.external.pretty.PrettyPrinter]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">PrettyPrinter</tt><big>(</big><em>output</em>, <em>max_width=79</em>, <em>newline='n'</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">IPython.external.pretty._PrettyPrinterBase</span></tt></p>
+<p>Baseclass for the <cite>RepresentationPrinter</cite> prettyprinter that is used to
+generate pretty reprs of objects.  Contrary to the <cite>RepresentationPrinter</cite>
+this printer knows nothing about the default pprinters or the <cite>__pretty__</cite>
+callback method.</p>
+<dl class="method">
+<dt id="IPython.external.pretty.PrettyPrinter.__init__">
+<!--[IPython.external.pretty.PrettyPrinter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>output</em>, <em>max_width=79</em>, <em>newline='n'</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.PrettyPrinter.begin_group">
+<!--[IPython.external.pretty.PrettyPrinter.begin_group]--><tt class="descname">begin_group</tt><big>(</big><em>indent=0</em>, <em>open=''</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter.begin_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin a group.  If you want support for python &lt; 2.5 which doesn&#8217;t has
+the with statement this is the preferred way:</p>
+<blockquote>
+p.begin_group(1, &#8216;{&#8216;)
+...
+p.end_group(1, &#8216;}&#8217;)</blockquote>
+<p>The python 2.5 expression would be this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>with p.group(1, &#8216;{&#8216;, &#8216;}&#8217;):</dt>
+<dd>...</dd>
+</dl>
+</blockquote>
+<p>The first parameter specifies the indentation for the next line (usually
+the width of the opening text), the second the opening text.  All
+parameters are optional.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.PrettyPrinter.breakable">
+<!--[IPython.external.pretty.PrettyPrinter.breakable]--><tt class="descname">breakable</tt><big>(</big><em>sep=' '</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter.breakable" title="Permalink to this definition">¶</a></dt>
+<dd>Add a breakable separator to the output.  This does not mean that it
+will automatically break here.  If no breaking on this position takes
+place the <cite>sep</cite> is inserted which default to one space.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.PrettyPrinter.end_group">
+<!--[IPython.external.pretty.PrettyPrinter.end_group]--><tt class="descname">end_group</tt><big>(</big><em>dedent=0</em>, <em>close=''</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter.end_group" title="Permalink to this definition">¶</a></dt>
+<dd>End a group. See <cite>begin_group</cite> for more details.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.PrettyPrinter.flush">
+<!--[IPython.external.pretty.PrettyPrinter.flush]--><tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter.flush" title="Permalink to this definition">¶</a></dt>
+<dd>Flush data that is left in the buffer.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.PrettyPrinter.text">
+<!--[IPython.external.pretty.PrettyPrinter.text]--><tt class="descname">text</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.PrettyPrinter.text" title="Permalink to this definition">¶</a></dt>
+<dd>Add literal text to the output.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="printable">
+<h3><a title="IPython.external.pretty.Printable" class="reference internal" href="#IPython.external.pretty.Printable"><tt class="xref docutils literal"><span class="pre">Printable</span></tt></a><a class="headerlink" href="#printable" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.Printable">
+<!--[IPython.external.pretty.Printable]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">Printable</tt><a class="headerlink" href="#IPython.external.pretty.Printable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.external.pretty.Printable.__init__">
+<!--[IPython.external.pretty.Printable.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.pretty.Printable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.Printable.output">
+<!--[IPython.external.pretty.Printable.output]--><tt class="descname">output</tt><big>(</big><em>stream</em>, <em>output_width</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Printable.output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="representationprinter">
+<h3><a title="IPython.external.pretty.RepresentationPrinter" class="reference internal" href="#IPython.external.pretty.RepresentationPrinter"><tt class="xref docutils literal"><span class="pre">RepresentationPrinter</span></tt></a><a class="headerlink" href="#representationprinter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.RepresentationPrinter">
+<!--[IPython.external.pretty.RepresentationPrinter]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">RepresentationPrinter</tt><big>(</big><em>output</em>, <em>verbose=False</em>, <em>max_width=79</em>, <em>newline='n'</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.RepresentationPrinter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.pretty.PrettyPrinter" class="reference internal" href="#IPython.external.pretty.PrettyPrinter"><tt class="xref docutils literal"><span class="pre">IPython.external.pretty.PrettyPrinter</span></tt></a></p>
+<p>Special pretty printer that has a <cite>pretty</cite> method that calls the pretty
+printer for a python object.</p>
+<p>This class stores processing data on <cite>self</cite> so you must <em>never</em> use
+this class in a threaded environment.  Always lock it or reinstanciate
+it.</p>
+<p>Instances also have a verbose flag callbacks can access to control their
+output.  For example the default instance repr prints all attributes and
+methods that are not prefixed by an underscore if the printer is in
+verbose mode.</p>
+<dl class="method">
+<dt id="IPython.external.pretty.RepresentationPrinter.__init__">
+<!--[IPython.external.pretty.RepresentationPrinter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>output</em>, <em>verbose=False</em>, <em>max_width=79</em>, <em>newline='n'</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.RepresentationPrinter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.RepresentationPrinter.pretty">
+<!--[IPython.external.pretty.RepresentationPrinter.pretty]--><tt class="descname">pretty</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.RepresentationPrinter.pretty" title="Permalink to this definition">¶</a></dt>
+<dd>Pretty print the given object.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="text">
+<h3><a title="IPython.external.pretty.Text" class="reference internal" href="#IPython.external.pretty.Text"><tt class="xref docutils literal"><span class="pre">Text</span></tt></a><a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.pretty.Text">
+<!--[IPython.external.pretty.Text]-->class <tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">Text</tt><a class="headerlink" href="#IPython.external.pretty.Text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.pretty.Printable" class="reference internal" href="#IPython.external.pretty.Printable"><tt class="xref docutils literal"><span class="pre">IPython.external.pretty.Printable</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.external.pretty.Text.__init__">
+<!--[IPython.external.pretty.Text.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.pretty.Text.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.Text.add">
+<!--[IPython.external.pretty.Text.add]--><tt class="descname">add</tt><big>(</big><em>obj</em>, <em>width</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Text.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.pretty.Text.output">
+<!--[IPython.external.pretty.Text.output]--><tt class="descname">output</tt><big>(</big><em>stream</em>, <em>output_width</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.Text.output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.external.pretty.for_type">
+<!--[IPython.external.pretty.for_type]--><tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">for_type</tt><big>(</big><em>typ</em>, <em>func</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.for_type" title="Permalink to this definition">¶</a></dt>
+<dd>Add a pretty printer for a given type.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.pretty.for_type_by_name">
+<!--[IPython.external.pretty.for_type_by_name]--><tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">for_type_by_name</tt><big>(</big><em>type_module</em>, <em>type_name</em>, <em>func</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.for_type_by_name" title="Permalink to this definition">¶</a></dt>
+<dd>Add a pretty printer for a type specified by the module and name of a type
+rather than the type object itself.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.pretty.pprint">
+<!--[IPython.external.pretty.pprint]--><tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">pprint</tt><big>(</big><em>obj</em>, <em>verbose=False</em>, <em>max_width=79</em>, <em>newline='n'</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.pprint" title="Permalink to this definition">¶</a></dt>
+<dd>Like <cite>pretty</cite> but print to stdout.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.pretty.pretty">
+<!--[IPython.external.pretty.pretty]--><tt class="descclassname">IPython.external.pretty.</tt><tt class="descname">pretty</tt><big>(</big><em>obj</em>, <em>verbose=False</em>, <em>max_width=79</em>, <em>newline='n'</em><big>)</big><a class="headerlink" href="#IPython.external.pretty.pretty" title="Permalink to this definition">¶</a></dt>
+<dd>Pretty print the object&#8217;s representation.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">external.pretty</a><ul>
+<li><a class="reference external" href="#module-IPython.external.pretty">Module: <tt class="docutils literal"><span class="pre">external.pretty</span></tt></a><ul>
+<li><a class="reference external" href="#example-usage">Example Usage</a></li>
+<li><a class="reference external" href="#extending">Extending</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#breakable"><tt class="docutils literal"><span class="pre">Breakable</span></tt></a></li>
+<li><a class="reference external" href="#group"><tt class="docutils literal"><span class="pre">Group</span></tt></a></li>
+<li><a class="reference external" href="#groupqueue"><tt class="docutils literal"><span class="pre">GroupQueue</span></tt></a></li>
+<li><a class="reference external" href="#prettyprinter"><tt class="docutils literal"><span class="pre">PrettyPrinter</span></tt></a></li>
+<li><a class="reference external" href="#printable"><tt class="docutils literal"><span class="pre">Printable</span></tt></a></li>
+<li><a class="reference external" href="#representationprinter"><tt class="docutils literal"><span class="pre">RepresentationPrinter</span></tt></a></li>
+<li><a class="reference external" href="#text"><tt class="docutils literal"><span class="pre">Text</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.external.path.html" title="previous chapter">external.path</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.external.simplegeneric.html" title="next chapter">external.simplegeneric</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.external.pretty.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.simplegeneric.html" title="external.simplegeneric"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.path.html" title="external.path"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

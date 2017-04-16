@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>New configuration system &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Configuration and customization" href="index.html" />
+    <link rel="next" title="Frequently asked questions" href="../faq.html" />
+    <link rel="prev" title="Customization of IPython" href="customization.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../faq.html" title="Frequently asked questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization of IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration and customization</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="new-configuration-system">
+<h1>New configuration system<a class="headerlink" href="#new-configuration-system" title="Permalink to this headline">¶</a></h1>
+<p>IPython has a configuration system. When running IPython for the first time,
+reasonable defaults are used for the configuration. The configuration of IPython
+can be changed in two ways:</p>
+<blockquote>
+<ul class="simple">
+<li>Configuration files</li>
+<li>Commands line options (which override the configuration files)</li>
+</ul>
+</blockquote>
+<p>IPython has a separate configuration file for each subpackage. Thus, the main
+configuration files are (in your <tt class="docutils literal"><span class="pre">~/.ipython</span></tt> directory):</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ipython1.core.ini</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ipython1.kernel.ini</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ipython1.notebook.ini</span></tt></li>
+</ul>
+</blockquote>
+<p>To create these files for the first time, do the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">IPython.kernel.config</span> <span class="k">import</span> <span class="n">config_manager</span> <span class="k">as</span> <span class="n">kernel_config</span>
+<span class="n">kernel_config</span><span class="o">.</span><span class="n">write_default_config_file</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>But, you should only need to do this if you need to modify the defaults. If needed
+repeat this process with the <tt class="docutils literal"><span class="pre">notebook</span></tt> and <tt class="docutils literal"><span class="pre">core</span></tt> configuration as well. If you
+are running into problems with IPython, you might try deleting these configuration
+files.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="customization.html" title="previous chapter">Customization of IPython</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../faq.html" title="next chapter">Frequently asked questions</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/config/new_config.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../faq.html" title="Frequently asked questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization of IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration and customization</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

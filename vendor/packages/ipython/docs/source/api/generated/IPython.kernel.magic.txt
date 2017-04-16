@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.magic
+============
+
+Module: :mod:`kernel.magic`
+---------------------------
+.. automodule:: IPython.kernel.magic
+
+.. currentmodule:: IPython.kernel.magic
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.magic.magic_autopx
+
+
+.. autofunction:: IPython.kernel.magic.magic_px
+
+
+.. autofunction:: IPython.kernel.magic.magic_result
+
+
+.. autofunction:: IPython.kernel.magic.pxrunsource
+

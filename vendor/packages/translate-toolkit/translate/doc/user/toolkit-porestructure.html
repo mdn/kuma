@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="porestructure" id="porestructure">porestructure</a></h1>
+<div class="level1">
+
+<p>
+
+porestructure takes the <acronym title="Gettext Portable Object">PO</acronym> files output by <a href="toolkit-poconflicts.html" class="wikilink1" title="toolkit-poconflicts.html">poconflicts</a> (a flat structure), and recreates the directory structure according to the poonflict location comments found in each <acronym title="Gettext Portable Object">PO</acronym> message. After being restructured, the messages in the resulting directory structure can be merged back using <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+</p>
+
+<p>
+Since poconflicts adds conflicting messages, from many different <acronym title="Gettext Portable Object">PO</acronym> files, into a single <acronym title="Gettext Portable Object">PO</acronym> file, the original structure of the files and directories are lost and the new <acronym title="Gettext Portable Object">PO</acronym> files are output to a single directory. The original structure information is left in ”(pofilter)” comments for each <acronym title="Gettext Portable Object">PO</acronym> element. 
+</p>
+
+</div>
+<!-- SECTION "porestructure" [1-637] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">porestructure [options] &lt;conflicts&gt; &lt;po&gt; </pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;conflicts&gt;  </td><td class="col1 leftalign"> is a directory containing one the corrected output from poconflict   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;po&gt;         </td><td class="col1 leftalign"> is an output directory to write the restructured files to   </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in po format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in po format  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [638-1566] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+The documentation for poconflicts has <a href="toolkit-poconflicts.html#examples" class="wikilink1" title="toolkit-poconflicts.html">examples</a> for the complete process using poconflict, porestructure, and pomerge.
+</p>
+
+</div>
+<!-- SECTION "Examples" [1567-1723] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None Known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [1724-] --></body>
+</html>

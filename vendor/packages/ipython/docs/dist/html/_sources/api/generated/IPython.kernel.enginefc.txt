@@ -1,0 +1,73 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.enginefc
+===============
+
+Module: :mod:`kernel.enginefc`
+------------------------------
+Inheritance diagram for ``IPython.kernel.enginefc``:
+
+.. inheritance-diagram:: IPython.kernel.enginefc 
+   :parts: 3
+
+.. automodule:: IPython.kernel.enginefc
+
+.. currentmodule:: IPython.kernel.enginefc
+
+Classes
+-------
+
+:class:`EngineFromReference`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EngineFromReference
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FCEngineReferenceFromService`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FCEngineReferenceFromService
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FCRemoteEngineRefFromService`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FCRemoteEngineRefFromService
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFCControllerBase`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFCControllerBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFCEngine`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFCEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

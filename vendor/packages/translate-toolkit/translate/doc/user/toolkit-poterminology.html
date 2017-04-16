@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="poterminology" id="poterminology">poterminology</a></h1>
+<div class="level1">
+
+<p>
+
+poterminology takes Gettext <acronym title="Gettext Portable Object">PO</acronym>/<acronym title="Gettext Portable Object Template">POT</acronym> files and extracts potential terminology.
+</p>
+
+<p>
+This is useful as a first step before translating a new project (or an existing project into a new target language) as it allows you to define key terminology for consistency in translations.  The resulting terminology <acronym title="Gettext Portable Object">PO</acronym> files can be used by Pootle to provide suggestions while translating.
+</p>
+
+<p>
+Generally, all the input files should have the same source language, and either be <acronym title="Gettext Portable Object Template">POT</acronym> files (with no translations) or <acronym title="Gettext Portable Object">PO</acronym> files with translations to the same target language.
+</p>
+
+<p>
+The more separate <acronym title="Gettext Portable Object">PO</acronym> files you use to generate terminology, the better your results will be, but poterminology can be used with just a single input file.
+</p>
+
+<p>
+<p><div class="noteclassic">New in v1.2
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "poterminology" [1-756] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">poterminology [options] &lt;input&gt; &lt;terminology&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> &lt;input&gt; </td><td class="col1 leftalign"> translations to be examined for terminology   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;terminology&gt;   </td><td class="col1 leftalign"> extracted potential terminology   </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in pot, po formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -u UPDATEFILE, --update=UPDATEFILE  </td><td class="col1"> update terminology in UPDATEFILE </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -S STOPFILE, --stopword-list=STOPFILE  </td><td class="col1 leftalign"> read stopword (term exclusion) list from STOPFILE (default site-packages/translate/share/stoplist-en)  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> -F, --fold-titlecase  </td><td class="col1 leftalign"> fold “Title Case” to lowercase (default)  </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> -C, --preserve-case   </td><td class="col1 leftalign"> preserve all uppercase/lowercase  </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> -I, --ignore-case     </td><td class="col1 leftalign"> make all terms lowercase  </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0"> --accelerator=ACCELERATORS </td><td class="col1 leftalign"> ignores the given accelerator characters when matching (accelerator characters probably require quoting)  </td>
+	</tr>
+	<tr class="row15">
+		<td class="col0 leftalign"> -t LENGTH, --term-words=LENGTH  </td><td class="col1 leftalign"> generate terms of up to LENGTH words (default 3)  </td>
+	</tr>
+	<tr class="row16">
+		<td class="col0 leftalign"> --inputs-needed=MIN   </td><td class="col1 leftalign"> omit terms appearing in less than MIN input files (default 2, or 1 if only one input file)  </td>
+	</tr>
+	<tr class="row17">
+		<td class="col0 leftalign"> --fullmsg-needed=MIN  </td><td class="col1 leftalign"> omit full message terms appearing in less than MIN different messages (default 1)  </td>
+	</tr>
+	<tr class="row18">
+		<td class="col0 leftalign"> --substr-needed=MIN   </td><td class="col1 leftalign"> omit substring-only terms appearing in less than MIN different messages (default 2)  </td>
+	</tr>
+	<tr class="row19">
+		<td class="col0 leftalign"> --locs-needed=MIN     </td><td class="col1 leftalign"> omit terms appearing in less than MIN different original program locations (default 2)  </td>
+	</tr>
+	<tr class="row20">
+		<td class="col0 leftalign"> --sort=ORDER          </td><td class="col1 leftalign"> output sort order(s): frequency, dictionary, length (default is all orders in the above priority)  </td>
+	</tr>
+	<tr class="row21">
+		<td class="col0 leftalign"> --source-language=LANG  </td><td class="col1 leftalign"> the source language code (default &#039;en&#039;)  </td>
+	</tr>
+	<tr class="row22">
+		<td class="col0 leftalign"> -v, --invert          </td><td class="col1 leftalign"> invert the source and target languages for terminology  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [757-3035] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+You want to generate a terminology file for Pootle that will be used to   provide suggestions for translating Pootle itself:
+
+</p>
+<pre class="code">poterminology Pootle/po/pootle/templates/*.pot .</pre>
+
+<p>
+
+This results in a <code>./pootle-terminology.pot</code> output file with 23 terms (from “file” to “does not exist”) - without any translations.
+</p>
+
+<p>
+The default output file can be added to a Pootle project to provide <a href="pootle-terminology_matching.html" class="wikilink2" title="pootle-terminology_matching.html">terminology matching</a> suggestions for that project; alternately a special Terminology project can be used and it will provide terminology suggestions for all projects that do not have a pootle-terminology.po file.
+</p>
+
+<p>
+Generating a terminology file containing automatically extracted translations is possible as well, by using <acronym title="Gettext Portable Object">PO</acronym> files with translations for the input files:
+
+</p>
+<pre class="code">poterminology Pootle/po/pootle/fi/*.po --output fi/pootle-terminology.po \
+  --sort dictionary</pre>
+
+<p>
+
+Using <acronym title="Gettext Portable Object">PO</acronym> files with Finnish translations, you get an output file that contains the same 23 terms, with translations of eight terms - one (“login”) is fuzzy due to slightly different translations in jToolkit and Pootle.  The file is sorted in alphabetical order (by source term, not translated term), which can be useful when comparing different terminology files.
+</p>
+
+<p>
+Even though there is no translation of Pootle into Kinyarwanda, you can use the Gnome UI terminology <acronym title="Gettext Portable Object">PO</acronym> file as a source for translations; in order to extract only the terms common to jToolkit and Pootle this command includes the <acronym title="Gettext Portable Object Template">POT</acronym> output from the first step above (which is redundant) and require terms to appear in three different input sources:
+
+</p>
+<pre class="code">poterminology Pootle/po/pootle/templates/*.pot pootle-terminology.pot \
+  Pootle/po/terminology/rw/gnome/rw.po --inputs-needed=3 -o terminology/rw.po</pre>
+
+<p>
+
+Of the 23 terms, 16 have Kinyarwanda translations extracted from the Gnome UI terminology.
+</p>
+
+<p>
+For a language like Spanish, with both Pootle translations and Gnome terminology available, 18 translations (2 fuzzy) are generated by the following command, which initializes the terminology file from the <acronym title="Gettext Portable Object Template">POT</acronym> output from the first step, and then uses --update to specify that the pootle-es.po file is to be used both for input and output:
+
+</p>
+<pre class="code">cp pootle-terminology.pot glossary-es.po; 
+poterminology --inputs=3 --update glossary-es.po \
+  Pootle/po/pootle/es/*.po Pootle/po/terminology/es/gnome/es.po</pre>
+
+</div>
+<!-- SECTION "Examples" [3036-5390] -->
+<h3><a name="reduced_terminology_glossaries" id="reduced_terminology_glossaries">Reduced terminology glossaries</a></h3>
+<div class="level3">
+
+<p>
+
+If you want to generate a terminology file containing only single words,  not phrases, you can use -t/--term-words to control this.  If your input files are very large and/or you have a lot of input files, and you are finding that poterminology is taking too much time and memory to run, reducing the phrase size from the default value of 3 can be helpful.
+</p>
+
+<p>
+For example, running poterminology on the subversion trunk with the default phrase size can take quite some time and may not even complete on a small-memory system, but with --term-words=1 the initial number of terms is reduced by half, and the thresholding process can complete:
+
+</p>
+<pre class="code">poterminology --progress=none -t 1 translate</pre>
+<pre class="code">1297 terms from 64039 units in 216 files
+254 terms after thresholding
+254 terms after subphrase reduction</pre>
+
+<p>
+
+The first line of output indicates the number of input files and translation units (messages), with the number of unique terms present after removing C and Python format specifiers (e.g. %d), <acronym title="Extensible Markup Language">XML</acronym>/<acronym title="HyperText Markup Language">HTML</acronym> &lt;elements&gt; and &amp;entities; and performing stoplist elimination.
+</p>
+
+<p>
+The second line gives the number of terms remaining after applying threshold filtering (discussed in more detail below) to eliminate terms that are not sufficiently “common” in the input files.
+</p>
+
+<p>
+The third line gives the number of terms remaining after eliminating subphrases that did not occur independently.  In this case, since the term-words limit is 1, there are no subphrases and so the number is the same as on the second line.
+</p>
+
+<p>
+However, in the first example above (generating terminology for Pootle itself), the term “not exist” passes the stoplist and threshold filters, but all occurrences of this term also contained the term “does not exist” which also passes the stoplist and threshold filters.  Given this duplication, the shorter phrase is eliminated in favor of the longer one, resulting in 23 terms (out of 25 that pass the threshold filters).
+
+</p>
+
+</div>
+<!-- SECTION "Reduced terminology glossaries" [5391-7357] -->
+<h2><a name="reducing_output_terminology_with_thresholding_options" id="reducing_output_terminology_with_thresholding_options">Reducing output terminology with thresholding options</a></h2>
+<div class="level2">
+
+<p>
+
+Depending on the size and number of the source files, and the desired scope of the output terminology file, there are several thresholding filters that can be adjusted to allow fewer or more terms in the output file.  We have seen above how one (--inputs-needed) can be used to require that terms be present in multiple input files, but there are also other thresholds that can be adjusted to control the size of the output terminology file.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> --inputs-needed</div>
+</li>
+</ul>
+
+<p>
+
+This is the most flexible and powerful thresholding control.  The default value is 2, unless only one input file (not counting an --update argument) is provided, in which case the threshold is 1 to avoid filtering out all terms and generating an empty output terminology file.
+</p>
+
+<p>
+By copying input files and providing them multiple times as inputs, you can even achieve “weighted” thresholding, so that for example, all terms in one original input file will pass thresholding, while other files may be filtered.  A simple version of this technique was used above to incorporate translations from the Gnome terminology <acronym title="Gettext Portable Object">PO</acronym> files without having it affect the terms that passed the threshold filters. 
+
+</p>
+<ul>
+<li class="level1"><div class="li"> --locs-needed</div>
+</li>
+</ul>
+
+<p>
+
+Rather than requiring that a term appear in multiple input <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="Gettext Portable Object Template">POT</acronym> files, this requires that it have been present in multiple source code files, as evidenced by location comments in the <acronym title="Gettext Portable Object">PO</acronym>/<acronym title="Gettext Portable Object Template">POT</acronym> sources.
+</p>
+
+<p>
+This threshold can be helpful in eliminating over-specialized terminology that you don&#039;t want when multiple <acronym title="Gettext Portable Object">PO</acronym>/<acronym title="Gettext Portable Object Template">POT</acronym> files are generated from the same sources (via included header or library files).
+</p>
+
+<p>
+Note that some <acronym title="Gettext Portable Object">PO</acronym>/<acronym title="Gettext Portable Object Template">POT</acronym> files have function names rather than source file names in the location comments; in this case the threshold will be on multiple functions, which may need to be set higher to be effective.
+</p>
+
+<p>
+Not all <acronym title="Gettext Portable Object">PO</acronym>/<acronym title="Gettext Portable Object Template">POT</acronym> files contain proper location comments.  If your input files don&#039;t have (good) location comments and the output terminology file is reduced to zero or very few entries by thresholding, you may need to override the default value for this threshold and set it to 0, which disables this check.
+</p>
+
+<p>
+The setting of the --locs-needed comment has another effect, which is that location comments in the output terminology file will be limited to twice that number; a location comment indicating the number of additional locations not specified will be added instead of the omitted locations.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> --fullmsg-needed</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> --substr-needed</div>
+</li>
+</ul>
+
+<p>
+
+These two thresholds specify the number of different translation units (messages) in which a term must appear; they both work in the same way, but the first one applies to terms which appear as complete translation units in one or more of the source files (full message terms), and the second one to all other terms (substring terms).  Note that translations are extracted only for full message terms; poterminology cannot identify the corresponding substring in a translation.
+</p>
+
+<p>
+If you are working with a single input file without useful location comments, increasing these thresholds may be the only way to effectively reduce the output terminology.  Generally, you should increase the --substr-needed threshold first, as the full message terms are more likely to be useful terminology.
+</p>
+
+</div>
+<!-- SECTION "Reducing output terminology with thresholding options" [7358-10647] -->
+<h2><a name="stop_word_files" id="stop_word_files">Stop word files</a></h2>
+<div class="level2">
+
+<p>
+
+Much of the power of poterminology in generating useful terminology files is due to the default stop word file that it uses.  This file contains words and regular expressions that poterminology will ignore when generating terms, so that the output terminology doesn&#039;t have tons of useless entries like “the 16” or “Z”.
+</p>
+
+<p>
+In most cases, the default stop word list will work well, but you may want to replace it with your own version, or possibly just supplement or override certain entries.  The default <a href="toolkit-poterminology_stopword_file.html" class="wikilink1" title="toolkit-poterminology_stopword_file.html">poterminology stopword file</a> contains comments that describe the syntax and operation of these files.
+</p>
+
+<p>
+If you want to completely replace the stopword list (for example, if your source language is French rather than English) you could do it with a command like this:
+
+</p>
+<pre class="code">poterminology --stopword-list=stoplist-fr logiciel/ -o glossaire.po</pre>
+
+<p>
+
+If you merely want to modify the standard stopword list with your own additions and overrides, you must explicitly specify the default list first:
+
+</p>
+<pre class="code">poterminology -S /usr/lib/python2.5/site-packages/translate/share/stoplist-en \
+  -S my-stoplist po/ -o terminology.po</pre>
+
+<p>
+
+You can use poterminology --help to see the default stopword list pathname, which may differ from the one shown above.
+</p>
+
+<p>
+Note that if you are using multiple stopword list files, as in the above, they will all be subject to the same case mapping (fold “Title Case” to lower case by default) - if you specify a different case mapping in the second file it will override the mapping for all the stopword list files.
+
+</p>
+
+</div>
+<!-- SECTION "Stop word files" [10648-12203] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+
+<p>
+
+When using poterminology on Windows systems, file globbing for input is not supported (unless you have a version of Python built with cygwin, which is not common).  On Windows, a command like “poterminology -o test.po podir/*.po” will fail with an error “No such file or directory: &#039;podir\\*.po&#039;” instead of expanding the podir/*.po glob expression.  (This problem affects all Translate Toolkit command-line tools, not just poterminology.)  You can work around this problem by making sure that the directory does not contain any files (or subdirectories) that you do not want to use for input, and just giving the directory name as the argument, e.g. “poterminology -o test.po podir” for the case above.
+</p>
+
+<p>
+When using terminology files generated by poterminology as input, a plethora of translator comments marked with (poterminology) may be generated, with the number of these increasing on each iteration.  You may wish to run <a href="toolkit-pocommentclean.html" class="wikilink1" title="toolkit-pocommentclean.html">pocommentclean</a> (or a slightly modified version of it which only removes (poterminology) comments) on the input and/or output files, especially since translator comments are displayed as tooltips by Pootle (thankfully, they are truncated at a few dozen characters).
+</p>
+
+<p>
+Currently, any translation items using plural forms will be entirely ignored for terminology extraction.  The singular form for the item should be used, but this is not yet implemented (it is tracked as bug <a href="http://bugs.locamotion.org/show_bug.cgi?id=532" class="interwiki iw_bug" title="http://bugs.locamotion.org/show_bug.cgi?id=532">532</a>).
+</p>
+
+<p>
+Default threshold settings may eliminate all output terms; in this case, poterminology should suggest threshold option settings that would allow output to be generated (this enhancement is tracked as “bug” <a href="http://bugs.locamotion.org/show_bug.cgi?id=582" class="interwiki iw_bug" title="http://bugs.locamotion.org/show_bug.cgi?id=582">582</a>).
+</p>
+
+<p>
+While poterminology ignores <acronym title="Extensible Markup Language">XML</acronym>/<acronym title="HyperText Markup Language">HTML</acronym> entities and elements and %-style format strings (for C and Python), it does not ignore all types of “variables” that may occur, particularly in OpenOffice.org, Mozilla, or Gnome localization files.  These other types should be ignored as well (this enhancement is tracked as “bug” <a href="http://bugs.locamotion.org/show_bug.cgi?id=598" class="interwiki iw_bug" title="http://bugs.locamotion.org/show_bug.cgi?id=598">598</a>).
+</p>
+
+<p>
+Terms containing only words that are ignored individually, but not excluded from phrases (e.g. “you are you”) may be generated by poterminology, but aren&#039;t generally useful.  Adding a new threshold option --nonstop-needed could allow these to be suppressed (this enhancement is tracked as “bug” <a href="http://bugs.locamotion.org/show_bug.cgi?id=1102" class="interwiki iw_bug" title="http://bugs.locamotion.org/show_bug.cgi?id=1102">1102</a>).
+</p>
+
+<p>
+Pootle ignores parenthetical comments in source text when performing terminology matching; this allows for terms like “scan (verb)” and “scan (noun)” to both be provided as suggestions for a message containing “scan.”  poterminology does not provide any special handling for these, but it could use them to provide better handling of different translations for a single term.  This would be an improvement over the current approach, which marks the term fuzzy and includes all variants, with location information in {} braces in the automatically extracted translation.
+</p>
+
+<p>
+Currently, message context information (<acronym title="Gettext Portable Object">PO</acronym> msgctxt) is not used in any way; this could provide an additional source of information for distinguishing variants of the same term.
+</p>
+
+<p>
+A single execution of poterminology can only perform automatic translation extraction for a single target language - having the ability to handle all target languages in one run would allow a single command to generate all terminology for an entire project.  Additionally, this could provide even more information for identifying variant terms by comparing the number of target languages that have variant translations.
+
+</p>
+
+</div>
+<!-- SECTION "Issues" [12204-] --></body>
+</html>

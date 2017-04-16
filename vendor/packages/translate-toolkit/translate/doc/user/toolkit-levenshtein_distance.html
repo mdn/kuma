@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="levenshtein_distance" id="levenshtein_distance">Levenshtein distance</a></h1>
+<div class="level1">
+
+<p>
+The <a href="http://en.wikipedia.org/wiki/Levenshtein%20distance" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Levenshtein%20distance">Levenshtein distance</a> is used for measuring the “distance” or similarity of two character strings. Other similarity algorithms can be supplied to the code that does the matching.
+</p>
+
+<p>
+This code is used in <a href="toolkit-pot2po.html" class="wikilink1" title="toolkit-pot2po.html">pot2po</a>, <a href="toolkit-tmserver.html" class="wikilink1" title="toolkit-tmserver.html">tmserver</a> and <a href="virtaal-index.html" class="wikilink2" title="virtaal-index.html">Virtaal</a>. It is implemented in the toolkit, but can optionally use the fast C implementation provided by <a href="https://sourceforge.net/project/showfiles.php?group_id=91920&amp;package_id=260161" class="urlextern" title="https://sourceforge.net/project/showfiles.php?group_id=91920&amp;package_id=260161">python-Levenshtein</a> if it is installed. It is strongly recommended that python-levenshtein be installed.
+</p>
+
+<p>
+To exercise the code the classfile “Levenshtein.py” can be executed directly with 
+</p>
+<pre class="code">python Levenshtein.py &quot;The first string.&quot; &quot;The second string&quot;</pre>
+
+<p>
+(remember to quote the two parameters)
+</p>
+
+<p>
+The following things should be noted:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  Only the first MAX_LEN characters are considered. Long strings differing at the end will therefore seem to match better than they should. A penalty is awarded if strings are shortened.</div>
+</li>
+<li class="level1"><div class="li"> The calculation can stop prematurely as soon as it realise that the supplied minimum required similarity can not be reached. Strings with widely different lengths give the opportunity for this shortcut. This is by definition of the Levenshtein distance: the distance will be at least as much as the difference in string length. Similarities lower than your supplied minimum (or the default) should therefore not be considered authoritive.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Levenshtein distance" [1-1445] -->
+<h3><a name="shortcommings" id="shortcommings">Shortcommings</a></h3>
+<div class="level3">
+
+<p>
+
+The following shortcommings have been identified:
+</p>
+<ul>
+<li class="level1"><div class="li"> Cases sensitivity: &#039;E&#039; and &#039;e&#039; are considered different characters and according differ as much as &#039;z&#039; and &#039;e&#039;. This is not ideal, as case differences should be considered less of a difference.</div>
+</li>
+<li class="level1"><div class="li"> Diacritics: &#039;ê&#039; and &#039;e&#039; are considered different characters and according differ as much as &#039;z&#039; and &#039;e&#039;. This is not ideal, as missing diacritics could be due to small input errors, or even input data that simply do not have the correct diacritics.</div>
+</li>
+<li class="level1"><div class="li"> Words that have similar characters, but are different, could increase the similarity beyond what is wanted. The sentences “It is though.” and “It is dough.” differ markedly semantically, but score similarity of almost 85%. A possible solution is to do an additional calculation based on words, instead of characters.</div>
+</li>
+<li class="level1"><div class="li"> Whitespace: Differences in tabs, newlines, and space usage should perhaps be considered as a special case.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Shortcommings" [1446-] --></body>
+</html>

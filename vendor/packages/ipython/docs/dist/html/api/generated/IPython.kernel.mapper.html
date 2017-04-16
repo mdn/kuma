@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.mapper &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.multiengine" href="IPython.kernel.multiengine.html" />
+    <link rel="prev" title="kernel.map" href="IPython.kernel.map.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengine.html" title="kernel.multiengine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.map.html" title="kernel.map"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-mapper">
+<h1>kernel.mapper<a class="headerlink" href="#kernel-mapper" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.mapper">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.mapper</span></tt><a class="headerlink" href="#module-IPython.kernel.mapper" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.mapper</span></tt>:</p>
+<img src="../../_images/inheritance0cfcf4b863.png" usemap="#inheritance0cfcf4b863" class="inheritance"/><map id="inheritance0cfcf4b863" name="inheritance0cfcf4b863">
+<area shape="rect" href="#IPython.kernel.mapper.IMultiEngineMapperFactory" title="kernel.mapper.IMultiEngineMapperFactory" alt="" coords="331,107,619,133"/>
+<area shape="rect" href="#IPython.kernel.mapper.IMapper" title="kernel.mapper.IMapper" alt="" coords="391,157,559,184"/>
+<area shape="rect" href="#IPython.kernel.mapper.ITaskMapperFactory" title="kernel.mapper.ITaskMapperFactory" alt="" coords="355,208,595,235"/>
+<area shape="rect" href="#IPython.kernel.mapper.SynchronousTaskMapper" title="kernel.mapper.SynchronousTaskMapper" alt="" coords="7,107,281,133"/>
+<area shape="rect" href="#IPython.kernel.mapper.MultiEngineMapper" title="kernel.mapper.MultiEngineMapper" alt="" coords="25,56,263,83"/>
+<area shape="rect" href="#IPython.kernel.mapper.TaskMapper" title="kernel.mapper.TaskMapper" alt="" coords="48,5,240,32"/>
+</map>
+<p>A parallelized version of Python&#8217;s builtin map.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="imapper">
+<h3><a title="IPython.kernel.mapper.IMapper" class="reference internal" href="#IPython.kernel.mapper.IMapper"><tt class="xref docutils literal"><span class="pre">IMapper</span></tt></a><a class="headerlink" href="#imapper" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.mapper.IMapper">
+<!--[IPython.kernel.mapper.IMapper]-->class <tt class="descclassname">IPython.kernel.mapper.</tt><tt class="descname">IMapper</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.IMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>The basic interface for a Mapper.</p>
+<p>This defines a generic interface for mapping.  The idea of this is 
+similar to that of Python&#8217;s builtin <cite>map</cite> function, which applies a function
+elementwise to a sequence.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.mapper.IMapper.__init__">
+<!--[IPython.kernel.mapper.IMapper.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.IMapper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imultienginemapperfactory">
+<h3><a title="IPython.kernel.mapper.IMultiEngineMapperFactory" class="reference internal" href="#IPython.kernel.mapper.IMultiEngineMapperFactory"><tt class="xref docutils literal"><span class="pre">IMultiEngineMapperFactory</span></tt></a><a class="headerlink" href="#imultienginemapperfactory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.mapper.IMultiEngineMapperFactory">
+<!--[IPython.kernel.mapper.IMultiEngineMapperFactory]-->class <tt class="descclassname">IPython.kernel.mapper.</tt><tt class="descname">IMultiEngineMapperFactory</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.IMultiEngineMapperFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>An interface for something that creates <cite>IMapper</cite> instances.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.mapper.IMultiEngineMapperFactory.__init__">
+<!--[IPython.kernel.mapper.IMultiEngineMapperFactory.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.IMultiEngineMapperFactory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itaskmapperfactory">
+<h3><a title="IPython.kernel.mapper.ITaskMapperFactory" class="reference internal" href="#IPython.kernel.mapper.ITaskMapperFactory"><tt class="xref docutils literal"><span class="pre">ITaskMapperFactory</span></tt></a><a class="headerlink" href="#itaskmapperfactory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.mapper.ITaskMapperFactory">
+<!--[IPython.kernel.mapper.ITaskMapperFactory]-->class <tt class="descclassname">IPython.kernel.mapper.</tt><tt class="descname">ITaskMapperFactory</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.ITaskMapperFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>An interface for something that creates <cite>IMapper</cite> instances.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.mapper.ITaskMapperFactory.__init__">
+<!--[IPython.kernel.mapper.ITaskMapperFactory.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.ITaskMapperFactory.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="multienginemapper">
+<h3><a title="IPython.kernel.mapper.MultiEngineMapper" class="reference internal" href="#IPython.kernel.mapper.MultiEngineMapper"><tt class="xref docutils literal"><span class="pre">MultiEngineMapper</span></tt></a><a class="headerlink" href="#multienginemapper" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.mapper.MultiEngineMapper">
+<!--[IPython.kernel.mapper.MultiEngineMapper]-->class <tt class="descclassname">IPython.kernel.mapper.</tt><tt class="descname">MultiEngineMapper</tt><big>(</big><em>multiengine</em>, <em>dist='b'</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.MultiEngineMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A Mapper for <cite>IMultiEngine</cite> implementers.</p>
+<dl class="method">
+<dt id="IPython.kernel.mapper.MultiEngineMapper.__init__">
+<!--[IPython.kernel.mapper.MultiEngineMapper.__init__]--><tt class="descname">__init__</tt><big>(</big><em>multiengine</em>, <em>dist='b'</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.MultiEngineMapper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Mapper for a multiengine.</p>
+<p>The value of all arguments are used for all calls to <cite>map</cite>.  This
+class allows these arguemnts to be set for a series of map calls.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>multiengine <span class="classifier-delimiter">:</span> <span class="classifier"><cite>IMultiEngine</cite> implementer</span></dt>
+<dd><p class="first last">The multiengine to use for running the map commands</p>
+</dd>
+<dt>dist <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The type of decomposition to use.  Only block (&#8216;b&#8217;) is
+supported currently</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">(str, int, tuple of ints)</span></dt>
+<dd><p class="first last">The engines to use in the map</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Whether to block when the map is applied</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.mapper.MultiEngineMapper.map">
+<!--[IPython.kernel.mapper.MultiEngineMapper.map]--><tt class="descname">map</tt><big>(</big><em>func</em>, <em>*sequences</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.MultiEngineMapper.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply func to <a href="#id1"><span class="problematic" id="id2">*</span></a>sequences elementwise.  Like Python&#8217;s builtin map.</p>
+<p>This version is not load balanced.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="synchronoustaskmapper">
+<h3><a title="IPython.kernel.mapper.SynchronousTaskMapper" class="reference internal" href="#IPython.kernel.mapper.SynchronousTaskMapper"><tt class="xref docutils literal"><span class="pre">SynchronousTaskMapper</span></tt></a><a class="headerlink" href="#synchronoustaskmapper" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.mapper.SynchronousTaskMapper">
+<!--[IPython.kernel.mapper.SynchronousTaskMapper]-->class <tt class="descclassname">IPython.kernel.mapper.</tt><tt class="descname">SynchronousTaskMapper</tt><big>(</big><em>task_controller</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.SynchronousTaskMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Make an <cite>IBlockingTaskClient</cite> look like an <cite>IMapper</cite>.</p>
+<p>This class provides a load balanced version of <cite>map</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.mapper.SynchronousTaskMapper.__init__">
+<!--[IPython.kernel.mapper.SynchronousTaskMapper.__init__]--><tt class="descname">__init__</tt><big>(</big><em>task_controller</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.SynchronousTaskMapper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <cite>IMapper</cite> given a <cite>IBlockingTaskClient</cite> and arguments.</p>
+<p>The additional arguments are those that are common to all types of 
+tasks and are described in the documentation for 
+<cite>IPython.kernel.task.BaseTask</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>task_controller <span class="classifier-delimiter">:</span> <span class="classifier">an <cite>IBlockingTaskClient</cite> implementer</span></dt>
+<dd><p class="first last">The <cite>TaskController</cite> to use for calls to <cite>map</cite></p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.mapper.SynchronousTaskMapper.map">
+<!--[IPython.kernel.mapper.SynchronousTaskMapper.map]--><tt class="descname">map</tt><big>(</big><em>func</em>, <em>*sequences</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.SynchronousTaskMapper.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply func to <a href="#id3"><span class="problematic" id="id4">*</span></a>sequences elementwise.  Like Python&#8217;s builtin map.</p>
+<p>This version is load balanced.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="taskmapper">
+<h3><a title="IPython.kernel.mapper.TaskMapper" class="reference internal" href="#IPython.kernel.mapper.TaskMapper"><tt class="xref docutils literal"><span class="pre">TaskMapper</span></tt></a><a class="headerlink" href="#taskmapper" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.mapper.TaskMapper">
+<!--[IPython.kernel.mapper.TaskMapper]-->class <tt class="descclassname">IPython.kernel.mapper.</tt><tt class="descname">TaskMapper</tt><big>(</big><em>task_controller</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.TaskMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Make an <cite>ITaskController</cite> look like an <cite>IMapper</cite>.</p>
+<p>This class provides a load balanced version of <cite>map</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.mapper.TaskMapper.__init__">
+<!--[IPython.kernel.mapper.TaskMapper.__init__]--><tt class="descname">__init__</tt><big>(</big><em>task_controller</em>, <em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.TaskMapper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <cite>IMapper</cite> given a <cite>TaskController</cite> and arguments.</p>
+<p>The additional arguments are those that are common to all types of 
+tasks and are described in the documentation for 
+<cite>IPython.kernel.task.BaseTask</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>task_controller <span class="classifier-delimiter">:</span> <span class="classifier">an <cite>IBlockingTaskClient</cite> implementer</span></dt>
+<dd><p class="first last">The <cite>TaskController</cite> to use for calls to <cite>map</cite></p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.mapper.TaskMapper.map">
+<!--[IPython.kernel.mapper.TaskMapper.map]--><tt class="descname">map</tt><big>(</big><em>func</em>, <em>*sequences</em><big>)</big><a class="headerlink" href="#IPython.kernel.mapper.TaskMapper.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply func to <a href="#id5"><span class="problematic" id="id6">*</span></a>sequences elementwise.  Like Python&#8217;s builtin map.</p>
+<p>This version is load balanced.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.mapper</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.mapper">Module: <tt class="docutils literal"><span class="pre">kernel.mapper</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#imapper"><tt class="docutils literal"><span class="pre">IMapper</span></tt></a></li>
+<li><a class="reference external" href="#imultienginemapperfactory"><tt class="docutils literal"><span class="pre">IMultiEngineMapperFactory</span></tt></a></li>
+<li><a class="reference external" href="#itaskmapperfactory"><tt class="docutils literal"><span class="pre">ITaskMapperFactory</span></tt></a></li>
+<li><a class="reference external" href="#multienginemapper"><tt class="docutils literal"><span class="pre">MultiEngineMapper</span></tt></a></li>
+<li><a class="reference external" href="#synchronoustaskmapper"><tt class="docutils literal"><span class="pre">SynchronousTaskMapper</span></tt></a></li>
+<li><a class="reference external" href="#taskmapper"><tt class="docutils literal"><span class="pre">TaskMapper</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.map.html" title="previous chapter">kernel.map</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.multiengine.html" title="next chapter">kernel.multiengine</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.mapper.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengine.html" title="kernel.multiengine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.map.html" title="kernel.map"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

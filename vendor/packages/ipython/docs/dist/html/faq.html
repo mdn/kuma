@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently asked questions &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="index.html" />
+    <link rel="next" title="History" href="history.html" />
+    <link rel="prev" title="New configuration system" href="config/new_config.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="history.html" title="History"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="config/new_config.html" title="New configuration system"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frequently-asked-questions">
+<span id="faq"></span><h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-questions">
+<h2>General questions<a class="headerlink" href="#general-questions" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="questions-about-parallel-computing-with-ipython">
+<h2>Questions about parallel computing with IPython<a class="headerlink" href="#questions-about-parallel-computing-with-ipython" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="will-ipython-speed-my-python-code-up">
+<h3>Will IPython speed my Python code up?<a class="headerlink" href="#will-ipython-speed-my-python-code-up" title="Permalink to this headline">¶</a></h3>
+<p>Yes and no. When converting a serial code to run in parallel, there often many
+difficulty questions that need to be answered, such as:</p>
+<ul class="simple">
+<li>How should data be decomposed onto the set of processors?</li>
+<li>What are the data movement patterns?</li>
+<li>Can the algorithm be structured to minimize data movement?</li>
+<li>Is dynamic load balancing important?</li>
+</ul>
+<p>We can&#8217;t answer such questions for you. This is the hard (but fun) work of parallel
+computing. But, once you understand these things IPython will make it easier for you to
+implement a good solution quickly. Most importantly, you will be able to use the
+resulting parallel code interactively.</p>
+<p>With that said, if your problem is trivial to parallelize, IPython has a number of
+different interfaces that will enable you to parallelize things is almost no time at
+all.  A good place to start is the <tt class="docutils literal"><span class="pre">map</span></tt> method of our <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt>.</p>
+</div>
+<div class="section" id="what-is-the-best-way-to-use-mpi-from-python">
+<h3>What is the best way to use MPI from Python?<a class="headerlink" href="#what-is-the-best-way-to-use-mpi-from-python" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="what-about-all-the-other-parallel-computing-packages-in-python">
+<h3>What about all the other parallel computing packages in Python?<a class="headerlink" href="#what-about-all-the-other-parallel-computing-packages-in-python" title="Permalink to this headline">¶</a></h3>
+<p>Some of the unique characteristic of IPython are:</p>
+<ul class="simple">
+<li>IPython is the only architecture that abstracts out the notion of a
+parallel computation in such a way that new models of parallel computing
+can be explored quickly and easily.  If you don&#8217;t like the models we
+provide, you can simply create your own using the capabilities we provide.</li>
+<li>IPython is asynchronous from the ground up (we use <a class="reference external" href="http://www.twistedmatrix.com">Twisted</a>).</li>
+<li>IPython&#8217;s architecture is designed to avoid subtle problems
+that emerge because of Python&#8217;s global interpreter lock (GIL).</li>
+<li>While IPython&#8217;s architecture is designed to support a wide range
+of novel parallel computing models, it is fully interoperable with
+traditional MPI applications.</li>
+<li>IPython has been used and tested extensively on modern supercomputers.</li>
+<li>IPython&#8217;s networking layers are completely modular.  Thus, is
+straightforward to replace our existing network protocols with
+high performance alternatives (ones based upon Myranet/Infiniband).</li>
+<li>IPython is designed from the ground up to support collaborative
+parallel computing.  This enables multiple users to actively develop
+and run the <em>same</em> parallel computation.</li>
+<li>Interactivity is a central goal for us.  While IPython does not have
+to be used interactivly, it can be.</li>
+</ul>
+</div>
+<div class="section" id="why-the-ipython-controller-a-bottleneck-in-my-parallel-calculation">
+<h3>Why The IPython controller a bottleneck in my parallel calculation?<a class="headerlink" href="#why-the-ipython-controller-a-bottleneck-in-my-parallel-calculation" title="Permalink to this headline">¶</a></h3>
+<p>A golden rule in parallel computing is that you should only move data around if you
+absolutely need to. The main reason that the controller becomes a bottleneck is that
+too much data is being pushed and pulled to and from the engines. If your algorithm
+is structured in this way, you really should think about alternative ways of
+handling the data movement. Here are some ideas:</p>
+<ol class="arabic simple">
+<li>Have the engines write data to files on the locals disks of the engines.</li>
+<li>Have the engines write data to files on a file system that is shared by
+the engines.</li>
+<li>Have the engines write data to a database that is shared by the engines.</li>
+<li>Simply keep data in the persistent memory of the engines and move the
+computation to the data (rather than the data to the computation).</li>
+<li>See if you can pass data directly between engines using MPI.</li>
+</ol>
+</div>
+<div class="section" id="isn-t-python-slow-to-be-used-for-high-performance-parallel-computing">
+<h3>Isn&#8217;t Python slow to be used for high-performance parallel computing?<a class="headerlink" href="#isn-t-python-slow-to-be-used-for-high-performance-parallel-computing" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Frequently asked questions</a><ul>
+<li><a class="reference external" href="#general-questions">General questions</a></li>
+<li><a class="reference external" href="#questions-about-parallel-computing-with-ipython">Questions about parallel computing with IPython</a><ul>
+<li><a class="reference external" href="#will-ipython-speed-my-python-code-up">Will IPython speed my Python code up?</a></li>
+<li><a class="reference external" href="#what-is-the-best-way-to-use-mpi-from-python">What is the best way to use MPI from Python?</a></li>
+<li><a class="reference external" href="#what-about-all-the-other-parallel-computing-packages-in-python">What about all the other parallel computing packages in Python?</a></li>
+<li><a class="reference external" href="#why-the-ipython-controller-a-bottleneck-in-my-parallel-calculation">Why The IPython controller a bottleneck in my parallel calculation?</a></li>
+<li><a class="reference external" href="#isn-t-python-slow-to-be-used-for-high-performance-parallel-computing">Isn&#8217;t Python slow to be used for high-performance parallel computing?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="config/new_config.html" title="previous chapter">New configuration system</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="history.html" title="next chapter">History</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/faq.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="history.html" title="History"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="config/new_config.html" title="New configuration system"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

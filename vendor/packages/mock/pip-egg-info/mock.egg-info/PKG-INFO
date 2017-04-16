@@ -1,0 +1,16 @@
+Metadata-Version: 1.0
+Name: mock
+Version: 0.6.0
+Summary: A Python mock object library
+Home-page: http://www.voidspace.org.uk/python/mock/
+Author: Michael Foord
+Author-email: fuzzyman@voidspace.org.uk
+License: BSD
+Download-URL: http://www.voidspace.org.uk/downloads/mock-0.6.0.zip
+Description: Mock is a flexible mock object intended to replace the use of stubs and test doubles
+        throughout your code. Mocks are callable and create attributes as new mocks when you
+        access them. Accessing the same attribute will always return the same mock. Mocks
+        record how you use them, allowing you to make assertions about what your code has
+        done to them.
+Keywords: testing test mock mocking unittest patching stubs
+Platform: UNKNOWN

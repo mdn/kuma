@@ -1,0 +1,16 @@
+bin/pyflakes
+pip-egg-info/pyflakes.egg-info/PKG-INFO
+pip-egg-info/pyflakes.egg-info/SOURCES.txt
+pip-egg-info/pyflakes.egg-info/dependency_links.txt
+pip-egg-info/pyflakes.egg-info/top_level.txt
+pyflakes/__init__.py
+pyflakes/checker.py
+pyflakes/messages.py
+pyflakes/scripts/__init__.py
+pyflakes/scripts/pyflakes.py
+pyflakes/test/__init__.py
+pyflakes/test/harness.py
+pyflakes/test/test_imports.py
+pyflakes/test/test_other.py
+pyflakes/test/test_script.py
+pyflakes/test/test_undefined_names.py

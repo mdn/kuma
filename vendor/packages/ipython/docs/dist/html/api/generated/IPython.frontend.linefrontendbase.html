@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>frontend.linefrontendbase &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="frontend.prefilterfrontend" href="IPython.frontend.prefilterfrontend.html" />
+    <link rel="prev" title="frontend.frontendbase" href="IPython.frontend.frontendbase.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.prefilterfrontend.html" title="frontend.prefilterfrontend"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.frontendbase.html" title="frontend.frontendbase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frontend-linefrontendbase">
+<h1>frontend.linefrontendbase<a class="headerlink" href="#frontend-linefrontendbase" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.frontend.linefrontendbase">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">frontend.linefrontendbase</span></tt><a class="headerlink" href="#module-IPython.frontend.linefrontendbase" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.frontend.linefrontendbase</span></tt>:</p>
+<img src="../../_images/inheritancee34b0e9ff2.png" usemap="#inheritancee34b0e9ff2" class="inheritance"/><map id="inheritancee34b0e9ff2" name="inheritancee34b0e9ff2">
+<area shape="rect" href="IPython.frontend.frontendbase.html#IPython.frontend.frontendbase.FrontEndBase" title="frontend.frontendbase.FrontEndBase" alt="" coords="5,5,261,32"/>
+<area shape="rect" href="#IPython.frontend.linefrontendbase.LineFrontEndBase" title="frontend.linefrontendbase.LineFrontEndBase" alt="" coords="309,5,613,32"/>
+</map>
+<p>Base front end class for all line-oriented frontends, rather than
+block-oriented.</p>
+<p>Currently this focuses on synchronous frontends.</p>
+</div>
+<div class="section" id="linefrontendbase">
+<h2><a title="IPython.frontend.linefrontendbase.LineFrontEndBase" class="reference internal" href="#IPython.frontend.linefrontendbase.LineFrontEndBase"><tt class="xref docutils literal"><span class="pre">LineFrontEndBase</span></tt></a><a class="headerlink" href="#linefrontendbase" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase]-->class <tt class="descclassname">IPython.frontend.linefrontendbase.</tt><tt class="descname">LineFrontEndBase</tt><big>(</big><em>shell=None</em>, <em>history=None</em>, <em>banner=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.frontend.frontendbase.FrontEndBase" class="reference external" href="IPython.frontend.frontendbase.html#IPython.frontend.frontendbase.FrontEndBase"><tt class="xref docutils literal"><span class="pre">IPython.frontend.frontendbase.FrontEndBase</span></tt></a></p>
+<p>Concrete implementation of the FrontEndBase class. This is meant
+to be the base class behind all the frontend that are line-oriented,
+rather than block-oriented.</p>
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.__init__">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shell=None</em>, <em>history=None</em>, <em>banner=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.after_execute">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.after_execute]--><tt class="descname">after_execute</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.after_execute" title="Permalink to this definition">¶</a></dt>
+<dd>All the operations required after an execution to put the
+terminal back in a shape where it is usable.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.complete">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.complete]--><tt class="descname">complete</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete line in engine&#8217;s user_ns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> : string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><strong>The replacement for the line and the list of possible completions.</strong> :</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.complete_current_input">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.complete_current_input]--><tt class="descname">complete_current_input</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.complete_current_input" title="Permalink to this definition">¶</a></dt>
+<dd>Do code completion on current line.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.continuation_prompt">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.continuation_prompt]--><tt class="descname">continuation_prompt</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.continuation_prompt" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the current continuation prompt.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.execute">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.execute]--><tt class="descname">execute</tt><big>(</big><em>python_string</em>, <em>raw_string=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.execute" title="Permalink to this definition">¶</a></dt>
+<dd>Stores the raw_string in the history, and sends the
+python string to the interpreter.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.execute_command">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.execute_command]--><tt class="descname">execute_command</tt><big>(</big><em>command</em>, <em>hidden=False</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd>Execute a command, not only in the model, but also in the
+view, if any.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.get_line_width">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.get_line_width]--><tt class="descname">get_line_width</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.get_line_width" title="Permalink to this definition">¶</a></dt>
+<dd>Return the width of the line in characters.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.is_complete">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.is_complete]--><tt class="descname">is_complete</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.is_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a string forms a complete, executable set of
+commands.</p>
+<p>For the line-oriented frontend, multi-line code is not executed
+as soon as it is complete: the users has to enter two line
+returns.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.new_prompt">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.new_prompt]--><tt class="descname">new_prompt</tt><big>(</big><em>prompt</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.new_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a prompt and starts a new editing buffer.</p>
+<p>Subclasses should use this method to make sure that the
+terminal is put in a state favorable for a new line
+input.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.prefilter_input">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.prefilter_input]--><tt class="descname">prefilter_input</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.prefilter_input" title="Permalink to this definition">¶</a></dt>
+<dd>Prefilter the input to turn it in valid python.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.render_error">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.render_error]--><tt class="descname">render_error</tt><big>(</big><em>failure</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.render_error" title="Permalink to this definition">¶</a></dt>
+<dd>Frontend-specific rendering of error.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.render_result">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.render_result]--><tt class="descname">render_result</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.render_result" title="Permalink to this definition">¶</a></dt>
+<dd>Frontend-specific rendering of the result of a calculation
+that has been sent to an engine.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.start">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.start]--><tt class="descname">start</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.start" title="Permalink to this definition">¶</a></dt>
+<dd>Put the frontend in a state where it is ready for user
+interaction.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.write">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.write]--><tt class="descname">write</tt><big>(</big><em>string</em>, <em>refresh=True</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write some characters to the display.</p>
+<p>Subclass should overide this method.</p>
+<p>The refresh keyword argument is used in frontends with an
+event loop, to choose whether the write should trigget an UI
+refresh, and thus be syncrhonous, or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.linefrontendbase.LineFrontEndBase.write_completion">
+<!--[IPython.frontend.linefrontendbase.LineFrontEndBase.write_completion]--><tt class="descname">write_completion</tt><big>(</big><em>possibilities</em>, <em>new_line=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.LineFrontEndBase.write_completion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the list of possible completions.</p>
+<p>new_line is the completed input line that should be displayed
+after the completion are writen. If None, the input_buffer
+before the completion is used.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.frontend.linefrontendbase.common_prefix">
+<!--[IPython.frontend.linefrontendbase.common_prefix]--><tt class="descclassname">IPython.frontend.linefrontendbase.</tt><tt class="descname">common_prefix</tt><big>(</big><em>strings</em><big>)</big><a class="headerlink" href="#IPython.frontend.linefrontendbase.common_prefix" title="Permalink to this definition">¶</a></dt>
+<dd>Given a list of strings, return the common prefix between all
+these strings.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">frontend.linefrontendbase</a><ul>
+<li><a class="reference external" href="#module-IPython.frontend.linefrontendbase">Module: <tt class="docutils literal"><span class="pre">frontend.linefrontendbase</span></tt></a></li>
+<li><a class="reference external" href="#linefrontendbase"><tt class="docutils literal"><span class="pre">LineFrontEndBase</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.frontend.frontendbase.html" title="previous chapter">frontend.frontendbase</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.frontend.prefilterfrontend.html" title="next chapter">frontend.prefilterfrontend</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.frontend.linefrontendbase.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.prefilterfrontend.html" title="frontend.prefilterfrontend"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.frontendbase.html" title="frontend.frontendbase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

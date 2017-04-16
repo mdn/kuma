@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview and getting started &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for parallel computing" href="index.html" />
+    <link rel="next" title="Starting the IPython controller and engines" href="parallel_process.html" />
+    <link rel="prev" title="Using IPython for parallel computing" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_process.html" title="Starting the IPython controller and engines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Using IPython for parallel computing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="overview-and-getting-started">
+<span id="ip1par"></span><h1>Overview and getting started<a class="headerlink" href="#overview-and-getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This section gives an overview of IPython&#8217;s sophisticated and powerful
+architecture for parallel and distributed computing. This architecture
+abstracts out parallelism in a very general way, which enables IPython to
+support many different styles of parallelism including:</p>
+<ul class="simple">
+<li>Single program, multiple data (SPMD) parallelism.</li>
+<li>Multiple program, multiple data (MPMD) parallelism.</li>
+<li>Message passing using MPI.</li>
+<li>Task farming.</li>
+<li>Data parallel.</li>
+<li>Combinations of these approaches.</li>
+<li>Custom user defined approaches.</li>
+</ul>
+<p>Most importantly, IPython enables all types of parallel applications to
+be developed, executed, debugged and monitored <em>interactively</em>. Hence,
+the <tt class="docutils literal"><span class="pre">I</span></tt> in IPython.  The following are some example usage cases for IPython:</p>
+<ul class="simple">
+<li>Quickly parallelize algorithms that are embarrassingly parallel
+using a number of simple approaches.  Many simple things can be
+parallelized interactively in one or two lines of code.</li>
+<li>Steer traditional MPI applications on a supercomputer from an
+IPython session on your laptop.</li>
+<li>Analyze and visualize large datasets (that could be remote and/or
+distributed) interactively using IPython and tools like
+matplotlib/TVTK.</li>
+<li>Develop, test and debug new parallel algorithms
+(that may use MPI) interactively.</li>
+<li>Tie together multiple MPI jobs running on different systems into
+one giant distributed and parallel system.</li>
+<li>Start a parallel job on your cluster and then have a remote
+collaborator connect to it and pull back data into their
+local IPython session for plotting and analysis.</li>
+<li>Run a set of tasks on a set of CPUs using dynamic load balancing.</li>
+</ul>
+</div>
+<div class="section" id="architecture-overview">
+<h2>Architecture overview<a class="headerlink" href="#architecture-overview" title="Permalink to this headline">¶</a></h2>
+<p>The IPython architecture consists of three components:</p>
+<ul class="simple">
+<li>The IPython engine.</li>
+<li>The IPython controller.</li>
+<li>Various controller clients.</li>
+</ul>
+<p>These components live in the <tt class="xref docutils literal"><span class="pre">IPython.kernel</span></tt> package and are
+installed with IPython.  They do, however, have additional dependencies
+that must be installed.  For more information, see our
+<a class="reference external" href="../install/index.html#install-index"><em>installation documentation</em></a>.</p>
+<div class="section" id="ipython-engine">
+<h3>IPython engine<a class="headerlink" href="#ipython-engine" title="Permalink to this headline">¶</a></h3>
+<p>The IPython engine is a Python instance that takes Python commands over a
+network connection. Eventually, the IPython engine will be a full IPython
+interpreter, but for now, it is a regular Python interpreter. The engine
+can also handle incoming and outgoing Python objects sent over a network
+connection.  When multiple engines are started, parallel and distributed
+computing becomes possible. An important feature of an IPython engine is
+that it blocks while user code is being executed. Read on for how the
+IPython controller solves this problem to expose a clean asynchronous API
+to the user.</p>
+</div>
+<div class="section" id="ipython-controller">
+<h3>IPython controller<a class="headerlink" href="#ipython-controller" title="Permalink to this headline">¶</a></h3>
+<p>The IPython controller provides an interface for working with a set of
+engines. At an general level, the controller is a process to which
+IPython engines can connect. For each connected engine, the controller
+manages a queue. All actions that can be performed on the engine go
+through this queue. While the engines themselves block when user code is
+run, the controller hides that from the user to provide a fully
+asynchronous interface to a set of engines.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Because the controller listens on a network port for engines to
+connect to it, it must be started <em>before</em> any engines are started.</p>
+</div>
+<p>The controller also provides a single point of contact for users who wish
+to utilize the engines connected to the controller. There are different
+ways of working with a controller. In IPython these ways correspond to different interfaces that the controller is adapted to.  Currently we have two default interfaces to the controller:</p>
+<ul class="simple">
+<li>The MultiEngine interface, which provides the simplest possible way of
+working with engines interactively.</li>
+<li>The Task interface, which provides presents the engines as a load balanced
+task farming system.</li>
+</ul>
+<p>Advanced users can easily add new custom interfaces to enable other
+styles of parallelism.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A single controller and set of engines can be accessed
+through multiple interfaces simultaneously.  This opens the
+door for lots of interesting things.</p>
+</div>
+</div>
+<div class="section" id="controller-clients">
+<h3>Controller clients<a class="headerlink" href="#controller-clients" title="Permalink to this headline">¶</a></h3>
+<p>For each controller interface, there is a corresponding client. These
+clients allow users to interact with a set of engines through the
+interface.  Here are the two default clients:</p>
+<ul class="simple">
+<li>The <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> class.</li>
+<li>The <tt class="xref docutils literal"><span class="pre">TaskClient</span></tt> class.</li>
+</ul>
+</div>
+<div class="section" id="security">
+<h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
+<p>By default (as long as <cite>pyOpenSSL</cite> is installed) all network connections between the controller and engines and the controller and clients are secure.  What does this mean?  First of all, all of the connections will be encrypted using SSL.  Second, the connections are authenticated.  We handle authentication in a capability based security model <a class="reference internal" href="#capability">[Capability]</a>.  In this model,  a &#8220;capability (known in some systems as a key) is a communicable, unforgeable token of authority&#8221;.  Put simply, a capability is like a key to your house.  If you have the key to your house, you can get in.  If not, you can&#8217;t.</p>
+<p>In our architecture, the controller is the only process that listens on network ports, and is thus responsible to creating these keys.  In IPython, these keys are known as Foolscap URLs, or FURLs, because of the underlying network protocol we are using.  As a user, you don&#8217;t need to know anything about the details of these FURLs, other than that when the controller starts, it saves a set of FURLs to files named <tt class="docutils literal"><span class="pre">something.furl</span></tt>.  The default location of these files is the <tt class="docutils literal"><span class="pre">~./ipython/security</span></tt> directory.</p>
+<p>To connect and authenticate to the controller an engine or client simply needs to present an appropriate FURL (that was originally created by the controller) to the controller.  Thus, the FURL files need to be copied to a location where the clients and engines can find them.  Typically, this is the <tt class="docutils literal"><span class="pre">~./ipython/security</span></tt> directory on the host where the client/engine is running (which could be a different host than the controller).  Once the FURL files are copied over, everything should work fine.</p>
+<p>Currently, there are three FURL files that the controller creates:</p>
+<dl class="docutils">
+<dt>ipcontroller-engine.furl</dt>
+<dd>This FURL file is the key that gives an engine the ability to connect
+to a controller.</dd>
+<dt>ipcontroller-tc.furl</dt>
+<dd>This FURL file is the key that a <tt class="xref docutils literal"><span class="pre">TaskClient</span></tt> must use to
+connect to the task interface of a controller.</dd>
+<dt>ipcontroller-mec.furl</dt>
+<dd>This FURL file is the key that a <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> must use
+to connect to the multiengine interface of a controller.</dd>
+</dl>
+<p>More details of how these FURL files are used are given below.</p>
+<p>A detailed description of the security model and its implementation in IPython
+can be found <a class="reference external" href="parallel_security.html#parallelsecurity"><em>here</em></a>.</p>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>To use IPython for parallel computing, you need to start one instance of
+the controller and one or more instances of the engine. Initially, it is best to simply start a controller and engines on a single host using the <strong>ipcluster</strong> command.  To start a controller and 4 engines on you localhost, just do:</p>
+<div class="highlight-python"><pre>$ ipcluster local -n 4</pre>
+</div>
+<p>More details about starting the IPython controller and engines can be found <a class="reference external" href="parallel_process.html#parallel-process"><em>here</em></a></p>
+<p>Once you have started the IPython controller and one or more engines, you
+are ready to use the engines to do something useful. To make sure
+everything is working correctly, try the following commands:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">from</span> <span class="nn">IPython.kernel</span> <span class="k">import</span> <span class="n">client</span>
+
+<span class="gp">In [2]: </span><span class="n">mec</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">MultiEngineClient</span><span class="p">()</span>
+
+<span class="gp">In [4]: </span><span class="n">mec</span><span class="o">.</span><span class="n">get_ids</span><span class="p">()</span>
+<span class="go">Out[4]: </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">]</span>
+
+<span class="gp">In [5]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;print &quot;Hello World&quot;&#39;</span><span class="p">)</span>
+<span class="go">Out[5]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [1]: print &quot;Hello World&quot;</span>
+<span class="go">[0] Out[1]: Hello World</span>
+
+<span class="go">[1] In [1]: print &quot;Hello World&quot;</span>
+<span class="go">[1] Out[1]: Hello World</span>
+
+<span class="go">[2] In [1]: print &quot;Hello World&quot;</span>
+<span class="go">[2] Out[1]: Hello World</span>
+
+<span class="go">[3] In [1]: print &quot;Hello World&quot;</span>
+<span class="go">[3] Out[1]: Hello World</span>
+</pre></div>
+</div>
+<p>Remember, a client also needs to present a FURL file to the controller.  How does this happen?  When a multiengine client is created with no arguments, the client tries to find the corresponding FURL file in the local <tt class="docutils literal"><span class="pre">~./ipython/security</span></tt> directory.  If it finds it, you are set.  If you have put the FURL file in a different location or it has a different name, create the client like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mec</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">MultiEngineClient</span><span class="p">(</span><span class="s">&#39;/path/to/my/ipcontroller-mec.furl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Same thing hold true of creating a task client:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tc</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">TaskClient</span><span class="p">(</span><span class="s">&#39;/path/to/my/ipcontroller-tc.furl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You are now ready to learn more about the <a class="reference external" href="parallel_multiengine.html#parallelmultiengine"><em>MultiEngine</em></a> and <a class="reference external" href="parallel_task.html#paralleltask"><em>Task</em></a> interfaces to the controller.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Don&#8217;t forget that the engine, multiengine client and task client all have
+<em>different</em> furl files. You must move <em>each</em> of these around to an
+appropriate location so that the engines and clients can use them to
+connect to the controller.</p>
+</div>
+<table class="docutils citation" frame="void" id="capability" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[Capability]</a></td><td>Capability-based security, <a class="reference external" href="http://en.wikipedia.org/wiki/Capability-based_security">http://en.wikipedia.org/wiki/Capability-based_security</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Overview and getting started</a><ul>
+<li><a class="reference external" href="#introduction">Introduction</a></li>
+<li><a class="reference external" href="#architecture-overview">Architecture overview</a><ul>
+<li><a class="reference external" href="#ipython-engine">IPython engine</a></li>
+<li><a class="reference external" href="#ipython-controller">IPython controller</a></li>
+<li><a class="reference external" href="#controller-clients">Controller clients</a></li>
+<li><a class="reference external" href="#security">Security</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#getting-started">Getting Started</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">Using IPython for parallel computing</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="parallel_process.html" title="next chapter">Starting the IPython controller and engines</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/parallel_intro.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_process.html" title="Starting the IPython controller and engines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Using IPython for parallel computing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

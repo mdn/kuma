@@ -1,0 +1,50 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.interpreter
+=======================
+
+Module: :mod:`kernel.core.interpreter`
+--------------------------------------
+Inheritance diagram for ``IPython.kernel.core.interpreter``:
+
+.. inheritance-diagram:: IPython.kernel.core.interpreter 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.interpreter
+
+.. currentmodule:: IPython.kernel.core.interpreter
+
+Classes
+-------
+
+:class:`Interpreter`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Interpreter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NotDefined`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NotDefined
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.core.interpreter.default_display_formatters
+
+
+.. autofunction:: IPython.kernel.core.interpreter.default_traceback_formatters
+

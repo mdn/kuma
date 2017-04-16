@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="tbx" id="tbx">TBX</a></h1>
+<div class="level1">
+
+<p>
+<acronym title="TermBase eXchange">TBX</acronym> is the LISA standard for terminology and term exchange.
+</p>
+
+<p>
+For information on more file formats, see <a href="toolkit-conformance.html" class="wikilink1" title="toolkit-conformance.html">conformance</a>.
+</p>
+
+</div>
+<!-- SECTION "TBX" [1-139] -->
+<h2><a name="references" id="references">References</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.lisa.org/Term-Base-eXchange.32.0.html" class="urlextern" title="http://www.lisa.org/Term-Base-eXchange.32.0.html">Standard home page</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.lisa.org/TBX-Specification.33.0.html" class="urlextern" title="http://www.lisa.org/TBX-Specification.33.0.html">Specification</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=45797" class="urlextern" title="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=45797">ISO 30042</a> - <acronym title="TermBase eXchange">TBX</acronym> is an approved <acronym title="International Organization for Standardization">ISO</acronym> standard</div>
+</li>
+</ul>
+
+<p>
+
+You might also be interested in reading about <acronym title="TermBase eXchange">TBX</acronym>-Basic - a simpler, reduced version of <acronym title="TermBase eXchange">TBX</acronym> with most of the useful features included.
+</p>
+
+</div>
+<!-- SECTION "References" [140-584] -->
+<h2><a name="standard_conformance" id="standard_conformance">Standard conformance</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Standard conformance" [585-617] -->
+<h3><a name="done" id="done">Done</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Basic file creation</div>
+</li>
+<li class="level1"><div class="li"> Creating a bilingual list from <acronym title="Comma Separated Value">CSV</acronym> with <a href="toolkit-csv2tbx.html" class="wikilink1" title="toolkit-csv2tbx.html">csv2tbx</a></div>
+</li>
+<li class="level1"><div class="li"> Using &lt;tig&gt; tags, not ntig</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Done" [618-744] -->
+<h3><a name="todo" id="todo">Todo</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> id attributes for termEntry tags</div>
+</li>
+<li class="level1"><div class="li"> ntig, read and write</div>
+</li>
+<li class="level1"><div class="li"> multiple languages</div>
+</li>
+<li class="level1"><div class="li"> synonyms</div>
+</li>
+<li class="level1"><div class="li"> cross references</div>
+</li>
+<li class="level1"><div class="li"> abbreviations</div>
+</li>
+<li class="level1"><div class="li"> definitions</div>
+</li>
+<li class="level1"><div class="li"> context</div>
+</li>
+<li class="level1"><div class="li"> parts of speech</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Todo" [745-945] -->
+<h2><a name="implementation_notes_for_missing_features" id="implementation_notes_for_missing_features">Implementation notes for missing features</a></h2>
+<div class="level2">
+
+<p>
+
+Note here:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> NLS - South African National Language Services - Multilingual Maths Dictionary</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Implementation notes for missing features" [946-1096] -->
+<h3><a name="synonyms" id="synonyms">Synonyms</a></h3>
+<div class="level3">
+
+<p>
+NLS: Extra listing<br/>
+
+<acronym title="TermBase eXchange">TBX</acronym>:
+
+</p>
+<pre class="code xml"><span class="sc3"><span class="re1">&lt;termNote</span> <span class="re0">type</span>=<span class="st0">&quot;termNote&quot;</span><span class="re2">&gt;</span></span>synonym<span class="sc3"><span class="re1">&lt;/termNote<span class="re2">&gt;</span></span></span></pre>
+<p>
+according to this <acronym title="TermBase eXchange">TBX</acronym> documentation. In another place:
+</p>
+<pre class="code xml"><span class="sc3"><span class="re1">&lt;termNote</span> <span class="re0">type</span>=<span class="st0">&quot;termType&quot;</span><span class="re2">&gt;</span></span>synonym<span class="sc3"><span class="re1">&lt;/termNote<span class="re2">&gt;</span></span></span></pre>
+<p>
+inside a &lt;termGrp&gt;, following &lt;term&gt;
+</p>
+
+</div>
+<!-- SECTION "Synonyms" [1097-1365] -->
+<h3><a name="definition" id="definition">Definition</a></h3>
+<div class="level3">
+
+<p>
+NLS: term {definition/contextual information}<br/>
+
+<acronym title="TermBase eXchange">TBX</acronym>
+
+</p>
+<pre class="code xml"><span class="sc3"><span class="re1">&lt;descripGrp<span class="re2">&gt;</span></span></span>
+   <span class="sc3"><span class="re1">&lt;descrip</span> <span class="re0">type</span>=<span class="st0">&quot;definition&quot;</span><span class="re2">&gt;</span></span>The longish definition of the term<span class="sc3"><span class="re1">&lt;/descrip<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/descripGrp<span class="re2">&gt;</span></span></span></pre>
+<p>
+inside langSet
+&lt;descript&gt; can probably be used directly under langSet
+</p>
+
+</div>
+<!-- SECTION "Definition" [1366-1631] -->
+<h3><a name="context" id="context">Context</a></h3>
+<div class="level3">
+
+<p>
+NLS: term {definition/contextual information} (see above)<br/>
+
+<acronym title="TermBase eXchange">TBX</acronym>:
+
+</p>
+<pre class="code xml"><span class="sc3"><span class="re1">&lt;descrip</span> <span class="re0">type</span>=<span class="st0">&quot;context&quot;</span><span class="re2">&gt;</span></span>A usually somewhat longer contextual sentence.<span class="sc3"><span class="re1">&lt;/descrip<span class="re2">&gt;</span></span></span></pre>
+<p>
+inside &lt;ntig&gt;
+</p>
+
+</div>
+<!-- SECTION "Context" [1632-1830] -->
+<h3><a name="parts_of_speech" id="parts_of_speech">Parts of speech</a></h3>
+<div class="level3">
+
+<p>
+NLS: term v.  (or adj, or n.)<br/>
+
+<acronym title="TermBase eXchange">TBX</acronym>:
+
+</p>
+<pre class="code xml"><span class="sc3"><span class="re1">&lt;termNote</span> <span class="re0">type</span>=<span class="st0">&quot;partOfSpeech&quot;</span> <span class="re2">&gt;</span></span>noun<span class="sc3"><span class="re1">&lt;/termNote<span class="re2">&gt;</span></span></span></pre>
+<p>
+following &lt;term&gt;
+</p>
+
+</div>
+<!-- SECTION "Parts of speech" [1831-1978] -->
+<h3><a name="cross_reference" id="cross_reference">Cross reference</a></h3>
+<div class="level3">
+
+<p>
+NLS: alternate term → real lemma<br/>
+
+<acronym title="TermBase eXchange">TBX</acronym>: &lt;ref&gt; TODO
+</p>
+
+</div>
+<!-- SECTION "Cross reference" [1979-2057] -->
+<h3><a name="abbreviations" id="abbreviations">Abbreviations</a></h3>
+<div class="level3">
+
+<p>
+NLS: same as alternate term: a.m. → before noon<br/>
+
+<acronym title="TermBase eXchange">TBX</acronym>: TODO
+</p>
+
+</div>
+<!-- SECTION "Abbreviations" [2058-2144] -->
+<h2><a name="tbx_cheat_sheet" id="tbx_cheat_sheet">TBX cheat sheet</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> source word in English</div>
+</li>
+<li class="level1"><div class="li"> definition in English</div>
+</li>
+<li class="level1"><div class="li"> translation of source word to XX</div>
+</li>
+<li class="level1"><div class="li"> definition in XX</div>
+</li>
+<li class="level1"><div class="li"> comment</div>
+</li>
+<li class="level1"><div class="li"> syntactic group</div>
+</li>
+<li class="level1"><div class="li"> one or more tags</div>
+</li>
+<li class="level1"><div class="li"> a reference number</div>
+</li>
+</ol>
+<pre class="code xml"><span class="sc3"><span class="re1">&lt;termEntry</span> <span class="re0">id</span>=<span class="st0">&quot;4324 (8)&quot;</span><span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;note<span class="re2">&gt;</span></span></span>tag1, tag2, tag3 (7) -
+(Actually not clear what the best mapping to TBX is in this case.)<span class="sc3"><span class="re1">&lt;/note<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;langSet</span> <span class="re0">xml:lang</span>=<span class="st0">&quot;en&quot;</span><span class="re2">&gt;</span></span>
+        <span class="sc3"><span class="re1">&lt;tig<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;term<span class="re2">&gt;</span></span></span>sound (1)<span class="sc3"><span class="re1">&lt;/term<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;termNote</span> <span class="re0">type</span>=<span class="st0">&quot;partOfSpeech&quot;</span><span class="re2">&gt;</span></span>noun (6)<span class="sc3"><span class="re1">&lt;/termNote<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;/tig<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;descripGrp<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;descrip</span> <span class="re0">type</span>=<span class="st0">&quot;definition&quot;</span><span class="re2">&gt;</span></span>Something you can hear (2) -
+definition with an associated external source)<span class="sc3"><span class="re1">&lt;/descrip<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;xref</span> <span class="re0">type</span>=<span class="st0">&quot;xSource&quot;</span> <span class="re0">target</span>=<span class="st0">&quot;http://www.something.org/?id=234&quot;</span><span class="re2">&gt;</span></span>Glossmaster<span class="sc3"><span class="re1">&lt;/xref<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;/descripGrp<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;note<span class="re2">&gt;</span></span></span>Any random note about the term. (5)
+(Actually there are ways of storing pretty specific stuff in specific spaces,
+but while it seems the comment could be a more verbose definition, examples,
+usage notes or anything else, we'll use this generic way.)
+        <span class="sc3"><span class="re1">&lt;/note<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/langSet<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;langSet</span> <span class="re0">xml:lang</span>=<span class="st0">&quot;af&quot;</span><span class="re2">&gt;</span></span>
+        <span class="sc3"><span class="re1">&lt;tig<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;term<span class="re2">&gt;</span></span></span>klank (3)<span class="sc3"><span class="re1">&lt;/term<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;/tig<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;descrip</span> <span class="re0">type</span>=<span class="st0">&quot;definition&quot;</span><span class="re2">&gt;</span></span>Iets wat jy kan hoor (4) -
+definition without an external source)<span class="sc3"><span class="re1">&lt;/descrip<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;note<span class="re2">&gt;</span></span></span>A note in the target language (5).<span class="sc3"><span class="re1">&lt;/note<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/langSet<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/termEntry<span class="re2">&gt;</span></span></span></pre>
+<p>
+Note that the &lt;xref&gt; tags are optional (as are just about everything except termEntry, langSet and tig). They allow to link to an external source. An internal source can also be specified, or the definition can be specified without a source as shown for the term “klank”.
+
+</p>
+
+</div>
+<!-- SECTION "TBX cheat sheet" [2145-] --></body>
+</html>

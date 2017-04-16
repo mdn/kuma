@@ -1,0 +1,3 @@
+# requirements file for Read The Docs
+# http://readthedocs.org/docs/nose/
+sphinx>=1.0

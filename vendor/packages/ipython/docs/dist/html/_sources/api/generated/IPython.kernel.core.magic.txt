@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.magic
+=================
+
+Module: :mod:`kernel.core.magic`
+--------------------------------
+Inheritance diagram for ``IPython.kernel.core.magic``:
+
+.. inheritance-diagram:: IPython.kernel.core.magic 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.magic
+
+.. currentmodule:: IPython.kernel.core.magic
+
+:class:`Magic`
+--------------
+
+
+.. autoclass:: Magic
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

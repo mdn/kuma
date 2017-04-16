@@ -1,0 +1,1526 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="Mini Templates" href="templates.html">
+    <link rel="prev" title="Utilities" href="utils.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="utils.html">&laquo; Utilities</a></li>
+        <li class="active"><a href="">Data Structures</a></li>
+        <li><a href="templates.html">Mini Templates &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Data Structures</a><ul>
+<li><a class="reference external" href="#general-purpose">General Purpose</a></li>
+<li><a class="reference external" href="#http-related">HTTP Related</a></li>
+<li><a class="reference external" href="#others">Others</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Data Structures<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>Werkzeug provides some subclasses of common Python objects to extend them
+with additional features.  Some of them are used to make them immutable, others
+are used to change some semantics to better work with HTTP.</p>
+<p>You can import all these objects directly from <a title="" class="reference external" href="wrappers.html#module-werkzeug"><tt class="xref docutils literal"><span class="pre">werkzeug</span></tt></a>.</p>
+<div class="section" id="general-purpose">
+<h2>General Purpose<a class="headerlink" href="#general-purpose" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.TypeConversionDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">TypeConversionDict</tt><a class="headerlink" href="#werkzeug.TypeConversionDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Works like a regular dict but the <a title="werkzeug.TypeConversionDict.get" class="reference internal" href="#werkzeug.TypeConversionDict.get"><tt class="xref docutils literal"><span class="pre">get</span></tt></a> method can perform
+type conversions.  <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> and <a title="werkzeug.CombinedMultiDict" class="reference internal" href="#werkzeug.CombinedMultiDict"><tt class="xref docutils literal"><span class="pre">CombinedMultiDict</span></tt></a>
+are subclasses of this class and provide the same feature.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<dl class="method">
+<dt id="werkzeug.TypeConversionDict.get">
+<tt class="descname">get</tt><big>(</big><em>key</em>, <em>default=None</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#werkzeug.TypeConversionDict.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the default value if the requested data doesn&#8217;t exist.
+If <cite>type</cite> is provided and is a callable it should convert the value,
+return it or raise a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> if that is not possible.  In
+this case the function will return the default as if the value was not
+found:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">TypeConversionDict</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="s">&#39;42&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s">&#39;blub&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>default</em> &#8211; The default value to be returned if the key can&#8217;t
+be looked up.  If not further specified <cite>None</cite> is
+returned.</li>
+<li><em>type</em> &#8211; A callable that is used to cast the value in the
+<a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>.  If a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> is raised
+by this callable the default value is returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ImmutableTypeConversionDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ImmutableTypeConversionDict</tt><a class="headerlink" href="#werkzeug.ImmutableTypeConversionDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Works like a <a title="werkzeug.TypeConversionDict" class="reference internal" href="#werkzeug.TypeConversionDict"><tt class="xref docutils literal"><span class="pre">TypeConversionDict</span></tt></a> but does not support
+modifications.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<dl class="method">
+<dt id="werkzeug.ImmutableTypeConversionDict.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.ImmutableTypeConversionDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a shallow mutable copy of this object.  Keep in mind that
+the standard library&#8217;s <a title="werkzeug.ImmutableTypeConversionDict.copy" class="reference internal" href="#werkzeug.ImmutableTypeConversionDict.copy"><tt class="xref docutils literal"><span class="pre">copy</span></tt></a> funciton is a no-op for this class
+like for any other python immutable type (eg: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#tuple"><tt class="xref docutils literal"><span class="pre">tuple</span></tt></a>).</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.MultiDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">MultiDict</tt><big>(</big><em>mapping=None</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> is a dictionary subclass customized to deal with
+multiple values for the same key which is for example used by the parsing
+functions in the wrappers.  This is necessary because some HTML form
+elements pass multiple values for the same key.</p>
+<p><a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> implements all standard dictionary methods.
+Internally, it saves all values for a key as a list, but the standard dict
+access methods will only return the first value for a key. If you want to
+gain access to the other values, too, you have to use the <cite>list</cite> methods as
+explained below.</p>
+<p>Basic Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">([(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">MultiDict([(&#39;a&#39;, &#39;b&#39;), (&#39;a&#39;, &#39;c&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>
+<span class="go">&#39;b&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">[&#39;b&#39;, &#39;c&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;a&#39;</span> <span class="ow">in</span> <span class="n">d</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>It behaves like a normal dict thus all dict functions will only return the
+first value when multiple values for one key are found.</p>
+<p>From Werkzeug 0.3 onwards, the <cite>KeyError</cite> raised by this class is also a
+subclass of the <a title="werkzeug.exceptions.BadRequest" class="reference external" href="exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> HTTP exception and will
+render a page for a <tt class="docutils literal"><span class="pre">400</span> <span class="pre">BAD</span> <span class="pre">REQUEST</span></tt> if catched in a catch-all for HTTP
+exceptions.</p>
+<p>A <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> can be constructed from an iterable of
+<tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> tuples, a dict, a <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> or from Werkzeug 0.2
+onwards some keyword parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>mapping</em> &#8211; the initial value for the <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>.  Either a
+regular dict, an iterable of <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> tuples
+or <cite>None</cite>.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="werkzeug.MultiDict.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.clear" title="Permalink to this definition">¶</a></dt>
+<dd>D.clear() -&gt; None.  Remove all items from D.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a shallow copy of this object.</dd></dl>
+
+<dl class="staticmethod">
+<dt id="werkzeug.MultiDict.fromkeys">
+<em class="property">
+static </em><tt class="descname">fromkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.fromkeys" title="Permalink to this definition">¶</a></dt>
+<dd>dict.fromkeys(S[,v]) -&gt; New dict with keys from S and values equal to v.
+v defaults to None.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.get">
+<tt class="descname">get</tt><big>(</big><em>key</em>, <em>default=None</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the default value if the requested data doesn&#8217;t exist.
+If <cite>type</cite> is provided and is a callable it should convert the value,
+return it or raise a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> if that is not possible.  In
+this case the function will return the default as if the value was not
+found:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">TypeConversionDict</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="s">&#39;42&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s">&#39;blub&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>default</em> &#8211; The default value to be returned if the key can&#8217;t
+be looked up.  If not further specified <cite>None</cite> is
+returned.</li>
+<li><em>type</em> &#8211; A callable that is used to cast the value in the
+<a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>.  If a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> is raised
+by this callable the default value is returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.getlist">
+<tt class="descname">getlist</tt><big>(</big><em>key</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.getlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of items for a given key. If that key is not in the
+<cite>MultiDict</cite>, the return value will be an empty list.  Just as <cite>get</cite>
+<cite>getlist</cite> accepts a <cite>type</cite> parameter.  All items will be converted
+with the callable defined there.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>type</em> &#8211; A callable that is used to cast the value in the
+<a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>.  If a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> is raised
+by this callable the value will be removed from the list.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a> of all the values for the key.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.has_key">
+<tt class="descname">has_key</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.has_key" title="Permalink to this definition">¶</a></dt>
+<dd>D.has_key(k) -&gt; True if D has a key k, else False</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.items">
+<tt class="descname">items</tt><big>(</big><em>multi=False</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>multi</em> &#8211; If set to <cite>True</cite> the list returned will have a
+pair for each value of each key.  Ohterwise it
+will only contain pairs for the first value of
+each key.</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><em>multi=False</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd>Like <a title="werkzeug.MultiDict.items" class="reference internal" href="#werkzeug.MultiDict.items"><tt class="xref docutils literal"><span class="pre">items</span></tt></a> but returns an iterator.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd>D.iterkeys() -&gt; an iterator over the keys of D</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.iterlists">
+<tt class="descname">iterlists</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.iterlists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all values associated with a key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a class:<cite>list</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.iterlistvalues">
+<tt class="descname">iterlistvalues</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.iterlistvalues" title="Permalink to this definition">¶</a></dt>
+<dd>like <a title="werkzeug.MultiDict.listvalues" class="reference internal" href="#werkzeug.MultiDict.listvalues"><tt class="xref docutils literal"><span class="pre">listvalues</span></tt></a> but returns an iterator.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd>Like <a title="werkzeug.MultiDict.values" class="reference internal" href="#werkzeug.MultiDict.values"><tt class="xref docutils literal"><span class="pre">values</span></tt></a> but returns an iterator.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.keys">
+<tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.keys" title="Permalink to this definition">¶</a></dt>
+<dd>D.keys() -&gt; list of D&#8217;s keys</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.lists">
+<tt class="descname">lists</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.lists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs, where values is the list of
+all values associated with the key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.listvalues">
+<tt class="descname">listvalues</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.listvalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all values associated with a key.  Zipping
+<a title="werkzeug.MultiDict.keys" class="reference internal" href="#werkzeug.MultiDict.keys"><tt class="xref docutils literal"><span class="pre">keys</span></tt></a> and this is the same as calling <a title="werkzeug.MultiDict.lists" class="reference internal" href="#werkzeug.MultiDict.lists"><tt class="xref docutils literal"><span class="pre">lists</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">zip</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">d</span><span class="o">.</span><span class="n">listvalues</span><span class="p">())</span> <span class="o">==</span> <span class="n">d</span><span class="o">.</span><span class="n">lists</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.pop">
+<tt class="descname">pop</tt><big>(</big><em>key</em>, <em>default=no value</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop the first item for a list on the dict.  Afterwards the
+key is removed from the dict, so additional values are discarded:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;foo&quot;</span> <span class="ow">in</span> <span class="n">d</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key to pop.</li>
+<li><em>default</em> &#8211; if provided the value to return if the key was
+not in the dictionary.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.popitem">
+<tt class="descname">popitem</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.popitem" title="Permalink to this definition">¶</a></dt>
+<dd>Pop an item from the dict.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.popitemlist">
+<tt class="descname">popitemlist</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.popitemlist" title="Permalink to this definition">¶</a></dt>
+<dd>Pop a <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">list)</span></tt> tuple from the dict.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.poplist">
+<tt class="descname">poplist</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.poplist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop the list for a key from the dict.  If the key is not in the dict
+an empty list is returned.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>If the key does no longer exist a list is returned instead of
+raising an error.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.setdefault">
+<tt class="descname">setdefault</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value for the key if it is in the dict, otherwise it
+returns <cite>default</cite> and sets that value for <cite>key</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>default</em> &#8211; The default value to be returned if the key is not
+in the dict.  If not further specified it&#8217;s <cite>None</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.setlist">
+<tt class="descname">setlist</tt><big>(</big><em>key</em>, <em>new_list</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.setlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the old values for a key and add new ones.  Note that the list
+you pass the values in will be shallow-copied before it is inserted in
+the dictionary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">setlist</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">]</span>
+<span class="go">&#39;1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">)</span>
+<span class="go">[&#39;1&#39;, &#39;2&#39;]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key for which the values are set.</li>
+<li><em>new_list</em> &#8211; An iterable with the new values for the key.  Old values
+are removed first.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.setlistdefault">
+<tt class="descname">setlistdefault</tt><big>(</big><em>key</em>, <em>default_list=None</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.setlistdefault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <cite>setdefault</cite> but sets multiple values.  The list returned
+is not a copy, but the list that is actually used internally.  This
+means that you can put new values into the dict by appending items
+to the list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="mf">1</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">setlistdefault</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>default</em> &#8211; An iterable of default values.  It is either copied
+(in case it was a list) or converted into a list
+before returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.to_dict">
+<tt class="descname">to_dict</tt><big>(</big><em>flat=True</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the contents as regular dict.  If <cite>flat</cite> is <cite>True</cite> the
+returned dict will only have the first item present, if <cite>flat</cite> is
+<cite>False</cite> all values will be returned as lists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>flat</em> &#8211; If set to <cite>False</cite> the dict returned will have lists
+with all the values in it.  Otherwise it will only
+contain the first value for each key.</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/stdtypes.html#dict"><tt class="xref docutils literal"><span class="pre">dict</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.update">
+<tt class="descname">update</tt><big>(</big><em>other_dict</em><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.update" title="Permalink to this definition">¶</a></dt>
+<dd>update() extends rather than replaces existing key lists.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.MultiDict.values">
+<tt class="descname">values</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.MultiDict.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of the first value on every key&#8217;s value list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ImmutableMultiDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ImmutableMultiDict</tt><big>(</big><em>mapping=None</em><big>)</big><a class="headerlink" href="#werkzeug.ImmutableMultiDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>An immutable <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<dl class="method">
+<dt id="werkzeug.ImmutableMultiDict.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.ImmutableMultiDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a shallow mutable copy of this object.  Keep in mind that
+the standard library&#8217;s <a title="werkzeug.ImmutableMultiDict.copy" class="reference internal" href="#werkzeug.ImmutableMultiDict.copy"><tt class="xref docutils literal"><span class="pre">copy</span></tt></a> funciton is a no-op for this class
+like for any other python immutable type (eg: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#tuple"><tt class="xref docutils literal"><span class="pre">tuple</span></tt></a>).</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.CombinedMultiDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">CombinedMultiDict</tt><big>(</big><em>dicts=None</em><big>)</big><a class="headerlink" href="#werkzeug.CombinedMultiDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A read only <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> that you can pass multiple <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>
+instances as sequence and it will combine the return values of all wrapped
+dicts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">MultiDict</span><span class="p">,</span> <span class="n">CombinedMultiDict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">([(</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get</span> <span class="o">=</span> <span class="n">MultiDict</span><span class="p">([(</span><span class="s">&#39;blub&#39;</span><span class="p">,</span> <span class="s">&#39;blah&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined</span> <span class="o">=</span> <span class="n">CombinedMultiDict</span><span class="p">([</span><span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined</span><span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">]</span>
+<span class="go">&#39;bar&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined</span><span class="p">[</span><span class="s">&#39;blub&#39;</span><span class="p">]</span>
+<span class="go">&#39;blah&#39;</span>
+</pre></div>
+</div>
+<p>This works for all read operations and will raise a <cite>TypeError</cite> for
+methods that usually change data which isn&#8217;t possible.</p>
+<p>From Werkzeug 0.3 onwards, the <cite>KeyError</cite> raised by this class is also a
+subclass of the <a title="werkzeug.exceptions.BadRequest" class="reference external" href="exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> HTTP exception and will
+render a page for a <tt class="docutils literal"><span class="pre">400</span> <span class="pre">BAD</span> <span class="pre">REQUEST</span></tt> if catched in a catch-all for HTTP
+exceptions.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ImmutableDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ImmutableDict</tt><a class="headerlink" href="#werkzeug.ImmutableDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>An immutable <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/stdtypes.html#dict"><tt class="xref docutils literal"><span class="pre">dict</span></tt></a>.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<dl class="method">
+<dt id="werkzeug.ImmutableDict.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.ImmutableDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a shallow mutable copy of this object.  Keep in mind that
+the standard library&#8217;s <a title="werkzeug.ImmutableDict.copy" class="reference internal" href="#werkzeug.ImmutableDict.copy"><tt class="xref docutils literal"><span class="pre">copy</span></tt></a> funciton is a no-op for this class
+like for any other python immutable type (eg: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#tuple"><tt class="xref docutils literal"><span class="pre">tuple</span></tt></a>).</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ImmutableList">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ImmutableList</tt><a class="headerlink" href="#werkzeug.ImmutableList" title="Permalink to this definition">¶</a></dt>
+<dd><p>An immutable <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a>.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Private:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.FileMultiDict">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">FileMultiDict</tt><big>(</big><em>mapping=None</em><big>)</big><a class="headerlink" href="#werkzeug.FileMultiDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A special <a title="werkzeug.MultiDict" class="reference internal" href="#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> that has convenience methods to add
+files to it.  This is used for <a title="werkzeug.EnvironBuilder" class="reference external" href="test.html#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a> and generally
+useful for unittesting.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<dl class="method">
+<dt id="werkzeug.FileMultiDict.add_file">
+<tt class="descname">add_file</tt><big>(</big><em>name</em>, <em>file</em>, <em>filename=None</em>, <em>content_type=None</em><big>)</big><a class="headerlink" href="#werkzeug.FileMultiDict.add_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new file to the dict.  <cite>file</cite> can be a file name or
+a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#file"><tt class="xref docutils literal"><span class="pre">file</span></tt></a>-like or a <a title="werkzeug.FileStorage" class="reference internal" href="#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>name</em> &#8211; the name of the field.</li>
+<li><em>file</em> &#8211; a filename or <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#file"><tt class="xref docutils literal"><span class="pre">file</span></tt></a>-like object</li>
+<li><em>filename</em> &#8211; an optional filename</li>
+<li><em>content_type</em> &#8211; an optional content type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="http-related">
+<h2>HTTP Related<a class="headerlink" href="#http-related" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.Headers">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Headers</tt><big>(</big><span class="optional">[</span><em>defaults</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#werkzeug.Headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that stores some headers.  It has a dict-like interface
+but is ordered and can store the same keys multiple times.</p>
+<p>This data structure is useful if you want a nicer way to handle WSGI
+headers which are stored as tuples in a list.</p>
+<p>From Werkzeug 0.3 onwards, the <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.KeyError"><tt class="xref docutils literal"><span class="pre">KeyError</span></tt></a> raised by this class is
+also a subclass of the <a title="werkzeug.exceptions.BadRequest" class="reference external" href="exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> HTTP exception
+and will render a page for a <tt class="docutils literal"><span class="pre">400</span> <span class="pre">BAD</span> <span class="pre">REQUEST</span></tt> if catched in a
+catch-all for HTTP exceptions.</p>
+<p>Headers is mostly compatible with the Python <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#wsgiref.headers.Headers"><tt class="xref docutils literal"><span class="pre">wsgiref.headers.Headers</span></tt></a>
+class, with the exception of <cite>__getitem__</cite>.  <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#module-wsgiref"><tt class="xref docutils literal"><span class="pre">wsgiref</span></tt></a> will return
+<cite>None</cite> for <tt class="docutils literal"><span class="pre">headers['missing']</span></tt>, whereas <a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> will raise
+a <tt class="xref docutils literal"><span class="pre">KeyError</span></tt>.</p>
+<p>To create a new <a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object pass it a list or dict of headers
+which are used as default values.  This does not reuse the list passed
+to the constructor for internal usage.  To create a <a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a>
+object that uses as internal storage the list or list-like object you
+can use the <a title="werkzeug.Headers.linked" class="reference internal" href="#werkzeug.Headers.linked"><tt class="xref docutils literal"><span class="pre">linked</span></tt></a> class method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>defaults</em> &#8211; The list of default values for the <a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="werkzeug.Headers.add">
+<tt class="descname">add</tt><big>(</big><em>_key</em>, <em>_value</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new header tuple to the list.</p>
+<p>Keyword arguments can specify additional parameters for the header
+value, with underscores converted to dashes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">Headers</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="s">&#39;attachment&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&#39;foo.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The keyword argument dumping uses <tt class="xref docutils literal"><span class="pre">dump_options_header</span></tt>
+behind the scenes.</p>
+<p>
+<span class="versionmodified">New in version 0.4.1: </span>keyword arguments were added for <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#module-wsgiref"><tt class="xref docutils literal"><span class="pre">wsgiref</span></tt></a> compatibility.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.add_header">
+<tt class="descname">add_header</tt><big>(</big><em>_key</em>, <em>_value</em>, <em>**_kw</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.add_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new header tuple to the list.</p>
+<p>An alias for <a title="werkzeug.Headers.add" class="reference internal" href="#werkzeug.Headers.add"><tt class="xref docutils literal"><span class="pre">add</span></tt></a> for compatibility with the <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#module-wsgiref"><tt class="xref docutils literal"><span class="pre">wsgiref</span></tt></a>
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#wsgiref.headers.Headers.add_header"><tt class="xref docutils literal"><span class="pre">add_header</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.Headers.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Clears all headers.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.extend">
+<tt class="descname">extend</tt><big>(</big><em>iterable</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.extend" title="Permalink to this definition">¶</a></dt>
+<dd>Extend the headers with a dict or an iterable yielding keys and
+values.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.get">
+<tt class="descname">get</tt><big>(</big><em>key</em>, <em>default=None</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the default value if the requested data doesn&#8217;t exist.
+If <cite>type</cite> is provided and is a callable it should convert the value,
+return it or raise a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> if that is not possible.  In
+this case the function will return the default as if the value was not
+found:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">Headers</span><span class="p">([(</span><span class="s">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="s">&#39;42&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">42</span>
+</pre></div>
+</div>
+<p>If a headers object is bound you must not add unicode strings
+because no encoding takes place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>default</em> &#8211; The default value to be returned if the key can&#8217;t
+be looked up.  If not further specified <cite>None</cite> is
+returned.</li>
+<li><em>type</em> &#8211; A callable that is used to cast the value in the
+<a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a>.  If a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> is raised
+by this callable the default value is returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.get_all">
+<tt class="descname">get_all</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all the values for the named field.</p>
+<p>This method is compatible with the <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#module-wsgiref"><tt class="xref docutils literal"><span class="pre">wsgiref</span></tt></a>
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/wsgiref.html#wsgiref.headers.Headers.get_all"><tt class="xref docutils literal"><span class="pre">get_all</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.getlist">
+<tt class="descname">getlist</tt><big>(</big><em>key</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.getlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of items for a given key. If that key is not in the
+<a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a>, the return value will be an empty list.  Just as
+<a title="werkzeug.Headers.get" class="reference internal" href="#werkzeug.Headers.get"><tt class="xref docutils literal"><span class="pre">get</span></tt></a> <a title="werkzeug.Headers.getlist" class="reference internal" href="#werkzeug.Headers.getlist"><tt class="xref docutils literal"><span class="pre">getlist</span></tt></a> accepts a <cite>type</cite> parameter.  All items will
+be converted with the callable defined there.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>type</em> &#8211; A callable that is used to cast the value in the
+<a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a>.  If a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a> is raised
+by this callable the value will be removed from the list.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a> of all the values for the key.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.has_key">
+<tt class="descname">has_key</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.has_key" title="Permalink to this definition">¶</a></dt>
+<dd>Check if a key is present.</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.Headers.linked">
+<em class="property">
+classmethod </em><tt class="descname">linked</tt><big>(</big><em>headerlist</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.linked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new <a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object that uses the list of headers
+passed as internal storage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">headerlist</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="s">&#39;40&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">headers</span> <span class="o">=</span> <span class="n">Headers</span><span class="o">.</span><span class="n">linked</span><span class="p">(</span><span class="n">headerlist</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">headers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/html&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">headerlist</span>
+<span class="go">[(&#39;Content-Length&#39;, &#39;40&#39;), (&#39;Content-Type&#39;, &#39;text/html&#39;)]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>headerlist</em> &#8211; The list of headers the class is linked to.</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">new linked <a title="werkzeug.Headers" class="reference internal" href="#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.pop">
+<tt class="descname">pop</tt><big>(</big><em>key=None</em>, <em>default=no value</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes and returns a key or index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>key</em> &#8211; The key to be popped.  If this is an integer the item at
+that position is removed, if it&#8217;s a string the value for
+that key is.  If the key is omitted or <cite>None</cite> the last
+item is removed.</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">an item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.popitem">
+<tt class="descname">popitem</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.Headers.popitem" title="Permalink to this definition">¶</a></dt>
+<dd>Removes a key or index and returns a (key, value) item.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.remove">
+<tt class="descname">remove</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>key</em> &#8211; The key to be removed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.set">
+<tt class="descname">set</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all header tuples for <cite>key</cite> and add a new one.  The newly
+added key either appears at the end of the list if there was no
+entry or replaces the first one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key to be inserted.</li>
+<li><em>value</em> &#8211; The value to be inserted.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.setdefault">
+<tt class="descname">setdefault</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value for the key if it is in the dict, otherwise it
+returns <cite>default</cite> and sets that value for <cite>key</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; The key to be looked up.</li>
+<li><em>default</em> &#8211; The default value to be returned if the key is not
+in the dict.  If not further specified it&#8217;s <cite>None</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Headers.to_list">
+<tt class="descname">to_list</tt><big>(</big><em>charset='utf-8'</em><big>)</big><a class="headerlink" href="#werkzeug.Headers.to_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the headers into a list and converts the unicode header
+items to the specified charset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.EnvironHeaders">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">EnvironHeaders</tt><big>(</big><em>environ</em><big>)</big><a class="headerlink" href="#werkzeug.EnvironHeaders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read only version of the headers from a WSGI environment.  This
+provides the same interface as <cite>Headers</cite> and is constructed from
+a WSGI environment.</p>
+<p>From Werkzeug 0.3 onwards, the <cite>KeyError</cite> raised by this class is also a
+subclass of the <a title="werkzeug.exceptions.BadRequest" class="reference external" href="exceptions.html#werkzeug.exceptions.BadRequest"><tt class="xref docutils literal"><span class="pre">BadRequest</span></tt></a> HTTP exception and will
+render a page for a <tt class="docutils literal"><span class="pre">400</span> <span class="pre">BAD</span> <span class="pre">REQUEST</span></tt> if catched in a catch-all for
+HTTP exceptions.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.HeaderSet">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">HeaderSet</tt><big>(</big><em>headers=None</em>, <em>on_update=None</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to the <a title="werkzeug.ETags" class="reference internal" href="#werkzeug.ETags"><tt class="xref docutils literal"><span class="pre">ETags</span></tt></a> class this implements a set-like structure.
+Unlike <a title="werkzeug.ETags" class="reference internal" href="#werkzeug.ETags"><tt class="xref docutils literal"><span class="pre">ETags</span></tt></a> this is case insensitive and used for vary, allow, and
+content-language headers.</p>
+<p>If not constructed using the <a title="werkzeug.parse_set_header" class="reference external" href="utils.html#werkzeug.parse_set_header"><tt class="xref docutils literal"><span class="pre">parse_set_header</span></tt></a> function the
+instantiation works like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span> <span class="o">=</span> <span class="n">HeaderSet</span><span class="p">([</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="s">&#39;baz&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span>
+<span class="go">HeaderSet([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;])</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="werkzeug.HeaderSet.add">
+<tt class="descname">add</tt><big>(</big><em>header</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.add" title="Permalink to this definition">¶</a></dt>
+<dd>Add a new header to the set.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.as_set">
+<tt class="descname">as_set</tt><big>(</big><em>preserve_casing=False</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the set as real python set type.  When calling this, all
+the items are converted to lowercase and the ordering is lost.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>preserve_casing</em> &#8211; if set to <cite>True</cite> the items in the set returned
+will have the original case like in the
+<a title="werkzeug.HeaderSet" class="reference internal" href="#werkzeug.HeaderSet"><tt class="xref docutils literal"><span class="pre">HeaderSet</span></tt></a>, otherwise they will
+be lowercase.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Clear the set.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.discard">
+<tt class="descname">discard</tt><big>(</big><em>header</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.discard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a title="werkzeug.HeaderSet.remove" class="reference internal" href="#werkzeug.HeaderSet.remove"><tt class="xref docutils literal"><span class="pre">remove</span></tt></a> but ignores errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>header</em> &#8211; the header to be discarded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.find">
+<tt class="descname">find</tt><big>(</big><em>header</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the index of the header in the set or return -1 if not found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>header</em> &#8211; the header to be looked up.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.index">
+<tt class="descname">index</tt><big>(</big><em>header</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the index of the header in the set or raise an
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.IndexError"><tt class="xref docutils literal"><span class="pre">IndexError</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>header</em> &#8211; the header to be looked up.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.remove">
+<tt class="descname">remove</tt><big>(</big><em>header</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a layer from the set.  This raises an <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.KeyError"><tt class="xref docutils literal"><span class="pre">KeyError</span></tt></a> if the
+header is not in the set.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>In older versions a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.IndexError"><tt class="xref docutils literal"><span class="pre">IndexError</span></tt></a> was raised instead of a
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.KeyError"><tt class="xref docutils literal"><span class="pre">KeyError</span></tt></a> if the object was missing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>header</em> &#8211; the header to be removed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.to_header">
+<tt class="descname">to_header</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.to_header" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the header set into an HTTP header string.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.HeaderSet.update">
+<tt class="descname">update</tt><big>(</big><em>iterable</em><big>)</big><a class="headerlink" href="#werkzeug.HeaderSet.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add all the headers from the iterable to the set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>iterable</em> &#8211; updates the set with the items from the iterable.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.Accept">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Accept</tt><big>(</big><em>values=()</em><big>)</big><a class="headerlink" href="#werkzeug.Accept" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <a title="werkzeug.Accept" class="reference internal" href="#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> object is just a list subclass for lists of
+<tt class="docutils literal"><span class="pre">(value,</span> <span class="pre">quality)</span></tt> tuples.  It is automatically sorted by quality.</p>
+<p>All <a title="werkzeug.Accept" class="reference internal" href="#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> objects work similar to a list but provide extra
+functionality for working with the data.  Containment checks are
+normalized to the rules of that header:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">CharsetAccept</span><span class="p">([(</span><span class="s">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="mf">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">best</span>
+<span class="go">&#39;ISO-8859-1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;iso-8859-1&#39;</span> <span class="ow">in</span> <span class="n">a</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;UTF8&#39;</span> <span class="ow">in</span> <span class="n">a</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;utf7&#39;</span> <span class="ow">in</span> <span class="n">a</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>To get the quality for an item you can use normal item lookup:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="p">[</span><span class="s">&#39;utf-8&#39;</span><span class="p">]</span>
+<span class="go">0.7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;utf7&#39;</span><span class="p">]</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span><a title="werkzeug.Accept" class="reference internal" href="#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> objects are forzed immutable now.</p>
+<dl class="attribute">
+<dt id="werkzeug.Accept.best">
+<tt class="descname">best</tt><a class="headerlink" href="#werkzeug.Accept.best" title="Permalink to this definition">¶</a></dt>
+<dd>The best match as value.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Accept.find">
+<tt class="descname">find</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.Accept.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position of an entry or return -1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>key</em> &#8211; The key to be looked up.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Accept.index">
+<tt class="descname">index</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.Accept.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position of an entry or raise <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.ValueError"><tt class="xref docutils literal"><span class="pre">ValueError</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>key</em> &#8211; The key to be looked up.</td>
+</tr>
+</tbody>
+</table>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>This used to raise <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.IndexError"><tt class="xref docutils literal"><span class="pre">IndexError</span></tt></a>, which was inconsistent
+with the list API.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Accept.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.Accept.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd>Iterate over all values.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Accept.to_header">
+<tt class="descname">to_header</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.Accept.to_header" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the header set into an HTTP header string.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Accept.values">
+<tt class="descname">values</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.Accept.values" title="Permalink to this definition">¶</a></dt>
+<dd>Return a list of the values, not the qualities.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.MIMEAccept">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">MIMEAccept</tt><big>(</big><em>values=()</em><big>)</big><a class="headerlink" href="#werkzeug.MIMEAccept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a title="werkzeug.Accept" class="reference internal" href="#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> but with special methods and behavior for
+mimetypes.</p>
+<dl class="attribute">
+<dt id="werkzeug.MIMEAccept.accept_html">
+<tt class="descname">accept_html</tt><a class="headerlink" href="#werkzeug.MIMEAccept.accept_html" title="Permalink to this definition">¶</a></dt>
+<dd>True if this object accepts HTML.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.MIMEAccept.accept_xhtml">
+<tt class="descname">accept_xhtml</tt><a class="headerlink" href="#werkzeug.MIMEAccept.accept_xhtml" title="Permalink to this definition">¶</a></dt>
+<dd>True if this object accepts XHTML.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.CharsetAccept">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">CharsetAccept</tt><big>(</big><em>values=()</em><big>)</big><a class="headerlink" href="#werkzeug.CharsetAccept" title="Permalink to this definition">¶</a></dt>
+<dd>Like <a title="werkzeug.Accept" class="reference internal" href="#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> but with normalization for charsets.</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.LanguageAccept">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">LanguageAccept</tt><big>(</big><em>values=()</em><big>)</big><a class="headerlink" href="#werkzeug.LanguageAccept" title="Permalink to this definition">¶</a></dt>
+<dd>Like <a title="werkzeug.Accept" class="reference internal" href="#werkzeug.Accept"><tt class="xref docutils literal"><span class="pre">Accept</span></tt></a> but with normalization for languages.</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.RequestCacheControl">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">RequestCacheControl</tt><big>(</big><em>values=()</em>, <em>on_update=None</em><big>)</big><a class="headerlink" href="#werkzeug.RequestCacheControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache control for requests.  This is immutable and gives access
+to all the request-relevant cache control headers.</p>
+<p>
+<span class="versionmodified">New in version 0.5: </span>In previous versions a <cite>CacheControl</cite> class existed that was used
+both for request and response.</p>
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.no_cache">
+<tt class="descname">no_cache</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.no_cache" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;no-cache&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.no_store">
+<tt class="descname">no_store</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.no_store" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;no-store&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.max_age">
+<tt class="descname">max_age</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.max_age" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;max-age&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.no_transform">
+<tt class="descname">no_transform</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.no_transform" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;no-transform&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.max_stale">
+<tt class="descname">max_stale</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.max_stale" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;max-stale&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.min_fresh">
+<tt class="descname">min_fresh</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.min_fresh" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;min-fresh&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">no_transform</tt></dt>
+<dd>accessor for &#8216;no-transform&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.RequestCacheControl.only_if_cached">
+<tt class="descname">only_if_cached</tt><a class="headerlink" href="#werkzeug.RequestCacheControl.only_if_cached" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;only-if-cached&#8217;</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ResponseCacheControl">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ResponseCacheControl</tt><big>(</big><em>values=()</em>, <em>on_update=None</em><big>)</big><a class="headerlink" href="#werkzeug.ResponseCacheControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache control for responses.  Unlike <a title="werkzeug.RequestCacheControl" class="reference internal" href="#werkzeug.RequestCacheControl"><tt class="xref docutils literal"><span class="pre">RequestCacheControl</span></tt></a>
+this is mutable and gives access to response-relevant cache control
+headers.</p>
+<p>
+<span class="versionmodified">New in version 0.5: </span>In previous versions a <cite>CacheControl</cite> class existed that was used
+both for request and response.</p>
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.no_cache">
+<tt class="descname">no_cache</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.no_cache" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;no-cache&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.no_store">
+<tt class="descname">no_store</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.no_store" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;no-store&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.max_age">
+<tt class="descname">max_age</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.max_age" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;max-age&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.no_transform">
+<tt class="descname">no_transform</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.no_transform" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;no-transform&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.must_revalidate">
+<tt class="descname">must_revalidate</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.must_revalidate" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;must-revalidate&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.private">
+<tt class="descname">private</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.private" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;private&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.proxy_revalidate">
+<tt class="descname">proxy_revalidate</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.proxy_revalidate" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;proxy-revalidate&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.public">
+<tt class="descname">public</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.public" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;public&#8217;</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.ResponseCacheControl.s_maxage">
+<tt class="descname">s_maxage</tt><a class="headerlink" href="#werkzeug.ResponseCacheControl.s_maxage" title="Permalink to this definition">¶</a></dt>
+<dd>accessor for &#8216;s-maxage&#8217;</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.ETags">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">ETags</tt><big>(</big><em>strong_etags=None</em>, <em>weak_etags=None</em>, <em>star_tag=False</em><big>)</big><a class="headerlink" href="#werkzeug.ETags" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set that can be used to check if one etag is present in a collection
+of etags.</p>
+<dl class="method">
+<dt id="werkzeug.ETags.as_set">
+<tt class="descname">as_set</tt><big>(</big><em>include_weak=False</em><big>)</big><a class="headerlink" href="#werkzeug.ETags.as_set" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the <cite>ETags</cite> object into a python set.  Per default all the
+weak etags are not part of this set.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETags.contains">
+<tt class="descname">contains</tt><big>(</big><em>etag</em><big>)</big><a class="headerlink" href="#werkzeug.ETags.contains" title="Permalink to this definition">¶</a></dt>
+<dd>Check if an etag is part of the set ignoring weak tags.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETags.contains_raw">
+<tt class="descname">contains_raw</tt><big>(</big><em>etag</em><big>)</big><a class="headerlink" href="#werkzeug.ETags.contains_raw" title="Permalink to this definition">¶</a></dt>
+<dd>When passed a quoted tag it will check if this tag is part of the
+set.  If the tag is weak it is checked against weak and strong tags,
+otherwise weak only.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETags.contains_weak">
+<tt class="descname">contains_weak</tt><big>(</big><em>etag</em><big>)</big><a class="headerlink" href="#werkzeug.ETags.contains_weak" title="Permalink to this definition">¶</a></dt>
+<dd>Check if an etag is part of the set including weak and strong tags.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETags.is_weak">
+<tt class="descname">is_weak</tt><big>(</big><em>etag</em><big>)</big><a class="headerlink" href="#werkzeug.ETags.is_weak" title="Permalink to this definition">¶</a></dt>
+<dd>Check if an etag is weak.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.ETags.to_header">
+<tt class="descname">to_header</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.ETags.to_header" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the etags set into a HTTP header string.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.Authorization">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Authorization</tt><big>(</big><em>auth_type</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#werkzeug.Authorization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <cite>Authorization</cite> header sent by the client.  You should
+not create this kind of object yourself but use it when it&#8217;s returned by
+the <cite>parse_authorization_header</cite> function.</p>
+<p>This object is a dict subclass and can be altered by setting dict items
+but it should be considered immutable as it&#8217;s returned by the client and
+not meant for modifications.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>This object became immutable.</p>
+<dl class="attribute">
+<dt id="werkzeug.Authorization.cnonce">
+<tt class="descname">cnonce</tt><a class="headerlink" href="#werkzeug.Authorization.cnonce" title="Permalink to this definition">¶</a></dt>
+<dd>If the server sent a qop-header in the <tt class="docutils literal"><span class="pre">WWW-Authenticate</span></tt>
+header, the client has to provide this value for HTTP digest auth.
+See the RFC for more details.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.nc">
+<tt class="descname">nc</tt><a class="headerlink" href="#werkzeug.Authorization.nc" title="Permalink to this definition">¶</a></dt>
+<dd>The nonce count value transmitted by clients if a qop-header is
+also transmitted.  HTTP digest auth only.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.nonce">
+<tt class="descname">nonce</tt><a class="headerlink" href="#werkzeug.Authorization.nonce" title="Permalink to this definition">¶</a></dt>
+<dd>The nonce the server sent for digest auth, sent back by the client.
+A nonce should be unique for every 401 response for HTTP digest
+auth.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.opaque">
+<tt class="descname">opaque</tt><a class="headerlink" href="#werkzeug.Authorization.opaque" title="Permalink to this definition">¶</a></dt>
+<dd>The opaque header from the server returned unchanged by the client.
+It is recommended that this string be base64 or hexadecimal data.
+Digest auth only.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.password">
+<tt class="descname">password</tt><a class="headerlink" href="#werkzeug.Authorization.password" title="Permalink to this definition">¶</a></dt>
+<dd>When the authentication type is basic this is the password
+transmitted by the client, else <cite>None</cite>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.qop">
+<tt class="descname">qop</tt><a class="headerlink" href="#werkzeug.Authorization.qop" title="Permalink to this definition">¶</a></dt>
+<dd>Indicates what &#8220;quality of protection&#8221; the client has applied to
+the message for HTTP digest auth.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.realm">
+<tt class="descname">realm</tt><a class="headerlink" href="#werkzeug.Authorization.realm" title="Permalink to this definition">¶</a></dt>
+<dd>This is the server realm sent back for HTTP digest auth.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.response">
+<tt class="descname">response</tt><a class="headerlink" href="#werkzeug.Authorization.response" title="Permalink to this definition">¶</a></dt>
+<dd>A string of 32 hex digits computed as defined in RFC 2617, which
+proves that the user knows a password.  Digest auth only.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.uri">
+<tt class="descname">uri</tt><a class="headerlink" href="#werkzeug.Authorization.uri" title="Permalink to this definition">¶</a></dt>
+<dd>The URI from Request-URI of the Request-Line; duplicated because
+proxies are allowed to change the Request-Line in transit.  HTTP
+digest auth only.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.Authorization.username">
+<tt class="descname">username</tt><a class="headerlink" href="#werkzeug.Authorization.username" title="Permalink to this definition">¶</a></dt>
+<dd>The username transmitted.  This is set for both basic and digest
+auth all the time.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.WWWAuthenticate">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">WWWAuthenticate</tt><big>(</big><em>auth_type=None</em>, <em>values=None</em>, <em>on_update=None</em><big>)</big><a class="headerlink" href="#werkzeug.WWWAuthenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides simple access to <cite>WWW-Authenticate</cite> headers.</p>
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.algorithm">
+<tt class="descname">algorithm</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.algorithm" title="Permalink to this definition">¶</a></dt>
+<dd>A string indicating a pair of algorithms used to produce the digest
+and a checksum.  If this is not present it is assumed to be &#8220;MD5&#8221;.
+If the algorithm is not understood, the challenge should be ignored
+(and a different one used, if there is more than one).</dd></dl>
+
+<dl class="staticmethod">
+<dt id="werkzeug.WWWAuthenticate.auth_property">
+<em class="property">
+static </em><tt class="descname">auth_property</tt><big>(</big><em>name</em>, <em>doc=None</em><big>)</big><a class="headerlink" href="#werkzeug.WWWAuthenticate.auth_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>A static helper function for subclasses to add extra authentication
+system properites onto a class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FooAuthenticate</span><span class="p">(</span><span class="n">WWWAuthenticate</span><span class="p">):</span>
+    <span class="n">special_realm</span> <span class="o">=</span> <span class="n">auth_property</span><span class="p">(</span><span class="s">&#39;special_realm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information have a look at the sourcecode to see how the
+regular properties (<a title="werkzeug.WWWAuthenticate.realm" class="reference internal" href="#werkzeug.WWWAuthenticate.realm"><tt class="xref docutils literal"><span class="pre">realm</span></tt></a> etc. are implemented).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.domain">
+<tt class="descname">domain</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.domain" title="Permalink to this definition">¶</a></dt>
+<dd>A list of URIs that define the protection space.  If a URI is an
+absolute path, it is relative to the canonical root URL of the
+server being accessed.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.nonce">
+<tt class="descname">nonce</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.nonce" title="Permalink to this definition">¶</a></dt>
+<dd>A server-specified data string which should be uniquely generated
+each time a 401 response is made.  It is recommended that this
+string be base64 or hexadecimal data.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.opaque">
+<tt class="descname">opaque</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.opaque" title="Permalink to this definition">¶</a></dt>
+<dd>A string of data, specified by the server, which should be returned
+by the client unchanged in the Authorization header of subsequent
+requests with URIs in the same protection space.  It is recommended
+that this string be base64 or hexadecimal data.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.qop">
+<tt class="descname">qop</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.qop" title="Permalink to this definition">¶</a></dt>
+<dd>A set of quality-of-privacy modifies such as auth and auth-int.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.realm">
+<tt class="descname">realm</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.realm" title="Permalink to this definition">¶</a></dt>
+<dd>A string to be displayed to users so they know which username and
+password to use.  This string should contain at least the name of
+the host performing the authentication and might additionally
+indicate the collection of users who might have access.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.WWWAuthenticate.set_basic">
+<tt class="descname">set_basic</tt><big>(</big><em>realm='authentication required'</em><big>)</big><a class="headerlink" href="#werkzeug.WWWAuthenticate.set_basic" title="Permalink to this definition">¶</a></dt>
+<dd>Clear the auth info and enable basic auth.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.WWWAuthenticate.set_digest">
+<tt class="descname">set_digest</tt><big>(</big><em>realm</em>, <em>nonce</em>, <em>qop=('auth'</em>, <em>)</em>, <em>opaque=None</em>, <em>algorithm=None</em>, <em>stale=False</em><big>)</big><a class="headerlink" href="#werkzeug.WWWAuthenticate.set_digest" title="Permalink to this definition">¶</a></dt>
+<dd>Clear the auth info and enable digest auth.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.stale">
+<tt class="descname">stale</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.stale" title="Permalink to this definition">¶</a></dt>
+<dd>A flag, indicating that the previous request from the client was
+rejected because the nonce value was stale.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.WWWAuthenticate.to_header">
+<tt class="descname">to_header</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.WWWAuthenticate.to_header" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the stored values into a WWW-Authenticate header.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.WWWAuthenticate.type">
+<tt class="descname">type</tt><a class="headerlink" href="#werkzeug.WWWAuthenticate.type" title="Permalink to this definition">¶</a></dt>
+<dd>The type of the auth mechanism.  HTTP currently specifies
+<cite>Basic</cite> and <cite>Digest</cite>.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="others">
+<h2>Others<a class="headerlink" href="#others" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.FileStorage">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">FileStorage</tt><big>(</big><em>stream=None</em>, <em>filename=None</em>, <em>name=None</em>, <em>content_type='application/octet-stream'</em>, <em>content_length=-1</em><big>)</big><a class="headerlink" href="#werkzeug.FileStorage" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a title="werkzeug.FileStorage" class="reference internal" href="#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a> class is a thin wrapper over incoming files.
+It is used by the request object to represent uploaded files.  All the
+attributes of the wrapper stream are proxied by the file storage so
+it&#8217;s possible to do <tt class="docutils literal"><span class="pre">storage.read()</span></tt> instead of the long form
+<tt class="docutils literal"><span class="pre">storage.stream.read()</span></tt>.</p>
+<dl class="attribute">
+<dt id="werkzeug.FileStorage.stream">
+<tt class="descname">stream</tt><a class="headerlink" href="#werkzeug.FileStorage.stream" title="Permalink to this definition">¶</a></dt>
+<dd>The input stream for the uploaded file.  This usually points to an
+open temporary file.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.FileStorage.filename">
+<tt class="descname">filename</tt><a class="headerlink" href="#werkzeug.FileStorage.filename" title="Permalink to this definition">¶</a></dt>
+<dd>The filename of the file on the client.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.FileStorage.name">
+<tt class="descname">name</tt><a class="headerlink" href="#werkzeug.FileStorage.name" title="Permalink to this definition">¶</a></dt>
+<dd>The name of the form field.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.FileStorage.content_type">
+<tt class="descname">content_type</tt><a class="headerlink" href="#werkzeug.FileStorage.content_type" title="Permalink to this definition">¶</a></dt>
+<dd>The content type (mimetype) of the file.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.FileStorage.content_length">
+<tt class="descname">content_length</tt><a class="headerlink" href="#werkzeug.FileStorage.content_length" title="Permalink to this definition">¶</a></dt>
+<dd>The length of the file in bytes.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.FileStorage.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.FileStorage.close" title="Permalink to this definition">¶</a></dt>
+<dd>Close the underlaying file if possible.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.FileStorage.save">
+<tt class="descname">save</tt><big>(</big><em>dst</em>, <em>buffer_size=16384</em><big>)</big><a class="headerlink" href="#werkzeug.FileStorage.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the file to a destination path or file object.  If the
+destination is a file object you have to close it yourself after the
+call.  The buffer size is the number of bytes held in memory during
+the copy process.  It defaults to 16KB.</p>
+<p>For secure file saving also have a look at <a title="werkzeug.secure_filename" class="reference external" href="utils.html#werkzeug.secure_filename"><tt class="xref docutils literal"><span class="pre">secure_filename</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>dst</em> &#8211; a filename or open file object the uploaded file
+is saved to.</li>
+<li><em>buffer_size</em> &#8211; the size of the buffer.  This works the same as
+the <cite>length</cite> parameter of
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/shutil.html#shutil.copyfileobj"><tt class="xref docutils literal"><span class="pre">shutil.copyfileobj</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

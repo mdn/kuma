@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>babel.messages.extract</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="babel-module.html">Package&nbsp;babel</a> ::
+        <a href="babel.messages-module.html">Package&nbsp;messages</a> ::
+        Module&nbsp;extract
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module extract</h1><p class="nomargin-top"></p>
+<p>Basic infrastructure for extracting localizable messages from source files.</p>
+<p>This module defines an extensible system for collecting localizable message
+strings from a variety of sources. A native extractor for Python source files
+is builtin, extractors for other sources can be added using very simple plugins.</p>
+<p>The main entry points into the extraction functionality are the functions
+<a href="babel.messages.extract-module.html#extract_from_dir" class="link">extract_from_dir</a> and <a href="babel.messages.extract-module.html#extract_from_file" class="link">extract_from_file</a>.</p>
+
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><tt class="rst-docutils literal"><span class="pre">iterator</span></tt></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.messages.extract-module.html#extract_from_dir" class="summary-sig-name">extract_from_dir</a>(<span class="summary-sig-arg">dirname</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">/home/asmodai/projects/babel-0.9.5</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">method_map</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">**.py</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">python</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">]</code></span>,
+        <span class="summary-sig-arg">options_map</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">keywords</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">N_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dgettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dngettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></span>,
+        <span class="summary-sig-arg">comment_tags</span>=<span class="summary-sig-default"><code class="variable-group">(</code><code class="variable-group">)</code></span>,
+        <span class="summary-sig-arg">callback</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">strip_comment_tags</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Extract messages from any source files found in the given directory.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">list</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.messages.extract-module.html#extract_from_file" class="summary-sig-name">extract_from_file</a>(<span class="summary-sig-arg">method</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">keywords</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">N_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dgettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dngettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></span>,
+        <span class="summary-sig-arg">comment_tags</span>=<span class="summary-sig-default"><code class="variable-group">(</code><code class="variable-group">)</code></span>,
+        <span class="summary-sig-arg">options</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">strip_comment_tags</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Extract messages from a specific file.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">list</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.messages.extract-module.html#extract" class="summary-sig-name">extract</a>(<span class="summary-sig-arg">method</span>,
+        <span class="summary-sig-arg">fileobj</span>,
+        <span class="summary-sig-arg">keywords</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">N_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dgettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dngettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></span>,
+        <span class="summary-sig-arg">comment_tags</span>=<span class="summary-sig-default"><code class="variable-group">(</code><code class="variable-group">)</code></span>,
+        <span class="summary-sig-arg">options</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">strip_comment_tags</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Extract messages from the given file-like object using the specified
+extraction method.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="extract_from_dir"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract_from_dir</span>(<span class="sig-arg">dirname</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">/home/asmodai/projects/babel-0.9.5</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">method_map</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">**.py</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">python</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">]</code></span>,
+        <span class="sig-arg">options_map</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">keywords</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">N_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dgettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dngettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></span>,
+        <span class="sig-arg">comment_tags</span>=<span class="sig-default"><code class="variable-group">(</code><code class="variable-group">)</code></span>,
+        <span class="sig-arg">callback</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">strip_comment_tags</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extract messages from any source files found in the given directory.</p>
+<p>This function generates tuples of the form:</p>
+<blockquote>
+<tt class="rst-docutils literal"><span class="pre">(filename,</span> <span class="pre">lineno,</span> <span class="pre">message,</span> <span class="pre">comments)</span></tt></blockquote>
+<p>Which extraction method is used per file is determined by the <code class="link">method_map</code>
+parameter, which maps extended glob patterns to extraction method names.
+For example, the following is the default mapping:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>method_map = [
+<span class="py-more">... </span>    (<span class="py-string">'**.py'</span>, <span class="py-string">'python'</span>)
+<span class="py-more">... </span>]</pre>
+<p>This basically says that files with the filename extension &quot;.py&quot; at any
+level inside the directory should be processed by the &quot;python&quot; extraction
+method. Files that don't match any of the mapping patterns are ignored. See
+the documentation of the <a href="babel.util-module.html#pathmatch" class="link">pathmatch</a> function for details on the pattern
+syntax.</p>
+<p>The following extended mapping would also use the &quot;genshi&quot; extraction
+method on any file in &quot;templates&quot; subdirectory:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>method_map = [
+<span class="py-more">... </span>    (<span class="py-string">'**/templates/**.*'</span>, <span class="py-string">'genshi'</span>),
+<span class="py-more">... </span>    (<span class="py-string">'**.py'</span>, <span class="py-string">'python'</span>)
+<span class="py-more">... </span>]</pre>
+<p>The dictionary provided by the optional <code class="link">options_map</code> parameter augments
+these mappings. It uses extended glob patterns as keys, and the values are
+dictionaries mapping options names to option values (both strings).</p>
+<p>The glob patterns of the <code class="link">options_map</code> do not necessarily need to be the
+same as those used in the method mapping. For example, while all files in
+the <tt class="rst-docutils literal"><span class="pre">templates</span></tt> folders in an application may be Genshi applications, the
+options for those files may differ based on extension:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>options_map = {
+<span class="py-more">... </span>    <span class="py-string">'**/templates/**.txt'</span>: {
+<span class="py-more">... </span>        <span class="py-string">'template_class'</span>: <span class="py-string">'genshi.template:TextTemplate'</span>,
+<span class="py-more">... </span>        <span class="py-string">'encoding'</span>: <span class="py-string">'latin-1'</span>
+<span class="py-more">... </span>    },
+<span class="py-more">... </span>    <span class="py-string">'**/templates/**.html'</span>: {
+<span class="py-more">... </span>        <span class="py-string">'include_attrs'</span>: <span class="py-string">''</span>
+<span class="py-more">... </span>    }
+<span class="py-more">... </span>}</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dirname</code></strong> - the path to the directory to extract messages from</li>
+        <li><strong class="pname"><code>method_map</code></strong> - a list of <tt class="rst-docutils literal"><span class="pre">(pattern,</span> <span class="pre">method)</span></tt> tuples that maps of
+extraction method names to extended glob patterns</li>
+        <li><strong class="pname"><code>options_map</code></strong> - a dictionary of additional options (optional)</li>
+        <li><strong class="pname"><code>keywords</code></strong> - a dictionary mapping keywords (i.e. names of functions
+that should be recognized as translation functions) to
+tuples that specify which of their arguments contain
+localizable strings</li>
+        <li><strong class="pname"><code>comment_tags</code></strong> - a list of tags of translator comments to search for
+and include in the results</li>
+        <li><strong class="pname"><code>callback</code></strong> - a function that is called for every file that message are
+extracted from, just before the extraction itself is
+performed; the function is passed the filename, the name
+of the extraction method and and the options dictionary as
+positional arguments, in that order</li>
+        <li><strong class="pname"><code>strip_comment_tags</code></strong> - a flag that if set to <code class="link">True</code> causes all comment
+tags to be removed from the collected comments.</li>
+    </ul></dd>
+    <dt>Returns: <tt class="rst-rst-docutils literal rst-docutils literal"><span class="pre">iterator</span></tt></dt>
+        <dd>an iterator over <tt class="rst-docutils literal"><span class="pre">(filename,</span> <span class="pre">lineno,</span> <span class="pre">funcname,</span> <span class="pre">message)</span></tt> tuples</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="babel.util-module.html#pathmatch" class="link">pathmatch</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="extract_from_file"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract_from_file</span>(<span class="sig-arg">method</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">keywords</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">N_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dgettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dngettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></span>,
+        <span class="sig-arg">comment_tags</span>=<span class="sig-default"><code class="variable-group">(</code><code class="variable-group">)</code></span>,
+        <span class="sig-arg">options</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">strip_comment_tags</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extract messages from a specific file.</p>
+<p>This function returns a list of tuples of the form:</p>
+<blockquote>
+<tt class="rst-docutils literal"><span class="pre">(lineno,</span> <span class="pre">funcname,</span> <span class="pre">message)</span></tt></blockquote>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> - the path to the file to extract messages from</li>
+        <li><strong class="pname"><code>method</code></strong> - a string specifying the extraction method (.e.g. &quot;python&quot;)</li>
+        <li><strong class="pname"><code>keywords</code></strong> - a dictionary mapping keywords (i.e. names of functions
+that should be recognized as translation functions) to
+tuples that specify which of their arguments contain
+localizable strings</li>
+        <li><strong class="pname"><code>comment_tags</code></strong> - a list of translator tags to search for and include
+in the results</li>
+        <li><strong class="pname"><code>strip_comment_tags</code></strong> - a flag that if set to <code class="link">True</code> causes all comment
+tags to be removed from the collected comments.</li>
+        <li><strong class="pname"><code>options</code></strong> - a dictionary of additional options (optional)</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">list</code></dt>
+        <dd>the list of extracted messages</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extract"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract</span>(<span class="sig-arg">method</span>,
+        <span class="sig-arg">fileobj</span>,
+        <span class="sig-arg">keywords</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">N_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dgettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dngettext</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></span>,
+        <span class="sig-arg">comment_tags</span>=<span class="sig-default"><code class="variable-group">(</code><code class="variable-group">)</code></span>,
+        <span class="sig-arg">options</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">strip_comment_tags</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extract messages from the given file-like object using the specified
+extraction method.</p>
+<p>This function returns a list of tuples of the form:</p>
+<blockquote>
+<tt class="rst-docutils literal"><span class="pre">(lineno,</span> <span class="pre">message,</span> <span class="pre">comments)</span></tt></blockquote>
+<p>The implementation dispatches the actual extraction to plugins, based on the
+value of the <tt class="rst-docutils literal"><span class="pre">method</span></tt> parameter.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>source = <span class="py-string">'''# foo module</span>
+<span class="py-more">... </span><span class="py-string">def run(argv):</span>
+<span class="py-more">... </span><span class="py-string">   print _('Hello, world!')</span>
+<span class="py-more">... </span><span class="py-string">'''</span></pre>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> StringIO <span class="py-keyword">import</span> StringIO
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">for</span> message <span class="py-keyword">in</span> extract(<span class="py-string">'python'</span>, StringIO(source)):
+<span class="py-more">... </span>    <span class="py-keyword">print</span> message
+<span class="py-output">(3, u'Hello, world!', [])</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>method</code></strong> - a string specifying the extraction method (.e.g. &quot;python&quot;);
+if this is a simple name, the extraction function will be
+looked up by entry point; if it is an explicit reference
+to a function (of the form <tt class="rst-docutils literal"><span class="pre">package.module:funcname</span></tt> or
+<tt class="rst-docutils literal"><span class="pre">package.module.funcname</span></tt>), the corresponding function
+will be imported and used</li>
+        <li><strong class="pname"><code>fileobj</code></strong> - the file-like object the messages should be extracted from</li>
+        <li><strong class="pname"><code>keywords</code></strong> - a dictionary mapping keywords (i.e. names of functions
+that should be recognized as translation functions) to
+tuples that specify which of their arguments contain
+localizable strings</li>
+        <li><strong class="pname"><code>comment_tags</code></strong> - a list of translator tags to search for and include
+in the results</li>
+        <li><strong class="pname"><code>options</code></strong> - a dictionary of additional options (optional)</li>
+        <li><strong class="pname"><code>strip_comment_tags</code></strong> - a flag that if set to <code class="link">True</code> causes all comment
+tags to be removed from the collected comments.</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">list</code></dt>
+        <dd>the list of extracted messages</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if the extraction method is not registered</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Apr  7 09:54:55 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+hooks
+=====
+
+Module: :mod:`hooks`
+--------------------
+Inheritance diagram for ``IPython.hooks``:
+
+.. inheritance-diagram:: IPython.hooks 
+   :parts: 3
+
+.. automodule:: IPython.hooks
+
+.. currentmodule:: IPython.hooks
+
+Class
+-----
+
+:class:`CommandChainDispatcher`
+-------------------------------
+
+
+.. autoclass:: CommandChainDispatcher
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.hooks.calljed
+
+
+.. autofunction:: IPython.hooks.clipboard_get
+
+
+.. autofunction:: IPython.hooks.editor
+
+
+.. autofunction:: IPython.hooks.fix_error_editor
+
+
+.. autofunction:: IPython.hooks.generate_output_prompt
+
+
+.. autofunction:: IPython.hooks.generate_prompt
+
+
+.. autofunction:: IPython.hooks.input_prefilter
+
+
+.. autofunction:: IPython.hooks.late_startup_hook
+
+
+.. autofunction:: IPython.hooks.pre_prompt_hook
+
+
+.. autofunction:: IPython.hooks.pre_runcode_hook
+
+
+.. autofunction:: IPython.hooks.result_display
+
+
+.. autofunction:: IPython.hooks.shell_hook
+
+
+.. autofunction:: IPython.hooks.show_in_pager
+
+
+.. autofunction:: IPython.hooks.shutdown_hook
+
+
+.. autofunction:: IPython.hooks.synchronize_with_editor
+

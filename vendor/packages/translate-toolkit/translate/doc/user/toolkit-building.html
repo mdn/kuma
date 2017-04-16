@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="building" id="building">Building</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Building" [1-24] -->
+<h2><a name="unix" id="unix">UNIX</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "UNIX" [25-42] -->
+<h2><a name="windows" id="windows">Windows</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Windows" [43-64] -->
+<h3><a name="requirements" id="requirements">Requirements</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.jrsoftware.org/isinfo.php" class="urlextern" title="http://www.jrsoftware.org/isinfo.php">Innosetup</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.py2exe.org/" class="urlextern" title="http://www.py2exe.org/">py2exe</a></div>
+</li>
+</ul>
+
+<p>
+
+Consult the README in the source distribution for the build dependencies. 
+</p>
+
+</div>
+
+<h4><a name="building_python_packages_with_c_extensions_under_windows" id="building_python_packages_with_c_extensions_under_windows">Building Python packages with C extensions under Windows</a></h4>
+<div class="level4">
+
+<p>
+
+In order to build modules which have C extensions, you will need either the Visual Studio C++ compiler or <a href="http://sourceforge.net/project/showfiles.php?group_id=2435&amp;package_id=240780" class="urlextern" title="http://sourceforge.net/project/showfiles.php?group_id=2435&amp;package_id=240780">MinGW</a>.
+</p>
+
+<p>
+Make sure that your Visual Studio C++ or MinGW program path is part of your system&#039;s program path, since the Python build system requires this.
+</p>
+
+<p>
+To build and install a package with MinGW, you need to execute:
+</p>
+<pre class="code">&#039;&#039;python setup.py build -c mingw32 install&#039;&#039;</pre>
+
+<p>
+from the command line.
+</p>
+
+<p>
+To build a Windows installer when using MinGW, execute:
+</p>
+<pre class="code">&#039;&#039;python setup.py build -c mingw32 bdist_wininst&#039;&#039;</pre>
+
+</div>
+<!-- SECTION "Requirements" [65-909] -->
+<h3><a name="building1" id="building1">Building</a></h3>
+<div class="level3">
+
+<p>
+
+Simply execute <code>python setup.py innosetup</code>.
+</p>
+
+<p>
+The generated file can be found under <code>translate-toolkit-&lt;version&gt;\Output</code> (where <code>&lt;version&gt;</code> is the software version).
+</p>
+
+</div>
+<!-- SECTION "Building" [910-] --></body>
+</html>

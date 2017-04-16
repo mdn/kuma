@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+<p>
+<p><div class="noteclassic">Note that lookupserver has been replaced by <a href="toolkit-tmserver.html" class="wikilink1" title="toolkit-tmserver.html">tmserver</a> as the best way to provide a translation memory service. This is kept for reference only. Tmserver should be used for all work.
+</div></p>
+</p>
+
+
+
+<h1><a name="lookupserver" id="lookupserver">lookupserver</a></h1>
+<div class="level1">
+
+<p>
+The lookupserver is a service that can be accessed via http and queried via <acronym title="Extensible Markup Language">XML</acronym>-<acronym title="Remote Procedure Call">RPC</acronym>. It can perform lookup of strings in certain storage formats.
+</p>
+
+</div>
+<!-- SECTION "lookupserver" [200-373] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">lookupserver [--port=portnumber] [--address=hostname] [--language=languagename] storagefile</pre>
+
+where storagefile is the file from which queries must be answered.
+<p>
+Options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --port   </td><td class="col1"> set the port number on which to listen </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> --address </td><td class="col1"> the hostname to bind to </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> --language </td><td class="col1"> the target language for the lookup operation</td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [374-720] -->
+<h2><a name="testing" id="testing">Testing</a></h2>
+<div class="level2">
+
+<p>
+The server can be queried using any <acronym title="Extensible Markup Language">XML</acronym>-<acronym title="Remote Procedure Call">RPC</acronym> client. Example code is provided in the file lookupclient.py. Running 
+</p>
+<pre class="code"> python lookupclient.py</pre>
+
+<p>
+
+with no parameters will connect to a lookupserver on the localhost as long as default settings were used by the server. Words can then be typed in and the reply from the server will be displayed in the client in the native format of the file store used by the server.
+</p>
+
+</div>
+<!-- SECTION "Testing" [721-] --></body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pomerge" id="pomerge">pomerge</a></h1>
+<div class="level1">
+
+<p>
+
+Pomerge will merge corrected <acronym title="Gettext Portable Object">PO</acronym>, <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, or <acronym title="Translation Memory eXchange">TMX</acronym> files (or snippets) into your existing <acronym title="Gettext Portable Object">PO</acronym>, <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, <acronym title="Translation Memory eXchange">TMX</acronym> files.  Usually you would extract
+errors using <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a>, make corrections to these <acronym title="Gettext Portable Object">PO</acronym> (or <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, <acronym title="Translation Memory eXchange">TMX</acronym>) snippets then merge them back using pomerge.  You could also use <a href="toolkit-pogrep.html" class="wikilink1" title="toolkit-pogrep.html">pogrep</a> to extract a number of messages matching a certain string, make corrections then merge the correction back using pomerge.
+</p>
+
+<p>
+It is probably best to run pomerge against files stored in some kind of version control system so that you can monitor what changes were made.
+</p>
+
+<p>
+Pomerge will also attempt to make as small a change as possible to the text, making it easier to see the changes using your version control system.
+</p>
+
+</div>
+<!-- SECTION "pomerge" [1-724] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">pomerge [options] [-t &lt;template&gt;] -i &lt;input&gt; -o &lt;output&gt;</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;template&gt;  </td><td class="col1 leftalign"> is a set of reference <acronym title="Gettext Portable Object">PO</acronym>, <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, <acronym title="Translation Memory eXchange">TMX</acronym> files, either the originals or a set of <acronym title="Gettext Portable Object Template">POT</acronym> files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;input&gt;     </td><td class="col1 leftalign"> contains the corrected files that are to override content in &lt;output&gt;  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> &lt;output&gt;    </td><td class="col1 leftalign"> contains the files whose content will be overridden by &lt;input&gt;.  This can be the same directory as &lt;template&gt;  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in po, pot, xlf, tmx formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT   </td><td class="col1 leftalign"> write to OUTPUT in po, pot, xlf, tmx formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in po, pot, xlf, tmx formats  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>        </td><td class="col1 leftalign"> use psyco to speed up the operation (set mode)  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --mergeblanks=MERGEBLANKS  </td><td class="col1 leftalign"> whether to overwrite existing translations with blank translations (yes/no). Default is yes.  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --mergecomments=MERGECOMMENTS  </td><td class="col1 leftalign"> whether to merge comments as well as translations (yes/no). Default is yes.  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [725-2173] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+These examples show pomerge in action.
+
+</p>
+<pre class="code">pomerge -t af -i af-check -o af</pre>
+
+<p>
+
+Take corrections from <em>af-check</em> merge them with the templates in <em>af</em> and output into <em>af</em>.  Thus merge af-check and override entries found in <em>af</em>.  Do this only if you are using a version control system so that you can check what changes pomerge made or if you have complete and utter confidence in this tool.
+
+</p>
+<pre class="code">pomerge --mergeblanks=yes -t af -i af-check -o af-new</pre>
+
+<p>
+
+Merge the corrections from <em>af-check</em> with templates in <em>af</em> and output to <em>af-new</em>.  If an entry is blank in <em>af-check</em> then make it blank in the output in <em>af-new</em>.
+</p>
+
+</div>
+<!-- SECTION "Examples" [2174-2827] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Seems to have trouble merging KDE style comments back. (Probably not relevant with newest versions any more.)</div>
+</li>
+<li class="level1"><div class="li"> Only files found in the input directory will be copied to the output. The template directory is not searched for extra files to copy to the output. Therefore it is always best to have your input directory in version control, and use the same directory as output. This will allow you to use the diff function of the version control system to double check changes made, with all the files of the input still present.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Issues" [2828-] --></body>
+</html>

@@ -1,0 +1,83 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.prompts
+===================
+
+Module: :mod:`kernel.core.prompts`
+----------------------------------
+Inheritance diagram for ``IPython.kernel.core.prompts``:
+
+.. inheritance-diagram:: IPython.kernel.core.prompts 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.prompts
+
+.. currentmodule:: IPython.kernel.core.prompts
+
+Classes
+-------
+
+:class:`BasePrompt`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: BasePrompt
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`CachedOutput`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: CachedOutput
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Prompt1`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Prompt1
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Prompt2`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Prompt2
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PromptOut`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PromptOut
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.core.prompts.multiple_replace
+
+
+.. autofunction:: IPython.kernel.core.prompts.str_safe
+

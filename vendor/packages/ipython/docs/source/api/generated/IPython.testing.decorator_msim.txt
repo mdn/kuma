@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.decorator_msim
+======================
+
+Module: :mod:`testing.decorator_msim`
+-------------------------------------
+.. automodule:: IPython.testing.decorator_msim
+
+.. currentmodule:: IPython.testing.decorator_msim
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.decorator_msim.decorator
+
+
+.. autofunction:: IPython.testing.decorator_msim.getinfo
+
+
+.. autofunction:: IPython.testing.decorator_msim.update_wrapper
+

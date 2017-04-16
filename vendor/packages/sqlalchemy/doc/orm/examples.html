@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Examples
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="SQLAlchemy Core" href="../core/index.html" />
+        <link rel="prev" title="SqlSoup" href="extensions/sqlsoup.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/orm/examples.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+                » 
+    Examples
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="extensions/sqlsoup.html" title="previous chapter">SqlSoup</a>
+        Next:
+        <a href="../core/index.html" title="next chapter">SQLAlchemy Core</a>
+</div>
+
+                <h2>
+                    
+    Examples
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Examples</a><ul>
+<li><a class="reference internal" href="#adjacency-list">Adjacency List</a></li>
+<li><a class="reference internal" href="#associations">Associations</a></li>
+<li><a class="reference internal" href="#attribute-instrumentation">Attribute Instrumentation</a></li>
+<li><a class="reference internal" href="#beaker-caching">Beaker Caching</a></li>
+<li><a class="reference internal" href="#derived-attributes">Derived Attributes</a></li>
+<li><a class="reference internal" href="#directed-graphs">Directed Graphs</a></li>
+<li><a class="reference internal" href="#dynamic-relations-as-dictionaries">Dynamic Relations as Dictionaries</a></li>
+<li><a class="reference internal" href="#horizontal-sharding">Horizontal Sharding</a></li>
+<li><a class="reference internal" href="#inheritance-mappings">Inheritance Mappings</a></li>
+<li><a class="reference internal" href="#large-collections">Large Collections</a></li>
+<li><a class="reference internal" href="#nested-sets">Nested Sets</a></li>
+<li><a class="reference internal" href="#polymorphic-associations">Polymorphic Associations</a></li>
+<li><a class="reference internal" href="#postgis-integration">PostGIS Integration</a></li>
+<li><a class="reference internal" href="#versioned-objects">Versioned Objects</a></li>
+<li><a class="reference internal" href="#vertical-attribute-mapping">Vertical Attribute Mapping</a></li>
+<li><a class="reference internal" href="#xml-persistence">XML Persistence</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="examples">
+<span id="examples-toplevel"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>The SQLAlchemy distribution includes a variety of code examples illustrating a select set of patterns, some typical and some not so typical.   All are runnable and can be found in the <tt class="docutils literal"><span class="pre">/examples</span></tt> directory of the distribution.   Each example contains a README in its <tt class="docutils literal"><span class="pre">__init__.py</span></tt> file, each of which are listed below.</p>
+<p>Additional SQLAlchemy examples, some user contributed, are available on the wiki at <a class="reference external" href="http://www.sqlalchemy.org/trac/wiki/UsageRecipes">http://www.sqlalchemy.org/trac/wiki/UsageRecipes</a>.</p>
+<div class="section" id="adjacency-list">
+<span id="examples-adjacencylist"></span><h2>Adjacency List<a class="headerlink" href="#adjacency-list" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/adjacency_list/</p>
+<span class="target" id="module-adjacency_list"></span><p>An example of a dictionary-of-dictionaries structure mapped using
+an adjacency list model.</p>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">node</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="s">&#39;rootnode&#39;</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;node1&#39;</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;node3&#39;</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="n">dump_tree</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="associations">
+<h2>Associations<a class="headerlink" href="#associations" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/association/</p>
+<span class="target" id="module-association"></span><p>Examples illustrating the usage of the &#8220;association object&#8221; pattern,
+where an intermediary object associates two endpoint objects together.</p>
+<p>The first example illustrates a basic association from a User object
+to a collection or Order objects, each which references a collection of Item objects.</p>
+<p>The second example builds upon the first to add the Association Proxy extension.</p>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># create an order</span>
+<span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="p">(</span><span class="s">&#39;john smith&#39;</span><span class="p">)</span>
+
+<span class="c"># append an OrderItem association via the &quot;itemassociations&quot;</span>
+<span class="c"># collection with a custom price.</span>
+<span class="n">order</span><span class="o">.</span><span class="n">itemassociations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OrderItem</span><span class="p">(</span><span class="n">item</span><span class="p">(</span><span class="s">&#39;MySQL Crowbar&#39;</span><span class="p">),</span> <span class="mf">10.99</span><span class="p">))</span>
+
+<span class="c"># append two more Items via the transparent &quot;items&quot; proxy, which</span>
+<span class="c"># will create OrderItems automatically using the default price.</span>
+<span class="n">order</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">(</span><span class="s">&#39;SA Mug&#39;</span><span class="p">))</span>
+<span class="n">order</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">(</span><span class="s">&#39;SA Hat&#39;</span><span class="p">))</span></pre></div>
+</div>
+</div>
+<div class="section" id="attribute-instrumentation">
+<span id="examples-instrumentation"></span><h2>Attribute Instrumentation<a class="headerlink" href="#attribute-instrumentation" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/custom_attributes/</p>
+<span class="target" id="module-custom_attributes"></span><p>Two examples illustrating modifications to SQLAlchemy&#8217;s attribute management system.</p>
+<p><tt class="docutils literal"><span class="pre">listen_for_events.py</span></tt> illustrates the usage of <a class="reference internal" href="interfaces.html#sqlalchemy.orm.interfaces.AttributeExtension" title="sqlalchemy.orm.interfaces.AttributeExtension"><tt class="xref py py-class docutils literal"><span class="pre">AttributeExtension</span></tt></a> to intercept attribute events.  It additionally illustrates a way to automatically attach these listeners to all class attributes using a <a class="reference internal" href="interfaces.html#sqlalchemy.orm.interfaces.InstrumentationManager" title="sqlalchemy.orm.interfaces.InstrumentationManager"><tt class="xref py py-class docutils literal"><span class="pre">InstrumentationManager</span></tt></a>.</p>
+<p><tt class="docutils literal"><span class="pre">custom_management.py</span></tt> illustrates much deeper usage of <a class="reference internal" href="interfaces.html#sqlalchemy.orm.interfaces.InstrumentationManager" title="sqlalchemy.orm.interfaces.InstrumentationManager"><tt class="xref py py-class docutils literal"><span class="pre">InstrumentationManager</span></tt></a> as well as collection adaptation, to completely change the underlying method used to store state on an object.   This example was developed to illustrate techniques which would be used by other third party object instrumentation systems to interact with SQLAlchemy&#8217;s event system and is only intended for very intricate framework integrations.</p>
+</div>
+<div class="section" id="beaker-caching">
+<span id="examples-caching"></span><h2>Beaker Caching<a class="headerlink" href="#beaker-caching" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/beaker_caching/</p>
+<span class="target" id="module-beaker_caching"></span><p>Illustrates how to embed Beaker cache functionality within
+the Query object, allowing full cache control as well as the
+ability to pull &#8220;lazy loaded&#8221; attributes from long term cache 
+as well.</p>
+<p>In this demo, the following techniques are illustrated:</p>
+<ul class="simple">
+<li>Using custom subclasses of Query</li>
+<li>Basic technique of circumventing Query to pull from a 
+custom cache source instead of the database.</li>
+<li>Rudimental caching with Beaker, using &#8220;regions&#8221; which allow
+global control over a fixed set of configurations.</li>
+<li>Using custom MapperOption objects to configure options on 
+a Query, including the ability to invoke the options 
+deep within an object graph when lazy loads occur.</li>
+</ul>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># query for Person objects, specifying cache</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">FromCache</span><span class="p">(</span><span class="s">&quot;default&quot;</span><span class="p">,</span> <span class="s">&quot;all_people&quot;</span><span class="p">))</span>
+
+<span class="c"># specify that each Person&#39;s &quot;addresses&quot; collection comes from</span>
+<span class="c"># cache too</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">RelationshipCache</span><span class="p">(</span><span class="s">&quot;default&quot;</span><span class="p">,</span> <span class="s">&quot;by_person&quot;</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span>
+
+<span class="c"># query</span>
+<span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>To run, both SQLAlchemy and Beaker (1.4 or greater) must be
+installed or on the current PYTHONPATH. The demo will create a local
+directory for datafiles, insert initial data, and run. Running the
+demo a second time will utilize the cache files already present, and
+exactly one SQL statement against two tables will be emitted - the
+displayed result however will utilize dozens of lazyloads that all
+pull from cache.</p>
+<p>The demo scripts themselves, in order of complexity, are run as follows:</p>
+<div class="highlight-python"><pre>python examples/beaker_caching/helloworld.py
+
+python examples/beaker_caching/relationship_caching.py
+
+python examples/beaker_caching/advanced.py
+
+python examples/beaker_caching/local_session_caching.py</pre>
+</div>
+<p>Listing of files:</p>
+<blockquote>
+<p>environment.py - Establish the Session, the Beaker cache
+manager, data / cache file paths, and configurations, 
+bootstrap fixture data if necessary.</p>
+<p>caching_query.py - Represent functions and classes 
+which allow the usage of Beaker caching with SQLAlchemy.  
+Introduces a query option called FromCache.</p>
+<p>model.py - The datamodel, which represents Person that has multiple
+Address objects, each with PostalCode, City, Country</p>
+<p>fixture_data.py - creates demo PostalCode, Address, Person objects
+in the database.</p>
+<p>helloworld.py - the basic idea.</p>
+<p>relationship_caching.py - Illustrates how to add cache options on
+relationship endpoints, so that lazyloads load from cache.</p>
+<p>advanced.py - Further examples of how to use FromCache.  Combines
+techniques from the first two scripts.</p>
+<p>local_session_caching.py - Grok everything so far ?   This example
+creates a new Beaker container that will persist data in a dictionary
+which is local to the current session.   remove() the session
+and the cache is gone.</p>
+</blockquote>
+</div>
+<div class="section" id="derived-attributes">
+<h2>Derived Attributes<a class="headerlink" href="#derived-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/derived_attributes/</p>
+<span class="target" id="module-derived_attributes"></span><p>Illustrates a clever technique using Python descriptors to create custom attributes representing SQL expressions when used at the class level, and Python expressions when used at the instance level.   In some cases this technique replaces the need to configure the attribute in the mapping, instead relying upon ordinary Python behavior to create custom expression components.</p>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BaseInterval</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@hybrid</span>
+    <span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">point</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">point</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">point</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="directed-graphs">
+<h2>Directed Graphs<a class="headerlink" href="#directed-graphs" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/graphs/</p>
+<span class="target" id="module-graphs"></span><p>An example of persistence for a directed graph structure.   The graph is stored as a collection of edges, each referencing both a &#8220;lower&#8221; and an &#8220;upper&#8221; node in a table of nodes.  Basic persistence and querying for lower- and upper- neighbors are illustrated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">n2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">n5</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">n2</span><span class="o">.</span><span class="n">add_neighbor</span><span class="p">(</span><span class="n">n5</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">n2</span><span class="o">.</span><span class="n">higher_neighbors</span><span class="p">()</span></pre></div>
+</div>
+</div>
+<div class="section" id="dynamic-relations-as-dictionaries">
+<h2>Dynamic Relations as Dictionaries<a class="headerlink" href="#dynamic-relations-as-dictionaries" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/dynamic_dict/</p>
+<span class="target" id="module-dynamic_dict"></span><p>Illustrates how to place a dictionary-like facade on top of a &#8220;dynamic&#8221; relation, so
+that dictionary operations (assuming simple string keys) can operate upon a large 
+collection without loading the full collection at once.</p>
+</div>
+<div class="section" id="horizontal-sharding">
+<span id="examples-sharding"></span><h2>Horizontal Sharding<a class="headerlink" href="#horizontal-sharding" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/sharding</p>
+<span class="target" id="module-sharding"></span><p>a basic example of using the SQLAlchemy Sharding API.
+Sharding refers to horizontally scaling data across multiple
+databases.</p>
+<p>The basic components of a &#8220;sharded&#8221; mapping are:</p>
+<ul class="simple">
+<li>multiple databases, each assigned a &#8216;shard id&#8217;</li>
+<li>a function which can return a single shard id, given an instance
+to be saved; this is called &#8220;shard_chooser&#8221;</li>
+<li>a function which can return a list of shard ids which apply to a particular
+instance identifier; this is called &#8220;id_chooser&#8221;.  If it returns all shard ids,
+all shards will be searched.</li>
+<li>a function which can return a list of shard ids to try, given a particular 
+Query (&#8220;query_chooser&#8221;).  If it returns all shard ids, all shards will be 
+queried and the results joined together.</li>
+</ul>
+<p>In this example, four sqlite databases will store information about
+weather data on a database-per-continent basis.  We provide example shard_chooser, id_chooser and query_chooser functions.  The query_chooser illustrates inspection of the SQL expression element in order to attempt to determine a single shard being requested.</p>
+</div>
+<div class="section" id="inheritance-mappings">
+<h2>Inheritance Mappings<a class="headerlink" href="#inheritance-mappings" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/inheritance/</p>
+<span class="target" id="module-inheritance"></span><p>Working examples of single-table, joined-table, and concrete-table inheritance as described in <em class="xref std std-ref">datamapping_inheritance</em>.</p>
+</div>
+<div class="section" id="large-collections">
+<h2>Large Collections<a class="headerlink" href="#large-collections" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/large_collection/</p>
+<span class="target" id="module-large_collection"></span><p>Large collection example.</p>
+<p>Illustrates the options to use with <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> when the list of related objects is very large, including:</p>
+<ul class="simple">
+<li>&#8220;dynamic&#8221; relationships which query slices of data as accessed</li>
+<li>how to use ON DELETE CASCADE in conjunction with <tt class="docutils literal"><span class="pre">passive_deletes=True</span></tt> to greatly improve the performance of related collection deletion.</li>
+</ul>
+</div>
+<div class="section" id="nested-sets">
+<h2>Nested Sets<a class="headerlink" href="#nested-sets" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/nested_sets/</p>
+<span class="target" id="module-nested_sets"></span><p>Illustrates a rudimentary way to implement the &#8220;nested sets&#8221; pattern for hierarchical data using the SQLAlchemy ORM.</p>
+</div>
+<div class="section" id="polymorphic-associations">
+<h2>Polymorphic Associations<a class="headerlink" href="#polymorphic-associations" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/poly_assoc/</p>
+<span class="target" id="module-poly_assoc"></span><p>Illustrates polymorphic associations, a method of associating a particular child object with many different types of parent object.</p>
+<p>This example is based off the original blog post at <a class="reference external" href="http://techspot.zzzeek.org/?p=13">http://techspot.zzzeek.org/?p=13</a> and illustrates three techniques:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">poly_assoc.py</span></tt> - imitates the non-foreign-key schema used by Ruby on Rails&#8217; Active Record.</li>
+<li><tt class="docutils literal"><span class="pre">poly_assoc_fk.py</span></tt> - Adds a polymorphic association table so that referential integrity can be maintained.</li>
+<li><tt class="docutils literal"><span class="pre">poly_assoc_generic.py</span></tt> - further automates the approach of <tt class="docutils literal"><span class="pre">poly_assoc_fk.py</span></tt> to also generate the association table definitions automatically.</li>
+</ul>
+</div>
+<div class="section" id="postgis-integration">
+<h2>PostGIS Integration<a class="headerlink" href="#postgis-integration" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/postgis</p>
+<span class="target" id="module-postgis"></span><p>A naive example illustrating techniques to help 
+embed PostGIS functionality.</p>
+<p>This example was originally developed in the hopes that it would be extrapolated into a comprehensive PostGIS integration layer.  We are pleased to announce that this has come to fruition as <a class="reference external" href="http://www.geoalchemy.org/">GeoAlchemy</a>.</p>
+<p>The example illustrates:</p>
+<ul class="simple">
+<li>a DDL extension which allows CREATE/DROP to work in 
+conjunction with AddGeometryColumn/DropGeometryColumn</li>
+<li>a Geometry type, as well as a few subtypes, which
+convert result row values to a GIS-aware object,
+and also integrates with the DDL extension.</li>
+<li>a GIS-aware object which stores a raw geometry value
+and provides a factory for functions such as AsText().</li>
+<li>an ORM comparator which can override standard column
+methods on mapped objects to produce GIS operators.</li>
+<li>an attribute event listener that intercepts strings
+and converts to GeomFromText().</li>
+<li>a standalone operator example.</li>
+</ul>
+<p>The implementation is limited to only public, well known
+and simple to use extension points.</p>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Road</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Road</span><span class="o">.</span><span class="n">road_geom</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">road_geom</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</div>
+<div class="section" id="versioned-objects">
+<h2>Versioned Objects<a class="headerlink" href="#versioned-objects" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/versioning</p>
+<span class="target" id="module-versioning"></span><p>Illustrates an extension which creates version tables for entities and stores
+records for each change. The same idea as Elixir&#8217;s versioned extension, but
+more efficient (uses attribute API to get history) and handles class
+inheritance. The given extensions generate an anonymous &#8220;history&#8221; class which
+represents historical versions of the target object.</p>
+<p>Usage is illustrated via a unit test module <tt class="docutils literal"><span class="pre">test_versioning.py</span></tt>, which can
+be run via nose:</p>
+<div class="highlight-python"><pre>nosetests -w examples/versioning/</pre>
+</div>
+<p>A fragment of example usage, using declarative:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">history_meta</span> <span class="kn">import</span> <span class="n">VersionedMeta</span><span class="p">,</span> <span class="n">VersionedListener</span>
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">VersionedMeta</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">VersionedListener</span><span class="p">())</span>
+
+<span class="k">class</span> <span class="nc">SomeClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;sometable&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">is</span> <span class="n">SomeClass</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+    
+<span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;sc1&#39;</span><span class="p">)</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="n">sc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;sc1modified&#39;</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="k">assert</span> <span class="n">sc</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">2</span>
+
+<span class="n">SomeClassHistory</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="o">.</span><span class="n">__history_mapper__</span><span class="o">.</span><span class="n">class_</span>
+
+<span class="k">assert</span> <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SomeClassHistory</span><span class="p">)</span><span class="o">.</span>\
+            <span class="nb">filter</span><span class="p">(</span><span class="n">SomeClassHistory</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span>\
+            <span class="nb">all</span><span class="p">()</span> \
+            <span class="o">==</span> <span class="p">[</span><span class="n">SomeClassHistory</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;sc1&#39;</span><span class="p">)]</span></pre></div>
+</div>
+<p>To apply <tt class="docutils literal"><span class="pre">VersionedMeta</span></tt> to a subset of classes (probably more typical), the
+metaclass can be applied on a per-class basis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">history_meta</span> <span class="kn">import</span> <span class="n">VersionedMeta</span><span class="p">,</span> <span class="n">VersionedListener</span>
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SomeClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;sometable&#39;</span>
+
+    <span class="c"># ...</span>
+
+<span class="k">class</span> <span class="nc">SomeVersionedClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">VersionedMeta</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;someothertable&#39;</span>
+
+    <span class="c"># ...</span></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">VersionedMeta</span></tt> is a declarative metaclass - to use the extension with
+plain mappers, the <tt class="docutils literal"><span class="pre">_history_mapper</span></tt> function can be applied:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">history_meta</span> <span class="kn">import</span> <span class="n">_history_mapper</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">mapper</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">,</span> <span class="n">sometable</span><span class="p">)</span>
+<span class="n">_history_mapper</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">SomeHistoryClass</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="o">.</span><span class="n">__history_mapper__</span><span class="o">.</span><span class="n">class_</span></pre></div>
+</div>
+</div>
+<div class="section" id="vertical-attribute-mapping">
+<h2>Vertical Attribute Mapping<a class="headerlink" href="#vertical-attribute-mapping" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/vertical</p>
+<span class="target" id="module-vertical"></span><p>Illustrates &#8220;vertical table&#8221; mappings.</p>
+<p>A &#8220;vertical table&#8221; refers to a technique where individual attributes of an object are stored as distinct rows in a table.   
+The &#8220;vertical table&#8221; technique is used to persist objects which can have a varied set of attributes, at the expense of simple query control and brevity.   It is commonly found in content/document management systems in order to represent user-created structures flexibly.</p>
+<p>Two variants on the approach are given.  In the second, each row references a &#8220;datatype&#8221; which contains information about the type of information stored in the attribute, such as integer, string, or date.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">shrew</span> <span class="o">=</span> <span class="n">Animal</span><span class="p">(</span><span class="s">u&#39;shrew&#39;</span><span class="p">)</span>
+<span class="n">shrew</span><span class="p">[</span><span class="s">u&#39;cuteness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">shrew</span><span class="p">[</span><span class="s">u&#39;weasel-like&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">shrew</span><span class="p">[</span><span class="s">u&#39;poisonous&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">shrew</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Animal</span><span class="p">)</span><span class="o">.</span>
+     <span class="nb">filter</span><span class="p">(</span><span class="n">Animal</span><span class="o">.</span><span class="n">facts</span><span class="o">.</span><span class="n">any</span><span class="p">(</span>
+       <span class="n">and_</span><span class="p">(</span><span class="n">AnimalFact</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="s">u&#39;weasel-like&#39;</span><span class="p">,</span>
+            <span class="n">AnimalFact</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="bp">True</span><span class="p">))))</span>
+<span class="k">print</span> <span class="s">&#39;weasel-like animals&#39;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</div>
+<div class="section" id="xml-persistence">
+<span id="examples-xmlpersistence"></span><h2>XML Persistence<a class="headerlink" href="#xml-persistence" title="Permalink to this headline">¶</a></h2>
+<p>Location: /examples/elementtree/</p>
+<span class="target" id="module-elementtree"></span><p>Illustrates three strategies for persisting and querying XML documents as represented by 
+ElementTree in a relational database.   The techniques do not apply any mappings to the ElementTree objects directly, so are compatible with the native cElementTree as well as lxml, and can be adapted to suit any kind of DOM representation system.   Querying along xpath-like strings is illustrated as well.</p>
+<p>In order of complexity:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">pickle.py</span></tt> - Quick and dirty, serialize the whole DOM into a BLOB column.  While the example
+is very brief, it has very limited functionality.</li>
+<li><tt class="docutils literal"><span class="pre">adjacency_list.py</span></tt> - Each DOM node is stored in an individual table row, with attributes
+represented in a separate table.  The nodes are associated in a hierarchy using an adjacency list
+structure.  A query function is introduced which can search for nodes along any path with a given
+structure of attributes, basically a (very narrow) subset of xpath.</li>
+<li><tt class="docutils literal"><span class="pre">optimized_al.py</span></tt> - Uses the same strategy as <tt class="docutils literal"><span class="pre">adjacency_list.py</span></tt>, but adds a
+<a class="reference internal" href="interfaces.html#sqlalchemy.orm.interfaces.MapperExtension" title="sqlalchemy.orm.interfaces.MapperExtension"><tt class="xref py py-class docutils literal"><span class="pre">MapperExtension</span></tt></a> which optimizes how the hierarchical structure  
+is loaded, such that the full set of DOM nodes are loaded within a single table result set, and
+are organized hierarchically as they are received during a load.</li>
+</ul>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># parse an XML file and persist in the database</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;test.xml&quot;</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Document</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">doc</span><span class="p">))</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="c"># locate documents with a certain path/attribute structure </span>
+<span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">find_document</span><span class="p">(</span><span class="s">&#39;/somefile/header/field2[@attr=foo]&#39;</span><span class="p">):</span>
+    <span class="c"># dump the XML</span>
+    <span class="k">print</span> <span class="n">document</span></pre></div>
+</div>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="extensions/sqlsoup.html" title="previous chapter">SqlSoup</a>
+        Next:
+        <a href="../core/index.html" title="next chapter">SQLAlchemy Core</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

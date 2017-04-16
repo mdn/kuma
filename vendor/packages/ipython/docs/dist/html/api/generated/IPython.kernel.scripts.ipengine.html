@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.scripts.ipengine &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.task" href="IPython.kernel.task.html" />
+    <link rel="prev" title="kernel.scripts.ipcontroller" href="IPython.kernel.scripts.ipcontroller.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.task.html" title="kernel.task"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcontroller.html" title="kernel.scripts.ipcontroller"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-scripts-ipengine">
+<h1>kernel.scripts.ipengine<a class="headerlink" href="#kernel-scripts-ipengine" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.scripts.ipengine">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.scripts.ipengine</span></tt><a class="headerlink" href="#module-IPython.kernel.scripts.ipengine" title="Permalink to this headline">¶</a></h2>
+<p>Start the IPython Engine.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipengine.init_config">
+<!--[IPython.kernel.scripts.ipengine.init_config]--><tt class="descclassname">IPython.kernel.scripts.ipengine.</tt><tt class="descname">init_config</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipengine.init_config" title="Permalink to this definition">¶</a></dt>
+<dd>Initialize the configuration using default and command line options.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipengine.main">
+<!--[IPython.kernel.scripts.ipengine.main]--><tt class="descclassname">IPython.kernel.scripts.ipengine.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipengine.main" title="Permalink to this definition">¶</a></dt>
+<dd>After creating the configuration information, start the engine.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipengine.start_engine">
+<!--[IPython.kernel.scripts.ipengine.start_engine]--><tt class="descclassname">IPython.kernel.scripts.ipengine.</tt><tt class="descname">start_engine</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipengine.start_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the engine, by creating it and starting the Twisted reactor.</p>
+<p>This method does:</p>
+<blockquote>
+<ul class="simple">
+<li>If it exists, runs the <cite>mpi_import_statement</cite> to call <cite>MPI_Init</cite></li>
+<li>Starts the engine logging</li>
+<li>Creates an IPython shell and wraps it in an <cite>EngineService</cite></li>
+<li>Creates a <cite>foolscap.Tub</cite> to use in connecting to a controller.</li>
+<li>Uses the tub and the <cite>EngineService</cite> along with a Foolscap URL
+(or FURL) to connect to the controller and register the engine
+with the controller</li>
+</ul>
+</blockquote>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.scripts.ipengine</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.scripts.ipengine">Module: <tt class="docutils literal"><span class="pre">kernel.scripts.ipengine</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.scripts.ipcontroller.html" title="previous chapter">kernel.scripts.ipcontroller</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.task.html" title="next chapter">kernel.task</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.scripts.ipengine.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.task.html" title="kernel.task"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcontroller.html" title="kernel.scripts.ipcontroller"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

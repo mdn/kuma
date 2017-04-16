@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="general_usage" id="general_usage">General Usage</a></h1>
+<div class="level1">
+
+<p>
+
+The tools follow a general usage convention which is helpful to understand.
+</p>
+
+</div>
+<!-- SECTION "General Usage" [1-106] -->
+<h2><a name="input_output" id="input_output">Input &amp; Output</a></h2>
+<div class="level2">
+
+<p>
+
+The last two arguments of your command are the input and output directories:
+
+</p>
+<pre class="code">moz2po &lt;input&gt; &lt;output&gt;</pre>
+
+<p>
+
+You can of course still us the -i and -o options which allows you to reorder commands
+
+</p>
+<pre class="code">moz2po -o &lt;output&gt; -i &lt;input&gt;</pre>
+
+</div>
+<!-- SECTION "Input & Output" [107-359] -->
+<h2><a name="error_reporting" id="error_reporting">Error Reporting</a></h2>
+<div class="level2">
+
+<p>
+
+All tools accept the option --errorlevel.  If you find a bug add this option and send the traceback to the developers.
+</p>
+<pre class="code">moz2po &lt;other-options&gt; --errorlevel=traceback</pre>
+
+</div>
+<!-- SECTION "Error Reporting" [360-558] -->
+<h2><a name="templates" id="templates">Templates</a></h2>
+<div class="level2">
+
+<p>
+
+If you are working with any file format and you wish to preserve comments and layout then use your source file
+as a template.
+
+</p>
+<pre class="code">po2dtd -t &lt;source-file&gt; &lt;input&gt; &lt;output&gt;</pre>
+
+<p>
+
+This will use the files in &lt;source-file&gt; as a template merge the <acronym title="Gettext Portable Object">PO</acronym> files in &lt;input&gt; and create new <acronym title="Document Type Definition">DTD</acronym> files in &lt;output&gt;
+</p>
+
+<p>
+If you ran this without the templates you would get valid <acronym title="Document Type Definition">DTD</acronym> files but they would not preserve the layout or all the comments from the source <acronym title="Document Type Definition">DTD</acronym> file
+</p>
+
+<p>
+The same concept of templates is also used when you merge files.
+
+</p>
+<pre class="code">pomerge -t &lt;old&gt; &lt;fixes&gt; &lt;new&gt;</pre>
+
+<p>
+
+This would take the &lt;old&gt; files merge in the &lt;fix&gt;&#039;s and output new <acronym title="Gettext Portable Object">PO</acronym> files, preserving formatting, into &lt;new&gt;.  You can use the same directory for &lt;old&gt; and &lt;new&gt; if you want the merges to overwrite files in &lt;old&gt;
+</p>
+
+</div>
+<!-- SECTION "Templates" [559-1345] -->
+<h2><a name="source2target" id="source2target">source2target</a></h2>
+<div class="level2">
+
+<p>
+
+The converters all follow this convention:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> source = the format from which you are converting e.g. in oo2po we are converting from OpenOffice.org SDF/GSI</div>
+</li>
+<li class="level1"><div class="li"> target = the format into which you are converting e.g. in oo2po we are converting to Gettext <acronym title="Gettext Portable Object">PO</acronym></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "source2target" [1346-1631] -->
+<h2><a name="getting_help" id="getting_help">Getting Help</a></h2>
+<div class="level2">
+
+<p>
+
+The --help option will always list the available commands for the tool.
+
+</p>
+<pre class="code">moz2po --help</pre>
+
+</div>
+<!-- SECTION "Getting Help" [1632-] --></body>
+</html>

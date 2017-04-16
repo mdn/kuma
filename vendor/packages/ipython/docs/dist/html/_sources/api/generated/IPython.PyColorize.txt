@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+PyColorize
+==========
+
+Module: :mod:`PyColorize`
+-------------------------
+Inheritance diagram for ``IPython.PyColorize``:
+
+.. inheritance-diagram:: IPython.PyColorize 
+   :parts: 3
+
+.. automodule:: IPython.PyColorize
+
+.. currentmodule:: IPython.PyColorize
+
+:class:`Parser`
+---------------
+
+
+.. autoclass:: Parser
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+.. autofunction:: IPython.PyColorize.main
+

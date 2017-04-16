@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="creating_openoffice.org_pot_files" id="creating_openoffice.org_pot_files">Creating OpenOffice.org POT files</a></h1>
+<div class="level1">
+
+<p>
+
+This quick start guide shows you how to create the <acronym title="Gettext Portable Object">PO</acronym> Template files
+for your OpenOffice.org translation.
+</p>
+
+</div>
+<!-- SECTION "Creating OpenOffice.org POT files" [1-156] -->
+<h2><a name="quick_start" id="quick_start">Quick Start</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> <a href="ftp://ftp.linux.cz/pub/localization/OpenOffice.org/devel/POT" class="urlextern" title="ftp://ftp.linux.cz/pub/localization/OpenOffice.org/devel/POT">Download the latest POT and GSI files</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a> -P &lt;gsi&gt; &lt;new-pots&gt;</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Quick Start" [157-323] -->
+<h2><a name="detailed_description" id="detailed_description">Detailed Description</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Detailed Description" [324-357] -->
+<h3><a name="download_the_latest_pot_and_gsi_files" id="download_the_latest_pot_and_gsi_files">Download the latest POT and GSI files</a></h3>
+<div class="level3">
+
+<p>
+
+The <acronym title="Gettext Portable Object Template">POT</acronym> files produced by Pavel Janik contain the associated en-US.sdf file that you need to create your own languages SDF file.  This is the
+same file that produces the <acronym title="Gettext Portable Object Template">POT</acronym> files.  So to begin translating you don&#039;t need to go further than this.
+</p>
+
+<p>
+ * <a href="ftp://ftp.linux.cz/pub/localization/OpenOffice.org/devel/POT" class="urlextern" title="ftp://ftp.linux.cz/pub/localization/OpenOffice.org/devel/POT">Download the latest POT and GSI files</a>
+</p>
+
+<p>
+However, you will need this file if you need to use some of the other features of <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a> such as changing the source language from English.
+</p>
+
+</div>
+<!-- SECTION "Download the latest POT and GSI files" [358-904] -->
+<h3><a name="produce_the_pot_files_using_oo2po" id="produce_the_pot_files_using_oo2po">Produce the POT files using oo2po</a></h3>
+<div class="level3">
+<pre class="code">oo2po -P &lt;gsi&gt; &lt;new-pots&gt;
+oo2po -P en-US.gsi pot</pre>
+
+<p>
+
+This takes the <em>en-US.gsi</em> file and creates <acronym title="Gettext Portable Object Template">POT</acronym> files in the <em>pot</em> directory.  The <em>-P</em> option ensures
+that .pot files are created instead of .po file.
+</p>
+
+<p>
+If you want to create one large .pot file instead of a lot of small ones, you should use the
+
+</p>
+<pre class="code">oo2po -P --multifile=onefile en-US.gsi pot</pre>
+
+<p>
+
+option as described in <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a>.
+</p>
+
+</div>
+<!-- SECTION "Produce the POT files using oo2po" [905-1337] -->
+<h3><a name="produce_a_pot_files_with_french_source_text" id="produce_a_pot_files_with_french_source_text">Produce a POT files with French source text</a></h3>
+<div class="level3">
+
+<p>
+
+You will need to have access to a French GSI file.  The following commands will create a set of <acronym title="Gettext Portable Object Template">POT</acronym> files with French as the source language:
+
+</p>
+<pre class="code">oo2po -P --source-language=fr fr.gsi pot-fr</pre>
+
+<p>
+
+This will take translations from <em>fr.gsi</em> and create a set of <acronym title="Gettext Portable Object Template">POT</acronym> files in <em>pot-fr</em>.  These <acronym title="Gettext Portable Object Template">POT</acronym> files will have French as the source language.  You need to make sure that fr.gsi is in fact up to date.
+
+</p>
+
+</div>
+<!-- SECTION "Produce a POT files with French source text" [1338-] --></body>
+</html>

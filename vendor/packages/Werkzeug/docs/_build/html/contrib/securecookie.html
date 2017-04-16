@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="Cache" href="cache.html">
+    <link rel="prev" title="Sessions" href="sessions.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="sessions.html">&laquo; Sessions</a></li>
+        <li class="active"><a href="">Secure Cookie</a></li>
+        <li><a href="cache.html">Cache &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Secure Cookie</a><ul>
+<li><a class="reference external" href="#application-integration">Application Integration</a></li>
+<li><a class="reference external" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug.contrib.securecookie">
+<h1>Secure Cookie<a class="headerlink" href="#module-werkzeug.contrib.securecookie" title="Permalink to this headline">¶</a></h1>
+<p>This module implements a cookie that is not alterable from the client
+because it adds a checksum the server checks for.  You can use it as
+session replacement if all you have is a user id or something to mark
+a logged in user.</p>
+<p>Keep in mind that the data is still readable from the client as a
+normal cookie is.  However you don&#8217;t have to store and flush the
+sessions you have at the server.</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug.contrib.securecookie</span> <span class="kn">import</span> <span class="n">SecureCookie</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">SecureCookie</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="mf">42</span><span class="p">,</span> <span class="s">&quot;baz&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">)},</span> <span class="s">&quot;deadbeef&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Dumping into a string so that one can store it in a cookie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Loading from that string again:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">SecureCookie</span><span class="o">.</span><span class="n">unserialize</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s">&quot;deadbeef&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="s">&quot;baz&quot;</span><span class="p">]</span>
+<span class="go">(1, 2, 3)</span>
+</pre></div>
+</div>
+<p>If someone modifies the cookie and the checksum is wrong the unserialize
+method will fail silently and return a new empty <cite>SecureCookie</cite> object.</p>
+<p>Keep in mind that the values will be visible in the cookie so do not
+store data in a cookie you don&#8217;t want the user to see.</p>
+<div class="section" id="application-integration">
+<h2>Application Integration<a class="headerlink" href="#application-integration" title="Permalink to this headline">¶</a></h2>
+<p>If you are using the werkzeug request objects you could integrate the
+secure cookie into your application like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">BaseRequest</span><span class="p">,</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">werkzeug.contrib.securecookie</span> <span class="kn">import</span> <span class="n">SecureCookie</span>
+
+<span class="c"># don&#39;t use this key but a different one; you could just use</span>
+<span class="c"># os.unrandom(20) to get something random</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\xfa\xdd\xb8</span><span class="s">z</span><span class="se">\xae\xe0</span><span class="s">}4</span><span class="se">\x8b\xea</span><span class="s">&#39;</span>
+
+<span class="k">class</span> <span class="nc">Request</span><span class="p">(</span><span class="n">BaseRequest</span><span class="p">):</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">client_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;session_data&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SecureCookie</span><span class="p">(</span><span class="n">secret_key</span><span class="o">=</span><span class="n">SECRET_KEY</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SecureCookie</span><span class="o">.</span><span class="n">unserialize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">SECRET_KEY</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+
+    <span class="c"># get a response object here</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="o">...</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">client_session</span><span class="o">.</span><span class="n">should_save</span><span class="p">:</span>
+        <span class="n">session_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">client_session</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&#39;session_data&#39;</span><span class="p">,</span> <span class="n">session_data</span><span class="p">,</span>
+                            <span class="n">httponly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A less verbose integration can be achieved by using shorthand methods:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Request</span><span class="p">(</span><span class="n">BaseRequest</span><span class="p">):</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">client_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SecureCookie</span><span class="o">.</span><span class="n">load_cookie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secret_key</span><span class="o">=</span><span class="n">COOKIE_SECRET</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+
+    <span class="c"># get a response object here</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="o">...</span>
+
+    <span class="n">request</span><span class="o">.</span><span class="n">client_session</span><span class="o">.</span><span class="n">save_cookie</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.contrib.securecookie.SecureCookie">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.securecookie.</tt><tt class="descname">SecureCookie</tt><big>(</big><em>data=None</em>, <em>secret_key=None</em>, <em>new=True</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a secure cookie.  You can subclass this class and provide
+an alternative mac method.  The import thing is that the mac method
+is a function with a similar interface to the hashlib.  Required
+methods are update() and digest().</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">SecureCookie</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="mf">42</span><span class="p">,</span> <span class="s">&quot;baz&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">)},</span> <span class="s">&quot;deadbeef&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">]</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="s">&quot;baz&quot;</span><span class="p">]</span>
+<span class="go">(1, 2, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="s">&quot;blafasel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">23</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">should_save</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>data</em> &#8211; the initial data.  Either a dict, list of tuples or <cite>None</cite>.</li>
+<li><em>secret_key</em> &#8211; the secret key.  If not set <cite>None</cite> or not specified
+it has to be set before <a title="werkzeug.contrib.securecookie.SecureCookie.serialize" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie.serialize"><tt class="xref docutils literal"><span class="pre">serialize</span></tt></a> is called.</li>
+<li><em>new</em> &#8211; The initial value of the <cite>new</cite> flag.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.new">
+<tt class="descname">new</tt><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.new" title="Permalink to this definition">¶</a></dt>
+<dd><cite>True</cite> is the cookie was newly created, otherwise <cite>False</cite></dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.modified">
+<tt class="descname">modified</tt><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whenever an item on the cookie is set, this attribute is set to <cite>True</cite>.
+However this does not track modifications inside mutable objects
+in the cookie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">SecureCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">modified</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">modified</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">modified</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>In that situation it has to be set to <cite>modified</cite> by hand so that
+<a title="werkzeug.contrib.securecookie.SecureCookie.should_save" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie.should_save"><tt class="xref docutils literal"><span class="pre">should_save</span></tt></a> can pick it up.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.hash_method">
+<tt class="descname">hash_method</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.hash_method" title="Permalink to this definition">¶</a></dt>
+<dd>The hash method to use.  This has to be a module with a new function
+or a function that creates a hashlib object.  Such as <cite>hashlib.md5</cite>
+Subclasses can override this attribute.  The default hash is sha1.</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.load_cookie">
+<em class="property">
+classmethod </em><tt class="descname">load_cookie</tt><big>(</big><em>request</em>, <em>key='session'</em>, <em>secret_key=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.load_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <a title="werkzeug.contrib.securecookie.SecureCookie" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie"><tt class="xref docutils literal"><span class="pre">SecureCookie</span></tt></a> from a cookie in request.  If the
+cookie is not set, a new <a title="werkzeug.contrib.securecookie.SecureCookie" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie"><tt class="xref docutils literal"><span class="pre">SecureCookie</span></tt></a> instanced is
+returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>request</em> &#8211; a request object that has a <cite>cookies</cite> attribute
+which is a dict of all cookie values.</li>
+<li><em>key</em> &#8211; the name of the cookie.</li>
+<li><em>secret_key</em> &#8211; the secret key used to unquote the cookie.
+Always provide the value even though it has
+no default!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.quote">
+<em class="property">
+classmethod </em><tt class="descname">quote</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.quote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quote the value for the cookie.  This can be any object supported
+by <a title="werkzeug.contrib.securecookie.SecureCookie.serialization_method" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie.serialization_method"><tt class="xref docutils literal"><span class="pre">serialization_method</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>value</em> &#8211; the value to quote.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.quote_base64">
+<tt class="descname">quote_base64</tt><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.quote_base64" title="Permalink to this definition">¶</a></dt>
+<dd>if the contents should be base64 quoted.  This can be disabled if the
+serialization process returns cookie safe strings only.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.save_cookie">
+<tt class="descname">save_cookie</tt><big>(</big><em>response</em>, <em>key='session'</em>, <em>expires=None</em>, <em>session_expires=None</em>, <em>max_age=None</em>, <em>path='/'</em>, <em>domain=None</em>, <em>secure=None</em>, <em>httponly=False</em>, <em>force=False</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.save_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the SecureCookie in a cookie on response object.  All
+parameters that are not described here are forwarded directly
+to <tt class="xref docutils literal"><span class="pre">set_cookie</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>response</em> &#8211; a response object that has a
+<tt class="xref docutils literal"><span class="pre">set_cookie</span></tt> method.</li>
+<li><em>key</em> &#8211; the name of the cookie.</li>
+<li><em>session_expires</em> &#8211; the expiration date of the secure cookie
+stored information.  If this is not provided
+the cookie <cite>expires</cite> date is used instead.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.serialization_method">
+<tt class="descname">serialization_method</tt><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.serialization_method" title="Permalink to this definition">¶</a></dt>
+<dd>the module used for serialization.  Unless overriden by subclasses
+the standard pickle module is used.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.serialize">
+<tt class="descname">serialize</tt><big>(</big><em>expires=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize the secure cookie into a string.</p>
+<p>If expires is provided, the session will be automatically invalidated
+after expiration when you unseralize it. This provides better
+protection against session cookie theft.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>expires</em> &#8211; an optional expiration date for the cookie (a
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/datetime.html#datetime.datetime"><tt class="xref docutils literal"><span class="pre">datetime.datetime</span></tt></a> object)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.should_save">
+<tt class="descname">should_save</tt><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.should_save" title="Permalink to this definition">¶</a></dt>
+<dd>True if the session should be saved.  By default this is only true
+for <a title="werkzeug.contrib.securecookie.SecureCookie.modified" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie.modified"><tt class="xref docutils literal"><span class="pre">modified</span></tt></a> cookies, not <a title="werkzeug.contrib.securecookie.SecureCookie.new" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie.new"><tt class="xref docutils literal"><span class="pre">new</span></tt></a>.</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.unquote">
+<em class="property">
+classmethod </em><tt class="descname">unquote</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.unquote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unquote the value for the cookie.  If unquoting does not work a
+<a title="werkzeug.contrib.securecookie.UnquoteError" class="reference internal" href="#werkzeug.contrib.securecookie.UnquoteError"><tt class="xref docutils literal"><span class="pre">UnquoteError</span></tt></a> is raised.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>value</em> &#8211; the value to unquote.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="werkzeug.contrib.securecookie.SecureCookie.unserialize">
+<em class="property">
+classmethod </em><tt class="descname">unserialize</tt><big>(</big><em>string</em>, <em>secret_key</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.securecookie.SecureCookie.unserialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the secure cookie from a serialized string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>string</em> &#8211; the cookie value to unserialize.</li>
+<li><em>secret_key</em> &#8211; the secret key used to serialize the cookie.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a new <a title="werkzeug.contrib.securecookie.SecureCookie" class="reference internal" href="#werkzeug.contrib.securecookie.SecureCookie"><tt class="xref docutils literal"><span class="pre">SecureCookie</span></tt></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="werkzeug.contrib.securecookie.UnquoteError">
+<em class="property">
+exception </em><tt class="descclassname">werkzeug.contrib.securecookie.</tt><tt class="descname">UnquoteError</tt><a class="headerlink" href="#werkzeug.contrib.securecookie.UnquoteError" title="Permalink to this definition">¶</a></dt>
+<dd>Internal exception used to signal failures on quoting.</dd></dl>
+
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

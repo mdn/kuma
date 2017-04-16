@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="sub2po_and_po2sub" id="sub2po_and_po2sub">sub2po and po2sub</a></h1>
+<div class="level1">
+
+<p>
+
+sub2po allows you to use the same principles of <acronym title="Gettext Portable Object">PO</acronym> files with <a href="toolkit-subtitles.html" class="wikilink1" title="toolkit-subtitles.html">subtitles</a>. In <acronym title="Gettext Portable Object">PO</acronym> only items that change are marked fuzzy and only new items need to be translated, unchanged items remain unchanged for the translation.
+</p>
+
+</div>
+<!-- SECTION "sub2po and po2sub" [1-254] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">sub2po [options] &lt;foo.srt&gt; &lt;foo.po&gt;
+po2sub [options] [-t &lt;foo.srt&gt;] &lt;XX.po&gt; &lt;foo-XX.srt&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> foo.srt    </td><td class="col1 leftalign"> is the input subtitle file   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> foo.po     </td><td class="col1 leftalign"> is an empty <acronym title="Gettext Portable Object">PO</acronym> file that may be translated   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> XX.po      </td><td class="col1 leftalign"> is a <acronym title="Gettext Portable Object">PO</acronym> file translated into the XX language   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> foo-XX.srt </td><td class="col1 leftalign"> is the foo.srt file translated into language XX   </td>
+	</tr>
+</table>
+
+<p>
+
+Options (sub2po):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>   </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT    </td><td class="col1 leftalign"> read from INPUT in .srt format   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -P, --pot            </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> <a href="toolkit-duplicates_duplicatestyle.html" class="wikilink1" title="toolkit-duplicates_duplicatestyle.html">--duplicates=DUPLICATESTYLE</a>  </td><td class="col1"> what to do with duplicate strings (identical source text): merge, msgctxt (default) </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2sub):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>   </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT    </td><td class="col1 leftalign"> read from INPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT   </td><td class="col1 leftalign"> write to OUTPUT in srt format   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in txt format   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --fuzzy              </td><td class="col1 leftalign"> use translations marked fuzzy  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --nofuzzy            </td><td class="col1 leftalign"> don&#039;t use translations marked fuzzy (default)  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [255-2467] -->
+<h3><a name="examples" id="examples">Examples</a></h3>
+<div class="level3">
+
+<p>
+
+To create the <acronym title="Gettext Portable Object Template">POT</acronym> files is simple:
+
+</p>
+<pre class="code">sub2po -P SUBTITLE_FILE subtitles.pot</pre>
+
+<p>
+
+A translator would copy the <acronym title="Gettext Portable Object Template">POT</acronym> file to their own <acronym title="Gettext Portable Object">PO</acronym> file and then create translations of the entries. If you wish to create a <acronym title="Gettext Portable Object">PO</acronym> file and not a <acronym title="Gettext Portable Object Template">POT</acronym> file then leave off the <em>-P</em> option.
+</p>
+
+<p>
+To convert back:
+
+</p>
+<pre class="code">po2sub -t SUBTITLE_FILE   subtitles-XX.po  subtitles-XX.srt</pre>
+
+</div>
+<!-- SECTION "Examples" [2468-2835] -->
+<h3><a name="translating" id="translating">Translating</a></h3>
+<div class="level3">
+
+<p>
+
+Translate as normal. However, see the issues mentioned at <a href="toolkit-subtitles.html" class="wikilink1" title="toolkit-subtitles.html">subtitles</a>.
+</p>
+
+</div>
+<!-- SECTION "Translating" [2836-2932] -->
+<h3><a name="bugs" id="bugs">Bugs</a></h3>
+<div class="level3">
+
+<p>
+There might be some issues with encodings, since the srt files don&#039;t specify them. We assume files to be encoded in UTF-8, so a conversion should solve this easily. Note that most of the handling of the srt files come from gaupol.
+</p>
+
+</div>
+<!-- SECTION "Bugs" [2933-] --></body>
+</html>

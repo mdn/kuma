@@ -1,0 +1,97 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+ultraTB
+=======
+
+Module: :mod:`ultraTB`
+----------------------
+Inheritance diagram for ``IPython.ultraTB``:
+
+.. inheritance-diagram:: IPython.ultraTB 
+   :parts: 3
+
+.. automodule:: IPython.ultraTB
+
+.. currentmodule:: IPython.ultraTB
+
+Classes
+-------
+
+:class:`AutoFormattedTB`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: AutoFormattedTB
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ColorTB`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ColorTB
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FormattedTB`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FormattedTB
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ListTB`
+~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ListTB
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TBTools`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TBTools
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VerboseTB`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VerboseTB
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.ultraTB.findsource
+
+
+.. autofunction:: IPython.ultraTB.fix_frame_records_filenames
+
+
+.. autofunction:: IPython.ultraTB.inspect_error
+

@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.iptest &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.mkdoctests" href="IPython.testing.mkdoctests.html" />
+    <link rel="prev" title="testing.decorators_trial" href="IPython.testing.decorators_trial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.mkdoctests.html" title="testing.mkdoctests"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorators_trial.html" title="testing.decorators_trial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-iptest">
+<h1>testing.iptest<a class="headerlink" href="#testing-iptest" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.iptest">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.iptest</span></tt><a class="headerlink" href="#module-IPython.testing.iptest" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.testing.iptest</span></tt>:</p>
+<img src="../../_images/inheritancec99b0098c8.png" usemap="#inheritancec99b0098c8" class="inheritance"/><map id="inheritancec99b0098c8" name="inheritancec99b0098c8">
+<area shape="rect" href="#IPython.testing.iptest.IPTester" title="testing.iptest.IPTester" alt="" coords="7,5,164,32"/>
+</map>
+<p>IPython Test Suite Runner.</p>
+<p>This module provides a main entry point to a user script to test IPython
+itself from the command line. There are two ways of running this script:</p>
+<ol class="arabic simple">
+<li>With the syntax <cite>iptest all</cite>.  This runs our entire test suite by
+calling this script (with different arguments) or trial recursively.  This
+causes modules and package to be tested in different processes, using nose
+or trial where appropriate.</li>
+<li>With the regular nose syntax, like <cite>iptest -vvs IPython</cite>.  In this form
+the script simply calls nose, but with special command line flags and
+plugins loaded.</li>
+</ol>
+<p>For now, this script requires that both nose and twisted are installed.  This
+will change in the future.</p>
+</div>
+<div class="section" id="class">
+<h2>Class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iptester">
+<h2><a title="IPython.testing.iptest.IPTester" class="reference internal" href="#IPython.testing.iptest.IPTester"><tt class="xref docutils literal"><span class="pre">IPTester</span></tt></a><a class="headerlink" href="#iptester" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.testing.iptest.IPTester">
+<!--[IPython.testing.iptest.IPTester]-->class <tt class="descclassname">IPython.testing.iptest.</tt><tt class="descname">IPTester</tt><big>(</big><em>runner='iptest'</em>, <em>params=None</em><big>)</big><a class="headerlink" href="#IPython.testing.iptest.IPTester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Call that calls iptest or trial in a subprocess.</p>
+<dl class="method">
+<dt id="IPython.testing.iptest.IPTester.__init__">
+<!--[IPython.testing.iptest.IPTester.__init__]--><tt class="descname">__init__</tt><big>(</big><em>runner='iptest'</em>, <em>params=None</em><big>)</big><a class="headerlink" href="#IPython.testing.iptest.IPTester.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.testing.iptest.IPTester.run">
+<!--[IPython.testing.iptest.IPTester.run]--><tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.iptest.IPTester.run" title="Permalink to this definition">¶</a></dt>
+<dd>Run the stored commands</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.iptest.main">
+<!--[IPython.testing.iptest.main]--><tt class="descclassname">IPython.testing.iptest.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.iptest.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.iptest.make_runners">
+<!--[IPython.testing.iptest.make_runners]--><tt class="descclassname">IPython.testing.iptest.</tt><tt class="descname">make_runners</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.iptest.make_runners" title="Permalink to this definition">¶</a></dt>
+<dd>Define the modules and packages that need to be tested.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.iptest.run_iptest">
+<!--[IPython.testing.iptest.run_iptest]--><tt class="descclassname">IPython.testing.iptest.</tt><tt class="descname">run_iptest</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.iptest.run_iptest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the IPython test suite using nose.</p>
+<p>This function is called when this script is <strong>not</strong> called with the form
+<cite>iptest all</cite>.  It simply calls nose with appropriate command line flags
+and accepts all of the standard nose arguments.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.iptest.run_iptestall">
+<!--[IPython.testing.iptest.run_iptestall]--><tt class="descclassname">IPython.testing.iptest.</tt><tt class="descname">run_iptestall</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.iptest.run_iptestall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the entire IPython test suite by calling nose and trial.</p>
+<p>This function constructs <a title="IPython.testing.iptest.IPTester" class="reference internal" href="#IPython.testing.iptest.IPTester"><tt class="xref docutils literal"><span class="pre">IPTester</span></tt></a> instances for all IPython
+modules and package and then runs each of them.  This causes the modules
+and packages of IPython to be tested each in their own subprocess using
+nose or twisted.trial appropriately.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.iptest.test_for">
+<!--[IPython.testing.iptest.test_for]--><tt class="descclassname">IPython.testing.iptest.</tt><tt class="descname">test_for</tt><big>(</big><em>mod</em><big>)</big><a class="headerlink" href="#IPython.testing.iptest.test_for" title="Permalink to this definition">¶</a></dt>
+<dd>Test to see if mod is importable.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.iptest</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.iptest">Module: <tt class="docutils literal"><span class="pre">testing.iptest</span></tt></a></li>
+<li><a class="reference external" href="#class">Class</a></li>
+<li><a class="reference external" href="#iptester"><tt class="docutils literal"><span class="pre">IPTester</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.decorators_trial.html" title="previous chapter">testing.decorators_trial</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.mkdoctests.html" title="next chapter">testing.mkdoctests</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.iptest.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.mkdoctests.html" title="testing.mkdoctests"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorators_trial.html" title="testing.decorators_trial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

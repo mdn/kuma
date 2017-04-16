@@ -1,0 +1,47 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.wx.ipythonx
+====================
+
+Module: :mod:`frontend.wx.ipythonx`
+-----------------------------------
+Inheritance diagram for ``IPython.frontend.wx.ipythonx``:
+
+.. inheritance-diagram:: IPython.frontend.wx.ipythonx 
+   :parts: 3
+
+.. automodule:: IPython.frontend.wx.ipythonx
+
+.. currentmodule:: IPython.frontend.wx.ipythonx
+
+Classes
+-------
+
+:class:`IPythonX`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonX
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPythonXController`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonXController
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Function
+--------
+
+
+.. autofunction:: IPython.frontend.wx.ipythonx.main
+

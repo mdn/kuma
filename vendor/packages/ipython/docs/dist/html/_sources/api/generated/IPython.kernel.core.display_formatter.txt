@@ -1,0 +1,51 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.display_formatter
+=============================
+
+Module: :mod:`kernel.core.display_formatter`
+--------------------------------------------
+Inheritance diagram for ``IPython.kernel.core.display_formatter``:
+
+.. inheritance-diagram:: IPython.kernel.core.display_formatter 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.display_formatter
+
+.. currentmodule:: IPython.kernel.core.display_formatter
+
+Classes
+-------
+
+:class:`IDisplayFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IDisplayFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PPrintDisplayFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PPrintDisplayFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ReprDisplayFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ReprDisplayFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

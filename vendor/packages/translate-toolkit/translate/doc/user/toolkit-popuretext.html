@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="popuretext" id="popuretext">popuretext</a></h1>
+<div class="level1">
+
+<p>
+
+Extracts all the source text from a directory of <acronym title="Gettext Portable Object Template">POT</acronym> files or the target text from a directory of <acronym title="Gettext Portable Object">PO</acronym> files, removing <acronym title="Gettext Portable Object">PO</acronym> headers and optionally the accelerator keys.
+</p>
+
+<p>
+If you want to use other tools to analyse the text within a translation project, then this is the tool for you.  For example, you can use it to calculate word frequencies to create an initial glossary based on the pure source text.
+</p>
+
+</div>
+<!-- SECTION "popuretext" [1-425] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> GNU Gettext</div>
+</li>
+<li class="level1"><div class="li"> sed</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Prerequisites" [426-478] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">popuretext &lt;-P pot-dir|po-dir&gt; &lt;file.txt&gt; [accelerator]</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> pot-dir   </td><td class="col1 leftalign"> a directory containing <acronym title="Gettext Portable Object Template">POT</acronym> files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> po-dir   </td><td class="col1 leftalign"> a directory containing <acronym title="Gettext Portable Object">PO</acronym> files  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> file.txt  </td><td class="col1 leftalign"> file that contains the output text  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> accelerator  </td><td class="col1 leftalign"> optional: accelerator marker to be removed from the text  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [479-792] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<pre class="code">popuretext -P pot pot.txt &#039;&amp;&#039;</pre>
+
+<p>
+
+Extract all the source text from the <em>pot</em> directory and place it in the <em>pot.txt</em> file removing all occurrences of the <code>&amp;</code> accelerator.
+
+</p>
+<pre class="code">popuretext af af.txt</pre>
+
+<p>
+
+Extract all target text from the Afrikaans files in the <em>af</em> directory, placing the extracted text in <em>af.txt</em>.  In this case we are not filtering any accelerator characters.
+</p>
+
+</div>
+<!-- SECTION "Examples" [793-1195] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [1196-] --></body>
+</html>

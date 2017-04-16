@@ -1,0 +1,84 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.mapper
+=============
+
+Module: :mod:`kernel.mapper`
+----------------------------
+Inheritance diagram for ``IPython.kernel.mapper``:
+
+.. inheritance-diagram:: IPython.kernel.mapper 
+   :parts: 3
+
+.. automodule:: IPython.kernel.mapper
+
+.. currentmodule:: IPython.kernel.mapper
+
+Classes
+-------
+
+:class:`IMapper`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMapper
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IMultiEngineMapperFactory`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IMultiEngineMapperFactory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ITaskMapperFactory`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ITaskMapperFactory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MultiEngineMapper`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MultiEngineMapper
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SynchronousTaskMapper`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SynchronousTaskMapper
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TaskMapper`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TaskMapper
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

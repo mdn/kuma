@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.taskfc &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.twistedutil" href="IPython.kernel.twistedutil.html" />
+    <link rel="prev" title="kernel.taskclient" href="IPython.kernel.taskclient.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.twistedutil.html" title="kernel.twistedutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.taskclient.html" title="kernel.taskclient"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-taskfc">
+<h1>kernel.taskfc<a class="headerlink" href="#kernel-taskfc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.taskfc">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.taskfc</span></tt><a class="headerlink" href="#module-IPython.kernel.taskfc" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.taskfc</span></tt>:</p>
+<img src="../../_images/inheritancec44c5ec068.png" usemap="#inheritancec44c5ec068" class="inheritance"/><map id="inheritancec44c5ec068" name="inheritancec44c5ec068">
+<area shape="rect" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController" title="kernel.taskfc.FCTaskControllerFromTaskController" alt="" coords="506,83,763,104"/>
+<area shape="rect" href="#IPython.kernel.taskfc.IFCTaskController" title="kernel.taskfc.IFCTaskController" alt="" coords="284,43,449,64"/>
+<area shape="rect" href="#IPython.kernel.taskfc.FCTaskClient" title="kernel.taskfc.FCTaskClient" alt="" coords="45,4,187,25"/>
+</map>
+<p>A Foolscap interface to a TaskController.</p>
+<p>This class lets Foolscap clients talk to a TaskController.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fctaskclient">
+<h3><a title="IPython.kernel.taskfc.FCTaskClient" class="reference internal" href="#IPython.kernel.taskfc.FCTaskClient"><tt class="xref docutils literal"><span class="pre">FCTaskClient</span></tt></a><a class="headerlink" href="#fctaskclient" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.taskfc.FCTaskClient">
+<!--[IPython.kernel.taskfc.FCTaskClient]-->class <tt class="descclassname">IPython.kernel.taskfc.</tt><tt class="descname">FCTaskClient</tt><big>(</big><em>remote_reference</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Client class for Foolscap exposed <cite>TaskController</cite>.</p>
+<p>This class is an adapter that makes a <cite>RemoteReference</cite> to a 
+<cite>TaskController</cite> look like an actual <cite>ITaskController</cite> on the client side.</p>
+<p>This class also implements <cite>IBlockingClientAdaptor</cite> so that clients can 
+automatically get a blocking version of this class.</p>
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.__init__">
+<!--[IPython.kernel.taskfc.FCTaskClient.__init__]--><tt class="descname">__init__</tt><big>(</big><em>remote_reference</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.abort">
+<!--[IPython.kernel.taskfc.FCTaskClient.abort]--><tt class="descname">abort</tt><big>(</big><em>taskid</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abort a task by taskid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>taskid <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The taskid of the task to be aborted.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.adapt_to_blocking_client">
+<!--[IPython.kernel.taskfc.FCTaskClient.adapt_to_blocking_client]--><tt class="descname">adapt_to_blocking_client</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.adapt_to_blocking_client" title="Permalink to this definition">¶</a></dt>
+<dd>Wrap self in a blocking version that implements <a href="#id1"><span class="problematic" id="id2">`</span></a>IBlockingTaskClient.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.barrier">
+<!--[IPython.kernel.taskfc.FCTaskClient.barrier]--><tt class="descname">barrier</tt><big>(</big><em>taskids</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.barrier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Block until a set of tasks are completed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>taskids <span class="classifier-delimiter">:</span> <span class="classifier">list, tuple</span></dt>
+<dd><p class="first last">A sequence of taskids to block on.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.clear">
+<!--[IPython.kernel.taskfc.FCTaskClient.clear]--><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all previously run tasks from the task controller.</p>
+<p>This is needed because the task controller keep all task results
+in memory.  This can be a problem is there are many completed
+tasks.  Users should call this periodically to clean out these
+cached task results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.get_task_result">
+<!--[IPython.kernel.taskfc.FCTaskClient.get_task_result]--><tt class="descname">get_task_result</tt><big>(</big><em>taskid</em>, <em>block=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.get_task_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a task result by taskid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>taskid <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The taskid of the task to be retrieved.</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should I block until the task is done?</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <cite>TaskResult</cite> object that encapsulates the task result.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.map">
+<!--[IPython.kernel.taskfc.FCTaskClient.map]--><tt class="descname">map</tt><big>(</big><em>func</em>, <em>*sequences</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply func to <a href="#id3"><span class="problematic" id="id4">*</span></a>sequences elementwise.  Like Python&#8217;s builtin map.</p>
+<p>This version is load balanced.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.mapper">
+<!--[IPython.kernel.taskfc.FCTaskClient.mapper]--><tt class="descname">mapper</tt><big>(</big><em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <cite>IMapper</cite> implementer with a given set of arguments.</p>
+<p>The <cite>IMapper</cite> created using a task controller is load balanced.</p>
+<p>See the documentation for <cite>IPython.kernel.task.BaseTask</cite> for 
+documentation on the arguments to this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.parallel">
+<!--[IPython.kernel.taskfc.FCTaskClient.parallel]--><tt class="descname">parallel</tt><big>(</big><em>clear_before=False</em>, <em>clear_after=False</em>, <em>retries=0</em>, <em>recovery_task=None</em>, <em>depend=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.parallel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.queue_status">
+<!--[IPython.kernel.taskfc.FCTaskClient.queue_status]--><tt class="descname">queue_status</tt><big>(</big><em>verbose=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a dictionary with the current state of the task queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If True, return a list of taskids.  If False, simply give
+the number of tasks with each status.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dict with the queue status.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.run">
+<!--[IPython.kernel.taskfc.FCTaskClient.run]--><tt class="descname">run</tt><big>(</big><em>task</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a task on the <cite>TaskController</cite>.</p>
+<p>See the documentation of the <cite>MapTask</cite> and <cite>StringTask</cite> classes for 
+details on how to build a task of different types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body">task : an <cite>ITask</cite> implementer</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">The int taskid of the submitted task.  Pass this to 
+<cite>get_task_result</cite> to get the <cite>TaskResult</cite> object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.spin">
+<!--[IPython.kernel.taskfc.FCTaskClient.spin]--><tt class="descname">spin</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Touch the scheduler, to resume scheduling without submitting a task.</p>
+<p>This method only needs to be called in unusual situations where the
+scheduler is idle for some reason.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskClient.unpackage">
+<!--[IPython.kernel.taskfc.FCTaskClient.unpackage]--><tt class="descname">unpackage</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskClient.unpackage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fctaskcontrollerfromtaskcontroller">
+<h3><a title="IPython.kernel.taskfc.FCTaskControllerFromTaskController" class="reference internal" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController"><tt class="xref docutils literal"><span class="pre">FCTaskControllerFromTaskController</span></tt></a><a class="headerlink" href="#fctaskcontrollerfromtaskcontroller" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController]-->class <tt class="descclassname">IPython.kernel.taskfc.</tt><tt class="descname">FCTaskControllerFromTaskController</tt><big>(</big><em>taskController</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">foolscap.referenceable.Referenceable</span></tt></p>
+<p>Adapt a <cite>TaskController</cite> to an <cite>IFCTaskController</cite></p>
+<p>This class is used to expose a <cite>TaskController</cite> over the wire using
+the Foolscap network protocol.</p>
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.__init__">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.__init__]--><tt class="descname">__init__</tt><big>(</big><em>taskController</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.packageFailure">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.packageFailure]--><tt class="descname">packageFailure</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.packageFailure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.packageSuccess">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.packageSuccess]--><tt class="descname">packageSuccess</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.packageSuccess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_abort">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_abort]--><tt class="descname">remote_abort</tt><big>(</big><em>taskid</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_abort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_barrier">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_barrier]--><tt class="descname">remote_barrier</tt><big>(</big><em>taskids</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_barrier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_clear">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_clear]--><tt class="descname">remote_clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_get_client_name">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_get_client_name]--><tt class="descname">remote_get_client_name</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_get_client_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_get_task_result">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_get_task_result]--><tt class="descname">remote_get_task_result</tt><big>(</big><em>taskid</em>, <em>block=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_get_task_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_queue_status">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_queue_status]--><tt class="descname">remote_queue_status</tt><big>(</big><em>verbose</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_run">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_run]--><tt class="descname">remote_run</tt><big>(</big><em>ptask</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_spin">
+<!--[IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_spin]--><tt class="descname">remote_spin</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.FCTaskControllerFromTaskController.remote_spin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifctaskcontroller">
+<h3><a title="IPython.kernel.taskfc.IFCTaskController" class="reference internal" href="#IPython.kernel.taskfc.IFCTaskController"><tt class="xref docutils literal"><span class="pre">IFCTaskController</span></tt></a><a class="headerlink" href="#ifctaskcontroller" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.taskfc.IFCTaskController">
+<!--[IPython.kernel.taskfc.IFCTaskController]-->class <tt class="descclassname">IPython.kernel.taskfc.</tt><tt class="descname">IFCTaskController</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.IFCTaskController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Foolscap interface to task controller.</p>
+<p>See the documentation of <cite>ITaskController</cite> for more information.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.taskfc.IFCTaskController.__init__">
+<!--[IPython.kernel.taskfc.IFCTaskController.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.taskfc.IFCTaskController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.taskfc</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.taskfc">Module: <tt class="docutils literal"><span class="pre">kernel.taskfc</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#fctaskclient"><tt class="docutils literal"><span class="pre">FCTaskClient</span></tt></a></li>
+<li><a class="reference external" href="#fctaskcontrollerfromtaskcontroller"><tt class="docutils literal"><span class="pre">FCTaskControllerFromTaskController</span></tt></a></li>
+<li><a class="reference external" href="#ifctaskcontroller"><tt class="docutils literal"><span class="pre">IFCTaskController</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.taskclient.html" title="previous chapter">kernel.taskclient</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.twistedutil.html" title="next chapter">kernel.twistedutil</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.taskfc.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.twistedutil.html" title="kernel.twistedutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.taskclient.html" title="kernel.taskclient"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

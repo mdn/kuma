@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Debugger &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="Itpl" href="IPython.Itpl.html" />
+    <link rel="prev" title="DPyGetOpt" href="IPython.DPyGetOpt.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Itpl.html" title="Itpl"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.DPyGetOpt.html" title="DPyGetOpt"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="debugger">
+<h1>Debugger<a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.Debugger">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">Debugger</span></tt><a class="headerlink" href="#module-IPython.Debugger" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.Debugger</span></tt>:</p>
+<img src="../../_images/inheritancedef30748d8.png" usemap="#inheritancedef30748d8" class="inheritance"/><map id="inheritancedef30748d8" name="inheritancedef30748d8">
+<area shape="rect" href="#IPython.Debugger.Pdb" title="IPython.Debugger.Pdb" alt="" coords="352,81,515,108"/>
+<area shape="rect" href="#IPython.Debugger.Tracer" title="IPython.Debugger.Tracer" alt="" coords="5,5,181,32"/>
+</map>
+<p>Pdb debugger class.</p>
+<p>Modified from the standard pdb.Pdb class to avoid including readline, so that
+the command line completion of other programs which include this isn&#8217;t
+damaged.</p>
+<p>In the future, this class will be expanded with improvements over the standard
+pdb.</p>
+<p>The code in this file is mainly lifted out of cmd.py in Python 2.2, with minor
+changes. Licensing should therefore be under the standard Python terms.  For
+details on the PSF (Python Software Foundation) standard license, see:</p>
+<p><a class="reference external" href="http://www.python.org/2.2.3/license.html">http://www.python.org/2.2.3/license.html</a></p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pdb">
+<h3><a title="IPython.Debugger.Pdb" class="reference internal" href="#IPython.Debugger.Pdb"><tt class="xref docutils literal"><span class="pre">Pdb</span></tt></a><a class="headerlink" href="#pdb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Debugger.Pdb">
+<!--[IPython.Debugger.Pdb]-->class <tt class="descclassname">IPython.Debugger.</tt><tt class="descname">Pdb</tt><big>(</big><em>color_scheme='NoColor'</em>, <em>completekey=None</em>, <em>stdin=None</em>, <em>stdout=None</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">pdb.Pdb</span></tt></p>
+<p>Modified Pdb class, does not load readline.</p>
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.__init__">
+<!--[IPython.Debugger.Pdb.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_scheme='NoColor'</em>, <em>completekey=None</em>, <em>stdin=None</em>, <em>stdout=None</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_d">
+<!--[IPython.Debugger.Pdb.do_d]--><tt class="descname">do_d</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_down">
+<!--[IPython.Debugger.Pdb.do_down]--><tt class="descname">do_down</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_l">
+<!--[IPython.Debugger.Pdb.do_l]--><tt class="descname">do_l</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_l" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_list">
+<!--[IPython.Debugger.Pdb.do_list]--><tt class="descname">do_list</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_pdef">
+<!--[IPython.Debugger.Pdb.do_pdef]--><tt class="descname">do_pdef</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_pdef" title="Permalink to this definition">¶</a></dt>
+<dd>The debugger interface to magic_pdef</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_pdoc">
+<!--[IPython.Debugger.Pdb.do_pdoc]--><tt class="descname">do_pdoc</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_pdoc" title="Permalink to this definition">¶</a></dt>
+<dd>The debugger interface to magic_pdoc</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_pinfo">
+<!--[IPython.Debugger.Pdb.do_pinfo]--><tt class="descname">do_pinfo</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_pinfo" title="Permalink to this definition">¶</a></dt>
+<dd>The debugger equivalant of ?obj</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_q">
+<!--[IPython.Debugger.Pdb.do_q]--><tt class="descname">do_q</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_quit">
+<!--[IPython.Debugger.Pdb.do_quit]--><tt class="descname">do_quit</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_u">
+<!--[IPython.Debugger.Pdb.do_u]--><tt class="descname">do_u</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_u" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.do_up">
+<!--[IPython.Debugger.Pdb.do_up]--><tt class="descname">do_up</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.do_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.format_stack_entry">
+<!--[IPython.Debugger.Pdb.format_stack_entry]--><tt class="descname">format_stack_entry</tt><big>(</big><em>frame_lineno</em>, <em>lprefix=': '</em>, <em>context=3</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.format_stack_entry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.interaction">
+<!--[IPython.Debugger.Pdb.interaction]--><tt class="descname">interaction</tt><big>(</big><em>frame</em>, <em>traceback</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.interaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.list_command_pydb">
+<!--[IPython.Debugger.Pdb.list_command_pydb]--><tt class="descname">list_command_pydb</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.list_command_pydb" title="Permalink to this definition">¶</a></dt>
+<dd>List command to use if we have a newer pydb installed</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.new_do_down">
+<!--[IPython.Debugger.Pdb.new_do_down]--><tt class="descname">new_do_down</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.new_do_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.new_do_frame">
+<!--[IPython.Debugger.Pdb.new_do_frame]--><tt class="descname">new_do_frame</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.new_do_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.new_do_quit">
+<!--[IPython.Debugger.Pdb.new_do_quit]--><tt class="descname">new_do_quit</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.new_do_quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.new_do_restart">
+<!--[IPython.Debugger.Pdb.new_do_restart]--><tt class="descname">new_do_restart</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.new_do_restart" title="Permalink to this definition">¶</a></dt>
+<dd>Restart command. In the context of ipython this is exactly the same
+thing as &#8216;quit&#8217;.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.new_do_up">
+<!--[IPython.Debugger.Pdb.new_do_up]--><tt class="descname">new_do_up</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.new_do_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.postloop">
+<!--[IPython.Debugger.Pdb.postloop]--><tt class="descname">postloop</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.postloop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.print_list_lines">
+<!--[IPython.Debugger.Pdb.print_list_lines]--><tt class="descname">print_list_lines</tt><big>(</big><em>filename</em>, <em>first</em>, <em>last</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.print_list_lines" title="Permalink to this definition">¶</a></dt>
+<dd>The printing (as opposed to the parsing part of a &#8216;list&#8217;
+command.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.print_stack_entry">
+<!--[IPython.Debugger.Pdb.print_stack_entry]--><tt class="descname">print_stack_entry</tt><big>(</big><em>frame_lineno</em>, <em>prompt_prefix='n-&gt; '</em>, <em>context=3</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.print_stack_entry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.print_stack_trace">
+<!--[IPython.Debugger.Pdb.print_stack_trace]--><tt class="descname">print_stack_trace</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.print_stack_trace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Debugger.Pdb.set_colors">
+<!--[IPython.Debugger.Pdb.set_colors]--><tt class="descname">set_colors</tt><big>(</big><em>scheme</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Pdb.set_colors" title="Permalink to this definition">¶</a></dt>
+<dd>Shorthand access to the color table scheme selector method.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tracer">
+<h3><a title="IPython.Debugger.Tracer" class="reference internal" href="#IPython.Debugger.Tracer"><tt class="xref docutils literal"><span class="pre">Tracer</span></tt></a><a class="headerlink" href="#tracer" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Debugger.Tracer">
+<!--[IPython.Debugger.Tracer]-->class <tt class="descclassname">IPython.Debugger.</tt><tt class="descname">Tracer</tt><big>(</big><em>colors=None</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Tracer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Class for local debugging, similar to pdb.set_trace.</p>
+<p>Instances of this class, when called, behave like pdb.set_trace, but
+providing IPython&#8217;s enhanced capabilities.</p>
+<p>This is implemented as a class which must be initialized in your own code
+and not as a standalone function because we need to detect at runtime
+whether IPython is already active or not.  That detection is done in the
+constructor, ensuring that this code plays nicely with a running IPython,
+while functioning acceptably (though with limitations) if outside of it.</p>
+<dl class="method">
+<dt id="IPython.Debugger.Tracer.__init__">
+<!--[IPython.Debugger.Tracer.__init__]--><tt class="descname">__init__</tt><big>(</big><em>colors=None</em><big>)</big><a class="headerlink" href="#IPython.Debugger.Tracer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a local debugger instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><cite>colors</cite> (None): a string containing the name of the color scheme to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>use, it must be one of IPython&#8217;s valid color schemes.  If not given, the
+function will default to the current IPython scheme when running inside
+IPython, and to &#8216;NoColor&#8217; otherwise.</p>
+<p>Usage example:</p>
+<p>from IPython.Debugger import Tracer; debug_here = Tracer()</p>
+<p>... later in your code
+debug_here()  # -&gt; will open up the debugger at that point.</p>
+<p>Once the debugger activates, you can use all of its regular commands to
+step through code, set breakpoints, etc.  See the pdb documentation
+from the Python standard library for usage details.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.Debugger.BdbQuit_IPython_excepthook">
+<!--[IPython.Debugger.BdbQuit_IPython_excepthook]--><tt class="descclassname">IPython.Debugger.</tt><tt class="descname">BdbQuit_IPython_excepthook</tt><big>(</big><em>self</em>, <em>et</em>, <em>ev</em>, <em>tb</em><big>)</big><a class="headerlink" href="#IPython.Debugger.BdbQuit_IPython_excepthook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Debugger.BdbQuit_excepthook">
+<!--[IPython.Debugger.BdbQuit_excepthook]--><tt class="descclassname">IPython.Debugger.</tt><tt class="descname">BdbQuit_excepthook</tt><big>(</big><em>et</em>, <em>ev</em>, <em>tb</em><big>)</big><a class="headerlink" href="#IPython.Debugger.BdbQuit_excepthook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Debugger.decorate_fn_with_doc">
+<!--[IPython.Debugger.decorate_fn_with_doc]--><tt class="descclassname">IPython.Debugger.</tt><tt class="descname">decorate_fn_with_doc</tt><big>(</big><em>new_fn</em>, <em>old_fn</em>, <em>additional_text=''</em><big>)</big><a class="headerlink" href="#IPython.Debugger.decorate_fn_with_doc" title="Permalink to this definition">¶</a></dt>
+<dd>Make new_fn have old_fn&#8217;s doc string. This is particularly useful
+for the <a href="#id1"><span class="problematic" id="id2">do_</span></a>... commands that hook into the help system.
+Adapted from from a comp.lang.python posting
+by Duncan Booth.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Debugger</a><ul>
+<li><a class="reference external" href="#module-IPython.Debugger">Module: <tt class="docutils literal"><span class="pre">Debugger</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#pdb"><tt class="docutils literal"><span class="pre">Pdb</span></tt></a></li>
+<li><a class="reference external" href="#tracer"><tt class="docutils literal"><span class="pre">Tracer</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.DPyGetOpt.html" title="previous chapter">DPyGetOpt</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.Itpl.html" title="next chapter">Itpl</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.Debugger.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Itpl.html" title="Itpl"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.DPyGetOpt.html" title="DPyGetOpt"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

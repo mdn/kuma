@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="errorlevel_errorlevel" id="errorlevel_errorlevel">--errorlevel=ERRORLEVEL</a></h1>
+<div class="level1">
+
+<p>
+
+This is a parameter that can be passed to most of the programs in the translate toolkit in order to choose the level of feedback that you need when errors occur.  It is mostly useful for debugging. Please report your errors to the developers with --errorlevel=traceback.
+</p>
+
+</div>
+<!-- SECTION "--errorlevel=ERRORLEVEL" [1-311] -->
+<h2><a name="none" id="none">none</a></h2>
+<div class="level2">
+
+<p>
+
+Display no error messages
+</p>
+
+</div>
+<!-- SECTION "none" [312-356] -->
+<h2><a name="message" id="message">message</a></h2>
+<div class="level2">
+
+<p>
+
+Display on the error message
+</p>
+<pre class="code">
+An error occurred processing PO file
+</pre>
+
+</div>
+<!-- SECTION "message" [357-460] -->
+<h2><a name="exception" id="exception">exception</a></h2>
+<div class="level2">
+
+<p>
+
+Give the error message and name and Python exception
+</p>
+<pre class="code">
+ValueError: An error occurred processing PO file
+</pre>
+
+</div>
+<!-- SECTION "exception" [461-602] -->
+<h2><a name="traceback" id="traceback">traceback</a></h2>
+<div class="level2">
+
+<p>
+
+Provide a full traceback for debugging purposes
+</p>
+<pre class="code">
+csv2po: warning: Error processing: nso/readlicense_oo/docs/readme.csv: Traceback (most recent call last):
+
+  File &quot;/usr/lib/python2.4/site-packages/translate/misc/optrecurse.py&quot;, line 415, in recursiveprocess
+    success = self.processfile(fileprocessor, options, fullinputpath, fulloutputpath, fulltemplatepath)
+
+  File &quot;/usr/lib/python2.4/site-packages/translate/misc/optrecurse.py&quot;, line 468, in processfile
+    if fileprocessor(inputfile, outputfile, templatefile, **passthroughoptions):
+
+  File &quot;/usr/lib/python2.4/site-packages/translate/convert/csv2po.py&quot;, line 183, in convertcsv
+    outputpo = convertor.convertfile(inputcsv)
+
+  File &quot;/usr/lib/python2.4/site-packages/translate/convert/csv2po.py&quot;, line 159, in convertfile
+    raise ValueError(&quot;An error occured processing PO file&quot;)
+
+ValueError: An error occurred processing PO file
+</pre>
+
+</div>
+<!-- SECTION "traceback" [603-] --></body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.prompts &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.redirector_output_trap" href="IPython.kernel.core.redirector_output_trap.html" />
+    <link rel="prev" title="kernel.core.output_trap" href="IPython.kernel.core.output_trap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.redirector_output_trap.html" title="kernel.core.redirector_output_trap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.output_trap.html" title="kernel.core.output_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-prompts">
+<h1>kernel.core.prompts<a class="headerlink" href="#kernel-core-prompts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.prompts">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.prompts</span></tt><a class="headerlink" href="#module-IPython.kernel.core.prompts" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.prompts</span></tt>:</p>
+<img src="../../_images/inheritanceeb512baa90.png" usemap="#inheritanceeb512baa90" class="inheritance"/><map id="inheritanceeb512baa90" name="inheritanceeb512baa90">
+<area shape="rect" href="#IPython.kernel.core.prompts.Prompt1" title="core.prompts.Prompt1" alt="" coords="267,5,432,32"/>
+<area shape="rect" href="#IPython.kernel.core.prompts.BasePrompt" title="core.prompts.BasePrompt" alt="" coords="13,56,203,83"/>
+<area shape="rect" href="#IPython.kernel.core.prompts.PromptOut" title="core.prompts.PromptOut" alt="" coords="259,56,440,83"/>
+<area shape="rect" href="#IPython.kernel.core.prompts.Prompt2" title="core.prompts.Prompt2" alt="" coords="267,107,432,133"/>
+<area shape="rect" href="#IPython.kernel.core.prompts.CachedOutput" title="core.prompts.CachedOutput" alt="" coords="7,5,209,32"/>
+</map>
+<p>Classes for handling input/output prompts.</p>
+<div class="section" id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fernando Perez &lt;<a class="reference external" href="mailto:Fernando&#46;Perez&#37;&#52;&#48;berkeley&#46;edu">Fernando<span>&#46;</span>Perez<span>&#64;</span>berkeley<span>&#46;</span>edu</a>&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="baseprompt">
+<h3><a title="IPython.kernel.core.prompts.BasePrompt" class="reference internal" href="#IPython.kernel.core.prompts.BasePrompt"><tt class="xref docutils literal"><span class="pre">BasePrompt</span></tt></a><a class="headerlink" href="#baseprompt" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.prompts.BasePrompt">
+<!--[IPython.kernel.core.prompts.BasePrompt]-->class <tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">BasePrompt</tt><big>(</big><em>cache</em>, <em>sep</em>, <em>prompt</em>, <em>pad_left=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Interactive prompt similar to Mathematica&#8217;s.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.BasePrompt.__init__">
+<!--[IPython.kernel.core.prompts.BasePrompt.__init__]--><tt class="descname">__init__</tt><big>(</big><em>cache</em>, <em>sep</em>, <em>prompt</em>, <em>pad_left=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.BasePrompt.cwd_filt">
+<!--[IPython.kernel.core.prompts.BasePrompt.cwd_filt]--><tt class="descname">cwd_filt</tt><big>(</big><em>depth</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt.cwd_filt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last depth elements of the current working directory.</p>
+<p>$HOME is always replaced with &#8216;~&#8217;.
+If depth==0, the full path is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.BasePrompt.cwd_filt2">
+<!--[IPython.kernel.core.prompts.BasePrompt.cwd_filt2]--><tt class="descname">cwd_filt2</tt><big>(</big><em>depth</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt.cwd_filt2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last depth elements of the current working directory.</p>
+<p>$HOME is always replaced with &#8216;~&#8217;.
+If depth==0, the full path is returned.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.core.prompts.BasePrompt.p_template">
+<!--[IPython.kernel.core.prompts.BasePrompt.p_template]--><tt class="descname">p_template</tt><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt.p_template" title="Permalink to this definition">¶</a></dt>
+<dd>Template for prompt string creation</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.BasePrompt.set_p_str">
+<!--[IPython.kernel.core.prompts.BasePrompt.set_p_str]--><tt class="descname">set_p_str</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt.set_p_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the interpolating prompt strings.</p>
+<p>This must be called every time the color settings change, because the
+prompt_specials global may have changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.BasePrompt.write">
+<!--[IPython.kernel.core.prompts.BasePrompt.write]--><tt class="descname">write</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.BasePrompt.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cachedoutput">
+<h3><a title="IPython.kernel.core.prompts.CachedOutput" class="reference internal" href="#IPython.kernel.core.prompts.CachedOutput"><tt class="xref docutils literal"><span class="pre">CachedOutput</span></tt></a><a class="headerlink" href="#cachedoutput" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.prompts.CachedOutput">
+<!--[IPython.kernel.core.prompts.CachedOutput]-->class <tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">CachedOutput</tt><big>(</big><em>shell</em>, <em>cache_size</em>, <em>Pprint</em>, <em>colors='NoColor'</em>, <em>input_sep='n'</em>, <em>output_sep='n'</em>, <em>output_sep2=''</em>, <em>ps1=None</em>, <em>ps2=None</em>, <em>ps_out=None</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.CachedOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for printing output from calculations while keeping a cache of
+reults. It dynamically creates global variables prefixed with _ which
+contain these results.</p>
+<p>Meant to be used as a sys.displayhook replacement, providing numbered
+prompts and cache services.</p>
+<p>Initialize with initial and final values for cache counter (this defines
+the maximum size of the cache.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.CachedOutput.__init__">
+<!--[IPython.kernel.core.prompts.CachedOutput.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shell</em>, <em>cache_size</em>, <em>Pprint</em>, <em>colors='NoColor'</em>, <em>input_sep='n'</em>, <em>output_sep='n'</em>, <em>output_sep2=''</em>, <em>ps1=None</em>, <em>ps2=None</em>, <em>ps_out=None</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.CachedOutput.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.CachedOutput.display">
+<!--[IPython.kernel.core.prompts.CachedOutput.display]--><tt class="descname">display</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.CachedOutput.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default printer method, uses pprint.</p>
+<p>Do ip.set_hook(&#8220;result_display&#8221;, my_displayhook) for custom result
+display, e.g. when your own objects need special formatting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.CachedOutput.flush">
+<!--[IPython.kernel.core.prompts.CachedOutput.flush]--><tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.CachedOutput.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.CachedOutput.set_colors">
+<!--[IPython.kernel.core.prompts.CachedOutput.set_colors]--><tt class="descname">set_colors</tt><big>(</big><em>colors</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.CachedOutput.set_colors" title="Permalink to this definition">¶</a></dt>
+<dd>Set the active color scheme and configure colors for the three
+prompt subsystems.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.CachedOutput.update">
+<!--[IPython.kernel.core.prompts.CachedOutput.update]--><tt class="descname">update</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.CachedOutput.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="prompt1">
+<h3><a title="IPython.kernel.core.prompts.Prompt1" class="reference internal" href="#IPython.kernel.core.prompts.Prompt1"><tt class="xref docutils literal"><span class="pre">Prompt1</span></tt></a><a class="headerlink" href="#prompt1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.prompts.Prompt1">
+<!--[IPython.kernel.core.prompts.Prompt1]-->class <tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">Prompt1</tt><big>(</big><em>cache</em>, <em>sep='n'</em>, <em>prompt='In</em><span class="optional">[</span>, <em>\#</em><span class="optional">]</span>, <em>: '</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.prompts.BasePrompt" class="reference internal" href="#IPython.kernel.core.prompts.BasePrompt"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.prompts.BasePrompt</span></tt></a></p>
+<p>Input interactive prompt similar to Mathematica&#8217;s.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.Prompt1.__init__">
+<!--[IPython.kernel.core.prompts.Prompt1.__init__]--><tt class="descname">__init__</tt><big>(</big><em>cache</em>, <em>sep='n'</em>, <em>prompt='In</em><span class="optional">[</span>, <em>\#</em><span class="optional">]</span>, <em>: '</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt1.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.Prompt1.auto_rewrite">
+<!--[IPython.kernel.core.prompts.Prompt1.auto_rewrite]--><tt class="descname">auto_rewrite</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt1.auto_rewrite" title="Permalink to this definition">¶</a></dt>
+<dd>Print a string of the form &#8216;&#8212;&gt;&#8217; which lines up with the previous
+input string. Useful for systems which re-write the user input when
+handling automatically special syntaxes.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.Prompt1.set_colors">
+<!--[IPython.kernel.core.prompts.Prompt1.set_colors]--><tt class="descname">set_colors</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt1.set_colors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="prompt2">
+<h3><a title="IPython.kernel.core.prompts.Prompt2" class="reference internal" href="#IPython.kernel.core.prompts.Prompt2"><tt class="xref docutils literal"><span class="pre">Prompt2</span></tt></a><a class="headerlink" href="#prompt2" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.prompts.Prompt2">
+<!--[IPython.kernel.core.prompts.Prompt2]-->class <tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">Prompt2</tt><big>(</big><em>cache</em>, <em>prompt='   .\D.: '</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.prompts.BasePrompt" class="reference internal" href="#IPython.kernel.core.prompts.BasePrompt"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.prompts.BasePrompt</span></tt></a></p>
+<p>Interactive continuation prompt.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.Prompt2.__init__">
+<!--[IPython.kernel.core.prompts.Prompt2.__init__]--><tt class="descname">__init__</tt><big>(</big><em>cache</em>, <em>prompt='   .\D.: '</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt2.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.Prompt2.set_colors">
+<!--[IPython.kernel.core.prompts.Prompt2.set_colors]--><tt class="descname">set_colors</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt2.set_colors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.Prompt2.set_p_str">
+<!--[IPython.kernel.core.prompts.Prompt2.set_p_str]--><tt class="descname">set_p_str</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.Prompt2.set_p_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="promptout">
+<h3><a title="IPython.kernel.core.prompts.PromptOut" class="reference internal" href="#IPython.kernel.core.prompts.PromptOut"><tt class="xref docutils literal"><span class="pre">PromptOut</span></tt></a><a class="headerlink" href="#promptout" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.prompts.PromptOut">
+<!--[IPython.kernel.core.prompts.PromptOut]-->class <tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">PromptOut</tt><big>(</big><em>cache</em>, <em>sep=''</em>, <em>prompt='Out</em><span class="optional">[</span>, <em>\#</em><span class="optional">]</span>, <em>: '</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.PromptOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.prompts.BasePrompt" class="reference internal" href="#IPython.kernel.core.prompts.BasePrompt"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.prompts.BasePrompt</span></tt></a></p>
+<p>Output interactive prompt similar to Mathematica&#8217;s.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.PromptOut.__init__">
+<!--[IPython.kernel.core.prompts.PromptOut.__init__]--><tt class="descname">__init__</tt><big>(</big><em>cache</em>, <em>sep=''</em>, <em>prompt='Out</em><span class="optional">[</span>, <em>\#</em><span class="optional">]</span>, <em>: '</em>, <em>pad_left=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.PromptOut.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.prompts.PromptOut.set_colors">
+<!--[IPython.kernel.core.prompts.PromptOut.set_colors]--><tt class="descname">set_colors</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.PromptOut.set_colors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.core.prompts.multiple_replace">
+<!--[IPython.kernel.core.prompts.multiple_replace]--><tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">multiple_replace</tt><big>(</big><em>dict</em>, <em>text</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.multiple_replace" title="Permalink to this definition">¶</a></dt>
+<dd>Replace in &#8216;text&#8217; all occurences of any key in the given
+dictionary by its corresponding value.  Returns the new string.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.core.prompts.str_safe">
+<!--[IPython.kernel.core.prompts.str_safe]--><tt class="descclassname">IPython.kernel.core.prompts.</tt><tt class="descname">str_safe</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.prompts.str_safe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to a string, without ever raising an exception.</p>
+<p>If str(arg) fails, &lt;ERROR: ... &gt; is returned, where ... is the exception
+error message.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.prompts</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.prompts">Module: <tt class="docutils literal"><span class="pre">kernel.core.prompts</span></tt></a><ul>
+<li><a class="reference external" href="#authors">Authors</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#baseprompt"><tt class="docutils literal"><span class="pre">BasePrompt</span></tt></a></li>
+<li><a class="reference external" href="#cachedoutput"><tt class="docutils literal"><span class="pre">CachedOutput</span></tt></a></li>
+<li><a class="reference external" href="#prompt1"><tt class="docutils literal"><span class="pre">Prompt1</span></tt></a></li>
+<li><a class="reference external" href="#prompt2"><tt class="docutils literal"><span class="pre">Prompt2</span></tt></a></li>
+<li><a class="reference external" href="#promptout"><tt class="docutils literal"><span class="pre">PromptOut</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.output_trap.html" title="previous chapter">kernel.core.output_trap</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.redirector_output_trap.html" title="next chapter">kernel.core.redirector_output_trap</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.prompts.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.redirector_output_trap.html" title="kernel.core.redirector_output_trap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.output_trap.html" title="kernel.core.output_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

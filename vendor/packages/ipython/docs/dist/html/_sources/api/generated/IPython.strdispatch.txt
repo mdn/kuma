@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+strdispatch
+===========
+
+Module: :mod:`strdispatch`
+--------------------------
+Inheritance diagram for ``IPython.strdispatch``:
+
+.. inheritance-diagram:: IPython.strdispatch 
+   :parts: 3
+
+.. automodule:: IPython.strdispatch
+
+.. currentmodule:: IPython.strdispatch
+
+:class:`StrDispatch`
+--------------------
+
+
+.. autoclass:: StrDispatch
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

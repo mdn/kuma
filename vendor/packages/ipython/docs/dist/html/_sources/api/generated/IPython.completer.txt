@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+completer
+=========
+
+Module: :mod:`completer`
+------------------------
+Inheritance diagram for ``IPython.completer``:
+
+.. inheritance-diagram:: IPython.completer 
+   :parts: 3
+
+.. automodule:: IPython.completer
+
+.. currentmodule:: IPython.completer
+
+Classes
+-------
+
+:class:`Completer`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Completer
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPCompleter`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPCompleter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="Management Script Utilities" href="script.html">
+    <link rel="prev" title="Test Utilities" href="test.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="test.html">&laquo; Test Utilities</a></li>
+        <li class="active"><a href="">Debugging Applications</a></li>
+        <li><a href="script.html">Management Script Utilities &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Debugging Applications</a><ul>
+<li><a class="reference external" href="#enabling-the-debugger">Enabling the Debugger</a></li>
+<li><a class="reference external" href="#using-the-debugger">Using the Debugger</a></li>
+<li><a class="reference external" href="#pasting-errors">Pasting Errors</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Debugging Applications<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>Depending on the WSGI gateway/server, exceptions are handled differently.
+But most of the time, exceptions go to stderr or the error log.</p>
+<p>Since this is not the best debugging environment, Werkzeug provides a
+WSGI middleware that renders nice debugging tracebacks, optionally with an
+AJAX based debugger (which allows to execute code in the context of the
+traceback&#8217;s frames).</p>
+<p>The interactive debugger however does not work in forking environments
+which makes it nearly impossible to use on production servers.  Also the
+debugger allows the execution of arbitrary code which makes it a major
+security risk and <strong>must never be used on production machines</strong> because of
+that.</p>
+<div class="section" id="enabling-the-debugger">
+<h2>Enabling the Debugger<a class="headerlink" href="#enabling-the-debugger" title="Permalink to this headline">¶</a></h2>
+<p>You can enable the debugger by wrapping the application in a
+<a title="werkzeug.DebuggedApplication" class="reference internal" href="#werkzeug.DebuggedApplication"><tt class="xref docutils literal"><span class="pre">DebuggedApplication</span></tt></a> middleware.  Additionally there are
+parameters to the <a title="werkzeug.run_simple" class="reference external" href="serving.html#werkzeug.run_simple"><tt class="xref docutils literal"><span class="pre">run_simple</span></tt></a> function to enable it because this
+is a common task during development.</p>
+<dl class="class">
+<dt id="werkzeug.DebuggedApplication">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">DebuggedApplication</tt><big>(</big><em>app</em>, <em>evalex=False</em>, <em>request_key='werkzeug.request'</em>, <em>console_path='/console'</em>, <em>console_init_func=None</em>, <em>show_hidden_frames=False</em><big>)</big><a class="headerlink" href="#werkzeug.DebuggedApplication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables debugging support for a given application:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug.debug</span> <span class="kn">import</span> <span class="n">DebuggedApplication</span>
+<span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">DebuggedApplication</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">evalex</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <cite>evalex</cite> keyword argument allows evaluating expressions in a
+traceback&#8217;s frame context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>app</em> &#8211; the WSGI application to run debugged.</li>
+<li><em>evalex</em> &#8211; enable exception evaluation feature (interactive
+debugging).  This requires a non-forking server.</li>
+<li><em>request_key</em> &#8211; The key that points to the request object in ths
+environment.  This parameter is ignored in current
+versions.</li>
+<li><em>console_path</em> &#8211; the URL for a general purpose console.</li>
+<li><em>console_init_func</em> &#8211; the function that is executed before starting
+the general purpose console.  The return value
+is used as initial namespace.</li>
+<li><em>show_hidden_frames</em> &#8211; by default hidden traceback frames are skipped.
+You can show them by setting this parameter
+to <cite>True</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="using-the-debugger">
+<h2>Using the Debugger<a class="headerlink" href="#using-the-debugger" title="Permalink to this headline">¶</a></h2>
+<p>Once enabled and an error happens during a request you will see a detailed
+traceback instead of a general &#8220;internal server error&#8221;.  If you have the
+<cite>evalex</cite> feature enabled you can also get a traceback for every frame in
+the traceback by clicking on the console icon.</p>
+<p>Once clicked a console opens where you can execute Python code in:</p>
+<div align="center" class="align-center"><img alt="a screenshot of the interactive debugger" class="align-center" src="_images/debug-screenshot.png" /></div>
+<p>Inside the interactive consoles you can execute any kind of Python code.
+Unlike regular Python consoles the output of the object reprs is colored
+and stripped to a reasonable size by default.  If the output is longer
+than what the console decides to display a small plus sign is added to
+the repr and a click will expand the repr.</p>
+<p>To display all variables that are defined in the current frame you can
+use the <cite>dump()</cite> function.  You can call it without arguments to get a
+detailed list of all variables and their values, or with an object as
+argument to get a detailed list of all the attributes it has.</p>
+</div>
+<div class="section" id="pasting-errors">
+<h2>Pasting Errors<a class="headerlink" href="#pasting-errors" title="Permalink to this headline">¶</a></h2>
+<p>If you click on the <cite>Traceback</cite> title the traceback switches over to a text
+based one.  The text based one can be pasted to <a class="reference external" href="http://paste.pocoo.org/">paste.pocoo.org</a> with one
+click.</p>
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

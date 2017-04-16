@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="index.html" />
+    <link rel="next" title="Installation" href="install/index.html" />
+    <link rel="prev" title="IPython Documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="install/index.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="IPython Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="introduction">
+<span id="overview"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>One of Python&#8217;s most useful features is its interactive interpreter.
+This system allows very fast testing of ideas without the overhead of
+creating test files as is typical in most programming languages.
+However, the interpreter supplied with the standard Python distribution
+is somewhat limited for extended interactive use.</p>
+<p>The goal of IPython is to create a comprehensive environment for
+interactive and exploratory computing.  To support this goal, IPython
+has two main components:</p>
+<ul class="simple">
+<li>An enhanced interactive Python shell.</li>
+<li>An architecture for interactive parallel computing.</li>
+</ul>
+<p>All of IPython is open source (released under the revised BSD license).</p>
+</div>
+<div class="section" id="enhanced-interactive-python-shell">
+<h2>Enhanced interactive Python shell<a class="headerlink" href="#enhanced-interactive-python-shell" title="Permalink to this headline">¶</a></h2>
+<p>IPython&#8217;s interactive shell (<strong>ipython</strong>), has the following goals,
+amongst others:</p>
+<ol class="arabic simple">
+<li>Provide an interactive shell superior to Python&#8217;s default. IPython
+has many features for object introspection, system shell access,
+and its own special command system for adding functionality when
+working interactively. It tries to be a very efficient environment
+both for Python code development and for exploration of problems
+using Python objects (in situations like data analysis).</li>
+<li>Serve as an embeddable, ready to use interpreter for your own
+programs. IPython can be started with a single call from inside
+another program, providing access to the current namespace. This
+can be very useful both for debugging purposes and for situations
+where a blend of batch-processing and interactive exploration are
+needed.  New in the 0.9 version of IPython is a reusable wxPython
+based IPython widget.</li>
+<li>Offer a flexible framework which can be used as the base
+environment for other systems with Python as the underlying
+language. Specifically scientific environments like Mathematica,
+IDL and Matlab inspired its design, but similar ideas can be
+useful in many fields.</li>
+<li>Allow interactive testing of threaded graphical toolkits. IPython
+has support for interactive, non-blocking control of GTK, Qt and
+WX applications via special threading flags. The normal Python
+shell can only do this for Tkinter applications.</li>
+</ol>
+<div class="section" id="main-features-of-the-interactive-shell">
+<h3>Main features of the interactive shell<a class="headerlink" href="#main-features-of-the-interactive-shell" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Dynamic object introspection. One can access docstrings, function
+definition prototypes, source code, source files and other details
+of any object accessible to the interpreter with a single
+keystroke (<tt class="docutils literal"><span class="pre">?</span></tt>, and using <tt class="docutils literal"><span class="pre">??</span></tt> provides additional detail).</li>
+<li>Searching through modules and namespaces with <tt class="docutils literal"><span class="pre">*</span></tt> wildcards, both
+when using the <tt class="docutils literal"><span class="pre">?</span></tt> system and via the <tt class="docutils literal"><span class="pre">%psearch</span></tt> command.</li>
+<li>Completion in the local namespace, by typing <tt class="docutils literal"><span class="pre">TAB</span></tt> at the prompt.
+This works for keywords, modules, methods, variables and files in the
+current directory. This is supported via the readline library, and
+full access to configuring readline&#8217;s behavior is provided.
+Custom completers can be implemented easily for different purposes
+(system commands, magic arguments etc.)</li>
+<li>Numbered input/output prompts with command history (persistent
+across sessions and tied to each profile), full searching in this
+history and caching of all input and output.</li>
+<li>User-extensible &#8216;magic&#8217; commands. A set of commands prefixed with
+<tt class="docutils literal"><span class="pre">%</span></tt> is available for controlling IPython itself and provides
+directory control, namespace information and many aliases to
+common system shell commands.</li>
+<li>Alias facility for defining your own system aliases.</li>
+<li>Complete system shell access. Lines starting with <tt class="docutils literal"><span class="pre">!</span></tt> are passed
+directly to the system shell, and using <tt class="docutils literal"><span class="pre">!!</span></tt> or <tt class="docutils literal"><span class="pre">var</span> <span class="pre">=</span> <span class="pre">!cmd</span></tt>
+captures shell output into python variables for further use.</li>
+<li>Background execution of Python commands in a separate thread.
+IPython has an internal job manager called jobs, and a
+convenience backgrounding magic function called <tt class="docutils literal"><span class="pre">%bg</span></tt>.</li>
+<li>The ability to expand python variables when calling the system shell. In a
+shell command, any python variable prefixed with <tt class="docutils literal"><span class="pre">$</span></tt> is expanded. A
+double <tt class="docutils literal"><span class="pre">$$</span></tt> allows passing a literal <tt class="docutils literal"><span class="pre">$</span></tt> to the shell (for access
+to shell and environment variables like <span class="target" id="index-0"></span><strong class="xref">PATH</strong>).</li>
+<li>Filesystem navigation, via a magic <tt class="docutils literal"><span class="pre">%cd</span></tt> command, along with a
+persistent bookmark system (using <tt class="docutils literal"><span class="pre">%bookmark</span></tt>) for fast access to
+frequently visited directories.</li>
+<li>A lightweight persistence framework via the <tt class="docutils literal"><span class="pre">%store</span></tt> command, which
+allows you to save arbitrary Python variables. These get restored
+automatically when your session restarts.</li>
+<li>Automatic indentation (optional) of code as you type (through the
+readline library).</li>
+<li>Macro system for quickly re-executing multiple lines of previous
+input with a single name. Macros can be stored persistently via
+<tt class="docutils literal"><span class="pre">%store</span></tt> and edited via <tt class="docutils literal"><span class="pre">%edit</span></tt>.</li>
+<li>Session logging (you can then later use these logs as code in your
+programs). Logs can optionally timestamp all input, and also store
+session output (marked as comments, so the log remains valid
+Python source code).</li>
+<li>Session restoring: logs can be replayed to restore a previous
+session to the state where you left it.</li>
+<li>Verbose and colored exception traceback printouts. Easier to parse
+visually, and in verbose mode they produce a lot of useful
+debugging information (basically a terminal version of the cgitb
+module).</li>
+<li>Auto-parentheses: callable objects can be executed without
+parentheses: <tt class="docutils literal"><span class="pre">sin</span> <span class="pre">3</span></tt> is automatically converted to <tt class="docutils literal"><span class="pre">sin(3)</span></tt>.</li>
+<li>Auto-quoting: using <tt class="docutils literal"><span class="pre">,</span></tt>, or <tt class="docutils literal"><span class="pre">;</span></tt> as the first character forces
+auto-quoting of the rest of the line: <tt class="docutils literal"><span class="pre">,my_function</span> <span class="pre">a</span> <span class="pre">b</span></tt> becomes
+automatically <tt class="docutils literal"><span class="pre">my_function(&quot;a&quot;,&quot;b&quot;)</span></tt>, while <tt class="docutils literal"><span class="pre">;my_function</span> <span class="pre">a</span> <span class="pre">b</span></tt>
+becomes <tt class="docutils literal"><span class="pre">my_function(&quot;a</span> <span class="pre">b&quot;)</span></tt>.</li>
+<li>Extensible input syntax. You can define filters that pre-process
+user input to simplify input in special situations. This allows
+for example pasting multi-line code fragments which start with
+<tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt> or <tt class="docutils literal"><span class="pre">...</span></tt> such as those from other python sessions or the
+standard Python documentation.</li>
+<li>Flexible configuration system. It uses a configuration file which
+allows permanent setting of all command-line options, module
+loading, code and file execution. The system allows recursive file
+inclusion, so you can have a base file with defaults and layers
+which load other customizations for particular projects.</li>
+<li>Embeddable. You can call IPython as a python shell inside your own
+python programs. This can be used both for debugging code or for
+providing interactive abilities to your programs with knowledge
+about the local namespaces (very useful in debugging and data
+analysis situations).</li>
+<li>Easy debugger access. You can set IPython to call up an enhanced version of
+the Python debugger (pdb) every time there is an uncaught exception. This
+drops you inside the code which triggered the exception with all the data
+live and it is possible to navigate the stack to rapidly isolate the source
+of a bug. The <tt class="docutils literal"><span class="pre">%run</span></tt> magic command (with the <tt class="docutils literal"><span class="pre">-d</span></tt> option) can run
+any script under pdb&#8217;s control, automatically setting initial breakpoints for
+you.  This version of pdb has IPython-specific improvements, including
+tab-completion and traceback coloring support. For even easier debugger
+access, try <tt class="docutils literal"><span class="pre">%debug</span></tt> after seeing an exception. winpdb is also
+supported, see ipy_winpdb extension.</li>
+<li>Profiler support. You can run single statements (similar to
+<tt class="docutils literal"><span class="pre">profile.run()</span></tt>) or complete programs under the profiler&#8217;s control.
+While this is possible with standard cProfile or profile modules,
+IPython wraps this functionality with magic commands (see <tt class="docutils literal"><span class="pre">%prun</span></tt>
+and <tt class="docutils literal"><span class="pre">%run</span> <span class="pre">-p</span></tt>) convenient for rapid interactive work.</li>
+<li>Doctest support. The special <tt class="docutils literal"><span class="pre">%doctest_mode</span></tt> command toggles a mode
+that allows you to paste existing doctests (with leading <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt>
+prompts and whitespace) and uses doctest-compatible prompts and
+output, so you can use IPython sessions as doctest code.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="interactive-parallel-computing">
+<h2>Interactive parallel computing<a class="headerlink" href="#interactive-parallel-computing" title="Permalink to this headline">¶</a></h2>
+<p>Increasingly, parallel computer hardware, such as multicore CPUs, clusters and
+supercomputers, is becoming ubiquitous. Over the last 3 years, we have
+developed an architecture within IPython that allows such hardware to be used
+quickly and easily from Python. Moreover, this architecture is designed to
+support interactive and collaborative parallel computing.</p>
+<p>The main features of this system are:</p>
+<ul class="simple">
+<li>Quickly parallelize Python code from an interactive Python/IPython session.</li>
+<li>A flexible and dynamic process model that be deployed on anything from
+multicore workstations to supercomputers.</li>
+<li>An architecture that supports many different styles of parallelism, from
+message passing to task farming.  And all of these styles can be handled
+interactively.</li>
+<li>Both blocking and fully asynchronous interfaces.</li>
+<li>High level APIs that enable many things to be parallelized in a few lines
+of code.</li>
+<li>Write parallel code that will run unchanged on everything from multicore
+workstations to supercomputers.</li>
+<li>Full integration with Message Passing libraries (MPI).</li>
+<li>Capabilities based security model with full encryption of network connections.</li>
+<li>Share live parallel jobs with other users securely.  We call this
+collaborative parallel computing.</li>
+<li>Dynamically load balanced task farming system.</li>
+<li>Robust error handling.  Python exceptions raised in parallel execution are
+gathered and presented to the top-level code.</li>
+</ul>
+<p>For more information, see our <a class="reference external" href="parallel/index.html#parallel-index"><em>overview</em></a> of using IPython
+for parallel computing.</p>
+<div class="section" id="portability-and-python-requirements">
+<h3>Portability and Python requirements<a class="headerlink" href="#portability-and-python-requirements" title="Permalink to this headline">¶</a></h3>
+<p>As of the 0.9 release, IPython requires Python 2.4 or greater.  We have
+not begun to test IPython on Python 2.6 or 3.0, but we expect it will
+work with some minor changes.</p>
+<p>IPython is known to work on the following operating systems:</p>
+<blockquote>
+<ul class="simple">
+<li>Linux</li>
+<li>Most other Unix-like OSs (AIX, Solaris, BSD, etc.)</li>
+<li>Mac OS X</li>
+<li>Windows (CygWin, XP, Vista, etc.)</li>
+</ul>
+</blockquote>
+<p>See <a class="reference external" href="install/index.html#install-index"><em>here</em></a> for instructions on how to install IPython.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Introduction</a><ul>
+<li><a class="reference external" href="#id1">Overview</a></li>
+<li><a class="reference external" href="#enhanced-interactive-python-shell">Enhanced interactive Python shell</a><ul>
+<li><a class="reference external" href="#main-features-of-the-interactive-shell">Main features of the interactive shell</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#interactive-parallel-computing">Interactive parallel computing</a><ul>
+<li><a class="reference external" href="#portability-and-python-requirements">Portability and Python requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">IPython Documentation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="install/index.html" title="next chapter">Installation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/overview.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="install/index.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="IPython Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

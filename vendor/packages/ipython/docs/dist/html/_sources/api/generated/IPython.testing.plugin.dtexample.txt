@@ -1,0 +1,32 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.plugin.dtexample
+========================
+
+Module: :mod:`testing.plugin.dtexample`
+---------------------------------------
+.. automodule:: IPython.testing.plugin.dtexample
+
+.. currentmodule:: IPython.testing.plugin.dtexample
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.plugin.dtexample.ipfunc
+
+
+.. autofunction:: IPython.testing.plugin.dtexample.iprand
+
+
+.. autofunction:: IPython.testing.plugin.dtexample.iprand_all
+
+
+.. autofunction:: IPython.testing.plugin.dtexample.pyfunc
+
+
+.. autofunction:: IPython.testing.plugin.dtexample.random_all
+
+
+.. autofunction:: IPython.testing.plugin.dtexample.ranfunc
+

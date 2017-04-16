@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.util &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="tools.growl" href="IPython.tools.growl.html" />
+    <link rel="prev" title="testing.tools" href="IPython.testing.tools.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.tools.growl.html" title="tools.growl"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.tools.html" title="testing.tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-util">
+<h1>testing.util<a class="headerlink" href="#testing-util" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.util">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.util</span></tt><a class="headerlink" href="#module-IPython.testing.util" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.testing.util</span></tt>:</p>
+<img src="../../_images/inheritanceeb8335e7cd.png" usemap="#inheritanceeb8335e7cd" class="inheritance"/><map id="inheritanceeb8335e7cd" name="inheritanceeb8335e7cd">
+<area shape="rect" href="#IPython.testing.util.DeferredTestCase" title="testing.util.DeferredTestCase" alt="" coords="573,5,763,30"/>
+</map>
+<p>This file contains utility classes for performing tests with Deferreds.</p>
+</div>
+<div class="section" id="deferredtestcase">
+<h2><a title="IPython.testing.util.DeferredTestCase" class="reference internal" href="#IPython.testing.util.DeferredTestCase"><tt class="xref docutils literal"><span class="pre">DeferredTestCase</span></tt></a><a class="headerlink" href="#deferredtestcase" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.testing.util.DeferredTestCase">
+<!--[IPython.testing.util.DeferredTestCase]-->class <tt class="descclassname">IPython.testing.util.</tt><tt class="descname">DeferredTestCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#IPython.testing.util.DeferredTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">twisted.trial.unittest.TestCase</span></tt></p>
+<dl class="method">
+<dt id="IPython.testing.util.DeferredTestCase.__init__">
+<!--[IPython.testing.util.DeferredTestCase.__init__]--><tt class="descname">__init__</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#IPython.testing.util.DeferredTestCase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an asynchronous test case for C{methodName}.</p>
+<p>&#64;param methodName: The name of a method on C{self}. This method should
+be a unit test. That is, it should be a short method that calls some of
+the assert* methods. If C{methodName} is unspecified, L{runTest} will
+be used as the test method. This is mostly useful for testing Trial.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.testing.util.DeferredTestCase.assertDeferredEquals">
+<!--[IPython.testing.util.DeferredTestCase.assertDeferredEquals]--><tt class="descname">assertDeferredEquals</tt><big>(</big><em>deferred</em>, <em>expectedResult</em>, <em>chainDeferred=None</em><big>)</big><a class="headerlink" href="#IPython.testing.util.DeferredTestCase.assertDeferredEquals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls assertEquals on the result of the deferred and expectedResult.</p>
+<p>chainDeferred can be used to pass in previous Deferred objects that
+have tests being run on them.  This chaining of Deferred&#8217;s in tests
+is needed to insure that all Deferred&#8217;s are cleaned up at the end of
+a test.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.testing.util.DeferredTestCase.assertDeferredRaises">
+<!--[IPython.testing.util.DeferredTestCase.assertDeferredRaises]--><tt class="descname">assertDeferredRaises</tt><big>(</big><em>deferred</em>, <em>expectedException</em>, <em>chainDeferred=None</em><big>)</big><a class="headerlink" href="#IPython.testing.util.DeferredTestCase.assertDeferredRaises" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls assertRaises on the Failure of the deferred and expectedException.</p>
+<p>chainDeferred can be used to pass in previous Deferred objects that
+have tests being run on them.  This chaining of Deferred&#8217;s in tests
+is needed to insure that all Deferred&#8217;s are cleaned up at the end of
+a test.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.util</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.util">Module: <tt class="docutils literal"><span class="pre">testing.util</span></tt></a></li>
+<li><a class="reference external" href="#deferredtestcase"><tt class="docutils literal"><span class="pre">DeferredTestCase</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.tools.html" title="previous chapter">testing.tools</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.tools.growl.html" title="next chapter">tools.growl</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.util.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.tools.growl.html" title="tools.growl"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.tools.html" title="testing.tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

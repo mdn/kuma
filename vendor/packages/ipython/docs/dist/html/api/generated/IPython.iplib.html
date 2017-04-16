@@ -1,0 +1,1040 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>iplib &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="ipmaker" href="IPython.ipmaker.html" />
+    <link rel="prev" title="ipapi" href="IPython.ipapi.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipmaker.html" title="ipmaker"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipapi.html" title="ipapi"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="iplib">
+<h1>iplib<a class="headerlink" href="#iplib" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.iplib">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">iplib</span></tt><a class="headerlink" href="#module-IPython.iplib" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.iplib</span></tt>:</p>
+<img src="../../_images/inheritance282b13d4e8.png" usemap="#inheritance282b13d4e8" class="inheritance"/><map id="inheritance282b13d4e8" name="inheritance282b13d4e8">
+<area shape="rect" href="#IPython.iplib.SpaceInInput" title="IPython.iplib.SpaceInInput" alt="" coords="5,309,189,336"/>
+<area shape="rect" href="IPython.Magic.html#IPython.Magic.Magic" title="IPython.Magic.Magic" alt="" coords="23,259,172,285"/>
+<area shape="rect" href="#IPython.iplib.InteractiveShell" title="IPython.iplib.InteractiveShell" alt="" coords="237,259,437,285"/>
+<area shape="rect" href="#IPython.iplib.Quitter" title="IPython.iplib.Quitter" alt="" coords="25,208,169,235"/>
+<area shape="rect" href="#IPython.iplib.SyntaxTB" title="IPython.iplib.SyntaxTB" alt="" coords="487,157,647,184"/>
+<area shape="rect" href="IPython.ultraTB.html#IPython.ultraTB.ListTB" title="IPython.ultraTB.ListTB" alt="" coords="257,157,417,184"/>
+<area shape="rect" href="IPython.ultraTB.html#IPython.ultraTB.TBTools" title="IPython.ultraTB.TBTools" alt="" coords="13,157,181,184"/>
+<area shape="rect" href="#IPython.iplib.Bunch" title="IPython.iplib.Bunch" alt="" coords="27,107,168,133"/>
+<area shape="rect" href="#IPython.iplib.Undefined" title="IPython.iplib.Undefined" alt="" coords="15,56,180,83"/>
+<area shape="rect" href="#IPython.iplib.InputList" title="IPython.iplib.InputList" alt="" coords="20,5,175,32"/>
+</map>
+<p>IPython &#8211; An enhanced Interactive Python</p>
+<p>Requires Python 2.4 or newer.</p>
+<p>This file contains all the classes and helper functions specific to IPython.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bunch">
+<h3><a title="IPython.iplib.Bunch" class="reference internal" href="#IPython.iplib.Bunch"><tt class="xref docutils literal"><span class="pre">Bunch</span></tt></a><a class="headerlink" href="#bunch" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.Bunch">
+<!--[IPython.iplib.Bunch]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">Bunch</tt><a class="headerlink" href="#IPython.iplib.Bunch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="inputlist">
+<h3><a title="IPython.iplib.InputList" class="reference internal" href="#IPython.iplib.InputList"><tt class="xref docutils literal"><span class="pre">InputList</span></tt></a><a class="headerlink" href="#inputlist" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.InputList">
+<!--[IPython.iplib.InputList]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">InputList</tt><a class="headerlink" href="#IPython.iplib.InputList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">list</span></tt></p>
+<p>Class to store user input.</p>
+<p>It&#8217;s basically a list, but slices return a string instead of a list, thus
+allowing things like (assuming &#8216;In&#8217; is an instance):</p>
+<p>exec In[4:7]</p>
+<p>or</p>
+<p>exec In[5:9] + In[14] + In[21:25]</p>
+<dl class="method">
+<dt id="IPython.iplib.InputList.__init__">
+<!--[IPython.iplib.InputList.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InputList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interactiveshell">
+<h3><a title="IPython.iplib.InteractiveShell" class="reference internal" href="#IPython.iplib.InteractiveShell"><tt class="xref docutils literal"><span class="pre">InteractiveShell</span></tt></a><a class="headerlink" href="#interactiveshell" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.InteractiveShell">
+<!--[IPython.iplib.InteractiveShell]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">InteractiveShell</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>banner2=''</em>, <em>custom_exceptions=(()</em>, <em>None)</em>, <em>embedded=False</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt>, <a title="IPython.Magic.Magic" class="reference external" href="IPython.Magic.html#IPython.Magic.Magic"><tt class="xref docutils literal"><span class="pre">IPython.Magic.Magic</span></tt></a></p>
+<p>An enhanced console for Python.</p>
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.__init__">
+<!--[IPython.iplib.InteractiveShell.__init__]--><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>banner2=''</em>, <em>custom_exceptions=(()</em>, <em>None)</em>, <em>embedded=False</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.add_builtins">
+<!--[IPython.iplib.InteractiveShell.add_builtins]--><tt class="descname">add_builtins</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.add_builtins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store ipython references into the builtin namespace.</p>
+<p>Some parts of ipython operate via builtins injected here, which hold a
+reference to IPython itself.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.alias_table_validate">
+<!--[IPython.iplib.InteractiveShell.alias_table_validate]--><tt class="descname">alias_table_validate</tt><big>(</big><em>verbose=0</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.alias_table_validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update information about the alias table.</p>
+<p>In particular, make sure no Python keywords/builtins are in it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.ask_exit">
+<!--[IPython.iplib.InteractiveShell.ask_exit]--><tt class="descname">ask_exit</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.ask_exit" title="Permalink to this definition">¶</a></dt>
+<dd>Call for exiting. Can be overiden and used as a callback.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.ask_yes_no">
+<!--[IPython.iplib.InteractiveShell.ask_yes_no]--><tt class="descname">ask_yes_no</tt><big>(</big><em>prompt</em>, <em>default=True</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.ask_yes_no" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.atexit_operations">
+<!--[IPython.iplib.InteractiveShell.atexit_operations]--><tt class="descname">atexit_operations</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.atexit_operations" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will be executed at the time of exit.</p>
+<p>Saving of persistent data should be performed here.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.autoindent_update">
+<!--[IPython.iplib.InteractiveShell.autoindent_update]--><tt class="descname">autoindent_update</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.autoindent_update" title="Permalink to this definition">¶</a></dt>
+<dd>Keep track of the indent level.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.cache_main_mod">
+<!--[IPython.iplib.InteractiveShell.cache_main_mod]--><tt class="descname">cache_main_mod</tt><big>(</big><em>ns</em>, <em>fname</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.cache_main_mod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cache a main module&#8217;s namespace.</p>
+<p>When scripts are executed via %run, we must keep a reference to the
+namespace of their __main__ module (a FakeModule instance) around so
+that Python doesn&#8217;t clear it, rendering objects defined therein
+useless.</p>
+<p>This method keeps said reference in a private dict, keyed by the
+absolute path of the module object (which corresponds to the script
+path).  This way, for multiple executions of the same script we only
+keep one copy of the namespace (the last one), thus preventing memory
+leaks from old references while allowing the objects from the last
+execution to be accessible.</p>
+<p>Note: we can not allow the actual FakeModule instances to be deleted,
+because of how Python tears down modules (it hard-sets all their
+references to None without regard for reference counts).  This method
+must therefore make a <em>copy</em> of the given namespace, to allow the
+original module&#8217;s __dict__ to be cleared and reused.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ns</strong> : a namespace (a dict, typically)</p>
+<blockquote class="last">
+<dl class="docutils">
+<dt>fname <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Filename associated with the namespace.</p>
+</dd>
+</dl>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>In [10]: import IPython</p>
+<p>In [11]: _ip.IP.cache_main_mod(IPython.__dict__,IPython.__file__)</p>
+<p>In [12]: IPython.__file__ in _ip.IP._main_ns_cache
+Out[12]: True</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.call_alias">
+<!--[IPython.iplib.InteractiveShell.call_alias]--><tt class="descname">call_alias</tt><big>(</big><em>alias</em>, <em>rest=''</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.call_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call an alias given its name and the rest of the line.</p>
+<p>This is only used to provide backwards compatibility for users of
+ipalias(), use of which is not recommended for anymore.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.iplib.InteractiveShell.call_pdb">
+<!--[IPython.iplib.InteractiveShell.call_pdb]--><tt class="descname">call_pdb</tt><a class="headerlink" href="#IPython.iplib.InteractiveShell.call_pdb" title="Permalink to this definition">¶</a></dt>
+<dd>Control auto-activation of pdb at exceptions</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.clean_builtins">
+<!--[IPython.iplib.InteractiveShell.clean_builtins]--><tt class="descname">clean_builtins</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.clean_builtins" title="Permalink to this definition">¶</a></dt>
+<dd>Remove any builtins which might have been added by add_builtins, or
+restore overwritten ones to their previous values.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.clear_main_mod_cache">
+<!--[IPython.iplib.InteractiveShell.clear_main_mod_cache]--><tt class="descname">clear_main_mod_cache</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.clear_main_mod_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the cache of main modules.</p>
+<p>Mainly for use by utilities like %reset.</p>
+<p class="rubric">Examples</p>
+<p>In [15]: import IPython</p>
+<p>In [16]: _ip.IP.cache_main_mod(IPython.__dict__,IPython.__file__)</p>
+<p>In [17]: len(_ip.IP._main_ns_cache) &gt; 0
+Out[17]: True</p>
+<p>In [18]: _ip.IP.clear_main_mod_cache()</p>
+<p>In [19]: len(_ip.IP._main_ns_cache) == 0
+Out[19]: True</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.complete">
+<!--[IPython.iplib.InteractiveShell.complete]--><tt class="descname">complete</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a sorted list of all possible completions on text.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>text: a string of text to be completed on.</li>
+</ul>
+</blockquote>
+<p>This is a wrapper around the completion mechanism, similar to what
+readline does at the command line when the TAB key is hit.  By
+exposing it as a method, it can be used by other non-readline
+environments (such as GUIs) for text completion.</p>
+<p>Simple usage example:</p>
+<p>In [7]: x = &#8216;hello&#8217;</p>
+<p>In [8]: x
+Out[8]: &#8216;hello&#8217;</p>
+<p>In [9]: print x
+hello</p>
+<p>In [10]: _ip.IP.complete(&#8216;x.l&#8217;)
+Out[10]: [&#8216;x.ljust&#8217;, &#8216;x.lower&#8217;, &#8216;x.lstrip&#8217;]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.debugger">
+<!--[IPython.iplib.InteractiveShell.debugger]--><tt class="descname">debugger</tt><big>(</big><em>force=False</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.debugger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the pydb/pdb debugger.</p>
+<p>Keywords:</p>
+<blockquote>
+<ul class="simple">
+<li>force(False): by default, this routine checks the instance call_pdb</li>
+</ul>
+<p>flag and does not actually invoke the debugger if the flag is false.
+The &#8216;force&#8217; option forces the debugger to activate even if the flag
+is false.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.edit_syntax_error">
+<!--[IPython.iplib.InteractiveShell.edit_syntax_error]--><tt class="descname">edit_syntax_error</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.edit_syntax_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bottom half of the syntax error handler called in the main loop.</p>
+<p>Loop until syntax error is fixed or user cancels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.embed_mainloop">
+<!--[IPython.iplib.InteractiveShell.embed_mainloop]--><tt class="descname">embed_mainloop</tt><big>(</big><em>header=''</em>, <em>local_ns=None</em>, <em>global_ns=None</em>, <em>stack_depth=0</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.embed_mainloop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embeds IPython into a running python program.</p>
+<p>Input:</p>
+<blockquote>
+<ul class="simple">
+<li>header: An optional header message can be specified.</li>
+<li>local_ns, global_ns: working namespaces. If given as None, the</li>
+</ul>
+<p>IPython-initialized one is updated with __main__.__dict__, so that
+program variables become visible but user-specific configuration
+remains possible.</p>
+<ul class="simple">
+<li>stack_depth: specifies how many levels in the stack to go to</li>
+</ul>
+<p>looking for namespaces (when local_ns and global_ns are None).  This
+allows an intermediate caller to make sure that this function gets
+the namespace from the intended level in the stack.  By default (0)
+it will get its locals and globals from the immediate caller.</p>
+</blockquote>
+<p>Warning: it&#8217;s possible to use this in a program which is being run by
+IPython itself (via %run), but some funny things will happen (a few
+globals get overwritten). In the future this will be cleaned up, as
+there is no fundamental reason why it can&#8217;t work perfectly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.excepthook">
+<!--[IPython.iplib.InteractiveShell.excepthook]--><tt class="descname">excepthook</tt><big>(</big><em>etype</em>, <em>value</em>, <em>tb</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.excepthook" title="Permalink to this definition">¶</a></dt>
+<dd><p>One more defense for GUI apps that call sys.excepthook.</p>
+<p>GUI frameworks like wxPython trap exceptions and call
+sys.excepthook themselves.  I guess this is a feature that
+enables them to keep running after exceptions that would
+otherwise kill their mainloop. This is a bother for IPython
+which excepts to catch all of the program exceptions with a try:
+except: statement.</p>
+<p>Normally, IPython sets sys.excepthook to a CrashHandler instance, so if
+any app directly invokes sys.excepthook, it will look to the user like
+IPython crashed.  In order to work around this, we can disable the
+CrashHandler and replace it with this excepthook instead, which prints a
+regular traceback using our InteractiveTB.  In this fashion, apps which
+call sys.excepthook will generate a regular-looking exception from
+IPython, and the CrashHandler will only be triggered by real IPython
+crashes.</p>
+<p>This hook should be used sparingly, only in places which are not likely
+to be true IPython errors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.exec_init_cmd">
+<!--[IPython.iplib.InteractiveShell.exec_init_cmd]--><tt class="descname">exec_init_cmd</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.exec_init_cmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a command given at the command line.</p>
+<p>This emulates Python&#8217;s -c option.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.exit">
+<!--[IPython.iplib.InteractiveShell.exit]--><tt class="descname">exit</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle interactive exit.</p>
+<p>This method calls the ask_exit callback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.expand_aliases">
+<!--[IPython.iplib.InteractiveShell.expand_aliases]--><tt class="descname">expand_aliases</tt><big>(</big><em>fn</em>, <em>rest</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.expand_aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand multiple levels of aliases:</p>
+<p>if:</p>
+<p>alias foo bar /tmp
+alias baz foo</p>
+<p>then:</p>
+<p>baz huhhahhei -&gt; bar /tmp huhhahhei</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.getapi">
+<!--[IPython.iplib.InteractiveShell.getapi]--><tt class="descname">getapi</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.getapi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an IPApi object for this shell instance</p>
+<p>Getting an IPApi object is always preferable to accessing the shell
+directly, but this holds true especially for extensions.</p>
+<p>It should always be possible to implement an extension with IPApi
+alone. If not, contact maintainer to request an addition.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_alias">
+<!--[IPython.iplib.InteractiveShell.handle_alias]--><tt class="descname">handle_alias</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_alias" title="Permalink to this definition">¶</a></dt>
+<dd>Handle alias input lines.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_auto">
+<!--[IPython.iplib.InteractiveShell.handle_auto]--><tt class="descname">handle_auto</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_auto" title="Permalink to this definition">¶</a></dt>
+<dd>Hande lines which can be auto-executed, quoting if requested.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_emacs">
+<!--[IPython.iplib.InteractiveShell.handle_emacs]--><tt class="descname">handle_emacs</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_emacs" title="Permalink to this definition">¶</a></dt>
+<dd>Handle input lines marked by python-mode.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_help">
+<!--[IPython.iplib.InteractiveShell.handle_help]--><tt class="descname">handle_help</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to get some help for the object.</p>
+<p>obj? or ?obj   -&gt; basic information.
+obj?? or ??obj -&gt; more details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_magic">
+<!--[IPython.iplib.InteractiveShell.handle_magic]--><tt class="descname">handle_magic</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_magic" title="Permalink to this definition">¶</a></dt>
+<dd>Execute magic functions.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_normal">
+<!--[IPython.iplib.InteractiveShell.handle_normal]--><tt class="descname">handle_normal</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_normal" title="Permalink to this definition">¶</a></dt>
+<dd>Handle normal input lines. Use as a template for handlers.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.handle_shell_escape">
+<!--[IPython.iplib.InteractiveShell.handle_shell_escape]--><tt class="descname">handle_shell_escape</tt><big>(</big><em>line_info</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.handle_shell_escape" title="Permalink to this definition">¶</a></dt>
+<dd>Execute the line in a shell, empty return value</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.history_saving_wrapper">
+<!--[IPython.iplib.InteractiveShell.history_saving_wrapper]--><tt class="descname">history_saving_wrapper</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.history_saving_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap func for readline history saving</p>
+<p>Convert func into callable that saves &amp; restores
+history around the call</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.indent_current_str">
+<!--[IPython.iplib.InteractiveShell.indent_current_str]--><tt class="descname">indent_current_str</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.indent_current_str" title="Permalink to this definition">¶</a></dt>
+<dd>return the current level of indentation as a string</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.init_auto_alias">
+<!--[IPython.iplib.InteractiveShell.init_auto_alias]--><tt class="descname">init_auto_alias</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.init_auto_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define some aliases automatically.</p>
+<p>These are ALL parameter-less aliases</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.init_namespaces">
+<!--[IPython.iplib.InteractiveShell.init_namespaces]--><tt class="descname">init_namespaces</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.init_namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize all user-visible namespaces to their minimum defaults.</p>
+<p>Certain history lists are also initialized here, as they effectively
+act as user namespaces.</p>
+<p class="rubric">Notes</p>
+<p>All data structures here are only filled in, they are NOT reset by this
+method.  If they were not empty before, data will simply be added to
+therm.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.init_readline">
+<!--[IPython.iplib.InteractiveShell.init_readline]--><tt class="descname">init_readline</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.init_readline" title="Permalink to this definition">¶</a></dt>
+<dd>Command history completion/saving/reloading.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.interact">
+<!--[IPython.iplib.InteractiveShell.interact]--><tt class="descname">interact</tt><big>(</big><em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.interact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closely emulate the interactive Python console.</p>
+<p>The optional banner argument specify the banner to print
+before the first interaction; by default it prints a banner
+similar to the one printed by the real Python interpreter,
+followed by the current class name in parentheses (so as not
+to confuse this with the real interpreter &#8211; since it&#8217;s so
+close!).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.interact_handle_input">
+<!--[IPython.iplib.InteractiveShell.interact_handle_input]--><tt class="descname">interact_handle_input</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.interact_handle_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle the input line (in read-eval-print loop)</p>
+<p>Provided for those who want to implement their own read-eval-print loop (e.g. GUIs), not 
+used in standard IPython flow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.interact_prompt">
+<!--[IPython.iplib.InteractiveShell.interact_prompt]--><tt class="descname">interact_prompt</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.interact_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the prompt (in read-eval-print loop)</p>
+<p>Provided for those who want to implement their own read-eval-print loop (e.g. GUIs), not 
+used in standard IPython flow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.interact_with_readline">
+<!--[IPython.iplib.InteractiveShell.interact_with_readline]--><tt class="descname">interact_with_readline</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.interact_with_readline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Demo of using interact_handle_input, interact_prompt</p>
+<p>This is the main read-eval-print loop. If you need to implement your own (e.g. for GUI),
+it should work like this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.ipalias">
+<!--[IPython.iplib.InteractiveShell.ipalias]--><tt class="descname">ipalias</tt><big>(</big><em>arg_s</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.ipalias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call an alias by name.</p>
+<p>Input: a string containing the name of the alias to call and any
+additional arguments to be passed to the magic.</p>
+<p>ipalias(&#8216;name -opt foo bar&#8217;) is equivalent to typing at the ipython
+prompt:</p>
+<p>In[1]: name -opt foo bar</p>
+<p>To call an alias without arguments, simply use ipalias(&#8216;name&#8217;).</p>
+<p>This provides a proper Python function to call IPython&#8217;s aliases in any
+valid Python code you can type at the interpreter, including loops and
+compound statements.  It is added by IPython to the Python builtin
+namespace upon initialization.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.ipmagic">
+<!--[IPython.iplib.InteractiveShell.ipmagic]--><tt class="descname">ipmagic</tt><big>(</big><em>arg_s</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.ipmagic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a magic function by name.</p>
+<p>Input: a string containing the name of the magic function to call and any
+additional arguments to be passed to the magic.</p>
+<p>ipmagic(&#8216;name -opt foo bar&#8217;) is equivalent to typing at the ipython
+prompt:</p>
+<p>In[1]: %name -opt foo bar</p>
+<p>To call a magic without arguments, simply use ipmagic(&#8216;name&#8217;).</p>
+<p>This provides a proper Python function to call IPython&#8217;s magics in any
+valid Python code you can type at the interpreter, including loops and
+compound statements.  It is added by IPython to the Python builtin
+namespace upon initialization.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.ipsystem">
+<!--[IPython.iplib.InteractiveShell.ipsystem]--><tt class="descname">ipsystem</tt><big>(</big><em>arg_s</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.ipsystem" title="Permalink to this definition">¶</a></dt>
+<dd>Make a system call, using IPython.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.mainloop">
+<!--[IPython.iplib.InteractiveShell.mainloop]--><tt class="descname">mainloop</tt><big>(</big><em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.mainloop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the local namespace and starts the mainloop.</p>
+<p>If an optional banner argument is given, it will override the
+internally created default banner.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.mktempfile">
+<!--[IPython.iplib.InteractiveShell.mktempfile]--><tt class="descname">mktempfile</tt><big>(</big><em>data=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.mktempfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new tempfile and return its filename.</p>
+<p>This makes a call to tempfile.mktemp, but it registers the created
+filename internally so ipython cleans it up at exit time.</p>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>data(None): if data is given, it gets written out to the temp file</li>
+</ul>
+<p>immediately, and the file is closed again.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.multiline_prefilter">
+<!--[IPython.iplib.InteractiveShell.multiline_prefilter]--><tt class="descname">multiline_prefilter</tt><big>(</big><em>line</em>, <em>continue_prompt</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.multiline_prefilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run _prefilter for each line of input</p>
+<p>Covers cases where there are multiple lines in the user entry,
+which is the case when the user goes back to a multiline history
+entry and presses enter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.new_main_mod">
+<!--[IPython.iplib.InteractiveShell.new_main_mod]--><tt class="descname">new_main_mod</tt><big>(</big><em>ns=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.new_main_mod" title="Permalink to this definition">¶</a></dt>
+<dd>Return a new &#8216;main&#8217; module object for user code execution.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.post_config_initialization">
+<!--[IPython.iplib.InteractiveShell.post_config_initialization]--><tt class="descname">post_config_initialization</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.post_config_initialization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post configuration init method</p>
+<p>This is called after the configuration files have been processed to
+&#8216;finalize&#8217; the initialization.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.pre_config_initialization">
+<!--[IPython.iplib.InteractiveShell.pre_config_initialization]--><tt class="descname">pre_config_initialization</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.pre_config_initialization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pre-configuration init method</p>
+<p>This is called before the configuration files are processed to
+prepare the services the config files might need.</p>
+<p>self.rc already has reasonable default values at this point.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.pre_readline">
+<!--[IPython.iplib.InteractiveShell.pre_readline]--><tt class="descname">pre_readline</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.pre_readline" title="Permalink to this definition">¶</a></dt>
+<dd><p>readline hook to be used at the start of each line.</p>
+<p>Currently it handles auto-indent only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.prefilter">
+<!--[IPython.iplib.InteractiveShell.prefilter]--><tt class="descname">prefilter</tt><big>(</big><em>line</em>, <em>continue_prompt</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.prefilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run _prefilter for each line of input</p>
+<p>Covers cases where there are multiple lines in the user entry,
+which is the case when the user goes back to a multiline history
+entry and presses enter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.push">
+<!--[IPython.iplib.InteractiveShell.push]--><tt class="descname">push</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a line to the interpreter.</p>
+<p>The line should not have a trailing newline; it may have
+internal newlines.  The line is appended to a buffer and the
+interpreter&#8217;s runsource() method is called with the
+concatenated contents of the buffer as source.  If this
+indicates that the command was executed or invalid, the buffer
+is reset; otherwise, the command is incomplete, and the buffer
+is left as it was after the line was appended.  The return
+value is 1 if more input is required, 0 if the line was dealt
+with in some way (this is the same as runsource()).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.raw_input">
+<!--[IPython.iplib.InteractiveShell.raw_input]--><tt class="descname">raw_input</tt><big>(</big><em>prompt=''</em>, <em>continue_prompt=False</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.raw_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a prompt and read a line.</p>
+<p>The returned line does not include the trailing newline.
+When the user enters the EOF key sequence, EOFError is raised.</p>
+<p>Optional inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>prompt(&#8216;&#8217;): a string to be printed to prompt the user.</li>
+<li>continue_prompt(False): whether this line is the first one or a</li>
+</ul>
+<p>continuation in a sequence of inputs.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.rc_set_toggle">
+<!--[IPython.iplib.InteractiveShell.rc_set_toggle]--><tt class="descname">rc_set_toggle</tt><big>(</big><em>rc_field</em>, <em>value=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.rc_set_toggle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set or toggle a field in IPython&#8217;s rc config. structure.</p>
+<p>If called with no arguments, it acts as a toggle.</p>
+<p>If called with a non-existent field, the resulting AttributeError
+exception will propagate out.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.reloadhist">
+<!--[IPython.iplib.InteractiveShell.reloadhist]--><tt class="descname">reloadhist</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.reloadhist" title="Permalink to this definition">¶</a></dt>
+<dd>Reload the input history from disk file.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.reset">
+<!--[IPython.iplib.InteractiveShell.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all internal namespaces.</p>
+<p>Note that this is much more aggressive than %reset, since it clears
+fully all namespaces, as well as all input/output lists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.resetbuffer">
+<!--[IPython.iplib.InteractiveShell.resetbuffer]--><tt class="descname">resetbuffer</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.resetbuffer" title="Permalink to this definition">¶</a></dt>
+<dd>Reset the input buffer.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.runcode">
+<!--[IPython.iplib.InteractiveShell.runcode]--><tt class="descname">runcode</tt><big>(</big><em>code_obj</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.runcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a code object.</p>
+<p>When an exception occurs, self.showtraceback() is called to display a
+traceback.</p>
+<p>Return value: a flag indicating whether the code to be run completed
+successfully:</p>
+<blockquote>
+<ul class="simple">
+<li>0: successful execution.</li>
+<li>1: an error occurred.</li>
+</ul>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.runlines">
+<!--[IPython.iplib.InteractiveShell.runlines]--><tt class="descname">runlines</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.runlines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a string of one or more lines of source.</p>
+<p>This method is capable of running a string containing multiple source
+lines, as if they had been entered at the IPython prompt.  Since it
+exposes IPython&#8217;s processing machinery, the given strings can contain
+magic calls (%magic), special shell access (!cmd), etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.runsource">
+<!--[IPython.iplib.InteractiveShell.runsource]--><tt class="descname">runsource</tt><big>(</big><em>source</em>, <em>filename='&lt;input&gt;'</em>, <em>symbol='single'</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.runsource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile and run some source in the interpreter.</p>
+<p>Arguments are as for compile_command().</p>
+<p>One several things can happen:</p>
+<p>1) The input is incorrect; compile_command() raised an
+exception (SyntaxError or OverflowError).  A syntax traceback
+will be printed by calling the showsyntaxerror() method.</p>
+<p>2) The input is incomplete, and more input is required;
+compile_command() returned None.  Nothing happens.</p>
+<p>3) The input is complete; compile_command() returned a code
+object.  The code is executed by calling self.runcode() (which
+also handles run-time exceptions, except for SystemExit).</p>
+<p>The return value is:</p>
+<blockquote>
+<ul class="simple">
+<li>True in case 2</li>
+<li>False in the other cases, unless an exception is raised, where</li>
+</ul>
+<p>None is returned instead.  This can be used by external callers to
+know whether to continue feeding input or not.</p>
+</blockquote>
+<p>The return value can be used to decide whether to use sys.ps1 or
+sys.ps2 to prompt the next line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.safe_execfile">
+<!--[IPython.iplib.InteractiveShell.safe_execfile]--><tt class="descname">safe_execfile</tt><big>(</big><em>fname</em>, <em>*where</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.safe_execfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A safe version of the builtin execfile().</p>
+<p>This version will never throw an exception, and knows how to handle
+ipython logs as well.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>fname <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">Name of the file to be executed.</p>
+</dd>
+<dt>where <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">One or two namespaces, passed to execfile() as (globals,locals).
+If only one is given, it is passed as both.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Keywords:</th><td class="field-body"><p class="first">islog : boolean (False)</p>
+<p>quiet : boolean (True)</p>
+<p class="last">exit_ignore : boolean (False)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.savehist">
+<!--[IPython.iplib.InteractiveShell.savehist]--><tt class="descname">savehist</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.savehist" title="Permalink to this definition">¶</a></dt>
+<dd>Save input history to a file (via readline library).</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_autoindent">
+<!--[IPython.iplib.InteractiveShell.set_autoindent]--><tt class="descname">set_autoindent</tt><big>(</big><em>value=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_autoindent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the autoindent flag, checking for readline support.</p>
+<p>If called with no arguments, it acts as a toggle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_completer">
+<!--[IPython.iplib.InteractiveShell.set_completer]--><tt class="descname">set_completer</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_completer" title="Permalink to this definition">¶</a></dt>
+<dd>reset readline&#8217;s completer to be our own.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_completer_frame">
+<!--[IPython.iplib.InteractiveShell.set_completer_frame]--><tt class="descname">set_completer_frame</tt><big>(</big><em>frame=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_completer_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_crash_handler">
+<!--[IPython.iplib.InteractiveShell.set_crash_handler]--><tt class="descname">set_crash_handler</tt><big>(</big><em>crashHandler</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_crash_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the IPython crash handler.</p>
+<p>This must be a callable with a signature suitable for use as
+sys.excepthook.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_custom_completer">
+<!--[IPython.iplib.InteractiveShell.set_custom_completer]--><tt class="descname">set_custom_completer</tt><big>(</big><em>completer</em>, <em>pos=0</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_custom_completer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new custom completer function.</p>
+<p>The position argument (defaults to 0) is the index in the completers
+list where you want the completer to be inserted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_custom_exc">
+<!--[IPython.iplib.InteractiveShell.set_custom_exc]--><tt class="descname">set_custom_exc</tt><big>(</big><em>exc_tuple</em>, <em>handler</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_custom_exc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a custom exception handler, which will be called if any of the
+exceptions in exc_tuple occur in the mainloop (specifically, in the
+runcode() method.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>exc_tuple: a <em>tuple</em> of valid exceptions to call the defined</li>
+</ul>
+<p>handler for.  It is very important that you use a tuple, and NOT A
+LIST here, because of the way Python&#8217;s except statement works.  If
+you only want to trap a single exception, use a singleton tuple:</p>
+<blockquote>
+exc_tuple == (MyCustomException,)</blockquote>
+<ul class="simple">
+<li>handler: this must be defined as a function with the following</li>
+</ul>
+<p>basic interface: def my_handler(self,etype,value,tb).</p>
+<p>This will be made into an instance method (via new.instancemethod)
+of IPython itself, and it will be called if any of the exceptions
+listed in the exc_tuple are caught.  If the handler is None, an
+internal basic one is used, which just prints basic info.</p>
+</blockquote>
+<p>WARNING: by putting in your own exception handler into IPython&#8217;s main
+execution loop, you run a very good chance of nasty crashes.  This
+facility should only be used if you really know what you are doing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.set_hook">
+<!--[IPython.iplib.InteractiveShell.set_hook]--><tt class="descname">set_hook</tt><big>(</big><em>name</em>, <em>hook</em>, <em>priority=50</em>, <em>str_key=None</em>, <em>re_key=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.set_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>set_hook(name,hook) -&gt; sets an internal IPython hook.</p>
+<p>IPython exposes some of its internal API as user-modifiable hooks.  By
+adding your function to one of these hooks, you can modify IPython&#8217;s 
+behavior to call at runtime your own routines.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.showsyntaxerror">
+<!--[IPython.iplib.InteractiveShell.showsyntaxerror]--><tt class="descname">showsyntaxerror</tt><big>(</big><em>filename=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.showsyntaxerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the syntax error that just occurred.</p>
+<p>This doesn&#8217;t display a stack trace because there isn&#8217;t one.</p>
+<p>If a filename is given, it is stuffed in the exception instead
+of what was there before (because Python&#8217;s parser always uses
+&#8220;&lt;string&gt;&#8221; when reading from a string).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.showtraceback">
+<!--[IPython.iplib.InteractiveShell.showtraceback]--><tt class="descname">showtraceback</tt><big>(</big><em>exc_tuple=None</em>, <em>filename=None</em>, <em>tb_offset=None</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.showtraceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the exception that just occurred.</p>
+<p>If nothing is known about the exception, this is the method which
+should be used throughout the code for presenting user tracebacks,
+rather than directly invoking the InteractiveTB object.</p>
+<p>A specific showsyntaxerror() also exists, but this method can take
+care of calling it if needed, so unless you are explicitly catching a
+SyntaxError exception, don&#8217;t try to analyze the stack manually and
+simply call this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.split_user_input">
+<!--[IPython.iplib.InteractiveShell.split_user_input]--><tt class="descname">split_user_input</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.split_user_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.transform_alias">
+<!--[IPython.iplib.InteractiveShell.transform_alias]--><tt class="descname">transform_alias</tt><big>(</big><em>alias</em>, <em>rest=''</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.transform_alias" title="Permalink to this definition">¶</a></dt>
+<dd>Transform alias to system command string.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.user_setup">
+<!--[IPython.iplib.InteractiveShell.user_setup]--><tt class="descname">user_setup</tt><big>(</big><em>ipythondir</em>, <em>rc_suffix</em>, <em>mode='install'</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.user_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install the user configuration directory.</p>
+<p class="rubric">Notes</p>
+<p>DEPRECATED: use the top-level user_setup() function instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.var_expand">
+<!--[IPython.iplib.InteractiveShell.var_expand]--><tt class="descname">var_expand</tt><big>(</big><em>cmd</em>, <em>depth=0</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.var_expand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand python variables in a string.</p>
+<p>The depth argument indicates how many frames above the caller should
+be walked to look for the local namespace where to expand variables.</p>
+<p>The global namespace for expansion is always the user&#8217;s interactive
+namespace.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.write">
+<!--[IPython.iplib.InteractiveShell.write]--><tt class="descname">write</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.write" title="Permalink to this definition">¶</a></dt>
+<dd>Write a string to the default output</dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.InteractiveShell.write_err">
+<!--[IPython.iplib.InteractiveShell.write_err]--><tt class="descname">write_err</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#IPython.iplib.InteractiveShell.write_err" title="Permalink to this definition">¶</a></dt>
+<dd>Write a string to the default error output</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="quitter">
+<h3><a title="IPython.iplib.Quitter" class="reference internal" href="#IPython.iplib.Quitter"><tt class="xref docutils literal"><span class="pre">Quitter</span></tt></a><a class="headerlink" href="#quitter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.Quitter">
+<!--[IPython.iplib.Quitter]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">Quitter</tt><big>(</big><em>shell</em>, <em>name</em><big>)</big><a class="headerlink" href="#IPython.iplib.Quitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Simple class to handle exit, similar to Python 2.5&#8217;s.</p>
+<p>It handles exiting in an ipython-safe manner, which the one in Python 2.5
+doesn&#8217;t do (obviously, since it doesn&#8217;t know about ipython).</p>
+<dl class="method">
+<dt id="IPython.iplib.Quitter.__init__">
+<!--[IPython.iplib.Quitter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shell</em>, <em>name</em><big>)</big><a class="headerlink" href="#IPython.iplib.Quitter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="spaceininput">
+<h3><a title="IPython.iplib.SpaceInInput" class="reference internal" href="#IPython.iplib.SpaceInInput"><tt class="xref docutils literal"><span class="pre">SpaceInInput</span></tt></a><a class="headerlink" href="#spaceininput" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.SpaceInInput">
+<!--[IPython.iplib.SpaceInInput]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">SpaceInInput</tt><a class="headerlink" href="#IPython.iplib.SpaceInInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<dl class="method">
+<dt id="IPython.iplib.SpaceInInput.__init__">
+<!--[IPython.iplib.SpaceInInput.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.SpaceInInput.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="syntaxtb">
+<h3><a title="IPython.iplib.SyntaxTB" class="reference internal" href="#IPython.iplib.SyntaxTB"><tt class="xref docutils literal"><span class="pre">SyntaxTB</span></tt></a><a class="headerlink" href="#syntaxtb" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.SyntaxTB">
+<!--[IPython.iplib.SyntaxTB]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">SyntaxTB</tt><big>(</big><em>color_scheme='NoColor'</em><big>)</big><a class="headerlink" href="#IPython.iplib.SyntaxTB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.ultraTB.ListTB" class="reference external" href="IPython.ultraTB.html#IPython.ultraTB.ListTB"><tt class="xref docutils literal"><span class="pre">IPython.ultraTB.ListTB</span></tt></a></p>
+<p>Extension which holds some state: the last exception value</p>
+<dl class="method">
+<dt id="IPython.iplib.SyntaxTB.__init__">
+<!--[IPython.iplib.SyntaxTB.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_scheme='NoColor'</em><big>)</big><a class="headerlink" href="#IPython.iplib.SyntaxTB.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.iplib.SyntaxTB.clear_err_state">
+<!--[IPython.iplib.SyntaxTB.clear_err_state]--><tt class="descname">clear_err_state</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.iplib.SyntaxTB.clear_err_state" title="Permalink to this definition">¶</a></dt>
+<dd>Return the current error state and clear it</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="undefined">
+<h3><a title="IPython.iplib.Undefined" class="reference internal" href="#IPython.iplib.Undefined"><tt class="xref docutils literal"><span class="pre">Undefined</span></tt></a><a class="headerlink" href="#undefined" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.iplib.Undefined">
+<!--[IPython.iplib.Undefined]-->class <tt class="descclassname">IPython.iplib.</tt><tt class="descname">Undefined</tt><a class="headerlink" href="#IPython.iplib.Undefined" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.iplib.num_ini_spaces">
+<!--[IPython.iplib.num_ini_spaces]--><tt class="descclassname">IPython.iplib.</tt><tt class="descname">num_ini_spaces</tt><big>(</big><em>strng</em><big>)</big><a class="headerlink" href="#IPython.iplib.num_ini_spaces" title="Permalink to this definition">¶</a></dt>
+<dd>Return the number of initial spaces in a string</dd></dl>
+
+<dl class="function">
+<dt id="IPython.iplib.softspace">
+<!--[IPython.iplib.softspace]--><tt class="descclassname">IPython.iplib.</tt><tt class="descname">softspace</tt><big>(</big><em>file</em>, <em>newvalue</em><big>)</big><a class="headerlink" href="#IPython.iplib.softspace" title="Permalink to this definition">¶</a></dt>
+<dd>Copied from code.py, to remove the dependency</dd></dl>
+
+<dl class="function">
+<dt id="IPython.iplib.user_setup">
+<!--[IPython.iplib.user_setup]--><tt class="descclassname">IPython.iplib.</tt><tt class="descname">user_setup</tt><big>(</big><em>ipythondir</em>, <em>rc_suffix</em>, <em>mode='install'</em>, <em>interactive=True</em><big>)</big><a class="headerlink" href="#IPython.iplib.user_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install or upgrade the user configuration directory.</p>
+<p>Can be called when running for the first time or to upgrade the user&#8217;s
+.ipython/ directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ipythondir</strong> : path</p>
+<blockquote class="last">
+<blockquote>
+<p>The directory to be used for installation/upgrade.  In &#8216;install&#8217; mode,
+if this path already exists, the function exits immediately.</p>
+</blockquote>
+<dl class="docutils">
+<dt>rc_suffix <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Extension for the config files.  On <a href="#id1"><span class="problematic" id="id2">*</span></a>nix platforms it is typically the
+empty string, while Windows normally uses &#8216;.ini&#8217;.</p>
+</dd>
+<dt>mode <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd><p class="first last">Valid modes are &#8216;install&#8217; and &#8216;upgrade&#8217;.</p>
+</dd>
+<dt>interactive <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If False, do not wait for user input on any errors.  Normally after
+printing its status information, this function waits for the user to
+hit Return before proceeding.  This is because the default use case is
+when first installing the IPython configuration, so we want the user to
+acknowledge the initial message, which contains some useful
+information.</p>
+</dd>
+</dl>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">iplib</a><ul>
+<li><a class="reference external" href="#module-IPython.iplib">Module: <tt class="docutils literal"><span class="pre">iplib</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#bunch"><tt class="docutils literal"><span class="pre">Bunch</span></tt></a></li>
+<li><a class="reference external" href="#inputlist"><tt class="docutils literal"><span class="pre">InputList</span></tt></a></li>
+<li><a class="reference external" href="#interactiveshell"><tt class="docutils literal"><span class="pre">InteractiveShell</span></tt></a></li>
+<li><a class="reference external" href="#quitter"><tt class="docutils literal"><span class="pre">Quitter</span></tt></a></li>
+<li><a class="reference external" href="#spaceininput"><tt class="docutils literal"><span class="pre">SpaceInInput</span></tt></a></li>
+<li><a class="reference external" href="#syntaxtb"><tt class="docutils literal"><span class="pre">SyntaxTB</span></tt></a></li>
+<li><a class="reference external" href="#undefined"><tt class="docutils literal"><span class="pre">Undefined</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.ipapi.html" title="previous chapter">ipapi</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.ipmaker.html" title="next chapter">ipmaker</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.iplib.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipmaker.html" title="ipmaker"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipapi.html" title="ipapi"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

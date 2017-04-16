@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="wordfast_translation_memory" id="wordfast_translation_memory">Wordfast Translation Memory</a></h1>
+<div class="level1">
+
+<p>
+
+The Wordfast format, as used by the <a href="http://en.wikipedia.org/wiki/Wordfast" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Wordfast">Wordfast</a> translation tool, is a simple tab delimited file.
+</p>
+
+<p>
+The storage format can read and write Wordfast TM files.
+</p>
+
+</div>
+<!-- SECTION "Wordfast Translation Memory" [1-205] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Escaping - The format correctly handles Wordfast &amp;&#039;XX; escaping and will unescape and escape seamlessly.</div>
+</li>
+<li class="level1"><div class="li"> Soft-breaks - these are not managed and are left as escaped</div>
+</li>
+<li class="level1"><div class="li"> Replaceables - these are not managed</div>
+</li>
+<li class="level1"><div class="li"> Header - Only basic updating and reading of the header is implemented</div>
+</li>
+<li class="level1"><div class="li"> Tab-separated value (TSV) - the format correctly handles the TSV format used by Wordfast.  There is no quoting, Windows newlines are used and the \t is used as a delimiter (see <a href="http://bugs.locamotion.org/show_bug.cgi?id=472" class="interwiki iw_bug" title="http://bugs.locamotion.org/show_bug.cgi?id=472">472</a>)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Conformance" [206-] --></body>
+</html>

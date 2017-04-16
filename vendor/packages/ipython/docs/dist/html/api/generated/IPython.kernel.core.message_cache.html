@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.message_cache &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.notification" href="IPython.kernel.core.notification.html" />
+    <link rel="prev" title="kernel.core.magic" href="IPython.kernel.core.magic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.notification.html" title="kernel.core.notification"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.magic.html" title="kernel.core.magic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-message-cache">
+<h1>kernel.core.message_cache<a class="headerlink" href="#kernel-core-message-cache" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.message_cache">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.message_cache</span></tt><a class="headerlink" href="#module-IPython.kernel.core.message_cache" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.message_cache</span></tt>:</p>
+<img src="../../_images/inheritancefd542f036c.png" usemap="#inheritancefd542f036c" class="inheritance"/><map id="inheritancefd542f036c" name="inheritancefd542f036c">
+<area shape="rect" href="#IPython.kernel.core.message_cache.SimpleMessageCache" title="core.message_cache.SimpleMessageCache" alt="" coords="7,56,308,83"/>
+<area shape="rect" href="#IPython.kernel.core.message_cache.IMessageCache" title="core.message_cache.IMessageCache" alt="" coords="27,5,288,32"/>
+</map>
+<p>Storage for the responses from the interpreter.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="imessagecache">
+<h3><a title="IPython.kernel.core.message_cache.IMessageCache" class="reference internal" href="#IPython.kernel.core.message_cache.IMessageCache"><tt class="xref docutils literal"><span class="pre">IMessageCache</span></tt></a><a class="headerlink" href="#imessagecache" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.message_cache.IMessageCache">
+<!--[IPython.kernel.core.message_cache.IMessageCache]-->class <tt class="descclassname">IPython.kernel.core.message_cache.</tt><tt class="descname">IMessageCache</tt><a class="headerlink" href="#IPython.kernel.core.message_cache.IMessageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Storage for the response from the interpreter.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.message_cache.IMessageCache.__init__">
+<!--[IPython.kernel.core.message_cache.IMessageCache.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.message_cache.IMessageCache.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.message_cache.IMessageCache.add_message">
+<!--[IPython.kernel.core.message_cache.IMessageCache.add_message]--><tt class="descname">add_message</tt><big>(</big><em>i</em>, <em>message</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.message_cache.IMessageCache.add_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a message dictionary to the cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>i</strong> : int</p>
+<p class="last"><strong>message</strong> : dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.message_cache.IMessageCache.get_message">
+<!--[IPython.kernel.core.message_cache.IMessageCache.get_message]--><tt class="descname">get_message</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.message_cache.IMessageCache.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the message from the cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>i</strong> : int, optional</p>
+<blockquote>
+<p>The number of the message. If not provided, return the
+highest-numbered message.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>message</strong> : dict</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>IndexError if the message does not exist in the cache.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="simplemessagecache">
+<h3><a title="IPython.kernel.core.message_cache.SimpleMessageCache" class="reference internal" href="#IPython.kernel.core.message_cache.SimpleMessageCache"><tt class="xref docutils literal"><span class="pre">SimpleMessageCache</span></tt></a><a class="headerlink" href="#simplemessagecache" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.message_cache.SimpleMessageCache">
+<!--[IPython.kernel.core.message_cache.SimpleMessageCache]-->class <tt class="descclassname">IPython.kernel.core.message_cache.</tt><tt class="descname">SimpleMessageCache</tt><a class="headerlink" href="#IPython.kernel.core.message_cache.SimpleMessageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Simple dictionary-based, in-memory storage of the responses from the
+interpreter.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.message_cache.SimpleMessageCache.__init__">
+<!--[IPython.kernel.core.message_cache.SimpleMessageCache.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.message_cache.SimpleMessageCache.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.message_cache.SimpleMessageCache.add_message">
+<!--[IPython.kernel.core.message_cache.SimpleMessageCache.add_message]--><tt class="descname">add_message</tt><big>(</big><em>i</em>, <em>message</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.message_cache.SimpleMessageCache.add_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a message dictionary to the cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>i</strong> : int</p>
+<p class="last"><strong>message</strong> : dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.message_cache.SimpleMessageCache.get_message">
+<!--[IPython.kernel.core.message_cache.SimpleMessageCache.get_message]--><tt class="descname">get_message</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.message_cache.SimpleMessageCache.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the message from the cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>i</strong> : int, optional</p>
+<blockquote>
+<p>The number of the message. If not provided, return the
+highest-numbered message.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>message</strong> : dict</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>IndexError if the message does not exist in the cache.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.message_cache</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.message_cache">Module: <tt class="docutils literal"><span class="pre">kernel.core.message_cache</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#imessagecache"><tt class="docutils literal"><span class="pre">IMessageCache</span></tt></a></li>
+<li><a class="reference external" href="#simplemessagecache"><tt class="docutils literal"><span class="pre">SimpleMessageCache</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.magic.html" title="previous chapter">kernel.core.magic</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.notification.html" title="next chapter">kernel.core.notification</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.message_cache.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.notification.html" title="kernel.core.notification"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.magic.html" title="kernel.core.magic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

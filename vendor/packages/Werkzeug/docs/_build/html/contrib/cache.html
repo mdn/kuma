@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="Extra Wrappers" href="wrappers.html">
+    <link rel="prev" title="Secure Cookie" href="securecookie.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="securecookie.html">&laquo; Secure Cookie</a></li>
+        <li class="active"><a href="">Cache</a></li>
+        <li><a href="wrappers.html">Extra Wrappers &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Cache</a><ul>
+<li><a class="reference external" href="#how-caching-works">How Caching Works</a></li>
+<li><a class="reference external" href="#creating-a-cache-object">Creating a Cache Object</a></li>
+<li><a class="reference external" href="#cache-system-api">Cache System API</a></li>
+<li><a class="reference external" href="#cache-systems">Cache Systems</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug.contrib.cache">
+<h1>Cache<a class="headerlink" href="#module-werkzeug.contrib.cache" title="Permalink to this headline">¶</a></h1>
+<p>The main problem with dynamic Web sites is, well, they&#8217;re dynamic.  Each
+time a user requests a page, the webserver executes a lot of code, queries
+the database, renders templates until the visitor gets the page he sees.</p>
+<p>This is a lot more expensive than just loading a file from the file system
+and sending it to the visitor.</p>
+<p>For most Web applications, this overhead isn&#8217;t a big deal but once it
+becomes, you will be glad to have a cache system in place.</p>
+<div class="section" id="how-caching-works">
+<h2>How Caching Works<a class="headerlink" href="#how-caching-works" title="Permalink to this headline">¶</a></h2>
+<p>Caching is pretty simple.  Basically you have a cache object lurking around
+somewhere that is connected to a remote cache or the file system or
+something else.  When the request comes in you check if the current page
+is already in the cache and if, you&#8217;re returning it.  Otherwise you generate
+the page and put it into the cache.  (Or a fragment of the page, you don&#8217;t
+have to cache the full thing)</p>
+<p>Here a simple example of how to cache a sidebar for a template:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_sidebar</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="s">&#39;sidebar_for/user</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">generate_sidebar_for</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">60</span> <span class="o">*</span> <span class="mf">5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-cache-object">
+<h2>Creating a Cache Object<a class="headerlink" href="#creating-a-cache-object" title="Permalink to this headline">¶</a></h2>
+<p>To create a cache object you just import the cache system of your choice
+from the cache module and instanciate it.  Then you can start working
+with that object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug.contrib.cache</span> <span class="kn">import</span> <span class="n">SimpleCache</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">SimpleCache</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;value&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">&#39;value&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;missing&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">None</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Please keep in mind that you have to create the cache and put it somewhere
+you have access to it (either as a module global you can import or if you
+put it onto your WSGI application).</p>
+</div>
+<div class="section" id="cache-system-api">
+<h2>Cache System API<a class="headerlink" href="#cache-system-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.contrib.cache.BaseCache">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.cache.</tt><tt class="descname">BaseCache</tt><big>(</big><em>default_timeout=300</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Baseclass for the cache systems.  All the cache systems implement this
+API or a superset of it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>default_timeout</em> &#8211; the default timeout that is used if no timeout is
+specified on <a title="werkzeug.contrib.cache.BaseCache.set" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.add">
+<tt class="descname">add</tt><big>(</big><em>key</em>, <em>value</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Works like <a title="werkzeug.contrib.cache.BaseCache.set" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a> but does not override already existing
+values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key to set</li>
+<li><em>value</em> &#8211; the value for the key</li>
+<li><em>timeout</em> &#8211; the cache timeout for the key or the default
+timeout if not specified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Clears the cache.  Keep in mind that not all caches support
+clearning of the full cache.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.dec">
+<tt class="descname">dec</tt><big>(</big><em>key</em>, <em>delta=1</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.dec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrements the value of a key by <cite>delta</cite>.  If the key does
+not yet exist it is initialized with <cite>-delta</cite>.</p>
+<p>For supporting caches this is an atomic operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key to increment.</li>
+<li><em>delta</em> &#8211; the delta to subtract.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.delete">
+<tt class="descname">delete</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes <cite>key</cite> from the cache.  If it does not exist in the cache
+nothing happens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>key</em> &#8211; the key to delete.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.delete_many">
+<tt class="descname">delete_many</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.delete_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes multiple keys at once.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>keys</em> &#8211; The function accepts multiple keys as positional
+arguments.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Looks up key in the cache and returns it.  If the key does not
+exist <cite>None</cite> is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>key</em> &#8211; the key to be looked up.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.get_dict">
+<tt class="descname">get_dict</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.get_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Works like <a title="werkzeug.contrib.cache.BaseCache.get_many" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.get_many"><tt class="xref docutils literal"><span class="pre">get_many</span></tt></a> but returns a dict:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get_dict</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">)</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">]</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;bar&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>keys</em> &#8211; The function accepts multiple keys as positional
+arguments.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.get_many">
+<tt class="descname">get_many</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.get_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of keys.  For each key a item in the list is
+created.  Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">foo</span><span class="p">,</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get_many</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a key can&#8217;t be looked up <cite>None</cite> is returned for that key
+instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>keys</em> &#8211; The function accepts multiple keys as positional
+arguments.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.inc">
+<tt class="descname">inc</tt><big>(</big><em>key</em>, <em>delta=1</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.inc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increments the value of a key by <cite>delta</cite>.  If the key does
+not yet exist it is initialized with <cite>delta</cite>.</p>
+<p>For supporting caches this is an atomic operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key to increment.</li>
+<li><em>delta</em> &#8211; the delta to add.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.set">
+<tt class="descname">set</tt><big>(</big><em>key</em>, <em>value</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds or overrides a key in the cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>key</em> &#8211; the key to set</li>
+<li><em>value</em> &#8211; the value for the key</li>
+<li><em>timeout</em> &#8211; the cache timeout for the key or the default
+timeout if not specified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.cache.BaseCache.set_many">
+<tt class="descname">set_many</tt><big>(</big><em>mapping</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.BaseCache.set_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets multiple keys and values from a dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>mapping</em> &#8211; a dict with the values to set.</li>
+<li><em>timeout</em> &#8211; the cache timeout for the key or the default
+timeout if not specified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cache-systems">
+<h2>Cache Systems<a class="headerlink" href="#cache-systems" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.contrib.cache.NullCache">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.cache.</tt><tt class="descname">NullCache</tt><big>(</big><em>default_timeout=300</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.NullCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache that doesn&#8217;t cache.  This can be useful for unit testing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>default_timeout</em> &#8211; a dummy parameter that is ignored but exists
+for API compatibility with other caches.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.cache.SimpleCache">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.cache.</tt><tt class="descname">SimpleCache</tt><big>(</big><em>threshold=500</em>, <em>default_timeout=300</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.SimpleCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple memory cache for single process environments.  This class exists
+mainly for the development server and is not 100% thread safe.  It tries
+to use as many atomic operations as possible and no locks for simplicity
+but it could happen under heavy load that keys are added multiple times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>threshold</em> &#8211; the maximum number of items the cache stores before
+it starts deleting some.</li>
+<li><em>default_timeout</em> &#8211; the default timeout that is used if no timeout is
+specified on <a title="werkzeug.contrib.cache.BaseCache.set" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.cache.MemcachedCache">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.cache.</tt><tt class="descname">MemcachedCache</tt><big>(</big><em>servers</em>, <em>default_timeout=300</em>, <em>key_prefix=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.MemcachedCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache that uses memcached as backend.</p>
+<p>The first argument can either be a list or tuple of server addresses
+in which case Werkzeug tries to import the memcache module and connect
+to it, or an object that resembles the API of a <tt class="xref docutils literal"><span class="pre">memcache.Client</span></tt>.</p>
+<p>Implementation notes:  This cache backend works around some limitations in
+memcached to simplify the interface.  For example unicode keys are encoded
+to utf-8 on the fly.  Methods such as <a title="werkzeug.contrib.cache.BaseCache.get_dict" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.get_dict"><tt class="xref docutils literal"><span class="pre">get_dict</span></tt></a> return
+the keys in the same format as passed.  Furthermore all get methods
+silently ignore key errors to not cause problems when untrusted user data
+is passed to the get methods which is often the case in web applications.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>servers</em> &#8211; a list or tuple of server addresses or alternatively
+a <tt class="xref docutils literal"><span class="pre">memcache.Client</span></tt> or a compatible client.</li>
+<li><em>default_timeout</em> &#8211; the default timeout that is used if no timeout is
+specified on <a title="werkzeug.contrib.cache.BaseCache.set" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a>.</li>
+<li><em>key_prefix</em> &#8211; a prefix that is added before all keys.  This makes it
+possible to use the same memcached server for different
+applications.  Keep in mind that
+<a title="werkzeug.contrib.cache.BaseCache.clear" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.clear"><tt class="xref docutils literal"><span class="pre">clear</span></tt></a> will also clear keys with a
+different prefix.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.cache.GAEMemcachedCache">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.cache.</tt><tt class="descname">GAEMemcachedCache</tt><big>(</big><em>default_timeout=300</em>, <em>key_prefix=None</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.GAEMemcachedCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects to the Google appengine memcached Cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>default_timeout</em> &#8211; the default timeout that is used if no timeout is
+specified on <a title="werkzeug.contrib.cache.BaseCache.set" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a>.</li>
+<li><em>key_prefix</em> &#8211; a prefix that is added before all keys.  This makes it
+possible to use the same memcached server for different
+applications.  Keep in mind that
+<a title="werkzeug.contrib.cache.BaseCache.clear" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.clear"><tt class="xref docutils literal"><span class="pre">clear</span></tt></a> will also clear keys with a
+different prefix.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.cache.FileSystemCache">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.cache.</tt><tt class="descname">FileSystemCache</tt><big>(</big><em>cache_dir</em>, <em>threshold=500</em>, <em>default_timeout=300</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.cache.FileSystemCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache that stores the items on the file system.  This cache depends
+on being the only user of the <cite>cache_dir</cite>.  Make absolutely sure that
+nobody but this cache stores files there or otherwise the chace will
+randomely delete files therein.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>cache_dir</em> &#8211; the directory where cached files are stored.</li>
+<li><em>threshold</em> &#8211; the maximum number of items the cache stores before
+it starts deleting some.</li>
+<li><em>default_timeout</em> &#8211; the default timeout that is used if no timeout is
+specified on <a title="werkzeug.contrib.cache.BaseCache.set" class="reference internal" href="#werkzeug.contrib.cache.BaseCache.set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

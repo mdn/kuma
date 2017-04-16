@@ -1,0 +1,12 @@
+Check how Decimals should be encoded in tables.  The docs
+are a bit unclear, and looking at RabbitMQ and py-qpid
+didn't help much.  At least it should work when the
+sender and receiver are both using this version of this library.
+
+Error handling, a bit rough in this first version, receiving
+unexpected frames may do strange things.
+
+Nothing is done at all with heartbeat, oob-method, oob-header
+oob-body, and trace frames.
+
+Unittests - always can use more

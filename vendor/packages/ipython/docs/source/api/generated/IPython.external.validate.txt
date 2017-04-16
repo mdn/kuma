@@ -1,0 +1,191 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.validate
+=================
+
+Module: :mod:`external.validate`
+--------------------------------
+Inheritance diagram for ``IPython.external.validate``:
+
+.. inheritance-diagram:: IPython.external.validate 
+   :parts: 3
+
+.. automodule:: IPython.external.validate
+
+.. currentmodule:: IPython.external.validate
+
+Classes
+-------
+
+:class:`ValidateError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ValidateError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Validator`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Validator
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtMissingValue`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtMissingValue
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtParamError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtParamError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtTypeError`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtTypeError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtUnknownCheckError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtUnknownCheckError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtValueError`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtValueError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtValueTooBigError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtValueTooBigError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtValueTooLongError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtValueTooLongError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtValueTooShortError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtValueTooShortError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`VdtValueTooSmallError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: VdtValueTooSmallError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.validate.dottedQuadToNum
+
+
+.. autofunction:: IPython.external.validate.is_bool_list
+
+
+.. autofunction:: IPython.external.validate.is_boolean
+
+
+.. autofunction:: IPython.external.validate.is_float
+
+
+.. autofunction:: IPython.external.validate.is_float_list
+
+
+.. autofunction:: IPython.external.validate.is_int_list
+
+
+.. autofunction:: IPython.external.validate.is_integer
+
+
+.. autofunction:: IPython.external.validate.is_ip_addr
+
+
+.. autofunction:: IPython.external.validate.is_ip_addr_list
+
+
+.. autofunction:: IPython.external.validate.is_list
+
+
+.. autofunction:: IPython.external.validate.is_mixed_list
+
+
+.. autofunction:: IPython.external.validate.is_option
+
+
+.. autofunction:: IPython.external.validate.is_string
+
+
+.. autofunction:: IPython.external.validate.is_string_list
+
+
+.. autofunction:: IPython.external.validate.is_tuple
+
+
+.. autofunction:: IPython.external.validate.numToDottedQuad
+

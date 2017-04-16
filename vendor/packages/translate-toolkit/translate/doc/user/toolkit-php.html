@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="php" id="php">PHP</a></h1>
+<div class="level1">
+
+<p>
+
+Many <a href="http://en.wikipedia.org/wiki/PHP" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/PHP">PHP</a> programs make use of a localisable string array.  The toolkit support the full localisation of such files with <a href="toolkit-php2po.html" class="wikilink1" title="toolkit-php2po.html">php2po</a> and po2php.
+</p>
+
+</div>
+<!-- SECTION "PHP" [1-170] -->
+<h2><a name="example" id="example">Example</a></h2>
+<div class="level2">
+
+<p>
+
+The localisable string arrays appear like this:
+</p>
+<pre class="code php"><span class="kw2">&lt;?php</span>
+<span class="re1">$string</span><span class="br0">&#91;</span><span class="st0">'name'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">'value'</span></pre>
+</div>
+<!-- SECTION "Example" [171-292] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+
+<p>
+
+Our format support allows:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Hypertext Preprocessor">PHP</acronym> escaping (both for <a href="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.single" class="urlextern" title="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.single">single</a> and <a href="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.double" class="urlextern" title="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.double">double</a> quoted strings)</div>
+</li>
+<li class="level1"><div class="li"> Multiline entries</div>
+</li>
+<li class="level1"><div class="li"> Various layouts of the id: </div>
+</li>
+</ul>
+<pre class="code php"><span class="re1">$string</span><span class="br0">&#91;</span><span class="st0">'name'</span><span class="br0">&#93;</span>
+<span class="re1">$string</span><span class="br0">&#91;</span>name<span class="br0">&#93;</span>
+<span class="re1">$string</span><span class="br0">&#91;</span> <span class="st0">'name'</span> <span class="br0">&#93;</span></pre>
+</div>
+<!-- SECTION "Conformance" [293-717] -->
+<h2><a name="non-conformance" id="non-conformance">Non-Conformance</a></h2>
+<div class="level2">
+
+<p>
+
+The following are not yet supported:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Hypertext Preprocessor">PHP</acronym> array syntax for localisation</div>
+</li>
+</ul>
+<pre class="code php"><span class="re1">$lang</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span>
+   <span class="st0">'name'</span> <span class="sy0">=&gt;</span> <span class="st0">'value'</span><span class="sy0">,</span>
+   <span class="st0">'name2'</span> <span class="sy0">=&gt;</span> <span class="st0">'value2'</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre><ul>
+<li class="level1"><div class="li"> <a href="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc" class="urlextern" title="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc">herdoc</a> and <a href="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.nowdoc" class="urlextern" title="http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.nowdoc">nowdoc</a> are not managed</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Non-Conformance" [718-] --></body>
+</html>

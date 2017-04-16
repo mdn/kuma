@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h2><a name="support_for_tmx" id="support_for_tmx">Support for TMX</a></h2>
+<div class="level2">
+
+<p>
+
+Although <acronym title="Translation Memory eXchange">TMX</acronym> is supposed to be an exchange standard, not all tools create or read standard <acronym title="Translation Memory eXchange">TMX</acronym> files, and consequently some tools may not be able to use the Toolkit&#039;s TMXes and vice versa.
+</p>
+
+<p>
+Have a good Unicode editor handy so that you can fiddle with the encoding of the file in extreme cases.  For <acronym title="Microsoft">MS</acronym> Windows users, we suggest Babelpad.
+</p>
+
+</div>
+
+<h4><a name="how_they_were_tested" id="how_they_were_tested">How they were tested</a></h4>
+<div class="level4">
+
+<p>
+
+I tested other tools by checking if they import Toolkit TMXes without complaint, and in some cases if I could get translation matches from it.  I tested their TMXes with the Toolkit by doing a pocount on the <acronym title="Translation Memory eXchange">TMX</acronym> and doing a pot2po (with --tm=file.tmx) on a file with known matches.
+</p>
+
+</div>
+<!-- SECTION "Support for TMX" [2-682] -->
+<h3><a name="support_for_toolkit_tmxes" id="support_for_toolkit_tmxes">Support for Toolkit TMXes</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="cafetran_2007" id="cafetran_2007">Cafetran 2007</a></h4>
+<div class="level4">
+
+<p>
+
+Seems fully compatible with Tranlate-toolkit, in both directions.  Cafetran imports our <acronym title="Translation Memory eXchange">TMX</acronym> without complaints.  A Cafetran user was able to read and use one of our TMXes, and we were able to test and use one of the Cafetran user&#039;s TMXes.
+</p>
+
+</div>
+
+<h4><a name="wordfast_5" id="wordfast_5">Wordfast 5</a></h4>
+<div class="level4">
+
+<p>
+
+Fully compatible with Translate-toolkit.  Wordfast opens our TMXes directly and converts them to its own internal format.  Wordfast can also export to <acronym title="Translation Memory eXchange">TMX</acronym>, which can be read by our tools.  Remember, Wordfast&#039;s Unicode format is UTF16LE with BOM, so if you run into problems, try converting it by character encoding.  Wordfast 3 and 4 should also work.
+</p>
+
+</div>
+
+<h4><a name="trados_2007_workbench_8" id="trados_2007_workbench_8">Trados 2007 (Workbench 8)</a></h4>
+<div class="level4">
+
+<p>
+
+Possibly compatible with Translate-toolkit.  To import using Trados, first create a Trados TM and then import the <acronym title="Translation Memory eXchange">TMX</acronym> into it.  Trados did import our test <acronym title="Translation Memory eXchange">TMX</acronym> (22000 segments) but it lost about 30% of the segments in the process.  Our tools can read TMXes exported from Trados.
+</p>
+
+</div>
+
+<h4><a name="omegat_1.6" id="omegat_1.6">OmegaT 1.6</a></h4>
+<div class="level4">
+
+<p>
+
+Fully compatible with Translate-toolkit.  Simply place our TMXes in the /tm/ folder of your project.  All of OmegaT&#039;s exported TMXes can be read by the Translate-toolkit -- although which one you use will depend on what your workflow is (i.e. with OmegaT&#039;s internal tags or without them).
+</p>
+
+</div>
+<!-- SECTION "Support for Toolkit TMXes" [683-1979] -->
+<h3><a name="no_or_little_support_for_toolkit_tmxes" id="no_or_little_support_for_toolkit_tmxes">No or little support for Toolkit TMXes</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="aid_trans_professional_2.0" id="aid_trans_professional_2.0">Aid Trans Professional 2.0</a></h4>
+<div class="level4">
+
+<p>
+
+Actually, this tool is still in beta and it kept crashing when I tested it, but I was able to discover one thing:  the <acronym title="Translation Memory eXchange">TMX</acronym> <acronym title="Document Type Definition">DTD</acronym> (called tmx14.dtd) must be in the same folder as the <acronym title="Translation Memory eXchange">TMX</acronym> file you&#039;re trying to import.
+</p>
+
+</div>
+
+<h4><a name="transolution" id="transolution">Transolution</a></h4>
+<div class="level4">
+
+<p>
+
+I was unable to test this tool because I couldn&#039;t figure out how it works.
+</p>
+
+</div>
+
+<h4><a name="across" id="across">Across</a></h4>
+<div class="level4">
+
+<p>
+
+This tool was too big for me to test (several hundreds of megabytes).
+</p>
+
+</div>
+
+<h4><a name="deja_vu" id="deja_vu">Deja Vu</a></h4>
+<div class="level4">
+
+<p>
+
+I was unable to test this tool because I couldn&#039;t figure out how it works.
+</p>
+
+</div>
+<!-- SECTION "No or little support for Toolkit TMXes" [1980-] --></body>
+</html>

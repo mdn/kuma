@@ -1,0 +1,69 @@
+{% load threadedcommentstags %}
+
+<html>
+<head><title>{{ post.title }}</title>
+<script type="text/javascript" src="http://media.eflorenzano.com/js/jquery-1.2.1.js"></script>
+<script type="text/javascript">
+function show_reply_form(comment_id, url, person_name) {
+    var comment_reply = $('#' + comment_id);
+    var to_add = $( new Array(
+    '<div class="response"><p>Reply to ' + person_name + ':</p>',
+    '<form method="POST" action="' + url + '">',
+    '<ul>',  '{{ form.as_ul|oneline }}',
+    '<li><input type="submit" value="Submit Comment" /></li>',
+    '</ul>', '</form>', '</div>').join(''));
+    to_add.css("display", "none");
+    comment_reply.after(to_add);
+    to_add.slideDown(function() {
+        comment_reply.replaceWith(new Array('<a id="',
+        comment_id,'" href="javascript:hide_reply_form(\'',
+        comment_id, '\',\'', url, '\',\'', person_name,
+        '\')">Stop Replying</a>').join(''));
+    });
+}
+function hide_reply_form(comment_id, url, person_name) {
+    var comment_reply = $('#' + comment_id);
+    comment_reply.next().slideUp(function (){
+        comment_reply.next('.response').remove();
+        comment_reply.replaceWith(new Array('<a id="',
+        comment_id,'" href="javascript:show_reply_form(\'',
+        comment_id, '\',\'', url, '\',\'', person_name,
+        '\')">Reply</a>').join(''));
+    });
+}
+</script>
+<style type="text/css">
+html { background-color: #336666; }
+a { color: #CC6633; font-size: 80%; }
+.comment { border-left: 2px solid #FFCC00; padding-left: 2px; 
+    margin-bottom: 4px; background-color: #993333; color: #FF9900; }
+#blogpost { background-color: #666633; padding-top: 4px; 
+    padding-bottom: 3px; }
+#blogpost h1 { background-color: #CDCDCD; margin: 4px 4px 4px 4px; }
+</style>
+</head>
+<body>
+    <div id="blogpost">
+        <h1>{{ post.title }}</h1>
+        <h3>Posted On: {{ post.date_posted|date }}</h3>
+        {{ post.body|linebreaks }}
+    </div>
+    <h3>Comments on This Post:</h3>
+    {% get_free_threaded_comment_tree for post as tree %}
+    {% for comment in tree %}
+        <div style="margin-left: {{ comment.depth }}em;" class="comment">
+            <a href="{{ comment.website }}">{{ comment.name }}</a> said:<br/>
+            {% auto_transform_markup comment %}
+            <a id="c{{ comment.id }}" href="javascript:show_reply_form('c{{ comment.id }}','{% get_free_comment_url post comment %}','{{ comment.name }}')">Reply</a>
+        </div>
+    {% endfor %}
+    <p>Reply to Original:</p>
+    <form method="POST" action="{% get_free_comment_url_xml post %}">
+        <ul>
+            {% get_free_threaded_comment_form as form %}
+            {{ form.as_ul }}
+            <li><input type="submit" value="Submit Comment" /></li>
+        </ul>
+    </form>
+</body>
+</html>

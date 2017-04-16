@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython Developer&#8217;s Guide &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="next" title="IPython development guidelines" href="overview.html" />
+    <link rel="prev" title="What&#8217;s new" href="../changes.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="IPython development guidelines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../changes.html" title="What&#8217;s new"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-developer-s-guide">
+<h1>IPython Developer&#8217;s Guide<a class="headerlink" href="#ipython-developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="overview.html">IPython development guidelines</a><ul>
+<li class="toctree-l2"><a class="reference external" href="overview.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#how-to-contribute-to-ipython">How to contribute to IPython</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#some-notes-for-core-developers-when-merging-third-party-contributions">Some notes for core developers when merging third-party contributions</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#coding-conventions">Coding conventions</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#testing-system">Testing system</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#release-checklist">Release checklist</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#porting-to-3-0">Porting to 3.0</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="coding_guide.html">Coding guide</a><ul>
+<li class="toctree-l2"><a class="reference external" href="coding_guide.html#coding-conventions">Coding conventions</a></li>
+<li class="toctree-l2"><a class="reference external" href="coding_guide.html#testing-system">Testing system</a></li>
+<li class="toctree-l2"><a class="reference external" href="coding_guide.html#configuration-system">Configuration system</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="doc_guide.html">Documenting IPython</a><ul>
+<li class="toctree-l2"><a class="reference external" href="doc_guide.html#standalone-documentation">Standalone documentation</a></li>
+<li class="toctree-l2"><a class="reference external" href="doc_guide.html#docstring-format">Docstring format</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="roadmap.html">Development roadmap</a><ul>
+<li class="toctree-l2"><a class="reference external" href="roadmap.html#work-targeted-to-particular-releases">Work targeted to particular releases</a></li>
+<li class="toctree-l2"><a class="reference external" href="roadmap.html#major-areas-of-work">Major areas of work</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="notification_blueprint.html">IPython.kernel.core.notification blueprint</a><ul>
+<li class="toctree-l2"><a class="reference external" href="notification_blueprint.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference external" href="notification_blueprint.html#functional-requirements">Functional Requirements</a></li>
+<li class="toctree-l2"><a class="reference external" href="notification_blueprint.html#what-s-not-included">What&#8217;s not included</a></li>
+<li class="toctree-l2"><a class="reference external" href="notification_blueprint.html#use-cases">Use Cases</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="config_blueprint.html">Notes on the IPython configuration system</a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../changes.html" title="previous chapter">What&#8217;s new</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="overview.html" title="next chapter">IPython development guidelines</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/index.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="IPython development guidelines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../changes.html" title="What&#8217;s new"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

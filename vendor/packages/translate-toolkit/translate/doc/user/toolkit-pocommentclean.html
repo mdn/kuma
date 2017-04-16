@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pocommentclean" id="pocommentclean">pocommentclean</a></h1>
+<div class="level1">
+
+<p>
+
+pocommentclean will remove all translator comments from a directory of <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "pocommentclean" [1-112] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://man.cx/sed" class="interwiki iw_man" title="http://man.cx/sed">sed</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Prerequisites" [113-158] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+
+<p>
+
+pocommentclean [--backup] &lt;po&gt;
+</p>
+
+<p>
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> po           </td><td class="col1 leftalign"> is a directory of existing <acronym title="Gettext Portable Object">PO</acronym> files that you want to clean  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> -- backup  </td><td class="col1 leftalign"> Create a backup file for each <acronym title="Gettext Portable Object">PO</acronym> file converted, .po.bak  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [159-381] -->
+<h2><a name="operation" id="operation">Operation</a></h2>
+<div class="level2">
+
+<p>
+
+Using sed pocommentclean will delete all lines starting with # but which are not standard Gettext <acronym title="Gettext Portable Object">PO</acronym> format lines.  So it won&#039;t delete developer comments (#.), obsolete messages (#~), flags (#,) or locations (#:).
+</p>
+
+</div>
+<!-- SECTION "Operation" [382-619] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+pocommentclean cannot clean individual <acronym title="Gettext Portable Object">PO</acronym> files, it only cleans directories
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [620-] --></body>
+</html>

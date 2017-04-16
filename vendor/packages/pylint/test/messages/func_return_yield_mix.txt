@@ -1,0 +1,1 @@
+E:  6:somegen: Return with argument inside generator

@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.map
+==========
+
+Module: :mod:`kernel.map`
+-------------------------
+Inheritance diagram for ``IPython.kernel.map``:
+
+.. inheritance-diagram:: IPython.kernel.map 
+   :parts: 3
+
+.. automodule:: IPython.kernel.map
+
+.. currentmodule:: IPython.kernel.map
+
+Classes
+-------
+
+:class:`Map`
+~~~~~~~~~~~~
+
+
+.. autoclass:: Map
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RoundRobinMap`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RoundRobinMap
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,561 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Connection Pooling
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Core" href="index.html" />
+        <link rel="next" title="Schema Definition Language" href="schema.html" />
+        <link rel="prev" title="Working with Engines and Connections" href="connections.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/core/pooling.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+                » 
+    Connection Pooling
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="connections.html" title="previous chapter">Working with Engines and Connections</a>
+        Next:
+        <a href="schema.html" title="next chapter">Schema Definition Language</a>
+</div>
+
+                <h2>
+                    
+    Connection Pooling
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Connection Pooling</a><ul>
+<li><a class="reference internal" href="#connection-pool-configuration">Connection Pool Configuration</a></li>
+<li><a class="reference internal" href="#switching-pool-implementations">Switching Pool Implementations</a></li>
+<li><a class="reference internal" href="#using-a-custom-connection-function">Using a Custom Connection Function</a></li>
+<li><a class="reference internal" href="#constructing-a-pool">Constructing a Pool</a></li>
+<li><a class="reference internal" href="#pool-event-listeners">Pool Event Listeners</a></li>
+<li><a class="reference internal" href="#builtin-pool-implementations">Builtin Pool Implementations</a></li>
+<li><a class="reference internal" href="#pooling-plain-db-api-connections">Pooling Plain DB-API Connections</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.pool">
+<span id="connection-pooling"></span><span id="pooling-toplevel"></span><h1>Connection Pooling<a class="headerlink" href="#module-sqlalchemy.pool" title="Permalink to this headline">¶</a></h1>
+<p>The establishment of a
+database connection is typically a somewhat expensive operation, and
+applications need a way to get at database connections repeatedly
+with minimal overhead.  Particularly for
+server-side web applications, a connection pool is the standard way to
+maintain a &#8220;pool&#8221; of active database connections in memory which are
+reused across requests.</p>
+<p>SQLAlchemy includes several connection pool implementations
+which integrate with the <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>.  They can also be used
+directly for applications that want to add pooling to an otherwise
+plain DBAPI approach.</p>
+<div class="section" id="connection-pool-configuration">
+<h2>Connection Pool Configuration<a class="headerlink" href="#connection-pool-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt> returned by the
+<a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> function in most cases has a <a class="reference internal" href="#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>
+integrated, pre-configured with reasonable pooling defaults.  If
+you&#8217;re reading this section to simply enable pooling- congratulations!
+You&#8217;re already done.</p>
+<p>The most common <a class="reference internal" href="#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a> tuning parameters can be passed
+directly to <a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> as keyword arguments:
+<tt class="docutils literal"><span class="pre">pool_size</span></tt>, <tt class="docutils literal"><span class="pre">max_overflow</span></tt>, <tt class="docutils literal"><span class="pre">pool_recycle</span></tt> and
+<tt class="docutils literal"><span class="pre">pool_timeout</span></tt>.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://me@localhost/mydb&#39;</span><span class="p">,</span>
+                       <span class="n">pool_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">max_overflow</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></pre></div>
+</div>
+<p>In the case of SQLite, a <a class="reference internal" href="#sqlalchemy.pool.SingletonThreadPool" title="sqlalchemy.pool.SingletonThreadPool"><tt class="xref py py-class docutils literal"><span class="pre">SingletonThreadPool</span></tt></a> is provided instead,
+to provide compatibility with SQLite&#8217;s restricted threading model, as well
+as to provide a reasonable default behavior to SQLite &#8220;memory&#8221; databases,
+which maintain their entire dataset within the scope of a single connection.</p>
+<p>All SQLAlchemy pool implementations have in common
+that none of them &#8220;pre create&#8221; connections - all implementations wait
+until first use before creating a connection.   At that point, if
+no additional concurrent checkout requests for more connections
+are made, no additional connections are created.   This is why it&#8217;s perfectly
+fine for <a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> to default to using a <a class="reference internal" href="#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>
+of size five without regard to whether or not the application really needs five connections
+queued up - the pool would only grow to that size if the application
+actually used five connections concurrently, in which case the usage of a
+small pool is an entirely appropriate default behavior.</p>
+</div>
+<div class="section" id="switching-pool-implementations">
+<h2>Switching Pool Implementations<a class="headerlink" href="#switching-pool-implementations" title="Permalink to this headline">¶</a></h2>
+<p>The usual way to use a different kind of pool with <a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a>
+is to use the <tt class="docutils literal"><span class="pre">poolclass</span></tt> argument.   This argument accepts a class
+imported from the <tt class="docutils literal"><span class="pre">sqlalchemy.pool</span></tt> module, and handles the details
+of building the pool for you.   Common options include specifying
+<a class="reference internal" href="#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a> with SQLite:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">QueuePool</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:///file.db&#39;</span><span class="p">,</span> <span class="n">poolclass</span><span class="o">=</span><span class="n">QueuePool</span><span class="p">)</span></pre></div>
+</div>
+<p>Disabling pooling using <a class="reference internal" href="#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><tt class="xref py py-class docutils literal"><span class="pre">NullPool</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">NullPool</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+          <span class="s">&#39;postgresql+psycopg2://scott:tiger@localhost/test&#39;</span><span class="p">,</span>
+          <span class="n">poolclass</span><span class="o">=</span><span class="n">NullPool</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="using-a-custom-connection-function">
+<h2>Using a Custom Connection Function<a class="headerlink" href="#using-a-custom-connection-function" title="Permalink to this headline">¶</a></h2>
+<p>All <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a> classes accept an argument <tt class="docutils literal"><span class="pre">creator</span></tt> which is
+a callable that creates a new connection.  <a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a>
+accepts this function to pass onto the pool via an argument of
+the same name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">as</span> <span class="nn">pool</span>
+<span class="kn">import</span> <span class="nn">psycopg2</span>
+
+<span class="k">def</span> <span class="nf">getconn</span><span class="p">():</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;ed&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">dbname</span><span class="o">=</span><span class="s">&#39;test&#39;</span><span class="p">)</span>
+    <span class="c"># do things with &#39;c&#39; to set up</span>
+    <span class="k">return</span> <span class="n">c</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql+psycopg2://&#39;</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="n">getconn</span><span class="p">)</span></pre></div>
+</div>
+<p>For most &#8220;initialize on connection&#8221; routines, it&#8217;s more convenient
+to use a <a class="reference internal" href="interfaces.html#sqlalchemy.interfaces.PoolListener" title="sqlalchemy.interfaces.PoolListener"><tt class="xref py py-class docutils literal"><span class="pre">PoolListener</span></tt></a>, so that the usual URL argument to
+<a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> is still usable.  <tt class="docutils literal"><span class="pre">creator</span></tt> is there as
+a total last resort for when a DBAPI has some form of <tt class="docutils literal"><span class="pre">connect</span></tt>
+that is not at all supported by SQLAlchemy.</p>
+</div>
+<div class="section" id="constructing-a-pool">
+<h2>Constructing a Pool<a class="headerlink" href="#constructing-a-pool" title="Permalink to this headline">¶</a></h2>
+<p>To use a <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a> by itself, the <tt class="docutils literal"><span class="pre">creator</span></tt> function is
+the only argument that&#8217;s required and is passed first, followed
+by any additional options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">as</span> <span class="nn">pool</span>
+<span class="kn">import</span> <span class="nn">psycopg2</span>
+
+<span class="k">def</span> <span class="nf">getconn</span><span class="p">():</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;ed&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">dbname</span><span class="o">=</span><span class="s">&#39;test&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">c</span>
+
+<span class="n">mypool</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">QueuePool</span><span class="p">(</span><span class="n">getconn</span><span class="p">,</span> <span class="n">max_overflow</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pool_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></pre></div>
+</div>
+<p>DBAPI connections can then be procured from the pool using the <a class="reference internal" href="#sqlalchemy.pool.Pool.connect" title="sqlalchemy.pool.Pool.connect"><tt class="xref py py-meth docutils literal"><span class="pre">Pool.connect()</span></tt></a>
+function.  The return value of this method is a DBAPI connection that&#8217;s contained
+within a transparent proxy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># get a connection</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">mypool</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+<span class="c"># use it</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;select foo&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>The purpose of the transparent proxy is to intercept the <tt class="docutils literal"><span class="pre">close()</span></tt> call,
+such that instead of the DBAPI connection being closed, its returned to the
+pool:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># &quot;close&quot; the connection.  Returns</span>
+<span class="c"># it to the pool.</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+</div>
+<p>The proxy also returns its contained DBAPI connection to the pool
+when it is garbage collected,
+though it&#8217;s not deterministic in Python that this occurs immediately (though
+it is typical with cPython).</p>
+<p>A particular pre-created <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a> can be shared with one or more
+engines by passing it to the <tt class="docutils literal"><span class="pre">pool</span></tt> argument of <a class="reference internal" href="engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://&#39;</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">mypool</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="pool-event-listeners">
+<h2>Pool Event Listeners<a class="headerlink" href="#pool-event-listeners" title="Permalink to this headline">¶</a></h2>
+<p>Connection pools support an event interface that allows hooks to execute
+upon first connect, upon each new connection, and upon checkout and
+checkin of connections.   See <a class="reference internal" href="interfaces.html#sqlalchemy.interfaces.PoolListener" title="sqlalchemy.interfaces.PoolListener"><tt class="xref py py-class docutils literal"><span class="pre">PoolListener</span></tt></a> for details.</p>
+</div>
+<div class="section" id="builtin-pool-implementations">
+<h2>Builtin Pool Implementations<a class="headerlink" href="#builtin-pool-implementations" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sqlalchemy.pool.Pool">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">Pool</tt><big>(</big><em>creator</em>, <em>recycle=-1</em>, <em>echo=None</em>, <em>use_threadlocal=False</em>, <em>logging_name=None</em>, <em>reset_on_return=True</em>, <em>listeners=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.Pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for connection pools.</p>
+<dl class="method">
+<dt id="sqlalchemy.pool.Pool.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>creator</em>, <em>recycle=-1</em>, <em>echo=None</em>, <em>use_threadlocal=False</em>, <em>logging_name=None</em>, <em>reset_on_return=True</em>, <em>listeners=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.Pool.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a Pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>creator</strong> &#8211; a callable function that returns a DB-API
+connection object.  The function will be called with
+parameters.</li>
+<li><strong>recycle</strong> &#8211; If set to non -1, number of seconds between
+connection recycling, which means upon checkout, if this
+timeout is surpassed the connection will be closed and
+replaced with a newly opened connection. Defaults to -1.</li>
+<li><strong>logging_name</strong> &#8211; String identifier which will be used within
+the &#8220;name&#8221; field of logging records generated within the 
+&#8220;sqlalchemy.pool&#8221; logger. Defaults to a hexstring of the object&#8217;s 
+id.</li>
+<li><strong>echo</strong> &#8211; If True, connections being pulled and retrieved
+from the pool will be logged to the standard output, as well
+as pool sizing information.  Echoing can also be achieved by
+enabling logging for the &#8220;sqlalchemy.pool&#8221;
+namespace. Defaults to False.</li>
+<li><strong>use_threadlocal</strong> &#8211; If set to True, repeated calls to
+<a class="reference internal" href="#sqlalchemy.pool.Pool.connect" title="sqlalchemy.pool.Pool.connect"><tt class="xref py py-meth docutils literal"><span class="pre">connect()</span></tt></a> within the same application thread will be
+guaranteed to return the same connection object, if one has
+already been retrieved from the pool and has not been
+returned yet.  Offers a slight performance advantage at the
+cost of individual transactions by default.  The
+<tt class="xref py py-meth docutils literal"><span class="pre">unique_connection()</span></tt> method is provided to bypass the
+threadlocal behavior installed into <a class="reference internal" href="#sqlalchemy.pool.Pool.connect" title="sqlalchemy.pool.Pool.connect"><tt class="xref py py-meth docutils literal"><span class="pre">connect()</span></tt></a>.</li>
+<li><strong>reset_on_return</strong> &#8211; If true, reset the database state of
+connections returned to the pool.  This is typically a
+ROLLBACK to release locks and transaction resources.
+Disable at your own peril.  Defaults to True.</li>
+<li><strong>listeners</strong> &#8211; A list of
+<a class="reference internal" href="interfaces.html#sqlalchemy.interfaces.PoolListener" title="sqlalchemy.interfaces.PoolListener"><tt class="xref py py-class docutils literal"><span class="pre">PoolListener</span></tt></a>-like objects or
+dictionaries of callables that receive events when DB-API
+connections are created, checked out and checked in to the
+pool.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.pool.Pool.connect">
+<tt class="descname">connect</tt><big>(</big><big>)</big><a class="headerlink" href="#sqlalchemy.pool.Pool.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a DBAPI connection from the pool.</p>
+<p>The connection is instrumented such that when its 
+<tt class="docutils literal"><span class="pre">close()</span></tt> method is called, the connection will be returned to 
+the pool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.pool.Pool.dispose">
+<tt class="descname">dispose</tt><big>(</big><big>)</big><a class="headerlink" href="#sqlalchemy.pool.Pool.dispose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispose of this pool.</p>
+<p>This method leaves the possibility of checked-out connections
+remaining open, It is advised to not reuse the pool once dispose()
+is called, and to instead use a new pool constructed by the
+recreate() method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.pool.Pool.recreate">
+<tt class="descname">recreate</tt><big>(</big><big>)</big><a class="headerlink" href="#sqlalchemy.pool.Pool.recreate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>, of the same class as this one
+and configured with identical creation arguments.</p>
+<p>This method is used in conjunection with <a class="reference internal" href="#sqlalchemy.pool.Pool.dispose" title="sqlalchemy.pool.Pool.dispose"><tt class="xref py py-meth docutils literal"><span class="pre">dispose()</span></tt></a> 
+to close out an entire <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a> and create a new one in 
+its place.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.pool.QueuePool">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">QueuePool</tt><big>(</big><em>creator</em>, <em>pool_size=5</em>, <em>max_overflow=10</em>, <em>timeout=30</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.QueuePool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.Pool</span></tt></a></p>
+<p>A Pool that imposes a limit on the number of open connections.</p>
+<dl class="method">
+<dt id="sqlalchemy.pool.QueuePool.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>creator</em>, <em>pool_size=5</em>, <em>max_overflow=10</em>, <em>timeout=30</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.QueuePool.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a QueuePool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>creator</strong> &#8211; a callable function that returns a DB-API
+connection object.  The function will be called with
+parameters.</li>
+<li><strong>pool_size</strong> &#8211; The size of the pool to be maintained,
+defaults to 5. This is the largest number of connections that
+will be kept persistently in the pool. Note that the pool
+begins with no connections; once this number of connections
+is requested, that number of connections will remain.
+<tt class="docutils literal"><span class="pre">pool_size</span></tt> can be set to 0 to indicate no size limit; to
+disable pooling, use a <a class="reference internal" href="#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><tt class="xref py py-class docutils literal"><span class="pre">NullPool</span></tt></a>
+instead.</li>
+<li><strong>max_overflow</strong> &#8211; The maximum overflow size of the
+pool. When the number of checked-out connections reaches the
+size set in pool_size, additional connections will be
+returned up to this limit. When those additional connections
+are returned to the pool, they are disconnected and
+discarded. It follows then that the total number of
+simultaneous connections the pool will allow is pool_size +
+<cite>max_overflow</cite>, and the total number of &#8220;sleeping&#8221;
+connections the pool will allow is pool_size. <cite>max_overflow</cite>
+can be set to -1 to indicate no overflow limit; no limit
+will be placed on the total number of concurrent
+connections. Defaults to 10.</li>
+<li><strong>timeout</strong> &#8211; The number of seconds to wait before giving up
+on returning a connection. Defaults to 30.</li>
+<li><strong>recycle</strong> &#8211; If set to non -1, number of seconds between
+connection recycling, which means upon checkout, if this
+timeout is surpassed the connection will be closed and
+replaced with a newly opened connection. Defaults to -1.</li>
+<li><strong>echo</strong> &#8211; If True, connections being pulled and retrieved
+from the pool will be logged to the standard output, as well
+as pool sizing information.  Echoing can also be achieved by
+enabling logging for the &#8220;sqlalchemy.pool&#8221;
+namespace. Defaults to False.</li>
+<li><strong>use_threadlocal</strong> &#8211; If set to True, repeated calls to
+<tt class="xref py py-meth docutils literal"><span class="pre">connect()</span></tt> within the same application thread will be
+guaranteed to return the same connection object, if one has
+already been retrieved from the pool and has not been
+returned yet.  Offers a slight performance advantage at the
+cost of individual transactions by default.  The
+<tt class="xref py py-meth docutils literal"><span class="pre">unique_connection()</span></tt> method is provided to bypass the
+threadlocal behavior installed into <tt class="xref py py-meth docutils literal"><span class="pre">connect()</span></tt>.</li>
+<li><strong>reset_on_return</strong> &#8211; If true, reset the database state of
+connections returned to the pool.  This is typically a
+ROLLBACK to release locks and transaction resources.
+Disable at your own peril.  Defaults to True.</li>
+<li><strong>listeners</strong> &#8211; A list of
+<a class="reference internal" href="interfaces.html#sqlalchemy.interfaces.PoolListener" title="sqlalchemy.interfaces.PoolListener"><tt class="xref py py-class docutils literal"><span class="pre">PoolListener</span></tt></a>-like objects or
+dictionaries of callables that receive events when DB-API
+connections are created, checked out and checked in to the
+pool.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.pool.SingletonThreadPool">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">SingletonThreadPool</tt><big>(</big><em>creator</em>, <em>pool_size=5</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.SingletonThreadPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.Pool</span></tt></a></p>
+<p>A Pool that maintains one connection per thread.</p>
+<p>Maintains one connection per each thread, never moving a connection to a
+thread other than the one which it was created in.</p>
+<p>This is used for SQLite, which both does not handle multithreading by
+default, and also requires a singleton connection if a :memory: database
+is being used.</p>
+<p>Options are the same as those of <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>, as well as:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pool_size</strong> &#8211; The number of threads in which to maintain connections 
+at once.  Defaults to five.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sqlalchemy.pool.SingletonThreadPool.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>creator</em>, <em>pool_size=5</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.SingletonThreadPool.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.pool.AssertionPool">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">AssertionPool</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.AssertionPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.Pool</span></tt></a></p>
+<p>A Pool that allows at most one checked out connection at any given
+time.</p>
+<p>This will raise an exception if more than one connection is checked out
+at a time.  Useful for debugging code that is using more connections
+than desired.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.pool.NullPool">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">NullPool</tt><big>(</big><em>creator</em>, <em>recycle=-1</em>, <em>echo=None</em>, <em>use_threadlocal=False</em>, <em>logging_name=None</em>, <em>reset_on_return=True</em>, <em>listeners=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.NullPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.Pool</span></tt></a></p>
+<p>A Pool which does not pool connections.</p>
+<p>Instead it literally opens and closes the underlying DB-API connection
+per each connection open/close.</p>
+<p>Reconnect-related functions such as <tt class="docutils literal"><span class="pre">recycle</span></tt> and connection
+invalidation are not supported by this Pool implementation, since
+no connections are held persistently.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.pool.StaticPool">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">StaticPool</tt><big>(</big><em>creator</em>, <em>recycle=-1</em>, <em>echo=None</em>, <em>use_threadlocal=False</em>, <em>logging_name=None</em>, <em>reset_on_return=True</em>, <em>listeners=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.StaticPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.pool.Pool</span></tt></a></p>
+<p>A Pool of exactly one connection, used for all requests.</p>
+<p>Reconnect-related functions such as <tt class="docutils literal"><span class="pre">recycle</span></tt> and connection
+invalidation (which is also used to support auto-reconnect) are not
+currently supported by this Pool implementation but may be implemented
+in a future release.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pooling-plain-db-api-connections">
+<h2>Pooling Plain DB-API Connections<a class="headerlink" href="#pooling-plain-db-api-connections" title="Permalink to this headline">¶</a></h2>
+<p>Any <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0249"><strong>PEP 249</strong></a> DB-API module can be &#8220;proxied&#8221; through the connection
+pool transparently.  Usage of the DB-API is exactly as before, except
+the <tt class="docutils literal"><span class="pre">connect()</span></tt> method will consult the pool.  Below we illustrate
+this with <tt class="docutils literal"><span class="pre">psycopg2</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">as</span> <span class="nn">pool</span>
+<span class="kn">import</span> <span class="nn">psycopg2</span> <span class="kn">as</span> <span class="nn">psycopg</span>
+
+<span class="n">psycopg</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">manage</span><span class="p">(</span><span class="n">psycopg</span><span class="p">)</span>
+
+<span class="c"># then connect normally</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;scott&#39;</span><span class="p">,</span>
+                             <span class="n">password</span><span class="o">=</span><span class="s">&#39;tiger&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>This produces a <tt class="xref py py-class docutils literal"><span class="pre">_DBProxy</span></tt> object which supports the same
+<tt class="docutils literal"><span class="pre">connect()</span></tt> function as the original DB-API module.  Upon
+connection, a connection proxy object is returned, which delegates its
+calls to a real DB-API connection object.  This connection object is
+stored persistently within a connection pool (an instance of
+<a class="reference internal" href="#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>) that corresponds to the exact connection arguments sent
+to the <tt class="docutils literal"><span class="pre">connect()</span></tt> function.</p>
+<p>The connection proxy supports all of the methods on the original
+connection object, most of which are proxied via <tt class="docutils literal"><span class="pre">__getattr__()</span></tt>.
+The <tt class="docutils literal"><span class="pre">close()</span></tt> method will return the connection to the pool, and the
+<tt class="docutils literal"><span class="pre">cursor()</span></tt> method will return a proxied cursor object.  Both the
+connection proxy and the cursor proxy will also return the underlying
+connection to the pool after they have both been garbage collected,
+which is detected via weakref callbacks  (<tt class="docutils literal"><span class="pre">__del__</span></tt> is not used).</p>
+<p>Additionally, when connections are returned to the pool, a
+<tt class="docutils literal"><span class="pre">rollback()</span></tt> is issued on the connection unconditionally.  This is
+to release any locks still held by the connection that may have
+resulted from normal activity.</p>
+<p>By default, the <tt class="docutils literal"><span class="pre">connect()</span></tt> method will return the same connection
+that is already checked out in the current thread.  This allows a
+particular connection to be used in a given thread without needing to
+pass it around between functions.  To disable this behavior, specify
+<tt class="docutils literal"><span class="pre">use_threadlocal=False</span></tt> to the <tt class="docutils literal"><span class="pre">manage()</span></tt> function.</p>
+<dl class="function">
+<dt id="sqlalchemy.pool.manage">
+<tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">manage</tt><big>(</big><em>module</em>, <em>**params</em><big>)</big><a class="headerlink" href="#sqlalchemy.pool.manage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a proxy for a DB-API module that automatically 
+pools connections.</p>
+<p>Given a DB-API 2.0 module and pool management parameters, returns
+a proxy for the module that will automatically pool connections,
+creating new connection pools for each distinct set of connection
+arguments sent to the decorated module&#8217;s connect() function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>module</strong> &#8211; a DB-API 2.0 database module</li>
+<li><strong>poolclass</strong> &#8211; the class used by the pool module to provide
+pooling.  Defaults to <a class="reference internal" href="#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>.</li>
+<li><strong>**params</strong> &#8211; will be passed through to <em>poolclass</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.pool.clear_managers">
+<tt class="descclassname">sqlalchemy.pool.</tt><tt class="descname">clear_managers</tt><big>(</big><big>)</big><a class="headerlink" href="#sqlalchemy.pool.clear_managers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all current DB-API 2.0 managers.</p>
+<p>All pools and connections are disposed.</p>
+</dd></dl>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="connections.html" title="previous chapter">Working with Engines and Connections</a>
+        Next:
+        <a href="schema.html" title="next chapter">Schema Definition Language</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

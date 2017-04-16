@@ -1,0 +1,502 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="Debugging Applications" href="debug.html">
+    <link rel="prev" title="Serving WSGI Applications" href="serving.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="serving.html">&laquo; Serving WSGI Applications</a></li>
+        <li class="active"><a href="">Test Utilities</a></li>
+        <li><a href="debug.html">Debugging Applications &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Test Utilities</a><ul>
+<li><a class="reference external" href="#diving-in">Diving In</a></li>
+<li><a class="reference external" href="#environment-building">Environment Building</a></li>
+<li><a class="reference external" href="#testing-api">Testing API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Test Utilities<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>Quite often you want to unittest your application or just check the output
+from an interactive python session.  In theory that is pretty simple because
+you can fake a WSGI environment and call the application with a dummy
+<cite>start_response</cite> and iterate over the application iterator but there are
+argumentably better ways to interact with an application.</p>
+<p>Werkzeug provides an object called <cite>Client</cite> which you can pass a WSGI
+application (and optionally a response wrapper) which you can use to send
+virtual requests to the application.</p>
+<p>A response wrapper is a callable that takes three arguments: the application
+iterator, the status and finally a list of headers.  The default response
+wrapper returns a tuple.  Because response objects have the same signature
+you can use them as response wrapper, ideally by subclassing them and hooking
+in test functionality.</p>
+<div class="section" id="diving-in">
+<h2>Diving In<a class="headerlink" href="#diving-in" title="Permalink to this headline">¶</a></h2>
+<p>Werkzeug provides a <cite>Client</cite> object which you can pass a WSGI application (and
+optionally a response wrapper) which you can use to send virtual requests to
+the application.</p>
+<p>A response wrapper is a callable that takes three arguments: the application
+iterator, the status and finally a list of headers.  The default response
+wrapper returns a tuple.  Because response objects have the same signature,
+you can use them as response wrapper, ideally by subclassing them and hooking
+in test functionality.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">BaseResponse</span><span class="p">,</span> <span class="n">test_app</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">test_app</span><span class="p">,</span> <span class="n">BaseResponse</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span><span class="o">.</span><span class="n">headers</span>
+<span class="go">Headers([(&#39;Content-Type&#39;, &#39;text/html; charset=utf-8&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mf">2</span><span class="p">]</span>
+<span class="go">[&#39;&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&#39;,</span>
+<span class="go"> &#39;  &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;&#39;]</span>
+</pre></div>
+</div>
+<p>Or without a wrapper defined:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">test_app</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">app_iter</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">status</span>
+<span class="go">&#39;200 OK&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">headers</span>
+<span class="go">[(&#39;Content-Type&#39;, &#39;text/html; charset=utf-8&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app_iter</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mf">2</span><span class="p">]</span>
+<span class="go">[&#39;&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&#39;,</span>
+<span class="go"> &#39;  &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="environment-building">
+<h2>Environment Building<a class="headerlink" href="#environment-building" title="Permalink to this headline">¶</a></h2>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>The easiest way to interactively test applications is using the
+<a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a>.  It can create both standard WSGI environments
+and request objects.</p>
+<p>The following example creates a WSGI environment with one uploaded file
+and a form field:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">EnvironBuilder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span> <span class="o">=</span> <span class="n">EnvironBuilder</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;foo&#39;</span><span class="p">:</span> <span class="s">&#39;this is some text&#39;</span><span class="p">,</span>
+<span class="gp">... </span>     <span class="s">&#39;file&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;my file contents&#39;</span><span class="p">),</span> <span class="s">&#39;test.txt&#39;</span><span class="p">)})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">env</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">get_environ</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The resulting environment is a regular WSGI environment that can be used for
+further processing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">]</span>
+<span class="go">u&#39;this is some text&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s">&#39;file&#39;</span><span class="p">]</span>
+<span class="go">&lt;FileStorage: u&#39;test.txt&#39; (&#39;text/plain&#39;)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">&#39;my file contents&#39;</span>
+</pre></div>
+</div>
+<p>The <a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a> figures out the content type automatically if you
+pass a dict to the constructor as <cite>data</cite>.  If you provide a string or an
+input stream you have to do that yourself.</p>
+<p>By default it will try to use <tt class="docutils literal"><span class="pre">application/x-www-form-urlencoded</span></tt> and only
+use <tt class="docutils literal"><span class="pre">multipart/form-data</span></tt> if files are uploaded:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span> <span class="o">=</span> <span class="n">EnvironBuilder</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;foo&#39;</span><span class="p">:</span> <span class="s">&#39;bar&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">content_type</span>
+<span class="go">&#39;application/x-www-form-urlencoded&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;contents&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">content_type</span>
+<span class="go">&#39;multipart/form-data&#39;</span>
+</pre></div>
+</div>
+<p>If a string is provided as data (or an input stream) you have to specify
+the content type yourself:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span> <span class="o">=</span> <span class="n">EnvironBuilder</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s">&#39;{&quot;json&quot;: &quot;this is&quot;}&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">content_type</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s">&#39;application/json&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-api">
+<h2>Testing API<a class="headerlink" href="#testing-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.EnvironBuilder">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">EnvironBuilder</tt><big>(</big><em>path='/'</em>, <em>base_url=None</em>, <em>query_string=None</em>, <em>method='GET'</em>, <em>input_stream=None</em>, <em>content_type=None</em>, <em>content_length=None</em>, <em>errors_stream=None</em>, <em>multithread=False</em>, <em>multiprocess=False</em>, <em>run_once=False</em>, <em>headers=None</em>, <em>data=None</em>, <em>environ_base=None</em>, <em>environ_overrides=None</em>, <em>charset='utf-8'</em><big>)</big><a class="headerlink" href="#werkzeug.EnvironBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class can be used to conveniently create a WSGI environment
+for testing purposes.  It can be used to quickly create WSGI environments
+or request objects from arbitrary data.</p>
+<p>The signature of this class is also used in some other places as of
+Werkzeug 0.5 (<a title="werkzeug.create_environ" class="reference internal" href="#werkzeug.create_environ"><tt class="xref docutils literal"><span class="pre">create_environ</span></tt></a>, <tt class="xref docutils literal"><span class="pre">BaseResponse.from_values</span></tt>,
+<a title="werkzeug.Client.open" class="reference internal" href="#werkzeug.Client.open"><tt class="xref docutils literal"><span class="pre">Client.open</span></tt></a>).  Because of this most of the functionality is
+available through the constructor alone.</p>
+<p>Files and regular form data can be manipulated independently of each
+other with the <tt class="xref docutils literal"><span class="pre">form</span></tt> and <tt class="xref docutils literal"><span class="pre">files</span></tt> attributes, but are
+passed with the same argument to the constructor: <cite>data</cite>.</p>
+<p><cite>data</cite> can be any of these values:</p>
+<ul class="simple">
+<li>a <cite>str</cite>: If it&#8217;s a string it is converted into a <a title="werkzeug.EnvironBuilder.input_stream" class="reference internal" href="#werkzeug.EnvironBuilder.input_stream"><tt class="xref docutils literal"><span class="pre">input_stream</span></tt></a>,
+the <a title="werkzeug.EnvironBuilder.content_length" class="reference internal" href="#werkzeug.EnvironBuilder.content_length"><tt class="xref docutils literal"><span class="pre">content_length</span></tt></a> is set and you have to provide a
+<a title="werkzeug.EnvironBuilder.content_type" class="reference internal" href="#werkzeug.EnvironBuilder.content_type"><tt class="xref docutils literal"><span class="pre">content_type</span></tt></a>.</li>
+<li>a <cite>dict</cite>: If it&#8217;s a dict the keys have to be strings and the values
+and of the following objects:<ul>
+<li>a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#file"><tt class="xref docutils literal"><span class="pre">file</span></tt></a>-like object.  These are converted into
+<a title="werkzeug.FileStorage" class="reference external" href="datastructures.html#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a> objects automatically.</li>
+<li>a tuple.  The <a title="werkzeug.FileMultiDict.add_file" class="reference external" href="datastructures.html#werkzeug.FileMultiDict.add_file"><tt class="xref docutils literal"><span class="pre">add_file</span></tt></a> method is called
+with the tuple items as positional arguments.</li>
+</ul>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>path</em> &#8211; the path of the request.  In the WSGI environment this will
+end up as <cite>PATH_INFO</cite>.  If the <cite>query_string</cite> is not defined
+and there is a question mark in the <cite>path</cite> everything after
+it is used as query string.</li>
+<li><em>base_url</em> &#8211; the base URL is a URL that is used to extract the WSGI
+URL scheme, host (server name + server port) and the
+script root (<cite>SCRIPT_NAME</cite>).</li>
+<li><em>query_string</em> &#8211; an optional string or dict with URL parameters.</li>
+<li><em>method</em> &#8211; the HTTP method to use, defaults to <cite>GET</cite>.</li>
+<li><em>input_stream</em> &#8211; an optional input stream.  Do not specify this and
+<cite>data</cite>.  As soon as an input stream is set you can&#8217;t
+modify <a title="werkzeug.EnvironBuilder.args" class="reference internal" href="#werkzeug.EnvironBuilder.args"><tt class="xref docutils literal"><span class="pre">args</span></tt></a> and <tt class="xref docutils literal"><span class="pre">files</span></tt> unless you
+set the <a title="werkzeug.EnvironBuilder.input_stream" class="reference internal" href="#werkzeug.EnvironBuilder.input_stream"><tt class="xref docutils literal"><span class="pre">input_stream</span></tt></a> to <cite>None</cite> again.</li>
+<li><em>content_type</em> &#8211; The content type for the request.  As of 0.5 you
+don&#8217;t have to provide this when specifying files
+and form data via <cite>data</cite>.</li>
+<li><em>content_length</em> &#8211; The content length for the request.  You don&#8217;t
+have to specify this when providing data via
+<cite>data</cite>.</li>
+<li><em>errors_stream</em> &#8211; an optional error stream that is used for
+<cite>wsgi.errors</cite>.  Defaults to <tt class="xref docutils literal"><span class="pre">stderr</span></tt>.</li>
+<li><em>multithread</em> &#8211; controls <cite>wsgi.multithread</cite>.  Defaults to <cite>False</cite>.</li>
+<li><em>multiprocess</em> &#8211; controls <cite>wsgi.multiprocess</cite>.  Defaults to <cite>False</cite>.</li>
+<li><em>run_once</em> &#8211; controls <cite>wsgi.run_once</cite>.  Defaults to <cite>False</cite>.</li>
+<li><em>headers</em> &#8211; an optional list or <a title="werkzeug.Headers" class="reference external" href="datastructures.html#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object of headers.</li>
+<li><em>data</em> &#8211; a string or dict of form data.  See explanation above.</li>
+<li><em>environ_base</em> &#8211; an optional dict of environment defaults.</li>
+<li><em>environ_overrides</em> &#8211; an optional dict of environment overrides.</li>
+<li><em>charset</em> &#8211; the charset used to encode unicode data.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.path">
+<tt class="descname">path</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.path" title="Permalink to this definition">¶</a></dt>
+<dd>The path of the application.  (aka <cite>PATH_INFO</cite>)</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.charset">
+<tt class="descname">charset</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.charset" title="Permalink to this definition">¶</a></dt>
+<dd>The charset used to encode unicode data.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.headers" title="Permalink to this definition">¶</a></dt>
+<dd>A <a title="werkzeug.Headers" class="reference external" href="datastructures.html#werkzeug.Headers"><tt class="xref docutils literal"><span class="pre">Headers</span></tt></a> object with the request headers.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.errors_stream">
+<tt class="descname">errors_stream</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.errors_stream" title="Permalink to this definition">¶</a></dt>
+<dd>The error stream used for the <cite>wsgi.errors</cite> stream.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.multithread">
+<tt class="descname">multithread</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.multithread" title="Permalink to this definition">¶</a></dt>
+<dd>The value of <cite>wsgi.multithread</cite></dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.multiprocess">
+<tt class="descname">multiprocess</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.multiprocess" title="Permalink to this definition">¶</a></dt>
+<dd>The value of <cite>wsgi.multiprocess</cite></dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.environ_base">
+<tt class="descname">environ_base</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.environ_base" title="Permalink to this definition">¶</a></dt>
+<dd>The dict used as base for the newly create environ.</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">environ_base</tt></dt>
+<dd>A dict with values that are used to override the generated environ.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.input_stream">
+<tt class="descname">input_stream</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.input_stream" title="Permalink to this definition">¶</a></dt>
+<dd>The optional input stream.  This and <tt class="xref docutils literal"><span class="pre">form</span></tt> / <tt class="xref docutils literal"><span class="pre">files</span></tt>
+is mutually exclusive.  Also do not provide this stream if the
+request method is not <cite>POST</cite> / <cite>PUT</cite> or something comparable.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.args">
+<tt class="descname">args</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.args" title="Permalink to this definition">¶</a></dt>
+<dd>The URL arguments as <a title="werkzeug.MultiDict" class="reference external" href="datastructures.html#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.base_url">
+<tt class="descname">base_url</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.base_url" title="Permalink to this definition">¶</a></dt>
+<dd>The base URL is a URL that is used to extract the WSGI
+URL scheme, host (server name + server port) and the
+script root (<cite>SCRIPT_NAME</cite>).</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.EnvironBuilder.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.EnvironBuilder.close" title="Permalink to this definition">¶</a></dt>
+<dd>Closes all files.  If you put real <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#file"><tt class="xref docutils literal"><span class="pre">file</span></tt></a> objects into the
+<tt class="xref docutils literal"><span class="pre">files</span></tt> dict you can call this method to automatically close
+them all in one go.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.content_length">
+<tt class="descname">content_length</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.content_length" title="Permalink to this definition">¶</a></dt>
+<dd>The content length as integer.  Reflected from and to the
+<a title="werkzeug.EnvironBuilder.headers" class="reference internal" href="#werkzeug.EnvironBuilder.headers"><tt class="xref docutils literal"><span class="pre">headers</span></tt></a>.  Do not set if you set <tt class="xref docutils literal"><span class="pre">files</span></tt> or
+<tt class="xref docutils literal"><span class="pre">form</span></tt> for auto detection.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.content_type">
+<tt class="descname">content_type</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.content_type" title="Permalink to this definition">¶</a></dt>
+<dd>The content type for the request.  Reflected from and to the
+<a title="werkzeug.EnvironBuilder.headers" class="reference internal" href="#werkzeug.EnvironBuilder.headers"><tt class="xref docutils literal"><span class="pre">headers</span></tt></a>.  Do not set if you set <tt class="xref docutils literal"><span class="pre">files</span></tt> or
+<tt class="xref docutils literal"><span class="pre">form</span></tt> for auto detection.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.EnvironBuilder.get_environ">
+<tt class="descname">get_environ</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.EnvironBuilder.get_environ" title="Permalink to this definition">¶</a></dt>
+<dd>Return the built environ.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.EnvironBuilder.get_request">
+<tt class="descname">get_request</tt><big>(</big><em>cls=None</em><big>)</big><a class="headerlink" href="#werkzeug.EnvironBuilder.get_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a request with the data.  If the request class is not
+specified <a title="werkzeug.EnvironBuilder.request_class" class="reference internal" href="#werkzeug.EnvironBuilder.request_class"><tt class="xref docutils literal"><span class="pre">request_class</span></tt></a> is used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>cls</em> &#8211; The request wrapper to use.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">input_stream</tt></dt>
+<dd>An optional input stream.  If you set this it will clear
+<tt class="xref docutils literal"><span class="pre">form</span></tt> and <tt class="xref docutils literal"><span class="pre">files</span></tt>.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.query_string">
+<tt class="descname">query_string</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.query_string" title="Permalink to this definition">¶</a></dt>
+<dd>The query string.  If you set this to a string <a title="werkzeug.EnvironBuilder.args" class="reference internal" href="#werkzeug.EnvironBuilder.args"><tt class="xref docutils literal"><span class="pre">args</span></tt></a> will
+no longer be available.</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.request_class">
+<tt class="descname">request_class</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.request_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>the default request class for <a title="werkzeug.EnvironBuilder.get_request" class="reference internal" href="#werkzeug.EnvironBuilder.get_request"><tt class="xref docutils literal"><span class="pre">get_request</span></tt></a></p>
+<p>alias of <a title="werkzeug.BaseRequest" class="reference external" href="wrappers.html#werkzeug.BaseRequest"><tt class="xref docutils literal"><span class="pre">BaseRequest</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.server_name">
+<tt class="descname">server_name</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.server_name" title="Permalink to this definition">¶</a></dt>
+<dd>The server name (read-only, use <tt class="xref docutils literal"><span class="pre">host</span></tt> to set)</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.server_port">
+<tt class="descname">server_port</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.server_port" title="Permalink to this definition">¶</a></dt>
+<dd>The server port as integer (read-only, use <tt class="xref docutils literal"><span class="pre">host</span></tt> to set)</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.server_protocol">
+<tt class="descname">server_protocol</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.server_protocol" title="Permalink to this definition">¶</a></dt>
+<dd>the server protocol to use.  defaults to HTTP/1.1</dd></dl>
+
+<dl class="attribute">
+<dt id="werkzeug.EnvironBuilder.wsgi_version">
+<tt class="descname">wsgi_version</tt><a class="headerlink" href="#werkzeug.EnvironBuilder.wsgi_version" title="Permalink to this definition">¶</a></dt>
+<dd>the wsgi version to use.  defaults to (1, 0)</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.Client">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Client</tt><big>(</big><em>application</em>, <em>response_wrapper=None</em>, <em>use_cookies=True</em><big>)</big><a class="headerlink" href="#werkzeug.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to send requests to a wrapped application.</p>
+<p>The response wrapper can be a class or factory function that takes
+three arguments: app_iter, status and headers.  The default response
+wrapper just returns a tuple.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ClientResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">MyApplication</span><span class="p">(),</span> <span class="n">response_wrapper</span><span class="o">=</span><span class="n">ClientResponse</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The use_cookies parameter indicates whether cookies should be stored and
+sent for subsequent requests. This is True by default, but passing False
+will disable this behaviour.</p>
+<p>
+<span class="versionmodified">New in version 0.5: </span><cite>use_cookies</cite> is new in this version.  Older versions did not provide
+builtin cookie support.</p>
+<dl class="method">
+<dt id="werkzeug.Client.open">
+<tt class="descname">open</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#werkzeug.Client.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the same arguments as the <a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a> class with
+some additions:  You can provide a <a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a> or a WSGI
+environment as only argument instead of the <a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a>
+arguments and two optional keyword arguments (<cite>as_tuple</cite>, <cite>buffered</cite>)
+that change the type of the return value or the way the application is
+executed.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>If a dict is provided as file in the dict for the <cite>data</cite> parameter
+the content type has to be called <cite>content_type</cite> now instead of
+<cite>mimetype</cite>.  This change was made for consistency with
+<a title="werkzeug.FileWrapper" class="reference external" href="utils.html#werkzeug.FileWrapper"><tt class="xref docutils literal"><span class="pre">werkzeug.FileWrapper</span></tt></a>.<blockquote>
+The <cite>follow_redirects</cite> parameter was added to <a title="werkzeug.Client.open" class="reference internal" href="#werkzeug.Client.open"><tt class="xref docutils literal"><span class="pre">open</span></tt></a>.</blockquote>
+</p>
+<p>Additional parameters:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>as_tuple</em> &#8211; Returns a tuple in the form <tt class="docutils literal"><span class="pre">(environ,</span> <span class="pre">result)</span></tt></li>
+<li><em>buffered</em> &#8211; Set this to true to buffer the application run.
+This will automatically close the application for
+you as well.</li>
+<li><em>follow_redirects</em> &#8211; Set this to True if the <cite>Client</cite> should
+follow HTTP redirects.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Client.get">
+<tt class="descname">get</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#werkzeug.Client.get" title="Permalink to this definition">¶</a></dt>
+<dd>Like open but method is enforced to GET.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Client.post">
+<tt class="descname">post</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#werkzeug.Client.post" title="Permalink to this definition">¶</a></dt>
+<dd>Like open but method is enforced to POST.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Client.put">
+<tt class="descname">put</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#werkzeug.Client.put" title="Permalink to this definition">¶</a></dt>
+<dd>Like open but method is enforced to PUT.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Client.delete">
+<tt class="descname">delete</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#werkzeug.Client.delete" title="Permalink to this definition">¶</a></dt>
+<dd>Like open but method is enforced to DELETE.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Client.head">
+<tt class="descname">head</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#werkzeug.Client.head" title="Permalink to this definition">¶</a></dt>
+<dd>Like open but method is enforced to HEAD.</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="werkzeug.create_environ">
+<tt class="descclassname">werkzeug.</tt><tt class="descname">create_environ</tt><big>(</big><span class="optional">[</span><em>options</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#werkzeug.create_environ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new WSGI environ dict based on the values passed.  The first
+parameter should be the path of the request which defaults to &#8216;/&#8217;.  The
+second one can either be an absolute path (in that case the host is
+localhost:80) or a full path to the request with scheme, netloc port and
+the path to the script.</p>
+<p>This accepts the same arguments as the <a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a>
+constructor.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>This function is now a thin wrapper over <a title="werkzeug.EnvironBuilder" class="reference internal" href="#werkzeug.EnvironBuilder"><tt class="xref docutils literal"><span class="pre">EnvironBuilder</span></tt></a> which
+was added in 0.5.  The <cite>headers</cite>, <cite>environ_base</cite>, <cite>environ_overrides</cite>
+and <cite>charset</cite> parameters were added.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="werkzeug.run_wsgi_app">
+<tt class="descclassname">werkzeug.</tt><tt class="descname">run_wsgi_app</tt><big>(</big><em>app</em>, <em>environ</em>, <em>buffered=False</em><big>)</big><a class="headerlink" href="#werkzeug.run_wsgi_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a tuple in the form (app_iter, status, headers) of the
+application output.  This works best if you pass it an application that
+returns an iterator all the time.</p>
+<p>Sometimes applications may use the <cite>write()</cite> callable returned
+by the <cite>start_response</cite> function.  This tries to resolve such edge
+cases automatically.  But if you don&#8217;t get the expected output you
+should set <cite>buffered</cite> to <cite>True</cite> which enforces buffering.</p>
+<p>If passed an invalid WSGI application the behavior of this function is
+undefined.  Never pass non-conforming WSGI applications to this function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>app</em> &#8211; the application to execute.</li>
+<li><em>buffered</em> &#8211; set to <cite>True</cite> to enforce buffering.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple in the form <tt class="docutils literal"><span class="pre">(app_iter,</span> <span class="pre">status,</span> <span class="pre">headers)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

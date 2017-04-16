@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="creating_mozilla_pot_files" id="creating_mozilla_pot_files">Creating Mozilla POT files</a></h1>
+<div class="level1">
+
+<p>
+
+You can do this two ways:
+</p>
+<ol>
+<li class="level1"><div class="li"> Using Mozilla source (from <acronym title="Concurrent Versions System">CVS</acronym> or Mercurial)</div>
+</li>
+<li class="level1"><div class="li"> Using an en-US <acronym title="Cross Platform Installer">XPI</acronym> file</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Creating Mozilla POT files" [1-147] -->
+<h2><a name="using_mercurial" id="using_mercurial">Using Mercurial</a></h2>
+<div class="level2">
+
+<p>
+
+Since Firefox 3.1 and Thunderbird 3.0, Mozilla has switched to using Mercurial for version control. See the Mozilla&#039;s <a href="https://developer.mozilla.org/En/L10n_on_Mercurial" class="urlextern" title="https://developer.mozilla.org/En/L10n_on_Mercurial">L10n on Mercurial</a> page for instructions on how to checkout and update your Mozilla sources and l10n files.
+</p>
+
+<p>
+You can use <a href="toolkit-mozilla_l10n_scripts.html#get_moz_enus.py" class="wikilink1" title="toolkit-mozilla_l10n_scripts.html">get_moz_enUS.py</a> to extract an en-US directory from the source tree:
+
+</p>
+<pre class="code">get_moz_enUS.py -s mozilla-central/ -d l10n/ -p browser</pre>
+
+<p>
+
+This will move the correct en-US files to <code>l10n/en-US</code>.  You can now create <acronym title="Gettext Portable Object Template">POT</acronym> files as follows:
+
+</p>
+<pre class="code">moz2po -P l10n/en-US l10n/pot</pre>
+
+<p>
+
+This will create the <acronym title="Gettext Portable Object Template">POT</acronym> files in <code>l10n/pot</code> using the American English files from <code>en-US</code>.  You now have a set of <acronym title="Gettext Portable Object Template">POT</acronym> files 
+that you can use for translation or updating your existing <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+<p>
+There are also <a href="toolkit-mozilla_l10n_scripts.html" class="wikilink1" title="toolkit-mozilla_l10n_scripts.html">other scripts</a> that can help with creating and updating <acronym title="Gettext Portable Object Template">POT</acronym> and <acronym title="Gettext Portable Object">PO</acronym> files for <a href="toolkit-mozilla.html" class="wikilink2" title="toolkit-mozilla.html">Mozilla</a> localisation.
+</p>
+
+</div>
+<!-- SECTION "Using Mercurial" [148-1115] -->
+<h2><a name="using_cvs" id="using_cvs">Using CVS</a></h2>
+<div class="level2">
+
+<p>
+
+Firefox versions before 3.1 and Thunderbird versions before 3.0 still has its source in <acronym title="Concurrent Versions System">CVS</acronym>. Check out files from the Mozilla repository. If you don&#039;t want to checkout all files do:
+
+</p>
+<pre class="code">make -f client.mk l10n-checkout</pre>
+
+<p>
+
+The English files are in the <code>mozilla/</code> module, while the translated files all reside in the <code>l10n/</code> module.  They have different structure but not enough to kill you.
+</p>
+
+<p>
+Once you have checked out <code>mozilla/</code> you will need to get the correct files for en-US.  To do this we will create en-US as a pseudo language.
+
+</p>
+<pre class="code">make -f tools/l10n/l10n.mk create-en-US</pre>
+
+<p>
+
+This will move the correct en-US files to <code>l10n/en-US</code>.  You can now create <acronym title="Gettext Portable Object Template">POT</acronym> files as follows:
+
+</p>
+<pre class="code">moz2po -P l10n/en-US l10n/pot</pre>
+
+<p>
+
+This will create the <acronym title="Gettext Portable Object Template">POT</acronym> files in <code>l10n/pot</code> using the American English files from <code>en-US</code>.  You now have a set of <acronym title="Gettext Portable Object Template">POT</acronym> files 
+that you can use for translation or updating your existing <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "Using CVS" [1116-2052] -->
+<h2><a name="using_an_en-us_xpi_file" id="using_an_en-us_xpi_file">Using an en-US XPI file</a></h2>
+<div class="level2">
+
+<p>
+
+Download an <acronym title="Cross Platform Installer">XPI</acronym> file and run the following:
+
+</p>
+<pre class="code">moz2po -P en-US.xpi pot</pre>
+
+<p>
+
+You now have a set of <acronym title="Gettext Portable Object Template">POT</acronym> files in <code>pot</code>.
+
+</p>
+
+</div>
+<!-- SECTION "Using an en-US XPI file" [2053-] --></body>
+</html>

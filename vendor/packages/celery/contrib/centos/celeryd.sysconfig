@@ -1,0 +1,21 @@
+# Passed into celeryd multi
+#CELERYD="-m celery.bin.celeryd_detach"
+
+# Path to the celerd multi
+#CELERYD_MULTI="/usr/bin/celeryd-multi"
+
+# Sets the verbosity of the celeryd logging.
+#CELERYD_LOG_LEVEL="INFO"
+
+# Define the loader that celeryd should use for loading in configs.
+#CELERY_LOADER=""
+
+# User and group information for directories
+#CELERYD_USER="celery"
+#CELERYD_GROUP="celery"
+
+# Default arguments to be passed into celeryd.
+#CELERYD_OPTS=""
+
+# Change to this directory first before launching celeryd.
+#CELERYD_CHDIR=""

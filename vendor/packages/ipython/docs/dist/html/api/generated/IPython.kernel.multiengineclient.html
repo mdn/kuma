@@ -1,0 +1,894 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.multiengineclient &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.multienginefc" href="IPython.kernel.multienginefc.html" />
+    <link rel="prev" title="kernel.multiengine" href="IPython.kernel.multiengine.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multienginefc.html" title="kernel.multienginefc"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengine.html" title="kernel.multiengine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-multiengineclient">
+<h1>kernel.multiengineclient<a class="headerlink" href="#kernel-multiengineclient" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.multiengineclient">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.multiengineclient</span></tt><a class="headerlink" href="#module-IPython.kernel.multiengineclient" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.multiengineclient</span></tt>:</p>
+<img src="../../_images/inheritancebcafe94cd2.png" usemap="#inheritancebcafe94cd2" class="inheritance"/><map id="inheritancebcafe94cd2" name="inheritancebcafe94cd2">
+<area shape="rect" href="#IPython.kernel.multiengineclient.QueueStatusList" title="kernel.multiengineclient.QueueStatusList" alt="" coords="41,231,321,257"/>
+<area shape="rect" href="#IPython.kernel.multiengineclient.IPendingResult" title="kernel.multiengineclient.IPendingResult" alt="" coords="450,156,717,182"/>
+<area shape="rect" href="#IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient" title="kernel.multiengineclient.IFullBlockingMultiEngineClient" alt="" coords="404,206,763,232"/>
+<area shape="rect" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient" title="kernel.multiengineclient.FullBlockingMultiEngineClient" alt="" coords="405,106,761,132"/>
+<area shape="rect" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient" title="kernel.multiengineclient.InteractiveMultiEngineClient" alt="" coords="7,106,355,132"/>
+<area shape="rect" href="#IPython.kernel.multiengineclient.PendingResult" title="kernel.multiengineclient.PendingResult" alt="" coords="49,55,313,82"/>
+<area shape="rect" href="#IPython.kernel.multiengineclient.ResultList" title="kernel.multiengineclient.ResultList" alt="" coords="63,5,298,32"/>
+</map>
+<p>General Classes for IMultiEngine clients.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fullblockingmultiengineclient">
+<h3><a title="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient" class="reference internal" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient"><tt class="xref docutils literal"><span class="pre">FullBlockingMultiEngineClient</span></tt></a><a class="headerlink" href="#fullblockingmultiengineclient" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">FullBlockingMultiEngineClient</tt><big>(</big><em>smultiengine</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengineclient.InteractiveMultiEngineClient" class="reference internal" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengineclient.InteractiveMultiEngineClient</span></tt></a></p>
+<p>A blocking client to the <cite>IMultiEngine</cite> controller interface.</p>
+<p>This class allows users to use a set of engines for a parallel
+computation through the <cite>IMultiEngine</cite> interface.  In this interface,
+each engine has a specific id (an int) that is used to refer to the
+engine, run code on it, etc.</p>
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.__init__">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.__init__]--><tt class="descname">__init__</tt><big>(</big><em>smultiengine</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.barrier">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.barrier]--><tt class="descname">barrier</tt><big>(</big><em>pendingResults</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.barrier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronize a set of <cite>PendingResults</cite>.</p>
+<p>This method is a synchronization primitive that waits for a set of
+<cite>PendingResult</cite> objects to complete.  More specifically, barier does
+the following.</p>
+<ul class="simple">
+<li>The <a href="#id1"><span class="problematic" id="id2">`</span></a>PendingResult`s are sorted by result_id.</li>
+<li>The <cite>get_result</cite> method is called for each <cite>PendingResult</cite> sequentially
+with block=True.</li>
+<li>If a <cite>PendingResult</cite> gets a result that is an exception, it is 
+trapped and can be re-raised later by calling <cite>get_result</cite> again.</li>
+<li>The <a href="#id3"><span class="problematic" id="id4">`</span></a>PendingResult`s are flushed from the controller.</li>
+</ul>
+<p>After barrier has been called on a <cite>PendingResult</cite>, its results can 
+be retrieved by calling <cite>get_result</cite> again or accesing the <cite>r</cite> attribute
+of the instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.benchmark">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.benchmark]--><tt class="descname">benchmark</tt><big>(</big><em>push_size=10000</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run performance benchmarks for the current IPython cluster.</p>
+<p>This method tests both the latency of sending command and data to the
+engines as well as the throughput of sending large objects to the
+engines using push.  The latency is measured by having one or more
+engines execute the command &#8216;pass&#8217;.  The throughput is measure by 
+sending an NumPy array of size <cite>push_size</cite> to one or more engines.</p>
+<p>These benchmarks will vary widely on different hardware and networks
+and thus can be used to get an idea of the performance characteristics
+of a particular configuration of an IPython controller and engines.</p>
+<p>This function is not testable within our current testing framework.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_pending_results">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_pending_results]--><tt class="descname">clear_pending_results</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_pending_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all pending deferreds/results from the controller.</p>
+<p>For each <cite>PendingResult</cite> that is created by this client, the controller
+holds on to the result for that <cite>PendingResult</cite>.  This can be a problem
+if there are a large number of <cite>PendingResult</cite> objects that are created.</p>
+<p>Once the result of the <cite>PendingResult</cite> has been retrieved, the result
+is removed from the controller, but if a user doesn&#8217;t get a result (
+they just ignore the <cite>PendingResult</cite>) the result is kept forever on the
+controller.  This method allows the user to clear out all un-retrieved
+results on the controller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_properties">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_queue">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_queue]--><tt class="descname">clear_queue</tt><big>(</big><em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear out the controller&#8217;s queue for an engine.</p>
+<p>The controller maintains a queue for each engine.  This clear it out.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.del_properties">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>keys</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.execute">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.execute]--><tt class="descname">execute</tt><big>(</big><em>lines</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute code on a set of engines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>lines <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The Python code to execute as a string</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.flush">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.flush]--><tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all pending deferreds/results from the controller.</p>
+<p>For each <cite>PendingResult</cite> that is created by this client, the controller
+holds on to the result for that <cite>PendingResult</cite>.  This can be a problem
+if there are a large number of <cite>PendingResult</cite> objects that are created.</p>
+<p>Once the result of the <cite>PendingResult</cite> has been retrieved, the result
+is removed from the controller, but if a user doesn&#8217;t get a result (
+they just ignore the <cite>PendingResult</cite>) the result is kept forever on the
+controller.  This method allows the user to clear out all un-retrieved
+results on the controller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.gather">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.gather]--><tt class="descname">gather</tt><big>(</big><em>key</em>, <em>dist='b'</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.gather" title="Permalink to this definition">¶</a></dt>
+<dd>Gather a partitioned sequence on a set of engines as a single local seq.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_ids">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_ids]--><tt class="descname">get_ids</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_ids" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the ids of currently registered engines.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_pending_deferred">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_pending_deferred]--><tt class="descname">get_pending_deferred</tt><big>(</big><em>deferredID</em>, <em>block</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_pending_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_properties">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>keys=None</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_result">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_result]--><tt class="descname">get_result</tt><big>(</big><em>i=None</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a previous result.</p>
+<p>When code is executed in an engine, a dict is created and returned.  This
+method retrieves that dict for previous commands.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>i <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The number of the result to get</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.has_properties">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>keys</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.keys">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.keys]--><tt class="descname">keys</tt><big>(</big><em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of all the variables in an engine&#8217;s namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.kill">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.kill]--><tt class="descname">kill</tt><big>(</big><em>controller=False</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.kill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kill the engines and controller.</p>
+<p>This method is used to stop the engine and controller by calling
+<cite>reactor.stop</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>controller <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If True, kill the engines and controller.  If False, just the 
+engines</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.map">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.map]--><tt class="descname">map</tt><big>(</big><em>func</em>, <em>*sequences</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parallel version of Python&#8217;s builtin <cite>map</cite> function.</p>
+<p>This method applies a function to sequences of arguments.  It 
+follows the same syntax as the builtin <cite>map</cite>.</p>
+<p>This method creates a mapper objects by calling <cite>self.mapper</cite> with
+no arguments and then uses that mapper to do the mapping.  See
+the documentation of <cite>mapper</cite> for more details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.mapper">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.mapper]--><tt class="descname">mapper</tt><big>(</big><em>dist='b'</em>, <em>targets='all'</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a mapper object that has a <cite>map</cite> method.</p>
+<p>This method returns an object that implements the <cite>IMapper</cite> 
+interface.  This method is a factory that is used to control how 
+the map happens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>dist <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">What decomposition to use, &#8216;b&#8217; is the only one supported
+currently</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">str, int, sequence of ints</span></dt>
+<dd><p class="first last">Which engines to use for the map</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should calls to <cite>map</cite> block or not</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.parallel">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.parallel]--><tt class="descname">parallel</tt><big>(</big><em>dist='b'</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator that turns a function into a parallel function.</p>
+<p>This can be used as:</p>
+<p>&#64;parallel()
+def f(x, y)</p>
+<blockquote>
+...</blockquote>
+<p>f(range(10), range(10))</p>
+<p>This causes f(0,0), f(1,1), ... to be called in parallel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>dist <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">What decomposition to use, &#8216;b&#8217; is the only one supported
+currently</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">str, int, sequence of ints</span></dt>
+<dd><p class="first last">Which engines to use for the map</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should calls to <cite>map</cite> block or not</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull]--><tt class="descname">pull</tt><big>(</big><em>keys</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull Python objects by key out of engines namespaces.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>keys <span class="classifier-delimiter">:</span> <span class="classifier">str or list of str</span></dt>
+<dd><p class="first last">The names of the variables to be pulled</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull_function">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>keys</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull a Python function from an engine.</p>
+<p>This method is used to pull a Python function from an engine.
+Closures are not supported.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>keys <span class="classifier-delimiter">:</span> <span class="classifier">str or list of str</span></dt>
+<dd><p class="first last">The names of the functions to be pulled</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull_serialized">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>keys</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push]--><tt class="descname">push</tt><big>(</big><em>namespace</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a dictionary of keys and values to engines namespace.</p>
+<p>Each engine has a persistent namespace.  This method is used to push
+Python objects into that namespace.</p>
+<p>The objects in the namespace must be pickleable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>namespace <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">A dict that contains Python objects to be injected into
+the engine persistent namespace.</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push_function">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push_function]--><tt class="descname">push_function</tt><big>(</big><em>namespace</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a Python function to an engine.</p>
+<p>This method is used to push a Python function to an engine.  This
+method can then be used in code on the engines.  Closures are not supported.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>namespace <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">A dict whose values are the functions to be pushed.  The keys give
+that names that the function will appear as in the engines
+namespace.</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push_serialized">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>namespace</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.queue_status">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.queue_status]--><tt class="descname">queue_status</tt><big>(</big><em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the status of an engines queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.raw_map">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.raw_map]--><tt class="descname">raw_map</tt><big>(</big><em>func</em>, <em>seq</em>, <em>dist='b'</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.raw_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parallelized version of Python&#8217;s builtin map.</p>
+<p>This has a slightly different syntax than the builtin <cite>map</cite>.
+This is needed because we need to have keyword arguments and thus
+can&#8217;t use <a href="#id5"><span class="problematic" id="id6">*</span></a>args to capture all the sequences.  Instead, they must
+be passed in a list or tuple.</p>
+<p>raw_map(func, seqs) -&gt; map(func, seqs[0], seqs[1], ...)</p>
+<p>Most users will want to use parallel functions or the <cite>mapper</cite>
+and <cite>map</cite> methods for an API that follows that of the builtin
+<cite>map</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.reset">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.reset]--><tt class="descname">reset</tt><big>(</big><em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset an engine.</p>
+<p>This method clears out the namespace of an engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.run">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.run]--><tt class="descname">run</tt><big>(</big><em>filename</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a Python code in a file on the engines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name of the local file to run</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">id or list of ids</span></dt>
+<dd><p class="first last">The engine to use for the execution</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">If False, this method will return the actual result.  If False,
+a <cite>PendingResult</cite> is returned which can be used to get the result
+at a later time.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.scatter">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.scatter]--><tt class="descname">scatter</tt><big>(</big><em>key</em>, <em>seq</em>, <em>dist='b'</em>, <em>flatten=False</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.scatter" title="Permalink to this definition">¶</a></dt>
+<dd>Partition a Python sequence and send the partitions to a set of engines.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.set_properties">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>properties</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.zip_pull">
+<!--[IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.zip_pull]--><tt class="descname">zip_pull</tt><big>(</big><em>keys</em>, <em>targets=None</em>, <em>block=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.FullBlockingMultiEngineClient.zip_pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifullblockingmultiengineclient">
+<h3><a title="IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient" class="reference internal" href="#IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient"><tt class="xref docutils literal"><span class="pre">IFullBlockingMultiEngineClient</span></tt></a><a class="headerlink" href="#ifullblockingmultiengineclient" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient">
+<!--[IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">IFullBlockingMultiEngineClient</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient.__init__">
+<!--[IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.IFullBlockingMultiEngineClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipendingresult">
+<h3><a title="IPython.kernel.multiengineclient.IPendingResult" class="reference internal" href="#IPython.kernel.multiengineclient.IPendingResult"><tt class="xref docutils literal"><span class="pre">IPendingResult</span></tt></a><a class="headerlink" href="#ipendingresult" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.IPendingResult">
+<!--[IPython.kernel.multiengineclient.IPendingResult]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">IPendingResult</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.IPendingResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>A representation of a result that is pending.</p>
+<p>This class is similar to Twisted&#8217;s <cite>Deferred</cite> object, but is designed to be
+used in a synchronous context.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengineclient.IPendingResult.__init__">
+<!--[IPython.kernel.multiengineclient.IPendingResult.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.IPendingResult.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interactivemultiengineclient">
+<h3><a title="IPython.kernel.multiengineclient.InteractiveMultiEngineClient" class="reference internal" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient"><tt class="xref docutils literal"><span class="pre">InteractiveMultiEngineClient</span></tt></a><a class="headerlink" href="#interactivemultiengineclient" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.InteractiveMultiEngineClient">
+<!--[IPython.kernel.multiengineclient.InteractiveMultiEngineClient]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">InteractiveMultiEngineClient</tt><a class="headerlink" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A mixin class that add a few methods to a multiengine client.</p>
+<p>The methods in this mixin class are designed for interactive usage.</p>
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.InteractiveMultiEngineClient.__init__">
+<!--[IPython.kernel.multiengineclient.InteractiveMultiEngineClient.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.InteractiveMultiEngineClient.activate">
+<!--[IPython.kernel.multiengineclient.InteractiveMultiEngineClient.activate]--><tt class="descname">activate</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient.activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make this <cite>MultiEngineClient</cite> active for parallel magic commands.</p>
+<p>IPython has a magic command syntax to work with <cite>MultiEngineClient</cite> objects.
+In a given IPython session there is a single active one.  While
+there can be many <cite>MultiEngineClient</cite> created and used by the user, 
+there is only one active one.  The active <cite>MultiEngineClient</cite> is used whenever 
+the magic commands %px and %autopx are used.</p>
+<p>The activate() method is called on a given <cite>MultiEngineClient</cite> to make it 
+active.  Once this has been done, the magic commands can be used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.InteractiveMultiEngineClient.findsource_file">
+<!--[IPython.kernel.multiengineclient.InteractiveMultiEngineClient.findsource_file]--><tt class="descname">findsource_file</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient.findsource_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.InteractiveMultiEngineClient.findsource_ipython">
+<!--[IPython.kernel.multiengineclient.InteractiveMultiEngineClient.findsource_ipython]--><tt class="descname">findsource_ipython</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.InteractiveMultiEngineClient.findsource_ipython" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pendingresult">
+<h3><a title="IPython.kernel.multiengineclient.PendingResult" class="reference internal" href="#IPython.kernel.multiengineclient.PendingResult"><tt class="xref docutils literal"><span class="pre">PendingResult</span></tt></a><a class="headerlink" href="#pendingresult" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.PendingResult">
+<!--[IPython.kernel.multiengineclient.PendingResult]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">PendingResult</tt><big>(</big><em>client</em>, <em>result_id</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.PendingResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A representation of a result that is not yet ready.</p>
+<p>A user should not create a <cite>PendingResult</cite> instance by hand.</p>
+<p>Methods:</p>
+<ul class="simple">
+<li><cite>get_result</cite></li>
+<li><cite>add_callback</cite></li>
+</ul>
+<p>Properties:</p>
+<ul class="simple">
+<li><cite>r</cite></li>
+</ul>
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.PendingResult.__init__">
+<!--[IPython.kernel.multiengineclient.PendingResult.__init__]--><tt class="descname">__init__</tt><big>(</big><em>client</em>, <em>result_id</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.PendingResult.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a PendingResult with a result_id and a client instance.</p>
+<p>The client should implement <cite>_getPendingResult(result_id, block)</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.PendingResult.add_callback">
+<!--[IPython.kernel.multiengineclient.PendingResult.add_callback]--><tt class="descname">add_callback</tt><big>(</big><em>f</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.PendingResult.add_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a callback that is called with the result.</p>
+<p>If the original result is result, adding a callback will cause
+f(result, <a href="#id7"><span class="problematic" id="id8">*</span></a>args, <a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs) to be returned instead.  If multiple
+callbacks are registered, they are chained together: the result of
+one is passed to the next and so on.</p>
+<p>Unlike Twisted&#8217;s Deferred object, there is no errback chain.  Thus
+any exception raised will not be caught and handled.  User must 
+catch these by hand when calling <cite>get_result</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.PendingResult.get_result">
+<!--[IPython.kernel.multiengineclient.PendingResult.get_result]--><tt class="descname">get_result</tt><big>(</big><em>default=None</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.PendingResult.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a result that is pending.</p>
+<p>This method will connect to an IMultiEngine adapted controller
+and see if the result is ready.  If the action triggers an exception
+raise it and record it.  This method records the result/exception once it is 
+retrieved.  Calling <cite>get_result</cite> again will get this cached result or will
+re-raise the exception.  The .r attribute is a property that calls
+<cite>get_result</cite> with block=True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>default</dt>
+<dd><p class="first last">The value to return if the result is not ready.</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should I block for the result.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The actual result or the default value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.multiengineclient.PendingResult.r">
+<!--[IPython.kernel.multiengineclient.PendingResult.r]--><tt class="descname">r</tt><a class="headerlink" href="#IPython.kernel.multiengineclient.PendingResult.r" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="queuestatuslist">
+<h3><a title="IPython.kernel.multiengineclient.QueueStatusList" class="reference internal" href="#IPython.kernel.multiengineclient.QueueStatusList"><tt class="xref docutils literal"><span class="pre">QueueStatusList</span></tt></a><a class="headerlink" href="#queuestatuslist" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.QueueStatusList">
+<!--[IPython.kernel.multiengineclient.QueueStatusList]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">QueueStatusList</tt><a class="headerlink" href="#IPython.kernel.multiengineclient.QueueStatusList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">list</span></tt></p>
+<p>A subclass of list that pretty prints the output of <cite>queue_status</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.QueueStatusList.__init__">
+<!--[IPython.kernel.multiengineclient.QueueStatusList.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.QueueStatusList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="resultlist">
+<h3><a title="IPython.kernel.multiengineclient.ResultList" class="reference internal" href="#IPython.kernel.multiengineclient.ResultList"><tt class="xref docutils literal"><span class="pre">ResultList</span></tt></a><a class="headerlink" href="#resultlist" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengineclient.ResultList">
+<!--[IPython.kernel.multiengineclient.ResultList]-->class <tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">ResultList</tt><a class="headerlink" href="#IPython.kernel.multiengineclient.ResultList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">list</span></tt></p>
+<p>A subclass of list that pretty prints the output of <cite>execute</cite>/<cite>get_result</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.multiengineclient.ResultList.__init__">
+<!--[IPython.kernel.multiengineclient.ResultList.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.ResultList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.multiengineclient.remote">
+<!--[IPython.kernel.multiengineclient.remote]--><tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">remote</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.remote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.multiengineclient.strip_whitespace">
+<!--[IPython.kernel.multiengineclient.strip_whitespace]--><tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">strip_whitespace</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.strip_whitespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.multiengineclient.wrapResultList">
+<!--[IPython.kernel.multiengineclient.wrapResultList]--><tt class="descclassname">IPython.kernel.multiengineclient.</tt><tt class="descname">wrapResultList</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengineclient.wrapResultList" title="Permalink to this definition">¶</a></dt>
+<dd>A function that wraps the output of <cite>execute</cite>/<cite>get_result</cite> -&gt; <cite>ResultList</cite>.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.multiengineclient</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.multiengineclient">Module: <tt class="docutils literal"><span class="pre">kernel.multiengineclient</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#fullblockingmultiengineclient"><tt class="docutils literal"><span class="pre">FullBlockingMultiEngineClient</span></tt></a></li>
+<li><a class="reference external" href="#ifullblockingmultiengineclient"><tt class="docutils literal"><span class="pre">IFullBlockingMultiEngineClient</span></tt></a></li>
+<li><a class="reference external" href="#ipendingresult"><tt class="docutils literal"><span class="pre">IPendingResult</span></tt></a></li>
+<li><a class="reference external" href="#interactivemultiengineclient"><tt class="docutils literal"><span class="pre">InteractiveMultiEngineClient</span></tt></a></li>
+<li><a class="reference external" href="#pendingresult"><tt class="docutils literal"><span class="pre">PendingResult</span></tt></a></li>
+<li><a class="reference external" href="#queuestatuslist"><tt class="docutils literal"><span class="pre">QueueStatusList</span></tt></a></li>
+<li><a class="reference external" href="#resultlist"><tt class="docutils literal"><span class="pre">ResultList</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.multiengine.html" title="previous chapter">kernel.multiengine</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.multienginefc.html" title="next chapter">kernel.multienginefc</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.multiengineclient.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multienginefc.html" title="kernel.multienginefc"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengine.html" title="kernel.multiengine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

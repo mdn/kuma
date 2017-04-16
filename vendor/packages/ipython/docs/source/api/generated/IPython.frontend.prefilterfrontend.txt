@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.prefilterfrontend
+==========================
+
+Module: :mod:`frontend.prefilterfrontend`
+-----------------------------------------
+Inheritance diagram for ``IPython.frontend.prefilterfrontend``:
+
+.. inheritance-diagram:: IPython.frontend.prefilterfrontend 
+   :parts: 3
+
+.. automodule:: IPython.frontend.prefilterfrontend
+
+.. currentmodule:: IPython.frontend.prefilterfrontend
+
+:class:`PrefilterFrontEnd`
+--------------------------
+
+
+.. autoclass:: PrefilterFrontEnd
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+.. autofunction:: IPython.frontend.prefilterfrontend.mk_system_call
+

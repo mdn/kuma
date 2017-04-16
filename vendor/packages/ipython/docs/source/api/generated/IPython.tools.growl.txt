@@ -1,0 +1,53 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+tools.growl
+===========
+
+Module: :mod:`tools.growl`
+--------------------------
+Inheritance diagram for ``IPython.tools.growl``:
+
+.. inheritance-diagram:: IPython.tools.growl 
+   :parts: 3
+
+.. automodule:: IPython.tools.growl
+
+.. currentmodule:: IPython.tools.growl
+
+Classes
+-------
+
+:class:`IPythonGrowlError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonGrowlError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Notifier`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Notifier
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.tools.growl.notify
+
+
+.. autofunction:: IPython.tools.growl.notify_deferred
+
+
+.. autofunction:: IPython.tools.growl.start
+

@@ -1,0 +1,38 @@
+Installing Babel
+================
+
+Prerequisites
+-------------
+
+ * Python 2.3 or later (2.4 or later is recommended)
+ * Optional: setuptools 0.6b1 or later
+ * Optional: pytz (strongly recommended for real time-zone support)
+
+
+Installation
+------------
+
+Once you've downloaded and unpacked a Babel source release, enter the
+directory where the archive was unpacked, and run:
+
+  $ python setup.py install
+
+Note that you may need administrator/root privileges for this step, as
+this command will by default attempt to install Babel to the Python
+site-packages directory on your system.
+
+For advanced options, please refer to the easy_install and/or the distutils
+documentation:
+
+  http://peak.telecommunity.com/DevCenter/EasyInstall
+  http://docs.python.org/inst/inst.html
+
+
+Support
+-------
+
+If you encounter any problems with Babel, please don't hesitate to ask
+questions on the Babel mailing list or IRC channel:
+
+  http://babel.edgewall.org/wiki/MailingList
+  http://babel.edgewall.org/wiki/IrcChannel

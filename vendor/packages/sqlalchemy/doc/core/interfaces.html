@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Core Event Interfaces
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Core" href="index.html" />
+        <link rel="next" title="Custom SQL Constructs and Compilation Extension" href="compiler.html" />
+        <link rel="prev" title="Column and Data Types" href="types.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/core/interfaces.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+                » 
+    Core Event Interfaces
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="types.html" title="previous chapter">Column and Data Types</a>
+        Next:
+        <a href="compiler.html" title="next chapter">Custom SQL Constructs and Compilation Extension</a>
+</div>
+
+                <h2>
+                    
+    Core Event Interfaces
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Core Event Interfaces</a><ul>
+<li><a class="reference internal" href="#execution-connection-and-cursor-events">Execution, Connection and Cursor Events</a></li>
+<li><a class="reference internal" href="#connection-pool-events">Connection Pool Events</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.interfaces">
+<span id="core-event-interfaces"></span><span id="interfaces-core-toplevel"></span><h1>Core Event Interfaces<a class="headerlink" href="#module-sqlalchemy.interfaces" title="Permalink to this headline">¶</a></h1>
+<p>This section describes the various categories of events which can be intercepted
+in SQLAlchemy core, including execution and connection pool events.</p>
+<p>For ORM event documentation, see <a class="reference internal" href="../orm/interfaces.html"><em>ORM Event Interfaces</em></a>.</p>
+<p>A new version of this API with a significantly more flexible and consistent
+interface will be available in version 0.7.</p>
+<div class="section" id="execution-connection-and-cursor-events">
+<h2>Execution, Connection and Cursor Events<a class="headerlink" href="#execution-connection-and-cursor-events" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sqlalchemy.interfaces.ConnectionProxy">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.interfaces.</tt><tt class="descname">ConnectionProxy</tt><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows interception of statement execution by Connections.</p>
+<p>Either or both of the <tt class="docutils literal"><span class="pre">execute()</span></tt> and <tt class="docutils literal"><span class="pre">cursor_execute()</span></tt>
+may be implemented to intercept compiled statement and
+cursor level executions, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyProxy</span><span class="p">(</span><span class="n">ConnectionProxy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">execute</span><span class="p">,</span> <span class="n">clauseelement</span><span class="p">,</span> <span class="o">*</span><span class="n">multiparams</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;compiled statement:&quot;</span><span class="p">,</span> <span class="n">clauseelement</span>
+        <span class="k">return</span> <span class="n">execute</span><span class="p">(</span><span class="n">clauseelement</span><span class="p">,</span> <span class="o">*</span><span class="n">multiparams</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">cursor_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">execute</span><span class="p">,</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">executemany</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;raw statement:&quot;</span><span class="p">,</span> <span class="n">statement</span>
+        <span class="k">return</span> <span class="n">execute</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">execute</span></tt> argument is a function that will fulfill the default
+execution behavior for the operation.  The signature illustrated
+in the example should be used.</p>
+<p>The proxy is installed into an <tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt> via
+the <tt class="docutils literal"><span class="pre">proxy</span></tt> argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;someurl://&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="n">MyProxy</span><span class="p">())</span></pre></div>
+</div>
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.begin">
+<tt class="descname">begin</tt><big>(</big><em>conn</em>, <em>begin</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept begin() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.begin_twophase">
+<tt class="descname">begin_twophase</tt><big>(</big><em>conn</em>, <em>begin_twophase</em>, <em>xid</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.begin_twophase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept begin_twophase() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.commit">
+<tt class="descname">commit</tt><big>(</big><em>conn</em>, <em>commit</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept commit() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.commit_twophase">
+<tt class="descname">commit_twophase</tt><big>(</big><em>conn</em>, <em>commit_twophase</em>, <em>xid</em>, <em>is_prepared</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.commit_twophase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept commit_twophase() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.cursor_execute">
+<tt class="descname">cursor_execute</tt><big>(</big><em>execute</em>, <em>cursor</em>, <em>statement</em>, <em>parameters</em>, <em>context</em>, <em>executemany</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.cursor_execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept low-level cursor execute() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.execute">
+<tt class="descname">execute</tt><big>(</big><em>conn</em>, <em>execute</em>, <em>clauseelement</em>, <em>*multiparams</em>, <em>**params</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept high level execute() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.prepare_twophase">
+<tt class="descname">prepare_twophase</tt><big>(</big><em>conn</em>, <em>prepare_twophase</em>, <em>xid</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.prepare_twophase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept prepare_twophase() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.release_savepoint">
+<tt class="descname">release_savepoint</tt><big>(</big><em>conn</em>, <em>release_savepoint</em>, <em>name</em>, <em>context</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.release_savepoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept release_savepoint() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.rollback">
+<tt class="descname">rollback</tt><big>(</big><em>conn</em>, <em>rollback</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.rollback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept rollback() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.rollback_savepoint">
+<tt class="descname">rollback_savepoint</tt><big>(</big><em>conn</em>, <em>rollback_savepoint</em>, <em>name</em>, <em>context</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.rollback_savepoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept rollback_savepoint() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.rollback_twophase">
+<tt class="descname">rollback_twophase</tt><big>(</big><em>conn</em>, <em>rollback_twophase</em>, <em>xid</em>, <em>is_prepared</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.rollback_twophase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept rollback_twophase() events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.ConnectionProxy.savepoint">
+<tt class="descname">savepoint</tt><big>(</big><em>conn</em>, <em>savepoint</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.ConnectionProxy.savepoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept savepoint() events.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="connection-pool-events">
+<h2>Connection Pool Events<a class="headerlink" href="#connection-pool-events" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sqlalchemy.interfaces.PoolListener">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.interfaces.</tt><tt class="descname">PoolListener</tt><a class="headerlink" href="#sqlalchemy.interfaces.PoolListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hooks into the lifecycle of connections in a <tt class="docutils literal"><span class="pre">Pool</span></tt>.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyListener</span><span class="p">(</span><span class="n">PoolListener</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbapi_con</span><span class="p">,</span> <span class="n">con_record</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;perform connect operations&#39;&#39;&#39;</span>
+    <span class="c"># etc. </span>
+    
+<span class="c"># create a new pool with a listener</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">QueuePool</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="p">[</span><span class="n">MyListener</span><span class="p">()])</span>
+
+<span class="c"># add a listener after the fact</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="n">MyListener</span><span class="p">())</span>
+
+<span class="c"># usage with create_engine()</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;url://&quot;</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="p">[</span><span class="n">MyListener</span><span class="p">()])</span></pre></div>
+</div>
+<p>All of the standard connection <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a> types can
+accept event listeners for key connection lifecycle events:
+creation, pool check-out and check-in.  There are no events fired
+when a connection closes.</p>
+<p>For any given DB-API connection, there will be one <tt class="docutils literal"><span class="pre">connect</span></tt>
+event, <cite>n</cite> number of <tt class="docutils literal"><span class="pre">checkout</span></tt> events, and either <cite>n</cite> or <cite>n - 1</cite>
+<tt class="docutils literal"><span class="pre">checkin</span></tt> events.  (If a <tt class="docutils literal"><span class="pre">Connection</span></tt> is detached from its
+pool via the <tt class="docutils literal"><span class="pre">detach()</span></tt> method, it won&#8217;t be checked back in.)</p>
+<p>These are low-level events for low-level objects: raw Python
+DB-API connections, without the conveniences of the SQLAlchemy
+<tt class="docutils literal"><span class="pre">Connection</span></tt> wrapper, <tt class="docutils literal"><span class="pre">Dialect</span></tt> services or <tt class="docutils literal"><span class="pre">ClauseElement</span></tt>
+execution.  If you execute SQL through the connection, explicitly
+closing all cursors and other resources is recommended.</p>
+<p>Events also receive a <tt class="docutils literal"><span class="pre">_ConnectionRecord</span></tt>, a long-lived internal
+<tt class="docutils literal"><span class="pre">Pool</span></tt> object that basically represents a &#8220;slot&#8221; in the
+connection pool.  <tt class="docutils literal"><span class="pre">_ConnectionRecord</span></tt> objects have one public
+attribute of note: <tt class="docutils literal"><span class="pre">info</span></tt>, a dictionary whose contents are
+scoped to the lifetime of the DB-API connection managed by the
+record.  You can use this shared storage area however you like.</p>
+<p>There is no need to subclass <tt class="docutils literal"><span class="pre">PoolListener</span></tt> to handle events.
+Any class that implements one or more of these methods can be used
+as a pool listener.  The <tt class="docutils literal"><span class="pre">Pool</span></tt> will inspect the methods
+provided by a listener object and add the listener to one or more
+internal event queues based on its capabilities.  In terms of
+efficiency and function call overhead, you&#8217;re much better off only
+providing implementations for the hooks you&#8217;ll be using.</p>
+<dl class="method">
+<dt id="sqlalchemy.interfaces.PoolListener.checkin">
+<tt class="descname">checkin</tt><big>(</big><em>dbapi_con</em>, <em>con_record</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.PoolListener.checkin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a connection returns to the pool.</p>
+<p>Note that the connection may be closed, and may be None if the
+connection has been invalidated.  <tt class="docutils literal"><span class="pre">checkin</span></tt> will not be called
+for detached connections.  (They do not return to the pool.)</p>
+<dl class="docutils">
+<dt>dbapi_con</dt>
+<dd>A raw DB-API connection</dd>
+<dt>con_record</dt>
+<dd>The <tt class="docutils literal"><span class="pre">_ConnectionRecord</span></tt> that persistently manages the connection</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.PoolListener.checkout">
+<tt class="descname">checkout</tt><big>(</big><em>dbapi_con</em>, <em>con_record</em>, <em>con_proxy</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.PoolListener.checkout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a connection is retrieved from the Pool.</p>
+<dl class="docutils">
+<dt>dbapi_con</dt>
+<dd>A raw DB-API connection</dd>
+<dt>con_record</dt>
+<dd>The <tt class="docutils literal"><span class="pre">_ConnectionRecord</span></tt> that persistently manages the connection</dd>
+<dt>con_proxy</dt>
+<dd>The <tt class="docutils literal"><span class="pre">_ConnectionFairy</span></tt> which manages the connection for the span of
+the current checkout.</dd>
+</dl>
+<p>If you raise an <tt class="docutils literal"><span class="pre">exc.DisconnectionError</span></tt>, the current
+connection will be disposed and a fresh connection retrieved.
+Processing of all checkout listeners will abort and restart
+using the new connection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.PoolListener.connect">
+<tt class="descname">connect</tt><big>(</big><em>dbapi_con</em>, <em>con_record</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.PoolListener.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called once for each new DB-API connection or Pool&#8217;s <tt class="docutils literal"><span class="pre">creator()</span></tt>.</p>
+<dl class="docutils">
+<dt>dbapi_con</dt>
+<dd>A newly connected raw DB-API connection (not a SQLAlchemy
+<tt class="docutils literal"><span class="pre">Connection</span></tt> wrapper).</dd>
+<dt>con_record</dt>
+<dd>The <tt class="docutils literal"><span class="pre">_ConnectionRecord</span></tt> that persistently manages the connection</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.interfaces.PoolListener.first_connect">
+<tt class="descname">first_connect</tt><big>(</big><em>dbapi_con</em>, <em>con_record</em><big>)</big><a class="headerlink" href="#sqlalchemy.interfaces.PoolListener.first_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called exactly once for the first DB-API connection.</p>
+<dl class="docutils">
+<dt>dbapi_con</dt>
+<dd>A newly connected raw DB-API connection (not a SQLAlchemy
+<tt class="docutils literal"><span class="pre">Connection</span></tt> wrapper).</dd>
+<dt>con_record</dt>
+<dd>The <tt class="docutils literal"><span class="pre">_ConnectionRecord</span></tt> that persistently manages the connection</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="types.html" title="previous chapter">Column and Data Types</a>
+        Next:
+        <a href="compiler.html" title="next chapter">Custom SQL Constructs and Compilation Extension</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

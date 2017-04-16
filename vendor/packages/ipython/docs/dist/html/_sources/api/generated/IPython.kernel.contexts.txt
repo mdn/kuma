@@ -1,0 +1,50 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.contexts
+===============
+
+Module: :mod:`kernel.contexts`
+------------------------------
+Inheritance diagram for ``IPython.kernel.contexts``:
+
+.. inheritance-diagram:: IPython.kernel.contexts 
+   :parts: 3
+
+.. automodule:: IPython.kernel.contexts
+
+.. currentmodule:: IPython.kernel.contexts
+
+Classes
+-------
+
+:class:`RemoteContextBase`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RemoteContextBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RemoteMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RemoteMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.contexts.remote
+
+
+.. autofunction:: IPython.kernel.contexts.strip_whitespace
+

@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+gui.wx.thread_ex
+================
+
+Module: :mod:`gui.wx.thread_ex`
+-------------------------------
+Inheritance diagram for ``IPython.gui.wx.thread_ex``:
+
+.. inheritance-diagram:: IPython.gui.wx.thread_ex 
+   :parts: 3
+
+.. automodule:: IPython.gui.wx.thread_ex
+
+.. currentmodule:: IPython.gui.wx.thread_ex
+
+:class:`ThreadEx`
+-----------------
+
+
+.. autoclass:: ThreadEx
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

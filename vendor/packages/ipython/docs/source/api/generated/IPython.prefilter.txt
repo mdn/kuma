@@ -1,0 +1,72 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+prefilter
+=========
+
+Module: :mod:`prefilter`
+------------------------
+Inheritance diagram for ``IPython.prefilter``:
+
+.. inheritance-diagram:: IPython.prefilter 
+   :parts: 3
+
+.. automodule:: IPython.prefilter
+
+.. currentmodule:: IPython.prefilter
+
+Class
+-----
+
+:class:`LineInfo`
+-----------------
+
+
+.. autoclass:: LineInfo
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.prefilter.checkAlias
+
+
+.. autofunction:: IPython.prefilter.checkAssignment
+
+
+.. autofunction:: IPython.prefilter.checkAutocall
+
+
+.. autofunction:: IPython.prefilter.checkAutomagic
+
+
+.. autofunction:: IPython.prefilter.checkEmacs
+
+
+.. autofunction:: IPython.prefilter.checkEscChars
+
+
+.. autofunction:: IPython.prefilter.checkIPyAutocall
+
+
+.. autofunction:: IPython.prefilter.checkMultiLineMagic
+
+
+.. autofunction:: IPython.prefilter.checkPythonOps
+
+
+.. autofunction:: IPython.prefilter.checkShellEscape
+
+
+.. autofunction:: IPython.prefilter.isShadowed
+
+
+.. autofunction:: IPython.prefilter.prefilter
+
+
+.. autofunction:: IPython.prefilter.splitUserInput
+

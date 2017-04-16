@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gui.wx.wxIPython &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="history" href="IPython.history.html" />
+    <link rel="prev" title="gui.wx.thread_ex" href="IPython.gui.wx.thread_ex.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.history.html" title="history"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.thread_ex.html" title="gui.wx.thread_ex"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="gui-wx-wxipython">
+<h1>gui.wx.wxIPython<a class="headerlink" href="#gui-wx-wxipython" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.gui.wx.wxIPython">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">gui.wx.wxIPython</span></tt><a class="headerlink" href="#module-IPython.gui.wx.wxIPython" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.gui.wx.wxIPython</span></tt>:</p>
+<img src="../../_images/inheritance2918b8a868.png" usemap="#inheritance2918b8a868" class="inheritance"/><map id="inheritance2918b8a868" name="inheritance2918b8a868">
+<area shape="rect" href="#IPython.gui.wx.wxIPython.MyFrame" title="wx.wxIPython.MyFrame" alt="" coords="657,3,764,21"/>
+<area shape="rect" href="#IPython.gui.wx.wxIPython.MyApp" title="wx.wxIPython.MyApp" alt="" coords="661,36,759,53"/>
+</map>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="myapp">
+<h3><a title="IPython.gui.wx.wxIPython.MyApp" class="reference internal" href="#IPython.gui.wx.wxIPython.MyApp"><tt class="xref docutils literal"><span class="pre">MyApp</span></tt></a><a class="headerlink" href="#myapp" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.gui.wx.wxIPython.MyApp">
+<!--[IPython.gui.wx.wxIPython.MyApp]-->class <tt class="descclassname">IPython.gui.wx.wxIPython.</tt><tt class="descname">MyApp</tt><big>(</big><em>sync_ok=False</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">wx._core.PySimpleApp</span></tt></p>
+<p>Creating our application</p>
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyApp.__init__">
+<!--[IPython.gui.wx.wxIPython.MyApp.__init__]--><tt class="descname">__init__</tt><big>(</big><em>sync_ok=False</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyApp.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="myframe">
+<h3><a title="IPython.gui.wx.wxIPython.MyFrame" class="reference internal" href="#IPython.gui.wx.wxIPython.MyFrame"><tt class="xref docutils literal"><span class="pre">MyFrame</span></tt></a><a class="headerlink" href="#myframe" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.gui.wx.wxIPython.MyFrame">
+<!--[IPython.gui.wx.wxIPython.MyFrame]-->class <tt class="descclassname">IPython.gui.wx.wxIPython.</tt><tt class="descname">MyFrame</tt><big>(</big><em>parent=None</em>, <em>id=-1</em>, <em>title='WxIPython'</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=(800</em>, <em>600)</em>, <em>style=541072960</em>, <em>sync_ok=False</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">wx._windows.Frame</span></tt></p>
+<p>Creating one main frame for our 
+application with movables windows</p>
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.__init__">
+<!--[IPython.gui.wx.wxIPython.MyFrame.__init__]--><tt class="descname">__init__</tt><big>(</big><em>parent=None</em>, <em>id=-1</em>, <em>title='WxIPython'</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=(800</em>, <em>600)</em>, <em>style=541072960</em>, <em>sync_ok=False</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.OnClose">
+<!--[IPython.gui.wx.wxIPython.MyFrame.OnClose]--><tt class="descname">OnClose</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.OnClose" title="Permalink to this definition">¶</a></dt>
+<dd>#event used to close program</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.OnExitDlg">
+<!--[IPython.gui.wx.wxIPython.MyFrame.OnExitDlg]--><tt class="descname">OnExitDlg</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.OnExitDlg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.OnShowAbout">
+<!--[IPython.gui.wx.wxIPython.MyFrame.OnShowAbout]--><tt class="descname">OnShowAbout</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.OnShowAbout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.OnShowAllPanel">
+<!--[IPython.gui.wx.wxIPython.MyFrame.OnShowAllPanel]--><tt class="descname">OnShowAllPanel</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.OnShowAllPanel" title="Permalink to this definition">¶</a></dt>
+<dd>#event to display all Pannels</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.OnShowHistoryPanel">
+<!--[IPython.gui.wx.wxIPython.MyFrame.OnShowHistoryPanel]--><tt class="descname">OnShowHistoryPanel</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.OnShowHistoryPanel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.OnShowIPythonPanel">
+<!--[IPython.gui.wx.wxIPython.MyFrame.OnShowIPythonPanel]--><tt class="descname">OnShowIPythonPanel</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.OnShowIPythonPanel" title="Permalink to this definition">¶</a></dt>
+<dd>#event to display Boxpannel</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.createMenu">
+<!--[IPython.gui.wx.wxIPython.MyFrame.createMenu]--><tt class="descname">createMenu</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.createMenu" title="Permalink to this definition">¶</a></dt>
+<dd>local method used to create one menu bar</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.createStatus">
+<!--[IPython.gui.wx.wxIPython.MyFrame.createStatus]--><tt class="descname">createStatus</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.createStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.optionLoad">
+<!--[IPython.gui.wx.wxIPython.MyFrame.optionLoad]--><tt class="descname">optionLoad</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.optionLoad" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.optionSave">
+<!--[IPython.gui.wx.wxIPython.MyFrame.optionSave]--><tt class="descname">optionSave</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.optionSave" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.wxIPython.MyFrame.updateStatus">
+<!--[IPython.gui.wx.wxIPython.MyFrame.updateStatus]--><tt class="descname">updateStatus</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.MyFrame.updateStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.gui.wx.wxIPython.main">
+<!--[IPython.gui.wx.wxIPython.main]--><tt class="descclassname">IPython.gui.wx.wxIPython.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.wxIPython.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">gui.wx.wxIPython</a><ul>
+<li><a class="reference external" href="#module-IPython.gui.wx.wxIPython">Module: <tt class="docutils literal"><span class="pre">gui.wx.wxIPython</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#myapp"><tt class="docutils literal"><span class="pre">MyApp</span></tt></a></li>
+<li><a class="reference external" href="#myframe"><tt class="docutils literal"><span class="pre">MyFrame</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.gui.wx.thread_ex.html" title="previous chapter">gui.wx.thread_ex</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.history.html" title="next chapter">history</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.gui.wx.wxIPython.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.history.html" title="history"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.thread_ex.html" title="gui.wx.thread_ex"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

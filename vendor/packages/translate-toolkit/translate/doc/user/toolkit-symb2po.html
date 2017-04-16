@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="symb2po" id="symb2po">symb2po</a></h1>
+<div class="level1">
+
+<p>
+
+Converts Symbian-style translation files to <acronym title="Gettext Portable Object">PO</acronym> files and vice versa. The Symbian translation files currently have a strong Buddycloud flavour, but the tools will be made more general as the need arises.
+</p>
+
+<p>
+<p><div class="noteclassic">Appears in version 1.3 of the toolkit.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "symb2po" [1-280] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">symb2po [options] [-t &lt;target_lang_symb&gt;] &lt;source_lang_symb&gt; &lt;po&gt;
+po2symb [options] -t &lt;target_lang_symb&gt; &lt;po&gt; &lt;target_lang_symb&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;target_lang_symb&gt;   </td><td class="col1 leftalign"> is a valid Symbian translation file or directory of those files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;source_lang_symb&gt;   </td><td class="col1 leftalign"> is a valid Symbian translation file or directory of those files  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> &lt;po&gt;   </td><td class="col1 leftalign"> is a <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="Gettext Portable Object Template">POT</acronym> file or a directory of <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="Gettext Portable Object Template">POT</acronym> files  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (symb2po):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version           </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help          </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage           </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT      </td><td class="col1 leftalign"> read from INPUT in php format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -t TEMPLATE, --template=TEMPLATE  </td><td class="col1 leftalign"> read from TEMPLATE in the Symbian translation format  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>  </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none,                        full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -P, --pot    </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2symb):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>    </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT  </td><td class="col1 leftalign"> read from INPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT      </td><td class="col1 leftalign"> write to OUTPUT in php format  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -t TEMPLATE, --template=TEMPLATE  </td><td class="col1 leftalign"> read from TEMPLATE in the Symbian translation format  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [281-2381] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Examples" [2382-2403] -->
+<h3><a name="symb2po1" id="symb2po1">symb2po</a></h3>
+<div class="level3">
+
+<p>
+
+The most common use of symb2po, is to generate a <acronym title="Gettext Portable Object Template">POT</acronym> (<acronym title="Gettext Portable Object">PO</acronym> template) file from the English translation (note that the tool currently expects the Symbian translation file to end with the extension .r01, which is the code for English translation files). This file then serves as the source document from which all translations will be derived.
+</p>
+
+<p>
+To create a <acronym title="Gettext Portable Object Template">POT</acronym> file called <code>my_project.pot</code> from the source Symbian translation file <code>my_project.r01</code>, the following is executed:
+
+</p>
+<pre class="code">symb2po my_project.r01 my_project.pot</pre>
+
+<p>
+
+In order to re-use existing translations in the Symbian translation format, symb2po can merge that translation into the source Symbian translation to produce a translated <acronym title="Gettext Portable Object">PO</acronym> file. The existing Symbian translation file is specified with the <code>-t</code> flag.
+</p>
+
+<p>
+To create a file called <code>my_project-en-fr.po</code> (this is not the recommended <acronym title="Gettext Portable Object">PO</acronym> naming convention) from the source Symbian translation file <code>my_project.r01</code> and its French translation <code>my_project.r02</code>, execute:
+
+</p>
+<pre class="code">symb2po -t my_project.r02 my_project.r01 my_project-en-fr.po</pre>
+
+<p>
+
+<p><div class="noteclassic">Ensure that the English and French files are well aligned, in other words, no changes to the source text should have happened since the translation was done.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "symb2po" [2404-3646] -->
+<h3><a name="po2symb" id="po2symb">po2symb</a></h3>
+<div class="level3">
+
+<p>
+
+The po2symb tool is used to extract the translations in a <acronym title="Gettext Portable Object">PO</acronym> into a template Symbian translation file. The template Symbian translation file supplies the “shape” of the generated file (formatting and comments).
+</p>
+
+<p>
+In order to produce a French Symbian translation file using the English Symbian translation file <code>my_project.r01</code> as a template and the <acronym title="Gettext Portable Object">PO</acronym> file <code>my_project-en-fr.po</code> (this is not the recommended <acronym title="Gettext Portable Object">PO</acronym> naming convention) as the source document, execute:
+
+</p>
+<pre class="code">po2symb -t my_project.r01 my_project-en-fr.po my_project.r02</pre>
+
+</div>
+<!-- SECTION "po2symb" [3647-4196] -->
+<h2><a name="notes" id="notes">Notes</a></h2>
+<div class="level2">
+
+<p>
+
+The tools won&#039;t touch anything appearing between lines marked as
+
+</p>
+<pre class="code">// DO NOT TRANSLATE</pre>
+
+<p>
+
+The string <code>r_string_languagegroup_name</code> is used to set the <code>Language-Team</code> <acronym title="Gettext Portable Object">PO</acronym> header field.
+</p>
+
+<p>
+The Symbian translation header field <code>Author</code> is used to set the <code>Last-Translator</code> <acronym title="Gettext Portable Object">PO</acronym> header field.
+</p>
+
+</div>
+<!-- SECTION "Notes" [4197-4507] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+
+<p>
+
+The file format is heavily tilted towards the Buddycould implementation
+</p>
+
+<p>
+The tools do nothing with the <code>Name</code> and <code>Description</code> Symbian header fields. This means that <code>po2symb</code> will just copy the values in the supplied template. So you might see something such as 
+
+</p>
+<pre class="code">Description : Localisation File : English</pre>
+
+<p>
+
+in a generated French translation file.
+</p>
+
+</div>
+<!-- SECTION "Issues" [4508-4885] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+Probably many, since this software hasn&#039;t been tested much yet.
+</p>
+
+</div>
+<!-- SECTION "Bugs" [4886-] --></body>
+</html>

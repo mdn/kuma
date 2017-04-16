@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="mozilla_l10n_scripts" id="mozilla_l10n_scripts">Mozilla L10n Scripts</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Mozilla L10n Scripts" [1-35] -->
+<h2><a name="introduction" id="introduction">Introduction</a></h2>
+<div class="level2">
+
+<p>
+This page describes the purpose and usage of scripts available in the Translate Toolkit specifically for making the translation of Mozilla products easier.
+</p>
+
+<p>
+Mozilla&#039;s move from <acronym title="Concurrent Versions System">CVS</acronym> to Mercurial made a lot of these scripts necessary. For more information about Mozilla l10n from <acronym title="Concurrent Versions System">CVS</acronym>, see the <a href="toolkit-moz-l10n-builder.html" class="wikilink1" title="toolkit-moz-l10n-builder.html">moz-l10n-builder</a> page.
+</p>
+
+<p>
+All of these scripts are available on Subversion from <a href="https://translate.svn.sourceforge.net/svnroot/translate/src/trunk/tools/mozilla/" class="urlextern" title="https://translate.svn.sourceforge.net/svnroot/translate/src/trunk/tools/mozilla/">here</a>.
+</p>
+
+<p>
+We are currently generating <acronym title="Gettext Portable Object Template">POT</acronym> files for most major betas, RCs and releases of Firefox and Thunderbird. They are available here:
+<a href="http://l10n.mozilla.org/pootle/pot/" class="urlextern" title="http://l10n.mozilla.org/pootle/pot/">http://l10n.mozilla.org/pootle/pot/</a>
+</p>
+
+<p>
+As a start you might want to just use these <acronym title="Gettext Portable Object Template">POT</acronym> files and gradually learn more about the processes described below. Contact us for more help on using these.
+</p>
+
+</div>
+<!-- SECTION "Introduction" [36-850] -->
+<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> The <a href="toolkit-index.html" class="wikilink1" title="toolkit-index.html">Translate Toolkit</a> (&gt;=1.3)</div>
+</li>
+<li class="level1"><div class="li"> All scripts in the <code>tools/mozilla</code> directory (from the project sources) should be executable and in your <code>PATH</code>.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Requirements" [851-1050] -->
+<h2><a name="build_ff3.1_langs.sh" id="build_ff3.1_langs.sh">build_ff3.1_langs.sh</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "build_ff3.1_langs.sh" [1051-1083] -->
+<h3><a name="description" id="description">Description</a></h3>
+<div class="level3">
+
+<p>
+This is a simple bash script that embodies most of the Mozilla l10n process and does the following:
+</p>
+<ol>
+<li class="level1"><div class="li"> Update Mozilla sources</div>
+</li>
+<li class="level1"><div class="li"> Update language files from <a href="http://hg.mozilla.org/l10n-central" class="urlextern" title="http://hg.mozilla.org/l10n-central">Mozilla&#039;s L10n</a> Mercurial repository.</div>
+</li>
+<li class="level1"><div class="li"> Replace old l10n en-US files with a fresh copy from the updated source tree.</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-creating_mozilla_pot_files.html" class="wikilink1" title="toolkit-creating_mozilla_pot_files.html">Create new POT files</a> from the <a href="#get_moz_enus.py" title=":toolkit:mozilla_l10n_scripts.txt &crarr;" class="wikilink1">en-US</a> l10n files.</div>
+</li>
+<li class="level1"><div class="li"> Create archives of the <acronym title="Gettext Portable Object Template">POT</acronym> files.</div>
+</li>
+<li class="level1"><div class="li"> For each language:</div>
+<ol>
+<li class="level2"><div class="li"> Update existing <acronym title="Gettext Portable Object">PO</acronym> files if the checked out from a <acronym title="Concurrent Versions System">CVS</acronym>, Subversion or Mercurial repository.</div>
+</li>
+<li class="level2"><div class="li"> <a href="toolkit-migrating_translations.html" class="wikilink1" title="toolkit-migrating_translations.html">Migrate</a> <acronym title="Gettext Portable Object">PO</acronym> files to new <acronym title="Gettext Portable Object Template">POT</acronym> files.</div>
+</li>
+<li class="level2"><div class="li"> <a href="toolkit-po2moz.html" class="wikilink1" title="toolkit-po2moz.html">Create Mozilla l10n files</a> for the language based on the migrated <acronym title="Gettext Portable Object">PO</acronym> files.</div>
+</li>
+<li class="level2"><div class="li"> Create archives of the <acronym title="Gettext Portable Object">PO</acronym> files.</div>
+</li>
+<li class="level2"><div class="li"> <a href="#buildxpi.py" title=":toolkit:mozilla_l10n_scripts.txt &crarr;" class="wikilink1">Build langpack</a> for the language.</div>
+</li>
+</ol>
+</li>
+</ol>
+
+<p>
+
+This script is used on the l10n.mozilla.org server to create most (if not all) of the files available from <a href="http://l10n.mozilla.org/pootle/" class="urlextern" title="http://l10n.mozilla.org/pootle/">http://l10n.mozilla.org/pootle/</a>. It was originally written as a stable way to provide these files and as such making it as general as possible was not the biggest requirement. This is evident in the script&#039;s very narrow focus.
+
+</p>
+
+</div>
+<!-- SECTION "Description" [1084-2273] -->
+<h3><a name="usage" id="usage">Usage</a></h3>
+<div class="level3">
+
+<p>
+This script takes no command-line parameters and is only configurable via the variables at the top and, failing that, custom hacking of the script.
+</p>
+
+<p>
+The variables are used in the following ways:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"><code>BUILD_DIR</code></td><td class="col1"> The base build directory from where building is done. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><code>MOZCENTRAL_DIR</code></td><td class="col1"> The directory containing a checkout of the Mozilla source tree (from <a href="http://hg.mozilla.org/mozilla-central/" class="urlextern" title="http://hg.mozilla.org/mozilla-central/">http://hg.mozilla.org/mozilla-central/</a>). </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><code>HG_LANGS</code></td><td class="col1"> A space-separated list of language codes to build for. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><code>L10N_DIR</code></td><td class="col1"> The directory where Mozilla l10n files (from l10n-central) should be collected. </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"><code><acronym title="Gettext Portable Object">PO</acronym>_DIR</code></td><td class="col1"> The directory containing the externally-hosted or previously available source <acronym title="Gettext Portable Object">PO</acronym> files (ex. <acronym title="Gettext Portable Object">PO</acronym> files managed in another VCS repository). It contains a sub-directory for each language. </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"><code>POPACK_DIR</code></td><td class="col1"> The output directory for <acronym title="Gettext Portable Object">PO</acronym> archives. </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"><code>PORECOVER_DIR</code></td><td class="col1"> The directory to put recovered <acronym title="Gettext Portable Object">PO</acronym> files in. It contains a sub-directory for each language. </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"><code><acronym title="Gettext Portable Object Template">POT</acronym>_INCLUDES</code></td><td class="col1"> A space-separated list of files to be included in <acronym title="Gettext Portable Object Template">POT</acronym> archives. </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"><code>POTPACK_DIR</code></td><td class="col1"> The output directory for <acronym title="Gettext Portable Object Template">POT</acronym> archives. </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0"><code>POUPDATED_DIR</code></td><td class="col1"> The directory to use for updated <acronym title="Gettext Portable Object">PO</acronym> files. It contains a sub-directory for each language. </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0"><code>LANGPACK_DIR</code></td><td class="col1"> The directory to put langpacks (XPIs) in. </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"><code>FF_VERSION</code></td><td class="col1"> The version of Firefox that is being built for. This is used in the file names of archives. </td>
+	</tr>
+</table>
+
+<p>
+
+<p><div class="noteclassic">It is <strong>strongly</strong> recommended that you mirror the directory structure specified by the default values of the <code>*_DIR</code> variables. For example the default value for <code>L10N_DIR</code> is <code>${BUILD_DIR}/l10n</code>, then you should put your l10n-central check-outs in the <code>l10n</code> directory under your main build directory (<code>BUILD_DIR</code>).
+</p>
+
+<p>
+Basically, you should have an ideally separate build directory containing the following sub-directories: <code>l10n</code>, <code>mozilla-central</code>, <code>po</code>, <code>popacks</code>, <code>potpacks</code>, <code>po-updated</code> and <code>xpi</code> (if used). This way the only variable that need to be changed is <code>BUILD_DIR</code>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Usage" [2274-4280] -->
+<h2><a name="build_tb3_langs.sh" id="build_tb3_langs.sh">build_tb3_langs.sh</a></h2>
+<div class="level2">
+
+<p>
+This is the script that the <code>build_ff3.1_langs.sh</code> script above was actually adapted from. It is 90% similar with the obvious exception that it is aimed at building Thunderbird 3.0 packages in stead of Firefox 3.1. Also note that this script uses the comm-central repository in stead of mozilla-central.
+</p>
+
+</div>
+<!-- SECTION "build_tb3_langs.sh" [4281-4619] -->
+<h2><a name="buildxpi.py" id="buildxpi.py">buildxpi.py</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "buildxpi.py" [4620-4643] -->
+<h3><a name="description1" id="description1">Description</a></h3>
+<div class="level3">
+
+<p>
+Creats a <acronym title="Cross Platform Installer">XPI</acronym> language pack from Mozilla sources and translated l10n files. This script has only been tested with Firefox 3.1 beta sources.
+</p>
+
+<p>
+It is basically the scripted version of the process described on Mozilla&#039;s <a href="https://developer.mozilla.org/en/Creating_a_Language_Pack" class="urlextern" title="https://developer.mozilla.org/en/Creating_a_Language_Pack">&quot;Creating a language pack&quot;</a> page.
+</p>
+
+<p>
+This script is used by <code>build_ff3.1_langs.sh</code> to build language packs in its final step.
+</p>
+
+<p>
+<strong>Note:</strong> This script uses the <code>.mozconfig</code> file in your home directory. Any existing <code>.mozconfig</code> is renamed to <code>.mozconfig.bak</code> during operation and copied back afterwards.
+</p>
+
+</div>
+<!-- SECTION "Description" [4644-5250] -->
+<h3><a name="usage1" id="usage1">Usage</a></h3>
+<div class="level3">
+<pre class="code">buildxpi.py -L /path/to/l10n -s /path/to/mozilla-central -o /path/to/xpi_output af</pre>
+
+Options:<table class="inline">
+	<tr class="row0">
+		<td class="col0"><code>/path/to/l10n</code></td><td class="col1"> The path to the parent directory of the “af” directory containing the Afrikaans translated l10n files. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><code>/path/to/mozilla-central</code></td><td class="col1"> The path to the Firefox sources check out from <a href="http://hg.mozilla.org/mozilla-central" class="urlextern" title="http://hg.mozilla.org/mozilla-central">Mercurial</a>. Note that <code>--mozproduct</code> is not specified, because the default is <code>browser</code>. For Thunderbird (&gt;=3.0) it should be <code>/path/to/<a href="http://hg.mozilla.org/comm-central" class="urlextern" title="http://hg.mozilla.org/comm-central">comm-central</a></code> and <code>--mozproduct mail</code> should be specified. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><code>/path/to/xpi_output</code></td><td class="col1"> The path to the output directory. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><code>af</code></td><td class="col1"> The language (Afrikaans in this case) to build a language pack for. </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [5251-5992] -->
+<h2><a name="get_moz_enus.py" id="get_moz_enus.py">get_moz_enUS.py</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "get_moz_enUS.py" [5993-6020] -->
+<h3><a name="description2" id="description2">Description</a></h3>
+<div class="level3">
+
+<p>
+A simple script to collect the en-US l10n files from a Mozilla source tree (<code>&#039;comm-central</code>&#039; or <code>&#039;mozilla-central</code>&#039;) by traversing the product&#039;s <code>l10n.ini</code> file.
+</p>
+
+</div>
+<!-- SECTION "Description" [6021-6211] -->
+<h3><a name="usage2" id="usage2">Usage</a></h3>
+<div class="level3">
+<pre class="code">get_moz_enUS.py [options]</pre>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"><code>-h</code>, <code>--help</code></td><td class="col1"> Show this help message and exit. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><code>-s SRCDIR</code>, <code>--src=SRCDIR</code></td><td class="col1"> The directory containing the Mozilla l10n sources. (default: <code>mozilla</code>) </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><code>-d DESTDIR</code>, <code>--dest=DESTDIR</code></td><td class="col1"> The destination directory to copy the en-US locale files to. (default: <code>l10n</code>) </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><code>-pMOZPRODUCT</code>, <code>--mozproduct=MOZPRODUCT</code></td><td class="col1"> The Mozilla product name. (default: <code>browser</code>) </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"><code>--delete-dest</code></td><td class="col1"> Delete the destination directory (if it exists). </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"><code>-v, --verbose</code></td><td class="col1"> Be more noisy. </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [6212-6761] -->
+<h2><a name="moz-l10n-builder" id="moz-l10n-builder">moz-l10n-builder</a></h2>
+<div class="level2">
+
+<p>
+This is the pre-Mercurial build script originally written by Dwayne Bailey. This is the script that all the others on this page replaces for post-<acronym title="Concurrent Versions System">CVS</acronym> Mozilla l10n.
+</p>
+
+<p>
+<strong>Note</strong>: This script is <strong>not</strong> applicable to the l10n process of any Mozilla products after the move to Mercurial.
+</p>
+
+<p>
+For more information about this script see its dedicated <a href="toolkit-moz-l10n-builder.html" class="wikilink1" title="toolkit-moz-l10n-builder.html">wiki page</a>.
+</p>
+
+</div>
+<!-- SECTION "moz-l10n-builder" [6762-7172] -->
+<h2><a name="moz_l10n_builder.py" id="moz_l10n_builder.py">moz_l10n_builder.py</a></h2>
+<div class="level2">
+
+<p>
+This script was intended to be a simple and direct port of the <code>moz-l10n-builder</code> script from above. It has pro&#039;s and cons in comparison to the original, but is very similar for the most part. So for more information about this script, see the original script&#039;s <a href="toolkit-moz-l10n-builder.html" class="wikilink1" title="toolkit-moz-l10n-builder.html">wiki page</a>.
+
+</p>
+
+</div>
+<!-- SECTION "moz_l10n_builder.py" [7173-] --></body>
+</html>

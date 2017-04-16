@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="personality_type" id="personality_type">--personality=TYPE</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "--personality=TYPE" [1-34] -->
+<h2><a name="java_default" id="java_default">java (default)</a></h2>
+<div class="level2">
+
+<p>
+
+Create output strictly according to the specification for .properties files.  This will use escaped Unicode for any non-assci characters.  Thus the following string found in a <acronym title="Gettext Portable Object">PO</acronym> file:
+
+</p>
+<pre class="code">ṽḁḽṻḝ</pre>
+
+<p>
+
+Will appear as follows in the output .properties file:
+
+</p>
+<pre class="code">\u1E7D\u1E01\u1E3D\u1E7B\u1E1D</pre>
+
+</div>
+<!-- SECTION "java (default)" [35-357] -->
+<h2><a name="mozilla" id="mozilla">mozilla</a></h2>
+<div class="level2">
+
+<p>
+
+Mozilla has made slight adjustments to the Java .properties <acronym title="specification">spec</acronym>.  Mozilla will accept UTF-8 encoded strings in the property file and thus does not need escaped Unicode.  Thus the above string - ṽḁḽṻḝ - will not be escaped.  Mozilla property files are thus more useful for non-Latin languages in that they are actually readable.
+</p>
+
+<p>
+Of course this style of file is only used by Mozilla and should not be used for other projects that follow the Java <acronym title="specification">spec</acronym> more strictly.
+
+</p>
+
+</div>
+<!-- SECTION "mozilla" [358-] --></body>
+</html>

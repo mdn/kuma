@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.decorators_numpy
+========================
+
+Module: :mod:`testing.decorators_numpy`
+---------------------------------------
+.. automodule:: IPython.testing.decorators_numpy
+
+.. currentmodule:: IPython.testing.decorators_numpy
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.decorators_numpy.setastest
+
+
+.. autofunction:: IPython.testing.decorators_numpy.skipif
+
+
+.. autofunction:: IPython.testing.decorators_numpy.skipknownfailure
+
+
+.. autofunction:: IPython.testing.decorators_numpy.slow
+

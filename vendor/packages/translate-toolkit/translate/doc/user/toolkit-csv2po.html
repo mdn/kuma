@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="csv2po_and_po2csv" id="csv2po_and_po2csv">csv2po and po2csv</a></h1>
+<div class="level1">
+
+<p>
+
+Convert between <acronym title="Comma Separated Value">CSV</acronym> (Comma Separated Value) files and the <acronym title="Gettext Portable Object">PO</acronym> format.  This is useful for those translators who can only use a Spreadsheet, a modern spreadsheet can open <acronym title="Comma Separated Value">CSV</acronym> files for editing.  It is also useful if you have other data such as translation memory in <acronym title="Comma Separated Value">CSV</acronym> format and you wish to use it with your <acronym title="Gettext Portable Object">PO</acronym> translations.
+</p>
+
+<p>
+If you are starting out with your own <acronym title="Comma Separated Value">CSV</acronym> files (not created by po2csv), take note of the assumptions of the column layout explained below.
+</p>
+
+</div>
+<!-- SECTION "csv2po and po2csv" [1-500] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">csv2po [options] &lt;csv&gt; &lt;po&gt;
+po2csv [options] &lt;po&gt; &lt;csv&gt;</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;csv&gt;  </td><td class="col1 leftalign"> is a file or directory containing <acronym title="Comma Separated Value">CSV</acronym> files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;po&gt;   </td><td class="col1 leftalign"> is a file or directory containing <acronym title="Gettext Portable Object">PO</acronym> files  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (csv2po):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>   </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT    </td><td class="col1 leftalign"> read from INPUT in csv format   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE  </td><td class="col1 leftalign"> read from TEMPLATE in pot, po, pot formats   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --charset=CHARSET    </td><td class="col1 leftalign"> set charset to decode from csv files   </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --columnorder=COLUMNORDER  </td><td class="col1 leftalign"> specify the order and position of columns (source,source,target)   </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2csv):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in csv format   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -P, --pot            </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --columnorder=COLUMNORDER   </td><td class="col1 leftalign"> specify the order and position of columns (comment,source,target)   </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [501-2574] -->
+<h2><a name="csv_file_layout" id="csv_file_layout">CSV file layout</a></h2>
+<div class="level2">
+
+<p>
+
+The resultant <acronym title="Comma Separated Value">CSV</acronym> file has the following layout
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column  </th><th class="col1 leftalign"> Data  </th><th class="col2 leftalign"> Description  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 centeralign">  A  </td><td class="col1 leftalign"> Location              </td><td class="col2 leftalign"> All the <acronym title="Gettext Portable Object">PO</acronym> #: location comments.  These are needed to reconstruct or merge the <acronym title="Comma Separated Value">CSV</acronym> back into the <acronym title="Gettext Portable Object">PO</acronym> file  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  B  </td><td class="col1"> Source Language (English) </td><td class="col2 leftalign"> The msgid or source string  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  C  </td><td class="col1 leftalign"> Target Language  </td><td class="col2 leftalign"> The msgstr or target language  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "CSV file layout" [2575-2955] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+These examples demonstrate the use of csv2po:
+
+</p>
+<pre class="code">po2csv -P pot csv</pre>
+
+<p>
+
+We use the <em>-P</em> option to recognise <acronym title="Gettext Portable Object Template">POT</acronym> files found in <em>pot</em> and convert them to <acronym title="Comma Separated Value">CSV</acronym> files placed in <em>csv</em>
+
+</p>
+<pre class="code">csv2po csv po</pre>
+
+<p>
+
+Convert <acronym title="Comma Separated Value">CSV</acronym> files in <em>csv</em> to <acronym title="Gettext Portable Object">PO</acronym> files placed in <em>po</em>
+
+</p>
+<pre class="code">csv2po --charset=windows-1250 -t pot csv po</pre>
+
+<p>
+
+User working on Windows will often return files encoded in everything but Unicode.  In this case we convert
+<acronym title="Comma Separated Value">CSV</acronym> files found in <em>csv</em> from <em>windows-1250</em> to UTF-8 and place the correctly encoded files in <em>po</em>.  We use
+the templates found in <em>pot</em> to ensure that we preserve formatting and other data.  Note that 
+UTF-8 is the only available destination encoding.
+</p>
+
+</div>
+<!-- SECTION "Examples" [2956-3653] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Translation comments #[space] and KDE comments _: are not available in <acronym title="Comma Separated Value">CSV</acronym> mode which effects the translators effectiveness</div>
+</li>
+<li class="level1"><div class="li"> Locations #: that are not conformant to <acronym title="Gettext Portable Object">PO</acronym> (i.e. have spaces) will get messed up by <acronym title="Gettext Portable Object">PO</acronym> tools.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Bugs" [3654-] --></body>
+</html>

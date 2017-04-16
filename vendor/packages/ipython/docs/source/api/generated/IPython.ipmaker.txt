@@ -1,0 +1,20 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+ipmaker
+=======
+
+Module: :mod:`ipmaker`
+----------------------
+.. automodule:: IPython.ipmaker
+
+.. currentmodule:: IPython.ipmaker
+
+Functions
+---------
+
+
+.. autofunction:: IPython.ipmaker.force_import
+
+
+.. autofunction:: IPython.ipmaker.make_IPython
+

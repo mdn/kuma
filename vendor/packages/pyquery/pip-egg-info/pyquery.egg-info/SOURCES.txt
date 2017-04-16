@@ -1,0 +1,17 @@
+MANIFEST.in
+setup.cfg
+pip-egg-info/pyquery.egg-info/PKG-INFO
+pip-egg-info/pyquery.egg-info/SOURCES.txt
+pip-egg-info/pyquery.egg-info/dependency_links.txt
+pip-egg-info/pyquery.egg-info/entry_points.txt
+pip-egg-info/pyquery.egg-info/not-zip-safe
+pip-egg-info/pyquery.egg-info/requires.txt
+pip-egg-info/pyquery.egg-info/top_level.txt
+pyquery/README.txt
+pyquery/__init__.py
+pyquery/ajax.py
+pyquery/cssselectpatch.py
+pyquery/pyquery.py
+pyquery/rules.py
+pyquery/test.py
+pyquery/tests.txt

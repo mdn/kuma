@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pofilter" id="pofilter">pofilter</a></h1>
+<div class="level1">
+
+<p>
+
+Pofilter allows you to run a <a href="toolkit-pofilter_tests.html" class="wikilink1" title="toolkit-pofilter_tests.html">number of checks</a> against your <acronym title="Gettext Portable Object">PO</acronym>, <acronym title="XML Localization Interchange File Format">XLIFF</acronym> or <acronym title="Translation Memory eXchange">TMX</acronym> files.  These checks are designed to pick up problems with capitalisation, accelerators, variables, etc.  Those messages that fail any of the checks are output and marked so that you can correct them.
+</p>
+
+<p>
+Use pofilter -l to get a list of available checks.
+</p>
+
+<p>
+Once you have corrected the errors in your <acronym title="Gettext Portable Object">PO</acronym> files you can merge the corrections into your existing translated <acronym title="Gettext Portable Object">PO</acronym> files using <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+</p>
+
+</div>
+<!-- SECTION "pofilter" [1-514] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">pofilter [options] &lt;in&gt; &lt;out&gt;</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;in&gt;  </td><td class="col1"> the input file or directory which contains <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;out&gt;  </td><td class="col1 leftalign"> the output file or directory that contains <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files that fail the various tests  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1"> read from INPUT in pot, po, xlf, tmx formats </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1"> write to OUTPUT in po, pot, xlf, tmx formats </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>        </td><td class="col1 leftalign"> use psyco to speed up the operation (set mode)  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -l, --listfilters    </td><td class="col1 leftalign"> list filters available  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --review             </td><td class="col1 leftalign"> include elements marked for review (default)  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --noreview           </td><td class="col1 leftalign"> exclude elements marked for review  </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> --fuzzy              </td><td class="col1 leftalign"> include elements marked fuzzy (default)  </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> --nofuzzy            </td><td class="col1 leftalign"> exclude elements marked fuzzy  </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0 leftalign"> --header             </td><td class="col1"> include a <acronym title="Gettext Portable Object">PO</acronym> header in the output (always the case since version 1.6) </td>
+	</tr>
+	<tr class="row15">
+		<td class="col0 leftalign"> --nonotes            </td><td class="col1 leftalign"> don&#039;t add notes about the errors (since version 1.3)  </td>
+	</tr>
+	<tr class="row16">
+		<td class="col0 leftalign"> --autocorrect        </td><td class="col1 leftalign"> output automatic corrections where possible rather than describing issues  </td>
+	</tr>
+	<tr class="row17">
+		<td class="col0 leftalign"> --language=LANG      </td><td class="col1"> set target language code (e.g. af-ZA) [required for spell check]. This will help to make pofilter aware of the conventions of your language </td>
+	</tr>
+	<tr class="row18">
+		<td class="col0 leftalign"> --openoffice         </td><td class="col1 leftalign"> use the standard checks for OpenOffice translations  </td>
+	</tr>
+	<tr class="row19">
+		<td class="col0 leftalign"> --mozilla            </td><td class="col1 leftalign"> use the standard checks for Mozilla translations  </td>
+	</tr>
+	<tr class="row20">
+		<td class="col0 leftalign"> --drupal            </td><td class="col1 leftalign"> use the standard checks for Drupal translations  </td>
+	</tr>
+	<tr class="row21">
+		<td class="col0 leftalign"> --gnome              </td><td class="col1 leftalign"> use the standard checks for Gnome translations  </td>
+	</tr>
+	<tr class="row22">
+		<td class="col0 leftalign"> --kde                </td><td class="col1 leftalign"> use the standard checks for KDE translations  </td>
+	</tr>
+	<tr class="row23">
+		<td class="col0 leftalign"> --wx                 </td><td class="col1"> use the standard checks for wxWidgets translations - identical to --kde </td>
+	</tr>
+	<tr class="row24">
+		<td class="col0 leftalign"> --excludefilter=FILTER  </td><td class="col1 leftalign"> don&#039;t use FILTER when filtering  </td>
+	</tr>
+	<tr class="row25">
+		<td class="col0 leftalign"> -tFILTER, --test=FILTER  </td><td class="col1 leftalign"> only use test FILTERs specified with this option when filtering  </td>
+	</tr>
+	<tr class="row26">
+		<td class="col0 leftalign"> --notranslatefile=FILE   </td><td class="col1 leftalign"> read list of untranslatable words from FILE (must not be translated)  </td>
+	</tr>
+	<tr class="row27">
+		<td class="col0 leftalign"> --musttranslatefile=FILE  </td><td class="col1 leftalign"> read list of translatable words from FILE (must be translated)  </td>
+	</tr>
+	<tr class="row28">
+		<td class="col0 leftalign"> --validcharsfile=FILE  </td><td class="col1 leftalign"> read list of all valid characters from FILE (must be in UTF-8)  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [515-3142] -->
+<h2><a name="example" id="example">Example</a></h2>
+<div class="level2">
+
+<p>
+
+Here are some examples to demonstrate how to use pofilter:
+
+</p>
+<pre class="code">pofilter --openoffice af af-check</pre>
+
+<p>
+
+Use the default settings (accelerator and variables) for OpenOffice.org.  Check all <acronym title="Gettext Portable Object">PO</acronym> files in <em>af</em> and output any messages
+that fail the check in <em>af-check</em> (create the directory if it does not already exist).
+
+</p>
+<pre class="code">pofilter -t isfuzzy -t untranslated zu zu-check</pre>
+
+<p>
+
+Only run the <em>isfuzzy</em> and <em>untranslated</em> checks, this will extract all messages that are either fuzzy or untranslated.
+
+</p>
+<pre class="code">pofilter --excludefilter=simplecaps --nofuzzy nso nso-check</pre>
+
+<p>
+
+Run all filters except <em>simplecaps</em>.  You might want to do this if your language does not make use of capitalisation or if the test is
+creating too many false positives.  Also only run the checks against messages that are not marked fuzzy.  This is useful if you 
+have already marked problem strings as fuzzy or you know that the fuzzy strings are bad, with this option you don&#039;t have to see the 
+obviously wrong messages.
+
+</p>
+<pre class="code">pofilter --language=fr dir dir-check</pre>
+
+<p>
+
+Tell pofilter that you are checking French translations so that it can take the conventions of the language into account (for things like punctuation, spacing, quoting, etc.) It will also disable some tests that are not meaningful for your language, like capitalisation checks for languages that don&#039;t have capital letters.
+
+</p>
+<pre class="code">pofilter --excludefilter=untranslated</pre>
+
+<p>
+
+Tell pofilter not to complain about your untranslated units.
+
+</p>
+<pre class="code">pofilter -l</pre>
+
+<p>
+
+List all the available checks.
+</p>
+
+</div>
+<!-- SECTION "Example" [3143-4657] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+There are minor bugs in the filters.  Most relate to false positives, corner cases or minor changes for better fault description.
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [4658-] --></body>
+</html>

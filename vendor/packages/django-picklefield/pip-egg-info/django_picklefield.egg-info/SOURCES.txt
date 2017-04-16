@@ -1,0 +1,10 @@
+README
+setup.cfg
+pip-egg-info/django_picklefield.egg-info/PKG-INFO
+pip-egg-info/django_picklefield.egg-info/SOURCES.txt
+pip-egg-info/django_picklefield.egg-info/dependency_links.txt
+pip-egg-info/django_picklefield.egg-info/top_level.txt
+src/picklefield/__init__.py
+src/picklefield/fields.py
+src/picklefield/models.py
+src/picklefield/tests.py

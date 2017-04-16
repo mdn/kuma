@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OInspect &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="OutputTrap" href="IPython.OutputTrap.html" />
+    <link rel="prev" title="Magic" href="IPython.Magic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.OutputTrap.html" title="OutputTrap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Magic.html" title="Magic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="oinspect">
+<h1>OInspect<a class="headerlink" href="#oinspect" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.OInspect">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">OInspect</span></tt><a class="headerlink" href="#module-IPython.OInspect" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.OInspect</span></tt>:</p>
+<img src="../../_images/inheritance2c0ade3727.png" usemap="#inheritance2c0ade3727" class="inheritance"/><map id="inheritance2c0ade3727" name="inheritance2c0ade3727">
+<area shape="rect" href="#IPython.OInspect.Inspector" title="IPython.OInspect.Inspector" alt="" coords="5,56,197,83"/>
+<area shape="rect" href="#IPython.OInspect.myStringIO" title="IPython.OInspect.myStringIO" alt="" coords="247,5,449,32"/>
+</map>
+<p>Tools for inspecting Python objects.</p>
+<p>Uses syntax highlighting for presenting the various information elements.</p>
+<p>Similar in spirit to the inspect module, but all calls take a name argument to
+reference the name under which an object is being read.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inspector">
+<h3><a title="IPython.OInspect.Inspector" class="reference internal" href="#IPython.OInspect.Inspector"><tt class="xref docutils literal"><span class="pre">Inspector</span></tt></a><a class="headerlink" href="#inspector" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.OInspect.Inspector">
+<!--[IPython.OInspect.Inspector]-->class <tt class="descclassname">IPython.OInspect.</tt><tt class="descname">Inspector</tt><big>(</big><em>color_table</em>, <em>code_color_table</em>, <em>scheme</em>, <em>str_detail_level=0</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="IPython.OInspect.Inspector.__init__">
+<!--[IPython.OInspect.Inspector.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_table</em>, <em>code_color_table</em>, <em>scheme</em>, <em>str_detail_level=0</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.noinfo">
+<!--[IPython.OInspect.Inspector.noinfo]--><tt class="descname">noinfo</tt><big>(</big><em>msg</em>, <em>oname</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.noinfo" title="Permalink to this definition">¶</a></dt>
+<dd>Generic message when no information is found.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.pdef">
+<!--[IPython.OInspect.Inspector.pdef]--><tt class="descname">pdef</tt><big>(</big><em>obj</em>, <em>oname=''</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.pdef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the definition header for any callable object.</p>
+<p>If the object is a class, print the constructor information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.pdoc">
+<!--[IPython.OInspect.Inspector.pdoc]--><tt class="descname">pdoc</tt><big>(</big><em>obj</em>, <em>oname=''</em>, <em>formatter=None</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.pdoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the docstring for any object.</p>
+<p>Optional:
+-formatter: a function to run the docstring through for specially
+formatted docstrings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.pfile">
+<!--[IPython.OInspect.Inspector.pfile]--><tt class="descname">pfile</tt><big>(</big><em>obj</em>, <em>oname=''</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.pfile" title="Permalink to this definition">¶</a></dt>
+<dd>Show the whole file where an object was defined.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.pinfo">
+<!--[IPython.OInspect.Inspector.pinfo]--><tt class="descname">pinfo</tt><big>(</big><em>obj</em>, <em>oname=''</em>, <em>formatter=None</em>, <em>info=None</em>, <em>detail_level=0</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.pinfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show detailed information about an object.</p>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li>oname: name of the variable pointing to the object.</li>
+<li>formatter: special formatter for docstrings (see pdoc)</li>
+<li>info: a structure with some information fields which may have been</li>
+</ul>
+<p>precomputed already.</p>
+<ul class="simple">
+<li>detail_level: if set to 1, more information is given.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.psearch">
+<!--[IPython.OInspect.Inspector.psearch]--><tt class="descname">psearch</tt><big>(</big><em>pattern</em>, <em>ns_table</em>, <em>ns_search=</em><span class="optional">[</span><span class="optional">]</span>, <em>ignore_case=False</em>, <em>show_all=False</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.psearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search namespaces with wildcards for objects.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li>pattern: string containing shell-like wildcards to use in namespace</li>
+</ul>
+<p>searches and optionally a type specification to narrow the search to
+objects of that type.</p>
+<ul class="simple">
+<li>ns_table: dict of name-&gt;namespaces for search.</li>
+</ul>
+<p>Optional arguments:</p>
+<blockquote>
+<ul class="simple">
+<li>ns_search: list of namespace names to include in search.</li>
+<li>ignore_case(False): make the search case-insensitive.</li>
+<li>show_all(False): show all names, including those starting with</li>
+</ul>
+<p>underscores.</p>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.psource">
+<!--[IPython.OInspect.Inspector.psource]--><tt class="descname">psource</tt><big>(</big><em>obj</em>, <em>oname=''</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.psource" title="Permalink to this definition">¶</a></dt>
+<dd>Print the source code for an object.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.Inspector.set_active_scheme">
+<!--[IPython.OInspect.Inspector.set_active_scheme]--><tt class="descname">set_active_scheme</tt><big>(</big><em>scheme</em><big>)</big><a class="headerlink" href="#IPython.OInspect.Inspector.set_active_scheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mystringio">
+<h3><a title="IPython.OInspect.myStringIO" class="reference internal" href="#IPython.OInspect.myStringIO"><tt class="xref docutils literal"><span class="pre">myStringIO</span></tt></a><a class="headerlink" href="#mystringio" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.OInspect.myStringIO">
+<!--[IPython.OInspect.myStringIO]-->class <tt class="descclassname">IPython.OInspect.</tt><tt class="descname">myStringIO</tt><big>(</big><em>buf=''</em><big>)</big><a class="headerlink" href="#IPython.OInspect.myStringIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">StringIO.StringIO</span></tt></p>
+<p>Adds a writeln method to normal StringIO.</p>
+<dl class="method">
+<dt id="IPython.OInspect.myStringIO.__init__">
+<!--[IPython.OInspect.myStringIO.__init__]--><tt class="descname">__init__</tt><big>(</big><em>buf=''</em><big>)</big><a class="headerlink" href="#IPython.OInspect.myStringIO.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.OInspect.myStringIO.writeln">
+<!--[IPython.OInspect.myStringIO.writeln]--><tt class="descname">writeln</tt><big>(</big><em>*arg</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.OInspect.myStringIO.writeln" title="Permalink to this definition">¶</a></dt>
+<dd>Does a write() and then a write(&#8216;
+&#8216;)</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.OInspect.getargspec">
+<!--[IPython.OInspect.getargspec]--><tt class="descclassname">IPython.OInspect.</tt><tt class="descname">getargspec</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.OInspect.getargspec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the names and default values of a function&#8217;s arguments.</p>
+<p>A tuple of four things is returned: (args, varargs, varkw, defaults).
+&#8216;args&#8217; is a list of the argument names (it may contain nested lists).
+&#8216;varargs&#8217; and &#8216;varkw&#8217; are the names of the * and ** arguments or None.
+&#8216;defaults&#8217; is an n-tuple of the default values of the last n arguments.</p>
+<p>Modified version of inspect.getargspec from the Python Standard
+Library.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.OInspect.getdoc">
+<!--[IPython.OInspect.getdoc]--><tt class="descclassname">IPython.OInspect.</tt><tt class="descname">getdoc</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.OInspect.getdoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stable wrapper around inspect.getdoc.</p>
+<p>This can&#8217;t crash because of attribute problems.</p>
+<p>It also attempts to call a getdoc() method on the given object.  This
+allows objects which provide their docstrings via non-standard mechanisms
+(like Pyro proxies) to still be inspected by ipython&#8217;s ? system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.OInspect.getsource">
+<!--[IPython.OInspect.getsource]--><tt class="descclassname">IPython.OInspect.</tt><tt class="descname">getsource</tt><big>(</big><em>obj</em>, <em>is_binary=False</em><big>)</big><a class="headerlink" href="#IPython.OInspect.getsource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around inspect.getsource.</p>
+<p>This can be modified by other projects to provide customized source
+extraction.</p>
+<p>Inputs:</p>
+<ul class="simple">
+<li>obj: an object whose source code we will attempt to extract.</li>
+</ul>
+<p>Optional inputs:</p>
+<ul class="simple">
+<li>is_binary: whether the object is known to come from a binary source.</li>
+</ul>
+<p>This implementation will skip returning any output for binary objects, but
+custom extractors may know how to meaningfully process them.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">OInspect</a><ul>
+<li><a class="reference external" href="#module-IPython.OInspect">Module: <tt class="docutils literal"><span class="pre">OInspect</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#inspector"><tt class="docutils literal"><span class="pre">Inspector</span></tt></a></li>
+<li><a class="reference external" href="#mystringio"><tt class="docutils literal"><span class="pre">myStringIO</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.Magic.html" title="previous chapter">Magic</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.OutputTrap.html" title="next chapter">OutputTrap</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.OInspect.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.OutputTrap.html" title="OutputTrap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Magic.html" title="Magic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

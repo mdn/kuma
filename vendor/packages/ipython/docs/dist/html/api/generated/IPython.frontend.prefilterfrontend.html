@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>frontend.prefilterfrontend &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="frontend.process.pipedprocess" href="IPython.frontend.process.pipedprocess.html" />
+    <link rel="prev" title="frontend.linefrontendbase" href="IPython.frontend.linefrontendbase.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.process.pipedprocess.html" title="frontend.process.pipedprocess"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.linefrontendbase.html" title="frontend.linefrontendbase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frontend-prefilterfrontend">
+<h1>frontend.prefilterfrontend<a class="headerlink" href="#frontend-prefilterfrontend" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.frontend.prefilterfrontend">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">frontend.prefilterfrontend</span></tt><a class="headerlink" href="#module-IPython.frontend.prefilterfrontend" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.frontend.prefilterfrontend</span></tt>:</p>
+<img src="../../_images/inheritance87aef75d35.png" usemap="#inheritance87aef75d35" class="inheritance"/><map id="inheritance87aef75d35" name="inheritance87aef75d35">
+<area shape="rect" href="IPython.frontend.linefrontendbase.html#IPython.frontend.linefrontendbase.LineFrontEndBase" title="frontend.linefrontendbase.LineFrontEndBase" alt="" coords="247,4,491,26"/>
+<area shape="rect" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd" title="frontend.prefilterfrontend.PrefilterFrontEnd" alt="" coords="530,4,763,26"/>
+<area shape="rect" href="IPython.frontend.frontendbase.html#IPython.frontend.frontendbase.FrontEndBase" title="frontend.frontendbase.FrontEndBase" alt="" coords="4,4,209,26"/>
+</map>
+<p>Frontend class that uses IPython0 to prefilter the inputs.</p>
+<p>Using the IPython0 mechanism gives us access to the magics.</p>
+<p>This is a transitory class, used here to do the transition between
+ipython0 and ipython1. This class is meant to be short-lived as more
+functionnality is abstracted out of ipython0 in reusable functions and
+is added on the interpreter. This class can be a used to guide this
+refactoring.</p>
+</div>
+<div class="section" id="prefilterfrontend">
+<h2><a title="IPython.frontend.prefilterfrontend.PrefilterFrontEnd" class="reference internal" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd"><tt class="xref docutils literal"><span class="pre">PrefilterFrontEnd</span></tt></a><a class="headerlink" href="#prefilterfrontend" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd]-->class <tt class="descclassname">IPython.frontend.prefilterfrontend.</tt><tt class="descname">PrefilterFrontEnd</tt><big>(</big><em>ipython0=None</em>, <em>argv=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.frontend.linefrontendbase.LineFrontEndBase" class="reference external" href="IPython.frontend.linefrontendbase.html#IPython.frontend.linefrontendbase.LineFrontEndBase"><tt class="xref docutils literal"><span class="pre">IPython.frontend.linefrontendbase.LineFrontEndBase</span></tt></a></p>
+<p>Class that uses ipython0 to do prefilter the input, do the
+completion and the magics.</p>
+<p>The core trick is to use an ipython0 instance to prefilter the
+input, and share the namespace between the interpreter instance used
+to execute the statements and the ipython0 used for code
+completion...</p>
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.__init__">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.__init__]--><tt class="descname">__init__</tt><big>(</big><em>ipython0=None</em>, <em>argv=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ipython0: an optional ipython0 instance to use for command</strong> :</p>
+<p><strong>prefiltering and completion.</strong> :</p>
+<p><strong>argv</strong> : list, optional</p>
+<blockquote class="last">
+<p>Used as the instance&#8217;s argv value.  If not given, [] is used.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.capture_output">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.capture_output]--><tt class="descname">capture_output</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.capture_output" title="Permalink to this definition">¶</a></dt>
+<dd>Capture all the output mechanisms we can think of.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.complete">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.complete]--><tt class="descname">complete</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.complete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.do_exit">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.do_exit]--><tt class="descname">do_exit</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.do_exit" title="Permalink to this definition">¶</a></dt>
+<dd>Exit the shell, cleanup and save the history.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.execute">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.execute]--><tt class="descname">execute</tt><big>(</big><em>python_string</em>, <em>raw_string=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.prefilter_input">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.prefilter_input]--><tt class="descname">prefilter_input</tt><big>(</big><em>input_string</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.prefilter_input" title="Permalink to this definition">¶</a></dt>
+<dd>Using IPython0 to prefilter the commands to turn them
+in executable statements that are valid Python strings.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.release_output">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.release_output]--><tt class="descname">release_output</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.release_output" title="Permalink to this definition">¶</a></dt>
+<dd>Release all the different captures we have made.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.save_output_hooks">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.save_output_hooks]--><tt class="descname">save_output_hooks</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.save_output_hooks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store all the output hooks we can think of, to be able to
+restore them.</p>
+<p>We need to do this early, as starting the ipython0 instance will
+screw ouput hooks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.show_traceback">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.show_traceback]--><tt class="descname">show_traceback</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.show_traceback" title="Permalink to this definition">¶</a></dt>
+<dd>Use ipython0 to capture the last traceback and display it.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.prefilterfrontend.PrefilterFrontEnd.system_call">
+<!--[IPython.frontend.prefilterfrontend.PrefilterFrontEnd.system_call]--><tt class="descname">system_call</tt><big>(</big><em>command_string</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.PrefilterFrontEnd.system_call" title="Permalink to this definition">¶</a></dt>
+<dd>Allows for frontend to define their own system call, to be
+able capture output and redirect input.</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.frontend.prefilterfrontend.mk_system_call">
+<!--[IPython.frontend.prefilterfrontend.mk_system_call]--><tt class="descclassname">IPython.frontend.prefilterfrontend.</tt><tt class="descname">mk_system_call</tt><big>(</big><em>system_call_function</em>, <em>command</em><big>)</big><a class="headerlink" href="#IPython.frontend.prefilterfrontend.mk_system_call" title="Permalink to this definition">¶</a></dt>
+<dd>given a os.system replacement, and a leading string command,
+returns a function that will execute the command with the given
+argument string.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">frontend.prefilterfrontend</a><ul>
+<li><a class="reference external" href="#module-IPython.frontend.prefilterfrontend">Module: <tt class="docutils literal"><span class="pre">frontend.prefilterfrontend</span></tt></a></li>
+<li><a class="reference external" href="#prefilterfrontend"><tt class="docutils literal"><span class="pre">PrefilterFrontEnd</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.frontend.linefrontendbase.html" title="previous chapter">frontend.linefrontendbase</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.frontend.process.pipedprocess.html" title="next chapter">frontend.process.pipedprocess</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.frontend.prefilterfrontend.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.process.pipedprocess.html" title="frontend.process.pipedprocess"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.linefrontendbase.html" title="frontend.linefrontendbase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

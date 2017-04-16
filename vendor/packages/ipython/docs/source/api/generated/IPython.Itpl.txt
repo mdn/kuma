@@ -1,0 +1,87 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Itpl
+====
+
+Module: :mod:`Itpl`
+-------------------
+Inheritance diagram for ``IPython.Itpl``:
+
+.. inheritance-diagram:: IPython.Itpl 
+   :parts: 3
+
+.. automodule:: IPython.Itpl
+
+.. currentmodule:: IPython.Itpl
+
+Classes
+-------
+
+:class:`Itpl`
+~~~~~~~~~~~~~
+
+
+.. autoclass:: Itpl
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ItplError`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ItplError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ItplFile`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ItplFile
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ItplNS`
+~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ItplNS
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.Itpl.filter
+
+
+.. autofunction:: IPython.Itpl.itpl
+
+
+.. autofunction:: IPython.Itpl.itplns
+
+
+.. autofunction:: IPython.Itpl.matchorfail
+
+
+.. autofunction:: IPython.Itpl.printpl
+
+
+.. autofunction:: IPython.Itpl.printplns
+
+
+.. autofunction:: IPython.Itpl.unfilter
+

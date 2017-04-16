@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.pickleutil &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.scripts.ipcluster" href="IPython.kernel.scripts.ipcluster.html" />
+    <link rel="prev" title="kernel.pendingdeferred" href="IPython.kernel.pendingdeferred.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcluster.html" title="kernel.scripts.ipcluster"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pendingdeferred.html" title="kernel.pendingdeferred"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-pickleutil">
+<h1>kernel.pickleutil<a class="headerlink" href="#kernel-pickleutil" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.pickleutil">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.pickleutil</span></tt><a class="headerlink" href="#module-IPython.kernel.pickleutil" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.pickleutil</span></tt>:</p>
+<img src="../../_images/inheritanced89a399a0b.png" usemap="#inheritanced89a399a0b" class="inheritance"/><map id="inheritanced89a399a0b" name="inheritanced89a399a0b">
+<area shape="rect" href="#IPython.kernel.pickleutil.CannedObject" title="kernel.pickleutil.CannedObject" alt="" coords="5,5,219,32"/>
+<area shape="rect" href="#IPython.kernel.pickleutil.CannedFunction" title="kernel.pickleutil.CannedFunction" alt="" coords="268,5,492,32"/>
+</map>
+<p>Pickle related utilities.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cannedfunction">
+<h3><a title="IPython.kernel.pickleutil.CannedFunction" class="reference internal" href="#IPython.kernel.pickleutil.CannedFunction"><tt class="xref docutils literal"><span class="pre">CannedFunction</span></tt></a><a class="headerlink" href="#cannedfunction" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.pickleutil.CannedFunction">
+<!--[IPython.kernel.pickleutil.CannedFunction]-->class <tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">CannedFunction</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.CannedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.pickleutil.CannedObject" class="reference internal" href="#IPython.kernel.pickleutil.CannedObject"><tt class="xref docutils literal"><span class="pre">IPython.kernel.pickleutil.CannedObject</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.pickleutil.CannedFunction.__init__">
+<!--[IPython.kernel.pickleutil.CannedFunction.__init__]--><tt class="descname">__init__</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.CannedFunction.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pickleutil.CannedFunction.getFunction">
+<!--[IPython.kernel.pickleutil.CannedFunction.getFunction]--><tt class="descname">getFunction</tt><big>(</big><em>g=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.CannedFunction.getFunction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cannedobject">
+<h3><a title="IPython.kernel.pickleutil.CannedObject" class="reference internal" href="#IPython.kernel.pickleutil.CannedObject"><tt class="xref docutils literal"><span class="pre">CannedObject</span></tt></a><a class="headerlink" href="#cannedobject" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.pickleutil.CannedObject">
+<!--[IPython.kernel.pickleutil.CannedObject]-->class <tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">CannedObject</tt><a class="headerlink" href="#IPython.kernel.pickleutil.CannedObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.pickleutil.CannedObject.__init__">
+<!--[IPython.kernel.pickleutil.CannedObject.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.CannedObject.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.can">
+<!--[IPython.kernel.pickleutil.can]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">can</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.can" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.canDict">
+<!--[IPython.kernel.pickleutil.canDict]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">canDict</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.canDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.canSequence">
+<!--[IPython.kernel.pickleutil.canSequence]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">canSequence</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.canSequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.rebindFunctionGlobals">
+<!--[IPython.kernel.pickleutil.rebindFunctionGlobals]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">rebindFunctionGlobals</tt><big>(</big><em>f</em>, <em>glbls</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.rebindFunctionGlobals" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.uncan">
+<!--[IPython.kernel.pickleutil.uncan]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">uncan</tt><big>(</big><em>obj</em>, <em>g=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.uncan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.uncanDict">
+<!--[IPython.kernel.pickleutil.uncanDict]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">uncanDict</tt><big>(</big><em>obj</em>, <em>g=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.uncanDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pickleutil.uncanSequence">
+<!--[IPython.kernel.pickleutil.uncanSequence]--><tt class="descclassname">IPython.kernel.pickleutil.</tt><tt class="descname">uncanSequence</tt><big>(</big><em>obj</em>, <em>g=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.pickleutil.uncanSequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.pickleutil</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.pickleutil">Module: <tt class="docutils literal"><span class="pre">kernel.pickleutil</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#cannedfunction"><tt class="docutils literal"><span class="pre">CannedFunction</span></tt></a></li>
+<li><a class="reference external" href="#cannedobject"><tt class="docutils literal"><span class="pre">CannedObject</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.pendingdeferred.html" title="previous chapter">kernel.pendingdeferred</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.scripts.ipcluster.html" title="next chapter">kernel.scripts.ipcluster</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.pickleutil.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcluster.html" title="kernel.scripts.ipcluster"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pendingdeferred.html" title="kernel.pendingdeferred"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

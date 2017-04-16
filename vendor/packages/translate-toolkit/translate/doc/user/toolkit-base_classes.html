@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="base_classes" id="base_classes">Base classes</a></h1>
+<div class="level1">
+
+<p>
+NOTE: This page is mostly useful for <a href="toolkit-developers.html" class="wikilink1" title="toolkit-developers.html">developers</a> as it describes some programming detail of the <a href="toolkit-index.html" class="wikilink1" title="toolkit-index.html">toolkit</a>.
+</p>
+
+<p>
+For the implementation of the different storage classes that the toolkit supports, we want to define a set of base classes to form a common <acronym title="Application Programming Interface">API</acronym> for all formats. This will simplify implementation of new storage formats, and enable easy integration into external tools, such as Pootle. It will also mean less duplication of code in similar storage formats.
+</p>
+
+<p>
+These ideas explained here should be seen as drafts only.
+</p>
+
+</div>
+<!-- SECTION "Base classes" [1-561] -->
+<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<div class="level2">
+
+<p>
+The base classes should be rich enough in functionality to enable users of the base classes to have access to all or most of the features that are available in the formats. In particular, the following are considered requirements:
+</p>
+<ul>
+<li class="level1"><div class="li"> Seamless and hidden handling of escaping, quoting and character sets</div>
+</li>
+<li class="level1"><div class="li"> Parsing a file when given a file name or file contents (whole file in a string)</div>
+</li>
+<li class="level1"><div class="li"> Writing a file to disk</div>
+</li>
+<li class="level1"><div class="li"> Support for source and target languages (as required in the <a href="toolkit-lisa.html" class="wikilink2" title="toolkit-lisa.html">LISA</a> standards)</div>
+</li>
+<li class="level1"><div class="li"> Support for “multifiles”, in other words a file that contain other entities that corresponds to files in other formats. Examples: ZIP, <acronym title="Cross Platform Installer">XPI</acronym> and <a href="toolkit-xliff.html" class="wikilink1" title="toolkit-xliff.html">XLIFF</a>.</div>
+</li>
+<li class="level1"><div class="li"> Support for variable number of languages in the format. Examples: .txt and .properties support one language, <acronym title="Gettext Portable Object">PO</acronym> supports two, <a href="toolkit-tmx.html" class="wikilink1" title="toolkit-tmx.html">TMX</a> supports many.</div>
+</li>
+<li class="level1"><div class="li"> Support for plurality that can vary between different languages (as the <acronym title="Gettext Portable Object">PO</acronym> format allows with msgid_plural, etc.)</div>
+</li>
+</ul>
+
+<p>
+
+All these do not mean that all formats must support al these features, but in the formats that do support these features, it must be accessible through the base class, and it must be possible to interrogate the storage format through the base class to know which features it supports.
+</p>
+
+</div>
+<!-- SECTION "Requirements" [562-1801] -->
+<h2><a name="the_classes" id="the_classes">The classes</a></h2>
+<div class="level2">
+
+<p>
+A file contains a number of translation units, and possibly a header. Each translation unit contains one or more strings corresponding to each of the languages represented in that unit.
+</p>
+
+</div>
+<!-- SECTION "The classes" [1802-2012] -->
+<h3><a name="messagestring_multistring" id="messagestring_multistring">Message/string (multistring)</a></h3>
+<div class="level3">
+
+<p>
+This class represents a single conceptual string in a single language. It must know its own requirements for escaping and implement it internally. Escaped versions are only used for internal representation and only exposed for file creation and testing (unit tests, for example).
+</p>
+
+<p>
+Note that when storing different plural forms of the same string, they should be stored in this class. The main object is the singular string, and all of the string forms can be accessed in a list at x.strings. Most of the time the object can be dealt with as a single string, only when it is necessary to deal with plural forms do the extra strings have to be taken into account
+</p>
+
+<p>
+Comments/notes could possibly be supported in this class.
+</p>
+
+</div>
+<!-- SECTION "Message/string (multistring)" [2013-2772] -->
+<h3><a name="translation_unit" id="translation_unit">Translation unit</a></h3>
+<div class="level3">
+
+<p>
+This class represents a unit of one or several related messages/strings. In most formats the contained strings will be translations of some original message/string. It must associate a language value with each message/string. It must know how to join all contained messages/strings to compile a valid representation. For formats that support at least two languages, the first two languages will serve as “source” and “target” languages for the common case of translating from one language into another language.
+</p>
+
+<p>
+As the number of of languages can be seen as one “dimension” of the translation unit, plurality can be seen as a second dimension. A format can thus be classified according to the dimensionality that it supports, as follows:
+</p>
+<ul>
+<li class="level1"><div class="li"> .properties files supports one language and no concept of plurals. This include most document types, such as .txt, <acronym title="HyperText Markup Language">HTML</acronym> and OpenDocument formats.</div>
+</li>
+<li class="level1"><div class="li"> Old style <acronym title="Gettext Portable Object">PO</acronym> files supported two languages and no plurals.</div>
+</li>
+<li class="level1"><div class="li"> New style <acronym title="Gettext Portable Object">PO</acronym> files support two languages and any number of plurals as required by the target language. The plural forms are stored in the original or target strings, as extra forms of the string (See message/string class above).</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Translation Memory eXchange">TMX</acronym> files support any number of languages, but has no concept of plurality.</div>
+</li>
+</ul>
+
+<p>
+
+Comments/notes are supported in this class. Quality or status information (fuzzy, last-changed-by) should be stored. TODO: see if this should be on unit level or language level.
+</p>
+
+</div>
+<!-- SECTION "Translation unit" [2773-4243] -->
+<h3><a name="file" id="file">File</a></h3>
+<div class="level3">
+
+<p>
+This class represents a whole collection of translation units, usually stored in a single file. It supports the concept of a header, and possibly comments at file level. A file will not necessarily be contained alone in single file on disc. See “multifile” below.
+</p>
+
+</div>
+<!-- SECTION "File" [4244-4523] -->
+<h3><a name="multifile" id="multifile">Multifile</a></h3>
+<div class="level3">
+
+<p>
+This class represents a storage format that contains other files or file like objects. Examples include ZIP, <acronym title="Cross Platform Installer">XPI</acronym> and <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, and OpenOffice SDF files. It must give access to the contained files, and possibly give access to the translation units contained in those files, as if they are contained natively.
+</p>
+
+</div>
+<!-- SECTION "Multifile" [4524-4849] -->
+<h1><a name="additional_notes" id="additional_notes">Additional Notes</a></h1>
+<div class="level1">
+
+<p>
+
+Dwayne and I (Andreas) discussed cleaning up the storage base class.
+A lot of what we discussed is related to the above.
+A quick summary:
+</p>
+<ul>
+<li class="level1"><div class="li"> Implement a new base class.</div>
+<ul>
+<li class="level2"><div class="li"> Flesh out the <acronym title="Application Programming Interface">API</acronym>, clean and clear definitions.</div>
+</li>
+<li class="level2"><div class="li"> Document the <acronym title="Application Programming Interface">API</acronym>.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> We need to discuss the class hierarchy, eg:</div>
+</li>
+</ul>
+<pre class="code">
+base
+     -- po
+     -- text
+     -- xml
+            -- xhtml
+            -- lisa
+                    -- xliff
+                    -- tmx
+                    -- tbx
+</pre>
+<ul>
+<li class="level1"><div class="li"> Clean up converters.</div>
+<ul>
+<li class="level2"><div class="li"> Parsing of file content needs to happen only in the storage implementation of each filetype/storage type. Currently parsing happens all over the place.</div>
+</li>
+<li class="level2"><div class="li"> Currently there are separate conversion programs for each type and direction to convert to, eg. po2xliff and xliff2po (24 commands with lots of duplicate code in them). Ideally conversion should be as simple as:</div>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="code">
+&gt;&gt;&gt; po_store = POStore(filecontent)
+&gt;&gt;&gt; print str(po_store)
+msgid &quot;bleep&quot;
+msgstr &quot;blorp&quot;
+
+&gt;&gt;&gt; xliff_store = XliffStore(po_store)
+&gt;&gt;&gt; print str(xliff_store)
+&lt;xliff&gt;
+  &lt;file&gt;
+    &lt;trans-unit&gt;
+      &lt;source&gt;bleep&lt;/source&gt;
+      &lt;target&gt;blorp&lt;/target&gt;
+    &lt;/trans-unit&gt;
+  &lt;/file&gt;
+&lt;/xliff&gt;
+</pre>
+
+<p>
+Note that the xliffstore is being instantiated using the postore object.
+This works because all the data in any translation store object is accessible via the same well-defined base <acronym title="Application Programming Interface">API</acronym>.
+A concept class implementing the above code snippet has already been written.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Move certain options into their respective storage classes.</div>
+<ul>
+<li class="level2"><div class="li"> eg the --duplicates option can move into po.py</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Store the meta data for a storage object.</div>
+<ul>
+<li class="level2"><div class="li"> Can be implemented as separate sqlite file that accompanies the real file.</div>
+</li>
+<li class="level2"><div class="li"> Features not directly supported by a file format can be stored in the metadata file.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> A storage object should know all information pertaining to itself.</div>
+<ul>
+<li class="level2"><div class="li"> eg. “am I monolingual?”</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> We should discuss how to make an object aware that it is monolingual, bilingual or multilingual.</div>
+<ul>
+<li class="level2"><div class="li"> Maybe through mixin-classes?</div>
+</li>
+<li class="level2"><div class="li"> How will the behaviour of a monolingual store differ from a bilingual store?</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Additional Notes" [4850-] --></body>
+</html>

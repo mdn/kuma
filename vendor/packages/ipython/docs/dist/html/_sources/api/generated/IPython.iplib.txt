@@ -1,0 +1,108 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+iplib
+=====
+
+Module: :mod:`iplib`
+--------------------
+Inheritance diagram for ``IPython.iplib``:
+
+.. inheritance-diagram:: IPython.iplib 
+   :parts: 3
+
+.. automodule:: IPython.iplib
+
+.. currentmodule:: IPython.iplib
+
+Classes
+-------
+
+:class:`Bunch`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Bunch
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InputList`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InputList
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InteractiveShell`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InteractiveShell
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Quitter`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Quitter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SpaceInInput`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SpaceInInput
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SyntaxTB`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SyntaxTB
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Undefined`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Undefined
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.iplib.num_ini_spaces
+
+
+.. autofunction:: IPython.iplib.softspace
+
+
+.. autofunction:: IPython.iplib.user_setup
+

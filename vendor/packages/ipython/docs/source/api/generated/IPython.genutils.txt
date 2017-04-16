@@ -1,0 +1,357 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+genutils
+========
+
+Module: :mod:`genutils`
+-----------------------
+Inheritance diagram for ``IPython.genutils``:
+
+.. inheritance-diagram:: IPython.genutils 
+   :parts: 3
+
+.. automodule:: IPython.genutils
+
+.. currentmodule:: IPython.genutils
+
+Classes
+-------
+
+:class:`Error`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Error
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`EvalDict`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EvalDict
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`HomeDirError`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: HomeDirError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IOStream`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IOStream
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IOTerm`
+~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IOTerm
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`LSString`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: LSString
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NLprinter`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NLprinter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`NotGiven`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: NotGiven
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SList`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: SList
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SystemExec`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SystemExec
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.genutils.abbrev_cwd
+
+
+.. autofunction:: IPython.genutils.all_belong
+
+
+.. autofunction:: IPython.genutils.arg_split
+
+
+.. autofunction:: IPython.genutils.ask_yes_no
+
+
+.. autofunction:: IPython.genutils.belong
+
+
+.. autofunction:: IPython.genutils.chop
+
+
+.. autofunction:: IPython.genutils.debugx
+
+
+.. autofunction:: IPython.genutils.dgrep
+
+
+.. autofunction:: IPython.genutils.dhook_wrap
+
+
+.. autofunction:: IPython.genutils.dir2
+
+
+.. autofunction:: IPython.genutils.doctest_reload
+
+
+.. autofunction:: IPython.genutils.error
+
+
+.. autofunction:: IPython.genutils.esc_quotes
+
+
+.. autofunction:: IPython.genutils.fatal
+
+
+.. autofunction:: IPython.genutils.file_read
+
+
+.. autofunction:: IPython.genutils.file_readlines
+
+
+.. autofunction:: IPython.genutils.filefind
+
+
+.. autofunction:: IPython.genutils.flag_calls
+
+
+.. autofunction:: IPython.genutils.flatten
+
+
+.. autofunction:: IPython.genutils.get_class_members
+
+
+.. autofunction:: IPython.genutils.get_home_dir
+
+
+.. autofunction:: IPython.genutils.get_ipython_dir
+
+
+.. autofunction:: IPython.genutils.get_log_dir
+
+
+.. autofunction:: IPython.genutils.get_pager_cmd
+
+
+.. autofunction:: IPython.genutils.get_pager_start
+
+
+.. autofunction:: IPython.genutils.get_py_filename
+
+
+.. autofunction:: IPython.genutils.get_security_dir
+
+
+.. autofunction:: IPython.genutils.get_slice
+
+
+.. autofunction:: IPython.genutils.getattr_list
+
+
+.. autofunction:: IPython.genutils.getoutput
+
+
+.. autofunction:: IPython.genutils.getoutputerror
+
+
+.. autofunction:: IPython.genutils.grep
+
+
+.. autofunction:: IPython.genutils.idgrep
+
+
+.. autofunction:: IPython.genutils.igrep
+
+
+.. autofunction:: IPython.genutils.import_fail_info
+
+
+.. autofunction:: IPython.genutils.indent
+
+
+.. autofunction:: IPython.genutils.info
+
+
+.. autofunction:: IPython.genutils.list2dict
+
+
+.. autofunction:: IPython.genutils.list2dict2
+
+
+.. autofunction:: IPython.genutils.list_strings
+
+
+.. autofunction:: IPython.genutils.make_quoted_expr
+
+
+.. autofunction:: IPython.genutils.map_method
+
+
+.. autofunction:: IPython.genutils.marquee
+
+
+.. autofunction:: IPython.genutils.mutex_opts
+
+
+.. autofunction:: IPython.genutils.native_line_ends
+
+
+.. autofunction:: IPython.genutils.num_cpus
+
+
+.. autofunction:: IPython.genutils.optstr2types
+
+
+.. autofunction:: IPython.genutils.page
+
+
+.. autofunction:: IPython.genutils.page_dumb
+
+
+.. autofunction:: IPython.genutils.page_file
+
+
+.. autofunction:: IPython.genutils.popkey
+
+
+.. autofunction:: IPython.genutils.print_lsstring
+
+
+.. autofunction:: IPython.genutils.print_slist
+
+
+.. autofunction:: IPython.genutils.process_cmdline
+
+
+.. autofunction:: IPython.genutils.qw
+
+
+.. autofunction:: IPython.genutils.qw_lol
+
+
+.. autofunction:: IPython.genutils.qwflat
+
+
+.. autofunction:: IPython.genutils.raw_input_ext
+
+
+.. autofunction:: IPython.genutils.raw_input_multi
+
+
+.. autofunction:: IPython.genutils.read_dict
+
+
+.. autofunction:: IPython.genutils.setattr_list
+
+
+.. autofunction:: IPython.genutils.shell
+
+
+.. autofunction:: IPython.genutils.snip_print
+
+
+.. autofunction:: IPython.genutils.sort_compare
+
+
+.. autofunction:: IPython.genutils.system
+
+
+.. autofunction:: IPython.genutils.target_outdated
+
+
+.. autofunction:: IPython.genutils.target_update
+
+
+.. autofunction:: IPython.genutils.timing
+
+
+.. autofunction:: IPython.genutils.timings
+
+
+.. autofunction:: IPython.genutils.timings_out
+
+
+.. autofunction:: IPython.genutils.uniq_stable
+
+
+.. autofunction:: IPython.genutils.unquote_ends
+
+
+.. autofunction:: IPython.genutils.warn
+
+
+.. autofunction:: IPython.genutils.with_obj
+
+
+.. autofunction:: IPython.genutils.wrap_deprecated
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gui.wx.ipython_history &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="gui.wx.ipython_view" href="IPython.gui.wx.ipython_view.html" />
+    <link rel="prev" title="gui.wx.ipshell_nonblocking" href="IPython.gui.wx.ipshell_nonblocking.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipython_view.html" title="gui.wx.ipython_view"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipshell_nonblocking.html" title="gui.wx.ipshell_nonblocking"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="gui-wx-ipython-history">
+<h1>gui.wx.ipython_history<a class="headerlink" href="#gui-wx-ipython-history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.gui.wx.ipython_history">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">gui.wx.ipython_history</span></tt><a class="headerlink" href="#module-IPython.gui.wx.ipython_history" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.gui.wx.ipython_history</span></tt>:</p>
+<img src="../../_images/inheritance0e9fd84c8f.png" usemap="#inheritance0e9fd84c8f" class="inheritance"/><map id="inheritance0e9fd84c8f" name="inheritance0e9fd84c8f">
+<area shape="rect" href="#IPython.gui.wx.ipython_history.PythonSTC" title="wx.ipython_history.PythonSTC" alt="" coords="639,3,765,19"/>
+<area shape="rect" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel" title="wx.ipython_history.IPythonHistoryPanel" alt="" coords="448,34,610,50"/>
+</map>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ipythonhistorypanel">
+<h3><a title="IPython.gui.wx.ipython_history.IPythonHistoryPanel" class="reference internal" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel"><tt class="xref docutils literal"><span class="pre">IPythonHistoryPanel</span></tt></a><a class="headerlink" href="#ipythonhistorypanel" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel]-->class <tt class="descclassname">IPython.gui.wx.ipython_history.</tt><tt class="descname">IPythonHistoryPanel</tt><big>(</big><em>parent</em>, <em>flt_empty=True</em>, <em>flt_doc=True</em>, <em>flt_cmd=True</em>, <em>flt_magic=True</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">wx._windows.Panel</span></tt></p>
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.__init__">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.__init__]--><tt class="descname">__init__</tt><big>(</big><em>parent</em>, <em>flt_empty=True</em>, <em>flt_doc=True</em>, <em>flt_cmd=True</em>, <em>flt_magic=True</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckCmdFilter">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckCmdFilter]--><tt class="descname">evtCheckCmdFilter</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckCmdFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckDocFilter">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckDocFilter]--><tt class="descname">evtCheckDocFilter</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckDocFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckEmptyFilter">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckEmptyFilter]--><tt class="descname">evtCheckEmptyFilter</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckEmptyFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckMagicFilter">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckMagicFilter]--><tt class="descname">evtCheckMagicFilter</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.evtCheckMagicFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.getOptions">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.getOptions]--><tt class="descname">getOptions</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.getOptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.processOptionCheckedEvt">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.processOptionCheckedEvt]--><tt class="descname">processOptionCheckedEvt</tt><big>(</big><em>event</em>, <em>name</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.processOptionCheckedEvt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.reloadOptions">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.reloadOptions]--><tt class="descname">reloadOptions</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.reloadOptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.setOptionTrackerHook">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.setOptionTrackerHook]--><tt class="descname">setOptionTrackerHook</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.setOptionTrackerHook" title="Permalink to this definition">¶</a></dt>
+<dd>Define a new history tracker</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.updateOptionTracker">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.updateOptionTracker]--><tt class="descname">updateOptionTracker</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.updateOptionTracker" title="Permalink to this definition">¶</a></dt>
+<dd>Default history tracker (does nothing)</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.IPythonHistoryPanel.write">
+<!--[IPython.gui.wx.ipython_history.IPythonHistoryPanel.write]--><tt class="descname">write</tt><big>(</big><em>history_line</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.IPythonHistoryPanel.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pythonstc">
+<h3><a title="IPython.gui.wx.ipython_history.PythonSTC" class="reference internal" href="#IPython.gui.wx.ipython_history.PythonSTC"><tt class="xref docutils literal"><span class="pre">PythonSTC</span></tt></a><a class="headerlink" href="#pythonstc" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC">
+<!--[IPython.gui.wx.ipython_history.PythonSTC]-->class <tt class="descclassname">IPython.gui.wx.ipython_history.</tt><tt class="descname">PythonSTC</tt><big>(</big><em>parent</em>, <em>ID</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=wx.Size(-1</em>, <em>-1)</em>, <em>style=0</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">wx.stc.StyledTextCtrl</span></tt></p>
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC.__init__">
+<!--[IPython.gui.wx.ipython_history.PythonSTC.__init__]--><tt class="descname">__init__</tt><big>(</big><em>parent</em>, <em>ID</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=wx.Size(-1</em>, <em>-1)</em>, <em>style=0</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC.Expand">
+<!--[IPython.gui.wx.ipython_history.PythonSTC.Expand]--><tt class="descname">Expand</tt><big>(</big><em>line</em>, <em>doExpand</em>, <em>force=False</em>, <em>visLevels=0</em>, <em>level=-1</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC.Expand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC.FoldAll">
+<!--[IPython.gui.wx.ipython_history.PythonSTC.FoldAll]--><tt class="descname">FoldAll</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC.FoldAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC.OnKeyPressed">
+<!--[IPython.gui.wx.ipython_history.PythonSTC.OnKeyPressed]--><tt class="descname">OnKeyPressed</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC.OnKeyPressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC.OnMarginClick">
+<!--[IPython.gui.wx.ipython_history.PythonSTC.OnMarginClick]--><tt class="descname">OnMarginClick</tt><big>(</big><em>evt</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC.OnMarginClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipython_history.PythonSTC.OnUpdateUI">
+<!--[IPython.gui.wx.ipython_history.PythonSTC.OnUpdateUI]--><tt class="descname">OnUpdateUI</tt><big>(</big><em>evt</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipython_history.PythonSTC.OnUpdateUI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">gui.wx.ipython_history</a><ul>
+<li><a class="reference external" href="#module-IPython.gui.wx.ipython_history">Module: <tt class="docutils literal"><span class="pre">gui.wx.ipython_history</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#ipythonhistorypanel"><tt class="docutils literal"><span class="pre">IPythonHistoryPanel</span></tt></a></li>
+<li><a class="reference external" href="#pythonstc"><tt class="docutils literal"><span class="pre">PythonSTC</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.gui.wx.ipshell_nonblocking.html" title="previous chapter">gui.wx.ipshell_nonblocking</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.gui.wx.ipython_view.html" title="next chapter">gui.wx.ipython_view</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.gui.wx.ipython_history.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipython_view.html" title="gui.wx.ipython_view"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipshell_nonblocking.html" title="gui.wx.ipshell_nonblocking"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>completer &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="config.api" href="IPython.config.api.html" />
+    <link rel="prev" title="clipboard" href="IPython.clipboard.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.config.api.html" title="config.api"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.clipboard.html" title="clipboard"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="completer">
+<h1>completer<a class="headerlink" href="#completer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.completer">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">completer</span></tt><a class="headerlink" href="#module-IPython.completer" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.completer</span></tt>:</p>
+<img src="../../_images/inheritance36887168eb.png" usemap="#inheritance36887168eb" class="inheritance"/><map id="inheritance36887168eb" name="inheritance36887168eb">
+<area shape="rect" href="#IPython.completer.Completer" title="IPython.completer.Completer" alt="" coords="5,5,213,32"/>
+<area shape="rect" href="#IPython.completer.IPCompleter" title="IPython.completer.IPCompleter" alt="" coords="261,5,480,32"/>
+</map>
+<p>Word completion for IPython.</p>
+<p>This module is a fork of the rlcompleter module in the Python standard
+library.  The original enhancements made to rlcompleter have been sent
+upstream and were accepted as of Python 2.3, but we need a lot more
+functionality specific to IPython, so this module will continue to live as an
+IPython-specific utility.</p>
+<p>Original rlcompleter documentation:</p>
+<p>This requires the latest extension to the readline module (the
+completes keywords, built-ins and globals in __main__; when completing
+NAME.NAME..., it evaluates (!) the expression up to the last dot and
+completes its attributes.</p>
+<p>It&#8217;s very cool to do &#8220;import string&#8221; type &#8220;string.&#8221;, hit the
+completion key (twice), and see the list of names defined by the
+string module!</p>
+<p>Tip: to use the tab key as the completion key, call</p>
+<blockquote>
+readline.parse_and_bind(&#8220;tab: complete&#8221;)</blockquote>
+<p>Notes:</p>
+<ul class="simple">
+<li>Exceptions raised by the completer function are <em>ignored</em> (and</li>
+</ul>
+<p>generally cause the completion to fail).  This is a feature &#8211; since
+readline sets the tty device in raw (or cbreak) mode, printing a
+traceback wouldn&#8217;t work well without some complicated hoopla to save,
+reset and restore the tty state.</p>
+<ul class="simple">
+<li>The evaluation of the NAME.NAME... form may cause arbitrary</li>
+</ul>
+<p>application defined code to be executed if an object with a
+__getattr__ hook is found.  Since it is the responsibility of the
+application (or the user) to enable this feature, I consider this an
+acceptable risk.  More complicated expressions (e.g. function calls or
+indexing operations) are <em>not</em> evaluated.</p>
+<ul class="simple">
+<li>GNU readline is also used by the built-in functions input() and</li>
+</ul>
+<p>raw_input(), and thus these also benefit/suffer from the completer
+features.  Clearly an interactive application can benefit by
+specifying its own completer function and using raw_input() for all
+its input.</p>
+<ul class="simple">
+<li>When the original stdin is not a tty device, GNU readline is never</li>
+</ul>
+<p>used, and this module (and the readline module) are silently inactive.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3><a title="IPython.completer.Completer" class="reference internal" href="#IPython.completer.Completer"><tt class="xref docutils literal"><span class="pre">Completer</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.completer.Completer">
+<!--[IPython.completer.Completer]-->class <tt class="descclassname">IPython.completer.</tt><tt class="descname">Completer</tt><big>(</big><em>namespace=None</em>, <em>global_namespace=None</em><big>)</big><a class="headerlink" href="#IPython.completer.Completer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="IPython.completer.Completer.__init__">
+<!--[IPython.completer.Completer.__init__]--><tt class="descname">__init__</tt><big>(</big><em>namespace=None</em>, <em>global_namespace=None</em><big>)</big><a class="headerlink" href="#IPython.completer.Completer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new completer for the command line.</p>
+<p>Completer([namespace,global_namespace]) -&gt; completer instance.</p>
+<p>If unspecified, the default namespace where completions are performed
+is __main__ (technically, __main__.__dict__). Namespaces should be
+given as dictionaries.</p>
+<p>An optional second namespace can be given.  This allows the completer
+to handle cases where both the local and global scopes need to be
+distinguished.</p>
+<p>Completer instances should be used as the completion mechanism of
+readline via the set_completer() call:</p>
+<p>readline.set_completer(Completer(my_namespace).complete)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.Completer.attr_matches">
+<!--[IPython.completer.Completer.attr_matches]--><tt class="descname">attr_matches</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.Completer.attr_matches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute matches when text contains a dot.</p>
+<p>Assuming the text is of the form NAME.NAME....[NAME], and is
+evaluatable in self.namespace or self.global_namespace, it will be
+evaluated and its attributes (as revealed by dir()) are used as
+possible completions.  (For class instances, class members are are
+also considered.)</p>
+<p>WARNING: this can still invoke arbitrary C code, if an object
+with a __getattr__ hook is evaluated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.Completer.complete">
+<!--[IPython.completer.Completer.complete]--><tt class="descname">complete</tt><big>(</big><em>text</em>, <em>state</em><big>)</big><a class="headerlink" href="#IPython.completer.Completer.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the next possible completion for &#8216;text&#8217;.</p>
+<p>This is called successively with state == 0, 1, 2, ... until it
+returns None.  The completion should begin with &#8216;text&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.Completer.global_matches">
+<!--[IPython.completer.Completer.global_matches]--><tt class="descname">global_matches</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.Completer.global_matches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute matches when text is a simple name.</p>
+<p>Return a list of all keywords, built-in functions and names currently
+defined in self.namespace or self.global_namespace that match.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipcompleter">
+<h3><a title="IPython.completer.IPCompleter" class="reference internal" href="#IPython.completer.IPCompleter"><tt class="xref docutils literal"><span class="pre">IPCompleter</span></tt></a><a class="headerlink" href="#ipcompleter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.completer.IPCompleter">
+<!--[IPython.completer.IPCompleter]-->class <tt class="descclassname">IPython.completer.</tt><tt class="descname">IPCompleter</tt><big>(</big><em>shell</em>, <em>namespace=None</em>, <em>global_namespace=None</em>, <em>omit__names=0</em>, <em>alias_table=None</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.completer.Completer" class="reference internal" href="#IPython.completer.Completer"><tt class="xref docutils literal"><span class="pre">IPython.completer.Completer</span></tt></a></p>
+<p>Extension of the completer class with IPython-specific features</p>
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.__init__">
+<!--[IPython.completer.IPCompleter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shell</em>, <em>namespace=None</em>, <em>global_namespace=None</em>, <em>omit__names=0</em>, <em>alias_table=None</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>IPCompleter() -&gt; completer</p>
+<p>Return a completer object suitable for use by the readline library
+via readline.set_completer().</p>
+<p>Inputs:</p>
+<ul class="simple">
+<li>shell: a pointer to the ipython shell itself.  This is needed</li>
+</ul>
+<p>because this completer knows about magic functions, and those can
+only be accessed via the ipython instance.</p>
+<ul class="simple">
+<li>namespace: an optional dict where completions are performed.</li>
+<li>global_namespace: secondary optional dict for completions, to</li>
+</ul>
+<p>handle cases (such as IPython embedded inside functions) where
+both Python scopes are visible.</p>
+<ul class="simple">
+<li>The optional omit__names parameter sets the completer to omit the</li>
+</ul>
+<p>&#8216;magic&#8217; names (__magicname__) for python objects unless the text
+to be completed explicitly starts with one or more underscores.</p>
+<ul class="simple">
+<li>If alias_table is supplied, it should be a dictionary of aliases</li>
+</ul>
+<p>to complete.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.alias_matches">
+<!--[IPython.completer.IPCompleter.alias_matches]--><tt class="descname">alias_matches</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.alias_matches" title="Permalink to this definition">¶</a></dt>
+<dd>Match internal system aliases</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.all_completions">
+<!--[IPython.completer.IPCompleter.all_completions]--><tt class="descname">all_completions</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.all_completions" title="Permalink to this definition">¶</a></dt>
+<dd>Return all possible completions for the benefit of emacs.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.complete">
+<!--[IPython.completer.IPCompleter.complete]--><tt class="descname">complete</tt><big>(</big><em>text</em>, <em>state</em>, <em>line_buffer=None</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the next possible completion for &#8216;text&#8217;.</p>
+<p>This is called successively with state == 0, 1, 2, ... until it
+returns None.  The completion should begin with &#8216;text&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Keywords:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>line_buffer: string</li>
+</ul>
+<p>If not given, the completer attempts to obtain the current line buffer
+via readline.  This keyword allows clients which are requesting for
+text completions in non-readline contexts to inform the completer of
+the entire text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.dispatch_custom_completer">
+<!--[IPython.completer.IPCompleter.dispatch_custom_completer]--><tt class="descname">dispatch_custom_completer</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.dispatch_custom_completer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.file_matches">
+<!--[IPython.completer.IPCompleter.file_matches]--><tt class="descname">file_matches</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.file_matches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Match filenames, expanding ~USER type strings.</p>
+<p>Most of the seemingly convoluted logic in this completer is an
+attempt to handle filenames with spaces in them.  And yet it&#8217;s not
+quite perfect, because Python&#8217;s readline doesn&#8217;t expose all of the
+GNU readline details needed for this to be done correctly.</p>
+<p>For a filename with a space in it, the printed completions will be
+only the parts after what&#8217;s already been typed (instead of the
+full completions, as is normally done).  I don&#8217;t think with the
+current (as of Python 2.3) Python readline it&#8217;s possible to do
+better.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.python_func_kw_matches">
+<!--[IPython.completer.IPCompleter.python_func_kw_matches]--><tt class="descname">python_func_kw_matches</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.python_func_kw_matches" title="Permalink to this definition">¶</a></dt>
+<dd>Match named parameters (kwargs) of the last open function</dd></dl>
+
+<dl class="method">
+<dt id="IPython.completer.IPCompleter.python_matches">
+<!--[IPython.completer.IPCompleter.python_matches]--><tt class="descname">python_matches</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.completer.IPCompleter.python_matches" title="Permalink to this definition">¶</a></dt>
+<dd>Match attributes or global python names</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">completer</a><ul>
+<li><a class="reference external" href="#module-IPython.completer">Module: <tt class="docutils literal"><span class="pre">completer</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">Completer</span></tt></a></li>
+<li><a class="reference external" href="#ipcompleter"><tt class="docutils literal"><span class="pre">IPCompleter</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.clipboard.html" title="previous chapter">clipboard</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.config.api.html" title="next chapter">config.api</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.completer.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.config.api.html" title="config.api"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.clipboard.html" title="clipboard"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

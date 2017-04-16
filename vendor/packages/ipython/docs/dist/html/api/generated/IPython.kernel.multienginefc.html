@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.multienginefc &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.newserialized" href="IPython.kernel.newserialized.html" />
+    <link rel="prev" title="kernel.multiengineclient" href="IPython.kernel.multiengineclient.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.newserialized.html" title="kernel.newserialized"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengineclient.html" title="kernel.multiengineclient"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-multienginefc">
+<h1>kernel.multienginefc<a class="headerlink" href="#kernel-multienginefc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.multienginefc">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.multienginefc</span></tt><a class="headerlink" href="#module-IPython.kernel.multienginefc" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.multienginefc</span></tt>:</p>
+<img src="../../_images/inheritanced8ce90c5dc.png" usemap="#inheritanced8ce90c5dc" class="inheritance"/><map id="inheritanced8ce90c5dc" name="inheritanced8ce90c5dc">
+<area shape="rect" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine" title="kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine" alt="" coords="500,65,765,82"/>
+<area shape="rect" href="#IPython.kernel.multienginefc.IFCSynchronousMultiEngine" title="kernel.multienginefc.IFCSynchronousMultiEngine" alt="" coords="269,34,470,51"/>
+<area shape="rect" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient" title="kernel.multienginefc.FCFullSynchronousMultiEngineClient" alt="" coords="4,3,238,20"/>
+</map>
+<p>Expose the multiengine controller over the Foolscap network protocol.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fcfullsynchronousmultiengineclient">
+<h3><a title="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient" class="reference internal" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient"><tt class="xref docutils literal"><span class="pre">FCFullSynchronousMultiEngineClient</span></tt></a><a class="headerlink" href="#fcfullsynchronousmultiengineclient" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient]-->class <tt class="descclassname">IPython.kernel.multienginefc.</tt><tt class="descname">FCFullSynchronousMultiEngineClient</tt><big>(</big><em>remote_reference</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.__init__">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.__init__]--><tt class="descname">__init__</tt><big>(</big><em>remote_reference</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.adapt_to_blocking_client">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.adapt_to_blocking_client]--><tt class="descname">adapt_to_blocking_client</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.adapt_to_blocking_client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_pending_deferreds">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_pending_deferreds]--><tt class="descname">clear_pending_deferreds</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_pending_deferreds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_properties">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_queue">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_queue]--><tt class="descname">clear_queue</tt><big>(</big><em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.del_properties">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>keys</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.execute">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.execute]--><tt class="descname">execute</tt><big>(</big><em>lines</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.gather">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.gather]--><tt class="descname">gather</tt><big>(</big><em>key</em>, <em>dist='b'</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.gather" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_ids">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_ids]--><tt class="descname">get_ids</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_pending_deferred">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_pending_deferred]--><tt class="descname">get_pending_deferred</tt><big>(</big><em>deferredID</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_pending_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_properties">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>keys=None</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_result">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_result]--><tt class="descname">get_result</tt><big>(</big><em>i=None</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.has_properties">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>keys</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.keys">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.keys]--><tt class="descname">keys</tt><big>(</big><em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.kill">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.kill]--><tt class="descname">kill</tt><big>(</big><em>controller=False</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.map">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.map]--><tt class="descname">map</tt><big>(</big><em>func</em>, <em>*sequences</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parallel version of Python&#8217;s builtin <cite>map</cite> function.</p>
+<p>This method applies a function to sequences of arguments.  It 
+follows the same syntax as the builtin <cite>map</cite>.</p>
+<p>This method creates a mapper objects by calling <cite>self.mapper</cite> with
+no arguments and then uses that mapper to do the mapping.  See
+the documentation of <cite>mapper</cite> for more details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.mapper">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.mapper]--><tt class="descname">mapper</tt><big>(</big><em>dist='b'</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a mapper object that has a <cite>map</cite> method.</p>
+<p>This method returns an object that implements the <cite>IMapper</cite> 
+interface.  This method is a factory that is used to control how 
+the map happens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>dist <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">What decomposition to use, &#8216;b&#8217; is the only one supported
+currently</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">str, int, sequence of ints</span></dt>
+<dd><p class="first last">Which engines to use for the map</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should calls to <cite>map</cite> block or not</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.parallel">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.parallel]--><tt class="descname">parallel</tt><big>(</big><em>dist='b'</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator that turns a function into a parallel function.</p>
+<p>This can be used as:</p>
+<p>&#64;parallel()
+def f(x, y)</p>
+<blockquote>
+...</blockquote>
+<p>f(range(10), range(10))</p>
+<p>This causes f(0,0), f(1,1), ... to be called in parallel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>dist <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">What decomposition to use, &#8216;b&#8217; is the only one supported
+currently</p>
+</dd>
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">str, int, sequence of ints</span></dt>
+<dd><p class="first last">Which engines to use for the map</p>
+</dd>
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should calls to <cite>map</cite> block or not</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull]--><tt class="descname">pull</tt><big>(</big><em>keys</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull_function">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>keys</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull_serialized">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>keys</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push]--><tt class="descname">push</tt><big>(</big><em>namespace</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push_function">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push_function]--><tt class="descname">push_function</tt><big>(</big><em>namespace</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push_serialized">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>namespace</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.queue_status">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.queue_status]--><tt class="descname">queue_status</tt><big>(</big><em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.raw_map">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.raw_map]--><tt class="descname">raw_map</tt><big>(</big><em>func</em>, <em>sequences</em>, <em>dist='b'</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.raw_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parallelized version of Python&#8217;s builtin map.</p>
+<p>This has a slightly different syntax than the builtin <cite>map</cite>.
+This is needed because we need to have keyword arguments and thus
+can&#8217;t use <a href="#id1"><span class="problematic" id="id2">*</span></a>args to capture all the sequences.  Instead, they must
+be passed in a list or tuple.</p>
+<p>raw_map(func, seqs) -&gt; map(func, seqs[0], seqs[1], ...)</p>
+<p>Most users will want to use parallel functions or the <cite>mapper</cite>
+and <cite>map</cite> methods for an API that follows that of the builtin
+<cite>map</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.reset">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.reset]--><tt class="descname">reset</tt><big>(</big><em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.run">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.run]--><tt class="descname">run</tt><big>(</big><em>fname</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.scatter">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.scatter]--><tt class="descname">scatter</tt><big>(</big><em>key</em>, <em>seq</em>, <em>dist='b'</em>, <em>flatten=False</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.scatter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.set_properties">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>properties</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.unpackage">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.unpackage]--><tt class="descname">unpackage</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.unpackage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.zip_pull">
+<!--[IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.zip_pull]--><tt class="descname">zip_pull</tt><big>(</big><em>keys</em>, <em>targets='all'</em>, <em>block=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCFullSynchronousMultiEngineClient.zip_pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fcsynchronousmultienginefrommultiengine">
+<h3><a title="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine" class="reference internal" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine"><tt class="xref docutils literal"><span class="pre">FCSynchronousMultiEngineFromMultiEngine</span></tt></a><a class="headerlink" href="#fcsynchronousmultienginefrommultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine]-->class <tt class="descclassname">IPython.kernel.multienginefc.</tt><tt class="descname">FCSynchronousMultiEngineFromMultiEngine</tt><big>(</big><em>multiengine</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">foolscap.referenceable.Referenceable</span></tt></p>
+<p>Adapt <cite>IMultiEngine</cite> -&gt; <cite>ISynchronousMultiEngine</cite> -&gt; <cite>IFCSynchronousMultiEngine</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.__init__">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.__init__]--><tt class="descname">__init__</tt><big>(</big><em>multiengine</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.packageFailure">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.packageFailure]--><tt class="descname">packageFailure</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.packageFailure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.packageSuccess">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.packageSuccess]--><tt class="descname">packageSuccess</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.packageSuccess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_pending_deferreds">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_pending_deferreds]--><tt class="descname">remote_clear_pending_deferreds</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_pending_deferreds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_properties">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_properties]--><tt class="descname">remote_clear_properties</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_queue">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_queue]--><tt class="descname">remote_clear_queue</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_del_properties">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_del_properties]--><tt class="descname">remote_del_properties</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_execute">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_execute]--><tt class="descname">remote_execute</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_client_name">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_client_name]--><tt class="descname">remote_get_client_name</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_client_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_ids">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_ids]--><tt class="descname">remote_get_ids</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ids of the registered engines.</p>
+<p>This method always blocks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_pending_deferred">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_pending_deferred]--><tt class="descname">remote_get_pending_deferred</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_pending_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_properties">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_properties]--><tt class="descname">remote_get_properties</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_result">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_result]--><tt class="descname">remote_get_result</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_has_properties">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_has_properties]--><tt class="descname">remote_has_properties</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_keys">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_keys]--><tt class="descname">remote_keys</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_kill">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_kill]--><tt class="descname">remote_kill</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull]--><tt class="descname">remote_pull</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull_function">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull_function]--><tt class="descname">remote_pull_function</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull_serialized">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull_serialized]--><tt class="descname">remote_pull_serialized</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push]--><tt class="descname">remote_push</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push_function">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push_function]--><tt class="descname">remote_push_function</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push_serialized">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push_serialized]--><tt class="descname">remote_push_serialized</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_queue_status">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_queue_status]--><tt class="descname">remote_queue_status</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_reset">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_reset]--><tt class="descname">remote_reset</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_set_properties">
+<!--[IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_set_properties]--><tt class="descname">remote_set_properties</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.FCSynchronousMultiEngineFromMultiEngine.remote_set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifcsynchronousmultiengine">
+<h3><a title="IPython.kernel.multienginefc.IFCSynchronousMultiEngine" class="reference internal" href="#IPython.kernel.multienginefc.IFCSynchronousMultiEngine"><tt class="xref docutils literal"><span class="pre">IFCSynchronousMultiEngine</span></tt></a><a class="headerlink" href="#ifcsynchronousmultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multienginefc.IFCSynchronousMultiEngine">
+<!--[IPython.kernel.multienginefc.IFCSynchronousMultiEngine]-->class <tt class="descclassname">IPython.kernel.multienginefc.</tt><tt class="descname">IFCSynchronousMultiEngine</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.IFCSynchronousMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Foolscap interface to <cite>ISynchronousMultiEngine</cite>.</p>
+<p>The methods in this interface are similar to those of 
+<cite>ISynchronousMultiEngine</cite>, but their arguments and return values are pickled
+if they are not already simple Python types that can be send over XML-RPC.</p>
+<p>See the documentation of <cite>ISynchronousMultiEngine</cite> and <cite>IMultiEngine</cite> for 
+documentation about the methods.</p>
+<p>Most methods in this interface act like the <cite>ISynchronousMultiEngine</cite>
+versions and can be called in blocking or non-blocking mode.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multienginefc.IFCSynchronousMultiEngine.__init__">
+<!--[IPython.kernel.multienginefc.IFCSynchronousMultiEngine.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.IFCSynchronousMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.multienginefc.packageResult">
+<!--[IPython.kernel.multienginefc.packageResult]--><tt class="descclassname">IPython.kernel.multienginefc.</tt><tt class="descname">packageResult</tt><big>(</big><em>wrappedMethod</em><big>)</big><a class="headerlink" href="#IPython.kernel.multienginefc.packageResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.multienginefc</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.multienginefc">Module: <tt class="docutils literal"><span class="pre">kernel.multienginefc</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#fcfullsynchronousmultiengineclient"><tt class="docutils literal"><span class="pre">FCFullSynchronousMultiEngineClient</span></tt></a></li>
+<li><a class="reference external" href="#fcsynchronousmultienginefrommultiengine"><tt class="docutils literal"><span class="pre">FCSynchronousMultiEngineFromMultiEngine</span></tt></a></li>
+<li><a class="reference external" href="#ifcsynchronousmultiengine"><tt class="docutils literal"><span class="pre">IFCSynchronousMultiEngine</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.multiengineclient.html" title="previous chapter">kernel.multiengineclient</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.newserialized.html" title="next chapter">kernel.newserialized</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.multienginefc.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.newserialized.html" title="kernel.newserialized"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengineclient.html" title="kernel.multiengineclient"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>
