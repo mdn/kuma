@@ -1,0 +1,23 @@
+[
+    {
+        "ga_name": "framework-test",
+        "id": "experiment-framework-test",
+        "pages": [
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Operators/Comparison_Operators",
+                "variants": [
+                    [
+                        "control",
+                        "Web/JavaScript/Reference/Operators/Comparison_Operators"
+                    ],
+                    [
+                        "test",
+                        "Experiment:FrameworkTest/Comparison_Operators"
+                    ]
+                ]
+            }
+        ],
+        "param": "v"
+    }
+]
