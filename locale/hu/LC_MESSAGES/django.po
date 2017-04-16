@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-16 16:24+0000\n"
+"PO-Revision-Date: 2017-04-16 18:48+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -1103,7 +1103,7 @@ msgstr "Szerzők"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
 msgid "Active macros"
-msgstr ""
+msgstr "Aktív makrók"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
 #, python-format
@@ -1115,20 +1115,20 @@ msgstr[1] "%(num)s aktív makró található."
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "Lásd a <a href=\"%(url)s\">GitHub tárolót</a> a makrók listájához."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "<a href=\"%(url)s\">Kézzel is kereshet makrókat</a>."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "Aktív makrók és a használatuk száma"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Makró neve"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
 msgid "English Page Count"
@@ -1136,20 +1136,19 @@ msgstr "Angol lapok száma"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Összes lap száma"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "Keresés a makró használatára:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
 msgstr "Az összes lap keresése"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Legutóbbi angol változások"
+msgstr "Angol lapok keresése"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -3850,14 +3849,14 @@ msgid "This article needs these reviews:"
 msgstr "Ez a cikk ezekre a felülvizsgálatokra szorul:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Műszaki – kódminták, API-k vagy technológiák"
+msgstr "Műszaki – kódminták, API-k vagy technológiák. <a href=\"%(url)s\">Tud segíteni?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Szerkesztői – szöveg, nyelvtan vagy tartalom"
+msgstr "Szerkesztői – szöveg, nyelvtan vagy tartalom. <a href=\"%(url)s\">Tud segíteni?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3933,14 +3932,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "A kiszolgáló a tartalom összehasonlítását rendereli. Kérjük, frissítse ezt az oldalt néhány perc múlva."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Feliratkozás ezekre: %(title)s és minden alcikke"
+msgstr "Feliratkozás erre a cikkre és minden alcikkére"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Leiratkozás ezekről: %(title)s és minden alcikke"
+msgstr "Leiratkozás erről a cikkről és minden alcikkéről"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3955,14 +3952,12 @@ msgid "Updating subscription status"
 msgstr "Feliratkozási állapot frissítése"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Feliratkozás erre: %(title)s"
+msgstr "Feliratkozás erre a cikkre"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Leiratkozás ezekről az e-mailekről:"
+msgstr "Leiratkozás erről a cikkről"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3975,14 +3970,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Leiratkozott erről: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Feliratkozás a <bdi>%(language)s</bdi> verzióra"
+msgstr "Feliratkozás a(z) %(language)s verzióra"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Leiratkozás a <bdi>%(language)s</bdi> verzióról"
+msgstr "Leiratkozás a(z) %(language)s verzióról"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
