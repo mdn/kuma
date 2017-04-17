@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """py.test fixtures for kuma.wiki.tests."""
+import json
+import base64
 from datetime import datetime
 from collections import namedtuple
 
@@ -12,6 +14,10 @@ BannedUser = namedtuple('BannedUser', 'user ban')
 Contributors = namedtuple('Contributors', 'valid banned inactive')
 DocWithContributors = namedtuple('DocWithContributors', 'doc contributors')
 DocHierarchy = namedtuple('DocHierarchy', 'top middle_top middle_bottom bottom')
+KumaScriptToolbox = namedtuple(
+    'KumaScriptToolbox',
+    'errors errors_as_headers macros_response'
+)
 
 
 @pytest.fixture
@@ -324,3 +330,73 @@ def root_doc_with_mixed_contributors(root_doc, wiki_user, wiki_user_2,
             inactive=inactive_wiki_user
         )
     )
+
+
+@pytest.fixture
+def ks_toolbox():
+    errors = {
+        "logs": [
+            {"level": "debug",
+             "message": "Message #1",
+             "args": ['TestError', {},
+                      {'name': 'SomeMacro',
+                       'token': {'args': 'arguments here'}}],
+             "time": "12:32:03 GMT-0400 (EDT)",
+             "timestamp": "1331829123101000"},
+            {"level": "warning",
+             "message": "Error: unable to load: SomeMacro2",
+             "args": ['TestError', {}, {'name': 'SomeMacro2'}],
+             "time": "12:33:58 GMT-0400 (EDT)",
+             "timestamp": "1331829238052000"},
+            {"level": "info",
+             "message": "Message #3",
+             "args": ['TestError'],
+             "time": "12:34:22 GMT-0400 (EDT)",
+             "timestamp": "1331829262403000"},
+            {"level": "debug",
+             "message": "Message #4",
+             "time": "12:32:03 GMT-0400 (EDT)",
+             "timestamp": "1331829123101000"},
+            {"level": "warning",
+             "message": "Message #5",
+             "time": "12:33:58 GMT-0400 (EDT)",
+             "timestamp": "1331829238052000"},
+            {"level": "info",
+             "message": "Message #6",
+             "time": "12:34:22 GMT-0400 (EDT)",
+             "timestamp": "1331829262403000"},
+        ]
+    }
+
+    d_json = json.dumps(errors)
+    d_b64 = base64.encodestring(d_json)
+    d_lines = [x for x in d_b64.split("\n") if x]
+
+    # Headers are case-insensitive, so let's drive that point home.
+    p = ['firelogger', 'FIRELOGGER', 'FireLogger']
+    fl_uid = 8675309
+    errors_as_headers = {}
+    for i in range(0, len(d_lines)):
+        errors_as_headers['%s-%s-%s' % (p[i % len(p)], fl_uid, i)] = d_lines[i]
+
+    macros_response = {
+        'json': {
+            'loader': 'FileLoader',
+            'can_list_macros': True,
+            'macros': [
+                {
+                    'name': 'SomeMacro',
+                    'filename': 'SomeMacro.ejs'
+                },
+                {
+                    'name': 'SomeMacro2',
+                    'filename': 'SomeMacro2.ejs'
+                }
+            ]
+        },
+        'headers': {
+            'Content-Type': 'application/json; charset=utf-8'
+        }
+    }
+
+    return KumaScriptToolbox(errors, errors_as_headers, macros_response)

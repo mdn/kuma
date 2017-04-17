@@ -49,6 +49,7 @@ from ..models import (Document, DocumentDeletionLog, DocumentTag, DocumentZone,
                       Revision, RevisionAkismetSubmission, RevisionIP)
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
+from .conftest import ks_toolbox
 
 
 class RedirectTests(UserTestCase, WikiTestCase):
@@ -630,6 +631,11 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
     Note that these tests really just check whether or not the service was
     used, and are not integration tests meant to exercise the real service.
+
+    REFACTOR NOTES:
+    * The "test_error_reporting" method was moved into "test_views_document.py"
+      as "test_kumascript_error_reporting" and expanded to cover the
+      "wiki.preview" endpoint as well. (escattone, June 20, 2017)
     """
     localizing_client = True
 
@@ -709,7 +715,13 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         """
         Authenticated users can request a zero max-age for kumascript
         """
-        mock_requests.get(self.url, content='HELLO WORLD')
+        mock_requests.get(
+            requests_mock.ANY,
+            [
+                dict(content='HELLO WORLD'),
+                ks_toolbox().macros_response,
+            ]
+        )
 
         self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
         eq_(mock_requests.request_history[0].headers['Cache-Control'],
@@ -727,7 +739,13 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         """
         Authenticated users can request no-cache for kumascript
         """
-        mock_requests.get(self.url, content='HELLO WORLD')
+        mock_requests.get(
+            requests_mock.ANY,
+            [
+                dict(content='HELLO WORLD'),
+                ks_toolbox().macros_response,
+            ]
+        )
 
         self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
         eq_(mock_requests.request_history[0].headers['Cache-Control'],
@@ -794,77 +812,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         # Third request to verify content was cached and served on a 304
         response = self.client.get(self.url)
         ok_(expected_content in response.content)
-
-    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
-    @requests_mock.mock()
-    def test_error_reporting(self, mock_requests):
-        """Kumascript reports errors in HTTP headers, Kuma should display"""
-
-        # Make sure we have enough log messages to ensure there are more than
-        # 10 lines of Base64 in headers. This ensures that there'll be a
-        # failure if the view sorts FireLogger sequence number alphabetically
-        # instead of numerically.
-        expected_errors = {
-            "logs": [
-                {"level": "debug",
-                 "message": "Message #1",
-                 "args": ['TestError', {},
-                          {'name': 'SomeMacro',
-                           'token': {'args': 'arguments here'}}],
-                 "time": "12:32:03 GMT-0400 (EDT)",
-                 "timestamp": "1331829123101000"},
-                {"level": "warning",
-                 "message": "Message #2",
-                 "args": ['TestError', {}, {'name': 'SomeMacro2'}],
-                 "time": "12:33:58 GMT-0400 (EDT)",
-                 "timestamp": "1331829238052000"},
-                {"level": "info",
-                 "message": "Message #3",
-                 "args": ['TestError'],
-                 "time": "12:34:22 GMT-0400 (EDT)",
-                 "timestamp": "1331829262403000"},
-                {"level": "debug",
-                 "message": "Message #4",
-                 "time": "12:32:03 GMT-0400 (EDT)",
-                 "timestamp": "1331829123101000"},
-                {"level": "warning",
-                 "message": "Message #5",
-                 "time": "12:33:58 GMT-0400 (EDT)",
-                 "timestamp": "1331829238052000"},
-                {"level": "info",
-                 "message": "Message #6",
-                 "time": "12:34:22 GMT-0400 (EDT)",
-                 "timestamp": "1331829262403000"},
-            ]
-        }
-
-        # Pack it up, get ready to ship it out.
-        d_json = json.dumps(expected_errors)
-        d_b64 = base64.encodestring(d_json)
-        d_lines = [x for x in d_b64.split("\n") if x]
-
-        # Headers are case-insensitive, so let's just drive that point home
-        p = ['firelogger', 'FIRELOGGER', 'FireLogger']
-        fl_uid = 8675309
-        headers_out = {}
-        for i in range(0, len(d_lines)):
-            headers_out['%s-%s-%s' % (p[i % len(p)], fl_uid, i)] = d_lines[i]
-
-        mock_requests.get(
-            requests_mock.ANY,
-            content='HELLO WORLD',
-            headers=headers_out,
-        )
-
-        # Finally, fire off the request to the view and ensure that the log
-        # messages were received and displayed on the page. But, only for a
-        # logged in user.
-        self.client.login(username='admin', password='testpass')
-        response = self.client.get(self.url)
-        eq_(mock_requests.request_history[0].headers['X-FireLogger'], '1.2')
-        for error in expected_errors['logs']:
-            ok_(error['message'] in response.content)
-            eq_(response.status_code, 200)
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @requests_mock.mock()
@@ -1825,7 +1772,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
         eq_(r.toc_depth, es_d.current_revision.toc_depth)
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     def test_translate_rebuilds_source_json(self):
         self.client.login(username='admin', password='testpass')
         # Create an English original and a Spanish translation.
