@@ -13,6 +13,10 @@ Kuma
 .. image:: https://requires.io/github/mozilla/kuma/requirements.svg?branch=master
    :target: https://requires.io/github/mozilla/kuma/requirements/?branch=master
    :alt: Requirements Status
+   
+.. image:: http://img.shields.io/badge/license-MPL2-blue.svg
+   :target: https://raw.githubusercontent.com/mozilla/kuma/master/LICENSE
+   :alt: License
 
 .. image:: http://img.shields.io/badge/license-MPL2-blue.svg
    :target: https://raw.githubusercontent.com/mozilla/kuma/master/LICENSE
