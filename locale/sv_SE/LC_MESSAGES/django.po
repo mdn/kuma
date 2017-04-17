@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-14 13:48+0000\n"
-"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
+"PO-Revision-Date: 2017-04-17 16:05+0000\n"
+"Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -1087,7 +1087,7 @@ msgstr[1] "Hittade %(num)s aktiva makron."
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "Se <a href=\"%(url)s\">GitHub repo</a> för listan med makron."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
@@ -1096,20 +1096,19 @@ msgstr "Du kan också <a href=\"%(url)s\"> söka manuellt efter makron</a>."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "Aktiva makron och deras användarantal"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
 msgstr "Makro namn"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Engelska taggar"
+msgstr "Antal Engelska sidor"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Antal sidor"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
@@ -3806,14 +3805,14 @@ msgid "This article needs these reviews:"
 msgstr "Denna artikel är i behov av en teknisk granskning:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Teknisk - kodexempel, API:er eller teknologier"
+msgstr "Teknisk - kodexempel, API:er eller teknologier. <a href=\"%(url)s\">Kan du hjälpa till?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Redaktionell - prosa, grammatik eller innehåll"
+msgstr "Redaktionell - prosa, grammatik eller innehåll. <a href=\"%(url)s\">Kan du hjälpa till?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3889,14 +3888,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "Servern renderar innehållet för jämförelsen. Vänligen uppdatera den här sidan om några minuter."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Prenumerera på %(title)s och alla dess underordnade artiklar"
+msgstr "Prenumerera på denna artikel och alla dess underordnade artiklar"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Avsluta prenumeration från %(title)s och alla dess underordnade artiklar"
+msgstr "Avsluta prenumeration från denna artikel och alla dess underordnade artiklar"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3929,14 +3926,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Du har avregistrerat från %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Prenumerera på version <bdi>%(language)s</bdi>"
+msgstr "Prenumerera på version <%(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Avsluta prenumeration från version <bdi>%(language)s</bdi>"
+msgstr "Avsluta prenumeration från version %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
