@@ -313,8 +313,8 @@
         Load and build compat tables if present in page
     */
     (function() {
-        // don't run if no compat table on page with min 1 row
-        var $compatFeatureRows = $('.bc-table tbody tr');
+        // don't run if no compat table on page with min 1 row with 1 value
+        var $compatFeatureRows = $('.bc-table tbody tr td');
         if(!$compatFeatureRows.length) return;
 
         var compatCSS, compatJS;
