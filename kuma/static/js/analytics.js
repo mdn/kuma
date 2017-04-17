@@ -38,8 +38,7 @@
             };
 
             // If Analytics has loaded, go ahead with tracking
-            // Checking for ".create" due to Ghostery mocking of ga
-            if(ga && ga.create) {
+            if(ga) {
                 // Send event to GA
                 ga('send', data);
             }
