@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-17 13:06+0000\n"
+"PO-Revision-Date: 2017-04-17 13:49+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -491,7 +491,7 @@ msgstr "Японски"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Kabyle"
-msgstr ""
+msgstr "Кабилски"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Korean"
@@ -511,7 +511,7 @@ msgstr "Малайски"
 
 #: jinja2/includes/translate_locales.html:41
 msgid "Malayalam"
-msgstr ""
+msgstr "Малаялам"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Persian"
