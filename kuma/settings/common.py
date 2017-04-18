@@ -986,6 +986,15 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/experiment-framework-test.js',
     },
+    'experiment-static-examples-on-top': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+            'js/libs/mozilla.cookiehelper.js',
+            'js/libs/mozilla.trafficcop.js',
+            'js/experiment-static-examples-on-top.js',
+        ),
+        'output_filename': 'build/js/experiment-static-examples-on-top.js',
+    },
 }
 
 PIPELINE = {
