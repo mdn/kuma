@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-14 08:36+0000\n"
+"PO-Revision-Date: 2017-04-18 09:29+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -1088,43 +1088,40 @@ msgstr[1] "%(num)s aktive makro's fûn."
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "Besjoch de <a href=\"%(url)s\">GitHub-repo</a> foar de list fan makro’s."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "Jo kinne ek <a href=\"%(url)s\">hânmjittich nei makro’s sykje</a>."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "Aktive makro’s en harren brûksoantallen"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Makronamme"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Ingelske labels"
+msgstr "Oantal op Ingelske siden"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Oantal op alle siden"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "Sykje nei makrogebrûk:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
-#, fuzzy
 msgid "Search All Pages"
-msgstr "Sykje demo's foar \"{q}\""
+msgstr "Alle siden trochsykje"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Ingelske labels"
+msgstr "Ingelske siden trochsykje"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -3813,14 +3810,14 @@ msgid "This article needs these reviews:"
 msgstr "Dit artikel hat de folgjende beoardielingen nedich:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Technysk - koadefoarbylden, API’s of technologyen"
+msgstr "Technysk - koadefoarbylden, API’s of technologyen. <a href=\"%(url)s\">Kinne jo helpe?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Redaksjoneel - proza, grammatika of ynhâld"
+msgstr "Redaksjoneel - proaza, grammatika of ynhâld. <a href=\"%(url)s\">Kinne jo helpe?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3896,14 +3893,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "De server ferwurket de ynhâldsfergeliking. Fernij dizze side oer inkelde minuten."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Abonnearje op %(title)s en alle sub-artikels derfan"
+msgstr "Abonnearje op dit artikel en alle sub-artikels derfan"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Ofmelde foar %(title)s en alle sub-artikels derfan"
+msgstr "Ofmelde foar dit artikel en alle sub-artikels derfan"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3918,14 +3913,12 @@ msgid "Updating subscription status"
 msgstr "Abonnemintsteat bywurkje"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Abonnearje op %(title)s"
+msgstr "Abonnearje op dit artikel"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Ofmelde fan dizze e-mailberjochten:"
+msgstr "Ofmelde fan dit artikel"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3938,14 +3931,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Jo binne ôfmeld foar %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Abonnearje op ferzje yn it <bdi>%(language)s</bdi>"
+msgstr "Abonnearje op ferzje yn it %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Ofmelde foar ferzje yn it <bdi>%(language)s</bdi>"
+msgstr "Ofmelde foar ferzje yn it %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
