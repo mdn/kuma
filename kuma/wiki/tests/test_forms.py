@@ -284,7 +284,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
             '<h2 id="Syntax">Syntax</h2>\r\n'
             '<pre class="brush:css">\r\n'
             'display: none;\r\n'
-            '</pre>\r\n'
+            '</pre>'
         ),
         'slug': 'Web/CSS/display',
         'tags': '"CSS" "CSS Property" "Reference"',
@@ -613,6 +613,23 @@ class RevisionFormEditTests(RevisionFormViewTests):
                                    is_spam='true')
         assert rev_form.is_valid()
         assert not rev_form.akismet_enabled()
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_set_review_flags(self, mock_requests):
+        only_set_review_flags = {
+            'content': self.original['content'],
+            'comment': '',
+            'review_tags': ['editorial', 'technical']
+        }
+        rev_form = self.setup_form(mock_requests,
+                                   override_data=only_set_review_flags,
+                                   is_spam='true')
+
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['comment_content'] == ''
+        assert mock_requests.call_count == 1  # Only verify key called
 
 
 class RevisionFormCreateTests(RevisionFormViewTests):
