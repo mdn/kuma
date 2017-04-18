@@ -1,4 +1,4 @@
-(function() {
+(function(Mozilla) {
     'use strict';
 
     var lou = new Mozilla.TrafficCop({
