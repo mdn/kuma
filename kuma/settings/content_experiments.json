@@ -19,5 +19,1188 @@
             }
         ],
         "param": "v"
+    },
+    {
+        "ga_name": "static-examples-on-top",
+        "id": "experiment-static-examples-on-top",
+        "pages": [
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/from",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/from"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/isArray",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/isArray"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/length",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/length"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/of",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/of"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/prototype",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/prototype"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/concat",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/concat"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/copyWithin",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/copyWithin"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/entries",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/entries"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/every",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/every"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/fill",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/fill"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/filter",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/filter"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/find",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/find"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/findIndex",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/findIndex"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/forEach",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/forEach"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/includes",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/includes"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/indexOf",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/indexOf"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/join",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/join"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/keys",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/keys"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/keys"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/lastIndexOf"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/map",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/map"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/pop",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/pop"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/push",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/push"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/Reduce",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/reduce"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/ReduceRight",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/reduceRight"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/reverse",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/reverse"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/shift",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/shift"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/slice",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/slice"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/some",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/some"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/sort",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/sort"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/splice",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/splice"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/toLocaleString",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/toLocaleString"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/toString",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/toString"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toString"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/unshift",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/unshift"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/JavaScript/Reference/Global_Objects/Array/values",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/JavaScript/Array/values"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/display",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/display"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/display"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/position",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/position"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/position"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/background-image",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/background-image"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/background-image"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/background-size",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/background-size"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/background-size"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/pointer-events",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/pointer-events"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/box-shadow",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/box-shadow"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/transform",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/transform"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/transform"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/cursor",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/cursor"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/cursor"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/overflow-wrap",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/overflow-wrap"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/flex",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/flex"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/flex"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/font-family",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/font-family"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/font-family"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/vertical-align",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/vertical-align"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/font-weight",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/font-weight"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/font-style",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/font-style"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/font-style"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/box-sizing",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/box-sizing"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/object-fit",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/object-fit"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/z-index",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/z-index"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/z-index"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/flex-basis",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/flex-basis"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/text-overflow",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/text-overflow"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/background-position",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/background-position"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/background-position"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/background",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/background"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/background"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/text-decoration",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/text-decoration"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/filter",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/filter"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/filter"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/animation",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/animation"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/animation"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/font",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/font"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/font"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/float",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/float"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/float"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/white-space",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/white-space"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/white-space"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/justify-content",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/justify-content"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/font-size",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/font-size"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/border",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/border"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/border"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/background-color",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/background-color"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/background-color"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/border-radius",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/border-radius"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/text-align",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/text-align"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/text-align"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/overflow",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/overflow"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/overflow"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/transition",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/transition"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/transition"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/transform-origin",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/transform-origin"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/flex-wrap",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/flex-wrap"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/touch-action",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/touch-action"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/margin",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/margin"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/margin"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/align-items",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/align-items"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/align-items"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/border-style",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/border-style"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/border-style"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/line-height",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/line-height"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/line-height"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/flex-grow",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/flex-grow"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/list-style-type",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/list-style-type"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/width",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/width"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/width"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/padding",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/padding"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/padding"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/color",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/color"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/color"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/flex-shrink",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/flex-shrink"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink"
+                    ]
+                ]
+            },
+            {
+                "locale": "en-US",
+                "slug": "Web/CSS/text-size-adjust",
+                "variants": [
+                    [
+                        "control",
+                        "https://developer.mozilla.org/en-US/docs/Experiment:StaticExamplesOnTop/CSS/text-size-adjust"
+                    ],
+                    [
+                        "example",
+                        "https://developer.mozilla.org/en-US/docs/Web/CSS/text-size-adjust"
+                    ]
+                ]
+            }
+        ],
+        "param": "v"
     }
 ]
