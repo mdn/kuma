@@ -120,6 +120,20 @@ def trans_revision(trans_doc):
 
 
 @pytest.fixture
+def trans_edit_revision(trans_doc, edit_revision, wiki_user):
+    """A further edit to the translated document."""
+    trans_doc.current_revision = Revision.objects.create(
+        document=trans_doc,
+        creator=wiki_user,
+        based_on=edit_revision,
+        content='<p>Le document racine.</p>',
+        title='Racine du Document',
+        created=datetime(2017, 4, 14, 20, 25))
+    trans_doc.save()
+    return trans_doc.current_revision
+
+
+@pytest.fixture
 def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
     top_doc = Document.objects.create(
         locale='en-US',

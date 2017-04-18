@@ -44,7 +44,7 @@
           {% endif %}
           {% for rev in revisions %}
             {% if loop.first %}<ul class="revision-list">{% endif %}
-            <li>
+            <li {%- if document != rev.document %} class="revision-list-en-source"{% endif %}>
               <div class="revision-list-cell revision-list-radio">
                 {% if not current %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
               </div>
@@ -57,7 +57,7 @@
               {% endif %}
               </div>
               <div class="revision-list-cell revision-list-date">
-                <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
+                <a href="{{ url('wiki.revision', rev.document.slug, rev.id, locale=rev.document.locale) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
               <div class="revision-list-cell revision-list-creator">
                 <a href="{{ rev.creator.get_absolute_url() }}">{{ rev.creator }}</a>
@@ -68,9 +68,9 @@
                 {% endif %}
                 {{ format_comment(rev) }}
               </div>
-              {% if document.current_revision.id != rev.id and user_can_delete %}
-              <div class="revision-list-cell">
-                <a href="{{ url('wiki.revert_document', document.slug, rev.id) }}" class="button revert-revision" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
+              {% if document.current_revision.id != rev.id and document == rev.document and user_can_delete %}
+              <div class="revision-list-cell revision-list-revert">
+                <a href="{{ url('wiki.revert_document', rev.document.slug, rev.id, locale=rev.document.locale) }}" class="button revert-revision" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
               </div>
               {% endif %}
             </li>
