@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-17 13:57+0000\n"
-"Last-Translator: k.berov <k.berov@gmail.com>\n"
+"PO-Revision-Date: 2017-04-18 13:33+0000\n"
+"Last-Translator: :stoyan <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -3371,7 +3371,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This translation is in progress."
-msgstr "Този превод все още се прави."
+msgstr "Преводът на тази статия е незавършен."
 
 #: kuma/wiki/jinja2/wiki/document.html:310
 #, python-format
