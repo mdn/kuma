@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-18 07:00+0000\n"
-"Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
+"PO-Revision-Date: 2017-04-18 21:24+0000\n"
+"Last-Translator: jlG <jlg.l10n.es@gmail.com>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1099,8 +1099,8 @@ msgstr "Macros activas"
 #, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "Se han encontrado %(num)s macro(s) activa(s)."
-msgstr[1] ""
+msgstr[0] "Se ha encontrado %(num)s macro activa."
+msgstr[1] "Se han encontrado %(num)s macros activas."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
@@ -1121,13 +1121,12 @@ msgid "Macro Name"
 msgstr "Nombre de la macro"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Etiquetas en inglés"
+msgstr "Número de páginas en inglés"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Número total de páginas"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
