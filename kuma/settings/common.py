@@ -968,15 +968,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'experiment-wiki-content': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-            'js/libs/mozilla.cookiehelper.js',
-            'js/libs/mozilla.trafficcop.js',
-            'js/experiment-wiki-content.js',
-        ),
-        'output_filename': 'build/js/experiment-wiki-content.js',
-    },
     'experiment-framework-test': {
         'source_filenames': (
             'js/libs/mozilla.dnthelper.js',
