@@ -210,10 +210,6 @@
                 "control": "Experiment:StaticExamplesOnTop/CSS/z-index",
                 "example": "Web/CSS/z-index"
             },
-            "en-US:Web/JavaScript/Reference/Global_Objects/Array": {
-                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array",
-                "example": "Web/JavaScript/Reference/Global_Objects/Array"
-            },
             "en-US:Web/JavaScript/Reference/Global_Objects/Array/Reduce": {
                 "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/reduce",
                 "example": "Web/JavaScript/Reference/Global_Objects/Array/Reduce"
