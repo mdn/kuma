@@ -6,6 +6,7 @@ CELERY_ALWAYS_EAGER = True
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 ES_LIVE_INDEX = False
 
+# SHA1 because it is fast, and hard-coded in the test fixture JSON.
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.SHA1PasswordHasher',
 )

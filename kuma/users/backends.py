@@ -8,7 +8,9 @@ from django.utils.translation import ugettext
 
 class Sha256Hasher(BasePasswordHasher):
     """
-    SHA-256 password hasher.
+    SHA-256 password hasher. Good option for 2010.
+
+    TODO: Remove in favor of modern Django-included hashers.
     """
     algorithm = 'sha256'
     digest = hashlib.sha256
