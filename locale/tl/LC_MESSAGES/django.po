@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-19 07:31+0000\n"
+"PO-Revision-Date: 2017-04-19 07:36+0000\n"
 "Last-Translator: Frederick Villaluna <fv_comscie@yahoo.com>\n"
 "Language-Team: Tagalog https://pontoon.mozilla.org/tl/\n"
 "Language: tl\n"
@@ -336,7 +336,7 @@ msgstr "Ang newsletter ay inaalok sa Ingles lamang sa sandaling ito."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Salamat! Mangyaring suriin ang iyong inbox upang kumpirmahin ang iyong subscription."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
@@ -737,16 +737,16 @@ msgstr ""
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1923
 msgid "Title"
-msgstr ""
+msgstr "Titulo"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Paglalarawan"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "Mga komento"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
@@ -879,44 +879,44 @@ msgstr ""
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "Apps"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr ""
+msgstr "Mobile"
 
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/utils.py:425
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Ngayun sa %s"
 
 #: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
 msgid "Yes"
-msgstr ""
+msgstr "Oo"
 
 #: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
 msgid "No"
-msgstr ""
+msgstr "Hindi"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "Add-ons & Extensions"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "Ako ay isang Expert"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
@@ -1252,27 +1252,27 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "higit pa..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Learn"
-msgstr ""
+msgstr "Matuto"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
-msgstr ""
+msgstr "Pagsisimula sa Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
-msgstr ""
+msgstr "Matuto ng HTML"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn CSS"
-msgstr ""
+msgstr "Matuto ng CSS"
 
 #: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Learn JavaScript"
-msgstr ""
+msgstr "Matuto ng JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -1312,7 +1312,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "Buong kapurihan non-profit."
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Donate before Dec 31."
@@ -1320,7 +1320,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Donate Now"
-msgstr ""
+msgstr "Mag-donate Ngayon"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get The Browser For Developers Like You"
@@ -1393,7 +1393,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
 msgid "creating accounts"
-msgstr ""
+msgstr "gumawa ng accounts"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
@@ -1665,7 +1665,7 @@ msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Ipinapakita ang lahat ng mga resulta."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
@@ -1841,11 +1841,11 @@ msgstr ""
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "Pangalan"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "Organisasyon"
 
 #: kuma/users/models.py:85
 msgid "Location"
