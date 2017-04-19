@@ -1806,7 +1806,7 @@ class Revision(models.Model):
                 created__lt=self.created,
             ).order_by('-created')[0]
         except IndexError:
-            return None
+            return self.based_on
 
     @cached_property
     def needs_editorial_review(self):

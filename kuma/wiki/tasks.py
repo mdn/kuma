@@ -9,13 +9,12 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
-from django.core.mail import EmailMessage, mail_admins, send_mail
+from django.core.mail import mail_admins, send_mail
 from django.db import connection, transaction
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
 from celery import chord, task
-from constance import config
 from djcelery_transactions import task as transaction_task
 from lxml import etree
 
@@ -24,7 +23,7 @@ from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.utils import MemcacheLock, chord_flow, chunked
 from kuma.search.models import Index
 
-from .events import context_dict
+from .events import first_edit_email
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .models import Document, DocumentSpamAttempt, Revision, RevisionIP
 from .search import WikiDocumentType
@@ -312,17 +311,7 @@ def delete_old_revision_ips(days=30):
 def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
-    user, doc = revision.creator, revision.document
-    subject = (u"[MDN] [%(loc)s] %(user)s made their first edit, to: %(doc)s" %
-               {'loc': doc.locale, 'user': user.username, 'doc': doc.title})
-    message = render_to_string('wiki/email/edited.ltxt',
-                               context_dict(revision))
-    doc_url = absolutify(doc.get_absolute_url())
-    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
-                         to=[config.EMAIL_LIST_SPAM_WATCH],
-                         headers={'X-Kuma-Document-Url': doc_url,
-                                  'X-Kuma-Editor-Username': user.username})
-    email.send()
+    first_edit_email(revision).send()
 
 
 class WikiSitemap(GenericSitemap):
