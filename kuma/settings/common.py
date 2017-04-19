@@ -968,15 +968,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'experiment-wiki-content': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-            'js/libs/mozilla.cookiehelper.js',
-            'js/libs/mozilla.trafficcop.js',
-            'js/experiment-wiki-content.js',
-        ),
-        'output_filename': 'build/js/experiment-wiki-content.js',
-    },
     'experiment-framework-test': {
         'source_filenames': (
             'js/libs/mozilla.dnthelper.js',
@@ -985,6 +976,15 @@ PIPELINE_JS = {
             'js/experiment-framework-test.js',
         ),
         'output_filename': 'build/js/experiment-framework-test.js',
+    },
+    'experiment-static-examples-on-top': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+            'js/libs/mozilla.cookiehelper.js',
+            'js/libs/mozilla.trafficcop.js',
+            'js/experiment-static-examples-on-top.js',
+        ),
+        'output_filename': 'build/js/experiment-static-examples-on-top.js',
     },
 }
 
@@ -1512,16 +1512,6 @@ TAGGIT_CASE_INSENSITIVE = True
 #  kuma/static/js/experiment-wiki-content.js
 # Only one experiment should be active for a given locale and slug.
 #
-CONTENT_EXPERIMENTS = [{
-    'id': 'experiment-framework-test',
-    'ga_name': 'framework-test',
-    'param': 'v',
-    'pages': [{
-        'locale': 'en-US',
-        'slug': 'Web/JavaScript/Reference/Operators/Comparison_Operators',
-        'variants': [
-            ['control', 'Web/JavaScript/Reference/Operators/Comparison_Operators'],
-            ['test', 'Experiment:FrameworkTest/Comparison_Operators'],
-        ]
-    }]
-}]
+ce_path = path('kuma', 'settings', 'content_experiments.json')
+with open(ce_path, 'r') as ce_file:
+    CONTENT_EXPERIMENTS = json.load(ce_file)

@@ -257,38 +257,39 @@ def _apply_content_experiment(request, doc):
     If the page is not under a content experiment, the return is
     (original Document, None).
     """
+    key = u"%s:%s" % (doc.locale, doc.slug)
     for experiment in settings.CONTENT_EXPERIMENTS:
-        for pages in experiment['pages']:
-            if (pages['locale'] == doc.locale and pages['slug'] == doc.slug):
-                # This page is under a content experiment
-                exp_params = {
-                    'id': experiment['id'],
-                    'ga_name': experiment['ga_name'],
-                    'param': experiment['param'],
-                    'original_path': request.path,
-                    'variants': pages['variants'],
-                    'selected': None,
-                    'selection_is_valid': None,
-                }
+        if key in experiment['pages']:
+            # This page is under a content experiment
+            variants = experiment['pages'][key]
+            exp_params = {
+                'id': experiment['id'],
+                'ga_name': experiment['ga_name'],
+                'param': experiment['param'],
+                'original_path': request.path,
+                'variants': variants,
+                'selected': None,
+                'selection_is_valid': None,
+            }
 
-                # Which variant was selected?
-                selected = request.GET.get(experiment['param'])
-                if selected:
-                    exp_params['selection_is_valid'] = False
-                    for variant, variant_slug in pages['variants']:
-                        if selected == variant:
-                            try:
-                                content_doc = Document.objects.get(
-                                    locale=pages['locale'],
-                                    slug=variant_slug)
-                            except Document.DoesNotExist:
-                                pass
-                            else:
-                                # Valid variant selected
-                                exp_params['selected'] = selected
-                                exp_params['selection_is_valid'] = True
-                                return content_doc, exp_params
-                return doc, exp_params  # No (valid) variant selected
+            # Which variant was selected?
+            selected = request.GET.get(experiment['param'])
+            if selected:
+                exp_params['selection_is_valid'] = False
+                for variant, variant_slug in variants.items():
+                    if selected == variant:
+                        try:
+                            content_doc = Document.objects.get(
+                                locale=doc.locale,
+                                slug=variant_slug)
+                        except Document.DoesNotExist:
+                            pass
+                        else:
+                            # Valid variant selected
+                            exp_params['selected'] = selected
+                            exp_params['selection_is_valid'] = True
+                            return content_doc, exp_params
+            return doc, exp_params  # No (valid) variant selected
     return doc, None  # Not a content experiment
 
 
