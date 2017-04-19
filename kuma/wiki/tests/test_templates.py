@@ -365,7 +365,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
     dim1 = "ga('set', 'dimension1', 'Yes');"
     dim2 = "ga('set', 'dimension2', 'Yes');"
     dim17_tmpl = "ga('set', 'dimension17', '%s');"
-    dim18_tmpl = "ga('set', 'dimension18', '%s');"
+    dim18 = "ga('set', 'dimension18', 'Yes');"
 
     def test_en_doc(self):
         doc = _create_document()
@@ -403,9 +403,9 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
-        assert self.dim1 not in response.content.decode('utf8')
-        assert self.dim2 not in response.content.decode('utf8')
-        assert "ga('set', 'dimension18'," not in content
+        assert self.dim1 not in content
+        assert self.dim2 not in content
+        assert self.dim18 not in content
 
     def test_regular_user(self):
         assert self.client.login(username='testuser', password='testpass')
@@ -413,9 +413,9 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
-        assert self.dim1 in response.content.decode('utf8')
-        assert self.dim2 not in response.content.decode('utf8')
-        assert (self.dim18_tmpl % 'No') in content
+        assert self.dim1 in content
+        assert self.dim2 not in content
+        assert self.dim18 not in content
 
     def test_beta_user(self):
         testuser = User.objects.get(username='testuser')
@@ -426,9 +426,9 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
-        assert self.dim1 in response.content.decode('utf8')
-        assert self.dim2 in response.content.decode('utf8')
-        assert (self.dim18_tmpl % 'No') in content
+        assert self.dim1 in content
+        assert self.dim2 in content
+        assert self.dim18 not in content
 
     def test_staff_user(self):
         assert self.client.login(username='admin', password='testpass')
@@ -436,9 +436,9 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
-        assert self.dim1 in response.content.decode('utf8')
-        assert self.dim2 not in response.content.decode('utf8')
-        assert (self.dim18_tmpl % 'Yes') in content
+        assert self.dim1 in content
+        assert self.dim2 not in content
+        assert self.dim18 in content
 
 
 class RevisionTests(UserTestCase, WikiTestCase):
