@@ -275,14 +275,12 @@ _TEST_CONTENT_EXPERIMENTS = [{
     'id': 'experiment-test',
     'ga_name': 'experiment-test',
     'param': 'v',
-    'pages': [{
-        'locale': 'en-US',
-        'slug': 'Original',
-        'variants': [
-            ['control', 'Original'],
-            ['test', 'Experiment:Test/Variant'],
-        ]
-    }]
+    'pages': {
+        'en-US:Original': {
+            'control': 'Original',
+            'test': 'Experiment:Test/Variant',
+        }
+    }
 }]
 _PIPELINE = settings.PIPELINE
 _PIPELINE['JAVASCRIPT']['experiment-test'] = {
