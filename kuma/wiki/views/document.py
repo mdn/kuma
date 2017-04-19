@@ -267,7 +267,7 @@ def _apply_content_experiment(request, doc):
                 'ga_name': experiment['ga_name'],
                 'param': experiment['param'],
                 'original_path': request.path,
-                'variants': experiment['pages'][key],
+                'variants': variants,
                 'selected': None,
                 'selection_is_valid': None,
             }
