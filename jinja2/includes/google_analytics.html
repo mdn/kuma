@@ -19,8 +19,10 @@
             ga('set', 'dimension2', 'Yes');
         {% endif %}
 
-        // dimension18 == "Staff"
-        ga('set', 'dimension18', '{{ request.user.is_staff | yesno }}');
+        {%- if request.user.is_staff %}
+            // dimension18 == "Staff"
+            ga('set', 'dimension18', 'Yes');
+        {% endif %}
     {% endif %}
 
     // dimension9 == "Section editing"
