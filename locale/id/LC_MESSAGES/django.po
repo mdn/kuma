@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
+"POT-Creation-Date: 2017-04-20 13:52-0700\n"
 "PO-Revision-Date: 2016-08-28 07:19+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
@@ -2845,7 +2845,7 @@ msgstr ""
 msgid "Admin"
 msgstr "Admin"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2865,7 +2865,7 @@ msgstr "Pelokalan sedang berlangsung - belum diterjemahkan sepenuhnya."
 msgid "Edit section"
 msgstr "Sunting seksi"
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:79
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "Halaman [MDN] \"%(document_title)s\" diubah oleh %(creator)s"
@@ -4298,27 +4298,27 @@ msgstr "Terjadi kesalahan dalam memunculkan konten."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Dokumen sudah ada. Catatan: anda tidak bisa mengembalikan dokumen yang telah dipindahkan sampai anda menghapus pengalihannya."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Dialihkan dari %(url)s"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Saya belajar mengenai %(title)s di MDN."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Tipe konten yang tidak didukung: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Permintaan penguraian salah: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "Prekondisi ETag gagal"
 

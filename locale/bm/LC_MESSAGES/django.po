@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
+"POT-Creation-Date: 2017-04-20 13:52-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bambara https://pontoon.mozilla.org/bm/\n"
@@ -2778,7 +2778,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr ""
 
@@ -2798,7 +2798,7 @@ msgstr ""
 msgid "Edit section"
 msgstr ""
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:79
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr ""
@@ -4210,27 +4210,27 @@ msgstr ""
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr ""
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr ""
 

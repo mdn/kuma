@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-20 13:51-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic https://pontoon.mozilla.org/ar/\n"
@@ -329,7 +329,7 @@ msgid "What should the sample title be?"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
+msgid "HTML"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
@@ -337,7 +337,7 @@ msgid "Sample HTML Content"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
+msgid "CSS"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
@@ -345,7 +345,7 @@ msgid "Sample CSS Content"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+msgid "JavaScript"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32

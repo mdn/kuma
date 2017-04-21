@@ -17,23 +17,23 @@ CKEDITOR.plugins.add('mdn-sampler', {
           sampleSlug = $.slugifyString(text);
 
         // Create main heading.
-        makeElement('h2', text, { name: sampleSlug });
+        makeElement('h2', text);
 
         // Create Pre[html].
-        makeElement('h3', gettext('HTML Content'));
+        makeElement('h3', gettext('HTML'));
         makeElement('pre', gettext('Sample HTML Content'), { 'class': 'brush: html' });
 
         // Create Pre[css].
-        makeElement('h3', gettext('CSS Content'));
+        makeElement('h3', gettext('CSS'));
         makeElement('pre', gettext('Sample CSS Content'), { 'class': 'brush: css' });
 
         // Create Pre[js].
-        makeElement('h3', gettext('JavaScript Content'));
+        makeElement('h3', gettext('JavaScript'));
         makeElement('pre', gettext('Sample JavaScript Content'), { 'class': 'brush: js' });
 
         // Create the IFrame?
         makeElement('h3', gettext('Result'));
-        makeElement('p', '{{ EmbedLiveSample(\'' + sampleSlug + '\') }}');
+        makeElement('p', '{{EmbedLiveSample(\'' + sampleSlug + '\')}}');
 
         editor.insertHtml(temp.getHtml());
 

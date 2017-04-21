@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-20 13:51-0700\n"
 "PO-Revision-Date: 2016-09-19 22:56+0000\n"
 "Last-Translator: Stjepan Treger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian https://pontoon.mozilla.org/hr/\n"
@@ -331,23 +331,24 @@ msgid "What should the sample title be?"
 msgstr "Što bi trebao biti naslov primjera?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML sadržaj"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Primjer HTML sadržaja"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS sadržaj"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Primjer CSS sadržaja"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript sadržaj"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -397,3 +398,9 @@ msgstr "URL kojeg ste unijeli izgleda da nije valjan"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Zadano"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML sadržaj"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS sadržaj"

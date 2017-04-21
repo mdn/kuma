@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
+"POT-Creation-Date: 2017-04-20 13:52-0700\n"
 "PO-Revision-Date: 2017-02-15 03:05+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -2855,7 +2855,7 @@ msgstr "사용자 금지 & 초기화"
 msgid "Admin"
 msgstr "관리자"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "위키"
 
@@ -2875,7 +2875,7 @@ msgstr "문서 지역화 중 - 모두 번역되지 않음을 양해바라며, �
 msgid "Edit section"
 msgstr "섹션 편집"
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:79
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] 페이지 \"%(document_title)s\" 변경자 %(creator)s"
@@ -4337,27 +4337,27 @@ msgstr "콘텐츠 생성중에 오류가 발생했습니다."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "문서가 이미 존재합니다. 주의: 당신이 리다이렉트를 삭제할 때까지 이동된 문서를 되돌릴 수 없습니다."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "%(url)s 에서 문서 이동"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "MDN에서 %(title)s에 대해서 배웠습니다."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "지원하지 않는 문서 형식: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "처리 요청 중 오류: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "ETag 이전 조건 실패"
 

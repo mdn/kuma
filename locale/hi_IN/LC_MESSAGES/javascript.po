@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-20 13:51-0700\n"
 "PO-Revision-Date: 2017-01-21 12:12+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
@@ -332,23 +332,24 @@ msgid "What should the sample title be?"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML अंतर्वस्तु"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "नमूना HTML सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS सामग्री"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "नमूना CSS सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript सामग्री"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,3 +399,9 @@ msgstr ""
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "तयशुदा"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML अंतर्वस्तु"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS सामग्री"
