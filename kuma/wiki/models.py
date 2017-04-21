@@ -1738,9 +1738,32 @@ class Revision(models.Model):
         self.document.render_max_age = self.render_max_age
         self.document.current_revision = self
 
+        tags = []
+
         # Since Revision stores tags as a string, we need to parse them first
         # before setting on the Document.
-        self.document.tags.set(*parse_tags(self.tags))
+        for tag in parse_tags(self.tags):
+            doc_tag = DocumentTag.objects.filter(name=tag)
+
+            if not doc_tag:
+                # If the current tag didn't in some sense match, create it.
+                tags.append(DocumentTag.objects.create(name=tag))
+            else:
+                for instance in doc_tag:
+                    # Use Python string matching to get the case-sensitive match
+                    # we can't achieve with the Django query.
+                    if instance.name == tag:
+                        # Found an exact match
+                        tags.append(instance)
+                        break
+                else:
+                    # No exact match found, so just pick the first one.
+                    tags.append(doc_tag[0])
+
+        # The Taggit tag manager will tag instances as well as
+        # strings, and won't do bonkers things if we've already
+        # determined which instances we want.
+        self.document.tags.set(*tags)
 
         self.document.save()
 

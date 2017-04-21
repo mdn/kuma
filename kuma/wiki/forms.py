@@ -595,29 +595,32 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         tags = self.cleaned_data['tags']
         cleaned_tags = []
 
-        if tags:
-            for tag in parse_tags(tags):
-                # Note: The exact match query doesn't work correctly with
-                # MySQL with regards to case-sensitivity. If we move to
-                # Postgresql in the future this code may need to change.
-                doc_tag = (DocumentTag.objects.filter(name__exact=tag)
-                                              .values_list('name', flat=True))
+        for tag in parse_tags(tags):
+            # Note: The exact match query doesn't work correctly with MySQL
+            # with regards to case-sensitivity, due to the case-insensitive
+            # collation.  If we move to Postgresql in the future this code will
+            # need to change.
+            doc_tag = (DocumentTag.objects.filter(name__exact=tag)
+                                          .values_list('name', flat=True))
 
-                # Write a log we can grep to help find pre-existing duplicate
-                # document tags for cleanup.
-                if len(doc_tag) > 1:
-                    log.warn('Found duplicate document tags: %s' % doc_tag)
+            # Write a log we can grep to help find pre-existing duplicate
+            # document tags for cleanup.
+            if len(doc_tag) > 1:
+                log.warn('Found duplicate document tags: %s' % doc_tag)
 
-                if doc_tag:
-                    if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():
-                        # The tag differs only by case. Do not add a new one,
-                        # add the existing one.
-                        cleaned_tags.append(doc_tag[0])
-                        continue
-
+            if doc_tag:
+                if tag in doc_tag:
+                    # We have an exact match, so use it.
+                    cleaned_tags.append(tag)
+                else:
+                    # The casing doesn't match anything here, but the tag was a
+                    # match under the collation rules, so just pick one.
+                    cleaned_tags.append(doc_tag[0])
+            else:
+                # A new tag, so we'll be creating it.
                 cleaned_tags.append(tag)
 
-        return ' '.join([u'"%s"' % t for t in cleaned_tags])
+        return ' '.join(u'"%s"' % t for t in cleaned_tags)
 
     def clean_content(self):
         """
