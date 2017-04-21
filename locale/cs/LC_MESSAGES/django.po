@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-19 15:40+0000\n"
-"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
+"PO-Revision-Date: 2017-04-14 09:19+0000\n"
+"Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -1102,29 +1102,27 @@ msgstr "Aktivní makra a počet jejich použití"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Název makra"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Anglické štítky"
+msgstr "Počet anglických stránek"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Počet všech stránek"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "Vyhledat použití makra:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
-msgstr ""
+msgstr "Prohledat všechny stránky"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Anglické štítky"
+msgstr "Prohledat anglické stránky"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -3816,14 +3814,14 @@ msgid "This article needs these reviews:"
 msgstr "Tento článek potřebuje tyto kontroly:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Technické - příklady kódu, API nebo technologií"
+msgstr "Technické - příklady kódu, API nebo technologií. <a href=\"%(url)s\">Můžete pomoci?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Redakce - próza, gramatika nebo obsah"
+msgstr "Redakce - próza, gramatika nebo obsah. <a href=\"%(url)s\">Can you help?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3899,14 +3897,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "Server vykresluje porovnání obsahu. Obnovte prosím tuto stránku za pár minut."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Odebírat %(title)s a všechny jeho podčlánky"
+msgstr "Odebírat tento článek a všechny jeho podčlánky"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Přestat odebírat %(title)s a všechny jeho podčlánky"
+msgstr "Přestat odebírat tento článek a všechny jeho podčlánky"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3921,14 +3917,12 @@ msgid "Updating subscription status"
 msgstr "Aktualizace stavu odeslání"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Odebírat %(title)s"
+msgstr "Odebírat tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Odhlásit od těchto e-mailů:"
+msgstr "Odhlásit odběr tohoto článku"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3941,14 +3935,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Přestali jste odebírat %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Odebírat verzi v jazyce <bdi>%(language)s</bdi>"
+msgstr "Odebírat verzi v jazyce %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Přestat odebírat verzi v jazyce <bdi>%(language)s</bdi>"
+msgstr "Odhlásit odběr verze v jazyce %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
