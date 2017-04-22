@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-22 11:11+0000\n"
+"PO-Revision-Date: 2017-04-22 11:15+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -2218,12 +2218,12 @@ msgstr "Потребителското ви име от GitHub %(username)s е �
 
 #: kuma/users/jinja2/socialaccount/signup.html:97
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
-msgstr ""
+msgstr "Моля въведете името, което искате да се показва на другите потребители за разпознаване на вашия принос."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
 #, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr ""
+msgstr "Вече съществува сметка с избраната електронна поща. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Свържете вашата сметка при %(provider_name)s с нея.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
