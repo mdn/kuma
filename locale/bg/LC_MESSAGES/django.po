@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-18 13:33+0000\n"
-"Last-Translator: :stoyan <stoyan@gmx.com>\n"
+"PO-Revision-Date: 2017-04-22 11:11+0000\n"
+"Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -1111,7 +1111,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
-msgstr ""
+msgstr "Търсене във всички страници"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
 msgid "Search English Pages"
@@ -2154,7 +2154,7 @@ msgstr "Бележка"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "вече сте влезли като %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -2200,11 +2200,11 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "За да настроите сметката си в MDN, моля <strong>изберете потребителско име</strong>. Вашето потребителско име ще се показва в MDN за разпознаване на вашия принос."
 
 #: kuma/users/jinja2/socialaccount/signup.html:60
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr ""
+msgstr "За да настроите сметката си в MDN, моля <strong>изберете потребителско име и електронна поща</strong>. Вашето потребителско име ще се показва в MDN за разпознаване на вашия принос."
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
 #, python-format
