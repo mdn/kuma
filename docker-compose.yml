@@ -76,7 +76,7 @@ services:
       - mysqlvolume:/var/lib/mysql
 
   elasticsearch:
-    image: elasticsearch:1.7
+    image: elasticsearch:2.4
 
   redis:
     image: redis
