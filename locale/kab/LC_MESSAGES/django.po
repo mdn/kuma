@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-15 07:38+0000\n"
+"PO-Revision-Date: 2017-04-23 19:29+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -1078,51 +1078,49 @@ msgid "Active macros"
 msgstr "Imakṛuyen urmiden"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "Tettwaf %(num)s n tneɣruft."
-msgstr[1] "Ttwafent %(num)s n tneɣrufin"
+msgstr[0] "Yettwaf %(num)s n umakru urmid."
+msgstr[1] "Ttwafent %(num)s n imakruyen urmiden."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "Wali <a href=\"%(url)s\">Taffa GitHub</a> i tebdart n imakruyen."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "Tzemreḍ daɣen <a href=\"%(url)s\">ad tnadiḍ imakruyen s ufus </a>."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "Amḍan n imakruyen urmiden akked useqdec-nsen"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Isem n umakṛu"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Tibzimin s teglizit"
+msgstr "Amḍan n isebtar n teglizit"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Amḍan n isebtar meṛṛa"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "Anadi i useqdec n imaruyen:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
 msgstr "Nadi akk isebtar"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Tibzimin s teglizit"
+msgstr "Nadi isebtar n teglizit"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -3911,14 +3909,12 @@ msgid "Updating subscription status"
 msgstr "Aleqqem n waddad n ujerred"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Jerred ɣer %(title)s"
+msgstr "Jerred ar umagrad-agi"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Ffeɣ seg ujerred n yimaylen agi:"
+msgstr "Ffeɣ seg ujerred n umagrad-agi"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3931,14 +3927,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Teffɣeḍ seg ujettwajerd akka tura n %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Jerred ɣer lqem s <bdi>%(language)s</bdi>"
+msgstr "Jerred ar lqem  %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Ffeɣ seg ujerred n lqem s <bdi>%(language)s</bdi>"
+msgstr "Ffeɣ seg ujerred n lqem  %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
