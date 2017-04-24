@@ -17,7 +17,7 @@ def test_notification_context_for_create(create_revision):
                     '&utm_source=developer.mozilla.org')
     url = '/en-US/docs/Root'
     expected = {
-        'compare_url': utm_campaign,
+        'compare_url': '',
         'creator': create_revision.creator,
         'diff': 'Diff is unavailable.',
         'document_title': 'Root Document',
