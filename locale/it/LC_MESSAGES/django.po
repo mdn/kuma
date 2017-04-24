@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-24 09:20+0000\n"
+"PO-Revision-Date: 2017-04-24 09:13+0000\n"
 "Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -3839,9 +3839,9 @@ msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can 
 msgstr "Revisione tecnica – campioni di codice, API e tecnologie varie. <a href=\"%(url)s\">Sei in grado di contribuire?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Stilistica – stile, grammatica o contenuto"
+msgstr "Editoriale – stile, grammatica e contenuti. <a href=\"%(url)s\">Sei in grado di contribuire?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
