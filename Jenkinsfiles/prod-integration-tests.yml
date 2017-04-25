@@ -3,7 +3,7 @@ pipeline:
   script: "integration-tests"
 job:
   dockerfile: "docker/images/integration-tests/Dockerfile"
-  selenium: "2.48.2"
+  selenium: "3.8.1"
   selenium_nodes: 5
   base_url: 'https://developer.mozilla.org'
   tests: "not login"
