@@ -17,15 +17,10 @@ pyquery==1.2.11 \
     --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
     --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
 
-# A better test runner
-# TODO: Sync version with dev.txt
-pytest==3.0.3 \
-    --hash=sha256:aea87ca4240b79868ccabd14ba56a12eceb1c1e8076b585fe2fa5602a5874db7 \
-    --hash=sha256:f213500a356800a483e8a146ff971ae14a8df3f2c0ae4145181aad96996abee7
-
 # Test plugin: Re-run flaky tests
-pytest-rerunfailures==1.0.2 \
-    --hash=sha256:1fffd37a252dc9861a84097eab65584dad962a859c41db2f58fb42d7373efa89
+pytest-rerunfailures==2.1.0 \
+    --hash=sha256:e867cec5eabb20ed38e04b6b9c277e34b0603143ee315beab56296d8329fe3f2 \
+    --hash=sha256:82e6cd823c50ff2d1b2b183642302d42c1650bcf387b17d46f5711e08fa0995f
 
 # Test plugin: Run tests with selenium
 pytest-selenium==1.4.0 \
@@ -33,8 +28,8 @@ pytest-selenium==1.4.0 \
     --hash=sha256:888aa5d11221c1e2e39883d9b5d7637597d8e0d07bafd5081c2a7f4bebe48dd4
 
 # Test plugin: Run tests in parallel
-pytest-xdist==1.15.0 \
-    --hash=sha256:6238395f8bd050f9288a3b10f34330edece80f4424cf2b4204d6e7d622f0f00b
+pytest-xdist==1.16.0 \
+    --hash=sha256:42e5a1e5da9d7cff3e74b07f8692598382f95624f234ff7e00a3b1237e0feba2
 
 # Better HTTP requests
 # TODO: Sync with default.txt

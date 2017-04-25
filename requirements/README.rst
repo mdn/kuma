@@ -114,4 +114,3 @@ Future
 .. _hashin: https://github.com/peterbe/hashin
 .. _constraints feature: http://pip.readthedocs.io/en/stable/user_guide/#constraints-files
 .. _pipdeptree: https://github.com/naiquevin/pipdeptree
-
