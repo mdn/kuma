@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-23 06:49+0000\n"
+"PO-Revision-Date: 2017-04-26 13:50+0000\n"
 "Last-Translator: Hoony <thechunsik@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -1116,12 +1116,12 @@ msgstr[0] "%(num)s 템플릿을 찾았습니다"
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "매크로 목록을 확인하려면 <a href=\"%(url)s\">GitHub 레포지토리</a> 를 확인해주세요."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "<a href=\"%(url)s\">수동으로 매크로를 직접 검색</a>하실 수도 있습니다."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
