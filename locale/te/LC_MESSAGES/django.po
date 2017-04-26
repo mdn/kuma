@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-19 11:15+0000\n"
+"PO-Revision-Date: 2017-04-26 08:55+0000\n"
 "Last-Translator: వీవెన్ <veeven@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -186,9 +186,8 @@ msgid "References & Guides"
 msgstr "మూలాలు & సహాయకాలు"
 
 #: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learn web development"
-msgstr "జాల అభివృద్ధి నేర్చుకోవడం"
+msgstr "జాల అభివృద్ధి నేర్చుకోండి"
 
 #: jinja2/base.html:157
 msgid "Tutorials"
@@ -1080,11 +1079,11 @@ msgid "Active macros"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "%(num)s మూస కనుగొనబడింది."
-msgstr[1] "%(num)s మూసలు కనుగొనబడ్డాయి"
+msgstr[0] "%(num)s క్రియాశీల మాక్రోలు కనబడ్డాయి."
+msgstr[1] ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
@@ -1105,9 +1104,8 @@ msgid "Macro Name"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "ఆంగ్ల ట్యాగ్స్"
+msgstr "ఇంగ్లీషు పేజీల సంఖ్య"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
@@ -1122,9 +1120,8 @@ msgid "Search All Pages"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "ఆంగ్ల ట్యాగ్స్"
+msgstr "ఇంగ్లీషు పేజీలలో వెతకండి"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1408,9 +1405,8 @@ msgid "While in maintenance mode, the following actions are unavailable:"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "ఈ వ్యాసాలలో లంకె వేయబడింది"
+msgstr "వ్యాసాలను సరిదిద్దడం"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
 msgid "creating accounts"
@@ -3862,9 +3858,8 @@ msgid "Subscribe to this article and all its sub-articles"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "ఈ మయిల్స్ నుండీ అన్ సబ్స్క్సైబ్ అవ్వండి:"
+msgstr "ఈ వ్యాసం నుండి దీని ఉప-వ్యాసాల నుండి చందా విరమించండి"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3902,9 +3897,9 @@ msgid "Subscribe to the %(language)s version"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "ఈ మయిల్స్ నుండీ అన్ సబ్స్క్సైబ్ అవ్వండి:"
+msgstr "%(language)s కూర్పు నుండి చందా విరమించండి"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
