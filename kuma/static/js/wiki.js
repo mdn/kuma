@@ -310,44 +310,6 @@
 
 
     /*
-        Load and build compat tables if present in page
-    */
-    (function() {
-        // don't run if no compat table on page with min 1 row
-        var $compatFeatureRows = $('.bc-table tbody tr');
-        if(!$compatFeatureRows.length) return;
-
-        var compatCSS, compatJS;
-
-        // don't run if waffle not active
-        if(!win.waffle || !win.waffle.flag_is_active('compat_api')) return;
-
-        if(!win.mdn || !mdn.assets) return;
-        /*
-           This chaining logic will break in development if these assets are
-           split into multiple files.
-         */
-        compatCSS = mdn.assets.css['wiki-compat-tables'][0];
-        compatJS = mdn.assets.js['wiki-compat-tables'][0];
-        $('<link />').attr({
-                href: compatCSS,
-                type: 'text/css',
-                rel: 'stylesheet'
-            }).on('load', function() {
-
-                $.ajax({
-                    url: compatJS,
-                    dataType: 'script',
-                    cache: true
-                }).then(function() {
-                    $('.bc-table').mozCompatTable();
-                });
-
-            }).appendTo(doc.head);
-
-    })();
-
-    /*
         Track clicks on access menu items
     */
     $('#nav-access').on('click contextmenu', 'a', function(event) {

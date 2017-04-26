@@ -679,13 +679,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/wiki-edit.css',
     },
-    'wiki-compat-tables': {
-        'source_filenames': (
-            'styles/wiki-compat-tables.scss',
-        ),
-        'output_filename': 'build/styles/wiki-compat-tables.css',
-        'template_name': 'pipeline/javascript-array.jinja',
-    },
     'sphinx': {
         'source_filenames': (
             'styles/wiki.scss',
@@ -898,13 +891,6 @@ PIPELINE_JS = {
         'extra_context': {
             'async': True,
         },
-    },
-    'wiki-compat-tables': {
-        'source_filenames': (
-            'js/wiki-compat-tables.js',
-        ),
-        'output_filename': 'build/js/wiki-compat-tables.js',
-        'template_name': 'pipeline/javascript-array.jinja',
     },
     'helpfulness': {
         'source_filenames': (
