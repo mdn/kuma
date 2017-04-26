@@ -1,0 +1,21 @@
+/*
+.stack-form is the stackoverflow form which appears on the landing page for
+the Connect zone
+********************************************************************** */
+
+.stack-form {
+    margin-bottom: $content-block-margin;
+
+    input {
+        display: inline-block;
+        width: 90%;
+    }
+
+    .stack-icon {
+        background-image: url($path-to-images + 'stackoverflow.png');
+        display: inline-block;
+        height: 16px;
+        margin-right: $icon-margin;
+        width: 16px;
+    }
+}

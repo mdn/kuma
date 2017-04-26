@@ -60,9 +60,7 @@
 {% block site_css %}
     {{ super() }}
     {% if zone_stack %}
-      {% for zone in zone_stack|reverse() %}
-        <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.slug) }}">
-      {% endfor %}
+        {% stylesheet 'zones' %}
     {% endif %}
 {% endblock %}
 

@@ -1,0 +1,123 @@
+/*
+Custom images which appear in zone headers
+********************************************************************** */
+
+
+.zone-image {
+    @include bidi-style(right, $grid-spacing, left, auto);
+    @include bidi-value(background-position, bottom right, bottom left);
+    background-repeat: no-repeat;
+    background-size: contain;
+    top: $grid-spacing / 2 * -1;
+    bottom: $grid-spacing / 2 * -1;
+    display: block;
+    position: absolute;
+    width: -calc-col-width(3);
+
+    .zone-landing-header & {
+        bottom: $grid-spacing;
+        top: 80px;
+        height: auto;
+    }
+}
+
+
+@media #{$media-query-tablet} {
+    .zone-image {
+        .zone-landing-header & {
+            @include bidi-value(background-position, bottom right, bottom left);
+            background-size: contain;
+            opacity: .2;
+            width: 48%;
+        }
+    }
+}
+
+
+@media #{$media-query-mobile} {
+    .zone-image {
+        display: none;
+    }
+}
+
+
+/*
+archive
+====================================================================== */
+
+body[data-slug^='Archive'] .zone-image {
+    background-image: url($path-to-images + 'zones/Nuvola_apps_important.png');
+}
+
+/*
+apps
+====================================================================== */
+
+body[data-slug^='Web/Apps'] .zone-image {
+    background-image: url($path-to-images + 'zones/phq-blue.svg');
+}
+
+body[data-slug^='Web/Apps'] .zone-landing-header .zone-image {
+    bottom: 0;
+}
+
+/*
+connect
+====================================================================== */
+
+body[data-slug^='Mozilla/Connect'] .zone-image {
+    background-image: url($path-to-images + 'zones/firefox_logo.png');
+}
+
+body[data-slug^='Mozilla/Connect'] .zone-landing-header .zone-image {
+    @include bidi-value(background-position, top right, top left);
+    background-size: 100% auto;
+    bottom: 0;
+}
+
+/*
+firefox
+====================================================================== */
+body[data-slug^='Mozilla/Firefox'] .zone-image {
+    background-image: url($path-to-images + 'zones/firefox_logo-new.png');
+}
+
+body[data-slug^='Mozilla/Firefox'] .zone-landing-header .zone-image {
+    @include bidi-value(background-position, top right, top left);
+    background-size: 100% auto;
+    bottom: 0;
+}
+
+/*
+games
+====================================================================== */
+
+body[data-slug^='Games'] .zone-image {
+    background-image: url($path-to-images + 'zones/owg-logo.svg');
+}
+
+/*
+learn
+====================================================================== */
+
+body[data-slug^='Learn'] .zone-image {
+    background-image: url($path-to-images + 'zones/learning-logo-small.png');
+}
+
+/*
+marketplace
+====================================================================== */
+
+body[data-slug^='Mozilla/Marketplace'] .zone-image {
+    background-image: url($path-to-images + 'zones/fx-marketplace-icon.png');
+}
+
+body[data-slug^='Mozilla/Marketplace'] .zone-landing-header .zone-image {
+    @include bidi-value(background-position, 0 0, 0 0);
+    background-size: 120% auto;
+    bottom: 0;
+
+    @media #{$media-query-tablet} {
+        @include bidi-value(background-position, bottom center, bottom center);
+    }
+}

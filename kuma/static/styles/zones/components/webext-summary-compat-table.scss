@@ -1,0 +1,21 @@
+/*
+Styling for summary compat tables for WebExtensions
+********************************************************************** */
+
+
+table.webext-summary-compat-table {
+    table-layout: fixed;
+    width: 100%;
+
+    td.full-support {
+        background-color: rgb(204, 255, 153);
+    }
+
+    td.partial-support {
+        background-color: rgb(255, 255, 153);
+    }
+
+    td.no-support {
+        background-color: rgb(255, 204, 204);
+    }
+}

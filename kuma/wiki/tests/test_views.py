@@ -4538,17 +4538,9 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
         response = self.client.get(url, follow=True)
 
-        styles_url = reverse('wiki.styles', args=(self.root_doc.slug,),
-                             locale=settings.WIKI_DEFAULT_LANGUAGE)
-        root_expected = ('<link rel="stylesheet" type="text/css" href="%s"' %
-                         styles_url)
-        ok_(root_expected in response.content)
-
-        styles_url = reverse('wiki.styles', args=(self.middle_doc.slug,),
-                             locale=settings.WIKI_DEFAULT_LANGUAGE)
-        middle_expected = ('<link rel="stylesheet" type="text/css" href="%s"' %
-                           styles_url)
-        ok_(middle_expected in response.content)
+        page = pq(response.content)
+        zone_styles = page.find('link[href$="zones.css"]')
+        assert len(zone_styles)
 
 
 class ListDocumentTests(UserTestCase, WikiTestCase):
