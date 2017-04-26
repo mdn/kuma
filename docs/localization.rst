@@ -62,6 +62,12 @@ Updating the localizations
 When localizable strings are added, changed, or removed in the code, they need
 to be gathered into ``.po`` files for translation.
 
+.. Note::
+
+   This work is done only during the preparation to push to production. You do
+   not need to do this for your PR.
+
+
 To update the localizations:
 
 #. Inside the development environment, extract and rebuild the translations::
