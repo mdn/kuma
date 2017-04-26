@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-26 13:50+0000\n"
+"PO-Revision-Date: 2017-04-26 14:04+0000\n"
 "Last-Translator: Hoony <thechunsik@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -1103,15 +1103,14 @@ msgid "Authors"
 msgstr "저자"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
-#, fuzzy
 msgid "Active macros"
-msgstr "가장 많이 인용되는 문서"
+msgstr "활성화된 매크로"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "%(num)s 템플릿을 찾았습니다"
+msgstr[0] "%(num)s 개의 활성화된 매크로를 찾았습니다."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
@@ -1125,16 +1124,15 @@ msgstr "<a href=\"%(url)s\">수동으로 매크로를 직접 검색</a>하실 �
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "활성화된 매크로와 매크로 사용 횟수"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "매크로 이름"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "영문 태그"
+msgstr "영문 페이지 숫자"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
@@ -1142,7 +1140,7 @@ msgstr "모든 페이지 수"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "매크로 사용 검색:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
@@ -1440,7 +1438,6 @@ msgid "creating accounts"
 msgstr "계정 생성하기"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
-#, fuzzy
 msgid "logging in"
 msgstr "로그인"
 
@@ -4173,14 +4170,13 @@ msgid "Documents for review"
 msgstr "검토용 문서"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in need of review: %(tag)s"
-msgstr "검토 필요로 태그된 문서: %(tag)s"
+msgstr "검토가 필요한 문서: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
-#, fuzzy
 msgid "All articles in need of review"
-msgstr "검토 필요한 모든 문서"
+msgstr "검토가 필요한 모든 문서"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
