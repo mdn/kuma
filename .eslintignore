@@ -1,0 +1,8 @@
+kuma/static/js/libs/*
+kuma/static/js/prism-mdn/*
+kuma/wiki/jinja2/wiki/ckeditor_config.js
+
+!kuma/static/js/libs/mozilla.cookiehelper.js
+!kuma/static/js/libs/mozilla.dnthelper.js
+!kuma/static/js/libs/mozilla.trafficcop.js
+!kuma/static/js/libs/tag-it.js
