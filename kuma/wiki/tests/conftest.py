@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 """py.test fixtures for kuma.wiki.tests."""
+from datetime import datetime
+from collections import namedtuple
 
 import pytest
-from datetime import datetime
 
 from ..models import Document, Revision
 
 
-class Object(object):
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+BannedUser = namedtuple('BannedUser', 'user ban')
+Contributors = namedtuple('Contributors', 'valid banned inactive')
+DocWithContributors = namedtuple('DocWithContributors', 'doc contributors')
+DocHierarchy = namedtuple('DocHierarchy', 'top middle_top middle_bottom bottom')
 
 
 @pytest.fixture
@@ -58,10 +60,7 @@ def banned_wiki_user(db, django_user_model, wiki_user):
         date_joined=datetime(2017, 4, 18, 9, 15)
     )
     ban = user.bans.create(by=wiki_user, reason='because')
-    return Object(
-        user=user,
-        ban=ban
-    )
+    return BannedUser(user=user, ban=ban)
 
 
 @pytest.fixture
@@ -121,67 +120,67 @@ def trans_revision(trans_doc):
 
 
 @pytest.fixture
-def multi_generational_docs(wiki_user):
-    great_grandparent_doc = Document.objects.create(
+def doc_hierarchy(wiki_user):
+    top_doc = Document.objects.create(
         locale='en-US',
-        slug='Great-grandparent',
-        title='Great-grandparent Document'
+        slug='top',
+        title='Top Document'
     )
     Revision.objects.create(
-        document=great_grandparent_doc,
+        document=top_doc,
         creator=wiki_user,
-        content='<p>Great-grandparent...</p>',
-        title='Great-grandparent Document',
+        content='<p>Top...</p>',
+        title='Top Document',
         created=datetime(2017, 4, 24, 13, 49)
     )
 
-    grandparent_doc = Document.objects.create(
+    middle_top_doc = Document.objects.create(
         locale='en-US',
-        slug='Grandparent',
-        title='Grandparent Document',
-        parent_topic=great_grandparent_doc
+        slug='top/middle-top',
+        title='Middle-Top Document',
+        parent_topic=top_doc
     )
     Revision.objects.create(
-        document=grandparent_doc,
+        document=middle_top_doc,
         creator=wiki_user,
-        content='<p>Grandparent...</p>',
-        title='Grandparent Document',
+        content='<p>Middle-Top...</p>',
+        title='Middle-Top Document',
         created=datetime(2017, 4, 24, 13, 50)
     )
 
-    parent_doc = Document.objects.create(
+    middle_bottom_doc = Document.objects.create(
         locale='en-US',
-        slug='Parent',
-        title='Parent Document',
-        parent_topic=grandparent_doc
+        slug='top/middle-top/middle-bottom',
+        title='Middle-Bottom Document',
+        parent_topic=middle_top_doc
     )
     Revision.objects.create(
-        document=parent_doc,
+        document=middle_bottom_doc,
         creator=wiki_user,
-        content='<p>Parent...</p>',
-        title='Parent Document',
+        content='<p>Middle-Bottom...</p>',
+        title='Middle-Bottom Document',
         created=datetime(2017, 4, 24, 13, 51)
     )
 
-    child_doc = Document.objects.create(
+    bottom_doc = Document.objects.create(
         locale='en-US',
-        slug='Child',
-        title='Child Document',
-        parent_topic=parent_doc
+        slug='top/middle-top/middle-bottom/bottom',
+        title='Bottom Document',
+        parent_topic=middle_bottom_doc
     )
     Revision.objects.create(
-        document=child_doc,
+        document=bottom_doc,
         creator=wiki_user,
-        content='<p>Child...</p>',
-        title='Child Document',
+        content='<p>Bottom...</p>',
+        title='Bottom Document',
         created=datetime(2017, 4, 24, 13, 52)
     )
 
-    return Object(
-        child=child_doc,
-        parent=parent_doc,
-        grandparent=grandparent_doc,
-        great_grandparent=great_grandparent_doc
+    return DocHierarchy(
+        top=top_doc,
+        middle_top=middle_top_doc,
+        middle_bottom=middle_bottom_doc,
+        bottom=bottom_doc
     )
 
 
@@ -216,9 +215,11 @@ def root_doc_with_mixed_contributors(root_doc, wiki_user, wiki_user_2,
         created=datetime(2017, 4, 19, 10, 15))
     root_doc.save()
 
-    return Object(
+    return DocWithContributors(
         doc=root_doc,
-        valid_contributors=[wiki_user_2, wiki_user],
-        banned_contributor=banned_wiki_user,
-        inactive_contributor=inactive_wiki_user
+        contributors=Contributors(
+            valid=[wiki_user_2, wiki_user],
+            banned=banned_wiki_user,
+            inactive=inactive_wiki_user
+        )
     )
