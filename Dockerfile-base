@@ -53,4 +53,4 @@ RUN useradd kuma
 USER kuma
 
 ENV WEB_CONCURRENCY=4
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout=120", "kuma.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout=120", "--worker-class=meinheld.gmeinheld.MeinheldWorker", "kuma.wsgi:application"]

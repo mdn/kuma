@@ -5,6 +5,10 @@ stage('compose-test') {
   sh 'make compose-test'
 }
 
+stage('Build & push kuma_base image') {
+  sh 'make build-base push-base'
+}
+
 stage('Build & push kuma image') {
   sh 'make build-kuma push-kuma'
 }
