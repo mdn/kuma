@@ -155,10 +155,10 @@ up:
 	docker-compose up -d
 
 bash: up
-	docker exec -it kuma_web_1 bash
+	docker-compose exec web bash
 
 shell_plus: up
-	docker exec -it kuma_web_1 ./manage.py shell_plus
+	docker-compose exec web ./manage.py shell_plus
 
 compose-test:
 	docker-compose -f docker-compose.yml -f docker-compose.test.yml run $(TEST)
