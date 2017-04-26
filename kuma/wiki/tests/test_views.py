@@ -415,32 +415,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         eq_(page.find('#wikiArticle').parent().attr('open'), 'open')
         eq_(page.find('#doc-source').parent().attr('open'), None)
 
-    def test_raw_css_view(self):
-        """The raw source for a document can be requested"""
-        self.client.login(username='admin', password='testpass')
-        doc = document(title='Template:CustomSampleCSS',
-                       slug='Template:CustomSampleCSS',
-                       save=True)
-        revision(
-            save=True,
-            is_approved=True,
-            document=doc,
-            content="""
-                /* CSS here */
-
-                body {
-                    padding: 0;
-                    margin: 0;
-                }
-
-                svg:not(:root) {
-                    display:block;
-                }
-            """)
-        response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document', args=[doc.slug]))
-        ok_('text/css' in response['Content-Type'])
-
 
 class PermissionTests(UserTestCase, WikiTestCase):
     localizing_client = True

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{{ '%s%s' % (settings.SITE_URL, config.KUMA_CUSTOM_SAMPLE_CSS_PATH) }}?raw=1" />
+        {% stylesheet 'samples' %}
         {% if css %}
         <style type="text/css">
             {{ css|safe }}
