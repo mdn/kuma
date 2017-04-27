@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-27 07:39-0700\n"
-"PO-Revision-Date: 2016-11-30 20:25+0000\n"
+"PO-Revision-Date: 2017-04-27 18:43+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -293,7 +293,7 @@ msgstr "Mi legyen a minta címe?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
@@ -301,16 +301,15 @@ msgstr "Minta HTML tartalom"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Minta CSS tartalom"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-#, fuzzy
 msgid "JavaScript"
-msgstr "JavaScript tartalom"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
