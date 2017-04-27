@@ -773,6 +773,13 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/maintenance-mode-global.css',
     },
+    # embeded iframe for live samples
+    'samples': {
+        'source_filenames': (
+            'styles/samples.scss',
+        ),
+        'output_filename': 'build/styles/samples.css',
+    },
 }
 
 PIPELINE_JS = {
@@ -1230,13 +1237,6 @@ CONSTANCE_CONFIG = dict(
         'Maximum acceptable age (in seconds) of a cached response from '
         'kumascript. Passed along in a Cache-Control: max-age={value} header, '
         'which tells kumascript whether or not to serve up a cached response.'
-    ),
-    KUMA_CUSTOM_SAMPLE_CSS_PATH=(
-        '/en-US/docs/Template:CustomSampleCSS',
-        'Path to a wiki document whose raw content will be loaded as a CSS '
-        'stylesheet for live sample template. Will also cause the ?raw '
-        'parameter for this path to send a Content-Type: text/css header. Empty '
-        'value disables the feature altogether.',
     ),
     DIFF_CONTEXT_LINES=(
         0,

@@ -7,7 +7,6 @@ except ImportError:
     from StringIO import StringIO
 
 import newrelic.agent
-from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -15,7 +14,6 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          HttpResponsePermanentRedirect, JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.http import urlunquote_plus
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
@@ -561,11 +559,8 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
     response['X-Robots-Tag'] = 'noindex'
-    absolute_url = urlunquote_plus(doc.get_absolute_url())
 
-    if absolute_url in (config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
-        response['Content-Type'] = 'text/css; charset=utf-8'
-    elif doc.is_template:
+    if doc.is_template:
         # Treat raw, un-bleached template source as plain text, not HTML.
         response['Content-Type'] = 'text/plain; charset=utf-8'
 
