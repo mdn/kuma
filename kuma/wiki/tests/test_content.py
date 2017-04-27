@@ -2,6 +2,7 @@
 from urlparse import urljoin
 
 from cssselect.parser import SelectorSyntaxError
+from django.test import TestCase
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 import bleach
@@ -22,14 +23,15 @@ from ..models import Document
 from ..templatetags.jinja_helpers import bugize_text
 
 
-class ContentSectionToolTests(UserTestCase):
-
+class GetContentSectionsTests(TestCase):
     def test_section_pars_for_empty_docs(self):
         doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
                        html='<!-- -->')
         res = get_content_sections(doc.html)
         eq_(type(res).__name__, 'list')
 
+
+class InjectSectionIDsTests(TestCase):
     def test_section_ids(self):
 
         doc_src = """
@@ -112,6 +114,8 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         self.assertHTMLEqual(result_src, expected)
 
+
+class ExtractSectionTests(TestCase):
     def test_simple_implicit_section_extract(self):
         doc_src = """
             <h1 id="s1">Head 1</h1>
@@ -294,6 +298,31 @@ class ContentSectionToolTests(UserTestCase):
                                    .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_ignore_heading_section_extract(self):
+        doc_src = """
+            <p>test</p>
+            <h1 id="s4">Head 4</h1>
+            <p>test</p>
+            <h2 id="s4-1">Head 4-1</h2>
+            <p>test</p>
+            <h3 id="s4-2">Head 4-1-1</h3>
+            <p>test s4-2</p>
+            <h1 id="s4-next">Head</h1>
+            <p>test</p>
+        """
+        expected = """
+            <p>test</p>
+            <h3 id="s4-2">Head 4-1-1</h3>
+            <p>test s4-2</p>
+        """
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="s4-1",
+                                                   ignore_heading=True)
+                                   .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+
+class ReplaceSectionTests(TestCase):
     def test_basic_section_replace(self):
         doc_src = """
             <h1 id="s1">Head 1</h1>
@@ -326,6 +355,41 @@ class ContentSectionToolTests(UserTestCase):
                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_ignore_heading_section_replace(self):
+        doc_src = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        replace_src = """
+            <p>replacement worked yay hooray</p>
+        """
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s2">Head 2</h1>
+            <p>replacement worked yay hooray</p>
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        result = (kuma.wiki.content
+                  .parse(doc_src)
+                  .replaceSection(id="s2",
+                                  replace_src=replace_src,
+                                  ignore_heading=True)
+                  .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+
+class InjectSectionEditingLinksTests(TestCase):
     def test_section_edit_links(self):
         doc_src = """
             <h1 id="s1">Head 1</h1>
@@ -355,6 +419,8 @@ class ContentSectionToolTests(UserTestCase):
                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+
+class CodeSyntaxFilterTests(TestCase):
     def test_code_syntax_conversion(self):
         doc_src = """
             <h2>Some JavaScript</h2>:
@@ -385,6 +451,8 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(CodeSyntaxFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+
+class SectionIDFilterTests(TestCase):
     def test_non_ascii_section_headers(self):
         headers = [
             (u'Documentation à propos de HTML',
@@ -410,7 +478,9 @@ class ContentSectionToolTests(UserTestCase):
         for original, slugified in headers:
             ok_(slugified == section_filter.slugify(original))
 
-    @pytest.mark.toc
+
+@pytest.mark.toc
+class TOCFilterTests(TestCase):
     def test_generate_toc(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -460,7 +530,6 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @pytest.mark.toc
     def test_generate_toc_h2(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -488,7 +557,6 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(H2TOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @pytest.mark.toc
     def test_generate_toc_h3(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -543,6 +611,8 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+
+class FilterOutNoIncludeTests(TestCase):
     def test_noinclude(self):
         doc_src = u"""
             <div class="noinclude">{{ XULRefAttr() }}</div>
@@ -575,6 +645,8 @@ class ContentSectionToolTests(UserTestCase):
         except Exception:
             self.fail("There should not have been an exception")
 
+
+class ExtractCodeSampleTests(UserTestCase):
     def test_sample_code_extraction(self):
         sample_html = u"""
             <div class="foo">
@@ -716,6 +788,8 @@ class ContentSectionToolTests(UserTestCase):
         except SelectorSyntaxError:
             self.fail("There should be no SelectorSyntaxError")
 
+
+class BugizeTests(TestCase):
     def test_bugize_text(self):
         bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
         good = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">bug 12345</a> again. &lt;img src=&#34;http://davidwalsh.name&#34; /&gt; &lt;a href=&#34;&#34;&gt;javascript&gt;&lt;/a&gt;'
@@ -725,6 +799,8 @@ class ContentSectionToolTests(UserTestCase):
         good_upper = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">Bug 12345</a> again.'
         eq_(bugize_text(bad_upper), Markup(good_upper))
 
+
+class FilterIframeHostsTests(TestCase):
     def test_iframe_host_filter(self):
         slug = 'test-code-embed'
         embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
@@ -814,6 +890,8 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
+
+class BleachTests(TestCase):
     def test_bleach_filter_invalid_protocol(self):
         doc_src = """
             <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
@@ -833,6 +911,8 @@ class ContentSectionToolTests(UserTestCase):
         eq_(page.find('#xss3').attr('href'), None)
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
+
+class AnnotateLinksTests(UserTestCase):
     def test_link_annotation(self):
         rev = revision(is_approved=True, save=True,
                        content="This document exists")
@@ -924,6 +1004,8 @@ class ContentSectionToolTests(UserTestCase):
                                             .serialize())
             self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
 
+
+class FilterEditorSafetyTests(TestCase):
     def test_editor_safety_filter(self):
         """Markup that's hazardous for editing should be stripped"""
         doc_src = """
@@ -952,62 +1034,6 @@ class ContentSectionToolTests(UserTestCase):
                       .filterEditorSafety()
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
-
-    def test_ignore_heading_section_extract(self):
-        doc_src = """
-            <p>test</p>
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h2>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test s4-2</p>
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-        """
-        expected = """
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test s4-2</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s4-1",
-                                                   ignore_heading=True)
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
-
-    def test_ignore_heading_section_replace(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2">Head 2</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s3">Head 3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        replace_src = """
-            <p>replacement worked yay hooray</p>
-        """
-        expected = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2">Head 2</h1>
-            <p>replacement worked yay hooray</p>
-            <h1 id="s3">Head 3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .replaceSection(id="s2",
-                                  replace_src=replace_src,
-                                  ignore_heading=True)
-                  .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
 
 class AllowedHTMLTests(KumaTestCase):
