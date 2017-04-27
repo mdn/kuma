@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-27 07:39-0700\n"
-"PO-Revision-Date: 2016-12-01 00:36+0000\n"
-"Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
+"PO-Revision-Date: 2017-04-27 16:39+0000\n"
+"Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -293,7 +293,7 @@ msgstr "Qual deve ser o título do exemplo?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
@@ -301,16 +301,15 @@ msgstr "Conteúdo HTML do exemplo"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Conteúdo CSS do exemplo"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-#, fuzzy
 msgid "JavaScript"
-msgstr "Conteúdo JavaScript"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
