@@ -51,7 +51,7 @@ install:
 
 clean:
 	rm -rf .coverage build/
-	find kuma -name '*.pyc' -exec rm {} \;
+	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -prune -exec rm -rf {} +
 	mkdir -p build/locale
 
 locale:
