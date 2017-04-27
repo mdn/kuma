@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-12-01 09:56+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
@@ -141,46 +141,6 @@ msgstr "Selektearre: "
 msgid "New interest..."
 msgstr "Nije ynteresse…"
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Ymplementaasjeopmerkingen iepenje"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Iepenje"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Werom nei kompatibiliteitstabel"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Slute"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Nije kompatibiliteitstabellen binne yn bèta "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Mear oer de bèta."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "De enkête starte"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "In flater melde"
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Meld. Tank!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Alde tabel toane"
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Konsept bewarje"
@@ -262,15 +222,15 @@ msgstr "Nij label…"
 msgid "How to read CSS syntax."
 msgstr "CSS-syntaksis lêze."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Sykje by Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Jo browser stipet gjin MathML. Dêrom is in CSS-wermfalferzje brûkt."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Details"
 
@@ -331,23 +291,24 @@ msgid "What should the sample title be?"
 msgstr "Wat soe de foarbyldtitel wêze moatte?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML-ynhâld"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Foarbyld fan HTML-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS-ynhâld"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Foarbyld fan CSS-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -397,3 +358,39 @@ msgstr "De URL dy't jo ynfierd hawwe liket net jildich te wêzen"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Standert"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Ymplementaasjeopmerkingen iepenje"
+
+#~ msgid "Open"
+#~ msgstr "Iepenje"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Werom nei kompatibiliteitstabel"
+
+#~ msgid "Close"
+#~ msgstr "Slute"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Nije kompatibiliteitstabellen binne yn bèta "
+
+#~ msgid "More about the beta."
+#~ msgstr "Mear oer de bèta."
+
+#~ msgid "Take the survey"
+#~ msgstr "De enkête starte"
+
+#~ msgid "Report an error."
+#~ msgstr "In flater melde"
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Meld. Tank!"
+
+#~ msgid "Show old table."
+#~ msgstr "Alde tabel toane"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML-ynhâld"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS-ynhâld"

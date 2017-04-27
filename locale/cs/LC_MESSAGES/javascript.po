@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-12-05 11:58+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
@@ -141,46 +141,6 @@ msgstr "Vybráno: "
 msgid "New interest..."
 msgstr "Nový zájem..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Otevřít implementační poznámky"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Otevřít"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Zpět na tabulku kompatibility."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Zavřít"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Nové tabulky kompatibility jsou aktuálně v betě "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Více o této betě."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Zúčastnit se průzkumu"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Nahlásit chybu."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Nahlášeno. Děkujeme!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Zobrazit starou tabulku."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Uložit koncept"
@@ -262,15 +222,15 @@ msgstr "Nový štítek..."
 msgid "How to read CSS syntax."
 msgstr "Jak číst CSS syntaxi."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Prohledat Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Detaily"
 
@@ -331,23 +291,24 @@ msgid "What should the sample title be?"
 msgstr "Jaký má být ukázkový nadpis?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML obsah"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Ukázkový HTML obsah"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS obsah"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Ukázkový CSS obsah"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScriptový obsah"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -397,6 +358,42 @@ msgstr "Zadaná URL není validní"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Výchozí"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Otevřít implementační poznámky"
+
+#~ msgid "Open"
+#~ msgstr "Otevřít"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Zpět na tabulku kompatibility."
+
+#~ msgid "Close"
+#~ msgstr "Zavřít"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Nové tabulky kompatibility jsou aktuálně v betě "
+
+#~ msgid "More about the beta."
+#~ msgstr "Více o této betě."
+
+#~ msgid "Take the survey"
+#~ msgstr "Zúčastnit se průzkumu"
+
+#~ msgid "Report an error."
+#~ msgstr "Nahlásit chybu."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Nahlášeno. Děkujeme!"
+
+#~ msgid "Show old table."
+#~ msgstr "Zobrazit starou tabulku."
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML obsah"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS obsah"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-11-30 20:25+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
@@ -142,46 +142,6 @@ msgstr "Kiválasztva: "
 msgid "New interest..."
 msgstr "Új érdeklődési kör…"
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Megvalósítási megjegyzések megnyitása"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Megnyitás"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Visszatérés a kompatibilitási táblázathoz."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Bezárás"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Új kompatibilitási táblázatok a béta verzióban "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "További információk a béta verzióról."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Kérdőív kitíöltése"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Hiba bejelentése."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Bejelentve. Köszönjük!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Régi táblázat megjelenítése."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Piszkozat mentése"
@@ -263,15 +223,15 @@ msgstr "Új címke…"
 msgid "How to read CSS syntax."
 msgstr "Hogyan olvasandó a CSS szintaxis."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Keresés a Stack Overflow oldalon"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Böngészője nem támogatja a MathML-t. Egy CSS tartalékmegoldás lett használva helyette."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Részletek"
 
@@ -332,23 +292,24 @@ msgid "What should the sample title be?"
 msgstr "Mi legyen a minta címe?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML tartalom"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Minta HTML tartalom"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS tartalom"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Minta CSS tartalom"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript tartalom"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,3 +359,39 @@ msgstr "A megadott URL valószínűleg érvénytelen"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Alapértelmezett"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Megvalósítási megjegyzések megnyitása"
+
+#~ msgid "Open"
+#~ msgstr "Megnyitás"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Visszatérés a kompatibilitási táblázathoz."
+
+#~ msgid "Close"
+#~ msgstr "Bezárás"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Új kompatibilitási táblázatok a béta verzióban "
+
+#~ msgid "More about the beta."
+#~ msgstr "További információk a béta verzióról."
+
+#~ msgid "Take the survey"
+#~ msgstr "Kérdőív kitíöltése"
+
+#~ msgid "Report an error."
+#~ msgstr "Hiba bejelentése."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Bejelentve. Köszönjük!"
+
+#~ msgid "Show old table."
+#~ msgstr "Régi táblázat megjelenítése."
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML tartalom"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS tartalom"

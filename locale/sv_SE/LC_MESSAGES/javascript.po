@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-11-30 18:47+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
@@ -141,46 +141,6 @@ msgstr "Markerade: "
 msgid "New interest..."
 msgstr "Nytt intresse..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Öppna implementeringsanteckningar"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Öppna"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Tillbaka till kompatibilitetstabell."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Stäng"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Nya kompatibilitetstabeller är i beta "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Mer om beta."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Gör undersökningen"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Rapportera ett fel."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Rapporterat. Tack!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Visa gammal tabell."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Spara utkast"
@@ -262,15 +222,15 @@ msgstr "Ny tagg..."
 msgid "How to read CSS syntax."
 msgstr "Hur man läser CSS-syntax."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Sök Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Din webbläsare stöder inte MathML. En CSS fallback har använts i stället."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Detaljer"
 
@@ -331,23 +291,24 @@ msgid "What should the sample title be?"
 msgstr "Vad ska titeln vara på exemplet?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML-innehåll"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Exempel HTML-innehåll"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS-innehåll"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Exempel CSS-innehåll"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript-innehåll"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -397,6 +358,42 @@ msgstr "Den URL som du har angett verkar inte vara giltig"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Standard"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Öppna implementeringsanteckningar"
+
+#~ msgid "Open"
+#~ msgstr "Öppna"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Tillbaka till kompatibilitetstabell."
+
+#~ msgid "Close"
+#~ msgstr "Stäng"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Nya kompatibilitetstabeller är i beta "
+
+#~ msgid "More about the beta."
+#~ msgstr "Mer om beta."
+
+#~ msgid "Take the survey"
+#~ msgstr "Gör undersökningen"
+
+#~ msgid "Report an error."
+#~ msgstr "Rapportera ett fel."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Rapporterat. Tack!"
+
+#~ msgid "Show old table."
+#~ msgstr "Visa gammal tabell."
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML-innehåll"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS-innehåll"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

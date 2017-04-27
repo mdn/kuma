@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2017-01-30 01:22+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -142,46 +142,6 @@ msgstr "선택됨: "
 msgid "New interest..."
 msgstr "새로운 관심사..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "구현 노트 열기"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "열기"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "호환성 테이블로 돌아갑니다."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "닫기"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "새로운 호환성 테이블은 베타 버전에 있습니다 "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "베타 자세히 보기"
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "설문 조사에 참여해주세요."
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "오류를 보고합니다."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "보고되었습니다. 감사합니다!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "이전 표를 표시합니다."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "초안 저장"
@@ -263,15 +223,15 @@ msgstr "새 태그..."
 msgid "How to read CSS syntax."
 msgstr "CSS 구문을 읽는 방법"
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "스택 오버플로우 검색"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "브라우저가 MathML을 지원하지 않습니다. CSS 폴백이 대신 사용되었습니다."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "상세 정보"
 
@@ -332,23 +292,24 @@ msgid "What should the sample title be?"
 msgstr "샘플 제목을 무엇으로 할까요?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML 콘텐츠"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "HTML 콘텐츠 예제"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS 콘텐츠"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "CSS 콘텐츠 예제"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript 콘텐츠"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,3 +359,39 @@ msgstr "입력한 URL이 유효하게 보이지 않습니다"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "기본 설정"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "구현 노트 열기"
+
+#~ msgid "Open"
+#~ msgstr "열기"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "호환성 테이블로 돌아갑니다."
+
+#~ msgid "Close"
+#~ msgstr "닫기"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "새로운 호환성 테이블은 베타 버전에 있습니다 "
+
+#~ msgid "More about the beta."
+#~ msgstr "베타 자세히 보기"
+
+#~ msgid "Take the survey"
+#~ msgstr "설문 조사에 참여해주세요."
+
+#~ msgid "Report an error."
+#~ msgstr "오류를 보고합니다."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "보고되었습니다. 감사합니다!"
+
+#~ msgid "Show old table."
+#~ msgstr "이전 표를 표시합니다."
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML 콘텐츠"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS 콘텐츠"

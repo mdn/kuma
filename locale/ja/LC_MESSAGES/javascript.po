@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2017-04-13 20:14+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
@@ -142,46 +142,6 @@ msgstr "選択済み: "
 msgid "New interest..."
 msgstr "新たな興味..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "実装メモを開く"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "開く"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "互換性の表へ戻る"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "閉じる"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "新しい互換性の表はベータ版です "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "ベータ版に関する詳細"
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "アンケートに答える"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "問題を報告"
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "報告が送信されました。ありがとうございます！"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "古い表を表示"
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "下書きを保存"
@@ -263,15 +223,15 @@ msgstr "新しいタグ..."
 msgid "How to read CSS syntax."
 msgstr "CSS 構文の読み方"
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Stack Overflow を検索"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "お使いのブラウザーは MathML に対応していません。代わりに CSS フォールバックを表示します。"
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "詳細"
 
@@ -332,23 +292,24 @@ msgid "What should the sample title be?"
 msgstr "サンプルのタイトルを入力してください。"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML コンテンツ"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "サンプル HTML コンテンツ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS コンテンツ"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "サンプル CSS コンテンツ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript コンテンツ"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,6 +359,42 @@ msgstr "入力された URL が正しくないようです"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "既定値"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "実装メモを開く"
+
+#~ msgid "Open"
+#~ msgstr "開く"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "互換性の表へ戻る"
+
+#~ msgid "Close"
+#~ msgstr "閉じる"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "新しい互換性の表はベータ版です "
+
+#~ msgid "More about the beta."
+#~ msgstr "ベータ版に関する詳細"
+
+#~ msgid "Take the survey"
+#~ msgstr "アンケートに答える"
+
+#~ msgid "Report an error."
+#~ msgstr "問題を報告"
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "報告が送信されました。ありがとうございます！"
+
+#~ msgid "Show old table."
+#~ msgstr "古い表を表示"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML コンテンツ"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS コンテンツ"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

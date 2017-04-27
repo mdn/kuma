@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2017-03-29 04:41+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -142,46 +142,6 @@ msgstr "নির্বাচিত: "
 msgid "New interest..."
 msgstr "নতুন আগ্রহ..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "ইমপ্লিমেন্টেশন নোট খুলুন"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "খুলুন"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "কম্প্যাটিবিলিটি টেবিলে ফিরে যাও।"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "বন্ধ"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "নতুন কম্প্যাটিবিলিটি টেবিলগুলো বেটা সংস্করণে আছে "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "বেটা সংস্করণ সম্পর্কে আরও জানুন।"
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "জরিপে অংশ নিন"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "ভুলটি রিপোর্ট করুন।"
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "রিপোর্ট সম্পন্ন। ধন্যবাদ!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "পুরনো টেবিল দেখুন।"
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr ""
@@ -263,15 +223,15 @@ msgstr "নতুন ট্যাগ..."
 msgid "How to read CSS syntax."
 msgstr "কিভাবে CSS সিনট্যাক্স পড়তে হয়।"
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr ""
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "বিস্তারিত"
 
@@ -332,15 +292,15 @@ msgid "What should the sample title be?"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML কনটেন্ট"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
+msgid "CSS"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
@@ -348,7 +308,7 @@ msgid "Sample CSS Content"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+msgid "JavaScript"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,3 +358,36 @@ msgstr ""
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "স্বাভাবিক"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "ইমপ্লিমেন্টেশন নোট খুলুন"
+
+#~ msgid "Open"
+#~ msgstr "খুলুন"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "কম্প্যাটিবিলিটি টেবিলে ফিরে যাও।"
+
+#~ msgid "Close"
+#~ msgstr "বন্ধ"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "নতুন কম্প্যাটিবিলিটি টেবিলগুলো বেটা সংস্করণে আছে "
+
+#~ msgid "More about the beta."
+#~ msgstr "বেটা সংস্করণ সম্পর্কে আরও জানুন।"
+
+#~ msgid "Take the survey"
+#~ msgstr "জরিপে অংশ নিন"
+
+#~ msgid "Report an error."
+#~ msgstr "ভুলটি রিপোর্ট করুন।"
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "রিপোর্ট সম্পন্ন। ধন্যবাদ!"
+
+#~ msgid "Show old table."
+#~ msgstr "পুরনো টেবিল দেখুন।"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML কনটেন্ট"

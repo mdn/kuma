@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
+"POT-Creation-Date: 2017-04-27 07:41-0700\n"
 "PO-Revision-Date: 2017-04-26 08:55+0000\n"
 "Last-Translator: వీవెన్ <veeven@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
@@ -28,39 +28,35 @@ msgid "Your profile has been banned from making edits."
 msgstr "మీ ప్రొఫైల్ నున్డి మార్పులు చెయడమ్ నిరాకరించబడినది."
 
 #: jinja2/403.html:27
-msgid "This user's profile has been banned."
-msgstr "ఈ వాడుకరి ప్రొఫైలు నిషేధించబడింది."
-
-#: jinja2/403.html:29
 msgid "You must sign in to view all history"
 msgstr "చరిత్రనంతా చూడడానికి మీరు ప్రవేశించి ఉండాలి"
 
-#: jinja2/403.html:39 jinja2/handlers/400.html:21
+#: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>క్షమించండి %(name)s, మేము అలా చేయలేము.</p>"
 
-#: jinja2/403.html:43 jinja2/handlers/400.html:25
+#: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>క్షమించండి, మేమలా చేయలేము.</p>"
 
-#: jinja2/403.html:50
+#: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li>మరలా ప్రయత్నించడానికి మీ ఖాతానుంచి<a href=\"%(logout_url)s\">నిష్క్రమించండి</a> .</li>"
 
-#: jinja2/403.html:54 jinja2/handlers/400.html:36
+#: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li>మరలా ప్రయత్నించడానికి మీ ఖాతా లోకి <a href=\"%(login_url)s\">ప్రవేశించండి</a> .</li>"
 
-#: jinja2/403.html:62
+#: jinja2/403.html:60
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a>మాథ్యూ ఇన్మాన్ చేత <a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
-"rel=\"nofollow\">టమ్ బీస్టులు</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a>మాథ్యూ ఇన్మాన్ చేత <a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">టమ్ "
+"బీస్టులు</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -80,7 +76,11 @@ msgstr "మీరు ఒక శోధనను ప్రయత్నించవ
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr "ఒకవేళ మీరు ప్రమాణపత్ర లంకెను అనుసరిస్తున్నట్లైతే, మీరు ఖాతాలోకి ప్రవేశించి పుటను సృష్టించవచ్చు. లేదా, దయచేసి <a href=\"%(bug_form_url)s\" rel=\"nofollow\">లోపాన్ని నివేదించండి </a>. ధన్యవాదాలు!"
 
-#: jinja2/404.html:36
+#: jinja2/404.html:35
+msgid "This user's profile has been banned."
+msgstr "ఈ వాడుకరి ప్రొఫైలు నిషేధించబడింది."
+
+#: jinja2/404.html:42
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr "<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a> మాథ్యూ ఇన్మాన్ చేత <a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">టం బీస్ట్స్</a>"
@@ -627,8 +627,8 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
-"మేము మీ చందాను కనుగొనలేకపోయాం. ఒకవేళ చందా రద్దుచేయబడి ఉండవచ్చు లేదా చందా రద్దు లంకెలో పొరపాటు ఉండవచ్చు. దయచేసి ఈమెయిల్ లో పూర్తి లింకు విహారిణిలోకి వచ్చిందో లేదో పరిశీలించండి. ఒకేళ లంకె చివరి భాగము "
-"చిరునామా పెట్టెలో రెండో వరసలోకి వెళ్లినట్లయితే ,లంకెను నకలు తీసి విహారిణిలో అతికించి ప్రయత్నించండి."
+"మేము మీ చందాను కనుగొనలేకపోయాం. ఒకవేళ చందా రద్దుచేయబడి ఉండవచ్చు లేదా చందా రద్దు లంకెలో పొరపాటు ఉండవచ్చు. దయచేసి ఈమెయిల్ లో పూర్తి లింకు విహారిణిలోకి వచ్చిందో లేదో పరిశీలించండి. ఒకేళ లంకె చివరి భాగము చిరునామా పెట్టెలో రెండో వరసలోకి వెళ్లినట్లయితే ,లంకెను నకలు తీసి విహారిణిలో "
+"అతికించి ప్రయత్నించండి."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -820,8 +820,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"ఇవి మీ API కీలకాలు. అవి MDN లో మీ తరుపున కార్యాలను నిర్వర్తించే అనువర్తనాలను నిర్మించడంలో ఉపయోగపడతాయి. ఒకవేళ మీరు వీటిలో దేన్నైనా ఉపయోగించడం ఆపివేసినా, లేదా మీరు మీ ఖాతాతో నమ్మని వ్యక్తులకు అవి "
-"అందుబాటులో ఉన్నాయని అనుమానించినా కీ లేదా కీలకాన్ని తొలగించండి. ఎప్పుడైనా మరొక పునస్థాపన కీ ను సృష్టించడం చాలా సులభం."
+"ఇవి మీ API కీలకాలు. అవి MDN లో మీ తరుపున కార్యాలను నిర్వర్తించే అనువర్తనాలను నిర్మించడంలో ఉపయోగపడతాయి. ఒకవేళ మీరు వీటిలో దేన్నైనా ఉపయోగించడం ఆపివేసినా, లేదా మీరు మీ ఖాతాతో నమ్మని వ్యక్తులకు అవి అందుబాటులో ఉన్నాయని అనుమానించినా కీ లేదా కీలకాన్ని తొలగించండి. ఎప్పుడైనా మరొక "
+"పునస్థాపన కీ ను సృష్టించడం చాలా సులభం."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -847,11 +847,10 @@ msgstr "API కీలను వాడడానికి మీకు ప్ర�
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
-"<p>ఈ క్రింద మీరు ఈ కీని ఎలా వాడాలనుకుంటున్నారో తెలపండి. <p><strong>NOTE:</strong> మీరు తర్వాత ఈ కీ ని కనుగొనటానికి ఈ కీ ని సృష్టించిన తేదీ సమయం మాత్రమే కాకుండా, మీరు తెలిపిన విద్యుక్త ఉపయోగమే "
-"మిగిలిన ఏకైక దారి. కాబట్టి వీలైనంత స్పష్టంగా పేర్కొనండి. </p>"
+"<p>ఈ క్రింద మీరు ఈ కీని ఎలా వాడాలనుకుంటున్నారో తెలపండి. <p><strong>NOTE:</strong> మీరు తర్వాత ఈ కీ ని కనుగొనటానికి ఈ కీ ని సృష్టించిన తేదీ సమయం మాత్రమే కాకుండా, మీరు తెలిపిన విద్యుక్త ఉపయోగమే మిగిలిన ఏకైక దారి. కాబట్టి వీలైనంత స్పష్టంగా పేర్కొనండి. </p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -863,9 +862,8 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p> మీ నూతన కీ సృష్టింపబడింది. దయచేసి కింద వివరాలను ఒకపారి పరికించండి (ఉ.దా. వాటిని మీ అనువర్తన ప్రాధాన్యతలలోకి నకలు తీయడం ద్వారా). ఈ సమాచారము మరలా ఎప్పుడూ ప్రదర్శింపబడదు, మరియు ఒకసారి పోతే మరలా "
-"పునఃప్రాప్యత పొందలేము.</p><p><strong>NOTE:</strong> పరికించడం పూర్తైన తర్వాత, <a class=\"button\" href=\"%(list_url)s\"> కీ జాబితాకి తిరిగి వెళ్లండి</a>. ఈ పుటను తిరితిప్పితే నూతన కీ "
-"సృష్టింపబడుతుంది. </p>"
+"<p> మీ నూతన కీ సృష్టింపబడింది. దయచేసి కింద వివరాలను ఒకపారి పరికించండి (ఉ.దా. వాటిని మీ అనువర్తన ప్రాధాన్యతలలోకి నకలు తీయడం ద్వారా). ఈ సమాచారము మరలా ఎప్పుడూ ప్రదర్శింపబడదు, మరియు ఒకసారి పోతే మరలా పునఃప్రాప్యత పొందలేము.</p><p><strong>NOTE:</strong> "
+"పరికించడం పూర్తైన తర్వాత, <a class=\"button\" href=\"%(list_url)s\"> కీ జాబితాకి తిరిగి వెళ్లండి</a>. ఈ పుటను తిరితిప్పితే నూతన కీ సృష్టింపబడుతుంది. </p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -1238,11 +1236,9 @@ msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN) ఫ
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
-msgstr ""
-"Mozillaఅభివృద్ధికారుల జాలం (MDN), HTML, CSS, మరియు జాలగూళ్ల, HTML5 అనువర్తనాల APIలు వంటి స్వేచ్ఛాజాల సాంకేతికతకు సంబంధించి సమాచారాన్ని అందిస్తుంది. ఇది ఫైర్ఫాక్స్ OS వంటి ఇతర ఫైర్ఫాక్స్ ఉత్పత్తుల "
-"సమాచారాన్ని కూడా ప్రామాణికరిస్తుంది."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
+msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN), HTML, CSS, మరియు జాలగూళ్ల, HTML5 అనువర్తనాల APIలు వంటి స్వేచ్ఛాజాల సాంకేతికతకు సంబంధించి సమాచారాన్ని అందిస్తుంది. ఇది ఫైర్ఫాక్స్ OS వంటి ఇతర ఫైర్ఫాక్స్ ఉత్పత్తుల సమాచారాన్ని కూడా ప్రామాణికరిస్తుంది."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1354,8 +1350,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">ప్రపంచ వ్యాప్తంగా</span> <span class=\"row2\"> <span class=\"number\">%(locales)s</span> భాషలు మరియు స్థానికీకరణలో </span><span class=\"row3\"><span "
-"class=\"number\">%(contributors)s</span>భాగస్వాములలో మీరూ చేరండి.</span></p>"
+"<p class=\"numbers\"> <span class=\"row1\">ప్రపంచ వ్యాప్తంగా</span> <span class=\"row2\"> <span class=\"number\">%(locales)s</span> భాషలు మరియు స్థానికీకరణలో </span><span class=\"row3\"><span class=\"number\">"
+"%(contributors)s</span>భాగస్వాములలో మీరూ చేరండి.</span></p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
@@ -1363,8 +1359,7 @@ msgstr "MDNను మెరుగుపరచడంలో తోడ్పడం�
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr ""
-"MDN యొక్క అన్ని భాగాలూ (పత్రాలు మరియు జాలగూటితో సహా) ఒక స్వేచ్ఛా జాల అభివృద్ధికారుల సంఘం చేత సృష్టింపబడ్డాయి. దయచేసి మీరూ మాతో చేరండి! సహాయం చేయటానికి కింది వాటిలో ఏదో ఒక మార్గాన్ని ఎన్నుకోండి:"
+msgstr "MDN యొక్క అన్ని భాగాలూ (పత్రాలు మరియు జాలగూటితో సహా) ఒక స్వేచ్ఛా జాల అభివృద్ధికారుల సంఘం చేత సృష్టింపబడ్డాయి. దయచేసి మీరూ మాతో చేరండి! సహాయం చేయటానికి కింది వాటిలో ఏదో ఒక మార్గాన్ని ఎన్నుకోండి:"
 
 #: kuma/landing/jinja2/landing/homepage.html:175
 msgid "Getting started"
@@ -1436,8 +1431,8 @@ msgstr "కాస్త అభివృద్ధికారుల ప్రే�
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
@@ -1737,8 +1732,8 @@ msgstr "రకం"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1758,15 +1753,15 @@ msgstr "వాడుకరి"
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr ""
 
-#: kuma/users/backends.py:32
+#: kuma/users/backends.py:34
 msgid "algorithm"
 msgstr "అల్గోరిథం"
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:35
 msgid "salt"
 msgstr "ఉప్పు"
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:36
 msgid "hash"
 msgstr "హ్యాష్"
 
@@ -1939,25 +1934,25 @@ msgstr "నేను అంగేకరిస్తున్నాను"
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:474
+#: kuma/users/views.py:473
 msgid "Email address"
 msgstr "ఈ మెయిల్ చిరునామా"
 
-#: kuma/users/views.py:520
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:523
+#: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:527 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "ఇతర:"
 
-#: kuma/users/views.py:529
+#: kuma/users/views.py:528
 msgid "Email:"
 msgstr "ఇమెయిల్:"
 
@@ -2237,8 +2232,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -2797,7 +2792,7 @@ msgstr ""
 msgid "Admin"
 msgstr "నిర్వాహకులు"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "వికీ"
 
@@ -2817,7 +2812,7 @@ msgstr ""
 msgid "Edit section"
 msgstr ""
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:82
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr ""
@@ -2978,12 +2973,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "శీర్షిక:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
 msgid "Title of article"
 msgstr "వ్యాసపు శీర్షిక"
 
@@ -3036,11 +3031,11 @@ msgstr ""
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:895
+#: kuma/wiki/forms.py:906
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:896
+#: kuma/wiki/forms.py:907
 msgid "New article URL"
 msgstr ""
 
@@ -3187,8 +3182,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3356,15 +3351,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:287
@@ -4229,27 +4224,27 @@ msgstr "విషయాన్ని సృష్టించడంలో ఏద�
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "పత్రం ముందే ఉనికిలో ఉంది. గమనిక: ఒక తరలింపబడిన పత్రం వైపు ఉన్న దారి మళ్లింపును తొలగించకుండా ఆ పత్రాన్ని పూర్వస్థితికి తీసుకురాలేరు."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "%(url)s నుండి దారి మరల్చబడింది"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "నేను MDN పై %(title)s గురించి తెలుసుకున్నాను."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "మద్దతు లేని విషయ రీతి: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "అభ్యర్ధనను అన్వయించడంలో లోపం: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "ETag ముందస్తు షరతు విఫలమయ్యింది"
 

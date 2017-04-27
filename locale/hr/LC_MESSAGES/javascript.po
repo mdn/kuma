@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-09-19 22:56+0000\n"
 "Last-Translator: Stjepan Treger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian https://pontoon.mozilla.org/hr/\n"
@@ -141,46 +141,6 @@ msgstr "Odabrano: "
 msgid "New interest..."
 msgstr "Novi interest..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Otvorite bilješke implementacije"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Otvori"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Vratite na tablicu kompatibilnosti."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Zatvori"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Nove tablice kompatibilnosti su u beti "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Više o beti."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Ispunite anketu"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Prijavite grešku."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Prijavljeno. Hvala!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Prikaži staru tablicu."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Spremi skicu"
@@ -262,15 +222,15 @@ msgstr "Novi tag..."
 msgid "How to read CSS syntax."
 msgstr "Kako čitati CSS sintaksu."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Pretraži Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Vaš preglednik ne podržava MathML. Bit će korišten CSS rezerva."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Detalji"
 
@@ -331,23 +291,24 @@ msgid "What should the sample title be?"
 msgstr "Što bi trebao biti naslov primjera?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML sadržaj"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Primjer HTML sadržaja"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS sadržaj"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Primjer CSS sadržaja"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript sadržaj"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -397,3 +358,39 @@ msgstr "URL kojeg ste unijeli izgleda da nije valjan"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Zadano"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Otvorite bilješke implementacije"
+
+#~ msgid "Open"
+#~ msgstr "Otvori"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Vratite na tablicu kompatibilnosti."
+
+#~ msgid "Close"
+#~ msgstr "Zatvori"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Nove tablice kompatibilnosti su u beti "
+
+#~ msgid "More about the beta."
+#~ msgstr "Više o beti."
+
+#~ msgid "Take the survey"
+#~ msgstr "Ispunite anketu"
+
+#~ msgid "Report an error."
+#~ msgstr "Prijavite grešku."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Prijavljeno. Hvala!"
+
+#~ msgid "Show old table."
+#~ msgstr "Prikaži staru tablicu."
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML sadržaj"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS sadržaj"
