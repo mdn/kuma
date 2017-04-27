@@ -1,5 +1,6 @@
 import collections
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from kuma.core.jobs import KumaJob, GenerationJob
@@ -66,6 +67,11 @@ class DocumentContributorsJob(KumaJob):
     version = 2
     # Don't synchronously fetch the contributor bar but schedule a fetch
     fetch_on_miss = False
+
+    def get(self, *args, **kwargs):
+        if settings.MAINTENANCE_MODE:
+            return self.empty()
+        return super(DocumentContributorsJob, self).get(*args, **kwargs)
 
     def fetch(self, pk):
         from .models import Document

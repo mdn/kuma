@@ -60,7 +60,7 @@ def revision(save=False, **kwargs):
         'summary': 'Some summary',
         'content': 'Some content',
         'comment': 'Some comment',
-        'creator': kwargs.get('creator', get_user()),
+        'creator': kwargs.get('creator') or get_user(),
         'document': doc,
         'tags': '"some", "tags"',
         'toc_depth': 1,
