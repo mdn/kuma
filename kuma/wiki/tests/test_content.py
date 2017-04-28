@@ -2,6 +2,7 @@
 from urlparse import urljoin
 
 from cssselect.parser import SelectorSyntaxError
+from django.conf import settings
 from django.test import TestCase
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
@@ -18,7 +19,7 @@ from . import document, normalize_html, revision
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
                        H3TOCFilter, SectionIDFilter, SectionTOCFilter,
-                       get_content_sections, get_seo_description)
+                       get_content_sections, get_seo_description, parse)
 from ..models import Document
 from ..templatetags.jinja_helpers import bugize_text
 
@@ -800,95 +801,99 @@ class BugizeTests(TestCase):
         eq_(bugize_text(bad_upper), Markup(good_upper))
 
 
-class FilterIframeHostsTests(TestCase):
-    def test_iframe_host_filter(self):
-        slug = 'test-code-embed'
-        embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
-
-        doc_src = """
-            <p>This is a page. Deal with it.</p>
-            <div id="sample1" class="code-sample">
-                <pre class="brush: html">Some HTML</pre>
-                <pre class="brush: css">.some-css { color: red; }</pre>
-                <pre class="brush: js">window.alert("HI THERE")</pre>
-            </div>
-            <iframe id="if1" src="%(embed_url)s"></iframe>
-            <iframe id="if2" src="http://testserver"></iframe>
-            <iframe id="if3" src="https://some.alien.site.com"></iframe>
-            <p>test</p>
+def test_filteriframe():
+    """The filter drops iframe src that does not match the pattern."""
+    slug = 'test-code-embed'
+    embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
+    doc_src = """\
+        <p>This is a page. Deal with it.</p>
+        <iframe id="if1" src="%(embed_url)s"></iframe>
+        <iframe id="if2" src="https://testserver"></iframe>
+        <iframe id="if3" src="https://some.alien.site.com"></iframe>
+        <iframe id="if4" src="http://davidwalsh.name"></iframe>
+        <iframe id="if5" src="ftp://davidwalsh.name"></iframe>
+        <p>test</p>
         """ % dict(embed_url=embed_url)
 
-        result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterIframeHosts('^https?\:\/\/sampleserver')
-                      .serialize())
-        page = pq(result_src)
+    pattern = r'^https?\:\/\/(sample|test)server'
+    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    page = pq(result_src)
+    assert page('#if1').attr('src') == embed_url
+    assert page('#if2').attr('src') == 'https://testserver'
+    assert page('#if3').attr('src') == ''
+    assert page('#if4').attr('src') == ''
+    assert page('#if5').attr('src') == ''
 
-        if1 = page.find('#if1')
-        eq_(if1.length, 1)
-        eq_(if1.attr('src'), embed_url)
 
-        if2 = page.find('#if2')
-        eq_(if2.length, 1)
-        eq_(if2.attr('src'), '')
+def test_filteriframe_empty_contents():
+    """Any contents inside an <iframe> should be removed."""
+    doc_src = """
+        <iframe>
+        <iframe src="javascript:alert(1);"></iframe>
+        </iframe>
+    """
+    expected_src = """
+        <iframe>
+        </iframe>
+    """
+    pattern = r'https?\:\/\/sampleserver'
+    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    assert normalize_html(expected_src) == normalize_html(result_src)
 
-        if3 = page.find('#if3')
-        eq_(if3.length, 1)
-        eq_(if3.attr('src'), '')
 
-    def test_iframe_host_filter_invalid_host(self):
-        doc_src = """
-            <iframe id="if1" src="http://sampleserver"></iframe>
-            <iframe id="if2" src="http://testserver"></iframe>
-            <iframe id="if3" src="http://davidwalsh.name"></iframe>
-            <iframe id="if4" src="ftp://davidwalsh.name"></iframe>
-            <p>test</p>
-        """
-        result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterIframeHosts('^https?\:\/\/(sample|test)server')
-                      .serialize())
-        page = pq(result_src)
+FILTERIFRAME_ACCEPTED = {
+    'vagrant': ('https://developer-local.allizom.org/'
+                'en-US/docs/Test$samples/sample1?revision=123'),
+    'stage': ('https://developer.allizom.org/'
+              'fr/docs/Test$samples/sample2?revision=234'),
+    'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
+    'docker': 'http://localhost:8000/de/docs/Test$samples/test?revision=678',
+    'youtube_http': ('http://www.youtube.com/embed/'
+                     'iaNoBlae5Qw/?feature=player_detailpage'),
+    'youtube_ssl': ('https://youtube.com/embed/'
+                    'iaNoBlae5Qw/?feature=player_detailpage'),
+    # Not allowed in production
+    'prod_old': ('https://mozillademos.org/'
+                 'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
+}
 
-        eq_(page.find('#if1').attr('src'), 'http://sampleserver')
-        eq_(page.find('#if2').attr('src'), 'http://testserver')
-        eq_(page.find('#if3').attr('src'), '')
-        eq_(page.find('#if4').attr('src'), '')
+FILTERIFRAME_REJECTED = {
+    'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
+    'alien': 'https://some.alien.site.com',
+    'dwalsh_web': 'http://davidwalsh.name',
+    'dwalsh_ftp': 'ftp://davidwalsh.name',
+    'js': 'javascript:alert(1);',
+    'youtube_other': 'https://youtube.com/sembed/',
+    # Allowed in production
+    'prod': ('https://mdn.mozillademos.org/'
+             'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
+    'vagrant_2': ('http://developer-local:81/'
+                  'en-US/docs/Test$samples/sample1?revision=123'),
+    'newrelic': 'https://rpm.newrelic.com/public/charts/9PqtkrTkoo5',
+    'jsfiddle': 'https://jsfiddle.net/78dg25ax/embedded/js,result/',
+    'github.io': ('https://mdn.github.io/webgl-examples/'
+                  'tutorial/sample6/index.html')
+}
 
-    def test_iframe_host_filter_youtube(self):
-        tubes = (
-            'http://www.youtube.com/embed/iaNoBlae5Qw/?feature=player_detailpage',
-            'https://youtube.com/embed/iaNoBlae5Qw/?feature=player_detailpage',
-            'https://youtube.com/sembed/'
-        )
-        doc_src = """
-            <iframe id="if1" src="%s"></iframe>
-            <iframe id="if2" src="%s"></iframe>
-            <iframe id="if3" src="%s"></iframe>
-            <p>test</p>
-        """ % tubes
-        result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterIframeHosts('^https?\:\/\/(www.)?youtube.com\/embed\/(\.*)')
-                      .serialize())
-        page = pq(result_src)
 
-        eq_(page.find('#if1').attr('src'), tubes[0])
-        eq_(page.find('#if2').attr('src'), tubes[1])
-        eq_(page.find('#if3').attr('src'), '')
+@pytest.mark.parametrize('url', FILTERIFRAME_ACCEPTED.values(),
+                         ids=FILTERIFRAME_ACCEPTED.keys())
+def test_filteriframe_default_accepted(url):
+    doc_src = '<iframe id="test" src="%s"></iframe>' % url
+    pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
+    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    page = pq(result_src)
+    assert page('#test').attr('src') == url
 
-    def test_iframe_host_contents_filter(self):
-        """Any contents inside an <iframe> should be removed"""
-        doc_src = """
-            <iframe>
-            <iframe src="javascript:alert(1);"></iframe>
-            </iframe>
-        """
-        expected_src = """
-            <iframe>
-            </iframe>
-        """
-        result_src = (kuma.wiki.content.parse(doc_src)
-                      .filterIframeHosts('^https?\:\/\/sampleserver')
-                      .serialize())
-        eq_(normalize_html(expected_src), normalize_html(result_src))
+
+@pytest.mark.parametrize('url', FILTERIFRAME_REJECTED.values(),
+                         ids=FILTERIFRAME_REJECTED.keys())
+def test_filteriframe_default_rejected(url):
+    doc_src = '<iframe id="test" src="%s"></iframe>' % url
+    pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
+    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    page = pq(result_src)
+    assert page('#test').attr('src') == ''
 
 
 class BleachTests(TestCase):
