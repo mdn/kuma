@@ -852,19 +852,6 @@ FILTERIFRAME_ACCEPTED = {
                      'iaNoBlae5Qw/?feature=player_detailpage'),
     'youtube_ssl': ('https://youtube.com/embed/'
                     'iaNoBlae5Qw/?feature=player_detailpage'),
-    # Not allowed in production
-    'prod_old': ('https://mozillademos.org/'
-                 'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
-}
-
-FILTERIFRAME_REJECTED = {
-    'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
-    'alien': 'https://some.alien.site.com',
-    'dwalsh_web': 'http://davidwalsh.name',
-    'dwalsh_ftp': 'ftp://davidwalsh.name',
-    'js': 'javascript:alert(1);',
-    'youtube_other': 'https://youtube.com/sembed/',
-    # Allowed in production
     'prod': ('https://mdn.mozillademos.org/'
              'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
     'vagrant_2': ('http://developer-local:81/'
@@ -872,7 +859,18 @@ FILTERIFRAME_REJECTED = {
     'newrelic': 'https://rpm.newrelic.com/public/charts/9PqtkrTkoo5',
     'jsfiddle': 'https://jsfiddle.net/78dg25ax/embedded/js,result/',
     'github.io': ('https://mdn.github.io/webgl-examples/'
-                  'tutorial/sample6/index.html')
+                  'tutorial/sample6/index.html'),
+    'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
+}
+
+FILTERIFRAME_REJECTED = {
+    'alien': 'https://some.alien.site.com',
+    'dwalsh_web': 'http://davidwalsh.name',
+    'dwalsh_ftp': 'ftp://davidwalsh.name',
+    'js': 'javascript:alert(1);',
+    'youtube_other': 'https://youtube.com/sembed/',
+    'prod_old': ('https://mozillademos.org/'
+                 'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
 }
 
 
