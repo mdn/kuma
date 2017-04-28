@@ -842,8 +842,6 @@ def test_filteriframe_empty_contents():
 
 
 FILTERIFRAME_ACCEPTED = {
-    'vagrant': ('https://developer-local.allizom.org/'
-                'en-US/docs/Test$samples/sample1?revision=123'),
     'stage': ('https://developer.allizom.org/'
               'fr/docs/Test$samples/sample2?revision=234'),
     'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
@@ -854,13 +852,10 @@ FILTERIFRAME_ACCEPTED = {
                     'iaNoBlae5Qw/?feature=player_detailpage'),
     'prod': ('https://mdn.mozillademos.org/'
              'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
-    'vagrant_2': ('http://developer-local:81/'
-                  'en-US/docs/Test$samples/sample1?revision=123'),
     'newrelic': 'https://rpm.newrelic.com/public/charts/9PqtkrTkoo5',
     'jsfiddle': 'https://jsfiddle.net/78dg25ax/embedded/js,result/',
     'github.io': ('https://mdn.github.io/webgl-examples/'
                   'tutorial/sample6/index.html'),
-    'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
 }
 
 FILTERIFRAME_REJECTED = {
@@ -871,6 +866,11 @@ FILTERIFRAME_REJECTED = {
     'youtube_other': 'https://youtube.com/sembed/',
     'prod_old': ('https://mozillademos.org/'
                  'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
+    'vagrant': ('https://developer-local.allizom.org/'
+                'en-US/docs/Test$samples/sample1?revision=123'),
+    'vagrant_2': ('http://developer-local:81/'
+                  'en-US/docs/Test$samples/sample1?revision=123'),
+    'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
 }
 
 

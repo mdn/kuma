@@ -1270,17 +1270,14 @@ CONSTANCE_CONFIG = dict(
     ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         ('^https?\:\/\/('
-         'developer-local.allizom.org|'
-         'developer.allizom.org|'
-         'mdn.mozillademos.org|'
-         'testserver|'
-         'localhost\:8000|'
-         'developer.cdn.mozilla.net|'
-         'developer-local\:81|'
-         'rpm.newrelic.com\/public\/charts\/.*|'
-         '(www.)?youtube.com\/embed\/(\.*)|'
-         'jsfiddle.net\/.*embedded.*|'
-         'mdn.github.io)'),
+         'developer.allizom.org|'  # Staging demos
+         'mdn.mozillademos.org|'   # Production demos
+         'testserver|'             # Unit test demos
+         'localhost\:8000|'        # Docker development demos
+         'rpm.newrelic.com\/public\/charts\/.*|'  # MDN/Kuma/Server_charts
+         '(www.)?youtube.com\/embed\/(\.*)|'  # Embedded videos
+         'jsfiddle.net\/.*embedded.*|'  # Embedded samples
+         'mdn.github.io)'),        # Embedded samples
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
     GOOGLE_ANALYTICS_ACCOUNT=(
