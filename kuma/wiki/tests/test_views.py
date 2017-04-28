@@ -22,6 +22,7 @@ from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
 from django.test.utils import override_settings
 from django.utils.encoding import smart_str
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
@@ -4478,69 +4479,38 @@ class PageMoveTests(UserTestCase, WikiTestCase):
         eq_(200, resp.status_code)
 
 
-class DocumentZoneTests(UserTestCase, WikiTestCase):
-    localizing_client = True
+def test_zone_styles(client, doc_hierarchy_with_zones):
+    """Ensure CSS styles for a zone can be fetched."""
+    top_doc = doc_hierarchy_with_zones.top
+    bottom_doc = doc_hierarchy_with_zones.bottom
 
-    def setUp(self):
-        super(DocumentZoneTests, self).setUp()
+    url = reverse(
+        'wiki.styles',
+        args=(top_doc.slug,),
+        locale=settings.WIKI_DEFAULT_LANGUAGE
+    )
+    response = client.get(url, follow=True)
 
-        root_rev = revision(title='ZoneRoot', slug='ZoneRoot',
-                            content='This is the Zone Root',
-                            is_approved=True, save=True)
-        self.root_doc = root_rev.document
+    assert response.redirect_chain
+    redirect_location, redirect_code = response.redirect_chain[-1]
+    assert redirect_location.endswith('build/styles/zones.css')
+    assert redirect_code == 302
 
-        middle_rev = revision(title='middlePage', slug='middlePage',
-                              content='This is a middlepage',
-                              is_approved=True, save=True)
-        self.middle_doc = middle_rev.document
-        self.middle_doc.parent_topic = self.root_doc
-        self.middle_doc.save()
+    url = reverse(
+        'wiki.styles',
+        args=(bottom_doc.slug,),
+        locale=settings.WIKI_DEFAULT_LANGUAGE
+    )
+    response = client.get(url, follow=True)
+    assert response.status_code == 404
 
-        sub_rev = revision(title='SubPage', slug='SubPage',
-                           content='This is a subpage',
-                           is_approved=True, save=True)
-        self.sub_doc = sub_rev.document
-        self.sub_doc.parent_topic = self.middle_doc
-        self.sub_doc.save()
-
-        self.root_zone = DocumentZone(document=self.root_doc)
-        self.root_zone.styles = """
-            article { color: blue; }
-        """
-        self.root_zone.save()
-
-        self.middle_zone = DocumentZone(document=self.middle_doc)
-        self.middle_zone.styles = """
-            article { font-weight: bold; }
-        """
-        self.middle_zone.save()
-
-    def test_zone_styles(self):
-        """Ensure CSS styles for a zone can be fetched"""
-        url = reverse('wiki.styles', args=(self.root_doc.slug,),
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(url, follow=True)
-        eq_(self.root_zone.styles, response.content)
-
-        url = reverse('wiki.styles', args=(self.middle_doc.slug,),
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(url, follow=True)
-        eq_(self.middle_zone.styles, response.content)
-
-        url = reverse('wiki.styles', args=(self.sub_doc.slug,),
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(url, follow=True)
-        eq_(404, response.status_code)
-
-    def test_zone_styles_links(self):
-        """Ensure link to zone style appears in child document views"""
-        url = reverse('wiki.document', args=(self.sub_doc.slug,),
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(url, follow=True)
-
-        page = pq(response.content)
-        zone_styles = page.find('link[href$="zones.css"]')
-        assert len(zone_styles)
+    url = reverse(
+        'wiki.styles',
+        args=('some-unknown-document-slug',),
+        locale=settings.WIKI_DEFAULT_LANGUAGE
+    )
+    response = client.get(url, follow=True)
+    assert response.status_code == 404
 
 
 class ListDocumentTests(UserTestCase, WikiTestCase):

@@ -1861,3 +1861,38 @@ class AttachmentTests(UserTestCase):
         eq_(attachments.count(), 2)
         eq_(attachments[0].file, attachment)
         eq_(attachments[1].file, attachment2)
+
+
+def test_zone_stack(doc_hierarchy_with_zones, cleared_cacheback_cache):
+    """
+    Test the zone stack of English and non-English documents.
+    """
+    top_doc = doc_hierarchy_with_zones.top
+    top_zone = top_doc.zone
+
+    fr_top_doc = top_doc.translations.filter(locale='fr').first()
+    de_top_doc = top_doc.translations.filter(locale='de').first()
+
+    assert fr_top_doc.parent == top_doc
+    assert de_top_doc.parent == top_doc
+    assert top_doc.zone_stack == [top_zone]
+    # The French translation of the top doc doesn't have its own locale-
+    # specific zone stack, so it'll return the zone stack of its parent.
+    assert fr_top_doc.zone_stack == top_doc.zone_stack
+    # The German translation of the top doc does have its own
+    # locale-specific zone stack.
+    assert de_top_doc.zone_stack == [de_top_doc.zone]
+
+
+def test_zone_stack_when_no_parent(doc_hierarchy_with_zones,
+                                   cleared_cacheback_cache):
+    """
+    Silly end-case test of the zone stack of a non-English document without
+    a parent.
+    """
+    top_doc = doc_hierarchy_with_zones.top
+    fr_top_doc = top_doc.translations.filter(locale='fr').first()
+    fr_top_doc.parent = None
+    fr_top_doc.save()
+
+    assert not fr_top_doc.zone_stack

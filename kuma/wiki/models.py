@@ -1541,7 +1541,17 @@ Full traceback:
 
     @cached_property
     def zone_stack(self):
-        return DocumentZoneStackJob().get(self.pk)
+        """
+        The zone stack of this document. For a non-default-language document
+        that does not have its own zone stack, returns the zone stack of its
+        parent (the document it was translated from).
+        """
+        job = DocumentZoneStackJob()
+        result = job.get(self.pk)
+        if ((not result) and (self.locale != settings.WIKI_DEFAULT_LANGUAGE) and
+                self.parent):
+            return job.get(self.parent.pk)
+        return result
 
     def get_full_url(self):
         return absolutify(self.get_absolute_url())
@@ -1584,7 +1594,10 @@ class DocumentZone(models.Model):
     attributes inherited by the topic hierarchy beneath it.
     """
     document = models.OneToOneField(Document, related_name='zone')
-    styles = models.TextField(null=True, blank=True)
+    css_slug = models.CharField(
+        max_length=100, blank=True,
+        help_text='name of an alternative pipeline CSS group for documents '
+                  'under this zone')
     url_root = models.CharField(
         max_length=255, null=True, blank=True, db_index=True,
         help_text="alternative URL path root for documents under this zone")

@@ -2,24 +2,25 @@ from datetime import datetime
 
 import pytest
 
-from ..models import Revision, DocumentZone
+from ..models import Revision
 from ..jobs import DocumentZoneStackJob, DocumentContributorsJob
 
 
-def test_find_roots(db, cleared_cacheback_cache, doc_hierarchy, root_doc):
+def test_find_roots(doc_hierarchy_with_zones, root_doc,
+                    cleared_cacheback_cache):
     """
     Ensure sub pages can find the content zone root.
     """
     def get_zone_stack(doc):
         return DocumentZoneStackJob().get(doc.pk)
 
-    top_doc = doc_hierarchy.top
-    middle_top_doc = doc_hierarchy.middle_top
-    middle_bottom_doc = doc_hierarchy.middle_bottom
-    bottom_doc = doc_hierarchy.bottom
+    top_doc = doc_hierarchy_with_zones.top
+    middle_top_doc = doc_hierarchy_with_zones.middle_top
+    middle_bottom_doc = doc_hierarchy_with_zones.middle_bottom
+    bottom_doc = doc_hierarchy_with_zones.bottom
 
-    top_zone = DocumentZone.objects.create(document=top_doc)
-    middle_top_zone = DocumentZone.objects.create(document=middle_top_doc)
+    top_zone = top_doc.zone
+    middle_top_zone = middle_top_doc.zone
 
     assert unicode(top_zone) == u'DocumentZone {} ({})'.format(
         top_doc.get_absolute_url(), top_doc.title)

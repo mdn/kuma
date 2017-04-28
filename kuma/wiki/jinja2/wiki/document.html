@@ -27,7 +27,7 @@
 
 {% set zone_stack = document.zone_stack %}
 {% set is_zone = zone_stack|length %}
-{% set is_zone_root = is_zone and zone_stack[0].document == document %}
+{% set is_zone_root = is_zone and (zone_stack[0].document in (document, document.parent)) %}
 {% set other_translations = document.other_translations %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
@@ -60,7 +60,11 @@
 {% block site_css %}
     {{ super() }}
     {% if zone_stack %}
+      {% for zone in zone_stack|reverse() if zone.css_slug %}
+        {% stylesheet zone.css_slug %}
+      {% else %}
         {% stylesheet 'zones' %}
+      {% endfor %}
     {% endif %}
 {% endblock %}
 

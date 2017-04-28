@@ -5,7 +5,7 @@ from collections import namedtuple
 
 import pytest
 
-from ..models import Document, Revision
+from ..models import Document, DocumentZone, Revision
 
 
 BannedUser = namedtuple('BannedUser', 'user ban')
@@ -182,6 +182,103 @@ def doc_hierarchy(wiki_user):
         middle_bottom=middle_bottom_doc,
         bottom=bottom_doc
     )
+
+
+@pytest.fixture
+def doc_hierarchy_with_zones(settings, doc_hierarchy, wiki_user_2, wiki_user_3):
+    top_doc = doc_hierarchy.top
+    it_top_doc = Document.objects.create(
+        locale='it',
+        slug='superiore',
+        title='Superiore Documento',
+        rendered_html='<p>Superiore...</p>',
+        parent=top_doc
+    )
+    Revision.objects.create(
+        document=it_top_doc,
+        creator=wiki_user_2,
+        based_on=top_doc.current_revision,
+        content='<p>Superiore...</p>',
+        title='Superiore Documento',
+        created=datetime(2017, 4, 30, 11, 17)
+    )
+    de_top_doc = Document.objects.create(
+        locale='de',
+        slug='oben',
+        title='Oben Dokument',
+        rendered_html='<p>Oben...</p>',
+        parent=top_doc
+    )
+    Revision.objects.create(
+        document=de_top_doc,
+        creator=wiki_user_2,
+        based_on=top_doc.current_revision,
+        content='<p>Oben...</p>',
+        title='Oben Dokument',
+        created=datetime(2017, 4, 30, 10, 03)
+    )
+    fr_top_doc = Document.objects.create(
+        locale='fr',
+        slug='haut',
+        title='Haut Document',
+        rendered_html='<p>Haut...</p>',
+        parent=top_doc
+    )
+    Revision.objects.create(
+        document=fr_top_doc,
+        creator=wiki_user_3,
+        based_on=top_doc.current_revision,
+        content='<p>Haut...</p>',
+        title='Haut Document',
+        is_approved=True,
+        created=datetime(2017, 4, 30, 12, 01)
+    )
+    DocumentZone.objects.create(
+        document=top_doc,
+        css_slug='lindsey',
+        url_root='fleetwood-mac'
+    )
+    DocumentZone.objects.create(
+        document=doc_hierarchy.middle_top,
+        css_slug='bobby',
+        url_root='spinners'
+    )
+    DocumentZone.objects.create(
+        document=de_top_doc,
+        css_slug='berlin',
+        url_root='berlin'
+    )
+    DocumentZone.objects.create(
+        document=it_top_doc,
+        url_root='florence'
+    )
+    settings.PIPELINE_CSS.update(
+        lindsey={
+            'source_filenames': (
+                'styles/lindsey.scss',
+            ),
+            'output_filename': 'build/styles/lindsey.css',
+        },
+        bobby={
+            'source_filenames': (
+                'styles/bobby.scss',
+            ),
+            'output_filename': 'build/styles/bobby.css',
+        },
+        berlin={
+            'source_filenames': (
+                'styles/berlin.scss',
+            ),
+            'output_filename': 'build/styles/berlin.css',
+        },
+        zones={
+            'source_filenames': (
+                'styles/zones.scss',
+            ),
+            'output_filename': 'build/styles/zones.css',
+        }
+    )
+    return doc_hierarchy
 
 
 @pytest.fixture
