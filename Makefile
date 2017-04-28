@@ -51,7 +51,7 @@ install:
 
 clean:
 	rm -rf .coverage build/
-	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -prune -exec rm -rf {} +
+	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -delete
 	mkdir -p build/locale
 
 locale:
