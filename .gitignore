@@ -1,43 +1,90 @@
-!static/fonts/.htaccess
-!build/assets/css/README.md
-*.pyc
-*.pyo
-*.sw?
-*devmo*.sql*
-.DS_Store
-.awsconfig
-.cache
+# Modeled after https://github.com/github/gitignore/blob/master/Python.gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+build/
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox
 .coverage
-.env
+.coverage.*
+.cache
 .noseids
 .noserc
-.tox
-.vagrant
-bower_components
-/static/
-build.py
-build/
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+
+# Sphinx documentation
+docs/_build/
+
+# pyenv
+.python-version
+
+# Celery
 celerybeat-schedule
 celeryev.pid
-coverage.xml
-docs/_build/
-htmlcov/
+
+# .dotenv
+.env
+
+# Virtualenv
+.venv
+venv/
+ENV/
+
+# Swapfiles
+*.sw?
+
+# Vagrant
+.vagrant
+kuma.box
+
+# macOS finder files
+.DS_Store
+
+# Kuma-specfic
+*devmo*.sql*
+bower_components
+build.py
+developer.mozilla.org.tar.gz
+docker-compose.dev.yml
 humans.txt
 james.ini
-kuma.box
 kuma/static/js/libs/ckeditor/source/ckbuilder
-kumascript.log
 kumascript_settings_local.json
-locale/**/*.mo
-logs/
+kumascript_settings_local.json*
+mdn_sample_db.sql
+mdn_sample_db.sql.gz
+mdntests/
 media/attachments
 media/sitemap*
 media/uploads
+media/revision.txt
+media/kumascript-revision.txt
 node_modules/
-nosetests.xml
-pip-log.txt
+settings_local.py
+settings_local.py*
+static/
 tmp
-uploads/
-webroot/.htaccess
-wheelhouse
+
+# Selenium
+geckodriver.log
+
+# Legacy
+.awsconfig
+logs/
 xfers/*
+wheelhouse
+webroot/.htaccess
+uploads/
+kumascript.log
