@@ -776,6 +776,17 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         parameters.update(self.akismet_parameter_overrides())
         return parameters
 
+    def akismet_call(self, parameters):
+        """
+        Skip Akismet check if the content is the same.
+
+        This happens if the edit is to a non-content field, such as
+        setting or clearing the technical review flag.
+        """
+        if not parameters['comment_content']:
+            return False  # No content change, not spam
+        return super(RevisionForm, self).akismet_call(parameters)
+
     def save(self, document, **kwargs):
         """
         Persists the revision and returns it.

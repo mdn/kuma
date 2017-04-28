@@ -23,8 +23,6 @@
       <p class="notice">{{ _('The wiki is in read-only mode.') }}</p>
     {% elif reason == 'kumabanned' %}
       <p class="notice">{{ _('Your profile has been banned from making edits.') }}</p>
-    {% elif reason == 'bannedprofile' %}
-      <p class="notice">{{ _("This user's profile has been banned.") }}</p>
     {% elif reason == 'revisions_login_required' %}
       <p class="notice">{{ _("You must sign in to view all history") }}</p>
     {% endif %}

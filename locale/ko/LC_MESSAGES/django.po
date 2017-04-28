@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-02-15 03:05+0000\n"
-"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
+"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"PO-Revision-Date: 2017-04-26 14:16+0000\n"
+"Last-Translator: Hoony <thechunsik@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -30,39 +30,35 @@ msgid "Your profile has been banned from making edits."
 msgstr "이 계정은 편집기능이 제한되었습니다."
 
 #: jinja2/403.html:27
-msgid "This user's profile has been banned."
-msgstr "사용자 계정이 차단되었습니다."
-
-#: jinja2/403.html:29
 msgid "You must sign in to view all history"
 msgstr "전체 기록을 보려면 로그인해야 합니다."
 
 # 83%
-#: jinja2/403.html:39 jinja2/handlers/400.html:21
+#: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>죄송합니다만 %(name)s님, 그렇게 할 수 없어서 유감입니다.</p>"
 
 # 80%
-#: jinja2/403.html:43 jinja2/handlers/400.html:25
+#: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>죄송하지만, 그렇게 할 수 없습니다.</p>"
 
 # 86%
 # 100%
-#: jinja2/403.html:50
+#: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li><a href=\"%(logout_url)s\">로그 아웃</a> 후 다시 시도 하세요.</li>"
 
 # 86%
 # 100%
-#: jinja2/403.html:54 jinja2/handlers/400.html:36
+#: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">로그인</a> 후 다시 시도하세요.</li>"
 
-#: jinja2/403.html:62
+#: jinja2/403.html:60
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -88,7 +84,11 @@ msgstr "검색 해 보시거나 <a href=\"%(homepage_url)s\">홈페이지</a>에
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr "문서 링크를 클릭해서 오셨다면, 로그인 해서 새 페이지를 만들어 보세요. 아니라면, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">버그를 등록</a> 해 주세요. 감사합니다!"
 
-#: jinja2/404.html:36
+#: jinja2/404.html:35
+msgid "This user's profile has been banned."
+msgstr "사용자 계정이 차단되었습니다."
+
+#: jinja2/404.html:42
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr "<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>의 Matthew Inman가 만든 <a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a>"
@@ -104,7 +104,7 @@ msgstr "Mozilla 개발자 네트워크"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "MDN은 현재 보수 작업 중으로 읽기-전용으로만 사용하실 수 있습니다."
 
 #: jinja2/base.html:87
 msgid "Learn more"
@@ -197,7 +197,6 @@ msgid "References & Guides"
 msgstr "문서 참조 및 가이드"
 
 #: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:84
-#, fuzzy
 msgid "Learn web development"
 msgstr "웹 개발 배우기"
 
@@ -1108,56 +1107,52 @@ msgid "Authors"
 msgstr "저자"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
-#, fuzzy
 msgid "Active macros"
-msgstr "가장 많이 인용되는 문서"
+msgstr "활성화된 매크로"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "%(num)s 템플릿을 찾았습니다"
+msgstr[0] "%(num)s 개의 활성화된 매크로를 찾았습니다."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "매크로 목록을 확인하려면 <a href=\"%(url)s\">GitHub 레포지토리</a> 를 확인해주세요."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "<a href=\"%(url)s\">수동으로 매크로를 직접 검색</a>하실 수도 있습니다."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "활성화된 매크로와 매크로 사용 횟수"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "매크로 이름"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "영문 태그"
+msgstr "영문 페이지 숫자"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "모든 페이지 수"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "매크로 사용 검색:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
-#, fuzzy
 msgid "Search All Pages"
-msgstr "데모 검색"
+msgstr "전체 페이지 검색"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "최근 영문 변경 사항"
+msgstr "영문 페이지 검색"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1349,11 +1344,11 @@ msgstr "오픈 웹 및 모바일"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-msgstr ""
+msgstr "FIrefox를 포함한 800개 이상의 브라우저와 OS에서 Mozilla와 Sauce Labs를 테스트해보세요"
 
 #: kuma/landing/jinja2/landing/homepage.html:120
 msgid "Test on Sauce Labs"
-msgstr ""
+msgstr "Sauce Labs 테스트하기"
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
@@ -1426,36 +1421,33 @@ msgstr "MDN 웹 사이트 개발 참여"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:5 kuma/landing/jinja2/landing/maintenance-mode.html:13
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "유지/보수 모드"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:18
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
-msgstr ""
+msgstr "MDN은 현재 보수 중에 있습니다. 백업된 데이터를 통해 컨텐츠를 제공하고 있으며 몇몇의 내용은 최신의 정보가 아닐 수 있습니다. 걱정마세요! 보수 작업이 끝나면 모두 안전하게 복구 될 것입니다."
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
-msgstr ""
+msgstr "사이트 보수 중에는 다음 액션은 사용할 수 없습니다:"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:33
-#, fuzzy
 msgid "editing articles"
-msgstr "글에 링크됨"
+msgstr "문서 편집중"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
-#, fuzzy
 msgid "creating accounts"
-msgstr "로그인 또는 계정 생성:"
+msgstr "계정 생성하기"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
-#, fuzzy
 msgid "logging in"
 msgstr "로그인"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "불편을 드려 죄송합니다."
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -1795,15 +1787,15 @@ msgstr "사용자"
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "<a href=\"%s\">MDN 시작하기</a>의 첫 단계를 완료하였습니다"
 
-#: kuma/users/backends.py:32
+#: kuma/users/backends.py:34
 msgid "algorithm"
 msgstr "알고리즘"
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:35
 msgid "salt"
 msgstr "솔트"
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:36
 msgid "hash"
 msgstr "해시"
 
@@ -1983,25 +1975,25 @@ msgstr "동의"
 msgid "Take the next step to get involved on MDN!"
 msgstr "MDN 참여하기 위한 다음 단계"
 
-#: kuma/users/views.py:474
+#: kuma/users/views.py:473
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: kuma/users/views.py:520
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>인증됨</b>"
 
-#: kuma/users/views.py:523
+#: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s 미인증됨"
 
-#: kuma/users/views.py:527 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "또 다른 것들:"
 
-#: kuma/users/views.py:529
+#: kuma/users/views.py:528
 msgid "Email:"
 msgstr "이메일:"
 
@@ -2855,7 +2847,7 @@ msgstr "사용자 금지 & 초기화"
 msgid "Admin"
 msgstr "관리자"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "위키"
 
@@ -2875,7 +2867,7 @@ msgstr "문서 지역화 중 - 모두 번역되지 않음을 양해바라며, �
 msgid "Edit section"
 msgstr "섹션 편집"
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:82
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] 페이지 \"%(document_title)s\" 변경자 %(creator)s"
@@ -3042,12 +3034,12 @@ msgstr "현재 문서 짧은 URL을 변경하려면 하위 문서로 이동이 �
 
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
 # 83%
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "제목:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
 msgid "Title of article"
 msgstr "문서 제목"
 
@@ -3106,11 +3098,11 @@ msgstr "검토를 위해 이 리비전에 태그할까요?"
 msgid "Tag this revision for localization?"
 msgstr "새 번역을 위한 리비전 태그하시겠습니까?"
 
-#: kuma/wiki/forms.py:895
+#: kuma/wiki/forms.py:906
 msgid "New slug:"
 msgstr "새 짧은 URL(영문):"
 
-#: kuma/wiki/forms.py:896
+#: kuma/wiki/forms.py:907
 msgid "New article URL"
 msgstr "새 문서 URL"
 
@@ -3430,7 +3422,7 @@ msgstr "현재 문서 내"
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
-msgstr ""
+msgstr "이 문서는 아직 볼 수 없으며 MDN이 <a href=\"%(url)s\">유지/보수 모드</a>일 때는 불러올 수 없습니다. 유지/보수가 끝난 뒤 다시 확인해보세요."
 
 #: kuma/wiki/jinja2/wiki/document.html:259
 #, python-format
@@ -3456,7 +3448,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:287
 msgid "This is an experimental page."
-msgstr ""
+msgstr "현재 보고 계신 페이지는 실험 중에 있습니다."
 
 #: kuma/wiki/jinja2/wiki/document.html:298
 #, python-format
@@ -3495,9 +3487,8 @@ msgid "Was this article helpful?"
 msgstr "이 글이 여러분에게 도움이 되나요?"
 
 #: kuma/wiki/jinja2/wiki/document.html:359
-#, fuzzy
 msgid "Thank you!"
-msgstr "(바로 여러분!)"
+msgstr "감사합니다!"
 
 #: kuma/wiki/jinja2/wiki/document.html:369
 msgid "Document Tags and Contributors"
@@ -3869,14 +3860,14 @@ msgid "This article needs these reviews:"
 msgstr "이 글은 다음의 검토가 필요합니다:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "기술 - 코드 샘플, API, 테크놀로지"
+msgstr "기술 관련 - 코드 샘플, APIs, 혹은 기술. <a href=\"%(url)s\">도움이 필요하나요?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "편집 - 산문, 문법, 내용"
+msgstr "편집 관련 - 문체, 문법 혹은 내용. <a href=\"%(url)s\">도움이 필요하나요?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3954,14 +3945,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "서버가 콘텐츠 비교를 렌더링 중입니다. 몇 분 뒤에 이 페이지를 새로 고침해 주세요."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "%(title)s과(와) 그 하위 글 모두 구독"
+msgstr "이 문서와 하위 문서의 소식 구독하기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "%(title)s 및 그 하위 글 모두 구독 취소"
+msgstr "이 문서와 하위 문서의 소식 구독 취소하기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3976,14 +3965,12 @@ msgid "Updating subscription status"
 msgstr "구독 현황 갱신중"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "%(title)s 구독"
+msgstr "이 문서 소식 구독하기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "현재 메일 구독 취소:"
+msgstr "이 문서 소식 구독 취소하기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3996,14 +3983,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "%(title)s 구독 취소했습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "<bdi>%(language)s</bdi> 판 구독"
+msgstr "%(language)s 버전으로 구독하기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "<bdi>%(language)s</bdi> 판 구독 취소"
+msgstr "%(language)s 으로 구독 취소하기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
@@ -4203,14 +4190,13 @@ msgid "Documents for review"
 msgstr "검토용 문서"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in need of review: %(tag)s"
-msgstr "검토 필요로 태그된 문서: %(tag)s"
+msgstr "검토가 필요한 문서: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
-#, fuzzy
 msgid "All articles in need of review"
-msgstr "검토 필요한 모든 문서"
+msgstr "검토가 필요한 모든 문서"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
@@ -4337,27 +4323,27 @@ msgstr "콘텐츠 생성중에 오류가 발생했습니다."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "문서가 이미 존재합니다. 주의: 당신이 리다이렉트를 삭제할 때까지 이동된 문서를 되돌릴 수 없습니다."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "%(url)s 에서 문서 이동"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "MDN에서 %(title)s에 대해서 배웠습니다."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "지원하지 않는 문서 형식: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "처리 요청 중 오류: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "ETag 이전 조건 실패"
 

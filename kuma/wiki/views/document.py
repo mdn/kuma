@@ -7,7 +7,6 @@ except ImportError:
     from StringIO import StringIO
 
 import newrelic.agent
-from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -15,7 +14,6 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          HttpResponsePermanentRedirect, JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.http import urlunquote_plus
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
@@ -257,38 +255,39 @@ def _apply_content_experiment(request, doc):
     If the page is not under a content experiment, the return is
     (original Document, None).
     """
+    key = u"%s:%s" % (doc.locale, doc.slug)
     for experiment in settings.CONTENT_EXPERIMENTS:
-        for pages in experiment['pages']:
-            if (pages['locale'] == doc.locale and pages['slug'] == doc.slug):
-                # This page is under a content experiment
-                exp_params = {
-                    'id': experiment['id'],
-                    'ga_name': experiment['ga_name'],
-                    'param': experiment['param'],
-                    'original_path': request.path,
-                    'variants': pages['variants'],
-                    'selected': None,
-                    'selection_is_valid': None,
-                }
+        if key in experiment['pages']:
+            # This page is under a content experiment
+            variants = experiment['pages'][key]
+            exp_params = {
+                'id': experiment['id'],
+                'ga_name': experiment['ga_name'],
+                'param': experiment['param'],
+                'original_path': request.path,
+                'variants': variants,
+                'selected': None,
+                'selection_is_valid': None,
+            }
 
-                # Which variant was selected?
-                selected = request.GET.get(experiment['param'])
-                if selected:
-                    exp_params['selection_is_valid'] = False
-                    for variant, variant_slug in pages['variants']:
-                        if selected == variant:
-                            try:
-                                content_doc = Document.objects.get(
-                                    locale=pages['locale'],
-                                    slug=variant_slug)
-                            except Document.DoesNotExist:
-                                pass
-                            else:
-                                # Valid variant selected
-                                exp_params['selected'] = selected
-                                exp_params['selection_is_valid'] = True
-                                return content_doc, exp_params
-                return doc, exp_params  # No (valid) variant selected
+            # Which variant was selected?
+            selected = request.GET.get(experiment['param'])
+            if selected:
+                exp_params['selection_is_valid'] = False
+                for variant, variant_slug in variants.items():
+                    if selected == variant:
+                        try:
+                            content_doc = Document.objects.get(
+                                locale=doc.locale,
+                                slug=variant_slug)
+                        except Document.DoesNotExist:
+                            pass
+                        else:
+                            # Valid variant selected
+                            exp_params['selected'] = selected
+                            exp_params['selection_is_valid'] = True
+                            return content_doc, exp_params
+            return doc, exp_params  # No (valid) variant selected
     return doc, None  # Not a content experiment
 
 
@@ -563,11 +562,8 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
     response['X-Robots-Tag'] = 'noindex'
-    absolute_url = urlunquote_plus(doc.get_absolute_url())
 
-    if absolute_url in (config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
-        response['Content-Type'] = 'text/css; charset=utf-8'
-    elif doc.is_template:
+    if doc.is_template:
         # Treat raw, un-bleached template source as plain text, not HTML.
         response['Content-Type'] = 'text/plain; charset=utf-8'
 

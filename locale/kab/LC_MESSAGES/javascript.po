@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
-"PO-Revision-Date: 2016-11-30 19:14+0000\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"PO-Revision-Date: 2017-04-28 00:06+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -142,46 +142,6 @@ msgstr "Yettwafren: "
 msgid "New interest..."
 msgstr "Amaynut n wayen tḥemleḍ..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Ldi-d tizmilin n bennu"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Ldi"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Uɣal ɣer tfelwit n umṣada."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Mdel"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Tifelwiyin timaynutin n umṣada llant s lqem beta "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Ugar ɣef beta."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Err i uḥedqis"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Azen tuccḍa."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Yettwazen. Tanemmirt!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Sken tafelwit taqbuṛt."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Sekles arewway"
@@ -263,15 +223,15 @@ msgstr "Tabzimt tamaynut..."
 msgid "How to read CSS syntax."
 msgstr "Amek ad teɣreḍ taseddast CSS."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Nadi di Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Iminig inek ur isefrak ara MathML. Agbur n usemselsi s CSS yettwaseqdec."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Talqayt"
 
@@ -332,24 +292,24 @@ msgid "What should the sample title be?"
 msgstr "Amek yessefk ad yili uzwel n umedya agi?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "Agbur HTML"
+msgid "HTML"
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Amedya n ugbur HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "Agbur CSS"
+msgid "CSS"
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Agbur CSS aḥerfi"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
-msgstr "Agbur JavaScript"
+msgid "JavaScript"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
@@ -398,3 +358,39 @@ msgstr "Tansa URL ikecmen tettban mačči d tameɣtut"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Amezwer"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Ldi-d tizmilin n bennu"
+
+#~ msgid "Open"
+#~ msgstr "Ldi"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Uɣal ɣer tfelwit n umṣada."
+
+#~ msgid "Close"
+#~ msgstr "Mdel"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Tifelwiyin timaynutin n umṣada llant s lqem beta "
+
+#~ msgid "More about the beta."
+#~ msgstr "Ugar ɣef beta."
+
+#~ msgid "Take the survey"
+#~ msgstr "Err i uḥedqis"
+
+#~ msgid "Report an error."
+#~ msgstr "Azen tuccḍa."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Yettwazen. Tanemmirt!"
+
+#~ msgid "Show old table."
+#~ msgstr "Sken tafelwit taqbuṛt."
+
+#~ msgid "HTML Content"
+#~ msgstr "Agbur HTML"
+
+#~ msgid "CSS Content"
+#~ msgstr "Agbur CSS"

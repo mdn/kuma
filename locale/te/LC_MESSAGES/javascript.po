@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-11-16 09:44+0000\n"
 "Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
@@ -142,46 +142,6 @@ msgstr "ఎంపికైంది:"
 msgid "New interest..."
 msgstr "కొత్త ఆసక్తి..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "అమలు పరుచు పత్రాలు తెరువుము"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "తెరువు"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "అనుగుణ్యత పట్టికకు తిరిగి వెల్లుము."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "మూత"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "కొత్త అనుగుణ్యత పట్తికలు బీటలొ వున్నవి"
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "బీటా గురించి మరింత."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "సర్వే తీసుకోండి"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "లొపాన్ని నివెదించండి."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "నివేదించబడింది. కృతజ్ఞతలు!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "పాత పట్టికను చూపించు."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "డ్రాఫ్ట్ గా సేవ్ చేయి"
@@ -263,15 +223,15 @@ msgstr "కొత్త ట్యాగ్..."
 msgid "How to read CSS syntax."
 msgstr "CSS సింటాక్స్ని చదవడం ఎలా."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "స్టాక్ ఫ్లోని వెతుకుము"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "మీ బ్రౌసెర్ MathML కి మద్దతు ఇవ్వదు. దానికి బదులుగా CSS ని వాడారు."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "వివరాలు"
 
@@ -332,23 +292,24 @@ msgid "What should the sample title be?"
 msgstr "నమూనా శీర్షిక ఏమి ఉండాలి?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML విషయం"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "మాదిరి HTML విషయం"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS విషయం"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "మాదిరి CSS విషయం"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "JavaScript విషయం"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,3 +359,39 @@ msgstr "మీరు ఇచ్చిన URL సరైనదిగా కనప�
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "అప్రమేయం"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "అమలు పరుచు పత్రాలు తెరువుము"
+
+#~ msgid "Open"
+#~ msgstr "తెరువు"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "అనుగుణ్యత పట్టికకు తిరిగి వెల్లుము."
+
+#~ msgid "Close"
+#~ msgstr "మూత"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "కొత్త అనుగుణ్యత పట్తికలు బీటలొ వున్నవి"
+
+#~ msgid "More about the beta."
+#~ msgstr "బీటా గురించి మరింత."
+
+#~ msgid "Take the survey"
+#~ msgstr "సర్వే తీసుకోండి"
+
+#~ msgid "Report an error."
+#~ msgstr "లొపాన్ని నివెదించండి."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "నివేదించబడింది. కృతజ్ఞతలు!"
+
+#~ msgid "Show old table."
+#~ msgstr "పాత పట్టికను చూపించు."
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML విషయం"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS విషయం"

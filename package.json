@@ -12,10 +12,16 @@
   "bugs": {
     "url": "https://bugzilla.mozilla.org/"
   },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint kuma/",
+    "precommit": "npm run lint"
+  },
   "devDependencies": {
+    "eslint": "^3.19.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "gulp-stylelint": "^3.9.0",
-    "gulp-watch": "^4.3.6"
+    "gulp-watch": "^4.3.6",
+    "husky": "^0.13.3"
   }
 }

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2016-12-02 21:06+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -143,46 +143,6 @@ msgstr "Të përzgjedhur: "
 msgid "New interest..."
 msgstr "Interes i ri..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Hapni shënime sendërtimi"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Hape"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Rikthehuni te tabela e përputhshmërive."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Mbylle"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Tabelat e reja të përputhshmërisë janë në gjendje beta"
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Më tepër mbi betan."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Plotësoni pyetësorin"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Njoftoni një gabim"
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "U njoftua. Faleminderit!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Shfaq tabelën e vjetër."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Ruajeni Skicën"
@@ -264,15 +224,15 @@ msgstr "Etiketë e re..."
 msgid "How to read CSS syntax."
 msgstr "Si të lexohet sintaksa CSS."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Kërkoni te Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Shfletuesi juaj nuk mbulon MathML. Në vend të tij është përdorur CSS."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Hollësi"
 
@@ -333,23 +293,24 @@ msgid "What should the sample title be?"
 msgstr "Cili do të ishte titulli i shembullit?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "Lëndë HTML"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Shembull Lënde HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "Lëndë CSS"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Shembull Lënde CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "Lëndë JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -399,6 +360,42 @@ msgstr "URL-ja që dhatë s’duket se është e vlefshme"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Parazgjedhje"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Hapni shënime sendërtimi"
+
+#~ msgid "Open"
+#~ msgstr "Hape"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Rikthehuni te tabela e përputhshmërive."
+
+#~ msgid "Close"
+#~ msgstr "Mbylle"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Tabelat e reja të përputhshmërisë janë në gjendje beta"
+
+#~ msgid "More about the beta."
+#~ msgstr "Më tepër mbi betan."
+
+#~ msgid "Take the survey"
+#~ msgstr "Plotësoni pyetësorin"
+
+#~ msgid "Report an error."
+#~ msgstr "Njoftoni një gabim"
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "U njoftua. Faleminderit!"
+
+#~ msgid "Show old table."
+#~ msgstr "Shfaq tabelën e vjetër."
+
+#~ msgid "HTML Content"
+#~ msgstr "Lëndë HTML"
+
+#~ msgid "CSS Content"
+#~ msgstr "Lëndë CSS"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Studio Demosh"

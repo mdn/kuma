@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-04-09 13:31+0000\n"
-"Last-Translator: Slimane Amiri <slimane.amiri@gmail.com>\n"
+"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"PO-Revision-Date: 2017-04-24 04:40+0000\n"
+"Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
@@ -28,33 +28,29 @@ msgid "Your profile has been banned from making edits."
 msgstr "Amaɣnu yinek yettwaḥwi ihi ur yezmir ara ad yesnifel."
 
 #: jinja2/403.html:27
-msgid "This user's profile has been banned."
-msgstr "Amaγnu-agi n useqdac yettwaḥwi."
-
-#: jinja2/403.html:29
 msgid "You must sign in to view all history"
 msgstr "Yessefk ad tkecmeḍ akken ad twaliḍ amazray"
 
-#: jinja2/403.html:39 jinja2/handlers/400.html:21
+#: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>Suref-aɣ%(name)s, ur nezmir ara ad t-neg.</p>"
 
-#: jinja2/403.html:43 jinja2/handlers/400.html:25
+#: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>Suref-aɣ, ur nezmir ara ad t-neg.</p>"
 
-#: jinja2/403.html:50
+#: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li><a href=\"%(logout_url)s\">Ffeɣ </a> akken ad tɛeṛḍeḍ tikelt nniḍen.</li>"
 
-#: jinja2/403.html:54 jinja2/handlers/400.html:36
+#: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">Kcem</a> akken ad tɛeṛḍeḍ tikelt nniḍen.</li>"
 
-#: jinja2/403.html:62
+#: jinja2/403.html:60
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -80,7 +76,11 @@ msgstr "Tzemreḍ ad tɛerḍeḍ anadi neɣ ad tuɣaled ɣer <a href=\"%(homepa
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr "Ma tḍefreḍ-d aseɣwen seg tsemlit, tzemreḍ ad teqqneḍ u ad ternuḍ asebter. Ma ulac, ttxil-k <a href=\"%(bug_form_url)s\" rel=\"nofollow\">azen-d abug</a>. Tanemmirt!"
 
-#: jinja2/404.html:36
+#: jinja2/404.html:35
+msgid "This user's profile has been banned."
+msgstr "Amaγnu-agi n useqdac yettwaḥwi."
+
+#: jinja2/404.html:42
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> Sɣuṛ Matthew Inman, win i d-yesnulfan <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
@@ -1076,54 +1076,52 @@ msgstr "Imeskaren"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
 msgid "Active macros"
-msgstr ""
+msgstr "Imakṛuyen urmiden"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "Tettwaf %(num)s n tneɣruft."
-msgstr[1] "Ttwafent %(num)s n tneɣrufin"
+msgstr[0] "Yettwaf %(num)s n umakru urmid."
+msgstr[1] "Ttwafent %(num)s n imakruyen urmiden."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "Wali <a href=\"%(url)s\">Taffa GitHub</a> i tebdart n imakruyen."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "Tzemreḍ daɣen <a href=\"%(url)s\">ad tnadiḍ imakruyen s ufus </a>."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "Amḍan n imakruyen urmiden akked useqdec-nsen"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Isem n umakṛu"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Tibzimin s teglizit"
+msgstr "Amḍan n isebtar n teglizit"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Amḍan n isebtar meṛṛa"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "Anadi i useqdec n imaruyen:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
-msgstr ""
+msgstr "Nadi akk isebtar"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Tibzimin s teglizit"
+msgstr "Nadi isebtar n teglizit"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1765,15 +1763,15 @@ msgstr "Aseqdac"
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "Tfuked amecwaṛ amezwaru n umnir n <a href=\"%s\"> Bdu di MDN </a>"
 
-#: kuma/users/backends.py:32
+#: kuma/users/backends.py:34
 msgid "algorithm"
 msgstr "alguritm"
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:35
 msgid "salt"
 msgstr "salt"
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:36
 msgid "hash"
 msgstr "hash"
 
@@ -1946,25 +1944,25 @@ msgstr "Qqebleɣ"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Ddu ɣer umecwar wis sin akken ad tettekkiḍ di MDN!"
 
-#: kuma/users/views.py:474
+#: kuma/users/views.py:473
 msgid "Email address"
 msgstr "Tansa imayl"
 
-#: kuma/users/views.py:520
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>Yettwasenqed</b>"
 
-#: kuma/users/views.py:523
+#: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s Ur yettwasenqed ara"
 
-#: kuma/users/views.py:527 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Wayeḍ:"
 
-#: kuma/users/views.py:529
+#: kuma/users/views.py:528
 msgid "Email:"
 msgstr "Imayl:"
 
@@ -2817,7 +2815,7 @@ msgstr "Gdel aseqdac agi & sfeḍ"
 msgid "Admin"
 msgstr "Anebdal"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2837,7 +2835,7 @@ msgstr "Tasuqilt tetteddu - ur yettwasuqel ara yakan imeṛṛa."
 msgid "Edit section"
 msgstr "Ẓreg tigezmi"
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:82
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] Asebter \"%(document_title)s\" yesnifel-it %(creator)s"
@@ -3000,12 +2998,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Asnifel n unegzum n isemli agi yesra ad yettwasenkez netta akked isemliyen ines isnawanen."
 
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Azwel:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
 msgid "Title of article"
 msgstr "Azwel n umagrad"
 
@@ -3058,11 +3056,11 @@ msgstr "Creḍ aɛiwed agi n tmuɣli i tɣuṛi nniḍen?"
 msgid "Tag this revision for localization?"
 msgstr "Creḍ aɛiwed agi n tmuɣli i tsuqilt?"
 
-#: kuma/wiki/forms.py:895
+#: kuma/wiki/forms.py:906
 msgid "New slug:"
 msgstr "Anugzum amaynut:"
 
-#: kuma/wiki/forms.py:896
+#: kuma/wiki/forms.py:907
 msgid "New article URL"
 msgstr "Tansa URL tamaynut n umagrad"
 
@@ -3807,14 +3805,14 @@ msgid "This article needs these reviews:"
 msgstr "Amagrad agi yesra aɛided agi n tmuɣli:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Atiknikan - imedyaten n tengalt, API neɣ tatiknulujit"
+msgstr "Tatiknikt- imedyaten n tengalt, API, neɣ titiknulujiyin. <a href=\"%(url)s\">Tzemreḍ ad d-muddeḍ afus?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Tira - aḍris, tajeṛṛumt, neɣ agbur"
+msgstr "Tira - aḍris, tajeṛṛumt, neɣ agbur. <a href=\"%(url)s\">Tzemreḍ ad d-muddeḍ afus?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3890,14 +3888,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "Aqeddac ad yeskan amgired gar igburen. Ma ulac aɣilif, smiren asebter agi di kra n tesdatin."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Jerred ɣer %(title)s akked akk imagraden icudded ɣur-s"
+msgstr "Jerred ɣer umagrad-agi akked akk imagraden icudden ɣur-s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Ffe seg ujerred n %(title)s akked akk imagraden icudded ɣur-s"
+msgstr "Ffeɣ seg ujerred n numagrad-agi akked d imagraden icudden ɣur-s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3912,14 +3908,12 @@ msgid "Updating subscription status"
 msgstr "Aleqqem n waddad n ujerred"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Jerred ɣer %(title)s"
+msgstr "Jerred ar umagrad-agi"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Ffeɣ seg ujerred n yimaylen agi:"
+msgstr "Ffeɣ seg ujerred n umagrad-agi"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3932,14 +3926,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Teffɣeḍ seg ujettwajerd akka tura n %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Jerred ɣer lqem s <bdi>%(language)s</bdi>"
+msgstr "Jerred ar lqem  %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Ffeɣ seg ujerred n lqem s <bdi>%(language)s</bdi>"
+msgstr "Ffeɣ seg ujerred n lqem  %(language)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
@@ -4275,27 +4269,27 @@ msgstr "Teḍra-d tuccḍa deg usirew n ugbur."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Isemli agi yella yakan. Tamawt : ur tezmireḍ ara ad terreḍ lqem n isemli yettwasemselsin skud ur tekkiseḍ ara awelleh ines."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Yettweleh-d si %(url)s"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Lemdeɣ ɣef %(title)s di MDN."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Anaw n ugbur ur yettusefrak ara: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Tuccḍa n tesleṭ n tuttra: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "Tawtilt tuzwirt ETag ur teddi ara"
 

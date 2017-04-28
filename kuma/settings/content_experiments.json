@@ -1,0 +1,352 @@
+[
+    {
+        "ga_name": "framework-test",
+        "id": "experiment-framework-test",
+        "pages": {
+            "en-US:Web/JavaScript/Reference/Operators/Comparison_Operators": {
+                "control": "Web/JavaScript/Reference/Operators/Comparison_Operators",
+                "test": "Experiment:FrameworkTest/Comparison_Operators"
+            }
+        },
+        "param": "v"
+    },
+    {
+        "ga_name": "static-examples-on-top",
+        "id": "experiment-static-examples-on-top",
+        "pages": {
+            "en-US:Web/CSS/align-items": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/align-items",
+                "example": "Web/CSS/align-items"
+            },
+            "en-US:Web/CSS/animation": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/animation",
+                "example": "Web/CSS/animation"
+            },
+            "en-US:Web/CSS/background": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/background",
+                "example": "Web/CSS/background"
+            },
+            "en-US:Web/CSS/background-color": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/background-color",
+                "example": "Web/CSS/background-color"
+            },
+            "en-US:Web/CSS/background-image": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/background-image",
+                "example": "Web/CSS/background-image"
+            },
+            "en-US:Web/CSS/background-position": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/background-position",
+                "example": "Web/CSS/background-position"
+            },
+            "en-US:Web/CSS/background-size": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/background-size",
+                "example": "Web/CSS/background-size"
+            },
+            "en-US:Web/CSS/border": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/border",
+                "example": "Web/CSS/border"
+            },
+            "en-US:Web/CSS/border-radius": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/border-radius",
+                "example": "Web/CSS/border-radius"
+            },
+            "en-US:Web/CSS/border-style": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/border-style",
+                "example": "Web/CSS/border-style"
+            },
+            "en-US:Web/CSS/box-shadow": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/box-shadow",
+                "example": "Web/CSS/box-shadow"
+            },
+            "en-US:Web/CSS/box-sizing": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/box-sizing",
+                "example": "Web/CSS/box-sizing"
+            },
+            "en-US:Web/CSS/color": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/color",
+                "example": "Web/CSS/color"
+            },
+            "en-US:Web/CSS/cursor": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/cursor",
+                "example": "Web/CSS/cursor"
+            },
+            "en-US:Web/CSS/display": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/display",
+                "example": "Web/CSS/display"
+            },
+            "en-US:Web/CSS/filter": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/filter",
+                "example": "Web/CSS/filter"
+            },
+            "en-US:Web/CSS/flex": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/flex",
+                "example": "Web/CSS/flex"
+            },
+            "en-US:Web/CSS/flex-basis": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/flex-basis",
+                "example": "Web/CSS/flex-basis"
+            },
+            "en-US:Web/CSS/flex-grow": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/flex-grow",
+                "example": "Web/CSS/flex-grow"
+            },
+            "en-US:Web/CSS/flex-shrink": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/flex-shrink",
+                "example": "Web/CSS/flex-shrink"
+            },
+            "en-US:Web/CSS/flex-wrap": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/flex-wrap",
+                "example": "Web/CSS/flex-wrap"
+            },
+            "en-US:Web/CSS/float": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/float",
+                "example": "Web/CSS/float"
+            },
+            "en-US:Web/CSS/font": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/font",
+                "example": "Web/CSS/font"
+            },
+            "en-US:Web/CSS/font-family": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/font-family",
+                "example": "Web/CSS/font-family"
+            },
+            "en-US:Web/CSS/font-size": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/font-size",
+                "example": "Web/CSS/font-size"
+            },
+            "en-US:Web/CSS/font-style": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/font-style",
+                "example": "Web/CSS/font-style"
+            },
+            "en-US:Web/CSS/font-weight": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/font-weight",
+                "example": "Web/CSS/font-weight"
+            },
+            "en-US:Web/CSS/justify-content": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/justify-content",
+                "example": "Web/CSS/justify-content"
+            },
+            "en-US:Web/CSS/line-height": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/line-height",
+                "example": "Web/CSS/line-height"
+            },
+            "en-US:Web/CSS/list-style-type": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/list-style-type",
+                "example": "Web/CSS/list-style-type"
+            },
+            "en-US:Web/CSS/margin": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/margin",
+                "example": "Web/CSS/margin"
+            },
+            "en-US:Web/CSS/object-fit": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/object-fit",
+                "example": "Web/CSS/object-fit"
+            },
+            "en-US:Web/CSS/overflow": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/overflow",
+                "example": "Web/CSS/overflow"
+            },
+            "en-US:Web/CSS/overflow-wrap": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/overflow-wrap",
+                "example": "Web/CSS/overflow-wrap"
+            },
+            "en-US:Web/CSS/padding": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/padding",
+                "example": "Web/CSS/padding"
+            },
+            "en-US:Web/CSS/pointer-events": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/pointer-events",
+                "example": "Web/CSS/pointer-events"
+            },
+            "en-US:Web/CSS/position": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/position",
+                "example": "Web/CSS/position"
+            },
+            "en-US:Web/CSS/text-align": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/text-align",
+                "example": "Web/CSS/text-align"
+            },
+            "en-US:Web/CSS/text-decoration": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/text-decoration",
+                "example": "Web/CSS/text-decoration"
+            },
+            "en-US:Web/CSS/text-overflow": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/text-overflow",
+                "example": "Web/CSS/text-overflow"
+            },
+            "en-US:Web/CSS/text-size-adjust": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/text-size-adjust",
+                "example": "Web/CSS/text-size-adjust"
+            },
+            "en-US:Web/CSS/touch-action": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/touch-action",
+                "example": "Web/CSS/touch-action"
+            },
+            "en-US:Web/CSS/transform": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/transform",
+                "example": "Web/CSS/transform"
+            },
+            "en-US:Web/CSS/transform-origin": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/transform-origin",
+                "example": "Web/CSS/transform-origin"
+            },
+            "en-US:Web/CSS/transition": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/transition",
+                "example": "Web/CSS/transition"
+            },
+            "en-US:Web/CSS/vertical-align": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/vertical-align",
+                "example": "Web/CSS/vertical-align"
+            },
+            "en-US:Web/CSS/white-space": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/white-space",
+                "example": "Web/CSS/white-space"
+            },
+            "en-US:Web/CSS/width": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/width",
+                "example": "Web/CSS/width"
+            },
+            "en-US:Web/CSS/z-index": {
+                "control": "Experiment:StaticExamplesOnTop/CSS/z-index",
+                "example": "Web/CSS/z-index"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/Reduce": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/reduce",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/Reduce"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/ReduceRight": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/reduceRight",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/ReduceRight"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/concat": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/concat",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/concat"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/copyWithin": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/copyWithin",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/copyWithin"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/entries": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/entries",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/entries"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/every": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/every",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/every"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/fill": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/fill",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/fill"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/filter": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/filter",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/filter"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/find": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/find",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/find"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/findIndex": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/findIndex",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/findIndex"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/forEach": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/forEach",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/forEach"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/from": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/from",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/from"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/includes": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/includes",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/includes"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/indexOf": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/indexOf",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/indexOf"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/isArray": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/isArray",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/isArray"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/join": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/join",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/join"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/keys": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/keys",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/keys"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/lastIndexOf",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/length": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/length",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/length"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/map": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/map",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/map"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/of": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/of",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/of"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/pop": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/pop",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/pop"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/prototype": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/prototype",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/prototype"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/push": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/push",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/push"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/reverse": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/reverse",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/reverse"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/shift": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/shift",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/shift"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/slice": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/slice",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/slice"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/some": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/some",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/some"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/sort": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/sort",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/sort"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/splice": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/splice",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/splice"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/toLocaleString": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/toLocaleString",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/toLocaleString"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/toString": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/toString",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/toString"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/unshift": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/unshift",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/unshift"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/values": {
+                "control": "Experiment:StaticExamplesOnTop/JavaScript/Array/values",
+                "example": "Web/JavaScript/Reference/Global_Objects/Array/values"
+            }
+        },
+        "param": "v"
+    }
+]

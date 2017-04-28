@@ -284,7 +284,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
             '<h2 id="Syntax">Syntax</h2>\r\n'
             '<pre class="brush:css">\r\n'
             'display: none;\r\n'
-            '</pre>\r\n'
+            '</pre>'
         ),
         'slug': 'Web/CSS/display',
         'tags': '"CSS" "CSS Property" "Reference"',
@@ -613,6 +613,62 @@ class RevisionFormEditTests(RevisionFormViewTests):
                                    is_spam='true')
         assert rev_form.is_valid()
         assert not rev_form.akismet_enabled()
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_set_review_flags(self, mock_requests):
+        only_set_review_flags = {
+            'content': self.original['content'],
+            'comment': '',
+            'review_tags': ['editorial', 'technical']
+        }
+        rev_form = self.setup_form(mock_requests,
+                                   override_data=only_set_review_flags,
+                                   is_spam='true')
+
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['comment_content'] == ''
+        assert mock_requests.call_count == 1  # Only verify key called
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_significant_normalized_whitespace(self, mock_requests):
+        """
+        Whitespace is signficant when analyzing a change.
+
+        This can be fixed after some long-standing issues with content tidying
+        are addressed.  See bug 1358541.
+        """
+        original = (
+            '<h2 id="Summary">Tabs</h2>\r\n'
+            '<p>\r\n'
+            '\tThe "tab" or tabulator key, was added to typewriters in\r\n'
+            '\tthe late 19th century, to aid in the typing of tabular data\r\n'
+            '\tsuch as columns of numbers. In the modern computing era, a\r\n'
+            '\tdomain-specific language such as CSV or HTML tables\r\n'
+            '\tshould be used for tabular data. It is an on-going\r\n'
+            '\teffort to remove the deprecated tab character from\r\n'
+            '\tsource documents.\r\n'
+            '</p>\r\n')
+        new = (
+            '<h2 id="Summary">Tabs</h2>\r\n'
+            '<p>\r\n'
+            '  The "tab" or tabulator key, was added to typewriters in\n'
+            '  the late 19th century, to aid in the typing of tabular data\n'
+            '  such as columns of numbers. In the modern computing era, a\n'
+            '  domain-specific language such as CSV or HTML tables\n'
+            '  should be used for tabular data. It is an on-going\n'
+            '  effort to remove the deprecated tab character from\n'
+            '  source documents.\r\n'
+            '</p>\n')
+        rev_form = self.setup_form(mock_requests,
+                                   override_original={'content': original},
+                                   override_data={'content': new})
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        # Akismet sees a content change due to the whitespace
+        assert parameters['comment_content'] != ''
 
 
 class RevisionFormCreateTests(RevisionFormViewTests):

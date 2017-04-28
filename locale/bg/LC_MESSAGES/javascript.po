@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: 2017-03-31 09:05+0000\n"
 "Last-Translator: :stoyan <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
@@ -142,46 +142,6 @@ msgstr "Избрано: "
 msgid "New interest..."
 msgstr "Нов интерес..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Отваряне бележките по осъществяването"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Отваряне"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Връщане към таблицата за съвместимостта."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Затваряне"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Новите таблици за съвместимостта са в бета-версия "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Повече относно бета-версията."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Попълване на въпросника"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Съобщаване за грешка."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Докладвано. Благодарим!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Показване на старата таблица."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Запис на чернова"
@@ -263,15 +223,15 @@ msgstr "Нов етикет…"
 msgid "How to read CSS syntax."
 msgstr ""
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Търсене в Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Вашият четец не поддържа MathML. Вместо това е използван вариант със CSS."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Подробности"
 
@@ -332,23 +292,24 @@ msgid "What should the sample title be?"
 msgstr "Какво трябва да е примерното заглавие?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "Съдържание на HTML"
+msgid "HTML"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Примерно съдържание на HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "Съдържание в CSS формат"
+msgid "CSS"
+msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Примерно съдържание в CSS формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+#, fuzzy
+msgid "JavaScript"
 msgstr "Съдържание в JavaScript формат"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
@@ -398,3 +359,39 @@ msgstr "Връзката, която добавихте изглежда не с
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "По подразбиране"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Отваряне бележките по осъществяването"
+
+#~ msgid "Open"
+#~ msgstr "Отваряне"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Връщане към таблицата за съвместимостта."
+
+#~ msgid "Close"
+#~ msgstr "Затваряне"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Новите таблици за съвместимостта са в бета-версия "
+
+#~ msgid "More about the beta."
+#~ msgstr "Повече относно бета-версията."
+
+#~ msgid "Take the survey"
+#~ msgstr "Попълване на въпросника"
+
+#~ msgid "Report an error."
+#~ msgstr "Съобщаване за грешка."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Докладвано. Благодарим!"
+
+#~ msgid "Show old table."
+#~ msgstr "Показване на старата таблица."
+
+#~ msgid "HTML Content"
+#~ msgstr "Съдържание на HTML"
+
+#~ msgid "CSS Content"
+#~ msgstr "Съдържание в CSS формат"

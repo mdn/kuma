@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
-"PO-Revision-Date: 2016-11-30 20:50+0000\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"PO-Revision-Date: 2017-04-28 09:46+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
 "Language: nl\n"
@@ -143,46 +143,6 @@ msgstr "Geselecteerd: "
 msgid "New interest..."
 msgstr "Nieuwe interesse…"
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Implementatieopmerkingen openen"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Openen"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Terug naar compatibiliteitstabel"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Sluiten"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Nieuwe compatibiliteitstabellen zijn in bèta "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Meer over de bèta."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "De enquête starten"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Een fout melden"
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Gemeld. Bedankt!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Oude tabel tonen"
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Concept opslaan"
@@ -264,15 +224,15 @@ msgstr "Nieuw label…"
 msgid "How to read CSS syntax."
 msgstr "CSS-syntaxis lezen."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Zoeken bij Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Uw browser ondersteunt geen MathML. Daarom is een CSS-terugvalversie gebruikt."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Details"
 
@@ -333,24 +293,24 @@ msgid "What should the sample title be?"
 msgstr "Wat zou de voorbeeldtitel moeten zijn?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML-inhoud"
+msgid "HTML"
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Voorbeeld van HTML-inhoud"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS-inhoud"
+msgid "CSS"
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Voorbeeld van CSS-inhoud"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
-msgstr "JavaScript-inhoud"
+msgid "JavaScript"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
@@ -399,6 +359,42 @@ msgstr "De URL die u hebt ingevoerd lijkt niet geldig te zijn"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Standaard"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Implementatieopmerkingen openen"
+
+#~ msgid "Open"
+#~ msgstr "Openen"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Terug naar compatibiliteitstabel"
+
+#~ msgid "Close"
+#~ msgstr "Sluiten"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Nieuwe compatibiliteitstabellen zijn in bèta "
+
+#~ msgid "More about the beta."
+#~ msgstr "Meer over de bèta."
+
+#~ msgid "Take the survey"
+#~ msgstr "De enquête starten"
+
+#~ msgid "Report an error."
+#~ msgstr "Een fout melden"
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Gemeld. Bedankt!"
+
+#~ msgid "Show old table."
+#~ msgstr "Oude tabel tonen"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML-inhoud"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS-inhoud"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

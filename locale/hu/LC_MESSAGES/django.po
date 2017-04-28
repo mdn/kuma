@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-03-20 21:29+0000\n"
+"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"PO-Revision-Date: 2017-04-16 18:48+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -29,33 +29,29 @@ msgid "Your profile has been banned from making edits."
 msgstr "Profilja szerkesztési jogosultsága visszavonva."
 
 #: jinja2/403.html:27
-msgid "This user's profile has been banned."
-msgstr "Ezt a felhasználói profilt letiltották."
-
-#: jinja2/403.html:29
 msgid "You must sign in to view all history"
 msgstr "Az összes előzmény megtekintéséhez be kell bejelentkeznie"
 
-#: jinja2/403.html:39 jinja2/handlers/400.html:21
+#: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>Sajnáljuk %(name)s, ezt sajnos nem tudjuk megtenni.</p>"
 
-#: jinja2/403.html:43 jinja2/handlers/400.html:25
+#: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>Sajnáljuk, ezt sajnos nem tudjuk megtenni.</p>"
 
-#: jinja2/403.html:50
+#: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li><a href=\"%(logout_url)s\">Jelentkezzen ki</a> az újrapróbálkozáshoz.</li>"
 
-#: jinja2/403.html:54 jinja2/handlers/400.html:36
+#: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">Jelentkezzen be</a> az újrapróbálkozáshoz.</li>"
 
-#: jinja2/403.html:62
+#: jinja2/403.html:60
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -84,7 +80,11 @@ msgstr ""
 "Ha egy dokumentációs hivatkozást követett, akkor bejelentkezhet és létrehozhatja az oldalt. Ellenkező esetben, kérjük <a href=\"%(bug_form_url)s\" rel=\"nofollow\">jelentse be a hibát</a>. "
 "Köszönjük!"
 
-#: jinja2/404.html:36
+#: jinja2/404.html:35
+msgid "This user's profile has been banned."
+msgstr "Ezt a felhasználói profilt letiltották."
+
+#: jinja2/404.html:42
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a>, készítője Matthew Inman, a <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a> oldalról"
@@ -1105,55 +1105,52 @@ msgstr "Szerzők"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
 msgid "Active macros"
-msgstr ""
+msgstr "Aktív makrók"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "%(num)s sablon található."
-msgstr[1] "%(num)s sablon található."
+msgstr[0] "%(num)s aktív makró található."
+msgstr[1] "%(num)s aktív makró található."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
-msgstr ""
+msgstr "Lásd a <a href=\"%(url)s\">GitHub tárolót</a> a makrók listájához."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:17
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
-msgstr ""
+msgstr "<a href=\"%(url)s\">Kézzel is kereshet makrókat</a>."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:23
 msgid "Active macros and their usage counts"
-msgstr ""
+msgstr "Aktív makrók és a használatuk száma"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Makró neve"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Angol címkék"
+msgstr "Angol lapok száma"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Összes lap száma"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
-msgstr ""
+msgstr "Keresés a makró használatára:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
-#, fuzzy
 msgid "Search All Pages"
-msgstr "Keresési eredmények"
+msgstr "Az összes lap keresése"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Legutóbbi angol változások"
+msgstr "Angol lapok keresése"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1800,15 +1797,15 @@ msgstr "Felhasználó"
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "Teljesítette az első lépesét az <a href=\"%s\">MDN megismerésének</a>"
 
-#: kuma/users/backends.py:32
+#: kuma/users/backends.py:34
 msgid "algorithm"
 msgstr "algoritmus"
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:35
 msgid "salt"
 msgstr "só"
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:36
 msgid "hash"
 msgstr "hash"
 
@@ -1982,25 +1979,25 @@ msgstr "Elfogadom"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Tegye meg a következő lépést, hogy közreműködjön a MDN-ben!"
 
-#: kuma/users/views.py:474
+#: kuma/users/views.py:473
 msgid "Email address"
 msgstr "E-mail cím"
 
-#: kuma/users/views.py:520
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>Megerősítve</b>"
 
-#: kuma/users/views.py:523
+#: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s Nincs megerősítve"
 
-#: kuma/users/views.py:527 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Egyéb:"
 
-#: kuma/users/views.py:529
+#: kuma/users/views.py:528
 msgid "Email:"
 msgstr "E-mail:"
 
@@ -2856,7 +2853,7 @@ msgstr "Felhasználó kitiltása és takarítás"
 msgid "Admin"
 msgstr "Admin"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2876,7 +2873,7 @@ msgstr "Honosítás folyamatban – nincs teljesen lefordítva."
 msgid "Edit section"
 msgstr "Fejezet szerkesztése"
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:82
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] „%(document_title)s” oldalt megváltoztatta: %(creator)s"
@@ -3039,12 +3036,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "A dokumentum SEO URL-jének módosításához az összes gyermekét át kell helyezni."
 
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Cím:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
 msgid "Title of article"
 msgstr "A cikk címe"
 
@@ -3099,11 +3096,11 @@ msgstr "Megcímkézi ezt a verziót felülvizsgálatra?"
 msgid "Tag this revision for localization?"
 msgstr "Megcímkézi ezt a verziót honosításra?"
 
-#: kuma/wiki/forms.py:895
+#: kuma/wiki/forms.py:906
 msgid "New slug:"
 msgstr "Új SEO URL:"
 
-#: kuma/wiki/forms.py:896
+#: kuma/wiki/forms.py:907
 msgid "New article URL"
 msgstr "Új cikk URL"
 
@@ -3854,14 +3851,14 @@ msgid "This article needs these reviews:"
 msgstr "Ez a cikk ezekre a felülvizsgálatokra szorul:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Műszaki – kódminták, API-k vagy technológiák"
+msgstr "Műszaki – kódminták, API-k vagy technológiák. <a href=\"%(url)s\">Tud segíteni?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Szerkesztői – szöveg, nyelvtan vagy tartalom"
+msgstr "Szerkesztői – szöveg, nyelvtan vagy tartalom. <a href=\"%(url)s\">Tud segíteni?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3937,14 +3934,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "A kiszolgáló a tartalom összehasonlítását rendereli. Kérjük, frissítse ezt az oldalt néhány perc múlva."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Feliratkozás ezekre: %(title)s és minden alcikke"
+msgstr "Feliratkozás erre a cikkre és minden alcikkére"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Leiratkozás ezekről: %(title)s és minden alcikke"
+msgstr "Leiratkozás erről a cikkről és minden alcikkéről"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3959,14 +3954,12 @@ msgid "Updating subscription status"
 msgstr "Feliratkozási állapot frissítése"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Feliratkozás erre: %(title)s"
+msgstr "Feliratkozás erre a cikkre"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Leiratkozás ezekről az e-mailekről:"
+msgstr "Leiratkozás erről a cikkről"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3979,14 +3972,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Leiratkozott erről: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Feliratkozás a <bdi>%(language)s</bdi> verzióra"
+msgstr "Feliratkozás a(z) %(language)s verzióra"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Leiratkozás a <bdi>%(language)s</bdi> verzióról"
+msgstr "Leiratkozás a(z) %(language)s verzióról"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
@@ -4324,27 +4317,27 @@ msgstr "Hiba történt a tartalom előállításakor."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "A dokumentum már létezik. Megjegyzés: Addig nem állíthat vissza egy dokumentumot amelyet áthelyeztek, amíg nem törli az átirányítását."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Átirányítva innen: %(url)s"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Megismertem ezt az MDN-en: %(title)s."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Nem támogatott tartalomtípus: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Kérelem-feldolgozási hiba: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "ETag hibás előfeltétel"
 

@@ -437,12 +437,12 @@ AUTHENTICATION_BACKENDS = (
 )
 AUTH_USER_MODEL = 'users.User'
 
-
+# Django 1.8 strong defaults, plus legacy Sha256Hasher
 PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
     'kuma.users.backends.Sha256Hasher',
-    'django.contrib.auth.hashers.SHA1PasswordHasher',
-    'django.contrib.auth.hashers.MD5PasswordHasher',
-    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
 )
 
 USER_AVATAR_PATH = 'uploads/avatars/'
@@ -599,7 +599,7 @@ PUENTE = {
         ],
     },
     'PROJECT': 'MDN',
-    'VERSION': '2017.06',
+    'VERSION': '2017.07',
     'MSGID_BUGS_ADDRESS': 'dev-mdn@lists.mozilla.org',
 }
 
@@ -678,13 +678,6 @@ PIPELINE_CSS = {
             'styles/wiki-edit.scss',
         ),
         'output_filename': 'build/styles/wiki-edit.css',
-    },
-    'wiki-compat-tables': {
-        'source_filenames': (
-            'styles/wiki-compat-tables.scss',
-        ),
-        'output_filename': 'build/styles/wiki-compat-tables.css',
-        'template_name': 'pipeline/javascript-array.jinja',
     },
     'sphinx': {
         'source_filenames': (
@@ -779,6 +772,13 @@ PIPELINE_CSS = {
             'styles/maintenance-mode-global.scss',
         ),
         'output_filename': 'build/styles/maintenance-mode-global.css',
+    },
+    # embeded iframe for live samples
+    'samples': {
+        'source_filenames': (
+            'styles/samples.scss',
+        ),
+        'output_filename': 'build/styles/samples.css',
     },
 }
 
@@ -899,13 +899,6 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'wiki-compat-tables': {
-        'source_filenames': (
-            'js/wiki-compat-tables.js',
-        ),
-        'output_filename': 'build/js/wiki-compat-tables.js',
-        'template_name': 'pipeline/javascript-array.jinja',
-    },
     'helpfulness': {
         'source_filenames': (
             'js/helpfulness.js',
@@ -968,15 +961,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'experiment-wiki-content': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-            'js/libs/mozilla.cookiehelper.js',
-            'js/libs/mozilla.trafficcop.js',
-            'js/experiment-wiki-content.js',
-        ),
-        'output_filename': 'build/js/experiment-wiki-content.js',
-    },
     'experiment-framework-test': {
         'source_filenames': (
             'js/libs/mozilla.dnthelper.js',
@@ -985,6 +969,15 @@ PIPELINE_JS = {
             'js/experiment-framework-test.js',
         ),
         'output_filename': 'build/js/experiment-framework-test.js',
+    },
+    'experiment-static-examples-on-top': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+            'js/libs/mozilla.cookiehelper.js',
+            'js/libs/mozilla.trafficcop.js',
+            'js/experiment-static-examples-on-top.js',
+        ),
+        'output_filename': 'build/js/experiment-static-examples-on-top.js',
     },
 }
 
@@ -1244,13 +1237,6 @@ CONSTANCE_CONFIG = dict(
         'Maximum acceptable age (in seconds) of a cached response from '
         'kumascript. Passed along in a Cache-Control: max-age={value} header, '
         'which tells kumascript whether or not to serve up a cached response.'
-    ),
-    KUMA_CUSTOM_SAMPLE_CSS_PATH=(
-        '/en-US/docs/Template:CustomSampleCSS',
-        'Path to a wiki document whose raw content will be loaded as a CSS '
-        'stylesheet for live sample template. Will also cause the ?raw '
-        'parameter for this path to send a Content-Type: text/css header. Empty '
-        'value disables the feature altogether.',
     ),
     DIFF_CONTEXT_LINES=(
         0,
@@ -1512,16 +1498,6 @@ TAGGIT_CASE_INSENSITIVE = True
 #  kuma/static/js/experiment-wiki-content.js
 # Only one experiment should be active for a given locale and slug.
 #
-CONTENT_EXPERIMENTS = [{
-    'id': 'experiment-framework-test',
-    'ga_name': 'framework-test',
-    'param': 'v',
-    'pages': [{
-        'locale': 'en-US',
-        'slug': 'Web/JavaScript/Reference/Operators/Comparison_Operators',
-        'variants': [
-            ['control', 'Web/JavaScript/Reference/Operators/Comparison_Operators'],
-            ['test', 'Experiment:FrameworkTest/Comparison_Operators'],
-        ]
-    }]
-}]
+ce_path = path('kuma', 'settings', 'content_experiments.json')
+with open(ce_path, 'r') as ce_file:
+    CONTENT_EXPERIMENTS = json.load(ce_file)

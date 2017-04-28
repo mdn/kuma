@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
-"PO-Revision-Date: 2017-03-15 02:39+0000\n"
+"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"PO-Revision-Date: 2017-04-19 07:36+0000\n"
 "Last-Translator: Frederick Villaluna <fv_comscie@yahoo.com>\n"
 "Language-Team: Tagalog https://pontoon.mozilla.org/tl/\n"
 "Language: tl\n"
@@ -16,44 +16,40 @@ msgstr ""
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
-msgstr ""
+msgstr "Tinanggihan ang Pahintulot"
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
-msgstr ""
+msgstr "Ang wiki ay nasa read-only na mode."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "Ang iyong profile ay pinagbawalan mula sa paggawa ng pag-edit."
 
 #: jinja2/403.html:27
-msgid "This user's profile has been banned."
-msgstr ""
-
-#: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "Kailangan mong mag-sign in upang tingnan ang lahat ng kasaysayan"
 
-#: jinja2/403.html:39 jinja2/handlers/400.html:21
+#: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr ""
 
-#: jinja2/403.html:43 jinja2/handlers/400.html:25
+#: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr ""
 
-#: jinja2/403.html:50
+#: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr ""
 
-#: jinja2/403.html:54 jinja2/handlers/400.html:36
+#: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr ""
 
-#: jinja2/403.html:62
+#: jinja2/403.html:60
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -61,11 +57,11 @@ msgstr ""
 
 #: jinja2/404.html:6
 msgid "Not Found"
-msgstr ""
+msgstr "Hindi Makita"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
-msgstr ""
+msgstr "Ikinalulungkot namin, hindi namin mahanap kung ano ang iyong hinahanap."
 
 #: jinja2/404.html:24
 #, python-format
@@ -77,7 +73,11 @@ msgstr ""
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr ""
 
-#: jinja2/404.html:36
+#: jinja2/404.html:35
+msgid "This user's profile has been banned."
+msgstr "Ang profile na ito ay pinagbawalan sa paggamit."
+
+#: jinja2/404.html:42
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr ""
@@ -96,15 +96,15 @@ msgstr ""
 
 #: jinja2/base.html:87
 msgid "Learn more"
-msgstr ""
+msgstr "Matuto ng higit pa"
 
 #: jinja2/base.html:97
 msgid "Skip to main content"
-msgstr ""
+msgstr "Laktawan sa pangunahing nilalaman"
 
 #: jinja2/base.html:99
 msgid "Select language"
-msgstr ""
+msgstr "Piliin ang wika"
 
 #: jinja2/base.html:100
 msgid "Skip to search"
@@ -120,7 +120,7 @@ msgstr ""
 
 #: jinja2/base.html:123
 msgid "Get started"
-msgstr ""
+msgstr "Magsimula"
 
 #: jinja2/base.html:124
 msgid "Review or localize docs"
@@ -228,7 +228,7 @@ msgstr ""
 
 #: jinja2/base.html:175
 msgid "Feedback"
-msgstr ""
+msgstr "Feedback"
 
 #: jinja2/base.html:179
 msgid "Get Firefox help"
@@ -307,7 +307,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:3
 msgid "Learn the best of web development"
-msgstr ""
+msgstr "Matutunan ang mga pinakamahusay tungkol sa web development"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Sign up for our newsletter:"
@@ -332,11 +332,11 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:27
 msgid "The newsletter is offered in English only at the moment."
-msgstr ""
+msgstr "Ang newsletter ay inaalok sa Ingles lamang sa sandaling ito."
 
 #: jinja2/includes/newsletter.html:31
 msgid "Thanks! Please check your inbox to confirm your subscription."
-msgstr ""
+msgstr "Salamat! Mangyaring suriin ang iyong inbox upang kumpirmahin ang iyong subscription."
 
 #: jinja2/includes/newsletter.html:32
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
@@ -737,16 +737,16 @@ msgstr ""
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1923
 msgid "Title"
-msgstr ""
+msgstr "Titulo"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Paglalarawan"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "Mga komento"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
@@ -879,44 +879,44 @@ msgstr ""
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "Apps"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr ""
+msgstr "Mobile"
 
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/utils.py:425
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Ngayun sa %s"
 
 #: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
 msgid "Yes"
-msgstr ""
+msgstr "Oo"
 
 #: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
 msgid "No"
-msgstr ""
+msgstr "Hindi"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "Add-ons & Extensions"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "Ako ay isang Expert"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
@@ -1252,27 +1252,27 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr ""
+msgstr "higit pa..."
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Learn"
-msgstr ""
+msgstr "Matuto"
 
 #: kuma/landing/jinja2/landing/homepage.html:85
 msgid "Getting started with the Web"
-msgstr ""
+msgstr "Pagsisimula sa Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:86
 msgid "Learn HTML"
-msgstr ""
+msgstr "Matuto ng HTML"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn CSS"
-msgstr ""
+msgstr "Matuto ng CSS"
 
 #: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Learn JavaScript"
-msgstr ""
+msgstr "Matuto ng JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
@@ -1312,7 +1312,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Proudly non-profit."
-msgstr ""
+msgstr "Buong kapurihan non-profit."
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Donate before Dec 31."
@@ -1320,7 +1320,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Donate Now"
-msgstr ""
+msgstr "Mag-donate Ngayon"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get The Browser For Developers Like You"
@@ -1393,7 +1393,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:34
 msgid "creating accounts"
-msgstr ""
+msgstr "gumawa ng accounts"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:35
 msgid "logging in"
@@ -1665,7 +1665,7 @@ msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Ipinapakita ang lahat ng mga resulta."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
@@ -1741,15 +1741,15 @@ msgstr ""
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr ""
 
-#: kuma/users/backends.py:32
+#: kuma/users/backends.py:34
 msgid "algorithm"
 msgstr ""
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:35
 msgid "salt"
 msgstr ""
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:36
 msgid "hash"
 msgstr ""
 
@@ -1841,11 +1841,11 @@ msgstr ""
 
 #: kuma/users/models.py:75
 msgid "Name"
-msgstr ""
+msgstr "Pangalan"
 
 #: kuma/users/models.py:80
 msgid "Organization"
-msgstr ""
+msgstr "Organisasyon"
 
 #: kuma/users/models.py:85
 msgid "Location"
@@ -1922,25 +1922,25 @@ msgstr ""
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:474
+#: kuma/users/views.py:473
 msgid "Email address"
 msgstr ""
 
-#: kuma/users/views.py:520
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:523
+#: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:527 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr ""
 
-#: kuma/users/views.py:529
+#: kuma/users/views.py:528
 msgid "Email:"
 msgstr ""
 
@@ -2780,7 +2780,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr ""
 
@@ -2800,7 +2800,7 @@ msgstr ""
 msgid "Edit section"
 msgstr ""
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:82
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr ""
@@ -2961,12 +2961,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
 msgid "Title of article"
 msgstr ""
 
@@ -3019,11 +3019,11 @@ msgstr ""
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:895
+#: kuma/wiki/forms.py:906
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:896
+#: kuma/wiki/forms.py:907
 msgid "New article URL"
 msgstr ""
 
@@ -4212,27 +4212,27 @@ msgstr ""
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr ""
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr ""
 

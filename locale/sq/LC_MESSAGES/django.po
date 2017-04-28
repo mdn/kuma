@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:40-0700\n"
+"POT-Creation-Date: 2017-04-27 07:41-0700\n"
 "PO-Revision-Date: 2017-03-02 08:47+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -29,33 +29,29 @@ msgid "Your profile has been banned from making edits."
 msgstr "Profilit tuaj i është ndaluar të bëjë përpunime."
 
 #: jinja2/403.html:27
-msgid "This user's profile has been banned."
-msgstr "Profili i këtij përdoruesi është dëbuar."
-
-#: jinja2/403.html:29
 msgid "You must sign in to view all history"
 msgstr "Që të shihni krejt historikun, duhet të keni bërë hyrjen"
 
-#: jinja2/403.html:39 jinja2/handlers/400.html:21
+#: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>Na ndjeni, %(name)s, kemi frikë se këtë s’e bëjmë dot.</p>"
 
-#: jinja2/403.html:43 jinja2/handlers/400.html:25
+#: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>Na ndjeni, kemi frikë se këtë s’e bëjmë dot.</p>"
 
-#: jinja2/403.html:50
+#: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li><a href=\"%(logout_url)s\">Dilni</a> që të riprovoni.</li>"
 
-#: jinja2/403.html:54 jinja2/handlers/400.html:36
+#: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">Hyni</a> që të riprovoni.</li>"
 
-#: jinja2/403.html:62
+#: jinja2/403.html:60
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -81,7 +77,11 @@ msgstr "Mund të provoni të kërkoni, ose t’ia filloni nga e para, te <a href
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr "Nëse ndoqët një lidhje dokumentimi, mund të bëni hyrjen dhe ta krijoni faqen. Përndryshe, ju lutemi, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">njoftoni një të metë</a>. Faleminderit!"
 
-#: jinja2/404.html:36
+#: jinja2/404.html:35
+msgid "This user's profile has been banned."
+msgstr "Profili i këtij përdoruesi është dëbuar."
+
+#: jinja2/404.html:42
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> nga Matthew Inman-i i <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>-it"
@@ -1771,15 +1771,15 @@ msgstr "Përdorues"
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "Plotësuat hapin e parë se <a href=\"%s\">si t’ia fillohet me MDN-në</a>"
 
-#: kuma/users/backends.py:32
+#: kuma/users/backends.py:34
 msgid "algorithm"
 msgstr "algoritëm"
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:35
 msgid "salt"
 msgstr ""
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:36
 msgid "hash"
 msgstr "hash"
 
@@ -1954,25 +1954,25 @@ msgstr "Pajtohem"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Bëni hapin pasues për t’u përfshirë te MDN-ja!"
 
-#: kuma/users/views.py:474
+#: kuma/users/views.py:473
 msgid "Email address"
 msgstr "Adresë email"
 
-#: kuma/users/views.py:520
+#: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>I Verifikuar</b>"
 
-#: kuma/users/views.py:523
+#: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s I paverifikuar"
 
-#: kuma/users/views.py:527 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Tjetër:"
 
-#: kuma/users/views.py:529
+#: kuma/users/views.py:528
 msgid "Email:"
 msgstr "Email:"
 
@@ -2831,7 +2831,7 @@ msgstr "Dëboje Përdoruesin & Pastroje"
 msgid "Admin"
 msgstr "Admin"
 
-#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2851,7 +2851,7 @@ msgstr "Përkthimi është në rrugë e sipër - ende i papërkthyer plotësisht
 msgid "Edit section"
 msgstr "Përpunoni ndarjen"
 
-#: kuma/wiki/events.py:72
+#: kuma/wiki/events.py:82
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] Faqja \"%(document_title)s\" u ndryshua nga %(creator)s"
@@ -3014,12 +3014,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Ndryshimi i identifikuesit të këtij dokumenti lyp lëvizjen e tij dhe të pjellave të tij."
 
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:888 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Titull:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:889
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
 msgid "Title of article"
 msgstr "Titulli i artikullit"
 
@@ -3072,11 +3072,11 @@ msgstr "Të etiketohet ky rishikim për shqyrtim?"
 msgid "Tag this revision for localization?"
 msgstr "Të etiketohet ky rishikim për përkthime?"
 
-#: kuma/wiki/forms.py:895
+#: kuma/wiki/forms.py:906
 msgid "New slug:"
 msgstr "Identifikues i ri:"
 
-#: kuma/wiki/forms.py:896
+#: kuma/wiki/forms.py:907
 msgid "New article URL"
 msgstr "URL e re artikulli"
 
@@ -4301,27 +4301,27 @@ msgstr "Pati një gabim gjatë prodhimit të lëndës."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Dokumenti ekziston tashmë. Shënim: s’mund të ktheni një dokument që është lëvizur, pa fshirë ridrejtimin për të."
 
-#: kuma/wiki/views/document.py:657
+#: kuma/wiki/views/document.py:658
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Ridrejtuar prej %(url)s"
 
-#: kuma/wiki/views/document.py:719
+#: kuma/wiki/views/document.py:720
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Mësova rreth %(title)s te MDN-ja."
 
-#: kuma/wiki/views/document.py:792
+#: kuma/wiki/views/document.py:793
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Lloj lënde i pambuluar: %s"
 
-#: kuma/wiki/views/document.py:799
+#: kuma/wiki/views/document.py:800
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Gabim në përtypje kërkese: %s"
 
-#: kuma/wiki/views/document.py:819
+#: kuma/wiki/views/document.py:820
 msgid "ETag precondition failed"
 msgstr "S’u plotësua parakushti ETag"
 

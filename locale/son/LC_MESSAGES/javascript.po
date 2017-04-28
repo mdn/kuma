@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Songhai https://pontoon.mozilla.org/son/\n"
@@ -139,46 +139,6 @@ msgstr ""
 msgid "New interest..."
 msgstr ""
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr ""
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr ""
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr ""
@@ -260,15 +220,15 @@ msgstr ""
 msgid "How to read CSS syntax."
 msgstr ""
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr ""
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr ""
 
@@ -329,7 +289,7 @@ msgid "What should the sample title be?"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
+msgid "HTML"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
@@ -337,7 +297,7 @@ msgid "Sample HTML Content"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
+msgid "CSS"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
@@ -345,7 +305,7 @@ msgid "Sample CSS Content"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
+msgid "JavaScript"
 msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32

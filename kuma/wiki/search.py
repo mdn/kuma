@@ -53,7 +53,7 @@ class WikiDocumentType(document.DocType):
 
     class Meta(object):
         mapping = Mapping('wiki_document')
-        mapping.meta('_all', enalbed=False)
+        mapping.meta('_all', enabled=False)
 
     @classmethod
     def get_connection(cls, alias='default'):

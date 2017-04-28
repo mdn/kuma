@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
-"PO-Revision-Date: 2016-12-01 06:10+0000\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"PO-Revision-Date: 2017-04-28 03:22+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -142,46 +142,6 @@ msgstr "已選擇:"
 msgid "New interest..."
 msgstr "新興趣…"
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "打開實作筆記"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "開啟"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "回到相容性表格。"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "關閉"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "新版相容性表格正在 beta 測試中"
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "了解 beta 測試的更多資訊。"
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "填寫問卷"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "回報錯誤。"
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "已回報，感謝您！"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "顯示舊版表格。"
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "儲存草稿"
@@ -263,15 +223,15 @@ msgstr "新增標籤…"
 msgid "How to read CSS syntax."
 msgstr "如何閱讀 CSS 語法。"
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "搜尋 Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "您的瀏覽器不支援 MathML，已改用 CSS 顯示。"
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "詳細資訊"
 
@@ -332,24 +292,24 @@ msgid "What should the sample title be?"
 msgstr "範例的標題是什麼？"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "HTML 內容"
+msgid "HTML"
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "HTML 範例內容"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "CSS 內容"
+msgid "CSS"
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "CSS 範例內容"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
-msgstr "JavaScript 內容"
+msgid "JavaScript"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
@@ -398,6 +358,42 @@ msgstr "您輸入的網址看起來不正確"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "預設"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "打開實作筆記"
+
+#~ msgid "Open"
+#~ msgstr "開啟"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "回到相容性表格。"
+
+#~ msgid "Close"
+#~ msgstr "關閉"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "新版相容性表格正在 beta 測試中"
+
+#~ msgid "More about the beta."
+#~ msgstr "了解 beta 測試的更多資訊。"
+
+#~ msgid "Take the survey"
+#~ msgstr "填寫問卷"
+
+#~ msgid "Report an error."
+#~ msgstr "回報錯誤。"
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "已回報，感謝您！"
+
+#~ msgid "Show old table."
+#~ msgstr "顯示舊版表格。"
+
+#~ msgid "HTML Content"
+#~ msgstr "HTML 內容"
+
+#~ msgid "CSS Content"
+#~ msgstr "CSS 內容"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-13 10:15-0700\n"
-"PO-Revision-Date: 2016-12-01 00:36+0000\n"
-"Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
+"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"PO-Revision-Date: 2017-04-27 16:39+0000\n"
+"Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -142,46 +142,6 @@ msgstr "Selecionado: "
 msgid "New interest..."
 msgstr "Novo interesse..."
 
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open implementation notes"
-msgstr "Abrir notas de implementação"
-
-#: kuma/static/js/wiki-compat-tables.js:23
-msgid "Open"
-msgstr "Abrir"
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatibility table."
-msgstr "Voltar para a tabela de compatibilidade."
-
-#: kuma/static/js/wiki-compat-tables.js:25
-msgid "Close"
-msgstr "Fechar"
-
-#: kuma/static/js/wiki-compat-tables.js:108
-msgid "New compatibility tables are in beta "
-msgstr "Novas tabelas de compatibilidade estão em beta "
-
-#: kuma/static/js/wiki-compat-tables.js:112
-msgid "More about the beta."
-msgstr "Mais sobre o beta."
-
-#: kuma/static/js/wiki-compat-tables.js:115
-msgid "Take the survey"
-msgstr "Preencha o inquérito"
-
-#: kuma/static/js/wiki-compat-tables.js:118
-msgid "Report an error."
-msgstr "Reporte um erro."
-
-#: kuma/static/js/wiki-compat-tables.js:124
-msgid "Reported. Thanks!"
-msgstr "Reportado. Obrigado!"
-
-#: kuma/static/js/wiki-compat-tables.js:128
-msgid "Show old table."
-msgstr "Mostrar tabela antiga."
-
 #: kuma/static/js/wiki-edit.js:364
 msgid "Save Draft"
 msgstr "Guardar rascunho"
@@ -263,15 +223,15 @@ msgstr "Nova etiqueta..."
 msgid "How to read CSS syntax."
 msgstr "Como ler a sintaxe CSS."
 
-#: kuma/static/js/wiki.js:605
+#: kuma/static/js/wiki.js:567
 msgid "Search Stack Overflow"
 msgstr "Pesquisar o Stack Overflow"
 
-#: kuma/static/js/wiki.js:712
+#: kuma/static/js/wiki.js:674
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "O seu navegador não suporta MathML. Será utilizado um mecanismo alternativo de substituição em CSS."
 
-#: kuma/static/js/wiki.js:927
+#: kuma/static/js/wiki.js:889
 msgid "Details"
 msgstr "Detalhes"
 
@@ -332,24 +292,24 @@ msgid "What should the sample title be?"
 msgstr "Qual deve ser o título do exemplo?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
-msgid "HTML Content"
-msgstr "Conteúdo HTML"
+msgid "HTML"
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
 msgstr "Conteúdo HTML do exemplo"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
-msgid "CSS Content"
-msgstr "Conteúdo CSS"
+msgid "CSS"
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "Conteúdo CSS do exemplo"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-msgid "JavaScript Content"
-msgstr "Conteúdo JavaScript"
+msgid "JavaScript"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
@@ -398,6 +358,42 @@ msgstr "O URL que introduziu parece ser inválido"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Predefinido"
+
+#~ msgid "Open implementation notes"
+#~ msgstr "Abrir notas de implementação"
+
+#~ msgid "Open"
+#~ msgstr "Abrir"
+
+#~ msgid "Return to compatibility table."
+#~ msgstr "Voltar para a tabela de compatibilidade."
+
+#~ msgid "Close"
+#~ msgstr "Fechar"
+
+#~ msgid "New compatibility tables are in beta "
+#~ msgstr "Novas tabelas de compatibilidade estão em beta "
+
+#~ msgid "More about the beta."
+#~ msgstr "Mais sobre o beta."
+
+#~ msgid "Take the survey"
+#~ msgstr "Preencha o inquérito"
+
+#~ msgid "Report an error."
+#~ msgstr "Reporte um erro."
+
+#~ msgid "Reported. Thanks!"
+#~ msgstr "Reportado. Obrigado!"
+
+#~ msgid "Show old table."
+#~ msgstr "Mostrar tabela antiga."
+
+#~ msgid "HTML Content"
+#~ msgstr "Conteúdo HTML"
+
+#~ msgid "CSS Content"
+#~ msgstr "Conteúdo CSS"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

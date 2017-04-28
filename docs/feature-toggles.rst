@@ -42,7 +42,6 @@ Flags
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.
 
-* ``compat_api`` - View the new API-backed compatibility tables.
 * ``kumabanned`` - (deprecated) added to users to mark them as banned.
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``page_move`` - (deprecated) enable/disable page move feature.
