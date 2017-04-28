@@ -1,9 +1,7 @@
 module.exports = {
     "env": {
         "browser": true,
-        "es6": true,
-        "jquery": true,
-        "jasmine": true
+        "jquery": true
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -61,6 +59,7 @@ module.exports = {
         "gettext": true,
         "interpolate": true,
         "mdn": true,
-        "Mozilla": true
+        "Mozilla": true,
+        "waffle": true
     }
 };
