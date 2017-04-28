@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-27 07:41-0700\n"
-"PO-Revision-Date: 2016-08-28 07:19+0000\n"
-"Last-Translator: alamanda <dian.ina@gmail.com>\n"
+"PO-Revision-Date: 2017-04-28 05:51+0000\n"
+"Last-Translator: Fauzan Alfi <fauzanalfi@mozilla.web.id>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -485,7 +485,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Indonesian"
-msgstr ""
+msgstr "Bahasa Indonesia"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Irish"
@@ -857,8 +857,8 @@ msgstr "Anda membutuhkan izin khusus untuk menggunakan kunci API. Anda dapat mem
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
 "<p>Deskripsikan harapan Anda dalam menggunakan kunci ini, di bawah. <p><strong>CATATAN:</strong> Ini akan berarti Anda mengidentifikasi kunci ini nanti, bukan tanggal dan waktu dibuatnya. Jadi, "
 "sebaiknya sejelas mungkin.</p>"
@@ -1249,8 +1249,8 @@ msgstr "Program Fellowship Mozilla Developer Network (MDN) mengundang pengembang
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
 msgstr ""
 "Mozilla Developer Network (MDN) menyediakan informasi mengenai teknologi Web Terbuka termasuk HTML, CSS, dan APIs untuk situs Web dan Aplikasi HTML5. Juga untuk mendokumentasikan produk-produk "
 "Mozilla seperti Firefox OS."
@@ -1452,12 +1452,12 @@ msgstr "Bagikan kasih sayang pengembang."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 "<ol> <li><strong>Dapatkan Tombol:</strong> Gunakan form sederhana di bawah ini untuk membuat tombol khusus dan kode sumber untuk mempromosikan MDN di situs atau blog anda.</li> <li><strong>Tombol "
-"Kirim:</strong> Salin kode sumber dan tempelkan di mana saja di situs atau blog anda untuk memandu orang mengklik melalui MDN.</li> <li><strong>Rasa Senang:</strong> Berbanggalah karena anda "
-"membuat hidup para pengembang sedikit lebih baik dengan membagikan MDN pada dunia.</li> </ol>"
+"Kirim:</strong> Salin kode sumber dan tempelkan di mana saja di situs atau blog anda untuk memandu orang mengklik melalui MDN.</li> <li><strong>Rasa Senang:</strong> Berbanggalah karena anda membuat"
+" hidup para pengembang sedikit lebih baik dengan membagikan MDN pada dunia.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
 msgid "Preview"
@@ -1751,8 +1751,8 @@ msgstr "tipe"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
 "Maaf, Anda harus memiliki setidaknya satu account tersambung agar anda dapat masuk. Untuk memutuskan sambungan akun ini hubungkan akun lain terlebih dahulu. Untuk menghapus profil MDN anda silakan "
 "<a href=\"%(bug_form_url)s\" rel=\"nofollow\">mengajukan bug</a>."
@@ -2262,11 +2262,11 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Alamat surel apa yang harus kami gunakan untuk mengirim pesan terkait MDN dan notifikasi? Alamat ini tidak <strong>akan</strong> ditampilkan di MDN dan akan digunakan sesuai <a href="
-"\"%(privacy_url)s\">kebijakan privasi</a>kami."
+"Alamat surel apa yang harus kami gunakan untuk mengirim pesan terkait MDN dan notifikasi? Alamat ini tidak <strong>akan</strong> ditampilkan di MDN dan akan digunakan sesuai <a "
+"href=\"%(privacy_url)s\">kebijakan privasi</a>kami."
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
@@ -2673,8 +2673,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"Sekarang, lanjutkan dengan memilih tugas di MDN, dan mengerjakannya! Kami memiliki sejumlah tugas pembuka yang dapat anda pilih, jika anda <a href=\"%(words_link)s\">senang kata-kata</a>, <a href="
-"\"%(code_link)s\">senang menulis kode</a>, <a href=\"%(both_link)s\">senang keduanya</a>, atau anda ingin <a href=\"%(translate_link)s\">menerjemahkan MDN ke dalam bahasa anda</a>."
+"Sekarang, lanjutkan dengan memilih tugas di MDN, dan mengerjakannya! Kami memiliki sejumlah tugas pembuka yang dapat anda pilih, jika anda <a href=\"%(words_link)s\">senang kata-kata</a>, <a "
+"href=\"%(code_link)s\">senang menulis kode</a>, <a href=\"%(both_link)s\">senang keduanya</a>, atau anda ingin <a href=\"%(translate_link)s\">menerjemahkan MDN ke dalam bahasa anda</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2696,9 +2696,8 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Percakapan di saat yang sama: <a href=\"%(channel_link)s\">saluran #mdn di irc.mozilla.org</a>. (Dapatkan info lebih lanjut tentang <a href=\"%(irc_link)s\">IRC</a>.) Anda dapat menemukan para "
-"admin staff penulis MDN: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), dan saya (jms), sebagai manajer komunitas "
-"MDN."
+"Percakapan di saat yang sama: <a href=\"%(channel_link)s\">saluran #mdn di irc.mozilla.org</a>. (Dapatkan info lebih lanjut tentang <a href=\"%(irc_link)s\">IRC</a>.) Anda dapat menemukan para admin"
+" staff penulis MDN: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), dan saya (jms), sebagai manajer komunitas MDN."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -3235,8 +3234,8 @@ msgstr "Anda mencoba membuat halaman baru."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 "Membuat halaman baru adalah tindakan terbatas. Untuk meminta halaman baru, sila <a href=\"%(request_page_url)s\">laporkan bug</a>. Jika Anda membutuhkan ijin untuk membuat halaman baru, sila <a "
 "href=\"%(email_link)s\">hubungi kami</a>."
@@ -3409,8 +3408,8 @@ msgstr "Dokumen ini sedang dirender untuk pertama kalinya oleh sistem. Silakan <
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 "Pembaruan pada dokumen ini <abbr title=\"%(started_at)s\">tengah berlangsung</abbr>. Jika konten di bawah ini tampak basi atau sesuatu menghilang, silakan <a href=\"%(url)s\">memuat laman ini</a> "
 "dalam beberapa menit."
@@ -3418,11 +3417,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
-"Pembaruan pada dokumen ini <abbr title=\"%(scheduled_at)s\">telah dijadwalkan</abbr>. Jika konten di bawah ini tampak basi atau ada yang hilang, silakan <a href=\"%(url)s\">muat kembali laman ini</"
-"a> dalam beberapa menit."
+"Pembaruan pada dokumen ini <abbr title=\"%(scheduled_at)s\">telah dijadwalkan</abbr>. Jika konten di bawah ini tampak basi atau ada yang hilang, silakan <a href=\"%(url)s\">muat kembali laman "
+"ini</a> dalam beberapa menit."
 
 #: kuma/wiki/jinja2/wiki/document.html:287
 msgid "This is an experimental page."
@@ -4365,11 +4364,11 @@ msgstr "Server elasticsearch: %(backend)s"
 #~ msgstr "Buatlah Aplikasi Web yang Terbuka"
 
 #~ msgid ""
-#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
+#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 #~ msgstr ""
-#~ "Pengajuan anda menyertakan konten yang mungkin tidak akan cocok untuk MDN. Percobaan berulang kali untuk mengirimkan bahan yang tidak cocok dapat mengakibatkan akun anda dinonaktifkan. Lihat "
-#~ "panduan kami “<a href=\"%(does_this_belong_url)s\">Apakah ini cocok untuk MDN?</a>” untuk rincian mengenai apa yang merupakan bahan yang tepat."
+#~ "Pengajuan anda menyertakan konten yang mungkin tidak akan cocok untuk MDN. Percobaan berulang kali untuk mengirimkan bahan yang tidak cocok dapat mengakibatkan akun anda dinonaktifkan. Lihat panduan"
+#~ " kami “<a href=\"%(does_this_belong_url)s\">Apakah ini cocok untuk MDN?</a>” untuk rincian mengenai apa yang merupakan bahan yang tepat."
 
 #~ msgid "Sign in:"
 #~ msgstr "Masuk:"
@@ -4396,11 +4395,11 @@ msgstr "Server elasticsearch: %(backend)s"
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 #~ msgstr[0] ""
-#~ "Sudah ada profil dengan salah satu alamat email ini di bawah ini. Apakah anda sudah mempunyai profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-#~ "\"%(persona_next_url)s\">Ya, hubungkan dengan profil MDN saya</a>"
+#~ "Sudah ada profil dengan salah satu alamat email ini di bawah ini. Apakah anda sudah mempunyai profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+#~ "next=\"%(persona_next_url)s\">Ya, hubungkan dengan profil MDN saya</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "Telah masuk dengan Persona"
@@ -4411,7 +4410,6 @@ msgstr "Server elasticsearch: %(backend)s"
 #~ msgid "Sign in with Persona"
 #~ msgstr "Masuk dengan Persona"
 
-#, fuzzy
 #~ msgid "Create MDN profile with GitHub"
 #~ msgstr "Buatlah profil MDN anda untuk lanjut"
 
@@ -4461,8 +4459,8 @@ msgstr "Server elasticsearch: %(backend)s"
 #~ msgstr "Dokumen ini dimodifikasi saat anda menyuntingnya."
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
-#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
 #~ "Konten tersedia di bawah lisensi khusus untuk proyek ini. &middot; <a href=\"%(about_url)s\">Tentang MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Kontribusi pada kode</a> &middot; <a "
 #~ "href=\"//www.mozilla.org/en-US/privacy\">Kebijakan privasi</a>"
