@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-04-27 07:39-0700\n"
-"PO-Revision-Date: 2016-12-01 06:10+0000\n"
+"PO-Revision-Date: 2017-04-28 03:22+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -293,7 +293,7 @@ msgstr "範例的標題是什麼？"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
@@ -301,16 +301,15 @@ msgstr "HTML 範例內容"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "CSS 範例內容"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-#, fuzzy
 msgid "JavaScript"
-msgstr "JavaScript 內容"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
