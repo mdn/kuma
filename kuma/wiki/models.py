@@ -40,14 +40,14 @@ from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
                       get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
-                         SlugCollision, UniqueCollision)
+                         SlugCollision, UniqueCollision, NotDocumentView)
 from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
-from .utils import tidy_content
+from .utils import tidy_content, get_doc_components_from_url
 
 
 def cache_with_field(field_name):
@@ -379,6 +379,44 @@ class Document(NotificationsMixin, models.Model):
     @cache_with_field('summary_text')
     def get_summary_text(self, *args, **kwargs):
         return self.get_summary(strip_markup=True)
+
+    @classmethod
+    def from_url(cls, url, id_only=True):
+        """
+        Return the approved Document the URL represents, None if there isn't one.
+
+        Taken from:
+        https://github.com/mozilla/kitsune/blob/dd944c9ebb126cc1e660fba569cd68a6c7e88430/kitsune/wiki/models.py#L388
+
+        Return None if the URL is a 404, the URL doesn't point to the right
+        view, or the indicated document doesn't exist.
+        To fetch all values of the returned Document not only ID,
+        set `id_only` to True.
+        """
+
+        try:
+            components = get_doc_components_from_url(url)
+        except NotDocumentView:
+            return None
+        if not components:
+            return None
+        locale, path, slug = components
+
+        doc = cls.objects
+        if id_only:
+            doc = doc.only('id')
+        try:
+            doc = doc.get(locale=locale, slug=slug)
+        except cls.DoesNotExist:
+            try:
+                # Check if the slug belongs to any default language document
+                doc = doc.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+                translation = doc.translated_to(locale)
+                if translation:
+                    return translation
+            except cls.DoesNotExist:
+                return None
+        return doc
 
     def regenerate_cache_with_fields(self):
         """Regenerate fresh content for all the cached fields"""
@@ -1358,6 +1396,14 @@ Full traceback:
                         return url
                 elif len(url) == 1 and url[0] == '/':
                     return url
+
+    def get_redirect_document(self, id_only=True):
+        """If I am a redirect to a Document, return that Document.
+        Otherwise, return None.
+        """
+        url = self.get_redirect_url()
+        if url:
+            return self.from_url(url, id_only=id_only)
 
     def get_topic_parents(self):
         """Build a list of parent topics from self to root"""

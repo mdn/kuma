@@ -5,7 +5,7 @@ import HTMLParser
 import json
 import time
 from urllib import urlencode
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 
 import mock
 import pytest
@@ -1181,6 +1181,73 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            args=['Template:NoExist'],
                                            locale=locale))
         eq_(302, response.status_code)
+
+    def test_creating_child_of_redirect(self):
+        """While try to create a child of a redirect,
+        the parent of the child should be redirect's parent"""
+        self.client.login(username='admin', password='testpass')
+        rev = revision(is_approved=True, save=True)
+        doc = rev.document
+        doc_first_slug = doc.slug
+        # Move the document to new slug
+        doc._move_tree(new_slug="moved_doc")
+
+        # Try to create a child with the old slug
+        child_full_slug = doc_first_slug + "/" + "children_document"
+        url = reverse('wiki.document', args=[child_full_slug])
+        response = self.client.get(url, follow=True)
+
+        # The parent id of the query should be same because while moving, a new document is created with old slug
+        # and make redirect to the old document
+        parameters = parse_qs(response.request['QUERY_STRING'])
+        assert parameters['parent'][0] == str(doc.id)
+
+    def test_creating_child_of_redirect_zoned_document(self):
+        """While try to create a child of a redirected zone document,
+           the parent of the child should be redirect's parent"""
+        self.client.login(username='admin', password='testpass')
+        rev = revision(is_approved=True, save=True)
+        root_doc = rev.document
+        # Create a zone of the document
+        zoned_doc = DocumentZone(document=root_doc, url_root="zoned_url")
+        zoned_doc.save()
+
+        # Move the document to new slug
+        root_doc._move_tree(new_slug="moved_doc")
+
+        zoned_child_full_slug = zoned_doc.url_root + "/" + "children_document"
+        response = self.client.get(zoned_child_full_slug, follow=True)
+        assert response.status_code == 200
+
+        # The parent id of the query should be same because while moving, a new document is created with old slug
+        # and make redirect to the old document
+        parameters = parse_qs(response.request['QUERY_STRING'])
+        assert parameters['parent'][0] == str(root_doc.id)
+
+    def test_creating_child_of_redirect_zoned_doc_with_unzoned_doc_slug(self):
+        """While try to create a child of a redirected zone document with its unzoned document slug,
+           the parent of the child should be redirect's parent"""
+        self.client.login(username='admin', password='testpass')
+        rev = revision(is_approved=True, save=True)
+        root_doc = rev.document
+        # Create a zone of the document
+        zoned_doc = DocumentZone(document=root_doc, url_root="zoned_url")
+        zoned_doc.save()
+
+        # Move the document to new slug
+        root_doc._move_tree(new_slug="moved_doc")
+
+        # Try to create a child doc with root document slug
+        unzoned_doc_child_full_slug = root_doc.slug + "/" + "children_document"
+        url = reverse('wiki.document', args=[unzoned_doc_child_full_slug])
+        response = self.client.get(url, follow=True)
+
+        assert response.status_code == 200
+
+        # The parent id of the query should be same because while moving, a new document is created with old slug
+        # and make redirect to the old document
+        parameters = parse_qs(response.request['QUERY_STRING'])
+        assert parameters['parent'][0] == str(root_doc.id)
 
     def test_new_document_comment(self):
         """Creating a new document with a revision comment saves the comment"""

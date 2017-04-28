@@ -3,13 +3,18 @@ import json
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import resolve, Resolver404
 import tidylib
 
 from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
+from urlparse import urlparse
 
 from constance import config
+
+from kuma.core.urlresolvers import split_path
+from kuma.wiki.exceptions import NotDocumentView
 
 
 def locale_and_slug_from_path(path, request=None, path_locale=None):
@@ -50,6 +55,33 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
         locale = getattr(settings, 'WIKI_DEFAULT_LANGUAGE', 'en-US')
 
     return (locale, slug, needs_redirect)
+
+
+def get_doc_components_from_url(url, required_locale=None, check_host=True):
+    """Return (locale, path, slug) if URL is a Document, False otherwise.
+    If URL doesn't even point to the document view, raise _NotDocumentView.
+    """
+    # Extract locale and path from URL:
+    parsed = urlparse(url)  # Never has errors AFAICT
+    if check_host and parsed.netloc:
+        return False
+    locale, path = split_path(parsed.path)
+    if required_locale and locale != required_locale:
+        return False
+    path = '/' + path
+
+    try:
+        view, view_args, view_kwargs = resolve(path)
+    except Resolver404:
+        return False
+
+    # View imports Model, Model imports utils, utils import Views.
+    from kuma.wiki.views.document import document as document_view
+
+    if view != document_view:
+        raise NotDocumentView
+
+    return locale, path, view_kwargs['document_path']
 
 
 def tidy_content(content):
