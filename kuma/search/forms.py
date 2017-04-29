@@ -7,7 +7,7 @@ from .models import Index
 
 class IndexModelForm(forms.ModelForm):
 
-    class Meta:
+    class Meta(object):
         model = Index
         fields = ['created_at', 'name', 'promoted', 'populated']
 

@@ -4,6 +4,6 @@ from .models import Key
 
 
 class KeyForm(forms.ModelForm):
-    class Meta:
+    class Meta(object):
         model = Key
         fields = ('description',)

@@ -117,7 +117,7 @@ def valid_slug_parent(slug, locale):
 
 class DocumentTag(TagBase):
     """A tag indexing a document"""
-    class Meta:
+    class Meta(object):
         verbose_name = _('Document Tag')
         verbose_name_plural = _('Document Tags')
 
@@ -181,7 +181,7 @@ class DocumentAttachment(models.Model):
         default=False,
     )
 
-    class Meta:
+    class Meta(object):
         db_table = 'attachments_documentattachment'
 
     def __unicode__(self):
@@ -1596,14 +1596,14 @@ class DocumentZone(models.Model):
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
-    class Meta:
+    class Meta(object):
         verbose_name = _('Review Tag')
         verbose_name_plural = _('Review Tags')
 
 
 class LocalizationTag(TagBase):
     """A tag indicating localization status, mainly for revisions"""
-    class Meta:
+    class Meta(object):
         verbose_name = _('Localization Tag')
         verbose_name_plural = _('Localization Tags')
 
@@ -1924,7 +1924,7 @@ class RevisionAkismetSubmission(AkismetSubmission):
         on_delete=models.SET_NULL,
     )
 
-    class Meta:
+    class Meta(object):
         verbose_name = _('Akismet submission')
         verbose_name_plural = _('Akismet submissions')
 

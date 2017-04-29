@@ -32,7 +32,7 @@ class Index(models.Model):
 
     objects = IndexManager()
 
-    class Meta:
+    class Meta(object):
         verbose_name = 'Index'
         verbose_name_plural = 'Indexes'
         ordering = ['-created_at']
@@ -126,7 +126,7 @@ class FilterGroup(models.Model):
                                           'the filter group should show up '
                                           'in the sidebar')
 
-    class Meta:
+    class Meta(object):
         ordering = ('-order', 'name')
         unique_together = (
             ('name', 'slug'),

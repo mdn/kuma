@@ -19,7 +19,7 @@ class AttachmentRevisionForm(forms.ModelForm):
 
     As a result of this, calling save(commit=True) is off-limits.
     """
-    class Meta:
+    class Meta(object):
         model = AttachmentRevision
         fields = ('file', 'title', 'description', 'comment')
 

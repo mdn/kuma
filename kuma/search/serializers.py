@@ -69,7 +69,7 @@ class FilterSerializer(serializers.ModelSerializer):
     slug = serializers.ReadOnlyField(required=False)
     shortcut = serializers.ReadOnlyField(required=False)
 
-    class Meta:
+    class Meta(object):
         model = models.Filter
         depth = 1
         fields = ('name', 'slug', 'shortcut')
@@ -86,7 +86,7 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
                                read_only=True,
                                many=True)
 
-    class Meta:
+    class Meta(object):
         model = models.FilterGroup
         depth = 1
         fields = ('name', 'slug', 'order', 'filters')

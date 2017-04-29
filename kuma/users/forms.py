@@ -111,7 +111,7 @@ class UserEditForm(forms.ModelForm):
         }),
     )
 
-    class Meta:
+    class Meta(object):
         model = User
         fields = ('fullname', 'title', 'organization', 'location',
                   'locale', 'timezone', 'irc_nickname', 'interests',

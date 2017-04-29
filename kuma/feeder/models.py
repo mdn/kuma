@@ -94,7 +94,7 @@ class Entry(models.Model):
     updated = models.DateTimeField(
         auto_now=True, verbose_name='Last Modified')
 
-    class Meta:
+    class Meta(object):
         ordering = ['-last_published']
         unique_together = ('feed', 'guid')
         verbose_name_plural = 'Entries'

@@ -312,7 +312,7 @@ def akismet_data_as_dl(akismet_data):
 @admin.register(Document)
 class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
-    class Media:
+    class Media(object):
         js = ('js/wiki-admin.js',)
 
     list_per_page = 25

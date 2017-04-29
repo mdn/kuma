@@ -9,7 +9,7 @@ class SpamAttempt(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     created = CreationDateTimeField(_('created'), db_index=True)
 
-    class Meta:
+    class Meta(object):
         get_latest_by = 'created'
         ordering = ('-created',)
         abstract = True
@@ -39,7 +39,7 @@ class AkismetSubmission(models.Model):
         db_index=True,
     )
 
-    class Meta:
+    class Meta(object):
         get_latest_by = 'sent'
         ordering = ('-sent',)
         abstract = True

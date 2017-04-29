@@ -136,7 +136,7 @@ class AttachmentRevision(models.Model):
         default=False, db_index=True,
         help_text="Did this revision come from MindTouch?")
 
-    class Meta:
+    class Meta(object):
         verbose_name = _('attachment revision')
         verbose_name_plural = _('attachment revisions')
 
@@ -230,7 +230,7 @@ class TrashedAttachment(MySQLModel):
                     'attachment revision at the time of trashing.'),
     )
 
-    class Meta:
+    class Meta(object):
         verbose_name = _('Trashed attachment')
         verbose_name_plural = _('Trashed attachments')
 

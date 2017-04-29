@@ -358,7 +358,7 @@ class DocumentForm(forms.ModelForm):
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
-    class Meta:
+    class Meta(object):
         model = Document
         fields = ('title', 'slug', 'locale')
 

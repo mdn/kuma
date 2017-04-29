@@ -173,7 +173,7 @@ class User(AbstractUser):
         validators=[WEBSITE_VALIDATORS['stackoverflow']],
     )
 
-    class Meta:
+    class Meta(object):
         db_table = 'auth_user'
 
     @property
