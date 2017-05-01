@@ -215,7 +215,9 @@ class Document(NotificationsMixin, models.Model):
     # completion and such.)
     tags = TaggableManager(through=TaggedDocument)
 
-    # Is this document a template or not?
+    # DEPRECATED: Is this document a template or not?
+    # Droping or altering this column will require a table rebuild, so it
+    # should be done in a maintenance window.
     is_template = models.BooleanField(default=False, editable=False,
                                       db_index=True)
 

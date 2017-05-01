@@ -90,6 +90,7 @@ def process_document_path(func, reverse_name='wiki.document'):
                 # HACK: There are and will be a lot of kumascript templates
                 # based on legacy DekiScript which will attempt to request
                 # old-style URLs. Skip 301 redirects for raw content.
+                # TODO: evaluate if this is still appropriate
                 needs_redirect = False
 
             if needs_redirect:
