@@ -562,11 +562,6 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
     response['X-Robots-Tag'] = 'noindex'
-
-    if doc.is_template:
-        # Treat raw, un-bleached template source as plain text, not HTML.
-        response['Content-Type'] = 'text/plain; charset=utf-8'
-
     return _set_common_headers(doc, rendering_params['section'], response)
 
 
