@@ -33,8 +33,7 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
-                        REDIRECT_CONTENT, REDIRECT_HTML,
-                        TEMPLATE_TITLE_PREFIX)
+                        REDIRECT_CONTENT, REDIRECT_HTML)
 from .content import parse as parse_content
 from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
                       get_content_sections, get_seo_description)
@@ -951,8 +950,6 @@ class Document(NotificationsMixin, models.Model):
         return modified_epoch
 
     def save(self, *args, **kwargs):
-
-        self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
         self.is_redirect = bool(self.get_redirect_url())
 
         try:
