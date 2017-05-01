@@ -348,8 +348,7 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                     document_nav_links,
                     revision_links,)
     list_display_links = ('id', 'slug',)
-    list_filter = ('defer_rendering', 'is_template', 'is_localizable',
-                   'locale', 'deleted')
+    list_filter = ('defer_rendering', 'is_localizable', 'locale', 'deleted')
     raw_id_fields = ('parent', 'parent_topic',)
     readonly_fields = ('id', 'current_revision')
     search_fields = ('title', 'slug', 'html', 'current_revision__tags')
