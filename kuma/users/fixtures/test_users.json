@@ -11,17 +11,6 @@
     },
     {
         "fields": {
-            "name": "template-editors",
-            "permissions": [
-                ["add_template_document", "wiki", "document"],
-                ["change_template_document", "wiki", "document"]
-            ]
-        },
-        "model": "auth.group",
-        "pk": 1
-    },
-    {
-        "fields": {
             "name": "Page Creators",
             "permissions": [
                 ["add_document", "wiki", "document"]

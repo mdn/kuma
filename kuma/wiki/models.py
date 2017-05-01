@@ -327,8 +327,6 @@ class Document(NotificationsMixin, models.Model):
         )
         permissions = (
             ('view_document', 'Can view document'),
-            ('add_template_document', 'Can add Template:* document'),
-            ('change_template_document', 'Can change Template:* document'),
             ('move_tree', 'Can move a tree of documents'),
             ('purge_document', 'Can permanently delete document'),
             ('restore_document', 'Can restore deleted document'),
