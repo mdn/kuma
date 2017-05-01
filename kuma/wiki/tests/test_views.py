@@ -451,9 +451,9 @@ class PermissionTests(UserTestCase, WikiTestCase):
         eq_(200, resp.status_code)
 
     def test_template_permissions(self):
-        msg = ('edit', 'create')
+        msg = ('edit',)
 
-        for is_add in (True, False):
+        for is_add in (False,):
 
             slug_trials = (
                 ('test_for_%s', (
@@ -491,13 +491,9 @@ class PermissionTests(UserTestCase, WikiTestCase):
                     slug = slug_tmpl % username
                     data.update({"title": slug, "slug": slug})
 
-                    if is_add:
-                        url = reverse('wiki.create', locale=locale)
-                        resp = self.client.post(url, data, follow=False)
-                    else:
-                        data['form-type'] = 'rev'
-                        url = reverse('wiki.edit', args=(slug,), locale=locale)
-                        resp = self.client.post(url, data, follow=False)
+                    data['form-type'] = 'rev'
+                    url = reverse('wiki.edit', args=(slug,), locale=locale)
+                    resp = self.client.post(url, data, follow=False)
 
                     if expected:
                         eq_(302, resp.status_code,

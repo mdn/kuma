@@ -823,10 +823,6 @@ def _document_PUT(request, document_slug, document_locale):
                 return resp
 
     except Document.DoesNotExist:
-        # No existing document, so this is an attempt to create a new one...
-        if not Document.objects.allows_add_by(request.user, document_slug):
-            raise PermissionDenied
-
         # TODO: There should be a model utility for creating a doc...
 
         # Let's see if this slug path implies a parent...

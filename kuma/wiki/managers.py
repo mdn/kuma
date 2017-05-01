@@ -7,7 +7,7 @@ from constance import config
 from django_mysql.models import QuerySet
 
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
-                        ALLOWED_STYLES, TEMPLATE_TITLE_PREFIX)
+                        ALLOWED_STYLES)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 
@@ -52,20 +52,6 @@ class BaseDocumentManager(models.Manager):
         """Find documents whose renderings have gone stale"""
         return (self.exclude(render_expires__isnull=True)
                     .filter(render_expires__lte=datetime.now()))
-
-    def allows_add_by(self, user, slug):
-        """
-        Determine whether the user can create a document with the given
-        slug. Mainly for enforcing Template: editing permissions
-
-        TODO: Convert to a method that raises exceptions that are handled
-        by an exception middleware.
-        """
-        if (slug.startswith(TEMPLATE_TITLE_PREFIX) and
-                not user.has_perm('wiki.add_template_document')):
-            return False
-        # TODO: Add wiki.add_document check
-        return True
 
     def filter_for_list(self, locale=None, tag=None, tag_name=None,
                         errors=None, noparent=None, toplevel=None):
