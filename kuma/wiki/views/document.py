@@ -158,8 +158,7 @@ def _filter_doc_html(request, doc, doc_html, rendering_params):
     # If this user can edit the document, inject section editing links.
     # TODO: Rework so that this happens on the client side?
     if ((rendering_params['edit_links'] or not rendering_params['raw']) and
-            request.user.is_authenticated() and
-            doc.allows_revision_by(request.user)):
+            request.user.is_authenticated()):
         tool.injectSectionEditingLinks(doc.slug, doc.locale)
 
     doc_html = tool.serialize()
@@ -806,8 +805,6 @@ def _document_PUT(request, document_slug, document_locale):
         # Look for existing document to edit:
         doc = Document.objects.get(locale=document_locale,
                                    slug=document_slug)
-        if not doc.allows_revision_by(request.user):
-            raise PermissionDenied
         section_id = request.GET.get('section', None)
         is_new = False
 

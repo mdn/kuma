@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.core.exceptions import PermissionDenied
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext
@@ -27,9 +26,6 @@ def revert_document(request, document_path, revision_id):
     revision = get_object_or_404(Revision.objects.select_related('document'),
                                  pk=revision_id,
                                  document__slug=document_slug)
-
-    if not revision.document.allows_revision_by(request.user):
-        raise PermissionDenied
 
     if request.method == 'GET':
         # Render the confirmation page

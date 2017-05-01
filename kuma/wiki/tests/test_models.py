@@ -14,11 +14,11 @@ from django.core.exceptions import ValidationError
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.urlresolvers import reverse
-from kuma.core.tests import KumaTestCase, eq_, get_user, ok_
+from kuma.core.tests import eq_, get_user, ok_
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.users.tests import UserTestCase
 
-from . import (create_document_tree, create_template_test_users,
+from . import (create_document_tree,
                create_topical_parents_docs, document, normalize_html,
                revision)
 from .. import tasks
@@ -330,49 +330,6 @@ class DocumentTests(UserTestCase):
         old_slug_document = Document.objects.get(slug=doc_first_slug)
 
         assert old_slug_document.get_redirect_document().id == doc.id
-
-
-class PermissionTests(KumaTestCase):
-
-    def setUp(self):
-        """Set up the permissions, groups, and users needed for the tests"""
-        super(PermissionTests, self).setUp()
-        (self.perms, self.groups, self.users, self.superuser) = (
-            create_template_test_users())
-
-    def test_template_permissions(self):
-        msg = ('should not', 'should')
-
-        for is_add in (True, False):
-
-            slug_trials = (
-                ('test_for_%s', (
-                    (True, self.superuser),
-                    (True, self.users['none']),
-                    (True, self.users['all']),
-                    (True, self.users['add']),
-                    (True, self.users['change']),
-                )),
-                ('Template:test_for_%s', (
-                    (True, self.superuser),
-                    (False, self.users['none']),
-                    (True, self.users['all']),
-                    (is_add, self.users['add']),
-                    (not is_add, self.users['change']),
-                ))
-            )
-
-            for slug_tmpl, trials in slug_trials:
-                for expected, trial_user in trials:
-                    slug = slug_tmpl % trial_user.username
-                    if is_add:
-                        pass
-                    else:
-                        doc = document(slug=slug, title=slug)
-                        eq_(expected,
-                            doc.allows_revision_by(trial_user),
-                            'User %s %s able to revise %s' % (
-                                trial_user, msg[expected], slug))
 
 
 class UserDocumentTests(UserTestCase):
