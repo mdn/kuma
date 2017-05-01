@@ -2,9 +2,6 @@
 {% set counter = ngettext('Found %(num)s document.', 'Found %(num)s documents', count) %}
 {% if tag %}
   {% set title = _('Articles tagged: %(tag)s', tag=tag) %}
-{% elif is_templates %}
-  {% set title = _('All templates') %}
-  {% set counter = ngettext('Found %(num)s template.', 'Found %(num)s templates', count) %}
 {% elif errors %}
   {% set title = _('Documents with errors') %}
 {% elif toplevel %}
@@ -44,7 +41,7 @@
           {% for doc in documents.object_list %}
             <li>
               <a href="{{ doc.get_absolute_url() }}">{{ doc.slug }}</a>
-                {% if not is_templates and not errors %}
+                {% if not errors %}
                   <small>{{ doc.get_summary_text() | truncate(100) }}</small>
                 {% endif %}
             </li>

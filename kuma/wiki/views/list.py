@@ -39,22 +39,6 @@ def documents(request, tag=None):
 
 @block_user_agents
 @require_GET
-def templates(request):
-    """
-    Returns listing of all templates
-    """
-    docs = Document.objects.filter(is_template=True).order_by('title')
-    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    context = {
-        'documents': paginated_docs,
-        'count': docs.count(),
-        'is_templates': True,
-    }
-    return render(request, 'wiki/list/documents.html', context)
-
-
-@block_user_agents
-@require_GET
 def tags(request):
     """
     Returns listing of all tags
