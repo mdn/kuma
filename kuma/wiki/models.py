@@ -1431,9 +1431,6 @@ Full traceback:
         all the Document fields are still editable. Once there is an approved
         Revision, the Document fields can only be edited by privileged users.
         """
-        if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
-                not user.has_perm('wiki.change_template_document')):
-            return False
         return (not self.current_revision or
                 user.has_perm('wiki.change_document'))
 

@@ -376,10 +376,6 @@ class PermissionTests(KumaTestCase):
                             doc.allows_revision_by(trial_user),
                             'User %s %s able to revise %s' % (
                                 trial_user, msg[expected], slug))
-                        eq_(expected,
-                            doc.allows_editing_by(trial_user),
-                            'User %s %s able to edit %s' % (
-                                trial_user, msg[expected], slug))
 
 
 class UserDocumentTests(UserTestCase):
