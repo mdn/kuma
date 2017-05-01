@@ -695,7 +695,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         first_edit_email = mail.outbox[0]
         expected_to = [config.EMAIL_LIST_SPAM_WATCH]
         expected_subject = (
-            u'[MDN] [%(loc)s] %(user)s made their first edit, to: %(title)s' %
+            u'[MDN][%(loc)s] %(user)s made their first edit, to: %(title)s' %
             {'loc': self.d.locale,
              'user': new_rev.creator.username,
              'title': self.d.title}
@@ -705,8 +705,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
 
         edited_email = mail.outbox[1]
         expected_to = [u'sam@example.com']
-        expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
-                                                               new_rev.creator)
+        expected_subject = (u'[MDN][en-US] Page "%s" changed by %s'
+                            % (self.d.title, new_rev.creator))
         eq_(expected_subject, edited_email.subject)
         eq_(expected_to, edited_email.to)
         ok_('%s changed %s.' % (unicode(self.username), unicode(self.d.title))

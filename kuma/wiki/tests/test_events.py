@@ -23,6 +23,7 @@ def test_notification_context_for_create(create_revision):
         'document_title': 'Root Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
+        'locale': 'en-US',
         'user_url': '/profiles/wiki_user' + utm_campaign,
         'view_url': url + utm_campaign
     }
@@ -61,6 +62,7 @@ def test_notification_context_for_edit(create_revision, edit_revision):
         'document_title': 'Root Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
+        'locale': 'en-US',
         'user_url': '/profiles/wiki_user' + utm_campaign,
         'view_url': url + utm_campaign
     }
@@ -99,6 +101,7 @@ def test_notification_context_for_translation(trans_revision, create_revision):
         'document_title': 'Racine du Document',
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
+        'locale': 'fr',
         'user_url': '/profiles/wiki_user' + utm_campaign,
         'view_url': url + utm_campaign
     }
@@ -128,32 +131,64 @@ def test_edit_document_event_emails_on_create(mock_emails, create_revision):
         'html_template': None,
         'context_vars': notification_context(create_revision),
         'users_and_watches': users_and_watches,
-        'default_locale': 'en-US'
+        'default_locale': 'en-US',
+        'headers': {
+            'X-Kuma-Editor-Username': 'wiki_user',
+            'X-Kuma-Document-Url': 'https://example.com/en-US/docs/Root',
+            'X-Kuma-Document-Title': 'Root Document',
+            'X-Kuma-Document-Locale': 'en-US',
+        }
     }
     subject = kwargs['subject'] % kwargs['context_vars']
-    expected = '[MDN] Page "Root Document" changed by wiki_user'
+    expected = '[MDN][en-US][New] Page "Root Document" created by wiki_user'
     assert subject == expected
+
+
+@mock.patch('kuma.wiki.events.emails_with_users_and_watches')
+def test_edit_document_event_emails_on_change(mock_emails, edit_revision):
+    """Test event email parameters for changing an English page."""
+    users_and_watches = [('fake_user', [None])]
+    EditDocumentEvent(edit_revision)._mails(users_and_watches)
+    assert mock_emails.call_count == 1
+    args, kwargs = mock_emails.call_args
+    assert not args
+    context = notification_context(edit_revision)
+    assert kwargs['context_vars'] == context
+    subject = kwargs['subject'] % context
+    expected = '[MDN][en-US] Page "Root Document" changed by wiki_user'
+    assert subject == expected
+
+
+def test_first_edit_email_on_create(create_revision):
+    """A first edit email is formatted for a new English page."""
+    mail = first_edit_email(create_revision)
+    assert mail.subject == ('[MDN][en-US][New] wiki_user made their first edit,'
+                            ' creating: Root Document')
+    assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': 'wiki_user',
+        'X-Kuma-Document-Url': 'https://example.com/en-US/docs/Root',
+        'X-Kuma-Document-Title': 'Root Document',
+        'X-Kuma-Document-Locale': 'en-US',
+    }
 
 
 def test_first_edit_email_on_change(edit_revision):
     """A first edit email is formatted for an English change."""
     mail = first_edit_email(edit_revision)
-    assert mail.subject == ('[MDN] [en-US] wiki_user made their first edit,'
+    assert mail.subject == ('[MDN][en-US] wiki_user made their first edit,'
                             ' to: Root Document')
-    assert mail.extra_headers == {
-        'X-Kuma-Document-Url': u'https://example.com/en-US/docs/Root',
-        'X-Kuma-Editor-Username': u'wiki_user'
-    }
 
 
 def test_first_edit_email_on_translate(trans_revision):
     """A first edit email is formatted for a first translation."""
     mail = first_edit_email(trans_revision)
-    assert mail.subject == ('[MDN] [fr] wiki_user made their first edit,'
-                            ' to: Racine du Document')
+    assert mail.subject == ('[MDN][fr][New] wiki_user made their first edit,'
+                            ' creating: Racine du Document')
     assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': u'wiki_user',
         'X-Kuma-Document-Url': u'https://example.com/fr/docs/Racine',
-        'X-Kuma-Editor-Username': u'wiki_user'
+        'X-Kuma-Document-Title': 'Racine du Document',
+        'X-Kuma-Document-Locale': 'fr',
     }
 
 
@@ -168,6 +203,9 @@ def test_spam_attempt_email_on_create(wiki_user):
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded with title'
                             ' My new spam page')
+    assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': 'wiki_user'
+    }
 
 
 def test_spam_attempt_email_on_change(wiki_user, root_doc):
@@ -182,6 +220,12 @@ def test_spam_attempt_email_on_change(wiki_user, root_doc):
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded for document'
                             ' /en-US/docs/Root (Root Document)')
+    assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': 'wiki_user',
+        'X-Kuma-Document-Url': 'https://example.com/en-US/docs/Root',
+        'X-Kuma-Document-Title': 'Root Document',
+        'X-Kuma-Document-Locale': 'en-US',
+    }
 
 
 def test_spam_attempt_email_on_translate(wiki_user, trans_doc):
@@ -206,3 +250,6 @@ def test_spam_attempt_email_partial_model(wiki_user):
     )
     mail = spam_attempt_email(spam_attempt)
     assert mail.subject == ('[MDN] Wiki spam attempt recorded')
+    assert mail.extra_headers == {
+        'X-Kuma-Editor-Username': 'wiki_user',
+    }

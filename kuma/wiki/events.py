@@ -7,7 +7,7 @@ from constance import config
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from tidings.events import EventUnion, InstanceEvent
 
 from kuma.core.email_utils import emails_with_users_and_watches
@@ -35,6 +35,7 @@ def notification_context(revision):
         'document_title': document.title,
         'creator': revision.creator,
         'diff': diff,
+        'locale': document.locale
     }
 
     if from_revision:
@@ -63,6 +64,18 @@ def notification_context(revision):
     return context
 
 
+def extra_headers(user, document=None):
+    """Get extra headers for filtering notification emails."""
+    headers = {
+        'X-Kuma-Editor-Username': user.username
+    }
+    if document:
+        headers['X-Kuma-Document-Url'] = document.get_full_url()
+        headers['X-Kuma-Document-Title'] = document.title
+        headers['X-Kuma-Document-Locale'] = document.locale
+    return headers
+
+
 class EditDocumentEvent(InstanceEvent):
     """
     Event fired when a certain document is edited
@@ -79,8 +92,14 @@ class EditDocumentEvent(InstanceEvent):
         document = revision.document
         log.debug('Sending edited notification email for document (id=%s)' %
                   document.id)
-        subject = ugettext(
-            '[MDN] Page "%(document_title)s" changed by %(creator)s')
+        if document.revisions.only('id').first().id == revision.id:
+            subject = _(
+                '[MDN][%(locale)s][New] Page "%(document_title)s"'
+                ' created by %(creator)s')
+        else:
+            subject = _(
+                '[MDN][%(locale)s] Page "%(document_title)s"'
+                ' changed by %(creator)s')
         context = notification_context(revision)
 
         return emails_with_users_and_watches(
@@ -89,7 +108,8 @@ class EditDocumentEvent(InstanceEvent):
             html_template=None,
             context_vars=context,
             users_and_watches=users_and_watches,
-            default_locale=document.locale)
+            default_locale=document.locale,
+            headers=extra_headers(revision.creator, document))
 
     def fire(self, **kwargs):
         parent_events = [EditDocumentInTreeEvent(doc) for doc in
@@ -112,14 +132,19 @@ class EditDocumentInTreeEvent(InstanceEvent):
 def first_edit_email(revision):
     """Create a notification email for first-time editors."""
     user, doc = revision.creator, revision.document
-    subject = ("[MDN] [%(loc)s] %(user)s made their first edit, to: %(doc)s" %
-               {'loc': doc.locale, 'user': user.username, 'doc': doc.title})
+    if doc.revisions.only('id').first().id == revision.id:
+        subject_tmpl = ("[MDN][%(loc)s][New] %(user)s made their first edit,"
+                        " creating: %(doc)s")
+    else:
+        subject_tmpl = ("[MDN][%(loc)s] %(user)s made their first edit,"
+                        " to: %(doc)s")
+    subject = subject_tmpl % {'loc': doc.locale, 'user': user.username,
+                              'doc': doc.title}
     message = render_to_string('wiki/email/edited.ltxt',
                                notification_context(revision))
     email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
                          to=[config.EMAIL_LIST_SPAM_WATCH],
-                         headers={'X-Kuma-Document-Url': doc.get_full_url(),
-                                  'X-Kuma-Editor-Username': user.username})
+                         headers=extra_headers(user, doc))
     return email
 
 
@@ -130,12 +155,14 @@ def spam_attempt_email(spam_attempt):
     Because the spam may be on document creation, the document might be null.
     """
     subject = '[MDN] Wiki spam attempt recorded'
-    if spam_attempt.document:
-        subject = '%s for document %s' % (subject, spam_attempt.document)
+    document = spam_attempt.document
+    if document:
+        subject = '%s for document %s' % (subject, document)
     elif spam_attempt.title:
         subject = '%s with title %s' % (subject, spam_attempt.title)
     body = render_to_string('wiki/email/spam.ltxt',
                             {'spam_attempt': spam_attempt})
     email = EmailMessage(subject, body, settings.DEFAULT_FROM_EMAIL,
-                         to=[config.EMAIL_LIST_SPAM_WATCH])
+                         to=[config.EMAIL_LIST_SPAM_WATCH],
+                         headers=extra_headers(spam_attempt.user, document))
     return email
