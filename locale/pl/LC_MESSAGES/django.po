@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"POT-Creation-Date: 2017-05-01 12:40-0700\n"
 "PO-Revision-Date: 2017-04-14 16:06+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
@@ -741,7 +741,7 @@ msgid "File"
 msgstr "Plik"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1923
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
 msgid "Title"
 msgstr "Tytuł"
 
@@ -1142,7 +1142,7 @@ msgstr "Filtr"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "Tendencje w czasie, koniec w: %(date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1876
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
 msgid "Revision"
 msgstr "Wersja"
 
@@ -2007,7 +2007,8 @@ msgid "Remove"
 msgstr "Usuń"
 
 #: kuma/users/jinja2/account/email.html:45
-msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
+#, fuzzy
+msgid "<strong>Warning:</strong> You have not added any email addresses to this profile. Without one you cannot receive notifications."
 msgstr "<strong>Informacja!</strong> Nie dodałeś jeszcze do tego profilu żadnego adresu e-mail. Bez podania adresu nie możesz odbierać powiadomień."
 
 #: kuma/users/jinja2/account/email.html:49
@@ -2843,9 +2844,14 @@ msgstr "Trwa tłumaczenie – jeszcze nie w pełni przetłumaczono."
 msgid "Edit section"
 msgstr "Edytuj sekcję"
 
-#: kuma/wiki/events.py:82
-#, python-format
-msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
+#: kuma/wiki/events.py:96
+#, fuzzy, python-format
+msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
+msgstr "[MDN] Strona „%(document_title)s” została zmieniona przez %(creator)s"
+
+#: kuma/wiki/events.py:100
+#, fuzzy, python-format
+msgid "[MDN][%(locale)s] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] Strona „%(document_title)s” została zmieniona przez %(creator)s"
 
 #: kuma/wiki/feeds.py:28
@@ -3098,108 +3104,108 @@ msgstr "podlinkowany w treści dokumentu"
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "Załącznik %(attachment_id)s nie może być wiele razy dołączany do dokumentu %(document_id)s"
 
-#: kuma/wiki/models.py:1554
+#: kuma/wiki/models.py:1600
 msgid "Review Tag"
 msgstr "Etykieta sprawdzenia"
 
-#: kuma/wiki/models.py:1555
+#: kuma/wiki/models.py:1601
 msgid "Review Tags"
 msgstr "Etykiety sprawdzenia"
 
-#: kuma/wiki/models.py:1561
+#: kuma/wiki/models.py:1607
 msgid "Localization Tag"
 msgstr "Etykieta lokalizacji"
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1608
 msgid "Localization Tags"
 msgstr "Etykiety lokalizacji"
 
-#: kuma/wiki/models.py:1595
+#: kuma/wiki/models.py:1641
 msgid "No table of contents"
 msgstr "Bez spisu treści"
 
-#: kuma/wiki/models.py:1596
+#: kuma/wiki/models.py:1642
 msgid "All levels"
 msgstr "Wszystkie poziomy"
 
-#: kuma/wiki/models.py:1597
+#: kuma/wiki/models.py:1643
 msgid "H2 and higher"
 msgstr "H2 i wyższe"
 
-#: kuma/wiki/models.py:1598
+#: kuma/wiki/models.py:1644
 msgid "H3 and higher"
 msgstr "H3 i wyższe"
 
-#: kuma/wiki/models.py:1599
+#: kuma/wiki/models.py:1645
 msgid "H4 and higher"
 msgstr "H4 i wyższe"
 
-#: kuma/wiki/models.py:1703
+#: kuma/wiki/models.py:1749
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Korekta musi być oparta na wersji artykułu %(locale)s. ID %(id)s korekty nie spełnia tych kryteriów."
 
-#: kuma/wiki/models.py:1836
+#: kuma/wiki/models.py:1882
 msgid "IP address"
 msgstr "Adres IP"
 
-#: kuma/wiki/models.py:1844
+#: kuma/wiki/models.py:1890
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: kuma/wiki/models.py:1849
+#: kuma/wiki/models.py:1895
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1857 kuma/wiki/models.py:1942
+#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
 msgid "Data submitted to Akismet"
 msgstr "Dane przesłane do Akismet"
 
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1928
 msgid "Akismet submission"
 msgstr "Przesyłanie Akismet"
 
-#: kuma/wiki/models.py:1883
+#: kuma/wiki/models.py:1929
 msgid "Akismet submissions"
 msgstr "Przesyłania Akismet"
 
-#: kuma/wiki/models.py:1927
+#: kuma/wiki/models.py:1973
 msgid "Slug"
 msgstr "Ciąg słów"
 
-#: kuma/wiki/models.py:1935
+#: kuma/wiki/models.py:1981
 msgid "Document (optional)"
 msgstr "Dokument (opcjonalne)"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1991
 msgid "reviewed"
 msgstr "sprawdzone"
 
-#: kuma/wiki/models.py:1956
+#: kuma/wiki/models.py:2002
 msgid "Needs Review"
 msgstr "Wymaga sprawdzenia"
 
-#: kuma/wiki/models.py:1957
+#: kuma/wiki/models.py:2003
 msgid "Ham / False Positive"
 msgstr "To nie jest spam"
 
-#: kuma/wiki/models.py:1958
+#: kuma/wiki/models.py:2004
 msgid "Confirmed as Spam"
 msgstr "Potwierdzony spam"
 
-#: kuma/wiki/models.py:1959
+#: kuma/wiki/models.py:2005
 msgid "Review Unavailable"
 msgstr "Sprawdzanie jest niedostępne"
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:2006
 msgid "Akismet Error"
 msgstr "Błąd Akismet"
 
-#: kuma/wiki/models.py:1965
+#: kuma/wiki/models.py:2011
 msgid "Review of Akismet's classification as spam"
 msgstr "Sprawdzenie klasyfikacji jako spam przez Akismet"
 
-#: kuma/wiki/models.py:1972
+#: kuma/wiki/models.py:2018
 msgid "Staff reviewer"
 msgstr "Redaktor - administrator"
 
@@ -4283,27 +4289,27 @@ msgstr "Wystąpił błąd podczas generowania treści."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Dokument już istnieje. Nie można przywrócić przeniesionego dokumentu do czasu usunięcia jego przekierowania."
 
-#: kuma/wiki/views/document.py:658
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Przekierowano z %(url)s"
 
-#: kuma/wiki/views/document.py:720
+#: kuma/wiki/views/document.py:718
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Dowiedziałem się o %(title)s na MDN."
 
-#: kuma/wiki/views/document.py:793
+#: kuma/wiki/views/document.py:791
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Nieobsługiwany typ treści: %s"
 
-#: kuma/wiki/views/document.py:800
+#: kuma/wiki/views/document.py:798
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Błąd przetwarzania: %s"
 
-#: kuma/wiki/views/document.py:820
+#: kuma/wiki/views/document.py:818
 msgid "ETag precondition failed"
 msgstr "Nie powiodło się użycie warunku eTag"
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"POT-Creation-Date: 2017-05-01 12:40-0700\n"
 "PO-Revision-Date: 2017-03-02 08:47+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -744,7 +744,7 @@ msgid "File"
 msgstr "Kartelë"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1923
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
 msgid "Title"
 msgstr "Titull"
 
@@ -1147,7 +1147,7 @@ msgstr "Filtroji"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "Prirje Në Kohë, Mbaron më %(date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1876
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
 msgid "Revision"
 msgstr "Rishikim"
 
@@ -2010,7 +2010,8 @@ msgid "Remove"
 msgstr "Hiqe"
 
 #: kuma/users/jinja2/account/email.html:45
-msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
+#, fuzzy
+msgid "<strong>Warning:</strong> You have not added any email addresses to this profile. Without one you cannot receive notifications."
 msgstr "<strong>Kujdes:</strong>\"S’keni shtuar ndonjë adresë email te ky profil. Pa një të tillë, s’mund të merrni njoftime."
 
 #: kuma/users/jinja2/account/email.html:49
@@ -2851,9 +2852,14 @@ msgstr "Përkthimi është në rrugë e sipër - ende i papërkthyer plotësisht
 msgid "Edit section"
 msgstr "Përpunoni ndarjen"
 
-#: kuma/wiki/events.py:82
-#, python-format
-msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
+#: kuma/wiki/events.py:96
+#, fuzzy, python-format
+msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
+msgstr "[MDN] Faqja \"%(document_title)s\" u ndryshua nga %(creator)s"
+
+#: kuma/wiki/events.py:100
+#, fuzzy, python-format
+msgid "[MDN][%(locale)s] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] Faqja \"%(document_title)s\" u ndryshua nga %(creator)s"
 
 #: kuma/wiki/feeds.py:28
@@ -3106,108 +3112,108 @@ msgstr "lidhur te lënda e dokumentit"
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "Bashkëngjitja %(attachment_id)s s’mund të bashkëngjitet disa herë te dokumenti %(document_id)s"
 
-#: kuma/wiki/models.py:1554
+#: kuma/wiki/models.py:1600
 msgid "Review Tag"
 msgstr "Etiketë Shqyrtimi"
 
-#: kuma/wiki/models.py:1555
+#: kuma/wiki/models.py:1601
 msgid "Review Tags"
 msgstr "Etiketa Shqyrtimesh"
 
-#: kuma/wiki/models.py:1561
+#: kuma/wiki/models.py:1607
 msgid "Localization Tag"
 msgstr "Etiketë Përkthimi"
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1608
 msgid "Localization Tags"
 msgstr "Etiketa Përkthimi"
 
-#: kuma/wiki/models.py:1595
+#: kuma/wiki/models.py:1641
 msgid "No table of contents"
 msgstr "Pa tabelë lënde"
 
-#: kuma/wiki/models.py:1596
+#: kuma/wiki/models.py:1642
 msgid "All levels"
 msgstr "Krejt nivelet"
 
-#: kuma/wiki/models.py:1597
+#: kuma/wiki/models.py:1643
 msgid "H2 and higher"
 msgstr "H2 dhe më të lartë"
 
-#: kuma/wiki/models.py:1598
+#: kuma/wiki/models.py:1644
 msgid "H3 and higher"
 msgstr "H3 dhe më të lartë"
 
-#: kuma/wiki/models.py:1599
+#: kuma/wiki/models.py:1645
 msgid "H4 and higher"
 msgstr "H4 dhe më të lartë"
 
-#: kuma/wiki/models.py:1703
+#: kuma/wiki/models.py:1749
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Rishikimet duhet të bazohen mbi një rishikim të dokumentit në %(locale)s. Rishikimi me ID %(id)s s’e plotëson këtë kusht."
 
-#: kuma/wiki/models.py:1836
+#: kuma/wiki/models.py:1882
 msgid "IP address"
 msgstr "Adresë IP"
 
-#: kuma/wiki/models.py:1844
+#: kuma/wiki/models.py:1890
 msgid "User-Agent"
 msgstr "Agjent Përdoruesi"
 
-#: kuma/wiki/models.py:1849
+#: kuma/wiki/models.py:1895
 msgid "HTTP Referrer"
 msgstr "Referues HTTP"
 
-#: kuma/wiki/models.py:1857 kuma/wiki/models.py:1942
+#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
 msgid "Data submitted to Akismet"
 msgstr "Të dhënat u parashtruan te Akismet-i"
 
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1928
 msgid "Akismet submission"
 msgstr "Parashtrim nga Akismet"
 
-#: kuma/wiki/models.py:1883
+#: kuma/wiki/models.py:1929
 msgid "Akismet submissions"
 msgstr "Parashtrime nga Akismet"
 
-#: kuma/wiki/models.py:1927
+#: kuma/wiki/models.py:1973
 msgid "Slug"
 msgstr "Identifikues"
 
-#: kuma/wiki/models.py:1935
+#: kuma/wiki/models.py:1981
 msgid "Document (optional)"
 msgstr "Dokument (në dëshirë)"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1991
 msgid "reviewed"
 msgstr "e shqyrtuar"
 
-#: kuma/wiki/models.py:1956
+#: kuma/wiki/models.py:2002
 msgid "Needs Review"
 msgstr "Lyp Shqyrtim"
 
-#: kuma/wiki/models.py:1957
+#: kuma/wiki/models.py:2003
 msgid "Ham / False Positive"
 msgstr ""
 
-#: kuma/wiki/models.py:1958
+#: kuma/wiki/models.py:2004
 msgid "Confirmed as Spam"
 msgstr "Ripohuar si i Padëshiruar"
 
-#: kuma/wiki/models.py:1959
+#: kuma/wiki/models.py:2005
 msgid "Review Unavailable"
 msgstr "S’ka Shqyrtim"
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:2006
 msgid "Akismet Error"
 msgstr "Gabim Akismet-i"
 
-#: kuma/wiki/models.py:1965
+#: kuma/wiki/models.py:2011
 msgid "Review of Akismet's classification as spam"
 msgstr "Shqyrtim i klasifikimit nga Akismet-i si i padëshiruar"
 
-#: kuma/wiki/models.py:1972
+#: kuma/wiki/models.py:2018
 msgid "Staff reviewer"
 msgstr "Shqyrtim nga stafi"
 
@@ -4301,27 +4307,27 @@ msgstr "Pati një gabim gjatë prodhimit të lëndës."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Dokumenti ekziston tashmë. Shënim: s’mund të ktheni një dokument që është lëvizur, pa fshirë ridrejtimin për të."
 
-#: kuma/wiki/views/document.py:658
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Ridrejtuar prej %(url)s"
 
-#: kuma/wiki/views/document.py:720
+#: kuma/wiki/views/document.py:718
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Mësova rreth %(title)s te MDN-ja."
 
-#: kuma/wiki/views/document.py:793
+#: kuma/wiki/views/document.py:791
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Lloj lënde i pambuluar: %s"
 
-#: kuma/wiki/views/document.py:800
+#: kuma/wiki/views/document.py:798
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Gabim në përtypje kërkese: %s"
 
-#: kuma/wiki/views/document.py:820
+#: kuma/wiki/views/document.py:818
 msgid "ETag precondition failed"
 msgstr "S’u plotësua parakushti ETag"
 

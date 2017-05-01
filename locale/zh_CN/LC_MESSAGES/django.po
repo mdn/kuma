@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"POT-Creation-Date: 2017-05-01 12:40-0700\n"
 "PO-Revision-Date: 2017-04-13 19:50+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
@@ -738,7 +738,7 @@ msgid "File"
 msgstr "文件"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1923
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
 msgid "Title"
 msgstr "标题"
 
@@ -1134,7 +1134,7 @@ msgstr "筛选器"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "%(date)s 日趋势"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1876
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
 msgid "Revision"
 msgstr "版本"
 
@@ -1982,7 +1982,8 @@ msgid "Remove"
 msgstr "移除"
 
 #: kuma/users/jinja2/account/email.html:45
-msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
+#, fuzzy
+msgid "<strong>Warning:</strong> You have not added any email addresses to this profile. Without one you cannot receive notifications."
 msgstr "<strong>警告：</strong>您还没有添加任何电子邮件地址到此个人资料。如果没有，您无法接收通知。"
 
 #: kuma/users/jinja2/account/email.html:49
@@ -2809,9 +2810,14 @@ msgstr "本地化进行中 - 还没完全翻译呢。"
 msgid "Edit section"
 msgstr "编辑段落"
 
-#: kuma/wiki/events.py:82
-#, python-format
-msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
+#: kuma/wiki/events.py:96
+#, fuzzy, python-format
+msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
+msgstr "[MDN] 页面 \"%(document_title)s\" 已由 %(creator)s 更改"
+
+#: kuma/wiki/events.py:100
+#, fuzzy, python-format
+msgid "[MDN][%(locale)s] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] 页面 \"%(document_title)s\" 已由 %(creator)s 更改"
 
 #: kuma/wiki/feeds.py:28
@@ -3062,108 +3068,108 @@ msgstr "已在该文档的内容中链接"
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "附件 %(attachment_id)s 不能多次附加到文档 %(document_id)s"
 
-#: kuma/wiki/models.py:1554
+#: kuma/wiki/models.py:1600
 msgid "Review Tag"
 msgstr "复核标签"
 
-#: kuma/wiki/models.py:1555
+#: kuma/wiki/models.py:1601
 msgid "Review Tags"
 msgstr "复核标签"
 
-#: kuma/wiki/models.py:1561
+#: kuma/wiki/models.py:1607
 msgid "Localization Tag"
 msgstr "本地化 Tag"
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1608
 msgid "Localization Tags"
 msgstr "本地化标签"
 
-#: kuma/wiki/models.py:1595
+#: kuma/wiki/models.py:1641
 msgid "No table of contents"
 msgstr "没有目录"
 
-#: kuma/wiki/models.py:1596
+#: kuma/wiki/models.py:1642
 msgid "All levels"
 msgstr "所有级别"
 
-#: kuma/wiki/models.py:1597
+#: kuma/wiki/models.py:1643
 msgid "H2 and higher"
 msgstr "H2 及以上"
 
-#: kuma/wiki/models.py:1598
+#: kuma/wiki/models.py:1644
 msgid "H3 and higher"
 msgstr "H3 及以上"
 
-#: kuma/wiki/models.py:1599
+#: kuma/wiki/models.py:1645
 msgid "H4 and higher"
 msgstr "H4 及以上"
 
-#: kuma/wiki/models.py:1703
+#: kuma/wiki/models.py:1749
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "必须基于 %(locale)s 文档的修订版本进行修改。版本号 %(id)s 不符合那些标准。"
 
-#: kuma/wiki/models.py:1836
+#: kuma/wiki/models.py:1882
 msgid "IP address"
 msgstr "IP 地址"
 
-#: kuma/wiki/models.py:1844
+#: kuma/wiki/models.py:1890
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: kuma/wiki/models.py:1849
+#: kuma/wiki/models.py:1895
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1857 kuma/wiki/models.py:1942
+#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
 msgid "Data submitted to Akismet"
 msgstr "数据提交到 Akismet"
 
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1928
 msgid "Akismet submission"
 msgstr "Akismet 提交"
 
-#: kuma/wiki/models.py:1883
+#: kuma/wiki/models.py:1929
 msgid "Akismet submissions"
 msgstr "Akismet 提交"
 
-#: kuma/wiki/models.py:1927
+#: kuma/wiki/models.py:1973
 msgid "Slug"
 msgstr "网址缩略名"
 
-#: kuma/wiki/models.py:1935
+#: kuma/wiki/models.py:1981
 msgid "Document (optional)"
 msgstr "文档（可选）"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1991
 msgid "reviewed"
 msgstr "复核于"
 
-#: kuma/wiki/models.py:1956
+#: kuma/wiki/models.py:2002
 msgid "Needs Review"
 msgstr "需要复核"
 
-#: kuma/wiki/models.py:1957
+#: kuma/wiki/models.py:2003
 msgid "Ham / False Positive"
 msgstr "过火 / 误报"
 
-#: kuma/wiki/models.py:1958
+#: kuma/wiki/models.py:2004
 msgid "Confirmed as Spam"
 msgstr "已确认为垃圾信息"
 
-#: kuma/wiki/models.py:1959
+#: kuma/wiki/models.py:2005
 msgid "Review Unavailable"
 msgstr "复核不可用"
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:2006
 msgid "Akismet Error"
 msgstr "Akismet 错误"
 
-#: kuma/wiki/models.py:1965
+#: kuma/wiki/models.py:2011
 msgid "Review of Akismet's classification as spam"
 msgstr "Akismet 的检查分类为垃圾信息"
 
-#: kuma/wiki/models.py:1972
+#: kuma/wiki/models.py:2018
 msgid "Staff reviewer"
 msgstr "审核人员"
 
@@ -4225,27 +4231,27 @@ msgstr "生成内容时发生了错误。"
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "文档已存在。注意：您不能还原已被移动的文档，直至它的重定向已被删除。"
 
-#: kuma/wiki/views/document.py:658
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "重定向自 %(url)s"
 
-#: kuma/wiki/views/document.py:720
+#: kuma/wiki/views/document.py:718
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "我已经了解了 MDN 上的 %(title)s。"
 
-#: kuma/wiki/views/document.py:793
+#: kuma/wiki/views/document.py:791
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "不支持的 content-type: %s"
 
-#: kuma/wiki/views/document.py:800
+#: kuma/wiki/views/document.py:798
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "请求解析错误: %s"
 
-#: kuma/wiki/views/document.py:820
+#: kuma/wiki/views/document.py:818
 msgid "ETag precondition failed"
 msgstr "ETag的前提条件失败"
 

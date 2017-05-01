@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:41-0700\n"
+"POT-Creation-Date: 2017-05-01 12:40-0700\n"
 "PO-Revision-Date: 2017-03-20 21:18+0000\n"
 "Last-Translator: Top <teerapatxtop@yahoo.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
@@ -738,7 +738,7 @@ msgid "File"
 msgstr "ไฟล์"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1923
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
 msgid "Title"
 msgstr ""
 
@@ -845,8 +845,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -1133,7 +1133,7 @@ msgstr ""
 msgid "Trends Over Time, Ending %(date)s"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1876
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
 msgid "Revision"
 msgstr ""
 
@@ -1233,8 +1233,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1428,8 +1428,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
@@ -1729,8 +1729,8 @@ msgstr "ประเภท"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1991,7 +1991,7 @@ msgid "Remove"
 msgstr "เอาออก"
 
 #: kuma/users/jinja2/account/email.html:45
-msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
+msgid "<strong>Warning:</strong> You have not added any email addresses to this profile. Without one you cannot receive notifications."
 msgstr ""
 
 #: kuma/users/jinja2/account/email.html:49
@@ -2238,8 +2238,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -2831,9 +2831,14 @@ msgstr ""
 msgid "Edit section"
 msgstr ""
 
-#: kuma/wiki/events.py:82
+#: kuma/wiki/events.py:96
 #, python-format
-msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
+msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
+msgstr ""
+
+#: kuma/wiki/events.py:100
+#, python-format
+msgid "[MDN][%(locale)s] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr ""
 
 #: kuma/wiki/feeds.py:28
@@ -3090,111 +3095,111 @@ msgstr ""
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr ""
 
-#: kuma/wiki/models.py:1554
+#: kuma/wiki/models.py:1600
 msgid "Review Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1555
+#: kuma/wiki/models.py:1601
 msgid "Review Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1561
+#: kuma/wiki/models.py:1607
 msgid "Localization Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1608
 msgid "Localization Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1595
+#: kuma/wiki/models.py:1641
 msgid "No table of contents"
 msgstr "ไม่มีสารบัญ"
 
-#: kuma/wiki/models.py:1596
+#: kuma/wiki/models.py:1642
 msgid "All levels"
 msgstr ""
 
-#: kuma/wiki/models.py:1597
+#: kuma/wiki/models.py:1643
 msgid "H2 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1598
+#: kuma/wiki/models.py:1644
 msgid "H3 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1599
+#: kuma/wiki/models.py:1645
 msgid "H4 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1703
+#: kuma/wiki/models.py:1749
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr ""
 
-#: kuma/wiki/models.py:1836
+#: kuma/wiki/models.py:1882
 msgid "IP address"
 msgstr "ที่อยู่ IP"
 
-#: kuma/wiki/models.py:1844
+#: kuma/wiki/models.py:1890
 msgid "User-Agent"
 msgstr ""
 
-#: kuma/wiki/models.py:1849
+#: kuma/wiki/models.py:1895
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1857 kuma/wiki/models.py:1942
+#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
 #, fuzzy
 msgid "Data submitted to Akismet"
 msgstr "วันที่ส่ง"
 
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1928
 #, fuzzy
 msgid "Akismet submission"
 msgstr "การเสนอ"
 
-#: kuma/wiki/models.py:1883
+#: kuma/wiki/models.py:1929
 #, fuzzy
 msgid "Akismet submissions"
 msgstr "การเสนอ"
 
-#: kuma/wiki/models.py:1927
+#: kuma/wiki/models.py:1973
 msgid "Slug"
 msgstr ""
 
-#: kuma/wiki/models.py:1935
+#: kuma/wiki/models.py:1981
 msgid "Document (optional)"
 msgstr ""
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1991
 msgid "reviewed"
 msgstr ""
 
-#: kuma/wiki/models.py:1956
+#: kuma/wiki/models.py:2002
 msgid "Needs Review"
 msgstr ""
 
-#: kuma/wiki/models.py:1957
+#: kuma/wiki/models.py:2003
 msgid "Ham / False Positive"
 msgstr ""
 
-#: kuma/wiki/models.py:1958
+#: kuma/wiki/models.py:2004
 msgid "Confirmed as Spam"
 msgstr ""
 
-#: kuma/wiki/models.py:1959
+#: kuma/wiki/models.py:2005
 msgid "Review Unavailable"
 msgstr ""
 
-#: kuma/wiki/models.py:1960
+#: kuma/wiki/models.py:2006
 msgid "Akismet Error"
 msgstr ""
 
-#: kuma/wiki/models.py:1965
+#: kuma/wiki/models.py:2011
 msgid "Review of Akismet's classification as spam"
 msgstr ""
 
-#: kuma/wiki/models.py:1972
+#: kuma/wiki/models.py:2018
 msgid "Staff reviewer"
 msgstr ""
 
@@ -3210,8 +3215,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3382,15 +3387,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:287
@@ -4265,27 +4270,27 @@ msgstr "พบข้อผิดพลาดในการสร้างเน
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
-#: kuma/wiki/views/document.py:658
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:720
+#: kuma/wiki/views/document.py:718
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "ฉันได้อ่านเกี่ยวกับ %(title)s บน MDN"
 
-#: kuma/wiki/views/document.py:793
+#: kuma/wiki/views/document.py:791
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "ประเภทของเนื้อหาที่ไม่รองรับ: %s"
 
-#: kuma/wiki/views/document.py:800
+#: kuma/wiki/views/document.py:798
 #, python-format
 msgid "Request parsing error: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:820
+#: kuma/wiki/views/document.py:818
 msgid "ETag precondition failed"
 msgstr ""
 
@@ -4785,8 +4790,7 @@ msgstr ""
 #~ msgid ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
-#~ msgstr ""
-#~ "<p>คุณกำลังจะลบ <strong>%(demo_title)s</strong> จากห้องจัดแสดงการสาธิต</p> <p>รายการของการสาธิต โค้ดต้นฉบับ และสถิติจะถูก <strong>ลบ</strong></p> <p>การกระทำนี้ <strong>ไม่สามารถยกเลิกได้</strong>"
+#~ msgstr "<p>คุณกำลังจะลบ <strong>%(demo_title)s</strong> จากห้องจัดแสดงการสาธิต</p> <p>รายการของการสาธิต โค้ดต้นฉบับ และสถิติจะถูก <strong>ลบ</strong></p> <p>การกระทำนี้ <strong>ไม่สามารถยกเลิกได้</strong>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "ไปที่การสาธิตก่อนหน้า {demo_title}"
@@ -5457,7 +5461,8 @@ msgstr ""
 #~ msgid "Browse Thousands of Docs for <b>Web Developers</b>"
 #~ msgstr "เรียกดูเอกสารนับพันสำหรับ<b>นักพัฒนาเว็บ</b>"
 
-#~ msgid "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
+#~ msgid ""
+#~ "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 #~ msgstr "และแหล่งข้อมูลที่มากขึ้นสำหรับ: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">ส่วนเสริม Firefox</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 
 #~ msgid "See what’s new for web developers in the latest version of Firefox"
@@ -5542,21 +5547,21 @@ msgstr ""
 #~ msgstr "ยินดีต้อนรับสู่ Mozilla Developer Network"
 
 #~ msgid ""
-#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together we "
-#~ "can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
+#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together "
+#~ "we can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
 #~ msgstr ""
-#~ "เราเป็นชุมชนเปิดสำหรับนักพัฒนาโดยสร้างแหล่งข้อมูลสำหรับเว็บที่ดีกว่า โดยไม่คำนึงถึงแบรนด์ เบราว์เซอร์ หรือแพลตฟอร์ม ทุกคนสามารถมีส่วนร่วม และแต่ละคนมีส่วนทำให้เราแข็งแกร่งขึ้น "
-#~ "เราสามารถผลักดันนวัตกรรมบนเว็บได้อย่างต่อเนื่องเพื่อส่งมอบสิ่งที่ดีกว่า มันเริ่มต้นขึ้นที่นี่กับคุณ"
+#~ "เราเป็นชุมชนเปิดสำหรับนักพัฒนาโดยสร้างแหล่งข้อมูลสำหรับเว็บที่ดีกว่า โดยไม่คำนึงถึงแบรนด์ เบราว์เซอร์ หรือแพลตฟอร์ม ทุกคนสามารถมีส่วนร่วม และแต่ละคนมีส่วนทำให้เราแข็งแกร่งขึ้น เราสามารถผลักดันนวัตกรรมบนเว็บได้อย่างต่อเนื่องเพื่อส่งมอบสิ่งที่ดีกว่า "
+#~ "มันเริ่มต้นขึ้นที่นี่กับคุณ"
 
 #~ msgid "See what's new for Web developers in the latest version of Firefox."
 #~ msgstr "ดูว่ามีอะไรใหม่สำหรับนักพัฒนาเว็บใน Firefox รุ่นล่าสุด"
 
 #~ msgid ""
-#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our mailing "
-#~ "list</a> to discuss ways to help create great documentation."
+#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our "
+#~ "mailing list</a> to discuss ways to help create great documentation."
 #~ msgstr ""
-#~ "คิดอย่างไรกับ MDN โฉมใหม่? โปรด<a href=\"%(uservoice_url)s\">แบ่งปันความคิดเห็นของคุณ</a>ให้กับเรา <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-"
-#~ "mdc\">เข้าร่วมรายชื่ออีเมลของเรา</a> เพื่อหารือเกี่ยวกับหนทางที่ช่วยในการสร้างเอกสารที่เยี่ยมยอด"
+#~ "คิดอย่างไรกับ MDN โฉมใหม่? โปรด<a href=\"%(uservoice_url)s\">แบ่งปันความคิดเห็นของคุณ</a>ให้กับเรา <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">เข้าร่วมรายชื่ออีเมลของเรา</a> "
+#~ "เพื่อหารือเกี่ยวกับหนทางที่ช่วยในการสร้างเอกสารที่เยี่ยมยอด"
 
 #~ msgid "Geolocation & Camera API"
 #~ msgstr "Geolocation และ Camera API"
