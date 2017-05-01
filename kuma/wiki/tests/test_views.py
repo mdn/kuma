@@ -391,17 +391,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         ok_('<svg>' not in ct)
         ok_('<a href="#">Hahaha</a>' in ct)
 
-    def test_template_revision_content(self):
-        doc = document(title='Testing Template', slug='Template:Testing', save=True)
-        r = revision(save=True, document=doc, is_approved=True)
-
-        resp = self.client.get(r.get_absolute_url())
-        page = pq(resp.content)
-
-        ok_('Revision Source' in resp.content)
-        ok_('Revision Content' not in resp.content)
-        eq_(page.find('#doc-source').parent().attr('open'), 'open')
-
     def test_article_revision_content(self):
         doc = document(title='Testing Article', slug='Article', save=True)
         r = revision(save=True, document=doc, is_approved=True)
@@ -2393,6 +2382,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # If this is a translation test, then create a translation and a revision on it
         if translate_locale:
+            data['locale'] = translate_locale
             translation = document(
                 parent=doc,
                 locale=translate_locale,
@@ -3614,12 +3604,7 @@ class AutosuggestDocumentsTests(WikiTestCase):
                 'title': 'Something Redirect 8',
                 'slug': 'xx',
                 'html': 'REDIRECT <a class="redirect" href="%s">yo</a>' % settings.SITE_URL
-            },
-            {
-                'title': 'My Template',
-                'slug': 'Template:Something',
-                'html': 'blah',
-            },
+            }
         ]
         valid_documents = [
             {'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'}

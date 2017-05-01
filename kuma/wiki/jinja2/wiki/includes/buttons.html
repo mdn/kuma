@@ -15,7 +15,6 @@
   {% set watch_menu_items_html = watch_menu_items(document, user) %}
 
   <ul class="page-buttons" data-sticky="false">
-      {% if not document.is_template %}
       <li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-language"></i></button>
 
         <div class="submenu js-submenu" id="languages-menu-submenu">
@@ -39,12 +38,12 @@
             </ul>
           </div>
         </div>
-      </li>{% endif %}
+      </li>
 
       {%- set is_experiment = (
             content_experiment and
             content_experiment.selection_is_valid) %}
-      {% if (not is_experiment) and not document.is_template %}
+      {% if (not is_experiment) %}
       <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button" rel="nofollow, noindex">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
       {% endif %}
 
@@ -66,7 +65,7 @@
             <div class="title">{{ _('Advanced') }}</div>
             <ul>
                 <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
-                {% if user.is_authenticated() and not document.is_template %}
+                {% if user.is_authenticated() %}
                   <li><a href="{{ url('wiki.create') }}?parent={{ document.id }}" rel="nofollow, noindex">{{ _('New sub-article') }}</a></li>
                   <li><a href="{{ url('wiki.create') }}?clone={{ document.id }}{% if document.parent_topic %}&amp;parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow, noindex">{{ _('Clone this article') }}</a></li>
                 {% endif %}
@@ -89,7 +88,7 @@
                 {% if zone_links['change'] %}
                   <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow, noindex">{{ _('Manage content zone') }}</a></li>
                 {% endif %}
-                {% if zone_links['add'] and not document.is_template %}
+                {% if zone_links['add'] %}
                   <li><a target="_blank" href="{{ zone_links['add'] }}" rel="nofollow, noindex">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
                 <li class="page-print"><a href="#" onclick="return window.print();">{{ _('Print this article') }}</a></li>

@@ -1835,10 +1835,7 @@ class Revision(models.Model):
 
     @property
     def content_cleaned(self):
-        if self.document.is_template:
-            return self.content
-        else:
-            return Document.objects.clean_content(self.content)
+        return Document.objects.clean_content(self.content)
 
     @cached_property
     def previous(self):
