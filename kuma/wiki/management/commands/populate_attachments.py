@@ -23,8 +23,7 @@ class Command(NoArgsCommand):
         of the documents whose content contained the attachment URL.
         """
         mapping = defaultdict(list)
-        documents = (Document.admin_objects.exclude(is_template=True,
-                                                    is_redirect=True)
+        documents = (Document.admin_objects.exclude(is_redirect=True)
                                            .only('pk', 'html'))
 
         self.stdout.write("Attaching files to %s documents...\n\n" %

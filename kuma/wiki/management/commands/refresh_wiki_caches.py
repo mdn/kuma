@@ -47,7 +47,7 @@ class Command(BaseCommand):
                              (doc_cnt, doc_total))
 
             url = doc.get_absolute_url()
-            if 'class="noinclude"' in doc.html and not doc.is_template:
+            if 'class="noinclude"' in doc.html:
                 # A page containing class="noinclude" is very likely to be used
                 # as included content on another page, so better prefetch. But,
                 # prefetching templates won't help us, since they don't get
