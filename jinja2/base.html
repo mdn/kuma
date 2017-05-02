@@ -236,6 +236,7 @@
     <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
 
     {{ providers_media_js() }}
+    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'main' %}
     {% if not is_sphinx %}
       <script>
@@ -245,7 +246,7 @@
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
-    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+
   {% endblock %}
 
   {% block js %}{% endblock %}
