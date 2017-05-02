@@ -403,6 +403,8 @@ _CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # must come before LocaleURLMiddleware
+    'redirect_urls.middleware.RedirectsMiddleware',
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
@@ -494,6 +496,7 @@ INSTALLED_APPS = (
     'kuma.core',
     'kuma.feeder',
     'kuma.landing',
+    'kuma.redirects',
     'kuma.search',
     'kuma.users',
     'kuma.wiki',
@@ -527,6 +530,7 @@ INSTALLED_APPS = (
 
     # other
     'kuma.humans',
+    'redirect_urls',
 )
 
 # Feed fetcher config
