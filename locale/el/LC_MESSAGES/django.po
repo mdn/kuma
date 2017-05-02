@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-01 21:05+0000\n"
+"PO-Revision-Date: 2017-05-02 18:05+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -1073,16 +1073,15 @@ msgid "Authors"
 msgstr "Δημιουργοί"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
-#, fuzzy
 msgid "Active macros"
-msgstr "Εγγραφα με την περισσοτερη δραστηριοτητα"
+msgstr "Ενεργές μακροεντολές"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "Βρέθηκε %(num)s πρότυπο."
-msgstr[1] "Βρέθηκαν %(num)s πρότυπα"
+msgstr[0] "Βρέθηκε %(num)s ενεργή μακροεντολή."
+msgstr[1] "Βρέθηκαν %(num)s ενεργές μακροεντολές."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
@@ -1718,7 +1717,7 @@ msgstr ""
 
 #: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
-msgstr ""
+msgstr "Ανεπιθύμητο"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
@@ -1762,7 +1761,7 @@ msgstr "αλγόριθμος"
 
 #: kuma/users/backends.py:35
 msgid "salt"
-msgstr ""
+msgstr "salt"
 
 #: kuma/users/backends.py:36
 msgid "hash"
@@ -2186,11 +2185,11 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Δημιουργήστε το προφίλ MDN σας για συνέχεια"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
-msgstr ""
+msgstr "Ένα υπάρχον προφίλ MDN αντιστοιχεί με το email σας στο GitHub. Κάντε κλικ εδώ για να ανακτήσετε ένα προφίλ:"
 
 #: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
