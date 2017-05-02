@@ -262,3 +262,9 @@ whitenoise==2.0.6 \
 meinheld==0.6.1 \
     --hash=sha256:40d9dbce0165b2d9142f364d26fd6d59d3682f89d0dfe2117717a8ddad1f4133 \
     --hash=sha256:293eff4983b7fcbd9134b47706b22189883fe354993bd10163c65869d141e565
+
+# Implement redirects in Django instead of Apache httpd
+django-redirect-urls==0.1 \
+    --hash=sha256:cd8499424e4920dc929bf1d64c5563349471353143af8e631033336570c42445 \
+    --hash=sha256:267f20cc44de96fc574b5b02e9efcd80f4aab4146539dea1f4228f62f34bb4f5
+
