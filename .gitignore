@@ -74,7 +74,7 @@ media/kumascript-revision.txt
 node_modules/
 settings_local.py
 settings_local.py*
-static/
+/static/
 tmp
 
 # Selenium
