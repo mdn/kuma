@@ -12,7 +12,7 @@
 # serve to show the default.
 
 # import sys, os
-import mdn_theme
+from collections import OrderedDict
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -96,15 +96,31 @@ exclude_patterns = ['_build']
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'mdn'
+html_theme = 'alabaster'
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = [mdn_theme.get_theme_dir()]
+html_theme_path = ["."]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-# html_theme_options = {}
+html_theme_options = {
+    'github_user': 'mozilla',
+    'github_repo': 'kuma',
+    'github_button': False,
+    'description': ('The platform that powers '
+                    '<a href="https://developer.mozilla.org/en-US/">MDN</a>'),
+    'travis_button': False,
+    'codecov_button': False,
+    'extra_nav_links': OrderedDict((
+        ('MDN', 'https://developer.mozilla.org'),
+        ('MDN Staging', 'https://developer.allizom.org'),
+        ('Kuma on GitHub', 'https://github.com/mozilla/kuma'),
+        ('KumaScript on GitHub', 'https://github.com/mozilla/kumascript'),
+    )),
+    'show_related': True,
+    'page_width': '100%'
+}
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -136,7 +152,15 @@ html_title = 'Kuma Documentation'
 # html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-# html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+        'donate.html',
+    ]
+}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
