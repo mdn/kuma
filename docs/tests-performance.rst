@@ -1,5 +1,5 @@
-Performance testing with Locust
-===============================
+Performance testing
+===================
 
 In 2015, as part of a "measure and improve performance" initiative, MDN staff
 configured Locust for performance testing of MDN. The locust test files

@@ -1,6 +1,6 @@
-=============================
-Celery and asynchronous tasks
-=============================
+======================
+Celery and async tasks
+======================
 Kuma uses Celery_ to enable asynchronous task processing for long-running jobs
 and to speed up the request-response cycle.
 

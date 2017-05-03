@@ -342,7 +342,7 @@ generate/use minified (compressed) and versioned (hashed) assets. To
 emulate production, and test compressed and hashed assets locally:
 
 #. Set the environment variable ``DEBUG=false``.
-#. Start (``docker-compose up -d``) or restart (``docker-compose restart`)
+#. Start (``docker-compose up -d``) or restart (``docker-compose restart``)
    your Docker services.
 #. Run ``docker-compose exec web make build-static``.
 #. Restart the web process using ``docker-compose restart web``.
@@ -359,7 +359,7 @@ HTTPS.
 
 
 Deis Workflow Demo instances
-----------------
+----------------------------
 You can deploy a hosted demo instance of Kuma by following these steps:
 
 #. Create a new branch, you cannot create a demo from the ``master`` branch.
@@ -393,7 +393,7 @@ whitespace at the beginning of the line.
 .. _maintenance-mode:
 
 Maintenance Mode
-------------
+----------------
 Maintenance mode is a special configuration for running Kuma in read-only mode,
 where all operations that would write to the database are blocked. As the name
 suggests, it's intended for those times when we'd like to continue to serve
