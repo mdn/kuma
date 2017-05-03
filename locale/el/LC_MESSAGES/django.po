@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-02 18:05+0000\n"
+"PO-Revision-Date: 2017-05-03 06:30+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -146,7 +146,7 @@ msgstr "Κατάσταση τεκμηρίωσης"
 # Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #: jinja2/base.html:139 kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr "Τεχνολογίες Ιστού"
+msgstr "Διαδικτυακές τεχνολογίες"
 
 #: jinja2/base.html:142
 msgid "Technologies"
@@ -223,7 +223,7 @@ msgstr "Έγγραφα Mozilla"
 # Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #: jinja2/base.html:170 kuma/core/sections.py:6
 msgid "Add-ons"
-msgstr "Προσθετα"
+msgstr "Πρόσθετα"
 
 #: jinja2/base.html:171 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
@@ -1201,7 +1201,7 @@ msgstr "Υποβολή ως:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
-msgstr ""
+msgstr "ανεπιθύμητο"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
 msgid "There are no revisions matching this filter set."
@@ -1247,7 +1247,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr "Αναζήτηση των εγγράφων"
+msgstr "Αναζήτηση εγγράφων"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
@@ -2813,7 +2813,7 @@ msgstr ""
 
 #: kuma/wiki/content.py:725
 msgid "Edit section"
-msgstr ""
+msgstr "Επεξεργασία ενότητας"
 
 #: kuma/wiki/events.py:96
 #, python-format
@@ -2839,7 +2839,7 @@ msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "Πρόσφατες αλλαγές εγγράφων MDN"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
@@ -3132,11 +3132,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1928
 msgid "Akismet submission"
-msgstr ""
+msgstr "Υποβολή Akismet"
 
 #: kuma/wiki/models.py:1929
 msgid "Akismet submissions"
-msgstr ""
+msgstr "Υποβολές Akismet"
 
 #: kuma/wiki/models.py:1973
 msgid "Slug"
@@ -3381,7 +3381,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Αυτή η μετάφραση βρίσκεται σε εξέλιξη."
 
 #: kuma/wiki/jinja2/wiki/document.html:310
 #, python-format
@@ -3392,7 +3392,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have any content yet."
-msgstr ""
+msgstr "Αυτό το άρθρο δεν έχει κανένα περιεχόμενο ακόμα."
 
 #: kuma/wiki/jinja2/wiki/document.html:327
 #, python-format
@@ -3421,7 +3421,7 @@ msgstr "Συνεισφέροντες σε αυτή τη σελίδα:"
 
 #: kuma/wiki/jinja2/wiki/document.html:381
 msgid "Last updated by:"
-msgstr ""
+msgstr "Τελευταία ενημέρωση από:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
