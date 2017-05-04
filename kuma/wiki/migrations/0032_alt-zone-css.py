@@ -11,10 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='documentzone',
-            name='styles',
-        ),
         migrations.AddField(
             model_name='documentzone',
             name='css_slug',

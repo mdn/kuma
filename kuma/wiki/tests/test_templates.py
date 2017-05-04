@@ -1331,108 +1331,41 @@ def _translation_data():
     }
 
 
-def test_zone_styles(client, doc_hierarchy_with_zones, root_doc):
+@pytest.mark.parametrize('doc_name', ['root', 'bottom', 'de', 'fr', 'it'])
+def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
     """
     Check document page for zone-style-related features.
     """
-    top_doc = doc_hierarchy_with_zones.top
-    bottom_doc = doc_hierarchy_with_zones.bottom
-    middle_top_doc = doc_hierarchy_with_zones.middle_top
-    fr_top_doc = top_doc.translations.filter(locale='fr').first()
-    de_top_doc = top_doc.translations.filter(locale='de').first()
-    it_top_doc = top_doc.translations.filter(locale='it').first()
+    zone_title = 'div.zone-title'
+    css_link = 'link[type="text/css"][href$="build/styles/{}.css"]'
 
-    link_tmpl = 'link[type="text/css"][href$="build/styles/{}.css"]'
-    nearest_zone_link_tmpl = 'div.zone-title > a[href="{}"]'
+    if doc_name == 'root':
+        doc = root_doc
+    elif doc_name == 'bottom':
+        doc = doc_hierarchy_with_zones.bottom
+        zone_title = 'div.zone-title > a[href="{}"]'.format(
+            doc_hierarchy_with_zones.middle_top.get_absolute_url()
+        )
+    else:
+        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
 
-    url = reverse(
-        'wiki.document',
-        args=(bottom_doc.slug,),
-        locale=bottom_doc.locale
-    )
+    url = reverse('wiki.document', args=(doc.slug,), locale=doc.locale)
     response = client.get(url, follow=True)
     response_html = pq(response.content)
 
-    assert response_html.find('body.zone')
-    assert not response_html.find('body.zone-landing')
-    assert response_html.find('#document-main.zone-article-header')
-    assert not response_html.find('#document-main.zone-landing-header')
-    assert response_html.find(
-        nearest_zone_link_tmpl.format(middle_top_doc.get_absolute_url())
-    )
-    assert len(response_html.find(link_tmpl.format('bobby'))) == 1
-    assert len(response_html.find(link_tmpl.format('lindsey'))) == 1
-    assert not response_html.find(link_tmpl.format('zones'))
-    assert not response_html.find(link_tmpl.format('berlin'))
+    def count(selector):
+        return len(response_html.find(selector))
 
-    url = reverse(
-        'wiki.document',
-        args=(fr_top_doc.slug,),
-        locale=fr_top_doc.locale
-    )
-    response = client.get(url, follow=True)
-    response_html = pq(response.content)
+    def one_if(*args):
+        return 1 if any(arg == doc_name for arg in args) else 0
 
-    assert response_html.find('body.zone')
-    assert response_html.find('body.zone-landing')
-    assert response_html.find('#document-main.zone-landing-header')
-    assert not response_html.find('#document-main.zone-article-header')
-    assert not response_html.find('div.zone-title')
-    assert len(response_html.find(link_tmpl.format('lindsey'))) == 1
-    assert not response_html.find(link_tmpl.format('bobby'))
-    assert not response_html.find(link_tmpl.format('zones'))
-    assert not response_html.find(link_tmpl.format('berlin'))
-
-    url = reverse(
-        'wiki.document',
-        args=(de_top_doc.slug,),
-        locale=de_top_doc.locale
-    )
-    response = client.get(url, follow=True)
-    response_html = pq(response.content)
-
-    assert response_html.find('body.zone')
-    assert response_html.find('body.zone-landing')
-    assert response_html.find('#document-main.zone-landing-header')
-    assert not response_html.find('#document-main.zone-article-header')
-    assert not response_html.find('div.zone-title')
-    assert len(response_html.find(link_tmpl.format('berlin'))) == 1
-    assert not response_html.find(link_tmpl.format('bobby'))
-    assert not response_html.find(link_tmpl.format('zones'))
-    assert not response_html.find(link_tmpl.format('lindsey'))
-
-    url = reverse(
-        'wiki.document',
-        args=(it_top_doc.slug,),
-        locale=it_top_doc.locale
-    )
-    response = client.get(url, follow=True)
-    response_html = pq(response.content)
-
-    assert response_html.find('body.zone')
-    assert response_html.find('body.zone-landing')
-    assert response_html.find('#document-main.zone-landing-header')
-    assert not response_html.find('#document-main.zone-article-header')
-    assert not response_html.find('div.zone-title')
-    assert len(response_html.find(link_tmpl.format('zones'))) == 1
-    assert not response_html.find(link_tmpl.format('bobby'))
-    assert not response_html.find(link_tmpl.format('berlin'))
-    assert not response_html.find(link_tmpl.format('lindsey'))
-
-    url = reverse(
-        'wiki.document',
-        args=(root_doc.slug,),
-        locale=root_doc.locale
-    )
-    response = client.get(url, follow=True)
-    response_html = pq(response.content)
-
-    assert not response_html.find('body.zone')
-    assert not response_html.find('body.zone-landing')
-    assert not response_html.find('#document-main.zone-landing-header')
-    assert not response_html.find('#document-main.zone-article-header')
-    assert not response_html.find('div.zone-title')
-    assert not response_html.find(link_tmpl.format('zones'))
-    assert not response_html.find(link_tmpl.format('bobby'))
-    assert not response_html.find(link_tmpl.format('berlin'))
-    assert not response_html.find(link_tmpl.format('lindsey'))
+    assert count('body.zone') == one_if('bottom', 'de', 'fr', 'it')
+    assert count('body.zone-landing') == one_if('de', 'fr', 'it')
+    assert (count('#document-main.zone-landing-header') ==
+            one_if('de', 'fr', 'it'))
+    assert count('#document-main.zone-article-header') == one_if('bottom')
+    assert count(zone_title) == one_if('bottom')
+    assert count(css_link.format('zones')) == one_if('it')
+    assert count(css_link.format('bobby')) == one_if('bottom')
+    assert count(css_link.format('berlin')) == one_if('de')
+    assert count(css_link.format('lindsey')) == one_if('bottom', 'fr')

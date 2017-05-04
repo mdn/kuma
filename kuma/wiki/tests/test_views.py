@@ -22,7 +22,6 @@ from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
 from django.test.utils import override_settings
 from django.utils.encoding import smart_str
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag

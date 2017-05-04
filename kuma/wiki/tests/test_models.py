@@ -1870,8 +1870,8 @@ def test_zone_stack(doc_hierarchy_with_zones, cleared_cacheback_cache):
     top_doc = doc_hierarchy_with_zones.top
     top_zone = top_doc.zone
 
-    fr_top_doc = top_doc.translations.filter(locale='fr').first()
-    de_top_doc = top_doc.translations.filter(locale='de').first()
+    fr_top_doc = top_doc.translations.get(locale='fr')
+    de_top_doc = top_doc.translations.get(locale='de')
 
     assert fr_top_doc.parent == top_doc
     assert de_top_doc.parent == top_doc
@@ -1891,7 +1891,7 @@ def test_zone_stack_when_no_parent(doc_hierarchy_with_zones,
     a parent.
     """
     top_doc = doc_hierarchy_with_zones.top
-    fr_top_doc = top_doc.translations.filter(locale='fr').first()
+    fr_top_doc = top_doc.translations.get(locale='fr')
     fr_top_doc.parent = None
     fr_top_doc.save()
 
