@@ -48,10 +48,6 @@ ENV/
 # Swapfiles
 *.sw?
 
-# Vagrant
-.vagrant
-kuma.box
-
 # macOS finder files
 .DS_Store
 

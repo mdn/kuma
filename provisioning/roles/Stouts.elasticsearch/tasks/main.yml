@@ -1,5 +1,0 @@
----
-
-- include: elasticsearch.yml
-  when: elasticsearch_enabled
-  tags: [elasticsearch]
