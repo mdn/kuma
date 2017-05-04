@@ -6,8 +6,7 @@ Kuma has a fairly comprehensive Python test suite. Changes should not break
 tests. Only change a test if there is a good reason to change the expected
 behavior. New code should come with tests.
 
-Commands should be run inside the development environment, after ``make bash``
-with Docker, or ``vagrant ssh`` with Vagrant.
+Commands should be run inside the development environment, after ``make bash``.
 
 Setup
 =====

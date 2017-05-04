@@ -37,7 +37,7 @@ This process works both in a development environment and in production:
   (the top most) and select "Populate selected search index via Celery" from
   the Action dropdown menu. Click "Go" to start indexing asynchronously.
 
-- In the development environment, you can watch the indexing process with:
+- In the development environment, you can watch the indexing process with::
 
     docker-compose logs -f elasticsearch worker
 

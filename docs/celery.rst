@@ -56,8 +56,6 @@ available to async tasks, and web code can easily schedule async tasks.
 
 In Docker, the worker process runs in the ``worker`` service / container.
 
-In Vagrant, the worker process is started with the ``foreman`` command.
-
 Broker
 ------
 Celery requires a `message broker`_ for task communication. There are two stable,
@@ -70,7 +68,7 @@ production-ready alternatives:
 * RabbitMQ_ is an AMQP_ message broker written in Erlang_. The Celery team has
   recommended it for a long time, and the docs describe it as
   "feature-complete, stable, durable and easy to install". It is used in the
-  Vagrant and production environments.
+  production environment.
 
 .. _AMQP: https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
 .. _Celery: http://celeryproject.org/
@@ -101,9 +99,9 @@ Periodic tasks are scheduled with `celery beat`_, which adds tasks to the task
 queue when they become due.  It should only be run once in a deployment, or
 tasks may be scheduled multiple times.
 
-It is run in the Docker and Vagrant environments by running the single celery
-worker process with ``--beat``.  In production, there are several task workers,
-and the ``celery beat`` process is run directly on just one worker.
+In Docker, it runs in the ``worker`` container by starting the celery process
+with ``--beat``.  In production, there are several task workers, and the
+``celery beat`` process is run directly on just one worker.
 
 The schedules themselves are configured using the deprecated `django-celery`_
 database backend.  The work to replace this is tracked in `bug 1268256`_.
@@ -123,8 +121,7 @@ It is not part of the default Docker services, but can be started inside the
 
     ./manage.py celerycam --freq=2.0
 
-In the Vagrant environment, ``celerycam`` is started with other Kuma services
-with ``foreman``.
+In production, ``celerycam`` is run directly on one worker.
 
 For more options, see the `Monitoring and Management Guide`_ in the Celery
 documentation.
@@ -140,9 +137,9 @@ overridden by the environment variables, including:
 
 - CELERY_ALWAYS_EAGER_
 
-  Default: ``false`` (Docker), ``true`` (Vagrant, tests).
+  Default: ``False`` (Docker), ``True`` (tests).
 
-  When ``true``, tasks are executed immediately, instead of being scheduled and
+  When ``True``, tasks are executed immediately, instead of being scheduled and
   executed by a worker, skipping the broker, results store, etc. In theory,
   tasks should act the same whether executed eagerly or normally. In practice,
   there are some tasks that fail or have different results in the two modes,

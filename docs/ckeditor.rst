@@ -19,11 +19,11 @@ This builds CKEditor within a Docker VM, using the Java ``ckbuilder`` tool
 from CKSource, then builds static resources so that the updated editor
 is installed where it belongs.
 
-To rebuild CKEditor from a ``vagrant ssh`` shell (or locally if you have Java
-installed)::
+To rebuild CKEditor locally, if you have Java installed::
 
     cd kuma/static/js/libs/ckeditor/source/
     ./build.sh
+    docker-compose exec web make build-static
 
 Portions of the build process will take a few minutes so don't expect an
 immediate result.

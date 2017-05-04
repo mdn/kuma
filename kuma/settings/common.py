@@ -580,6 +580,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
+    'VERSION': '2017.08',
     'BASE_DIR': ROOT,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -599,7 +600,6 @@ PUENTE = {
         ],
     },
     'PROJECT': 'MDN',
-    'VERSION': '2017.08',
     'MSGID_BUGS_ADDRESS': 'dev-mdn@lists.mozilla.org',
 }
 

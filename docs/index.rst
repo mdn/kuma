@@ -24,5 +24,3 @@ Contents:
    localization
    ckeditor
    documentation
-
-   installation-vagrant
