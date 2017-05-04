@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-04 21:25+0000\n"
+"PO-Revision-Date: 2017-05-04 21:37+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -2859,7 +2859,7 @@ msgstr "Modifica sezione"
 #: kuma/wiki/events.py:96
 #, python-format
 msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
-msgstr ""
+msgstr "[MDN][%(locale)s][Novità] È stata creata una nuova pagina,%(document_title)s, da %(creator)s"
 
 #: kuma/wiki/events.py:100
 #, python-format
