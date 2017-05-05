@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-03 06:30+0000\n"
+"PO-Revision-Date: 2017-05-05 18:59+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -1414,7 +1414,7 @@ msgstr "σύνδεση"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:39
 msgid "We apologize for the inconvenience."
-msgstr ""
+msgstr "Ζητούμε συγγνώμη για την ταλαιπωρία."
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
