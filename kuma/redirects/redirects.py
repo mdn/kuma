@@ -194,6 +194,9 @@ redirectpatterns = [
         '/docs/Web/API/CanvasRenderingContext2D.globalCompositeOperation',
         prepend_locale=False, permanent=True),
     # [R=301,L,NC]
+    ##################################
+    ##### MOZILLADEMOS
+    ##################################
     # canvas images
     redirect(
         r'^samples/canvas-tutorial/images/backdrop.png$',
