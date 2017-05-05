@@ -1,0 +1,10 @@
+.articulated-diagram-component {
+    margin: 0;
+    max-width: 90%;
+    transition: transform 1s, box-shadow 1s;
+}
+
+.articulated-diagram-container:hover .articulated-diagram-component {
+    box-shadow: 3px 3px 4px 5px #ccc;
+    transform: scale(.9);
+}

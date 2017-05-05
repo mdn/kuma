@@ -1,0 +1,33 @@
+/*
+Grey callout box
+********************************************************************** */
+
+
+.zone-callout {
+    background: $light-background-color;
+    margin: ($grid-spacing + ($grid-spacing / 2)) 0;
+    padding: $grid-spacing;
+    position: relative;
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        padding-right: $grid-spacing;
+        vertical-align: bottom;
+    }
+}
+
+div.zone-callout {
+    margin-bottom: 10px;
+}
+
+div.zone-callout ul,
+div.zone-callout ol {
+    margin: 0 0 10px 10px;
+}
+
+div.zone-callout li {
+    padding: 5px;
+}

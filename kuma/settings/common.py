@@ -654,7 +654,6 @@ PIPELINE_CSS = {
     'wiki': {
         'source_filenames': (
             'styles/wiki.scss',
-            'styles/zones.scss',
             'styles/diff.scss',
 
             # Custom build of our Prism theme
@@ -678,6 +677,12 @@ PIPELINE_CSS = {
             'styles/wiki-edit.scss',
         ),
         'output_filename': 'build/styles/wiki-edit.css',
+    },
+    'zones': {
+        'source_filenames': (
+            'styles/zones.scss',
+        ),
+        'output_filename': 'build/styles/zones.css',
     },
     'sphinx': {
         'source_filenames': (

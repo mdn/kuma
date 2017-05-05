@@ -1,0 +1,22 @@
+/*
+Zone article header and title
+********************************************************************** */
+
+
+.zone-article-header {
+    overflow: hidden;
+    padding: $grid-spacing 0;
+
+    .zone-title {
+        @include heading-2();
+
+        a {
+            color: $blue-background-text-color;
+
+            font-family: $heading-font-family;
+            #{$selector-heading-font-fallback} {
+                font-family: $heading-font-family-fallback;
+            }
+        }
+    }
+}

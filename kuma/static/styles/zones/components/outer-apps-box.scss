@@ -1,0 +1,21 @@
+/*
+B2G apps zone fancy box thing
+********************************************************************** */
+
+
+.outer-apps-box {
+    background: url($path-to-images + 'zones/apps/posh-app-image.png') no-repeat 12% center,
+              -webkit-linear-gradient(to bottom, #fff, #eee);
+    background: url($path-to-images + 'zones/apps/posh-app-image.png') no-repeat 12% center,
+              -moz-linear-gradient(to bottom, #fff, #eee);
+    background: url($path-to-images + 'zones/apps/posh-app-image.png') no-repeat 12% center,
+              -ms-linear-gradient(to bottom, #fff, #eee);
+    background: url($path-to-images + 'zones/apps/posh-app-image.png') no-repeat 12% center,
+              linear-gradient(to bottom, #fff, #eee);
+    border-radius: 3px;
+    box-shadow: 0 2px 2px #ccc;
+    height: auto;
+    margin: 0 auto 40px;
+    padding: 4% 6% 4% 30%;
+    width: 26%;
+}
