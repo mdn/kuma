@@ -1275,24 +1275,6 @@ CONSTANCE_CONFIG = dict(
         '',
         'The ID value for optimizely Project Code script'
     ),
-    BLEACH_ALLOWED_TAGS=(
-        json.dumps([
-            'a', 'p', 'div',
-        ]),
-        "JSON array of tags allowed through Bleach",
-    ),
-    BLEACH_ALLOWED_ATTRIBUTES=(
-        json.dumps({
-            '*': ['id', 'class', 'style', 'lang'],
-        }),
-        "JSON object associating tags with lists of allowed attributes",
-    ),
-    BLEACH_ALLOWED_STYLES=(
-        json.dumps([
-            'font-size', 'text-align',
-        ]),
-        "JSON array listing CSS styles allowed on tags",
-    ),
     WIKI_DOCUMENT_TAG_SUGGESTIONS=(
         json.dumps([
             "Accessibility", "AJAX", "API", "Apps", "B2G OS",

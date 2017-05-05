@@ -44,42 +44,40 @@ from .utils import document_last_modified, split_slug
 
 def _get_html_and_errors(request, doc, rendering_params):
     """
-    Get the initial HTML for a Document, including determining whether
-    to use kumascript to render it.
+    Get HTML and rendering errors for a Document.
 
+    Return is a tuple:
+    * The HTML
+    * A list of KumaScript errors encountered during rendering
+    * True if rendered content was requested but not available
+
+    If rendering_params['use_rendered'] is True, then KumaScript rendering is
+    attempted. If False, pre-rendered content is returned, if any.
     """
-    doc_html, ks_errors = doc.html, None
-    render_raw_fallback = False
+    doc_html, ks_errors, render_raw_fallback = doc.html, None, False
+    if not rendering_params['use_rendered']:
+        return doc_html, ks_errors, render_raw_fallback
+
+    # A logged-in user can schedule a full re-render with Shift-Reload
+    cache_control = None
+    if request.user.is_authenticated():
+        # Shift-Reload sends Cache-Control: no-cache
+        ua_cc = request.META.get('HTTP_CACHE_CONTROL')
+        if ua_cc == 'no-cache':
+            cache_control = 'no-cache'
+
     base_url = request.build_absolute_uri('/')
-
-    if rendering_params['use_rendered']:
-        if (request.GET.get('bleach_new', False) is not False and
-                request.user.is_authenticated()):
-            # Temporary bleach_new query option to switch to Constance-based
-            # Bleach whitelists, uses KumaScript POST for temporary rendering
-            doc_html, ks_errors = kumascript.post(request, doc_html,
-                                                  request.LANGUAGE_CODE, True)
-
-        else:
-            # A logged-in user can schedule a full re-render with Shift-Reload
-            cache_control = None
-            if request.user.is_authenticated():
-                # Shift-Reload sends Cache-Control: no-cache
-                ua_cc = request.META.get('HTTP_CACHE_CONTROL')
-                if ua_cc == 'no-cache':
-                    cache_control = 'no-cache'
-
-            try:
-                r_body, r_errors = doc.get_rendered(cache_control, base_url)
-                if r_body:
-                    doc_html = r_body
-                if r_errors:
-                    ks_errors = r_errors
-            except DocumentRenderedContentNotAvailable:
-                # There was no rendered content available, and we were unable
-                # to render it on the spot. So, fall back to presenting raw
-                # content
-                render_raw_fallback = True
+    try:
+        r_body, r_errors = doc.get_rendered(cache_control, base_url)
+        if r_body:
+            doc_html = r_body
+        if r_errors:
+            ks_errors = r_errors
+    except DocumentRenderedContentNotAvailable:
+        # There was no rendered content available, and we were unable
+        # to render it on the spot. So, fall back to presenting raw
+        # content
+        render_raw_fallback = True
 
     return doc_html, ks_errors, render_raw_fallback
 
