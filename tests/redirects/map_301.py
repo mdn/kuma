@@ -1,4 +1,3 @@
-import pytest
 from url_test_urls import url_test
 from .base import flatten, url_test
 
@@ -64,4 +63,83 @@ URLS = flatten((
 
 ))
 
+GITHUB_IO_URLS = flatten((
+    # http://mdn.github.io
+    # canvas raycaster
+    url_test("/samples/raycaster/input.js$", "/canvas-raycaster/input.js"),
+    url_test("/samples/raycaster/Level.js$", "/canvas-raycaster/Level.js"),
+    url_test("/samples/raycaster/Player.js$", "/canvas-raycaster/Player.js"),
+    url_test("/samples/raycaster/RayCaster.html$", "/canvas-raycaster/index.html"),
+    url_test("/samples/raycaster/RayCaster.js$", "/canvas-raycaster/RayCaster.js"),
+    url_test("/samples/raycaster/trace.css$", "/canvas-raycaster/trace.css"),
+    url_test("/samples/raycaster/trace.js$", "/canvas-raycaster/trace.js"),
+
+    # Bug 1215255 - Redirect static WebGL examples
+    url_test("/samples/webgl/sample1$", "/webgl-examples/tutorial/sample1"),
+    url_test("/samples/webgl/sample1/index.html$", "/webgl-examples/tutorial/sample1/index.html"),
+    url_test("/samples/webgl/sample1/webgl-demo.js$", "/webgl-examples/tutorial/sample1/webgl-demo.js"),
+    url_test("/samples/webgl/sample1/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample2$", "/webgl-examples/tutorial/sample2"),
+    url_test("/samples/webgl/sample2/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample2/index.html$", "/webgl-examples/tutorial/sample2/index.html"),
+    url_test("/samples/webgl/sample2/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample2/webgl-demo.js$", "/webgl-examples/tutorial/sample2/webgl-demo.js"),
+    url_test("/samples/webgl/sample2/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample3$", "/webgl-examples/tutorial/sample3"),
+    url_test("/samples/webgl/sample3/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample3/index.html$", "/webgl-examples/tutorial/sample3/index.html"),
+    url_test("/samples/webgl/sample3/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample3/webgl-demo.js$", "/webgl-examples/tutorial/sample3/webgl-demo.js"),
+    url_test("/samples/webgl/sample3/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample4$", "/webgl-examples/tutorial/sample4"),
+    url_test("/samples/webgl/sample4/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample4/index.html$", "/webgl-examples/tutorial/sample4/index.html"),
+    url_test("/samples/webgl/sample4/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample4/webgl-demo.js$", "/webgl-examples/tutorial/sample4/webgl-demo.js"),
+    url_test("/samples/webgl/sample4/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample5$", "/webgl-examples/tutorial/sample5"),
+    url_test("/samples/webgl/sample5/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample5/index.html$", "/webgl-examples/tutorial/sample5/index.html"),
+    url_test("/samples/webgl/sample5/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample5/webgl-demo.js$", "/webgl-examples/tutorial/sample5/webgl-demo.js"),
+    url_test("/samples/webgl/sample5/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample6$", "/webgl-examples/tutorial/sample6"),
+    url_test("/samples/webgl/sample6/cubetexture.png$", "/webgl-examples/tutorial/sample6/cubetexture.png"),
+    url_test("/samples/webgl/sample6/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample6/index.html$", "/webgl-examples/tutorial/sample6/index.html"),
+    url_test("/samples/webgl/sample6/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample6/webgl-demo.js$", "/webgl-examples/tutorial/sample6/webgl-demo.js"),
+    url_test("/samples/webgl/sample6/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample7$", "/webgl-examples/tutorial/sample7"),
+    url_test("/samples/webgl/sample7/cubetexture.png$", "/webgl-examples/tutorial/sample7/cubetexture.png"),
+    url_test("/samples/webgl/sample7/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample7/index.html$", "/webgl-examples/tutorial/sample7/index.html"),
+    url_test("/samples/webgl/sample7/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample7/webgl-demo.js$", "/webgl-examples/tutorial/sample7/webgl-demo.js"),
+    url_test("/samples/webgl/sample7/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+    url_test("/samples/webgl/sample8$", "/webgl-examples/tutorial/sample8"),
+    url_test("/samples/webgl/sample8/Firefox.ogv$", "/webgl-examples/tutorial/sample8/Firefox.ogv"),
+    url_test("/samples/webgl/sample8/glUtils.js$", "/webgl-examples/tutorial/glUtils.js"),
+    url_test("/samples/webgl/sample8/index.html$", "/webgl-examples/tutorial/sample8/index.html"),
+    url_test("/samples/webgl/sample8/sylvester.js$", "/webgl-examples/tutorial/sylvester.js"),
+    url_test("/samples/webgl/sample8/webgl-demo.js$", "/webgl-examples/tutorial/sample8/webgl-demo.js"),
+    url_test("/samples/webgl/sample8/webgl.css$", "/webgl-examples/tutorial/webgl.css"),
+))
+
+MOZILLADEMOS_URLS = flatten((
+    # https://mdn.mozillademos.org/
+    url_test("/samples/canvas-tutorial/images/backdrop.png$", "/files/5395/backdrop.png"),
+    url_test("/samples/canvas-tutorial/images/bg_gallery.png$", "/files/5415/bg_gallery.png"),
+    url_test("/samples/canvas-tutorial/images/gallery_1.jpg$", "/files/5399/gallery_1.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_2.jpg$", "/files/5401/gallery_2.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_3.jpg$", "/files/5403/gallery_3.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_4.jpg$", "/files/5405/gallery_4.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_5.jpg$", "/files/5407/gallery_5.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_6.jpg$", "/files/5409/gallery_6.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_7.jpg$", "/files/5411/gallery_7.jpg"),
+    url_test("/samples/canvas-tutorial/images/gallery_8.jpg$", "/files/5413/gallery_8.jpg"),
+    url_test("/samples/canvas-tutorial/images/picture_frame.png$", "/files/242/Canvas_picture_frame.png"),
+    url_test("/samples/canvas-tutorial/images/rhino.jpg$", "/files/5397/rhino.jpg"),
+    url_test("/samples/canvas-tutorial/images/wallpaper.png$", "/files/222/Canvas_createpattern.png"),
+))
 
