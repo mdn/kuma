@@ -1,0 +1,27 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Firefox zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/base';
+
+
+/*
+header modifications
+====================================================================== */
+
+.zone-image {
+    background-image: url($path-to-images + 'zones/firefox_logo.png');
+
+    .zone-landing-header & {
+        @include bidi-value(background-position, top right, top left);
+        background-size: 100% auto;
+        bottom: 0;
+    }
+}

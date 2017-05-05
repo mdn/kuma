@@ -682,6 +682,66 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/wiki-edit.css',
     },
+    'zone-addons': {
+        'source_filenames': (
+            'styles/zones-addons.scss',
+        ),
+        'output_filename': 'build/styles/zones-addons.css',
+    },
+    'zone-apps': {
+        'source_filenames': (
+            'styles/zones-apps.scss',
+        ),
+        'output_filename': 'build/styles/zones-apps.css',
+    },
+    'zone-archive': {
+        'source_filenames': (
+            'styles/zones-archive.scss',
+        ),
+        'output_filename': 'build/styles/zones-archive.css',
+    },
+    'zone-b2g': {
+        'source_filenames': (
+            'styles/zones-b2g.scss',
+        ),
+        'output_filename': 'build/styles/zones-b2g.css',
+    },
+    'zone-connect': {
+        'source_filenames': (
+            'styles/zones-connect.scss',
+        ),
+        'output_filename': 'build/styles/zones-connect.css',
+    },
+    'zone-firefox': {
+        'source_filenames': (
+            'styles/zones-firefox.scss',
+        ),
+        'output_filename': 'build/styles/zones-firefox.css',
+    },
+    'zone-games': {
+        'source_filenames': (
+            'styles/zones-games.scss',
+        ),
+        'output_filename': 'build/styles/zones-games.css',
+    },
+    'zone-learn': {
+        'source_filenames': (
+            'styles/zones-learn.scss',
+        ),
+        'output_filename': 'build/styles/zones-learn.css',
+    },
+    'zone-marketplace': {
+        'source_filenames': (
+            'styles/zones-marketplace.scss',
+        ),
+        'output_filename': 'build/styles/zones-marketplace.css',
+    },
+    'zone-ten': {
+        'source_filenames': (
+            'styles/zones-ten.scss',
+        ),
+        'output_filename': 'build/styles/zones-ten.css',
+    },
     'zones': {
         'source_filenames': (
             'styles/zones.scss',

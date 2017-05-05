@@ -1,0 +1,21 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Games zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/base';
+
+
+/*
+header modifications
+====================================================================== */
+
+.zone-image {
+    background-image: url($path-to-images + 'zones/owg-logo.svg');
+}

@@ -1,0 +1,26 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Apps zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/base';
+@import 'zones/components/initial-steps';
+
+
+/*
+header modifications
+====================================================================== */
+
+.zone-image {
+    background-image: url($path-to-images + 'zones/phq-blue.svg');
+
+    .zone-landing-header & {
+        bottom: 0;
+    }
+}

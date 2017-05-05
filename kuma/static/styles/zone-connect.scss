@@ -1,0 +1,45 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Connect zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/base';
+@import 'zones/components/dev-program';
+@import 'zones/components/stack-form';
+
+
+/*
+header modifications
+====================================================================== */
+.zone {
+    background-color: rgb(245, 241, 232);
+}
+
+.zone-image {
+    background-image: url($path-to-images + 'zones/firefox_logo.png');
+
+    .zone-landing-header & {
+        @include bidi-value(background-position, top right, top left);
+        background-size: 100% auto;
+        bottom: 0;
+    }
+}
+
+.masthead-text,
+.zone-landing h1 {
+    color: rgb(52, 52, 52) !important; /* stylelint-disable-line declaration-no-important */
+    padding-bottom: 20px;
+}
+
+
+/* =================================================================== */
+
+.column-container img {
+    border: 1px solid #000;
+}

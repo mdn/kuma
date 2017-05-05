@@ -1,0 +1,14 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+B2G / FxOS zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/base';
+@import 'zones/components/archive';
+@import 'zones/components/outer-apps-box';
