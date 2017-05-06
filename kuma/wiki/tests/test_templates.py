@@ -1368,4 +1368,4 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
     assert count(css_link.format('zones')) == one_if('it')
     assert count(css_link.format('bobby')) == one_if('bottom')
     assert count(css_link.format('berlin')) == one_if('de')
-    assert count(css_link.format('lindsey')) == one_if('bottom', 'fr')
+    assert count(css_link.format('lindsey')) == one_if('fr')

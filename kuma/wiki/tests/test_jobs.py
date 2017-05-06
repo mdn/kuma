@@ -1,18 +1,42 @@
 from datetime import datetime
 
+import mock
 import pytest
 
 from ..models import Revision
-from ..jobs import DocumentZoneStackJob, DocumentContributorsJob
+from ..jobs import DocumentNearestZoneJob, DocumentContributorsJob
 
 
-def test_find_roots(doc_hierarchy_with_zones, root_doc,
-                    cleared_cacheback_cache):
+def test_document_zone_unicode(doc_hierarchy_with_zones):
+    top_doc = doc_hierarchy_with_zones.top
+    assert unicode(top_doc.zone) == u'DocumentZone {} ({})'.format(
+        top_doc.get_absolute_url(), top_doc.title)
+
+
+@pytest.mark.parametrize('doc_name,expected_zone_name', [
+    ('top', 'top'),
+    ('middle_top', 'middle_top'),
+    ('middle_bottom', 'middle_top'),
+    ('bottom', 'middle_top'),
+    ('root', None),
+])
+def test_nearest_zone(doc_hierarchy_with_zones, root_doc,
+                      cleared_cacheback_cache, doc_name, expected_zone_name):
     """
-    Ensure sub pages can find the content zone root.
+    Test the nearest zone job.
     """
-    def get_zone_stack(doc):
-        return DocumentZoneStackJob().get(doc.pk)
+    doc = (root_doc
+           if doc_name == 'root' else
+           getattr(doc_hierarchy_with_zones, doc_name))
+    zone = (None
+            if expected_zone_name is None else
+            getattr(doc_hierarchy_with_zones, expected_zone_name).zone)
+    assert DocumentNearestZoneJob().get(doc.pk) == zone
+
+
+def test_nearest_zone_cache_invalidation_on_save_shallow(doc_hierarchy_with_zones,
+                                                         cleared_cacheback_cache):
+    job = DocumentNearestZoneJob()
 
     top_doc = doc_hierarchy_with_zones.top
     middle_top_doc = doc_hierarchy_with_zones.middle_top
@@ -22,15 +46,138 @@ def test_find_roots(doc_hierarchy_with_zones, root_doc,
     top_zone = top_doc.zone
     middle_top_zone = middle_top_doc.zone
 
-    assert unicode(top_zone) == u'DocumentZone {} ({})'.format(
-        top_doc.get_absolute_url(), top_doc.title)
+    # Load the cache for each of the docs.
+    assert job.get(top_doc.pk) == top_zone
+    assert job.get(middle_top_doc.pk) == middle_top_zone
+    assert job.get(middle_bottom_doc.pk) == middle_top_zone
+    assert job.get(bottom_doc.pk) == middle_top_zone
 
-    assert get_zone_stack(top_doc) == [top_zone]
-    assert get_zone_stack(middle_top_doc) == [middle_top_zone, top_zone]
-    assert get_zone_stack(middle_bottom_doc) == [middle_top_zone, top_zone]
-    assert get_zone_stack(bottom_doc) == [middle_top_zone, top_zone]
-    # "root_doc" is an unrelated document.
-    assert get_zone_stack(root_doc) == []
+    # Change and save a field (other than the document id) on the top zone.
+    assert top_zone.css_slug == 'lindsey'
+    with mock.patch('kuma.wiki.jobs.DocumentNearestZoneJob.refresh',
+                    wraps=job.refresh) as mock_refresh:
+        top_zone.css_slug = 'christine'
+        top_zone.save()
+
+    # Only the cache for the top doc should have been invalidated.
+    assert job.get(top_doc.pk).css_slug == 'christine'
+    mock_refresh.assert_called_once_with(top_doc.pk)
+
+
+def test_nearest_zone_cache_invalidation_on_save_deep(doc_hierarchy_with_zones,
+                                                      cleared_cacheback_cache):
+    job = DocumentNearestZoneJob()
+
+    top_doc = doc_hierarchy_with_zones.top
+    middle_top_doc = doc_hierarchy_with_zones.middle_top
+    middle_bottom_doc = doc_hierarchy_with_zones.middle_bottom
+    bottom_doc = doc_hierarchy_with_zones.bottom
+
+    top_zone = top_doc.zone
+    middle_top_zone = middle_top_doc.zone
+
+    # Load the cache for each of the docs.
+    assert job.get(top_doc.pk) == top_zone
+    assert job.get(middle_top_doc.pk) == middle_top_zone
+    assert job.get(middle_bottom_doc.pk) == middle_top_zone
+    assert job.get(bottom_doc.pk) == middle_top_zone
+
+    # Change and save a field (other than the document id) on a zone,
+    # but this time the invalidation process should descend to the bottom.
+    assert middle_top_zone.css_slug == 'bobby'
+    with mock.patch('kuma.wiki.jobs.DocumentNearestZoneJob.refresh',
+                    wraps=job.refresh) as mock_refresh:
+        middle_top_zone.css_slug = 'henry'
+        middle_top_zone.save()
+
+    # The cache for the middle-top doc and its descendants should have been
+    # invalidated.
+    assert job.get(middle_top_doc.pk).css_slug == 'henry'
+    assert job.get(middle_bottom_doc.pk).css_slug == 'henry'
+    assert job.get(bottom_doc.pk).css_slug == 'henry'
+
+    assert mock_refresh.call_count == 3
+    mock_refresh.assert_has_calls([
+        mock.call(middle_top_doc.pk),
+        mock.call(middle_bottom_doc.pk),
+        mock.call(bottom_doc.pk)
+    ], any_order=True)
+
+
+def test_nearest_zone_cache_invalidation_on_save_doc_id(doc_hierarchy_with_zones,
+                                                        cleared_cacheback_cache):
+    job = DocumentNearestZoneJob()
+
+    top_doc = doc_hierarchy_with_zones.top
+    middle_top_doc = doc_hierarchy_with_zones.middle_top
+    middle_bottom_doc = doc_hierarchy_with_zones.middle_bottom
+    bottom_doc = doc_hierarchy_with_zones.bottom
+
+    top_zone = top_doc.zone
+    middle_top_zone = middle_top_doc.zone
+
+    # Load the cache for each of the docs.
+    assert job.get(top_doc.pk) == top_zone
+    assert job.get(middle_top_doc.pk) == middle_top_zone
+    assert job.get(middle_bottom_doc.pk) == middle_top_zone
+    assert job.get(bottom_doc.pk) == middle_top_zone
+
+    # Change and save the document id field on a zone.
+    assert middle_top_zone.document == middle_top_doc
+    with mock.patch('kuma.wiki.jobs.DocumentNearestZoneJob.refresh',
+                    wraps=job.refresh) as mock_refresh:
+        middle_top_zone.document = bottom_doc
+        middle_top_zone.save()
+
+    # The cache for the middle-top doc and its descendants should have been
+    # invalidated.
+    assert job.get(middle_top_doc.pk) == top_zone
+    assert job.get(middle_bottom_doc.pk) == top_zone
+    assert job.get(bottom_doc.pk) == middle_top_zone
+
+    assert mock_refresh.call_count == 3
+    mock_refresh.assert_has_calls([
+        mock.call(middle_top_doc.pk),
+        mock.call(middle_bottom_doc.pk),
+        mock.call(bottom_doc.pk)
+    ], any_order=True)
+
+
+def test_nearest_zone_cache_invalidation_on_zone_delete(doc_hierarchy_with_zones,
+                                                        cleared_cacheback_cache):
+    job = DocumentNearestZoneJob()
+
+    top_doc = doc_hierarchy_with_zones.top
+    middle_top_doc = doc_hierarchy_with_zones.middle_top
+    middle_bottom_doc = doc_hierarchy_with_zones.middle_bottom
+    bottom_doc = doc_hierarchy_with_zones.bottom
+
+    top_zone = top_doc.zone
+    middle_top_zone = middle_top_doc.zone
+
+    # Load the cache for each of the docs.
+    assert job.get(top_doc.pk) == top_zone
+    assert job.get(middle_top_doc.pk) == middle_top_zone
+    assert job.get(middle_bottom_doc.pk) == middle_top_zone
+    assert job.get(bottom_doc.pk) == middle_top_zone
+
+    # Delete a zone.
+    with mock.patch('kuma.wiki.jobs.DocumentNearestZoneJob.refresh',
+                    wraps=job.refresh) as mock_refresh:
+        middle_top_zone.delete()
+
+    # The cache for the top doc and its descendants should have been invalidated.
+    assert job.get(top_doc.pk) == top_zone
+    assert job.get(middle_top_doc.pk) == top_zone
+    assert job.get(middle_bottom_doc.pk) == top_zone
+    assert job.get(bottom_doc.pk) == top_zone
+
+    assert mock_refresh.call_count == 3
+    mock_refresh.assert_has_calls([
+        mock.call(middle_top_doc.pk),
+        mock.call(middle_bottom_doc.pk),
+        mock.call(bottom_doc.pk),
+    ], any_order=True)
 
 
 @pytest.mark.parametrize("mode", ["maintenance-mode", "normal-mode"])

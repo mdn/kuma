@@ -1863,9 +1863,9 @@ class AttachmentTests(UserTestCase):
         eq_(attachments[1].file, attachment2)
 
 
-def test_zone_stack(doc_hierarchy_with_zones, cleared_cacheback_cache):
+def test_nearest_zone(doc_hierarchy_with_zones, cleared_cacheback_cache):
     """
-    Test the zone stack of English and non-English documents.
+    Test the nearest zone property of English and non-English documents.
     """
     top_doc = doc_hierarchy_with_zones.top
     top_zone = top_doc.zone
@@ -1875,24 +1875,45 @@ def test_zone_stack(doc_hierarchy_with_zones, cleared_cacheback_cache):
 
     assert fr_top_doc.parent == top_doc
     assert de_top_doc.parent == top_doc
-    assert top_doc.zone_stack == [top_zone]
+    assert top_doc.nearest_zone == top_zone
     # The French translation of the top doc doesn't have its own locale-
-    # specific zone stack, so it'll return the zone stack of its parent.
-    assert fr_top_doc.zone_stack == top_doc.zone_stack
+    # specific nearest zone, so it'll return the nearest zone of its parent.
+    assert fr_top_doc.nearest_zone == top_doc.nearest_zone
     # The German translation of the top doc does have its own
-    # locale-specific zone stack.
-    assert de_top_doc.zone_stack == [de_top_doc.zone]
+    # locale-specific nearest zone.
+    assert de_top_doc.nearest_zone == de_top_doc.zone
 
 
-def test_zone_stack_when_no_parent(doc_hierarchy_with_zones,
-                                   cleared_cacheback_cache):
+def test_nearest_zone_when_no_parent(doc_hierarchy_with_zones,
+                                     cleared_cacheback_cache):
     """
-    Silly end-case test of the zone stack of a non-English document without
-    a parent.
+    Silly end-case test of the nearest-zone property of a non-English document
+    without a parent.
     """
     top_doc = doc_hierarchy_with_zones.top
     fr_top_doc = top_doc.translations.get(locale='fr')
     fr_top_doc.parent = None
     fr_top_doc.save()
 
-    assert not fr_top_doc.zone_stack
+    assert not fr_top_doc.nearest_zone
+
+
+@pytest.mark.parametrize('doc_name,expected_result', [
+    ('top', True),
+    ('bottom', False),
+    ('de', True),
+    ('fr', True),
+    ('root', False),
+])
+def test_is_zone_root(doc_hierarchy_with_zones, root_doc,
+                      cleared_cacheback_cache, doc_name, expected_result):
+    """
+    Test is_zone_root.
+    """
+    if doc_name == 'root':
+        doc = root_doc
+    elif doc_name in ('de', 'fr'):
+        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
+    else:
+        doc = getattr(doc_hierarchy_with_zones, doc_name)
+    assert doc.is_zone_root is expected_result

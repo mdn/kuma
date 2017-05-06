@@ -7,31 +7,24 @@ from kuma.core.jobs import KumaJob, GenerationJob
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
-class DocumentZoneStackJob(KumaJob):
+class DocumentNearestZoneJob(KumaJob):
     lifetime = 60 * 60 * 3
     refresh_timeout = 60
 
     def fetch(self, pk):
         """
-        Assemble the stack of DocumentZones available from this document,
-        moving up the stack of topic parents
+        Find the nearest DocumentZone, if there is one, starting from this
+        document and going upwards via topic parents.
         """
         from .models import Document, DocumentZone
-        document = Document.objects.get(pk=pk)
-        stack = []
-        try:
-            stack.append(DocumentZone.objects.get(document=document))
-        except DocumentZone.DoesNotExist:
-            pass
-        for parent in document.get_topic_parents():
+        get_parent_id = Document.objects.values_list('parent_topic', flat=True).get
+        while pk:
             try:
-                stack.append(DocumentZone.objects.get(document=parent))
+                return DocumentZone.objects.get(document=pk)
             except DocumentZone.DoesNotExist:
-                pass
-        return stack
+                pk = get_parent_id(pk=pk)
 
-    def empty(self):
-        return []
+        return self.empty()
 
 
 class DocumentZoneURLRemapsJob(KumaJob):

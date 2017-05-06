@@ -41,7 +41,7 @@ from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision, NotDocumentView)
-from .jobs import DocumentContributorsJob, DocumentZoneStackJob
+from .jobs import DocumentContributorsJob, DocumentNearestZoneJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
@@ -431,16 +431,14 @@ class Document(NotificationsMixin, models.Model):
 
     def get_zone_subnav_html(self):
         """
-        Search from self up through DocumentZone stack, returning the first
-        zone nav HTML found.
+        Search this document and, if nothing is found, the document directly
+        associated with its nearest zone, returning the first zone nav HTML
+        found.
         """
         src = self.get_zone_subnav_local_html()
-        if src:
-            return src
-        for zone in DocumentZoneStackJob().get(self.pk):
-            src = zone.document.get_zone_subnav_local_html()
-            if src:
-                return src
+        if (not src) and self.nearest_zone:
+            src = self.nearest_zone.document.get_zone_subnav_local_html()
+        return src
 
     def get_section_content(self, section_id, ignore_heading=True):
         """
@@ -1540,18 +1538,24 @@ Full traceback:
         return DocumentContributorsJob().get(self.pk)
 
     @cached_property
-    def zone_stack(self):
+    def nearest_zone(self):
         """
-        The zone stack of this document. For a non-default-language document
-        that does not have its own zone stack, returns the zone stack of its
-        parent (the document it was translated from).
+        The nearest zone for this document, starting from this document and
+        moving upwards via "parent_topic". For a non-default-language document
+        that does not have its own nearest zone, returns the nearest zone of
+        its parent (the document it was translated from).
         """
-        job = DocumentZoneStackJob()
+        job = DocumentNearestZoneJob()
         result = job.get(self.pk)
-        if ((not result) and (self.locale != settings.WIKI_DEFAULT_LANGUAGE) and
-                self.parent):
-            return job.get(self.parent.pk)
+        if not result:
+            if (self.locale != settings.WIKI_DEFAULT_LANGUAGE) and self.parent:
+                return job.get(self.parent.pk)
         return result
+
+    @cached_property
+    def is_zone_root(self):
+        zone = self.nearest_zone
+        return bool(zone) and (zone.document in (self, self.parent))
 
     def get_full_url(self):
         return absolutify(self.get_absolute_url())

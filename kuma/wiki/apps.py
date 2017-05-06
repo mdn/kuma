@@ -1,48 +1,49 @@
 from django.apps import AppConfig
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
 from elasticsearch_dsl.connections import connections as es_connections
 
-from .jobs import (DocumentContributorsJob, DocumentZoneStackJob,
+from .models import Document, DocumentZone
+from .jobs import (DocumentContributorsJob, DocumentNearestZoneJob,
                    DocumentZoneURLRemapsJob, DocumentCodeSampleJob)
 from .signals import render_done
 
 
-def invalidate_zone_stack_cache(document, async=False):
+def invalidate_nearest_zone_cache(document_pk, async=False):
     """
-    Reset the cache for the zone stack for all of the documents
-    in the document tree branch.
+    Reset the nearest-zone cache for this document and its descendants.
     """
-    pks = [document.pk] + [parent.pk for parent in
-                           document.get_topic_parents()]
-    job = DocumentZoneStackJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    for pk in pks:
-        invalidator(pk)
+    job = DocumentNearestZoneJob()
+    do_invalidate = job.invalidate if async else job.refresh
+
+    def invalidate(pk):
+        do_invalidate(pk)
+        # Since the descendants of this document search upwards for their
+        # nearest zone, recursively invalidate their caches. Note that the
+        # branches of this tree of decendants can stop at (and exclude) any
+        # descendants that have their own zones.
+        children = (Document.objects
+                            .filter(parent_topic=pk)
+                            .values_list('pk', 'zone'))
+        for child_pk, child_zone_pk in children:
+            if child_zone_pk is None:
+                invalidate(child_pk)
+
+    invalidate(document_pk)
 
 
-def invalidate_zone_urls_cache(document, async=False):
+def invalidate_zone_urls_cache(locale, async=False):
     """
     Reset the URL remap list cache for the given document, assuming it
     even has a zone.
     """
     job = DocumentZoneURLRemapsJob()
     if async:
-        invalidator = job.invalidate
+        job.invalidate(locale)
     else:
-        invalidator = job.refresh
-    try:
-        if document.zone:
-            # reset the cached list of zones of the document's locale
-            invalidator(document.locale)
-    except ObjectDoesNotExist:
-        pass
+        job.refresh(locale)
 
 
 class WikiConfig(AppConfig):
@@ -81,9 +82,15 @@ class WikiConfig(AppConfig):
                                   dispatch_uid='wiki.revision.post_save')
 
         DocumentZone = self.get_model('DocumentZone')
-        signals.post_save.connect(self.on_zone_save,
+        signals.pre_save.connect(self.on_zone_pre_save,
+                                 sender=DocumentZone,
+                                 dispatch_uid='wiki.zone.pre_save')
+        signals.post_save.connect(self.on_zone_post_save,
                                   sender=DocumentZone,
                                   dispatch_uid='wiki.zone.post_save')
+        signals.post_delete.connect(self.on_zone_delete,
+                                    sender=DocumentZone,
+                                    dispatch_uid='wiki.zone.post_delete')
 
         DocumentSpamAttempt = self.get_model('DocumentSpamAttempt')
         signals.post_save.connect(self.on_document_spam_attempt_save,
@@ -102,22 +109,54 @@ class WikiConfig(AppConfig):
         """
         async = kwargs.get('async', True)
 
-        invalidate_zone_urls_cache(instance, async=async)
-        invalidate_zone_stack_cache(instance, async=async)
+        if hasattr(instance, 'zone'):
+            invalidate_zone_urls_cache(instance.locale, async=async)
+        invalidate_nearest_zone_cache(instance.pk, async=async)
 
         DocumentContributorsJob().invalidate(instance.pk)
 
         code_sample_job = DocumentCodeSampleJob(generation_args=[instance.pk])
         code_sample_job.invalidate_generation()
 
-    def on_zone_save(self, sender, instance, **kwargs):
+    def on_zone_pre_save(self, sender, instance, **kwargs):
         """
-        A signal handler to trigger the cache invalidation of both the zone
-        URLs and stack cache for a given zone's document.
+        A signal handler to capture the previous state of the zone
+        (from the DB) before it is lost.
         """
-        self.on_document_save(sender=instance.document.__class__,
-                              instance=instance.document,
-                              async=False)
+        # Temporarily save the previous state on the instance itself.
+        try:
+            instance.previous = (DocumentZone.objects
+                                             .values('document_id',
+                                                     'document__locale')
+                                             .get(pk=instance.pk))
+        except DocumentZone.DoesNotExist:
+            # This will happen for newly-created zones.
+            instance.previous = None
+
+    def on_zone_post_save(self, sender, instance, **kwargs):
+        """
+        A signal handler to trigger cache invalidation for this zone.
+        """
+        if instance.previous:
+            if instance.document.pk != instance.previous['document_id']:
+                invalidate_nearest_zone_cache(
+                    instance.previous['document_id']
+                )
+                invalidate_zone_urls_cache(
+                    instance.previous['document__locale']
+                )
+            # Now that we've used the previous state of the zone, clear it.
+            instance.previous = None
+
+        invalidate_nearest_zone_cache(instance.document.pk)
+        invalidate_zone_urls_cache(instance.document.locale)
+
+    def on_zone_delete(self, sender, instance, **kwargs):
+        """
+        A signal handler to trigger cache invalidation for this zone.
+        """
+        invalidate_nearest_zone_cache(instance.document.pk)
+        invalidate_zone_urls_cache(instance.document.locale)
 
     def on_render_done(self, sender, instance, **kwargs):
         """
