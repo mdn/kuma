@@ -25,8 +25,8 @@ URLS = flatten((
              "/docs/Web/Demos_of_open_web_technologies/",
              status_code=requests.codes.found),
 
-    url_test("/foo//bar", "/foo_bar"),
-    url_test("/foo//bar//baz", "/foo_bar_baz"),
+    url_test("/docs/Mozilla/Projects/NSPR/Reference/I//O_Functions", "/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions"),
+    url_test("/docs/Mozilla/Projects/NSPR/Reference/I//O//Functions", "/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions"),
 
     url_test("/samples/canvas-tutorial/2_1_canvas_rect.html" ,"/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#Rectangular_shape_example"),
     url_test("/samples/canvas-tutorial/2_2_canvas_moveto.html" ,"/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#Moving_the_pen"),

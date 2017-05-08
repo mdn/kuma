@@ -37,7 +37,8 @@ redirectpatterns = [
     # RedirectMatch 302 /media/uploads/demos/(.*)$
     # https://developer.mozilla.org/docs/Web/Demos_of_open_web_technologies/
     redirect(r'^media/uploads/demos/(?:.*)$',
-             'https://developer.mozilla.org/docs/Web/Demos_of_open_web_technologies/'),
+             '/docs/Web/Demos_of_open_web_technologies',
+             prepend_locale=False, permanent=True),
 
     # RewriteRule ^(.*)//(.*)$ $1_$2 [R=301,L,NC]
     redirect(r'^(?P<one>.*)//(?P<two>.*)$',
