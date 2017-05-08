@@ -1,4 +1,4 @@
-(function($, mdn) {
+(function(ga, $, mdn) {
     'use strict';
 
     var $survey;
@@ -10,6 +10,7 @@
     // script is parsed. we'll give it 2 seconds.
     function checkGA() {
         // survey won't do much good if we can't store the data
+        // checking for ".create" due to Ghostery mocking of ga
         if (ga && ga.create) {
             showSurvey();
         } else if (gaChecks < 5) {
@@ -41,4 +42,4 @@
     };
 
     checkGA();
-})(window.jQuery, window.mdn);
+})(window.ga, window.jQuery, window.mdn);
