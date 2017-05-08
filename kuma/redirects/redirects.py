@@ -36,19 +36,22 @@ redirectpatterns = [
 
     # RedirectMatch 302 /media/uploads/demos/(.*)$
     # https://developer.mozilla.org/docs/Web/Demos_of_open_web_technologies/
+    # Note that this has prepend_locale=True
     redirect(r'^media/uploads/demos/(?:.*)$',
-             '/docs/Web/Demos_of_open_web_technologies',
-             prepend_locale=False, permanent=True),
-
-    # RewriteRule ^(.*)//(.*)$ $1_$2 [R=301,L,NC]
-    redirect(r'^(?P<one>.*)//(?P<two>.*)$',
-             '{one}_{two}',
-             prepend_locale=False, permanent=True),
+             '/docs/Web/Demos_of_open_web_technologies/',
+             prepend_locale=True, permanent=False),
 
     # RewriteRule ^(.*)//(.*)//(.*)$ $1_$2_$3 [R=301,L,NC]
+    # Note that this has prepend_locale=True
     redirect(r'^(?P<one>.*)//(?P<two>.*)//(?P<three>.*)$',
-             '{one}_{two}_{three}',
-             prepend_locale=False, permanent=True),
+             '/{one}_{two}_{three}',
+             re_flags='i', prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(.*)//(.*)$ $1_$2 [R=301,L,NC]
+    # Note that this has prepend_locale=True
+    redirect(r'^(?P<one>.*)//(?P<two>.*)$',
+             '/{one}_{two}',
+             re_flags='i', prepend_locale=True, permanent=True),
 
     # The remaining redirects don't show explicit RewriteRule as comments,
     # as they're all in the style of "static URL A now points at static URL B"
