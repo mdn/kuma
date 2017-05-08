@@ -13,6 +13,9 @@ These styles compliment the wiki styles when the page is a zone.
 Specialized styles for specific zones
 ====================================================================== */
 
+/* Addons */
+@import 'zones/addons';
+
 /* Apps */
 @import 'zones/components/initial-steps';
 
