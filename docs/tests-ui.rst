@@ -11,6 +11,7 @@ The tests directory comprises of:
 * ``/functional`` contains pytest tests.
 * ``/pages`` contains Python `PyPOM`_ page objects.
 * ``/utils`` contains helper functions.
+* ``/redirects`` contains HTTP redirection tests.
 
 .. _`Selenium`: http://docs.seleniumhq.org/
 .. _`pytest`: http://pytest.org/latest/
