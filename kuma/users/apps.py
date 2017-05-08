@@ -111,6 +111,7 @@ class UserConfig(AuthConfig):
         """
         instance.user.is_active = not instance.is_active
         instance.user.save()
+        self.invalidate_document_contribution(instance.user)
 
     def on_ban_delete(self, **kwargs):
         """
@@ -120,3 +121,18 @@ class UserConfig(AuthConfig):
         if instance is not None:
             instance.user.is_active = True
             instance.user.save()
+            self.invalidate_document_contribution(instance.user)
+
+    def invalidate_document_contribution(self, user):
+        """
+        Invalidate the contributor list for Documents the user has edited.
+
+        This will remove them if they have been banned, and add them if they
+        have been unbanned.
+        """
+        from kuma.wiki.jobs import DocumentContributorsJob
+        doc_ids = set(user.created_revisions.values_list('document_id',
+                                                         flat=True))
+        job = DocumentContributorsJob()
+        for doc_id in doc_ids:
+            job.invalidate(doc_id)
