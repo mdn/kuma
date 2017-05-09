@@ -5,7 +5,7 @@ from collections import namedtuple
 
 import pytest
 
-from ..models import Document, Revision
+from ..models import Document, DocumentZone, Revision
 
 
 BannedUser = namedtuple('BannedUser', 'user ban')
@@ -120,7 +120,7 @@ def trans_revision(trans_doc):
 
 
 @pytest.fixture
-def doc_hierarchy(wiki_user):
+def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
     top_doc = Document.objects.create(
         locale='en-US',
         slug='top',
@@ -133,7 +133,52 @@ def doc_hierarchy(wiki_user):
         title='Top Document',
         created=datetime(2017, 4, 24, 13, 49)
     )
-
+    top_de_doc = Document.objects.create(
+        locale='de',
+        slug='oben',
+        title='Oben Dokument',
+        rendered_html='<p>Oben...</p>',
+        parent=top_doc
+    )
+    Revision.objects.create(
+        document=top_de_doc,
+        creator=wiki_user_2,
+        based_on=top_doc.current_revision,
+        content='<p>Oben...</p>',
+        title='Oben Dokument',
+        created=datetime(2017, 4, 30, 10, 3)
+    )
+    top_fr_doc = Document.objects.create(
+        locale='fr',
+        slug='haut',
+        title='Haut Document',
+        rendered_html='<p>Haut...</p>',
+        parent=top_doc
+    )
+    Revision.objects.create(
+        document=top_fr_doc,
+        creator=wiki_user_3,
+        based_on=top_doc.current_revision,
+        content='<p>Haut...</p>',
+        title='Haut Document',
+        is_approved=True,
+        created=datetime(2017, 4, 30, 12, 1)
+    )
+    top_it_doc = Document.objects.create(
+        locale='it',
+        slug='superiore',
+        title='Superiore Documento',
+        rendered_html='<p>Superiore...</p>',
+        parent=top_doc
+    )
+    Revision.objects.create(
+        document=top_it_doc,
+        creator=wiki_user_2,
+        based_on=top_doc.current_revision,
+        content='<p>Superiore...</p>',
+        title='Superiore Documento',
+        created=datetime(2017, 4, 30, 11, 17)
+    )
     middle_top_doc = Document.objects.create(
         locale='en-US',
         slug='top/middle-top',
@@ -147,7 +192,6 @@ def doc_hierarchy(wiki_user):
         title='Middle-Top Document',
         created=datetime(2017, 4, 24, 13, 50)
     )
-
     middle_bottom_doc = Document.objects.create(
         locale='en-US',
         slug='top/middle-top/middle-bottom',
@@ -161,7 +205,6 @@ def doc_hierarchy(wiki_user):
         title='Middle-Bottom Document',
         created=datetime(2017, 4, 24, 13, 51)
     )
-
     bottom_doc = Document.objects.create(
         locale='en-US',
         slug='top/middle-top/middle-bottom/bottom',
@@ -175,12 +218,56 @@ def doc_hierarchy(wiki_user):
         title='Bottom Document',
         created=datetime(2017, 4, 24, 13, 52)
     )
-
+    DocumentZone.objects.create(
+        document=top_doc,
+        css_slug='lindsey',
+        url_root='fleetwood-mac'
+    )
+    DocumentZone.objects.create(
+        document=middle_top_doc,
+        css_slug='bobby',
+        url_root='spinners'
+    )
+    DocumentZone.objects.create(
+        document=top_de_doc,
+        css_slug='berlin',
+        url_root='berlin'
+    )
+    DocumentZone.objects.create(
+        document=top_it_doc,
+        url_root='florence'
+    )
+    settings.PIPELINE_CSS.update({
+        'zone-lindsey': {
+            'source_filenames': (
+                'styles/zone-lindsey.scss',
+            ),
+            'output_filename': 'build/styles/zone-lindsey.css',
+        },
+        'zone-bobby': {
+            'source_filenames': (
+                'styles/zone-bobby.scss',
+            ),
+            'output_filename': 'build/styles/zone-bobby.css',
+        },
+        'zone-berlin': {
+            'source_filenames': (
+                'styles/zone-berlin.scss',
+            ),
+            'output_filename': 'build/styles/zone-berlin.css',
+        },
+        'zones': {
+            'source_filenames': (
+                'styles/zones.scss',
+            ),
+            'output_filename': 'build/styles/zones.css',
+        }
+    })
     return DocHierarchy(
         top=top_doc,
         middle_top=middle_top_doc,
         middle_bottom=middle_bottom_doc,
-        bottom=bottom_doc
+        bottom=bottom_doc,
     )
 
 

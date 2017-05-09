@@ -11,7 +11,8 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         HttpResponsePermanentRedirect, JsonResponse)
+                         HttpResponseRedirect, HttpResponsePermanentRedirect,
+                         JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
@@ -19,6 +20,7 @@ from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import (condition, require_GET,
                                           require_http_methods, require_POST)
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
@@ -457,12 +459,19 @@ def as_json(request, document_slug=None, document_locale=None):
 @prevent_indexing
 def styles(request, document_slug=None, document_locale=None):
     """
-    Return the Document zone stylsheet.
+    This is deprecated, and only exists temporarily to serve old
+    document pages that request zone CSS via this endpoint.
     """
-    kwargs = {'slug': document_slug, 'locale': document_locale}
-    document = get_object_or_404(Document, **kwargs)
-    zone = get_object_or_404(DocumentZone, document=document)
-    return HttpResponse(zone.styles, content_type='text/css')
+    # These queries are here simply to make sure the document
+    # exists and might have had some legacy custom zone CSS.
+    document = get_object_or_404(
+        Document,
+        slug=document_slug,
+        locale=document_locale
+    )
+    get_object_or_404(DocumentZone, document=document)
+    # All of the legacy custom zone CSS has been rolled into "zones.css".
+    return HttpResponseRedirect(static('build/styles/zones.css'))
 
 
 @block_user_agents

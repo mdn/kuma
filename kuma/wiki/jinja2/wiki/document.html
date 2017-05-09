@@ -25,9 +25,9 @@
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
-{% set zone_stack = document.zone_stack %}
-{% set is_zone = zone_stack|length %}
-{% set is_zone_root = is_zone and zone_stack[0].document == document %}
+{% set nearest_zone = document.nearest_zone %}
+{% set is_zone = nearest_zone %}
+{% set is_zone_root = document.is_zone_root %}
 {% set other_translations = document.other_translations %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
@@ -59,8 +59,12 @@
 
 {% block site_css %}
     {{ super() }}
-    {% if zone_stack %}
+    {% if nearest_zone %}
+      {% if nearest_zone.css_slug %}
+        {% stylesheet 'zone-' + nearest_zone.css_slug %}
+      {% else %}
         {% stylesheet 'zones' %}
+      {% endif %}
     {% endif %}
 {% endblock %}
 
@@ -157,7 +161,7 @@
       {% else %}
         <div class="zone-article-header" id="document-main"><div class="center">
           <!-- zone title -->
-          <div class="zone-title"><a href="{{ zone_stack[0].document.get_absolute_url() }}">{{ zone_stack[0].document.title }}</a></div>
+          <div class="zone-title"><a href="{{ nearest_zone.document.get_absolute_url() }}">{{ nearest_zone.document.title }}</a></div>
           <!-- zone image -->
           <div class="zone-image"></div>
         </div></div>

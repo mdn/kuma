@@ -1329,3 +1329,43 @@ def _translation_data():
         'content': 'loremo ipsumo doloro sito ameto',
         'toc_depth': Revision.TOC_DEPTH_H4,
     }
+
+
+@pytest.mark.parametrize('doc_name', ['root', 'bottom', 'de', 'fr', 'it'])
+def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
+    """
+    Check document page for zone-style-related features.
+    """
+    zone_title = 'div.zone-title'
+    css_link = 'link[type="text/css"][href$="build/styles/{}.css"]'
+
+    if doc_name == 'root':
+        doc = root_doc
+    elif doc_name == 'bottom':
+        doc = doc_hierarchy_with_zones.bottom
+        zone_title = 'div.zone-title > a[href="{}"]'.format(
+            doc_hierarchy_with_zones.middle_top.get_absolute_url()
+        )
+    else:
+        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
+
+    url = reverse('wiki.document', args=(doc.slug,), locale=doc.locale)
+    response = client.get(url, follow=True)
+    response_html = pq(response.content)
+
+    def count(selector):
+        return len(response_html.find(selector))
+
+    def one_if(*args):
+        return 1 if any(arg == doc_name for arg in args) else 0
+
+    assert count('body.zone') == one_if('bottom', 'de', 'fr', 'it')
+    assert count('body.zone-landing') == one_if('de', 'fr', 'it')
+    assert (count('#document-main.zone-landing-header') ==
+            one_if('de', 'fr', 'it'))
+    assert count('#document-main.zone-article-header') == one_if('bottom')
+    assert count(zone_title) == one_if('bottom')
+    assert count(css_link.format('zones')) == one_if('it')
+    assert count(css_link.format('zone-bobby')) == one_if('bottom')
+    assert count(css_link.format('zone-berlin')) == one_if('de')
+    assert count(css_link.format('zone-lindsey')) == one_if('fr')

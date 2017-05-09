@@ -18,7 +18,6 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
 from ..constants import DIFF_WRAP_COLUMN
-from ..jobs import DocumentZoneStackJob
 from ..utils import tidy_content
 
 
@@ -200,8 +199,7 @@ def tojson(value):
 @library.global_function
 def document_zone_management_links(user, document):
     links = {'add': None, 'change': None}
-    stack = DocumentZoneStackJob().get(document.pk)
-    zone = (len(stack) > 0) and stack[0] or None
+    zone = document.nearest_zone
 
     # Enable "add" link if there is no zone for this document, or if there's a
     # zone but the document is not itself the root (ie. to add sub-zones).
