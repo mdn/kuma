@@ -1269,7 +1269,15 @@ CONSTANCE_CONFIG = dict(
         '(Deprecated) Regex for protocols that are blocked for A HREFs'
     ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
-        '^https?\:\/\/(developer-local.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
+        ('^https?\:\/\/('
+         'developer.allizom.org|'  # Staging demos
+         'mdn.mozillademos.org|'   # Production demos
+         'testserver|'             # Unit test demos
+         'localhost\:8000|'        # Docker development demos
+         'rpm.newrelic.com\/public\/charts\/.*|'  # MDN/Kuma/Server_charts
+         '(www.)?youtube.com\/embed\/(\.*)|'  # Embedded videos
+         'jsfiddle.net\/.*embedded.*|'  # Embedded samples
+         'mdn.github.io)'),        # Embedded samples
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
     GOOGLE_ANALYTICS_ACCOUNT=(
