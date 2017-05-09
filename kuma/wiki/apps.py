@@ -26,7 +26,7 @@ def invalidate_nearest_zone_cache(document_pk, async=False):
         # descendants that have their own zones.
         children = (Document.objects
                             .filter(parent_topic=pk)
-                            .values_list('pk', 'zone'))
+                            .values_list('pk', 'zone__id'))
         for child_pk, child_zone_pk in children:
             if child_zone_pk is None:
                 invalidate(child_pk)

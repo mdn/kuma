@@ -1547,9 +1547,9 @@ Full traceback:
         """
         job = DocumentNearestZoneJob()
         result = job.get(self.pk)
-        if not result:
-            if (self.locale != settings.WIKI_DEFAULT_LANGUAGE) and self.parent:
-                return job.get(self.parent.pk)
+        if ((not result) and self.parent and
+                (self.locale != settings.WIKI_DEFAULT_LANGUAGE)):
+            return job.get(self.parent.pk)
         return result
 
     @cached_property
@@ -1601,7 +1601,7 @@ class DocumentZone(models.Model):
     css_slug = models.CharField(
         max_length=100, blank=True,
         help_text='name of an alternative pipeline CSS group for documents '
-                  'under this zone')
+                  'under this zone (note that "zone-" will be prepended)')
     url_root = models.CharField(
         max_length=255, null=True, blank=True, db_index=True,
         help_text="alternative URL path root for documents under this zone")

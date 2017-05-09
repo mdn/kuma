@@ -61,7 +61,7 @@
     {{ super() }}
     {% if nearest_zone %}
       {% if nearest_zone.css_slug %}
-        {% stylesheet nearest_zone.css_slug %}
+        {% stylesheet 'zone-' + nearest_zone.css_slug %}
       {% else %}
         {% stylesheet 'zones' %}
       {% endif %}

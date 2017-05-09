@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='documentzone',
             name='css_slug',
-            field=models.CharField(help_text=b'name of an alternative pipeline CSS group for documents under this zone', max_length=100, blank=True),
+            field=models.CharField(help_text=b'name of an alternative pipeline CSS group for documents under this zone (note that "zone-" will be prepended)', max_length=100, blank=True),
         ),
     ]

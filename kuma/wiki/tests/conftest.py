@@ -237,32 +237,32 @@ def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
         document=top_it_doc,
         url_root='florence'
     )
-    settings.PIPELINE_CSS.update(
-        lindsey={
+    settings.PIPELINE_CSS.update({
+        'zone-lindsey': {
             'source_filenames': (
-                'styles/lindsey.scss',
+                'styles/zone-lindsey.scss',
             ),
-            'output_filename': 'build/styles/lindsey.css',
+            'output_filename': 'build/styles/zone-lindsey.css',
         },
-        bobby={
+        'zone-bobby': {
             'source_filenames': (
-                'styles/bobby.scss',
+                'styles/zone-bobby.scss',
             ),
-            'output_filename': 'build/styles/bobby.css',
+            'output_filename': 'build/styles/zone-bobby.css',
         },
-        berlin={
+        'zone-berlin': {
             'source_filenames': (
-                'styles/berlin.scss',
+                'styles/zone-berlin.scss',
             ),
-            'output_filename': 'build/styles/berlin.css',
+            'output_filename': 'build/styles/zone-berlin.css',
         },
-        zones={
+        'zones': {
             'source_filenames': (
                 'styles/zones.scss',
             ),
             'output_filename': 'build/styles/zones.css',
         }
-    )
+    })
     return DocHierarchy(
         top=top_doc,
         middle_top=middle_top_doc,
