@@ -1,14 +1,25 @@
+/*
+Chapters in MDN at 10 history timeline
+********************************************************************** */
 $chapter-border : 2px;
 $chapter-space-between : 120px;
 
-/* container */
+
+/*
+container
+====================================================================== */
+
 .chapters {
     position: relative;
     overflow: hidden;
     @include clearfix();
 }
 
-/* individual boxes */
+
+/*
+individual boxes
+====================================================================== */
+
 .chapter {
     position: relative;
     float: left;
@@ -52,7 +63,13 @@ $chapter-space-between : 120px;
     }
 }
 
-/* box with portrait in it gets different header */
+.chapter-audio .open-in-host-container {
+    display: none;
+}
+
+/*
+box with portrait in it gets different header
+-------------------------------------------------------------- */
 .chapter-portrait {
     h2 {
         margin-top: 10px;
@@ -72,6 +89,11 @@ $chapter-space-between : 120px;
         border-radius: 3px;
     }
 }
+
+
+/*
+media queries
+====================================================================== */
 
 @media all and (min-width: 481px) {
     .chapters {

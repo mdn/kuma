@@ -1,6 +1,6 @@
 /*
-The Connect zone used to be called the Dev Program.
-These classes style that page
+Styles for connect zone
+- formerly the dev program page hence the class names
 ********************************************************************** */
 
 
@@ -9,6 +9,7 @@ These classes style that page
     background: $light-background-color;
     padding: ($grid-spacing);
 }
+
 
 /*
 Three grey boxes
@@ -41,12 +42,14 @@ Three grey boxes
     }
 }
 
+
 /*
 Content
 ====================================================================== */
 .dev-program-explanation {
     @extend %dev-program-pad;
 }
+
 
 /*
 Hacks blog headlines

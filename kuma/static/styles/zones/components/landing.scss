@@ -1,4 +1,7 @@
-/* zone landing pages only */
+/*
+Zone landing page styles
+********************************************************************** */
+
 .zone-landing {
     h1 {
         @include column-6();
@@ -73,6 +76,7 @@
     padding: $content-vertical-spacing 0;
     @include prevent-last-child-spacing(padding-bottom);
 }
+
 
 @media #{$media-query-tablet} {
     .zone-landing {

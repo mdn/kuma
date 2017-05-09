@@ -1,0 +1,30 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Marketplace zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/base';
+
+
+/*
+header modifications
+====================================================================== */
+.zone-image {
+    background-image: url($path-to-images + 'zones/fx-marketplace-icon.png');
+
+    .zone-landing-header & {
+        @include bidi-value(background-position, 0 0, 0 0);
+        background-size: 120% auto;
+        bottom: 0;
+
+        @media #{$media-query-tablet} {
+            @include bidi-value(background-position, bottom center, bottom center);
+        }
+    }
+}

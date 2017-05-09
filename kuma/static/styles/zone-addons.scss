@@ -1,0 +1,34 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+/*
+Addons / Web Extentions zone
+********************************************************************** */
+
+
+/*
+imports
+====================================================================== */
+@import 'zones/components/webext-summary-compat-table';
+
+
+/* =================================================================== */
+
+.addon-sdk-api-name {
+    background-color: rgba(212, 221, 228, .15);
+    padding: 3px;
+}
+
+
+/* =================================================================== */
+
+dd > dl.reference-values {
+    padding-left: 40px;
+}
+
+
+/* =================================================================== */
+
+li.webextension-api-sidebar {
+    background-color: #f4f7f8;
+}
