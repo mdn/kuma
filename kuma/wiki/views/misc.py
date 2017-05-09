@@ -51,10 +51,9 @@ def autosuggest_documents(request):
                                         'title. For a full document '
                                         'index, see the main page.'))
 
-    # Retrieve all documents that aren't redirects or templates
+    # Retrieve all documents that aren't redirects
     docs = (Document.objects.extra(select={'length': 'Length(slug)'})
                             .filter(title__icontains=partial_title,
-                                    is_template=0,
                                     is_redirect=0)
                             .exclude(slug__icontains='Talk:')  # Remove old talk pages
                             .order_by('title', 'length'))

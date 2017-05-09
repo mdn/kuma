@@ -13,8 +13,7 @@ from kuma.wiki.search import WikiDocumentType
 def mock_doc():
     """A mock Document that should update."""
     mock_doc = mock.Mock(
-        spec_set=['is_template', 'is_redirect', 'deleted', 'slug'])
-    mock_doc.is_template = False
+        spec_set=['is_redirect', 'deleted', 'slug'])
     mock_doc.is_redirect = False
     mock_doc.deleted = False
     mock_doc.slug = 'RegularSlug'
@@ -37,7 +36,7 @@ def test_should_not_update_excluded_slug(mock_doc, slug):
 
 
 @pytest.mark.parametrize(
-    'flag', ('is_template', 'is_redirect', 'deleted'))
+    'flag', ('is_redirect', 'deleted'))
 def test_should_not_update_excluded_flags(mock_doc, flag):
     """Do not update the search index if some flags are set."""
     setattr(mock_doc, flag, True)

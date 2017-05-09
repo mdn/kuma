@@ -16,8 +16,7 @@ import requests
 
 from kuma.core.cache import memcache
 
-from .constants import (KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR,
-                        TEMPLATE_TITLE_PREFIX)
+from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
 
 
 def should_use_rendered(doc, params, html=None):
@@ -34,13 +33,10 @@ def should_use_rendered(doc, params, html=None):
     show_raw = params.get('raw', False) is not False
     no_macros = params.get('nomacros', False) is not False
     force_macros = params.get('macros', False) is not False
-    is_template = False
     if doc:
-        is_template = doc.is_template
         html = doc.html
     return (config.KUMASCRIPT_TIMEOUT > 0 and
             html and
-            not is_template and
             (force_macros or (not no_macros and not show_raw)))
 
 
@@ -85,15 +81,6 @@ def _get_attachment_metadata_dict(attachment):
     }
 
 
-def _format_slug_for_request(slug):
-    """Formats a document slug which will play nice with kumascript caching"""
-    # http://bugzil.la/1063580
-    index = slug.find(TEMPLATE_TITLE_PREFIX)
-    if index != -1:
-        slug = '%s%s' % (TEMPLATE_TITLE_PREFIX, slug[(index + len(TEMPLATE_TITLE_PREFIX)):].lower())
-    return slug
-
-
 def get(document, cache_control, base_url, timeout=None):
     """Perform a kumascript GET request for a document locale and slug."""
     if not cache_control:
@@ -115,9 +102,6 @@ def get(document, cache_control, base_url, timeout=None):
     # 1063580 - Kumascript converts template name calls to lower case and bases
     # caching keys off of that.
     document_slug_for_kumascript = document_slug
-    if document.is_template:
-        document_slug_for_kumascript = _format_slug_for_request(document_slug)
-
     body, errors = None, None
 
     try:

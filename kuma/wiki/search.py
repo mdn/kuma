@@ -241,9 +241,7 @@ class WikiDocumentType(document.DocType):
             excludes.append(Q(slug__icontains=exclude))
 
         qs = (model.objects
-                   .filter(is_template=False,
-                           is_redirect=False,
-                           deleted=False)
+                   .filter(is_redirect=False, deleted=False)
                    .exclude(reduce(operator.or_, excludes)))
 
         percent = percent / 100
@@ -261,9 +259,7 @@ class WikiDocumentType(document.DocType):
         WARNING: This *must* mirror the logic of the ``get_indexable``
                  method above!
         """
-        return (not obj.is_template and
-                not obj.is_redirect and
-                not obj.deleted and
+        return (not obj.is_redirect and not obj.deleted and
                 not any([exclude in obj.slug
                          for exclude in cls.exclude_slugs]))
 
