@@ -45,7 +45,9 @@
                         {{ format_comment(revision) }}
                     </td>
                     <td class="dashboard-author">
-                        <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a><br>
+                        <a href="{{ revision.creator.get_absolute_url() }}"
+                           {%- if not revision.creator.is_active %} rel="nofollow"{% endif -%}
+                           >{{ revision.creator }}</a><br>
                         {% set revision_ip = revision.revisionip_set.first() %}
                         {% if show_ips and revision_ip %}
                             {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}

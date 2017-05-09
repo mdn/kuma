@@ -19,7 +19,9 @@
         <div>{{ document.title }}</div>
 
         <label><strong>{{ _('Creator') }}</strong></label>
-        <div><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></div>
+        <div><a href="{{ revision.creator.get_absolute_url() }}"
+                {%- if not revision.creator.is_active %} rel="nofollow"{% endif -%}
+                >{{ revision.creator }}</a></div>
         <label><strong>{{ _('Date') }}</strong></label>
         <div>{{ datetimeformat(revision.created, format='longdatetime') }}</div>
         <label><strong>{{ _('Content') }}</strong></label>

@@ -15,13 +15,17 @@
     <h1>{{ _('Delete') }} <a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h1>
 
     <strong>{{ _('Creator') }}</strong>
-    <p><a href="{{ revision.creator.get_absolute_url() }}">{{ user_display(revision.creator) }}</a></p>
+    <p><a href="{{ revision.creator.get_absolute_url() }}"
+          {%- if not revision.creator.is_active %} rel="nofollow"{% endif -%}
+          >{{ user_display(revision.creator) }}</a></p>
 
     <strong>{{ _('Creation Date') }}</strong>
     <p>{{ datetimeformat(revision.created, format='longdatetime') }}</p>
 
     <strong>{{ _('Last Change By') }}</strong>
-    <p><a href="{{ document.current_revision.creator.get_absolute_url() }}">{{ user_display(document.current_revision.creator) }}</a></p>
+    <p><a href="{{ document.current_revision.creator.get_absolute_url() }}"
+          {%- if not document.current_revision.creator.is_active %} rel="nofollow"{% endif -%}
+          >{{ user_display(document.current_revision.creator) }}</a></p>
 
     <strong>{{ _('Last Change Date') }}</strong>
     <p>{{ datetimeformat(document.current_revision.created, format='longdatetime') }}</p>

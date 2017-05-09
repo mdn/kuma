@@ -60,7 +60,9 @@
                 <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
               <div class="revision-list-cell revision-list-creator">
-                <a href="{{ rev.creator.get_absolute_url() }}">{{ rev.creator }}</a>
+                <a href="{{ rev.creator.get_absolute_url() }}"
+                   {%- if not rev.creator.is_active %} rel="nofollow"{% endif -%}
+                   >{{ rev.creator }}</a>
               </div>
               <div class="revision-list-cell revision-list-comment">
                 {% if rev.document.locale != document.locale %}
