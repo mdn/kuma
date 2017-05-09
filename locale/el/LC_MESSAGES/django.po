@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-06 09:43+0000\n"
+"PO-Revision-Date: 2017-05-09 20:46+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -1187,7 +1187,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Υποβλήθηκε ως %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
 #, python-format
@@ -2083,7 +2083,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Επαναφορά του κωδικού πρόσβασής μου"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -2129,12 +2129,12 @@ msgstr ""
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Η δημιουργία προφίλ απενεργοποιήθηκε"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Επιβεβαιώστε τη διεύθυνση e-mail σας"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
@@ -2160,7 +2160,7 @@ msgstr "Σημείωση"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "έχετε συνδεθεί ήδη ως %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -2492,7 +2492,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Πρόσφατη δραστηριότητα εγγράφων"
 
 #: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
@@ -2512,7 +2512,7 @@ msgstr "Επεξεργασία σελίδας"
 
 #: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
-msgstr ""
+msgstr "Προβολή πλήρους διαφοράς"
 
 #: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
 msgid "View page history"
@@ -2565,7 +2565,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Τομείς εξειδίκευσης"
 
 #: kuma/users/jinja2/users/user_edit.html:78
 msgid "Add your interests first, then declare yourself an expert in selected topics."
@@ -2577,7 +2577,7 @@ msgstr "Τα προφίλ μου"
 
 #: kuma/users/jinja2/users/user_edit.html:98
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Χρησιμοποιήστε το λογαριασμό GitHub σας για σύνδεση."
 
 #: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
@@ -2609,7 +2609,7 @@ msgstr "Σάς ευχαριστούμε που χρησιμοποιήσατε τ
 #: kuma/users/jinja2/users/email/recovery/subject.ltxt:1
 #, python-format
 msgid "Profile Recovery for %(username)s at %(domain)s"
-msgstr ""
+msgstr "Ανάκτηση προφίλ για %(username)s στο %(domain)s"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
