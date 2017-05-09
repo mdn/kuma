@@ -7,26 +7,3 @@ These styles compliment the wiki styles when the page is a zone.
 
 
 @import 'zones/base';
-
-
-/*
-Specialized styles for specific zones
-====================================================================== */
-
-/* Addons */
-@import 'zones/addons';
-
-/* Apps */
-@import 'zones/components/initial-steps';
-
-/* Archive */
-@import 'zones/archive';
-
-/* B2G */
-@import 'zones/components/outer-apps-box';
-
-/* Connect */
-@import 'zones/connect';
-
-/* MDN at 10 */
-@import 'zones/ten';
