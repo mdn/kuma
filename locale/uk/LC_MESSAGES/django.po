@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-05 20:41+0000\n"
-"Last-Translator: Andriy Kuryk <andrij.kuryk@gmail.com>\n"
+"PO-Revision-Date: 2017-05-09 11:10+0000\n"
+"Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -1082,12 +1082,12 @@ msgid "Active macros"
 msgstr "Активні макроси"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
-msgstr[0] "Знайдено %(num)s шаблон."
-msgstr[1] "Знайдено %(num)s шаблони"
-msgstr[2] "Знайдено %(num)s шаблонів"
+msgstr[0] "Знайдено %(num)s активний макрос."
+msgstr[1] "Знайдено %(num)s активних макроси."
+msgstr[2] "Знайдено %(num)s активних макросів."
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:15
 #, python-format
@@ -1105,12 +1105,11 @@ msgstr "Активні макроси і кількість їх викорис�
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Macro Name"
-msgstr ""
+msgstr "Ім'я макроса"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:32
-#, fuzzy
 msgid "English Page Count"
-msgstr "Англійські мітки"
+msgstr "Кількість англійських сторінок"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
@@ -1125,9 +1124,8 @@ msgid "Search All Pages"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
-#, fuzzy
 msgid "Search English Pages"
-msgstr "Англійські мітки"
+msgstr "Шукати на англійських сторінках"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -2013,9 +2011,8 @@ msgid "Remove"
 msgstr "Вилучити"
 
 #: kuma/users/jinja2/account/email.html:45
-#, fuzzy
 msgid "<strong>Warning:</strong> You have not added any email addresses to this profile. Without one you cannot receive notifications."
-msgstr "<strong>Попередження:</strong>\"Ви не додали жодної адреси електронної пошти в профіль. Без неї ви не можете отримувати сповіщення."
+msgstr "<strong>Попередження:</strong> Ви не додали жодної адреси електронної пошти в профіль. Без неї ви не можете отримувати сповіщення."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
@@ -2855,14 +2852,14 @@ msgid "Edit section"
 msgstr "Змінити розділ"
 
 #: kuma/wiki/events.py:96
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
-msgstr "[MDN] Сторінка \"%(document_title)s\" змінена %(creator)s"
+msgstr "[MDN][%(locale)s][Нова] Сторінка \"%(document_title)s\" створена %(creator)s"
 
 #: kuma/wiki/events.py:100
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN][%(locale)s] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] Сторінка \"%(document_title)s\" змінена %(creator)s"
+msgstr "[MDN][%(locale)s] Сторінка \"%(document_title)s\" змінена %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
@@ -3834,14 +3831,14 @@ msgid "This article needs these reviews:"
 msgstr "Ця стаття потребує наступні огляди:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:14
-#, fuzzy, python-format
+#, python-format
 msgid "Technical - code samples, APIs, or technologies. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Технічна - приклади коду, API або технологій"
+msgstr "Технічна - приклади коду, API або технологій. <a href=\"%(url)s\">Ви можете допомогти?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "Editorial - prose, grammar, or content. <a href=\"%(url)s\">Can you help?</a>"
-msgstr "Редакційна - текст, граматика або зміст"
+msgstr "Редакційна - текст, граматика або вміст. <a href=\"%(url)s\">Ви можете допомогти?</a>"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:32
 msgid "Save"
@@ -3939,14 +3936,12 @@ msgid "Updating subscription status"
 msgstr "Оновлення статусу підписки"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Підписатись на %(title)s"
+msgstr "Підписатись на цю статтю"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Відписатися від цих повідомлень:"
+msgstr "Відписатися від цієї статті"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3959,14 +3954,14 @@ msgid "You have been unsubscribed from %(title)s."
 msgstr "Ви відписались від %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to the %(language)s version"
-msgstr "Підписатись на <bdi>%(language)s</bdi> версію"
+msgstr "Підписатись на %(language)s версію"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from the %(language)s version"
-msgstr "Відписатись від <bdi>%(language)s</bdi> версії"
+msgstr "Відписатись від %(language)s версії"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
