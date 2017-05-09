@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-09 11:10+0000\n"
+"PO-Revision-Date: 2017-05-09 11:18+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
@@ -1113,7 +1113,7 @@ msgstr "Кількість англійських сторінок"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "All Page Count"
-msgstr ""
+msgstr "Загальна кількість сторінок"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:64
 msgid "Search for macro usage:"
@@ -1121,7 +1121,7 @@ msgstr "Пошук використань макросу:"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:67
 msgid "Search All Pages"
-msgstr ""
+msgstr "Шукати на всіх сторінках"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
 msgid "Search English Pages"
@@ -3914,14 +3914,12 @@ msgid "The server is rendering the content comparison. Please refresh this page 
 msgstr "Сервер виконує порівняння вмісту. Будь ласка, оновіть цю сторінку протягом декількох хвилин."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
-#, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
-msgstr "Підписатися на %(title)s і всі її підстатті"
+msgstr "Підписатися на цю статтю і усі її під-статті"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
-msgstr "Відписатися від %(title)s і всі її підстатті"
+msgstr "Відписатися від цієї статті і всі її підстатті"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
