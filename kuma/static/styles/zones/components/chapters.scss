@@ -52,6 +52,10 @@ $chapter-space-between : 120px;
     }
 }
 
+.chapter-audio .open-in-host-container {
+    display: none;
+}
+
 /* box with portrait in it gets different header */
 .chapter-portrait {
     h2 {

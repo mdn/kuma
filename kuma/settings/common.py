@@ -688,6 +688,48 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/zones.css',
     },
+    'zone-addons': {
+        'source_filenames': (
+            'styles/zones-addons.scss',
+        ),
+        'output_filename': 'build/styles/zones-addons.css',
+    },
+    'zone-apps': {
+        'source_filenames': (
+            'styles/zones-apps.scss',
+        ),
+        'output_filename': 'build/styles/zones-apps.css',
+    },
+    'zone-archive': {
+        'source_filenames': (
+            'styles/zones-archive.scss',
+        ),
+        'output_filename': 'build/styles/zones-archive.css',
+    },
+    'zone-b2g': {
+        'source_filenames': (
+            'styles/zones-b2g.scss',
+        ),
+        'output_filename': 'build/styles/zones-b2g.css',
+    },
+    'zone-connect': {
+        'source_filenames': (
+            'styles/zones-connect.scss',
+        ),
+        'output_filename': 'build/styles/zones-connect.css',
+    },
+    'zone-ten': {
+        'source_filenames': (
+            'styles/zones-ten.scss',
+        ),
+        'output_filename': 'build/styles/zones-ten.css',
+    },
+    'zone-tools': {
+        'source_filenames': (
+            'styles/zones-tools.scss',
+        ),
+        'output_filename': 'build/styles/zones-tools.css',
+    },
     'sphinx': {
         'source_filenames': (
             'styles/wiki.scss',
