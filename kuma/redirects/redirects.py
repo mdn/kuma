@@ -559,4 +559,158 @@ redirectpatterns = [
         r'^samples/webgl/sample8/webgl.css$',
         'http://mdn.github.io/webgl-examples/tutorial/webgl.css',
         re_flags='i', prepend_locale=False, permanent=True),
+
+    # Bug 887428 - Misprinted URL in promo materials
+    # RewriteRule ^Firefox_OS/Security$ docs/Mozilla/Firefox_OS/Security
+    # [R=301,L,NC]
+    redirect(
+        r'^Firefox_OS/Security$',
+        '/docs/Mozilla/Firefox_OS/Security',
+        re_flags='i', prepend_locale=False, permanent=True),
+
+    # Old landing pages. The regex, adapted from Bedrock, captures locale prefixes.
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?mobile/?$ /$1docs/Mozilla/Mobile
+    # [R=301,L]
+    redirect(
+        r'^(?P<localeprefix>\w{2,3}(?:-\w{2})?/)?mobile/?$',
+        '/{localeprefix}docs/Mozilla/Mobile',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?addons/?$ /$1Add-ons [R=301,L]
+    redirect(
+        r'^(?P<localeprefix>\w{2,3}(?:-\w{2})?/)?addons/?$',
+        '/{localeprefix}Add-ons',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?mozilla/?$ /$1docs/Mozilla [R=301,L]
+    redirect(
+        r'^(?P<localeprefix>\w{2,3}(?:-\w{2})?/)?mozilla/?$',
+        '/{localeprefix}docs/Mozilla',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?web/?$ /$1docs/Web [R=301,L]
+    redirect(
+        r'^(?P<localeprefix>\w{2,3}(?:-\w{2})?/)?web/?$',
+        '/{localeprefix}docs/Web',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/html5/?$
+    # /$1docs/Web/Guide/HTML/HTML5 [R=301,L]
+    redirect(
+        r'^(?P<localeprefix>\w{2,3}(?:-\w{2})?/)?learn/html5/?$',
+        '/{localeprefix}docs/Web/Guide/HTML/HTML5',
+        prepend_locale=True, permanent=True),
+
+    # Some blanket section moves / renames
+    # RewriteRule ^En/JavaScript/Reference/Objects/Array$
+    # en-US/docs/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]
+    redirect(
+        r'^En/JavaScript/Reference/Objects/Array$',
+        '/en-US/docs/JavaScript/Reference/Global_Objects/Array',
+        re_flags='i', prepend_locale=True, permanent=True),
+
+    # RewriteRule ^En/JavaScript/Reference/Objects$
+    # en-US/docs/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]
+    redirect(
+        r'^En/JavaScript/Reference/Objects$',
+        '/en-US/docs/JavaScript/Reference/Global_Objects/Object',
+        re_flags='i', prepend_locale=True, permanent=True),
+
+    # RewriteRule ^En/Core_JavaScript_1\.5_Reference/Objects/(.*)
+    # en-US/docs/JavaScript/Reference/Global_Objects/$1 [R=301,L,NC]
+    redirect(
+        r'^En/Core_JavaScript_1\.5_Reference/Objects/(?P<suffix>.*)$',
+        '/en-US/docs/JavaScript/Reference/Global_Objects/{suffix}',
+        re_flags='i', prepend_locale=True, permanent=True),
+
+    # RewriteRule ^En/Core_JavaScript_1\.5_Reference/(.*)
+    # en-US/docs/JavaScript/Reference/$1 [R=301,L,NC]
+    redirect(
+        r'^En/Core_JavaScript_1\.5_Reference/(?P<suffix>.*)$',
+        '/en-US/docs/JavaScript/Reference/{suffix}',
+        re_flags='i', prepend_locale=True, permanent=True),
+
+    # RewriteRule ^([\w\-]*)/HTML5$ $1/docs/HTML/HTML5 [R=301,L,NC]
+    redirect(
+        r'^(?P<pre>[\w\-]*)/HTML5$',
+        '/{pre}/docs/HTML/HTML5',
+        re_flags='i', prepend_locale=False, permanent=True),
+
+    # RewriteRule web-tech/2008/09/12/css-transforms
+    # /docs/CSS/Using_CSS_transforms [R=301,L]
+    redirect(
+        r'^web-tech/2008/09/12/css-transforms$',
+        '/docs/CSS/Using_CSS_transforms',
+        prepend_locale=False, permanent=True),
+
+    # RewriteRule ^([\w\-]*)/docs/?$ $1/docs/Web [R=301,L,NC]
+    redirect(
+        r'^(?P<pre>[\w\-]*)/docs/?$',
+        '/{pre}/docs/Web',
+        re_flags='i', prepend_locale=False, permanent=True),
+
+    # DevNews
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?devnews/index.php/feed.*
+    # https://blog.mozilla.org/feed/ [R=301,L]
+    redirect(
+        r'^(\w{2,3}(?:-\w{2})?/)?devnews/index.php/feed.*',
+        'https://blog.mozilla.org/feed/',
+        prepend_locale=False, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?devnews.*
+    # https://wiki.mozilla.org/Releases [R=301,L]
+    redirect(
+        r'(\w{2,3}(?:-\w{2})?/)?devnews.*',
+        'https://wiki.mozilla.org/Releases',
+        prepend_locale=False, permanent=True),
+
+    # Old "Learn" pages
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/html /$1Learn/HTML [R=301,L]
+    redirect(
+        r'^(?P<pre>\w{2,3}(?:-\w{2})?/)?learn/html',
+        '/{pre}Learn/HTML',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/css /$1Learn/CSS [R=301,L]
+    redirect(
+        r'^(?P<pre>\w{2,3}(?:-\w{2})?/)?learn/css',
+        '/{pre}Learn/CSS',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/javascript /$1Learn/JavaScript
+    # [R=301,L]
+    redirect(
+        r'^(?P<pre>\w{2,3}(?:-\w{2})?/)?learn/javascript',
+        '/{pre}Learn/JavaScript',
+        prepend_locale=True, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn /$1Learn [R=301,L]
+    redirect(
+        r'^(?P<pre>\w{2,3}(?:-\w{2})?/)?learn',
+        '/{pre}Learn',
+        prepend_locale=True, permanent=True),
+
+    # BananaBread demo (bug 1238041)
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread$
+    # https://github.com/kripken/BananaBread/ [R=301,L]
+    redirect(
+        r'^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread$',
+        'https://github.com/kripken/BananaBread/',
+        prepend_locale=False, permanent=True),
+
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread/launch$
+    # https://kripken.github.io/BananaBread/cube2/index.html [R=301,L]
+    redirect(
+        r'^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread/launch$',
+        'https://kripken.github.io/BananaBread/cube2/index.html',
+        prepend_locale=False, permanent=True),
+
+
+    # All other Demo Studio and Dev Derby paths (bug 1238037)
+    # RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos
+    # /$1docs/Web/Demos_of_open_web_technologies? [R=301,L]
+    redirect(
+        r'^(?P<pre>\w{2,3}(?:-\w{2})?/)?demos',
+        '/{pre}docs/Web/Demos_of_open_web_technologies',
+        prepend_locale=True, permanent=True),
 ]
