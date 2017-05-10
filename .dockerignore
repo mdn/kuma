@@ -97,31 +97,25 @@ kumascript.log
 # End kuma .gitignore
 #
 
-# From kumascript .gitignore
-kumascript/*.swp
-kumascript/*.swo
-kumascript/tmp
-kumascript/logs
-kumascript/docs
-kumascript/.monitor
-kumascript/.nodemonignore
-kumascript/*.node
-kumascript/*.dSYM
-kumascript/*.o
-kumascript/*.a
-kumascript/*.dylib
-kumascript/*.un~
-kumascript/node_modules/
-kumascript/npm-debug.log
+# Different patterns for .dockerignore syntax
+static/*
+**/__pycache__/
+**/__pycache__/*
+**/*.pyc
+**/*.pyo
+**/*.pyd
+docs/_build/*
 
 # Additional ignores
 .git
 .gitignore
-kumascript/.git
-kumascript/.gitignore
 provisioning
 k8s
 docker
 docker-compose*
 Dockerfile
 Dockerfile*
+# Not needed in kuma image
+kumascript/*
+# Rebuilt in Docker
+locale/*/LC_MESSAGES/*.mo
