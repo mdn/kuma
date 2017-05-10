@@ -1,30 +1,37 @@
-=======================
-Installation via Docker
-=======================
-Starting in 2016, we support using `Docker`_ for local development, and we are
-transitioning to Docker for integration testing and deployment as well.
+============
+Installation
+============
+Kuma uses `Docker`_ for local development and integration testing, and we are
+transitioning to Docker containers for deployment as well.
 
 .. _Docker: https://www.docker.com/
 
-**Current Status**:
+**Current Status of Dockerization**:
 
 * Kuma developers are using Docker for daily development and maintenance tasks.
   Staff developers primarily use `Docker for Mac`_. Other staff
   members and contributors use `Docker's Ubuntu packages`_.
-* When the master branch is updated, the ``kuma_base`` image is refreshed and
-  published to `quay.io`_. This image contains system packages and
-  third-party libraries.
 * The Docker development environment is evolving rapidly, to address issues
   found during development and to move toward a containerized design. You may
   need to regularly reset your environment to get the current changes.
-* The Docker environment doesn't yet support everything from the Vagrant
-  environment, such as local SSL development and automatic asset compiling.
+* The Docker development environment doesn't fully support a 'production-like'
+  environment. For example, we don't have a documented configuration for
+  running with an SSL connection.
+* When the master branch is updated, the ``kuma_base`` image is refreshed and
+  published to `quay.io`_. This image contains system packages and
+  third-party libraries.
+* Our TravisCI_ builds include a target that build Docker containers and runs
+  the tests inside.
+* Our Jenkins_ server builds and publishes Docker images, and runs integration
+  tests using Docker.
 * We are documenting tips and tricks on the
   :doc:`Troubleshooting page <troubleshooting>`.
 
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
+.. _TravisCI: https://travis-ci.org/mozilla/kuma/
+.. _Jenkins: https://ci.us-west.moz.works/view/MDN/job/mdn_multibranch_pipeline/
 
 Docker setup
 ============

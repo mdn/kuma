@@ -23,11 +23,9 @@ marked for translation in Python and templates.
 Unless otherwise noted, run all the commands in this document inside the
 development environment.
 
-For Docker, enter the environment with
+For Docker on Linux, set ``UID`` in ``.env`` or enter the environment with
 ``docker-compose run --rm --user $(id -u) web bash``, to ensure that created
 files are owned by your development user.
-
-For Vagrant, enter the environment with ``vagrant ssh``.
 
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _Django documentation on Translations: https://docs.djangoproject.com/en/dev/topics/i18n/translation/
@@ -70,6 +68,9 @@ to be gathered into ``.po`` files for translation.
 
 To update the localizations:
 
+#. Update ``kuma/settings/common.py``, and bump the version in
+   ``PUENTE['VERSION']``.
+
 #. Inside the development environment, extract and rebuild the translations::
 
     make localerefresh
@@ -81,7 +82,7 @@ To update the localizations:
 #. Finally, commit the files::
 
     git add --all locale
-    git commit -m "MDN string update YYYY-MM-DD"
+    git commit
 
 Adding a new locale (UI strings)
 ================================
@@ -129,8 +130,7 @@ translations:
 
 #. Restart the web server and verify that Django loads the new locale without
    errors by visiting the locale's home page, for example
-   http://localhost:8000/bg/ (https://developer-local.allizom.org/bg/
-   if you are using Vagrant).
+   http://localhost:8000/bg/.
 
 #. Commit the change to ``kuma/settings/common.py``.
 

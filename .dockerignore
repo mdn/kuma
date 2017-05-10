@@ -61,6 +61,7 @@ bower_components
 build.py
 developer.mozilla.org.tar.gz
 docker-compose.dev.yml
+docker-compose.locust.yml
 humans.txt
 james.ini
 kuma/static/js/libs/ckeditor/source/ckbuilder
