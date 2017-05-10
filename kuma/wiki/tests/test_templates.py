@@ -12,6 +12,7 @@ from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.test.utils import override_settings
+from django.utils import translation
 from django.utils.http import urlquote
 from pyquery import PyQuery as pq
 
@@ -1369,3 +1370,70 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
     assert count(css_link.format('zone-bobby')) == one_if('bottom')
     assert count(css_link.format('zone-berlin')) == one_if('de')
     assert count(css_link.format('zone-lindsey')) == one_if('fr')
+
+
+@pytest.mark.parametrize("elem_num,has_prev,is_english,has_revert", [
+    (0, True, False, False),
+    (1, False, False, True),
+    (2, False, True, False)],
+    ids=['current', 'first_trans', 'en_source'])
+def test_list_revisions(elem_num, has_prev, is_english, has_revert,
+                        admin_client, trans_edit_revision):
+    """Check the three rows of the test translation.
+
+    Row 1: The latest edit of the translation
+    Row 2: The first translation into French
+    Row 3: The English revision that the first translation was based on
+    """
+    doc = trans_edit_revision.document
+    url = reverse('wiki.document_revisions', locale=doc.locale,
+                  args=[doc.slug])
+    response = admin_client.get(url)
+    assert response.status_code == 200
+
+    page = pq(response.content)
+    list_items = page('ul.revision-list li')
+
+    # Select the list item and revision requested in the test
+    li_element = list_items[elem_num]
+    revision = trans_edit_revision
+    num = 0
+    while num < elem_num:
+        revision = revision.previous
+        num += 1
+    rev_doc = revision.document
+
+    # The date text links to the expected revision page
+    revision_url = reverse('wiki.revision',
+                           locale=rev_doc.locale,
+                           args=[rev_doc.slug, revision.id])
+    rev_link = li_element.cssselect('.revision-list-date')[0].find('a')
+    assert rev_link.attrib['href'] == revision_url
+
+    # Check if there is a previous link
+    prev_link = li_element.cssselect('.revision-list-prev')[0].find('a')
+    if has_prev:
+        assert prev_link is not None
+        with translation.override(doc.locale):
+            expected = translation.gettext('Previous').decode('utf8')
+        assert prev_link.text == expected
+    else:
+        assert prev_link is None
+
+    # The comment has a marker if it is the English source page
+    comment_em = li_element.cssselect('.revision-list-comment')[0].find('em')
+    if is_english:
+        assert li_element.attrib['class'] == 'revision-list-en-source'
+        with translation.override(doc.locale):
+            expected = translation.gettext('English (US)').decode('utf8')
+        assert comment_em.text == expected
+    else:
+        assert li_element.attrib.get('class') is None
+        assert comment_em is None
+
+    # The revert button is included if it makes sense for the revision
+    revert = li_element.cssselect('.revision-list-revert')
+    if has_revert:
+        assert len(revert) == 1
+    else:
+        assert len(revert) == 0
