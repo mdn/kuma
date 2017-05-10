@@ -14,7 +14,7 @@ Running tests
 -------------
 .. note:: **DO NOT RUN LOCUST TESTS AGAINST PRODUCTION**
 
-1. Create a file ``docker-compose.locust.yml`` in the root folder (same folder
+#. Create a file ``docker-compose.locust.yml`` in the root folder (same folder
    as ``docker-compose.yml``) with the contents::
 
     version: "2.1"
@@ -31,16 +31,16 @@ Running tests
         ports:
           - "8089:8089"
 
-1. Edit ``.env`` to update docker-compose::
+#. Edit ``.env`` to update docker-compose::
 
     COMPOSE_FILE=docker-compose.yml:docker-compose.locust.yml
 
-1. Restart with ``make up``
+#. Restart with ``make up``
 
-1. Load the Locust UI at http://localhost:8089, and select:
+#. Load the Locust UI at http://localhost:8089, and select:
 
-* number of users to simulate
-* users spawned per second
+   * number of users to simulate
+   * users spawned per second
 
 See `Start locust
 <http://docs.locust.io/en/latest/quickstart.html#start-locust>`_ for more.
