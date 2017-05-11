@@ -2,7 +2,6 @@
 import newrelic.agent
 
 from constance import config
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 
 from kuma.attachments.forms import AttachmentRevisionForm
@@ -29,9 +28,6 @@ def create(request):
     """
     initial_slug = request.GET.get('slug', '')
 
-    # Try to head off disallowed Template:* creation, right off the bat
-    if not Document.objects.allows_add_by(request.user, initial_slug):
-        raise PermissionDenied
     # TODO: Integrate this into a new exception-handling middleware
     if not request.user.has_perm('wiki.add_document'):
         context = {
@@ -137,10 +133,6 @@ def create(request):
                                 parent_slug=parent_slug)
 
         if doc_form.is_valid() and rev_form.is_valid():
-            slug = doc_form.cleaned_data['slug']
-            if not Document.objects.allows_add_by(request.user, slug):
-                raise PermissionDenied
-
             doc = doc_form.save(parent=None)
             rev_form.save(doc)
             if doc.current_revision.is_approved:

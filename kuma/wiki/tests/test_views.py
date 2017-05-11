@@ -40,9 +40,8 @@ from kuma.spam.constants import SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, SPAM_UR
 from kuma.users.tests import UserTestCase, user
 
 from . import (WikiTestCase, create_document_editor_group,
-               create_document_editor_user, create_document_tree,
-               create_template_test_users, document, make_translation,
-               new_document_data, normalize_html, revision)
+               create_document_editor_user, create_document_tree, document,
+               make_translation, new_document_data, normalize_html, revision)
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
@@ -416,100 +415,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         eq_(page.find('#doc-source').parent().attr('open'), None)
 
 
-class PermissionTests(UserTestCase, WikiTestCase):
-    localizing_client = True
-
-    def setUp(self):
-        """Set up the permissions, groups, and users needed for the tests"""
-        super(PermissionTests, self).setUp()
-        self.perms, self.groups, self.users, self.superuser = (
-            create_template_test_users())
-
-    def test_template_revert_permission(self):
-        locale = 'en-US'
-        slug = 'Template:test-revert-perm'
-        doc = document(save=True, slug=slug, title=slug, locale=locale)
-        rev = revision(save=True, document=doc)
-
-        # Revision template should not show revert button
-        url = reverse('wiki.revision', args=([doc.slug, rev.id]))
-        resp = self.client.get(url)
-        ok_('Revert' not in resp.content)
-
-        # Revert POST should give permission denied to user without perm
-        username = self.users['none'].username
-        self.client.login(username=username, password='testpass')
-        url = reverse('wiki.revert_document', args=([doc.slug, rev.id]))
-        resp = self.client.post(url, {'comment': 'test'})
-        eq_(403, resp.status_code)
-
-        # Revert POST should give success to user with perm
-        username = self.users['change'].username
-        self.client.login(username=username, password='testpass')
-        url = reverse('wiki.revert_document', args=([doc.slug, rev.id]))
-        resp = self.client.post(url, {'comment': 'test'}, follow=True)
-        eq_(200, resp.status_code)
-
-    def test_template_permissions(self):
-        msg = ('edit', 'create')
-
-        for is_add in (True, False):
-
-            slug_trials = (
-                ('test_for_%s', (
-                    (True, self.superuser),
-                    (True, self.users['none']),
-                    (True, self.users['all']),
-                    (True, self.users['add']),
-                    (True, self.users['change']),
-                )),
-                ('Template:test_for_%s', (
-                    (True, self.superuser),
-                    (False, self.users['none']),
-                    (True, self.users['all']),
-                    (is_add, self.users['add']),
-                    (not is_add, self.users['change']),
-                ))
-            )
-
-            for slug_tmpl, trials in slug_trials:
-                for expected, tmp_user in trials:
-
-                    username = tmp_user.username
-                    slug = slug_tmpl % username
-                    locale = settings.WIKI_DEFAULT_LANGUAGE
-
-                    Document.objects.all().filter(slug=slug).delete()
-                    if not is_add:
-                        doc = document(save=True, slug=slug, title=slug,
-                                       locale=locale)
-                        revision(save=True, document=doc)
-
-                    self.client.login(username=username, password='testpass')
-
-                    data = new_document_data()
-                    slug = slug_tmpl % username
-                    data.update({"title": slug, "slug": slug})
-
-                    if is_add:
-                        url = reverse('wiki.create', locale=locale)
-                        resp = self.client.post(url, data, follow=False)
-                    else:
-                        data['form-type'] = 'rev'
-                        url = reverse('wiki.edit', args=(slug,), locale=locale)
-                        resp = self.client.post(url, data, follow=False)
-
-                    if expected:
-                        eq_(302, resp.status_code,
-                            "%s should be able to %s %s" %
-                            (user, msg[is_add], slug))
-                        Document.objects.filter(slug=slug).delete()
-                    else:
-                        eq_(403, resp.status_code,
-                            "%s should not be able to %s %s" %
-                            (user, msg[is_add], slug))
-
-    def test_add_document_permission(self):
+class PermissionTests(WikiTestCase):
+    def test_new_user_does_not_have_add_document_permission(self):
         newuser = user(save=True, username='newuser', password='password')
         assert not newuser.has_perm('wiki.add_document')
         url = reverse('wiki.create', locale='en-US')

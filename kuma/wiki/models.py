@@ -1411,18 +1411,6 @@ Full traceback:
             parents.append(curr)
         return parents
 
-    def allows_revision_by(self, user):
-        """
-        Return whether `user` is allowed to create new revisions of me.
-
-        The motivation behind this method is that templates and other types of
-        docs may have different permissions.
-        """
-        if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
-                not user.has_perm('wiki.change_template_document')):
-            return False
-        return True
-
     def allows_editing_by(self, user):
         """
         Return whether `user` is allowed to edit document-level metadata.
@@ -1431,9 +1419,6 @@ Full traceback:
         all the Document fields are still editable. Once there is an approved
         Revision, the Document fields can only be edited by privileged users.
         """
-        if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
-                not user.has_perm('wiki.change_template_document')):
-            return False
         return (not self.current_revision or
                 user.has_perm('wiki.change_document'))
 

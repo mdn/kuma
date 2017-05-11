@@ -128,9 +128,6 @@ def quick_review(request, document_slug, document_locale):
                             locale=document_locale,
                             slug=document_slug)
 
-    if not doc.allows_revision_by(request.user):
-        raise PermissionDenied
-
     rev_id = request.POST.get('revision_id')
     if not rev_id:
         raise Http404

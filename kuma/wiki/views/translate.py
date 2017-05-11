@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
@@ -105,13 +105,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 pass
 
     user_has_doc_perm = (not doc) or (doc and doc.allows_editing_by(request.user))
-    user_has_rev_perm = (not doc) or (doc and doc.allows_revision_by(request.user))
-    if not user_has_doc_perm and not user_has_rev_perm:
-        # User has no perms, bye.
-        raise PermissionDenied
 
-    doc_form = rev_form = None
-
+    doc_form = None
     if user_has_doc_perm:
         if doc:
             # If there's an existing doc, populate form from it.
@@ -126,28 +121,27 @@ def translate(request, document_slug, document_locale, revision_id=None):
         doc_form = DocumentForm(initial=doc_initial,
                                 parent_slug=slug_dict['parent'])
 
-    if user_has_rev_perm:
-        initial = {
-            'based_on': based_on_rev.id,
-            'current_rev': doc.current_or_latest_revision().id if doc else None,
-            'comment': '',
-            'toc_depth': based_on_rev.toc_depth,
-            'localization_tags': ['inprogress'],
-        }
-        content = None
-        if revision is not None:
-            content = revision.content
-        elif not doc:
-            content = based_on_rev.content
-        if content:
-            initial.update(content=kuma.wiki.content.parse(content)
-                                                    .filterEditorSafety()
-                                                    .serialize())
-        instance = doc and doc.current_or_latest_revision()
-        rev_form = RevisionForm(request=request,
-                                instance=instance,
-                                initial=initial,
-                                parent_slug=slug_dict['parent'])
+    initial = {
+        'based_on': based_on_rev.id,
+        'current_rev': doc.current_or_latest_revision().id if doc else None,
+        'comment': '',
+        'toc_depth': based_on_rev.toc_depth,
+        'localization_tags': ['inprogress'],
+    }
+    content = None
+    if revision is not None:
+        content = revision.content
+    elif not doc:
+        content = based_on_rev.content
+    if content:
+        initial.update(content=kuma.wiki.content.parse(content)
+                                                .filterEditorSafety()
+                                                .serialize())
+    instance = doc and doc.current_or_latest_revision()
+    rev_form = RevisionForm(request=request,
+                            instance=instance,
+                            initial=initial,
+                            parent_slug=slug_dict['parent'])
 
     if request.method == 'POST':
         which_form = request.POST.get('form-type', 'both')
@@ -187,7 +181,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 doc_form.data['slug'] = posted_slug
                 doc_form_invalid = True
 
-        if doc and user_has_rev_perm and which_form in ['rev', 'both']:
+        if doc and which_form in ['rev', 'both']:
             post_data = request.POST.copy()
             if 'slug' not in post_data:
                 post_data['slug'] = posted_slug
