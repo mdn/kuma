@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-11 13:11+0000\n"
+"PO-Revision-Date: 2017-05-11 13:14+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -3590,11 +3590,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
-msgstr ""
+msgstr "Κανένα άλλο έγγραφο δεν θα επηρεαστεί από αυτή την αλλαγή."
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Ζητήθηκε μετακίνηση της σελίδας"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
@@ -3887,12 +3887,12 @@ msgstr "Κατάργηση εγγραφής από αυτό το άρθρο"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr ""
+msgstr "Έχετε εγγραφεί στο %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr ""
+msgstr "Έχετε καταργήσει την εγγραφή σας από το %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, python-format
@@ -4235,7 +4235,7 @@ msgstr ""
 #: kuma/wiki/views/document.py:656
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr ""
+msgstr "Ανακατευθύνθηκε από %(url)s"
 
 #: kuma/wiki/views/document.py:718
 #, python-format
@@ -4245,12 +4245,12 @@ msgstr "Έμαθα σχετικά με το %(title)s στο MDN."
 #: kuma/wiki/views/document.py:791
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr ""
+msgstr "Μη υποστηριζόμενος τύπος περιεχομένου: %s"
 
 #: kuma/wiki/views/document.py:798
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Σφάλμα ανάλυσης αιτήματος: %s"
 
 #: kuma/wiki/views/document.py:818
 msgid "ETag precondition failed"
