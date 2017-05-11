@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-01 12:40-0700\n"
-"PO-Revision-Date: 2017-05-09 20:46+0000\n"
+"PO-Revision-Date: 2017-05-11 13:11+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -96,7 +96,7 @@ msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:86
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "Το MDN είναι σε λειτουργία συντήρησης \"μόνο για ανάγνωση\" αυτή τη στιγμή."
 
 #: jinja2/base.html:87
 msgid "Learn more"
@@ -634,7 +634,7 @@ msgstr ""
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Η εγγραφή καταργήθηκε"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
@@ -2108,7 +2108,7 @@ msgstr "Αλλαγή κωδικού πρόσβασης"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Ο κωδικός πρόσβασής σας έχει πλέον αλλάξει."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
@@ -2125,7 +2125,7 @@ msgstr "Εγγραφή"
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Έχετε ήδη προφίλ; Τότε, παρακαλούμε <a href=\"%(login_url)s\">συνδεθείτε</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
@@ -3303,7 +3303,7 @@ msgstr "Το έγγραφο διαγράφηκε"
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
 msgid "This document was deleted on %(when)s."
-msgstr ""
+msgstr "Αυτό το έγγραφο διαγράφηκε στις %(when)s."
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -3960,7 +3960,7 @@ msgstr "Τύπος σφάλματος:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr ""
+msgstr "Εντός μακροεντολής:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
@@ -3972,7 +3972,7 @@ msgstr "Επεξεργασία προτύπου"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Ανάλυση μακροεντολής:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
@@ -3988,7 +3988,7 @@ msgstr "Νέα σελίδα"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Απόρριψη αλλαγών και δημιουργία νέου εγγράφου;"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:24
 msgid "Publish and Keep Editing"
@@ -4141,15 +4141,15 @@ msgstr "Ιστορικό αναθεωρήσεων για:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr ""
+msgstr "Σύγκριση επιλεγμένων μεταφράσεων"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Σύγκριση επιλεγμένων αναθεωρήσεων"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:81
 msgid "This document has no revisions."
-msgstr ""
+msgstr "Αυτό το έγγραφο δεν έχει αναθεωρήσεις."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
@@ -4162,7 +4162,7 @@ msgstr "Δεν υπάρχουν ετικέτες."
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Μεταφρασμένα άρθρα με ετικέτα: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
@@ -4254,11 +4254,11 @@ msgstr ""
 
 #: kuma/wiki/views/document.py:818
 msgid "ETag precondition failed"
-msgstr ""
+msgstr "Αποτυχία προϋπόθεσης ETag"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "Οι ενότητες μπορούν να επεξεργαστούν μόνο εντός γραμμής."
 
 #: kuma/wiki/views/misc.py:50
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
@@ -4266,7 +4266,7 @@ msgstr ""
 
 #: kuma/wiki/views/revision.py:145
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "Το έγγραφο έχει επεξεργαστεί· παρακαλώ κάντε ξανά έλεγχο."
 
 #: kuma/wiki/views/translate.py:74
 msgid "You cannot translate this document."
@@ -4275,7 +4275,7 @@ msgstr "Δεν μπορείτε να μεταφράσετε αυτό το έγγ
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Διακομιστής Elasticsearch: %(backend)s"
 
 #~ msgid "Unsubscribe from %(title)s"
 #~ msgstr "Κατάργηση εγγραφής από το %(title)s"
