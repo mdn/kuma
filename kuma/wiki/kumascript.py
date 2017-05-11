@@ -40,8 +40,7 @@ def should_use_rendered(doc, params, html=None):
             (force_macros or (not no_macros and not show_raw)))
 
 
-def post(request, content, locale=settings.LANGUAGE_CODE,
-         use_constance_bleach_whitelists=False):
+def post(request, content, locale=settings.LANGUAGE_CODE):
     url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
@@ -56,7 +55,7 @@ def post(request, content, locale=settings.LANGUAGE_CODE,
                              data=content.encode('utf8'),
                              headers=headers)
     if response:
-        body = process_body(response, use_constance_bleach_whitelists)
+        body = process_body(response)
         errors = process_errors(response)
         return body, errors
     else:
@@ -211,13 +210,12 @@ def add_env_headers(headers, env_vars):
     return headers
 
 
-def process_body(response, use_constance_bleach_whitelists=False):
+def process_body(response):
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
     from kuma.wiki.models import Document
-    return Document.objects.clean_content(response.text,
-                                          use_constance_bleach_whitelists)
+    return Document.objects.clean_content(response.text)
 
 
 def process_errors(response):
