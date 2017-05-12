@@ -528,8 +528,7 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     if slug_dict['length'] > 1:
         parent_doc = get_object_or_404(Document,
                                        locale=document_locale,
-                                       slug=slug_dict['parent'],
-                                       is_template=0)
+                                       slug=slug_dict['parent'])
         if parent_doc.is_redirect:
             parent_doc = parent_doc.get_redirect_document(id_only=True)
 
@@ -677,36 +676,28 @@ def document(request, document_slug, document_locale):
     doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(
         request, doc, rendering_params)
     rendering_params['render_raw_fallback'] = render_raw_fallback
-    toc_html = None
 
     # Start parsing and applying filters.
-    if not doc.is_template:
-        if doc.show_toc and not rendering_params['raw']:
-            toc_html = doc.get_toc_html()
-        else:
-            toc_html = None
-        doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
+    if doc.show_toc and not rendering_params['raw']:
+        toc_html = doc.get_toc_html()
+    else:
+        toc_html = None
+    doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
 
     # If we're doing raw view, bail out to that now.
     if rendering_params['raw']:
         return _document_raw(request, doc, doc_html, rendering_params)
 
     # Get the SEO summary
-    seo_summary = ''
-    if not doc.is_template:
-        seo_summary = doc.get_summary_text()
+    seo_summary = doc.get_summary_text()
 
     # Get the additional title information, if necessary.
     seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
 
     # Retrieve pre-parsed content hunks
-    if doc.is_template:
-        quick_links_html, zone_subnav_html = None, None
-        body_html = doc_html
-    else:
-        quick_links_html = doc.get_quick_links_html()
-        zone_subnav_html = doc.get_zone_subnav_html()
-        body_html = doc.get_body_html()
+    quick_links_html = doc.get_quick_links_html()
+    zone_subnav_html = doc.get_zone_subnav_html()
+    body_html = doc.get_body_html()
 
     # Record the English slug in Google Analytics, to associate translations
     if original_doc.locale == 'en-US':

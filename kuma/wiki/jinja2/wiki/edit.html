@@ -2,12 +2,7 @@
 {% from "includes/error_list.html" import errorlist %}
 {% from 'wiki/includes/page_buttons.html' import page_buttons %}
 
-{% if document.is_template %}
-  {% set title = _('%(title)s | Edit Template', title=document.title) %}
-{% else %}
-  {% set title = _('%(title)s | Edit Article', title=document.title) %}
-{% endif %}
-{% block title %}{{ page_title(title) }}{% endblock %}
+{% block title %}{{ page_title(_('%(title)s | Edit Article', title=document.title)) }}{% endblock %}
 
 {% set classes = 'edit' %}
 {% block bodyclass %}edit{% endblock %}
@@ -116,11 +111,7 @@
                     <label for="id_title">{{ _('Title:') }}</label>
                     {{ revision_form.title | safe }}
                 </li>
-                {% if document.is_template %}
-                  <input type="hidden" name="toc_depth" value="0" />
-                {% else %}
-                  {% include 'wiki/includes/document_toc_field.html' %}
-                {% endif %}
+                {% include 'wiki/includes/document_toc_field.html' %}
                 <li class="clear">
                   <fieldset class="duration-container">
                     <legend>{{ _('Rendering max age:') }}</legend>
@@ -172,13 +163,9 @@
         {% if revision_form %}
             {% include 'wiki/includes/guide_links.html' %}
 
-            {% if document.is_template %}
-              Templates are now being stored and edited on <a target="_blank" href="https://github.com/mozilla/kumascript/tree/master/macros">GitHub</a>.
-            {% else %}
-              <div id="editor-wrapper" class="editor-wrapper">
-                <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
-              </div>
-            {% endif %}
+            <div id="editor-wrapper" class="editor-wrapper">
+              <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
+            </div>
 
             <input type="hidden" name="form-type" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}

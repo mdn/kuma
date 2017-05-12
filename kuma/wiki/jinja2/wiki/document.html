@@ -15,11 +15,6 @@
 {% set doc_abs_url = document.get_absolute_url() %}
 {% set canonical = request.build_absolute_uri(doc_abs_url) %}
 
-{% if document.is_template %}
-  {% set macro_name = document.slug|replace('Template:','', 1) %}
-  {% set template_search_link = url('search', locale=document.locale)|urlparams(locale='*', kumascript_macros=macro_name, topic='none') %}
-{% endif %}
-
 {% set current_revision = document.current_revision %}
 {% if (is_logged_in and current_revision) and (current_revision.needs_technical_review or current_revision.needs_editorial_review) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
@@ -235,12 +230,6 @@
               </div>
             {% endif %}
 
-            {# determine the article content based on template status #}
-            {% if not document.is_template %}
-              {% set document_html_safe = body_html|safe %}
-            {% else %}
-              {% set document_html_safe = document_html|safe %}
-            {% endif %}
 
             <!-- center: main article content -->
             <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
@@ -322,20 +311,11 @@
                 {% if not fallback_reason %}
                   {% if not document_html %}
                     {{ _("This article doesn't have any content yet.") }}
-                  {% elif document.is_template %}
-                    <p>
-                      Templates are now being stored and edited on <a target="_blank" href="https://github.com/mozilla/kumascript/tree/master/macros">GitHub</a>.
-                    </p>
-                    {% trans search_link=template_search_link, title=document.title %}
-                      Search for
-                      <a href="{{ search_link }}" rel="nofollow, noindex">pages that use {{ title }}</a>
-                      to see example use cases and how many pages use this macro.
-                    {% endtrans %}
                   {% else %}
-                    {{ document_html_safe }}
+                    {{ body_html|safe }}
                   {% endif %}
                 {% elif fallback_reason == 'no_translation' %}
-                  {{ document_html_safe }}
+                  {{ body_html|safe }}
                 {% elif fallback_reason == 'translation_not_approved' %}
                   {{ document.parent.html|safe }}
                 {% else %}

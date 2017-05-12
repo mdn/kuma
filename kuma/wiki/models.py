@@ -33,8 +33,7 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
-                        REDIRECT_CONTENT, REDIRECT_HTML,
-                        TEMPLATE_TITLE_PREFIX)
+                        REDIRECT_CONTENT, REDIRECT_HTML)
 from .content import parse as parse_content
 from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
                       get_content_sections, get_seo_description)
@@ -216,7 +215,9 @@ class Document(NotificationsMixin, models.Model):
     # completion and such.)
     tags = TaggableManager(through=TaggedDocument)
 
-    # Is this document a template or not?
+    # DEPRECATED: Is this document a template or not?
+    # Droping or altering this column will require a table rebuild, so it
+    # should be done in a maintenance window.
     is_template = models.BooleanField(default=False, editable=False,
                                       db_index=True)
 
@@ -326,8 +327,6 @@ class Document(NotificationsMixin, models.Model):
         )
         permissions = (
             ('view_document', 'Can view document'),
-            ('add_template_document', 'Can add Template:* document'),
-            ('change_template_document', 'Can change Template:* document'),
             ('move_tree', 'Can move a tree of documents'),
             ('purge_document', 'Can permanently delete document'),
             ('restore_document', 'Can restore deleted document'),
@@ -951,8 +950,6 @@ class Document(NotificationsMixin, models.Model):
         return modified_epoch
 
     def save(self, *args, **kwargs):
-
-        self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
         self.is_redirect = bool(self.get_redirect_url())
 
         try:
@@ -1835,10 +1832,7 @@ class Revision(models.Model):
 
     @property
     def content_cleaned(self):
-        if self.document.is_template:
-            return self.content
-        else:
-            return Document.objects.clean_content(self.content)
+        return Document.objects.clean_content(self.content)
 
     @cached_property
     def previous(self):

@@ -40,14 +40,11 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
 
     # Process the original content for a diff, extracting a section if we're
     # editing one.
-    if doc.is_template:
-        curr_content = curr_rev.content
-    else:
-        parsed_content = kuma.wiki.content.parse(curr_rev.content)
-        parsed_content.injectSectionIDs()
-        if section_id:
-            parsed_content.extractSection(section_id)
-        curr_content = parsed_content.serialize()
+    parsed_content = kuma.wiki.content.parse(curr_rev.content)
+    parsed_content.injectSectionIDs()
+    if section_id:
+        parsed_content.extractSection(section_id)
+    curr_content = parsed_content.serialize()
 
     if is_raw:
         # When dealing with the raw content API, we need to signal the conflict

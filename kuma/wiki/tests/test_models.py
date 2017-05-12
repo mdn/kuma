@@ -22,8 +22,7 @@ from . import (create_document_tree,
                create_topical_parents_docs, document, normalize_html,
                revision)
 from .. import tasks
-from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT,
-                         TEMPLATE_TITLE_PREFIX)
+from ..constants import EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT
 from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
@@ -112,23 +111,6 @@ class DocumentTests(UserTestCase):
         assert de_data['summary'] == de_doc.current_revision.summary
         assert de_data['title'] == de_doc.title
         assert de_data['uuid'] == str(de_doc.uuid)
-
-    def test_document_is_template(self):
-        """is_template stays in sync with the title"""
-        d = document(title='test')
-        d.save()
-
-        assert not d.is_template
-
-        d.slug = '%stest' % TEMPLATE_TITLE_PREFIX
-        d.save()
-
-        assert d.is_template
-
-        d.slug = 'Back-to-document'
-        d.save()
-
-        assert not d.is_template
 
     def test_document_is_experiment(self):
         d = document(title='test', save=True)

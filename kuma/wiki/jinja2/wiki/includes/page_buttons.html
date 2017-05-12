@@ -27,11 +27,9 @@
   <li>
     <button type="submit" class="button positive btn-save">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button>
   </li>
-  {% if (not document and not is_template) or (document and not document.is_template) %}
   <li>
     <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview') }}<i aria-hidden="true" class="icon-play-circle"></i></button>
   </li>
-  {% endif %}
   <li>
     <a href="{{ discard_href }}" class="button negative btn-discard">{{ _('Discard') }}<i aria-hidden="true" class="icon-undo"></i></a>
   </li>

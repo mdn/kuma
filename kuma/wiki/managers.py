@@ -48,7 +48,7 @@ class BaseDocumentManager(models.Manager):
 
     def filter_for_list(self, locale=None, tag=None, tag_name=None,
                         errors=None, noparent=None, toplevel=None):
-        docs = (self.filter(is_template=False, is_redirect=False)
+        docs = (self.filter(is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
                     .exclude(slug__startswith='User_talk:')

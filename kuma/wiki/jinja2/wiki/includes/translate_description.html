@@ -40,7 +40,6 @@
                 </li>
                 {% endif %}
               {% endif %}
-              {% if not document.is_template %}
                 <li>
                   <dl class="approved">
                     <dt>&nbsp;</dt>
@@ -51,7 +50,6 @@
                     <dd>{{ revision_form.toc_depth | safe }}</dd>
                   </dl>
                 </li>
-              {% endif %}
               {% if revision_form and revision_form.instance.based_on %}
               <li class="metadata-choose-parent">
                 <dl class="approved">

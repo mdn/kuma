@@ -24,8 +24,7 @@ from kuma.users.tests import UserTestCase
 
 from . import (WikiTestCase, create_topical_parents_docs, document,
                new_document_data, revision)
-from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT,
-                         TEMPLATE_TITLE_PREFIX)
+from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT)
 from ..events import EditDocumentEvent
 from ..models import Document, DocumentTag, Revision
 
@@ -491,18 +490,12 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
             ok_(test_string in response.content)
 
     def test_new_document_preview_button(self):
-        """HTTP GET to new document URL shows preview button for basic doc
-        and not for template doc"""
+        """HTTP GET to new document URL shows preview button."""
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.create'))
         eq_(200, response.status_code)
         doc = pq(response.content)
         ok_(len(doc('.btn-preview')) > 0)
-
-        response = self.client.get(reverse('wiki.create') +
-                                   '?slug=' + TEMPLATE_TITLE_PREFIX)
-        doc = pq(response.content)
-        eq_(0, len(doc('.btn-preview')))
 
     def test_new_document_form_defaults(self):
         """The new document form should have all all 'Relevant to' options
@@ -827,22 +820,6 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
-
-    @pytest.mark.toc
-    def test_toc_hidden_input_for_templates(self):
-        """The toc_depth field is hidden when editing a template."""
-        doc_content = """w00t"""
-        doc = document(locale='en-US', slug="Template:w00t", save=True)
-        revision(document=doc, save=True, content=doc_content,
-                 is_approved=True)
-        url = reverse('wiki.edit', args=[doc.slug], locale=doc.locale)
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        parsed = pq(response.content)
-        toc_depth = parsed('input[name=toc_depth]')
-        eq_(1, len(toc_depth))
-        eq_('hidden', toc_depth[0].type)
-        eq_('0', toc_depth[0].value)
 
 
 class DocumentListTests(UserTestCase, WikiTestCase):

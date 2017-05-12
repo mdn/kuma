@@ -56,16 +56,14 @@
       {% include "wiki/includes/document_tag.html" %}
     </div>
 
-    {% if not document.is_template %}
-      <details open="open">
-        <summary><h2>{{ _('Revision Content') }}</h2></summary>
-        <article id="wikiArticle" class="text-content">
-          {{ revision.content_cleaned|safe }}
-        </article>
-      </details>
-    {% endif %}
+    <details open="open">
+      <summary><h2>{{ _('Revision Content') }}</h2></summary>
+      <article id="wikiArticle" class="text-content">
+        {{ revision.content_cleaned|safe }}
+      </article>
+    </details>
 
-    <details {% if document.is_template %}open="open"{% endif %}>
+    <details>
       <summary><h2>{{ _('Revision Source') }}</h2></summary>
       <div id="doc-source">
         <pre class="brush:js">{{ revision.content }}</pre>
