@@ -30,13 +30,6 @@ header modifications
     background-position: center -6px;
 }
 
-@media #{$media-query-mobile-only} {
-    .zone {
-        background-image: url($path-to-images + 'blueprint.png'), linear-gradient(to bottom, #153985, #044ca2 600px);
-        background-repeat: repeat, repeat-x;
-    }
-}
-
 @media #{$media-query-tablet-and-up} {
     .zone-landing .masthead-text p {
         @include heading-1();

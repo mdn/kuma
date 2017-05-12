@@ -36,5 +36,14 @@ All zones need these styles
 
     .masthead-text {
         width: -calc-col-width(6);
+
+        p {
+            /* margin causes space between bottom of .zone-landing-header-preview
+               and top of wiki-main-content which causes some zone landing
+               images to appear cut-off if there is no subnav present so we spap
+               margin for padding */
+            margin-bottom: 0;
+            padding-bottom: $grid-spacing;
+        }
     }
 }
