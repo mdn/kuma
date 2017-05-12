@@ -42,6 +42,15 @@ Three grey boxes
     }
 }
 
+@media #{$media-query-mobile} {
+    .dev-program-callouts {
+        display: block;
+    }
+    .dev-program-callout {
+        display: block;
+        width: auto;
+    }
+}
 
 /*
 Content
