@@ -58,8 +58,6 @@ docker-compose.locust.yml
 humans.txt
 james.ini
 kuma/static/js/libs/ckeditor/source/ckbuilder
-kumascript_settings_local.json
-kumascript_settings_local.json*
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
 mdntests/
@@ -69,10 +67,17 @@ media/uploads
 media/revision.txt
 media/kumascript-revision.txt
 node_modules/
-settings_local.py
-settings_local.py*
 /static/
 tmp
+
+# SCL3-specific files
+# TODO: Remove when AWS move is complete
+kumascript_settings_local.json
+kumascript_settings_local.json*
+!kumascript_settings_local.json-dist
+settings_local.py
+settings_local.py*
+webroot/.htaccess
 
 # Selenium
 geckodriver.log
@@ -82,6 +87,5 @@ geckodriver.log
 logs/
 xfers/*
 wheelhouse
-webroot/.htaccess
 uploads/
 kumascript.log
