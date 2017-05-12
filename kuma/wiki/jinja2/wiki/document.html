@@ -361,7 +361,9 @@
                   {% if current_revision.creator %}
                     <div class="contributors-sub">
                       <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>{{ _('Last updated by:') }}</strong>
-                      <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
+                      <a href="{{ current_revision.creator.get_absolute_url() }}"
+                         {%- if not current_revision.creator.is_active %} rel="nofollow"{% endif -%}
+                         >{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>
                   {% endif %}

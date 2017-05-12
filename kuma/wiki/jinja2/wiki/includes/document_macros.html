@@ -39,8 +39,12 @@
             {% endif %}
           </h3>
           <p>
-          {% trans id=revision_from.id, user_profile_url=revision_from.creator.get_absolute_url(), user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime') %}
-            Revision {{ id }} by <a href="{{ user_profile_url }}">{{ user }}</a> on {{ date }}
+          {% trans id=revision_from.id,
+                   user_profile_url=revision_from.creator.get_absolute_url(),
+                   user=revision_from.creator,
+                   rel='' if revision_from.creator.is_active else 'rel="nofollow"',
+                   date=datetimeformat(revision_from.created, format='longdatetime') %}
+             Revision {{ id }} by <a href="{{ user_profile_url }}" {{ rel }}>{{ user }}</a> on {{ date }}
           {% endtrans %}
           </p>
         </div>
@@ -55,8 +59,12 @@
             {% endif %}
           </h3>
           <p>
-          {% trans id=revision_to.id, user_profile_url=revision_to.creator.get_absolute_url(), user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime') %}
-            Revision {{ id }} by <a href="{{ user_profile_url }}">{{ user }}</a> on {{ date }}
+          {% trans id=revision_to.id,
+                   user_profile_url=revision_to.creator.get_absolute_url(),
+                   user=revision_to.creator,
+                   rel='' if revision_to.creator.is_active else 'rel="nofollow"',
+                   date=datetimeformat(revision_to.created, format='longdatetime') %}
+                   Revision {{ id }} by <a href="{{ user_profile_url }}" {{ rel }}>{{ user }}</a> on {{ date }}
           {% endtrans %}
           </p>
         </div>

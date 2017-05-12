@@ -101,9 +101,9 @@
           </td>
           <td>{{ datetimeformat(attachment.file.modified, format='datetime') }}</td>
           <td>
-            <a href="{{ attachment.file.current_revision.creator.get_absolute_url() }}">
-              {{ user_display(attachment.file.current_revision.creator) }}
-            </a>
+            <a href="{{ attachment.file.current_revision.creator.get_absolute_url() }}"
+               {%- if not attachment.file.current_revision.creator.is_active %} rel="nofollow"{% endif -%}
+               >{{ user_display(attachment.file.current_revision.creator) }}</a>
           </td>
           <td>
           {% if is_original %}

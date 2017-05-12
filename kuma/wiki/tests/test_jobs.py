@@ -210,9 +210,9 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     # Delete the ban.
     fixture.contributors.banned.ban.delete()
 
-    # The freshly un-banned user is not among the contributors
-    # because the cache has not been invalidated.
-    assert banned_user.pk not in set(c['id'] for c in job.get(root_doc.pk))
+    # The freshly un-banned user is now among the contributors because the
+    # cache has been invalidated.
+    assert banned_user.pk in set(c['id'] for c in job.get(root_doc.pk))
 
     # Another revision should invalidate the job's cache.
     root_doc.current_revision = Revision.objects.create(
