@@ -1,24 +1,6 @@
 ---
-- include: etc.yml
-  tags: [setup]
-
 - include: mysql.yml
-  tags: [setup, mysql]
-
-- include: apache.yml
-  tags: [setup]
-
-- include: vagrant.yml
-  tags: [setup]
+  tags: [mysql]
 
 - include: node.yml
-  tags: [setup, pipeline]
-
-- include: ruby.yml
-  tags: [setup]
-
-- include: python.yml
-  tags: [setup]
-
-- include: django.yml
-  tags: [app]
+  tags: [pipeline]

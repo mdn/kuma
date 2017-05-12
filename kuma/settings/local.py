@@ -1,7 +1,7 @@
 import logging
 from .common import *  # noqa
 
-# Settings for Vagrant Development
+# Settings for Docker Development
 # TODO: Use environment to override, not settings picker
 
 DEFAULT_FILE_STORAGE = 'kuma.core.storage.KumaHttpStorage'

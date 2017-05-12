@@ -2,8 +2,8 @@ Provisioning
 ============
 
 This is the provisioning folder which is partially managed automatically
-by ansible's package manager, ansible-galaxy. It'll be used by Vagrant
-automatically when running the provision step.
+by ansible's package manager, ansible-galaxy. It is currently used in
+TravisCI, but is planned for removal (bug 1352232).
 
 .. warn::
 
