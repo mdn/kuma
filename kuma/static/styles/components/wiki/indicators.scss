@@ -188,6 +188,9 @@ IE 11 converts hex to rgb, so target that as well.
     @include indicator-icon('\f0ac'); /* globe */
 }
 
+.secureContexts {
+    @include indicator-icon('\f023'); /* lock */
+}
 
 /*
 Colours for both types
@@ -209,7 +212,8 @@ Colours for both types
 /* experimental */
 .experimental,
 .experimentalBadge,
-.prefixBox {
+.prefixBox,
+.secureContexts {
     @extend %indicator-warning;
 }
 
