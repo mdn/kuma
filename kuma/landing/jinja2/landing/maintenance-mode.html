@@ -3,7 +3,7 @@
 {% set styles = ('maintenance-mode',) %}
 
 {% block title %}{{ page_title(_('Maintenance Mode')) }}{% endblock %}
-{% set meta = [('robots', 'noindex, nofollow')] %}
+{% block robots_value %}noindex, nofollow{% endblock %}
 
 {% block content %}
 
