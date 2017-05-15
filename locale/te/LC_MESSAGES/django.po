@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-05-01 12:40-0700\n"
+"POT-Creation-Date: 2017-05-15 10:06-0700\n"
 "PO-Revision-Date: 2017-04-26 08:55+0000\n"
 "Last-Translator: వీవెన్ <veeven@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
@@ -292,11 +292,11 @@ msgstr "<li><a href=\"/logout\"> లాగ్ అవుట్ </a> అయ్య�
 msgid "Search Firefox Help"
 msgstr "ఫైర్ఫాక్స్ సహాయం కోసం వెతుకు"
 
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:104
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:101
 msgid "Other languages:"
 msgstr "ఇతర భాషలు:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:115
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:112
 msgid "Go"
 msgstr "వెళ్ళు"
 
@@ -349,7 +349,7 @@ msgstr "మీరు ఒకవేళ Mozillaసంబంధిత వార్�
 msgid "Hide Newsletter Sign-up"
 msgstr "వార్తాప్రతి చందాను దాచు"
 
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
 msgid "Previous"
 msgstr "ముందు"
 
@@ -417,7 +417,7 @@ msgstr "చెజ్"
 msgid "Dutch"
 msgstr "డచ్"
 
-#: jinja2/includes/translate_locales.html:18
+#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1405
 msgid "English (US)"
 msgstr "ఆంగ్లం (US)"
 
@@ -613,8 +613,8 @@ msgstr "అన్ సబ్స్క్రిబ్"
 msgid "Are you sure you want to unsubscribe?"
 msgstr "మీరు ఇప్పటికీ అన్ సబ్స్క్రిబ్ అవ్వలనుకుంటున్నారా?"
 
-#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
+#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:44
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:43 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
 msgstr "రద్దుచేయి"
 
@@ -740,7 +740,7 @@ msgid "File"
 msgstr "ఫైల్"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1965
 msgid "Title"
 msgstr "శీర్షిక"
 
@@ -806,8 +806,8 @@ msgstr "ఉద్యుక్త వాడుక యొక్క వివరణ
 msgid "Created"
 msgstr "సృష్టించబడింది"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:107 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:246
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:16 kuma/wiki/jinja2/wiki/confirm_document_delete.html:43
 msgid "Delete"
 msgstr "తొలగించు"
 
@@ -912,11 +912,11 @@ msgstr "మోజ్ హ్యాక్స్"
 msgid "Today at %s"
 msgstr "ఈరోజు %s కి"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:332
 msgid "Yes"
 msgstr "అవును"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:336
 msgid "No"
 msgstr "కాదు"
 
@@ -1044,27 +1044,27 @@ msgstr "తెలిసిన రచయితలు"
 msgid "Unknown Authors"
 msgstr "తెలియని రచయితలు"
 
-#: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
+#: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:15
 msgid "Locale:"
 msgstr "స్థానికము:"
 
-#: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
+#: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:20
 msgid "User:"
 msgstr "వాడుకరి:"
 
-#: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
+#: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:25
 msgid "Topic:"
 msgstr "విషయం:"
 
-#: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
+#: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:31
 msgid "Start Date:"
 msgstr "ప్రారంభ తేదీ:"
 
-#: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
+#: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:36
 msgid "End Date:"
 msgstr "ముగింపు తేదీ:"
 
-#: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
+#: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:41
 msgid "Preceding Period:"
 msgstr "పూర్వ వ్యవధి:"
 
@@ -1072,52 +1072,52 @@ msgstr "పూర్వ వ్యవధి:"
 msgid "Authors"
 msgstr "రచయితలు"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
+#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:26
 msgid "Active macros"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:13
+#: kuma/dashboards/jinja2/dashboards/macros.html:14
 #, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
 msgstr[0] "%(num)s క్రియాశీల మాక్రోలు కనబడ్డాయి."
 msgstr[1] ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:15
+#: kuma/dashboards/jinja2/dashboards/macros.html:16
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:17
+#: kuma/dashboards/jinja2/dashboards/macros.html:18
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:23
+#: kuma/dashboards/jinja2/dashboards/macros.html:24
 msgid "Active macros and their usage counts"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
+#: kuma/dashboards/jinja2/dashboards/macros.html:31 kuma/dashboards/jinja2/dashboards/macros.html:66
 msgid "Macro Name"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:32
+#: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "English Page Count"
 msgstr "ఇంగ్లీషు పేజీల సంఖ్య"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:33
+#: kuma/dashboards/jinja2/dashboards/macros.html:34
 msgid "All Page Count"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:64
+#: kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Search for macro usage:"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:67
+#: kuma/dashboards/jinja2/dashboards/macros.html:68
 msgid "Search All Pages"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:68
+#: kuma/dashboards/jinja2/dashboards/macros.html:69
 msgid "Search English Pages"
 msgstr "ఇంగ్లీషు పేజీలలో వెతకండి"
 
@@ -1125,25 +1125,25 @@ msgstr "ఇంగ్లీషు పేజీలలో వెతకండి"
 msgid "Revision Dashboard"
 msgstr "పరిష్కృతుల క్రమణి"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:45
+#: kuma/dashboards/jinja2/dashboards/revisions.html:46
 msgid "Authors:"
 msgstr "రచయితలు:"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
+#: kuma/dashboards/jinja2/dashboards/revisions.html:50 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
 msgstr "వడపోత"
 
-#: kuma/dashboards/jinja2/dashboards/spam.html:30
+#: kuma/dashboards/jinja2/dashboards/spam.html:31
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "%(date)s దాకా ఉన్ముఖాలు"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1918
 msgid "Revision"
 msgstr "కూర్పు"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:44 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:35 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "వ్యాఖ్య"
 
@@ -1163,46 +1163,46 @@ msgstr "కొత్త"
 msgid "deleted"
 msgstr "తొలగించబడింది"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:55
 msgid "IP:"
 msgstr "ఐపి:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "Ban IP from Editing"
 msgstr "IP ను సవరించనీయకుండా నిషేధించు"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "User agent:"
 msgstr "వాడుకరి:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:62
 msgid "Referrer:"
 msgstr "సూచకుడు:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:69 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "%(user)s చేత %(ban_date)s నిషేధింప బడ్డాయి"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr "%(submission_type)s గా సమర్పించబడెను"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:85
 #, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "%(user)s చేత %(sent_date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:92
 msgid "Submit as:"
 msgstr "సమర్పణ:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:93
 msgid "spam"
 msgstr "స్పామ్"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:104
 msgid "There are no revisions matching this filter set."
 msgstr "ఈ వడపోత సమితికి సరిపోవు పరిష్కృతులేవీ లేవు."
 
@@ -1435,7 +1435,7 @@ msgid ""
 "little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
+#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
 msgstr "మునుజూపు"
 
@@ -1871,8 +1871,8 @@ msgstr "నా గురించి"
 msgid "IRC nickname"
 msgstr ""
 
-#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:76
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:30 kuma/wiki/jinja2/wiki/create.html:65
+#: kuma/wiki/jinja2/wiki/edit.html:184
 msgid "Tags"
 msgstr "ట్యాగ్స్"
 
@@ -2283,135 +2283,135 @@ msgstr ""
 msgid "Ban user"
 msgstr "యూసర్ ను నిషేదించండి"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:23
 #, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:27
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:30
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:47
 msgid "You cannot ban yourself for spam."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:51
 msgid "Submit Spam"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:53
 msgid "Ban User for Spam"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:55
 msgid "Ban User for Spam & Submit Spam"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
 msgid "Ban user for other reasons."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:62
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
 msgid "Summary"
 msgstr "సారాంశం"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Actions Taken"
 msgstr "తీసుకున్న చర్య"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
 msgid "Banned:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:32
 msgid "Submitted to Akismet as spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:45
 msgid "The user did not have any revisions that were reported as spam."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "Deleted:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:62
 msgid "The user did not have any revisions that were deleted."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66
 msgid "Reverted:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
 msgid "The user did not have any revisions that were reverted."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "Needs follow up"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:87
 msgid "New action by user:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:97 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:129 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:150
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:170 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:189 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:212
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:236 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:267 kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr "పేజీని చూడండి"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:68
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:216 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:240
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:271 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "History"
 msgstr "చరిత్ర"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:115 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:136 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:176 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:195 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:278
 msgid "None."
 msgstr "ఏమీలేదు."
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:119
 msgid "Revisions skipped due to newer non-spam revision:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:140
 msgid "Could not submit to Akismet:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:161
 msgid "Could not delete:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:180
 msgid "Could not revert:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "No actions taken"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:202
 msgid "Latest revision is non-spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:226
 msgid "Already identified as spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:257
 msgid "Identified as not spam:"
 msgstr ""
 
@@ -2487,40 +2487,40 @@ msgstr ""
 msgid "File a bug to close your account"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:36
+#: kuma/users/jinja2/users/user_detail.html:37
 msgid "Recent Docs Activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:36
+#: kuma/users/jinja2/users/user_detail.html:37
 msgid "View all activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:41
+#: kuma/users/jinja2/users/user_detail.html:42
 msgid "Page"
 msgstr "పేజీ"
 
-#: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/users/jinja2/users/user_detail.html:43 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:26
 msgid "Date"
 msgstr "తేదీ"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:427
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:411
 msgid "Edit page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:52
+#: kuma/users/jinja2/users/user_detail.html:53
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:412
 msgid "View page history"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:65
+#: kuma/users/jinja2/users/user_detail.html:66
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:69
+#: kuma/users/jinja2/users/user_detail.html:70
 msgid "This user has no activity."
 msgstr ""
 
@@ -2528,63 +2528,63 @@ msgstr ""
 msgid "Edit Your Profile"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:33
+#: kuma/users/jinja2/users/user_edit.html:34
 msgid "Change your avatar at"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:39
+#: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:43
+#: kuma/users/jinja2/users/user_edit.html:44
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:54
+#: kuma/users/jinja2/users/user_edit.html:55
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:57
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "Primary Email"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:57
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "Edit email"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:70
+#: kuma/users/jinja2/users/user_edit.html:71
 msgid "Interests (tags)"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:71
+#: kuma/users/jinja2/users/user_edit.html:72
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:78
 msgid "Areas of expertise"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:78
+#: kuma/users/jinja2/users/user_edit.html:79
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:86
+#: kuma/users/jinja2/users/user_edit.html:87
 msgid "My Profiles"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:98
+#: kuma/users/jinja2/users/user_edit.html:99
 msgid "Use your GitHub account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
+#: kuma/users/jinja2/users/user_edit.html:118 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr "ప్రచురించు"
 
-#: kuma/users/jinja2/users/user_edit.html:119
+#: kuma/users/jinja2/users/user_edit.html:120
 msgid "Delete your account."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:129
+#: kuma/users/jinja2/users/user_edit.html:130
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr ""
 
@@ -2742,11 +2742,11 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:47
 msgid "Edit"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:62 kuma/wiki/jinja2/wiki/includes/buttons.html:66
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:61 kuma/wiki/jinja2/wiki/includes/buttons.html:65
 msgid "Advanced"
 msgstr "ఉన్నత"
 
@@ -2792,19 +2792,19 @@ msgstr ""
 msgid "Admin"
 msgstr "నిర్వాహకులు"
 
-#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:55 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "వికీ"
 
-#: kuma/wiki/constants.py:217
+#: kuma/wiki/constants.py:216
 msgid "Technical - code samples, APIs, or technologies"
 msgstr ""
 
-#: kuma/wiki/constants.py:218
+#: kuma/wiki/constants.py:217
 msgid "Editorial - prose, grammar, or content"
 msgstr ""
 
-#: kuma/wiki/constants.py:223
+#: kuma/wiki/constants.py:222
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
@@ -2978,16 +2978,16 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
-#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:894 kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:72 kuma/wiki/jinja2/wiki/edit.html:120
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:74 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "శీర్షిక:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:895
 msgid "Title of article"
 msgstr "వ్యాసపు శీర్షిక"
 
-#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:78
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr ""
@@ -2996,15 +2996,15 @@ msgstr ""
 msgid "Article URL"
 msgstr ""
 
-#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:42 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:83 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr ""
 
-#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:84
 msgid "Keywords:"
 msgstr "ముఖ్య పదాలు:"
 
@@ -3020,11 +3020,11 @@ msgstr ""
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:94
 msgid "Content:"
 msgstr ""
 
-#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:89
 msgid "Comment:"
 msgstr "వ్యాఖ్య:"
 
@@ -3036,146 +3036,146 @@ msgstr ""
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:906
+#: kuma/wiki/forms.py:901
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:907
+#: kuma/wiki/forms.py:902
 msgid "New article URL"
 msgstr ""
 
-#: kuma/wiki/models.py:113
+#: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
 msgstr ""
 
-#: kuma/wiki/models.py:121
+#: kuma/wiki/models.py:120
 msgid "Document Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:122
+#: kuma/wiki/models.py:121
 msgid "Document Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:174
+#: kuma/wiki/models.py:173
 msgid "uploaded to the document"
 msgstr ""
 
-#: kuma/wiki/models.py:180
+#: kuma/wiki/models.py:179
 msgid "linked in the document content"
 msgstr ""
 
-#: kuma/wiki/models.py:194
+#: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr ""
 
-#: kuma/wiki/models.py:1600
+#: kuma/wiki/models.py:1599
 msgid "Review Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1601
+#: kuma/wiki/models.py:1600
 msgid "Review Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1607
+#: kuma/wiki/models.py:1606
 msgid "Localization Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1608
+#: kuma/wiki/models.py:1607
 msgid "Localization Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1641
+#: kuma/wiki/models.py:1640
 msgid "No table of contents"
 msgstr ""
 
-#: kuma/wiki/models.py:1642
+#: kuma/wiki/models.py:1641
 msgid "All levels"
 msgstr ""
 
-#: kuma/wiki/models.py:1643
+#: kuma/wiki/models.py:1642
 msgid "H2 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1644
+#: kuma/wiki/models.py:1643
 msgid "H3 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1645
+#: kuma/wiki/models.py:1644
 msgid "H4 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1749
+#: kuma/wiki/models.py:1748
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr ""
 
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1878
 msgid "IP address"
 msgstr "IP చిరునామా"
 
-#: kuma/wiki/models.py:1890
+#: kuma/wiki/models.py:1886
 msgid "User-Agent"
 msgstr ""
 
-#: kuma/wiki/models.py:1895
+#: kuma/wiki/models.py:1891
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
+#: kuma/wiki/models.py:1899 kuma/wiki/models.py:1984
 msgid "Data submitted to Akismet"
 msgstr ""
 
-#: kuma/wiki/models.py:1928
+#: kuma/wiki/models.py:1924
 msgid "Akismet submission"
 msgstr ""
 
-#: kuma/wiki/models.py:1929
+#: kuma/wiki/models.py:1925
 msgid "Akismet submissions"
 msgstr ""
 
-#: kuma/wiki/models.py:1973
+#: kuma/wiki/models.py:1969
 msgid "Slug"
 msgstr ""
 
-#: kuma/wiki/models.py:1981
+#: kuma/wiki/models.py:1977
 msgid "Document (optional)"
 msgstr ""
 
-#: kuma/wiki/models.py:1991
+#: kuma/wiki/models.py:1987
 msgid "reviewed"
 msgstr ""
 
-#: kuma/wiki/models.py:2002
+#: kuma/wiki/models.py:1998
 msgid "Needs Review"
 msgstr ""
 
-#: kuma/wiki/models.py:2003
+#: kuma/wiki/models.py:1999
 msgid "Ham / False Positive"
 msgstr ""
 
-#: kuma/wiki/models.py:2004
+#: kuma/wiki/models.py:2000
 msgid "Confirmed as Spam"
 msgstr ""
 
-#: kuma/wiki/models.py:2005
+#: kuma/wiki/models.py:2001
 msgid "Review Unavailable"
 msgstr ""
 
-#: kuma/wiki/models.py:2006
+#: kuma/wiki/models.py:2002
 msgid "Akismet Error"
 msgstr ""
 
-#: kuma/wiki/models.py:2011
+#: kuma/wiki/models.py:2007
 msgid "Review of Akismet's classification as spam"
 msgstr ""
 
-#: kuma/wiki/models.py:2018
+#: kuma/wiki/models.py:2014
 msgid "Staff reviewer"
 msgstr ""
 
-#: kuma/wiki/search.py:311
+#: kuma/wiki/search.py:307
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr ""
@@ -3216,31 +3216,31 @@ msgstr "తిరిగి చరిత్రకి"
 msgid "Delete Document | %(document)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:10
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:18 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:22
 msgid "Creator"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Creation Date"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change By"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:31
 msgid "Last Change Date"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:34
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:41
 msgid "Are you sure you want to continue?"
 msgstr ""
 
@@ -3249,47 +3249,43 @@ msgstr ""
 msgid "Revert Revision | %(document)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:11
 msgid "Are you sure you want to revert to this revision?"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:19
 msgid "Document"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:28
 msgid "Content"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "Why are you reverting to this revision?"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:42
 msgid "Revert"
 msgstr "పూర్వావస్థలోకి తెచ్చు"
 
-#: kuma/wiki/jinja2/wiki/create.html:6
-msgid "Create a New Template"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/create.html:8
+#: kuma/wiki/jinja2/wiki/create.html:5
 msgid "Create a New Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/create.html:32
+#: kuma/wiki/jinja2/wiki/create.html:29
 msgid "Create a"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/create.html:32
+#: kuma/wiki/jinja2/wiki/create.html:29
 msgid "New Document"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/create.html:41
+#: kuma/wiki/jinja2/wiki/create.html:38
 msgid "URL segment that identifies the page"
 msgstr ""
 
@@ -3310,150 +3306,140 @@ msgstr ""
 msgid "Restore this document"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:184
+#: kuma/wiki/jinja2/wiki/document.html:181
 msgid "Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:184 kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:181 kuma/wiki/jinja2/wiki/document.html:191
 msgid "No Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:187
 msgid "Your Search Results"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:191
 msgid "Next Search Result"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:198
+#: kuma/wiki/jinja2/wiki/document.html:195
 msgid "see all contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:198
+#: kuma/wiki/jinja2/wiki/document.html:195
 msgid "hide contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:202
+#: kuma/wiki/jinja2/wiki/document.html:199
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:227
+#: kuma/wiki/jinja2/wiki/document.html:224
 msgid "In This Article"
 msgstr "ఈ వ్యాసంలో"
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:259
+#: kuma/wiki/jinja2/wiki/document.html:250
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:267
+#: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:276
+#: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:287
+#: kuma/wiki/jinja2/wiki/document.html:278
 msgid "This is an experimental page."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:298
+#: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:303
+#: kuma/wiki/jinja2/wiki/document.html:294
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:310
+#: kuma/wiki/jinja2/wiki/document.html:301
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:313
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:327
-#, python-format
-msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:327
 msgid "Was this article helpful?"
 msgstr "ఈ వ్యాసం మీకు తోడ్పడిందా?"
 
-#: kuma/wiki/jinja2/wiki/document.html:359
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Thank you!"
 msgstr "కృతజ్ఞతలు!"
 
-#: kuma/wiki/jinja2/wiki/document.html:369
+#: kuma/wiki/jinja2/wiki/document.html:351
 msgid "Document Tags and Contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:375
+#: kuma/wiki/jinja2/wiki/document.html:357
 msgid "Contributors to this page:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:381
+#: kuma/wiki/jinja2/wiki/document.html:363
 msgid "Last updated by:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:6
-#, python-format
-msgid "%(title)s | Edit Template"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/edit.html:8
+#: kuma/wiki/jinja2/wiki/edit.html:5
 #, python-format
 msgid "%(title)s | Edit Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:31
+#: kuma/wiki/jinja2/wiki/edit.html:27
 msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:41
+#: kuma/wiki/jinja2/wiki/edit.html:37
 msgid "Your Changes"
 msgstr "మీ మార్పులు"
 
-#: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
+#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:62
 #, python-format
-msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
+msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> on %(date)s"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:86
+#: kuma/wiki/jinja2/wiki/edit.html:90
 msgid "Search results summary:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:106
+#: kuma/wiki/jinja2/wiki/edit.html:110
 msgid "Edit Page Title and Properties"
 msgstr ""
 
@@ -3477,7 +3463,7 @@ msgstr "నిముషాలు"
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:60
 msgid "Lookup:"
 msgstr ""
 
@@ -3498,11 +3484,11 @@ msgstr ""
 msgid "Have fun and be proud of your contribution!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/wiki/jinja2/wiki/edit.html:184
 msgid "Learn how to tag an article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:190 kuma/wiki/jinja2/wiki/translate.html:114
+#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr ""
@@ -3598,7 +3584,7 @@ msgstr ""
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/preview.html:13
+#: kuma/wiki/jinja2/wiki/preview.html:14
 msgid "This is a preview of an unsaved document."
 msgstr ""
 
@@ -3635,15 +3621,15 @@ msgstr "తయారీదారుడు:"
 msgid "Is current revision?"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/revision.html:61
+#: kuma/wiki/jinja2/wiki/revision.html:60
 msgid "Revision Content"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/revision.html:69
+#: kuma/wiki/jinja2/wiki/revision.html:67
 msgid "Revision Source"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:73
+#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:76
 msgid "Revert to this revision"
 msgstr ""
 
@@ -3668,65 +3654,65 @@ msgstr ""
 msgid "Translate Article | %(document)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:33
+#: kuma/wiki/jinja2/wiki/translate.html:34
 #, python-format
 msgid "Translating article to %(locale)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:43
+#: kuma/wiki/jinja2/wiki/translate.html:44
 msgid "Translate Content"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:83
+#: kuma/wiki/jinja2/wiki/translate.html:84
 #, python-format
 msgid "Approved %(locale)s version:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:85
+#: kuma/wiki/jinja2/wiki/translate.html:86
 msgid "View Rendered"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:85
+#: kuma/wiki/jinja2/wiki/translate.html:86
 msgid "View Source"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:87
 #, python-format
 msgid "Show %(locale)s"
 msgstr "%(locale)s చూపించు"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:87
 #, python-format
 msgid "Hide %(locale)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:98
+#: kuma/wiki/jinja2/wiki/translate.html:99
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "%(locale)s అనువాదం:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:111
+#: kuma/wiki/jinja2/wiki/translate.html:112
 msgid "Translate Tags"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:120
+#: kuma/wiki/jinja2/wiki/translate.html:121
 msgid "English tags"
 msgstr "ఆంగ్ల ట్యాగ్స్"
 
-#: kuma/wiki/jinja2/wiki/translate.html:132
+#: kuma/wiki/jinja2/wiki/translate.html:133
 msgid "This document has no tags."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:139
+#: kuma/wiki/jinja2/wiki/translate.html:140
 #, python-format
 msgid "%(locale)s tags"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:146
+#: kuma/wiki/jinja2/wiki/translate.html:147
 msgid "Version Notes"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:148
+#: kuma/wiki/jinja2/wiki/translate.html:149
 msgid "Localization flags"
 msgstr ""
 
@@ -3784,51 +3770,51 @@ msgstr ""
 msgid "Save"
 msgstr "సేవ్"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:19
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:18
 msgid "Languages"
 msgstr "భాషలు"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:32
 msgid "No translations exist for this article."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:36
 msgid "Add a translation"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:52 kuma/wiki/jinja2/wiki/includes/buttons.html:55
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:51 kuma/wiki/jinja2/wiki/includes/buttons.html:54
 msgid "Watch"
 msgstr "గమనించు"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:69
 msgid "New sub-article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "Clone this article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:73
 msgid "Move this article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:77
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:76
 msgid "View in admin"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:85
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:84
 msgid "Delete this article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:89
 msgid "Manage content zone"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:93
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Convert to content zone"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:95
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:94
 msgid "Print this article"
 msgstr "ఈ వ్యాసాన్ని ముద్రించుకోండి"
 
@@ -3844,78 +3830,78 @@ msgstr "ఇంకా చూడవలసినవి"
 msgid "Change Revisions"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:57
 #, python-format
 msgid "Revision %(num)s:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:96 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:116
 msgid "Subscribe to this article and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
 msgid "Unsubscribe from this article and all its sub-articles"
 msgstr "ఈ వ్యాసం నుండి దీని ఉప-వ్యాసాల నుండి చందా విరమించండి"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:131
 msgid "Updating subscription status"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "Subscribe to this article"
 msgstr "ఈ వ్యాసానికి చందాచేరండి"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 msgid "Unsubscribe from this article"
 msgstr "ఈ వ్యాసం నుండి చందావిరమించండి"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
 #, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:147
 #, python-format
 msgid "Subscribe to the %(language)s version"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "Unsubscribe from the %(language)s version"
 msgstr "%(language)s కూర్పు నుండి చందా విరమించండి"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:49
 msgid "Generate table of contents"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:49
 msgid "TOC:"
 msgstr ""
 
@@ -3991,7 +3977,7 @@ msgstr ""
 msgid "Publish and Keep Editing"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:34
 msgid "Discard"
 msgstr "తొలగించు"
 
@@ -4039,7 +4025,7 @@ msgstr "%(locale)s లో శీర్షిక:"
 msgid "Slug in %(locale)s:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
+#: kuma/wiki/jinja2/wiki/includes/translate_description.html:64
 msgid "Find the translation source with the lookup above and then click \"Save\"."
 msgstr "పై శోధని ద్వారా అనువాద మూలాన్ని కనుగొని, ఆ తర్వాత \"భద్రపరుచు\" బొత్తాన్ని నొక్కండి."
 
@@ -4056,37 +4042,26 @@ msgid "Articles tagged: %(tag)s"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
-msgid "All templates"
-msgstr "అన్ని మూసలు"
-
-#: kuma/wiki/jinja2/wiki/list/documents.html:7
-#, python-format
-msgid "Found %(num)s template."
-msgid_plural "Found %(num)s templates"
-msgstr[0] "%(num)s మూస కనుగొనబడింది."
-msgstr[1] "%(num)s మూసలు కనుగొనబడ్డాయి"
-
-#: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
 msgstr "లోపాలతో కూడిన పత్రాలు"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:11
+#: kuma/wiki/jinja2/wiki/list/documents.html:8
 msgid "Top level documents"
 msgstr "ఉన్నత స్థాయి పత్రాలు"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:13
+#: kuma/wiki/jinja2/wiki/list/documents.html:10
 msgid "Documents with no parent"
 msgstr "ఎటువంటి మాతృక లేని పత్రాలు"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:15
+#: kuma/wiki/jinja2/wiki/list/documents.html:12
 msgid "All documents"
 msgstr "అన్ని పత్రములు"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:28
 msgid "Translation updates needed"
 msgstr "అనువాద నవీకరణలు అవసరం"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:53 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
 msgstr "వ్యాసాలేమీ లేవు."
 
@@ -4128,23 +4103,23 @@ msgstr "%(count)s పత్రాలు కనుగొనబడ్డాయి.
 msgid "Revision History | %(document)s"
 msgstr "పరిష్కృత చరిత్ర | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:14
+#: kuma/wiki/jinja2/wiki/list/revisions.html:15
 msgid "History of"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:17
+#: kuma/wiki/jinja2/wiki/list/revisions.html:18
 msgid "Revision history for:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:42
+#: kuma/wiki/jinja2/wiki/list/revisions.html:43
 msgid "Compare Selected Translations"
 msgstr "ఎంచుకున్న అనువాదాలను పోల్చు"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:42
+#: kuma/wiki/jinja2/wiki/list/revisions.html:43
 msgid "Compare Selected Revisions"
 msgstr "ఎంచుకున్న పరిష్కృతులను పోల్చు"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:81
+#: kuma/wiki/jinja2/wiki/list/revisions.html:84
 msgid "This document has no revisions."
 msgstr "ఈ పత్రము ఎటువంటి ఇత పరిష్కృతులను కలిగి లేదు."
 
@@ -4216,16 +4191,16 @@ msgstr ""
 msgid "Select an Akismet submission for more details"
 msgstr ""
 
-#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
+#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
 #, python-format
 msgid "Revision %s"
 msgstr "రివిజన్ %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:107
+#: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
 msgstr "విషయాన్ని సృష్టించడంలో ఏదో లోపం సంభవించింది."
 
-#: kuma/wiki/views/delete.py:54
+#: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "పత్రం ముందే ఉనికిలో ఉంది. గమనిక: ఒక తరలింపబడిన పత్రం వైపు ఉన్న దారి మళ్లింపును తొలగించకుండా ఆ పత్రాన్ని పూర్వస్థితికి తీసుకురాలేరు."
 
@@ -4234,26 +4209,26 @@ msgstr "పత్రం ముందే ఉనికిలో ఉంది. గ�
 msgid "Redirected from %(url)s"
 msgstr "%(url)s నుండి దారి మరల్చబడింది"
 
-#: kuma/wiki/views/document.py:718
+#: kuma/wiki/views/document.py:710
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "నేను MDN పై %(title)s గురించి తెలుసుకున్నాను."
 
-#: kuma/wiki/views/document.py:791
+#: kuma/wiki/views/document.py:783
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "మద్దతు లేని విషయ రీతి: %s"
 
-#: kuma/wiki/views/document.py:798
+#: kuma/wiki/views/document.py:790
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "అభ్యర్ధనను అన్వయించడంలో లోపం: %s"
 
-#: kuma/wiki/views/document.py:818
+#: kuma/wiki/views/document.py:808
 msgid "ETag precondition failed"
 msgstr "ETag ముందస్తు షరతు విఫలమయ్యింది"
 
-#: kuma/wiki/views/edit.py:114
+#: kuma/wiki/views/edit.py:111
 msgid "Sections may only be edited inline."
 msgstr "విభాగాలు కేవలం వరసల్లోన మాత్రమే సవరించగలం."
 
@@ -4261,7 +4236,7 @@ msgstr "విభాగాలు కేవలం వరసల్లోన మా
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr "స్వీయసూచనల కోసం ఒక పాక్షిక శీర్షిక అవసరం. పూర్తి దస్త్ర సూచిక కోసం, ముంగిలి పుటను సందర్శించండి."
 
-#: kuma/wiki/views/revision.py:145
+#: kuma/wiki/views/revision.py:142
 msgid "Document has been edited; please re-review."
 msgstr "పత్రం‌ సవరించబడింది; దయచేసి పునః సమీక్షంచండి."
 
@@ -4273,6 +4248,14 @@ msgstr "మేరు ఈ డాక్యుమెంట్ ని తర్జ�
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "All templates"
+#~ msgstr "అన్ని మూసలు"
+
+#~ msgid "Found %(num)s template."
+#~ msgid_plural "Found %(num)s templates"
+#~ msgstr[0] "%(num)s మూస కనుగొనబడింది."
+#~ msgstr[1] "%(num)s మూసలు కనుగొనబడ్డాయి"
 
 #~ msgid "Welcome, <span class=\"user\">%(user)s</span>."
 #~ msgstr "సుస్వాగతం, <span class=\"user\">%(user)s</span>."

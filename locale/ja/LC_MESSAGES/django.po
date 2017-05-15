@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-05-01 12:40-0700\n"
+"POT-Creation-Date: 2017-05-15 10:06-0700\n"
 "PO-Revision-Date: 2017-05-02 15:57+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
@@ -74,7 +74,8 @@ msgstr "サイト内検索を試すか、<a href=\"%(homepage_url)s\">ホーム�
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr "ドキュメントのリンクを辿ってきた場合は、ログインしてページを作成することもできます。そうでなければ、<a href=\"%(bug_form_url)s\" rel=\"nofollow\">バグを報告してください</a>。よろしくお願いします。"
+msgstr ""
+"ドキュメントのリンクを辿ってきた場合は、ログインしてページを作成することもできます。そうでなければ、<a href=\"%(bug_form_url)s\" rel=\"nofollow\">バグを報告してください</a>。よろしくお願いします。"
 
 #: jinja2/404.html:35
 msgid "This user's profile has been banned."
@@ -304,12 +305,12 @@ msgid "Search Firefox Help"
 msgstr "Firefox ヘルプを検索"
 
 # フッタ右下
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:104
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:101
 msgid "Other languages:"
 msgstr "他の言語:"
 
 # JavaScript オフ時の表示言語切り替えボタン
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:115
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:112
 msgid "Go"
 msgstr "移動"
 
@@ -363,7 +364,7 @@ msgstr "これまでに Mozilla 関連のニュースレターを購読したこ
 msgid "Hide Newsletter Sign-up"
 msgstr "ニュースレター購読リンクを隠す"
 
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
 msgid "Previous"
 msgstr "前へ"
 
@@ -431,7 +432,7 @@ msgstr "チェコ語"
 msgid "Dutch"
 msgstr "オランダ語"
 
-#: jinja2/includes/translate_locales.html:18
+#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1405
 msgid "English (US)"
 msgstr "英語 (アメリカ)"
 
@@ -627,8 +628,8 @@ msgstr "通知を停止"
 msgid "Are you sure you want to unsubscribe?"
 msgstr "本当に通知を停止しますか？"
 
-#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
+#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:44
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:43 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -640,7 +641,9 @@ msgstr "通知停止エラー"
 msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
-msgstr "メール通知を見つけられませんでした。すでに通知が停止されているか、通知停止のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザーへコピー＆ペーストしてください。"
+msgstr ""
+"メール通知を見つけられませんでした。すでに通知が停止されているか、通知停止のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザーに渡されているか確認してください。メール内でリンクの"
+"後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザーへコピー＆ペーストしてください。"
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -755,7 +758,7 @@ msgstr "ファイル"
 
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1965
 msgid "Title"
 msgstr "タイトル"
 
@@ -822,8 +825,8 @@ msgstr "用途の概要"
 msgid "Created"
 msgstr "作成日:"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:107 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:246
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:16 kuma/wiki/jinja2/wiki/confirm_document_delete.html:43
 msgid "Delete"
 msgstr "削除"
 
@@ -835,7 +838,9 @@ msgstr "このキーはまだ使用されていません。"
 msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
-msgstr "これは、あなたの API キーです。MDN 上でタスクを実行するアプリケーションの構築に役立ちます。いずれかのキーの使用を中止したい場合、または信頼できない相手に漏洩した疑いがある場合は、キーを削除してください。代わりのキーはいつでも簡単に生成できます。"
+msgstr ""
+"これは、あなたの API キーです。MDN 上でタスクを実行するアプリケーションの構築に役立ちます。いずれかのキーの使用を中止したい場合、または信頼できない相手に漏洩した疑いがある場合は、キーを削除してくだ"
+"さい。代わりのキーはいつでも簡単に生成できます。"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -861,9 +866,10 @@ msgstr "API キーを使用するには特別な権限が必要です。<a href=
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
-msgstr "<p>このキーの用途を次の欄に入力してください。<p><strong>注記:</strong> これは、キーの生成日時を除き、このキーを識別するための唯一の手段となります。よって、できるだけ明確に記述してください。</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
+msgstr ""
+"<p>このキーの用途を次の欄に入力してください。<p><strong>注記:</strong> これは、キーの生成日時を除き、このキーを識別するための唯一の手段となります。よって、できるだけ明確に記述してください。</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -875,8 +881,8 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>新しいキーが生成されました。以下の詳細をメモに残しておいてください (あなたのアプリケーションの設定にコピーしておくなど)。この情報は、今後表示されないため、失われると二度と復元することができません。</p> <p><strong>注記:</strong> 情報をメモに残したら、<a class=\"button\" href=\"%(list_url)s\">キーの一覧ページ</a> "
-"へ戻ってください。ページを再読み込みすると新しいキーが生成されます。</p>"
+"<p>新しいキーが生成されました。以下の詳細をメモに残しておいてください (あなたのアプリケーションの設定にコピーしておくなど)。この情報は、今後表示されないため、失われると二度と復元することができませ"
+"ん。</p> <p><strong>注記:</strong> 情報をメモに残したら、<a class=\"button\" href=\"%(list_url)s\">キーの一覧ページ</a> へ戻ってください。ページを再読み込みすると新しいキーが生成されます。</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -929,11 +935,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "今日 %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:332
 msgid "Yes"
 msgstr "はい"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:336
 msgid "No"
 msgstr "いいえ"
 
@@ -1064,27 +1070,27 @@ msgstr "既知の著者"
 msgid "Unknown Authors"
 msgstr "不明な著者"
 
-#: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
+#: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:15
 msgid "Locale:"
 msgstr "ロケール:"
 
-#: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
+#: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:20
 msgid "User:"
 msgstr "ユーザー:"
 
-#: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
+#: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:25
 msgid "Topic:"
 msgstr "トピック:"
 
-#: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
+#: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:31
 msgid "Start Date:"
 msgstr "開始日:"
 
-#: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
+#: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:36
 msgid "End Date:"
 msgstr "終了日:"
 
-#: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
+#: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:41
 msgid "Preceding Period:"
 msgstr "先行期間:"
 
@@ -1092,51 +1098,51 @@ msgstr "先行期間:"
 msgid "Authors"
 msgstr "著者"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
+#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:26
 msgid "Active macros"
 msgstr "使用中のマクロ"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:13
+#: kuma/dashboards/jinja2/dashboards/macros.html:14
 #, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
 msgstr[0] "%(num)s 件の使用中のマクロが見つかりました。"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:15
+#: kuma/dashboards/jinja2/dashboards/macros.html:16
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
 msgstr "マクロの一覧は <a href=\"%(url)s\">GitHub レポジトリ</a> を見てください。"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:17
+#: kuma/dashboards/jinja2/dashboards/macros.html:18
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
 msgstr "<a href=\"%(url)s\">手作業でマクロを検索する</a> こともできます。"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:23
+#: kuma/dashboards/jinja2/dashboards/macros.html:24
 msgid "Active macros and their usage counts"
 msgstr "使用中のマクロとそれらの使用回数"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
+#: kuma/dashboards/jinja2/dashboards/macros.html:31 kuma/dashboards/jinja2/dashboards/macros.html:66
 msgid "Macro Name"
 msgstr "マクロ名"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:32
+#: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "English Page Count"
 msgstr "英語のページ内容"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:33
+#: kuma/dashboards/jinja2/dashboards/macros.html:34
 msgid "All Page Count"
 msgstr "全ページ数"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:64
+#: kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Search for macro usage:"
 msgstr "マクロの使用例を検索:"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:67
+#: kuma/dashboards/jinja2/dashboards/macros.html:68
 msgid "Search All Pages"
 msgstr "すべてのページを検索"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:68
+#: kuma/dashboards/jinja2/dashboards/macros.html:69
 msgid "Search English Pages"
 msgstr "英語のページを検索"
 
@@ -1146,25 +1152,25 @@ msgstr "英語のページを検索"
 msgid "Revision Dashboard"
 msgstr "リビジョンダッシュボード"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:45
+#: kuma/dashboards/jinja2/dashboards/revisions.html:46
 msgid "Authors:"
 msgstr "著者:"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
+#: kuma/dashboards/jinja2/dashboards/revisions.html:50 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
 msgstr "絞り込み"
 
-#: kuma/dashboards/jinja2/dashboards/spam.html:30
+#: kuma/dashboards/jinja2/dashboards/spam.html:31
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "時間の経過に伴うトレンド: %(date)s まで"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1918
 msgid "Revision"
 msgstr "リビジョン"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:44 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:35 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "コメント"
 
@@ -1184,47 +1190,47 @@ msgstr "新規"
 msgid "deleted"
 msgstr "削除済み"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:55
 msgid "IP:"
 msgstr "IP:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "Ban IP from Editing"
 msgstr "この IP からの編集を禁止"
 
 # 88%
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "User agent:"
 msgstr "ユーザーエージェント:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:62
 msgid "Referrer:"
 msgstr "リファラー:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:69 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "%(user)s により %(ban_date)s にアカウントが停止されました"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr "%(submission_type)s として投稿"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:85
 #, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "投稿日: %(sent_date)s 投稿者: %(user)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:92
 msgid "Submit as:"
 msgstr "投稿元:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:93
 msgid "spam"
 msgstr "スパム"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:104
 msgid "There are no revisions matching this filter set."
 msgstr "このフィルターセットに一致するリビジョンはありません。"
 
@@ -1258,9 +1264,11 @@ msgstr "Mozilla Developer Network (MDN) のフェローシッププログラム�
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
-msgstr "Mozilla Developer Network (MDN) は、ウェブサイトと HTML5 アプリ向けの HTML、CSS、API を含むオープンウェブについての情報を提供しています。また、Firefox OS のような Mozilla 製品のドキュメントもあります。"
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
+msgstr ""
+"Mozilla Developer Network (MDN) は、ウェブサイトと HTML5 アプリ向けの HTML、CSS、API を含むオープンウェブについての情報を提供しています。また、Firefox OS のような Mozilla 製品のドキュメントもありま"
+"す。"
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1372,8 +1380,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">世界中の <span class=\"number\">%(locales)s</span>の言語と地域から</span><span class=\"row2\"><span class=\"number\">%(contributors)s</span> 人の貢献者</span><span "
-"class=\"row3\">が参加しています。</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">世界中の <span class=\"number\">%(locales)s</span>の言語と地域から</span><span class=\"row2\"><span class=\"number\">%(contributors)s</span> 人の貢献者</"
+"span><span class=\"row3\">が参加しています。</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
@@ -1415,7 +1423,9 @@ msgstr "メンテナンスモード"
 msgid ""
 "MDN is currently in maintenance mode. Content is being served from a backup database, which means some articles may show out-of-date information. Have no fear! All will be restored when maintenance "
 "has concluded."
-msgstr "MDN は現在メンテナンスモードになっています。コンテンツはバックアップデータベースから配信されており、そのため一部の記事は古い情報を表示している可能性があります。心配はありません。メンテナンスが終了次第すべて復旧します。"
+msgstr ""
+"MDN は現在メンテナンスモードになっています。コンテンツはバックアップデータベースから配信されており、そのため一部の記事は古い情報を表示している可能性があります。心配はありません。メンテナンスが終了次"
+"第すべて復旧します。"
 
 #: kuma/landing/jinja2/landing/maintenance-mode.html:27
 msgid "While in maintenance mode, the following actions are unavailable:"
@@ -1453,13 +1463,14 @@ msgstr "開発者の愛を広める。"
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>ボタンを入手:</strong> あなたのウェブサイトやブログで MDN を宣伝するために、以下の簡単なフォームでカスタムボタンのソースコードを作成してください。</li> <li><strong>ボタンを配置:</strong> ソースコードをコピーして、あなたのウェブサイトやブログに貼りつけて、MDN へ訪れやすいように手助けしてください。</li> "
-"<li><strong>快感:</strong> MDN を世界に共有したことで開発者の生活を少しだけ良くできたということを忘れずにプライドを持ってください。</li> </ol>"
+"<ol> <li><strong>ボタンを入手:</strong> あなたのウェブサイトやブログで MDN を宣伝するために、以下の簡単なフォームでカスタムボタンのソースコードを作成してください。</li> <li><strong>ボタンを配置:</"
+"strong> ソースコードをコピーして、あなたのウェブサイトやブログに貼りつけて、MDN へ訪れやすいように手助けしてください。</li> <li><strong>快感:</strong> MDN を世界に共有したことで開発者の生活を少しだ"
+"け良くできたということを忘れずにプライドを持ってください。</li> </ol>"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
+#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
 msgstr "プレビュー"
 
@@ -1751,9 +1762,11 @@ msgstr "タイプ"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
-msgstr "申し訳ありませんが、ログインするには少なくとも 1 つの接続されたアカウントが必要です。このアカウントを切断するには、別のアカウントを先に接続してください。MDN アカウントを削除するには、<a href=\"%(bug_form_url)s\" rel=\"nofollow\">バグ登録</a> してください。"
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
+msgstr ""
+"申し訳ありませんが、ログインするには少なくとも 1 つの接続されたアカウントが必要です。このアカウントを切断するには、別のアカウントを先に接続してください。MDN アカウントを削除するには、<a href="
+"\"%(bug_form_url)s\" rel=\"nofollow\">バグ登録</a> してください。"
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1893,8 +1906,8 @@ msgstr "自己紹介"
 msgid "IRC nickname"
 msgstr "IRC ニックネーム"
 
-#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:76
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:30 kuma/wiki/jinja2/wiki/create.html:65
+#: kuma/wiki/jinja2/wiki/edit.html:184
 msgid "Tags"
 msgstr "タグ"
 
@@ -2256,14 +2269,18 @@ msgstr "他のユーザーに表示する名前を入力し、他のユーザー
 #: kuma/users/jinja2/socialaccount/signup.html:111
 #, python-format
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
-msgstr "選択されたメールアドレスのプロフィールはすでに存在します。<a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</a>。"
+msgstr ""
+"選択されたメールアドレスのプロフィールはすでに存在します。<a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</"
+"a>。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
-msgstr "MDN 関連のメッセージや通知を受け取りたいメールアドレスを入力してください。このアドレスは MDN 上では <strong>公開されず</strong>、Mozilla の <a href=\"%(privacy_url)s\">プライバシーポリシー</a> に従って扱われます。"
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
+msgstr ""
+"MDN 関連のメッセージや通知を受け取りたいメールアドレスを入力してください。このアドレスは MDN 上では <strong>公開されず</strong>、Mozilla の <a href=\"%(privacy_url)s\">プライバシーポリシー</a> に"
+"従って扱われます。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
@@ -2313,135 +2330,135 @@ msgstr "あるいは以下のテキストボックスに理由を入力してく
 msgid "Ban user"
 msgstr "ユーザーをアカウント停止にする"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:23
 #, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
 msgstr "<a href=\"%(url)s\">%(user)s</a> をスパマーとして特定しますか？"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:27
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
 msgstr "<a href=\"%(url)s\">%(user)s</a> のアカウントが停止されました。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:30
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
 msgstr "%(user)s のアカウントはすでに停止されています。この人物による以下のリビジョンをレビュー、取り消しできます。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:47
 msgid "You cannot ban yourself for spam."
 msgstr "あなた自身をスパムとして報告することはできません。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:51
 msgid "Submit Spam"
 msgstr "スパムを報告"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:53
 msgid "Ban User for Spam"
 msgstr "ユーザーをスパム行為のためアカウント停止にする"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:55
 msgid "Ban User for Spam & Submit Spam"
 msgstr "ユーザーをスパム行為のためアカウント停止にする & スパムを報告"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
 msgid "Ban user for other reasons."
 msgstr "他の理由でユーザーをアカウント停止にする。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:62
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
 msgstr "ユーザーが過去 3 日間に作成した取り消し可能なリビジョンはなく、このユーザはすでにアカウント停止されています。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
 msgid "Summary"
 msgstr "要約"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Actions Taken"
 msgstr "実行されたアクション"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
 msgid "Banned:"
 msgstr "アカウント停止:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:32
 msgid "Submitted to Akismet as spam:"
 msgstr "スパムとして Akismet に送信したもの:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:45
 msgid "The user did not have any revisions that were reported as spam."
 msgstr "このユーザーが編集したものでスパムとして報告されたリビジョンはありません。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "Deleted:"
 msgstr "削除済み:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:62
 msgid "The user did not have any revisions that were deleted."
 msgstr "このユーザーが編集したもので削除されたリビジョンはありません。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66
 msgid "Reverted:"
 msgstr "復元済み:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
 msgid "The user did not have any revisions that were reverted."
 msgstr "このユーザーが編集したもので復元されたリビジョンはありません。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "Needs follow up"
 msgstr "フォローアップが必要"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:87
 msgid "New action by user:"
 msgstr "ユーザーによる新たなアクション:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:97 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:129 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:150
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:170 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:189 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:212
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:236 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:267 kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr "ページを表示"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:68
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:216 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:240
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:271 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "History"
 msgstr "履歴"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:115 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:136 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:176 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:195 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:278
 msgid "None."
 msgstr "なし。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:119
 msgid "Revisions skipped due to newer non-spam revision:"
 msgstr "より新しい非スパムリビジョンのためにスキップされたリビジョン:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:140
 msgid "Could not submit to Akismet:"
 msgstr "Akismet へ投稿できなかった項目:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:161
 msgid "Could not delete:"
 msgstr "削除できなかった項目:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:180
 msgid "Could not revert:"
 msgstr "復元できなかった項目:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "No actions taken"
 msgstr "アクションは何も実行されていません"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:202
 msgid "Latest revision is non-spam:"
 msgstr "最新版が非スパム:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:226
 msgid "Already identified as spam:"
 msgstr "すでにスパムとして特定されているユーザー:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:257
 msgid "Identified as not spam:"
 msgstr "非スパムとして認定された項目:"
 
@@ -2517,40 +2534,40 @@ msgstr "私が行ったページの変更について帰属をすべて「匿名
 msgid "File a bug to close your account"
 msgstr "アカウントを閉じるためにバグを報告"
 
-#: kuma/users/jinja2/users/user_detail.html:36
+#: kuma/users/jinja2/users/user_detail.html:37
 msgid "Recent Docs Activity"
 msgstr "最近の更新"
 
-#: kuma/users/jinja2/users/user_detail.html:36
+#: kuma/users/jinja2/users/user_detail.html:37
 msgid "View all activity"
 msgstr "すべての活動を表示"
 
-#: kuma/users/jinja2/users/user_detail.html:41
+#: kuma/users/jinja2/users/user_detail.html:42
 msgid "Page"
 msgstr "ページ"
 
-#: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/users/jinja2/users/user_detail.html:43 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:26
 msgid "Date"
 msgstr "日時"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:427
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:411
 msgid "Edit page"
 msgstr "ページを編集"
 
-#: kuma/users/jinja2/users/user_detail.html:52
+#: kuma/users/jinja2/users/user_detail.html:53
 msgid "View complete diff"
 msgstr "すべての差分を表示"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:412
 msgid "View page history"
 msgstr "ページの履歴を表示"
 
-#: kuma/users/jinja2/users/user_detail.html:65
+#: kuma/users/jinja2/users/user_detail.html:66
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr "<p class=\"none\">まだ MDN ドキュメントに貢献していません。<a href=\"%(docs_url)s\">ご協力をお願いします！</a></p>"
 
-#: kuma/users/jinja2/users/user_detail.html:69
+#: kuma/users/jinja2/users/user_detail.html:70
 msgid "This user has no activity."
 msgstr "このユーザーは活動履歴がありません。"
 
@@ -2558,63 +2575,63 @@ msgstr "このユーザーは活動履歴がありません。"
 msgid "Edit Your Profile"
 msgstr "プロフィールを編集"
 
-#: kuma/users/jinja2/users/user_edit.html:33
+#: kuma/users/jinja2/users/user_edit.html:34
 msgid "Change your avatar at"
 msgstr "アバターを変更:"
 
-#: kuma/users/jinja2/users/user_edit.html:39
+#: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
 msgstr "プロフィールを表示"
 
-#: kuma/users/jinja2/users/user_edit.html:43
+#: kuma/users/jinja2/users/user_edit.html:44
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr "編集中のプロフィールはあなたのプロフィールではありません。注意してください！"
 
-#: kuma/users/jinja2/users/user_edit.html:54
+#: kuma/users/jinja2/users/user_edit.html:55
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr "このサイトの様々な変更についてあなたの意見を聞かせてください！ ベータテスターはいち早く新機能を試すことができ、特定の機能のテストに協力をお願いするメールを時々お送りします。"
 
-#: kuma/users/jinja2/users/user_edit.html:57
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "Primary Email"
 msgstr "優先メールアドレス"
 
-#: kuma/users/jinja2/users/user_edit.html:57
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "Edit email"
 msgstr "メールアドレスを編集"
 
-#: kuma/users/jinja2/users/user_edit.html:70
+#: kuma/users/jinja2/users/user_edit.html:71
 msgid "Interests (tags)"
 msgstr "興味のある分野 (タグ)"
 
-#: kuma/users/jinja2/users/user_edit.html:71
+#: kuma/users/jinja2/users/user_edit.html:72
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "タグを複数入力する際はカンマか半角スペースで区切ってください。複数の単語で構成されるタグは、\"web standards\" のようにダブルクォートで囲んでください。"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:78
 msgid "Areas of expertise"
 msgstr "専門分野"
 
-#: kuma/users/jinja2/users/user_edit.html:78
+#: kuma/users/jinja2/users/user_edit.html:79
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "まず興味のある分野を追加し、そして選択肢から自身の専門分野を宣言します。"
 
-#: kuma/users/jinja2/users/user_edit.html:86
+#: kuma/users/jinja2/users/user_edit.html:87
 msgid "My Profiles"
 msgstr "自分のプロフィール"
 
-#: kuma/users/jinja2/users/user_edit.html:98
+#: kuma/users/jinja2/users/user_edit.html:99
 msgid "Use your GitHub account to sign in."
 msgstr "GitHub アカウントを利用してログインしてください。"
 
-#: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
+#: kuma/users/jinja2/users/user_edit.html:118 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr "公開"
 
-#: kuma/users/jinja2/users/user_edit.html:119
+#: kuma/users/jinja2/users/user_edit.html:120
 msgid "Delete your account."
 msgstr "あなたのアカウントを削除します。"
 
-#: kuma/users/jinja2/users/user_edit.html:129
+#: kuma/users/jinja2/users/user_edit.html:130
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "Mozilla 関連ニュースレターの購読を管理"
 
@@ -2627,7 +2644,9 @@ msgstr "MDN からこんにちは！"
 msgid ""
 "You are receiving this e-mail because you or someone else has requested access to your user account %(username)s at %(domain)s. It can be safely ignored if you did not make this request. Click the "
 "link below to access your account:"
-msgstr "誰かがあなたの %(domain)s ユーザアカウント %(username)s へのアクセスを要求したため、このメールをお送りしています。あなたがこのリクエストを行っていない場合、無視してもらって大丈夫です。あなたのアカウントへアクセスするにはこのリンクをクリックしてください:"
+msgstr ""
+"誰かがあなたの %(domain)s ユーザアカウント %(username)s へのアクセスを要求したため、このメールをお送りしています。あなたがこのリクエストを行っていない場合、無視してもらって大丈夫です。あなたのアカウ"
+"ントへアクセスするにはこのリンクをクリックしてください:"
 
 #: kuma/users/jinja2/users/email/recovery/plain.ltxt:12
 msgid "Thank you for using MDN!"
@@ -2646,7 +2665,8 @@ msgstr "%(username)s さん、こんにちは！"
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr "<a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> にプロフィールを作成していただき、ありがとうございます。ここはあなたのような開発者のために優れた資料を作成しているコミュニティです。"
+msgstr ""
+"<a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> にプロフィールを作成していただき、ありがとうございます。ここはあなたのような開発者のために優れた資料を作成しているコミュニティです。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
@@ -2659,8 +2679,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 選択可能な入門的タスクはたくさんあります。例えば <a href=\"%(words_link)s\">単語</a>、<a href=\"%(code_link)s\">コード</a>、あるいは <a href=\"%(both_link)s\">単語とコードの両方</a> を書いたり、<a "
-"href=\"%(translate_link)s\">MDN をあなたの言語に翻訳</a> したりできます。"
+"次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 選択可能な入門的タスクはたくさんあります。例えば <a href=\"%(words_link)s\">単語</a>、<a href=\"%(code_link)s\">コード</a>、あるいは "
+"<a href=\"%(both_link)s\">単語とコードの両方</a> を書いたり、<a href=\"%(translate_link)s\">MDN をあなたの言語に翻訳</a> したりできます。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2682,8 +2702,8 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"リアルタイムチャット: <a href=\"%(channel_link)s\">irc.mozilla.org 上の #mdn チャンネル</a> を使ってください (<a href=\"%(irc_link)s\">IRC の詳細はこちら</a>)。MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will "
-"Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。"
+"リアルタイムチャット: <a href=\"%(channel_link)s\">irc.mozilla.org 上の #mdn チャンネル</a> を使ってください (<a href=\"%(irc_link)s\">IRC の詳細はこちら</a>)。MDN の編集スタッフの Eric Shepherd "
+"(sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -2711,7 +2731,9 @@ msgstr "Mozilla Developer Network (MDN) にプロフィールを作成してい�
 msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
-msgstr "あなたはプロフィールを作成することで MDN に参加する最初のステップを完了しました。次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんあります。"
+msgstr ""
+"あなたはプロフィールを作成することで MDN に参加する最初のステップを完了しました。次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんありま"
+"す。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2760,7 +2782,9 @@ msgstr "IRC の詳細は %(irc_link)s を参照してください。"
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
-msgstr "MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャーを務める Janet Swisher (jms) が常駐しています。"
+msgstr ""
+"MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャーを務める "
+"Janet Swisher (jms) が常駐しています。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2776,11 +2800,11 @@ msgstr "すでにスパムとして報告されています。"
 msgid "This user has not created any revisions in the past three days."
 msgstr "このユーザーが過去 3 日間に作成したリビジョンはありません。"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:47
 msgid "Edit"
 msgstr "編集"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:62 kuma/wiki/jinja2/wiki/includes/buttons.html:66
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:61 kuma/wiki/jinja2/wiki/includes/buttons.html:65
 msgid "Advanced"
 msgstr "詳細"
 
@@ -2826,19 +2850,19 @@ msgstr "ユーザーをアカウント停止にし、整理する"
 msgid "Admin"
 msgstr "管理者"
 
-#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:55 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:217
+#: kuma/wiki/constants.py:216
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "技術レビュー - サンプルコード、API 、技術について"
 
-#: kuma/wiki/constants.py:218
+#: kuma/wiki/constants.py:217
 msgid "Editorial - prose, grammar, or content"
 msgstr "編集レビュー - 表現、文法、内容について"
 
-#: kuma/wiki/constants.py:223
+#: kuma/wiki/constants.py:222
 msgid "Localization in progress - not completely translated yet."
 msgstr "翻訳途中 - まだ翻訳が完了していない"
 
@@ -3010,7 +3034,9 @@ msgstr "このメタデータを持つ別のドキュメントがすでに存在
 msgid ""
 "Publishing failed. Conflicting edit attempts detected. Please copy and paste your edits to a safe place and visit the <a href=\"%(url)s\">revision history</a> page to see what was changed before "
 "making further edits."
-msgstr "公開できませんでした。競合する編集が検出されました。あなたの編集内容を安全な場所へコピー＆ペーストしてから <a href=\"%(url)s\">リビジョン履歴</a> を参照し、編集前に何が変更されたのか確認してください。"
+msgstr ""
+"公開できませんでした。競合する編集が検出されました。あなたの編集内容を安全な場所へコピー＆ペーストしてから <a href=\"%(url)s\">リビジョン履歴</a> を参照し、編集前に何が変更されたのか確認してくださ"
+"い。"
 
 #: kuma/wiki/forms.py:74
 msgid "Changing this document's slug requires moving it and its children."
@@ -3018,16 +3044,16 @@ msgstr "このドキュメントの URL スラグを変更すると、このド�
 
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
 # 83%
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
-#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:894 kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:72 kuma/wiki/jinja2/wiki/edit.html:120
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:74 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "タイトル:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:895
 msgid "Title of article"
 msgstr "記事のタイトル"
 
-#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:78
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL スラグ:"
@@ -3036,16 +3062,16 @@ msgstr "URL スラグ:"
 msgid "Article URL"
 msgstr "記事の URL"
 
-#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:42 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "親記事:"
 
 # 80%
-#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:83 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "タグ:"
 
-#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:84
 msgid "Keywords:"
 msgstr "キーワード:"
 
@@ -3064,12 +3090,12 @@ msgstr "検索結果ページのみに表示されます"
 # 87%
 # 75%
 # 100%
-#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:94
 msgid "Content:"
 msgstr "内容:"
 
 # 87%
-#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:89
 msgid "Comment:"
 msgstr "コメント:"
 
@@ -3081,154 +3107,154 @@ msgstr "このリビジョンに「要レビュー」タグを付与しますか
 msgid "Tag this revision for localization?"
 msgstr "このリビジョンをローカライズ用にタグ付けしますか？"
 
-#: kuma/wiki/forms.py:906
+#: kuma/wiki/forms.py:901
 msgid "New slug:"
 msgstr "新しい URL スラグ:"
 
-#: kuma/wiki/forms.py:907
+#: kuma/wiki/forms.py:902
 msgid "New article URL"
 msgstr "新しい記事 URL"
 
-#: kuma/wiki/models.py:113
+#: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "親 %s は存在しません。"
 
-#: kuma/wiki/models.py:121
+#: kuma/wiki/models.py:120
 msgid "Document Tag"
 msgstr "ドキュメントのタグ"
 
-#: kuma/wiki/models.py:122
+#: kuma/wiki/models.py:121
 msgid "Document Tags"
 msgstr "ドキュメントのタグ"
 
-#: kuma/wiki/models.py:174
+#: kuma/wiki/models.py:173
 msgid "uploaded to the document"
 msgstr "ドキュメントに添付されています"
 
-#: kuma/wiki/models.py:180
+#: kuma/wiki/models.py:179
 msgid "linked in the document content"
 msgstr "ドキュメント本文でリンクされています"
 
-#: kuma/wiki/models.py:194
+#: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "添付ファイル %(attachment_id)s をドキュメント %(document_id)s へ複数回添付することはできません"
 
-#: kuma/wiki/models.py:1600
+#: kuma/wiki/models.py:1599
 msgid "Review Tag"
 msgstr "タグのレビュー"
 
-#: kuma/wiki/models.py:1601
+#: kuma/wiki/models.py:1600
 msgid "Review Tags"
 msgstr "タグのレビュー"
 
 # docs, Mozilla - リスト項目、
 # mozilla, Popular Mozilla Documentation - リンクテキスト
-#: kuma/wiki/models.py:1607
+#: kuma/wiki/models.py:1606
 msgid "Localization Tag"
 msgstr "ローカライズタグ"
 
 # docs, Mozilla - リスト項目、
 # mozilla, Popular Mozilla Documentation - リンクテキスト
-#: kuma/wiki/models.py:1608
+#: kuma/wiki/models.py:1607
 msgid "Localization Tags"
 msgstr "ローカライズタグ"
 
-#: kuma/wiki/models.py:1641
+#: kuma/wiki/models.py:1640
 msgid "No table of contents"
 msgstr "目次がありません"
 
-#: kuma/wiki/models.py:1642
+#: kuma/wiki/models.py:1641
 msgid "All levels"
 msgstr "全レベル"
 
-#: kuma/wiki/models.py:1643
+#: kuma/wiki/models.py:1642
 msgid "H2 and higher"
 msgstr "H2 以上"
 
-#: kuma/wiki/models.py:1644
+#: kuma/wiki/models.py:1643
 msgid "H3 and higher"
 msgstr "H3 以上"
 
-#: kuma/wiki/models.py:1645
+#: kuma/wiki/models.py:1644
 msgid "H4 and higher"
 msgstr "H4 以上"
 
-#: kuma/wiki/models.py:1749
+#: kuma/wiki/models.py:1748
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "ひとつのリビジョンは %(locale)s ドキュメントのひとつのリビジョンに基づかなければなりません。リビジョン ID %(id)s はこの基準に当てはまりません。"
 
 # 92%
 # 100%
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1878
 msgid "IP address"
 msgstr "IP アドレス"
 
-#: kuma/wiki/models.py:1890
+#: kuma/wiki/models.py:1886
 msgid "User-Agent"
 msgstr "ユーザーエージェント"
 
-#: kuma/wiki/models.py:1895
+#: kuma/wiki/models.py:1891
 msgid "HTTP Referrer"
 msgstr "HTTP リファラー"
 
-#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
+#: kuma/wiki/models.py:1899 kuma/wiki/models.py:1984
 msgid "Data submitted to Akismet"
 msgstr "Akismet 登録日"
 
 # DevDerby サブメニュー
-#: kuma/wiki/models.py:1928
+#: kuma/wiki/models.py:1924
 msgid "Akismet submission"
 msgstr "Akismet 投稿"
 
 # DevDerby サブメニュー
-#: kuma/wiki/models.py:1929
+#: kuma/wiki/models.py:1925
 msgid "Akismet submissions"
 msgstr "Akismet 投稿"
 
-#: kuma/wiki/models.py:1973
+#: kuma/wiki/models.py:1969
 msgid "Slug"
 msgstr "スラグ"
 
-#: kuma/wiki/models.py:1981
+#: kuma/wiki/models.py:1977
 msgid "Document (optional)"
 msgstr "ドキュメント (オプション)"
 
-#: kuma/wiki/models.py:1991
+#: kuma/wiki/models.py:1987
 msgid "reviewed"
 msgstr "レビュー済み"
 
-#: kuma/wiki/models.py:2002
+#: kuma/wiki/models.py:1998
 msgid "Needs Review"
 msgstr "要レビュー"
 
-#: kuma/wiki/models.py:2003
+#: kuma/wiki/models.py:1999
 msgid "Ham / False Positive"
 msgstr "誇張 / 誤判定"
 
-#: kuma/wiki/models.py:2004
+#: kuma/wiki/models.py:2000
 msgid "Confirmed as Spam"
 msgstr "スパム認定済み"
 
-#: kuma/wiki/models.py:2005
+#: kuma/wiki/models.py:2001
 msgid "Review Unavailable"
 msgstr "レビューは利用できません"
 
-#: kuma/wiki/models.py:2006
+#: kuma/wiki/models.py:2002
 msgid "Akismet Error"
 msgstr "Akismet エラー"
 
-#: kuma/wiki/models.py:2011
+#: kuma/wiki/models.py:2007
 msgid "Review of Akismet's classification as spam"
 msgstr "Akismet スパム分類レビュー"
 
-#: kuma/wiki/models.py:2018
+#: kuma/wiki/models.py:2014
 msgid "Staff reviewer"
 msgstr "レビュー担当スタッフ"
 
-#: kuma/wiki/search.py:311
+#: kuma/wiki/search.py:307
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr "%(total)d 件のドキュメントを、サイズを %(size)d とする %(total_chunks)d 個のチャンクとして、インデックス %(index)s を作成しています。"
@@ -3240,9 +3266,11 @@ msgstr "あなたはページを新規作成しようとしています。"
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
-msgstr "ページの新規作成は制限されたアクションです。新たなページをリクエストするには <a href=\"%(request_page_url)s\">バグを登録</a> してください。ページを新規作成するための権限が必要な場合は <a href=\"%(email_link)s\">ご連絡ください</a>。"
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
+msgstr ""
+"ページの新規作成は制限されたアクションです。新たなページをリクエストするには <a href=\"%(request_page_url)s\">バグを登録</a> してください。ページを新規作成するための権限が必要な場合は <a href="
+"\"%(email_link)s\">ご連絡ください</a>。"
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -3250,8 +3278,9 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
-"<p>以下の条件を満たすことでページの新規作成権限を与えられる可能性が上がります。</p> <ul>あなたの MDN ユーザー名を教えてください。</li> <li>ページを新規作成したい理由を教えてください。(新機能を解説したいのであればどのような機能か、用語集を編集したいのであればどのような用語か、など)</li> <li>既存のページにいくつかの適切な変更を加えていること。</li> "
-"<li>しばらく前からサイトに貢献していること。</li> </ul>"
+"<p>以下の条件を満たすことでページの新規作成権限を与えられる可能性が上がります。</p> <ul>あなたの MDN ユーザー名を教えてください。</li> <li>ページを新規作成したい理由を教えてください。(新機能を解説し"
+"たいのであればどのような機能か、用語集を編集したいのであればどのような用語か、など)</li> <li>既存のページにいくつかの適切な変更を加えていること。</li> <li>しばらく前からサイトに貢献していること。</"
+"li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3271,32 +3300,32 @@ msgstr "前に戻る"
 msgid "Delete Document | %(document)s"
 msgstr "ドキュメントを削除 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:10
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr "このバグが修正されるまで子ページ付きのページを削除することはできません:"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:18 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:22
 msgid "Creator"
 msgstr "製作者"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Creation Date"
 msgstr "作成日"
 
 # 91%
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change By"
 msgstr "最終変更者:"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:31
 msgid "Last Change Date"
 msgstr "最終変更日時:"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:34
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
 msgstr "このドキュメントとそのすべてのリビジョンを削除しようとしています。このページを削除すべき理由を教えてください。"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:41
 msgid "Are you sure you want to continue?"
 msgstr "本当に続けますか？"
 
@@ -3309,51 +3338,47 @@ msgstr "リビジョンの復元 | %(document)s"
 
 # 87%
 # 100%
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:11
 msgid "Are you sure you want to revert to this revision?"
 msgstr "本当にこのリビジョンに戻してもよろしいですか？"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:19
 msgid "Document"
 msgstr "ドキュメント"
 
 # 87%
 # 75%
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:28
 msgid "Content"
 msgstr "内容"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "Why are you reverting to this revision?"
 msgstr "このリビジョンに戻す理由は？"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr "ドキュメントをこのリビジョンに戻そうとしています。上記の内容へ戻すには「復元」をクリックしてください。"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:42
 msgid "Revert"
 msgstr "復元"
 
-#: kuma/wiki/jinja2/wiki/create.html:6
-msgid "Create a New Template"
-msgstr "新しいテンプレートを作成"
-
 # 80%
 # 100%
-#: kuma/wiki/jinja2/wiki/create.html:8
+#: kuma/wiki/jinja2/wiki/create.html:5
 msgid "Create a New Article"
 msgstr "新しい記事を作成"
 
-#: kuma/wiki/jinja2/wiki/create.html:32
+#: kuma/wiki/jinja2/wiki/create.html:29
 msgid "Create a"
 msgstr "生成:"
 
-#: kuma/wiki/jinja2/wiki/create.html:32
+#: kuma/wiki/jinja2/wiki/create.html:29
 msgid "New Document"
 msgstr "新しいドキュメント"
 
-#: kuma/wiki/jinja2/wiki/create.html:41
+#: kuma/wiki/jinja2/wiki/create.html:38
 msgid "URL segment that identifies the page"
 msgstr "ページ特定のための URL セグメント"
 
@@ -3374,40 +3399,40 @@ msgstr "削除の理由"
 msgid "Restore this document"
 msgstr "このドキュメントを復元"
 
-#: kuma/wiki/jinja2/wiki/document.html:184
+#: kuma/wiki/jinja2/wiki/document.html:181
 msgid "Previous Search Result"
 msgstr "前の検索結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:184 kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:181 kuma/wiki/jinja2/wiki/document.html:191
 msgid "No Previous Search Result"
 msgstr "前の検索結果はありません"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:187
 msgid "Your Search Results"
 msgstr "検索結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:191
 msgid "Next Search Result"
 msgstr "次の検索結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:198
+#: kuma/wiki/jinja2/wiki/document.html:195
 msgid "see all contributors"
 msgstr "すべての貢献者を見る"
 
-#: kuma/wiki/jinja2/wiki/document.html:198
+#: kuma/wiki/jinja2/wiki/document.html:195
 msgid "hide contributors"
 msgstr "貢献者を隠す"
 
-#: kuma/wiki/jinja2/wiki/document.html:202
+#: kuma/wiki/jinja2/wiki/document.html:199
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "プロフィールを表示: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:227
+#: kuma/wiki/jinja2/wiki/document.html:224
 msgid "In This Article"
 msgstr "この記事内"
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr "このドキュメントはまだ出力されておらず、また MDN が <a href=\"%(url)s\">メンテナンスモード</a> の間は出力できません。メンテナンス終了後に再度確認しに来てください。"
@@ -3415,115 +3440,111 @@ msgstr "このドキュメントはまだ出力されておらず、また MDN �
 # 「このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全なコンテンツを表示するには数分たってから<a
 # href="%(url)s">このページを再度読み込む</a>か、スーパーリロード (<kbd><kbd>ctlr</kbd> +
 # <kbd>F5</kbd></kbd>)をお試しください。」…意訳及び捏造。今の所はおそらくこれで良いでしょう。
-#: kuma/wiki/jinja2/wiki/document.html:259
+#: kuma/wiki/jinja2/wiki/document.html:250
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr "このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全な内容を表示するには数分たってから <a href=\"%(url)s\">このページを再度読み込む</a> か、スーパーリロード (<kbd>ctlr</kbd> + <kbd>F5</kbd>) をお試しください。"
+msgstr ""
+"このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全な内容を表示するには数分たってから <a href=\"%(url)s\">このページを再度読み込む</a> か、スーパーリロード (<kbd>ctlr</"
+"kbd> + <kbd>F5</kbd>) をお試しください。"
+
+#: kuma/wiki/jinja2/wiki/document.html:258
+#, python-format
+msgid ""
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
+msgstr ""
+"このドキュメントへの更新が <abbr title=\"%(started_at)s\">現在進行中</abbr> です。以下の内容が最新でなかったり一部欠けている場合は、数分後に <a href=\"%(url)s\">ページを再読み込み</a> してみてくださ"
+"い。"
 
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
-msgstr "このドキュメントへの更新が <abbr title=\"%(started_at)s\">現在進行中</abbr> です。以下の内容が最新でなかったり一部欠けている場合は、数分後に <a href=\"%(url)s\">ページを再読み込み</a> してみてください。"
-
-#: kuma/wiki/jinja2/wiki/document.html:276
-#, python-format
-msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr "このドキュメントは <abbr title=\"%(scheduled_at)s\">更新が予定されています</abbr>。内容に欠落などの問題がある場合は、数分後に <a href=\"%(url)s\">このページを再読み込み</a> してください。"
 
-#: kuma/wiki/jinja2/wiki/document.html:287
+#: kuma/wiki/jinja2/wiki/document.html:278
 msgid "This is an experimental page."
 msgstr "これは実験的なページです。"
 
-#: kuma/wiki/jinja2/wiki/document.html:298
+#: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "この翻訳は不完全です。英語から <a href=\"%(translate_url)s\">この記事を翻訳</a> してください。"
 
-#: kuma/wiki/jinja2/wiki/document.html:303
+#: kuma/wiki/jinja2/wiki/document.html:294
 msgid "This translation is in progress."
 msgstr "この記事は翻訳作業中です。"
 
 # 主語の変更、並べ替え、簡略化などを行っています。
-#: kuma/wiki/jinja2/wiki/document.html:310
+#: kuma/wiki/jinja2/wiki/document.html:301
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
-"この記事はまだボランティアによって <bdi>%(locale)s</bdi> に翻訳されていません。<a href=\"%(help_link)s\" rel=\"nofollow, noindex\">ぜひ MDN に参加して翻訳を手伝ってください！</a><br>この記事を <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> "
-"で読むこともできます。"
+"この記事はまだボランティアによって <bdi>%(locale)s</bdi> に翻訳されていません。<a href=\"%(help_link)s\" rel=\"nofollow, noindex\">ぜひ MDN に参加して翻訳を手伝ってください！</a><br>この記事を <a "
+"href=\"%(doc_abs_url)s\">%(parent_language)s</a> で読むこともできます。"
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:313
 msgid "This article doesn't have any content yet."
 msgstr "この記事にはまだ内容がありません。"
 
-#: kuma/wiki/jinja2/wiki/document.html:327
-#, python-format
-msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr "<a href=\"%(search_link)s\" rel=\"nofollow, noindex\">%(title)s を使用しているページ</a> を検索して、このマクロの使用例と使用回数を確認してください。"
-
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
 msgstr "この記事の内容は未承認です。"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:327
 msgid "Was this article helpful?"
 msgstr "この記事は役に立ちましたか？"
 
-#: kuma/wiki/jinja2/wiki/document.html:359
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Thank you!"
 msgstr "ありがとうございます！"
 
-#: kuma/wiki/jinja2/wiki/document.html:369
+#: kuma/wiki/jinja2/wiki/document.html:351
 msgid "Document Tags and Contributors"
 msgstr "ドキュメントのタグと貢献者"
 
-#: kuma/wiki/jinja2/wiki/document.html:375
+#: kuma/wiki/jinja2/wiki/document.html:357
 msgid "Contributors to this page:"
 msgstr "このページの貢献者:"
 
-#: kuma/wiki/jinja2/wiki/document.html:381
+#: kuma/wiki/jinja2/wiki/document.html:363
 msgid "Last updated by:"
 msgstr "最終更新者:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:6
-#, python-format
-msgid "%(title)s | Edit Template"
-msgstr "%(title)s | テンプレートを編集"
-
-#: kuma/wiki/jinja2/wiki/edit.html:8
+#: kuma/wiki/jinja2/wiki/edit.html:5
 #, python-format
 msgid "%(title)s | Edit Article"
 msgstr "%(title)s | 記事を編集"
 
-#: kuma/wiki/jinja2/wiki/edit.html:31
+#: kuma/wiki/jinja2/wiki/edit.html:27
 msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
-msgstr "あなたの変更と、あなたが編集を始めてから保存された変更の差分を確認してください。このまま再度保存することも可能ですが、編集を始めてから行われた変更が失われないよう、何か矛盾点があれば手作業で修正してください。"
+msgstr ""
+"あなたの変更と、あなたが編集を始めてから保存された変更の差分を確認してください。このまま再度保存することも可能ですが、編集を始めてから行われた変更が失われないよう、何か矛盾点があれば手作業で修正して"
+"ください。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:41
+#: kuma/wiki/jinja2/wiki/edit.html:37
 msgid "Your Changes"
 msgstr "あなたの変更"
 
-#: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
-#, python-format
-msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
+#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:62
+#, fuzzy, python-format
+msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> on %(date)s"
 msgstr "リビジョン %(id)s / 編集者: <a href=\"%(user_profile_url)s\">%(user)s</a> / 編集日時: %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
 msgstr "現行リビジョン:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:86
+#: kuma/wiki/jinja2/wiki/edit.html:90
 msgid "Search results summary:"
 msgstr "検索結果の概要:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:106
+#: kuma/wiki/jinja2/wiki/edit.html:110
 msgid "Edit Page Title and Properties"
 msgstr "ページのタイトルとプロパティの編集"
 
@@ -3547,7 +3568,7 @@ msgstr "分"
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
 msgstr "下の検索フォームで翻訳元を探して「公開」をクリックしてください。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:60
 msgid "Lookup:"
 msgstr "検索:"
 
@@ -3568,14 +3589,16 @@ msgstr "何か壊してしまわないかと怖れないでください。あな
 msgid "Have fun and be proud of your contribution!"
 msgstr "自分の貢献を楽しみ、誇りを持ってください！"
 
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/wiki/jinja2/wiki/edit.html:184
 msgid "Learn how to tag an article"
 msgstr "記事へのタグの付け方"
 
-#: kuma/wiki/jinja2/wiki/edit.html:190 kuma/wiki/jinja2/wiki/translate.html:114
+#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr "記事のカテゴリーを設定してください。それにより、検索エンジンで絞り込みを行った場合にもこの記事を正しく見つけられるようになります。詳しくは <a target=\"_blank\" href=\"%(url)s\">タグ付けガイド</a> を参照してください。"
+msgstr ""
+"記事のカテゴリーを設定してください。それにより、検索エンジンで絞り込みを行った場合にもこの記事を正しく見つけられるようになります。詳しくは <a target=\"_blank\" href=\"%(url)s\">タグ付けガイド</a> を"
+"参照してください。"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3666,9 +3689,11 @@ msgstr "ページの移動がリクエストされました"
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
-msgstr "<h1>ページの移動がスケジュールへ追加されました</h1> <p>%(old_slug)s から <a href=\"%(new_url)s\">%(new_slug)s</a> へ移動されます</p> <p> 完了時、あるいは移動中に何か問題が発生した場合にはメールでお知らせします。</p>"
+msgstr ""
+"<h1>ページの移動がスケジュールへ追加されました</h1> <p>%(old_slug)s から <a href=\"%(new_url)s\">%(new_slug)s</a> へ移動されます</p> <p> 完了時、あるいは移動中に何か問題が発生した場合にはメールでお"
+"知らせします。</p>"
 
-#: kuma/wiki/jinja2/wiki/preview.html:13
+#: kuma/wiki/jinja2/wiki/preview.html:14
 msgid "This is a preview of an unsaved document."
 msgstr "これは未保存のドキュメントのプレビューです。"
 
@@ -3707,15 +3732,15 @@ msgstr "作成者:"
 msgid "Is current revision?"
 msgstr "現行リビジョン？"
 
-#: kuma/wiki/jinja2/wiki/revision.html:61
+#: kuma/wiki/jinja2/wiki/revision.html:60
 msgid "Revision Content"
 msgstr "このリビジョンの内容"
 
-#: kuma/wiki/jinja2/wiki/revision.html:69
+#: kuma/wiki/jinja2/wiki/revision.html:67
 msgid "Revision Source"
 msgstr "このリビジョンのソースコード"
 
-#: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:73
+#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:76
 msgid "Revert to this revision"
 msgstr "このリビジョンへ戻す"
 
@@ -3734,75 +3759,75 @@ msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-%(this_year)s Mozilla Developer Network & 貢献者各人<br /> コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a> &middot; <a href=\"//www.mozilla.org/ja/privacy/\">プライバシーポリシー</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network & 貢献者各人<br /> コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; "
+"<a href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a> &middot; <a href=\"//www.mozilla.org/ja/privacy/\">プライバシーポリシー</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
 msgstr "記事の翻訳 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:33
+#: kuma/wiki/jinja2/wiki/translate.html:34
 #, python-format
 msgid "Translating article to %(locale)s"
 msgstr "記事を %(locale)s に翻訳中"
 
-#: kuma/wiki/jinja2/wiki/translate.html:43
+#: kuma/wiki/jinja2/wiki/translate.html:44
 msgid "Translate Content"
 msgstr "内容を翻訳"
 
-#: kuma/wiki/jinja2/wiki/translate.html:83
+#: kuma/wiki/jinja2/wiki/translate.html:84
 #, python-format
 msgid "Approved %(locale)s version:"
 msgstr "承認された %(locale)s 版:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:85
+#: kuma/wiki/jinja2/wiki/translate.html:86
 msgid "View Rendered"
 msgstr "レンダリング結果を表示"
 
-#: kuma/wiki/jinja2/wiki/translate.html:85
+#: kuma/wiki/jinja2/wiki/translate.html:86
 msgid "View Source"
 msgstr "ソースを表示"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:87
 #, python-format
 msgid "Show %(locale)s"
 msgstr "%(locale)s を表示"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:87
 #, python-format
 msgid "Hide %(locale)s"
 msgstr "%(locale)s を隠す"
 
-#: kuma/wiki/jinja2/wiki/translate.html:98
+#: kuma/wiki/jinja2/wiki/translate.html:99
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "%(locale)s の翻訳:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:111
+#: kuma/wiki/jinja2/wiki/translate.html:112
 msgid "Translate Tags"
 msgstr "タグの翻訳"
 
-#: kuma/wiki/jinja2/wiki/translate.html:120
+#: kuma/wiki/jinja2/wiki/translate.html:121
 msgid "English tags"
 msgstr "英語のタグ"
 
-#: kuma/wiki/jinja2/wiki/translate.html:132
+#: kuma/wiki/jinja2/wiki/translate.html:133
 msgid "This document has no tags."
 msgstr "このドキュメントはタグ付けされていません。"
 
-#: kuma/wiki/jinja2/wiki/translate.html:139
+#: kuma/wiki/jinja2/wiki/translate.html:140
 #, python-format
 msgid "%(locale)s tags"
 msgstr "%(locale)s のタグ"
 
-#: kuma/wiki/jinja2/wiki/translate.html:146
+#: kuma/wiki/jinja2/wiki/translate.html:147
 msgid "Version Notes"
 msgstr "バージョンノート"
 
 # docs, Mozilla - リスト項目、
 # mozilla, Popular Mozilla Documentation - リンクテキスト
-#: kuma/wiki/jinja2/wiki/translate.html:148
+#: kuma/wiki/jinja2/wiki/translate.html:149
 msgid "Localization flags"
 msgstr "ローカライズフラグ"
 
@@ -3863,51 +3888,51 @@ msgid "Save"
 msgstr "保存"
 
 # 88%
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:19
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:18
 msgid "Languages"
 msgstr "言語"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:32
 msgid "No translations exist for this article."
 msgstr "この記事はまだ翻訳されていません。"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:36
 msgid "Add a translation"
 msgstr "翻訳を追加"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:52 kuma/wiki/jinja2/wiki/includes/buttons.html:55
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:51 kuma/wiki/jinja2/wiki/includes/buttons.html:54
 msgid "Watch"
 msgstr "監視"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:69
 msgid "New sub-article"
 msgstr "新規サブ記事"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "Clone this article"
 msgstr "この記事を複製"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:73
 msgid "Move this article"
 msgstr "この記事を移動"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:77
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:76
 msgid "View in admin"
 msgstr "管理者として表示"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:85
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:84
 msgid "Delete this article"
 msgstr "この記事を削除"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:89
 msgid "Manage content zone"
 msgstr "コンテンツゾーンを管理"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:93
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Convert to content zone"
 msgstr "コンテンツゾーンへ変換"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:95
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:94
 msgid "Print this article"
 msgstr "この記事を印刷"
 
@@ -3923,78 +3948,78 @@ msgstr "関連記事"
 msgid "Change Revisions"
 msgstr "変更リビジョン"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:57
 #, python-format
 msgid "Revision %(num)s:"
 msgstr "リビジョン %(num)s:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:96 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr "サーバーが内容の比較をレンダリングしています。数分後にこのページを再読み込みしてください。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:116
 msgid "Subscribe to this article and all its sub-articles"
 msgstr "この記事と全サブ記事を購読"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
 msgid "Unsubscribe from this article and all its sub-articles"
 msgstr "この記事と全サブ記事の購読を中止"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "この記事と全サブ記事の購読を開始しました。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "この記事と全サブ記事の購読を中止しました。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:131
 msgid "Updating subscription status"
 msgstr "購読状況を更新しています"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "Subscribe to this article"
 msgstr "この記事を購読"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 msgid "Unsubscribe from this article"
 msgstr "この記事の購読を中止"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
 #, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "%(title)s の購読を開始しました。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "%(title)s の購読を中止しました。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:147
 #, python-format
 msgid "Subscribe to the %(language)s version"
 msgstr "%(language)s 版を購読"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "Unsubscribe from the %(language)s version"
 msgstr "%(language)s 版の購読を中止"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "この記事の %(language)s 版の購読を開始しました。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "この記事の %(language)s 版の編集通知を停止しました。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:49
 msgid "Generate table of contents"
 msgstr "目次を生成"
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:49
 msgid "TOC:"
 msgstr "目次:"
 
@@ -4026,7 +4051,9 @@ msgstr[0] "このエラーについての詳細情報"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr "MDN プロフィールを持っている人なら誰でもドキュメントを編集して問題点を修正できます。まずは <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript トラブルシューティングガイド</a> を見てみてください。"
+msgstr ""
+"MDN プロフィールを持っている人なら誰でもドキュメントを編集して問題点を修正できます。まずは <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript トラブルシューティングガイド</a> を"
+"見てみてください。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4068,7 +4095,7 @@ msgstr "変更内容を破棄し、新しいドキュメントを作成します
 msgid "Publish and Keep Editing"
 msgstr "公開して編集を続行"
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:34
 msgid "Discard"
 msgstr "破棄"
 
@@ -4118,7 +4145,7 @@ msgstr "%(locale)s のタイトル:"
 msgid "Slug in %(locale)s:"
 msgstr "%(locale)s の URL スラグ:"
 
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
+#: kuma/wiki/jinja2/wiki/includes/translate_description.html:64
 msgid "Find the translation source with the lookup above and then click \"Save\"."
 msgstr "上の検索フォームで翻訳元を探して「保存」をクリックしてください。"
 
@@ -4134,36 +4161,26 @@ msgid "Articles tagged: %(tag)s"
 msgstr "タグ「%(tag)s」の付いた記事"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
-msgid "All templates"
-msgstr "すべてのテンプレート"
-
-#: kuma/wiki/jinja2/wiki/list/documents.html:7
-#, python-format
-msgid "Found %(num)s template."
-msgid_plural "Found %(num)s templates"
-msgstr[0] "%(num)s 件のテンプレートが見つかりました"
-
-#: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
 msgstr "エラーのあるドキュメント"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:11
+#: kuma/wiki/jinja2/wiki/list/documents.html:8
 msgid "Top level documents"
 msgstr "トップレベルドキュメント"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:13
+#: kuma/wiki/jinja2/wiki/list/documents.html:10
 msgid "Documents with no parent"
 msgstr "親のないドキュメント"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:15
+#: kuma/wiki/jinja2/wiki/list/documents.html:12
 msgid "All documents"
 msgstr "すべてのドキュメント"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:28
 msgid "Translation updates needed"
 msgstr "翻訳の更新が必要"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:53 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
 msgstr "記事がありません。"
 
@@ -4205,23 +4222,23 @@ msgstr "%(count)s 件のドキュメントが見つかりました"
 msgid "Revision History | %(document)s"
 msgstr "リビジョン履歴 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:14
+#: kuma/wiki/jinja2/wiki/list/revisions.html:15
 msgid "History of"
 msgstr "履歴:"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:17
+#: kuma/wiki/jinja2/wiki/list/revisions.html:18
 msgid "Revision history for:"
 msgstr "改訂履歴:"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:42
+#: kuma/wiki/jinja2/wiki/list/revisions.html:43
 msgid "Compare Selected Translations"
 msgstr "選択した翻訳を比較"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:42
+#: kuma/wiki/jinja2/wiki/list/revisions.html:43
 msgid "Compare Selected Revisions"
 msgstr "選択したリビジョンを比較"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:81
+#: kuma/wiki/jinja2/wiki/list/revisions.html:84
 msgid "This document has no revisions."
 msgstr "このドキュメントにはリビジョンはありません。"
 
@@ -4297,16 +4314,16 @@ msgstr "詳しくは Akismet の各投稿を選択してください"
 
 # 75%
 # 100%
-#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
+#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
 #, python-format
 msgid "Revision %s"
 msgstr "リビジョン %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:107
+#: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
 msgstr "コンテンツの生成時にエラーが発生しました。"
 
-#: kuma/wiki/views/delete.py:54
+#: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "ドキュメントはすでに存在します。注: リダイレクトを削除しないと、移動されたドキュメントを元に戻すことはできません。"
 
@@ -4315,26 +4332,26 @@ msgstr "ドキュメントはすでに存在します。注: リダイレクト�
 msgid "Redirected from %(url)s"
 msgstr "%(url)s からリダイレクトされました"
 
-#: kuma/wiki/views/document.py:718
+#: kuma/wiki/views/document.py:710
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "私は %(title)s について MDN で学びました。"
 
-#: kuma/wiki/views/document.py:791
+#: kuma/wiki/views/document.py:783
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "未対応コンテンツタイプ: %s"
 
-#: kuma/wiki/views/document.py:798
+#: kuma/wiki/views/document.py:790
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "リクエスト解析エラー: %s"
 
-#: kuma/wiki/views/document.py:818
+#: kuma/wiki/views/document.py:808
 msgid "ETag precondition failed"
 msgstr "ETag の事前調整に失敗しました"
 
-#: kuma/wiki/views/edit.py:114
+#: kuma/wiki/views/edit.py:111
 msgid "Sections may only be edited inline."
 msgstr "セクションはインラインのみで編集できます。"
 
@@ -4342,7 +4359,7 @@ msgstr "セクションはインラインのみで編集できます。"
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr "自動提案には部分タイトルが必要です。完全なドキュメントインデックスに関してはメインページを参照してください。"
 
-#: kuma/wiki/views/revision.py:145
+#: kuma/wiki/views/revision.py:142
 msgid "Document has been edited; please re-review."
 msgstr "ドキュメントが編集されました。再度レビューしてください。"
 
@@ -4354,6 +4371,22 @@ msgstr "あなたはこのドキュメントを翻訳できません。"
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch サーバー: %(backend)s"
+
+#~ msgid "Create a New Template"
+#~ msgstr "新しいテンプレートを作成"
+
+#~ msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
+#~ msgstr "<a href=\"%(search_link)s\" rel=\"nofollow, noindex\">%(title)s を使用しているページ</a> を検索して、このマクロの使用例と使用回数を確認してください。"
+
+#~ msgid "%(title)s | Edit Template"
+#~ msgstr "%(title)s | テンプレートを編集"
+
+#~ msgid "All templates"
+#~ msgstr "すべてのテンプレート"
+
+#~ msgid "Found %(num)s template."
+#~ msgid_plural "Found %(num)s templates"
+#~ msgstr[0] "%(num)s 件のテンプレートが見つかりました"
 
 #~ msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 #~ msgstr "この記事は技術レビューを必要としています。<a href=\"%(url)s\">ぜひご協力ください</a>。"
@@ -4377,14 +4410,18 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "オープンウェブアプリの構築"
 
 #~ msgid ""
-#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-#~ msgstr "あなたの投稿には MDN にふさわしくないと思われる内容が含まれています。不適切な内容を何度も投稿した場合、あなたのアカウントは凍結される可能性があります。適切な内容かどうかの詳細に関しては <a href=\"%(does_this_belong_url)s\">MDN の記事掲載ガイド</a> を参照してください。"
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ msgstr ""
+#~ "あなたの投稿には MDN にふさわしくないと思われる内容が含まれています。不適切な内容を何度も投稿した場合、あなたのアカウントは凍結される可能性があります。適切な内容かどうかの詳細に関しては <a href="
+#~ "\"%(does_this_belong_url)s\">MDN の記事掲載ガイド</a> を参照してください。"
 
 #~ msgid ""
-#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you"
-#~ " can continue to sign in to MDN."
-#~ msgstr "あなたは Persona でログインしましたが、11 月 1 日以降 MDN にこの方法でログインすることはできなくなります。<br>今後も MDN へのログインを可能にするには、<a href=\"%(persona_info)s\">あなたの GitHub アカウントを MDN プロフィールと関連付けてください</a>。"
+#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
+#~ "you can continue to sign in to MDN."
+#~ msgstr ""
+#~ "あなたは Persona でログインしましたが、11 月 1 日以降 MDN にこの方法でログインすることはできなくなります。<br>今後も MDN へのログインを可能にするには、<a href=\"%(persona_info)s\">あなたの "
+#~ "GitHub アカウントを MDN プロフィールと関連付けてください</a>。"
 
 #~ msgid "Sign in:"
 #~ msgstr "ログイン:"
@@ -4414,15 +4451,19 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "接続されたアカウントはありません。"
 
 #~ msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-#~ msgstr "このメールアドレスのアカウントはすでに存在しています。Persona をあなたの MDN アカウントに接続するには、<a href=\"%(connections_url)s\">ログインしてあなたのソーシャルアカウント接続ページで設定する必要があります。</a>"
+#~ msgstr ""
+#~ "このメールアドレスのアカウントはすでに存在しています。Persona をあなたの MDN アカウントに接続するには、<a href=\"%(connections_url)s\">ログインしてあなたのソーシャルアカウント接続ページで設定する"
+#~ "必要があります。</a>"
 
 #~ msgid ""
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
-#~ msgstr[0] "このメールアドレスのアカウントはすでに存在しています。すでに MDN アカウントをお持ちですか？ <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">はい、自分の MDN アカウントと接続します</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ msgstr[0] ""
+#~ "このメールアドレスのアカウントはすでに存在しています。すでに MDN アカウントをお持ちですか？ <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">は"
+#~ "い、自分の MDN アカウントと接続します</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "Persona でログイン"
@@ -4485,11 +4526,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "あなたが編集している間に、このドキュメントに変更が加えられました。"
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
-#~ "コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a> &middot; <a href=\"//www.mozilla.org/en-"
-#~ "US/privacy\">プライバシーポリシー</a>"
+#~ "コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a> "
+#~ "&middot; <a href=\"//www.mozilla.org/en-US/privacy\">プライバシーポリシー</a>"
 
 #~ msgid "\"Load documents\""
 #~ msgstr "「ドキュメントを読み込む」"
@@ -4709,12 +4750,13 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "CSS3 アニメーションは、時間の経過によりプロパティの値を変化させ、要素の外観や位置を変化させます。JavaScript コードを最小限に減らし、トランジションよりも優れた制御ができます。"
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
-#~ "CSS3 アニメーションは、さらに優れた柔軟性とスタイルのコントロール、Web 体験を追加する、Firefox のようなモダンブラウザの新しい機能です。CSS3 アニメーションは、時間の経過によりプロパティの値を変化させ、要素の外観や位置を変化させます。JavaScript コードを最小限に減らし、CSS トランジションよりも優れた制御ができます。動きのなかったプロパティを HTML "
-#~ "要素の外観や位置を動かすものにしましょう。これらの効果は、Flash や Silverlight を必要としません。クリエイティブでダイナミックなインターフェースを CSS3 のアニメーションで実現できます。"
+#~ "CSS3 アニメーションは、さらに優れた柔軟性とスタイルのコントロール、Web 体験を追加する、Firefox のようなモダンブラウザの新しい機能です。CSS3 アニメーションは、時間の経過によりプロパティの値を変化"
+#~ "させ、要素の外観や位置を変化させます。JavaScript コードを最小限に減らし、CSS トランジションよりも優れた制御ができます。動きのなかったプロパティを HTML 要素の外観や位置を動かすものにしましょう。こ"
+#~ "れらの効果は、Flash や Silverlight を必要としません。クリエイティブでダイナミックなインターフェースを CSS3 のアニメーションで実現できます。"
 
 #~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
 #~ msgstr "2011 年 7 月の Dev Derby Challenge - HTML5 <video>"
@@ -4771,9 +4813,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "2011 年 11 月"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
-#~ " that make it easy to control and draw in."
-#~ msgstr "Canvas を用いると、JavaScriptを用いて 2D の図形、ビットマップイメージ、および高度なグラフィカルエフェクトをレンダリングし、Web をペイントすることができます。<canvas> 要素はグラフィックス状態を持つコンテキストを個別に持ち、容易な描画のためのメソッドも用意されています。"
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
+#~ msgstr ""
+#~ "Canvas を用いると、JavaScriptを用いて 2D の図形、ビットマップイメージ、および高度なグラフィカルエフェクトをレンダリングし、Web をペイントすることができます。<canvas> 要素はグラフィックス状態を持"
+#~ "つコンテキストを個別に持ち、容易な描画のためのメソッドも用意されています。"
 
 #~ msgid "December 2011 Dev Derby Challenge - IndexedDB"
 #~ msgstr "2011 年 12 月の Dev Derby Challenge - IndexedDB"
@@ -4866,9 +4910,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "2012 年 7 月"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-#~ "input with HTML, and more. What else can you do without JavaScript?"
-#~ msgstr "Web にリッチなユーザーエクスペリエンスをもたらす事は容易ではありませんでした。今日のオープンな Web 標準は、いくつかの最も強力な機能を手軽に扱う事ができます。CSS を使用したページのアニメーション、HTML でのユーザー入力の検証など、あなたは JavaScript 無しで何ができますか？"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
+#~ msgstr ""
+#~ "Web にリッチなユーザーエクスペリエンスをもたらす事は容易ではありませんでした。今日のオープンな Web 標準は、いくつかの最も強力な機能を手軽に扱う事ができます。CSS を使用したページのアニメーション、"
+#~ "HTML でのユーザー入力の検証など、あなたは JavaScript 無しで何ができますか？"
 
 #~ msgid "August 2012 Dev Derby Challenge - Camera API"
 #~ msgstr "2012 年 8 月の Dev Derby Challenge - Camera API"
@@ -4901,9 +4947,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "2012 年 10 月"
 
 #~ msgid ""
-#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-#~ "you do with Media Queries?"
-#~ msgstr "CSS メディアクエリは、レスポンシブ Web デザイン、モバイルファースト Web デザインのためのツールです。これは既に W3C 勧告となっています。画面幅の制約にとらわれず、より多くのことを伝えることができます。あなたはメディアクエリを使って何ができますか？"
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
+#~ "can you do with Media Queries?"
+#~ msgstr ""
+#~ "CSS メディアクエリは、レスポンシブ Web デザイン、モバイルファースト Web デザインのためのツールです。これは既に W3C 勧告となっています。画面幅の制約にとらわれず、より多くのことを伝えることができま"
+#~ "す。あなたはメディアクエリを使って何ができますか？"
 
 #~ msgid "November 2012 Dev Derby Challenge - Fullscreen API"
 #~ msgstr "2012 年 11 月の Dev Derby Challenge - Fullscreen API"
@@ -4915,7 +4963,9 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "2012 年 11 月"
 
 #~ msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
-#~ msgstr "フルスクリーン API を用いると、ブラウザのウィンドウの境界を脱出することができます。フルスクリーン状態の変化を検出したり、フルスクリーンページに特別なスタイルを適用する事も可能です。没入感を演出しましょう！"
+#~ msgstr ""
+#~ "フルスクリーン API を用いると、ブラウザのウィンドウの境界を脱出することができます。フルスクリーン状態の変化を検出したり、フルスクリーンページに特別なスタイルを適用する事も可能です。没入感を演出し"
+#~ "ましょう！"
 
 #~ msgid "December 2012 Dev Derby Challenge - Offline"
 #~ msgstr "2012 年 12 月の Dev Derby Challenge - オフライン"
@@ -4927,9 +4977,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "2012 年 12 月"
 
 #~ msgid ""
-#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-#~ "users, improve performance, and more."
-#~ msgstr "オープン Web の成熟したオフライン能力により、インターネット接続の有無に関わらずアプリを構築することができます。オフライン技術で、旅行者やモバイルユーザをサポートし、パフォーマンスを改善することができます。"
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
+#~ "mobile users, improve performance, and more."
+#~ msgstr ""
+#~ "オープン Web の成熟したオフライン能力により、インターネット接続の有無に関わらずアプリを構築することができます。オフライン技術で、旅行者やモバイルユーザをサポートし、パフォーマンスを改善することが"
+#~ "できます。"
 
 #~ msgid "January 2013 Dev Derby Challenge - Drag and Drop"
 #~ msgstr "2013 年 1 月の Dev Derby Challenge - ドラッグ＆ドロップ"
@@ -4953,9 +5005,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "2013 年 2 月"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
-#~ " all the interactions users have come to expect."
-#~ msgstr "タッチイベント API を使うと、マルチタッチに対応したデバイスでは同時に複数のタッチを認識できます。操作が複雑なゲームやピンチ操作でのズームなどの機能を実装できます。マルチタッチを利用することで、ユーザが思う通りに操作ができるアプリを開発できるようになります。"
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
+#~ msgstr ""
+#~ "タッチイベント API を使うと、マルチタッチに対応したデバイスでは同時に複数のタッチを認識できます。操作が複雑なゲームやピンチ操作でのズームなどの機能を実装できます。マルチタッチを利用することで、"
+#~ "ユーザが思う通りに操作ができるアプリを開発できるようになります。"
 
 #~ msgid "March 2013 Dev Derby Challenge - Mobile"
 #~ msgstr "2013 年 3 月の Dev Derby Challenge - モバイル"
@@ -5114,7 +5168,8 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "入力フォーム"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr "HTML5 での Form 関連要素とそれらの属性は HTML4 よりもさらに適切なセマンティックマークアップを提供し、HTML4 で必要であった冗長なスクリプトとスタイル設定の量を大幅に削減します。"
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -5501,7 +5556,9 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgid ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
-#~ msgstr "<p>Demo Studio から <strong>%(demo_title)s</strong> を削除しようとしています。</p> <p>該当デモの公開リストへの登録、そのソースコードおよび統計データは<strong>削除</strong>されます。</p> <p>この操作は<strong>取り消せません</strong>。"
+#~ msgstr ""
+#~ "<p>Demo Studio から <strong>%(demo_title)s</strong> を削除しようとしています。</p> <p>該当デモの公開リストへの登録、そのソースコードおよび統計データは<strong>削除</strong>されます。</p> <p>この操"
+#~ "作は<strong>取り消せません</strong>。"
 
 #~ msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
 #~ msgstr "<button type=\"submit\" class=\"remove\"><span>デモを削除</span></button>"
@@ -5511,11 +5568,12 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Mozilla Demo Studio へようこそ。ここでは、あなたのような開発者が Web に関するあらゆる技術を開発または共有、デモ、学習をすることができます。Demo Studio を探索して見てください。</p> <ul> <li>HTML や CSS、JavaScript を使ってできることを紹介したデモを見てください。</li> "
-#~ "<li>デモで使用されたソースコードを調べて、その動く仕組みを見てください。</li> <li>ドキュメントを読んで、Web を動かしているオープンな標準や技術を学んでください。</li> </ul>"
+#~ "<p>Mozilla Demo Studio へようこそ。ここでは、あなたのような開発者が Web に関するあらゆる技術を開発または共有、デモ、学習をすることができます。Demo Studio を探索して見てください。</p> <ul> "
+#~ "<li>HTML や CSS、JavaScript を使ってできることを紹介したデモを見てください。</li> <li>デモで使用されたソースコードを調べて、その動く仕組みを見てください。</li> <li>ドキュメントを読んで、Web を動"
+#~ "かしているオープンな標準や技術を学んでください。</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "前のデモへ戻る &rarr; %(demo_title)s"
@@ -5750,11 +5808,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "新しいデモを投稿"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、もしくは、お披露目するために投稿することをおすすめします。</p> <p>Demo Studio "
-#~ "にデモが上手く投稿されるようにするには、以下のフォームに必要事項を英語で入力してください。</p>"
+#~ "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、も"
+#~ "しくは、お披露目するために投稿することをおすすめします。</p> <p>Demo Studio にデモが上手く投稿されるようにするには、以下のフォームに必要事項を英語で入力してください。</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "あなたのデモについて説明してください(英語)"
@@ -5784,14 +5842,15 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "デモ投稿のための準備"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul><li>デモのソースコードは ZIP ファイルに格納してください。</li><li>デモのメインページは ZIP のルートディレクトリ内の <code>index.html</code> という名前のファイルにしてください。</li><li>あなたのデモはクライアントサイドの技術 (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby "
-#~ "のようなサーバサイド言語はサポートされていません。</li><li>デモが外部リソースを必要とする場合は、それらに AJAX でアクセスしてください。</li><li>デモを投稿するには、<a href=\"%(signup_url)s\">MDN アカウント</a>が必要です。</li><li>デモの詳細欄に、CC-BY-SA (表示-継承) "
-#~ "の下でライセンスすることができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li></ul>"
+#~ "<ul><li>デモのソースコードは ZIP ファイルに格納してください。</li><li>デモのメインページは ZIP のルートディレクトリ内の <code>index.html</code> という名前のファイルにしてください。</li><li>あなた"
+#~ "のデモはクライアントサイドの技術 (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby のようなサーバサイド言語はサポートされていません。</li><li>デモが外部リソースを必要とする場合"
+#~ "は、それらに AJAX でアクセスしてください。</li><li>デモを投稿するには、<a href=\"%(signup_url)s\">MDN アカウント</a>が必要です。</li><li>デモの詳細欄に、CC-BY-SA (表示-継承) の下でライセンスする"
+#~ "ことができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li></ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "ソースコードを提供してください"
@@ -5820,30 +5879,34 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "<p>MDN コミュニティと開発者の興味や専門分野を共有しましょう。これにより、より良くカスタマイズされた経験が得られるでしょう。また、素晴らしい作品を披露する場を手に入れることができます。</p>"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
-#~ msgstr "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、もしくは、お披露目するために投稿することをおすすめします。</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
+#~ msgstr ""
+#~ "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、も"
+#~ "しくは、お披露目するために投稿することをおすすめします。</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "始める前に"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>あなたはデモの<strong>ソースコードを提供する</strong>ための準備をしなければなりません。デモは Demo Studio のサーバに置かれます。</li> <li>あなたのデモのソースコードのライセンスは、MPL, GPL, BSD のような<strong>オープンライセンス</strong>にしなけれればなりません。</li> "
-#~ "<li>あなたのデモは、HTML5 および CSS3 のような<strong>オープンな Web 技術</strong>を披露するものでなければなりません。</li> <li>あなたのデモは、Firefox, Chrome, Safari そして Opera のような<strong>モダン Web ブラウザ</strong>を幅広くサポートしなくてはなりません。</li> </ul>"
+#~ "<ul> <li>あなたはデモの<strong>ソースコードを提供する</strong>ための準備をしなければなりません。デモは Demo Studio のサーバに置かれます。</li> <li>あなたのデモのソースコードのライセンスは、MPL, "
+#~ "GPL, BSD のような<strong>オープンライセンス</strong>にしなけれればなりません。</li> <li>あなたのデモは、HTML5 および CSS3 のような<strong>オープンな Web 技術</strong>を披露するものでなければなり"
+#~ "ません。</li> <li>あなたのデモは、Firefox, Chrome, Safari そして Opera のような<strong>モダン Web ブラウザ</strong>を幅広くサポートしなくてはなりません。</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>デモのソースコードは <strong>ZIP ファイル</strong>に格納してください。</li> <li>デモのメインページは ZIP のルートディレクトリ内の <strong><code>index.html</code></strong> という名前のファイルにしてください。</li> <li>あなたのデモは<strong>クライアントサイドの技術</strong>"
-#~ " (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby のようなサーバサイドの言語はサポートされていません。</li> <li>あなたのデモが外部リソースを必要とする場合は、それらに <strong>AJAX</strong> でアクセスしてください。</li> <li>デモの詳細欄に、CC-BY-SA (表示-継承) "
-#~ "の下でライセンスすることができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li> </ul>"
+#~ "<ul> <li>デモのソースコードは <strong>ZIP ファイル</strong>に格納してください。</li> <li>デモのメインページは ZIP のルートディレクトリ内の <strong><code>index.html</code></strong> という名前の"
+#~ "ファイルにしてください。</li> <li>あなたのデモは<strong>クライアントサイドの技術</strong> (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby のようなサーバサイドの言語はサポートさ"
+#~ "れていません。</li> <li>あなたのデモが外部リソースを必要とする場合は、それらに <strong>AJAX</strong> でアクセスしてください。</li> <li>デモの詳細欄に、CC-BY-SA (表示-継承) の下でライセンスするこ"
+#~ "とができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>デモを投稿するには <strong><a href=\"%(signup_url)s\">MDN アカウント</a></strong> が必要です。</p>"
@@ -6086,17 +6149,17 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "%s は %s によってアカウントが停止されています"
 
 #~ msgid ""
-#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the site. *"
-#~ " Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will "
-#~ "Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
+#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the "
+#~ "site. * Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier "
+#~ "(teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
 #~ msgstr ""
-#~ "MDN について誰かと話がしたいですか？ それにはいくつかの方法があります。 * メーリングリスト: %(list_link)s を購読して、MDN 上であなたが興味のあることを教えてください。サイトに関する質問もお気軽にどうぞ。 * リアルタイムチャット: irc.mozilla.org 上の #mdn チャンネルを使ってください (IRC の詳細は %(irc_link)s "
-#~ "を見てください)。MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) "
-#~ "が常駐しています。 * ブログ: %(blog_link)s"
+#~ "MDN について誰かと話がしたいですか？ それにはいくつかの方法があります。 * メーリングリスト: %(list_link)s を購読して、MDN 上であなたが興味のあることを教えてください。サイトに関する質問もお気軽に"
+#~ "どうぞ。 * リアルタイムチャット: irc.mozilla.org 上の #mdn チャンネルを使ってください (IRC の詳細は %(irc_link)s を見てください)。MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier "
+#~ "(teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。 * ブログ: %(blog_link)s"
 
 #~ msgid ""
-#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a "
-#~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
+#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href="
+#~ "\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
 #~ msgstr ""
 #~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">「%(parent_locale)s」の親を表示 </a> (<a href=\"%(mod_url)s\">最終更新: %(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" "
 #~ "title=\"%(doc_title)s\"> 「%(doc_locale)s」の翻訳を編集 </a> (最終更新: %(doc_modified)s) </p>"
@@ -6194,37 +6257,41 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "デモを投稿"
 
 #~ msgid ""
-#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose\"> "
-#~ "<li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
-#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of the "
-#~ "month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many "
-#~ "&ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than once in "
-#~ "the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
+#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose"
+#~ "\"> <li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
+#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of "
+#~ "the month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how "
+#~ "many &ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than "
+#~ "once in the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
 #~ msgstr ""
-#~ "<p>ルールの概要は以下から確認できます。コンテストの条件に関する詳細は、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a>をご覧ください。</p> <ul class=\"prose\"> <li>コンテストには、ほぼどなたでも参加できます (例外については<a "
-#~ "href=\"%(rules_url)s\">公式ルール</a>をご覧ください)。</li> <li>毎月、新しいコンテストが開催されています。</li> <li>エントリーには一定の基準を満たす必要があります。すべての基準は <a href=\"%(rules_url)s\">公式ルール</a> をご確認ください。また、Current Challenge (開催中のコンテスト) "
-#~ "のセクションでは、コンテストごとの特別な基準をご覧いただけます。</li> <li>それぞれのコンテストは、毎月初日から末日まで (<strong>米国太平洋時間</strong>) に開催されます。</li> <li>審査は選抜されたレビュアたちによって行われるものの、獲得した &ldquo;投票数&rdquo; が考慮に入れられるかどうかはそれぞれのレビュアによって異なります。</li> "
-#~ "<li>毎月のコンテストの受賞者は、<strong>翌月の 20 日</strong>までに発表されます。</li> <li>同じ暦年内に複数回、受賞することはできません。</li> <li>エントリーする前に、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a> "
+#~ "<p>ルールの概要は以下から確認できます。コンテストの条件に関する詳細は、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a>をご覧ください。</p> "
+#~ "<ul class=\"prose\"> <li>コンテストには、ほぼどなたでも参加できます (例外については<a href=\"%(rules_url)s\">公式ルール</a>をご覧ください)。</li> <li>毎月、新しいコンテストが開催されています。</"
+#~ "li> <li>エントリーには一定の基準を満たす必要があります。すべての基準は <a href=\"%(rules_url)s\">公式ルール</a> をご確認ください。また、Current Challenge (開催中のコンテスト) のセクションでは、コ"
+#~ "ンテストごとの特別な基準をご覧いただけます。</li> <li>それぞれのコンテストは、毎月初日から末日まで (<strong>米国太平洋時間</strong>) に開催されます。</li> <li>審査は選抜されたレビュアたちによって"
+#~ "行われるものの、獲得した &ldquo;投票数&rdquo; が考慮に入れられるかどうかはそれぞれのレビュアによって異なります。</li> <li>毎月のコンテストの受賞者は、<strong>翌月の 20 日</strong>までに発表されま"
+#~ "す。</li> <li>同じ暦年内に複数回、受賞することはできません。</li> <li>エントリーする前に、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a> "
 #~ "をご覧ください。</li> </ul>"
 
 #~ msgid "<p>Entries will be reviewed by a panel of qualified judges, including members of the Mozilla team and outside experts. We will rate the demos across 4 dimensions:</p>"
 #~ msgstr "<p>エントリは、 Mozilla チームのメンバーや外部の専門家を含む適格な審査員のパネルによって審査されます。私たちは多角的にデモを評価します:</p>"
 
 #~ msgid ""
-#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is the"
-#~ " demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the "
-#~ "Web today?</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is "
+#~ "the demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in "
+#~ "enhancing the Web today?</li> </ul>"
 #~ msgstr ""
-#~ "<ul class=\"prose\"> <li><strong>技術</strong>&ndash;オープンWeb技術の有効性が示されているか</li> <li><strong>オリジナリティ</strong>&ndash;どの程度の革新性と独自性があるか</li> <li><strong>美しさ</strong> "
-#~ "&ndash;視覚的なデザインとインタラクションはどの程度優れているか</li> <li><strong>実用性</strong> &ndash;現在のWebの発展に貢献するものか</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>技術</strong>&ndash;オープンWeb技術の有効性が示されているか</li> <li><strong>オリジナリティ</strong>&ndash;どの程度の革新性と独自性があるか</li> <li><strong>美し"
+#~ "さ</strong> &ndash;視覚的なデザインとインタラクションはどの程度優れているか</li> <li><strong>実用性</strong> &ndash;現在のWebの発展に貢献するものか</li> </ul>"
 
 #~ msgid "<p>The judges will use all four dimensions in scoring each entry, and any additional criteria specified for a particular contest.</p>"
 #~ msgstr "<p>審査員は各エントリを多角的に評価します。各コンテストには、特別な追加基準が設定されています。</p>"
 
 #~ msgid ""
-#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby "
-#~ "to &ldquo;vote.&rdquo;</p>"
-#~ msgstr "<p>審査員は、エントリにつけられた &ldquo;likes&rdquo; の数も考慮する事があります。ぜひ、他の人とあなたのデモを共有し、彼らが &ldquo;投票.&rdquo; してくれるよう、Dev Derby への訪問を促してください。</p>"
+#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev "
+#~ "Derby to &ldquo;vote.&rdquo;</p>"
+#~ msgstr ""
+#~ "<p>審査員は、エントリにつけられた &ldquo;likes&rdquo; の数も考慮する事があります。ぜひ、他の人とあなたのデモを共有し、彼らが &ldquo;投票.&rdquo; してくれるよう、Dev Derby への訪問を促してくださ"
+#~ "い。</p>"
 
 #~ msgid "Expert Judges"
 #~ msgstr "エキスパート審査員"
@@ -6236,7 +6303,8 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ "James is a London-based UI Developer with a passion for JavaScript, HTML5 and anything that enables him and others to create stuff of value. He's currently freelancing and working on interactive "
 #~ "media at Storygami, a new startup that he's the CTO of. James shares opinionated technical articles and code on his website and github."
 #~ msgstr ""
-#~ "ジェームズはロンドンを拠点とするUI開発者で、JavaScriptやHTML5など、価値あるものを創造するための、あらゆる技術に強い関心を持っています。現在、フリーランスで仕事をしている彼は、自身がCTOを務める新興企業、Storygamiでインタラクティブメディアに取り組んでいます。ジェームズのWebサイトやGithubでは、技術関連における彼独自の視点からの記事やコードが紹介されています。"
+#~ "ジェームズはロンドンを拠点とするUI開発者で、JavaScriptやHTML5など、価値あるものを創造するための、あらゆる技術に強い関心を持っています。現在、フリーランスで仕事をしている彼は、自身がCTOを務める新"
+#~ "興企業、Storygamiでインタラクティブメディアに取り組んでいます。ジェームズのWebサイトやGithubでは、技術関連における彼独自の視点からの記事やコードが紹介されています。"
 
 #~ msgid "Developer Engagement Community Organizer, Mozilla"
 #~ msgstr "Developer Engagement Community Organizer, Mozilla"
@@ -6244,14 +6312,16 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgid ""
 #~ "Janet has been wandering around software development since the twentieth century, and around open source software and documentation since 2004. She started working for Mozilla on developer "
 #~ "documentation in 2010, and recently became Community Manager for Developer Engagement. Her superpower is taking things literally."
-#~ msgstr "20世紀からソフトウェア開発でのキャリアをスタートさせたジャネットは、2004年からオープンソースのソフトウェアとドキュメンテーションに従事しています。2010年にMozillaでの開発者ドキュメンテーション業務を開始し、先日、デベロッパーエンゲージメント担当コミュニティーマネージャーに任命されました。物事を文字通りに解釈することが、彼女の大きな強みです。"
+#~ msgstr ""
+#~ "20世紀からソフトウェア開発でのキャリアをスタートさせたジャネットは、2004年からオープンソースのソフトウェアとドキュメンテーションに従事しています。2010年にMozillaでの開発者ドキュメンテーション業務"
+#~ "を開始し、先日、デベロッパーエンゲージメント担当コミュニティーマネージャーに任命されました。物事を文字通りに解釈することが、彼女の大きな強みです。"
 
 #~ msgid ""
 #~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev Derby is on hiatus while we work on revamping the contest series. When it returns, you may see some changes in the "
 #~ "contest format. However, the Dev Derby mission remains unchanged: to provide a platform that helps web developers learn, share, and push the web forward.</p> <p>See you soon!</p> </div>"
 #~ msgstr ""
-#~ "<div style=\"padding-right: 20px;\"><h2>Dev Derby 中断中</h2> <p>Dev Derby はコンテストの刷新を行っており、現在中断中です。再開後は様式が変わったコンテストとなっているでしょう。しかし、Dev Derby のミッションは変わりません: Web 開発者が Web を学習したり、共有したり、Web "
-#~ "を前に押し出す助けとなるプラットフォームであることです。</p> <p>乞うご期待！</p> </div>"
+#~ "<div style=\"padding-right: 20px;\"><h2>Dev Derby 中断中</h2> <p>Dev Derby はコンテストの刷新を行っており、現在中断中です。再開後は様式が変わったコンテストとなっているでしょう。しかし、Dev Derby "
+#~ "のミッションは変わりません: Web 開発者が Web を学習したり、共有したり、Web を前に押し出す助けとなるプラットフォームであることです。</p> <p>乞うご期待！</p> </div>"
 
 #~ msgid "Previous Winner"
 #~ msgstr "前回の勝者"
@@ -6260,14 +6330,15 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "デモを見る"
 
 #~ msgid ""
-#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" "
-#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a "
-#~ "limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
+#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones"
+#~ "\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" href=\"http://www.rickshawbags.com/"
+#~ "bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to "
+#~ "show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
-#~ "<h1>商品</h1> <ol> <li class=\"first\"> <h3>Android モバイル端末</h3> <p>優勝者には <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a> から Android モバイル端末が授与されます。</p> </li> <li "
-#~ "class=\"second\"> <h3>Rickshaw パソコンバッグ</h3> <p>次点者は <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a> "
-#~ "からノート PC 用の手作りバッグが授与されます。</p> </li> <li class=\"third\"> <h3>MDN T シャツ</h3> <p>3 位の受賞者にはあなたがギークであることが表される限定 MDN T シャツが授与されます。</p> </li> </ol>"
+#~ "<h1>商品</h1> <ol> <li class=\"first\"> <h3>Android モバイル端末</h3> <p>優勝者には <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a> から Android モバイル端末"
+#~ "が授与されます。</p> </li> <li class=\"second\"> <h3>Rickshaw パソコンバッグ</h3> <p>次点者は <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-"
+#~ "commuter-laptop-bag-black.html\">Rickshaw</a> からノート PC 用の手作りバッグが授与されます。</p> </li> <li class=\"third\"> <h3>MDN T シャツ</h3> <p>3 位の受賞者にはあなたがギークであることが表さ"
+#~ "れる限定 MDN T シャツが授与されます。</p> </li> </ol>"
 
 #~ msgid "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn More</strong>"
 #~ msgstr "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>もっと詳しく</strong>"
@@ -6291,11 +6362,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> によるコメント"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "投稿日時: <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\""
-#~ " title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "投稿日時: <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "このコメントへの {full_name} による返信"
@@ -6330,12 +6401,13 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgid ""
 #~ "Here you can see some of the developer events at which Mozilla will be participating, and the topics on which our Mozillians will be speaking. If you are organizing an event and would like a "
 #~ "Mozillian to participate, please <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">file a bug</a>. If you are a Mozillian speaking at an event that's not listed here, or if an "
-#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps "
-#~ "events</a> page to find a Mozilla Reps event near you!"
+#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla "
+#~ "Reps events</a> page to find a Mozilla Reps event near you!"
 #~ msgstr ""
-#~ "このページでは、Mozilla が参加する予定の一部の開発者イベントのほか、Mozillian が講演するテーマをご紹介しています。企画されているイベントに参加を希望される場合は、<a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">からバグを登録</a>してください。Mozillian "
-#~ "のあなたが講演を予定するイベントがリストアップされていない場合、またイベントのエントリーを更新する必要がある場合は、<a href=\"mailto:dev-events@mozilla.com\">Mozillaまでお知らせください</a>。また、<a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps"
-#~ " イベント</a>のページでは、Mozilla Reps イベントの開催場所をご確認いただけます。"
+#~ "このページでは、Mozilla が参加する予定の一部の開発者イベントのほか、Mozillian が講演するテーマをご紹介しています。企画されているイベントに参加を希望される場合は、<a href=\"https://bugzilla."
+#~ "mozilla.org/form.dev-engagement-event\">からバグを登録</a>してください。Mozillian のあなたが講演を予定するイベントがリストアップされていない場合、またイベントのエントリーを更新する必要がある場合"
+#~ "は、<a href=\"mailto:dev-events@mozilla.com\">Mozillaまでお知らせください</a>。また、<a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps イベント</a>のページでは、Mozilla "
+#~ "Reps イベントの開催場所をご確認いただけます。"
 
 #~ msgid "Upcoming Conferences"
 #~ msgstr "開催予定のカンファレンス"
@@ -6400,30 +6472,34 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
 #~ "location of the HTML elements within the pages.</p>"
-#~ msgstr "<p><strong>Cascading Style Sheets</strong> は Web ページの見た目を記述するための言語です。見栄えのいい Web ページを製作するためにはページ内での HTML 要素の見た目や配置を定義する CSS を学ぶ必要があります。</p>"
+#~ msgstr ""
+#~ "<p><strong>Cascading Style Sheets</strong> は Web ページの見た目を記述するための言語です。見栄えのいい Web ページを製作するためにはページ内での HTML 要素の見た目や配置を定義する CSS を学ぶ必要が"
+#~ "あります。</p>"
 
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr "<p><strong>JavaScript</strong> (JS と省略します) は HTML のリンクやフォームによって提供される基本的なレベルを超えて、Web ページがユーザとの相互体験を可能にするプログラミング言語です。</p>"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through "
-#~ "Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
-#~ "victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups "
+#~ "through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, "
+#~ "struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>ひとりで学習することに飽きていませんか？<br>オープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of "
-#~ "Webcraft (スクール・オブ・Web クラフト)</a>では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>ひとりで学習することに飽きていませんか？<br>オープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href="
+#~ "\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a>では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したこと"
+#~ "を、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid "Back to Home"
 #~ msgstr "最初のページへ戻る"
 
 #~ msgid ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
-#~ "the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
-#~ "learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
-#~ "here.</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to "
+#~ "define the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just "
+#~ "starting out, learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find "
+#~ "helpful resources here.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) はWeb ページの見た目を記述するための言語です。見た目の美しい Web ページを作るには、ページ内の HTML 要素の見た目や配置を定義するために CSS を学習する必要があります。</p><p>このページにあるリンクは多種多様な CSS チュートリアルや CSS"
-#~ " トレーニング素材へとつながっています。あなたが学習を始めたばかりでも、CSS の基本を学習する場合でも、<strong>CSS3</strong> (最新の規格) や良い事例を学ぼうとしているWeb 開発経験者であっても、有用な情報を見つけられるでしょう。</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) はWeb ページの見た目を記述するための言語です。見た目の美しい Web ページを作るには、ページ内の HTML 要素の見た目や配置を定義するた"
+#~ "めに CSS を学習する必要があります。</p><p>このページにあるリンクは多種多様な CSS チュートリアルや CSS トレーニング素材へとつながっています。あなたが学習を始めたばかりでも、CSS の基本を学習する場"
+#~ "合でも、<strong>CSS3</strong> (最新の規格) や良い事例を学ぼうとしているWeb 開発経験者であっても、有用な情報を見つけられるでしょう。</p>"
 
 #~ msgid "Introductory Level"
 #~ msgstr "入門レベル"
@@ -6543,42 +6619,50 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "@font-face での Web フォント実装のためのクイックガイド"
 
 #~ msgid "The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way."
-#~ msgstr "CSS3 の @font-face の機能を使用すると、文字画像などを使用した場合と異なり、「文字検索機能などによるアクセス」、「コピー &amp; ペーストなどの操作」、「ブラウザの機能や CSS での拡大縮小が可能」な方法で、Web 上でカスタム書体を使用することができます。"
+#~ msgstr ""
+#~ "CSS3 の @font-face の機能を使用すると、文字画像などを使用した場合と異なり、「文字検索機能などによるアクセス」、「コピー &amp; ペーストなどの操作」、「ブラウザの機能や CSS での拡大縮小が可能」な方"
+#~ "法で、Web 上でカスタム書体を使用することができます。"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online peer "
-#~ "study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
+#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online "
+#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
 #~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>CSS をひとりで学習することに飽きていませんか？<br>CSS や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
-#~ "webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>CSS をひとりで学習することに飽きていませんか？<br>CSS や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></"
+#~ "span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮"
+#~ "闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
-#~ " can't take advantage."
-#~ msgstr "このサイトでは、進化を続ける CSS の最新バージョンのである<strong>CSS3</strong>について説明します。モダンブラウザはさまざまな方法で CSS3 の機能に対応しているものの、多くのユーザはまだ古いブラウザを使用しており、この恩恵にあずかっていません。"
-
-#~ msgid ""
-#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
-#~ "please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, through an open "
-#~ "content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
+#~ "and so can't take advantage."
 #~ msgstr ""
-#~ "<p>これらのリソースは、オープンスタンダードや Web 開発の成功事例を採用してきた先進的な企業や Web 開発者によって構築されています。優れたリソースが含まれていないと考えられる場合は、<a href=\"%(feedback_url)s\">Mozilla までお知らせください</a>。こうしたリソースは、世界中の Mozilla コミュニティと共有される計画です。そのため、<a "
-#~ "href=\"http://creativecommons.org\" rel=\"external\">クリエイティブ・コモンズ</a> などのオープンコンテンツライセンスを利用した翻訳が提供、または許可されるものが優先されます。</p>"
+#~ "このサイトでは、進化を続ける CSS の最新バージョンのである<strong>CSS3</strong>について説明します。モダンブラウザはさまざまな方法で CSS3 の機能に対応しているものの、多くのユーザはまだ古いブラウザ"
+#~ "を使用しており、この恩恵にあずかっていません。"
+
+#~ msgid ""
+#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great "
+#~ "resource, please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, "
+#~ "through an open content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+#~ msgstr ""
+#~ "<p>これらのリソースは、オープンスタンダードや Web 開発の成功事例を採用してきた先進的な企業や Web 開発者によって構築されています。優れたリソースが含まれていないと考えられる場合は、<a href="
+#~ "\"%(feedback_url)s\">Mozilla までお知らせください</a>。こうしたリソースは、世界中の Mozilla コミュニティと共有される計画です。そのため、<a href=\"http://creativecommons.org\" rel=\"external\">ク"
+#~ "リエイティブ・コモンズ</a> などのオープンコンテンツライセンスを利用した翻訳が提供、または許可されるものが優先されます。</p>"
 
 #~ msgid ""
 #~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you "
-#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
-#~ "development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at "
+#~ "web development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) は World Wide Web に情報を配置するための中核となる構文です。Web ページを作成したり修正したりしたい場合、HTML を学ぶのが最も良い方法です。</p><p>このページにあるリンクから様々な HTML "
-#~ "チュートリアルや教材へ移動できます。あなたが HTML を始めたばかりで基礎を学んでいるところでも、<strong>HTML5</strong> (最新のバージョンの標準) を学びたいベテランの Web 開発者でも、HTML の良い事例集となるリソースをここで見つけられるでしょう。</p>"
+#~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) は World Wide Web に情報を配置するための中核となる構文です。Web ページを作成したり修正したりしたい場合、HTML を学ぶのが最も良"
+#~ "い方法です。</p><p>このページにあるリンクから様々な HTML チュートリアルや教材へ移動できます。あなたが HTML を始めたばかりで基礎を学んでいるところでも、<strong>HTML5</strong> (最新のバージョンの標"
+#~ "準) を学びたいベテランの Web 開発者でも、HTML の良い事例集となるリソースをここで見つけられるでしょう。</p>"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "HTML の基本"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
+#~ "depth."
 #~ msgstr "HTML とは何か、何をするか、簡略な歴史、そして HTML ドキュメントの構造がどうなっているか。この記事に続く一連の記事は、HTML のより深い部分について知ることができます。"
 
 #~ msgid "Basic Structure of a Web Page"
@@ -6711,25 +6795,29 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "HTML5 の望ましい使用方法についての学習を支援するサイトの紹介。"
 
 #~ msgid ""
-#~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through Peer-to-"
-#~ "Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and victories "
-#~ "with others who are learning the same things.</p>"
+#~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through Peer-"
+#~ "to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+#~ "victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>ひとりで学習することに飽きていませんか？<br>HTML や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
-#~ "webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>ひとりで学習することに飽きていませんか？<br>HTML や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> "
+#~ "<a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功"
+#~ "したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
-#~ "take advantage."
-#~ msgstr "このサイトでは、HTML 標準の次期最新バージョンである <strong>HTML5</strong> について説明します。最新のブラウザでは、既に多くの HTML5 の機能がサポートされていますが、多くのユーザはまだ古いブラウザを使用しており、この恩恵にあずかっていません。"
+#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
+#~ "can't take advantage."
+#~ msgstr ""
+#~ "このサイトでは、HTML 標準の次期最新バージョンである <strong>HTML5</strong> について説明します。最新のブラウザでは、既に多くの HTML5 の機能がサポートされていますが、多くのユーザはまだ古いブラウザ"
+#~ "を使用しており、この恩恵にあずかっていません。"
 
 #~ msgid ""
 #~ "<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and "
-#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old hand, "
-#~ "wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
+#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old "
+#~ "hand, wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\"><strong>JavaScript</strong> (JS と省略します) は HTML のリンクやフォームによって提供される基本的なレベルを超えて、Web ページがユーザとの相互体験を可能にするプログラミング言語です。</p> <p>このページにあるリンクから様々な JavaScript チュートリアルや教材へ移動できます。あなたが "
-#~ "JavaScript を始めたばかりで基礎を学んでいるところでも、JavaScript の技術を向上させたいベテランの Web 開発者でも、JS の良い事例集となるリソースをここで見つけられるでしょう。</p>"
+#~ "<p class=\"intro\"><strong>JavaScript</strong> (JS と省略します) は HTML のリンクやフォームによって提供される基本的なレベルを超えて、Web ページがユーザとの相互体験を可能にするプログラミング言語で"
+#~ "す。</p> <p>このページにあるリンクから様々な JavaScript チュートリアルや教材へ移動できます。あなたが JavaScript を始めたばかりで基礎を学んでいるところでも、JavaScript の技術を向上させたいベテラン"
+#~ "の Web 開発者でも、JS の良い事例集となるリソースをここで見つけられるでしょう。</p>"
 
 #~ msgid "Codecademy"
 #~ msgstr "Codecademy"
@@ -6837,12 +6925,13 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "ビギナーから上級者まであらゆる学習レベル向けの、定期的に更新される網羅的な JavaScript ガイド"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free online "
-#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
-#~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free "
+#~ "online peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share "
+#~ "your discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>JavaScript をひとりで学習することに飽きていませんか？<br>JavaScript や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools"
-#~ "/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>JavaScript をひとりで学習することに飽きていませんか？<br>JavaScript や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer "
+#~ "University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あ"
+#~ "なたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid "Do you want to stop receiving email notifications from the {1} <strong>{0}</strong>?"
 #~ msgstr "{1} <strong>{0}</strong> からのメール通知を停止しますか？"
@@ -6966,9 +7055,9 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using Persona</a>.</p> <p><strong>Returning members:</strong> sign in with Persona and you'll be connected to your MDN "
 #~ "profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with Persona first, then you'll be able to set up your new MDN profile.</p>"
 #~ msgstr ""
-#~ "<h3>これは何ですか？</h3> <p>MDN は、メールアドレスだけでログインできる安全で簡単な <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> に切り替わりました。<a href=\"%(why_browserid)s\" rel=\"external\">Mozilla が "
-#~ "Persona を使う理由についてはこちらをご覧ください</a>。</p> <p><strong>登録済みの方:</strong> Persona でログインすると、MDN プロフィール (すべての情報がまだそこにあります) に接続します。</p> <p><strong>未登録の方:</strong> まず Persona でログインしてください。すると、MDN "
-#~ "プロフィールを作成できるようになります。</p>"
+#~ "<h3>これは何ですか？</h3> <p>MDN は、メールアドレスだけでログインできる安全で簡単な <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> に切り替わりました。<a href="
+#~ "\"%(why_browserid)s\" rel=\"external\">Mozilla が Persona を使う理由についてはこちらをご覧ください</a>。</p> <p><strong>登録済みの方:</strong> Persona でログインすると、MDN プロフィール (すべての"
+#~ "情報がまだそこにあります) に接続します。</p> <p><strong>未登録の方:</strong> まず Persona でログインしてください。すると、MDN プロフィールを作成できるようになります。</p>"
 
 #~ msgid "Register"
 #~ msgstr "登録"
@@ -6977,9 +7066,11 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "Persona にはこちらから登録できます。"
 
 #~ msgid ""
-#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external\">Learn "
-#~ "more about it.</a>"
-#~ msgstr "MDN は、メールアドレスだけでログイン可能な安全で簡単なシステムの <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a> に移行しました。<a href=\"%(why_browserid)s\" rel=\"external\">詳細はこちらから</a>"
+#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external"
+#~ "\">Learn more about it.</a>"
+#~ msgstr ""
+#~ "MDN は、メールアドレスだけでログイン可能な安全で簡単なシステムの <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a> に移行しました。<a href=\"%(why_browserid)s\" rel=\"external\">詳細は"
+#~ "こちらから</a>"
 
 #~ msgid "New MDN Members"
 #~ msgstr "新規の MDN メンバー"
@@ -7003,8 +7094,8 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ "<h3>What's this?</h3> <p>MDN has switched to <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a "
 #~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using Persona</a>.</p>"
 #~ msgstr ""
-#~ "<h3>Persona とは</h3><p>MDN は<a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> を利用しています。これはメールアドレスのみを利用するシンプルな認証方式です。<a href=\"%(why_browserid)s\" rel=\"external\">Mozilla "
-#~ "が Persona を利用する理由についてはこちら</a>。</p>"
+#~ "<h3>Persona とは</h3><p>MDN は<a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> を利用しています。これはメールアドレスのみを利用するシンプルな認証方式です。<a href="
+#~ "\"%(why_browserid)s\" rel=\"external\">Mozilla が Persona を利用する理由についてはこちら</a>。</p>"
 
 #~ msgid "To change your MDN email, simply sign in below with the new email address."
 #~ msgstr "MDN で利用するメールアドレスを変更するためには、下記のボタンをクリック後、新しいメールアドレスでログインしてください。"
@@ -7123,8 +7214,8 @@ msgstr "Elasticsearch サーバー: %(backend)s"
 #~ msgstr "確認メールが送信されました。"
 
 #~ msgid ""
-#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the link"
-#~ " in the email."
+#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the "
+#~ "link in the email."
 #~ msgstr "ログインできるようになるにはメールアドレスの確認が必要です。<strong>%(email)s</strong> に送信された確認メール中にあるリンクをクリックして、メールアドレスを確認してください。"
 
 #~ msgid "No email found for this account"

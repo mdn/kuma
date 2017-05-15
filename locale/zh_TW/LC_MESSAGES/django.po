@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-05-01 12:40-0700\n"
+"POT-Creation-Date: 2017-05-15 10:06-0700\n"
 "PO-Revision-Date: 2017-05-02 13:10+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
@@ -294,11 +294,11 @@ msgstr "<li><a href=\"/logout\">登出</a> 以再試一次。</li>"
 msgid "Search Firefox Help"
 msgstr "搜尋 Firefox 輔助說明"
 
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:104
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:101
 msgid "Other languages:"
 msgstr "其他語言:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:115
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:112
 msgid "Go"
 msgstr "衝"
 
@@ -351,7 +351,7 @@ msgstr "若您先前沒有確認訂閱過 Mozilla 電子報，現在可能需要
 msgid "Hide Newsletter Sign-up"
 msgstr "隱藏註冊電子報"
 
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
 msgid "Previous"
 msgstr "上一個"
 
@@ -419,7 +419,7 @@ msgstr "捷克語"
 msgid "Dutch"
 msgstr "荷蘭語"
 
-#: jinja2/includes/translate_locales.html:18
+#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1405
 msgid "English (US)"
 msgstr "英語（美國）"
 
@@ -615,8 +615,8 @@ msgstr "取消訂閱"
 msgid "Are you sure you want to unsubscribe?"
 msgstr "您確定要退訂嗎？"
 
-#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
+#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:44
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:43 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
 msgstr "取消"
 
@@ -741,7 +741,7 @@ msgid "File"
 msgstr "檔案"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1969
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1965
 msgid "Title"
 msgstr "頭銜"
 
@@ -808,8 +808,8 @@ msgstr "預期用途描述"
 msgid "Created"
 msgstr "建立於"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:107 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:246
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:16 kuma/wiki/jinja2/wiki/confirm_document_delete.html:43
 msgid "Delete"
 msgstr "刪除"
 
@@ -847,8 +847,8 @@ msgstr "您需要特別權限才能使用 API 金鑰。您可以 <a href=\"%(bug
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr "<p>在下方描述此金鑰的用途。<p><strong>注意：</strong>除了建立的時間日期之外，這是唯一可識別這把金鑰的方式，請儘量清楚的描述！</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -860,7 +860,9 @@ msgstr "建立"
 msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
-msgstr "<p>你的新金鑰建立成功，請注意下面細節（你也可以把這些細節複製到你的應用程式設定）。這些資訊只會顯示這一次，如果遺失的話，將無法透過任何方式找回！</p><p><strong>注意：</strong>完成之後，請 <a class=\"button\" href=\"%(list_url)s\">回到金鑰列表頁面</a>，重新載入本頁則會產生一組新的金鑰</p>"
+msgstr ""
+"<p>你的新金鑰建立成功，請注意下面細節（你也可以把這些細節複製到你的應用程式設定）。這些資訊只會顯示這一次，如果遺失的話，將無法透過任何方式找回！</p><p><strong>注意：</strong>完成之後，請 <a class="
+"\"button\" href=\"%(list_url)s\">回到金鑰列表頁面</a>，重新載入本頁則會產生一組新的金鑰</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -909,11 +911,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "今天 %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:350
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:332
 msgid "Yes"
 msgstr "是"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:354
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:336
 msgid "No"
 msgstr "否"
 
@@ -1041,27 +1043,27 @@ msgstr "已知作者"
 msgid "Unknown Authors"
 msgstr "未知作者"
 
-#: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
+#: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:15
 msgid "Locale:"
 msgstr "語系:"
 
-#: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
+#: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:20
 msgid "User:"
 msgstr "使用者:"
 
-#: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
+#: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:25
 msgid "Topic:"
 msgstr "主題:"
 
-#: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
+#: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:31
 msgid "Start Date:"
 msgstr "開始日期:"
 
-#: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
+#: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:36
 msgid "End Date:"
 msgstr "結束日期:"
 
-#: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
+#: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:41
 msgid "Preceding Period:"
 msgstr "先前的期間:"
 
@@ -1069,51 +1071,51 @@ msgstr "先前的期間:"
 msgid "Authors"
 msgstr "作者"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:25
+#: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:26
 msgid "Active macros"
 msgstr "使用中的巨集"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:13
+#: kuma/dashboards/jinja2/dashboards/macros.html:14
 #, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
 msgstr[0] "找到 %(num)s 個使用中的巨集。"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:15
+#: kuma/dashboards/jinja2/dashboards/macros.html:16
 #, python-format
 msgid "See the <a href=\"%(url)s\">GitHub repo</a> for the list of macros."
 msgstr "請參考 <a href=\"%(url)s\">GitHub repo</a> 當中列出可用的巨集清單。"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:17
+#: kuma/dashboards/jinja2/dashboards/macros.html:18
 #, python-format
 msgid "You can also <a href=\"%(url)s\">manually search for macros</a>."
 msgstr "您也可以<a href=\"%(url)s\">手動搜尋巨集</a>。"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:23
+#: kuma/dashboards/jinja2/dashboards/macros.html:24
 msgid "Active macros and their usage counts"
 msgstr "使用中的巨集及使用次數"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:30 kuma/dashboards/jinja2/dashboards/macros.html:65
+#: kuma/dashboards/jinja2/dashboards/macros.html:31 kuma/dashboards/jinja2/dashboards/macros.html:66
 msgid "Macro Name"
 msgstr "巨集名稱"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:32
+#: kuma/dashboards/jinja2/dashboards/macros.html:33
 msgid "English Page Count"
 msgstr "英文版頁面數量"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:33
+#: kuma/dashboards/jinja2/dashboards/macros.html:34
 msgid "All Page Count"
 msgstr "所有頁面數量"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:64
+#: kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Search for macro usage:"
 msgstr "搜尋巨集使用情況:"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:67
+#: kuma/dashboards/jinja2/dashboards/macros.html:68
 msgid "Search All Pages"
 msgstr "搜尋所有頁面"
 
-#: kuma/dashboards/jinja2/dashboards/macros.html:68
+#: kuma/dashboards/jinja2/dashboards/macros.html:69
 msgid "Search English Pages"
 msgstr "搜尋英文版頁面"
 
@@ -1121,25 +1123,25 @@ msgstr "搜尋英文版頁面"
 msgid "Revision Dashboard"
 msgstr "編修主控台"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:45
+#: kuma/dashboards/jinja2/dashboards/revisions.html:46
 msgid "Authors:"
 msgstr "作者:"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
+#: kuma/dashboards/jinja2/dashboards/revisions.html:50 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
 msgstr "過濾"
 
-#: kuma/dashboards/jinja2/dashboards/spam.html:30
+#: kuma/dashboards/jinja2/dashboards/spam.html:31
 #, python-format
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "隨時間趨勢，結束於 %(date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1922
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1918
 msgid "Revision"
 msgstr "修改"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:44 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:35 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "回應"
 
@@ -1159,47 +1161,47 @@ msgstr "新"
 msgid "deleted"
 msgstr "已刪除"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:55
 msgid "IP:"
 msgstr "IP:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
 msgid "Ban IP from Editing"
 msgstr "封鎖 IP 不讓其進行編輯"
 
 # 88%
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:56
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:58
 msgid "User agent:"
 msgstr "使用者代理字串:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:60
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:62
 msgid "Referrer:"
 msgstr "Referrer:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:67 kuma/users/jinja2/users/includes/user_title_info.html:108
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:69 kuma/users/jinja2/users/includes/user_title_info.html:108
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
 msgstr "已被 %(user)s 於 %(ban_date)s 封鎖。"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:80
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
 msgid "Submitted as %(submission_type)s"
 msgstr "已提交為 %(submission_type)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:83
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:85
 #, python-format
 msgid "%(sent_date)s by %(user)s"
 msgstr "由 %(user)s 張貼於 %(sent_date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:92
 msgid "Submit as:"
 msgstr "送出為:"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:93
 msgid "spam"
 msgstr "垃圾文章"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:102
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:104
 msgid "There are no revisions matching this filter set."
 msgstr "沒有符合這些條件的修改。"
 
@@ -1233,8 +1235,8 @@ msgstr "Mozilla Developer Network (MDN) 獎助金計劃邀請全世界的網頁�
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr "Mozilla 開發者網路（MDN）提供關於 Open Web 技術的網站與 HTML5 網頁應用程式相關資訊，包含 HTML、CSS 及 API 等。本站也為 Firefox OS 等 Mozilla 產品提供技術文件。"
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1346,7 +1348,9 @@ msgstr "參與其中"
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
-msgstr "<p class=\"numbers\"> <span class=\"row1\">加入世界各地的</span> <span class=\"row2\"><span class=\"number\">%(locales)s</span> 語系</span> <span class=\"row3\"><span class=\"number\">%(contributors)s</span> 貢獻者。</span></p>"
+msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">加入世界各地的</span> <span class=\"row2\"><span class=\"number\">%(locales)s</span> 語系</span> <span class=\"row3\"><span class=\"number\">"
+"%(contributors)s</span> 貢獻者。</span></p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
@@ -1426,13 +1430,13 @@ msgstr "散播一些開發者的愛。"
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol><li><strong>取得按鈕:</strong> 使用下面簡單的表單以建立一個自訂按鈕以在您的網站或部落格宣傳 MDN。</li><li><strong>張貼按鈕:</strong> 複製原始碼並貼到您的網站或部落格的任何地方以幫助人們連結至 MDN。</li><li><strong>覺得不錯:</strong> 透過向世界分享 MDN "
-"按鈕讓自己知道您正讓網頁開發者過得更好一點。</li></ol>"
+"<ol><li><strong>取得按鈕:</strong> 使用下面簡單的表單以建立一個自訂按鈕以在您的網站或部落格宣傳 MDN。</li><li><strong>張貼按鈕:</strong> 複製原始碼並貼到您的網站或部落格的任何地方以幫助人們連結至 "
+"MDN。</li><li><strong>覺得不錯:</strong> 透過向世界分享 MDN 按鈕讓自己知道您正讓網頁開發者過得更好一點。</li></ol>"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:32
+#: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
 msgstr "預覽"
 
@@ -1723,8 +1727,8 @@ msgstr "類型"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr "抱歉，您必須要至少連結一個帳號才能登入。若要取消連結此帳號，請先連結其他帳號。若要刪除您的 MDN 帳號，請<a href=\"%(bug_form_url)s\" rel=\"nofollow\">開 bug 處理</a>。"
 
 #: kuma/users/adapters.py:21
@@ -1864,8 +1868,8 @@ msgstr "關於我"
 msgid "IRC nickname"
 msgstr "IRC 暱稱"
 
-#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:76
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:30 kuma/wiki/jinja2/wiki/create.html:65
+#: kuma/wiki/jinja2/wiki/edit.html:184
 msgid "Tags"
 msgstr "標籤"
 
@@ -2227,8 +2231,8 @@ msgstr "已有帳號使用選擇的電子郵件地址，<a href=\"%(login_url)s\
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr "我們應該傳送 MDN 相關的訊息與通知到哪個電子郵件地址？此地址將 <strong>不會</strong> 顯示在 MDN，並將依照我們的 <a href=\"%(privacy_url)s\">隱私權保護政策</a> 使用。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -2278,135 +2282,135 @@ msgstr "或在下方輸入框輸入原因"
 msgid "Ban user"
 msgstr "封鎖使用者"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:23
 #, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
 msgstr "將 <a href=\"%(url)s\">%(user)s</a> 標示為做垃圾修改的使用者？"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:27
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
 msgstr "<a href=\"%(url)s\">%(user)s</a> 已被封鎖。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:30
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
 msgstr "%(user)s 已被封鎖，您可以在下方審核並還原他所做的修改。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:47
 msgid "You cannot ban yourself for spam."
 msgstr "您無法因濫發垃圾文章封鎖自己。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:51
 msgid "Submit Spam"
 msgstr "送出為垃圾文章"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:53
 msgid "Ban User for Spam"
 msgstr "因垃圾修改封鎖使用者"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:55
 msgid "Ban User for Spam & Submit Spam"
 msgstr "因垃圾修改封鎖使用者並回報為垃圾信"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
 msgid "Ban user for other reasons."
 msgstr "因其他原因封鎖使用者。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:62
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
 msgstr "使用者過去三天內並未進行任何修改，也已經被封鎖。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
 msgid "Summary"
 msgstr "摘要"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Actions Taken"
 msgstr "採許行動"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
 msgid "Banned:"
 msgstr "已封鎖:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:32
 msgid "Submitted to Akismet as spam:"
 msgstr "送出給 Akismet 為垃圾信:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:45
 msgid "The user did not have any revisions that were reported as spam."
 msgstr "此使用者沒有任何被回報為垃圾信的修改。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "Deleted:"
 msgstr "刪除於:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:62
 msgid "The user did not have any revisions that were deleted."
 msgstr "此使用者沒有任何被刪除的修改。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66
 msgid "Reverted:"
 msgstr "還原於:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
 msgid "The user did not have any revisions that were reverted."
 msgstr "此使用者沒有任何被還原的修改。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "Needs follow up"
 msgstr "需要處理的頁面"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:87
 msgid "New action by user:"
 msgstr "使用者的新操作:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266 kuma/wiki/feeds.py:340
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:97 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:129 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:150
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:170 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:189 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:212
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:236 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:267 kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr "檢視頁面"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:68
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:216 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:240
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:271 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "History"
 msgstr "歷史紀錄"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:115 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:136 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:176 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:195 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:278
 msgid "None."
 msgstr "無。"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:119
 msgid "Revisions skipped due to newer non-spam revision:"
 msgstr "有新的非惡意修改版本:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:140
 msgid "Could not submit to Akismet:"
 msgstr "無法送出給 Akismet:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:161
 msgid "Could not delete:"
 msgstr "無法刪除:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:180
 msgid "Could not revert:"
 msgstr "無法還原:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "No actions taken"
 msgstr "並未進行任何操作"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:202
 msgid "Latest revision is non-spam:"
 msgstr "未經惡意修改的最新編修版本:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:226
 msgid "Already identified as spam:"
 msgstr "已被識別為垃圾文章:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:257
 msgid "Identified as not spam:"
 msgstr "被識別為非垃圾文:"
 
@@ -2482,40 +2486,40 @@ msgstr "將我所有做過的變更修改為匿名修改，再刪除我的帳號
 msgid "File a bug to close your account"
 msgstr "開 Bug 關閉您的帳號"
 
-#: kuma/users/jinja2/users/user_detail.html:36
+#: kuma/users/jinja2/users/user_detail.html:37
 msgid "Recent Docs Activity"
 msgstr "最近在 Docs 的活動"
 
-#: kuma/users/jinja2/users/user_detail.html:36
+#: kuma/users/jinja2/users/user_detail.html:37
 msgid "View all activity"
 msgstr "檢視所有活動"
 
-#: kuma/users/jinja2/users/user_detail.html:41
+#: kuma/users/jinja2/users/user_detail.html:42
 msgid "Page"
 msgstr "頁面"
 
-#: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/users/jinja2/users/user_detail.html:43 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:26
 msgid "Date"
 msgstr "日期"
 
-#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:427
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:411
 msgid "Edit page"
 msgstr "編輯頁面"
 
-#: kuma/users/jinja2/users/user_detail.html:52
+#: kuma/users/jinja2/users/user_detail.html:53
 msgid "View complete diff"
 msgstr "檢視完整比對"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:428
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:412
 msgid "View page history"
 msgstr "檢視頁面歷史紀錄"
 
-#: kuma/users/jinja2/users/user_detail.html:65
+#: kuma/users/jinja2/users/user_detail.html:66
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr "<p class=\"none\">您尚未貢獻任何 MDN 文件。<a href=\"%(docs_url)s\">一起來寫文件吧！</a></p>"
 
-#: kuma/users/jinja2/users/user_detail.html:69
+#: kuma/users/jinja2/users/user_detail.html:70
 msgid "This user has no activity."
 msgstr "此使用者沒有活動。"
 
@@ -2523,63 +2527,63 @@ msgstr "此使用者沒有活動。"
 msgid "Edit Your Profile"
 msgstr "編輯您的個人資料"
 
-#: kuma/users/jinja2/users/user_edit.html:33
+#: kuma/users/jinja2/users/user_edit.html:34
 msgid "Change your avatar at"
 msgstr "到此處修改您的頭像"
 
-#: kuma/users/jinja2/users/user_edit.html:39
+#: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
 msgstr "檢視個人資料"
 
-#: kuma/users/jinja2/users/user_edit.html:43
+#: kuma/users/jinja2/users/user_edit.html:44
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr "您正在編輯別人的資料，請小心！"
 
-#: kuma/users/jinja2/users/user_edit.html:54
+#: kuma/users/jinja2/users/user_edit.html:55
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr "我們想知道您對網站的變動有什麼意見！Beta 測試者可優先使用新功能，我們也會不定期寄信請您協助測試某些功能。"
 
-#: kuma/users/jinja2/users/user_edit.html:57
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "Primary Email"
 msgstr "主要電子郵件"
 
-#: kuma/users/jinja2/users/user_edit.html:57
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "Edit email"
 msgstr "編輯主要電子郵件地址"
 
-#: kuma/users/jinja2/users/user_edit.html:70
+#: kuma/users/jinja2/users/user_edit.html:71
 msgid "Interests (tags)"
 msgstr "興趣 (請以標籤列出)"
 
-#: kuma/users/jinja2/users/user_edit.html:71
+#: kuma/users/jinja2/users/user_edit.html:72
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "請用空白或逗號分隔標籤，並用雙引號輸入多字的標籤，例如 \"web standards\"。"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:78
 msgid "Areas of expertise"
 msgstr "專業知識領域"
 
-#: kuma/users/jinja2/users/user_edit.html:78
+#: kuma/users/jinja2/users/user_edit.html:79
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "請先新增您的興趣，並在所選的主題當中描述您強在哪裡。"
 
-#: kuma/users/jinja2/users/user_edit.html:86
+#: kuma/users/jinja2/users/user_edit.html:87
 msgid "My Profiles"
 msgstr "我的帳號"
 
-#: kuma/users/jinja2/users/user_edit.html:98
+#: kuma/users/jinja2/users/user_edit.html:99
 msgid "Use your GitHub account to sign in."
 msgstr "使用您的 GitHub 帳號登入。"
 
-#: kuma/users/jinja2/users/user_edit.html:117 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
+#: kuma/users/jinja2/users/user_edit.html:118 kuma/wiki/jinja2/wiki/includes/page_buttons.html:28
 msgid "Publish"
 msgstr "發布"
 
-#: kuma/users/jinja2/users/user_edit.html:119
+#: kuma/users/jinja2/users/user_edit.html:120
 msgid "Delete your account."
 msgstr "刪除您的帳號。"
 
-#: kuma/users/jinja2/users/user_edit.html:129
+#: kuma/users/jinja2/users/user_edit.html:130
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "管理您的 Mozilla 電子報訂閱狀況。"
 
@@ -2623,7 +2627,9 @@ msgstr "您已完成 <a href=\"%(started_link)s\">MDN 新手上路</a> 的第一
 msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
-msgstr "接下來，請到 MDN 上挑選任務，開始動手做！我們有一些入門小任務任君選擇，不論您 <a href=\"%(words_link)s\">喜歡寫作</a>、<a href=\"%(code_link)s\">寫 code</a>、<a href=\"%(both_link)s\">兩者都愛</a>，或想要 <a href=\"%(translate_link)s\">幫忙翻譯 MDN</a>，都有任務帶您上手。"
+msgstr ""
+"接下來，請到 MDN 上挑選任務，開始動手做！我們有一些入門小任務任君選擇，不論您 <a href=\"%(words_link)s\">喜歡寫作</a>、<a href=\"%(code_link)s\">寫 code</a>、<a href=\"%(both_link)s\">兩者都愛</a>，"
+"或想要 <a href=\"%(translate_link)s\">幫忙翻譯 MDN</a>，都有任務帶您上手。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2645,8 +2651,8 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"即時聊天: 可在 <a href=\"%(channel_link)s\">irc.mozilla.org 上的 #mdn 頻道</a>。（可在此了解 <a href=\"%(irc_link)s\">IRC</a> 的更多資訊）。您可以在上面找到 MDN 的管理編輯: Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg "
-"(wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)，還有我 (jms)，MDN 的社群經理。"
+"即時聊天: 可在 <a href=\"%(channel_link)s\">irc.mozilla.org 上的 #mdn 頻道</a>。（可在此了解 <a href=\"%(irc_link)s\">IRC</a> 的更多資訊）。您可以在上面找到 MDN 的管理編輯: Eric Shepherd (sheppy)、"
+"Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)，還有我 (jms)，MDN 的社群經理。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -2723,7 +2729,8 @@ msgstr "請參考 %(irc_link)s 以了解有關 IRC 的更多資訊。"
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
-msgstr "您可在此找到 MDN 作者管理群：Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)，還有我這現任的 MDN 社群經理 (jms)。"
+msgstr ""
+"您可在此找到 MDN 作者管理群：Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)，還有我這現任的 MDN 社群經理 (jms)。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2739,11 +2746,11 @@ msgstr "已被回報為垃圾文章。"
 msgid "This user has not created any revisions in the past three days."
 msgstr "此使用者過去三天內並未進行任何修改。"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:48
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:47
 msgid "Edit"
 msgstr "編輯"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:62 kuma/wiki/jinja2/wiki/includes/buttons.html:66
+#: kuma/users/jinja2/users/includes/user_title_info.html:23 kuma/wiki/jinja2/wiki/includes/buttons.html:61 kuma/wiki/jinja2/wiki/includes/buttons.html:65
 msgid "Advanced"
 msgstr "進階"
 
@@ -2789,19 +2796,19 @@ msgstr "封鎖使用者與清理"
 msgid "Admin"
 msgstr "管理"
 
-#: kuma/wiki/apps.py:54 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:55 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:217
+#: kuma/wiki/constants.py:216
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "技術 - 程式碼範本、API 或技術內容"
 
-#: kuma/wiki/constants.py:218
+#: kuma/wiki/constants.py:217
 msgid "Editorial - prose, grammar, or content"
 msgstr "編輯 - 篇章結構、文法或內容"
 
-#: kuma/wiki/constants.py:223
+#: kuma/wiki/constants.py:222
 msgid "Localization in progress - not completely translated yet."
 msgstr "在地化翻譯中 - 還沒有完全翻好。"
 
@@ -2977,16 +2984,16 @@ msgid "Changing this document's slug requires moving it and its children."
 msgstr "修改此文件的URL代稱必須連同子頁面一起移動。"
 
 # 83%
-#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:899 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
-#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:894 kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:72 kuma/wiki/jinja2/wiki/edit.html:120
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:74 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "標題:"
 
-#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:900
+#: kuma/wiki/forms.py:341 kuma/wiki/forms.py:411 kuma/wiki/forms.py:895
 msgid "Title of article"
 msgstr "文章標題"
 
-#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:78
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL代稱:"
@@ -2995,16 +3002,16 @@ msgstr "URL代稱:"
 msgid "Article URL"
 msgstr "文章網址"
 
-#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:45 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:357 kuma/wiki/jinja2/wiki/create.html:42 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "上層:"
 
 # 80%
-#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:83 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "標籤:"
 
-#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:444 kuma/wiki/jinja2/wiki/edit.html:84
 msgid "Keywords:"
 msgstr "關鍵字:"
 
@@ -3022,12 +3029,12 @@ msgstr "只顯示於搜尋結果頁面"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:94
 msgid "Content:"
 msgstr "內容:"
 
 # 87%
-#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:89
 msgid "Comment:"
 msgstr "回應:"
 
@@ -3039,146 +3046,146 @@ msgstr "是否要將此版本標記為「審核」？"
 msgid "Tag this revision for localization?"
 msgstr "是否標記此版本為「在地化」？"
 
-#: kuma/wiki/forms.py:906
+#: kuma/wiki/forms.py:901
 msgid "New slug:"
 msgstr "新的URL代稱:"
 
-#: kuma/wiki/forms.py:907
+#: kuma/wiki/forms.py:902
 msgid "New article URL"
 msgstr "新文件網址"
 
-#: kuma/wiki/models.py:113
+#: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "父文件 %s 不存在。"
 
-#: kuma/wiki/models.py:121
+#: kuma/wiki/models.py:120
 msgid "Document Tag"
 msgstr "文件標籤"
 
-#: kuma/wiki/models.py:122
+#: kuma/wiki/models.py:121
 msgid "Document Tags"
 msgstr "文件標籤"
 
-#: kuma/wiki/models.py:174
+#: kuma/wiki/models.py:173
 msgid "uploaded to the document"
 msgstr "已上傳至文件"
 
-#: kuma/wiki/models.py:180
+#: kuma/wiki/models.py:179
 msgid "linked in the document content"
 msgstr "連結至文件內容"
 
-#: kuma/wiki/models.py:194
+#: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "無法多次新增附件 %(attachment_id)s 至文件 %(document_id)s"
 
-#: kuma/wiki/models.py:1600
+#: kuma/wiki/models.py:1599
 msgid "Review Tag"
 msgstr "檢查標籤"
 
-#: kuma/wiki/models.py:1601
+#: kuma/wiki/models.py:1600
 msgid "Review Tags"
 msgstr "檢查標籤"
 
-#: kuma/wiki/models.py:1607
+#: kuma/wiki/models.py:1606
 msgid "Localization Tag"
 msgstr "在地化標籤"
 
-#: kuma/wiki/models.py:1608
+#: kuma/wiki/models.py:1607
 msgid "Localization Tags"
 msgstr "在地化標籤"
 
-#: kuma/wiki/models.py:1641
+#: kuma/wiki/models.py:1640
 msgid "No table of contents"
 msgstr "沒有目錄"
 
-#: kuma/wiki/models.py:1642
+#: kuma/wiki/models.py:1641
 msgid "All levels"
 msgstr "所有層級"
 
-#: kuma/wiki/models.py:1643
+#: kuma/wiki/models.py:1642
 msgid "H2 and higher"
 msgstr "H2 以上"
 
-#: kuma/wiki/models.py:1644
+#: kuma/wiki/models.py:1643
 msgid "H3 and higher"
 msgstr "H3 以上"
 
-#: kuma/wiki/models.py:1645
+#: kuma/wiki/models.py:1644
 msgid "H4 and higher"
 msgstr "H4 以上"
 
-#: kuma/wiki/models.py:1749
+#: kuma/wiki/models.py:1748
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "修改必須基於 %(locale)s 的修訂文件。 版本編號 %(id)s 不符合這些規範。"
 
-#: kuma/wiki/models.py:1882
+#: kuma/wiki/models.py:1878
 msgid "IP address"
 msgstr "IP 地址"
 
-#: kuma/wiki/models.py:1890
+#: kuma/wiki/models.py:1886
 msgid "User-Agent"
 msgstr "使用者代理字串"
 
-#: kuma/wiki/models.py:1895
+#: kuma/wiki/models.py:1891
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1903 kuma/wiki/models.py:1988
+#: kuma/wiki/models.py:1899 kuma/wiki/models.py:1984
 msgid "Data submitted to Akismet"
 msgstr "送出給 Akismet 的資料"
 
-#: kuma/wiki/models.py:1928
+#: kuma/wiki/models.py:1924
 msgid "Akismet submission"
 msgstr "送出 Akismet"
 
-#: kuma/wiki/models.py:1929
+#: kuma/wiki/models.py:1925
 msgid "Akismet submissions"
 msgstr "送出 Akismet"
 
-#: kuma/wiki/models.py:1973
+#: kuma/wiki/models.py:1969
 msgid "Slug"
 msgstr "Slug"
 
-#: kuma/wiki/models.py:1981
+#: kuma/wiki/models.py:1977
 msgid "Document (optional)"
 msgstr "文件（非必填）"
 
-#: kuma/wiki/models.py:1991
+#: kuma/wiki/models.py:1987
 msgid "reviewed"
 msgstr "已審查"
 
-#: kuma/wiki/models.py:2002
+#: kuma/wiki/models.py:1998
 msgid "Needs Review"
 msgstr "需要審查"
 
-#: kuma/wiki/models.py:2003
+#: kuma/wiki/models.py:1999
 msgid "Ham / False Positive"
 msgstr "Ham / 被誤分為垃圾信"
 
-#: kuma/wiki/models.py:2004
+#: kuma/wiki/models.py:2000
 msgid "Confirmed as Spam"
 msgstr "已確認為垃圾信"
 
-#: kuma/wiki/models.py:2005
+#: kuma/wiki/models.py:2001
 msgid "Review Unavailable"
 msgstr "無法審查"
 
-#: kuma/wiki/models.py:2006
+#: kuma/wiki/models.py:2002
 msgid "Akismet Error"
 msgstr "Akismet 錯誤"
 
-#: kuma/wiki/models.py:2011
+#: kuma/wiki/models.py:2007
 msgid "Review of Akismet's classification as spam"
 msgstr "Akismet 錯誤分類成垃圾信"
 
-#: kuma/wiki/models.py:2018
+#: kuma/wiki/models.py:2014
 msgid "Staff reviewer"
 msgstr "職員審核"
 
-#: kuma/wiki/search.py:311
+#: kuma/wiki/search.py:307
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr "正在將 %(total)d 份文件編入 %(total_chunks)d 塊大小為 %(size)d 的區塊，以及 %(index)s.total 索引"
@@ -3190,8 +3197,8 @@ msgstr "您正在嘗試建立新頁面。"
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr "建立新頁面是受限的行為。若要請求建立新頁面，請 <a href=\"%(request_page_url)s\">開 Bug</a>。若您需要可建立新頁面的權限，請 <a href=\"%(email_link)s\">聯絡我們</a>。"
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3199,7 +3206,9 @@ msgid ""
 "<p>You are more likely to be granted permission to create new pages if you:</p> <ul> <li>Tell us your MDN username.</li> <li>Tell us why you'd like to create new pages (Are you documenting a new "
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
-msgstr "<p>做到下面這些事情比較有可能取得建立新頁面的權限:</p><ul><li>告訴我們您的 MDN 帳號。</li><li>告訴我們您為什麼要建立新頁面（是要幫新功能寫文件嗎？什麼功能？您想要加入什麼詞彙嗎？什麼詞彙？）。</li><li>對現有頁面做了優良的修改。</li><li>已對這個網站貢獻過一陣子。</li></ul>"
+msgstr ""
+"<p>做到下面這些事情比較有可能取得建立新頁面的權限:</p><ul><li>告訴我們您的 MDN 帳號。</li><li>告訴我們您為什麼要建立新頁面（是要幫新功能寫文件嗎？什麼功能？您想要加入什麼詞彙嗎？什麼詞彙？）。</"
+"li><li>對現有頁面做了優良的修改。</li><li>已對這個網站貢獻過一陣子。</li></ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3219,31 +3228,31 @@ msgstr "回到編輯歷史"
 msgid "Delete Document | %(document)s"
 msgstr "刪除文件 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:10
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr "修好這個 bug 之前我們無法刪除有子頁面的頁面:"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:18 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:22
 msgid "Creator"
 msgstr "建立者"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Creation Date"
 msgstr "建立日期"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change By"
 msgstr "最近修改者"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:31
 msgid "Last Change Date"
 msgstr "最近修改日期"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:34
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
 msgstr "您將要刪除此文件及其所有歷史紀錄。請讓我們知道為什麼要刪掉這一頁。"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:41
 msgid "Are you sure you want to continue?"
 msgstr "您確定要繼續嗎？"
 
@@ -3252,49 +3261,45 @@ msgstr "您確定要繼續嗎？"
 msgid "Revert Revision | %(document)s"
 msgstr "退回修改 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:11
 msgid "Are you sure you want to revert to this revision?"
 msgstr "您確定要退回這次修改嗎？"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:19
 msgid "Document"
 msgstr "文件"
 
 # 87%
 # 75%
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:28
 msgid "Content"
 msgstr "內容"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid "Why are you reverting to this revision?"
 msgstr "您為什麼要回退到這筆修改？"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr "您正要將文件還原回此一版本。點擊「還原 (Revert)」即可還原為&nbsp;上述內容。"
 
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:42
 msgid "Revert"
 msgstr "退回"
 
-#: kuma/wiki/jinja2/wiki/create.html:6
-msgid "Create a New Template"
-msgstr "建立新範本"
-
-#: kuma/wiki/jinja2/wiki/create.html:8
+#: kuma/wiki/jinja2/wiki/create.html:5
 msgid "Create a New Article"
 msgstr "建立新文件"
 
-#: kuma/wiki/jinja2/wiki/create.html:32
+#: kuma/wiki/jinja2/wiki/create.html:29
 msgid "Create a"
 msgstr "建立"
 
-#: kuma/wiki/jinja2/wiki/create.html:32
+#: kuma/wiki/jinja2/wiki/create.html:29
 msgid "New Document"
 msgstr "新文件"
 
-#: kuma/wiki/jinja2/wiki/create.html:41
+#: kuma/wiki/jinja2/wiki/create.html:38
 msgid "URL segment that identifies the page"
 msgstr "用來識別頁面的 URL 區段"
 
@@ -3315,150 +3320,142 @@ msgstr "刪除原因"
 msgid "Restore this document"
 msgstr "還原此文件"
 
-#: kuma/wiki/jinja2/wiki/document.html:184
+#: kuma/wiki/jinja2/wiki/document.html:181
 msgid "Previous Search Result"
 msgstr "先前的搜尋結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:184 kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:181 kuma/wiki/jinja2/wiki/document.html:191
 msgid "No Previous Search Result"
 msgstr "無先前搜尋結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:190
+#: kuma/wiki/jinja2/wiki/document.html:187
 msgid "Your Search Results"
 msgstr "您的搜尋結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:194
+#: kuma/wiki/jinja2/wiki/document.html:191
 msgid "Next Search Result"
 msgstr "下一筆搜尋結果"
 
-#: kuma/wiki/jinja2/wiki/document.html:198
+#: kuma/wiki/jinja2/wiki/document.html:195
 msgid "see all contributors"
 msgstr "檢視所有貢獻者"
 
-#: kuma/wiki/jinja2/wiki/document.html:198
+#: kuma/wiki/jinja2/wiki/document.html:195
 msgid "hide contributors"
 msgstr "隱藏貢獻者"
 
-#: kuma/wiki/jinja2/wiki/document.html:202
+#: kuma/wiki/jinja2/wiki/document.html:199
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "檢視個人資料: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:227
+#: kuma/wiki/jinja2/wiki/document.html:224
 msgid "In This Article"
 msgstr "在這篇文章"
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr "此文件尚未描繪完成，但在 MDN 處於<a href=\"%(url)s\">維護模式</a>時無法進行描繪。請檢查是否已離開維護模式。"
 
-#: kuma/wiki/jinja2/wiki/document.html:259
+#: kuma/wiki/jinja2/wiki/document.html:250
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "系統正首次繪製此文件。請在數分鐘之後 <a href=\"%(url)s\">重新載入此頁面</a> 以觀看完整內容。"
 
+#: kuma/wiki/jinja2/wiki/document.html:258
+#, python-format
+msgid ""
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
+msgstr "<abbr title=\"%(started_at)s\">目前正在更新</abbr> 此文件。若下方內容看來已久未更新或缺漏某些部分，請於數分鐘之後 <a href=\"%(url)s\">重新載入此頁面</a>。"
+
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
-msgstr "<abbr title=\"%(started_at)s\">目前正在更新</abbr> 此文件。若下方內容看來已久未更新或缺漏某些部分，請於數分鐘之後 <a href=\"%(url)s\">重新載入此頁面</a>。"
-
-#: kuma/wiki/jinja2/wiki/document.html:276
-#, python-format
-msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr "此文件的更新作業 <abbr title=\"%(scheduled_at)s\">已經排程完畢</abbr>。若下方內容看來已久未更新或缺漏某些部分，請在數分鐘之後 <a href=\"%(url)s\">重新載入此頁面</a>。"
 
-#: kuma/wiki/jinja2/wiki/document.html:287
+#: kuma/wiki/jinja2/wiki/document.html:278
 msgid "This is an experimental page."
 msgstr "這是實驗中的頁面。"
 
-#: kuma/wiki/jinja2/wiki/document.html:298
+#: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "翻譯不完整。請協助 <a href=\"%(translate_url)s\">翻譯此英文文件</a>。"
 
-#: kuma/wiki/jinja2/wiki/document.html:303
+#: kuma/wiki/jinja2/wiki/document.html:294
 msgid "This translation is in progress."
 msgstr "正在翻譯中。"
 
-#: kuma/wiki/jinja2/wiki/document.html:310
+#: kuma/wiki/jinja2/wiki/document.html:301
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
-msgstr "我們的志工尚未將本文翻譯為 <bdi>%(locale)s</bdi> 版本。<a href=\"%(help_link)s\"  rel=\"nofollow, noindex\">加入我們，幫忙翻譯！</a><br>您也可以閱讀本文的 <a href=\"%(doc_abs_url)s\">%(parent_language)s</a> 版本。"
+msgstr ""
+"我們的志工尚未將本文翻譯為 <bdi>%(locale)s</bdi> 版本。<a href=\"%(help_link)s\"  rel=\"nofollow, noindex\">加入我們，幫忙翻譯！</a><br>您也可以閱讀本文的 <a href=\"%(doc_abs_url)s\">"
+"%(parent_language)s</a> 版本。"
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:313
 msgid "This article doesn't have any content yet."
 msgstr "這篇文章還沒有任何內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:327
-#, python-format
-msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr "搜尋 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">標題為 %(title)s 的頁面</a>，了解用法以及使用此巨集的頁面數量。"
-
-#: kuma/wiki/jinja2/wiki/document.html:340
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
 msgstr "這篇文章還沒有任何通過審核的內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:327
 msgid "Was this article helpful?"
 msgstr "這份文件有幫助嗎？"
 
-#: kuma/wiki/jinja2/wiki/document.html:359
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Thank you!"
 msgstr "感謝您！"
 
-#: kuma/wiki/jinja2/wiki/document.html:369
+#: kuma/wiki/jinja2/wiki/document.html:351
 msgid "Document Tags and Contributors"
 msgstr "文件標籤與貢獻者"
 
-#: kuma/wiki/jinja2/wiki/document.html:375
+#: kuma/wiki/jinja2/wiki/document.html:357
 msgid "Contributors to this page:"
 msgstr "此頁面的貢獻者:"
 
-#: kuma/wiki/jinja2/wiki/document.html:381
+#: kuma/wiki/jinja2/wiki/document.html:363
 msgid "Last updated by:"
 msgstr "最近更新:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:6
-#, python-format
-msgid "%(title)s | Edit Template"
-msgstr "%(title)s | 編輯範本"
-
-#: kuma/wiki/jinja2/wiki/edit.html:8
+#: kuma/wiki/jinja2/wiki/edit.html:5
 #, python-format
 msgid "%(title)s | Edit Article"
 msgstr "%(title)s | 編輯文章"
 
-#: kuma/wiki/jinja2/wiki/edit.html:31
+#: kuma/wiki/jinja2/wiki/edit.html:27
 msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr "在您開始編輯之後，請確認您的修改與已儲存修改之間的差異。您可以再次儲存，但請解決發生的任何衝突情形，如此您所修改的內容才不致遺失。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:41
+#: kuma/wiki/jinja2/wiki/edit.html:37
 msgid "Your Changes"
 msgstr "您的變更"
 
-#: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
-#, python-format
-msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
+#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:62
+#, fuzzy, python-format
+msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> on %(date)s"
 msgstr "由 <a href=\"%(user_profile_url)s\">%(user)s</a> 於 %(date)s 所做的編修 %(id)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
 msgstr "目前的線上版本:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:86
+#: kuma/wiki/jinja2/wiki/edit.html:90
 msgid "Search results summary:"
 msgstr "搜尋結果摘要:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:106
+#: kuma/wiki/jinja2/wiki/edit.html:110
 msgid "Edit Page Title and Properties"
 msgstr "編輯頁面標題及屬性"
 
@@ -3482,7 +3479,7 @@ msgstr "分鐘"
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
 msgstr "於下方尋找翻譯來源，再點擊「發布」。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:60
 msgid "Lookup:"
 msgstr "尋找:"
 
@@ -3503,11 +3500,11 @@ msgstr "別擔心會改壞什麼東西，您總是可以還原您的變更。"
 msgid "Have fun and be proud of your contribution!"
 msgstr "希望您能以您的貢獻為榮，祝您寫得愉快！"
 
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/wiki/jinja2/wiki/edit.html:184
 msgid "Learn how to tag an article"
 msgstr "了解如何用 tag 標示文件"
 
-#: kuma/wiki/jinja2/wiki/edit.html:190 kuma/wiki/jinja2/wiki/translate.html:114
+#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr "請為此篇文章分類，以利搜尋引擎能透過正確篩選條件找出文章。<a target=\"_blank\" href=\"%(url)s\">參閱標記指南</a>。"
@@ -3603,7 +3600,7 @@ msgstr "已請求移動頁面"
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
 msgstr "<h1>已排定頁面移動</h1> <p>正在移動 %(old_slug)s 至 <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p>您將會在移動完成或發生錯誤時收到通知。</p>"
 
-#: kuma/wiki/jinja2/wiki/preview.html:13
+#: kuma/wiki/jinja2/wiki/preview.html:14
 msgid "This is a preview of an unsaved document."
 msgstr "這是未儲存文件的預覽。"
 
@@ -3640,15 +3637,15 @@ msgstr "建立者:"
 msgid "Is current revision?"
 msgstr "是目前線上的版本？"
 
-#: kuma/wiki/jinja2/wiki/revision.html:61
+#: kuma/wiki/jinja2/wiki/revision.html:60
 msgid "Revision Content"
 msgstr "版本內容"
 
-#: kuma/wiki/jinja2/wiki/revision.html:69
+#: kuma/wiki/jinja2/wiki/revision.html:67
 msgid "Revision Source"
 msgstr "版本來源"
 
-#: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:73
+#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:76
 msgid "Revert to this revision"
 msgstr "還原至此版本"
 
@@ -3667,73 +3664,73 @@ msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-%(this_year)s Mozilla Developer Network 及個別貢獻者<br /> 內容依照此專案的授權條款提供大眾使用。&middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a"
-" href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
+"&copy; 2005-%(this_year)s Mozilla Developer Network 及個別貢獻者<br /> 內容依照此專案的授權條款提供大眾使用。&middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/"
+"kuma\">貢獻程式碼</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
 msgstr "翻譯文章 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:33
+#: kuma/wiki/jinja2/wiki/translate.html:34
 #, python-format
 msgid "Translating article to %(locale)s"
 msgstr "正在翻譯文章至 %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:43
+#: kuma/wiki/jinja2/wiki/translate.html:44
 msgid "Translate Content"
 msgstr "翻譯內容"
 
-#: kuma/wiki/jinja2/wiki/translate.html:83
+#: kuma/wiki/jinja2/wiki/translate.html:84
 #, python-format
 msgid "Approved %(locale)s version:"
 msgstr "通過審查的 %(locale)s 版本:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:85
+#: kuma/wiki/jinja2/wiki/translate.html:86
 msgid "View Rendered"
 msgstr "檢視產生的內容"
 
-#: kuma/wiki/jinja2/wiki/translate.html:85
+#: kuma/wiki/jinja2/wiki/translate.html:86
 msgid "View Source"
 msgstr "檢視原始碼"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:87
 #, python-format
 msgid "Show %(locale)s"
 msgstr "顯示 %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:87
 #, python-format
 msgid "Hide %(locale)s"
 msgstr "隱藏 %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:98
+#: kuma/wiki/jinja2/wiki/translate.html:99
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "%(locale)s 翻譯:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:111
+#: kuma/wiki/jinja2/wiki/translate.html:112
 msgid "Translate Tags"
 msgstr "翻譯標籤"
 
-#: kuma/wiki/jinja2/wiki/translate.html:120
+#: kuma/wiki/jinja2/wiki/translate.html:121
 msgid "English tags"
 msgstr "英文版標籤"
 
-#: kuma/wiki/jinja2/wiki/translate.html:132
+#: kuma/wiki/jinja2/wiki/translate.html:133
 msgid "This document has no tags."
 msgstr "這份文件沒有標籤。"
 
-#: kuma/wiki/jinja2/wiki/translate.html:139
+#: kuma/wiki/jinja2/wiki/translate.html:140
 #, python-format
 msgid "%(locale)s tags"
 msgstr "%(locale)s 版標籤"
 
-#: kuma/wiki/jinja2/wiki/translate.html:146
+#: kuma/wiki/jinja2/wiki/translate.html:147
 msgid "Version Notes"
 msgstr "版本記錄"
 
-#: kuma/wiki/jinja2/wiki/translate.html:148
+#: kuma/wiki/jinja2/wiki/translate.html:149
 msgid "Localization flags"
 msgstr "在地化標籤"
 
@@ -3792,51 +3789,51 @@ msgid "Save"
 msgstr "儲存"
 
 # 88%
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:19
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:18
 msgid "Languages"
 msgstr "語言"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:33
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:32
 msgid "No translations exist for this article."
 msgstr "此文件沒有翻譯。"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:37
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:36
 msgid "Add a translation"
 msgstr "新增翻譯"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:52 kuma/wiki/jinja2/wiki/includes/buttons.html:55
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:51 kuma/wiki/jinja2/wiki/includes/buttons.html:54
 msgid "Watch"
 msgstr "關注"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:69
 msgid "New sub-article"
 msgstr "新增子文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:71
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "Clone this article"
 msgstr "複製此文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:74
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:73
 msgid "Move this article"
 msgstr "移動此文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:77
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:76
 msgid "View in admin"
 msgstr "以管理員模式檢視"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:85
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:84
 msgid "Delete this article"
 msgstr "刪除此文件"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:90
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:89
 msgid "Manage content zone"
 msgstr "管理內容區域"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:93
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:92
 msgid "Convert to content zone"
 msgstr "轉換為內容區域"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:95
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:94
 msgid "Print this article"
 msgstr "列印此文件"
 
@@ -3852,78 +3849,78 @@ msgstr "詳見"
 msgid "Change Revisions"
 msgstr "變更修訂"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:57
 #, python-format
 msgid "Revision %(num)s:"
 msgstr "版本 %(num)s:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:96 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr "伺服器正在產生內容對照。請等幾分鐘後重新整理此頁面。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:116
 msgid "Subscribe to this article and all its sub-articles"
 msgstr "訂閱此文件及所有子文件"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
 msgid "Unsubscribe from this article and all its sub-articles"
 msgstr "退訂此文件及所有子文件"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "您已訂閱此文章及其所有子文章。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "您已取消訂閱此文章極其所有子文章。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:131
 msgid "Updating subscription status"
 msgstr "更新訂閱狀態"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "Subscribe to this article"
 msgstr "訂閱此文章"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 msgid "Unsubscribe from this article"
 msgstr "退訂此文章"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
 #, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "您已訂閱 %(title)s。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "您已取消訂閱 %(title)s。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:147
 #, python-format
 msgid "Subscribe to the %(language)s version"
 msgstr "訂閱 %(language)s 版"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "Unsubscribe from the %(language)s version"
 msgstr "退訂 %(language)s 版"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "您已訂閱此文章的 %(language)s 版本。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "您已取消訂閱此文章的 %(language)s 版本。"
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:49
 msgid "Generate table of contents"
 msgstr "產生目錄"
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:49
 msgid "TOC:"
 msgstr "目錄:"
 
@@ -3997,7 +3994,7 @@ msgstr "是否忽略變更並建立新文件？"
 msgid "Publish and Keep Editing"
 msgstr "發布並繼續編輯"
 
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:36
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:34
 msgid "Discard"
 msgstr "捨棄"
 
@@ -4045,7 +4042,7 @@ msgstr "%(locale)s 版標題:"
 msgid "Slug in %(locale)s:"
 msgstr "%(locale)s 版 Slug:"
 
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
+#: kuma/wiki/jinja2/wiki/includes/translate_description.html:64
 msgid "Find the translation source with the lookup above and then click \"Save\"."
 msgstr "在上面尋找翻譯來源，然後點擊「儲存」。"
 
@@ -4061,36 +4058,26 @@ msgid "Articles tagged: %(tag)s"
 msgstr "文章標籤: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
-msgid "All templates"
-msgstr "所有模板"
-
-#: kuma/wiki/jinja2/wiki/list/documents.html:7
-#, python-format
-msgid "Found %(num)s template."
-msgid_plural "Found %(num)s templates"
-msgstr[0] "找到 %(num)s 個模板"
-
-#: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
 msgstr "有錯誤的文件"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:11
+#: kuma/wiki/jinja2/wiki/list/documents.html:8
 msgid "Top level documents"
 msgstr "頂端文件"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:13
+#: kuma/wiki/jinja2/wiki/list/documents.html:10
 msgid "Documents with no parent"
 msgstr "沒有父文件的文件"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:15
+#: kuma/wiki/jinja2/wiki/list/documents.html:12
 msgid "All documents"
 msgstr "所有文件"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:28
 msgid "Translation updates needed"
 msgstr "需要更新翻譯"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:53 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
 msgstr "沒有文章。"
 
@@ -4132,23 +4119,23 @@ msgstr "找到 %(count)s 份文件。"
 msgid "Revision History | %(document)s"
 msgstr "編輯歷史 | %(document)s"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:14
+#: kuma/wiki/jinja2/wiki/list/revisions.html:15
 msgid "History of"
 msgstr "文件歷史:"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:17
+#: kuma/wiki/jinja2/wiki/list/revisions.html:18
 msgid "Revision history for:"
 msgstr "編輯歷史:"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:42
+#: kuma/wiki/jinja2/wiki/list/revisions.html:43
 msgid "Compare Selected Translations"
 msgstr "比較所選擇的翻譯"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:42
+#: kuma/wiki/jinja2/wiki/list/revisions.html:43
 msgid "Compare Selected Revisions"
 msgstr "比較所選擇的編輯版本"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:81
+#: kuma/wiki/jinja2/wiki/list/revisions.html:84
 msgid "This document has no revisions."
 msgstr "此文件沒有編修記錄。"
 
@@ -4222,16 +4209,16 @@ msgstr "請儲存下列表單以傳送至 Akismet。"
 msgid "Select an Akismet submission for more details"
 msgstr "選擇 Akismet 輸出項以取得更多詳細資訊"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
+#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
 #, python-format
 msgid "Revision %s"
 msgstr "修訂版本 %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:107
+#: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
 msgstr "產生內容發生錯誤。"
 
-#: kuma/wiki/views/delete.py:54
+#: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "文件已存在。註: 除非您已刪除重導文件，否則無法恢復已移動的文件。"
 
@@ -4240,26 +4227,26 @@ msgstr "文件已存在。註: 除非您已刪除重導文件，否則無法恢�
 msgid "Redirected from %(url)s"
 msgstr "重導自 %(url)s"
 
-#: kuma/wiki/views/document.py:718
+#: kuma/wiki/views/document.py:710
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "我在 MDN 學到了 %(title)s。"
 
-#: kuma/wiki/views/document.py:791
+#: kuma/wiki/views/document.py:783
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "未支援的 content-type: %s"
 
-#: kuma/wiki/views/document.py:798
+#: kuma/wiki/views/document.py:790
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "分析請求出現錯誤：%s"
 
-#: kuma/wiki/views/document.py:818
+#: kuma/wiki/views/document.py:808
 msgid "ETag precondition failed"
 msgstr "ETag 前提失敗"
 
-#: kuma/wiki/views/edit.py:114
+#: kuma/wiki/views/edit.py:111
 msgid "Sections may only be edited inline."
 msgstr "段落只能在行內編輯。"
 
@@ -4267,7 +4254,7 @@ msgstr "段落只能在行內編輯。"
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr "需要有一部份標題才能自動建議。若需完整的文件索引，請參考主要頁面。"
 
-#: kuma/wiki/views/revision.py:145
+#: kuma/wiki/views/revision.py:142
 msgid "Document has been edited; please re-review."
 msgstr "文件已被編輯，請重新檢閱。"
 
@@ -4279,6 +4266,22 @@ msgstr "您不能翻譯這份文件。"
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 伺服器: %(backend)s"
+
+#~ msgid "Create a New Template"
+#~ msgstr "建立新範本"
+
+#~ msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
+#~ msgstr "搜尋 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">標題為 %(title)s 的頁面</a>，了解用法以及使用此巨集的頁面數量。"
+
+#~ msgid "%(title)s | Edit Template"
+#~ msgstr "%(title)s | 編輯範本"
+
+#~ msgid "All templates"
+#~ msgstr "所有模板"
+
+#~ msgid "Found %(num)s template."
+#~ msgid_plural "Found %(num)s templates"
+#~ msgstr[0] "找到 %(num)s 個模板"
 
 #~ msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 #~ msgstr "此文件需要技術審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
@@ -4302,13 +4305,14 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "打造 Open Web Apps"
 
 #~ msgid ""
-#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-#~ msgstr "您送出的某些內容可能不適合 MDN。若重複送出不適當的內容，可能導致自己帳號遭到停權。請參閱 “<a href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” 指南，以進一步了解「適當內容」之定義。"
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ msgstr ""
+#~ "您送出的某些內容可能不適合 MDN。若重複送出不適當的內容，可能導致自己帳號遭到停權。請參閱 “<a href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” 指南，以進一步了解「適當內容」之定義。"
 
 #~ msgid ""
-#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you"
-#~ " can continue to sign in to MDN."
+#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
+#~ "you can continue to sign in to MDN."
 #~ msgstr "您已使用 Persona 登入 MDN，自 11 月 1 日起將無法再使用本方式登入。<br>請 <a href=\"%(persona_info)s\">立刻將您的 GitHub 帳號連結到 MDN 個人資料</a>，讓您之後可繼續登入至 MDN。"
 
 #~ msgid "Sign in:"
@@ -4345,11 +4349,11 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 #~ msgstr[0] ""
-#~ "已經有使用此電子郵件地址的帳號存在。您有MDN帳號嗎？<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">是的，請連結我的MDN帳號</a>這些電子郵件地址已有帳號存在。您有MDN帳號嗎？<a "
-#~ "href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">是的，請連結我的MDN帳號</a>"
+#~ "已經有使用此電子郵件地址的帳號存在。您有MDN帳號嗎？<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">是的，請連結我的MDN帳號</a>這些電子郵件地址"
+#~ "已有帳號存在。您有MDN帳號嗎？<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">是的，請連結我的MDN帳號</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "使用 Persona 登入"
@@ -4412,9 +4416,11 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "此文件在你編輯的時候已被修改過了。"
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
-#~ msgstr "內容依照此專案的授權條款提供大眾使用 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ msgstr ""
+#~ "內容依照此專案的授權條款提供大眾使用 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a href=\"//www.mozilla.org/en-US/"
+#~ "privacy\">隱私權保護政策</a>"
 
 #~ msgid "\"Load documents\""
 #~ msgstr "「載入文件」"
@@ -4634,12 +4640,12 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "CSS3 動畫可以讓您隨著時間修改屬性值，進而讓元素的位置或外觀不需要或只要一些簡單的 JavaScript 就可以變動，並可以有比變形更多的控制程度。"
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
-#~ "CSS3 動畫是像 Firefox 一類現代瀏覽器的新功能。可以讓您更靈活地控制網頁的樣式跟體驗。CSS3 動畫可以讓您隨著時間修改屬性值，而不需或只需要使用一點點 JavaScript，還有讓您可以更好地控制 CSS 變形。在靜態的屬性值之外，您可以讓 HTML 元素的外觀和位置動起來。您不需要 Flash 或 Silverlight 就能透過 CSS3 "
-#~ "達到這些特效，並建立有創意的動態介面與動畫。"
+#~ "CSS3 動畫是像 Firefox 一類現代瀏覽器的新功能。可以讓您更靈活地控制網頁的樣式跟體驗。CSS3 動畫可以讓您隨著時間修改屬性值，而不需或只需要使用一點點 JavaScript，還有讓您可以更好地控制 CSS 變形。在靜"
+#~ "態的屬性值之外，您可以讓 HTML 元素的外觀和位置動起來。您不需要 Flash 或 Silverlight 就能透過 CSS3 達到這些特效，並建立有創意的動態介面與動畫。"
 
 #~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
 #~ msgstr "2011 年七月 Dev Derby 挑戰 - HTML5<video>"
@@ -4696,8 +4702,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "2011 年十一月"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
-#~ " that make it easy to control and draw in."
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
 #~ msgstr "Canvas 允許您使用 JavaScript 渲染 2D 造型、點陣圖以及進階圖形效果至網頁上。每個 <canvas> 元素提供一個擁有狀態和方法的圖形內容，使其易於控制及繪製。"
 
 #~ msgid "December 2011 Dev Derby Challenge - IndexedDB"
@@ -4791,8 +4797,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "2012 年七月"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-#~ "input with HTML, and more. What else can you do without JavaScript?"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
 #~ msgstr "為 Web 創造豐富的使用者經驗未曾容易。現今開放的 Web 標準將許多強大的功能變得易如反掌。使用 CSS 的動畫網頁、使用HTML的使用者輸入驗證等等。還有什麼是 JavaScript 不能做的？"
 
 #~ msgid "August 2012 Dev Derby Challenge - Camera API"
@@ -4826,8 +4832,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "2012 年十月"
 
 #~ msgid ""
-#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-#~ "you do with Media Queries?"
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
+#~ "can you do with Media Queries?"
 #~ msgstr "目前 CSS 媒體選擇是常見的行動裝置適應性網頁設計工具。W3C 也相當推薦這個方法！這個語法可以告訴您除了網頁寬度外的更多資訊，讓您設定更多網頁樣式。您還可以使用 CSS 媒體選擇器做什麼？"
 
 #~ msgid "November 2012 Dev Derby Challenge - Fullscreen API"
@@ -4852,8 +4858,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "2012 年十二月"
 
 #~ msgid ""
-#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-#~ "users, improve performance, and more."
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
+#~ "mobile users, improve performance, and more."
 #~ msgstr "透過開放 Web 逐漸成熟的功能，您可以打造在線上或離線時皆能使用的應用程式。您可以透過離線功能更好地支持旅行者與行動使用者，改善效能等等。"
 
 #~ msgid "January 2013 Dev Derby Challenge - Drag and Drop"
@@ -4878,8 +4884,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "2013 年二月"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
-#~ " all the interactions users have come to expect."
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
 #~ msgstr "觸控事件 API 可以讓您在可支援同時追蹤多個觸碰事件的設備上使用這樣功能。適用於建立複雜的遊戲，且支援雙指縮放等等。使用多點觸控，您的應用程序可以回應使用者所期待的所有互動效果。"
 
 #~ msgid "March 2013 Dev Derby Challenge - Mobile"
@@ -5039,7 +5045,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "表單"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr "HTML5 當中的 Form 元素與屬性提供一個比 HTML4 更深層的語意標記，並移除了原本許多乏味的程式與樣式需求。"
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -5436,11 +5443,11 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>歡迎來到 Mozilla Demo Studio，讓像您這樣的開發者可以開發、分享、展示，並學習所有的網頁技術。透過探索 Demo Studio 看看有什麼可能:</p> <ul> <li>檢視 HTML、CSS，以及 JavaScript 可以做什麼的展示。</li> <li>檢測這些展示的原始碼，這樣您就可以這是如何工作的。</li> "
-#~ "<li>閱讀文件以學習這些讓網路變得更好的開放標準與技術。</li> </ul>"
+#~ "<p>歡迎來到 Mozilla Demo Studio，讓像您這樣的開發者可以開發、分享、展示，並學習所有的網頁技術。透過探索 Demo Studio 看看有什麼可能:</p> <ul> <li>檢視 HTML、CSS，以及 JavaScript 可以做什麼的展示。"
+#~ "</li> <li>檢測這些展示的原始碼，這樣您就可以這是如何工作的。</li> <li>閱讀文件以學習這些讓網路變得更好的開放標準與技術。</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "到上一個 Demo，%(demo_title)s"
@@ -5675,9 +5682,10 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "送出一個新的 Demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
-#~ msgstr "<p>不論您是正要建立一個全新的方式以體驗網頁，或正要實驗最新的技術，我們邀請您送出您的 demo 以與其他網頁開發者分享（或炫耀）。</p> <p>請完成下列表單以確定您的 demo 被成功送出到 Demo Studio。</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ msgstr ""
+#~ "<p>不論您是正要建立一個全新的方式以體驗網頁，或正要實驗最新的技術，我們邀請您送出您的 demo 以與其他網頁開發者分享（或炫耀）。</p> <p>請完成下列表單以確定您的 demo 被成功送出到 Demo Studio。</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "描述您的 Demo"
@@ -5707,13 +5715,14 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "準備您的 Demo"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul><li>您的 demo 原始碼應該封裝為 ZIP 檔案。</li><li>您的 demo 的主要網頁應該位於 ZIP 檔根目錄中，叫做 <code>index.html</code> 的檔案內。</li><li>您的 demo 應該以於客戶端執行的技術（HTML、CSS、JavaScript）開發。我們不支援 PHP 或 Ruby 等伺服器端語言。</li><li>若您的 demo "
-#~ "需要外部資源，應該使用 AJAX 來存取。</li><li>您需要有 <a href=\"%(signup_url)s\">MDN 帳號</a> 才能送出您的 demo。</li><li>請在 demo 的詳細資訊中明確列出任何無法依照 CC-BY-SA 授權的第三方內容，以及該內容的作者網站網址。</li></ul>"
+#~ "<ul><li>您的 demo 原始碼應該封裝為 ZIP 檔案。</li><li>您的 demo 的主要網頁應該位於 ZIP 檔根目錄中，叫做 <code>index.html</code> 的檔案內。</li><li>您的 demo 應該以於客戶端執行的技術（HTML、CSS、"
+#~ "JavaScript）開發。我們不支援 PHP 或 Ruby 等伺服器端語言。</li><li>若您的 demo 需要外部資源，應該使用 AJAX 來存取。</li><li>您需要有 <a href=\"%(signup_url)s\">MDN 帳號</a> 才能送出您的 demo。</"
+#~ "li><li>請在 demo 的詳細資訊中明確列出任何無法依照 CC-BY-SA 授權的第三方內容，以及該內容的作者網站網址。</li></ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "提供原始碼"
@@ -5742,29 +5751,31 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "<p>與 MDN 社群分享您有興趣的開發方向與領域，以及您的專業。我們即將可以為您提供更有興趣、更好的自訂體驗，且您將可以有個地方展示您做過什麼東西。</p>"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr "<p>無論您要創造令人吃驚的新方式來體驗 Web 或者是只想要測試最新的技術，我們邀請您送出您自己的範例程式與其他 web 開發者分享 (或者炫耀一番)。</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "在您開始之前"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>您必須準備好您展示的 <strong>程式原始碼</strong>。展示將會被存放於 Demo Studio 的伺服器。</li> <li>您的展示的原始碼必須透過一種 <strong>開放式授權</strong>，像是 MPL、GPL，或 BSD 等進行授權。</li> <li>您的 Demo 應該要展示 <strong>開放式網頁技術</strong>，像是 HTML5 "
-#~ "與 CSS3。</li> <li>您的展示應該支援大多數的 <strong>現代網頁瀏覽器</strong>，像是 Firefox、Chrome、Safari，及 Opera。</li> </ul>"
+#~ "<ul> <li>您必須準備好您展示的 <strong>程式原始碼</strong>。展示將會被存放於 Demo Studio 的伺服器。</li> <li>您的展示的原始碼必須透過一種 <strong>開放式授權</strong>，像是 MPL、GPL，或 BSD 等進行"
+#~ "授權。</li> <li>您的 Demo 應該要展示 <strong>開放式網頁技術</strong>，像是 HTML5 與 CSS3。</li> <li>您的展示應該支援大多數的 <strong>現代網頁瀏覽器</strong>，像是 Firefox、Chrome、Safari，及 "
+#~ "Opera。</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>您的展示的原始碼應該被封裝於 <strong>ZIP 檔案</strong> 當中。</li> <li>您的展示的主要頁面應該是 ZIP 檔根目錄下一個被命名為 <strong><code>index.html</code></strong> 的檔案。</li> <li>您的展示應該使用 <strong>客戶端技術</strong> (HTML、CSS、JavaScript)"
-#~ " 建立。不支援像是 PHP 或 Ruby 之類的伺服器端語言。</li> <li>若您的展示需要外部資源，應該使用 <strong>AJAX</strong> 來進行存取。</li> <li>請在展示的詳情欄位當中明確列出無法透過 CC-BY-SA 進行授權的第三人內容，並包含作者的網站鏈結。</li> </ul>"
+#~ "<ul> <li>您的展示的原始碼應該被封裝於 <strong>ZIP 檔案</strong> 當中。</li> <li>您的展示的主要頁面應該是 ZIP 檔根目錄下一個被命名為 <strong><code>index.html</code></strong> 的檔案。</li> <li>您的"
+#~ "展示應該使用 <strong>客戶端技術</strong> (HTML、CSS、JavaScript) 建立。不支援像是 PHP 或 Ruby 之類的伺服器端語言。</li> <li>若您的展示需要外部資源，應該使用 <strong>AJAX</strong> 來進行存取。</"
+#~ "li> <li>請在展示的詳情欄位當中明確列出無法透過 CC-BY-SA 進行授權的第三人內容，並包含作者的網站鏈結。</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>要送出您的 demo，您需要 <strong><a href=\"%(signup_url)s\">MDN 帳號</a></strong>。</p>"
@@ -6004,11 +6015,11 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "%s 已被 %s 封鎖"
 
 #~ msgid ""
-#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a "
-#~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
+#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href="
+#~ "\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
 #~ msgstr ""
-#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> 檢視「%(parent_locale)s」的上一層 </a> (<a href=\"%(mod_url)s\">最後於 %(parent_modified)s</a> 修改) </p> <p> <a href=\"%(doc_edit_url)s\" "
-#~ "title=\"%(doc_title)s\"> 編輯「%(doc_locale)s」翻譯 </a> (最後於 %(doc_modified)s 修改) </p>"
+#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> 檢視「%(parent_locale)s」的上一層 </a> (<a href=\"%(mod_url)s\">最後於 %(parent_modified)s</a> 修改) </p> <p> <a href=\"%(doc_edit_url)s"
+#~ "\" title=\"%(doc_title)s\"> 編輯「%(doc_locale)s」翻譯 </a> (最後於 %(doc_modified)s 修改) </p>"
 
 #~ msgid "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>Contributors to this page:</strong> %(contributors_list)s </div>"
 #~ msgstr "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>此頁面的貢獻者:</strong> %(contributors_list)s </div>"
@@ -6029,13 +6040,13 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "您將永久刪除這筆修改。<strong>無法還原！</strong>您確定要繼續嗎？"
 
 #~ msgid ""
-#~ "<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors<br /> Content is available under <a href=\"%(copyright_url)s\">these licenses</a> &middot; <a "
-#~ "href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//www.mozilla.org/about/legal/terms/mozilla\">Terms</a> &middot; <a href=\"//www.mozilla.org/privacy/websites/\">Privacy</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a></bdi>"
+#~ "<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors<br /> Content is available under <a href=\"%(copyright_url)s\">these licenses</a> &middot; <a href="
+#~ "\"%(about_url)s\">About MDN</a> &middot; <a href=\"//www.mozilla.org/about/legal/terms/mozilla\">Terms</a> &middot; <a href=\"//www.mozilla.org/privacy/websites/\">Privacy</a> &middot; <a href="
+#~ "\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a></bdi>"
 #~ msgstr ""
-#~ "<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network 及個別貢獻者<br /> 內容依照<a href=\"%(copyright_url)s\">這些授權條款</a>提供大眾使用 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/about/legal/terms/mozilla\">法律條款</a> &middot; <a href=\"//www.mozilla.org/privacy/websites/\">隱私權</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a></bdi>"
+#~ "<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network 及個別貢獻者<br /> 內容依照<a href=\"%(copyright_url)s\">這些授權條款</a>提供大眾使用 &middot; <a href=\"%(about_url)s\">關於 MDN</a> "
+#~ "&middot; <a href=\"//www.mozilla.org/about/legal/terms/mozilla\">法律條款</a> &middot; <a href=\"//www.mozilla.org/privacy/websites/\">隱私權</a> &middot; <a href=\"//www.mozilla.org/privacy/"
+#~ "websites/#cookies\">Cookies</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式碼</a></bdi>"
 
 #~ msgid "Zones"
 #~ msgstr "專區"
@@ -6094,8 +6105,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> 說，"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
 #~ "貼出於 <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"%(display_name)s 所送出的此回佣的永久鏈結\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" "
 #~ "title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
@@ -6256,13 +6267,14 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "回到首頁"
 
 #~ msgid ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
-#~ "the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
-#~ "learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
-#~ "here.</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to "
+#~ "define the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just "
+#~ "starting out, learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find "
+#~ "helpful resources here.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">CSS（<strong>串接樣式表</strong>）是一種用來描述網頁呈現方式的語言。如果要做出一張好看的網頁，您需要學會 CSS 才能定義網頁當中的 HTML 元素的樣式與位置。</p> <p>這張網頁當中的鏈結會包含了不同種類的 CSS 教學與訓練資源。不論您只是正準備要入門，剛剛了解 CSS 的基礎，或是已經是一位老練的網頁開發者但想要學習 "
-#~ "<strong>CSS3</strong>（最新版本的 CSS 標準）與 CSS 的最佳實踐，您都可以在這裡找到最能幫助您的資源。</p>"
+#~ "<p class=\"intro\">CSS（<strong>串接樣式表</strong>）是一種用來描述網頁呈現方式的語言。如果要做出一張好看的網頁，您需要學會 CSS 才能定義網頁當中的 HTML 元素的樣式與位置。</p> <p>這張網頁當中的鏈"
+#~ "結會包含了不同種類的 CSS 教學與訓練資源。不論您只是正準備要入門，剛剛了解 CSS 的基礎，或是已經是一位老練的網頁開發者但想要學習 <strong>CSS3</strong>（最新版本的 CSS 標準）與 CSS 的最佳實踐，您都"
+#~ "可以在這裡找到最能幫助您的資源。</p>"
 
 #~ msgid "Introductory Level"
 #~ msgstr "入門等級"
@@ -6385,23 +6397,24 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "CSS3 的 @font-face 功能讓您可以用簡單、可操縱、靈活的方式在網頁上使用自訂字形。"
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
-#~ " can't take advantage."
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
+#~ "and so can't take advantage."
 #~ msgstr "此網站討論 <strong>CSS3</strong>，是最新穎，仍然發展中的版本的 CSS。許多 CSS3 功能仍然由現在的瀏覽器有不同程度的支援，但許多使用者仍然裝著較舊的瀏覽器，所以無法得到 CSS3 的好處。"
 
 #~ msgid ""
 #~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you "
-#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
-#~ "development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at "
+#~ "web development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">HTML (<strong>超文字標示語言，HyperText Markup Language</strong>) 是將資訊放到全球資訊網上的核心語法。若您想要建立或修改網頁，您最好得學會 HTML。</p> <p>本頁上的鏈結將帶您到一些不同的 HTML 教學與 HTML 訓練材料。不論您只是剛剛入門，正在學習 HTML 的基礎，或是您已經是老鳥想要學習"
-#~ " <strong>HTML5</strong> (最新版本的標準)，您可以在此找到許多有用的 HTML 最佳實踐資源。</p>"
+#~ "<p class=\"intro\">HTML (<strong>超文字標示語言，HyperText Markup Language</strong>) 是將資訊放到全球資訊網上的核心語法。若您想要建立或修改網頁，您最好得學會 HTML。</p> <p>本頁上的鏈結將帶您到一"
+#~ "些不同的 HTML 教學與 HTML 訓練材料。不論您只是剛剛入門，正在學習 HTML 的基礎，或是您已經是老鳥想要學習 <strong>HTML5</strong> (最新版本的標準)，您可以在此找到許多有用的 HTML 最佳實踐資源。</p>"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "HTML 基礎"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
+#~ "depth."
 #~ msgstr "HTML 是什麼、可以做什麼、HTML 的簡明歷史，以及 HTML 文件的結構長成什麼樣子。這裡的文章都是 HTML 當中可以研究得很深的地方。"
 
 #~ msgid "Basic Structure of a Web Page"
@@ -6534,17 +6547,17 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "使用了 HTML5 網站的櫥窗，幫助您可以了解應該如何使用。"
 
 #~ msgid ""
-#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
-#~ "take advantage."
+#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
+#~ "can't take advantage."
 #~ msgstr "這個網站討論 <strong>HTML5</strong>，即將到來的下一個版本標準。許多 HTML 標準已由新興的瀏覽器支援，但許多使用者仍然使用舊版瀏覽器，無法體驗新技術所帶來的好處。"
 
 #~ msgid ""
 #~ "<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and "
-#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old hand, "
-#~ "wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
+#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old "
+#~ "hand, wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\"><strong>JavaScript</strong> (簡稱 JS) 是讓網頁可以在基礎的表單和鏈結之外，回應使用者行為的程式語言。</p> <p>​本頁上的鏈結將會帶您看到許多不同的 JavaScript 教學及 JavaScript 訓練教材。不論您只是剛剛入門，想要學習基礎 JS，或是已經是個老鳥，想要增進功力，您都可以在此找到有用的 JS "
-#~ "最佳實踐資源。</p>"
+#~ "<p class=\"intro\"><strong>JavaScript</strong> (簡稱 JS) 是讓網頁可以在基礎的表單和鏈結之外，回應使用者行為的程式語言。</p> <p>​本頁上的鏈結將會帶您看到許多不同的 JavaScript 教學及 JavaScript 訓練"
+#~ "教材。不論您只是剛剛入門，想要學習基礎 JS，或是已經是個老鳥，想要增進功力，您都可以在此找到有用的 JS 最佳實踐資源。</p>"
 
 #~ msgid "Codecademy"
 #~ msgstr "Codecademy"
@@ -6674,11 +6687,11 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "{title}"
 
 #~ msgid ""
-#~ "&copy; 2005-2013 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
-#~ "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "&copy; 2005-2013 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
+#~ "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
-#~ "&copy; 2005-2013 Mozilla Developer Network 及其獨立貢獻者<br /> 本站內容採用與專案相同的授權。 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻程式</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
+#~ "&copy; 2005-2013 Mozilla Developer Network 及其獨立貢獻者<br /> 本站內容採用與專案相同的授權。 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">貢獻"
+#~ "程式</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
 
 #~ msgid "No translations exist for this document."
 #~ msgstr "此文件沒有翻譯。"
@@ -6692,7 +6705,9 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgid ""
 #~ "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 #~ "don't trust with your account, click the <span class=\"button\">X</span> to delete the key. It's easy to create a replacement key at any time."
-#~ msgstr "這些是你的 API 金鑰。當你在 MDN 開發應用程式的時候會用到。如果你停止使用了任何金鑰，或可能洩漏給你不信任的人，則可按下 <span class=\"button\">X</span> 將之刪除。你也能於任何時間隨意建立一組新的金鑰。"
+#~ msgstr ""
+#~ "這些是你的 API 金鑰。當你在 MDN 開發應用程式的時候會用到。如果你停止使用了任何金鑰，或可能洩漏給你不信任的人，則可按下 <span class=\"button\">X</span> 將之刪除。你也能於任何時間隨意建立一組新的金"
+#~ "鑰。"
 
 #~ msgid "X"
 #~ msgstr "X"
@@ -6743,25 +6758,25 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "送出您的 Demo"
 
 #~ msgid ""
-#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose\"> "
-#~ "<li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
-#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of the "
-#~ "month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many "
-#~ "&ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than once in "
-#~ "the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
+#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose"
+#~ "\"> <li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
+#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of "
+#~ "the month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how "
+#~ "many &ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than "
+#~ "once in the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
 #~ msgstr ""
-#~ "<p>以下是競賽規則的摘要，若需完整規賽規則請見 <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>。</p><ul class=\"prose\"><li>幾乎任何人都能加入（<a "
-#~ "href=\"%(rules_url)s\">請見規則</a>當中的例外條款）。</li><li>每月都會有新的競賽。</li><li>您的作品必須符合某些條件，<a "
-#~ "href=\"%(rules_url)s\">請見規則</a>當中對作品的要求，以及「目前挑戰」段落中是否有任何特別的要求。</li><li>每場競賽皆自美國太平洋時間當月一日起至最後一日為止。</li><li>作品將由合格的評審進行評比，他們可能會或不會考慮您的作品收到的「讚」的數量。</li><li>每月競賽的得獎作品將會在 <strong>下個月的 20 "
-#~ "日</strong>宣布。</li><li>請在送出您的競賽作品前閱讀 <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>。</li></ul>"
+#~ "<p>以下是競賽規則的摘要，若需完整規賽規則請見 <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>。</p><ul class=\"prose\"><li>幾乎任何人都能加入（<a href=\"%(rules_url)s\">請見規則</"
+#~ "a>當中的例外條款）。</li><li>每月都會有新的競賽。</li><li>您的作品必須符合某些條件，<a href=\"%(rules_url)s\">請見規則</a>當中對作品的要求，以及「目前挑戰」段落中是否有任何特別的要求。</li><li>每"
+#~ "場競賽皆自美國太平洋時間當月一日起至最後一日為止。</li><li>作品將由合格的評審進行評比，他們可能會或不會考慮您的作品收到的「讚」的數量。</li><li>每月競賽的得獎作品將會在 <strong>下個月的 20 日</"
+#~ "strong>宣布。</li><li>請在送出您的競賽作品前閱讀 <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>。</li></ul>"
 
 #~ msgid "<p>Entries will be reviewed by a panel of qualified judges, including members of the Mozilla team and outside experts. We will rate the demos across 4 dimensions:</p>"
 #~ msgstr "<p>作品將由 Mozilla 團隊成員及外部專家所組成的合格評審進行審查，我們將從以下四個角度進行評分:</p>"
 
 #~ msgid ""
-#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is the"
-#~ " demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the "
-#~ "Web today?</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is "
+#~ "the demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in "
+#~ "enhancing the Web today?</li> </ul>"
 #~ msgstr ""
 #~ "<ul class=\"prose\"><li><strong>技術</strong>&ndash; 此 Demo 是否展示了開放 Web 技術的威力？</li><li><strong>原創性</strong>&ndash; Demo 有多創新與多獨特？</li><li><strong>美觀</strong> &ndash; "
 #~ "視覺設計與互動體驗有多棒？</li><li><strong>實用性</strong> &ndash; 此 Demo 可如何用來現今的 Web 威力？</li></ul>"
@@ -6770,8 +6785,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "<p>評審將使用以上全部四個角度，針對各項目進行評分。若某場比賽有其他的要求，則也將對其進行評分。</p>"
 
 #~ msgid ""
-#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby "
-#~ "to &ldquo;vote.&rdquo;</p>"
+#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev "
+#~ "Derby to &ldquo;vote.&rdquo;</p>"
 #~ msgstr "<p>評審也可能會考慮您的作品收到來自社群的「讚」的數量。所以請務必將您的 Demo 分享給別人，並請他們過來 Dev Derby「投票」。</p>"
 
 #~ msgid "Expert Judges"
@@ -6786,7 +6801,9 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgid ""
 #~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev Derby is on hiatus while we work on revamping the contest series. When it returns, you may see some changes in the "
 #~ "contest format. However, the Dev Derby mission remains unchanged: to provide a platform that helps web developers learn, share, and push the web forward.</p> <p>See you soon!</p> </div>"
-#~ msgstr "<div style=\"padding-right: 20px;\"><h2>Dev Derby 暫停中</h2><p>Dev Derby 目前暫停中，我們正在重新調整競賽項目。回來之後，您可能會看到一些競賽上的改變。然而 Dev Derby 的使命不變: 提供一個能幫助網頁開發者學習、分享、並讓 Web 更進一步的平台。</p><p>晚點見！</p></div>"
+#~ msgstr ""
+#~ "<div style=\"padding-right: 20px;\"><h2>Dev Derby 暫停中</h2><p>Dev Derby 目前暫停中，我們正在重新調整競賽項目。回來之後，您可能會看到一些競賽上的改變。然而 Dev Derby 的使命不變: 提供一個能幫助網"
+#~ "頁開發者學習、分享、並讓 Web 更進一步的平台。</p><p>晚點見！</p></div>"
 
 #~ msgid "Previous Winner"
 #~ msgstr "先前的得獎者"
@@ -6795,14 +6812,14 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "看看 Demo"
 
 #~ msgid ""
-#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" "
-#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a "
-#~ "limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
+#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones"
+#~ "\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" href=\"http://www.rickshawbags.com/"
+#~ "bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to "
+#~ "show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
-#~ "<h1>獎項</h1><ol><li class=\"first\"><h3>Android 行動裝置</h3><p>首獎得獎者可得到來自 <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a> 的 Android 行動裝置。</p></li><li "
-#~ "class=\"second\"><h3>Rickshaw 筆電包</h3><p>二獎是手工製作的 <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a> "
-#~ "筆電包。</p></li><li class=\"third\"><h3>MDN t-shirt</h3> <p>三獎得獎者將可獲得限量的 MDN t-shirt，可讓您用來炫耀您的技術威望。</p></li></ol>"
+#~ "<h1>獎項</h1><ol><li class=\"first\"><h3>Android 行動裝置</h3><p>首獎得獎者可得到來自 <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a> 的 Android 行動裝置。</"
+#~ "p></li><li class=\"second\"><h3>Rickshaw 筆電包</h3><p>二獎是手工製作的 <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-"
+#~ "black.html\">Rickshaw</a> 筆電包。</p></li><li class=\"third\"><h3>MDN t-shirt</h3> <p>三獎得獎者將可獲得限量的 MDN t-shirt，可讓您用來炫耀您的技術威望。</p></li></ol>"
 
 #~ msgid "Dev Derby Rules"
 #~ msgstr "Dev Derby 規則"
@@ -6826,13 +6843,14 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "請選擇適合的 Dev Derby 並確定您選擇了相關的技術以加入開發者競賽。"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>您要展示的原始碼應該被封裝於 ZIP 當中。</li> <li>您展示的主要頁面應該是 ZIP 檔根目錄下一個被命名為 <code>index.html</code> 的檔案。</li> <li>您的展示應該使用客戶端技術 (HTML、CSS、JavaScript) 建立。不支援像是 PHP 或 Ruby 之類的伺服器端語言。</li> "
-#~ "<li>若您的展示需要外部資源，應該使用 AJAX 來進行存取。</li> <li>若要送出您的展示，您需要一個 <a href=\"%(signup_url)s\">MDN 帳號</a>。</li> <li>請在展示的詳情欄位當中明確列出無法透過 CC-BY-SA 進行授權的第三人內容，並包含作者的網站鏈結。</li> </ul>"
+#~ "<ul> <li>您要展示的原始碼應該被封裝於 ZIP 當中。</li> <li>您展示的主要頁面應該是 ZIP 檔根目錄下一個被命名為 <code>index.html</code> 的檔案。</li> <li>您的展示應該使用客戶端技術 (HTML、CSS、"
+#~ "JavaScript) 建立。不支援像是 PHP 或 Ruby 之類的伺服器端語言。</li> <li>若您的展示需要外部資源，應該使用 AJAX 來進行存取。</li> <li>若要送出您的展示，您需要一個 <a href=\"%(signup_url)s\">MDN 帳號"
+#~ "</a>。</li> <li>請在展示的詳情欄位當中明確列出無法透過 CC-BY-SA 進行授權的第三人內容，並包含作者的網站鏈結。</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN account</a></strong>.</p>"
 #~ msgstr "<p>要送出您的 demo，您需要 <strong><a href=\"%(signup_url)s\">MDN 帳號</a></strong>。</p>"
@@ -6862,9 +6880,11 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "<a href=\"/profile/edit\">編輯您的個人資料</a> 以訂閱電子報。"
 
 #~ msgid ""
-#~ "<span class=\"row1\">Join <span class=\"number\">3,414</span> contributors</span> <span class=\"row2\">in <span class=\"number\">31</span> languages and locales</span> <span class=\"row3\">around "
-#~ "the world.</span>"
-#~ msgstr "<span class=\"row1\">加入 <span class=\"number\">3,414</span> 名貢獻者</span> <span class=\"row2\">的行列，遍及全球共 <span class=\"number\">31</span> 種語言/語系</span> <span class=\"row3\">。</span>"
+#~ "<span class=\"row1\">Join <span class=\"number\">3,414</span> contributors</span> <span class=\"row2\">in <span class=\"number\">31</span> languages and locales</span> <span class="
+#~ "\"row3\">around the world.</span>"
+#~ msgstr ""
+#~ "<span class=\"row1\">加入 <span class=\"number\">3,414</span> 名貢獻者</span> <span class=\"row2\">的行列，遍及全球共 <span class=\"number\">31</span> 種語言/語系</span> <span class=\"row3\">。</"
+#~ "span>"
 
 #~ msgid "You have been unsubscribed from this notification."
 #~ msgstr "您已取消訂閱此通知"
@@ -7058,8 +7078,8 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 #~ msgstr "確認信已成功寄出。"
 
 #~ msgid ""
-#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the link"
-#~ " in the email."
+#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the "
+#~ "link in the email."
 #~ msgstr "你必須先確認你的電子信箱才可以登入。我們已把新的確認信寄至<strong>%(email)s</strong>信箱中，點選信件中的連結來確認電子信箱。"
 
 #~ msgid "No email found for this account"
