@@ -368,6 +368,8 @@ SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
 LANGUAGE_URL_IGNORED_PATHS = (
+    'healthz',
+    'readiness',
     'media',
     'admin',
     'robots.txt',
