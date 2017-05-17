@@ -16,10 +16,8 @@ services:
     - mysql
 env:
     global:
-        - CFLAGS=-O0
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
-        - DEBIAN_FRONTEND=noninteractive
         - DOCKER_COMPOSE_VERSION=1.9.0
           # ES_VERSION must come before ES_DOWNLOAD_URL
         - ES_VERSION=2.4.5
