@@ -58,9 +58,9 @@ install:
     - pip install -U pip
     - pip install -r requirements/travis.txt
     # Wait for ElasticSearch to be ready
-    - if [ ${INSTALL_ELASTICSEARCH:-0} -ne 0 ]; then wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200; fi;
+    - if [[ "$INSTALL_ELASTICSEARCH" == "1" ]]; then wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200; fi;
 script:
-    if [[ "${PYTHONHASHSEED:-}" == "0" ]]; then
+    if [[ "$PYTHONHASHSEED" == "0" ]]; then
         tox -v --hashseed=noset;
     else
         tox -v;

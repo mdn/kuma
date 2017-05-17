@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e  # Exit on non-zero status
 set -x  # Print commands run
+set -u  # Treat unset variables as an error
+
 export LC_CTYPE=en_US.UTF-8
 
 # Download ElasticSearch
