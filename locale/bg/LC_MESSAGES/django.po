@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-15 10:06-0700\n"
-"PO-Revision-Date: 2017-05-17 20:29+0000\n"
+"PO-Revision-Date: 2017-05-17 20:38+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
 "Language: bg\n"
@@ -187,7 +187,7 @@ msgstr "Справочници и ръководства"
 
 #: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Learn web development"
-msgstr "Обучение за уеб-разработчици"
+msgstr "Обучение за уебразработчици"
 
 #: jinja2/base.html:157
 msgid "Tutorials"
@@ -239,7 +239,7 @@ msgstr "Помощ за Firefox"
 
 #: jinja2/base.html:180
 msgid "Get web development help"
-msgstr "Помощ за уеб-разработчици"
+msgstr "Помощ за уебразработчици"
 
 #: jinja2/base.html:183
 msgid "Join the MDN community"
@@ -1228,7 +1228,7 @@ msgstr "Да получавам писма за чакащи прегледи н
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr "Програмата за сътрудничество на Мрежата от Разработчици на Мозила (MDN) кани уеб-разработчици на световно равнище да помогнат да променим света с Мозила."
+msgstr "Програмата за сътрудничество на Мрежата от Разработчици на Мозила (MDN) кани уебразработчици на световно равнище да помогнат да променим света с Мозила."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -1316,7 +1316,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
-msgstr "Обучение за уеб-разработчици"
+msgstr "Обучение за уебразработчици"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Proudly non-profit."
@@ -2811,14 +2811,14 @@ msgid "Edit section"
 msgstr "Промяна на секция"
 
 #: kuma/wiki/events.py:96
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN][%(locale)s][New] Page \"%(document_title)s\" created by %(creator)s"
-msgstr "[MDN] Страница \"%(document_title)s\", променена от %(creator)s"
+msgstr "[MDN][%(locale)s][Нова] Страница „%(document_title)s“, създадена от %(creator)s"
 
 #: kuma/wiki/events.py:100
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN][%(locale)s] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] Страница \"%(document_title)s\", променена от %(creator)s"
+msgstr "[MDN][%(locale)s] Страница „%(document_title)s“, променена от %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"

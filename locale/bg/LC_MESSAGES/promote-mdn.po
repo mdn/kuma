@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-11-09 12:01+0000\n"
+"PO-Revision-Date: 2017-05-17 20:38+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: bg\n"
@@ -25,11 +25,11 @@ msgstr "Настройките за добавката са записани."
 
 #: promote-mdn.php:245
 msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr "MDN е мястото, където ще намерите документи, примери и други помагала за уеб-разработчици относно HTML, CSS, JavaScript, уеб-стандарти и технологии с отворен код."
+msgstr "MDN е мястото, където ще намерите документи, примери и други помагала за уебразработчици относно HTML, CSS, JavaScript, уеб-стандарти и технологии с отворен код."
 
 #: promote-mdn.php:248
 msgid "MDN is the best online resource - for web developers, by web developers."
-msgstr "MDN е най-добрият източник в мрежата - от уеб-разработчици за уеб-разработчици."
+msgstr "MDN е най-добрият източник в мрежата - от уебразработчици за уебразработчици."
 
 #: promote-mdn.php:249
 msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
