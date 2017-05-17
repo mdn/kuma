@@ -248,6 +248,7 @@ lxml==3.5.0 \
     --hash=sha256:78a1ec1e674ab6dc8a0644bb4401f3fb5787b636b0aaf0c9a720923491547b1b
 
 # pytest-cov
+# Keep in sync with travis.txt
 coverage==4.3.4 \
     --hash=sha256:e1fb21a807aa0b5cc79806d8ef09078acaa83f994e15f0f7277489ca8eda51b7 \
     --hash=sha256:8a82664931a071399d703d65af2521e2202b34f2d8db20fa22a922fec0339022 \

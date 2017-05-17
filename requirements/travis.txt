@@ -2,5 +2,7 @@
 # Travis CI specific requirements
 ansible==1.9.2
 codecov==1.6.3
+# Keep in sync w/ dev.txt
 tox==2.3.1
-coverage==4.0.3
+# Keep in sync w/ constraints.txt
+coverage==4.3.4
