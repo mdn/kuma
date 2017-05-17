@@ -2,38 +2,59 @@ sudo: required
 branches:
     only:
         - master
-cache: pip
+cache:
+    pip: True
+    directories:
+      - node_modules
+      - downloads
 language: python
 python:
     - "2.7"
 services:
     - docker
     - memcached
+    - mysql
 env:
-    matrix:
-        - TOXENV=py27
-        - TOXENV=flake8
-        - TOXENV=docs
-        - TOXENV=locales DOCKER_COMPOSE_VERSION=1.9.0
-        - TOXENV=docker DOCKER_COMPOSE_VERSION=1.9.0 UID=0
-        - TOXENV=stylelint
     global:
+        - CFLAGS=-O0
+        - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DEBIAN_FRONTEND=noninteractive
-        - DATABASE_URL=mysql://root:kuma@localhost:3306/kuma
-        - CFLAGS=-O0
+        - DOCKER_COMPOSE_VERSION=1.9.0
+          # ES_VERSION must come before ES_DOWNLOAD_URL
+        - ES_VERSION=2.4.5
+        - ES_DOWNLOAD_URL=https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/$ES_VERSION/elasticsearch-$ES_VERSION.tar.gz
+        - PIPELINE_CSSMIN_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/cssmin
+        - PIPELINE_CSS_COMPRESSOR=pipeline.compressors.cssmin.CSSMinCompressor
+        - PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor
+        - PIPELINE_SASS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/node-sass
+        - PIPELINE_UGLIFYJS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/uglifyjs
+    matrix:
+        - TOXENV=py27
+          CREATE_DB=kuma
+          INSTALL_PIPELINE=1
+          INSTALL_ELASTICSEARCH=1
+        - TOXENV=flake8
+        - TOXENV=docs
+        - TOXENV=locales
+          INSTALL_DOCKER_COMPOSE=1
+        - TOXENV=docker
+          INSTALL_DOCKER_COMPOSE=1
+          UID=0
+        - TOXENV=stylelint
 matrix:
     allow_failures:
-        - env: TOXENV=locales DOCKER_COMPOSE_VERSION=1.9.0
-before_install:
-    - scripts/travis-install
-    - pip install -U pip
+        - env: TOXENV=locales INSTALL_DOCKER_COMPOSE=1
 install:
-    - pip install -r requirements/travis.txt
-    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
     - nvm install 6
     - nvm use 6
-script: tox -v
+    - scripts/travis-install
+    - pip install -U pip
+    - pip install -r requirements/travis.txt
+    # Wait for ElasticSearch to be ready
+    - if [ ${INSTALL_ELASTICSEARCH:-0} -ne 0 ]; then wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200; fi;
+script:
+    tox -v;
 after_failure:
     - dmesg | tail
 after_success:

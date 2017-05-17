@@ -1,34 +1,55 @@
 #!/bin/bash
-set -e
-set -x
+set -e  # Exit on non-zero status
+set -x  # Print commands run
 export LC_CTYPE=en_US.UTF-8
 
-if [ "$TOXENV" == "py27" ]
+# Download ElasticSearch
+if [ ${INSTALL_ELASTICSEARCH:-0} -ne 0 ]
 then
-    sudo apt-get update -qq
-    sudo apt-get -y install build-essential libxml2-dev libxslt-dev libjpeg8 libjpeg8-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 tidy libtidy-dev libtidy-0.99-0 python-dev libffi-dev libssl-dev
-    sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
-    sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
-
-    # completely and utterly remove Travis' MySQL and let the Ansible role install it
-    sudo apt-get remove --purge 'mysql*'
-    sudo apt-get autoremove
-    sudo apt-get autoclean
-    sudo rm -rf /var/lib/mysql
-
-    # Install Elasticsearch
-    wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
-    sudo dpkg -i elasticsearch-1.7.2.deb
-
-    # limit elasticsearch / java memory usage to avoid OOM Killer
-    sudo service elasticsearch stop;
-    echo "ES_HEAP_SIZE=256m" | sudo tee --append /etc/default/elasticsearch
-    sudo service elasticsearch start;
+    mkdir -p downloads
+    wget -q -O downloads/elasticsearch-$ES_VERSION.tar.gz $ES_DOWNLOAD_URL
+    tar -zxf downloads/elasticsearch-$ES_VERSION.tar.gz
 fi
 
-if [ "$TOXENV" == "docker" -o "$TOXENV" == "locales" ]
+# Run ElasticSearch in background
+(if [ ${INSTALL_ELASTICSEARCH:-0} -ne 0 ]
 then
-    curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    chmod +x docker-compose
-    sudo mv docker-compose /usr/local/bin
+    ./elasticsearch-$ES_VERSION/bin/elasticsearch 1> elasticsearch.log 2> elasticsearch.err
+fi) &
+
+
+# Get database ready
+if [ -n "${CREATE_DB:-}" ]
+then
+    mysql -e "CREATE DATABASE IF NOT EXISTS ${CREATE_DB};";
+fi
+
+# Install pipeline toolchain
+if [ ${INSTALL_PIPELINE:-0} -ne 0 ]
+then
+    npm install
+    npm install cssmin@0.4.3
+    npm install uglify-js@2.4.13
+fi
+
+# Install docker-compose
+if [ ${INSTALL_DOCKER_COMPOSE:--} -ne 0 ]
+then
+    if [ -x $(command -v docker-compose) ]
+    then
+        echo "Overwriting existing docker-compose."
+        docker-compose -v
+    else
+        echo "Installing docker-compose ${DOCKER_COMPOSE_VERSION}."
+    fi
+    mkdir -p downloads
+    DOCKER_COMPOSE_FILE=downloads/docker-compose-${DOCKER_COMPOSE_VERSION}
+    if [ ! -f $DOCKER_COMPOSE_FILE ]
+    then
+        wget -q --waitretry=1 --retry-connrefused -T 10 \
+            -O downloads/docker-compose-${DOCKER_COMPOSE_VERSION} \
+            https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`
+    fi
+    chmod +x $DOCKER_COMPOSE_FILE
+    sudo cp $DOCKER_COMPOSE_FILE /usr/local/bin/docker-compose
 fi
