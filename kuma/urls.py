@@ -17,6 +17,7 @@ handler404 = core_views.handler404
 handler500 = core_views.handler500
 
 urlpatterns = [
+    url('', include('kuma.health.urls')),
     url('', include('kuma.landing.urls')),
     url(
         r'^events',
