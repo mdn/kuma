@@ -1114,23 +1114,19 @@ class AllowedHTMLTests(KumaTestCase):
 
     def test_iframe_in_script(self):
         """iframe in script should be filtered"""
-        content = """
-            <script><iframe src="data:text/plain,foo"></iframe></script>
-        """
-        expected = """
-            &lt;script&gt;<iframe></iframe>&lt;/script&gt;
-        """
+        content = ('<script><iframe src="data:text/plain,foo">'
+                   '</iframe></script>')
+        expected = ('&lt;script&gt;&lt;iframe src="data:text/plain,foo"&gt;'
+                    '&lt;/iframe&gt;&lt;/script&gt;')
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_iframe_in_style(self):
         """iframe in style should be filtered"""
-        content = """
-            <style><iframe src="data:text/plain,foo"></iframe></style>
-        """
-        expected = """
-            &lt;style&gt;<iframe></iframe>&lt;/style&gt;
-        """
+        content = ('<style><iframe src="data:text/plain,foo">'
+                   '</iframe></style>')
+        expected = ('&lt;style&gt;&lt;iframe src="data:text/plain,foo"&gt;'
+                    '&lt;/iframe&gt;&lt;/style&gt;')
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))
 

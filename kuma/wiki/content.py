@@ -9,7 +9,7 @@ from xml.sax.saxutils import quoteattr
 import html5lib
 import newrelic.agent
 from django.utils.translation import ugettext
-from html5lib.filters._base import Filter as html5lib_Filter
+from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
 from pyquery import PyQuery as pq
 
@@ -278,7 +278,7 @@ class ContentSectionTool(object):
 
         self._serializer = None
         self._default_serializer_options = {
-            'omit_optional_tags': False, 'quote_attr_values': True,
+            'omit_optional_tags': False, 'quote_attr_values': 'always',
             'escape_lt_in_attrs': True}
         self._serializer_options = None
         self.walker = html5lib.treewalkers.getTreeWalker("etree")
@@ -304,8 +304,7 @@ class ContentSectionTool(object):
         soptions = self._default_serializer_options.copy()
         soptions.update(options)
         if not (self._serializer and self._serializer_options == soptions):
-            self._serializer = html5lib.serializer.htmlserializer.HTMLSerializer(
-                **soptions)
+            self._serializer = html5lib.serializer.HTMLSerializer(**soptions)
             self._serializer_options = soptions
         return self._serializer
 
