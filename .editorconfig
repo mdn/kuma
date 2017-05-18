@@ -11,3 +11,8 @@ trim_trailing_whitespace = true
 [*.{css,html,js,json,py,styl}]
 indent_style = space
 indent_size = 4
+
+# Minified JavaScript files shouldn't be changed
+[**.min.js]
+indent_style = ignore
+insert_final_newline = ignore
