@@ -8,7 +8,7 @@ from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
 class DocumentNearestZoneJob(KumaJob):
-    lifetime = 60 * 60 * 3
+    lifetime = 60 * 60 * 29
     refresh_timeout = 60
 
     def fetch(self, pk):
