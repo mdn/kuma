@@ -17,7 +17,12 @@ class DocumentNearestZoneJob(KumaJob):
         document and going upwards via topic parents.
         """
         from .models import Document, DocumentZone
-        get_parent_id = Document.objects.values_list('parent_topic', flat=True).get
+
+        # Using "admin_objects" here to get around the
+        # filter that excludes deleted documents.
+        get_parent_id = (Document.admin_objects
+                                 .values_list('parent_topic', flat=True)
+                                 .get)
         while pk:
             try:
                 return DocumentZone.objects.get(document=pk)
