@@ -1,6 +1,5 @@
 # this is a standalone requirements file used in .travis.yml to install
 # Travis CI specific requirements
-ansible==1.9.2
 codecov==1.6.3
 # Keep in sync w/ dev.txt
 tox==2.3.1

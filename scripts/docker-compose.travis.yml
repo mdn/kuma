@@ -6,8 +6,6 @@ services:
       dockerfile: Dockerfile-base
     environment:
       - DJANGO_SETTINGS_MODULE
-      - DEBIAN_FRONTEND
-      - CFLAGS
 
   web:
     <<: *worker
