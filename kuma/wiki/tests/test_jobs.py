@@ -34,6 +34,20 @@ def test_nearest_zone(doc_hierarchy_with_zones, root_doc,
     assert DocumentNearestZoneJob().get(doc.pk) == zone
 
 
+def test_nearest_zone_when_deleted_parent_topic(doc_hierarchy_with_zones,
+                                                cleared_cacheback_cache):
+    """
+    Make sure we handle the case where we try to get the nearest
+    zone for a document whose parent-topic has been deleted.
+    """
+    bottom_doc = doc_hierarchy_with_zones.bottom
+    middle_top_zone = doc_hierarchy_with_zones.middle_top.zone
+    # Delete the parent-topic of the bottom doc.
+    doc_hierarchy_with_zones.middle_bottom.delete()
+    # We should still successfully get the nearest zone for the bottom doc.
+    assert DocumentNearestZoneJob().get(bottom_doc.pk) == middle_top_zone
+
+
 def test_nearest_zone_cache_invalidation_on_save_shallow(doc_hierarchy_with_zones,
                                                          cleared_cacheback_cache):
     job = DocumentNearestZoneJob()
