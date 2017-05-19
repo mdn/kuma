@@ -1,2 +1,0 @@
-geerlingguy.mysql,1.5.0
-geerlingguy.nodejs,3.3.1
