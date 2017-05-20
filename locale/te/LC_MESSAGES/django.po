@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-15 10:06-0700\n"
-"PO-Revision-Date: 2017-04-26 08:55+0000\n"
-"Last-Translator: వీవెన్ <veeven@gmail.com>\n"
+"PO-Revision-Date: 2017-05-20 05:43+0000\n"
+"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -55,8 +55,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a>మాథ్యూ ఇన్మాన్ చేత <a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">టమ్ "
-"బీస్టులు</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com\" rel=\"nofollow\">ది ఓట్ మీల్ వారి </a>మాథ్యూ ఇన్మాన్ చేత <a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">టమ్ బీస్టులు</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -491,7 +491,7 @@ msgstr "జాపనీస్"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Kabyle"
-msgstr ""
+msgstr "కబైల్"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Korean"
@@ -627,8 +627,8 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
-"మేము మీ చందాను కనుగొనలేకపోయాం. ఒకవేళ చందా రద్దుచేయబడి ఉండవచ్చు లేదా చందా రద్దు లంకెలో పొరపాటు ఉండవచ్చు. దయచేసి ఈమెయిల్ లో పూర్తి లింకు విహారిణిలోకి వచ్చిందో లేదో పరిశీలించండి. ఒకేళ లంకె చివరి భాగము చిరునామా పెట్టెలో రెండో వరసలోకి వెళ్లినట్లయితే ,లంకెను నకలు తీసి విహారిణిలో "
-"అతికించి ప్రయత్నించండి."
+"మేము మీ చందాను కనుగొనలేకపోయాం. ఒకవేళ చందా రద్దుచేయబడి ఉండవచ్చు లేదా చందా రద్దు లంకెలో పొరపాటు ఉండవచ్చు. దయచేసి ఈమెయిల్ లో పూర్తి లింకు విహారిణిలోకి వచ్చిందో లేదో పరిశీలించండి. ఒకేళ లంకె చివరి భాగము "
+"చిరునామా పెట్టెలో రెండో వరసలోకి వెళ్లినట్లయితే ,లంకెను నకలు తీసి విహారిణిలో అతికించి ప్రయత్నించండి."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -820,8 +820,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"ఇవి మీ API కీలకాలు. అవి MDN లో మీ తరుపున కార్యాలను నిర్వర్తించే అనువర్తనాలను నిర్మించడంలో ఉపయోగపడతాయి. ఒకవేళ మీరు వీటిలో దేన్నైనా ఉపయోగించడం ఆపివేసినా, లేదా మీరు మీ ఖాతాతో నమ్మని వ్యక్తులకు అవి అందుబాటులో ఉన్నాయని అనుమానించినా కీ లేదా కీలకాన్ని తొలగించండి. ఎప్పుడైనా మరొక "
-"పునస్థాపన కీ ను సృష్టించడం చాలా సులభం."
+"ఇవి మీ API కీలకాలు. అవి MDN లో మీ తరుపున కార్యాలను నిర్వర్తించే అనువర్తనాలను నిర్మించడంలో ఉపయోగపడతాయి. ఒకవేళ మీరు వీటిలో దేన్నైనా ఉపయోగించడం ఆపివేసినా, లేదా మీరు మీ ఖాతాతో నమ్మని వ్యక్తులకు అవి "
+"అందుబాటులో ఉన్నాయని అనుమానించినా కీ లేదా కీలకాన్ని తొలగించండి. ఎప్పుడైనా మరొక పునస్థాపన కీ ను సృష్టించడం చాలా సులభం."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -847,10 +847,11 @@ msgstr "API కీలను వాడడానికి మీకు ప్ర�
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
-"<p>ఈ క్రింద మీరు ఈ కీని ఎలా వాడాలనుకుంటున్నారో తెలపండి. <p><strong>NOTE:</strong> మీరు తర్వాత ఈ కీ ని కనుగొనటానికి ఈ కీ ని సృష్టించిన తేదీ సమయం మాత్రమే కాకుండా, మీరు తెలిపిన విద్యుక్త ఉపయోగమే మిగిలిన ఏకైక దారి. కాబట్టి వీలైనంత స్పష్టంగా పేర్కొనండి. </p>"
+"<p>ఈ క్రింద మీరు ఈ కీని ఎలా వాడాలనుకుంటున్నారో తెలపండి. <p><strong>NOTE:</strong> మీరు తర్వాత ఈ కీ ని కనుగొనటానికి ఈ కీ ని సృష్టించిన తేదీ సమయం మాత్రమే కాకుండా, మీరు తెలిపిన విద్యుక్త ఉపయోగమే "
+"మిగిలిన ఏకైక దారి. కాబట్టి వీలైనంత స్పష్టంగా పేర్కొనండి. </p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -862,8 +863,9 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p> మీ నూతన కీ సృష్టింపబడింది. దయచేసి కింద వివరాలను ఒకపారి పరికించండి (ఉ.దా. వాటిని మీ అనువర్తన ప్రాధాన్యతలలోకి నకలు తీయడం ద్వారా). ఈ సమాచారము మరలా ఎప్పుడూ ప్రదర్శింపబడదు, మరియు ఒకసారి పోతే మరలా పునఃప్రాప్యత పొందలేము.</p><p><strong>NOTE:</strong> "
-"పరికించడం పూర్తైన తర్వాత, <a class=\"button\" href=\"%(list_url)s\"> కీ జాబితాకి తిరిగి వెళ్లండి</a>. ఈ పుటను తిరితిప్పితే నూతన కీ సృష్టింపబడుతుంది. </p>"
+"<p> మీ నూతన కీ సృష్టింపబడింది. దయచేసి కింద వివరాలను ఒకపారి పరికించండి (ఉ.దా. వాటిని మీ అనువర్తన ప్రాధాన్యతలలోకి నకలు తీయడం ద్వారా). ఈ సమాచారము మరలా ఎప్పుడూ ప్రదర్శింపబడదు, మరియు ఒకసారి పోతే మరలా "
+"పునఃప్రాప్యత పొందలేము.</p><p><strong>NOTE:</strong> పరికించడం పూర్తైన తర్వాత, <a class=\"button\" href=\"%(list_url)s\"> కీ జాబితాకి తిరిగి వెళ్లండి</a>. ఈ పుటను తిరితిప్పితే నూతన కీ "
+"సృష్టింపబడుతుంది. </p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -1074,14 +1076,14 @@ msgstr "రచయితలు"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:3 kuma/dashboards/jinja2/dashboards/macros.html:26
 msgid "Active macros"
-msgstr ""
+msgstr "క్రియాశీల మాక్రోలు"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:14
 #, python-format
 msgid "Found %(num)s active macro."
 msgid_plural "Found %(num)s active macros."
 msgstr[0] "%(num)s క్రియాశీల మాక్రోలు కనబడ్డాయి."
-msgstr[1] ""
+msgstr[1] "%(num)s మూసలు కనుగొనబడ్డాయి"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:16
 #, python-format
@@ -1107,7 +1109,7 @@ msgstr "ఇంగ్లీషు పేజీల సంఖ్య"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:34
 msgid "All Page Count"
-msgstr ""
+msgstr "అన్ని పేజీల సంఖ్య"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:65
 msgid "Search for macro usage:"
@@ -1115,7 +1117,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:68
 msgid "Search All Pages"
-msgstr ""
+msgstr "అన్నీ పేజీలను వెతుకు"
 
 #: kuma/dashboards/jinja2/dashboards/macros.html:69
 msgid "Search English Pages"
@@ -1236,9 +1238,11 @@ msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN) ఫ
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
-msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN), HTML, CSS, మరియు జాలగూళ్ల, HTML5 అనువర్తనాల APIలు వంటి స్వేచ్ఛాజాల సాంకేతికతకు సంబంధించి సమాచారాన్ని అందిస్తుంది. ఇది ఫైర్ఫాక్స్ OS వంటి ఇతర ఫైర్ఫాక్స్ ఉత్పత్తుల సమాచారాన్ని కూడా ప్రామాణికరిస్తుంది."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
+msgstr ""
+"Mozillaఅభివృద్ధికారుల జాలం (MDN), HTML, CSS, మరియు జాలగూళ్ల, HTML5 అనువర్తనాల APIలు వంటి స్వేచ్ఛాజాల సాంకేతికతకు సంబంధించి సమాచారాన్ని అందిస్తుంది. ఇది ఫైర్ఫాక్స్ OS వంటి ఇతర ఫైర్ఫాక్స్ ఉత్పత్తుల "
+"సమాచారాన్ని కూడా ప్రామాణికరిస్తుంది."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1314,7 +1318,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:120
 msgid "Test on Sauce Labs"
-msgstr ""
+msgstr "Sauce Labs లో పరీక్షించు"
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
@@ -1350,8 +1354,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">ప్రపంచ వ్యాప్తంగా</span> <span class=\"row2\"> <span class=\"number\">%(locales)s</span> భాషలు మరియు స్థానికీకరణలో </span><span class=\"row3\"><span class=\"number\">"
-"%(contributors)s</span>భాగస్వాములలో మీరూ చేరండి.</span></p>"
+"<p class=\"numbers\"> <span class=\"row1\">ప్రపంచ వ్యాప్తంగా</span> <span class=\"row2\"> <span class=\"number\">%(locales)s</span> భాషలు మరియు స్థానికీకరణలో </span><span class=\"row3\"><span "
+"class=\"number\">%(contributors)s</span>భాగస్వాములలో మీరూ చేరండి.</span></p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
@@ -1359,7 +1363,8 @@ msgstr "MDNను మెరుగుపరచడంలో తోడ్పడం�
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr "MDN యొక్క అన్ని భాగాలూ (పత్రాలు మరియు జాలగూటితో సహా) ఒక స్వేచ్ఛా జాల అభివృద్ధికారుల సంఘం చేత సృష్టింపబడ్డాయి. దయచేసి మీరూ మాతో చేరండి! సహాయం చేయటానికి కింది వాటిలో ఏదో ఒక మార్గాన్ని ఎన్నుకోండి:"
+msgstr ""
+"MDN యొక్క అన్ని భాగాలూ (పత్రాలు మరియు జాలగూటితో సహా) ఒక స్వేచ్ఛా జాల అభివృద్ధికారుల సంఘం చేత సృష్టింపబడ్డాయి. దయచేసి మీరూ మాతో చేరండి! సహాయం చేయటానికి కింది వాటిలో ఏదో ఒక మార్గాన్ని ఎన్నుకోండి:"
 
 #: kuma/landing/jinja2/landing/homepage.html:175
 msgid "Getting started"
@@ -1431,8 +1436,8 @@ msgstr "కాస్త అభివృద్ధికారుల ప్రే�
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1545,16 +1550,16 @@ msgstr "MDN అనేది HTML,CSS, JavaScript మరియు ఇతర జ�
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "ఒకేసారి ఒకటి కంటే ఎక్కువ ఇండెక్స్ పదోన్నతి పొందడం సాధ్యపడదు."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "పదోన్నతి పొందిన సెర్చ్ ఇండెక్స్ %s."
 
 #: kuma/search/admin.py:18
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "ప్రస్తుత ఇండెక్స్ ఎంపిక శోధన సూచిక ప్రమోట్ చేయి"
 
 #: kuma/search/admin.py:23
 msgid "Can't demote more than one index at once."
@@ -1592,11 +1597,11 @@ msgstr ""
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr ""
+msgstr "శోధన తాత్కాలికంగా అందుబాటులో లేదు. దయచేసి కొద్ది నిమిషాల్లో మళ్ళీ ప్రయత్నించండి."
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr ""
+msgstr "ఏదో శోధన అభ్యర్ధన తప్పు జరిగింది. దయచేసి కొద్ది నిమిషాల్లో మళ్ళీ ప్రయత్నించండి."
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -1651,79 +1656,79 @@ msgstr[1] "\"%(query)s\" కొరకు %(locale_native)s మరియు %(def
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(count)s పత్రం దొరికాయి %(locale_native)s లో."
 msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s పత్రం దొరికింది %(locale_native)s మరియు %(default_locale_native)s లో."
+msgstr[1] "%(count)s పత్రాలు దొరికాయి %(locale_native)s మరియు %(default_locale_native)s లో."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s పత్రం దొరికింది \"%(query)s\"కోసం."
+msgstr[1] "%(count)s పత్రాలు దొరికాయి \"%(query)s\"కోసం."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
+msgstr[0] "%(count)s పత్రం దొరకింది."
 msgstr[1] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "అన్ని ఫలితాలు చూపిస్తున్నాం."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "ఫలితాలు చూపించు %(start)s నుంచీ %(end)s వరకు."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "మళ్ళీ శోధించు %(default_locale_native)s లో మాత్రమే"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "పత్రాలు"
 
 #: kuma/search/jinja2/search/results.html:183
 msgid "All Topics"
-msgstr ""
+msgstr "అన్ని విషయాలు"
 
 #: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
-msgstr ""
+msgstr "వడపోయి"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "సమర్పించిన డేటా లో చెల్లని వివరం ఉంది."
 
 #: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
-msgstr ""
+msgstr "సమర్పించిన డేటా లో చెల్లని వివరం ఉంది. దయచేసి మళ్ళీ ప్రయత్నించండి."
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "రూపొందించడం"
 
 #: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
-msgstr ""
+msgstr "చెత్త"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "హ్యామ్"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "కి పంపించబడింది"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1732,8 +1737,8 @@ msgstr "రకం"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1803,7 +1808,7 @@ msgstr "స్టాక్ ఓవర్‌ఫ్లో"
 
 #: kuma/users/forms.py:87 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:92
 msgid "LinkedIn"
-msgstr ""
+msgstr "లింక్డ్ ఇన్"
 
 #: kuma/users/forms.py:96 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:96
 msgid "Mozillians"
@@ -1815,11 +1820,11 @@ msgstr "ఫేస్బుక్"
 
 #: kuma/users/forms.py:137
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "రంగాల్లోని నైపుణ్యం తప్పకుండా అభిరుచులకి ఉపసమితి అయ్యుండాలి"
 
 #: kuma/users/forms.py:146
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "ఈ ప్రదేశం ఖాళీ గా ఉండకూడదు."
 
 #: kuma/users/forms.py:152
 msgid "Username already in use."
@@ -1832,12 +1837,12 @@ msgstr "ఇమెయిల్"
 #: kuma/users/models.py:34
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s ను %(banned_by)s నిషేదించారు"
 
 #: kuma/users/models.py:37
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (క్రియారహితం)"
 
 #: kuma/users/models.py:56
 msgid "Language"
@@ -1849,7 +1854,7 @@ msgstr "హోమ్పేజీ"
 
 #: kuma/users/models.py:65
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
-msgstr ""
+msgstr "ఈ URL చెల్లని ఫార్మాట్ లో ఉంది. చెల్లే URLs ఇలా ఉంటాయి http://example.com/my_page."
 
 #: kuma/users/models.py:75
 msgid "Name"
@@ -1869,7 +1874,7 @@ msgstr "నా గురించి"
 
 #: kuma/users/models.py:94
 msgid "IRC nickname"
-msgstr ""
+msgstr "IRC మారుపేరు"
 
 #: kuma/users/models.py:99 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:30 kuma/wiki/jinja2/wiki/create.html:65
 #: kuma/wiki/jinja2/wiki/edit.html:184
@@ -1878,31 +1883,31 @@ msgstr "ట్యాగ్స్"
 
 #: kuma/users/models.py:104
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే వెబ్సైట్ను నమోదు చేయు URL."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే ట్విట్టర్ నమోదు URL."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే GitHub URL నమోదు చేయి."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే స్టాక్ ఓవర్ఫ్లో URL నమోదు చేయి."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే LinkedIn URL నమోదు చేయి."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే Mozillians URL నమోదు చేయి."
 
 #: kuma/users/models.py:134
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే ఫేస్ బుక్ URL నమోదు చేయి."
 
 #: kuma/users/models.py:141
 msgid "Website"
@@ -1924,7 +1929,7 @@ msgstr ""
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "మీరు ఉపయోగ నిబంధనలు అంగీకరించాలి."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
@@ -1932,7 +1937,7 @@ msgstr "నేను అంగేకరిస్తున్నాను"
 
 #: kuma/users/tasks.py:55 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "MDNలో చేరడానికి తరువాతి అడుగు వేయండి!"
 
 #: kuma/users/views.py:473
 msgid "Email address"
@@ -1941,12 +1946,12 @@ msgstr "ఈ మెయిల్ చిరునామా"
 #: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s<b>ధ్రువీకరించబడినవి</b>"
 
 #: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s ధ్రువీకరించబడలేదు"
 
 #: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
@@ -1958,11 +1963,11 @@ msgstr "ఇమెయిల్:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "క్రియారహిత ప్రొఫైల్"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "ఈ ప్రొఫైల్ క్రియారహితంగా ఉంది."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Email addresses"
@@ -1979,11 +1984,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "ప్రాథమికంగా చేయి"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "మరల ధృవీకరించుము"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
@@ -2050,7 +2055,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "మమ్మల్ని క్షమించండి, కానీ ఈ ప్రొఫైల్ సృష్టి ప్రస్తుతం నిలిపివేయబడింది."
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -2062,7 +2067,7 @@ msgstr "సైన్ ఔట్"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "మీరు ఖచ్చితంగా సైన్ అవుట్ చేయాలనుకుంటున్నారా?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
@@ -2085,11 +2090,11 @@ msgstr "నా పాస్వర్డ్ రీసెట్"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "మీరు మీ పాస్వర్డ్ను రీసెట్ ఏ సమస్య ఉంటే, దయచేసి మమ్మల్ని సంప్రదించండి."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "మేము మీరు ఒక ఇమెయిల్ పంపాము. మీరు కొన్ని నిమిషాల్లో దాన్ని స్వీకరించడానికి లేకపోతే దయచేసి మమ్మల్ని సంప్రదించండి."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
@@ -2123,11 +2128,11 @@ msgstr "చేరడం"
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "ఇప్పటికే ఖాతా ఉందా? అయితే దయచేసి <a href=\"%(login_url)s\">లాగిన్ అవ్వండి</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "ప్రొఫైల్ సృష్టి అపి వేయబడింది"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2158,23 +2163,23 @@ msgstr "నోట్"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "మీరు ఇప్పటికే %(user_display)s వలె లాగిన్ అయ్యారు."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "OpenID సైన్ ఇన్"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "ఖాతా సైన్ వైఫల్యం"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "మీ ఖాతాతో సైన్ ఇన్ చేసేటప్పుడు ఒక లోపం ఏర్పడింది."
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "లాగిన్ కాన్సిల్"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2183,7 +2188,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:20
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "ముందుకు కొనసాగటానికి మీ MDN ఖాతాని సృష్టించుకోండి"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 msgid "An existing MDN profile matches your GitHub email. Click here to recover a profile:"
@@ -2191,7 +2196,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:32
 msgid "Recover my Profile"
-msgstr ""
+msgstr "నా ప్రొఫైల్ పునరుద్ధరించు"
 
 #: kuma/users/jinja2/socialaccount/signup.html:41
 #, python-format
@@ -2232,13 +2237,13 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "నిబంధనలు మరియు గోప్యత"
 
 #: kuma/users/jinja2/socialaccount/signup.html:166
 #, python-format
@@ -2247,29 +2252,29 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:176
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "నా MDN ఖాతా సృష్టించు"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "GitHub తో సైన్ ఇన్ అయ్యారు"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "GitHubతో అనుసందానించు"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "GitHubతో సైన్-ఇన్ అవ్వండి"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
 #, python-format
 msgid "Ban %(user)s"
-msgstr ""
+msgstr "%(user)s ను నిష్క్రమించండి"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr ""
+msgstr "%(user)s ను ఎందుకు మీరు నిషేదాస్తున్నారు\n"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
@@ -2277,7 +2282,7 @@ msgstr "కారణం ఎంచుకో"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "లేదా ఈ క్రింది టెక్స్ట్ బాక్స్ లో ఒక కారణాన్ని రాయండి"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
@@ -2308,7 +2313,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:53
 msgid "Ban User for Spam"
-msgstr ""
+msgstr "స్పామ్ వల్ల యూజర్ ను నిషేధించాలని"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:55
 msgid "Ban User for Spam & Submit Spam"
@@ -2332,7 +2337,7 @@ msgstr "తీసుకున్న చర్య"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
 msgid "Banned:"
-msgstr ""
+msgstr "నిషేదించారు:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:32
 msgid "Submitted to Akismet as spam:"
@@ -2344,7 +2349,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "Deleted:"
-msgstr ""
+msgstr "తొలగించినవి:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:62
 msgid "The user did not have any revisions that were deleted."
@@ -2360,11 +2365,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "Needs follow up"
-msgstr ""
+msgstr "అవసరాలకు అనుసరించాల్సి ఉంది"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:87
 msgid "New action by user:"
-msgstr ""
+msgstr "యూజర్ యొక్క కొత్త చర్య:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:97 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:129 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:150
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:170 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:189 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:212
@@ -2393,7 +2398,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:161
 msgid "Could not delete:"
-msgstr ""
+msgstr "తొలగించబడదు:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:180
 msgid "Could not revert:"
@@ -2401,7 +2406,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "No actions taken"
-msgstr ""
+msgstr "ఎటువంటి చర్యలు తీసుకోబడలేదు"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:202
 msgid "Latest revision is non-spam:"
@@ -2417,7 +2422,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_done.html:3
 msgid "Connect Account"
-msgstr ""
+msgstr "ఖాతా‌ను అనుసంధానించండి"
 
 #: kuma/users/jinja2/users/recover_done.html:12
 msgid "Use the button below to connect your MDN profile to GitHub."
@@ -2429,11 +2434,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/recover_failed.html:3
 msgid "Account Recovery Failed"
-msgstr ""
+msgstr "ఖాతా రికవరీ విఫలమైనది"
 
 #: kuma/users/jinja2/users/recover_failed.html:11
 msgid "This link is no longer valid."
-msgstr ""
+msgstr "ఈ లింక్ ఇక పై చెల్లదు."
 
 #: kuma/users/jinja2/users/recovery_email_sent.html:3
 msgid "Recovery Email Sent"
@@ -3187,8 +3192,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3352,15 +3357,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:258
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:278
