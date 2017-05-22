@@ -108,7 +108,6 @@ docs/_build/*
 # Additional ignores
 .git
 .gitignore
-provisioning
 k8s
 docker
 docker-compose*

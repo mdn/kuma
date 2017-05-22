@@ -1,6 +1,0 @@
----
-- include: mysql.yml
-  tags: [mysql]
-
-- include: node.yml
-  tags: [pipeline]
