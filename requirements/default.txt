@@ -93,9 +93,9 @@ django-picklefield==0.3.2 \
     --hash=sha256:5489fef164de43725242d56e65e016137d3df0d1a00672bda72d807f5b2b0d99
 
 # Asset packaging (CSS, JS concatenation and compression, etc.)
-django-pipeline==1.6.8 \
-    --hash=sha256:a6a9ce2003ae10e729768b6d79a4b3db330d876b86225eb7743b6f5696bafa59 \
-    --hash=sha256:b7cdc2efe27e478ddd38e878dd7b5e5ac121c2898fd85accf3187e19137fe6b7
+django-pipeline==1.6.13 \
+    --hash=sha256:81d8dd2db4c582bdfd0dc1df875c6b538c0a5ee233e954a52ae17f3ce904f604 \
+    --hash=sha256:d67ac0fc2556e3c5b5080ee96f8e661bda9a1e4b46b8fffbef3fb5524b6ef11e
 
 # Rate limit access to some views
 django-ratelimit==0.6.0 \
