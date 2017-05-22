@@ -2274,7 +2274,7 @@ msgstr "%(user)s ను నిష్క్రమించండి"
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr "%(user)s ను ఎందుకు మీరు నిషేదాస్తున్నారు\n"
+msgstr "%(user)s ను ఎందుకు మీరు నిషేదాస్తున్నారు"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
