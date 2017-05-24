@@ -2,7 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+const autoprefixer = require('autoprefixer');
 const gulp = require('gulp');
+const postcss = require('gulp-postcss');
 const sass = require('gulp-sass');
 const stylelint = require('gulp-stylelint');
 const watch = require('gulp-watch');
@@ -13,6 +15,7 @@ gulp.task('styles', () => {
     // all other .scss files are components/includes/libs
     gulp.src('./kuma/static/styles/*.scss')
         .pipe(sass().on('error', sass.logError))
+        .pipe(postcss([ autoprefixer() ]))
         // send compiled files to where expected by Django Pipeline
         .pipe(gulp.dest('./static/styles'));
 });
