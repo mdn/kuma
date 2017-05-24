@@ -1,9 +1,8 @@
-(function(ga, $, mdn) {
+(function($, mdn) {
     'use strict';
 
     var $survey;
     var $votes;
-    var gaInterval;
     var gaChecks = 0;
 
     // ga loads async, so there's a chance it wont be available when this
@@ -11,7 +10,7 @@
     function checkGA() {
         // survey won't do much good if we can't store the data
         // checking for ".create" due to Ghostery mocking of ga
-        if (ga && ga.create) {
+        if (window.ga && ga.create) {
             showSurvey();
         } else if (gaChecks < 5) {
             setTimeout(checkGA, 500);
@@ -39,7 +38,7 @@
             // hide buttons and display thank you message
             $survey.addClass('submitted');
         });
-    };
+    }
 
     checkGA();
-})(window.ga, window.jQuery, window.mdn);
+})(window.jQuery, window.mdn);
