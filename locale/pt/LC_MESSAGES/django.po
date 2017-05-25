@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-05-15 10:06-0700\n"
-"PO-Revision-Date: 2017-05-25 01:11+0000\n"
+"PO-Revision-Date: 2017-05-25 01:28+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
@@ -879,8 +879,8 @@ msgid ""
 "<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
 " as you can.</p>"
 msgstr ""
-"<p>Descreva em baixo o uso pretendido para esta chave. <p><strong>NOTA:</strong> Isto será a única forma de identificação desta chave mais tarde, para além da data e hora da sua criação. Por isso, "
-"seja o mais claro que conseguir.</p>"
+"<p>Descreva em baixo a utilização pretendida para esta chave. <p><strong>NOTA:</strong> Isto será a sua única forma de identificação desta chave mais tarde, para além da data e hora da sua criação. "
+"Por isso, seja o mais claro que conseguir.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -1279,7 +1279,7 @@ msgstr "Receber emails quando as revisões em Inglês estão em espera"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr "O programa de bolsas da Rede de Programadores da Mozilla (MDN) convida programadores web de renome mundial a alterar o mundo com a Mozilla."
+msgstr "O programa de bolsas da Rede de Programadores da Mozilla (MDN) convida programadores web de renome mundial a mudar o mundo com a Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -1307,7 +1307,7 @@ msgstr "Tecnologias<br />web"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
-msgstr "APIs web e DOM"
+msgstr "APIs da Web e DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
@@ -1383,7 +1383,7 @@ msgstr "Fazer um donativo agora"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get The Browser For Developers Like You"
-msgstr "Obtenha o navegador para programadores como você"
+msgstr "Obter o navegador para programadores como você"
 
 #: kuma/landing/jinja2/landing/homepage.html:144
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
@@ -1491,7 +1491,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
-msgstr "Pré-visualização"
+msgstr "Pré-visualizar"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1575,7 +1575,7 @@ msgstr "A MDN é suportada por programadores para documentação JavaScript e mu
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr "A MDN é suportada por programadores para documentação web e muito mais."
+msgstr "A MDN é suportada por programadores para a documentação da Web e muito mais."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
@@ -1992,7 +1992,7 @@ msgstr "Concordo"
 
 #: kuma/users/tasks.py:55 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr "Tome o próximo passo para participar na MDN!"
+msgstr "Siga o passo seguinte para participar na MDN!"
 
 #: kuma/users/views.py:473
 msgid "Email address"
@@ -2724,8 +2724,8 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Chat em tempo real: <a href=\"%(channel_link)s\">canal #mdn no irc.mozilla.org</a>. (Obter mais informação sobre o <a href=\"%(irc_link)s\">IRC</a>.) Lá, pode encontrar os administradores da equipa "
-"editorial: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) e eu (jms), gestor da comunidade MDN."
+"Conversação em tempo real: <a href=\"%(channel_link)s\">canal #mdn no irc.mozilla.org</a>. (Obter mais informação sobre o <a href=\"%(irc_link)s\">IRC</a>.) Lá, pode encontrar os administradores da "
+"equipa editorial: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) e eu (jms), gestor da comunidade MDN."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -2948,7 +2948,7 @@ msgstr "Documentos da MDN para revisão"
 #: kuma/wiki/feeds.py:223
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr "Traduções MDN '%s' que necessitam de atualização"
+msgstr "'%s' traduções MDN que necessitam de atualização"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
@@ -3465,7 +3465,7 @@ msgstr "Esta é uma página experimental."
 #: kuma/wiki/jinja2/wiki/document.html:289
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr "Esta tradução não está completa. Por favor ajude a <a href=\"%(translate_url)s\">traduzir este artigo</a> a partir do Inglês."
+msgstr "Esta tradução está incompleta. Por favor, ajude a <a href=\"%(translate_url)s\">traduzir este artigo</a> do Inglês."
 
 #: kuma/wiki/jinja2/wiki/document.html:294
 msgid "This translation is in progress."
@@ -3590,7 +3590,7 @@ msgstr "Aprenda como marcar um artigo"
 #: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr "Categorize o artigo. Isso tornará o artigo pesquisável com os filtros corretos no motor de pesquisa. <a target=\"_blank\" href=\"%(url)s\">Leia o guia de marcação</a>."
+msgstr "Categorize o artigo. Isso tornará o artigo pesquisável com os filtros corretos no motor de pesquisa. <a target=\"_blank\" href=\"%(url)s\">Leia o guia de categorização</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -4040,8 +4040,8 @@ msgstr[1] "Mais informação sobre estes erros"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
-"Qualquer pessoa com um perfil MDN pode editar um documento para corrigir um erro. Utilize o <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">guia de diagnósticos KumaScript</a> como um "
-"ponto de partida."
+"Qualquer pessoa com um perfil MDN pode editar um documento para corrigir um erro. Utilize o <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">guia de resolução de problemas KumaScript</a>"
+" como um ponto de partida."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
