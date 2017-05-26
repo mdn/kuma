@@ -17,6 +17,8 @@ the ``web`` Docker container to confirm the engine works::
 
 .. _releases new versions often: https://en.wikipedia.org/wiki/Elasticsearch#History
 
+.. _indexing-documents:
+
 Indexing documents
 ==================
 To see search results, you will need to index the documents.

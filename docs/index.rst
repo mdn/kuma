@@ -23,4 +23,5 @@ Contents:
    elasticsearch
    localization
    ckeditor
+   data
    documentation
