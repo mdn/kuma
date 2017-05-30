@@ -1,0 +1,50 @@
+import json
+
+from django.core.management.base import CommandError
+
+from kuma.scrape.fixture import FixtureLoader
+from . import ScrapeCommand
+
+
+class Command(ScrapeCommand):
+    help = 'Sample data from a running MDN server.'
+
+    def add_arguments(self, parser):
+        parser.add_argument('spec',
+                            metavar='specification.json',
+                            help=('Sample specification file'))
+        parser.add_argument('--host',
+                            help=('Where to sample MDN from (default'
+                                  ' "developer.mozilla.org")'),
+                            default='developer.mozilla.org')
+        parser.add_argument('--nossl',
+                            help='Disable SSL',
+                            action='store_false',
+                            default='true',
+                            dest='ssl')
+
+    def handle(self, *arg, **options):
+        self.setup_logging(options.get('verbosity'))
+        host = options['host']
+        ssl = options['ssl']
+        scraper = self.make_scraper(host=host, ssl=ssl)
+        spec_file = open(options['spec'])
+        data = json.load(spec_file)
+
+        # Load fixtures, which may include flags and settings
+        fl = FixtureLoader(data.get('fixtures', {}))
+        fl.load()
+
+        # Scrape data from MDN
+        for source_spec in data.get('sources', []):
+            source_name, param, source_args = source_spec
+            scraper.add_source(source_name, param, **source_args)
+        sources = scraper.scrape()
+        incomplete = 0
+        for name, source in sources.items():
+            if source.state != source.STATE_DONE:
+                self.stderr.write("%s: %s\n" % (name, source.state))
+                incomplete += 1
+        if incomplete:
+            raise CommandError("%d source%s incomplete." %
+                               (incomplete, 's' if incomplete != 0 else ''))
