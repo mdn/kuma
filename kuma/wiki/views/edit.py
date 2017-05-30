@@ -245,89 +245,29 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 if rev_form.instance.is_approved:
                     view = 'wiki.document'
                 else:
-                    orig_rev = Revision.objects.get(pk=orig_rev_id)
-                # Get the document's actual current revision.
-                curr_rev = doc.current_revision
+                    view = 'wiki.document_revisions'
 
-                if not rev_form.is_valid():
-                    # If this was an Ajax POST, then return a JsonResponse
-                    if is_async_submit:
-                        # Was there a mid-air collision?
-                        if 'current_rev' in rev_form._errors:
-                            # Make the error message safe so the '<' and '>' don't
-                            # get turned into '&lt;' and '&gt;', respectively
-                            rev_form.errors['current_rev'][0] = mark_safe(
-                                rev_form.errors['current_rev'][0])
-                        errors = [rev_form.errors[key][0] for key in rev_form.errors.keys()]
-
-                        data = {
-                            "error": True,
-                            "error_message": errors,
-                            "new_revision_id": curr_rev.id,
-                        }
-                        return JsonResponse(data=data)
-                        # Jump out to a function to escape indentation hell
-                        return _edit_document_collision(
-                            request, orig_rev, curr_rev, is_async_submit,
-                            is_raw, rev_form, doc_form, section_id,
-                            rev, doc)
-                    # Was this an Ajax submission that was marked as spam?
-                    if is_async_submit and '__all__' in rev_form._errors:
-                        # Return a JsonResponse
-                        data = {
-                            "error": True,
-                            "error_message": mark_safe(rev_form.errors['__all__'][0]),
-                            "new_revision_id": curr_rev.id,
-                        }
-                        return JsonResponse(data=data)
-                if rev_form.is_valid():
-                    rev_form.save(doc)
-                    if (is_raw and orig_rev is not None and
-                            curr_rev.id != orig_rev.id):
-                        # If this is the raw view, and there was an original
-                        # revision, but the original revision differed from the
-                        # current revision at start of editing, we should tell
-                        # the client to refresh the page.
-                        response = HttpResponse('RESET')
-                        response['X-Frame-Options'] = 'SAMEORIGIN'
-                        response.status_code = 205
-                        return response
-                    # Is this an Ajax POST?
-                    if is_async_submit:
-                        # This is the most recent revision id
-                        new_rev_id = rev.document.revisions.order_by('-id').first().id
-                        data = {
-                            "error": False,
-                            "new_revision_id": new_rev_id
-                        }
-                        return JsonResponse(data)
-
-                    if rev_form.instance.is_approved:
-                        view = 'wiki.document'
-                    else:
-                        view = 'wiki.document_revisions'
-
-                    # Construct the redirect URL, adding any needed parameters
-                    url = reverse(view, args=[doc.slug], locale=doc.locale)
-                    params = {}
-                    if is_raw:
-                        params['raw'] = 'true'
-                        if need_edit_links:
-                            # Only need to carry over ?edit_links with ?raw,
-                            # because they're on by default in the normal UI
-                            params['edit_links'] = 'true'
-                        if section_id:
-                            # If a section was edited, and we're using the raw
-                            # content API, constrain to that section.
-                            params['section'] = section_id
-                    # Parameter for the document saved, so that we can delete the cached draft on load
-                    params['rev_saved'] = curr_rev.id if curr_rev else ''
-                    url = '%s?%s' % (url, urlencode(params))
-                    if not is_raw and section_id:
-                        # If a section was edited, jump to the section anchor
-                        # if we're not getting raw content.
-                        url = '%s#%s' % (url, section_id)
-                    return redirect(url)
+                # Construct the redirect URL, adding any needed parameters
+                url = reverse(view, args=[doc.slug], locale=doc.locale)
+                params = {}
+                if is_raw:
+                    params['raw'] = 'true'
+                    if need_edit_links:
+                        # Only need to carry over ?edit_links with ?raw,
+                        # because they're on by default in the normal UI
+                        params['edit_links'] = 'true'
+                    if section_id:
+                        # If a section was edited, and we're using the raw
+                        # content API, constrain to that section.
+                        params['section'] = section_id
+                # Parameter for the document saved, so that we can delete the cached draft on load
+                params['rev_saved'] = curr_rev.id if curr_rev else ''
+                url = '%s?%s' % (url, urlencode(params))
+                if not is_raw and section_id:
+                    # If a section was edited, jump to the section anchor
+                    # if we're not getting raw content.
+                    url = '%s#%s' % (url, section_id)
+                return redirect(url)
 
     parent_path = parent_slug = ''
     if slug_dict['parent']:
