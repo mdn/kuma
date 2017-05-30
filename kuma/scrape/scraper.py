@@ -96,6 +96,18 @@ class Scraper(object):
         source_type, source_param = source_key.split(':', 1)
         return self.source_types[source_type](source_param, **options)
 
+    # Scrape progress report patterns
+    _report_prefix = ('%(cycle)d:%(source_num)d/%(source_total)d'
+                      ' Source %(source_key)s ')
+    _report_done = (_report_prefix +
+                    'complete, freshness=%(freshness)s, with %(dep_count)s'
+                    ' dependant source%(dep_s)s.')
+    _report_error = (_report_prefix +
+                     'errored, with %(dep_count)s dependant source%(dep_s)s.')
+    _report_progress = (_report_prefix +
+                        'in state "%(state)s" with %(dep_count)s dependant'
+                        ' source%(dep_s)s.')
+
     def scrape(self):
         """Scrape data from MDN sources."""
         if not self.sources:
@@ -117,9 +129,9 @@ class Scraper(object):
             new_sources = []
             cycle += 1
 
-            # Iterate over existing sources
+            # Iterate over existing sources, starting with new dependencies
             source_num = 0
-            for source_key, source in self.sources.items():
+            for source_key, source in reversed(self.sources.items()):
 
                 # If terminal condition, no processing to do
                 if source.state in (Source.STATE_DONE, Source.STATE_ERROR):
@@ -128,7 +140,6 @@ class Scraper(object):
 
                 # Gather dependent sources
                 source_num += 1
-                old_state = source.state
                 dependencies = source.gather(self.requester, self.storage)
                 new_sources.extend(dependencies)
                 dep_count = len(dependencies)
@@ -138,23 +149,25 @@ class Scraper(object):
                         logger.warn('Source "%s" has a percent in deps',
                                     source_key)
 
-                # At verbosity=debug, report on changed state
-                if source.state not in (Source.STATE_DONE, Source.STATE_ERROR):
+                # Detect unfinished work and report on changed state (in debug)
+                if source.state == Source.STATE_DONE:
+                    msg = self._report_done
+                elif source.state == Source.STATE_ERROR:
+                    msg = self._report_error
+                else:
                     repeat = True
-                    logger.debug('%d:%d/%d Source "%s" in state "%s" with %d'
-                                 ' dependant source%s.',
-                                 cycle, source_num, source_total,
-                                 source_key, source.state, dep_count,
-                                 '' if dep_count == 1 else 's')
+                    msg = self._report_progress
+                logger.debug(msg, {'cycle': cycle,
+                                   'source_num': source_num,
+                                   'source_total': source_total,
+                                   'source_key': source_key,
+                                   'state': source.state,
+                                   'freshness': source.freshness,
+                                   'dep_count': dep_count,
+                                   'dep_s': '' if dep_count == 1 else 's'})
+                if source.state not in (Source.STATE_DONE, Source.STATE_ERROR):
                     for num, dep in enumerate(dependencies):
                         logger.debug('* Dep %d: %s', num + 1, dep)
-                else:
-                    assert old_state != Source.STATE_DONE
-                    logger.debug('%d:%d/%d Source "%s" complete, '
-                                 'freshness=%s, with %d dependant source%s.',
-                                 cycle, source_num, source_total,
-                                 source_key, source.freshness, dep_count,
-                                 '' if dep_count == 1 else 's')
 
             # Add new sources
             repeat = repeat or bool(new_sources)
