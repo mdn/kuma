@@ -6,6 +6,7 @@ from datetime import datetime
 import pytest
 
 from kuma.scrape.sources import UserSource
+from kuma.users.models import UserBan
 from . import mock_requester, mock_storage
 
 
@@ -82,16 +83,21 @@ def test_gather_existing_user():
     assert source.freshness == source.FRESH_NO
 
 
-def test_gather_banned():
-    source = UserSource('banned', force=True)
-    requester = mock_requester(content="banned", status_code=403)
+def test_gather_banned(simple_user, client):
+    UserBan.objects.create(user=simple_user, by=simple_user,
+                           reason='Turning myself in.')
+    user_path = '/en-US/profiles/' + simple_user.username
+    result = client.get(user_path)
+    source = UserSource(simple_user.username, force=True)
+    requester = mock_requester(content=result.content,
+                               status_code=result.status_code)
     storage = mock_storage(spec=['save_user'])
     resources = source.gather(requester, storage)
     assert resources == []
     assert source.state == source.STATE_DONE
     assert source.freshness == source.FRESH_YES
     expected_data = {
-        'username': 'banned',
+        'username': simple_user.username,
         'banned': True
     }
     storage.save_user.assert_called_once_with(expected_data)

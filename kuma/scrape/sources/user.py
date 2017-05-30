@@ -35,7 +35,8 @@ class UserSource(Source):
                                      raise_for_status=False)
         if response.status_code == 200:
             data = self.extract_data(response.content)
-        elif response.status_code == 403:
+        elif (response.status_code == 404 and
+                self.is_banned(response.content)):
             data = {
                 'username': self.username,
                 'banned': True
@@ -102,3 +103,9 @@ class UserSource(Source):
         data['date_joined'] = date_joined.replace(tzinfo=None)
 
         return data
+
+    def is_banned(self, html):
+        """Detect if a 404 is for a banned user."""
+        parsed = pq(html)
+        ban_text = parsed.find('p.notice')
+        return 'banned' in ban_text.text()
