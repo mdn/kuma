@@ -105,3 +105,35 @@ Some useful options:
   Refresh an existing Document, instead of skipping
 
 For full options, see ``./manage.py scrape_document --help``
+
+Add Documents Linked from a Page
+================================
+If you need all the documents linked from a page in production or another Kuma
+instance, you can use the ``scrape_links`` command.  In the container (after
+``make bash`` or similar), run the following, using the desired URL::
+
+    ./manage.py scrape_links  # Scrape the homepage
+    ./manage.py scrape_links https://developer.mozilla.org/en-US/Web/CSS/display
+
+This treats a page a lot like a `web crawler`_ would, looking for wiki document
+links with the same locale from:
+
+- The header
+- The footer
+- The content
+- KumaScript-rendered sidebars and content
+
+This can result in a lot of traffic. There are options that don't affect the
+initial link scrape, but that are passed on to the scraped documents:
+
+``--revisions REVS``
+  Scrape more than one revision
+
+``--translations``
+  Scrape the translations of a page as well
+
+``--depth DEPTH``
+  Scrape one or more levels of child pages as well
+
+.. _`web crawler`: https://developer.mozilla.org/en-US/docs/Glossary/Crawler
+

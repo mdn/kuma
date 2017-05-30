@@ -9,8 +9,8 @@ import requests
 
 from .sources import (
     DocumentChildrenSource, DocumentHistorySource, DocumentMetaSource,
-    DocumentRenderedSource, DocumentSource, RevisionSource, Source, UserSource,
-    ZoneRootSource)
+    DocumentRenderedSource, DocumentSource, LinksSource, RevisionSource,
+    Source, UserSource, ZoneRootSource)
 from .storage import Storage
 
 logger = logging.getLogger('kuma.scraper')
@@ -70,6 +70,7 @@ class Scraper(object):
         'document_history': DocumentHistorySource,
         'document_meta': DocumentMetaSource,
         'document_rendered': DocumentRenderedSource,
+        'links': LinksSource,
         'revision': RevisionSource,
         'user': UserSource,
         'zone_root': ZoneRootSource,
