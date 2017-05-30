@@ -19,6 +19,15 @@ class FixtureLoader(object):
     # - relations: Details of properties that are foreign keys
     # - filters: Methods to run on values before saving to the database
     model_metadata = {
+        'account.emailaddress': {
+            'natural_key': ('email',),
+            'relations': {
+                'user': {
+                    'link': 'to_one',
+                    'resource': 'users.user',
+                },
+            },
+        },
         'auth.group': {
             'natural_key': ('name',),
             'relations': {
@@ -70,6 +79,27 @@ class FixtureLoader(object):
         },
         'search.filtergroup': {
             'natural_key': ('name', 'slug'),
+        },
+        'sites.site': {
+            'natural_key': ('id',),
+        },
+        'socialaccount.socialaccount': {
+            'natural_key': ('uid', 'provider'),
+            'relations': {
+                'user': {
+                    'link': 'to_one',
+                    'resource': 'users.user',
+                }
+            }
+        },
+        'socialaccount.socialapp': {
+            'natural_key': ('name', ),
+            'relations': {
+                'sites': {
+                    'link': 'to_many',
+                    'resource': 'sites.site'
+                }
+            }
         },
         'taggit.tag': {
             'natural_key': ('name',),

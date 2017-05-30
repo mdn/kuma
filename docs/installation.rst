@@ -210,6 +210,7 @@ management command. Replace ``YOUR_USERNAME`` with your username and
 With a password-enabled admin account, you can log into Django admin at
 http://localhost:8000/admin/login/
 
+.. _enable-github-auth:
 
 Enable GitHub Auth (optional)
 =============================
