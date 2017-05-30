@@ -1,4 +1,5 @@
 """Common methods for scraping management commands."""
+from argparse import ArgumentTypeError
 import logging
 
 from django.core.management.base import BaseCommand
@@ -48,3 +49,14 @@ class ScrapeCommand(BaseCommand):
         logger = logging.getLogger(log_name)
         logger.setLevel(level)
         logger.addHandler(console)
+
+    def int_all_type(self, value):
+        """A command argument that can take an integer or 'all'."""
+        if value.strip().lower() == 'all':
+            return 'all'
+        try:
+            as_int = int(value)
+        except ValueError:
+            msg = "%r should be 'all' or an integer" % value
+            raise ArgumentTypeError(msg)
+        return as_int

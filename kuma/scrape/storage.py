@@ -2,15 +2,29 @@
 from collections import OrderedDict
 import logging
 
+from django.db import IntegrityError
 from taggit.models import Tag
 
 from kuma.users.models import User, UserBan
+from kuma.wiki.constants import REDIRECT_CONTENT
+from kuma.wiki.models import (Document, DocumentTag, DocumentZone, Revision,
+                              ReviewTag, LocalizationTag)
 
 logger = logging.getLogger('kuma.scraper')
 
 
 class Storage(object):
     """Store temporary objects and interact with the database."""
+
+    def __init__(self):
+        self.local = {
+            'document_children': {},
+            'document_history': {},
+            'document_metadata': {},
+            'document_rendered': {},
+            'revision_html': {},
+            'zone_root': {},
+        }
 
     def sorted_tags(self, tags):
         """
@@ -44,6 +58,154 @@ class Storage(object):
                 dt = tag_type.objects.create(name=tag)
             tag_relation.add(dt)
 
+    def get_document(self, locale, slug):
+        try:
+            document = Document.objects.get(locale=locale, slug=slug)
+        except Document.DoesNotExist:
+            return None
+        else:
+            return document
+
+    def save_document(self, data):
+        doc_data = data.copy()
+        locale = doc_data.pop('locale')
+        slug = doc_data.pop('slug')
+        doc_id = doc_data.pop('id', None)
+        tags = doc_data.pop('tags', [])
+        redirect_to = doc_data.pop('redirect_to', None)
+        zone_redirect_path = doc_data.pop('zone_redirect_path', None)
+        zone_css_slug = doc_data.pop('zone_css_slug', '')
+        is_zone_root = doc_data.pop('is_zone_root', False)
+
+        attempt = 0
+        document = None
+        while attempt < 2 and not document:
+            # With ca/docs/Project:Quant_a, no document is found with the
+            # locales, slug or ID, but an IntegrityError is raised due to an
+            # ID collision when created. It will work as an update on the
+            # second pass.
+
+            attempt += 1
+            try:
+                document = Document.objects.get(locale=locale, slug=slug)
+            except Document.DoesNotExist:
+                if doc_id and not Document.objects.filter(id=doc_id).exists():
+                    doc_data['id'] = doc_id
+                try:
+                    document = Document.objects.create(
+                        locale=locale, slug=slug, **doc_data)
+                except IntegrityError as error:
+                    logger.warn('On locale "%s", slug "%s", got error %s',
+                                locale, slug, error)
+                    doc_data.pop('id', None)
+            else:
+                for name, value in doc_data.items():
+                    setattr(document, name, value)
+                if redirect_to:
+                    document.is_redirect = True
+                    document.html = REDIRECT_CONTENT % {
+                        'href': redirect_to, 'title': document.title}
+                document.save()
+        assert document is not None
+        self.safe_add_tags(tags, DocumentTag, document.tags)
+
+        if is_zone_root:
+            try:
+                dz = DocumentZone.objects.get(document=document)
+            except DocumentZone.DoesNotExist:
+                dz = DocumentZone.objects.create(document=document)
+            dz.css_slug = zone_css_slug
+            if zone_redirect_path:
+                url_root = zone_redirect_path.split('/')[-1]
+                dz.url_root = url_root
+            dz.save()
+
+        Document.objects.filter(pk=document.pk).update(json=None)
+
+    def get_document_metadata(self, locale, slug):
+        return self.local['document_metadata'].get((locale, slug), None)
+
+    def save_document_metadata(self, locale, slug, data):
+        self.local['document_metadata'][(locale, slug)] = data
+
+    def get_document_history(self, locale, slug):
+        return self.local['document_history'].get((locale, slug), None)
+
+    def save_document_history(self, locale, slug, data):
+        self.local['document_history'][(locale, slug)] = data
+
+    def get_document_rendered(self, locale, slug):
+        return self.local['document_rendered'].get((locale, slug), None)
+
+    def save_document_rendered(self, locale, slug, data):
+        self.local['document_rendered'][(locale, slug)] = data
+
+    def get_document_children(self, locale, slug):
+        return self.local['document_children'].get((locale, slug), None)
+
+    def save_document_children(self, locale, slug, data):
+        self.local['document_children'][(locale, slug)] = data
+
+    def get_revision(self, revision_id):
+        try:
+            revision = Revision.objects.get(id=revision_id)
+        except Revision.DoesNotExist:
+            return None
+        else:
+            return revision
+
+    def save_revision(self, data):
+        revision_id = data.pop('id')
+        is_current = data.pop('is_current')
+        creator = data.pop('creator')
+        document = data.pop('document')
+        tags = data.pop('tags')
+        review_tags = data.pop('review_tags', [])
+        localization_tags = data.pop('localization_tags', [])
+        revision, created = Revision.objects.get_or_create(
+            id=revision_id,
+            defaults={'creator': creator, 'document': document})
+        for name, value in data.items():
+            setattr(revision, name, value)
+        revision.content = revision.content or ""
+
+        # Manually add tags, to avoid issues with adding two 'duplicate'
+        #  tags, like 'Firefox' and 'firefox'
+        deduped_tags = self.deduped_tags(tags)
+        new_tags = []
+        for tag in deduped_tags:
+            try:
+                tag = DocumentTag.objects.get(name=tag)
+            except DocumentTag.DoesNotExist:
+                tag = DocumentTag.objects.create(name=tag)
+            new_tags.append('"%s"' % tag.name)
+        if new_tags:
+            revision.tags = ' '.join(new_tags)
+
+        # is_approved will update the document, avoid for old revisions
+        revision.is_approved = is_current
+        revision.save()
+
+        # Add review, localization tags
+        for tag_name in review_tags:
+            tag, created = ReviewTag.objects.get_or_create(
+                name=tag_name, defaults={'slug': tag_name})
+            revision.review_tags.add(tag)
+        for tag_name in localization_tags:
+            tag, created = LocalizationTag.objects.get_or_create(
+                name=tag_name, defaults={'slug': tag_name})
+            revision.localization_tags.add(tag)
+
+        # Approve old revisions w/o making them current
+        if not revision.is_approved:
+            Revision.objects.filter(id=revision.id).update(is_approved=True)
+
+    def get_revision_html(self, path):
+        return self.local['revision_html'].get((path), None)
+
+    def save_revision_html(self, path, data):
+        self.local['revision_html'][path] = data
+
     def get_user(self, username):
         try:
             user = User.objects.get(username=username)
@@ -68,3 +230,9 @@ class Storage(object):
             ban, ban_created = UserBan.objects.get_or_create(
                 user=user,
                 defaults={'by': user, 'reason': 'Ban detected by scraper'})
+
+    def get_zone_root(self, path):
+        return self.local['zone_root'].get(path, None)
+
+    def save_zone_root(self, path, data):
+        self.local['zone_root'][path] = data
