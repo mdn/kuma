@@ -499,6 +499,7 @@ INSTALLED_APPS = (
     'kuma.feeder',
     'kuma.landing',
     'kuma.redirects',
+    'kuma.scrape',
     'kuma.search',
     'kuma.users',
     'kuma.wiki',
