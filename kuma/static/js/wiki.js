@@ -938,10 +938,40 @@
         initDetailsTags();
     }
 
-    // clear out any drafts from localStorage, now that the document has been saved
-    if (typeof document_saved !== 'undefined' && document_saved) {
-      localStorage.removeItem('draft/edit' + location.pathname);
-      localStorage.removeItem('draft/edit' + location.pathname + '#save-time');
+
+    /**
+     * Generates a storage key based on pathname
+     * copied from wiki-edit-draft.js because: race conditions
+     * does not need to copy logic for dealing with new translations
+     */
+    function getDraftStorageKey() {
+        // start with path
+        var key = win.location.pathname;
+        // remove $vars
+        key = key.replace('$edit', '');
+        key = key.replace('$translate', '');
+        key = 'draft/edit' + key;
+        key = $.trim(key);
+        return key;
+    }
+
+    // check for rev_saved in query string
+    var revisionSaved = win.mdn.getUrlParameter('rev_saved');
+    var storageKey = getDraftStorageKey();
+    if(win.location.href.indexOf('rev_saved') > -1 && win.mdn.features.localStorage) {
+        var draftRevision = localStorage.getItem(storageKey + '#revision');
+        // check for drafts matching query string
+        if (draftRevision === revisionSaved) {
+            // delete matching draft, save-time, and revisionId
+            localStorage.removeItem(storageKey);
+            localStorage.removeItem(storageKey + '#save-time');
+            localStorage.removeItem(storageKey + '#revision');
+        }
+        // remove query string
+        var location = win.location;
+        if (win.history.replaceState) {
+            win.history.replaceState({}, '', location.pathname);
+        }
     }
 
 })(window, document, jQuery);

@@ -261,7 +261,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         # content API, constrain to that section.
                         params['section'] = section_id
                 # Parameter for the document saved, so that we can delete the cached draft on load
-                params['document_saved'] = 'true'
+                params['rev_saved'] = curr_rev.id if curr_rev else ''
                 url = '%s?%s' % (url, urlencode(params))
                 if not is_raw and section_id:
                     # If a section was edited, jump to the section anchor
