@@ -16,7 +16,7 @@ def test_session():
     session = requester.session
     assert isinstance(session, requests.Session)
     session2 = requester.session
-    assert session == session2
+    assert session is session2
 
 
 def test_request():
