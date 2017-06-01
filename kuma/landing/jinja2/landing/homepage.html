@@ -112,13 +112,13 @@
 <div class="home-callouts">
   <h2 class="offscreen">{{ _('Open Web and Mobile') }}</h2>
   <div class="column-container center">
-    <div class="column-callout callout-saucelabs">
-      <a href="https://www.saucelabs.com/cross-browser-testing-tutorial?utm_campaign=cbt&amp;utm_medium=banner&amp;utm_source=home-page">
-        <span>
-          <p>{{ _('Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs') }}</p>
+    <div class="column-callout callout-devrel">
+      <a href="https://www.surveygizmo.com/s3/3544552/d11af99eb1ed">
+          <span>
+            <p>{{ _('Do you have a couple minutes to help us out by taking a developer survey?') }}</p>
 
-          <button type="button">{{ _('Test on Sauce Labs') }}</button>
-        </span>
+            <button type="button">{{ _('Take the Survey') }}</button>
+          </span>
       </a>
     </div>
     <div class="column-callout callout-learn">
@@ -194,10 +194,10 @@
   {{ super() }}
   {% if settings.DEBUG %}
       <script>
-        jQuery('#home-search-form').on('submit', function() {
-            mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
-        });
-      </script>
+      jQuery('#home-search-form').on('submit', function() {
+    mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
+});
+</script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
     <script>
@@ -205,8 +205,8 @@
     </script>
     {% javascript 'search-suggestions' %}
     <script>
-        jQuery('#home-search-form').searchSuggestions();
-    </script>
+    jQuery('#home-search-form').searchSuggestions();
+</script>
   {% endif %}
   {% if waffle.switch('newsletter') %}
     {% javascript 'newsletter' %}
