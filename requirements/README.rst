@@ -23,11 +23,11 @@ To help gather packages and add hashes, we use hashin_, which computes the
 hashes and updates requirement files. For example, to install a particular
 Django version::
 
-    hashin Django==1.8.13 requirements/default.txt
+    hashin Django==1.8.13 -r requirements/default.txt
 
 Or, to update to the latest version of a package::
 
-    hashin django-allauth requirements/default.txt
+    hashin django-allauth -r requirements/default.txt
 
 It is still up to you to install the requirements, and to specify any
 requirements of your requirements, in ``constraints.txt``.
