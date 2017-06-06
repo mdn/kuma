@@ -6,9 +6,6 @@ contributors block at the bottom of the article
     color: #777;
 
     @include set-smaller-font-size();
-    #{$selector-heading-font-fallback} {
-        letter-spacing: -.002em;
-    }
 
     #{$selector-icon} {
         @include bidi-style(margin-left, 0, margin-right, $icon-margin);

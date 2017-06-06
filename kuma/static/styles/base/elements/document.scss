@@ -4,11 +4,10 @@ Styles for overall document.  Minimally styles the canvas.
 
 html {
     background: #fff;
-    font-size: $base-font-size;
+    color: $text-color;
 }
 
 body {
-    color: $text-color;
     @include create-gradient-background($header-background-color);
 
     /* typography */
@@ -16,7 +15,5 @@ body {
     line-height: 1.5;
     #{$selector-site-font-fallback} {
         font-family: $site-font-family-fallback;
-        letter-spacing: .01em;
-        word-spacing: .03em;
     }
 }

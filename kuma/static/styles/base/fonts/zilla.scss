@@ -1,0 +1,31 @@
+@font-face {
+    font-family: zillaslab;
+    src: url('#{$path-to-fonts}#{'ZillaSlab-Regular.woff2'}') format('woff2'),
+         url('#{$path-to-fonts}#{'ZillaSlab-Regular.woff'}') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: zillaslab;
+    src: url('#{$path-to-fonts}#{'ZillaSlab-Bold.woff2'}') format('woff2'),
+         url('#{$path-to-fonts}#{'ZillaSlab-Bold.woff'}') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: zillaslab;
+    src: url('#{$path-to-fonts}#{'ZillaSlab-Italic.woff2'}') format('woff2'),
+         url('#{$path-to-fonts}#{'ZillaSlab-Italic.woff'}') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: zillahighlight;
+    src: url('#{$path-to-fonts}#{'ZillaSlabHighlight-Bold.woff2'}') format('woff2'),
+         url('#{$path-to-fonts}#{'ZillaSlabHighlight-Bold.woff'}') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}

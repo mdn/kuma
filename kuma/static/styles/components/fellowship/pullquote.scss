@@ -13,7 +13,7 @@ The quote on the fellowship page
 
         font-family: $heading-font-family;
         font-style: italic;
-        font-size: $larger-font-size;
+        @include set-font-size($larger-font-size);
         #{$selector-heading-font-fallback} {
             font-family: $heading-font-family-fallback;
         }

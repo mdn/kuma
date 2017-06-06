@@ -20,7 +20,6 @@ List of four feature columns within the masthead
         min-height: 39px;
         @include set-larger-font-size();
         font-weight: bold;
-        font-family: 'Open Sans Extra Bold', sans-serif;
         text-transform: uppercase;
         @include clearfix();
 
@@ -64,10 +63,6 @@ List of four feature columns within the masthead
 .feature-newsletter {
     @include column-4();
     @include bidi-value(float, left, right);
-
-    h2 {
-        font-family: 'Open Sans Extra Bold', sans-serif;
-    }
 }
 
 @media #{$media-query-tablet} {

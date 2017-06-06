@@ -29,12 +29,6 @@ footer {
     padding: $first-content-top-padding 0 0 0;
     font-style: italic;
 
-    @include set-smaller-font-size();
-    #{$selector-heading-font-fallback} {
-        letter-spacing: -.01em;
-        word-spacing: 0;
-    }
-
     .column-strip {
         padding-top: 10px;
     }

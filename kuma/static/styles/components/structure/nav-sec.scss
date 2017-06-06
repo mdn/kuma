@@ -9,9 +9,6 @@ Secondary navigation, site tools and login info
     z-index: 36; /* one more than the demos "learn more" button */
 
     @include set-font-size($small-bump-font-size);
-    #{$selector-site-font-fallback} & {
-        letter-spacing: -.005em;
-    }
 
     > ul > li {
         position: relative;

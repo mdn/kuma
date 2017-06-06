@@ -41,7 +41,6 @@ homepage masthead (search, feature callouts)
     }
 
     input#home-q {
-        @include set-placeholder-style(letter-spacing, -1px);
         @include set-placeholder-style(color, $text-color);
         color: $text-color;
         background-color: #fff;

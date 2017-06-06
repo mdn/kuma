@@ -5,8 +5,8 @@ var mdn = window.mdn || {};
 
     var fonts = [
         {
-            'name' : 'Open Sans Light',
-            'className' : 'ffo-opensanslight',
+            'name' : 'Open Sans',
+            'className' : 'ffo-opensans',
             'loaded': false,
             'varient' : [
                 {'weight' : 'normal'},
@@ -15,13 +15,21 @@ var mdn = window.mdn || {};
             ]
         },
         {
-            'name' : 'Open Sans',
-            'className' : 'ffo-opensans',
+            'name' : 'zillaslab',
+            'className' : 'ffo-zillaslab',
             'loaded': false,
             'varient' : [
                 {'weight' : 'normal'},
                 {'weight' : 'bold'},
                 {'style' : 'italic'}
+            ]
+        },
+        {
+            'name' : 'zillahighlight',
+            'className' : 'ffo-zillahighlight',
+            'loaded': false,
+            'varient' : [
+                {'weight' : 'normal'}
             ]
         }
     ];

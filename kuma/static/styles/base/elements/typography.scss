@@ -7,78 +7,35 @@ Typography
 Headings
 ====================================================================== */
 
-h1,
-h2,
-h3,
-h4 {
-    margin-bottom: ($content-block-margin / 2);
-    word-wrap: break-word;
-
-    font-family: $heading-font-family;
-    font-weight: $light-font-weight;
-    line-height: 1;
-    color: $heading-color;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-        letter-spacing: -.04em;
-        line-height: 1;
-        word-spacing: .01em;
-    }
-}
-
-h2,
-h3 {
-    font-family: $site-font-family;
-    #{$selector-site-font-fallback} {
-        font-family: $site-font-family-fallback;
-    }
-}
-
 h1 {
     @include heading-1();
-    margin-bottom: $grid-spacing;
-
-    line-height: 1.5;
-    #{$selector-heading-font-fallback} {
-        line-height: 1.515;
-    }
 }
 
 h2 {
     @include heading-2();
-    font-weight: 700;
-    #{$selector-site-font-fallback} {
-        font-weight: normal;
-        letter-spacing: 0;
-        word-spacing: -.02em;
-    }
 }
 
 h3 {
     @include set-font-size(24px);
-    letter-spacing: -.021em;
-    #{$selector-site-font-fallback} {
-        line-height: 1.01;
-        letter-spacing: .002em;
-        word-spacing: .032em;
+    font-family: $subheading-font-family;
+    #{$selector-subheading-font-fallback} {
+        font-family: $subheading-font-family-fallback;
     }
 }
 
 h4 {
-    @include set-font-size(18px);
-    letter-spacing: -.014em;
-    #{$selector-site-font-fallback} {
-        letter-spacing: -.044em;
-        word-spacing: .22em;
+    @include set-font-size(20px);
+    font-family: $subheading-font-family;
+    #{$selector-subheading-font-fallback} {
+        font-family: $subheading-font-family-fallback;
     }
 }
 
 h5 {
     @include set-font-size(16px);
-    letter-spacing: -.014em;
-    #{$selector-site-font-fallback} {
-        letter-spacing: -.024em;
-        word-spacing: .04em;
+    font-family: $heading-font-family;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
     }
 }
 
@@ -93,32 +50,7 @@ p {
 ====================================================================== */
 
 blockquote {
-    @include prevent-last-child-bottom-spacing();
-    padding: 20px 25px;
-    border-left: 5px solid #ccc;
-    margin-bottom: $content-block-margin;
-    background: #eee;
-    position: relative;
-
-    &:before,
-    &:after {
-        color: #ccc;
-        content: open-quote;
-        font-size: 40px;
-        position: absolute;
-    }
-
-    &:before {
-        top: 0;
-        left: 10px;
-        content: '\201C';
-    }
-
-    &:after {
-        bottom: 0;
-        right: 10px;
-        content: '\201D';
-    }
+    @include callout();
 }
 
 /*
@@ -177,6 +109,7 @@ pre {
     overflow: auto;
     margin: 0 0 $grid-spacing 0;
     font-family: $code-block-font-family;
+    font-style: normal;
 }
 
 pre code {

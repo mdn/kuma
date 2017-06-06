@@ -24,6 +24,7 @@
 /* don't let wiki content escape the article - BUG 1325569 */
 #wiki-column-container {
     overflow: auto;
+    clear: both;
 }
 
 /* adjustments to columns based on show/hide and media query */

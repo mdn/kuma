@@ -381,7 +381,7 @@ div.index {
 }
 
 div.index > span {
-    font-family: Georgia, Times, 'Times New Roman', serif;
+    font-family: serif;
     font-size: 1.6em;
 }
 
@@ -561,9 +561,8 @@ table.compat-table td.header {
 
     /* typography */
     font-family: $heading-font-family;
-    font-size: 16px;
-    font-weight: 200;
-    line-height: 100%;
+    @include set-font-size(16px);
+    line-height: 1;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
@@ -579,7 +578,8 @@ div.action-driven {
 }
 
 div.action-driven > div {
-    font: 400 20px $heading-font-family;
+    font-family: $heading-font-family;
+    @include set-font-size(20px);
     text-transform: uppercase;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
@@ -925,8 +925,7 @@ dd.landingPageList {
             text-align: left;
 
             font-family: $heading-font-family;
-            font-size: 14px;
-            font-weight: 200;
+            @include set-font-size(14px);
             #{$selector-heading-font-fallback} {
                 font-family: $heading-font-family-fallback;
             }
