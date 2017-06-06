@@ -191,6 +191,14 @@ def test_scrape(scraper):
     assert sources.keys() == ['fake:loop', 'fake:loop2', 'fake:loop21']
 
 
+def test_scrape_error(scraper):
+    """The scraper will complete if a source is errored."""
+    scraper.add_source('fake', 'will_error', error=True)
+    sources = scraper.scrape()
+    source = sources['fake:will_error']
+    assert source.state == source.STATE_ERROR
+
+
 def test_scrape_none(scraper):
     """A scraper with no sources returns early."""
     sources = scraper.scrape()

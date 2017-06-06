@@ -1,6 +1,7 @@
 """Shared interface for data sources."""
 from __future__ import absolute_import, unicode_literals
 import logging
+import re
 
 from django.utils.six import binary_type, text_type, python_2_unicode_compatible
 from django.utils.six.moves.urllib.parse import unquote
@@ -201,3 +202,48 @@ class Source(object):
     def load_and_validate_existing(self, storage):
         """Default: Can not load existing data from storage."""
         return False, []
+
+
+class DocumentBaseSource(Source):
+    """Shared functionality for MDN Document sources."""
+
+    PARAM_NAME = 'path'
+
+    re_path = re.compile(r"/(?P<locale>[^/]+)/docs/(?P<slug>.*)")
+
+    # Standard options for Document-based sources
+    STANDARD_DOC_OPTIONS = {
+        'force': ('bool', False),         # Update existing Document records
+        'depth': ('int_all', 0),          # Scrape the topic tree to this depth
+        'revisions': ('int', 1),          # Scrape this many past revisions
+        'translations': ('bool', False),  # Scrape the alternate translations
+    }
+
+    def __init__(self, path, **options):
+        super(DocumentBaseSource, self).__init__(path, **options)
+        if path != unquote(path):
+            raise ValueError('URL-encoded path "%s"' % path)
+        try:
+            self.locale, self.slug = self.locale_and_slug(path)
+        except ValueError:
+            self.locale, self.slug, self.normalized_path = None, None, None
+        else:
+            self.normalized_path = path
+
+    def locale_and_slug(self, path):
+        """Extract a document locale and slug from a path."""
+        match = self.re_path.match(path)
+        if match:
+            return match.groups()
+        else:
+            raise ValueError('Not a valid document path "%s"' % path)
+
+    @property
+    def parent_slug(self):
+        if self.slug and '/' in self.slug:
+            return '/'.join(self.slug.split('/')[:-1])
+
+    @property
+    def parent_path(self):
+        if self.parent_slug:
+            return '/%s/docs/%s' % (self.locale, self.parent_slug)

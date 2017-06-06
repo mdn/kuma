@@ -50,7 +50,7 @@ following, replacing ``username`` with the desired user's username::
     ./manage.py scrape_user username
     ./manage.py scrape_user https://developer.mozilla.org/en-US/profiles/username
 
-Some useful options
+Some useful options:
 
 ``--email user@example.com``
   Set the email for the user, which can't be scraped from the profile. With
@@ -67,3 +67,41 @@ For full options, see ``./manage.py scrape_user --help``
 A local user can be promoted to staff with the command::
 
     ./manage.py ihavepower username --password=password
+
+Add an MDN Wiki Document
+========================
+If you need a wiki page that is not in the sample database, you can scrape it
+from production or another Kuma instance, using the ``scrape_document``
+command.  In the container (after ``make bash`` or similar), run the
+following, using the desired URL::
+
+    ./manage.py scrape_document https://developer.mozilla.org/en-US/docs/Web/CSS/display
+
+Scraping a document includes:
+
+- The parent documents (such as ``Web`` and ``Web/CSS`` for ``Web/CSS/display``)
+- The zone, if needed
+- A revision for each document, and the author for each revision
+- The English variant, if a translation is requested
+- Redirects, if a page move is detected
+
+It does not include:
+
+- Attachment data, or the attachments themselves. These will continue to use
+  production URLs.
+
+Some useful options:
+
+``--revisions REVS``
+  Scrape more than one revision
+
+``--translations``
+  Scrape the translations of a page as well
+
+``--depth DEPTH``
+  Scrape one or more levels of child pages as well
+
+``--force``
+  Refresh an existing Document, instead of skipping
+
+For full options, see ``./manage.py scrape_document --help``

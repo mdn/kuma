@@ -1,19 +1,46 @@
 from __future__ import unicode_literals
 from datetime import datetime
 
+from django.db import IntegrityError
 from taggit.models import Tag
+import mock
 import pytest
 
 from kuma.scrape.storage import Storage
+from kuma.wiki.constants import REDIRECT_CONTENT
+from kuma.wiki.models import Document, DocumentTag, DocumentZone, Revision
+
+
+@pytest.mark.parametrize(
+    "data_name,param_list", (
+        ('document_children', ('locale', 'slug')),
+        ('document_metadata', ('locale', 'slug')),
+        ('document_history', ('locale', 'slug')),
+        ('document_rendered', ('locale', 'slug')),
+        ('revision_html', ('path',)),
+        ('zone_root', ('path',)),
+    ), ids=['document_children', 'document_metadata', 'document_history',
+            'document_rendered', 'revision_html', 'zone_root'])
+def test_local_storage(data_name, param_list):
+    """Local storage objects are None when unset, return the saved value."""
+    storage = Storage()
+    getter = getattr(storage, 'get_' + data_name)
+    setter = getattr(storage, 'save_' + data_name)
+    assert getter(*param_list) is None
+    value = data_name + ' value'
+    setter(data=value, *param_list)
+    assert getter(*param_list) == value
 
 
 def test_safe_add_tags_new(simple_user):
+    """New tags are created."""
     tag = 'profile:interest:testing'
     Storage().safe_add_tags([tag], Tag, simple_user.tags)
     assert list(simple_user.tags.names()) == [tag]
 
 
 def test_safe_add_tags_existing(simple_user):
+    """Existing tags are reused."""
     tag = 'profile:expertise:existence'
     Tag.objects.create(name=tag)
     Storage().safe_add_tags([tag], Tag, simple_user.tags)
@@ -21,11 +48,334 @@ def test_safe_add_tags_existing(simple_user):
 
 
 def test_safe_add_tags_case_mismatch(simple_user):
+    """Existing tags with different capitalization are reused."""
     tag = 'profile:interest:css'
     Tag.objects.create(name=tag)
     upper_tag = 'profile:interest:CSS'
     Storage().safe_add_tags([upper_tag], Tag, simple_user.tags)
     assert list(simple_user.tags.names()) == [tag]
+
+
+@pytest.mark.django_db
+def test_get_document_missing():
+    assert Storage().get_document('en-US', 'Test') is None
+
+
+def test_get_document_present(simple_doc):
+    doc = Storage().get_document('en-US', 'Root')
+    assert doc.locale == 'en-US'
+    assert doc.slug == 'Root'
+
+
+@pytest.mark.django_db
+def test_save_document():
+    data = {
+        'id': 100,
+        'locale': 'en-US',
+        'modified': datetime(2016, 11, 9, 9, 40),
+        'slug': 'Test',
+        'tags': [],
+        'title': 'Test Document',
+        'uuid': 'd269d6c8-0759-49bc-92ab-03f126e73809',
+    }
+    Storage().save_document(data)
+    document = Document.objects.get(locale='en-US', slug='Test')
+    assert document.title == 'Test Document'
+    assert str(document.uuid) == data['uuid']
+
+
+@pytest.mark.django_db
+def test_save_document_tags():
+    """Tags are created and attached to the new document."""
+    data = {
+        'id': 101,
+        'locale': 'en-US',
+        'modified': datetime(2016, 11, 15, 9, 31),
+        'slug': 'Test',
+        'tags': ['NeedsTranslation'],
+        'title': 'Test Document',
+    }
+    Storage().save_document(data)
+    document = Document.objects.get(locale='en-US', slug='Test')
+    assert document.title == 'Test Document'
+    assert list(document.tags.names()) == ['NeedsTranslation']
+
+
+@pytest.mark.django_db
+def test_save_document_dupe_tags():
+    """
+    Duplicate tags are de-duped on document save.
+
+    This may not be needed now that bug 1293749 is fixed.
+    """
+    data = {
+        'id': 101,
+        'locale': 'en-US',
+        'modified': datetime(2016, 11, 15, 9, 31),
+        'slug': 'Test',
+        'tags': ['NeedsTranslation', 'needstranslation'],
+        'title': 'Test Document',
+    }
+    Storage().save_document(data)
+    document = Document.objects.get(locale='en-US', slug='Test')
+    assert document.title == 'Test Document'
+    assert list(document.tags.names()) == ['NeedsTranslation']
+
+
+def test_save_document_update_existing(simple_doc):
+    """An existing document gets new scraped tags."""
+    assert list(simple_doc.tags.names()) == []
+    data = {
+        'id': simple_doc.id,
+        'locale': 'en-US',
+        'slug': 'Root',
+        'tags': ['SuperTag']
+    }
+    Storage().save_document(data)
+    document = Document.objects.get(id=simple_doc.id)
+    assert list(document.tags.names()) == ['SuperTag']
+
+
+def test_save_document_update_existing_to_redirect(simple_doc):
+    """An existing document that has been moved is moved locally."""
+    data = {
+        'locale': 'en-US',
+        'slug': 'Root',
+        'redirect_to': '/en-US/docs/SuperTest'
+    }
+    redirect_html = REDIRECT_CONTENT % {
+        'href': data['redirect_to'], 'title': 'Root Document'}
+    Storage().save_document(data)
+    document = Document.objects.get(id=simple_doc.id)
+    assert document.is_redirect
+    assert document.html == redirect_html
+
+
+def test_save_document_new_doc_colliding_id(simple_doc):
+    """An existing document can have a different ID than remote doc."""
+    new_data = {
+        'id': simple_doc.id,
+        'locale': 'en-US',
+        'slug': 'NewDoc',
+        'title': 'New Document',
+    }
+    Storage().save_document(new_data)
+    new_doc = Document.objects.get(locale='en-US', slug='NewDoc')
+    assert new_doc.id != simple_doc.id
+
+
+@pytest.mark.django_db
+def test_save_document_integrity_error():
+    """Can save ca/docs/Project:Quant_a, despite IntegrityError."""
+    en_root_doc = Document.objects.create(
+        locale='en-US', slug='MDN', title='MDN')
+    en_doc = Document.objects.create(
+        locale='en-US', slug='MDN/About', title='About MDN',
+        parent_topic=en_root_doc)
+    ca_id = 1000
+    while Document.objects.filter(id=ca_id).exists():
+        ca_id += 1
+    ca_data = {
+        'locale': 'ca',
+        'slug': 'Project:Quant_a',
+        'title': 'Quant a',
+        'parent': en_doc,
+        'id': ca_id
+    }
+
+    def ca_weirdness(**data):
+        ca_doc = Document()
+        for name, value in data.items():
+            setattr(ca_doc, name, value)
+        ca_doc.save()
+        raise IntegrityError('ID in use')
+
+    with mock.patch('kuma.scrape.storage.Document.objects.create') as mcreate:
+        mcreate.side_effect = ca_weirdness
+        Storage().save_document(ca_data)
+    mcreate.assert_called_once_with(**ca_data)
+    ca_doc = Document.objects.get(locale='ca', slug='Project:Quant_a')
+    assert ca_doc.title == 'Quant a'
+    assert ca_doc.parent == en_doc
+
+
+def test_save_document_create_zone_with_redirect(simple_doc):
+    """A document with a vanity URL creates the associated DocumentZone."""
+    data = {
+        'parent_topic': simple_doc,
+        'locale': 'en-US',
+        'slug': 'Root/Zone',
+        'zone_redirect_path': '/en-US/Zone',
+        'is_zone_root': True,
+        'zone_css_slug': 'other-slug',
+    }
+    Storage().save_document(data)
+    doc = Document.objects.get(locale='en-US', slug='Root/Zone')
+    assert doc.zone
+    assert doc.zone.css_slug == data['zone_css_slug']
+    assert doc.zone.url_root == 'Zone'
+
+
+def test_save_document_create_simple_zone(simple_doc):
+    """A document with a plain zone creates the associated DocumentZone."""
+    data = {
+        'parent_topic': simple_doc,
+        'locale': 'en-US',
+        'slug': 'Root/Zone',
+        'is_zone_root': True,
+    }
+    Storage().save_document(data)
+    doc = Document.objects.get(locale='en-US', slug='Root/Zone')
+    assert doc.zone
+    assert doc.zone.css_slug == ''
+    assert doc.zone.url_root is None
+
+
+def test_save_document_zone_child(simple_doc):
+    """A zone child document does not create a DocumentZone."""
+    data = {
+        'parent_topic': simple_doc,
+        'locale': 'en-US',
+        'slug': 'Root/ZoneChild',
+        'is_zone_root': False,
+        'zone_redirect_path': '/en-US/Root/ZoneChild',
+        'zone_css_slug': 'other-slug',
+    }
+    Storage().save_document(data)
+    doc = Document.objects.get(locale='en-US', slug='Root/ZoneChild')
+    with pytest.raises(DocumentZone.DoesNotExist):
+        doc.zone
+
+
+def test_get_revision_existing(root_doc):
+    stored = Storage().get_revision(root_doc.current_revision_id)
+    assert stored == root_doc.current_revision
+
+
+@pytest.mark.django_db
+def test_get_revision_missing():
+    rev_id = 666
+    while Revision.objects.filter(id=rev_id).exists():
+        rev_id += 1
+    assert Storage().get_revision(rev_id) is None
+
+
+def test_save_revision_current(simple_doc, simple_user):
+    """Creating the current revision updates the associated document."""
+    data = {
+        'id': 1000,
+        'creator': simple_user,
+        'document': simple_doc,
+        'slug': 'Test',
+        'title': 'Test Document',
+        'created': datetime(2016, 11, 15, 16, 49),
+        'is_current': True,
+        'comment': 'Frist Post!',
+        'tags': ['One', 'Two', 'Three'],
+        'content': '<p>My awesome content.</p>'
+    }
+    Storage().save_revision(data)
+    rev = Revision.objects.get(id=1000)
+    assert rev.document == simple_doc
+    assert rev.creator == simple_user
+    assert rev.tags == '"One" "Two" "Three"'
+    assert rev.content == '<p>My awesome content.</p>'
+
+
+def test_save_revision_not_current(root_doc, simple_user):
+    """Creating an older revision does not update the associated document."""
+    data = {
+        'id': 1000,
+        'creator': simple_user,
+        'document': root_doc,
+        'slug': 'Test',
+        'title': 'Test Document',
+        'created': datetime(2014, 1, 1),
+        'is_current': False,
+        'comment': 'Frist Post!',
+        'tags': [],
+        'content': '<p>My awesome content.</p>'
+    }
+    Storage().save_revision(data)
+    rev = Revision.objects.get(id=1000)
+    assert rev.document == root_doc
+    assert rev.creator == simple_user
+    assert rev.tags == ''
+    assert rev.content == '<p>My awesome content.</p>'
+
+
+def test_save_revision_duplicate_tags(simple_doc, simple_user):
+    """
+    A current revision with duplicate tags does not create dupes on the doc.
+
+    Historical revisions will have these duplicate tags, even though
+    bug 1293749 is fixed, because they are stored as strings.
+    """
+    data = {
+        'id': 1001,
+        'creator': simple_user,
+        'document': simple_doc,
+        'slug': 'Test',
+        'title': 'Test Document',
+        'created': datetime(2016, 11, 16, 11, 27),
+        'is_current': True,
+        'comment': 'Frist Post!',
+        'tags': ['one', 'two', 'One', 'Two'],
+        'content': '<p>My awesome content.</p>'
+    }
+    Storage().save_revision(data)
+    rev = Revision.objects.get(id=1001)
+    assert rev.document == simple_doc
+    assert rev.creator == simple_user
+    assert rev.tags == '"One" "Two"'
+    assert sorted(rev.document.tags.names()) == ['One', 'Two']
+
+
+def test_save_revision_existing_tags(simple_doc, simple_user):
+    """Existing tags are reused when saving a current revision."""
+    DocumentTag.objects.create(name='One')
+    DocumentTag.objects.create(name='Two')
+    data = {
+        'id': 1002,
+        'creator': simple_user,
+        'document': simple_doc,
+        'slug': 'Test',
+        'title': 'Test Document',
+        'created': datetime(2016, 12, 19, 13, 52),
+        'is_current': True,
+        'comment': 'Frist Post!',
+        'tags': ['one', 'two'],
+        'content': '<p>My awesome content.</p>'
+    }
+    Storage().save_revision(data)
+    rev = Revision.objects.get(id=1002)
+    assert rev.document == simple_doc
+    assert rev.creator == simple_user
+    assert rev.tags == '"One" "Two"'
+    assert sorted(rev.document.tags.names()) == ['One', 'Two']
+
+
+def test_save_revision_no_content_review_tags(simple_doc, simple_user):
+    """A revision may have no content but include review tags."""
+    data = {
+        'id': 1003,
+        'creator': simple_user,
+        'document': simple_doc,
+        'slug': 'Test',
+        'title': 'Test Document',
+        'created': datetime(2016, 12, 19, 13, 52),
+        'is_current': True,
+        'tags': [],
+        'review_tags': ['technical'],
+        'localization_tags': ['inprogress']
+    }
+    Storage().save_revision(data)
+    rev = Revision.objects.get(id=1003)
+    assert rev.document == simple_doc
+    assert rev.creator == simple_user
+    assert rev.content == ''
+    assert list(rev.review_tags.names()) == ['technical']
+    assert list(rev.localization_tags.names()) == ['inprogress']
 
 
 @pytest.mark.django_db
@@ -38,7 +388,6 @@ def test_get_user_present(simple_user):
     assert user == simple_user
 
 
-@pytest.mark.django_db
 def test_save_user(django_user_model):
     data = {
         'username': 'JoeDeveloper',
@@ -80,8 +429,8 @@ def test_save_user(django_user_model):
     assert tags == expected_tags
 
 
-@pytest.mark.django_db
 def test_save_user_banned(django_user_model):
+    """A banned user creates a self-banning UserBan instance."""
     data = {
         'username': 'banned',
         'date_joined': datetime(2016, 12, 19),
