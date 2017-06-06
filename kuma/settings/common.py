@@ -972,15 +972,6 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'helpfulness': {
-        'source_filenames': (
-            'js/helpfulness.js',
-        ),
-        'output_filename': 'build/js/helpfulness.js',
-        'extra_context': {
-            'async': True,
-        },
-    },
     'task-completion': {
         'source_filenames': (
             'js/task-completion.js',
