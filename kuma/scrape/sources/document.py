@@ -67,12 +67,13 @@ class DocumentSource(DocumentBaseSource):
     def load_prereq_parent_topic(self, storage, data):
         """Load the parent topic, if a child page."""
         assert self.normalized_path
-        parent_topic = None
-        if self.parent_slug:
-            parent_topic = storage.get_document(self.locale, self.parent_slug)
-            if parent_topic is None:
-                data['needs'].append(('document', self.parent_path, {}))
-        if parent_topic:
+        if not self.parent_slug:
+            return  # No parent to load
+
+        parent_topic = storage.get_document(self.locale, self.parent_slug)
+        if parent_topic is None:
+            data['needs'].append(('document', self.parent_path, {}))
+        else:
             data['parent_topic'] = parent_topic
 
     def load_prereq_rendered(self, storage, data):
