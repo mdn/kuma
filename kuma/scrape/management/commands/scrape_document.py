@@ -29,7 +29,7 @@ class Command(ScrapeCommand):
                                   ' ("all" for all)'))
 
     def handle(self, *arg, **options):
-        self.setup_logging(options.get('verbosity'))
+        self.setup_logging(options['verbosity'])
         host, ssl, path = self.parse_url_or_path(options['url'])
         scraper = self.make_scraper(host=host, ssl=ssl)
 
