@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-04-28 10:46+0000\n"
+"PO-Revision-Date: 2017-06-07 18:07+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -83,70 +83,61 @@ msgid "an unknown date"
 msgstr "неизвестная дата"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "Просмотреть страницу"
+msgstr "Просмотреть черновик."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "Восстановить контент черновика"
+msgstr "Восстановить черновик."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "Удалить черновик"
+msgstr "Удалить черновик."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "С момента сохранения черновика была опубликована более новая версия этой статьи. Вы можете восстановить черновик, чтобы увидеть контент, но вы не сможете опубликовать его."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "История ревизий."
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "опубликован"
+msgstr "Опубликованная версия"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Сравните эту дату с датой последней версии, чтобы убедиться, что вы не перезаписываете более поздние изменения."
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "У вас есть черновик от:"
+msgstr "У вас есть черновик от: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "Просмотр старого черновика. Этот черновик нельзя опубликовать."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "восстановлен"
+msgstr "Черновик восстановлен."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "удалён"
+msgstr "Черновик удалён."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "опубликован"
+msgstr "Черновик опубликован:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "удалён"
+msgstr "Черновик удалён:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "автосохранён"
+msgstr "Черновик автосохранён:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -154,7 +145,7 @@ msgstr "Автосохранение включено."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "Публикация изменений…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -165,9 +156,8 @@ msgid "Changes saved."
 msgstr "Изменения сохранены."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "Публикация не удалась. Пожалуйста, скопируйте и вставьте ваши изменения в безопасное месте и попытайтесь отправить снова, используя кнопку \"Опубликовать\"."
+msgstr "Публикация не удалась. Пожалуйста, скопируйте и вставьте ваши изменения в безопасное место и попытайтесь отправить снова, используя кнопку \"Опубликовать\"."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
