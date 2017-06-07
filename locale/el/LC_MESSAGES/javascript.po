@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-29 15:15+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
@@ -65,70 +65,6 @@ msgstr "%(sent_date)s από %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Σφάλμα υποβολής ως %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Σάς βοήθησε αυτή η σελίδα;"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Ναι"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Όχι"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Να μην ερωτηθώ ξανά"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Ευχαριστούμε για τα σχόλιά σας!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Δεν θα σάς ενοχλήσουμε ξανά."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Μετάφραση στη γλώσσα μου"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Προβείτε σε καλύτερη επεξήγηση"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Προσθέστε περισσότερες λεπτομέρειες"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Διορθώστε εσφαλμένες πληροφορίες"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Προσθέστε ή βελτιώστε τα παραδείγματα"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Η αναζήτησή μου θα έπρεπε να είχε οδηγήσει σε ένα διαφορετικό άρθρο"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Κάτι άλλο"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Επιλέξτε ένα..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Ωχ. Τι θα το έκανε καλύτερο;"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Ευχαριστούμε! Θα το φτιάξουμε."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Χωρίς επιλογή"
@@ -141,73 +77,96 @@ msgstr "Επιλεγμένο: "
 msgid "New interest..."
 msgstr "Νέο ενδιαφέρον..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Αποθήκευση προσχεδίου"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Ενεργοποίηση αυτόματης αποθήκευσης."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "μια άγνωστη ημερομηνία"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Έχετε ένα προσχέδιο από:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Προβολή σελίδας"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Επαναφορά περιεχομένου προσχεδίου"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Απόρριψη προσχεδίου"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "ανακτήθηκε"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Αποτυχία δημοσίευσης. Δεν είστε συνδεδεμένος αυτή τη στιγμή. Παρακαλώ χρησιμοποιήστε μια νέα καρτέλα για να συνδεθείτε και δοκιμάστε να δημοσιεύσετε ξανά."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Οι αλλαγές αποθηκεύτηκαν."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Αποτυχία δημοσίευσης. Παρακαλώ αντιγράψτε και επικολλήστε τις αλλαγές σας σε ένα ασφαλές μέρος και δοκιμάστε να υποβάλετε τη φόρμα με το κουμπί 'Δημοσίευση'."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Προσχέδιο"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "αποθηκεύτηκε"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "αποθηκεύτηκε αυτόματα"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "δημοσιεύθηκε"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Έχετε ένα προσχέδιο από:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "ανακτήθηκε"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "απορρίφθηκε"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "δημοσιεύθηκε"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "απορρίφθηκε"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "αποθηκεύτηκε αυτόματα"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Ενεργοποιήθηκε η αυτόματη αποθήκευση."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Απενεργοποιήθηκε η αυτόματη αποθήκευση."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Αποτυχία δημοσίευσης. Δεν είστε συνδεδεμένος αυτή τη στιγμή. Παρακαλώ χρησιμοποιήστε μια νέα καρτέλα για να συνδεθείτε και δοκιμάστε να δημοσιεύσετε ξανά."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Οι αλλαγές αποθηκεύτηκαν."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Αποτυχία δημοσίευσης. Παρακαλώ αντιγράψτε και επικολλήστε τις αλλαγές σας σε ένα ασφαλές μέρος και δοκιμάστε να υποβάλετε τη φόρμα με το κουμπί 'Δημοσίευση'."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -357,6 +316,69 @@ msgstr "Η διεύθυνση URL που πληκτρολογήσατε δεν �
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Προεπιλογή"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Σάς βοήθησε αυτή η σελίδα;"
+
+#~ msgid "Yes"
+#~ msgstr "Ναι"
+
+#~ msgid "No"
+#~ msgstr "Όχι"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Να μην ερωτηθώ ξανά"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Ευχαριστούμε για τα σχόλιά σας!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Δεν θα σάς ενοχλήσουμε ξανά."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Μετάφραση στη γλώσσα μου"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Προβείτε σε καλύτερη επεξήγηση"
+
+#~ msgid "Add more details"
+#~ msgstr "Προσθέστε περισσότερες λεπτομέρειες"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Διορθώστε εσφαλμένες πληροφορίες"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Προσθέστε ή βελτιώστε τα παραδείγματα"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Η αναζήτησή μου θα έπρεπε να είχε οδηγήσει σε ένα διαφορετικό άρθρο"
+
+#~ msgid "Something else"
+#~ msgstr "Κάτι άλλο"
+
+#~ msgid "Choose one..."
+#~ msgstr "Επιλέξτε ένα..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Ωχ. Τι θα το έκανε καλύτερο;"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Ευχαριστούμε! Θα το φτιάξουμε."
+
+#~ msgid "Save Draft"
+#~ msgstr "Αποθήκευση προσχεδίου"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Ενεργοποίηση αυτόματης αποθήκευσης."
+
+#~ msgid "Draft"
+#~ msgstr "Προσχέδιο"
+
+#~ msgid "saved"
+#~ msgstr "αποθηκεύτηκε"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Απενεργοποιήθηκε η αυτόματη αποθήκευση."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Άνοιγμα σημειώσεων υλοποίησης"

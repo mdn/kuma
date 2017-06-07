@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-01-26 02:28+0000\n"
 "Last-Translator: wingyminus <wingyminus@gmail.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
@@ -65,70 +65,6 @@ msgstr "%(sent_date)s โดย %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr ""
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "หน้านี้ช่วยคุณได้หรือไม่?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "ใช่"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "ไม่"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "ไม่ต้องถามฉันอีก"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "ขอบคุณสำหรับข้อคิดเห็นของคุณ!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "แปลเป็นภาษาของฉัน"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "ทำให้คำอธิบายชัดเจนขึ้น"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "เพิ่มรายละเอียดเพิ่มเติม"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "แก้ไขข้อมูลที่ไม่ถูกต้อง"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "เพิ่มหรือปรับปรุงตัวอย่าง"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "เลือกหนึ่งรายการ..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr ""
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr ""
@@ -141,72 +77,88 @@ msgstr ""
 msgid "New interest..."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "บันทึกฉบับร่าง"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "เปิดใช้งานการบันทึกอัตโนมัติ"
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "ไม่ทราบวันที่"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "ดูหน้า"
+
+#: kuma/static/js/wiki-edit-draft.js:78
+msgid "Restore draft."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
-msgstr ""
-
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "ละทิ้งฉบับร่าง"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
+#: kuma/static/js/wiki-edit-draft.js:103
+msgid "Published version"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
+#: kuma/static/js/wiki-edit-draft.js:126
+#, python-format
+msgid "You have a draft from: %(time)s."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
+#: kuma/static/js/wiki-edit-draft.js:171
+msgid "Draft restored."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:188
+msgid "Draft discarded."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:222
+msgid "Draft published:"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:224
+msgid "Draft discarded:"
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "เปิดใช้งานการบันทึกอัตโนมัติ"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:417
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
 msgstr ""
 
 #: kuma/static/js/wiki-samples.js:99
@@ -358,6 +310,42 @@ msgstr "URL ที่คุณป้อนดูเหมือนจะไม�
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "ค่าปริยาย"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "หน้านี้ช่วยคุณได้หรือไม่?"
+
+#~ msgid "Yes"
+#~ msgstr "ใช่"
+
+#~ msgid "No"
+#~ msgstr "ไม่"
+
+#~ msgid "Never ask me again"
+#~ msgstr "ไม่ต้องถามฉันอีก"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "ขอบคุณสำหรับข้อคิดเห็นของคุณ!"
+
+#~ msgid "Translate it into my language"
+#~ msgstr "แปลเป็นภาษาของฉัน"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "ทำให้คำอธิบายชัดเจนขึ้น"
+
+#~ msgid "Add more details"
+#~ msgstr "เพิ่มรายละเอียดเพิ่มเติม"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "แก้ไขข้อมูลที่ไม่ถูกต้อง"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "เพิ่มหรือปรับปรุงตัวอย่าง"
+
+#~ msgid "Choose one..."
+#~ msgstr "เลือกหนึ่งรายการ..."
+
+#~ msgid "Save Draft"
+#~ msgstr "บันทึกฉบับร่าง"
 
 #~ msgid "Open"
 #~ msgstr "เปิด"

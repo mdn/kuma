@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-28 00:06+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
@@ -66,70 +66,6 @@ msgstr "%(sent_date)s sɣur %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Tuccḍa n tuzna am %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Asebter agi imudd-ak-d tallalt?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Ih"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Ala"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Ur yi-d-sutur ara tikelt nniden"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Tanemmirt ɣef tekti yinek!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Werǧin ak-nerr di tmara si sya ɣer zdat."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Suqel ɣer tutlayt-iw"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Segzu akken iwata"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Rnu talqayt nniḍen"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Seggem talɣut ur nwati ara"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Rnu neɣ snerni imedyaten"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Anadi inu yebbi-d amargad yemgaraden"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Ayen nniḍen"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Fren yiwen..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Alḥif . D acu izemren ad isnerni ayagi?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Tanemmirt! Ad nseggem ayagi."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Ulac afran"
@@ -142,73 +78,96 @@ msgstr "Yettwafren: "
 msgid "New interest..."
 msgstr "Amaynut n wayen tḥemleḍ..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Sekles arewway"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Rmed asekles awurman."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "azemz arussin"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Ɣur-k arewway yettwasekles si:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Sken asebter"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Snes agbur n urewway"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Kkes arewway"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "yuɣal-d"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Asuffeɣ ur yeddi ara. Ur tekcimed ara akka tura. MA ulac aɣilif seqdec iccer amaynut akken ad tkecmeḍ sakin ɛreḍ tikelt nniḍen."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Isnifal ttwakelsen."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Asuffeq ur yeddi ara. Ma ulac aɣilif nɣel sakin senṭeḍ asnifel inek ɣer wadig aɣelsan sakin ɛreḍ tuzna n tferkit s useqdec n tqeffalt 'Suffeɣ-d'."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Arewway"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "yettwasekles"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "yattwasekles s wudem awurman"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "yeffeɣ-d"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Ɣur-k arewway yettwasekles si:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "yuɣal-d"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "yettwakkes"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "yeffeɣ-d"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "yettwakkes"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "yattwasekles s wudem awurman"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Asekles awurman yettwarmed."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Asekles awurman ur yermid ara."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Asuffeɣ ur yeddi ara. Ur tekcimed ara akka tura. MA ulac aɣilif seqdec iccer amaynut akken ad tkecmeḍ sakin ɛreḍ tikelt nniḍen."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Isnifal ttwakelsen."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Asuffeq ur yeddi ara. Ma ulac aɣilif nɣel sakin senṭeḍ asnifel inek ɣer wadig aɣelsan sakin ɛreḍ tuzna n tferkit s useqdec n tqeffalt 'Suffeɣ-d'."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -358,6 +317,69 @@ msgstr "Tansa URL ikecmen tettban mačči d tameɣtut"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Amezwer"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Asebter agi imudd-ak-d tallalt?"
+
+#~ msgid "Yes"
+#~ msgstr "Ih"
+
+#~ msgid "No"
+#~ msgstr "Ala"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Ur yi-d-sutur ara tikelt nniden"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Tanemmirt ɣef tekti yinek!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Werǧin ak-nerr di tmara si sya ɣer zdat."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Suqel ɣer tutlayt-iw"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Segzu akken iwata"
+
+#~ msgid "Add more details"
+#~ msgstr "Rnu talqayt nniḍen"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Seggem talɣut ur nwati ara"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Rnu neɣ snerni imedyaten"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Anadi inu yebbi-d amargad yemgaraden"
+
+#~ msgid "Something else"
+#~ msgstr "Ayen nniḍen"
+
+#~ msgid "Choose one..."
+#~ msgstr "Fren yiwen..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Alḥif . D acu izemren ad isnerni ayagi?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Tanemmirt! Ad nseggem ayagi."
+
+#~ msgid "Save Draft"
+#~ msgstr "Sekles arewway"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Rmed asekles awurman."
+
+#~ msgid "Draft"
+#~ msgstr "Arewway"
+
+#~ msgid "saved"
+#~ msgstr "yettwasekles"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Asekles awurman ur yermid ara."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Ldi-d tizmilin n bennu"

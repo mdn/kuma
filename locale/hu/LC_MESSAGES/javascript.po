@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-27 18:43+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
@@ -66,70 +66,6 @@ msgstr "%(sent_date)s, beküldő: %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Hiba a benyújtáskor mint %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Segített ez az oldal?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Igen"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Nem"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Ez a kérdés a jövőben ne jelenjen meg"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Köszönjük visszajelzését."
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Nem fogjuk többet zargatni."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Fordítás a saját nyelvére"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Adjon részletesebb magyarázatot"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Adjon meg további részleteket"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Javítsa a hibás információkat"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Példák hozzáadása vagy tökéletesítése"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "A keresés más cikkre kellett volna vezessen"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Valami más"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Válasszon egyet…"
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Ajjaj. Mi tehetné jobbá?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Köszönjük. Javítjuk."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Nincs kiválasztva"
@@ -142,73 +78,96 @@ msgstr "Kiválasztva: "
 msgid "New interest..."
 msgstr "Új érdeklődési kör…"
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Piszkozat mentése"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Automatikus mentés engedélyezése."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "ismeretlen dátum"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Létezik egy piszkozata innen:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Oldal megtekintése"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Piszkozat tartalmának helyreállítása"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Piszkozat elvetése"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "visszaállítva"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Közzététel sikertelen. Jelenleg nincs bejelentkezve. Jelentkezzen be egy új lapon, és próbálja meg újra közzétenni."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Módosítások mentve."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Közzététel sikertelen. Másolja és illessze be a módosításokat egy biztonságos helyre, és próbálja újra elküldeni az űrlapot a „Közzététel” gombbal."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Piszkozat"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "mentve"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "automatikusan mentve"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "közzétéve"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Létezik egy piszkozata innen:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "visszaállítva"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "elvetve"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "közzétéve"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "elvetve"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "automatikusan mentve"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Automatikus mentés engedélyezve."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Automatikus mentés letiltva."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Közzététel sikertelen. Jelenleg nincs bejelentkezve. Jelentkezzen be egy új lapon, és próbálja meg újra közzétenni."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Módosítások mentve."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Közzététel sikertelen. Másolja és illessze be a módosításokat egy biztonságos helyre, és próbálja újra elküldeni az űrlapot a „Közzététel” gombbal."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -358,6 +317,69 @@ msgstr "A megadott URL valószínűleg érvénytelen"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Alapértelmezett"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Segített ez az oldal?"
+
+#~ msgid "Yes"
+#~ msgstr "Igen"
+
+#~ msgid "No"
+#~ msgstr "Nem"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Ez a kérdés a jövőben ne jelenjen meg"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Köszönjük visszajelzését."
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Nem fogjuk többet zargatni."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Fordítás a saját nyelvére"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Adjon részletesebb magyarázatot"
+
+#~ msgid "Add more details"
+#~ msgstr "Adjon meg további részleteket"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Javítsa a hibás információkat"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Példák hozzáadása vagy tökéletesítése"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "A keresés más cikkre kellett volna vezessen"
+
+#~ msgid "Something else"
+#~ msgstr "Valami más"
+
+#~ msgid "Choose one..."
+#~ msgstr "Válasszon egyet…"
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Ajjaj. Mi tehetné jobbá?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Köszönjük. Javítjuk."
+
+#~ msgid "Save Draft"
+#~ msgstr "Piszkozat mentése"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Automatikus mentés engedélyezése."
+
+#~ msgid "Draft"
+#~ msgstr "Piszkozat"
+
+#~ msgid "saved"
+#~ msgstr "mentve"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Automatikus mentés letiltva."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Megvalósítási megjegyzések megnyitása"

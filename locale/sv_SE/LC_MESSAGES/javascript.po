@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-27 20:59+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
@@ -65,70 +65,6 @@ msgstr "%(sent_date)s av %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Fel att skicka in som en %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Hjälpe den här sidan dig?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Ja"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Nej"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Fråga aldrig igen"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Tack för din återkoppling!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Vi kommer inte att störa dig igen."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Översätta det till mitt språk"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Gör förklaringar tydligare"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Lägg till fler detaljer"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Korrigera felaktig information"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Lägg till eller förbättra exempel"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Min sökning ska leda till en annan artikel"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Något annat"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Välj en..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Uh oh. Vad skulle göra den bättre?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Tack! Vi ska fixa det."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Ingen markerad"
@@ -141,73 +77,96 @@ msgstr "Markerade: "
 msgid "New interest..."
 msgstr "Nytt intresse..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Spara utkast"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Aktivera spara automatiskt."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "ett okänt datum"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Du har ett utkast från:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Visa sida"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Återställ innehållet från utkast"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Kasta utkastet"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "återställd"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Det gick inte att publicera. Du är inte inloggad. Använd en ny flik för att logga in och försök publicera igen."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Ändringarna har sparats."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Det gick inte att publicera. Vänligen kopiera och klistra in dina ändringar på en säker plats och försök att skicka in formuläret med knappen 'Publicera'."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Utkast"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "sparad"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "sparad automatiskt"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "publicerad"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Du har ett utkast från:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "återställd"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "kastad"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "publicerad"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "kastad"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "sparad automatiskt"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Spara automatiskt aktiverad."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Spara automatiskt inaktiverad."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Det gick inte att publicera. Du är inte inloggad. Använd en ny flik för att logga in och försök publicera igen."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Ändringarna har sparats."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Det gick inte att publicera. Vänligen kopiera och klistra in dina ändringar på en säker plats och försök att skicka in formuläret med knappen 'Publicera'."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -357,6 +316,69 @@ msgstr "Den URL som du har angett verkar inte vara giltig"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Standard"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Hjälpe den här sidan dig?"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nej"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Fråga aldrig igen"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Tack för din återkoppling!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Vi kommer inte att störa dig igen."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Översätta det till mitt språk"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Gör förklaringar tydligare"
+
+#~ msgid "Add more details"
+#~ msgstr "Lägg till fler detaljer"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Korrigera felaktig information"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Lägg till eller förbättra exempel"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Min sökning ska leda till en annan artikel"
+
+#~ msgid "Something else"
+#~ msgstr "Något annat"
+
+#~ msgid "Choose one..."
+#~ msgstr "Välj en..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Uh oh. Vad skulle göra den bättre?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Tack! Vi ska fixa det."
+
+#~ msgid "Save Draft"
+#~ msgstr "Spara utkast"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Aktivera spara automatiskt."
+
+#~ msgid "Draft"
+#~ msgstr "Utkast"
+
+#~ msgid "saved"
+#~ msgstr "sparad"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Spara automatiskt inaktiverad."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Öppna implementeringsanteckningar"

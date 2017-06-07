@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-05-01 17:43+0000\n"
 "Last-Translator: Alpha <adrien.gat@gmail.com>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
@@ -66,70 +66,6 @@ msgstr "%(sent_date)s par %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Erreur lors de l'envoi en tant que %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Cette page vous a-t-elle été utile ?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Oui"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Non"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Ne plus me demander"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Merci de votre retour !"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Nous ne vous ennuierons plus avec ça."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Traduire dans ma langue"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Clarifier les explications"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Ajouter plus de détails"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Corriger des informations incorrectes"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Ajouter ou améliorer les exemples"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Ma recherche aurait dû aboutir sur un autre article"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Autre chose"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Choisissez une raison…"
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Mince. Qu'est-ce qui pourrait améliorer cela ?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Merci ! Nous corrigerons ça."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Aucune sélection"
@@ -142,73 +78,96 @@ msgstr "Sélectionné : "
 msgid "New interest..."
 msgstr "Nouvel intérêt…"
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Enregistrer le brouillon"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Activer l'enregistrement automatique."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "une date inconnue"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Vous avez un brouillon enregistré depuis :"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Voir la page"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Appliquer le contenu du brouillon"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Supprimer le brouillon"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "restauré"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Échec de la publication. Vous n’êtes pas connecté-e actuellement. Veuillez ouvrir un nouvel onglet afin de vous connecter puis essayez de publier à nouveau."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Modifications enregistrées."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "La publication a échoué. Veuillez copier-coller vos modifications dans un endroit sûr et essayer de soumettre le formulaire en utilisant le bouton « Publier »."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Brouillon"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "enregistré"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "enregistré automatiquement"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "publié"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Vous avez un brouillon enregistré depuis :"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "restauré"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "supprimé"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "publié"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "supprimé"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "enregistré automatiquement"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Sauvegarde automatique activée."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Sauvegarde automatique désactivée."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Échec de la publication. Vous n’êtes pas connecté-e actuellement. Veuillez ouvrir un nouvel onglet afin de vous connecter puis essayez de publier à nouveau."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Modifications enregistrées."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "La publication a échoué. Veuillez copier-coller vos modifications dans un endroit sûr et essayer de soumettre le formulaire en utilisant le bouton « Publier »."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -358,6 +317,69 @@ msgstr "L'URL saisie ne semble pas être valide"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Par défaut"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Cette page vous a-t-elle été utile ?"
+
+#~ msgid "Yes"
+#~ msgstr "Oui"
+
+#~ msgid "No"
+#~ msgstr "Non"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Ne plus me demander"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Merci de votre retour !"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Nous ne vous ennuierons plus avec ça."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Traduire dans ma langue"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Clarifier les explications"
+
+#~ msgid "Add more details"
+#~ msgstr "Ajouter plus de détails"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Corriger des informations incorrectes"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Ajouter ou améliorer les exemples"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Ma recherche aurait dû aboutir sur un autre article"
+
+#~ msgid "Something else"
+#~ msgstr "Autre chose"
+
+#~ msgid "Choose one..."
+#~ msgstr "Choisissez une raison…"
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Mince. Qu'est-ce qui pourrait améliorer cela ?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Merci ! Nous corrigerons ça."
+
+#~ msgid "Save Draft"
+#~ msgstr "Enregistrer le brouillon"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Activer l'enregistrement automatique."
+
+#~ msgid "Draft"
+#~ msgstr "Brouillon"
+
+#~ msgid "saved"
+#~ msgstr "enregistré"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Sauvegarde automatique désactivée."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Ouvrir les notes d'implémentation"

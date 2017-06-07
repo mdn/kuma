@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-27 16:27+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
@@ -66,70 +66,6 @@ msgstr "%(sent_date)s / %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "%(type)s で送信中に問題が発生しました"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "このページはお役に立ちましたか？"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "はい"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "いいえ"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "再度表示しない"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "フィードバックを送っていただきありがとうございます！"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "あなたを再び悩ませることのないようにします。"
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "自分の言語に翻訳"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "説明をより明確にする"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "さらなる詳細を追加"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "間違った情報を訂正"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "例を追加もしくは改善"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "検索結果から別の記事にたどり着きました"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "その他"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "ひとつ選択してください..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "申し訳ありません。どうしたら改善できるでしょうか？"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "ありがとうございます。この問題を修正します。"
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "選択なし"
@@ -142,73 +78,96 @@ msgstr "選択済み: "
 msgid "New interest..."
 msgstr "新たな興味..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "下書きを保存"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "自動保存を有効化"
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "不明な日時"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "この日時に保存された下書きがあります:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "ページを表示"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "下書きの内容を復元"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "下書きを破棄"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "復元された内容"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "公開できませんでした。あなたは現在ログインしていません。新しいタブを使ってログインし、再度公開を試してください。"
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "変更が保存されました。"
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "公開できませんでした。あなたの編集内容を安全な場所へコピー＆ペーストしてから「公開」ボタンを使ってフォームの送信を試してください。"
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "下書き"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "保存済み"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "自動保存済み"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "公開済み"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "この日時に保存された下書きがあります:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "復元された内容"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "破棄されました"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "公開済み"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "破棄されました"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "自動保存済み"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "自動保存が有効化されました。"
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "自動保存が無効化されました。"
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "公開できませんでした。あなたは現在ログインしていません。新しいタブを使ってログインし、再度公開を試してください。"
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "変更が保存されました。"
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "公開できませんでした。あなたの編集内容を安全な場所へコピー＆ペーストしてから「公開」ボタンを使ってフォームの送信を試してください。"
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -358,6 +317,69 @@ msgstr "入力された URL が正しくないようです"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "既定値"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "このページはお役に立ちましたか？"
+
+#~ msgid "Yes"
+#~ msgstr "はい"
+
+#~ msgid "No"
+#~ msgstr "いいえ"
+
+#~ msgid "Never ask me again"
+#~ msgstr "再度表示しない"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "フィードバックを送っていただきありがとうございます！"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "あなたを再び悩ませることのないようにします。"
+
+#~ msgid "Translate it into my language"
+#~ msgstr "自分の言語に翻訳"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "説明をより明確にする"
+
+#~ msgid "Add more details"
+#~ msgstr "さらなる詳細を追加"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "間違った情報を訂正"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "例を追加もしくは改善"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "検索結果から別の記事にたどり着きました"
+
+#~ msgid "Something else"
+#~ msgstr "その他"
+
+#~ msgid "Choose one..."
+#~ msgstr "ひとつ選択してください..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "申し訳ありません。どうしたら改善できるでしょうか？"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "ありがとうございます。この問題を修正します。"
+
+#~ msgid "Save Draft"
+#~ msgstr "下書きを保存"
+
+#~ msgid "Enable autosave."
+#~ msgstr "自動保存を有効化"
+
+#~ msgid "Draft"
+#~ msgstr "下書き"
+
+#~ msgid "saved"
+#~ msgstr "保存済み"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "自動保存が無効化されました。"
 
 #~ msgid "Open implementation notes"
 #~ msgstr "実装メモを開く"

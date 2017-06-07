@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-05-15 10:06-0700\n"
+"POT-Creation-Date: 2017-06-07 06:48-0700\n"
 "PO-Revision-Date: 2017-05-16 11:56+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
@@ -55,8 +55,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> autorstwa Matthew Inman z <a href=\"http://theoatmeal.com\" "
-"rel=\"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> autorstwa Matthew Inman z <a href=\"http://theoatmeal.com\" rel=\"nofollow"
+"\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -262,7 +262,8 @@ msgstr "Szukaj"
 #: jinja2/base.html:210
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr "<p>Prawa autorskie &copy; 2005-%(thisyear)s posiada Mozilla Developer Network i poszczególni autorzy.</p><p> Treści są dostępne na zasadach <a href=\"%(copyright_url)s\">tych licencji</a>.</p>"
+msgstr ""
+"<p>Prawa autorskie &copy; 2005-%(thisyear)s posiada Mozilla Developer Network i poszczególni autorzy.</p><p> Treści są dostępne na zasadach <a href=\"%(copyright_url)s\">tych licencji</a>.</p>"
 
 #: jinja2/base.html:215
 msgid "About MDN"
@@ -292,11 +293,11 @@ msgstr "<li><a href=\"/logout\">Wyloguj się</a>, by spróbować ponownie.</li>"
 msgid "Search Firefox Help"
 msgstr "Przeszukaj pomoc dla Firefoksa"
 
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:101
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:91
 msgid "Other languages:"
 msgstr "Wybierz język:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:112
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:102
 msgid "Go"
 msgstr "Przejdź"
 
@@ -820,8 +821,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"To są twoje klucze API. Są one przydatne do tworzenia aplikacji wykonujących zadania na MDN w twoim imieniu. Jeśli już ich nie używasz lub podejrzewasz, że zostały ujawnione osobom, którym nie ufasz"
-" – usuń je. W dowolnym czasie łatwo możesz utworzyć ich zamienniki."
+"To są twoje klucze API. Są one przydatne do tworzenia aplikacji wykonujących zadania na MDN w twoim imieniu. Jeśli już ich nie używasz lub podejrzewasz, że zostały ujawnione osobom, którym nie "
+"ufasz – usuń je. W dowolnym czasie łatwo możesz utworzyć ich zamienniki."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -847,11 +848,11 @@ msgstr "Aby używać kluczy API, musisz mieć specjalne uprawnienia. Możesz pop
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
-"<p>Poniżej opisz przeznaczenie tego klucza.</p><p><strong>Uwaga!</strong> Później będzie to twój jedyny sposób identyfikacji tego klucza, inny niż data i godzina utworzenia, więc opisuj najprościej,"
-" jak tylko możesz.</p>"
+"<p>Poniżej opisz przeznaczenie tego klucza.</p><p><strong>Uwaga!</strong> Później będzie to twój jedyny sposób identyfikacji tego klucza, inny niż data i godzina utworzenia, więc opisuj "
+"najprościej, jak tylko możesz.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -914,11 +915,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Dzisiaj o %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:322
 msgid "Yes"
 msgstr "Tak"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:336
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:326
 msgid "No"
 msgstr "Nie"
 
@@ -1239,8 +1240,8 @@ msgstr "Program Fellowship z Mozilla Developer Network (MDN) zaprasza światowej
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 "Mozilla Developer Network (MDN) dostarcza informacji o otwartych technologiach internetowych, takich jak HTML, CSS i API zarówno dla witryn internetowych i aplikacji HTML5, a także dokumentację "
 "produktów Mozilli, takich jak Firefox OS."
@@ -1314,12 +1315,12 @@ msgid "Open Web and Mobile"
 msgstr "Open Web i Mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
-msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-msgstr "Testuj w Firefoksie i ponad 800 przeglądarkach/systemach dzięki Mozilli i Sauce Labs"
+msgid "Do you have a couple minutes to help us out by taking a developer survey?"
+msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:120
-msgid "Test on Sauce Labs"
-msgstr "Testuj w Sauce Labs"
+msgid "Take the Survey"
+msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
@@ -1355,8 +1356,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">Dołącz do <span class=\"number\">%(contributors)s</span> współtwórców, którzy tworzą i tłumaczą</span> <span class=\"row2\">w <span "
-"class=\"number\">%(locales)s</span> językach i lokalizacjach</span> <span class=\"row3\">z całego świata.</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">Dołącz do <span class=\"number\">%(contributors)s</span> współtwórców, którzy tworzą i tłumaczą</span> <span class=\"row2\">w <span class=\"number\">"
+"%(locales)s</span> językach i lokalizacjach</span> <span class=\"row3\">z całego świata.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
 msgid "Help improve MDN"
@@ -1436,8 +1437,8 @@ msgstr "Propaguj ulubione rzeczy programisty."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 "<ol> <li><strong>Pobierz przyciski</strong> – użyj naszego prostego formularza, by stworzyć swój własny przycisk i kod źródłowy do promowania MDN na swojej witrynie lub blogu.</li> "
 "<li><strong>Umieść przyciski</strong> – skopiuj kod źródłowy i wklej go w dowolnym miejscu na swojej witrynie lub blogu, by osoby odwiedzające mogły go kliknąć i przejść do MDN.</li> "
@@ -1746,8 +1747,8 @@ msgstr "typ"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 "Aby się logować, musisz mieć przynajmniej jedno działające konto. Aby wyłączyć to konto musisz zalogować z innego konta. Aby usunąć profil MDN <a href=\"%(bug_form_url)s\" rel=\"nofollow\">wypełnij "
 "zgłoszenie</a>."
@@ -2161,8 +2162,8 @@ msgstr "Ta część witryny wymaga potwierdzenia, że jesteś tym za kogo się p
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
 msgstr ""
-"Aby potwierdzić twój adres e-mail została wysłana do ciebie wiadomość. Użyj zawartego w niej odnośnika w celu potwierdzenia adresu. Jeśli nie otrzymasz wiadomości w ciągu kilku minut, skontaktuj się"
-" z nami."
+"Aby potwierdzić twój adres e-mail została wysłana do ciebie wiadomość. Użyj zawartego w niej odnośnika w celu potwierdzenia adresu. Jeśli nie otrzymasz wiadomości w ciągu kilku minut, skontaktuj "
+"się z nami."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -2250,8 +2251,8 @@ msgstr "Istnieje już profil z wybranym adresem e-mail. <a href=\"%(login_url)s
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 "Jakiego adresu e-mail mamy używać, by wysyłać ci związane z MDN wiadomości i powiadomienia? Ten adres <strong>nie będzie</strong> wyświetlany na stronach MDN i będzie używany zgodnie z naszymi <a "
 "href=\"%(privacy_url)s\">zasadami ochrony prywatności</a>."
@@ -2523,7 +2524,7 @@ msgstr "Strona"
 msgid "Date"
 msgstr "Data"
 
-#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:411
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:401
 msgid "Edit page"
 msgstr "Edytuj stronę"
 
@@ -2531,7 +2532,7 @@ msgstr "Edytuj stronę"
 msgid "View complete diff"
 msgstr "Zobacz pełne porównanie"
 
-#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:412
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:402
 msgid "View page history"
 msgstr "Historia strony"
 
@@ -2653,8 +2654,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"Teraz wybierz zadanie i wykonaj je! Na początek mamy kilka zadań spośród, których możesz wybrać zgodnie ze swoimi zainteresowaniami: <a href=\"%(words_link)s\">mówienie i pisanie</a>, <a "
-"href=\"%(code_link)s\">kodowanie</a>, <a href=\"%(both_link)s\">mówienie, pisanie i kodowanie</a> lub <a href=\"%(translate_link)s\">tłumaczenie MDN na swój język</a>."
+"Teraz wybierz zadanie i wykonaj je! Na początek mamy kilka zadań spośród, których możesz wybrać zgodnie ze swoimi zainteresowaniami: <a href=\"%(words_link)s\">mówienie i pisanie</a>, <a href="
+"\"%(code_link)s\">kodowanie</a>, <a href=\"%(both_link)s\">mówienie, pisanie i kodowanie</a> lub <a href=\"%(translate_link)s\">tłumaczenie MDN na swój język</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2772,7 +2773,7 @@ msgstr "Jest już zgłoszone jako spam."
 msgid "This user has not created any revisions in the past three days."
 msgstr "Ten użytkownik nie dokonał żadnych zmian w ciągu ostatnich trzech dni."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:47
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:47
 msgid "Edit"
 msgstr "Edytuj"
 
@@ -2838,7 +2839,7 @@ msgstr "Redakcyjnego – tekst​​, gramatyka lub treść"
 msgid "Localization in progress - not completely translated yet."
 msgstr "Trwa tłumaczenie – jeszcze nie w pełni przetłumaczono."
 
-#: kuma/wiki/content.py:725
+#: kuma/wiki/content.py:724
 msgid "Edit section"
 msgstr "Edytuj sekcję"
 
@@ -3219,11 +3220,11 @@ msgstr "Próbujesz utworzyć nową stronę."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
-"Tworzenie nowej strony to ograniczona akcja. Aby utworzyć nową stronę, <a href=\"%(request_page_url)s\">zgłoś taką potrzebę</a>. Jeśli potrzebujesz pozwolenia na tworzenie nowych stron, <a "
-"href=\"%(email_link)s\">napisz do nas</a>."
+"Tworzenie nowej strony to ograniczona akcja. Aby utworzyć nową stronę, <a href=\"%(request_page_url)s\">zgłoś taką potrzebę</a>. Jeśli potrzebujesz pozwolenia na tworzenie nowych stron, <a href="
+"\"%(email_link)s\">napisz do nas</a>."
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -3343,81 +3344,81 @@ msgstr "Powód usunięcia"
 msgid "Restore this document"
 msgstr "Przywróć ten dokument"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:171
 msgid "Previous Search Result"
 msgstr "Poprzednie wyniki"
 
-#: kuma/wiki/jinja2/wiki/document.html:181 kuma/wiki/jinja2/wiki/document.html:191
+#: kuma/wiki/jinja2/wiki/document.html:171 kuma/wiki/jinja2/wiki/document.html:181
 msgid "No Previous Search Result"
 msgstr "Nie ma poprzednich wyników"
 
-#: kuma/wiki/jinja2/wiki/document.html:187
+#: kuma/wiki/jinja2/wiki/document.html:177
 msgid "Your Search Results"
 msgstr "Wyniki wyszukiwania"
 
-#: kuma/wiki/jinja2/wiki/document.html:191
+#: kuma/wiki/jinja2/wiki/document.html:181
 msgid "Next Search Result"
 msgstr "Następne wyniki"
 
-#: kuma/wiki/jinja2/wiki/document.html:195
+#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "see all contributors"
 msgstr "zobacz wszystkich autorów"
 
-#: kuma/wiki/jinja2/wiki/document.html:195
+#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "hide contributors"
 msgstr "ukryj autorów"
 
-#: kuma/wiki/jinja2/wiki/document.html:199
+#: kuma/wiki/jinja2/wiki/document.html:189
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "Zobacz profil: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:224
+#: kuma/wiki/jinja2/wiki/document.html:214
 msgid "In This Article"
 msgstr "W tym artykule"
 
-#: kuma/wiki/jinja2/wiki/document.html:239
+#: kuma/wiki/jinja2/wiki/document.html:229
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr "Ten dokument nie był jeszcze renderowany, a nie można renderować w trakcie <a href=\"%(url)s\">konserwacji</a> MDN. Wróć po ukończeniu konserwacji."
 
-#: kuma/wiki/jinja2/wiki/document.html:250
+#: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "Ten dokument jest renderowany przez system po raz pierwszy. Aby zobaczyć całą treść <a href=\"%(url)s\">odśwież tę stronę</a> za kilka minut."
 
-#: kuma/wiki/jinja2/wiki/document.html:258
+#: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
-"Aktualnie <abbr title=\"%(started_at)s\">trwa</abbr> aktualizacja tego dokumentu. Jeżeli treść poniżej wydaje się przestarzała, lub jeśli czegoś brakuje, <a href=\"%(url)s\">odśwież tę stronę</a> za"
-" kilka minut."
+"Aktualnie <abbr title=\"%(started_at)s\">trwa</abbr> aktualizacja tego dokumentu. Jeżeli treść poniżej wydaje się przestarzała, lub jeśli czegoś brakuje, <a href=\"%(url)s\">odśwież tę stronę</a> "
+"za kilka minut."
 
-#: kuma/wiki/jinja2/wiki/document.html:267
+#: kuma/wiki/jinja2/wiki/document.html:257
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 "Aktualizacja tego dokumentu <abbr title=\"%(scheduled_at)s\">została zaplanowana</abbr>.Jeżeli treść poniżej wydaje się przestarzała, lub jeśli czegoś brakuje, <a href=\"%(url)s\">odśwież tę "
 "stronę</a> za kilka minut."
 
-#: kuma/wiki/jinja2/wiki/document.html:278
+#: kuma/wiki/jinja2/wiki/document.html:268
 msgid "This is an experimental page."
 msgstr "Ta strona jest eksperymentalna."
 
-#: kuma/wiki/jinja2/wiki/document.html:289
+#: kuma/wiki/jinja2/wiki/document.html:279
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "To tłumaczenie jest niekompletne. Pomóż <a href=\"%(translate_url)s\">przetłumaczyć ten artykuł</a> z języka angielskiego."
 
-#: kuma/wiki/jinja2/wiki/document.html:294
+#: kuma/wiki/jinja2/wiki/document.html:284
 msgid "This translation is in progress."
 msgstr "Trwa tłumaczenie tego artykułu."
 
-#: kuma/wiki/jinja2/wiki/document.html:301
+#: kuma/wiki/jinja2/wiki/document.html:291
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3426,31 +3427,31 @@ msgstr ""
 "Nasi wolontariusze nie przetłumaczyli jeszcze tego artykułu na język <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Dołącz do nas i pomóż go przetłumaczyć!</a><br>Można "
 "także przeczytać artykuł w języku <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
-#: kuma/wiki/jinja2/wiki/document.html:313
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This article doesn't have any content yet."
 msgstr "Ten artykuł nie ma jeszcze żadnej treści."
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:312
 msgid "This article doesn't have approved content yet."
 msgstr "Ten artykuł nie został jeszcze zatwierdzony."
 
-#: kuma/wiki/jinja2/wiki/document.html:327
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "Was this article helpful?"
 msgstr "Czy ten artykuł był pomocny?"
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:331
 msgid "Thank you!"
 msgstr "Dziękujemy!"
 
-#: kuma/wiki/jinja2/wiki/document.html:351
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "Autorzy i etykiety dokumentu"
 
-#: kuma/wiki/jinja2/wiki/document.html:357
+#: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
 msgstr "Autorzy tej strony:"
 
-#: kuma/wiki/jinja2/wiki/document.html:363
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "Ostatnia aktualizacja:"
 
@@ -4050,8 +4051,8 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Napisz dlaczego zrobiłeś uzupełnienia i zmiany. Jest to opcjonalne, ale dzięki temu będzie łatwiej zrozumieć historię strony."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, python-format
-msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+#, fuzzy, python-format
+msgid "Sorry! We weren't able to save your contribution. Please copy and paste your changes into a safe place and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
 msgstr "Zapisanie zmian się nie powiodło. Prosimy zapisać wersję roboczą i <a href=\"%(admin_email)s\">skontaktuj się z administratorami strony</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
@@ -4297,7 +4298,7 @@ msgstr "Automatyczne podpowiedzi wymagają części frazy. Indeks całego dokume
 msgid "Document has been edited; please re-review."
 msgstr "Dokument został zmieniony – sprawdź ponownie."
 
-#: kuma/wiki/views/translate.py:74
+#: kuma/wiki/views/translate.py:75
 msgid "You cannot translate this document."
 msgstr "Nie możesz tłumaczyć tego artykułu."
 
@@ -4305,6 +4306,12 @@ msgstr "Nie możesz tłumaczyć tego artykułu."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Server Elasticsearch: %(backend)s"
+
+#~ msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+#~ msgstr "Testuj w Firefoksie i ponad 800 przeglądarkach/systemach dzięki Mozilli i Sauce Labs"
+
+#~ msgid "Test on Sauce Labs"
+#~ msgstr "Testuj w Sauce Labs"
 
 #~ msgid "Create a New Template"
 #~ msgstr "Utwórz nowy szablon"
@@ -4346,11 +4353,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Twórz aplikacje Open Web"
 
 #~ msgid ""
-#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 #~ msgstr ""
-#~ "Twoje zgłoszenie zawiera treści, które mogą być nieodpowiednie dla MDN. Powtarzające się próby przesłania nieodpowiedniego materiału mogą spowodować dezaktywację konta. Zobacz naszą instrukcję “<a "
-#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>”, by poznać szczegółowe informacje na temat tego, co jest odpowiednim materiałem."
+#~ "Twoje zgłoszenie zawiera treści, które mogą być nieodpowiednie dla MDN. Powtarzające się próby przesłania nieodpowiedniego materiału mogą spowodować dezaktywację konta. Zobacz naszą instrukcję "
+#~ "“<a href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>”, by poznać szczegółowe informacje na temat tego, co jest odpowiednim materiałem."
 
 #~ msgid "Sign in:"
 #~ msgstr "Zaloguj się:"
@@ -4381,23 +4388,24 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
 #~ msgstr ""
-#~ "Profil z takim adresem e-mail już istnieje. Aby podłączyć Persona do profilu MDN należy, <a href=\"%(connections_url)s\">zalogować się do swojego konta społecznościowego i przejść do połączeń.</a>"
+#~ "Profil z takim adresem e-mail już istnieje. Aby podłączyć Persona do profilu MDN należy, <a href=\"%(connections_url)s\">zalogować się do swojego konta społecznościowego i przejść do połączeń.</"
+#~ "a>"
 
 #~ msgid ""
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 #~ msgstr[0] ""
-#~ "Istnieje już profil powiązany z poniższym adresem e-mail. Czy masz już profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Tak, połącz z "
-#~ "moim profilem MDN</a>"
+#~ "Istnieje już profil powiązany z poniższym adresem e-mail. Czy masz już profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Tak, połącz "
+#~ "z moim profilem MDN</a>"
 #~ msgstr[1] ""
-#~ "Istnieje już profil powiązany z jednym z poniższych adresów e-mail. Czy masz już profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Tak, "
-#~ "połącz z moim profilem MDN</a>"
+#~ "Istnieje już profil powiązany z jednym z poniższych adresów e-mail. Czy masz już profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s"
+#~ "\">Tak, połącz z moim profilem MDN</a>"
 #~ msgstr[2] ""
-#~ "Istnieje już profil powiązany z jednym z poniższych adresów e-mail. Czy masz już profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Tak, "
-#~ "połącz z moim profilem MDN</a>"
+#~ "Istnieje już profil powiązany z jednym z poniższych adresów e-mail. Czy masz już profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s"
+#~ "\">Tak, połącz z moim profilem MDN</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "Zaloguj się za pomocą Persona"
@@ -4460,8 +4468,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Ten artykuł został zmodyfikowany w trakcie twojej edycji."
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
 #~ "Treść jest dostępna na zasadach licencji określonej w tym projekcie. &middot; <a href=\"%(about_url)s\">Informacje o MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Współtwórz kod</a> "
 #~ "&middot; <a href=\"//www.mozilla.org/en-US/privacy\">Zasady ochrony prywatności</a>"
@@ -4683,12 +4691,13 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Czerwiec 2011"
 
 #~ msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
-#~ msgstr "Animacje CSS umożliwiają zmianę wartości właściwości w czasie, by animować wygląd lub położenie elementów bez lub z minimalnym udziałem JavaScriptu i z większą kontrolą niż efekty przejścia."
+#~ msgstr ""
+#~ "Animacje CSS umożliwiają zmianę wartości właściwości w czasie, by animować wygląd lub położenie elementów bez lub z minimalnym udziałem JavaScriptu i z większą kontrolą niż efekty przejścia."
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
 #~ "Animacje CSS3 są nową funkcją nowoczesnych przeglądarek, takich jak Firefox, które dodają większą elastyczność, kontrolę stylu i nowe doznania podczas przeglądania internetu. Animacje CSS3 "
 #~ "umożliwiają zmianę wartości w czasie, bez lub z minimalnym udziałem JavaScriptu i lepsze sterowanie niż efekty przejścia CSS. Przejdź od statycznych właściwości do animacji wyglądu i pozycji "
@@ -4729,8 +4738,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."
 #~ msgstr ""
-#~ "Za pomocą geolokalizacji można, za zgodą użytkownika, określić miejsce, w którym aktualnie się znajduje i użyć tę informację do zwiększenia możliwości przeglądania lub włączyć zaawansowane funkcje "
-#~ "informacyjne powiązane z lokalizacją."
+#~ "Za pomocą geolokalizacji można, za zgodą użytkownika, określić miejsce, w którym aktualnie się znajduje i użyć tę informację do zwiększenia możliwości przeglądania lub włączyć zaawansowane "
+#~ "funkcje informacyjne powiązane z lokalizacją."
 
 #~ msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
 #~ msgstr "Konkurs Dev Derby Październik 2011 – CSS Media Queries"
@@ -4753,8 +4762,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Listopad 2011"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
-#~ " that make it easy to control and draw in."
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
 #~ msgstr ""
 #~ "Canvas umożliwia malowanie internetu, używając do renderowania i animacji obiektów 2D, obrazków bitmapowych i zaawansowanych efektów graficznych JavaScriptu. Każdy element <canvas> dostarcza "
 #~ "graficzny kontekst z jego własnym stanem i metodami ułatwiającymi zarządzanie i rysowanie."
@@ -4770,8 +4779,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."
 #~ msgstr ""
-#~ "Indeksowanie bazy danych (IndexedDB) umożliwia aplikacjom internetowym przechowywanie lokalnie, dużych ilości danych strukturalnych w celu szybkiego dostępu do nich zarówno w trybie offline, jak i "
-#~ "online."
+#~ "Indeksowanie bazy danych (IndexedDB) umożliwia aplikacjom internetowym przechowywanie lokalnie, dużych ilości danych strukturalnych w celu szybkiego dostępu do nich zarówno w trybie offline, jak "
+#~ "i online."
 
 #~ msgid "January 2012 Dev Derby Challenge - Orientation"
 #~ msgstr "Konkurs Dev Derby Styczeń 2012 – Orientacja"
@@ -4853,11 +4862,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Lipiec 2012"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-#~ "input with HTML, and more. What else can you do without JavaScript?"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
 #~ msgstr ""
-#~ "Tworzenie zawierających wspaniałe doznania aplikacji internetowych nigdy nie było łatwiejsze. Dzisiejsze otwarte standardy internetowe ze wspaniałymi funkcjami są pod ręką. Można tworzyć animowane "
-#~ "strony za pomocą CSS, sprawdzać dane wprowadzane przez użytkowników za pomocą HTML-a i dużo więcej. Co można jeszcze zrobić, nie używając JavaScriptu?"
+#~ "Tworzenie zawierających wspaniałe doznania aplikacji internetowych nigdy nie było łatwiejsze. Dzisiejsze otwarte standardy internetowe ze wspaniałymi funkcjami są pod ręką. Można tworzyć "
+#~ "animowane strony za pomocą CSS, sprawdzać dane wprowadzane przez użytkowników za pomocą HTML-a i dużo więcej. Co można jeszcze zrobić, nie używając JavaScriptu?"
 
 #~ msgid "August 2012 Dev Derby Challenge - Camera API"
 #~ msgstr "Konkurs Dev Derby Sierpień 2012 – API Camera"
@@ -4890,8 +4899,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Październik 2012"
 
 #~ msgid ""
-#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-#~ "you do with Media Queries?"
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
+#~ "can you do with Media Queries?"
 #~ msgstr ""
 #~ "Technologia CSS Media Queries jest obecnie powszechnie stosowanym narzędziem do projektowania dla urządzeń mobilnych stron internetowych wchodzących w interakcję z użytkownikiem. Ma nawet "
 #~ "rekomendację organizacji W3C! Może powiedzieć ci o wiele więcej o wyświetlaczu niż tylko jego szerokość. Co można zrobić za pomocą Media Queries?"
@@ -4907,8 +4916,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
 #~ msgstr ""
-#~ "Za pomocą API Fullscreen można uciec od ograniczeń okna przeglądarki. Można wykryć przejścia w tryb pełnoekranowy i nadać stronom specjalny styl w trakcie przeglądania w tym trybie. Dyskusja o tym "
-#~ "jest zajmująca!"
+#~ "Za pomocą API Fullscreen można uciec od ograniczeń okna przeglądarki. Można wykryć przejścia w tryb pełnoekranowy i nadać stronom specjalny styl w trakcie przeglądania w tym trybie. Dyskusja o "
+#~ "tym jest zajmująca!"
 
 #~ msgid "December 2012 Dev Derby Challenge - Offline"
 #~ msgstr "Konkurs Dev Derby Grudzień 2012 – Offline"
@@ -4920,11 +4929,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Grudzień 2012"
 
 #~ msgid ""
-#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-#~ "users, improve performance, and more."
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
+#~ "mobile users, improve performance, and more."
 #~ msgstr ""
-#~ "Dzięki możliwościom technologii offline można tworzyć aplikacje działające zarówno, gdy masz lub nie masz połączenia z internetem. Używając tych technologii, można lepiej obsługiwać podróżujących i "
-#~ "przemieszczających się użytkowników, zwiększać wydajność i więcej."
+#~ "Dzięki możliwościom technologii offline można tworzyć aplikacje działające zarówno, gdy masz lub nie masz połączenia z internetem. Używając tych technologii, można lepiej obsługiwać "
+#~ "podróżujących i przemieszczających się użytkowników, zwiększać wydajność i więcej."
 
 #~ msgid "January 2013 Dev Derby Challenge - Drag and Drop"
 #~ msgstr "Konkurs Dev Derby Styczeń 2013 – Przeciągnij i upuść"
@@ -4948,11 +4957,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Luty 2013"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
-#~ " all the interactions users have come to expect."
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
 #~ msgstr ""
-#~ "API Touch Events umożliwia śledzenie zdarzeń wielodotyku na urządzeniach obsługujących tę technologię. Można ją używać przy tworzeniu złożonych gier, obsługuje pinch-to-zoom i więcej. Używając tej "
-#~ "technologii twoja aplikacja może odpowiedzieć na wszystkie interakcje, jakie oczekują użytkownicy."
+#~ "API Touch Events umożliwia śledzenie zdarzeń wielodotyku na urządzeniach obsługujących tę technologię. Można ją używać przy tworzeniu złożonych gier, obsługuje pinch-to-zoom i więcej. Używając "
+#~ "tej technologii twoja aplikacja może odpowiedzieć na wszystkie interakcje, jakie oczekują użytkownicy."
 
 #~ msgid "March 2013 Dev Derby Challenge - Mobile"
 #~ msgstr "Konkurs Dev Derby Marzec 2013 – Mobile"
@@ -4976,8 +4985,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ "Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
 #~ "tasks."
 #~ msgstr ""
-#~ "Web Workers umożliwia uruchamianie skryptów w tle. Korzystając z Web Workers, można tworzyć olśniewające interfejsy użytkownika, które nie są hamowane przez nawet najbardziej intensywne obliczeniowo"
-#~ " zadania."
+#~ "Web Workers umożliwia uruchamianie skryptów w tle. Korzystając z Web Workers, można tworzyć olśniewające interfejsy użytkownika, które nie są hamowane przez nawet najbardziej intensywne "
+#~ "obliczeniowo zadania."
 
 #~ msgid "May 2013 Dev Derby Challenge - getUserMedia"
 #~ msgstr "Konkurs Dev Derby Maj 2013 – getUserMedia"
@@ -5061,7 +5070,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgid ""
 #~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
 #~ msgstr ""
-#~ "Kaskadowe arkusze stylów poziomu 3 (CSS3) dostarczają różne nowe funkcje i możliwości rozszerzające formatowanie i wygląd dokumentów napisanych w różnych rodzajach języków, takich jak HTML czy XML."
+#~ "Kaskadowe arkusze stylów poziomu 3 (CSS3) dostarczają różne nowe funkcje i możliwości rozszerzające formatowanie i wygląd dokumentów napisanych w różnych rodzajach języków, takich jak HTML czy "
+#~ "XML."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS"
@@ -5101,8 +5111,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
 #~ msgstr ""
-#~ "Specyfikacja CSS3-Font zawiera udoskonalone funkcje czcionek i typografii, takie jak umieszczanie własnych czcionek za pomocą @ font-face lub kontrolowanie funkcji czcionek OpenType bezpośrednio za "
-#~ "pomocą CSS."
+#~ "Specyfikacja CSS3-Font zawiera udoskonalone funkcje czcionek i typografii, takie jak umieszczanie własnych czcionek za pomocą @ font-face lub kontrolowanie funkcji czcionek OpenType bezpośrednio "
+#~ "za pomocą CSS."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
@@ -5116,10 +5126,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "Formularze"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr ""
-#~ "Elementy i atrybuty formularza w HTML5 dostarczają wyższy stopień semantycznych znaczników niż HTML4 i znacznie zmniejszają potrzebę tworzenia żmudnych skryptów i stylizacji, niż było to wymagane w "
-#~ "HTML4."
+#~ "Elementy i atrybuty formularza w HTML5 dostarczają wyższy stopień semantycznych znaczników niż HTML4 i znacznie zmniejszają potrzebę tworzenia żmudnych skryptów i stylizacji, niż było to "
+#~ "wymagane w HTML4."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -5517,12 +5528,12 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
 #~ "<p>Witamy w Mozilla Demo Studio, gdzie twórcy, tacy jak ty, mogą rozwijać, dzielić się, pokazać i nauczyć się wszystkiego o technologiach internetowych. Zobacz, jakie możliwości daje zgłębianie "
-#~ "zasobów Demo Studio:</p> <ul> <li>Obejrzyj dema prezentujące, czego HTML, CSS i JavaScript mogą dokonać.</li> <li>Sprawdź kod źródłowy tych dem, by zobaczyć, jak one działają.</li> <li>Zapoznaj się "
-#~ "z dokumentacją, by dowiedzieć się więcej o otwartych standardach i technologiach stosowanych w internecie.</li> </ul>"
+#~ "zasobów Demo Studio:</p> <ul> <li>Obejrzyj dema prezentujące, czego HTML, CSS i JavaScript mogą dokonać.</li> <li>Sprawdź kod źródłowy tych dem, by zobaczyć, jak one działają.</li> <li>Zapoznaj "
+#~ "się z dokumentacją, by dowiedzieć się więcej o otwartych standardach i technologiach stosowanych w internecie.</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "Przejdź do poprzedniego dema, %(demo_title)s"
@@ -5762,8 +5773,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Prześlij nowe demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
 #~ "<p>Czy tworzysz niezwykłe nowe sposoby korzystania z internetu, czy tylko eksperymentujesz z najnowszymi technologiami, zapraszamy cię do przesłania swoich dem, by podzielić się nimi z innymi "
 #~ "twórcami lub tylko je pokazać.</p> <p>Uzupełnij poniższy formularz, by prawidłowo przesłać demo do Demo Studio.</p>"
@@ -5796,15 +5807,15 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Przygotowywanie demo"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Kod źródłowy dema dema powinien być spakowany w archiwum ZIP.</li> <li>Strona główna dema powinna mieć nazwę code>index.html</code> i znajdować się w katalogu głównym tego archiwum.</li> "
-#~ "<li>Demo powinno być zbudowane w oparciu o technologie, takie jak HTML, CSS, JavaScript bazujące na operacjach wykonywanych po stronie klienta. Języki o architekturze klient-serwer, takie jak PHP i "
-#~ "Ruby nie są obsługiwane.</li> <li>Jeśli demo wymaga zewnętrznych zasobów, by uzyskać do nich dostęp, powinno używać technologii AJAX.</li> <li>Aby przesłać demo, musisz mieć <a "
-#~ "href=\"%(signup_url)s\">profil MDN</a>.</li> <li>W polu szczegółowych informacji o demie podaj informacje o treściach innych podmiotów zawartych w demie, które nie mogą być udostępnione na zasadach "
+#~ "<ul> <li>Kod źródłowy dema dema powinien być spakowany w archiwum ZIP.</li> <li>Strona główna dema powinna mieć nazwę code>index.html</code> i znajdować się w katalogu głównym tego archiwum.</"
+#~ "li> <li>Demo powinno być zbudowane w oparciu o technologie, takie jak HTML, CSS, JavaScript bazujące na operacjach wykonywanych po stronie klienta. Języki o architekturze klient-serwer, takie "
+#~ "jak PHP i Ruby nie są obsługiwane.</li> <li>Jeśli demo wymaga zewnętrznych zasobów, by uzyskać do nich dostęp, powinno używać technologii AJAX.</li> <li>Aby przesłać demo, musisz mieć <a href="
+#~ "\"%(signup_url)s\">profil MDN</a>.</li> <li>W polu szczegółowych informacji o demie podaj informacje o treściach innych podmiotów zawartych w demie, które nie mogą być udostępnione na zasadach "
 #~ "wolnych licencji i dodaj odnośniki do stron internetowych ich autorów.</li> </ul>\""
 
 #~ msgid "Provide the Source Code"
@@ -5836,8 +5847,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ "niesamowitych prac.</p>"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr ""
 #~ "<p>Czy tworzysz niezwykłe nowe sposoby korzystania z internetu, czy tylko eksperymentujesz z najnowszymi technologiami, zapraszamy cię do przesłania swoich prac, by podzielić się nimi z innymi "
 #~ "twórcami lub tylko je pokazać.</p>"
@@ -5846,9 +5857,9 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Zanim zaczniesz"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Musisz być przygotowany do <strong>dostarczenia kodu źródłowego</strong> dema. Dema są utrzymywane na serwerach Demo Studio.</li> <li>Kod źródłowy dema musi być udostępniany na zasadach "
 #~ "<strong>otwartych licencji</strong>, takich jak MPL, GPL, lub BSD.</li> <li>Demo powinno być pokazem <strong>otwartych technologii internetowych</strong>, takich jak HTML5 i CSS3.</li> <li>Demo "
@@ -5856,15 +5867,15 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Kod źródłowy dema powinien być spakowany w <strong>pliku ZIP</strong>.</li> <li>Strona główna dema powinna mieć nazwę <strong><code>index.html</code></strong> i znajdować się w katalogu "
-#~ "głównym archiwum ZIP.</li> <li>Demo powinno być zbudowane w oparciu o technologie, takie jak HTML, CSS, JavaScript bazujące na <strong>operacjach wykonywanych po stronie klienta</strong>. Języki o "
-#~ "architekturze klient-serwer, takie jak PHP i Ruby nie są obsługiwane.</li> <li>Jeśli demo wymaga zewnętrznych zasobów, by uzyskać do nich dostęp, powinno używać technologii "
-#~ "<strong>AJAX</strong>.</li> <li>W polu szczegółowych informacji o demie podaj informacje o treściach innych podmiotów zawartych w demie, które nie mogą być udostępnione na zasadach wolnych licencji "
-#~ "i dodaj odnośniki do stron internetowych ich autorów.</li> </ul>"
+#~ "głównym archiwum ZIP.</li> <li>Demo powinno być zbudowane w oparciu o technologie, takie jak HTML, CSS, JavaScript bazujące na <strong>operacjach wykonywanych po stronie klienta</strong>. Języki "
+#~ "o architekturze klient-serwer, takie jak PHP i Ruby nie są obsługiwane.</li> <li>Jeśli demo wymaga zewnętrznych zasobów, by uzyskać do nich dostęp, powinno używać technologii <strong>AJAX</"
+#~ "strong>.</li> <li>W polu szczegółowych informacji o demie podaj informacje o treściach innych podmiotów zawartych w demie, które nie mogą być udostępnione na zasadach wolnych licencji i dodaj "
+#~ "odnośniki do stron internetowych ich autorów.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Aby przesłać swoje demo, musisz mieć <strong><a href=\"%(signup_url)s\">profil MDN</a></strong>.</p>"
@@ -6104,17 +6115,17 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Wyniki szukania dla „{q}”"
 
 #~ msgid ""
-#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the site. *"
-#~ " Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will "
-#~ "Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
+#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the "
+#~ "site. * Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier "
+#~ "(teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
 #~ msgstr ""
 #~ "Chcesz porozmawiać z kimś o MDN? Możesz to zrobić na kilka sposobów: * Lista mailingowa: %(list_link)s Subskrybuj listę, by powiedzieć nam, co cię interesuje w MDN i zadawać pytania dotyczące "
-#~ "witryny. * Czat: kanał #mdn na irc.mozilla.org</a>. Zobacz %(irc_link)s, by uzyskać więcej informacji o IRC-u. Na IRC-u znajdziesz osoby piszące artykuły i administratorów: Erica Shepherda (sheppy),"
-#~ " Jean-Yves Perriera (teoli), Willa Bamberga (wbamberg), Floriana Scholza (fscholz), Chrisa Millsa (chrismills), i opiekunkę społeczności Janet Swisher (jms). * Blog: %(blog_link)s"
+#~ "witryny. * Czat: kanał #mdn na irc.mozilla.org</a>. Zobacz %(irc_link)s, by uzyskać więcej informacji o IRC-u. Na IRC-u znajdziesz osoby piszące artykuły i administratorów: Erica Shepherda "
+#~ "(sheppy), Jean-Yves Perriera (teoli), Willa Bamberga (wbamberg), Floriana Scholza (fscholz), Chrisa Millsa (chrismills), i opiekunkę społeczności Janet Swisher (jms). * Blog: %(blog_link)s"
 
 #~ msgid ""
-#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a "
-#~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
+#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href="
+#~ "\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
 #~ msgstr ""
 #~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> Zobacz '%(parent_locale)s' dokument główny </a> (<a href=\"%(mod_url)s\">ostatnio zmodyfikowany %(parent_modified)s</a>) </p> <p> <a "
 #~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edytuj '%(doc_locale)s' tłumaczenie </a> (ostatnio zmodyfikowane %(doc_modified)s) </p>"
@@ -6160,8 +6171,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "<p><strong>HyperText Markup Language</strong> is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you learn HTML.</p>"
 #~ msgstr ""
-#~ "<p><strong>Hipertekstowy język znaczników (HTML)</strong> jest podstawowym językiem używanym do tworzenia stron internetowych. Jeśli chcesz tworzyć i modyfikować strony internetowe najlepiej, jeśli "
-#~ "nauczysz się HTML.</p>"
+#~ "<p><strong>Hipertekstowy język znaczników (HTML)</strong> jest podstawowym językiem używanym do tworzenia stron internetowych. Jeśli chcesz tworzyć i modyfikować strony internetowe najlepiej, "
+#~ "jeśli nauczysz się HTML.</p>"
 
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
@@ -6172,13 +6183,13 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr ""
-#~ "<p><strong>JavaScript (JS)</strong> jest językiem programowania umożliwiającym stronom internetowym interakcję z użytkownikiem ponad podstawowy poziom oferowany przez odnośniki i formularze "
-#~ "HTML.</p>"
+#~ "<p><strong>JavaScript (JS)</strong> jest językiem programowania umożliwiającym stronom internetowym interakcję z użytkownikiem ponad podstawowy poziom oferowany przez odnośniki i formularze HTML."
+#~ "</p>"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through "
-#~ "Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
-#~ "victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups "
+#~ "through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, "
+#~ "struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Masz już dość nauki na własną rękę?<br> Czy chcesz przyłączyć się do społeczności uczącej się o otwartych technologiach internetowych?</h2> <p>Zarejestruj się w Peer-to-Peer University<span "
 #~ "title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a> grupie takich samych, jak ty osób. Podziel się z "
@@ -6188,15 +6199,15 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Strona startowa"
 
 #~ msgid ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
-#~ "the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
-#~ "learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
-#~ "here.</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to "
+#~ "define the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just "
+#~ "starting out, learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find "
+#~ "helpful resources here.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">CSS – kaskadowe arkusze stylów (ang. <strong>Cascading Style Sheets</strong>), to język opisujący wygląd stron internetowych. Aby stworzyć pięknie wyglądającą stronę internetową, "
-#~ "musisz poznać CSS, by zdefiniować wygląd i położenie elementów HTML na stronach.</p> <p>Odnośniki na tej stronie prowadzą do różnych przewodników i materiałów do ćwiczeń związanych z CSS. Czy jesteś"
-#~ " początkującym, który chce poznać podstawy, czy doświadczonym programistą internetowym chcącym poznać <strong>CSS3</strong> – najnowszą wersję standardu – i najlepsze zastosowania, możesz tutaj "
-#~ "znaleźć pomocne zasoby.</p>"
+#~ "<p class=\"intro\">CSS – kaskadowe arkusze stylów (ang. <strong>Cascading Style Sheets</strong>), to język opisujący wygląd stron internetowych. Aby stworzyć pięknie wyglądającą stronę "
+#~ "internetową, musisz poznać CSS, by zdefiniować wygląd i położenie elementów HTML na stronach.</p> <p>Odnośniki na tej stronie prowadzą do różnych przewodników i materiałów do ćwiczeń związanych "
+#~ "z CSS. Czy jesteś początkującym, który chce poznać podstawy, czy doświadczonym programistą internetowym chcącym poznać <strong>CSS3</strong> – najnowszą wersję standardu – i najlepsze "
+#~ "zastosowania, możesz tutaj znaleźć pomocne zasoby.</p>"
 
 #~ msgid "Introductory Level"
 #~ msgstr "Poziom podstawowy"
@@ -6206,7 +6217,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "This tutorial introduces you to Cascading Style Sheets (CSS). It guides you through the basic features of CSS with practical examples that you can try for yourself on your own computer."
 #~ msgstr ""
-#~ "Ten poradnik wprowadza użytkownika do kaskadowych arkuszy stylów (CSS). Przeprowadzi go przez podstawowe funkcje CSS z praktycznymi przykładami, które można spróbować samemu na własnym komputerze."
+#~ "Ten poradnik wprowadza użytkownika do kaskadowych arkuszy stylów (CSS). Przeprowadzi go przez podstawowe funkcje CSS z praktycznymi przykładami, które można spróbować samemu na własnym "
+#~ "komputerze."
 
 #~ msgid "CSS Basics"
 #~ msgstr "Podstawy CSS"
@@ -6314,45 +6326,46 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Funkcja CSS3 @font-face umożliwia użycie niestandardowych czcionek w internecie w przystępny, skalowalny i dający się obrabiać sposób."
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online peer "
-#~ "study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
+#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online "
+#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
 #~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Masz już dość nauki kaskadowych arkuszy stylów (CSS) na własną rękę?<br> Czy chcesz przyłączyć się do społeczności uczącej się CSS i innych otwartych technologii internetowych?</h2> "
-#~ "<p>Zarejestruj się w Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a> "
-#~ "grupie takich samych, jak ty osób. Podziel się z innymi swoimi odkryciami, walką i zwycięstwami na niwie CSS.</p>"
+#~ "<p>Zarejestruj się w Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</"
+#~ "a> grupie takich samych, jak ty osób. Podziel się z innymi swoimi odkryciami, walką i zwycięstwami na niwie CSS.</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
-#~ " can't take advantage."
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
+#~ "and so can't take advantage."
 #~ msgstr ""
 #~ "Na tej witrynie jest omawiana najnowsza, wciąż rozwijająca się wersja CSS – <strong>CSS3</strong>. Wiele funkcji CSS3 jest w różny sposób obsługiwanych przez nowoczesne przeglądarki, ale wielu "
 #~ "użytkowników wciąż ma starsze przeglądarki i nie może z nich skorzystać."
 
 #~ msgid ""
-#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
-#~ "please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, through an open "
-#~ "content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great "
+#~ "resource, please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, "
+#~ "through an open content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
 #~ msgstr ""
 #~ "<p>Zasoby te są tworzone przez patrzące w przyszłość firmy i twórców internetowych, którzy przyjęli otwarte standardy i najlepsze rozwiązania dotyczące tworzenia materiałów dla internetu. Jeśli "
-#~ "uważasz, że pominęliśmy jakieś istotne materiały, <a href=\"%(feedback_url)s\">poinformuj nas o tym</a>. Chcemy podzielić się tymi zasobami z naszą międzynarodową społecznością, więc przetłumacz je "
-#~ "lub umożliw tłumaczenie na zasadach otwartej licencji, np. <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+#~ "uważasz, że pominęliśmy jakieś istotne materiały, <a href=\"%(feedback_url)s\">poinformuj nas o tym</a>. Chcemy podzielić się tymi zasobami z naszą międzynarodową społecznością, więc przetłumacz "
+#~ "je lub umożliw tłumaczenie na zasadach otwartej licencji, np. <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
 
 #~ msgid ""
 #~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you "
-#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
-#~ "development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at "
+#~ "web development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">HTML – hipertekstowy język znaczników (ang. <strong>HyperText Markup Language</strong>) jest podstawowym językiem używanym do tworzenia stron internetowych. Jeśli chcesz tworzyć i"
-#~ " modyfikować strony internetowe najlepiej, jeśli nauczysz się HTML.</p> <p>Odnośniki na tej stronie prowadzą do różnych przewodników i materiałów do ćwiczeń związanych z HTML. Czy jesteś "
-#~ "początkującym, który chce poznać podstawy, czy doświadczonym twórcą internetowym chcącym poznać <strong>HTML5</strong> – najnowszą wersję standardu – i najlepsze zastosowania, możesz tutaj znaleźć "
-#~ "pomocne zasoby.</p>"
+#~ "<p class=\"intro\">HTML – hipertekstowy język znaczników (ang. <strong>HyperText Markup Language</strong>) jest podstawowym językiem używanym do tworzenia stron internetowych. Jeśli chcesz "
+#~ "tworzyć i modyfikować strony internetowe najlepiej, jeśli nauczysz się HTML.</p> <p>Odnośniki na tej stronie prowadzą do różnych przewodników i materiałów do ćwiczeń związanych z HTML. Czy "
+#~ "jesteś początkującym, który chce poznać podstawy, czy doświadczonym twórcą internetowym chcącym poznać <strong>HTML5</strong> – najnowszą wersję standardu – i najlepsze zastosowania, możesz "
+#~ "tutaj znaleźć pomocne zasoby.</p>"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "Podstawy HTML"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
+#~ "depth."
 #~ msgstr "Co to jest HTML, co robi, jego historia w skrócie i jak wygląda struktura dokumentu HTML. Kolejne artykuły szeroko opisują poszczególne części HTML-a."
 
 #~ msgid "Basic Structure of a Web Page"
@@ -6482,25 +6495,25 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Prezentacja miejsc używających HTML5, które pomogą ci nauczyć się, jak należy go stosować."
 
 #~ msgid ""
-#~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through Peer-to-"
-#~ "Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and victories "
-#~ "with others who are learning the same things.</p>"
+#~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through Peer-"
+#~ "to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+#~ "victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Masz już dość nauki na własną rękę?<br> Czy chcesz przyłączyć się do społeczności uczącej się o HTML i innych otwartych technologiach internetowych?</h2> <p>Zarejestruj się w Peer-to-Peer "
-#~ "University<span title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a> grupie takich samych, jak ty osób. "
-#~ "Podziel się z innymi swoimi odkryciami, walką i zwycięstwami na niwie HTML i innych nowych technologii internetowych.</p>"
+#~ "University<span title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a> grupie takich samych, jak ty "
+#~ "osób. Podziel się z innymi swoimi odkryciami, walką i zwycięstwami na niwie HTML i innych nowych technologii internetowych.</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
-#~ "take advantage."
+#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
+#~ "can't take advantage."
 #~ msgstr ""
-#~ "Na tej witrynie jest omawiana najnowsza, nadchodząca wersja standardu <strong>HTML5</strong>. Wiele funkcji HTML5 jest obsługiwanych przez nowoczesne przeglądarki, ale wielu użytkowników wciąż ma "
-#~ "starsze przeglądarki i nie może z nich skorzystać."
+#~ "Na tej witrynie jest omawiana najnowsza, nadchodząca wersja standardu <strong>HTML5</strong>. Wiele funkcji HTML5 jest obsługiwanych przez nowoczesne przeglądarki, ale wielu użytkowników wciąż "
+#~ "ma starsze przeglądarki i nie może z nich skorzystać."
 
 #~ msgid ""
 #~ "<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and "
-#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old hand, "
-#~ "wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
+#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old "
+#~ "hand, wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
 #~ msgstr ""
 #~ "<p class=\"intro\"><strong>JavaScript</strong> (JS) jest językiem programowania umożliwiającym stronom internetowym interakcję z użytkownikiem ponad podstawowy poziom oferowany przez odnośniki i "
 #~ "formularze HTML.</p> <p>Odnośniki na tej stronie prowadzą do różnych przewodników i materiałów do ćwiczeń związanych z JavaScriptem. Czy jesteś początkującym, który chce poznać podstawy JS, czy "
@@ -6612,13 +6625,13 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Obszerny, regularnie aktualizowany przewodnik JavaScriptu dla wszystkich poziomów nauczania – od początkującego do zaawansowanego."
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free online "
-#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
-#~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free "
+#~ "online peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share "
+#~ "your discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>Masz już dość nauki języka JavaScript na własną rękę?<br> Czy chcesz przyłączyć się do społeczności uczącej się JavaScriptu i innych otwartych technologii?</h2> <p>Zarejestruj się w Peer-to-Peer"
-#~ " University<span title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a> grupie takich samych, jak ty osób. "
-#~ "Podziel się z innymi swoimi odkryciami, walką i zwycięstwami na niwie Javascriptu.</p>"
+#~ "<h2>Masz już dość nauki języka JavaScript na własną rękę?<br> Czy chcesz przyłączyć się do społeczności uczącej się JavaScriptu i innych otwartych technologii?</h2> <p>Zarejestruj się w Peer-to-"
+#~ "Peer University<span title=\"Peer-to-Peer University\"></span>, działającej w ramach <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a> grupie takich samych, jak "
+#~ "ty osób. Podziel się z innymi swoimi odkryciami, walką i zwycięstwami na niwie Javascriptu.</p>"
 
 #~ msgid "Delete Comment"
 #~ msgstr "Usuń komentarz"
@@ -6672,11 +6685,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> napisał,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Zamieszczony <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Stały odnośnik do komentarza autorstwa %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Zamieszczony <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Stały odnośnik do komentarza autorstwa %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Odpowiedz na komentarz napisany przez {full_name}"
@@ -6699,11 +6712,11 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgid ""
 #~ "Here you can see some of the developer events at which Mozilla will be participating, and the topics on which our Mozillians will be speaking. If you are organizing an event and would like a "
 #~ "Mozillian to participate, please <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">file a bug</a>. If you are a Mozillian speaking at an event that's not listed here, or if an "
-#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps "
-#~ "events</a> page to find a Mozilla Reps event near you!"
+#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla "
+#~ "Reps events</a> page to find a Mozilla Reps event near you!"
 #~ msgstr ""
-#~ "Tutaj można zobaczyć niektóre z wydarzeń, w których Mozilla będzie uczestniczyć, i tematy, na których Mozillianie będą prelegentami. Jeśli organizujesz jakieś spotkanie i chcesz, by uczestniczył w "
-#~ "nim jakiś Mozillianin <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">zgłoś to tutaj</a>. Jeśli jesteś Mozillianinem biorącym udział jako prelegent w jakimś zdarzeniu, a nie "
+#~ "Tutaj można zobaczyć niektóre z wydarzeń, w których Mozilla będzie uczestniczyć, i tematy, na których Mozillianie będą prelegentami. Jeśli organizujesz jakieś spotkanie i chcesz, by uczestniczył "
+#~ "w nim jakiś Mozillianin <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">zgłoś to tutaj</a>. Jeśli jesteś Mozillianinem biorącym udział jako prelegent w jakimś zdarzeniu, a nie "
 #~ "wymienionym tutaj, lub jeśli wpis o takim zdarzeniu wymaga uaktualnienia – <a href=\"mailto:dev-events@mozilla.com\">powiadom nas o tym</a>! Możesz także sprawdzić stronę ze zdarzeniami "
 #~ "organizowanymi przez <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps</a>, by poszukać organizowanego najbliżej ciebie zdarzenia!"
 
@@ -6766,9 +6779,9 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Ostatnio zdobyte odznaki"
 
 #~ msgid ""
-#~ "Mozilla is working to improve our MDN sign-in process. We're running a test to analyze what third party sites are most popular for sign-in. When you access this page during the test, we detect (<a "
-#~ "href=\"https://github.com/mozilla/kuma/blob/master/templates/includes/google_analytics.html\">in an anonymous way</a>) if you are also signed into Twitter or Facebook. After the test, we'll use the "
-#~ "aggregated results to select the best third party sites for MDN sign-in."
+#~ "Mozilla is working to improve our MDN sign-in process. We're running a test to analyze what third party sites are most popular for sign-in. When you access this page during the test, we detect "
+#~ "(<a href=\"https://github.com/mozilla/kuma/blob/master/templates/includes/google_analytics.html\">in an anonymous way</a>) if you are also signed into Twitter or Facebook. After the test, we'll "
+#~ "use the aggregated results to select the best third party sites for MDN sign-in."
 #~ msgstr ""
 #~ "Mozilla pracuje nad udoskonaleniem procesu logowania do MDN. Uruchomiliśmy specjalny test, aby dowiedzieć się, jakie witryny służące do logowania są najpopularniejsze. Gdy otwierasz tę stronę "
 #~ "podczas testu, wykrywamy, <a href=\"https://github.com/mozilla/kuma/blob/master/templates/includes/google_analytics.html\">zachowując anonimowość</a>, czy jesteś również zalogowany/zalogowana do "
@@ -6898,15 +6911,15 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 #~ "don't trust with your account, click the <span class=\"button\">X</span> to delete the key. It's easy to create a replacement key at any time."
 #~ msgstr ""
-#~ "To jest API kluczy. Jest ono użyteczne, gdy tworzysz aplikacje wykonujące w MDN zadania w twoim imieniu. Jeśli przestaniesz używać którejkolwiek z nich lub podejrzewasz, że jakaś została narażona na"
-#~ " działanie ze strony, której nie ufasz, naciśnij przycisk <span class=\"button\">X</span>, by usunąć klucz. W dowolnym czasie można w łatwy sposób utworzyć zamiennik klucza."
+#~ "To jest API kluczy. Jest ono użyteczne, gdy tworzysz aplikacje wykonujące w MDN zadania w twoim imieniu. Jeśli przestaniesz używać którejkolwiek z nich lub podejrzewasz, że jakaś została "
+#~ "narażona na działanie ze strony, której nie ufasz, naciśnij przycisk <span class=\"button\">X</span>, by usunąć klucz. W dowolnym czasie można w łatwy sposób utworzyć zamiennik klucza."
 
 #~ msgid "X"
 #~ msgstr "X"
 
 #~ msgid ""
-#~ "<span class=\"row1\">Join <span class=\"number\">3,414</span> contributors</span> <span class=\"row2\">in <span class=\"number\">31</span> languages and locales</span> <span class=\"row3\">around "
-#~ "the world.</span>"
+#~ "<span class=\"row1\">Join <span class=\"number\">3,414</span> contributors</span> <span class=\"row2\">in <span class=\"number\">31</span> languages and locales</span> <span class="
+#~ "\"row3\">around the world.</span>"
 #~ msgstr ""
 #~ "<span class=\"row1\">Dołącz do rzeszy <span class=\"number\">3414</span> twórców</span> <span class=\"row2\">piszących w <span class=\"number\">31</span> językach</span> <span class=\"row3\">z "
 #~ "całego świata.</span>"
@@ -6978,17 +6991,17 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Prześlij demo"
 
 #~ msgid ""
-#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose\"> "
-#~ "<li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
-#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of the "
-#~ "month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many "
-#~ "&ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than once in "
-#~ "the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
+#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose"
+#~ "\"> <li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
+#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of "
+#~ "the month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how "
+#~ "many &ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than "
+#~ "once in the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Skrót regulaminu znajduje się poniżej. Aby poznać pełny regulamin przeczytaj <a href=\"%(rules_url)s\">Oficjalny regulamin konkursu Dev Derby</a>.</p> <ul class=\"prose\"> <li>Prawie każdy może "
-#~ "wziąć udział w konkursie – sprawdź <a href=\"%(rules_url)s\">wyjątki</a> w regulaminie.</li> <li>Co miesiąc będzie nowy konkurs.</li> <li>Twoja praca musi spełniać pewne kryteria. Sprawdź w <a "
-#~ "href=\"%(rules_url)s\">regulaminie</a> ogólne kryteria i sekcję Aktualny konkurs, by zapoznać się z regułami danego konkursu.</li> <li>Każdy konkurs rozpoczyna się pierwszego dnia miesiąca i trwa do"
-#~ " ostatniego dnia danego miesiąca. Rozpoczęcie i zakończenie konkursu liczy się wg <strong>amerykańskiego czasu pacyficznego</strong>.</li> <li>Przesłane prace będą oceniane przez zespół "
+#~ "<p>Skrót regulaminu znajduje się poniżej. Aby poznać pełny regulamin przeczytaj <a href=\"%(rules_url)s\">Oficjalny regulamin konkursu Dev Derby</a>.</p> <ul class=\"prose\"> <li>Prawie każdy "
+#~ "może wziąć udział w konkursie – sprawdź <a href=\"%(rules_url)s\">wyjątki</a> w regulaminie.</li> <li>Co miesiąc będzie nowy konkurs.</li> <li>Twoja praca musi spełniać pewne kryteria. Sprawdź w "
+#~ "<a href=\"%(rules_url)s\">regulaminie</a> ogólne kryteria i sekcję Aktualny konkurs, by zapoznać się z regułami danego konkursu.</li> <li>Każdy konkurs rozpoczyna się pierwszego dnia miesiąca i "
+#~ "trwa do ostatniego dnia danego miesiąca. Rozpoczęcie i zakończenie konkursu liczy się wg <strong>amerykańskiego czasu pacyficznego</strong>.</li> <li>Przesłane prace będą oceniane przez zespół "
 #~ "wykwalifikowanych sędziów. Sędziowie mogą także brać pod uwagę liczbę otrzymanych przez demo określeń „Podoba mi się”.</li> <li>Zwycięzcy każdego konkursu będą ogłoszeni do <strong>20. dnia "
 #~ "następnego miesiąca</strong>.</li> <li>Uczestnik konkursu nie może zwyciężyć więcej niż jeden raz w ciągu tego samego roku kalendarzowego.</li> <li>Przed wysłaniem swojej pracy zapoznaj się z <a "
 #~ "href=\"%(rules_url)s\">oficjalnym regulaminem konkursu Dev Derby</a>.</li> </ul>"
@@ -6997,20 +7010,20 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "<p>Dema będą oceniane przez zespół wykwalifikowanych sędziów składający się z członków Mozilli i ekspertów zewnętrznych. Będziemy oceniać dema w czterech płaszczyznach:</p>"
 
 #~ msgid ""
-#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is the"
-#~ " demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the "
-#~ "Web today?</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is "
+#~ "the demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in "
+#~ "enhancing the Web today?</li> </ul>"
 #~ msgstr ""
 #~ "<ul class=\"prose\"> <li><strong>Technologia</strong> &ndash; czy demo prezentuje możliwości otwartych technologii internetowych?</li> <li><strong>Oryginalność</strong> &ndash; na ile demo jest "
-#~ "innowacyjne i unikalne?</li> <li><strong>Estetyka</strong> &ndash; jak dobry jest projekt graficzny i czy dostarcza dobrych doświadczeń interakcyjnych?</li> <li><strong>Praktyczność</strong> &ndash;"
-#~ " na ile demo jest użyteczne do ulepszania internetu?</li> </ul>"
+#~ "innowacyjne i unikalne?</li> <li><strong>Estetyka</strong> &ndash; jak dobry jest projekt graficzny i czy dostarcza dobrych doświadczeń interakcyjnych?</li> <li><strong>Praktyczność</strong> "
+#~ "&ndash; na ile demo jest użyteczne do ulepszania internetu?</li> </ul>"
 
 #~ msgid "<p>The judges will use all four dimensions in scoring each entry, and any additional criteria specified for a particular contest.</p>"
 #~ msgstr "<p>Do oceny każdego dema sędziowie będą stosowali wszystkie cztery wymiary i wszystkie dodatkowe kryteria określone dla danego konkursu.</p>"
 
 #~ msgid ""
-#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby "
-#~ "to &ldquo;vote.&rdquo;</p>"
+#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev "
+#~ "Derby to &ldquo;vote.&rdquo;</p>"
 #~ msgstr ""
 #~ "<p>Sędziowie mogą także brać pod uwagę liczbę otrzymanych przez demo określeń „Podoba mi się”. Podziel się swoimi demami z innymi i zachęć ich do odwiedzenia Dev Derby i zagłosowania na nie.</p>"
 
@@ -7024,8 +7037,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ "James is a London-based UI Developer with a passion for JavaScript, HTML5 and anything that enables him and others to create stuff of value. He's currently freelancing and working on interactive "
 #~ "media at Storygami, a new startup that he's the CTO of. James shares opinionated technical articles and code on his website and github."
 #~ msgstr ""
-#~ "James zamieszkuje w Londynie i zajmuje się tworzeniem interfejsów użytkownika. Jest pasjonatem JavaScriptu, HTML5 i wszystkiego, co pozwala mu i innym tworzyć wartościowe rzeczy. Obecnie jest wolnym"
-#~ " strzelcem i pracuje w nowym startupie Storygami, gdzie jest dyrektorem technicznym. James udostępnia artykuły techniczne i kod na swojej stronie internetowej i na GitHubie."
+#~ "James zamieszkuje w Londynie i zajmuje się tworzeniem interfejsów użytkownika. Jest pasjonatem JavaScriptu, HTML5 i wszystkiego, co pozwala mu i innym tworzyć wartościowe rzeczy. Obecnie jest "
+#~ "wolnym strzelcem i pracuje w nowym startupie Storygami, gdzie jest dyrektorem technicznym. James udostępnia artykuły techniczne i kod na swojej stronie internetowej i na GitHubie."
 
 #~ msgid "Developer Engagement Community Organizer, Mozilla"
 #~ msgstr "Organizator społeczności deweloperów, Mozilla"
@@ -7041,9 +7054,9 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev Derby is on hiatus while we work on revamping the contest series. When it returns, you may see some changes in the "
 #~ "contest format. However, the Dev Derby mission remains unchanged: to provide a platform that helps web developers learn, share, and push the web forward.</p> <p>See you soon!</p> </div>"
 #~ msgstr ""
-#~ "<div style=\"padding-right: 20px;\"> <h2>Przerwa w konkursachDev Derby</h2> <p>Aktualnie trwa przerwa w konkursach Dev Derby, a my pracujemy nad modernizacją kolejnej serii konkursów. Nowe konkursy "
-#~ "będą miały nową formę, jednak misja Dev Derby pozostaje bez zmian – stworzenie platformy, która pomaga deweloperom uczyć się, dzielić się wiedzą z innymi i rozwijać internet.</p> <p>Do zobaczenia "
-#~ "wkrótce!</p> </div>"
+#~ "<div style=\"padding-right: 20px;\"> <h2>Przerwa w konkursachDev Derby</h2> <p>Aktualnie trwa przerwa w konkursach Dev Derby, a my pracujemy nad modernizacją kolejnej serii konkursów. Nowe "
+#~ "konkursy będą miały nową formę, jednak misja Dev Derby pozostaje bez zmian – stworzenie platformy, która pomaga deweloperom uczyć się, dzielić się wiedzą z innymi i rozwijać internet.</p> <p>Do "
+#~ "zobaczenia wkrótce!</p> </div>"
 
 #~ msgid "Previous Winner"
 #~ msgstr "Poprzedni zwycięzca"
@@ -7052,15 +7065,15 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Obejrzyj demo"
 
 #~ msgid ""
-#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" "
-#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a "
-#~ "limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
+#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones"
+#~ "\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" href=\"http://www.rickshawbags.com/"
+#~ "bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to "
+#~ "show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
 #~ "<h1>Nagrody</h1> <ol> <li class=\"first\"> <h3>Telefon z Androidem</h3> <p>Zwycięzca otrzyma telefon z systemem Android produkcji <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">Samsunga</a>.</p> </li> <li class=\"second\"> <h3>Torba na laptopa</h3> <p>Za zajęcie drugiego miejsca nagrodą jest ręcznie robiona torba na laptopa z firmy <a rel=\"external\" "
-#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>T-shirt MDN</h3> <p>Nagrodą za "
-#~ "zajęcie trzeciego miejsca jest koszulka t-shirt z limitowanej edycji MDN.</p> </li> </ol>"
+#~ "phones\">Samsunga</a>.</p> </li> <li class=\"second\"> <h3>Torba na laptopa</h3> <p>Za zajęcie drugiego miejsca nagrodą jest ręcznie robiona torba na laptopa z firmy <a rel=\"external\" href="
+#~ "\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>T-shirt MDN</h3> <p>Nagrodą za zajęcie "
+#~ "trzeciego miejsca jest koszulka t-shirt z limitowanej edycji MDN.</p> </li> </ol>"
 
 #~ msgid "Dev Derby Rules"
 #~ msgstr "Regulamin Dev Derby"
@@ -7075,15 +7088,15 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Zaznacz odpowiednią opcję Dev Derby i upewnij się, że powyżej zostały wybrane właściwe dla danego konkursu technologie."
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Kod źródłowy dema dema powinien być spakowany w archiwum ZIP.</li> <li>Strona główna dema powinna mieć nazwę <code>index.html</code> i znajdować się w katalogu głównym tego archiwum.</li> "
-#~ "<li>Demo powinno być zbudowane w oparciu o technologie, takie jak HTML, CSS, JavaScript bazujące na operacjach wykonywanych po stronie klienta. Języki o architekturze klient-serwer, takie jak PHP i "
-#~ "Ruby nie są obsługiwane.</li> <li>Jeśli demo wymaga zewnętrznych zasobów, by uzyskać do nich dostęp, powinno używać technologii AJAX.</li> <li>Aby przesłać demo, musisz mieć <a "
-#~ "href=\"%(signup_url)s\">konto MDN</a>.</li> <li>W polu szczegółowych informacji o demie podaj informacje o treściach innych podmiotów zawartych w demie, które nie mogą być udostępnione na zasadach "
+#~ "<ul> <li>Kod źródłowy dema dema powinien być spakowany w archiwum ZIP.</li> <li>Strona główna dema powinna mieć nazwę <code>index.html</code> i znajdować się w katalogu głównym tego archiwum.</"
+#~ "li> <li>Demo powinno być zbudowane w oparciu o technologie, takie jak HTML, CSS, JavaScript bazujące na operacjach wykonywanych po stronie klienta. Języki o architekturze klient-serwer, takie "
+#~ "jak PHP i Ruby nie są obsługiwane.</li> <li>Jeśli demo wymaga zewnętrznych zasobów, by uzyskać do nich dostęp, powinno używać technologii AJAX.</li> <li>Aby przesłać demo, musisz mieć <a href="
+#~ "\"%(signup_url)s\">konto MDN</a>.</li> <li>W polu szczegółowych informacji o demie podaj informacje o treściach innych podmiotów zawartych w demie, które nie mogą być udostępnione na zasadach "
 #~ "wolnych licencji i dodaj odnośniki do stron internetowych ich autorów.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN account</a></strong>.</p>"
@@ -7208,8 +7221,8 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Tworząc konto, wykonałeś pierwszy krok na <a href=\"%(started_link)s\">MDN</a>."
 
 #~ msgid ""
-#~ "Real-time chat: <a href=\"%(irc_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric Shepherd "
-#~ "(sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and community manager Janet Swisher (jms)."
+#~ "Real-time chat: <a href=\"%(irc_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
+#~ "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and community manager Janet Swisher (jms)."
 #~ msgstr ""
 #~ "Czat: <a href=\"%(irc_link)s\">kanał #mdn na irc.mozilla.org</a>. (Więcej informacji o <a href=\"%(irc_link)s\">IRC-u</a>.) Na IRC-u znajdziesz osoby piszące artykuły i administratorów: Erica "
 #~ "Shepherda (sheppy), Jean-Yves Perriera (teoli), Willa Bamberga (wbamberg), Floriana Scholza (fscholz), Chrisa Millsa (chrismills), i opiekunkę społeczności Janet Swisher (jms)."
@@ -7218,17 +7231,17 @@ msgstr "Server Elasticsearch: %(backend)s"
 #~ msgstr "Dzięki za założenie konta na Mozilla Developer Network (MDN) – społeczność tworzy wspaniałe zasoby dla programistów, takich jak ty."
 
 #~ msgid ""
-#~ "You've completed the first step of Getting Started on MDN by creating an account. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
-#~ "interests."
+#~ "You've completed the first step of Getting Started on MDN by creating an account. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on "
+#~ "your interests."
 #~ msgstr ""
 #~ "Ukończyłeś pierwszy etap programu Pierwsze kroki na MDN, tworząc konto. Teraz wybierz zadanie i wykonaj je! Na początek mamy kilka zadań spośród, których możesz wybrać zgodnie ze swoimi "
 #~ "zainteresowaniami."
 
 #~ msgid ""
-#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: https://lists.mozilla.org/listinfo/dev-mdc Subscribe to tell us about what you're interested in on MDN and "
-#~ "ask questions about the site. * Real-time chat: #mdn channel on irc.mozilla.org (See https://wiki.mozilla.org/IRC for more info about IRC.) You can find the MDN writing staff admins there: Eric "
-#~ "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and community manager Janet Swisher (jms). * Blog: "
-#~ "https://blog.mozilla.org/community/category/developer-engagement"
+#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: https://lists.mozilla.org/listinfo/dev-mdc Subscribe to tell us about what you're interested in on MDN "
+#~ "and ask questions about the site. * Real-time chat: #mdn channel on irc.mozilla.org (See https://wiki.mozilla.org/IRC for more info about IRC.) You can find the MDN writing staff admins there: "
+#~ "Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and community manager Janet Swisher (jms). * Blog: https://blog."
+#~ "mozilla.org/community/category/developer-engagement"
 #~ msgstr ""
 #~ "Chcesz porozmawiać z kimś o MDN? Możesz to zrobić na kilka sposobów: * Lista mailingowa: https://lists.mozilla.org/listinfo/dev-mdc Subskrybuj listę, by powiedzieć nam, co cię interesuje w MDN i "
 #~ "zadawać pytania dotyczące witryny. * Czat: Kanał #mdn na irc.mozilla.org. Więcej o IRC-u dowiesz się na stronie https://wiki.mozilla.org/IRC . Na IRC-u znajdziesz osoby piszące artykuły i "

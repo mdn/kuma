@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-05-09 11:01+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
@@ -66,70 +66,6 @@ msgstr "%(sent_date)s від %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Помилка надсилання від %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Ця сторінка допомогла вам?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Так"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Ні"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Більше не запитувати"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Дякуємо за ваш відгук!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Ми не потурбуємо вас знов."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Перекласти це моєю мовою"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Зробити пояснення зрозумілішим"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Додати деталі"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Виправити хибні відомості"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Додати чи покращити приклади"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Мій пошук повинен вести на іншу статтю"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Щось інше"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Виберіть один..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Ох-ох. Як зробити це кращим?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Дякую! Ми виправимо це."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Не вибрано"
@@ -142,73 +78,96 @@ msgstr "Вибрано: "
 msgid "New interest..."
 msgstr "Нове зацікавлення..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Зберегти чернетку"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Увімкнути автозбереження."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "невідома дата"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "У вас є чернетка від:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Переглянути сторінку"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Відновити вміст чернетки"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Видалити чернетку"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "відновлено"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Не вдалося опублікувати. Ви поки що не увійшли. Будь ласка, зробіть вхід у новій вкладці та спробуйте опублікувати знову."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Зміни збережено."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Не вдалося опублікувати. Будь ласка, скопіюйте і вставте свої зміни в безпечне місце та спробуйте надіслати форму використовуючи кнопку \"Опублікувати\"."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Чернетка"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "збережено"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "автоматично збережено"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "опубліковано"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "У вас є чернетка від:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "відновлено"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "скасовано"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "опубліковано"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "скасовано"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "автоматично збережено"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Автозбереження увімкнено."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Автозбереження вимкнено."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Не вдалося опублікувати. Ви поки що не увійшли. Будь ласка, зробіть вхід у новій вкладці та спробуйте опублікувати знову."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Зміни збережено."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Не вдалося опублікувати. Будь ласка, скопіюйте і вставте свої зміни в безпечне місце та спробуйте надіслати форму використовуючи кнопку \"Опублікувати\"."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -358,6 +317,69 @@ msgstr "Схоже, ви ввели недійсну URL"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Типово"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Ця сторінка допомогла вам?"
+
+#~ msgid "Yes"
+#~ msgstr "Так"
+
+#~ msgid "No"
+#~ msgstr "Ні"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Більше не запитувати"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Дякуємо за ваш відгук!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Ми не потурбуємо вас знов."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Перекласти це моєю мовою"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Зробити пояснення зрозумілішим"
+
+#~ msgid "Add more details"
+#~ msgstr "Додати деталі"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Виправити хибні відомості"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Додати чи покращити приклади"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Мій пошук повинен вести на іншу статтю"
+
+#~ msgid "Something else"
+#~ msgstr "Щось інше"
+
+#~ msgid "Choose one..."
+#~ msgstr "Виберіть один..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Ох-ох. Як зробити це кращим?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Дякую! Ми виправимо це."
+
+#~ msgid "Save Draft"
+#~ msgstr "Зберегти чернетку"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Увімкнути автозбереження."
+
+#~ msgid "Draft"
+#~ msgstr "Чернетка"
+
+#~ msgid "saved"
+#~ msgstr "збережено"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Автозбереження вимкнено."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Відкрити примітки реалізації"

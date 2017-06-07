@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-01-21 12:12+0000\n"
 "Last-Translator: Dhiraj Kumar Singh <singhdhiraj255@gmail.com>\n"
 "Language-Team: Hindi (India) https://pontoon.mozilla.org/hi_IN/\n"
@@ -66,70 +66,6 @@ msgstr "%(user)s के द्वारा %(sent_date)s"
 msgid "Error submitting as %(type)s"
 msgstr ""
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "इस पृष्ठ से आपको मदद मिली?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "हाँ"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "नहीं"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "मुझसे दुबारा कभी न पूछें"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "आपकी प्रतिक्रिया के लिए धन्यवाद!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "इसे मेरी भाषा में अनुवाद करें"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "अधिक विवरण जोड़ें"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "गलत जानकारी को ठीक करें"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "उदाहरण जोड़ें या उन्नत करें"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "कुछ और"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "एक का चयन करें..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr ""
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "धन्यवाद! हम इसे ठीक कर देंगे."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "कोई चयन नहीं"
@@ -142,73 +78,95 @@ msgstr "चयनित: "
 msgid "New interest..."
 msgstr "नई रूचि..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "प्रारूप सहेजें"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "स्वचलित सहेजना सक्षम करें."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "एक अज्ञात तारीख"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr ""
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "पृष्ठ देखें"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "ड्राफ्ट सामग्री पुनर्स्थापित करें"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "मसौदा निरस्त"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "बहाल"
-
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "परिवर्तन सहेजे गए."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "ड्राफ्ट"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "सहेजा लिया गया"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "स्वतः सहेजा गया"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "प्रकाशित"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, python-format
+msgid "You have a draft from: %(time)s."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "बहाल"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "छोड़ा गया"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "प्रकाशित"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "छोड़ा गया"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "स्वतः सहेजा गया"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "स्वत: सहेजना सक्षम किया गया."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "स्वत: सहेजना अक्षम किया गया."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "परिवर्तन सहेजे गए."
+
+#: kuma/static/js/wiki-edit.js:417
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr ""
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -359,6 +317,57 @@ msgstr ""
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "तयशुदा"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "इस पृष्ठ से आपको मदद मिली?"
+
+#~ msgid "Yes"
+#~ msgstr "हाँ"
+
+#~ msgid "No"
+#~ msgstr "नहीं"
+
+#~ msgid "Never ask me again"
+#~ msgstr "मुझसे दुबारा कभी न पूछें"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "आपकी प्रतिक्रिया के लिए धन्यवाद!"
+
+#~ msgid "Translate it into my language"
+#~ msgstr "इसे मेरी भाषा में अनुवाद करें"
+
+#~ msgid "Add more details"
+#~ msgstr "अधिक विवरण जोड़ें"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "गलत जानकारी को ठीक करें"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "उदाहरण जोड़ें या उन्नत करें"
+
+#~ msgid "Something else"
+#~ msgstr "कुछ और"
+
+#~ msgid "Choose one..."
+#~ msgstr "एक का चयन करें..."
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "धन्यवाद! हम इसे ठीक कर देंगे."
+
+#~ msgid "Save Draft"
+#~ msgstr "प्रारूप सहेजें"
+
+#~ msgid "Enable autosave."
+#~ msgstr "स्वचलित सहेजना सक्षम करें."
+
+#~ msgid "Draft"
+#~ msgstr "ड्राफ्ट"
+
+#~ msgid "saved"
+#~ msgstr "सहेजा लिया गया"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "स्वत: सहेजना अक्षम किया गया."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "खुला कार्यान्वयन नोट्स"

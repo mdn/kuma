@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2016-12-02 21:06+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -67,70 +67,6 @@ msgstr "%(sent_date)s nga %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Gabim në parashtrimin si %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "A ju ndihmoi kjo faqe?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Po"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Jo"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Mos më pyet më kurrë"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Faleminderit për përshtypjet tuaja!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "S’do t’ju bezdisim më."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Përkthejeni në gjuhën time"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Bëjini shpjegimet më të qarta"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Shtoni më tepër hollësi"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Ndreqni të dhëna të pasakta"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Shtoni ose përmirësoni shembuj"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Kërkimi im do të duhej të shpinte në një tjetër artikull"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Diçka tjetër"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Zgjidhni një..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "Hmmm. Çfarë do ta përmirësonte?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Faleminderit! Do ta ndreqim."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Pa përzgjedhje"
@@ -143,73 +79,96 @@ msgstr "Të përzgjedhur: "
 msgid "New interest..."
 msgstr "Interes i ri..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Ruajeni Skicën"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Aktivizoni vetëruajtjet."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "një datë e panjohur"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Keni një skicë nga:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Shiheni Faqen"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Rikthe lëndën e skicës"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Hidhe tej skicën"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "e rikthyer"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Botimi dështoi. S’keni bërë hyrjen. Ju lutemi, përdorni një skedë të re për të bërë hyrjen dhe riprovoni më pas botimin."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Ndryshimet u ruajtën."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Botimi dështoi. Ju lutemi, kopjojini dhe ngjitini ndryshimet tuaja në një vend të sigurt dhe provoni ta parashtroni formularin duke përdorur butonin 'Botoje'."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Skicë"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "u ruajt"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "u vetëruajt"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "e botuar"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Keni një skicë nga:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "e rikthyer"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "hedhur tej"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "e botuar"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "hedhur tej"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "u vetëruajt"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Vetëruajtjet u aktivizuan."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Vetëruajtjet u çaktivizuan."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Botimi dështoi. S’keni bërë hyrjen. Ju lutemi, përdorni një skedë të re për të bërë hyrjen dhe riprovoni më pas botimin."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Ndryshimet u ruajtën."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Botimi dështoi. Ju lutemi, kopjojini dhe ngjitini ndryshimet tuaja në një vend të sigurt dhe provoni ta parashtroni formularin duke përdorur butonin 'Botoje'."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -360,6 +319,69 @@ msgstr "URL-ja që dhatë s’duket se është e vlefshme"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Parazgjedhje"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "A ju ndihmoi kjo faqe?"
+
+#~ msgid "Yes"
+#~ msgstr "Po"
+
+#~ msgid "No"
+#~ msgstr "Jo"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Mos më pyet më kurrë"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Faleminderit për përshtypjet tuaja!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "S’do t’ju bezdisim më."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Përkthejeni në gjuhën time"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Bëjini shpjegimet më të qarta"
+
+#~ msgid "Add more details"
+#~ msgstr "Shtoni më tepër hollësi"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Ndreqni të dhëna të pasakta"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Shtoni ose përmirësoni shembuj"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Kërkimi im do të duhej të shpinte në një tjetër artikull"
+
+#~ msgid "Something else"
+#~ msgstr "Diçka tjetër"
+
+#~ msgid "Choose one..."
+#~ msgstr "Zgjidhni një..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "Hmmm. Çfarë do ta përmirësonte?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Faleminderit! Do ta ndreqim."
+
+#~ msgid "Save Draft"
+#~ msgstr "Ruajeni Skicën"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Aktivizoni vetëruajtjet."
+
+#~ msgid "Draft"
+#~ msgstr "Skicë"
+
+#~ msgid "saved"
+#~ msgstr "u ruajt"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Vetëruajtjet u çaktivizuan."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Hapni shënime sendërtimi"

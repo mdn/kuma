@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-29 13:53+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
@@ -65,70 +65,6 @@ msgstr "%(sent_date)s uživatelem %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Chyba odesílání jako %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "Byla tato stránka užitečná?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Ano"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "Ne"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "Znovu se neptat"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "Děkujeme za vaši zpětnou vazbu!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "Už vás nebudeme obtěžovat."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Přeložte stránku do mého jazyka"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Udělat vysvětlení jasnější"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Přidejte více detailů"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Opravte nesprávné informace"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Přidejte nebo vylepšete příklady"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Mé vyhledání by mělo vést na jiný článek"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Něco jiného"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Vyberte jednu z možností..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "To nás mrzí. Co můžeme udělat, abychom to napravili?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "Děkujeme! Zkusíme to opravit."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "Nic nevybráno"
@@ -141,73 +77,96 @@ msgstr "Vybráno: "
 msgid "New interest..."
 msgstr "Nový zájem..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Uložit koncept"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Povolit automatické ukládání."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "neznámý datum"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Máte koncept od:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Zobrazit stránku"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Obnovit obsah konceptu"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Zahodit koncept"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "obnoveno"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "Publikování selhalo. Momentálně nejste přihlášeni. Použijte prosím nový panel pro přihlášení a zkuste publikaci znovu."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Změny uloženy."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "Publikování selhalo. Prosím, zkopírujte a vložte vaše úpravy na bezpečné místo a zkuste odeslat formulář pomocí tlačítka 'Odeslat'."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Koncept"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "uloženo"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "automaticky uloženo"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "publikováno"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Máte koncept od:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "obnoveno"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "zahozeno"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "publikováno"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "zahozeno"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "automaticky uloženo"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Automatické ukládání povoleno."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Automatické ukládání zakázáno."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "Publikování selhalo. Momentálně nejste přihlášeni. Použijte prosím nový panel pro přihlášení a zkuste publikaci znovu."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Změny uloženy."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "Publikování selhalo. Prosím, zkopírujte a vložte vaše úpravy na bezpečné místo a zkuste odeslat formulář pomocí tlačítka 'Odeslat'."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -357,6 +316,69 @@ msgstr "Zadaná URL není validní"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Výchozí"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "Byla tato stránka užitečná?"
+
+#~ msgid "Yes"
+#~ msgstr "Ano"
+
+#~ msgid "No"
+#~ msgstr "Ne"
+
+#~ msgid "Never ask me again"
+#~ msgstr "Znovu se neptat"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "Děkujeme za vaši zpětnou vazbu!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "Už vás nebudeme obtěžovat."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Přeložte stránku do mého jazyka"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Udělat vysvětlení jasnější"
+
+#~ msgid "Add more details"
+#~ msgstr "Přidejte více detailů"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Opravte nesprávné informace"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Přidejte nebo vylepšete příklady"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Mé vyhledání by mělo vést na jiný článek"
+
+#~ msgid "Something else"
+#~ msgstr "Něco jiného"
+
+#~ msgid "Choose one..."
+#~ msgstr "Vyberte jednu z možností..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "To nás mrzí. Co můžeme udělat, abychom to napravili?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "Děkujeme! Zkusíme to opravit."
+
+#~ msgid "Save Draft"
+#~ msgstr "Uložit koncept"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Povolit automatické ukládání."
+
+#~ msgid "Draft"
+#~ msgstr "Koncept"
+
+#~ msgid "saved"
+#~ msgstr "uloženo"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Automatické ukládání zakázáno."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Otevřít implementační poznámky"

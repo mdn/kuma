@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-04-27 07:39-0700\n"
+"POT-Creation-Date: 2017-06-07 06:46-0700\n"
 "PO-Revision-Date: 2017-04-27 21:10+0000\n"
 "Last-Translator: jlG <jlg.l10n.es@gmail.com>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
@@ -66,70 +66,6 @@ msgstr "%(sent_date)s por %(user)s"
 msgid "Error submitting as %(type)s"
 msgstr "Error al enviarlo como %(type)s"
 
-#: kuma/static/js/helpfulness.js:32
-msgid "Did this page help you?"
-msgstr "¿Te resultó útil esta página?"
-
-#: kuma/static/js/helpfulness.js:34
-msgid "Yes"
-msgstr "Sí"
-
-#: kuma/static/js/helpfulness.js:36
-msgid "No"
-msgstr "No"
-
-#: kuma/static/js/helpfulness.js:38
-msgid "Never ask me again"
-msgstr "No volver a preguntar"
-
-#: kuma/static/js/helpfulness.js:45
-msgid "Thanks for your feedback!"
-msgstr "¡Gracias por tu comentario!"
-
-#: kuma/static/js/helpfulness.js:54
-msgid "We won't bug you again."
-msgstr "No te volveremos a molestar."
-
-#: kuma/static/js/helpfulness.js:59
-msgid "Translate it into my language"
-msgstr "Traducir a mi idioma"
-
-#: kuma/static/js/helpfulness.js:60
-msgid "Make explanations clearer"
-msgstr "Hacer comentarios más completos"
-
-#: kuma/static/js/helpfulness.js:61
-msgid "Add more details"
-msgstr "Añadir más detalles"
-
-#: kuma/static/js/helpfulness.js:62
-msgid "Fix incorrect information"
-msgstr "Corregir información incorrecta"
-
-#: kuma/static/js/helpfulness.js:63
-msgid "Add or improve examples"
-msgstr "Añadir o mejorar los ejemplos"
-
-#: kuma/static/js/helpfulness.js:64
-msgid "My search should have led to a different article"
-msgstr "Mi búsqueda debería haberme dirigido a un artículo diferente"
-
-#: kuma/static/js/helpfulness.js:65
-msgid "Something else"
-msgstr "Algo más"
-
-#: kuma/static/js/helpfulness.js:69
-msgid "Choose one..."
-msgstr "Elige uno..."
-
-#: kuma/static/js/helpfulness.js:83
-msgid "Uh oh. What would make it better?"
-msgstr "¡Wow! ¿En qué podría mejorar?"
-
-#: kuma/static/js/helpfulness.js:86
-msgid "Thanks! We'll fix it."
-msgstr "¡Gracias! Lo solucionaremos."
-
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
 msgstr "No se ha seleccionado nada"
@@ -142,73 +78,96 @@ msgstr "Seleccionado: "
 msgid "New interest..."
 msgstr "Nuevo interés..."
 
-#: kuma/static/js/wiki-edit.js:364
-msgid "Save Draft"
-msgstr "Guardar borrador"
-
-#: kuma/static/js/wiki-edit.js:369
-msgid "Enable autosave."
-msgstr "Activar autoguardado."
-
-#: kuma/static/js/wiki-edit.js:377
+#: kuma/static/js/wiki-edit-draft.js:76
 msgid "an unknown date"
 msgstr "una fecha desconocida"
 
-#: kuma/static/js/wiki-edit.js:378
-msgid "You have a draft from:"
-msgstr "Tienes un borrador de:"
+#: kuma/static/js/wiki-edit-draft.js:77
+#, fuzzy
+msgid "View draft."
+msgstr "Ver página"
 
-#: kuma/static/js/wiki-edit.js:379
-msgid "Restore the draft content"
+#: kuma/static/js/wiki-edit-draft.js:78
+#, fuzzy
+msgid "Restore draft."
 msgstr "Restaurar el contenido del borrador"
 
-#: kuma/static/js/wiki-edit.js:380
-msgid "Discard the draft"
+#: kuma/static/js/wiki-edit-draft.js:79
+#, fuzzy
+msgid "Discard draft."
 msgstr "Descartar el borrador"
 
-#: kuma/static/js/wiki-edit.js:398
-msgid "restored"
-msgstr "recuperado"
+#: kuma/static/js/wiki-edit-draft.js:101
+msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:486
-msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
-msgstr "La publicación ha fallado. No tienes iniciada la sesión. Vuelve a iniciar sesión en una nueva pestaña e intenta publicarlo de nuevo."
+#: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
+msgid "Revision history."
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:489
-msgid "Changes saved."
-msgstr "Se han guardado los cambios."
-
-#: kuma/static/js/wiki-edit.js:517
-msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button."
-msgstr "La publicación ha fallado. Copia y pega los cambios en un lugar seguro e intenta enviar el formulario de nuevo utilizando el botón 'Publicar'."
-
-#: kuma/static/js/wiki-edit.js:563
-msgid "Draft"
-msgstr "Borrador"
-
-#: kuma/static/js/wiki-edit.js:582
-msgid "saved"
-msgstr "guardado"
-
-#: kuma/static/js/wiki-edit.js:601
-msgid "autosaved"
-msgstr "autoguardado"
-
-#: kuma/static/js/wiki-edit.js:610
-msgid "published"
+#: kuma/static/js/wiki-edit-draft.js:103
+#, fuzzy
+msgid "Published version"
 msgstr "publicado"
 
-#: kuma/static/js/wiki-edit.js:614
-msgid "discarded"
+#: kuma/static/js/wiki-edit-draft.js:116
+msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:126
+#, fuzzy, python-format
+msgid "You have a draft from: %(time)s."
+msgstr "Tienes un borrador de:"
+
+#: kuma/static/js/wiki-edit-draft.js:152
+msgid "Viewing old draft. This draft cannot be published."
+msgstr ""
+
+#: kuma/static/js/wiki-edit-draft.js:171
+#, fuzzy
+msgid "Draft restored."
+msgstr "recuperado"
+
+#: kuma/static/js/wiki-edit-draft.js:188
+#, fuzzy
+msgid "Draft discarded."
 msgstr "descartado"
 
-#: kuma/static/js/wiki-edit.js:652
+#: kuma/static/js/wiki-edit-draft.js:222
+#, fuzzy
+msgid "Draft published:"
+msgstr "publicado"
+
+#: kuma/static/js/wiki-edit-draft.js:224
+#, fuzzy
+msgid "Draft discarded:"
+msgstr "descartado"
+
+#: kuma/static/js/wiki-edit-draft.js:226
+#, fuzzy
+msgid "Draft autosaved:"
+msgstr "autoguardado"
+
+#: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
 msgstr "Autoguardado activado."
 
-#: kuma/static/js/wiki-edit.js:659
-msgid "Autosave disabled."
-msgstr "Autoguardado desactivado."
+#: kuma/static/js/wiki-edit.js:346
+msgid "Publishing changes…"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:385
+msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
+msgstr "La publicación ha fallado. No tienes iniciada la sesión. Vuelve a iniciar sesión en una nueva pestaña e intenta publicarlo de nuevo."
+
+#: kuma/static/js/wiki-edit.js:388
+msgid "Changes saved."
+msgstr "Se han guardado los cambios."
+
+#: kuma/static/js/wiki-edit.js:417
+#, fuzzy
+msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
+msgstr "La publicación ha fallado. Copia y pega los cambios en un lugar seguro e intenta enviar el formulario de nuevo utilizando el botón 'Publicar'."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
@@ -358,6 +317,69 @@ msgstr "La URL que has introducido parece que no es válida"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Predeterminada"
+
+#~ msgid "Did this page help you?"
+#~ msgstr "¿Te resultó útil esta página?"
+
+#~ msgid "Yes"
+#~ msgstr "Sí"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Never ask me again"
+#~ msgstr "No volver a preguntar"
+
+#~ msgid "Thanks for your feedback!"
+#~ msgstr "¡Gracias por tu comentario!"
+
+#~ msgid "We won't bug you again."
+#~ msgstr "No te volveremos a molestar."
+
+#~ msgid "Translate it into my language"
+#~ msgstr "Traducir a mi idioma"
+
+#~ msgid "Make explanations clearer"
+#~ msgstr "Hacer comentarios más completos"
+
+#~ msgid "Add more details"
+#~ msgstr "Añadir más detalles"
+
+#~ msgid "Fix incorrect information"
+#~ msgstr "Corregir información incorrecta"
+
+#~ msgid "Add or improve examples"
+#~ msgstr "Añadir o mejorar los ejemplos"
+
+#~ msgid "My search should have led to a different article"
+#~ msgstr "Mi búsqueda debería haberme dirigido a un artículo diferente"
+
+#~ msgid "Something else"
+#~ msgstr "Algo más"
+
+#~ msgid "Choose one..."
+#~ msgstr "Elige uno..."
+
+#~ msgid "Uh oh. What would make it better?"
+#~ msgstr "¡Wow! ¿En qué podría mejorar?"
+
+#~ msgid "Thanks! We'll fix it."
+#~ msgstr "¡Gracias! Lo solucionaremos."
+
+#~ msgid "Save Draft"
+#~ msgstr "Guardar borrador"
+
+#~ msgid "Enable autosave."
+#~ msgstr "Activar autoguardado."
+
+#~ msgid "Draft"
+#~ msgstr "Borrador"
+
+#~ msgid "saved"
+#~ msgstr "guardado"
+
+#~ msgid "Autosave disabled."
+#~ msgstr "Autoguardado desactivado."
 
 #~ msgid "Open implementation notes"
 #~ msgstr "Abrir notas de implementación"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-05-15 10:06-0700\n"
+"POT-Creation-Date: 2017-06-07 06:48-0700\n"
 "PO-Revision-Date: 2017-04-28 05:51+0000\n"
 "Last-Translator: Fauzan Alfi <fauzanalfi@mozilla.web.id>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
@@ -298,11 +298,11 @@ msgstr "<li><a href=\"/logout\">Keluar</a> untuk mencoba lagi.</li>"
 msgid "Search Firefox Help"
 msgstr "Cari Bantuan Firefox"
 
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:101
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:91
 msgid "Other languages:"
 msgstr "Bahasa lainnya:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:112
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:102
 msgid "Go"
 msgstr "Buka"
 
@@ -924,11 +924,11 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Hari ini pada %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:322
 msgid "Yes"
 msgstr "Ya"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:336
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:326
 msgid "No"
 msgstr "Tidak"
 
@@ -1328,11 +1328,11 @@ msgid "Open Web and Mobile"
 msgstr "Web yang Bergerak dan Terbuka"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
-msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:120
-msgid "Test on Sauce Labs"
+msgid "Take the Survey"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:125
@@ -2544,7 +2544,7 @@ msgstr "Laman"
 msgid "Date"
 msgstr "Tanggal"
 
-#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:411
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:401
 msgid "Edit page"
 msgstr "Sunting halaman"
 
@@ -2552,7 +2552,7 @@ msgstr "Sunting halaman"
 msgid "View complete diff"
 msgstr "Tampilkan diff lengkap"
 
-#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:412
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:402
 msgid "View page history"
 msgstr "Tampilkan riwayat laman"
 
@@ -2796,7 +2796,7 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:47
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:47
 msgid "Edit"
 msgstr "Sunting"
 
@@ -2862,7 +2862,7 @@ msgstr "Editorial - prosa, tata bahasa, atau konten"
 msgid "Localization in progress - not completely translated yet."
 msgstr "Pelokalan sedang berlangsung - belum diterjemahkan sepenuhnya."
 
-#: kuma/wiki/content.py:725
+#: kuma/wiki/content.py:724
 msgid "Edit section"
 msgstr "Sunting seksi"
 
@@ -3365,50 +3365,50 @@ msgstr "Sebab Penghapusan"
 msgid "Restore this document"
 msgstr "Mengembalikan dokumen ini"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:171
 msgid "Previous Search Result"
 msgstr "Hasil Pencarian Sebelumnya"
 
-#: kuma/wiki/jinja2/wiki/document.html:181 kuma/wiki/jinja2/wiki/document.html:191
+#: kuma/wiki/jinja2/wiki/document.html:171 kuma/wiki/jinja2/wiki/document.html:181
 msgid "No Previous Search Result"
 msgstr "Tidak Ada Hasil Pencarian Sebelumnya"
 
-#: kuma/wiki/jinja2/wiki/document.html:187
+#: kuma/wiki/jinja2/wiki/document.html:177
 msgid "Your Search Results"
 msgstr "Hasil Pencarian Anda"
 
-#: kuma/wiki/jinja2/wiki/document.html:191
+#: kuma/wiki/jinja2/wiki/document.html:181
 msgid "Next Search Result"
 msgstr "Hasil Pencarian Selanjutnya"
 
-#: kuma/wiki/jinja2/wiki/document.html:195
+#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "see all contributors"
 msgstr "lihat semua kontributor"
 
-#: kuma/wiki/jinja2/wiki/document.html:195
+#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "hide contributors"
 msgstr "menyembunyikan kontributor"
 
-#: kuma/wiki/jinja2/wiki/document.html:199
+#: kuma/wiki/jinja2/wiki/document.html:189
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "Lihat profil: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:224
+#: kuma/wiki/jinja2/wiki/document.html:214
 msgid "In This Article"
 msgstr "Dalam Artikel Ini"
 
-#: kuma/wiki/jinja2/wiki/document.html:239
+#: kuma/wiki/jinja2/wiki/document.html:229
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:250
+#: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "Dokumen ini sedang dirender untuk pertama kalinya oleh sistem. Silakan <a href=\"%(url)s\">memuat laman ini</a> kembali dalam beberapa menit untuk melihat konten sepenuhnya."
 
-#: kuma/wiki/jinja2/wiki/document.html:258
+#: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -3417,7 +3417,7 @@ msgstr ""
 "Pembaruan pada dokumen ini <abbr title=\"%(started_at)s\">tengah berlangsung</abbr>. Jika konten di bawah ini tampak basi atau sesuatu menghilang, silakan <a href=\"%(url)s\">memuat laman ini</a> "
 "dalam beberapa menit."
 
-#: kuma/wiki/jinja2/wiki/document.html:267
+#: kuma/wiki/jinja2/wiki/document.html:257
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -3426,52 +3426,52 @@ msgstr ""
 "Pembaruan pada dokumen ini <abbr title=\"%(scheduled_at)s\">telah dijadwalkan</abbr>. Jika konten di bawah ini tampak basi atau ada yang hilang, silakan <a href=\"%(url)s\">muat kembali laman ini</"
 "a> dalam beberapa menit."
 
-#: kuma/wiki/jinja2/wiki/document.html:278
+#: kuma/wiki/jinja2/wiki/document.html:268
 msgid "This is an experimental page."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:289
+#: kuma/wiki/jinja2/wiki/document.html:279
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "Terjemahan ini belum lengkap. Mohon bantu <a href=\"%(translate_url)s\">menerjemahkan artikel ini</a> dari Bahasa Inggris."
 
-#: kuma/wiki/jinja2/wiki/document.html:294
+#: kuma/wiki/jinja2/wiki/document.html:284
 msgid "This translation is in progress."
 msgstr "Penerjemahan ini sedang berlangsung."
 
-#: kuma/wiki/jinja2/wiki/document.html:301
+#: kuma/wiki/jinja2/wiki/document.html:291
 #, fuzzy, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr "Relawan kami belum menerjemahkan artikel ini ke dalam <bdi>%(locale)s</bdi> . <a href=\"%(help_link)s\">Bergabunglah dan bantu kami menyelesaikan pekerjaan ini!</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:313
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This article doesn't have any content yet."
 msgstr "Artikel ini belum memiliki konten."
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:312
 msgid "This article doesn't have approved content yet."
 msgstr "Artikel ini belum memiliki konten yang disetujui."
 
-#: kuma/wiki/jinja2/wiki/document.html:327
+#: kuma/wiki/jinja2/wiki/document.html:317
 #, fuzzy
 msgid "Was this article helpful?"
 msgstr "Pindahkan artikel ini"
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:331
 msgid "Thank you!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:351
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "Tag Dokumen dan Kontributor"
 
-#: kuma/wiki/jinja2/wiki/document.html:357
+#: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
 msgstr "Kontributor untuk laman ini:"
 
-#: kuma/wiki/jinja2/wiki/document.html:363
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "Terakhir diperbarui oleh:"
 
@@ -4073,7 +4073,7 @@ msgstr "Jelaskan pada kami mengapa anda membuat penambahan dan perubahan. Ini op
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, fuzzy, python-format
-msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+msgid "Sorry! We weren't able to save your contribution. Please copy and paste your changes into a safe place and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
 msgstr "Jika Anda yakin menerima pesan ini karena sebuah kesalahan, silakan <a href=\"%(admin_email)s\">menghubungi administrator situs</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
@@ -4316,7 +4316,7 @@ msgstr "Autosuggest memerlukan sebagian judul. Untuk indeks dokumen sepenuhnya, 
 msgid "Document has been edited; please re-review."
 msgstr "Dokumen telah disunting; silakan mengulasnya."
 
-#: kuma/wiki/views/translate.py:74
+#: kuma/wiki/views/translate.py:75
 msgid "You cannot translate this document."
 msgstr "Anda tidak dapat menerjemahkan dokumen ini."
 

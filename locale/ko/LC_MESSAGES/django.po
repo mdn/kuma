@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-05-15 10:06-0700\n"
+"POT-Creation-Date: 2017-06-07 06:48-0700\n"
 "PO-Revision-Date: 2017-04-26 14:16+0000\n"
 "Last-Translator: Hoony <thechunsik@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -306,11 +306,11 @@ msgstr "<li><a href=\"/logout\">로그 아웃</a> 후 다시 하기.</li>"
 msgid "Search Firefox Help"
 msgstr "Firefox 도움말 검색"
 
-#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:101
+#: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:91
 msgid "Other languages:"
 msgstr "다른 언어:"
 
-#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:112
+#: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:102
 msgid "Go"
 msgstr "이동"
 
@@ -943,11 +943,11 @@ msgstr "개발자 블로그"
 msgid "Today at %s"
 msgstr "%s의 오늘"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:332
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:322
 msgid "Yes"
 msgstr "네"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:336
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:326
 msgid "No"
 msgstr "아니오"
 
@@ -1343,12 +1343,12 @@ msgid "Open Web and Mobile"
 msgstr "오픈 웹 및 모바일"
 
 #: kuma/landing/jinja2/landing/homepage.html:118
-msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-msgstr "FIrefox를 포함한 800개 이상의 브라우저와 OS에서 Mozilla와 Sauce Labs를 테스트해보세요"
+msgid "Do you have a couple minutes to help us out by taking a developer survey?"
+msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:120
-msgid "Test on Sauce Labs"
-msgstr "Sauce Labs 테스트하기"
+msgid "Take the Survey"
+msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Learn Web Development"
@@ -2549,7 +2549,7 @@ msgstr "페이지"
 msgid "Date"
 msgstr "날짜"
 
-#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:411
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:401
 msgid "Edit page"
 msgstr "페이지 편집"
 
@@ -2557,7 +2557,7 @@ msgstr "페이지 편집"
 msgid "View complete diff"
 msgstr "모든 차이점 보기"
 
-#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:412
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:402
 msgid "View page history"
 msgstr "페이지 이력 보기"
 
@@ -2798,7 +2798,7 @@ msgstr "스팸으로 신고됨."
 msgid "This user has not created any revisions in the past three days."
 msgstr "이 사용자는 지난 3일간 어떤 리비전도 만들지 않았습니다."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:744 kuma/wiki/jinja2/wiki/includes/buttons.html:47
+#: kuma/users/jinja2/users/includes/user_title_info.html:21 kuma/wiki/content.py:743 kuma/wiki/jinja2/wiki/includes/buttons.html:47
 msgid "Edit"
 msgstr "편집"
 
@@ -2864,7 +2864,7 @@ msgstr "편집 - 산문, 문법, 내용"
 msgid "Localization in progress - not completely translated yet."
 msgstr "문서 지역화 중 - 모두 번역되지 않음을 양해바라며, 여러분의 도움이 필요합니다."
 
-#: kuma/wiki/content.py:725
+#: kuma/wiki/content.py:724
 msgid "Edit section"
 msgstr "섹션 편집"
 
@@ -3388,50 +3388,50 @@ msgstr "삭제 사유"
 msgid "Restore this document"
 msgstr "현재 문서 복원"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:171
 msgid "Previous Search Result"
 msgstr "이전 검색 결과"
 
-#: kuma/wiki/jinja2/wiki/document.html:181 kuma/wiki/jinja2/wiki/document.html:191
+#: kuma/wiki/jinja2/wiki/document.html:171 kuma/wiki/jinja2/wiki/document.html:181
 msgid "No Previous Search Result"
 msgstr "이전 검색 결과 없음"
 
-#: kuma/wiki/jinja2/wiki/document.html:187
+#: kuma/wiki/jinja2/wiki/document.html:177
 msgid "Your Search Results"
 msgstr "검색 결과"
 
-#: kuma/wiki/jinja2/wiki/document.html:191
+#: kuma/wiki/jinja2/wiki/document.html:181
 msgid "Next Search Result"
 msgstr "다음 검색 결과"
 
-#: kuma/wiki/jinja2/wiki/document.html:195
+#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "see all contributors"
 msgstr "모든 공헌자 보기"
 
-#: kuma/wiki/jinja2/wiki/document.html:195
+#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "hide contributors"
 msgstr "공헌자 감추기"
 
-#: kuma/wiki/jinja2/wiki/document.html:199
+#: kuma/wiki/jinja2/wiki/document.html:189
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "프로필: %(username)s"
 
-#: kuma/wiki/jinja2/wiki/document.html:224
+#: kuma/wiki/jinja2/wiki/document.html:214
 msgid "In This Article"
 msgstr "현재 문서 내"
 
-#: kuma/wiki/jinja2/wiki/document.html:239
+#: kuma/wiki/jinja2/wiki/document.html:229
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr "이 문서는 아직 볼 수 없으며 MDN이 <a href=\"%(url)s\">유지/보수 모드</a>일 때는 불러올 수 없습니다. 유지/보수가 끝난 뒤 다시 확인해보세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:250
+#: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "이 문서는 시스템이 처음으로 표시한 것입니다. 모든 콘텐트를 보려면 몇 분 뒤에 <a href=\"%(url)s\">페이지를 새로 고침</a>해 주세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:258
+#: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -3439,7 +3439,7 @@ msgid ""
 msgstr ""
 "이 문서에 대한 업데이트가 <abbr title=\"%(started_at)s\">현재 진행중입니다</abbr>. 만약 아래의 콘텐트가 낡았거나 무엇인가 빠졌다면, 몇 분 후에 <a href=\"%(url)s\">이 페이지를 새로고침</a>해 주세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:267
+#: kuma/wiki/jinja2/wiki/document.html:257
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -3448,20 +3448,20 @@ msgstr ""
 "이 문서에 대한 업데이트가 <abbr title=\"%(scheduled_at)s\">예약되어 있습니다</abbr>. 만약 아래의 콘텐트가 낡았거나 무엇인가 빠졌다면, 몇 분 후에 <a href=\"%(url)s\">이 페이지를 새로고침</a>해 주세"
 "요."
 
-#: kuma/wiki/jinja2/wiki/document.html:278
+#: kuma/wiki/jinja2/wiki/document.html:268
 msgid "This is an experimental page."
 msgstr "현재 보고 계신 페이지는 실험 중에 있습니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:289
+#: kuma/wiki/jinja2/wiki/document.html:279
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "현재 번역은 완벽하지 않습니다. 한국어로 <a href=\"%(translate_url)s\">문서 번역</a>에 동참해주세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:294
+#: kuma/wiki/jinja2/wiki/document.html:284
 msgid "This translation is in progress."
 msgstr "번역 작업 진행중입니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:301
+#: kuma/wiki/jinja2/wiki/document.html:291
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3471,32 +3471,32 @@ msgstr ""
 "\">%(parent_language)s</a>의 문서도 읽어보세요."
 
 # 85%
-#: kuma/wiki/jinja2/wiki/document.html:313
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "This article doesn't have any content yet."
 msgstr "이 글에는 아직 내용이 없습니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/wiki/jinja2/wiki/document.html:312
 msgid "This article doesn't have approved content yet."
 msgstr "현재 문서는 아직 승인된 내용이 없습니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:327
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "Was this article helpful?"
 msgstr "이 글이 여러분에게 도움이 되나요?"
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:331
 msgid "Thank you!"
 msgstr "감사합니다!"
 
-#: kuma/wiki/jinja2/wiki/document.html:351
+#: kuma/wiki/jinja2/wiki/document.html:341
 msgid "Document Tags and Contributors"
 msgstr "문서 태그 및 공헌자"
 
-#: kuma/wiki/jinja2/wiki/document.html:357
+#: kuma/wiki/jinja2/wiki/document.html:347
 msgid "Contributors to this page:"
 msgstr "이 페이지의 공헌자:"
 
 # 100%
-#: kuma/wiki/jinja2/wiki/document.html:363
+#: kuma/wiki/jinja2/wiki/document.html:353
 msgid "Last updated by:"
 msgstr "최종 변경:"
 
@@ -4095,8 +4095,8 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "추가 및 변경 사유를 알려주세요. 이는 선택 사항이며 기록을 위한 것입니다."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, python-format
-msgid "Sorry! We weren't able to save your contribution. Please save a draft of your change and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+#, fuzzy, python-format
+msgid "Sorry! We weren't able to save your contribution. Please copy and paste your changes into a safe place and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
 msgstr "죄송합니다! 작업을 저장할 수 없습니다. 작업중인 내용을 저장하고 <a href=\"%(admin_email)s\"> 사이트 관리자에게 연락</a>해 주세요."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
@@ -4340,7 +4340,7 @@ msgstr "자동 완성은 제목 부분만 가능합니다. 전체 문서 목록�
 msgid "Document has been edited; please re-review."
 msgstr "문서가 편집되었습니다. 다시 검토해 주십시오."
 
-#: kuma/wiki/views/translate.py:74
+#: kuma/wiki/views/translate.py:75
 msgid "You cannot translate this document."
 msgstr "이 문서를 번역할 수 없습니다."
 
@@ -4348,6 +4348,12 @@ msgstr "이 문서를 번역할 수 없습니다."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 서버: %(backend)s"
+
+#~ msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+#~ msgstr "FIrefox를 포함한 800개 이상의 브라우저와 OS에서 Mozilla와 Sauce Labs를 테스트해보세요"
+
+#~ msgid "Test on Sauce Labs"
+#~ msgstr "Sauce Labs 테스트하기"
 
 #~ msgid "Create a New Template"
 #~ msgstr "새 템플릿 만들기"
