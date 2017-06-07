@@ -140,6 +140,9 @@ def setup_dependencies(ctx):
     with ctx.lcd(os.path.join(settings.SRC_DIR, 'kumascript')):
         ctx.local('rm -rf node_modules')
         ctx.local('npm install --production')
+        # Update any top-level npm packages listed in package.json,
+        # as allowed by each package's given "semver".
+        ctx.local('npm update --production')
 
 
 @task
