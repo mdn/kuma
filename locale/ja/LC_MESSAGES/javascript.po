@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-04-27 16:27+0000\n"
+"PO-Revision-Date: 2017-06-07 16:51+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -83,70 +83,61 @@ msgid "an unknown date"
 msgstr "不明な日時"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "ページを表示"
+msgstr "下書きを表示"
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "下書きの内容を復元"
+msgstr "下書きを復元"
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
 msgstr "下書きを破棄"
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "この下書きが保存された後、この記事のより新しいバージョンが公開されています。下書きを復元してその内容を見ることもできますが、それを送信して公開することはできません。"
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "リビジョン履歴"
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "公開済み"
+msgstr "公開済みバージョン"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "この日付と最新のリビジョン日時を比較して、より新しい変更を上書きしていないことを確かめてください。"
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "この日時に保存された下書きがあります:"
+msgstr "%(time)s に保存された下書きがあります。"
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "古い下書きを表示しています。この下書きは公開できません。"
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "復元された内容"
+msgstr "下書きが復元されました。"
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "破棄されました"
+msgstr "下書きが破棄されました。"
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "公開済み"
+msgstr "下書きが公開されました:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "破棄されました"
+msgstr "下書きが破棄されました:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "自動保存済み"
+msgstr "下書きが自動保存されました:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -154,7 +145,7 @@ msgstr "自動保存が有効化されました。"
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "変更点を公開しています..."
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -165,9 +156,8 @@ msgid "Changes saved."
 msgstr "変更が保存されました。"
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "公開できませんでした。あなたの編集内容を安全な場所へコピー＆ペーストしてから「公開」ボタンを使ってフォームの送信を試してください。"
+msgstr "公開できませんでした。変更点を安全な所へコピー＆ペーストしてから「公開」ボタンを使ってフォームの送信を試してください。"
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
