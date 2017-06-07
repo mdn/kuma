@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-04-27 16:39+0000\n"
+"PO-Revision-Date: 2017-06-07 14:56+0000\n"
 "Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
@@ -83,19 +83,16 @@ msgid "an unknown date"
 msgstr "uma data desconhecida"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "Ver página"
+msgstr "Ver rascunho."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "Restaurar o conteúdo do rascunho"
+msgstr "Restaurar rascunho."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "Descartar o rascunho"
+msgstr "Descartar rascunho."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
