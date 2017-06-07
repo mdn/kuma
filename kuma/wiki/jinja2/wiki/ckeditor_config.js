@@ -137,7 +137,7 @@
     }
 
     config.startupFocus = true;
-    config.bodyClass = 'text-content redesign';
+    config.bodyClass = 'text-content';
     config.contentsCss = mdn.assets.css['editor-content'];
 
     config.dialog_backgroundCoverColor = 'black';
