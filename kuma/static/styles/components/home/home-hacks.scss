@@ -77,15 +77,6 @@ $home-involved-background-y : 50px;
         @include set-font-size(30px);
         font-weight: bold;
     }
-
-    .button {
-        /* stylelint-disable declaration-no-important */
-        background-color: #48ade4 !important;
-        font-size: $smaller-font-size !important;
-        color: $blue-background-text-color !important;
-        /* stylelint-enable */
-        font-weight: bold;
-    }
 }
 
 @media #{$mq-mobile-and-down} {

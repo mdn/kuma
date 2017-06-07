@@ -37,6 +37,6 @@ mixins applying only to the wiki
 }
 
 %review-base {
-    @include box-theme($yellow);
+    @include box-theme('warning');
     color: $text-color;
 }

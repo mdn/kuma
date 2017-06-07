@@ -117,10 +117,6 @@
                 @include bidi-style(margin-left, 5px, margin-right, 0);
                 @include bidi-value(padding, 5px 0 5px 5px  !important, 5px 5px 5px 0  !important);
                 /* stylelint-enable */
-
-                #{$selector-icon} {
-                    margin-left: 0;
-                }
             } /* end button.close */
 
             &:last-child {

@@ -53,7 +53,7 @@
 }
 
 .user-since {
-    color: #6a9412;
+    color: $green-dark;
     @include set-smaller-font-size();
     font-style: italic;
 }

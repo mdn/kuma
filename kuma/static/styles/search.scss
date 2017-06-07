@@ -112,8 +112,7 @@ fieldset #{$selector-icon} {
     font-style: italic;
 
     #{$selector-icon} {
-        margin-right: 6px !important; /* stylelint-disable-line declaration-no-important */
-        margin-left: 0;
+        @include right-icons();
     }
 
     a {

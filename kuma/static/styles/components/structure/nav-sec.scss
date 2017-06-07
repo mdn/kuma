@@ -15,6 +15,10 @@ Secondary navigation, site tools and login info
         display: inline-block;
         @include bidi-value(padding, 0 0 0 16px, 0 16px 0 0); /* same as main nav but we double it because only putting on left */
     }
+
+    #{$selector-icon} {
+        @include left-icons();
+    }
 }
 
 

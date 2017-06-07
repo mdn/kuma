@@ -15,7 +15,7 @@
             @include bidi-value(text-align, left, right);
             @include bidi-style(left, -($grid-spacing * 1.5), right, auto);
             position: absolute;
-            color: #484848;
+            color: $grey-dark;
         }
     }
 

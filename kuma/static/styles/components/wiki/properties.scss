@@ -71,8 +71,8 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
 }
 
 .text-content .learn-box {
-    border-color: #f69855;
-    background-color: #fce1ce;
+    border-color: $orange;
+    background-color: $orange-light;
 }
 
 /* small screen improvements to table display, only need to apply to .properties and .learn-box

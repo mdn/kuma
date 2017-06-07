@@ -9,10 +9,7 @@
     }
 
     i {
+        @include right-icons();
         @include set-font-size($base-font-size);
-    }
-
-    a {
-        @include bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
     }
 }

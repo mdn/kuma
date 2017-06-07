@@ -12,6 +12,7 @@ option {
     font-style: normal;
     font-weight: normal;
     font-family: $site-font-family;
+    line-height: 1.15;
     #{$selector-site-font-fallback} {
         font-family: $site-font-family-fallback;
     }
@@ -23,9 +24,13 @@ input[type=search],
 input[type=email],
 input[type=url],
 textarea {
-    background: #fff;
-    border: 1px solid #cbc8b9;
+    color: $form-text;
+    background: $form-background-color;
+    border: $form-border-width solid $form-border-color;
     padding: $content-vertical-spacing $content-horizontal-spacing;
+    font-weight: bold;
+
+    @include set-placeholder-style(color, $placeholder-text);
 }
 
 input[type='search'] {
@@ -63,55 +68,45 @@ input[type='button'] {
     cursor: pointer;
     display: inline-block;
     line-height: 1;
-    font-weight: normal;
+    font-weight: bold;
     letter-spacing: normal;
-    background-color: $button-background;
-    text-transform: uppercase;
+    border: $form-border-width solid $form-border-color;
+    background-color: $form-background-color;
     padding: 5px 11px;
-    border-radius: 4px;
-    box-shadow: inset 0 -1px $button-shadow-color;
-    color: $button-color;
+    color: $form-text;
     text-decoration: none;
 
-    &.disabled,
-    &[disabled] {
-        box-shadow: inset 0 -1px rgba($button-shadow-color, .5);
-    }
-
-    &.neutral,
-    &.negative,
-    &.positive {
-        color: #fff;
-    }
-
     &.neutral {
-        background-color: $blue;
-        box-shadow: inset 0 -1px $homepage-background-color;
+        border-color: $blue;
+        color: $blue-dark;
     }
 
     &.negative {
-        background-color: $red;
-        box-shadow: inset 0 -1px #c13832;
+        border-color: $red;
+        color: $red-dark;
     }
 
     &.positive {
-        background-color: $green;
-        box-shadow: inset 0 -1px #486900;
+        border-color: $green;
+        color: $green-dark;
     }
 
     &.transparent {
-        box-shadow: none;
         background-color: transparent;
+        border: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     &.link {
         @include vendorize(appearance, none);
+        font-size: inherit;
         font-weight: inherit;
         letter-spacing: inherit;
         background-color: transparent;
         text-transform: inherit;
+        border: 0;
         padding: 0;
-        box-shadow: none;
         color: $link-color;
 
         &:hover,
@@ -125,8 +120,17 @@ input[type='button'] {
         margin-bottom: -1px;
     }
 
+    #{$selector-icon} {
+        @include set-font-size($base-bump-font-size);
+    }
+
     #{$selector-icon}:before {
         cursor: pointer;
+    }
+
+    &:not(.only-icon) #{$selector-icon} {
+        @include bidi-value(float, left, right);
+        @include bidi-style(margin-right, $icon-margin, margin-left, 0);
     }
 }
 

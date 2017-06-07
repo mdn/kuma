@@ -151,60 +151,19 @@ Colours
     }
 }
 
-/*
-functions to transform the base colors into variations of themselves
--------------------------------------------------------------- */
-
-@function -theme-pale-light($color) {
-    @return mix(white, $color, 80%);
-}
-
-@function -theme-pale-dark($color) {
-    @return mix(black, $color, 20%);
-}
-
-@function -theme-pale-medium($color) {
-    @return mix(white, $color, 45%);
-}
-
-/*
-functions to get correct text colors for variations of theme colors
--------------------------------------------------------------- */
-
-@function -theme-pale-text($color) {
-    $color : -theme-pale-light($color);
-    $color : mix(#000, $color, 60%);
-    @return $color;
-}
-
-@function -theme-pale-contrast-text($color) {
-    $hu : hue($color);
-    $lite : lightness($color);
-    $sat : saturation($color);
-    @if (($hu < 20deg or $hu > 199deg) and $sat > 30% and $lite < 70%) {
-        $color : $text-light;
-    }
-    @else if ($lite < 50%) {
-        $color : $text-light;
-    }
-    @else {
-        $color : $text-dark;
-    }
-    @return $color;
-}
 
 /*
 function to apply all the generated colors to a notification to theme it
 -------------------------------------------------------------- */
 
 @mixin notification-theme($color) {
-    background-color: -theme-pale-light($color);
-    border-color: -theme-pale-medium($color);
-    color: -theme-pale-contrast-text(-theme-pale-light($color));
+    background-color: #{map-get( map-get($colors-lookup, $color), 'light')};
+    border-color: #{map-get( map-get($colors-lookup, $color), 'medium')};
+    color: $text-color;
 
     .notification-button {
-        background-color: -theme-pale-medium($color);
-        color: -theme-pale-text($color);
+        background-color: #{map-get( map-get($colors-lookup, $color), 'medium')};
+        color: $text-color;
 
         &:hover,
         &:focus {
@@ -214,15 +173,15 @@ function to apply all the generated colors to a notification to theme it
     }
 
     .notification-img i {
-        color: -theme-pale-dark($color);
+        color: #{map-get( map-get($colors-lookup, $color), 'dark')};
     }
 
     button.close {
-        color: -theme-pale-medium($color);
+        color: #{map-get( map-get($colors-lookup, $color), 'medium')};
 
         &:hover,
         &:focus {
-            color: -theme-pale-dark($color);
+            color: #{map-get( map-get($colors-lookup, $color), 'dark')};
         }
     }
 }
@@ -232,8 +191,8 @@ coloured boxes
 -------------------------------------------------------------- */
 
 @mixin box-theme($color) {
-    background: -theme-pale-light($color);
-    border-color: -theme-pale-medium($color);
+    background: #{map-get( map-get($colors-lookup, $color), 'light')};
+    border-color: #{map-get( map-get($colors-lookup, $color), 'medium')};
 }
 
 
@@ -384,15 +343,19 @@ Home & Zones
 
 /* sets an input tag's placeholder styles */
 @mixin set-placeholder-style($prop, $value) {
-    &::-webkit-input-placeholder {
+    &::-webkit-input-placeholder { // old Chrome & Safari, we can remove this soon
         #{$prop}: $value;
     }
 
-    &::-moz-placeholder {
+    &:-ms-input-placeholder { // IE 9-11, Edge
         #{$prop}: $value;
     }
 
-    &:-ms-input-placeholder { // IE 9 & 10, Edge suppoerts -webkit-
+    &::-moz-placeholder { // Old Firefox, we can remove this soon
+        #{$prop}: $value;
+    }
+
+    &::placeholder { // Current Firefox, Chrome, Safari
         #{$prop}: $value;
     }
 }
@@ -431,8 +394,11 @@ Bidi / l10n
 }
 
 @mixin right-icons() {
-    @include bidi-value(margin-left, 0 !important, 10px !important);
-    @include bidi-value(margin-right, 10px !important, 0 !important);
+    @include bidi-value(margin-right, $icon-margin, 0);
+}
+
+@mixin left-icons() {
+    @include bidi-value(margin-left, $icon-margin, 0);
 }
 
 
@@ -465,18 +431,12 @@ These are not dynamic but serve as mixins
 }
 
 @mixin big-search() {
-    @include rgba-fallback(background, #fff, .2);
+    background: #fff;
     @include set-larger-font-size();
     display: block;
     margin: 0 auto;
-    border: 0;
-    border-radius: 3px;
     width: 100%;
-
-    font-family: $heading-font-family;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
+    padding: ($grid-spacing / 2);
 }
 
 @mixin clearfix() {

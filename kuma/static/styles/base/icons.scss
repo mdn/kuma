@@ -1,6 +1,4 @@
 #{$selector-icon} {
-    @include bidi-style(margin-left, $icon-margin, margin-right, 0);
-    @include bidi-style(margin-right, 0, margin-left, $icon-margin);
     cursor: default;
     display: inline-block;
 
@@ -8,15 +6,9 @@
         display: inline-block;
         text-decoration: none;
     }
-
-    &.no-margin {
-        @include bidi-style(margin-left, 0, margin-right, 0);
-        @include bidi-style(margin-right, 0, margin-left, 0);
-    }
 }
 
-label #{$selector-icon} {
-    $label-icon-margin: ($grid-spacing / 2);
-    @include bidi-value(margin-left, 0, $label-icon-margin);
-    @include bidi-value(margin-right, $label-icon-margin, 0);
+label #{$selector-icon}:first-child {
+    @include bidi-value(margin-left, 0, $icon-margin);
+    @include bidi-value(margin-right, $icon-margin, 0);
 }

@@ -26,17 +26,11 @@ List of four feature columns within the masthead
         #{$selector-icon} {
             width: 42px;
             height: 39px;
-            background-position: 0 -147px;
-            background-size: 134px auto;
-            color: #0095dd;
             @include bidi-value(float, left, right);
-            @include bidi-value(margin-right, $icon-margin, 0);
-            @include bidi-value(margin-left, 0, $icon-margin);
 
             &:before {
                 margin: 11px 0 0 0;
                 display: block;
-                text-align: center;
             }
         }
 

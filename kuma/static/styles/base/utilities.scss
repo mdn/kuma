@@ -160,8 +160,6 @@ Utility classes
 .only-icon {
     #{$selector-icon} {
         /* stylelint-disable declaration-no-important */
-        margin-left: 0 !important;
-        margin-right: 0 !important;
         margin-top: -1px !important;
         /* stylelint-enable */
     }

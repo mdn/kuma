@@ -29,39 +29,13 @@
         background: transparent;
     }
 
-    h2,
-    h3 {
-        > #{$selector-icon} {
-            display: inline-block;
-            position: relative;
-            background-image: url($logo-sprite-url);
-            background-size: 132px;
-            background-position: 0 -143px;
-            background-repeat: no-repeat;
-        }
-    }
-
     h2 {
         > #{$selector-icon} {
-            width: 64px;
-            height: 64px;
-            color: #0095dd;
-            background-position: 0 -222px;
-            background-size: 205px auto;
+            position: relative;
+            top: -5px; // try to center icon vertically
             @include set-font-size(30px);
-            @include bidi-value(margin-right, ($icon-margin / 2), 0);
-            @include bidi-value(margin-left, 0, ($icon-margin / 2));
-
-            &.blue {
-                background-position: 0 -340px;
-                color: $blue-background-text-color;
-            }
-
-            &[class^='icon-']:before {
-                margin: 18px 0 0 0;
-                display: block;
-                text-align: center;
-            }
+            @include bidi-value(margin-right, $icon-margin, 0);
+            @include bidi-value(margin-left, 0, $icon-margin);
         }
     }
 

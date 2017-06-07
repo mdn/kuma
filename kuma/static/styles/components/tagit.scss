@@ -48,7 +48,7 @@ overrides for tagit widget
 
 .tagit-new {
     background-color: #fff;
-    border-color: #cbc8b9;
+    border-color: $tag-border-color;
     margin-bottom: 0; /* will always be last, no tags underneath it, and bottom margins on form elements dont' collapse */
 
     input {

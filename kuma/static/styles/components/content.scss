@@ -159,8 +159,8 @@ $table-cell-border: 2px solid #fff;
     .licenseblock,
     .originaldocinfo {
         @include set-message-base(true);
-        background: #f1f1f1;
-        border: 2px solid #cccccc;
+        background: #{map-get( map-get($colors-lookup, 'default'), 'light')};
+        border: 2px solid #{map-get( map-get($colors-lookup, 'default'), 'medium')};
         font-size: $smaller-font-size;
     }
 
@@ -290,7 +290,7 @@ div.bug {
 p.footnote {
     font-size: $smaller-font-size;
     font-style: italic;
-    color: #716d65;
+    color: $grey;
 }
 
 /*
