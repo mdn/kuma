@@ -1,0 +1,21 @@
+/* series of 3 number inputs which set rendering max age of a page */
+.duration-container {
+    display: inline-block;
+    float: left;
+    margin-left: 5px;
+
+    input {
+        display: inline-block;
+        width: 50px;
+    }
+
+    div {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    label {
+        float: right;
+        margin-left: 5px;
+    }
+}
