@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-04-28 11:32+0000\n"
+"PO-Revision-Date: 2017-06-07 16:12+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -83,70 +83,61 @@ msgid "an unknown date"
 msgstr "nieznana data"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "Wyświetl stronę"
+msgstr "Wyświetl szkic."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "Przywróć zawartość szkicu"
+msgstr "Przywróć szkic."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "Odrzuć szkic"
+msgstr "Odrzuć szkic."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "Od czasu zapisania tego szkicu opublikowano nowszą wersję tego artykułu. Można przywrócić szkic, aby wyświetlić jego treść, ale nie będzie można go opublikować."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "Historia wersji."
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "opublikowano"
+msgstr "Opublikowana wersja"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Porównaj tę datę do daty najnowszej wersji, aby upewnić się, że późniejsze zmiany nie zostaną zastąpione."
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "Masz szkic od:"
+msgstr "Masz szkic od: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "Wyświetlanie starego szkicu. Nie można go opublikować."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "przywrócono"
+msgstr "Przywrócono szkic."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "odrzucono"
+msgstr "Odrzucono szkic."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "opublikowano"
+msgstr "Opublikowano szkic:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "odrzucono"
+msgstr "Odrzucono szkic:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "zapisano"
+msgstr "Automatycznie zapisano szkic:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -154,7 +145,7 @@ msgstr "Automatyczny zapis włączony."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "Publikowanie zmian…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -165,9 +156,8 @@ msgid "Changes saved."
 msgstr "Zapisano zmiany."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "Publikacja się nie powiodła. Należy skopiować zmiany w bezpieczne miejsce i jeszcze raz wysłać formularz za pomocą przycisku „Opublikuj”."
+msgstr "Publikacja się nie powiodła. Prosimy skopiować swoje zmiany w bezpieczne miejsce i jeszcze raz wysłać formularz za pomocą przycisku „Opublikuj”."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
