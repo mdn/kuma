@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-06-07 14:56+0000\n"
+"PO-Revision-Date: 2017-06-07 15:04+0000\n"
 "Last-Translator: Rodrigo <rodrigo.mcunha@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal) https://pontoon.mozilla.org/pt_PT/\n"
 "Language: pt_PT\n"
@@ -96,54 +96,48 @@ msgstr "Descartar rascunho."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "Uma nova versão deste artigo foi publicada desde que este rascunho foi guardado. Pode restaurar o rascunho para ver o conteúdo, mas não irá conseguir submetê-lo para publicação."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "Histórico de revisões."
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "publicado"
+msgstr "Versão publicada"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Compare esta data à revisão mais recente para garantir que não está a sobrescrever alterações posteriores."
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "Tem um rascunho de:"
+msgstr "Tem um rascunho de: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "A ver rascunho antigo. Este rascunho não pode ser publicado."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "restaurado"
+msgstr "Rascunho restaurado."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "descartado"
+msgstr "Rascunho descartado."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "publicado"
+msgstr "Rascunho publicado:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "descartado"
+msgstr "Rascunho descartado:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "guardado automaticamente"
+msgstr "Rascunho guardado automaticamente:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -151,7 +145,7 @@ msgstr "Guardar automaticamente ativado."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "A publicar alterações…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -162,9 +156,8 @@ msgid "Changes saved."
 msgstr "Alterações guardadas."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "A publicação falhou. Por favor copie e cole as suas alterações num sítio seguro e tente submeter o formulário utilizando o botão 'publicar'."
+msgstr "A publicação falhou. Por favor copie e cole as suas alterações num sítio seguro e tente submeter o formulário utilizando o botão \"publicar\"."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
