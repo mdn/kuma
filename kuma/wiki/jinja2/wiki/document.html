@@ -167,20 +167,6 @@
 
       <!-- heading -->
       <div id="wiki-document-head" class="document-head">
-          <span class="from-search-previous-box">
-            <a class="button from-search-previous only-icon disabled" title="{{ _('Previous Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-left"></i></a>
-          </span>
-          <span class="from-search-navigate-wrap">
-            <a href="#" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
-          </span>
-          <div class="from-search-toc submenu">
-            <span class="title">{{ _('Your Search Results') }}</span>
-            <ol></ol>
-          </div>
-          <span class="from-search-next-box">
-            <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
-          </span>
-
         {% if has_contributors %}
         <div class="contributor-avatars" data-all-text="{{ _('see all contributors') }}" data-alternate-message="{{ _('hide contributors') }}" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
             <ul>

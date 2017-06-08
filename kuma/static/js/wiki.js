@@ -63,40 +63,6 @@
         minHeightFn();
     });
 
-    /*
-        Document search helper
-    */
-    (function() {
-        var searchUrl = $(doc.body).data('search-url');
-        if(searchUrl) {
-            $('.from-search-toc').mozSearchResults(searchUrl);
-        }
-    })();
-
-    /*
-        Set up the "from search" buttons if user came from search
-    */
-    var fromSearchNav = $('.from-search-navigate');
-    if(fromSearchNav.length) {
-        var fromSearchList = $('.from-search-toc');
-        fromSearchNav.mozMenu({
-            submenu: fromSearchList,
-            brickOnClick: true,
-            onOpen: function(){
-                mdn.analytics.trackEvent({
-                    category: 'Search doc navigator',
-                    action: 'Open on hover'
-                });
-            },
-            onClose: function() {
-                mdn.analytics.trackEvent({
-                    category: 'Search doc navigator',
-                    action: 'Close on blur'
-                });
-            }
-        });
-        fromSearchList.find('ol').mozKeyboardNav();
-    }
 
     /*
         Subscribe / unsubscribe to an article
