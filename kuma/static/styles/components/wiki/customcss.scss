@@ -25,26 +25,6 @@ eventually emptying this file.
     margin-left: 0;
 }
 
-/* Simulate two columns for landing page, if enough space is available    */
-@media #{$media-query-small-desktop-and-up} {
-    .landing {
-        display: table-row;
-    }
-}
-
-/* For Landing page boxes; these are boxes displayed within columns on landing
-     pages, such as the Community and Related boxes. */
-.landingPageBox {
-    width: 100%;
-    padding: 0;
-    border-bottom: 1px solid #bbb;
-    margin-bottom: 3px;
-}
-
-.landingPageBox ul {
-    padding-left: 44px;
-}
-
 /* Wide column box */
 .wideColumnBox {
     @include vendorize(column-width, 375px);
@@ -769,14 +749,6 @@ div.fxosLiveSampleWrapper {
 }
 
 /* unimplemented */
-/*
- * Landing page lists
- */
-
-dt.landingPageList,
-dd.landingPageList {
-    page-break-after: avoid;
-}
 
 /*
  * "Mozilla only" banners
