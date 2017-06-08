@@ -25,17 +25,6 @@ eventually emptying this file.
     margin-left: 0;
 }
 
-/* Wide column box */
-.wideColumnBox {
-    @include vendorize(column-width, 375px);
-}
-
-.wideColumnBoxList li {
-    line-height: 1.5;
-    list-style-type: none;
-    padding-left: 0;
-    page-break-inside: avoid;
-}
 
 /* Multi-column boxes for lists of longer links; this will adapt based on screen width */
 .multiColumnList {
