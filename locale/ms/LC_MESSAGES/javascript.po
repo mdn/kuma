@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-04-27 22:53+0000\n"
-"Last-Translator: Norman Haikal <normanh876@gmail.com>\n"
+"PO-Revision-Date: 2017-06-08 09:47+0000\n"
+"Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
 "MIME-Version: 1.0\n"
@@ -98,11 +98,11 @@ msgstr "Buang draf"
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "Versi baru artikel ini telah diterbitkan sejak draf ini disimpan. Anda boleh mengembalikan semula draf untuk melihat kandungannya, tetapi anda tidak boleh menghantarnya untuk penerbitan."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "Sejarah semakan."
 
 #: kuma/static/js/wiki-edit-draft.js:103
 #, fuzzy
@@ -111,7 +111,7 @@ msgstr "diterbitkan"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Bandingkan tarikh ini dengan tarikh semakan terakhir bagi memastikan anda tidak membuat perubahan pada yang terkemudian."
 
 #: kuma/static/js/wiki-edit-draft.js:126
 #, fuzzy, python-format
@@ -120,7 +120,7 @@ msgstr "Anda ada draf dari:"
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "Memaparkan draf yang lama. Draf ini tidak boleh diterbitkan."
 
 #: kuma/static/js/wiki-edit-draft.js:171
 #, fuzzy
@@ -153,7 +153,7 @@ msgstr "Autosimpan didayakan."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "Perubahan penerbitan…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
