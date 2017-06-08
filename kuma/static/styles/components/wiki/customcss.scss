@@ -19,18 +19,10 @@ eventually emptying this file.
     font-size: 60%;
 }
 
-
 /* remove left margin from Font Awesome icons inside wiki
      content; this is messing up document content */
 #wikiArticle #{$selector-icon} {
     margin-left: 0;
-}
-
-/* Iframe for live sample centered (Test) */
-.centered iframe {
-    display: block;
-    margin: 0 auto;
-    border: none;
 }
 
 /* Simulate two columns for landing page, if enough space is available    */
