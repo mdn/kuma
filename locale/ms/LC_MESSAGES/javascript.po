@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-06-08 09:47+0000\n"
-"Last-Translator: manxmensch <manxmensch@gmail.com>\n"
+"PO-Revision-Date: 2017-06-08 09:53+0000\n"
+"Last-Translator: Norman Haikal <normanh876@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
 "MIME-Version: 1.0\n"
@@ -82,19 +82,16 @@ msgid "an unknown date"
 msgstr "tarikh yang tidak diketahui"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "Papar Halaman"
+msgstr "Papar draf."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "Kembalikan semula kandungan draf"
+msgstr "Kembalikan semula draf."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "Buang draf"
+msgstr "Buang draf."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
@@ -105,47 +102,41 @@ msgid "Revision history."
 msgstr "Sejarah semakan."
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "diterbitkan"
+msgstr "Versi diterbitkan"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
 msgstr "Bandingkan tarikh ini dengan tarikh semakan terakhir bagi memastikan anda tidak membuat perubahan pada yang terkemudian."
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "Anda ada draf dari:"
+msgstr "Anda ada draf dari: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
 msgstr "Memaparkan draf yang lama. Draf ini tidak boleh diterbitkan."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "dikembalikan semula"
+msgstr "Draf dikembalikan semula."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "dibuang"
+msgstr "Draf dibuang."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "diterbitkan"
+msgstr "Draf diterbitkan:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "dibuang"
+msgstr "Draf dibuang:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "autosimpan"
+msgstr "Draf autosimpan:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -164,9 +155,8 @@ msgid "Changes saved."
 msgstr "Perubahan disimpan."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "Gagal diterbitkan. Sila salin dan tampal perubahan ke tempat yang selamat dan cuba hantar borang menggunakan butang 'Terbit'."
+msgstr "Gagal diterbitkan. Sila salin dan tampal perubahan ke tempat yang selamat dan cuba hantar borang menggunakan butang \"Terbit\"."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
