@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-06-08 07:23+0000\n"
-"Last-Translator: Kalman \"KAMI\" Szalai <kami911@gmail.com>\n"
+"PO-Revision-Date: 2017-06-08 14:45+0000\n"
+"Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -87,65 +87,57 @@ msgid "View draft."
 msgstr "Piszkozat megtekintése."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "Piszkozat tartalmának helyreállítása"
+msgstr "Piszkozat helyreállítása."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "Piszkozat elvetése"
+msgstr "Piszkozat elvetése."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "A cikk egy újabb verziója lett közzétéve, mióta ez a piszkozat mentésre került. Helyreállíthatja a piszkozatot a tartalom megtekintéséhez, de nem fogja tudni közzétenni."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "Verziótörténet."
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "közzétéve"
+msgstr "Közzétett verzió"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Hasonlítsa össze ezt a dátumot a legújabb értékelés dátumával, hogy meggyőződjön arról, hogy nem ír felül későbbi változtatásokat."
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "Létezik egy piszkozata innen:"
+msgstr "Létezik egy piszkozata ekkorról: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "Régi piszkozat megtekintése. Ez a piszkozat nem tehető közzé."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "visszaállítva"
+msgstr "Piszkozat helyreállítva."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "elvetve"
+msgstr "Piszkozat elvetve."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "közzétéve"
+msgstr "Piszkozat közzétéve:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "elvetve"
+msgstr "Piszkozat elvetve:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "automatikusan mentve"
+msgstr "Piszkozat automatikusan mentve:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -153,7 +145,7 @@ msgstr "Automatikus mentés engedélyezve."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "Módosítások közzététele…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -164,9 +156,8 @@ msgid "Changes saved."
 msgstr "Módosítások mentve."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "Közzététel sikertelen. Másolja és illessze be a módosításokat egy biztonságos helyre, és próbálja újra elküldeni az űrlapot a „Közzététel” gombbal."
+msgstr "Közzététel sikertelen. Másolja és illessze be egy biztonságos helyre a módosításait, és próbálja újra elküldeni az űrlapot a „Közzététel” gombbal."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
