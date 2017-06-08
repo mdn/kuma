@@ -19,11 +19,6 @@ eventually emptying this file.
     font-size: 60%;
 }
 
-/* Make the 2nd breadcrumbs disappear, only if the page has been regenerated with a modern template */
-.column-container #wikiArticle .themeUpdated {
-    display: none;
-}
-
 /* Used to wrap columns that should all be the same height */
 .equalColumnHeights {
     display: table;
