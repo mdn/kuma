@@ -23,6 +23,11 @@ Switches
 * ``dumb_doc_urls`` - (deprecated) Disable the render-time changing of /docs/
   URLs to the equivalent Zone URLs (see `PR 3331`_ for reasoning).
 * ``enable_optimizely`` - Enable the Optimizely JavaScript.
+* ``foundation_callout`` - show Foundation donation tile on homepage.
+* ``newsletter`` - Show newsletter sign-up site wide.
+* ``newsletter_article`` - Show newsletter sign-up in article footer (must be
+  used in combination with ``newsletter``).
+* ``redesign`` - show design reflecting new Mozilla branding
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
@@ -30,10 +35,6 @@ Switches
 * ``wiki_force_immediate_rendering`` - Force wiki pages to render immediately
   in the same http request in which they are saved (not in a background
   process).
-* ``newsletter`` - Show newsletter sign-up site wide.
-* ``newsletter_article`` - Show newsletter sign-up in article footer (must be
-  used in combination with ``newsletter``).
-* ``foundation_callout`` - show Foundation donation tile on homepage.
 
 
 Flags

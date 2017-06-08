@@ -1,36 +1,36 @@
-@import 'includes/vars';
-@import 'includes/mixins';
+@import 'includes-blue/vars';
+@import 'includes-blue/mixins';
 
 /*
 Profile shared
 ====================================================================== */
-@import 'components/users/vars';
-@import 'components/users/user-title';
+@import 'components-blue/users/vars';
+@import 'components-blue/users/user-title';
 
 
 /*
 Profile view
 ====================================================================== */
-@import 'components/activity';
-@import 'components/banned';
-@import 'components/users/docs-activity';
-@import 'components/users/user-links';
-@import 'components/users/user-head';
-@import 'components/users/user-section';
-@import 'components/users/user-tags';
+@import 'components-blue/activity';
+@import 'components-blue/banned';
+@import 'components-blue/users/docs-activity';
+@import 'components-blue/users/user-links';
+@import 'components-blue/users/user-head';
+@import 'components-blue/users/user-section';
+@import 'components-blue/users/user-tags';
 
 
 /*
 Profile edit
 ====================================================================== */
-@import 'components/tagit';
-@import 'components/users/user-edit';
+@import 'components-blue/tagit';
+@import 'components-blue/users/user-edit';
 
 
 /*
 API keys page
 ====================================================================== */
-@import 'components/option-list';
+@import 'components-blue/option-list';
 
 /*
  * Users app CSS

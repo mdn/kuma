@@ -1,0 +1,11 @@
+img,
+iframe,
+video {
+    max-width: 100%;
+}
+
+img,
+video {
+    /* always constrain to width, fixes CKEditor issue of autopopulating dimensions */
+    height: auto !important; /* stylelint-disable-line declaration-no-important */
+}

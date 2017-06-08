@@ -4,7 +4,12 @@
 
 {% block site_css %}
 	{{ super() }}
-	{% stylesheet 'home' %}
+
+    {% if waffle.flag('redesign') %}
+        {% stylesheet 'home' %}
+    {% else %}
+        {% stylesheet 'home-blue' %}
+    {% endif %}
 {% endblock %}
 
 {% block extrahead %}
