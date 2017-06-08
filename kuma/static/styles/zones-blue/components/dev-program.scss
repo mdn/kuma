@@ -52,6 +52,26 @@ Three grey boxes
     }
 }
 
+/* highlighted (bottom) link in call-out boxes */
+.callout-link-container {
+    position: relative;
+    height: 100%;
+}
+
+.callout-link-wrapper {
+    padding-top: 32px;
+}
+
+.callout-link {
+    font-style: italic;
+    font-size: 14px;
+    font-weight: normal;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 /*
 Content
 ====================================================================== */
