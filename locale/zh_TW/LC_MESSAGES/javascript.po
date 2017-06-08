@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-04-28 03:22+0000\n"
+"PO-Revision-Date: 2017-06-08 05:10+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -83,19 +83,16 @@ msgid "an unknown date"
 msgstr "未知日期"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "檢視頁面"
+msgstr "檢視草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "還原草稿內容"
+msgstr "還原草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "捨棄草稿"
+msgstr "捨棄草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
@@ -103,50 +100,44 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "版本紀錄。"
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "已發布"
+msgstr "已發布版本"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "你有個草稿從："
+msgstr "您有個建立於 %(time)s 的草稿"
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "檢視的是舊版草稿，無法發布此草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "已還原"
+msgstr "已還原草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "已捨棄"
+msgstr "已捨棄草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "已發布"
+msgstr "草稿發布於:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "已捨棄"
+msgstr "草稿捨棄於:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "已自動儲存"
+msgstr "草稿自動儲存於:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -154,7 +145,7 @@ msgstr "已開啟自動儲存。"
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "正在發布變更…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -165,9 +156,8 @@ msgid "Changes saved."
 msgstr "變更已儲存。"
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "發布失敗。請將您的變更複製到安全的地方，然後使用「發布」按鈕再次送出表單。"
+msgstr "發布失敗。請將變更複製貼到安全的地方，然後使用「發布」按鈕再次送出表單。"
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
