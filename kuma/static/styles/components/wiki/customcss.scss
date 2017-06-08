@@ -19,19 +19,6 @@ eventually emptying this file.
     font-size: 60%;
 }
 
-/* Used to wrap columns that should all be the same height */
-.equalColumnHeights {
-    display: table;
-    border-collapse: separate;
-    border-spacing: 20px;
-}
-
-.equalColumnHeights div {
-    display: table-cell;
-    width: 50%;
-    height: 100%;
-}
-
 /* Use for large table (.thirdColumn + .***Bg) */
 table#fullwidth-table td.thirdColumn {
     width: 30%;
