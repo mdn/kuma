@@ -26,54 +26,6 @@ eventually emptying this file.
 }
 
 
-/* Multi-column box for smaller text */
-.horizFlexboxContainer {
-    display: -webkit-flex;
-    display: flex;
-    @include vendorize(flex-flow, column nowrap);
-    @include vendorize(justify-content, center);
-    @include vendorize(align-content, center);
-    @include vendorize(align-items, center);
-    @include vendorize(flex-direction, column);
-}
-
-.smallTextMultiColumnBoxHeading {
-    width: 75%;
-    padding: 10px;
-    @include vendorize(flex, 0 1 auto);
-    font-weight: bold;
-    background-color: #e0e2e4;
-}
-
-.smallTextMultiColumnBoxList {
-    width: 75%;
-    padding: 10px;
-    @include vendorize(order, 2);
-    @include vendorize(flex, 0 1 auto);
-    background-color: $light-background-color;
-}
-
-.smallTextMultiColumnBoxList ul {
-    @include vendorize(column-width, 100px);
-    margin-bottom: 0;
-    padding-left: 0;
-}
-
-.smallTextMultiColumnBoxList li {
-    list-style-type: none;
-    padding-left: 0;
-    font-size: 80%;
-}
-
-
-@media #{$media-query-mobile} {
-    .smallTextMultiColumnBoxHeading,
-    .smallTextMultiColumnBoxList {
-        width: 90%;
-    }
-}
-
-
 /* Fancy Table of content for main pages of tutorial*/
 .fancyTOC {
     counter-reset: fancytoc;
@@ -174,36 +126,6 @@ div.index.widgeted li.webcomp::after {
 #wikiArticle .breadcrumbs {
     display: block;
     margin-bottom: 1em;
-}
-
-/* The HTML5 landing page has some special-case stuff, handled here */
-/*
-table.html5ArticleToc { border-width: 5px }
-*/
-table.html5ArticleToc {
-    border-style: none;
-    border-width: 0;
-    background-color: transparent;
-    border-color: transparent;
-    width: 100%;
-}
-
-.html5ArticleToc thead th {
-    padding: .5em 1em;
-}
-
-.html5ArticleToc tbody td {
-    vertical-align: middle;
-}
-
-.html5ArticleToc ul {
-    margin: 0;
-    padding: 0;
-}
-
-.html5ArticleToc ul li {
-    display: inline;
-    margin: 0 .25em;
 }
 
 
