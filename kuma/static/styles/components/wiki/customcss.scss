@@ -26,29 +26,6 @@ eventually emptying this file.
 }
 
 
-/* Multi-column boxes for lists of longer links; this will adapt based on screen width */
-.multiColumnList {
-    @include vendorize(column-width, 250px);
-}
-
-.multiColumnList li {
-    line-height: 1.5;
-    list-style-type: none;
-    padding-left: 0;
-    page-break-inside: avoid;
-}
-
-/* Multi-column boxes for smaller links, such as API terms */
-.smallMultiColumnList {
-    @include vendorize(column-width, 120px);
-}
-
-.smallMultiColumnList li {
-    list-style-type: none;
-    padding-left: 0;
-    page-break-inside: avoid;
-}
-
 /* Multi-column box for smaller text */
 .horizFlexboxContainer {
     display: -webkit-flex;
