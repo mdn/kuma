@@ -25,48 +25,6 @@ eventually emptying this file.
     margin-left: 0;
 }
 
-
-/* Fancy Table of content for main pages of tutorial*/
-.fancyTOC {
-    counter-reset: fancytoc;
-    @include vendorize(columns, 18em);
-    margin-bottom: 1em;
-    column-gap: $grid-spacing;
-}
-
-.fancyTOC .button {
-    display: block;
-    margin-right: 0;
-    margin-bottom: .25em;
-    background-color: #a24c4c;
-    color: #fff;
-    font-size: 1.5em;
-    line-height: 1.5;
-    overflow: hidden; /* Fix for firefox and IE 10-11  */
-    /* stylelint-disable indentation */
-    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-              page-break-inside: avoid; /* Deprecated Firefox */
-                   break-inside: avoid; /* IE 10+ */
-                   break-inside: avoid-column;
-    /* stylelint-enable */
-}
-
-.fancyTOC a::before {
-    counter-increment: fancytoc;
-    content: counter(fancytoc) '. ';
-}
-
-.fancyTOC a::after {
-    content: ' \00bb';
-    speak: none;
-}
-
-.fancyTOC .button:hover,
-.fancyTOC .button:focus,
-.fancyTOC .button:active {
-    background-color: #c26c6c;
-}
-
 /* In index, dim obsolete, deprecated or non-standard element instead of striking through them */
 s.deprecatedElement,
 s.obsoleteElement,
