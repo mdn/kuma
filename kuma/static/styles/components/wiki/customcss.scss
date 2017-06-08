@@ -1,6 +1,6 @@
 /*
 
-Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
+Copied from the custom CSS macro template CustomCSS
 This file was added to by the contributors as part of the redesign migration, it contains:
 - legacy classes in use from old versions of the MDN
 - new classes created to when contibutors needed something the devs did not provide
@@ -393,7 +393,7 @@ div.index ol {
 }
 
 
-/* https://developer.mozilla.org/en-US/docs/Template:HTML:Element_Navigation */
+/* https://github.com/mozilla/kumascript/blob/master/macros/HTML-Element_Navigation.ejs */
 table.HTMLElmNav {
     margin: 1em auto;
     border-width: 5px;
