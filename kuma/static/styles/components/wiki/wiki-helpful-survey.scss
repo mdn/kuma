@@ -55,3 +55,9 @@
         }
     }
 }
+
+@media print {
+    .helpful-survey {
+        display: none;
+    }
+}

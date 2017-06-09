@@ -51,3 +51,9 @@
         @include bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
     }
 }
+
+@media print {
+    .newsletter-box {
+        display: none;
+    }
+}
