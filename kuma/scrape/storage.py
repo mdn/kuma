@@ -164,7 +164,10 @@ class Storage(object):
         localization_tags = data.pop('localization_tags', [])
         revision, created = Revision.objects.get_or_create(
             id=revision_id,
-            defaults={'creator': creator, 'document': document})
+            defaults={'creator': creator,
+                      'document': document,
+                      'is_approved': False,  # Don't make current rev
+                      })
         for name, value in data.items():
             setattr(revision, name, value)
         revision.content = revision.content or ""
