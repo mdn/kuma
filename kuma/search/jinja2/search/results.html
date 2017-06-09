@@ -228,12 +228,6 @@
 {% endblock %}
 
 {% block js %}
-  {% if waffle.flag('search_doc_navigator') and count and search_ref %}
-  <script>
-    // Push search results into storage for docs navigator
-    jQuery('.result-list-item h4 a').mozSearchStore('{{ search_ref }}');
-  </script>
-  {% endif %}
   {% if waffle.flag('search_suggestions') %}
   {% javascript 'search-suggestions' %}
   <script>

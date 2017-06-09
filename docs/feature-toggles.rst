@@ -47,7 +47,6 @@ other advanced criteria.
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``registration_disabled`` - Enable/disable new user registration.
-* ``search_doc_navigator`` - Show the search doc navigator feature.
 * ``search_suggestions`` - Show the advanced search filter suggestions
   interface.
 * ``section_edit`` - Show section edit buttons.

@@ -17,7 +17,6 @@ $avatar-limit: 6;
     @include set-smaller-font-size();
     @include bidi-value(text-align, right, left);
 
-    .from-search &,
     .no-js & {
         display: none;
     }

@@ -940,7 +940,6 @@ PIPELINE_JS = {
     'search': {
         'source_filenames': (
             'js/search.js',
-            'js/search-navigator.js',
         ),
         'output_filename': 'build/js/search.js',
         'extra_context': {
@@ -980,7 +979,6 @@ PIPELINE_JS = {
     },
     'wiki': {
         'source_filenames': (
-            'js/search-navigator.js',
             'js/wiki.js',
             'js/wiki-samples.js',
             'js/wiki-helpful-survey.js',
