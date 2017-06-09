@@ -58,6 +58,7 @@ def test_root_doc(root_doc, client):
     storage = mock_storage(spec=['save_document_rendered'])
     resources = source.gather(requester, storage)
     assert resources == []
+    assert source.state == source.STATE_DONE
     storage.save_document_rendered.assert_called_once_with(
         'en-US', 'Root', {})
 
@@ -73,13 +74,14 @@ def test_non_zone_redirect(root_doc, client):
     html = client.get(url).content
     source = DocumentRenderedSource(url)
     requester = mock_requester(
-        response_spec=['content', 'history', 'url'],
+        response_spec=['content', 'history', 'status_code', 'url'],
         history=[(301, url)],
         final_path=url,
         content=html)
     storage = mock_storage(spec=['save_document_rendered'])
     resources = source.gather(requester, storage)
     assert resources == []
+    assert source.state == source.STATE_DONE
     storage.save_document_rendered.assert_called_once_with(
         'en-US', 'Root', {})
 
@@ -90,13 +92,14 @@ def test_zone_root_doc(zone_root_doc, client):
     html = client.get(url, follow=True).content
     source = DocumentRenderedSource(url)
     requester = mock_requester(
-        response_spec=['content', 'history', 'url'],
+        response_spec=['content', 'history', 'status_code', 'url'],
         history=[(302, url)],
         final_path=zone_root_doc.zone.url_root,
         content=html)
     storage = mock_storage(spec=['save_document_rendered'])
     resources = source.gather(requester, storage)
     assert resources == []
+    assert source.state == source.STATE_DONE
     context = {
         'redirect_to': 'Zone',
         'is_zone_root': True,
@@ -111,13 +114,29 @@ def test_zone_child_doc(zone_root_doc, zone_child_doc, client):
     html = client.get(url, follow=True).content
     source = DocumentRenderedSource(url)
     requester = mock_requester(
-        response_spec=['content', 'history', 'url'],
+        response_spec=['content', 'history', 'status_code', 'url'],
         history=[(302, url)],
         final_path=zone_root_doc.zone.url_root,
         content=html)
     storage = mock_storage(spec=['save_document_rendered'])
     resources = source.gather(requester, storage)
     assert resources == []
+    assert source.state == source.STATE_DONE
     context = {'redirect_to': 'Zone'}
     storage.save_document_rendered.assert_called_once_with(
         'en-US', 'Root/Zone/Child', context)
+
+
+def test_missing_doc(client):
+    """
+    A missing document results in an error.
+
+    One cause: translations are requested, and a recently deleted
+    translation is in the metadata.
+    """
+    source = DocumentRenderedSource('/en-US/docs/missing')
+    requester = mock_requester(status_code=404)
+    storage = mock_storage()
+    resources = source.gather(requester, storage)
+    assert resources == []
+    assert source.state == source.STATE_ERROR

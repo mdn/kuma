@@ -29,7 +29,10 @@ class DocumentRenderedSource(DocumentBaseSource):
 
     def load_prereqs(self, requester, storage):
         """Request the document, and process the redirects and response."""
-        response = requester.request(self.source_path())
+        response = requester.request(self.source_path(),
+                                     raise_for_status=False)
+        if response.status_code not in (200, 301, 302):
+            raise self.SourceError('status_code %s', response.status_code)
         data = {}
 
         # Is this a redirect?
