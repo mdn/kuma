@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-01-30 01:22+0000\n"
+"PO-Revision-Date: 2017-06-09 01:50+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -83,70 +83,61 @@ msgid "an unknown date"
 msgstr "알 수 없는 날짜"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "페이지 보기"
+msgstr "초안을 봅니다."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "초안 콘텐츠를 복원"
+msgstr "초안을 복원합니다."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "초안 삭제"
+msgstr "초안을 삭제합니다."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "초안이 저장된 후에 이 글의 새 버전이 공개되었습니다. 콘텐츠를 보기 위해서 초안을 복원할 수 있지만 초안을 저장해서 공개로 전환할 수는 없습니다."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "공개됨"
+msgstr "공개된 버전"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "보존된 초안이 있습니다:"
+msgstr "%(time)s에 저장한 초안이 있습니다."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "이전 초안을 봅니다. 이 초안은 공개로 전환할 수 없습니다."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "복원됨"
+msgstr "초안이 복원되었습니다."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "삭제됨"
+msgstr "초안이 삭제되었습니다."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "공개됨"
+msgstr "초안이 공개됨:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "삭제됨"
+msgstr "초안이 삭제됨:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "자동 저장됨"
+msgstr "초안이 자동 저장됨:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -252,7 +243,7 @@ msgstr "샘플 제목을 무엇으로 할까요?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
@@ -260,7 +251,7 @@ msgstr "HTML 콘텐츠 예제"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
