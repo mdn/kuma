@@ -26,8 +26,7 @@ def tagged_doc(db, django_user_model):
         title='Test Document',
         tags='"One" "Two" "Three"'
     )
-    document.current_revision = revision
-    document.save()
+    assert document.current_revision == revision
     return document
 
 

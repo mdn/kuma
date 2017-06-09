@@ -33,12 +33,12 @@ def root_doc(simple_doc, simple_user):
         content='<p>Getting started...</p>',
         title='Root Document',
         created=datetime(2016, 1, 1))
-    simple_doc.current_revision = Revision.objects.create(
+    current_rev = Revision.objects.create(
         document=simple_doc,
         creator=simple_user,
         content='<p>The root document.</p>',
         created=datetime(2016, 2, 1))
-    simple_doc.save()
+    assert simple_doc.current_revision == current_rev
     return simple_doc
 
 
@@ -50,7 +50,7 @@ def translated_doc(root_doc):
         slug='Racine',
         locale='fr',
         title='Document Racine')
-    revision = Revision.objects.create(
+    current_rev = Revision.objects.create(
         document=translated_doc,
         content='<p>Commencer...</p>',
         title='Document Racine',
@@ -58,6 +58,5 @@ def translated_doc(root_doc):
         based_on=root_doc.current_revision,
         creator=root_doc.current_revision.creator,
         created=datetime(2017, 6, 1, 15, 28))
-    translated_doc.current_revision = revision
-    translated_doc.save()
+    assert translated_doc.current_revision == current_rev
     return translated_doc

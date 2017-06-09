@@ -23,11 +23,12 @@ def zone_root_doc(root_doc, settings):
         document=doc,
         url_root='Zone',
         css_slug='special')
-    doc.current_revision = Revision.objects.create(
+    revision = Revision.objects.create(
         document=doc,
         creator=root_doc.current_revision.creator,
         content='<p>This is the Zone.</p>',
         created=datetime(2016, 12, 14))
+    assert doc.current_revision == revision
     doc.rendered_html = doc.current_revision.content
     doc.save()
     return doc
@@ -41,11 +42,10 @@ def zone_child_doc(zone_root_doc):
         slug=zone_root_doc.slug + '/Child',
         parent_topic=zone_root_doc)
     creator = zone_root_doc.current_revision.creator
-    doc.current_revision = Revision.objects.create(
+    Revision.objects.create(
         content='<p>A zone subpage.</p>',
         creator=creator,
         document=doc)
-    doc.save()
     return doc
 
 
