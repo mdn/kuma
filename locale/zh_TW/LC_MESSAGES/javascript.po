@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-06-08 05:10+0000\n"
+"PO-Revision-Date: 2017-06-09 05:48+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -96,7 +96,7 @@ msgstr "捨棄草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "在此草稿儲存後，已有新版本文章發布。您可以恢復此草稿來檢視其內容，但無法再發布這份草稿。"
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
@@ -108,7 +108,7 @@ msgstr "已發布版本"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "請比較此日期與最新版本文件的日期，確保您沒有蓋掉較新的修改。"
 
 #: kuma/static/js/wiki-edit-draft.js:126
 #, python-format
