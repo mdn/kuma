@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-05-03 13:52+0000\n"
+"PO-Revision-Date: 2017-06-09 11:07+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -82,70 +82,61 @@ msgid "an unknown date"
 msgstr "in ûnbekende datum"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "Side werjaan"
+msgstr "Konsept werjaan."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "De konseptynhâld werom bringe"
+msgstr "Konsept weromsette"
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "It konsept fuortsmite"
+msgstr "Konsept fuortsmite"
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
-msgstr ""
+msgstr "Der is in nijere ferzje fan dit artikel publisearre neidat dit konsept bewarre is. Jo kinne it konsept weromsette om de ynhâld te sjen, mar it net yntsjinje foar publikaasje."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "Refyzjeskiednis"
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "publisearre"
+msgstr "Publisearre ferzje"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Fergelykje dizze datum mei de lêste refyzje om wis te wêzen dat jo gjin lettere wizigingen oerskriuwe."
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "Jo hawwe in konsept fan:"
+msgstr "Jo hawwe in konsept fan: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "Jo besjogge in âld konsept. Dit konsept kin net publisearre wurde."
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "werom brocht"
+msgstr "Konsept weromset."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "ferworpen"
+msgstr "Konsept fuortsmiten."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "publisearre"
+msgstr "Konsept publisearre:"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "ferworpen"
+msgstr "Konsept fuortsmiten:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "automatysk bewarre"
+msgstr "Konsept automatysk bewarre:"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -153,7 +144,7 @@ msgstr "Automatysk bewarjen ynskeakele."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "Wizigingen publisearje…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -164,9 +155,8 @@ msgid "Changes saved."
 msgstr "Wizigingen bewarre."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "Publisearjen mislearre. Kopiearje en plak jo wizigingen nei in feilich plak en probearje it formulier yn te tsjinjen mei de knop ‘Publisearje’."
+msgstr "Publisearjen is mislearre. Kopiearje en plak jo wizigingen nei in feilich plak en probearje it formulier yn te tsjinjen mei help fan de knop ‘Publisearje’."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format

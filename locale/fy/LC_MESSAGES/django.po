@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:48-0700\n"
-"PO-Revision-Date: 2017-06-09 10:50+0000\n"
+"PO-Revision-Date: 2017-06-09 10:51+0000\n"
 "Last-Translator: Fjoerfoks <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -4044,9 +4044,9 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Fertel ús wêrom't jo oanfollingen en wizigingen oanbrocht hawwe. Dit is opsjoneel, mar makket de sideskiednis begrypliker."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please copy and paste your changes into a safe place and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Sorry! Jo bydrage koe net bewarre wurde. Bewarje in konsept fan jo wiziging en <a href=\"%(admin_email)s\">nim kontakt op mei de websitebehearders</a>."
+msgstr "Sorry! Jo bydrage koe net bewarre wurde. Kopiearje en plak jo wizigingen nei in feilich plak en <a href=\"%(admin_email)s\">nim kontakt op mei de websitebehearders</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
