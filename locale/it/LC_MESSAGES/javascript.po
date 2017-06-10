@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-07 06:46-0700\n"
-"PO-Revision-Date: 2017-06-08 10:38+0000\n"
-"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
+"PO-Revision-Date: 2017-06-09 12:04+0000\n"
+"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgstr "Versione pubblicata"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Assicurati che la data di questa versione sia posteriore a quella dell’ultima versione in modo da non sovrascrivere le modifiche più recenti."
 
 #: kuma/static/js/wiki-edit-draft.js:126
 #, python-format
@@ -157,9 +157,8 @@ msgid "Changes saved."
 msgstr "Le modifiche sono state salvate."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "Non è riuscita la pubblicazione dei contenuti. Copia e incolla le modifiche in un luogo sicuro e riprova a inviare i dati facendo clic sul pulsante Pubblica."
+msgstr "Pubblicazione non riuscita. Effettua una copia di backup, poi riprova a inviare i dati facendo clic sul pulsante Pubblica."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format
