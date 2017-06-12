@@ -114,7 +114,8 @@ class Scraper(object):
                     'complete, freshness=%(freshness)s, with %(dep_count)s'
                     ' dependant source%(dep_s)s.')
     _report_error = (_report_prefix +
-                     'errored, with %(dep_count)s dependant source%(dep_s)s.')
+                     'errored %(err_msg)s, with %(dep_count)s dependant'
+                     ' source%(dep_s)s.')
     _report_progress = (_report_prefix +
                         'in state "%(state)s" with %(dep_count)s dependant'
                         ' source%(dep_s)s.')
@@ -161,17 +162,22 @@ class Scraper(object):
                                     source_key)
 
                 # Detect unfinished work and report on changed state (in debug)
+                log_func = logger.debug
+                err_msg = ""
                 if source.state == Source.STATE_DONE:
-                    msg = self._report_done
+                    log_fmt = self._report_done
                 elif source.state == Source.STATE_ERROR:
-                    msg = self._report_error
+                    log_func = logger.warn
+                    err_msg = '"%s"' % source.error
+                    log_fmt = self._report_error
                 else:
                     repeat = True
-                    msg = self._report_progress
-                logger.debug(msg, {'cycle': cycle,
+                    log_fmt = self._report_progress
+                log_func(log_fmt, {'cycle': cycle,
                                    'source_num': source_num,
                                    'source_total': source_total,
                                    'source_key': source_key,
+                                   'err_msg': err_msg,
                                    'state': source.state,
                                    'freshness': source.freshness,
                                    'dep_count': dep_count,
