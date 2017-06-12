@@ -1,9 +1,12 @@
 /*
-Clear table styles, this class is mostly applied to divs now
-- need the extra specificity of body to over-ride .textcontent table {} declaration
+Two columns
+- usually found on article landing pages
+- applied to both <table> and <div> elements
+    - tables use <td>s to designate columns
+    - divs use class="section" to designate columns
 ********************************************************************** */
 
-body .topicpage-table {
+body .topicpage-table { // need the extra specificity of body to over-ride .textcontent table {} declaration
     clear: both;
     width: auto;
     border: none;

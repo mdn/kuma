@@ -1,0 +1,33 @@
+/*
+Fancy Table of content for main pages of tutorial
+- being phased out
+********************************************************************** */
+
+
+.fancyTOC {
+    counter-reset: fancytoc;
+    @include vendorize(columns, 18em);
+    column-gap: $grid-spacing;
+    margin-bottom: $grid-spacing;
+}
+
+.fancyTOC .button {
+    display: block;
+    margin-bottom: $grid-spacing;
+    /* stylelint-disable indentation */
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+              page-break-inside: avoid; /* Deprecated Firefox */
+                   break-inside: avoid; /* IE 10+ */
+                   break-inside: avoid-column;
+    /* stylelint-enable */
+}
+
+.fancyTOC a::before {
+    counter-increment: fancytoc;
+    content: counter(fancytoc) '. ';
+}
+
+.fancyTOC a::after {
+    content: ' \00bb';
+    speak: none;
+}
