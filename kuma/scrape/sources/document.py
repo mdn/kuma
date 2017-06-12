@@ -234,4 +234,5 @@ class DocumentSource(DocumentBaseSource):
                     doc_data['locale'], self.path)
                 doc_data['locale'] = self.locale
         storage.save_document(doc_data)
-        return []
+        return [('document_current', self.normalized_path,
+                 {'revisions': self.revisions})]
