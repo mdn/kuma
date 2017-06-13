@@ -15,7 +15,11 @@ block indicators aka banners
     clear: none; // over-rides default value assigned in clearfix
 
     background-color: $light-background-color;
-    font-size: $smaller-font-size;
+    font-style: italic;
+    font-family: $heading-font-family;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
 
     &:before {
         display: inline-block;
@@ -35,7 +39,7 @@ block indicators aka banners
 }
 
 %indicator-block-heading {
-    font-size: $base-font-size;
+    font-style: normal;
     font-weight: bold;
 }
 
@@ -43,7 +47,6 @@ block indicators aka banners
     /* need to specifically declare RTL to over-ride RTL inherited from set-message-base */
     @include bidi-value(border-width, 2px, 2px);
     @include bidi-value(border-style, solid, solid);
-    font-size: $base-font-size;
 }
 
 /*
@@ -62,7 +65,6 @@ inline indicators aka badges
     font-family: $tiny-font-family;
     font-size: $tiny-font-size;
     font-weight: normal;
-    letter-spacing: 1px;
     line-height: normal;
 }
 

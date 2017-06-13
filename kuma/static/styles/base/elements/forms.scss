@@ -8,10 +8,13 @@ textarea,
 select,
 optgroup,
 option {
-    font-family: inherit;
-    @include set-font-size(inherit);
-    font-style: inherit;
-    font-weight: inherit;
+    @include set-font-size(16px);
+    font-style: normal;
+    font-weight: normal;
+    font-family: $site-font-family;
+    #{$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+    }
 }
 
 input[type=text],

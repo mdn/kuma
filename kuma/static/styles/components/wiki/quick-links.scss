@@ -6,9 +6,6 @@ $see-also-outdent : 6px;
     background-color: #fff;
 
     @include set-smaller-font-size();
-    #{$selector-heading-font-fallback} {
-        letter-spacing: -.002em;
-    }
 
     /* need to give it a fake border when appearing on zones */
     .zone-landing-header-preview-base & {

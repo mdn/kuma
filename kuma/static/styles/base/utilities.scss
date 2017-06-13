@@ -62,9 +62,6 @@ Utility classes
 
 .smaller {
     @include set-smaller-font-size();
-    #{$selector-heading-font-fallback} {
-        letter-spacing: -.01em;
-    }
 }
 
 .larger {

@@ -141,7 +141,6 @@ fieldset #{$selector-icon} {
 
         legend {
             @include set-font-size(24px);
-            letter-spacing: -.5px;
             margin: -7px 0 ($grid-spacing / 2);
 
             i {

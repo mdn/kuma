@@ -24,9 +24,6 @@ edit, language, settings, save, and cancel buttons
         input[type='submit'],
         input[type='button'] {
             @include set-smaller-font-size();
-            #{$selector-heading-font-fallback} {
-                letter-spacing: -.035em;
-            }
         }
 
         .transparent {

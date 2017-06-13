@@ -278,7 +278,6 @@ coloured boxes
     @include bidi-style(border-left-width, $border-width, border-right-width, 0);
     @include bidi-style(border-left-style, solid, border-right-style, none);
     padding: ($grid-spacing / 2);
-    @include set-smaller-font-size();
 
     @if ($remove-last-spacing) {
         @include prevent-last-child-bottom-spacing();
@@ -443,13 +442,26 @@ These are not dynamic but serve as mixins
 ====================================================================== */
 
 @mixin heading-1() {
-    @include set-font-size(($content-block-margin * 2));
-    letter-spacing: -2px;
+    @include set-font-size(72px);
+    font-family: $heading-font-family;
+    line-height: 1;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
 }
 
 @mixin heading-2() {
-    @include set-font-size(30px);
-    letter-spacing: -1px;
+    @include set-font-size(48px);
+    font-family: $heading-font-family;
+    line-height: 1;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
+}
+
+@mixin callout() {
+    @include set-font-size(22px);
+    font-style: italic;
 }
 
 @mixin big-search() {
