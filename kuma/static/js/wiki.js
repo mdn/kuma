@@ -483,7 +483,7 @@
             }
 
             $contextMenu.on('click', function(e) {
-                location.href = $(e.target).data('action') + '?src=context';
+                window.location.href = $(e.target).data('action') + '?src=context';
             });
     });
 
