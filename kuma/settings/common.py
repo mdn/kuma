@@ -852,8 +852,8 @@ PIPELINE_CSS = {
     },
     'editor-content': {
         'source_filenames': (
-            'styles/main.scss',
-            'styles/wiki.scss',
+            'styles/main-blue.scss',
+            'styles/wiki-blue.scss',
             'styles/wiki-wysiwyg.scss',
             'styles/wiki-syntax.scss',
             'styles/libs/font-awesome/css/font-awesome.min.css',
