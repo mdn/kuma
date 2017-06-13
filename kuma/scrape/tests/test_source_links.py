@@ -61,14 +61,16 @@ def test_gather_homepage(client, db):
         assert spec not in resources
 
 
-def test_gather_ignore_anchors_relative_links(client, root_doc):
+def test_gather_ignores_links(client, root_doc, simple_user):
+    user_profile_url = simple_user.get_absolute_url()
     content = """
 <ul>
   <li><a href="/en-US/docs/Absolute/Link">Absolute Link</a></li>
   <li><a href="Relative/Link">Relative Link</a></li>
   <li><a href="#later">Later in this page.</a></li>
+  <li><a href="%s">Profile Link</a></li>
 </ul>
-"""
+""" % user_profile_url
     new_rev = Revision(
         document=root_doc,
         creator=root_doc.current_revision.creator,
@@ -92,3 +94,4 @@ def test_gather_ignore_anchors_relative_links(client, root_doc):
         assert base_path not in path
         assert "Relative/Link" not in path
         assert "#later" not in path
+        assert user_profile_url not in path

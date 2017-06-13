@@ -30,6 +30,7 @@ class LinksSource(Source):
 
     ignored_slugs = set((
         'dashboards',
+        'profiles',
         'search',
         'users/signin',
     ))
