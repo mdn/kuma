@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from urlparse import urljoin
 
+from constance.test import override_config
 from cssselect.parser import SelectorSyntaxError
 from django.conf import settings
 from django.test import TestCase
@@ -1147,6 +1148,7 @@ class AllowedHTMLTests(KumaTestCase):
 class ExtractorTests(UserTestCase):
     """Tests for document parsers that extract content"""
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_css_classname_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux')
         rev = revision(is_approved=True, save=True, content="""
@@ -1158,6 +1160,7 @@ class ExtractorTests(UserTestCase):
         result = rev.document.extract.css_classnames()
         eq_(sorted(expected), sorted(result))
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_html_attribute_extraction(self):
         expected = (
             'class="foobar"',
