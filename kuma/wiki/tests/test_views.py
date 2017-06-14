@@ -104,6 +104,7 @@ class LocaleRedirectTests(UserTestCase, WikiTestCase):
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
     localizing_client = True
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_fallback_to_translation(self):
         """If a slug isn't found in the requested locale but is in the default
         locale and if there is a translation of that default-locale document to
@@ -115,6 +116,7 @@ class LocaleRedirectTests(UserTestCase, WikiTestCase):
                                    follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url())
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_fallback_with_query_params(self):
         """The query parameters should be passed along to the redirect."""
 

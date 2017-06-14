@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from constance.test import override_config
 from django.test import RequestFactory
 
 from kuma.core.cache import memcache
@@ -152,6 +153,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
 
 
+@override_config(KUMASCRIPT_TIMEOUT=0)
 class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
     """bug 1267197 -- Locales and DocumentZones do not always play nicely together,
     particularly with the middleware that attempts to redirect requests to the

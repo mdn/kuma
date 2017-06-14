@@ -1324,7 +1324,7 @@ CONSTANCE_CONFIG = dict(
         'queue for future renders.'
     ),
     KUMASCRIPT_TIMEOUT=(
-        0.0,
+        30.0,
         'Maximum seconds to wait for a response from the kumascript service. '
         'On timeout, the document gets served up as-is and without macro '
         'evaluation as an attempt at graceful failure. NOTE: a value of 0 '

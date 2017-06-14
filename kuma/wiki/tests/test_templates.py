@@ -1239,6 +1239,7 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.preview'), follow=True)
         eq_(405, response.status_code)
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_preview(self):
         """Preview the wiki syntax content."""
         response = self.client.post(reverse('wiki.preview'),
