@@ -359,8 +359,6 @@
         var $pageButtons = $('.page-buttons');
         var pageButtonsOffset = $pageButtons.offset();
 
-        var stickyFeatureEnabled = $pageButtons.attr('data-sticky') === 'true';
-
         // Get button alignment according to text direction
         var buttonDirection = ($('html').attr('dir') === 'rtl') ? 'left' : 'right';
 
@@ -390,23 +388,6 @@
                 }
             }
 
-            // Check if page buttons need to be sticky
-            if(stickyFeatureEnabled){
-                pageButtonsHeight = $pageButtons.innerHeight();
-                if(scroll > pageButtonsOffset.top) {
-                    $pageButtons.addClass(fixedClass);
-
-                    // Only do the fixed positioning if the stylesheet says to
-                    // i.e. don't fix buttons to top while scrolling if on smaller device
-                    if(($pageButtons.css('position') === 'fixed')) {
-                        $pageButtons.css('min-width', $pageButtons.css('width'));
-                        $pageButtons.css(buttonDirection, pageButtonsOffset[buttonDirection]);
-                    }
-                } else {
-                    $pageButtons.removeClass(fixedClass);
-                }
-            }
-
             // If there is no ToC on the page
             if(!$toc.length) return;
 
@@ -431,7 +412,7 @@
         }, 15);
 
         // Set it forth!
-        if($toc.length || stickyFeatureEnabled){
+        if($toc.length){
             scrollFn();
             $(win).on('scroll resize', scrollFn);
         }
