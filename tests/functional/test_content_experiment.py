@@ -4,27 +4,10 @@ from pages.admin import AdminLogin
 from pages.article import ArticlePage
 from pages.content_experiment import VariantPage
 
-# Copied from kuma/settings/common.py, because we can't import directly
-CONTENT_EXPERIMENTS = [{
-    'id': 'experiment-framework-test',
-    'ga_name': 'framework-test',
-    'param': 'v',
-    'pages': [{
-        'locale': 'en-US',
-        'slug': 'Web/JavaScript/Reference/Operators/Comparison_Operators',
-        'variants': [
-            ['control',
-             'Web/JavaScript/Reference/Operators/Comparison_Operators'],
-            ['test', 'Experiment:FrameworkTest/Comparison_Operators'],
-        ]
-    }]
-}]
-
-EXPECTED_TITLES = {
-    ('en-US', 'Web/JavaScript/Reference/Operators/Comparison_Operators'):
-        'Comparison operators - JavaScript | MDN',
-}
-
+# Currently no enabled experiments
+# TODO: Investigate importing from /kuma/settings/content_experiments.json
+CONTENT_EXPERIMENTS = []
+EXPECTED_TITLES = {}
 
 # Create nicer parameter lists for tests, verbose output
 CONTENT_PAGES, CONTENT_VARIANTS = [], []
