@@ -18,17 +18,17 @@ class DashboardPage(BasePage):
     _page_two_link = (By.CSS_SELECTOR, '.pagination > li:first-child + li a')
     _ip_toggle_locator = (By.ID, 'show_ips_btn')
     _first_row_locator = (By.CSS_SELECTOR,
-                             '.dashboard-table tbody .dashboard-row:first-child')
+                          '.dashboard-table tbody .dashboard-row:first-child')
     _first_details_locator = (By.CSS_SELECTOR,
-                             '.dashboard-table tbody .dashboard-row:first-child + .dashboard-detail')
+                              '.dashboard-table tbody .dashboard-row:first-child + .dashboard-detail')
     _first_details_diff_locator = (By.CSS_SELECTOR,
-                                  '.dashboard-table tbody .dashboard-row:first-child + .dashboard-detail .diff')
+                                   '.dashboard-table tbody .dashboard-row:first-child + .dashboard-detail .diff')
     _details_locator = (By.CSS_SELECTOR, '.dashboard-detail')
 
     @property
     def is_ip_toggle_present(self):
         try:
-            ip_toggle = self.find_element(*self._ip_toggle_locator)
+            self.find_element(*self._ip_toggle_locator)
             return True
         except:
             return False
@@ -93,6 +93,7 @@ class DashboardPage(BasePage):
         crawlBar = self.selenium.execute_script("return document.documentElement.scrollWidth>document.documentElement.clientWidth;")
         return not crawlBar
 
+
 class DashboardRow(Region):
 
     _root_locator = (By.CSS_SELECTOR, '.dashboard-row')
@@ -106,7 +107,7 @@ class DashboardRow(Region):
     @property
     def is_ip_ban_present(self):
         try:
-            ip_toggle = self.find_element(*self._ban_ip_locator)
+            self.find_element(*self._ban_ip_locator)
             return True
         except:
             return False
@@ -114,10 +115,11 @@ class DashboardRow(Region):
     @property
     def is_spam_ham_button_present(self):
         try:
-            ip_toggle = self.find_element(*self._spam_ham_button_locator)
+            self.find_element(*self._spam_ham_button_locator)
             return True
         except:
             return False
+
 
 class DashboardDetail(Region):
 
