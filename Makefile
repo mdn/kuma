@@ -167,5 +167,8 @@ compose-test:
 create-demo:
 	@ ./Jenkinsfiles/create_demo_instance.sh
 
+lint:
+	flake8 kuma docs tests
+
 # Those tasks don't have file targets
 .PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
