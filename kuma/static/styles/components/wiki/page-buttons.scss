@@ -8,11 +8,6 @@ edit, language, settings, save, and cancel buttons
     padding: 5px 0;
     width: auto;
 
-    &.fixed {
-        overflow-y: inherit;
-        z-index: 50;
-    }
-
     > li {
         margin-left: ($grid-spacing / 2);
         display: inline-block;
@@ -44,15 +39,6 @@ edit, language, settings, save, and cancel buttons
 body:not(.zone-landing) #edit-button {
     background-color: $blue;
     color: $blue-background-text-color;
-}
-
-@media #{$media-query-small-desktop} {
-    .page-buttons,
-    #page-buttons {
-        &.fixed {
-            position: relative;
-        }
-    }
 }
 
 @media #{$media-query-mobile} {
