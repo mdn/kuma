@@ -9,6 +9,15 @@ from kuma.search.models import Filter, FilterGroup
 from kuma.search.serializers import GroupWithFiltersSerializer
 
 
+def contribute_json(request):
+    return static.serve(request, 'contribute.json',
+                        document_root=settings.ROOT)
+
+
+def fellowship(request):
+    return render(request, 'landing/fellowship.html')
+
+
 def home(request):
     """Home page."""
     updates = []
@@ -33,22 +42,13 @@ def home(request):
     return render(request, 'landing/homepage.html', context)
 
 
-def contribute_json(request):
-    return static.serve(request, 'contribute.json',
-                        document_root=settings.ROOT)
-
-
-def promote_buttons(request):
-    """Bug 646192: MDN affiliate buttons"""
-    return render(request, 'landing/promote_buttons.html')
-
-
-def fellowship(request):
-    return render(request, 'landing/fellowship.html')
-
-
 def maintenance_mode(request):
     if settings.MAINTENANCE_MODE:
         return render(request, 'landing/maintenance-mode.html')
     else:
         return redirect('home')
+
+
+def promote_buttons(request):
+    """Bug 646192: MDN affiliate buttons"""
+    return render(request, 'landing/promote_buttons.html')
