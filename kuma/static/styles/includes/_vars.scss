@@ -116,6 +116,7 @@ $small-desktop-starts : $tablet-ends + 1px;
 $tablet-starts : $mobile-ends + 1px;
 $mobile-starts : $small-mobile-ends + 1px;
 
+$mq-large-desktop-and-down : 'all and (max-width: #{$max-width-default})';
 $media-query-small-desktop : 'all and (max-width: #{$small-desktop-ends})';
 $media-query-tablet : 'all and (max-width: #{$tablet-ends})';
 $media-query-mobile : 'all and (max-width: #{$mobile-ends})';
