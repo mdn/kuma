@@ -1,6 +1,7 @@
 from .common import *  # noqa
 
 ATTACHMENT_HOST = 'mdn.mozillademos.org'
+ALLOW_ROBOTS = True
 
 # Email
 DEFAULT_FROM_EMAIL = 'no-reply@developer.mozilla.org'

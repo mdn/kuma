@@ -52,3 +52,16 @@ def maintenance_mode(request):
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return render(request, 'landing/promote_buttons.html')
+
+
+def robots_txt(request):
+    """
+    Serve robots.txt that allows or forbids robots.
+
+    TODO: After AWS move, try different strategy (WhiteNoise, template)
+    """
+    if settings.ALLOW_ROBOTS:
+        robots = 'robots.txt'
+    else:
+        robots = 'robots-go-away.txt'
+    return static.serve(request, robots, document_root=settings.MEDIA_ROOT)

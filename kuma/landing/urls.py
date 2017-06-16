@@ -22,4 +22,7 @@ urlpatterns = [
     url(r'^promote/buttons/?$',
         views.promote_buttons,
         name='promote_buttons'),
+    url(r'^robots.txt$',
+        views.robots_txt,
+        name='robots_txt'),
 ]

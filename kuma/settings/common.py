@@ -46,6 +46,7 @@ STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+ALLOW_ROBOTS = config('ALLOW_ROBOTS', default=False, cast=bool)
 
 MANAGERS = ADMINS
 
