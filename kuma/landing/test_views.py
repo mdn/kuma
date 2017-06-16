@@ -1,21 +1,32 @@
-from kuma.core.tests import KumaTestCase, eq_, ok_
+import pytest
+
 from kuma.core.urlresolvers import reverse
 
 
-class LandingViewsTest(KumaTestCase):
-    fixtures = ['test_data.json']
+def test_contribute_json(client, db):
+    response = client.get(reverse('contribute_json'))
+    assert response.status_code == 200
+    assert response['Content-Type'].startswith('application/json')
 
-    def test_home(self):
-        url = reverse('home')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
 
-    def test_promote_buttons(self):
-        url = reverse('promote_buttons')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
+def test_home(client, db):
+    response = client.get(reverse('home'), follow=True)
+    assert response.status_code == 200
 
-    def test_contribute_json(self):
-        r = self.client.get(reverse('contribute_json'))
-        eq_(200, r.status_code)
-        ok_('application/json' in r['Content-Type'])
+
+def test_promote_buttons(client, db):
+    response = client.get(reverse('promote_buttons'), follow=True)
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize('allowed', [True, False])
+def test_robots_enabled(client, db, settings, allowed):
+    settings.ALLOW_ROBOTS = allowed
+    response = client.get(reverse('robots_txt'))
+    assert response.status_code == 200
+    assert response['Content-Type'] == 'text/plain'
+    content = ''.join(response.streaming_content)
+    if allowed:
+        assert 'Sitemap: ' in content
+    else:
+        assert 'Disallow: /' in content
