@@ -13,6 +13,14 @@ def test_document_zone_unicode(doc_hierarchy_with_zones):
         top_doc.get_absolute_url(), top_doc.title)
 
 
+def test_nearest_zone_lifetime():
+    """
+    Ensure that the lifetime is not constant.
+    """
+    job = DocumentNearestZoneJob()
+    assert len(set(job.lifetime for _ in range(0, 1000))) > 1
+
+
 @pytest.mark.parametrize('doc_name,expected_zone_name', [
     ('top', 'top'),
     ('middle_top', 'middle_top'),
