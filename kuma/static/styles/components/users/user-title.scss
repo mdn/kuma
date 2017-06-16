@@ -3,7 +3,7 @@
     letter-spacing: 0;
     margin-bottom: ($grid-spacing / 2);
 
-    @media #{$media-query-tablet} {
+    @media #{$mq-tablet-and-down} {
         line-height: 1.2;
     }
 }

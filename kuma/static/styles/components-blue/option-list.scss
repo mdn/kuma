@@ -25,7 +25,7 @@ ul.option-list {
 }
 
 /* options drop beneath text on smaller screens */
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .option-list-options {
         width: 100%;
     }

@@ -11,15 +11,15 @@ Media query detection for use with javascript
     overflow: hidden;
     z-index: 1;
 
-    @media #{$media-query-small-desktop} {
+    @media #{$mq-small-desktop-and-down} {
         z-index: 2;
     }
 
-    @media #{$media-query-tablet} {
+    @media #{$mq-tablet-and-down} {
         z-index: 3;
     }
 
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         z-index: 4;
     }
 }

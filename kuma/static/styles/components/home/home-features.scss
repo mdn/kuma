@@ -65,7 +65,7 @@ List of four feature columns within the masthead
     @include bidi-value(float, left, right);
 }
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     .home-features-newsletter .column-container {
         width: 48.5%;
     }
@@ -89,7 +89,7 @@ List of four feature columns within the masthead
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .column-feature {
         ul {
             margin-bottom: $grid-spacing;

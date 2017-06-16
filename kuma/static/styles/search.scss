@@ -198,7 +198,7 @@ input.filter-button {
 }
 
 /* mobile media page */
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .result-list .column-1 {
         display: none;
     }

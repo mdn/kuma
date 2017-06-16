@@ -282,7 +282,7 @@ div.bug {
     z-index: 2;
 
     /* override behaviour of pull-aside */
-    @media #{$media-query-small-mobile} {
+    @media #{$mq-small-mobile-and-down} {
         @include bidi-value(margin-bottom, $grid-spacing, $grid-spacing);
     }
 }
@@ -314,7 +314,7 @@ Classes created by the WYSIWYG
     }
 }
 
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     .twocolumns,
     .threecolumns {
         @include vendorize(column-count, 1);

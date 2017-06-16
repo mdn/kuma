@@ -23,7 +23,7 @@ header modifications
         background-size: 120% auto;
         bottom: 0;
 
-        @media #{$media-query-tablet} {
+        @media #{$mq-tablet-and-down} {
             @include bidi-value(background-position, bottom center, bottom center);
         }
     }

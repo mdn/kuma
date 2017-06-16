@@ -49,7 +49,7 @@ homepage masthead (search, feature callouts)
     }
 }
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     .home-masthead {
         h1 {
             width: 90%;
@@ -63,7 +63,7 @@ homepage masthead (search, feature callouts)
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     h1 {
         @include set-font-size(34px);
     }

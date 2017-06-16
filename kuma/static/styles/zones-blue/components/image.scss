@@ -22,7 +22,7 @@ Custom images which appear in zone headers
 }
 
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     .zone-image {
         .zone-landing-header & {
             @include bidi-value(background-position, bottom right, bottom left);
@@ -34,7 +34,7 @@ Custom images which appear in zone headers
 }
 
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .zone-image {
         display: none;
     }

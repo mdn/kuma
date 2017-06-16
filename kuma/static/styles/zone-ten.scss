@@ -30,7 +30,7 @@ header modifications
     background-position: center -6px;
 }
 
-@media #{$media-query-tablet-and-up} {
+@media #{$mq-tablet-and-up} {
     .zone-landing .masthead-text p {
         @include heading-1();
         margin-bottom: $grid-spacing;
@@ -40,7 +40,7 @@ header modifications
     }
 }
 
-@media #{$media-query-small-desktop-and-up} {
+@media #{$mq-small-desktop-and-up} {
     .zone-landing {
 
         h1 {
