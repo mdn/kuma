@@ -123,9 +123,7 @@
       </div>
       <div class="column-4">
         {% if waffle.switch('newsletter') %}
-          <div class="newsletter-box">
             {% include "includes/newsletter.html" %}
-          </div>
           <h3>Unsubscribe</h3>
           <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
         {% endif %}

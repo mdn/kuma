@@ -1,25 +1,15 @@
-.newsletter-box {
-    position: relative;
-    @include notification-theme($default);
-    margin-bottom: $grid-spacing;
-    border: none;
-    padding: $grid-spacing;
-
-    .wiki-block + & {
-        margin-top: ($grid-spacing * 2);
-    }
-}
-
 .newsletter-teaser {
+    @include set-font-size(26px);
     margin-bottom: $grid-spacing;
-
-    .wiki-block-newsletter & {
-        @include bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
-    }
 }
 
 .newsletter-description {
-    margin-bottom: 0;
+    margin-bottom: $grid-spacing;
+    @include set-font-size(20px);
+    font-family: $heading-font-family;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
 }
 
 .newsletter-errors .errorlist {
@@ -39,16 +29,94 @@
     max-width: 450px;
 }
 
+.newsletter-fields {
+    margin-bottom: $grid-spacing;
+}
+
 .newsletter-hide {
     position: absolute;
-    top: $grid-spacing;
-    @include bidi-style(right, $grid-spacing, left, auto);
+    top: ($grid-spacing / 2);
+    @include bidi-style(right, ($grid-spacing / 2), left, auto);
     z-index: 11;
 }
 
-.newsletter-thanks {
-    h2 {
-        @include bidi-style(padding-right, ($grid-spacing * 3), padding-left, 0); // leave space for close button
+.newsletter-thanks h2 {
+    margin-bottom: $grid-spacing;
+}
+
+/* modifications for when it appears on articles */
+.newsletter-box {
+    position: relative;
+    margin: $grid-spacing 0;
+    border-top: 2px solid $text-color;
+    padding: $grid-spacing 0;
+
+
+    .newsletter-teaser {
+        @include set-font-size(48px);
+
+        /* small box to give .newsletter-hide button some space */
+        &:before {
+            content: '';
+            display: block;
+            @include bidi-value(float, right, left);
+            height: $grid-spacing;
+            width: $grid-spacing;
+        }
+    }
+
+    .newsletter-description {
+        @include set-font-size(24px);
+    }
+
+    .newsletter-fields {
+        margin-bottom: 0;
+    }
+}
+
+
+@media #{$media-query-tablet-and-up} {
+    .newsletter-box {
+        padding: ($grid-spacing * 2);
+    }
+}
+
+@media #{$media-query-large-desktop-and-up} {
+    @supports (display: grid) {
+        .newsletter-box {
+
+            .newsletter-form {
+                display: grid;
+                grid-column-gap: $grid-spacing;
+                grid-template-columns: 2fr 1fr;
+                grid-template-rows: auto auto;
+
+                &.hidden {
+                    display: none;
+                }
+            }
+
+            .newsletter-description {
+                margin-bottom: 0;
+            }
+        }
+
+        /* other grid stuff does not need .newsletter-box specificity
+           since it has no affect without display: grid */
+        .newsletter-teaser,
+        .newsletter-description {
+            grid-column: 1 / 2;
+        }
+
+        .newsletter-teaser {
+            align-self: end;
+        }
+
+        .newsletter-fields {
+            align-self: end;
+            grid-column: 2 / 3;
+            grid-row: 1 / 3;
+        }
     }
 }
 

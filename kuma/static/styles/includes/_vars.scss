@@ -123,6 +123,7 @@ $media-query-small-mobile : 'all and (max-width : #{$small-mobile-ends})';
 
 $media-query-between-small-desktop-and-max-width : 'all and (min-width: #{$small-desktop-starts}) and (max-width: #{$max-width-default})';
 
+$media-query-large-desktop-and-up : 'all and (min-width: #{$small-desktop-ends})';
 $media-query-small-desktop-and-up : 'all and (min-width: #{$small-desktop-starts})';
 $media-query-tablet-and-up : 'all and (min-width: #{$tablet-starts})';
 $media-query-mobile-and-up : 'all and (min-width: #{$mobile-starts})';

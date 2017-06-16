@@ -346,7 +346,7 @@
                 </div>
               {% endif %}
 
-              {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') %}
+              {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') and not waffle.flag('redesign') %}
                   <div class="newsletter-box">
                     {% include "includes/newsletter.html" %}
                   </div>
@@ -382,6 +382,12 @@
         </div>
       </div>
     </div> <!-- ends "main-content" -->
+
+    {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') and waffle.flag('redesign') %}
+      <div class="newsletter-box">
+      {% include "includes/newsletter.html" %}
+      </div>
+    {% endif %}
 
   <menu type="context" id="edit-history-menu">
     <menuitem data-action="{{ document.get_edit_url() }}" label="{{_('Edit page')}}"></menuitem>
