@@ -41,7 +41,7 @@ body:not(.zone-landing) #edit-button {
     color: $blue-background-text-color;
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .page-buttons > li.page-buttons-edit {
         display: none;
     }

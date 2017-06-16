@@ -88,7 +88,7 @@ $home-involved-background-y : 50px;
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .column-hacks,
     .column-involved {
         float: none;

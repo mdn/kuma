@@ -37,7 +37,7 @@
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .contentinfo {
         margin-bottom: 0;
         @include bidi-style(padding-left, 0, padding-right, 0, true);
@@ -61,7 +61,7 @@
     }
 }
 
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     .contentinfo {
         ul {
             @include vendorize(columns, 10em);

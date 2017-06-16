@@ -97,7 +97,7 @@ table#fullwidth-table td.thirdColumn {
 }
 
 /* Simulate two columns for landing page, if enough space is available    */
-@media #{$media-query-small-desktop-and-up} {
+@media #{$mq-small-desktop-and-up} {
     .landing {
         display: table-row;
     }
@@ -191,7 +191,7 @@ table#fullwidth-table td.thirdColumn {
 }
 
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .smallTextMultiColumnBoxHeading,
     .smallTextMultiColumnBoxList {
         width: 90%;
@@ -655,7 +655,7 @@ a.liveSample:focus {
 }
 
 
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     html .standardSidebar {
         float: none;
         margin: 0 0 15px 0;
@@ -1033,7 +1033,7 @@ li.download-box p {
 }
 
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .download-desc > span:first-child {
         font-weight: 700;
         display: block;

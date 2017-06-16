@@ -410,7 +410,7 @@ a.liveSample:focus {
 }
 
 
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     html .standardSidebar {
         float: none;
         margin: 0 0 15px 0;
@@ -779,7 +779,7 @@ li.download-box p {
 }
 
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .download-desc > span:first-child {
         font-weight: 700;
         display: block;

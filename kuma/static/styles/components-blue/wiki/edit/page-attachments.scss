@@ -68,7 +68,7 @@ $border-value : 1px solid #e0e0dc;
     @include set-smaller-font-size();
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     /* display the attachments table as inline */
     #page-attachments {
         table {

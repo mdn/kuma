@@ -42,7 +42,7 @@ Three grey boxes
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .dev-program-callouts {
         display: block;
     }

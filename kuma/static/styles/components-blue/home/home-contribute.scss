@@ -30,7 +30,7 @@ Contribute row at bottom
     margin-top: ($grid-spacing / 2);
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .home-contribute {
         li {
             &:last-child {

@@ -27,7 +27,7 @@ side by side calls to action
         }
     }
 
-    @media #{$media-query-tablet-and-up} {
+    @media #{$mq-tablet-and-up} {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -40,7 +40,7 @@ side by side calls to action
         }
     }
 
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         > li {
             margin-bottom: $grid-spacing;
         }

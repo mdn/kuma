@@ -78,7 +78,7 @@ Zone landing page styles
 }
 
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     .zone-landing {
         .zone-landing-header-preview .column-strip,
         .zone-landing-header-preview .masthead-text {
@@ -97,7 +97,7 @@ Zone landing page styles
 }
 
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .zone-landing h1 {
         width: auto;
     }
