@@ -21,7 +21,7 @@ Utility classes
     max-width: $max-width-default;
     @include add-center-spacing();
 
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         @include add-center-spacing(15px);
     }
 
@@ -82,7 +82,7 @@ Utility classes
     display: inline-block;
     margin: 0 ($grid-spacing * 2);
 
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         margin: 8px 0 0 0;
         display: block;
     }
@@ -148,13 +148,13 @@ Utility classes
 
 /* triggers for stacking */
 .media-mobile-stack {
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         @include media-stack();
     }
 }
 
 .media-small-mobile-stack {
-    @media #{$media-query-small-mobile} {
+    @media #{$mq-small-mobile-and-down} {
         @include media-stack();
     }
 }

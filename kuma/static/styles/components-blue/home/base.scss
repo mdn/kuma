@@ -71,7 +71,7 @@
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     #home { /* needs spcificity to over ride use of #home earlier */
         .home-contribute h2,
         .column-hacks > h2 {

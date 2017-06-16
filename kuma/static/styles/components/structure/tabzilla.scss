@@ -50,7 +50,7 @@ Customization for MDN
     background-color: $text-color;
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     #tabzilla {
         display: none;
     }

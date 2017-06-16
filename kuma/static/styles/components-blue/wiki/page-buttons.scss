@@ -49,7 +49,7 @@ body:not(.zone-landing) #edit-button {
     color: $blue-background-text-color;
 }
 
-@media #{$media-query-small-desktop} {
+@media #{$mq-small-desktop-and-down} {
     .page-buttons,
     #page-buttons {
         &.fixed {
@@ -58,7 +58,7 @@ body:not(.zone-landing) #edit-button {
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .page-buttons > li.page-buttons-edit {
         display: none;
     }

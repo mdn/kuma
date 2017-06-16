@@ -125,14 +125,14 @@
 }
 
 // max 1200px
-@media #{$media-query-small-desktop} {
+@media #{$mq-small-desktop-and-down} {
     #wiki-promo-sauce-labs-b .wiki-promo-copy {
         @include bidi-style(padding, 0 120px 0 0, padding, 0 0 0 120px);
     }
 }
 
 // max 1024px
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     #wiki-promo-sauce-labs-b {
         @include bidi-style(background-position, bottom right 40px, background-position, bottom left 40px);
         @include bidi-style(padding, 20px 350px 20px 25px, padding, 20px 25px 20px 350px);
@@ -148,7 +148,7 @@
 }
 
 // max 768px
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     #wiki-promo-sauce-labs-a {
         @include bidi-style(background-position, bottom 20px center, background-position, bottom 20px center);
         @include bidi-style(padding, 20px 10px 140px, padding, 20px 10px 140px);
@@ -187,7 +187,7 @@
 }
 
 // max 480px
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     #wiki-promo-sauce-labs-a .wiki-promo-copy {
         @include bidi-style(padding, 0, padding, 0);
     }

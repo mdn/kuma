@@ -42,7 +42,7 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
 }
 
 /* Simulate two columns, if enough space is available    */
-@media #{$media-query-small-desktop-and-up} {
+@media #{$mq-small-desktop-and-up} {
     body .topicpage-table {
         display: table;
         border-collapse: separate;

@@ -91,7 +91,7 @@ p.field-explanation {
     width: 670px;
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     .header-clear {
         display: none;
     }

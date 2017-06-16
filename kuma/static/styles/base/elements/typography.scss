@@ -118,7 +118,7 @@ pre code {
     font-style: normal;
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     h1,
     h2,
     h3,

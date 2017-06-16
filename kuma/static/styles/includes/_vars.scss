@@ -105,44 +105,57 @@ $grid-width-column-main : -calc-col-width(9);
 breakpoints & media queries
 ====================================================================== */
 
-$max-width-default : 1400px;
+/*
+break points
+- developers understand pixel values better
+- ems is a better user experience, because design handles text resizing better
+- divide pixels by browser default font size (16px)
+- and multiply by 1em to convert unit to em.
+*/
+$max-width-default : (1400px / 16px) * 1em;
+$small-desktop-ends : (1200px / 16px) * 1em;
+$tablet-ends : (1024px / 16px) * 1em;
+$mobile-ends : (768px / 16px) * 1em;
+$small-mobile-ends : (480px / 16px) * 1em;
 
-$small-desktop-ends : 1200px;
-$tablet-ends : 1024px;
-$mobile-ends : 768px;
-$small-mobile-ends : 480px;
+$small-desktop-starts : $tablet-ends + .001em;
+$tablet-starts : $mobile-ends + .001em;
+$mobile-starts : $small-mobile-ends + .001em;
 
-$small-desktop-starts : $tablet-ends + 1px;
-$tablet-starts : $mobile-ends + 1px;
-$mobile-starts : $small-mobile-ends + 1px;
+$navigation-break-ends : (1100px / 16px) * 1em;
+$navigation-block-ends : (850px / 16px) * 1em;
 
+$navigation-break-starts : $navigation-block-ends + .001em;
+
+/*
+media queries
+- MDN should be coded "mobile first"
+- when coding features, begin by coding the mobile presentation as default
+- use the min-width MQs to modify presentation for larger screens
+*/
+$mq-max-width-and-up : 'all and (min-width: #{$max-width-default})';
+$mq-large-desktop-and-up : 'all and (min-width: #{$small-desktop-ends})';
+$mq-small-desktop-and-up : 'all and (min-width: #{$small-desktop-starts})';
+$mq-tablet-and-up : 'all and (min-width: #{$tablet-starts})';
+$mq-mobile-and-up : 'all and (min-width: #{$mobile-starts})';
+
+$mq-small-desktop-only : 'all and (min-width: #{$small-desktop-starts})';
+$mq-tablet-only : 'all and (min-width: #{$tablet-starts}) and (max-width: #{$tablet-ends})';
+$mq-mobile-only : 'all and (min-width: #{$mobile-starts}) and (max-width: #{$mobile-ends})';
+$mq-small-mobile-only : 'all and (max-width: #{$small-mobile-ends})';
+
+$mq-navigation-break : 'all and (max-width: #{$navigation-break-ends})'; /* Moves nav items all the way to the left, moves logo above */
+$mq-navigation-block : 'all and (max-width: #{$navigation-block-ends})'; /* Moves nav menu items to block, its own line */
+
+$mq-break-and-up : 'all and (min-width: #{$navigation-break-starts})';
+
+/* avoid using these media queries, code mobile first */
 $mq-large-desktop-and-down : 'all and (max-width: #{$max-width-default})';
-$media-query-small-desktop : 'all and (max-width: #{$small-desktop-ends})';
-$media-query-tablet : 'all and (max-width: #{$tablet-ends})';
-$media-query-mobile : 'all and (max-width: #{$mobile-ends})';
-$media-query-small-mobile : 'all and (max-width : #{$small-mobile-ends})';
+$mq-small-desktop-and-down : 'all and (max-width: #{$small-desktop-ends})';
+$mq-tablet-and-down : 'all and (max-width: #{$tablet-ends})';
+$mq-mobile-and-down : 'all and (max-width: #{$mobile-ends})';
+$mq-small-mobile-and-down : 'all and (max-width : #{$small-mobile-ends})';
 
-$media-query-between-small-desktop-and-max-width : 'all and (min-width: #{$small-desktop-starts}) and (max-width: #{$max-width-default})';
-
-$media-query-large-desktop-and-up : 'all and (min-width: #{$small-desktop-ends})';
-$media-query-small-desktop-and-up : 'all and (min-width: #{$small-desktop-starts})';
-$media-query-tablet-and-up : 'all and (min-width: #{$tablet-starts})';
-$media-query-mobile-and-up : 'all and (min-width: #{$mobile-starts})';
-
-$media-query-small-desktop-only : 'all and (min-width: #{$small-desktop-starts})';
-$media-query-tablet-only : 'all and (min-width: #{$tablet-starts}) and (max-width: #{$tablet-ends})';
-$media-query-mobile-only : 'all and (min-width: #{$mobile-starts}) and (max-width: #{$mobile-ends})';
-$media-query-small-mobile-only : $media-query-small-mobile;
-
-$navigation-break-ends : 1100px;
-$navigation-block-ends : 850px;
-
-$navigation-break-starts : $navigation-block-ends + 1px;
-
-$media-query-navigation-break : 'all and (max-width: #{$navigation-break-ends})'; /* Moves nav items all the way to the left, moves logo above */
-$media-query-navigation-block : 'all and (max-width: #{$navigation-block-ends})'; /* Moves nav menu items to block, its own line */
-
-$media-query-break-and-up : 'all and (min-width: #{$navigation-break-starts})';
 
 /*
 animation

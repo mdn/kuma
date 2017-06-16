@@ -17,7 +17,7 @@
     }
 }
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     .user-buttons {
         position: relative;
         top: auto;

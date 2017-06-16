@@ -33,7 +33,7 @@ Main header, wraps all components of logo, main, and secondary navigation
 }
 
 /* custom nav menu movement */
-@media #{$media-query-navigation-break} {
+@media #{$mq-navigation-break} {
     #main-header {
         .logo {
             margin-top: -27px;
@@ -41,7 +41,7 @@ Main header, wraps all components of logo, main, and secondary navigation
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     #main-header {
         .logo {
             margin: ($grid-spacing / 2) 0;
@@ -52,7 +52,7 @@ Main header, wraps all components of logo, main, and secondary navigation
     }
 }
 
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     #main-header {
         .logo {
             width: 44px;

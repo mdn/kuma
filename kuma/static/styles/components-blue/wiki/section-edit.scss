@@ -4,7 +4,7 @@
     @include set-smaller-font-size();
     opacity: 0;
 
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         display: none;
     }
 

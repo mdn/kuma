@@ -78,7 +78,7 @@ Main navigation menu
         $submenu-width : 180px;
         @include submenu-set(180px, 5px, #fff, $text-color);
 
-        @media #{$media-query-tablet-and-up} {
+        @media #{$mq-tablet-and-up} {
             @include bidi-value(left, auto, 50%);
             @include bidi-value(right, 50%, auto);
             margin-right: (($submenu-width / 2 ) + $grid-spacing) * -1;
@@ -98,7 +98,7 @@ Main navigation menu
             }
         }
 
-        @media #{$media-query-mobile} {
+        @media #{$mq-mobile-and-down} {
             & {
                 @include bidi-style(left, auto, right, auto);
                 @include bidi-style(right, auto, left, auto);
@@ -114,7 +114,7 @@ Main navigation menu
 
 
 /* custom nav menu movement */
-@media #{$media-query-navigation-break} {
+@media #{$mq-navigation-break} {
     #main-nav {
         > ul {
             /* drop under logo, take full width */
@@ -135,7 +135,7 @@ Main navigation menu
 
 
 /* break nav into blocks (own line) */
-@media #{$media-query-navigation-block} {
+@media #{$mq-navigation-block} {
     #main-nav {
         > ul {
             float: none;
@@ -158,7 +158,7 @@ Main navigation menu
 
 
 /* tablet updates */
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     #main-nav {
         > ul {
             > li {
@@ -173,7 +173,7 @@ Main navigation menu
 }
 
 
-@media #{$media-query-small-mobile} {
+@media #{$mq-small-mobile-and-down} {
     #main-nav.expand {
         ul {
             > li:not(:last-child) {

@@ -75,13 +75,13 @@
 }
 
 
-@media #{$media-query-tablet-and-up} {
+@media #{$mq-tablet-and-up} {
     .newsletter-box {
         padding: ($grid-spacing * 2);
     }
 }
 
-@media #{$media-query-large-desktop-and-up} {
+@media #{$mq-large-desktop-and-up} {
     @supports (display: grid) {
         .newsletter-box {
 

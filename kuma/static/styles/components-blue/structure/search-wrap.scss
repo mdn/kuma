@@ -45,7 +45,7 @@ Main navigation search box and its wrapper
     }
 }
 
-@media #{$media-query-navigation-block} {
+@media #{$mq-navigation-block} {
     .search-wrap {
         width: 90%;
         width: calc(100% - 16px); /* 16px = left + right padding */
