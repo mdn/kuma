@@ -45,7 +45,7 @@
     }
 }
 
-@media #{$media-query-small-desktop} {
+@media #{$mq-large-desktop-and-down} {
 
     /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
     .wiki-left-present:not(.wiki-left-closed) {
