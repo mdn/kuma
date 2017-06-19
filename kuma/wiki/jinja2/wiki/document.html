@@ -167,7 +167,7 @@
 
       <!-- heading -->
       <div id="wiki-document-head" class="document-head">
-        {% if has_contributors %}
+        {% if has_contributors and not waffle.flag('redesign')%}
         <div class="contributor-avatars" data-all-text="{{ _('see all contributors') }}" data-alternate-message="{{ _('hide contributors') }}" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
             <ul>
             {% for contributor in contributors %}
