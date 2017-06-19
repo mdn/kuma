@@ -44,7 +44,7 @@
     }
 }
 
-@media #{$media-query-small-desktop} {
+@media #{$mq-small-desktop-and-down} {
 
     /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
     .wiki-left-present:not(.wiki-left-closed) {
@@ -65,7 +65,7 @@
     }
 }
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     @include make-wiki-blocks-flat();
 
     #wiki-right {

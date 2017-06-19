@@ -112,7 +112,7 @@
     }
 
     /*  tablet grid width */
-    @media #{$media-query-tablet} {
+    @media #{$mq-tablet-and-down} {
         .column-container {
             &.column-container-reverse {
                 margin-left: 0;
@@ -124,7 +124,7 @@
     mobile - just make everything its own column
     preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
     ====================================================================== */
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         .column-1,
         .column-2,
         .column-3,

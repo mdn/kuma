@@ -1,5 +1,5 @@
 /* hide print button on tablets since they are less likely to be hooked up to a printer */
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     .page-print {
         display: none;
     }

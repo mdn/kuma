@@ -100,13 +100,13 @@ hr {
     margin: $grid-spacing 0;
 }
 
-@media #{$media-query-tablet} {
+@media #{$mq-tablet-and-down} {
     footer {
         border-top: 1px solid $button-background;
     }
 }
 
-@media #{$media-query-mobile} {
+@media #{$mq-mobile-and-down} {
     /* add bottom spacing to the footer */
     footer {
         padding-bottom: $grid-spacing;

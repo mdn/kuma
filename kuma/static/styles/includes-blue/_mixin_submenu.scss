@@ -24,7 +24,7 @@ configurable declarations for the submenu extend
     }
 
     /* columns */
-    @media #{$media-query-tablet-and-up} {
+    @media #{$mq-tablet-and-up} {
         /* modifications for second column */
         &.submenu-cols-2 {
             width: ($menu-width * 2) + $grid-spacing;
@@ -35,14 +35,14 @@ configurable declarations for the submenu extend
         }
     }
 
-    @media #{$media-query-mobile} {
+    @media #{$mq-mobile-and-down} {
         .submenu-column + .submenu-column {
             margin-top: ($grid-spacing / 2);
         }
     }
 
     /* media queries */
-    @media #{$media-query-small-mobile} {
+    @media #{$mq-small-mobile-and-down} {
         & {
             padding-top: ($grid-spacing * 1.5);
             width: auto;
@@ -114,7 +114,7 @@ submenu
     }
 
     /* columns */
-    @media #{$media-query-tablet-and-up} {
+    @media #{$mq-tablet-and-up} {
         .submenu-column {
             vertical-align: text-top;
             width: 100%;
@@ -146,7 +146,7 @@ submenu
             margin: 0;
         }
 
-        @media #{$media-query-tablet} {
+        @media #{$mq-tablet-and-down} {
             & {
                 display: block;
             }
