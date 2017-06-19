@@ -308,14 +308,6 @@
         };
 
         mdn.analytics.trackLink(event, url, linkData);
-
-        var fixed = $('#toc.fixed').length > 0 ? 'fixed' : 'not fixed';
-        var clickData = {
-            category: 'TOC Click',
-            action: fixed
-        };
-
-        mdn.analytics.trackLink(event, url, clickData);
     });
 
     /*
@@ -348,73 +340,43 @@
 
 
     /*
-        Set up the scrolling TOC effect
+        Set up the TOC menu toggle
     */
     (function() {
         var $toc = $('#toc');
-        var tocOffset = $toc.offset();
         var $toggler = $toc.find('> .toggler');
-        var fixedClass = 'fixed';
-        var $wikiRight = $('#wiki-right');
-        var $pageButtons = $('.page-buttons');
-        var pageButtonsOffset = $pageButtons.offset();
 
-        // Get button alignment according to text direction
-        var buttonDirection = ($('html').attr('dir') === 'rtl') ? 'left' : 'right';
-
-        var scrollFn = debounce(function(e) {
-            var scroll = $(doc).scrollTop();
-            var pageButtonsHeight = 0;
-            var $mainContent = $('.wiki-main-content');
-
-            var pointerEvents = $toggler.css('pointer-events');
-
+        function tocToggle(e) {
             if(!e || e.type === 'resize') {
-                // Calculate right and offset for page buttons on resize and page load
-                if(buttonDirection === 'right'){
-                    pageButtonsOffset.right = $(win).width() - $mainContent.offset().left - $mainContent.innerWidth();
-                }
                 // Should the TOC be one-column (auto-closed) or sidebar'd
-                if($toc.length){
-                    if(pointerEvents === 'auto' || $toggler.find('i').css('display') !== 'none') { /* icon check is for old IEs that don't support pointer-events */
-                        // Checking "data-clicked" to ensure we don't override closing/opening if user has done so explicitly
-                        if(!$toc.attr('data-closed') && !$toggler.attr('data-clicked')) {
-                            $toggler.trigger('mdn:click');
+                if($toc.length) {
+                    // look for toggle icon to see if toggleable
+                    if($toggler.find('i').css('display') !== 'none') {
+                        // TOC is toggleable
+                        if(!$toc.attr('data-closed')) {
+                            // TOC is open
+                            $toggler.trigger('mdn:click'); // close TOC
+                        }
+                    } else {
+                        // TOC not togglable
+                        if($toc.attr('data-closed') === 'true') {
+                            // TOC is closed
+                            $toggler.trigger('mdn:click'); // open TOC
                         }
                     }
-                    else if($toc.attr('data-closed')) { // Changes width, should be opened (i.e. mobile to desktop width)
-                        $toggler.trigger('mdn:click');
-                    }
                 }
             }
+        }
 
-            // If there is no ToC on the page
-            if(!$toc.length) return;
-
-            // Styling for sticky ToC
-            var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10) - pageButtonsHeight;
-            if((scroll + pageButtonsHeight > tocOffset.top) && pointerEvents === 'none') {
-                $toc.css({
-                    width: $toc.css('width'),
-                    top: pageButtonsHeight,
-                    maxHeight: maxHeight
-                });
-                $toc.addClass(fixedClass);
-            }
-            else {
-                $toc.css({
-                    width: 'auto',
-                    maxHeight: 'none'
-                });
-                $toc.removeClass(fixedClass);
-            }
-
-        }, 15);
+        // If there is no ToC on the page
+        if(!$toc.length) {
+            return;
+        }
 
         // Set it forth!
-        if($toc.length){
-            scrollFn();
-            $(win).on('scroll resize', scrollFn);
+        if($toc.length) {
+            tocToggle();
+            $(win).on('resize', tocToggle);
         }
     })();
 

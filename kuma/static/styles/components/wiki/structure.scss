@@ -18,7 +18,7 @@
 #wiki-right,
 #wiki-left,
 #wiki-content {
-    min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
+    min-height: 1px; /* ensures the column has width when empty */
 }
 
 /* don't let wiki content escape the article - BUG 1325569 */
