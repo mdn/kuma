@@ -1,3 +1,5 @@
+import time
+import random
 import collections
 
 from django.conf import settings
@@ -8,8 +10,16 @@ from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
 class DocumentNearestZoneJob(KumaJob):
-    lifetime = 60 * 60 * 29
-    refresh_timeout = 60
+    # Allow up to three minutes to refresh the cache before assuming
+    # the task has failed and allowing another to be enqueued.
+    refresh_timeout = 180
+
+    def expiry(self, *args, **kwargs):
+        # Spread the cache expiration times across a random
+        # number of days from 1 to 10 (in units of seconds).
+        seconds_per_day = 24 * 60 * 60
+        return time.time() + random.randint(1 * seconds_per_day,
+                                            10 * seconds_per_day)
 
     def fetch(self, pk):
         """

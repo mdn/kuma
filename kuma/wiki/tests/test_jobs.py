@@ -13,6 +13,15 @@ def test_document_zone_unicode(doc_hierarchy_with_zones):
         top_doc.get_absolute_url(), top_doc.title)
 
 
+def test_nearest_zone_expiry():
+    """
+    Ensure that the expiry is not constant.
+    """
+    job = DocumentNearestZoneJob()
+    with mock.patch('time.time', return_value=0):
+        assert len(set(job.expiry() for _ in range(0, 1000))) > 1
+
+
 @pytest.mark.parametrize('doc_name,expected_zone_name', [
     ('top', 'top'),
     ('middle_top', 'middle_top'),
