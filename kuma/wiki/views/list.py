@@ -8,7 +8,8 @@ from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
 from ..decorators import process_document_path, prevent_indexing
-from ..models import Document, DocumentTag, ReviewTag, LocalizationTag
+from ..models import (Document, DocumentTag, ReviewTag, Revision,
+                      LocalizationTag)
 
 
 @block_user_agents
@@ -142,65 +143,73 @@ def revisions(request, document_slug, document_locale):
     List all the revisions of a given document.
     """
     locale = request.GET.get('locale', document_locale)
-    document = get_object_or_404(Document.objects
-                                         .select_related('current_revision'),
-                                 locale=locale,
-                                 slug=document_slug)
-    if document.current_revision is None:
+
+    # Load document with only fields for history display
+    try:
+        document = (Document.objects
+                    .only('id', 'locale', 'slug', 'title',
+                          'current_revision_id', 'parent__slug',
+                          'parent__locale')
+                    .select_related('parent__slug', 'parent__locale')
+                    .get(locale=locale, slug=document_slug))
+    except Document.DoesNotExist:
+        raise Http404
+    if document.current_revision_id is None:
         raise Http404
 
-    def get_previous(revisions):
-        for current_revision in revisions:
-            for previous_revision in revisions:
-                # we filter out all revisions that are not approved
-                # as that's the way the get_previous method does it as well
-                # also let's skip comparing the same revisions
-                if (not previous_revision.is_approved or
-                        current_revision.pk == previous_revision.pk):
-                    continue
-                # we stick to the first revision that we find
-                if previous_revision.created < current_revision.created:
-                    current_revision.previous_revision = previous_revision
-                    break
-        return revisions
-
+    # Process the requested page size
     per_page = request.GET.get('limit', 10)
-
     if not request.user.is_authenticated() and per_page == 'all':
         return render(request, '403.html',
                       {'reason': 'revisions_login_required'}, status=403)
 
-    # Grab revisions, but defer summary and content because they can lead to
-    # attempts to cache more than memcached allows.
-    all_revisions = (document.revisions.defer('summary', 'content').order_by('created', 'id')
-                     .select_related('creator').reverse().transform(get_previous))
+    # Get ordered revision IDs
+    revision_ids = list(document.revisions
+                        .order_by('-created', '-id')
+                        .values_list('id', flat=True))
 
-    if not all_revisions.exists():
-        raise Http404
+    # Create pairs (this revision, previous revision)
+    revision_pairs = zip(revision_ids, revision_ids[1:] + [None])
 
+    # Paginate the revision pairs, or use all of them
     if per_page == 'all':
         page = None
-        all_revisions = list(all_revisions)
+        selected_revision_pairs = revision_pairs
     else:
         try:
             per_page = int(per_page)
         except ValueError:
             per_page = DOCUMENTS_PER_PAGE
 
-        page = paginate(request, all_revisions, per_page)
-        all_revisions = list(page.object_list)
-    # In order to compare the first revision of a translation, need to insert its parent revision to the list
-    # The parent revision should stay at last page in order to compare. So insert only if there are no next page or
-    # all revisions are showing
-    if (not page or not page.has_next()) and document.parent:
-        # *all_revisions are in descending order. so call last() in order to get first revision
-        first_rev_based_on = all_revisions[-1].based_on
-        # Translation can be orphan so that first revision does not have any english based on. So handle the situation.
-        if first_rev_based_on:
-            all_revisions.append(first_rev_based_on)
+        page = paginate(request, revision_pairs, per_page)
+        selected_revision_pairs = list(page.object_list)
+
+    # Include original English revision of the first translation
+    earliest_id, earliest_prev_id = selected_revision_pairs[-1]
+    if earliest_prev_id is None and document.parent:
+        earliest = Revision.objects.only('based_on').get(id=earliest_id)
+        selected_revision_pairs[-1] = (earliest_id, earliest.based_on_id)
+        selected_revision_pairs.append((earliest.based_on_id, None))
+
+    # Gather revisions on this history page, restricted to display fields
+    selected_revision_ids = [rev_id for rev_id, _ in selected_revision_pairs]
+    previous_id = selected_revision_pairs[-1][1]
+    if previous_id is not None:
+        selected_revision_ids.append(previous_id)
+    selected_revisions = (Revision.objects
+                          .only('id', 'slug', 'created', 'comment',
+                                'document__slug', 'document__locale',
+                                'creator__username', 'creator__is_active')
+                          .select_related('document__slug',
+                                          'document__locale',
+                                          'creator__is_active',
+                                          'creator__username')
+                          .filter(id__in=selected_revision_ids))
+    revisions = {rev.id: rev for rev in selected_revisions}
 
     context = {
-        'revisions': all_revisions,
+        'selected_revision_pairs': selected_revision_pairs,
+        'revisions': revisions,
         'document': document,
         'page': page,
     }

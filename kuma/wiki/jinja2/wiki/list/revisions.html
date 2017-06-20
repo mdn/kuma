@@ -28,7 +28,7 @@
       </ul>
     </div>
     <div class="revision-list-contain">
-      {% set revision_count=revisions|length %}
+      {% set revision_count=selected_revision_pairs|length %}
       {% set user_can_delete=user.has_perm('wiki.delete_revision') %}
       {% if revision_count > 0 %}
         {% if request.GET.origin == 'translate' %}
@@ -43,7 +43,9 @@
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
             </div>
           {% endif %}
-          {% for rev in revisions %}
+          {% for rev_id, prev_id in selected_revision_pairs %}
+            {% set rev = revisions[rev_id] %}
+            {% if prev_id %}{% set prev = revisions[prev_id] %}{% else %}{% set prev = none %}{% endif%}
             {% if loop.first %}<ul class="revision-list">{% endif %}
             <li {%- if document != rev.document %} class="revision-list-en-source"{% endif %}>
               <div class="revision-list-cell revision-list-radio">
@@ -53,8 +55,8 @@
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
               </div>
                <div class="revision-list-cell revision-list-prev">
-              {% if rev.previous_revision %}
-                <a href="{{ url('wiki.compare_revisions', document.slug) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
+              {% if prev_id %}
+                <a href="{{ url('wiki.compare_revisions', document.slug) }}?to={{ rev.id }}&amp;from={{ prev_id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
               {% endif %}
               </div>
               <div class="revision-list-cell revision-list-date">
@@ -69,9 +71,9 @@
                 {% if rev.document.locale != document.locale %}
                   <em>{{ get_locale_localized(rev.document.locale) }}</em>
                 {% endif %}
-                {{ format_comment(rev) }}
+                {{ format_comment(rev, prev, load_previous=False) }}
               </div>
-              {% if document.current_revision.id != rev.id and document == rev.document and user_can_delete %}
+              {% if document.current_revision_id != rev_id and document.id == rev.document_id and user_can_delete %}
               <div class="revision-list-cell revision-list-revert">
                 <a href="{{ url('wiki.revert_document', rev.document.slug, rev.id, locale=rev.document.locale) }}" class="button revert-revision" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
               </div>

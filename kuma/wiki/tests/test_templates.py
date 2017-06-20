@@ -1351,7 +1351,7 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
 
 @pytest.mark.parametrize("elem_num,has_prev,is_english,has_revert", [
     (0, True, False, False),
-    (1, False, False, True),
+    (1, True, False, True),
     (2, False, True, False)],
     ids=['current', 'first_trans', 'en_source'])
 def test_list_revisions(elem_num, has_prev, is_english, has_revert,

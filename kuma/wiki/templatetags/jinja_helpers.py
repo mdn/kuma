@@ -41,12 +41,17 @@ def bugize_text(content):
 
 
 @library.global_function
-def format_comment(rev, previous_revision=None):
+def format_comment(rev, previous_revision=None, load_previous=True):
     """
-    Massages revision comment content after the fact
+    Format comment for HTML display, with Bugzilla links and slug changes.
+
+    Keyword Arguments:
+    rev - The revision
+    previous_revision - The previous revision (default None)
+    load_previous - Try loading previous revision if None (default True)
     """
     prev_rev = getattr(rev, 'previous_revision', previous_revision)
-    if prev_rev is None:
+    if prev_rev is None and load_previous:
         prev_rev = rev.previous
     comment = bugize_text(rev.comment if rev.comment else "")
 
