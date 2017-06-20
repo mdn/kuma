@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-07 06:48-0700\n"
+"POT-Creation-Date: 2017-06-20 07:48-0700\n"
 "PO-Revision-Date: 2017-06-08 19:36+0000\n"
 "Last-Translator: k.berov <k.berov@gmail.com>\n"
 "Language-Team: Bulgarian https://pontoon.mozilla.org/bg/\n"
@@ -89,198 +89,198 @@ msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> от Мат
 msgid "Internal Server Error"
 msgstr "Вътрешна Грешка на Сървъра"
 
-#: jinja2/base.html:13 jinja2/base.html:39 jinja2/base.html:44 jinja2/base.html:112 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:121 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Мрежа на разработчиците на Мозила"
 
-#: jinja2/base.html:86
+#: jinja2/base.html:95
 msgid "MDN is currently in read-only maintenance mode."
 msgstr "MDN е в режим само за четене."
 
-#: jinja2/base.html:87
+#: jinja2/base.html:96
 msgid "Learn more"
 msgstr "Учете повече"
 
-#: jinja2/base.html:97
+#: jinja2/base.html:106
 msgid "Skip to main content"
 msgstr "Към главното съдържание"
 
-#: jinja2/base.html:99
+#: jinja2/base.html:108
 msgid "Select language"
 msgstr "Избор на език"
 
-#: jinja2/base.html:100
+#: jinja2/base.html:109
 msgid "Skip to search"
 msgstr "Към страницата за търсене"
 
-#: jinja2/base.html:118 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:127 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Инструменти"
 
-#: jinja2/base.html:121
+#: jinja2/base.html:130
 msgid "Contribute to MDN"
 msgstr "Помогнете за MDN"
 
-#: jinja2/base.html:123
+#: jinja2/base.html:132
 msgid "Get started"
 msgstr "Да започваме"
 
-#: jinja2/base.html:124
+#: jinja2/base.html:133
 msgid "Review or localize docs"
 msgstr "Преглед и превод на документи"
 
-#: jinja2/base.html:127
+#: jinja2/base.html:136
 msgid "Site Tools"
 msgstr "Инструменти на сайта"
 
-#: jinja2/base.html:129
+#: jinja2/base.html:138
 msgid "Revision dashboard"
 msgstr "Табло за преглед на промените"
 
-#: jinja2/base.html:130
+#: jinja2/base.html:139
 msgid "Documentation status"
 msgstr "Състояние на документацията"
 
-#: jinja2/base.html:139 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:148 kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web Technologies"
 msgstr "Уеб-технологии"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:151
 msgid "Technologies"
 msgstr "Технологии"
 
-#: jinja2/base.html:144 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:153 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:145 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:154 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:146 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:155 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:156
 msgid "Graphics"
 msgstr "Графика"
 
-#: jinja2/base.html:148
+#: jinja2/base.html:157
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:149
+#: jinja2/base.html:158
 msgid "APIs / DOM"
 msgstr "Програмни интерфейси (APIs) / DOM"
 
-#: jinja2/base.html:150
+#: jinja2/base.html:159
 msgid "WebExtensions"
 msgstr "Уеб-разширения"
 
-#: jinja2/base.html:151 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:160 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:154
+#: jinja2/base.html:163
 msgid "References & Guides"
 msgstr "Справочници и ръководства"
 
-#: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:165 kuma/landing/jinja2/landing/homepage.html:89
 msgid "Learn web development"
 msgstr "Обучение за уебразработчици"
 
-#: jinja2/base.html:157
+#: jinja2/base.html:166
 msgid "Tutorials"
 msgstr "Уроци"
 
-#: jinja2/base.html:158
+#: jinja2/base.html:167
 msgid "References"
 msgstr "Справочници"
 
-#: jinja2/base.html:159
+#: jinja2/base.html:168
 msgid "Developer Guides"
 msgstr "Ръководства за разработчици"
 
-#: jinja2/base.html:160
+#: jinja2/base.html:169
 msgid "Accessibility"
 msgstr "Достъпност"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:170
 msgid "Game development"
 msgstr "Разработка на игри"
 
-#: jinja2/base.html:162
+#: jinja2/base.html:171
 msgid "...more docs"
 msgstr "...още документи"
 
-#: jinja2/base.html:166
+#: jinja2/base.html:175
 msgid "Mozilla Docs"
 msgstr "Документация от Мозила"
 
-#: jinja2/base.html:170 kuma/core/sections.py:6
+#: jinja2/base.html:179 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Добавки"
 
-#: jinja2/base.html:171 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:180 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:184
 msgid "Developer Tools"
 msgstr "Инструменти за разработчици"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:184
 msgid "Feedback"
 msgstr "Отзиви"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:188
 msgid "Get Firefox help"
 msgstr "Помощ за Firefox"
 
-#: jinja2/base.html:180
+#: jinja2/base.html:189
 msgid "Get web development help"
 msgstr "Помощ за уебразработчици"
 
-#: jinja2/base.html:183
+#: jinja2/base.html:192
 msgid "Join the MDN community"
 msgstr "Присъединете се към общността на MDN"
 
-#: jinja2/base.html:184
+#: jinja2/base.html:193
 msgid "Report a content problem"
 msgstr "Докладвайте проблем със съдържанието"
 
-#: jinja2/base.html:185
+#: jinja2/base.html:194
 msgid "Report a bug"
 msgstr "Докладване на програмна грешка"
 
-#: jinja2/base.html:191 jinja2/base.html:192 jinja2/base.html:194 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
-#: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
+#: jinja2/base.html:200 jinja2/base.html:201 jinja2/base.html:203 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
+#: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Търсене"
 
-#: jinja2/base.html:210
+#: jinja2/base.html:219
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>© 2005-%(thisyear)s Мрежата на Разработчиците на Мозила и отделни участници.</p><p>Съдържанието се разпространява под <a href=\"%(copyright_url)s\">тези лицензи</a>.</p>"
 
-#: jinja2/base.html:215
+#: jinja2/base.html:224
 msgid "About MDN"
 msgstr "Относно MDN"
 
-#: jinja2/base.html:216
+#: jinja2/base.html:225
 msgid "Terms"
 msgstr "Условия"
 
-#: jinja2/base.html:217
+#: jinja2/base.html:226
 msgid "Privacy"
 msgstr "Поверителност"
 
-#: jinja2/base.html:218
+#: jinja2/base.html:227
 msgid "Cookies"
 msgstr "Бисквитки"
 
-#: jinja2/base.html:219
+#: jinja2/base.html:228
 msgid "Contribute to the code"
 msgstr "Принос към програмния код"
 
@@ -313,39 +313,39 @@ msgid "Learn the best of web development"
 msgstr "Научете най-доброто в програмирането за уеб"
 
 #: jinja2/includes/newsletter.html:4
-msgid "Sign up for our newsletter:"
-msgstr "Записване за новинарската ни емисия:"
+msgid "Get the latest and greatest from MDN delivered straight to your inbox."
+msgstr ""
 
-#: jinja2/includes/newsletter.html:11
+#: jinja2/includes/newsletter.html:12
 msgid "E-mail"
 msgstr "Е-поща"
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:13
 msgid "you@example.com"
 msgstr "вие@example.com"
 
-#: jinja2/includes/newsletter.html:18
+#: jinja2/includes/newsletter.html:19
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr "Съгласен съм Мозила да ползва информацията за мен, както е обяснено в <a href=\"%(policy_url)s\">тази Политика за Поверителност</a>."
 
-#: jinja2/includes/newsletter.html:24
+#: jinja2/includes/newsletter.html:25
 msgid "Sign up now"
 msgstr "Записване сега"
 
-#: jinja2/includes/newsletter.html:27
+#: jinja2/includes/newsletter.html:29
 msgid "The newsletter is offered in English only at the moment."
 msgstr "Новинарската емисия се предлага само на английски засега."
 
-#: jinja2/includes/newsletter.html:31
+#: jinja2/includes/newsletter.html:33
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "Благодарим! Моля проверете електронната си поща, за да потвърдите записването си."
 
-#: jinja2/includes/newsletter.html:32
+#: jinja2/includes/newsletter.html:34
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr "Ако не сте потвърждавали записване за някоя от новинарските емисии на Мозила, може би трябва да го направите. Моля, проверете пощенската си кутия или спам-филтрите си за писмо от нас."
 
-#: jinja2/includes/newsletter.html:39
+#: jinja2/includes/newsletter.html:41
 msgid "Hide Newsletter Sign-up"
 msgstr "Скриване на възможността за записване за новинарската емисия"
 
@@ -846,8 +846,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -908,11 +908,11 @@ msgstr "Мозила-хакове"
 msgid "Today at %s"
 msgstr "Днес в %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:308
 msgid "Yes"
 msgstr "Да"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:326
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:312
 msgid "No"
 msgstr "Не"
 
@@ -1230,154 +1230,154 @@ msgstr "Да получавам писма за чакащи прегледи н
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
 msgstr "Програмата за сътрудничество на Мрежата от Разработчици на Мозила (MDN) кани уебразработчици на световно равнище да помогнат да променим света с Мозила."
 
-#: kuma/landing/jinja2/landing/homepage.html:14
+#: kuma/landing/jinja2/landing/homepage.html:19
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 "Мрежата на разработчиците на Мозила (MDN) предоставя информация, относно отворените уеб-технологии като HTML, CSS и начини за общуване между програми – API както за страници, така и за HTML5 "
 "приложения. Сайтът също документира продукти на Мозила като Firefox OS."
 
-#: kuma/landing/jinja2/landing/homepage.html:32
+#: kuma/landing/jinja2/landing/homepage.html:37
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "Споделено знание <span>за отворена мрежа</span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:47 kuma/landing/jinja2/landing/homepage.html:64 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "Търсене в документите"
 
-#: kuma/landing/jinja2/landing/homepage.html:45
+#: kuma/landing/jinja2/landing/homepage.html:50
 msgid "Show topics"
 msgstr "Показване на теми"
 
-#: kuma/landing/jinja2/landing/homepage.html:72
+#: kuma/landing/jinja2/landing/homepage.html:77
 msgid "Web<br />Technologies"
 msgstr "Уеб<br />Технологии"
 
-#: kuma/landing/jinja2/landing/homepage.html:74
+#: kuma/landing/jinja2/landing/homepage.html:79
 msgid "Web APIs &amp; DOM"
 msgstr "Web APIs и DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
+#: kuma/landing/jinja2/landing/homepage.html:83 kuma/landing/jinja2/landing/homepage.html:103
 msgid "more..."
 msgstr "още..."
 
-#: kuma/landing/jinja2/landing/homepage.html:82
+#: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn"
 msgstr "Учете се"
 
-#: kuma/landing/jinja2/landing/homepage.html:85
+#: kuma/landing/jinja2/landing/homepage.html:90
 msgid "Getting started with the Web"
 msgstr "Да се запознаем с Уеб"
 
-#: kuma/landing/jinja2/landing/homepage.html:86
+#: kuma/landing/jinja2/landing/homepage.html:91
 msgid "Learn HTML"
 msgstr "Обучение по HTML"
 
-#: kuma/landing/jinja2/landing/homepage.html:87
+#: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Learn CSS"
 msgstr "Обучение по CSS"
 
-#: kuma/landing/jinja2/landing/homepage.html:88
+#: kuma/landing/jinja2/landing/homepage.html:93
 msgid "Learn JavaScript"
 msgstr "Обучение по JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Developer<br />Tools"
 msgstr "Инструменти<br />за разработчици"
 
-#: kuma/landing/jinja2/landing/homepage.html:94
+#: kuma/landing/jinja2/landing/homepage.html:99
 msgid "Page Inspector"
 msgstr "Изследвач на страницата"
 
-#: kuma/landing/jinja2/landing/homepage.html:95
+#: kuma/landing/jinja2/landing/homepage.html:100
 msgid "Web Console"
 msgstr "Уеб-конзола"
 
-#: kuma/landing/jinja2/landing/homepage.html:96
+#: kuma/landing/jinja2/landing/homepage.html:101
 msgid "JavaScript Debugger"
 msgstr "Дебъгер на JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:97
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Performance Tools"
 msgstr "Инструменти за производителност"
 
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Open Web and Mobile"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:118
+#: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:120
+#: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Take the Survey"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Learn Web Development"
 msgstr "Обучение за уебразработчици"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Proudly non-profit."
 msgstr "С идеална цел."
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Donate before Dec 31."
 msgstr "Дарете преди 31-ви декември."
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Donate Now"
 msgstr "Дарете сега"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:140
 msgid "Get The Browser For Developers Like You"
 msgstr "Вземете уебчетеца за разработчици като вас"
 
-#: kuma/landing/jinja2/landing/homepage.html:144
+#: kuma/landing/jinja2/landing/homepage.html:149
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:149
+#: kuma/landing/jinja2/landing/homepage.html:154
 msgid "Get Involved"
 msgstr "Присъединете се"
 
-#: kuma/landing/jinja2/landing/homepage.html:151
+#: kuma/landing/jinja2/landing/homepage.html:156
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:163 kuma/landing/jinja2/landing/homepage.html:170
 msgid "Help improve MDN"
 msgstr "Помогнете ни да подобрим MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:169
+#: kuma/landing/jinja2/landing/homepage.html:174
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Всичко в MDN (документите и самият сайт) е създадено от отворена общност от разработчици. Присъединете се! Изберете си начин да помогнете:"
 
-#: kuma/landing/jinja2/landing/homepage.html:175
+#: kuma/landing/jinja2/landing/homepage.html:180
 msgid "Getting started"
 msgstr "Първи стъпки"
 
-#: kuma/landing/jinja2/landing/homepage.html:176
+#: kuma/landing/jinja2/landing/homepage.html:181
 msgid "Editorial review"
 msgstr "Редакторски преглед"
 
-#: kuma/landing/jinja2/landing/homepage.html:177
+#: kuma/landing/jinja2/landing/homepage.html:182
 msgid "Technical review"
 msgstr "Технически преглед"
 
-#: kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:187
 msgid "Translating"
 msgstr "Превеждане"
 
-#: kuma/landing/jinja2/landing/homepage.html:183
+#: kuma/landing/jinja2/landing/homepage.html:188
 msgid "Promoting MDN"
 msgstr "Популяризиране на MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:184
+#: kuma/landing/jinja2/landing/homepage.html:189
 msgid "Contributing to the MDN codebase"
 msgstr "Принос към програмния код в MDN"
 
@@ -1427,8 +1427,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1728,8 +1728,8 @@ msgstr "тип"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -2228,8 +2228,8 @@ msgstr "Вече съществува сметка с избраната еле�
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -2499,7 +2499,7 @@ msgstr "Страница"
 msgid "Date"
 msgstr "Дата"
 
-#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:393
 msgid "Edit page"
 msgstr "Промяна на страницата"
 
@@ -2507,7 +2507,7 @@ msgstr "Промяна на страницата"
 msgid "View complete diff"
 msgstr "Преглед на всички разлики"
 
-#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:402
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:394
 msgid "View page history"
 msgstr "Преглед на историята на страницата"
 
@@ -2580,7 +2580,7 @@ msgstr "Публикуване"
 msgid "Delete your account."
 msgstr "Изтриване на вашата сметка."
 
-#: kuma/users/jinja2/users/user_edit.html:130
+#: kuma/users/jinja2/users/user_edit.html:128
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "Управление на записването за новините от Мозила."
 
@@ -3185,8 +3185,8 @@ msgstr "Опитвате се да създадете нова страница.
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3305,76 +3305,60 @@ msgid "Restore this document"
 msgstr "Възстановяване на тази статия"
 
 #: kuma/wiki/jinja2/wiki/document.html:171
-msgid "Previous Search Result"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:171 kuma/wiki/jinja2/wiki/document.html:181
-msgid "No Previous Search Result"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:177
-msgid "Your Search Results"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:181
-msgid "Next Search Result"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "see all contributors"
 msgstr "всички сътрудници"
 
-#: kuma/wiki/jinja2/wiki/document.html:185
+#: kuma/wiki/jinja2/wiki/document.html:171
 msgid "hide contributors"
 msgstr "скриване на сътрудници"
 
-#: kuma/wiki/jinja2/wiki/document.html:189
+#: kuma/wiki/jinja2/wiki/document.html:175
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:214
+#: kuma/wiki/jinja2/wiki/document.html:200
 msgid "In This Article"
 msgstr "В статията"
 
-#: kuma/wiki/jinja2/wiki/document.html:229
+#: kuma/wiki/jinja2/wiki/document.html:215
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:240
+#: kuma/wiki/jinja2/wiki/document.html:226
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:234
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:257
+#: kuma/wiki/jinja2/wiki/document.html:243
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:268
+#: kuma/wiki/jinja2/wiki/document.html:254
 msgid "This is an experimental page."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:279
+#: kuma/wiki/jinja2/wiki/document.html:265
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This translation is in progress."
 msgstr "Преводът на тази статия е незавършен."
 
-#: kuma/wiki/jinja2/wiki/document.html:291
+#: kuma/wiki/jinja2/wiki/document.html:277
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
@@ -3383,31 +3367,31 @@ msgstr ""
 "Доброволците ни все още не са превели статията на <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Присъединете се и помогнете да свършим тая работа!</a><br>Можете да "
 "прочетете статията и на <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 
-#: kuma/wiki/jinja2/wiki/document.html:303
+#: kuma/wiki/jinja2/wiki/document.html:289
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:312
+#: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This article doesn't have approved content yet."
 msgstr "Тази статия все още няма одобрено съдържание."
 
-#: kuma/wiki/jinja2/wiki/document.html:317
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "Was this article helpful?"
 msgstr "Беше ли полезна тази статия?"
 
-#: kuma/wiki/jinja2/wiki/document.html:331
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "Thank you!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:327
 msgid "Document Tags and Contributors"
 msgstr "Етикети за документа и сътрудници"
 
-#: kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "Contributors to this page:"
 msgstr "Допринесли за тази страница:"
 
-#: kuma/wiki/jinja2/wiki/document.html:353
+#: kuma/wiki/jinja2/wiki/document.html:339
 msgid "Last updated by:"
 msgstr "Последно обновяване от:"
 
@@ -3488,7 +3472,7 @@ msgstr "Забавлявайте се и се гордейте с приноса
 msgid "Learn how to tag an article"
 msgstr "Как се поставя етикет на статия"
 
-#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
+#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr "Категоризирайте статията. Това ще я направи откриваема при правилно филтриране в търсачката. <a target=\"_blank\" href=\"%(url)s\">Прочетете наръчника за етикетиране</a>."
@@ -3648,73 +3632,73 @@ msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-%(this_year)s Мрежа на разработчиците на Мозила и отделни сътрудници<br /> Съдържанието е достъпно под лиценз, специфичен за този проект. &middot; <a href=\"%(about_url)s\">Относно "
-"MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Помогнете като програмист</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Политика за поверителност</a>"
+"&copy; 2005-%(this_year)s Мрежа на разработчиците на Мозила и отделни сътрудници<br /> Съдържанието е достъпно под лиценз, специфичен за този проект. &middot; <a href=\"%(about_url)s\">Относно MDN</"
+"a> &middot; <a href=\"//github.com/mozilla/kuma\">Помогнете като програмист</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Политика за поверителност</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:34
+#: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
 msgstr "Статията се превежда на %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:44
+#: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
 msgstr "Превод на текста"
 
-#: kuma/wiki/jinja2/wiki/translate.html:84
+#: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
 msgstr "Одобрена версия на %(locale)s:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
 msgstr "Изходен код"
 
-#: kuma/wiki/jinja2/wiki/translate.html:87
+#: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:87
+#: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
 msgstr "Скриване на %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:99
+#: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "%(locale)s превод:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:112
+#: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
 msgstr "Превод на етикетите"
 
-#: kuma/wiki/jinja2/wiki/translate.html:121
+#: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
 msgstr "Етикети на английски"
 
-#: kuma/wiki/jinja2/wiki/translate.html:133
+#: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:140
+#: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
 msgstr "Етикети на %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:147
+#: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
 msgstr "Бележки по версията"
 
-#: kuma/wiki/jinja2/wiki/translate.html:149
+#: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
 msgstr "Бележки по превода"
 
@@ -4255,6 +4239,9 @@ msgstr "Не може да превеждате този документ."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Сървър Elasticsearch %(backend)s"
+
+#~ msgid "Sign up for our newsletter:"
+#~ msgstr "Записване за новинарската ни емисия:"
 
 #~ msgid "Create a New Template"
 #~ msgstr "Създаване на нов шаблон"

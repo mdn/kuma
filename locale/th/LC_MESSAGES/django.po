@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-07 06:48-0700\n"
+"POT-Creation-Date: 2017-06-20 07:48-0700\n"
 "PO-Revision-Date: 2017-04-09 11:28+0000\n"
 "Last-Translator: pure.gif <pure.gif@gmail.com>\n"
 "Language-Team: Thai https://pontoon.mozilla.org/th/\n"
@@ -86,199 +86,199 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "ข้อผิดพลาดเซิร์ฟเวอร์ภายใน"
 
-#: jinja2/base.html:13 jinja2/base.html:39 jinja2/base.html:44 jinja2/base.html:112 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:121 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
-#: jinja2/base.html:86
+#: jinja2/base.html:95
 msgid "MDN is currently in read-only maintenance mode."
 msgstr ""
 
-#: jinja2/base.html:87
+#: jinja2/base.html:96
 msgid "Learn more"
 msgstr "เรียนรู้เพิ่มเติม"
 
-#: jinja2/base.html:97
+#: jinja2/base.html:106
 msgid "Skip to main content"
 msgstr "ข้ามไปยังเนื้อหาหลัก"
 
-#: jinja2/base.html:99
+#: jinja2/base.html:108
 msgid "Select language"
 msgstr "เลือกภาษา"
 
-#: jinja2/base.html:100
+#: jinja2/base.html:109
 msgid "Skip to search"
 msgstr "ข้ามไปยังการค้นหา"
 
-#: jinja2/base.html:118 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:127 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "เครื่องมือ"
 
-#: jinja2/base.html:121
+#: jinja2/base.html:130
 msgid "Contribute to MDN"
 msgstr "มีส่วนร่วมกับ MDN"
 
-#: jinja2/base.html:123
+#: jinja2/base.html:132
 msgid "Get started"
 msgstr "เริ่มต้น"
 
-#: jinja2/base.html:124
+#: jinja2/base.html:133
 msgid "Review or localize docs"
 msgstr "ตรวจทานหรือแปลเอกสาร"
 
-#: jinja2/base.html:127
+#: jinja2/base.html:136
 msgid "Site Tools"
 msgstr "เครื่องมือไซต์"
 
-#: jinja2/base.html:129
+#: jinja2/base.html:138
 msgid "Revision dashboard"
 msgstr ""
 
-#: jinja2/base.html:130
+#: jinja2/base.html:139
 msgid "Documentation status"
 msgstr "สถานะเอกสาร"
 
-#: jinja2/base.html:139 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:148 kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web Technologies"
 msgstr "เทคโนโลยีเว็บ"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:151
 msgid "Technologies"
 msgstr "เทคโนโลยี"
 
 # 80%
-#: jinja2/base.html:144 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:153 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:145 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:154 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:146 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:155 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:156
 msgid "Graphics"
 msgstr "กราฟิก"
 
-#: jinja2/base.html:148
+#: jinja2/base.html:157
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:149
+#: jinja2/base.html:158
 msgid "APIs / DOM"
 msgstr "API / DOM"
 
-#: jinja2/base.html:150
+#: jinja2/base.html:159
 msgid "WebExtensions"
 msgstr "WebExtensions"
 
-#: jinja2/base.html:151 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:160 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:154
+#: jinja2/base.html:163
 msgid "References & Guides"
 msgstr "อ้างอิงและคู่มือ"
 
-#: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:165 kuma/landing/jinja2/landing/homepage.html:89
 msgid "Learn web development"
 msgstr "เรียนรู้การพัฒนาเว็บ"
 
-#: jinja2/base.html:157
+#: jinja2/base.html:166
 msgid "Tutorials"
 msgstr "บทเรียน"
 
-#: jinja2/base.html:158
+#: jinja2/base.html:167
 msgid "References"
 msgstr "อ้างอิง"
 
-#: jinja2/base.html:159
+#: jinja2/base.html:168
 msgid "Developer Guides"
 msgstr "คู่มือนักพัฒนา"
 
-#: jinja2/base.html:160
+#: jinja2/base.html:169
 msgid "Accessibility"
 msgstr "การช่วยเข้าถึง"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:170
 msgid "Game development"
 msgstr "การพัฒนาเกม"
 
-#: jinja2/base.html:162
+#: jinja2/base.html:171
 msgid "...more docs"
 msgstr "...เอกสารเพิ่มเติม"
 
-#: jinja2/base.html:166
+#: jinja2/base.html:175
 msgid "Mozilla Docs"
 msgstr "เอกสาร Mozilla"
 
-#: jinja2/base.html:170 kuma/core/sections.py:6
+#: jinja2/base.html:179 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "ส่วนเสริม"
 
-#: jinja2/base.html:171 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:180 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:184
 msgid "Developer Tools"
 msgstr "เครื่องมือนักพัฒนา"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:184
 msgid "Feedback"
 msgstr "ข้อคิดเห็น"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:188
 msgid "Get Firefox help"
 msgstr "รับความช่วยเหลือ Firefox"
 
-#: jinja2/base.html:180
+#: jinja2/base.html:189
 msgid "Get web development help"
 msgstr "รับความช่วยเหลือการพัฒนาเว็บ"
 
-#: jinja2/base.html:183
+#: jinja2/base.html:192
 msgid "Join the MDN community"
 msgstr "เข้าร่วมชุมชน MDN"
 
-#: jinja2/base.html:184
+#: jinja2/base.html:193
 msgid "Report a content problem"
 msgstr "รายงานปัญหาของเนื้อหา"
 
-#: jinja2/base.html:185
+#: jinja2/base.html:194
 msgid "Report a bug"
 msgstr "รายงานข้อบกพร่อง"
 
-#: jinja2/base.html:191 jinja2/base.html:192 jinja2/base.html:194 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
-#: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
+#: jinja2/base.html:200 jinja2/base.html:201 jinja2/base.html:203 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
+#: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "ค้นหา"
 
-#: jinja2/base.html:210
+#: jinja2/base.html:219
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network และผู้มีส่วนร่วมแต่ละคน</p> <p>เนื้อหาใช้งานได้ภายใต้ <a href=\"%(copyright_url)s\">สัญญาอนุญาตเหล่านี้</a></p>"
 
-#: jinja2/base.html:215
+#: jinja2/base.html:224
 msgid "About MDN"
 msgstr "เกี่ยวกับ MDN"
 
-#: jinja2/base.html:216
+#: jinja2/base.html:225
 msgid "Terms"
 msgstr "ข้อกำหนด"
 
-#: jinja2/base.html:217
+#: jinja2/base.html:226
 msgid "Privacy"
 msgstr "ความเป็นส่วนตัว"
 
-#: jinja2/base.html:218
+#: jinja2/base.html:227
 msgid "Cookies"
 msgstr "คุกกี้"
 
-#: jinja2/base.html:219
+#: jinja2/base.html:228
 msgid "Contribute to the code"
 msgstr "มีส่วนร่วมกับโค้ด"
 
@@ -311,40 +311,40 @@ msgid "Learn the best of web development"
 msgstr "เรียนรู้ที่สุดของการพัฒนาเว็บ"
 
 #: jinja2/includes/newsletter.html:4
-msgid "Sign up for our newsletter:"
-msgstr "ลงทะเบียนสำหรับจดหมายข่าวของเรา:"
+msgid "Get the latest and greatest from MDN delivered straight to your inbox."
+msgstr ""
 
 # 83%
-#: jinja2/includes/newsletter.html:11
+#: jinja2/includes/newsletter.html:12
 msgid "E-mail"
 msgstr "อีเมล"
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:13
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:18
+#: jinja2/includes/newsletter.html:19
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr ""
 
-#: jinja2/includes/newsletter.html:24
+#: jinja2/includes/newsletter.html:25
 msgid "Sign up now"
 msgstr "ลงทะเบียนตอนนี้"
 
-#: jinja2/includes/newsletter.html:27
+#: jinja2/includes/newsletter.html:29
 msgid "The newsletter is offered in English only at the moment."
 msgstr "จดหมายข่าวนำเสนอเป็นภาษาอังกฤษเท่านั้นในขณะนี้"
 
-#: jinja2/includes/newsletter.html:31
+#: jinja2/includes/newsletter.html:33
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "ขอบคุณ! โปรดตรวจสอบกล่องขาเข้าของคุณเพื่อยืนยันการบอกรับของคุณ"
 
-#: jinja2/includes/newsletter.html:32
+#: jinja2/includes/newsletter.html:34
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
 
-#: jinja2/includes/newsletter.html:39
+#: jinja2/includes/newsletter.html:41
 msgid "Hide Newsletter Sign-up"
 msgstr "ซ่อนการลงทะเบียนจดหมายข่าว"
 
@@ -907,11 +907,11 @@ msgstr ""
 msgid "Today at %s"
 msgstr "วันนี้เมื่อ %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:308
 msgid "Yes"
 msgstr "ใช่"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:326
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:312
 msgid "No"
 msgstr "ไม่"
 
@@ -1231,152 +1231,152 @@ msgstr ""
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:14
+#: kuma/landing/jinja2/landing/homepage.html:19
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
 "Firefox OS."
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:32
+#: kuma/landing/jinja2/landing/homepage.html:37
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "ความรู้ที่แบ่งปัน <span>สำหรับเว็บแบบเปิด</span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:47 kuma/landing/jinja2/landing/homepage.html:64 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "ค้นหาเอกสาร"
 
-#: kuma/landing/jinja2/landing/homepage.html:45
+#: kuma/landing/jinja2/landing/homepage.html:50
 msgid "Show topics"
 msgstr "แสดงหัวข้อ"
 
-#: kuma/landing/jinja2/landing/homepage.html:72
+#: kuma/landing/jinja2/landing/homepage.html:77
 msgid "Web<br />Technologies"
 msgstr "เทคโนโลยี<br />เว็บ"
 
-#: kuma/landing/jinja2/landing/homepage.html:74
+#: kuma/landing/jinja2/landing/homepage.html:79
 msgid "Web APIs &amp; DOM"
 msgstr "Web API และ DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
+#: kuma/landing/jinja2/landing/homepage.html:83 kuma/landing/jinja2/landing/homepage.html:103
 msgid "more..."
 msgstr "เพิ่มเติม..."
 
-#: kuma/landing/jinja2/landing/homepage.html:82
+#: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn"
 msgstr "เรียนรู้"
 
-#: kuma/landing/jinja2/landing/homepage.html:85
+#: kuma/landing/jinja2/landing/homepage.html:90
 msgid "Getting started with the Web"
 msgstr "เริ่มต้นกับเว็บ"
 
-#: kuma/landing/jinja2/landing/homepage.html:86
+#: kuma/landing/jinja2/landing/homepage.html:91
 msgid "Learn HTML"
 msgstr "เรียน HTML"
 
-#: kuma/landing/jinja2/landing/homepage.html:87
+#: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Learn CSS"
 msgstr "เรียน CSS"
 
-#: kuma/landing/jinja2/landing/homepage.html:88
+#: kuma/landing/jinja2/landing/homepage.html:93
 msgid "Learn JavaScript"
 msgstr "เรียน JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Developer<br />Tools"
 msgstr "เครื่องมือ<br />นักพัฒนา"
 
-#: kuma/landing/jinja2/landing/homepage.html:94
+#: kuma/landing/jinja2/landing/homepage.html:99
 msgid "Page Inspector"
 msgstr "ตัวตรวจสอบหน้า"
 
-#: kuma/landing/jinja2/landing/homepage.html:95
+#: kuma/landing/jinja2/landing/homepage.html:100
 msgid "Web Console"
 msgstr "คอนโซลเว็บ"
 
-#: kuma/landing/jinja2/landing/homepage.html:96
+#: kuma/landing/jinja2/landing/homepage.html:101
 msgid "JavaScript Debugger"
 msgstr "ตัวดีบั๊ก JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:97
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Performance Tools"
 msgstr "เครื่องมือประสิทธิภาพ"
 
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Open Web and Mobile"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:118
+#: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:120
+#: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Take the Survey"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Learn Web Development"
 msgstr "เรียนรู้การพัฒนาเว็บ"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Proudly non-profit."
 msgstr "ไม่แสวงหาผลกำไรอย่างภาคภูมิ"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Donate before Dec 31."
 msgstr "บริจาคก่อน 31 ธ.ค."
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Donate Now"
 msgstr "บริจาคตอนนี้"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:140
 msgid "Get The Browser For Developers Like You"
 msgstr "รับเบราว์เซอร์สำหรับนักพัฒนาเช่นคุณ"
 
-#: kuma/landing/jinja2/landing/homepage.html:144
+#: kuma/landing/jinja2/landing/homepage.html:149
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">อ่านเพิ่มเติมที่ hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:149
+#: kuma/landing/jinja2/landing/homepage.html:154
 msgid "Get Involved"
 msgstr "มีส่วนร่วม"
 
-#: kuma/landing/jinja2/landing/homepage.html:151
+#: kuma/landing/jinja2/landing/homepage.html:156
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:163 kuma/landing/jinja2/landing/homepage.html:170
 msgid "Help improve MDN"
 msgstr "ช่วยปรับปรุง MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:169
+#: kuma/landing/jinja2/landing/homepage.html:174
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:175
+#: kuma/landing/jinja2/landing/homepage.html:180
 msgid "Getting started"
 msgstr "เริ่มต้น"
 
-#: kuma/landing/jinja2/landing/homepage.html:176
+#: kuma/landing/jinja2/landing/homepage.html:181
 msgid "Editorial review"
 msgstr "การตรวจทานบรรณาธิการ"
 
-#: kuma/landing/jinja2/landing/homepage.html:177
+#: kuma/landing/jinja2/landing/homepage.html:182
 msgid "Technical review"
 msgstr "การตรวจทานทางเทคนิค"
 
-#: kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:187
 msgid "Translating"
 msgstr "การแปล"
 
-#: kuma/landing/jinja2/landing/homepage.html:183
+#: kuma/landing/jinja2/landing/homepage.html:188
 msgid "Promoting MDN"
 msgstr "การส่งเสริม MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:184
+#: kuma/landing/jinja2/landing/homepage.html:189
 msgid "Contributing to the MDN codebase"
 msgstr ""
 
@@ -2520,7 +2520,7 @@ msgstr "หน้า"
 msgid "Date"
 msgstr "วันที่"
 
-#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:393
 msgid "Edit page"
 msgstr "แก้ไขหน้า"
 
@@ -2528,7 +2528,7 @@ msgstr "แก้ไขหน้า"
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:402
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:394
 msgid "View page history"
 msgstr "ดูประวัติหน้า"
 
@@ -2601,7 +2601,7 @@ msgstr "เผยแพร่"
 msgid "Delete your account."
 msgstr "ลบบัญชีของคุณ"
 
-#: kuma/users/jinja2/users/user_edit.html:130
+#: kuma/users/jinja2/users/user_edit.html:128
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr "จัดการการบอกรับจดหมายข่าว Mozilla ของคุณ"
 
@@ -3338,108 +3338,92 @@ msgid "Restore this document"
 msgstr "กู้คืนเอกสารนี้"
 
 #: kuma/wiki/jinja2/wiki/document.html:171
-msgid "Previous Search Result"
-msgstr "ผลการค้นหาก่อนหน้า"
-
-#: kuma/wiki/jinja2/wiki/document.html:171 kuma/wiki/jinja2/wiki/document.html:181
-msgid "No Previous Search Result"
-msgstr "ไม่มีผลการค้นหาก่อนหน้า"
-
-#: kuma/wiki/jinja2/wiki/document.html:177
-msgid "Your Search Results"
-msgstr "ผลการค้นหาของคุณ"
-
-#: kuma/wiki/jinja2/wiki/document.html:181
-msgid "Next Search Result"
-msgstr "ผลการค้นหาถัดไป"
-
-#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "see all contributors"
 msgstr "ดูผู้มีส่วนร่วมทั้งหมด"
 
-#: kuma/wiki/jinja2/wiki/document.html:185
+#: kuma/wiki/jinja2/wiki/document.html:171
 msgid "hide contributors"
 msgstr "ซ่อนผู้มีส่วนร่วม"
 
-#: kuma/wiki/jinja2/wiki/document.html:189
+#: kuma/wiki/jinja2/wiki/document.html:175
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:214
+#: kuma/wiki/jinja2/wiki/document.html:200
 msgid "In This Article"
 msgstr "ในบทความนี้"
 
-#: kuma/wiki/jinja2/wiki/document.html:229
+#: kuma/wiki/jinja2/wiki/document.html:215
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:240
+#: kuma/wiki/jinja2/wiki/document.html:226
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:234
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:257
+#: kuma/wiki/jinja2/wiki/document.html:243
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:268
+#: kuma/wiki/jinja2/wiki/document.html:254
 msgid "This is an experimental page."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:279
+#: kuma/wiki/jinja2/wiki/document.html:265
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:291
+#: kuma/wiki/jinja2/wiki/document.html:277
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:303
+#: kuma/wiki/jinja2/wiki/document.html:289
 msgid "This article doesn't have any content yet."
 msgstr "บทความนี้ยังไม่มีเนื้อหา"
 
-#: kuma/wiki/jinja2/wiki/document.html:312
+#: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:317
+#: kuma/wiki/jinja2/wiki/document.html:303
 #, fuzzy
 msgid "Was this article helpful?"
 msgstr "ย้ายบทความนี้"
 
-#: kuma/wiki/jinja2/wiki/document.html:331
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "Thank you!"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:327
 msgid "Document Tags and Contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "Contributors to this page:"
 msgstr "ผู้มีส่วนร่วมกับหน้านี้:"
 
-#: kuma/wiki/jinja2/wiki/document.html:353
+#: kuma/wiki/jinja2/wiki/document.html:339
 msgid "Last updated by:"
 msgstr "อัปเดตล่าสุดโดย:"
 
@@ -3520,7 +3504,7 @@ msgstr ""
 msgid "Learn how to tag an article"
 msgstr "เรียนรู้วิธีติดป้ายกำกับให้บทความ"
 
-#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
+#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr ""
@@ -3691,65 +3675,65 @@ msgstr ""
 msgid "Translate Article | %(document)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:34
+#: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:44
+#: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:84
+#: kuma/wiki/jinja2/wiki/translate.html:83
 #, fuzzy, python-format
 msgid "Approved %(locale)s version:"
 msgstr "การแปล {locale}:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
 msgstr "ดูต้นฉบับ"
 
-#: kuma/wiki/jinja2/wiki/translate.html:87
+#: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
 msgstr "แสดง %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:87
+#: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
 msgstr "ซ่อน %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:99
+#: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "การแปล %(locale)s:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:112
+#: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:121
+#: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:133
+#: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:140
+#: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
 msgstr "ป้ายกำกับ %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:147
+#: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:149
+#: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
 msgstr ""
 
@@ -4290,6 +4274,21 @@ msgstr "คุณไม่สามารถแปลเอกสารนี้
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "Sign up for our newsletter:"
+#~ msgstr "ลงทะเบียนสำหรับจดหมายข่าวของเรา:"
+
+#~ msgid "Previous Search Result"
+#~ msgstr "ผลการค้นหาก่อนหน้า"
+
+#~ msgid "No Previous Search Result"
+#~ msgstr "ไม่มีผลการค้นหาก่อนหน้า"
+
+#~ msgid "Your Search Results"
+#~ msgstr "ผลการค้นหาของคุณ"
+
+#~ msgid "Next Search Result"
+#~ msgstr "ผลการค้นหาถัดไป"
 
 #~ msgid "Create a New Template"
 #~ msgstr "สร้างแม่แบบใหม่"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-07 06:48-0700\n"
+"POT-Creation-Date: 2017-06-20 07:48-0700\n"
 "PO-Revision-Date: 2017-05-20 05:43+0000\n"
 "Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
@@ -89,198 +89,198 @@ msgstr "<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">ది ఓట్ మీల�
 msgid "Internal Server Error"
 msgstr "అంతర్గత సర్వర్ ఎర్రర్"
 
-#: jinja2/base.html:13 jinja2/base.html:39 jinja2/base.html:44 jinja2/base.html:112 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:121 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "మోజిల్లా డెవలపర్ నెట్వర్క్"
 
-#: jinja2/base.html:86
+#: jinja2/base.html:95
 msgid "MDN is currently in read-only maintenance mode."
 msgstr ""
 
-#: jinja2/base.html:87
+#: jinja2/base.html:96
 msgid "Learn more"
 msgstr "ఇంకా తెలుసుకోండి"
 
-#: jinja2/base.html:97
+#: jinja2/base.html:106
 msgid "Skip to main content"
 msgstr "ప్రధాన విషయముకు వెళ్ళు"
 
-#: jinja2/base.html:99
+#: jinja2/base.html:108
 msgid "Select language"
 msgstr "భాష ఎంచుకోండి"
 
-#: jinja2/base.html:100
+#: jinja2/base.html:109
 msgid "Skip to search"
 msgstr "అన్వేషణ దాటవేయి"
 
-#: jinja2/base.html:118 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:127 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "టూల్స్"
 
-#: jinja2/base.html:121
+#: jinja2/base.html:130
 msgid "Contribute to MDN"
 msgstr "MDNకి సహాయపడు"
 
-#: jinja2/base.html:123
+#: jinja2/base.html:132
 msgid "Get started"
 msgstr "ప్రారంభించడానికి"
 
-#: jinja2/base.html:124
+#: jinja2/base.html:133
 msgid "Review or localize docs"
 msgstr "పత్రాలను సరిచూడు లేదా స్థానికీకరించు"
 
-#: jinja2/base.html:127
+#: jinja2/base.html:136
 msgid "Site Tools"
 msgstr "సైట్ టూల్స్"
 
-#: jinja2/base.html:129
+#: jinja2/base.html:138
 msgid "Revision dashboard"
 msgstr "రివిషన్ డ్యాష్బోర్డ్"
 
-#: jinja2/base.html:130
+#: jinja2/base.html:139
 msgid "Documentation status"
 msgstr "డాక్యుమెంటేషన్ స్థితి"
 
-#: jinja2/base.html:139 kuma/landing/jinja2/landing/homepage.html:69
+#: jinja2/base.html:148 kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web Technologies"
 msgstr "జాల సాంకేతికతలు"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:151
 msgid "Technologies"
 msgstr "సాంకేతికతలు"
 
-#: jinja2/base.html:144 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:153 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:145 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:154 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:146 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:155 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:147
+#: jinja2/base.html:156
 msgid "Graphics"
 msgstr "గ్రాఫిక్స్"
 
-#: jinja2/base.html:148
+#: jinja2/base.html:157
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:149
+#: jinja2/base.html:158
 msgid "APIs / DOM"
 msgstr "APIలు / DOM"
 
-#: jinja2/base.html:150
+#: jinja2/base.html:159
 msgid "WebExtensions"
 msgstr "WebExtensions"
 
-#: jinja2/base.html:151 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:160 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:154
+#: jinja2/base.html:163
 msgid "References & Guides"
 msgstr "మూలాలు & సహాయకాలు"
 
-#: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:165 kuma/landing/jinja2/landing/homepage.html:89
 msgid "Learn web development"
 msgstr "జాల అభివృద్ధి నేర్చుకోండి"
 
-#: jinja2/base.html:157
+#: jinja2/base.html:166
 msgid "Tutorials"
 msgstr "పాఠాలు"
 
-#: jinja2/base.html:158
+#: jinja2/base.html:167
 msgid "References"
 msgstr "మూలాలు"
 
-#: jinja2/base.html:159
+#: jinja2/base.html:168
 msgid "Developer Guides"
 msgstr "అభివృద్ధికారుల సహాయకాలు"
 
-#: jinja2/base.html:160
+#: jinja2/base.html:169
 msgid "Accessibility"
 msgstr "ప్రాప్యత"
 
-#: jinja2/base.html:161
+#: jinja2/base.html:170
 msgid "Game development"
 msgstr "ఆట అభివృద్ధి"
 
-#: jinja2/base.html:162
+#: jinja2/base.html:171
 msgid "...more docs"
 msgstr "...మరిన్ని డాక్యుమెంట్లు"
 
-#: jinja2/base.html:166
+#: jinja2/base.html:175
 msgid "Mozilla Docs"
 msgstr "మోజిల్లా డాక్యుమెంట్లు"
 
-#: jinja2/base.html:170 kuma/core/sections.py:6
+#: jinja2/base.html:179 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "యాడ్-ఆన్స్"
 
-#: jinja2/base.html:171 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:180 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "ఫైర్ఫాక్స్"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:184
 msgid "Developer Tools"
 msgstr "డెవలపర్ పనిముట్లు"
 
-#: jinja2/base.html:175
+#: jinja2/base.html:184
 msgid "Feedback"
 msgstr "ఫీడ్బ్యాక్"
 
-#: jinja2/base.html:179
+#: jinja2/base.html:188
 msgid "Get Firefox help"
 msgstr "ఫైర్ఫాక్స్ సహాయము పొందు"
 
-#: jinja2/base.html:180
+#: jinja2/base.html:189
 msgid "Get web development help"
 msgstr "వెబ్ డవలప్మెంట్ కోసం సహాయం"
 
-#: jinja2/base.html:183
+#: jinja2/base.html:192
 msgid "Join the MDN community"
 msgstr "MDN కమ్యూనిటీ లో చేరు"
 
-#: jinja2/base.html:184
+#: jinja2/base.html:193
 msgid "Report a content problem"
 msgstr "విషయంపై సమస్యను నివేదించండి"
 
-#: jinja2/base.html:185
+#: jinja2/base.html:194
 msgid "Report a bug"
 msgstr "బగ్ తెలియపరుచు"
 
-#: jinja2/base.html:191 jinja2/base.html:192 jinja2/base.html:194 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
-#: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
+#: jinja2/base.html:200 jinja2/base.html:201 jinja2/base.html:203 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
+#: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "వెతుకు"
 
-#: jinja2/base.html:210
+#: jinja2/base.html:219
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozillaఅభివృద్ధికారుల జాలం మరియు స్వతంత్ర తోడ్పాటుదారులు.</p><p>విషయం <a href=\"%(copyright_url)s\">ఈ లైసెన్సుల</a> కింద అందుబాటులో ఉంది.</p>"
 
-#: jinja2/base.html:215
+#: jinja2/base.html:224
 msgid "About MDN"
 msgstr "MDN గురించి"
 
-#: jinja2/base.html:216
+#: jinja2/base.html:225
 msgid "Terms"
 msgstr "షరతులు"
 
-#: jinja2/base.html:217
+#: jinja2/base.html:226
 msgid "Privacy"
 msgstr "గోప్యత"
 
-#: jinja2/base.html:218
+#: jinja2/base.html:227
 msgid "Cookies"
 msgstr "కుకీస్"
 
-#: jinja2/base.html:219
+#: jinja2/base.html:228
 msgid "Contribute to the code"
 msgstr "కోడ్ లో‌ పాలుపంచుకో"
 
@@ -313,39 +313,39 @@ msgid "Learn the best of web development"
 msgstr "జాల అభివృద్ధి గురించి ఉత్తమంగా నేర్చుకోండి"
 
 #: jinja2/includes/newsletter.html:4
-msgid "Sign up for our newsletter:"
-msgstr "వార్తాపత్రానికి చందాదారులవ్వండి:"
+msgid "Get the latest and greatest from MDN delivered straight to your inbox."
+msgstr ""
 
-#: jinja2/includes/newsletter.html:11
+#: jinja2/includes/newsletter.html:12
 msgid "E-mail"
 msgstr "ఈమెయిలు"
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:13
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:18
+#: jinja2/includes/newsletter.html:19
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr "ఈ <a href=\"%(policy_url)s\">గోప్యత విధానాన్ని</a> అనుసరించి Mozillaనా సమాచారాన్ని ఉపయోగించుకోవడానికి సమ్మతిస్తున్నాను."
 
-#: jinja2/includes/newsletter.html:24
+#: jinja2/includes/newsletter.html:25
 msgid "Sign up now"
 msgstr "ఇప్పుడే ఖాతా సృష్టించుకోండి"
 
-#: jinja2/includes/newsletter.html:27
+#: jinja2/includes/newsletter.html:29
 msgid "The newsletter is offered in English only at the moment."
 msgstr "ప్రస్తుతానికి వార్తాప్రతి ఆంగ్లంలో మాత్రమే ప్రచురింపబడుతుంది."
 
-#: jinja2/includes/newsletter.html:31
+#: jinja2/includes/newsletter.html:33
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "ధన్యవాదాలు! మీ చందాని ధృవపరచటానికి మీ ఇన్ బాక్స్ ను సందర్శించండి."
 
-#: jinja2/includes/newsletter.html:32
+#: jinja2/includes/newsletter.html:34
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr "మీరు ఒకవేళ Mozillaసంబంధిత వార్తాప్రతి కి చందాని ఇంతకమునుపు ధృవీకరించనట్లైతే , మీరు ఆ పని చెయ్యాలి. దయచేసి మీ ఇన్ బాక్స్ గానీ స్పామ్ లో గానీ మానుంచి వచ్చిన ఈమెయిల్ను చూడండి."
 
-#: jinja2/includes/newsletter.html:39
+#: jinja2/includes/newsletter.html:41
 msgid "Hide Newsletter Sign-up"
 msgstr "వార్తాప్రతి చందాను దాచు"
 
@@ -912,11 +912,11 @@ msgstr "మోజ్ హ్యాక్స్"
 msgid "Today at %s"
 msgstr "ఈరోజు %s కి"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:322
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:308
 msgid "Yes"
 msgstr "అవును"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:326
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/wiki/jinja2/wiki/document.html:312
 msgid "No"
 msgstr "కాదు"
 
@@ -1234,117 +1234,117 @@ msgstr "ఆంగ్ల సమీక్షలు వేచి ఉన్నప్
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
 msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN) ఫెలోషిప్ కార్యక్రమం, ప్రపంచస్థాయి అభివృద్ధికారులను మొజిల్లాతో పాటుగా ఈ ప్రపంచాన్ని మార్చటానికి ఆహ్వానిస్తుంది."
 
-#: kuma/landing/jinja2/landing/homepage.html:14
+#: kuma/landing/jinja2/landing/homepage.html:19
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
 "Firefox OS."
 msgstr "Mozillaఅభివృద్ధికారుల జాలం (MDN), HTML, CSS, మరియు జాలగూళ్ల, HTML5 అనువర్తనాల APIలు వంటి స్వేచ్ఛాజాల సాంకేతికతకు సంబంధించి సమాచారాన్ని అందిస్తుంది. ఇది ఫైర్ఫాక్స్ OS వంటి ఇతర ఫైర్ఫాక్స్ ఉత్పత్తుల సమాచారాన్ని కూడా ప్రామాణికరిస్తుంది."
 
-#: kuma/landing/jinja2/landing/homepage.html:32
+#: kuma/landing/jinja2/landing/homepage.html:37
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "<span>స్వేచ్ఛా జాలం కొరకు</span> పరస్పర సహకార విజ్ఞానం"
 
-#: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:47 kuma/landing/jinja2/landing/homepage.html:64 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "పత్రాలను వెతుకు"
 
-#: kuma/landing/jinja2/landing/homepage.html:45
+#: kuma/landing/jinja2/landing/homepage.html:50
 msgid "Show topics"
 msgstr "అంశాలను చూపు"
 
-#: kuma/landing/jinja2/landing/homepage.html:72
+#: kuma/landing/jinja2/landing/homepage.html:77
 msgid "Web<br />Technologies"
 msgstr "జాల<br /> సాంకేతికతలు"
 
-#: kuma/landing/jinja2/landing/homepage.html:74
+#: kuma/landing/jinja2/landing/homepage.html:79
 msgid "Web APIs &amp; DOM"
 msgstr "జాల APIs &amp; DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
+#: kuma/landing/jinja2/landing/homepage.html:83 kuma/landing/jinja2/landing/homepage.html:103
 msgid "more..."
 msgstr "ఇంకా..."
 
-#: kuma/landing/jinja2/landing/homepage.html:82
+#: kuma/landing/jinja2/landing/homepage.html:87
 msgid "Learn"
 msgstr "నేర్చుకోండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:85
+#: kuma/landing/jinja2/landing/homepage.html:90
 msgid "Getting started with the Web"
 msgstr "జాలంతో పరిచయం"
 
-#: kuma/landing/jinja2/landing/homepage.html:86
+#: kuma/landing/jinja2/landing/homepage.html:91
 msgid "Learn HTML"
 msgstr "HTML నేర్చుకోండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:87
+#: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Learn CSS"
 msgstr "CSS నేర్చుకోండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:88
+#: kuma/landing/jinja2/landing/homepage.html:93
 msgid "Learn JavaScript"
 msgstr "JavaScript నేర్చుకోండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Developer<br />Tools"
 msgstr "డెవలపర్<br />పనిముట్లు"
 
-#: kuma/landing/jinja2/landing/homepage.html:94
+#: kuma/landing/jinja2/landing/homepage.html:99
 msgid "Page Inspector"
 msgstr "పుట తనిఖీకారి"
 
-#: kuma/landing/jinja2/landing/homepage.html:95
+#: kuma/landing/jinja2/landing/homepage.html:100
 msgid "Web Console"
 msgstr "జాల కన్సోల్"
 
-#: kuma/landing/jinja2/landing/homepage.html:96
+#: kuma/landing/jinja2/landing/homepage.html:101
 msgid "JavaScript Debugger"
 msgstr "JavaScript డీబగ్గర్"
 
-#: kuma/landing/jinja2/landing/homepage.html:97
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Performance Tools"
 msgstr "పనితీరు పరికరాలు"
 
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:118
 msgid "Open Web and Mobile"
 msgstr "స్వేచ్ఛా జాలము మరియు చరవాణి"
 
-#: kuma/landing/jinja2/landing/homepage.html:118
+#: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:120
+#: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Take the Survey"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Learn Web Development"
 msgstr "జాల అభివృద్ధి ని నేర్చుకో"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Proudly non-profit."
 msgstr "సగర్వంగా లాభాపేక్షలేని."
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Donate before Dec 31."
 msgstr "31 డిసెంబర్ ముందు దానం చేయండి."
 
-#: kuma/landing/jinja2/landing/homepage.html:130
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Donate Now"
 msgstr "ఇప్పుడు దానం చేయండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:140
 msgid "Get The Browser For Developers Like You"
 msgstr "మీ లాంటి అభివృద్ధికారుల కోసం తయారు చేయబడ్డ విహారిణిని పొందు"
 
-#: kuma/landing/jinja2/landing/homepage.html:144
+#: kuma/landing/jinja2/landing/homepage.html:149
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">మరిన్ని వివరాలు hacks.mozilla.org వద్ద చదవండి <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:149
+#: kuma/landing/jinja2/landing/homepage.html:154
 msgid "Get Involved"
 msgstr "పాల్గొనండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:151
+#: kuma/landing/jinja2/landing/homepage.html:156
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1353,35 +1353,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">ప్రపంచ వ్యాప్తంగా</span> <span class=\"row2\"> <span class=\"number\">%(locales)s</span> భాషలు మరియు స్థానికీకరణలో </span><span class=\"row3\"><span class=\"number\">"
 "%(contributors)s</span>భాగస్వాములలో మీరూ చేరండి.</span></p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:163 kuma/landing/jinja2/landing/homepage.html:170
 msgid "Help improve MDN"
 msgstr "MDNను మెరుగుపరచడంలో తోడ్పడండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:169
+#: kuma/landing/jinja2/landing/homepage.html:174
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN యొక్క అన్ని భాగాలూ (పత్రాలు మరియు జాలగూటితో సహా) ఒక స్వేచ్ఛా జాల అభివృద్ధికారుల సంఘం చేత సృష్టింపబడ్డాయి. దయచేసి మీరూ మాతో చేరండి! సహాయం చేయటానికి కింది వాటిలో ఏదో ఒక మార్గాన్ని ఎన్నుకోండి:"
 
-#: kuma/landing/jinja2/landing/homepage.html:175
+#: kuma/landing/jinja2/landing/homepage.html:180
 msgid "Getting started"
 msgstr "మొదలుపెట్టడం"
 
-#: kuma/landing/jinja2/landing/homepage.html:176
+#: kuma/landing/jinja2/landing/homepage.html:181
 msgid "Editorial review"
 msgstr "సంపాదక సమీక్ష"
 
-#: kuma/landing/jinja2/landing/homepage.html:177
+#: kuma/landing/jinja2/landing/homepage.html:182
 msgid "Technical review"
 msgstr "సాంకేతిక సమీక్ష"
 
-#: kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:187
 msgid "Translating"
 msgstr "అనువదించడం"
 
-#: kuma/landing/jinja2/landing/homepage.html:183
+#: kuma/landing/jinja2/landing/homepage.html:188
 msgid "Promoting MDN"
 msgstr "MDN ను వృద్ధిపరచటం"
 
-#: kuma/landing/jinja2/landing/homepage.html:184
+#: kuma/landing/jinja2/landing/homepage.html:189
 msgid "Contributing to the MDN codebase"
 msgstr "MDN కోడ్ బేస్ కి తోడ్పడటం"
 
@@ -2503,7 +2503,7 @@ msgstr "పేజీ"
 msgid "Date"
 msgstr "తేదీ"
 
-#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:401
+#: kuma/users/jinja2/users/user_detail.html:52 kuma/wiki/jinja2/wiki/document.html:393
 msgid "Edit page"
 msgstr ""
 
@@ -2511,7 +2511,7 @@ msgstr ""
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:402
+#: kuma/users/jinja2/users/user_detail.html:54 kuma/wiki/jinja2/wiki/document.html:394
 msgid "View page history"
 msgstr ""
 
@@ -2584,7 +2584,7 @@ msgstr "ప్రచురించు"
 msgid "Delete your account."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:130
+#: kuma/users/jinja2/users/user_edit.html:128
 msgid "Manage your Mozilla Newsletter Subscriptions."
 msgstr ""
 
@@ -3307,107 +3307,91 @@ msgid "Restore this document"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:171
-msgid "Previous Search Result"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:171 kuma/wiki/jinja2/wiki/document.html:181
-msgid "No Previous Search Result"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:177
-msgid "Your Search Results"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:181
-msgid "Next Search Result"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:185
 msgid "see all contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:185
+#: kuma/wiki/jinja2/wiki/document.html:171
 msgid "hide contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:189
+#: kuma/wiki/jinja2/wiki/document.html:175
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:214
+#: kuma/wiki/jinja2/wiki/document.html:200
 msgid "In This Article"
 msgstr "ఈ వ్యాసంలో"
 
-#: kuma/wiki/jinja2/wiki/document.html:229
+#: kuma/wiki/jinja2/wiki/document.html:215
 #, python-format
 msgid "This document has not yet been rendered, and cannot be rendered while MDN is in <a href=\"%(url)s\">maintenance mode</a>. Please check back when maintenance has concluded."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:240
+#: kuma/wiki/jinja2/wiki/document.html:226
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:248
+#: kuma/wiki/jinja2/wiki/document.html:234
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:257
+#: kuma/wiki/jinja2/wiki/document.html:243
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:268
+#: kuma/wiki/jinja2/wiki/document.html:254
 msgid "This is an experimental page."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:279
+#: kuma/wiki/jinja2/wiki/document.html:265
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:291
+#: kuma/wiki/jinja2/wiki/document.html:277
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\" rel=\"nofollow, noindex\">Join us and help get the job done!</a><br> You can also read the "
 "article in <a href=\"%(doc_abs_url)s\">%(parent_language)s</a>."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:303
+#: kuma/wiki/jinja2/wiki/document.html:289
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:312
+#: kuma/wiki/jinja2/wiki/document.html:298
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:317
+#: kuma/wiki/jinja2/wiki/document.html:303
 msgid "Was this article helpful?"
 msgstr "ఈ వ్యాసం మీకు తోడ్పడిందా?"
 
-#: kuma/wiki/jinja2/wiki/document.html:331
+#: kuma/wiki/jinja2/wiki/document.html:317
 msgid "Thank you!"
 msgstr "కృతజ్ఞతలు!"
 
-#: kuma/wiki/jinja2/wiki/document.html:341
+#: kuma/wiki/jinja2/wiki/document.html:327
 msgid "Document Tags and Contributors"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:347
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "Contributors to this page:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:353
+#: kuma/wiki/jinja2/wiki/document.html:339
 msgid "Last updated by:"
 msgstr ""
 
@@ -3488,7 +3472,7 @@ msgstr ""
 msgid "Learn how to tag an article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:115
+#: kuma/wiki/jinja2/wiki/edit.html:186 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr ""
@@ -3654,65 +3638,65 @@ msgstr ""
 msgid "Translate Article | %(document)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:34
+#: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:44
+#: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:84
+#: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version:"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:86
+#: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:87
+#: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
 msgstr "%(locale)s చూపించు"
 
-#: kuma/wiki/jinja2/wiki/translate.html:87
+#: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:99
+#: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "%(locale)s అనువాదం:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:112
+#: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:121
+#: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
 msgstr "ఆంగ్ల ట్యాగ్స్"
 
-#: kuma/wiki/jinja2/wiki/translate.html:133
+#: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:140
+#: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:147
+#: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/translate.html:149
+#: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
 msgstr ""
 
@@ -4248,6 +4232,9 @@ msgstr "మేరు ఈ డాక్యుమెంట్ ని తర్జ�
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "Sign up for our newsletter:"
+#~ msgstr "వార్తాపత్రానికి చందాదారులవ్వండి:"
 
 #~ msgid "Test on Sauce Labs"
 #~ msgstr "Sauce Labs లో పరీక్షించు"

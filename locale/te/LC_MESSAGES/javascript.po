@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-07 06:46-0700\n"
+"POT-Creation-Date: 2017-06-20 07:47-0700\n"
 "PO-Revision-Date: 2016-11-16 09:44+0000\n"
 "Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
@@ -177,19 +177,19 @@ msgstr "తెరువుము %(site)s లొ"
 msgid "New tag..."
 msgstr "కొత్త ట్యాగ్..."
 
-#: kuma/static/js/wiki.js:218
+#: kuma/static/js/wiki.js:184
 msgid "How to read CSS syntax."
 msgstr "CSS సింటాక్స్ని చదవడం ఎలా."
 
-#: kuma/static/js/wiki.js:567
+#: kuma/static/js/wiki.js:476
 msgid "Search Stack Overflow"
 msgstr "స్టాక్ ఫ్లోని వెతుకుము"
 
-#: kuma/static/js/wiki.js:674
+#: kuma/static/js/wiki.js:583
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "మీ బ్రౌసెర్ MathML కి మద్దతు ఇవ్వదు. దానికి బదులుగా CSS ని వాడారు."
 
-#: kuma/static/js/wiki.js:889
+#: kuma/static/js/wiki.js:798
 msgid "Details"
 msgstr "వివరాలు"
 

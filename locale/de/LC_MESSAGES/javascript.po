@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-07 06:46-0700\n"
+"POT-Creation-Date: 2017-06-20 07:47-0700\n"
 "PO-Revision-Date: 2017-06-07 18:15+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: German https://pontoon.mozilla.org/de/\n"
@@ -170,19 +170,19 @@ msgstr "Öffnen in %(site)s"
 msgid "New tag..."
 msgstr "Neues Schlagwort…"
 
-#: kuma/static/js/wiki.js:218
+#: kuma/static/js/wiki.js:184
 msgid "How to read CSS syntax."
 msgstr "Wie man die CSS-Syntax liest."
 
-#: kuma/static/js/wiki.js:567
+#: kuma/static/js/wiki.js:476
 msgid "Search Stack Overflow"
 msgstr "Stack Overflow durchsuchen"
 
-#: kuma/static/js/wiki.js:674
+#: kuma/static/js/wiki.js:583
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative verwendet."
 
-#: kuma/static/js/wiki.js:889
+#: kuma/static/js/wiki.js:798
 msgid "Details"
 msgstr "Details"
 
