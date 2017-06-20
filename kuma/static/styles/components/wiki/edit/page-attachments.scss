@@ -20,7 +20,7 @@ $border-value : 1px solid #e0e0dc;
 
     th {
         font-weight: bold;
-        color: #666;
+        color: $grey;
     }
 
     td {
@@ -38,7 +38,7 @@ $border-value : 1px solid #e0e0dc;
 }
 
 .attachment-error {
-    color: #900;
+    color: $error;
     @include set-font-size(11px);
 }
 
@@ -47,7 +47,7 @@ $border-value : 1px solid #e0e0dc;
         width: 90%;
 
         .attachment-required {
-            border: 1px solid #900;
+            border: 1px solid $error;
         }
     }
 
@@ -61,11 +61,6 @@ $border-value : 1px solid #e0e0dc;
     h3 #{$selector-icon} {
         @include right-icons();
     }
-}
-
-/* page attachments block at the bottom of the article */
-#page-attachments-button {
-    @include set-smaller-font-size();
 }
 
 @media #{$mq-mobile-and-down} {

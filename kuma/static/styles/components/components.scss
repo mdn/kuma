@@ -13,9 +13,9 @@ toggler component: a basic slide up and slide now system
     position: relative;
 
     #{$selector-icon} {
-        @include bidi-style(right, $icon-margin, left, auto);
         position: absolute;
         top: 3px;
+        @include bidi-style(right, $icon-margin, left, auto);
         color: $text-color;
     }
 
@@ -55,8 +55,8 @@ subnav component:  used within the wiki
     }
 
     #{$selector-icon} {
-        top: ($grid-spacing + 3px);
-        right: $grid-spacing;
+        top: 23px;
+        @include bidi-style(right, 20px, left, auto);
     }
 
     .toggle-container {
@@ -143,7 +143,6 @@ $notification-button-padding: 2px 5px 3px;
     button.close {
         background: transparent;
         border: 0;
-        box-shadow: none;
         display: block;
         padding: 2px;
         position: absolute;
@@ -153,19 +152,19 @@ $notification-button-padding: 2px 5px 3px;
 
     /* theme the various notification states */
     & {
-        @include notification-theme($default);
+        @include notification-theme('default');
     }
 
     &.info {
-        @include notification-theme($neutral);
+        @include notification-theme('neutral');
     }
 
     &.success {
-        @include notification-theme($positive);
+        @include notification-theme('positive');
     }
 
     &.warning {
-        @include notification-theme($warning);
+        @include notification-theme('warning');
 
         /* warning clashes with a class in CustomCSS so we have to re-assert border-width and link color
            the CustomCSS class might be changeable in the future but we can't change the notifier class
@@ -189,7 +188,7 @@ $notification-button-padding: 2px 5px 3px;
     }
 
     &.error {
-        @include notification-theme($negative);
+        @include notification-theme('negative');
     }
 }
 
@@ -216,7 +215,6 @@ $notification-button-padding: 2px 5px 3px;
 .notification-button {
     border: 1px solid;
     border-radius: 2px;
-    box-shadow: none;
     display: inline-block;
     line-height: 1;
     margin: 5px 5px 0 0;

@@ -13,7 +13,7 @@ $avatar-limit: 6;
     margin-top: 23px;
     @include bidi-style(margin-left, $grid-spacing, margin-right, 0);
     margin-bottom: $grid-spacing;
-    color: #777;
+    color: $grey;
     @include set-smaller-font-size();
     @include bidi-value(text-align, right, left);
 

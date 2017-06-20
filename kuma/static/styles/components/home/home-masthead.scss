@@ -37,7 +37,8 @@ homepage masthead (search, feature callouts)
 
     .search-icon {
         position: absolute;
-        top: ($grid-spacing * 2 + 7);
+        top: 48px;
+        @include bidi-style(left, $icon-margin, right, auto);
     }
 
     input#home-q {

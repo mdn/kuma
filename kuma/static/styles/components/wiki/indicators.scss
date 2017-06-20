@@ -209,14 +209,6 @@ Colours for both types
     @extend %indicator-danger;
 }
 
-/* experimental */
-.experimental,
-.experimentalBadge,
-.prefixBox,
-.secureContexts {
-    @extend %indicator-warning;
-}
-
 /* if you don't know this it won't work */
 .warning.warning-review,
 .draft,
@@ -224,12 +216,16 @@ Colours for both types
 .note,
 .notice,
 .renamed,
+.secureContexts,
+.prefixBox,
 .privilegedBadge,
 .translationInProgress {
     @extend %indicator-warning;
 }
 
 /* version info */
+.experimental,
+.experimentalBadge,
 .htmlVer,
 .domLevel,
 .jsMinVer,
@@ -263,16 +259,16 @@ Special snowflakes
 #kserrors.warning,
 #doc-rendering-in-progress.warning,
 #doc-rendering-scheduled.warning {
-    border-color: #b54d48;
-    background-color: #ca5651;
+    border-color: #{map-get( map-get($colors-lookup, 'negative'), 'dark')};
+    background-color: #{map-get( map-get($colors-lookup, 'negative'), 'dark')};
     @extend %indicator-link-invert;
     @extend %indicator-text-invert;
 }
 
 /* code colouration */
 .inheritsbox {
-    border-color: $code-block-border-color; /*orignally #D1D1FF*/
-    background: $code-block-background-alt-color; /* orignally #F5F5FF*/
+    border-color: $code-block-border-color;
+    background: $code-block-background-alt-color;
 }
 
 /* bright red */
@@ -290,6 +286,14 @@ Special snowflakes
     @extend %indicator-text-invert;
     @extend %indicator-link-invert;
 }
+
+/* harmony */
+.overheadIndicator[style='background: #9CF49C;'],
+.overheadIndicator[style='background: rgb(156, 244, 156);'] {
+    border-color: #{map-get( map-get($colors-lookup, 'positive'), 'medium')} !important; /* stylelint-disable-line declaration-no-important */
+    background: #{map-get( map-get($colors-lookup, 'positive'), 'light')} !important; /* stylelint-disable-line declaration-no-important */
+}
+
 
 /* heading that goes in with geckoVersionNote */
 .geckoVersionHeading {

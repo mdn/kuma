@@ -33,7 +33,7 @@
 }
 
 .helpful-survey {
-    background: #58779d;
+    background: #{map-get( map-get($colors-lookup, 'neutral'), 'dark')};
     color: #fff;
     float: none;
     margin: 0 auto;

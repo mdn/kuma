@@ -21,7 +21,7 @@ wiki article cookie crumbs
             display: inline-block;
             font-family: FontAwesome;
             text-decoration: none;
-            color: #c1c2c4;
+            color: $grey;
             @include set-font-size(70%);
         }
     }

@@ -1,3 +1,4 @@
+$tag-border-color: #cee9f9;
 /*
 - default styles for all tags.
 - needs qualifying ul because to pass classes to tagit widget it must be input.tags
@@ -5,7 +6,7 @@
 
 %tag-item {
     background: $light-background-color;
-    border: 1px solid #cee9f9;
+    border: 1px solid $tag-border-color;
     border-radius: 2px;
     display: inline-block;
     @include bidi-value(margin, 0 ($grid-spacing / 2) ($grid-spacing / 2) 0, 0 0 ($grid-spacing / 2) ($grid-spacing / 2));

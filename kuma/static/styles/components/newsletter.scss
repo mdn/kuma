@@ -23,10 +23,11 @@
     font-style: italic;
 }
 
-.newsletter-input-email {
+input.newsletter-input-email {
     box-sizing: border-box;
     width: 100%;
     max-width: 450px;
+    padding: ($grid-spacing / 2);
 }
 
 .newsletter-fields {
@@ -118,6 +119,10 @@
             grid-row: 1 / 3;
         }
     }
+}
+
+.newsletter-submit {
+    padding: ($grid-spacing / 2);
 }
 
 @media print {

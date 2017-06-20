@@ -22,7 +22,7 @@ $see-also-outdent : 6px;
 
         /* 404 link */
         &.new {
-            color: #900;
+            color: $error;
         }
     }
 
@@ -81,8 +81,6 @@ $see-also-outdent : 6px;
 
         #{$selector-icon} {
             @include set-font-size($base-font-size);
-            @include bidi-style(margin-left, 0, margin-right, 0);
-            @include bidi-style(margin-right, 0, margin-left, 0);
             position: realtive;
             top: 3px;
             min-width: 15px;
@@ -100,6 +98,6 @@ $see-also-outdent : 6px;
         @include set-font-size($base-font-size);
         position: absolute;
         top: 1px;
-        @include bidi-style(left, -6px, right, auto);
+        @include bidi-style(left, 0, right, auto);
     }
 }

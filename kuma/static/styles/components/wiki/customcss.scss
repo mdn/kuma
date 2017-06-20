@@ -19,12 +19,6 @@ eventually emptying this file.
     font-size: 60%;
 }
 
-/* remove left margin from Font Awesome icons inside wiki
-     content; this is messing up document content */
-#wikiArticle #{$selector-icon} {
-    margin-left: 0;
-}
-
 /* In index, dim obsolete, deprecated or non-standard element instead of striking through them */
 s.deprecatedElement,
 s.obsoleteElement,
@@ -732,25 +726,11 @@ a.download-button {
     margin-bottom: 20px;
     padding: 10px;
     text-align: center;
-    border-radius: 4px;
     display: inline-block;
-    background-color: #81bc2e;
+    border: 2px solid;
     white-space: nowrap;
-    color: #fff;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, .25);
-    box-shadow: 0 1px 0 0 rgba(0, 0, 0, .2), 0 -1px 0 0 rgba(0, 0, 0, .3) inset;
-}
-
-a.download-button:hover {
-    color: #c8c8c8;
-}
-
-a.download-button:visited {
-    color: #fff;
-}
-
-a.download-button:link {
-    color: #fff;
+    color: $green;
+    background-color: #fff;
 }
 
 

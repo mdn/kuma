@@ -73,10 +73,6 @@ Slug change callout
     margin: 4px 0;
     clear: both;
 
-    #{$selector-icon} {
-        @include bidi-style(margin-left, 0, margin-right, 0);
-    }
-
     span {
         white-space: nowrap;
     }

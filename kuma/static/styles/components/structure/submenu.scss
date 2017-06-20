@@ -2,7 +2,7 @@
 
 .submenu {
     @include submenu();
-    @include submenu-set(160px, 1px, $light-background-color, $button-shadow-color);
+    @include submenu-set(160px, 1px, $light-background-color, #bbbfc2);
 }
 
 @media #{$mq-mobile-and-down} {

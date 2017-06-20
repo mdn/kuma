@@ -9,17 +9,9 @@ $communitybox-spacing : 13px;
 
 .communitybox {
     padding: $communitybox-spacing;
-    background-color: $homepage-background-color;
-    background-image: url($path-to-images + 'blueprint.png');
+    background-color: $blue-light;
+    @include bidi-value(border, 0, 0);
     @include set-font-size($base-font-size);
-
-    &,
-    & a,
-    & a:hover,
-    & a:focus,
-    & a:visited {
-        color: $blue-background-text-color;
-    }
 
     strong {
         @include set-larger-font-size();
@@ -33,11 +25,10 @@ $communitybox-spacing : 13px;
 
     h2 {
         margin-bottom: 0;
-        color: $blue-background-text-color;
     }
 
     h3 {
-        color: $blue-background-text-color;
+        font-style: normal;
     }
 }
 
@@ -64,7 +55,7 @@ ul.communitymailinglist { /* needs specificity to get past .text-content ul */
 }
 
 .communitymailinglist a {
-    @include rgba-fallback(background, #fff, .3, $homepage-background-color);
+    background: $neutral;
     display: inline-block;
     color: #fff;
     padding: 3px 6px;

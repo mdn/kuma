@@ -44,7 +44,7 @@
             content_experiment and
             content_experiment.selection_is_valid) %}
       {% if (not is_experiment) %}
-      <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button" rel="nofollow, noindex">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
+      <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button neutral" data-optimizely-hook="button-edit-doc" id="edit-button" rel="nofollow, noindex">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
       {% endif %}
 
         {% if user.is_authenticated() and document %}

@@ -63,6 +63,7 @@ Zone landing page styles
 
     a.button,
     button {
+        border-color: $blue-background-text-color;
         color: $blue-background-text-color;
 
         &:not(.transparent) {

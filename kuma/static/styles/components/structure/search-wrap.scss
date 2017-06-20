@@ -61,7 +61,7 @@ Main navigation search box and its wrapper
 .search-trigger {
     cursor: text;
     position: absolute;
-    top: 3px;
+    top: 0;
     @include bidi-style(right, 12px, left, auto);
     z-index: 1;
 }

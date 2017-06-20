@@ -26,10 +26,6 @@ Main navigation menu
                 margin-left: 0;
             }
 
-            > a i {
-                opacity: .85;
-            }
-
             > a,
             .search-trigger {
                 text-transform: uppercase;
@@ -52,6 +48,10 @@ Main navigation menu
             .search-wrap {
                 padding: 4px 8px;
             }
+
+            #{$selector-icon} {
+                @include left-icons();
+            }
         }
     }
 
@@ -68,10 +68,6 @@ Main navigation menu
 
     .nav-search-link {
         display: none;
-
-        #{$selector-icon} {
-            margin: 0;
-        }
     }
 
     .submenu {

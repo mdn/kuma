@@ -116,17 +116,17 @@ colours for both indicator types
 
 %indicator-info,
 %indicator-obsolete {
-    @include box-theme($default);
+    @include box-theme('default');
 }
 
 %indicator-version {
-    @include box-theme($neutral);
+    @include box-theme('neutral');
 }
 
 %indicator-warning {
-    @include box-theme($warning);
+    @include box-theme('warning');
 }
 
 %indicator-danger {
-    @include box-theme($negative);
+    @include box-theme('negative');
 }
