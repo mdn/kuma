@@ -9,13 +9,6 @@ from django_mysql.models import QuerySet
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
                         ALLOWED_STYLES)
 from .content import parse as parse_content
-from .queries import TransformQuerySet
-
-
-class TransformManager(models.Manager):
-
-    def get_queryset(self):
-        return TransformQuerySet(self.model)
 
 
 class BaseDocumentManager(models.Manager):
