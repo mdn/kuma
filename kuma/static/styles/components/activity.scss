@@ -10,6 +10,7 @@
 
     h3 {
         @include set-font-size($base-bump-font-size);
+        @include set-site-font-family();
         margin: 0 0 ($grid-spacing / 4);
     }
 
@@ -47,7 +48,7 @@
 }
 
 .activity-actions {
-    @include set-font-size(10px);
+    @include set-font-size($tiny-font-size);
 
     li {
         display: inline;

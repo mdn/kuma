@@ -40,12 +40,8 @@ $table-cell-border: 2px solid #fff;
                 @include rgba-fallback(background, $table-blue, .5);
                 padding: 2px 8px 4px;
 
-                font-family: $heading-font-family;
-                font-size: 14px;
+                @include set-heading-font-family();
                 font-weight: bold;
-                #{$selector-heading-font-fallback} {
-                    font-family: $heading-font-family-fallback;
-                }
             }
 
             /* make this table full width */
@@ -159,14 +155,14 @@ $table-cell-border: 2px solid #fff;
     .licenseblock,
     .originaldocinfo {
         @include set-message-base(true);
-        background: #{map-get( map-get($colors-lookup, 'default'), 'light')};
-        border: 2px solid #{map-get( map-get($colors-lookup, 'default'), 'medium')};
-        font-size: $smaller-font-size;
+        background: $grey-light;
+        border: 2px solid $grey;
+        @include set-font-size($smaller-font-size);
     }
 
     .originaldocinfo {
         h2 {
-            font-size: $base-font-size;
+            @include set-font-size($body-font-size);
         }
     }
 }
@@ -288,7 +284,7 @@ div.bug {
 }
 
 p.footnote {
-    font-size: $smaller-font-size;
+    @include set-font-size($smaller-font-size);
     font-style: italic;
     color: $grey;
 }

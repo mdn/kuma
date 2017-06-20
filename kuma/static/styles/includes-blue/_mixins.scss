@@ -35,6 +35,27 @@ Provides main mixins for use within the MDN theme.
     @include set-font-size($base-bump-font-size);
 }
 
+@mixin set-heading-font-family() {
+    font-family: $heading-font-family;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
+}
+
+@mixin set-subheading-font-family() {
+    font-family: $subheading-font-family;
+    #{$selector-subheading-font-fallback} {
+        font-family: $subheading-font-family-fallback;
+    }
+}
+
+@mixin set-site-font-family() {
+    font-family: $site-font-family;
+    #{$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+    }
+}
+
 
 /*
 Vendor prefixes

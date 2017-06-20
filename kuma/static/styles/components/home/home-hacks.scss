@@ -5,7 +5,7 @@ hacks blog row, wrapper, entries, and get involved teaser
 $home-involved-background-y : 50px;
 
 .home-hacks {
-    padding-bottom: $first-content-top-padding;
+    padding: $first-content-top-padding 0;
     background: #fff;
 
     li {
@@ -21,7 +21,7 @@ $home-involved-background-y : 50px;
         letter-spacing: 0;
         line-height: normal;
         margin-bottom: 0;
-        @include set-font-size($base-font-size);
+        @include set-font-size($body-font-size);
 
         a {
             text-decoration: underline;
@@ -56,7 +56,7 @@ $home-involved-background-y : 50px;
     }
 
     a {
-        color: $blue-background-text-color;
+        color: #fff;
         text-decoration: none;
         padding: $grid-spacing;
         display: block;

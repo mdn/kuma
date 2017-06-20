@@ -24,17 +24,29 @@
 .helpful-survey-vote {
     @include vendorize(transition, 'transform 0.2s ease, background 0.2s ease, box-shadow 0.25s ease');
     margin: 0 10px;
+    border: none;
+    text-align: center;
 
     &:hover {
         @include vendorize(transform, translateY(-3px));
         background: #fff;
         box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
     }
+
+    #{$selector-icon} {
+        margin: 0 auto !important; /* stylelint-disable-line declaration-no-important */
+    }
+}
+
+.helpful-survey-no {
+    &:hover {
+        @include vendorize(transform, translateY(3px));
+        box-shadow: 0 -3px 8px rgba(0, 0, 0, .4);
+    }
 }
 
 .helpful-survey {
-    background: #{map-get( map-get($colors-lookup, 'neutral'), 'dark')};
-    color: #fff;
+    background: $blue-light;
     float: none;
     margin: 0 auto;
     text-align: center;

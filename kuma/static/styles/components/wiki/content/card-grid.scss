@@ -17,12 +17,9 @@ side by side calls to action
             display: block;
             margin-bottom: 12px;
 
-            font-family: $heading-font-family;
             @include set-font-size(22px);
             line-height: 1;
-            #{$selector-heading-font-fallback} {
-                font-family: $heading-font-family-fallback;
-            }
+            @include set-heading-font-family();
         }
     }
 

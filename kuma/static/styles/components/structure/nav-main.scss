@@ -1,0 +1,31 @@
+@import '_mixin_nav';
+
+/*
+Main navigation menu
+********************************************************************** */
+
+.nav-main {
+    position: relative;
+}
+
+html:not(.no-js) .nav-main-item > a {
+    color: $text-color;
+}
+
+@media #{$mq-mobile-and-down} {
+    .nav-main-item {
+        @include nav-item();
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .nav-main-item {
+        @include inline-nav-item();
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .nav-main-item {
+        @include large-inline-nav-item();
+    }
+}

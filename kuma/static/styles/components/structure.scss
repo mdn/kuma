@@ -32,7 +32,6 @@ Header
 ====================================================================== */
 
 @import 'structure/main-header';
-@import 'structure/tabzilla';
 @import 'structure/submenu';
 
 
@@ -52,8 +51,8 @@ Main Navigation
 - search bar
 -------------------------------------------------------------- */
 
-@import 'structure/main-nav';
-@import 'structure/main-nav-search';
+@import 'structure/nav-main';
+@import 'structure/nav-main-search';
 @import 'structure/search-wrap';
 
 
@@ -61,6 +60,7 @@ Main Navigation
 Footer
 ====================================================================== */
 
+@import 'structure/nav-footer';
 @import 'structure/contentinfo';
 
 

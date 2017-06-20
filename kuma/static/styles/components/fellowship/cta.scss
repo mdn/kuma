@@ -28,7 +28,7 @@ Call to action button
         width: 100%;
         padding: .75rem;
         margin: 0;
-        @include set-font-size(22px);
+        @include set-font-size($callout-font-size);
         line-height: 1;
         text-transform: uppercase;
         text-align: center;

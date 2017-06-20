@@ -3,12 +3,46 @@
     clear: both;
 
     h1 {
-        margin-top: $grid-spacing;
+        margin-top: ($grid-spacing * 1.5);
         margin-bottom: ($grid-spacing * 1.5);
-
         line-height: 1;
-        #{$selector-site-font-fallback} {
-            line-height: 1.005;
-        }
+    }
+}
+
+@mixin small-overflow() {
+    @include set-font-size($h1-font-size / 1.5);
+}
+
+@mixin large-overflow() {
+    @include set-font-size($large-screen-h1-font-size / 1.5);
+}
+
+@media #{$mq-small-mobile-only} {
+    .small-mobile-overflow {
+        @include small-overflow();
+    }
+}
+
+@media #{$mq-mobile-only} {
+    .mobile-overflow {
+        @include small-overflow();
+    }
+}
+
+@media #{$mq-tablet-only} {
+    .tablet-overflow {
+        @include small-overflow();
+    }
+}
+
+@media #{$mq-small-desktop-only} {
+    .tablet-overflow {
+        @include large-overflow();
+    }
+}
+
+@media #{$mq-large-desktop-and-up} {
+    .tablet-overflow {
+        @include large-overflow();
     }
 }

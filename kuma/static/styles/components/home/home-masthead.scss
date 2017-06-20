@@ -15,12 +15,6 @@ homepage masthead (search, feature callouts)
             display: block;
         }
     }
-
-    h1,
-    h2,
-    h3 {
-        color: $blue-background-text-color;
-    }
 }
 
 .search-form {
@@ -43,8 +37,6 @@ homepage masthead (search, feature callouts)
 
     input#home-q {
         @include set-placeholder-style(color, $text-color);
-        color: $text-color;
-        background-color: #fff;
         @include bidi-style(padding-left, 30px, padding-right, 0);
     }
 }

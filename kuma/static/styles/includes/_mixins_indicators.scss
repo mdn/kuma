@@ -16,16 +16,14 @@ block indicators aka banners
 
     background-color: $light-background-color;
     font-style: italic;
-    font-family: $heading-font-family;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
+    @include set-heading-font-family();
+    @include set-font-size($note-font-size);
 
     &:before {
         display: inline-block;
         width: 30px;
         @include bidi-value(float, left, right);
-        @include bidi-value(margin, -5px 0 -5px ($icon-spacing * -1), -5px ($icon-spacing * -1) -5px 0);
+        @include bidi-value(margin, -1px 0 -5px ($icon-spacing * -1), -5px ($icon-spacing * -1) -5px 0);
         font-family: FontAwesome;
         font-size: $larger-font-size;
         font-style: normal;

@@ -1,33 +1,41 @@
+@import '_mixin_nav';
+
 /*
 Secondary navigation, site tools and login info
 ********************************************************************** */
 
-#nav-sec {
-    position: absolute;
-    top: 12px;
-    @include bidi-style(right, 200px, left, auto);
-    z-index: 36; /* one more than the demos "learn more" button */
-
-    @include set-font-size($small-bump-font-size);
-
-    > ul > li {
-        position: relative;
-        display: inline-block;
-        @include bidi-value(padding, 0 0 0 16px, 0 16px 0 0); /* same as main nav but we double it because only putting on left */
-    }
-
-    #{$selector-icon} {
-        @include left-icons();
+@media #{$mq-tablet-and-down} {
+    .nav-tools {
+        display: none;
     }
 }
 
-
-@media #{$mq-mobile-and-down} {
+@media #{$mq-tablet-and-up} {
     #nav-sec {
-        @include bidi-style(right, $gutter-width, left, auto);
+        @include bidi-value(float, right, left);
+        position: relative;
+        @include bidi-style(right, ($gutter-width * -1), left, auto);
+        z-index: 2;
+        background-color: #000;
 
-        > ul > li.nav-tools {
-            display: none;
+        > ul > li {
+            @include inline-nav-item();
+
+            > a {
+                color: #fff;
+
+                &:hover,
+                &:focus {
+                    background-color: #000;
+                    color: #fff !important; /* stylelint-disable-line declaration-no-important */
+                }
+            }
         }
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    > ul > li {
+        @include large-inline-nav-item();
     }
 }

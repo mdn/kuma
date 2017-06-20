@@ -12,10 +12,7 @@ Welcome message put up first time someone edits a doc
         margin: 0 0 10px;
         @include set-font-size(18px);
         line-height: 1.5;
-        font-family: $site-font-family;
-        #{$selector-site-font-fallback} {
-            font-family: $site-font-family-fallback;
-        }
+        @include set-site-font-family();
     }
 
     p {

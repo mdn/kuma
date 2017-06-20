@@ -1,16 +1,9 @@
 @import 'includes-blue/vars';
 @import 'includes-blue/mixins';
 
-body.search-results {
-    @include create-gradient-background($header-background-color);
-}
-
 main {
     background: inherit;
 }
-
-/* update the header search size */
-@include minimize-header-search();
 
 /* search pane used by multiple blocks */
 .search-pane {

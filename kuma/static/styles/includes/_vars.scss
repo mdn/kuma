@@ -99,6 +99,8 @@ $code-block-padding : 15px;
 $code-block-border-width : $border-width;
 $code-block-border-style : solid;
 $table-blue : #d4dde4;
+$accent-light: #83d0f2;
+$accent-dark: #216684;
 
 $text-dark : $text-color;
 $text-light : #fff;
@@ -122,14 +124,25 @@ $diff-font-family : $code-inline-font-family;
 /*
 sizes
 ====================================================================== */
-$larger-font-size : 20px;
-$base-font-size : 16px;
-$smaller-font-size : 14px;
-$tiny-font-size : 12px;
+$h1-font-size: 50px;
+$h2-font-size: 38px;
+$h3-font-size: 24px;
+$h4-font-size: 20px;
+$callout-font-size: 22px;
+$note-font-size: 18px;
+$body-font-size: 16px;
+$form-font-size: $body-font-size;
+$tiny-font-size: 12px;
 
-$small-bump-font-size : 14px;
-$base-bump-font-size : 17px;
+/* for large screens */
+$large-screen-h1-font-size: 72px;
+$large-screen-h2-font-size: 48px;
 
+/* bumps */
+$larger-font-size: $callout-font-size;
+$small-bump-font-size: ($body-font-size + 2px);
+$base-bump-font-size: ($body-font-size + 1px);
+$smaller-font-size: ($body-font-size - 2px);
 
 /*
 forms
@@ -232,6 +245,7 @@ $gutter-width : 24px;
 $content-block-margin : $gutter-width;
 
 $first-content-top-padding : ($grid-spacing * 1.5);
+$mobile-center-spacing: 15px;
 
 $content-horizontal-spacing : 8px;
 $content-vertical-spacing : 6px;
@@ -262,7 +276,7 @@ $path-to-assets : '../';
 $path-to-images : $path-to-assets + 'img/';
 $path-to-embedded-images : $path-to-images + 'embed/';
 $path-to-fonts : $path-to-assets + 'fonts/';
-$logo-sprite-url : $path-to-images + 'logo_sprite.svg';
+$logo-sprite-url : $path-to-images + 'web_docs_sprite.svg';
 
 
 /*

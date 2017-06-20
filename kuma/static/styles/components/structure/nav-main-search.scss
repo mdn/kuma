@@ -1,0 +1,95 @@
+/*
+search items in .main-nav
+********************************************************************** */
+
+.nav-main-search-link {
+    // remove this and corresponding HTML after redesign lanuched
+    display: none;
+}
+
+.nav-main-search {
+    display: block; // JS uses this to determine if we're in mobile or not
+    position: relative;
+}
+
+.search-trigger {
+    position: absolute;
+    top: 12px;
+    @include bidi-style(left, 15px, right, auto);
+    z-index: 2;
+    cursor: pointer;
+
+    #{$selector-icon} {
+        cursor: pointer;
+    }
+}
+
+.zone .search-wrap {
+    background-color: transparent !important; /* stylelint-disable-line declaration-no-important */
+}
+
+.zone #main-header  .search-wrap input,
+.zone #main-header .search-wrap i {
+    color: $form-text !important; /* stylelint-disable-line declaration-no-important */
+}
+
+#main-q {
+    width: 100%;
+    margin: $content-vertical-spacing auto;
+    @include bidi-style(padding-left, 2.5em, padding-right, 0);
+}
+
+@media #{$mq-tablet-and-up} {
+    .main-nav-search {
+        display: list-item; // JS uses this to determine if we're in mobile or not
+        @include bidi-value(float, right, left);
+        @include bidi-value(text-align, right, left);
+    }
+
+    .search-trigger {
+        position: absolute;
+        top: 0;
+    }
+
+    .search-wrap {
+        position: absolute;
+        top: 0;
+        @include bidi-style(right, 0, left, auto);
+        width: 0;
+        overflow: hidden;
+        @include bidi-style(padding-left, 45px, padding-right, 0);
+        line-height: 48px + ($grid-spacing * 2);
+        @include vendorize(transition-property, 'width, opacity');
+        @include vendorize(transition-duration, $default-animation-duration);
+
+        &.expanded {
+            width: 300px;
+        }
+    }
+
+    .zone #main-header .search-wrap i {
+        color: #fff !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    #main-q {
+        border-color: #fff;
+        @include bidi-style(padding-left, 0, padding-right, 0);
+        border-bottom: 1px solid $grey;
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .search-wrap {
+        &.expanded {
+            width: 500px;
+        }
+    }
+}
+
+@media #{$mq-large-desktop-and-up} {
+    .search-wrap {
+        &.expanded {
+            width: 500px;
+        }
+    }
+}

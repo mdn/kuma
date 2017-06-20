@@ -14,10 +14,8 @@ html.maximized {
 body {
     padding: $grid-spacing;
 
-    font: 14px/1.5 $site-font-family;
-    #{$selector-site-font-fallback} {
-        font-family: $site-font-family-fallback;
-    }
+    font: 14px/1.5;
+    @include set-site-font-family();
 }
 
 

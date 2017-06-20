@@ -8,14 +8,10 @@ textarea,
 select,
 optgroup,
 option {
-    @include set-font-size(16px);
+    @include set-font-size($form-font-size);
+    @include set-site-font-family();
     font-style: normal;
     font-weight: normal;
-    font-family: $site-font-family;
-    line-height: 1.15;
-    #{$selector-site-font-fallback} {
-        font-family: $site-font-family-fallback;
-    }
 }
 
 input[type=text],
@@ -103,6 +99,7 @@ input[type='button'] {
         font-size: inherit;
         font-weight: inherit;
         letter-spacing: inherit;
+        line-height: inherit;
         background-color: transparent;
         text-transform: inherit;
         border: 0;

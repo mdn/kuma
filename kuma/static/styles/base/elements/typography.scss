@@ -13,30 +13,25 @@ h1 {
 
 h2 {
     @include heading-2();
+    margin: $grid-spacing 0;
 }
 
 h3 {
-    @include set-font-size(24px);
-    font-family: $subheading-font-family;
-    #{$selector-subheading-font-fallback} {
-        font-family: $subheading-font-family-fallback;
-    }
+    margin: $grid-spacing 0 ($grid-spacing / 2) 0;
+    @include set-font-size($h3-font-size);
+    @include set-subheading-font-family();
 }
 
 h4 {
-    @include set-font-size(20px);
-    font-family: $subheading-font-family;
-    #{$selector-subheading-font-fallback} {
-        font-family: $subheading-font-family-fallback;
-    }
+    margin: $grid-spacing 0 ($grid-spacing / 2) 0;
+    @include set-font-size($h4-font-size);
+    @include set-subheading-font-family();
 }
 
 h5 {
-    @include set-font-size(16px);
-    font-family: $heading-font-family;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
+    margin: ($grid-spacing / 2) 0;
+    @include set-font-size($body-font-size);
+    @include set-heading-font-family();
 }
 
 /*
@@ -100,7 +95,7 @@ code {
 
 /* pre is a block element so it gets a bit more fancy styling */
 pre {
-    @include set-font-size($base-font-size);
+    @include set-font-size($body-font-size);
     line-height: 19px;
     border: 0;
     background: $light-background-color;
