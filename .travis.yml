@@ -1,4 +1,6 @@
 sudo: required
+dist: trusty
+group: edge
 branches:
     only:
         - master
