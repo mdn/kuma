@@ -66,6 +66,9 @@ def preview(request):
         'content': wiki_content,
         'title': request.POST.get('title', ''),
         'kumascript_errors': kumascript_errors,
+        'macro_sources': (kumascript.macro_sources(force_lowercase_keys=True)
+                          if kumascript_errors else
+                          None),
     }
     return render(request, 'wiki/preview.html', context)
 

@@ -728,6 +728,9 @@ def document(request, document_slug, document_locale):
         'has_contributors': has_contributors,
         'fallback_reason': fallback_reason,
         'kumascript_errors': ks_errors,
+        'macro_sources': (kumascript.macro_sources(force_lowercase_keys=True)
+                          if ks_errors else
+                          None),
         'render_raw_fallback': rendering_params['render_raw_fallback'],
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,

@@ -16,8 +16,8 @@
     }}
   </button>
   <div class="kserrors-details hidden">
-      <p>{% trans %}
-        Anyone with an MDN profile can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+      <p>{% trans troubleshooting_url='/en-US/docs/MDN/Contribute/Tools/KumaScript/Troubleshooting' %}
+        Anyone with an MDN profile can edit a document to fix an error. Use the <a href="{{ troubleshooting_url }}">KumaScript troubleshooting guide</a> as a starting point.
       {% endtrans %}</p>
 
       <ul id="kserrors-list">
@@ -32,26 +32,20 @@
               </dd>
               {% set error_meta = error.args[2] %}
               {% if error_meta %}
-                {% set template_name = error_meta.name %}
-                {% if '$' not in template_name %}
-                  {% set template_slug = 'Template:%s' % template_name %}
-                  {% set edit_url = url('wiki.edit', template_slug) %}
-                  {% set new_url = url('wiki.create') + '?slug=Template:%s' % template_name %}
-                {% endif %}
+                {% set macro_name = error_meta.name %}
+                {% set macro_relpath = macro_sources.get(macro_name.lower()) %}
                 <dt>{{ _('In macro:') }}</dt>
                 <dd>
-                  <code class="kserror-macro">{{ template_name }}</code>
-                  {% if 'status 404' in error.message %}
-                    {% if new_url %}
-                      (<a href="{{ new_url }}">{{ _('Create Template') }}</a>)
-                    {% endif %}
-                  {% elif edit_url  %}
-                    (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
+                  <code class="kserror-macro">{{ macro_name }}</code>
+                  {% if ('unable to load: ' + macro_name) in error.message %}
+                    (<a href="https://github.com/mozilla/kumascript#updating-macros">{{ _('Create Macro') }}</a>)
+                  {% elif macro_relpath %}
+                    (<a href="{{ 'https://github.com/mozilla/kumascript/blob/master/macros/' + macro_relpath }}">{{ _('View Macro') }}</a>)
                   {% endif %}
                 </dd>
                 <dt>{{ _('Parsing macro:') }}</dt>
                 <dd>
-                  <code class="kserror-parse">{{ template_name }}
+                  <code class="kserror-parse">{{ macro_name }}
                     {% if error_meta.token %}
                       ({{ error_meta.token.args }})
                     {% endif %}

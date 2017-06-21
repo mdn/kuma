@@ -5,6 +5,7 @@ import hashlib
 import time
 import unicodedata
 from urlparse import urljoin
+from functools import partial
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -269,7 +270,7 @@ def build_cache_keys(document_locale, document_slug):
     return (etag_key, modified_key, body_key, errors_key)
 
 
-def macro_sources():
+def macro_sources(force_lowercase_keys=False):
     """
     Get active macros and their source paths.
 
@@ -282,10 +283,13 @@ def macro_sources():
     if response.status_code == 200:
         macros_raw = response.json()['macros']
         # Ensure Normal Form C used on GitHub
+        normalize_key = normalize = partial(unicodedata.normalize, 'NFC')
+        if force_lowercase_keys:
+            normalize_key = lambda x: normalize(x).lower()
         return {
-            unicodedata.normalize('NFC', md['name']):
-            unicodedata.normalize('NFC', md['filename'])
-            for md in macros_raw}
+            normalize_key(md['name']): normalize(md['filename'])
+            for md in macros_raw
+        }
     else:
         return {}
 
