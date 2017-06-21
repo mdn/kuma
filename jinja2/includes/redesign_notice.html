@@ -28,9 +28,7 @@
   <p>{{ _('Thanks for using MDN!') }} <br> {{ _('The MDN Web Docs Team') }}</p>
 <button id="redesignHide" type="button" class="only-icon transparent redesign-hide"><span>{{ _('Hide redesign announcement') }}</span><i aria-hidden="true" class="icon-times"></i></button>
 </div>
-{% endif %}
-
-{% if waffle.flag('redesign_live') %}
+{% elif waffle.flag('redesign_live') %}
 <div id="redesignNotice" class="redesign-notice hidden">
   <h2>{{ _('Why does MDN look different?') }}</h2>
   <p>{{ _('MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the web technology docs you’re looking for.') }}</p>
