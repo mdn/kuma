@@ -631,11 +631,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
     Note that these tests really just check whether or not the service was
     used, and are not integration tests meant to exercise the real service.
-
-    REFACTOR NOTES:
-    * The "test_error_reporting" method was moved into "test_views_document.py"
-      as "test_kumascript_error_reporting" and expanded to cover the
-      "wiki.preview" endpoint as well. (escattone, June 20, 2017)
     """
     localizing_client = True
 
