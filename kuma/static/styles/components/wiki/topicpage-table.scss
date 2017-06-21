@@ -26,10 +26,7 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
 /* styles for elements inside .topicpage-table */
 .topicpage-table {
     h2 {
-        font-family: $heading-font-family;
-        #{$selector-heading-font-fallback} {
-            font-family: $heading-font-family-fallback;
-        }
+        @include set-heading-font-family();
     }
 
     ul {

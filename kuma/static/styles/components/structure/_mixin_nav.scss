@@ -1,0 +1,51 @@
+/* mobile nav menu items */
+@mixin nav-item() {
+    border-bottom: 1px solid $text-color;
+
+    > a {
+        display: block;
+        padding: $content-vertical-spacing 0;
+
+        #{$selector-icon} {
+            @include bidi-value(float, right, left);
+        }
+    }
+}
+
+@mixin inline-nav-item() {
+    position: relative;
+    display: inline-block;
+
+    > #{$selector-icon} {
+        display: none;
+    }
+
+    > a {
+        display: inline-block;
+        line-height: 48px + ($grid-spacing * 2); // logo height + grid spacing *2
+        padding: 0 ($grid-spacing / 2);
+
+        html:not(.no-js) & {
+            text-decoration: none;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: $grey-light;
+            color: $text-color !important; /* stylelint-disable-line declaration-no-important */
+        }
+
+        #{$selector-icon} {
+            html:not(.no-js) & {
+                display: inline-block;
+                @include bidi-style(margin-left, 5px, margin-right, 0);
+            }
+        }
+    }
+}
+
+@mixin large-inline-nav-item() {
+    > a {
+        padding: 0 $grid-spacing;
+    }
+}

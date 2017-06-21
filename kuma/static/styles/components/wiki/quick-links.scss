@@ -80,7 +80,7 @@ $see-also-outdent : 6px;
         }
 
         #{$selector-icon} {
-            @include set-font-size($base-font-size);
+            @include set-font-size($body-font-size);
             position: realtive;
             top: 3px;
             min-width: 15px;
@@ -95,7 +95,7 @@ $see-also-outdent : 6px;
     @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
 
     #{$selector-icon} {
-        @include set-font-size($base-font-size);
+        @include set-font-size($body-font-size);
         position: absolute;
         top: 1px;
         @include bidi-style(left, 0, right, auto);

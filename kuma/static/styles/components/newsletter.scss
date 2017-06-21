@@ -1,15 +1,11 @@
 .newsletter-teaser {
-    @include set-font-size(26px);
     margin-bottom: $grid-spacing;
+    @include set-font-size($h2-font-size);
 }
 
 .newsletter-description {
     margin-bottom: $grid-spacing;
-    @include set-font-size(20px);
-    font-family: $heading-font-family;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
+    @include set-heading-font-family();
 }
 
 .newsletter-errors .errorlist {
@@ -39,6 +35,8 @@ input.newsletter-input-email {
     top: ($grid-spacing / 2);
     @include bidi-style(right, ($grid-spacing / 2), left, auto);
     z-index: 11;
+    border: none;
+    padding: 0;
 }
 
 .newsletter-thanks h2 {
@@ -54,20 +52,19 @@ input.newsletter-input-email {
 
 
     .newsletter-teaser {
-        @include set-font-size(48px);
 
         /* small box to give .newsletter-hide button some space */
         &:before {
             content: '';
             display: block;
             @include bidi-value(float, right, left);
-            height: $grid-spacing;
-            width: $grid-spacing;
+            height: .5em;
+            width: 1.5em;
         }
     }
 
     .newsletter-description {
-        @include set-font-size(24px);
+        @include set-font-size($larger-font-size);
     }
 
     .newsletter-fields {
@@ -75,10 +72,22 @@ input.newsletter-input-email {
     }
 }
 
-
 @media #{$mq-tablet-and-up} {
     .newsletter-box {
         padding: ($grid-spacing * 2);
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .newsletter-box {
+
+        .newsletter-teaser {
+            @include set-font-size($large-screen-h2-font-size);
+        }
+
+        .newsletter-description {
+            @include set-font-size($h3-font-size);
+        }
     }
 }
 
@@ -117,6 +126,10 @@ input.newsletter-input-email {
             align-self: end;
             grid-column: 2 / 3;
             grid-row: 1 / 3;
+        }
+
+        input.newsletter-input-email {
+            margin-top: $grid-spacing / 2;
         }
     }
 }

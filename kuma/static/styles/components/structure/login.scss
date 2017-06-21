@@ -1,51 +1,61 @@
+@import 'mixin_nav';
 /*
 Header login link
 ********************************************************************** */
 
-.login {
-    position: relative;
-    border-radius: 8px;
-    padding: $content-vertical-spacing $content-horizontal-spacing;
-    @include rgba-fallback(background, #000, .1);
+.zone #main-header .logout {
+    color: $link-color !important; /* stylelint-disable-line declaration-no-important */
+}
 
-    #{$selector-icon} {
-        @include set-font-size($small-bump-font-size * 1.2);
-        /* Keep the line height equal to make the icon appear as though it is on
-           the same line. */
-        line-height: 20px;
-        vertical-align: top; /* needed on mobile */
+.button.logout {
+    display: block;
+}
+
+@media #{$mq-mobile-and-down} {
+    .login {
+        @include nav-item();
     }
 
-    form {
-        display: inline-block;
+    .login-form {
+        display: block;
+        margin: $content-vertical-spacing 0;
+    }
+
+    .button.logout {
+        display: block;
+    }
+
+    .login-photo {
+        display: none;
     }
 }
 
-.login-link {
-    display: inline-block;
-    min-width: 150px;
+@media #{$mq-tablet-and-up} {
+    .login-name {
+        display: none;
+    }
 
-    #{$selector-icon} {
-        @include bidi-value(float, right, left);
+    .login {
+        @include inline-nav-item();
+
+        > a {
+            color: #fff;
+
+            &:hover,
+            &:focus {
+                background-color: #000;
+            }
+        }
+    }
+
+    .login-photo {
+        vertical-align: middle;
     }
 }
 
-.logout {
-    border: 0;
-    @include bidi-style(border-left, 1px solid #bbb, border-right, 0);
-    @include bidi-style(padding, 0 0 0 6px, padding, 0 6px 0 0);
-    @include bidi-style(margin, 0 0 0 2px, margin, 0 2px 0 0);
-    background-color: transparent;
-    color: $menu-link-color;
-    line-height: inherit;
-    font-size: inherit;
-    font-weight: normal;
 
-    &:hover {
-        text-decoration: underline;
+@media #{$mq-tablet-and-up} {
+    .login {
+        @include large-inline-nav-item();
     }
-}
-
-#home .logout {
-    color: #fff;
 }

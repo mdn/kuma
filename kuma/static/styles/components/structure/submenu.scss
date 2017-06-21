@@ -1,21 +1,88 @@
-@import '../../includes/mixin_submenu';
-
 .submenu {
-    @include submenu();
-    @include submenu-set(160px, 1px, $light-background-color, #bbbfc2);
-}
+    display: none;
+    position: relative;
+    background-color: #fff;
+    padding: 0 15px 15px;
 
-@media #{$mq-mobile-and-down} {
-    .submenu-column,
-    .submenu-column:nth-child(even) {
-        @include bidi-style(border-left, 0, border-right, 0);
-        @include bidi-style(padding-left, 0, padding-right, 0);
+    .title {
+        @include set-heading-font-family;
+        @include set-font-size($h4-font-size);
     }
 }
 
-@media #{$mq-small-mobile-and-down} {
-    .submenu-column {
-        width: auto;
+.zone #main-header .submenu a {
+    color: $link-color !important; /* stylelint-disable-line declaration-no-important */
+}
+
+@media #{$mq-mobile-and-down} {
+    .submenu-column a {
         display: block;
+        margin: $content-vertical-spacing 0;
+    }
+}
+
+.submenu-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@media #{$mq-tablet-and-up} {
+    .submenu {
+        position: absolute;
+        top: 100%;
+        @include bidi-style(left, 0, right, auto);
+        z-index: 3;
+        padding-top: 15px;
+        border-top: 5px solid $grey-light;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, .15);
+        width: 250px; // fallback, IE & Edge
+
+        &.submenu-cols-2 {
+            width: (250px * 2);
+        }
+
+        .submenu-column {
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: text-top;
+            @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+            width: 250px; // fallback, IE & Edge
+        }
+
+        @supports (width: -webkit-max-content) or (width: -moz-max-content) or (width: max-content) {
+            &,
+            &.submenu-cols-2 {
+                @include vendorize-value(width, max-content);
+            }
+
+            .submenu-column {
+                @include vendorize-value(width, max-content);
+
+                + .submenu-column {
+                    @include bidi-style(padding-left, ($grid-spacing * 2), padding-right, $grid-spacing);
+                }
+            }
+        }
+
+        li {
+            margin-top: 15px;
+        }
+
+        #{$selector-icon} {
+            @include bidi-style(margin-left, 5px, margin-right, 0);
+        }
+
+        #nav-sec & {
+            border-top-color: #000;
+            @include bidi-style(left, auto, right, auto);
+            @include bidi-style(right, 0, left, auto);
+        }
+
+        .page-buttons & {
+            @include bidi-style(left, auto, right, auto);
+            @include bidi-style(right, 0, left, auto);
+            border-top: 5px solid $form-border-color;
+        }
     }
 }

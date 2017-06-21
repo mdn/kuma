@@ -10,13 +10,9 @@ The quote on the fellowship page
         background-color: inherit;
         border: none;
         color: $neutral;
-
-        font-family: $heading-font-family;
         font-style: italic;
         @include set-font-size($larger-font-size);
-        #{$selector-heading-font-fallback} {
-            font-family: $heading-font-family-fallback;
-        }
+        @include set-heading-font-family();
     }
 
     .quote:before,

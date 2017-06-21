@@ -9,15 +9,19 @@ wiki article cookie crumbs
 
     li {
         @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
-        display: inline-block;
+        display: none;
+    }
+
+    li:nth-last-child(2) {
+        display: block;
     }
 
     a {
         display: block;
 
-        &:after {
-            @include bidi-style(margin-left, 4px, margin-right, 0, true);
-            @include bidi-style(content, '\f054', content, '\f053');
+        &:before {
+            @include bidi-style(margin-right, 4px, margin-left, 0, true);
+            @include bidi-style(content, '\f053', content, '\f054');
             display: inline-block;
             font-family: FontAwesome;
             text-decoration: none;

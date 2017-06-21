@@ -73,7 +73,7 @@
                     // Add the close
                     var $closeButton = $('<button type="button" class="submenu-close transparent">' +
                         '<span class="offscreen">' + gettext('Close submenu') + '</span>' +
-                        '<i aria-hidden="true" class="icon-remove-sign"></i>' +
+                        '<i aria-hidden="true" class="icon-times"></i>' +
                     '</button>').appendTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay

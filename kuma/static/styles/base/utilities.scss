@@ -22,7 +22,7 @@ Utility classes
     @include add-center-spacing();
 
     @media #{$mq-mobile-and-down} {
-        @include add-center-spacing(15px);
+        @include add-center-spacing($mobile-center-spacing);
     }
 
     @media print {
@@ -42,7 +42,8 @@ Utility classes
         padding: 3px;
 
         &:before {
-            @include set-font-size(10px);
+            @include set-font-size($tiny-font-size);
+            font-family: $tiny-font-family;
             content: 'hidden';
             position: absolute;
             top: -17px;
@@ -74,7 +75,7 @@ Utility classes
 
 .heading-link {
     font-style: italic;
-    @include set-font-size($base-font-size);
+    @include set-font-size($body-font-size);
     font-weight: normal;
     display: inline-block;
     margin: 0 ($grid-spacing * 2);

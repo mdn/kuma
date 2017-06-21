@@ -180,7 +180,7 @@
         </div>
         {% endif %}
 
-        <h1>{{ document.title }}</h1>
+        <h1 class="{% if document.title|length > 12 %}small-mobile-overflow{% endif %}{% if document.title|length > 19 %} mobile-overflow{% endif %}{% if document.title|length > 31 %} tablet-overflow{% endif %}{% if document.title|length > 42 %} small-desktop-overflow{% endif %}{% if document.title|length > 37 %} large-desktop-overflow{% endif %}">{{ document.title }}</h1>
 
       </div>
       {% endif %}

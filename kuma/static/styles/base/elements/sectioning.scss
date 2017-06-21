@@ -24,24 +24,6 @@ main {
     }
 }
 
-footer {
-    background: #fff;
-    padding: $first-content-top-padding 0 0 0;
-    font-style: italic;
-
-    .column-strip {
-        padding-top: 10px;
-    }
-
-    label {
-        padding-right: 4px;
-    }
-
-    select {
-        font-style: normal;
-    }
-}
-
 details {
     clear: both;
     display: block;
@@ -94,23 +76,8 @@ hr {
     margin: $grid-spacing 0;
 }
 
-@media #{$mq-tablet-and-down} {
-    footer {
-        border-top: 1px solid #000;
-    }
-}
-
-@media #{$mq-mobile-and-down} {
-    /* add bottom spacing to the footer */
-    footer {
-        padding-bottom: $grid-spacing;
-    }
-}
-
-
 @media print {
-    header,
-    footer {
+    header {
         display: none;
     }
 }

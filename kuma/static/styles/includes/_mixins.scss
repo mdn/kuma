@@ -7,7 +7,7 @@ Provides main mixins for use within the MDN theme.
     $v : 0;
 
     @if $u == 'px' {
-        $v : $value/$base-font-size * 1rem;
+        $v : $value/$body-font-size * 1rem;
     }
     @else {
         $v : unit($value, u);
@@ -33,6 +33,27 @@ Provides main mixins for use within the MDN theme.
 }
 @mixin set-larger-font-size() {
     @include set-font-size($base-bump-font-size);
+}
+
+@mixin set-heading-font-family() {
+    font-family: $heading-font-family;
+    #{$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
+}
+
+@mixin set-subheading-font-family() {
+    font-family: $subheading-font-family;
+    #{$selector-subheading-font-fallback} {
+        font-family: $subheading-font-family-fallback;
+    }
+}
+
+@mixin set-site-font-family() {
+    font-family: $site-font-family;
+    #{$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+    }
 }
 
 
@@ -124,13 +145,6 @@ Colours
 @mixin rgba-fallback($property, $color, $opacity, $bg : #fff) {
     #{$property}: mix($color, $bg, $opacity * 100); // hex fallback
     #{$property}: rgba($color, $opacity); // rgba value
-}
-
-
-@mixin create-home-gradient-background($color) {
-    @include create-gradient-background($color);
-    background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'blueprint.png'), url($path-to-images + 'mdn-header-gradient.png');
-    background-repeat: repeat, repeat, repeat-x;
 }
 
 /* generates a cross-browser gradient */
@@ -314,30 +328,6 @@ Home & Zones
     }
 }
 
-/* overrides the size of the navigation search box on certain pages */
-@mixin minimize-header-search() {
-
-    @media #{$mq-break-and-up} {
-        .main-nav-search {
-            width: 36px;
-        }
-
-        .search-wrap input {
-            width: 22px;
-
-            &:focus {
-                width: 500px;
-            }
-        }
-    }
-
-    @media #{$mq-mobile-and-down} {
-        .main-nav-search {
-            width: auto;
-        }
-    }
-}
-
 
 /* =================================================================== */
 
@@ -408,26 +398,40 @@ These are not dynamic but serve as mixins
 ====================================================================== */
 
 @mixin heading-1() {
-    @include set-font-size(72px);
+    @include set-font-size($h1-font-size);
     font-family: $heading-font-family;
     line-height: 1;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
+
+    @media #{$mq-small-desktop-and-up} {
+        @include set-font-size($large-screen-h1-font-size);
+    }
 }
 
 @mixin heading-2() {
-    @include set-font-size(48px);
+    @include set-font-size($h2-font-size);
     font-family: $heading-font-family;
     line-height: 1;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        @include set-font-size($large-screen-h2-font-size);
     }
 }
 
 @mixin callout() {
     @include set-font-size(22px);
-    font-style: italic;
+    border: 5px solid $accent-light;
+    border-width: 5px 0 5px 0;
+    border-image: linear-gradient(to right, $accent-light, $accent-dark) 10;
+    padding: $grid-spacing 0;
+    margin-bottom: $grid-spacing;
+
+    @include prevent-last-child-spacing(p, margin-bottom);
 }
 
 @mixin big-search() {
@@ -451,7 +455,6 @@ These are not dynamic but serve as mixins
 
 @mixin title-header() {
     font-weight: bold;
-    text-transform: uppercase;
     color: $text-color;
     text-decoration: none;
     display: block;

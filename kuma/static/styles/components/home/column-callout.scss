@@ -10,7 +10,7 @@ $callout-icon-width: 90px;
     background: #00539f;
 
     a {
-        color: $blue-background-text-color !important; /* stylelint-disable-line declaration-no-important */
+        color: #fff !important; /* stylelint-disable-line declaration-no-important */
         display: block;
         min-height: 170px;
         position: relative;
@@ -82,9 +82,8 @@ Colours and icons
 
     button {
         margin-top: 6px;
-        border: 3px solid #fff;
+        border: 3px solid;
         background-color: transparent;
-        color: #fff;
     }
 }
 
@@ -143,7 +142,7 @@ DevRel Survey promo
             color: #000;
             margin-top: 14px;
             padding: 10px 15px;
-            border: 3px solid #fff;
+            border: 3px solid;
             border-radius: 0;
             font-weight: bold;
             text-transform: none;
@@ -183,7 +182,7 @@ Promos
         button {
             @include bidi-style(text-align, left, text-align, right);
             background: #82d1f5;
-            border: 2px solid #fff;
+            border: 2px solid;
             border-radius: 0;
             box-shadow: none;
             color: #000;
