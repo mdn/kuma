@@ -243,6 +243,10 @@
   {% block content %}{% endblock %}
   </div></main>
 
+  <!-- redesign notices -->
+  {% include "includes/redesign_notice.html" %}
+
+
   <!-- Footer -->
   {% if waffle.flag('redesign') %}
       <footer id="nav-footer" class="nav-footer">

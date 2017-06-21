@@ -905,6 +905,7 @@ PIPELINE_JS = {
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
+            'js/redesign.js',
             # FFO lib contains Promise polyfill
             'js/libs/fontfaceobserver/fontfaceobserver.2.0.7.js',
             'js/fonts.js',
