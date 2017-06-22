@@ -17,30 +17,6 @@ homepage masthead (search, feature callouts)
     }
 }
 
-.search-form {
-    display: block;
-    margin: 0 auto;
-    padding: ($grid-spacing * 2) 0;
-    position: relative;
-    width: 60%;
-
-    /* Only use the "big search" style when the search filter feature is not enabled. */
-    > input#home-q {
-        @include big-search();
-    }
-
-    .search-icon {
-        position: absolute;
-        top: 48px;
-        @include bidi-style(left, $icon-margin, right, auto);
-    }
-
-    input#home-q {
-        @include set-placeholder-style(color, $text-color);
-        @include bidi-style(padding-left, 30px, padding-right, 0);
-    }
-}
-
 @media #{$mq-tablet-and-down} {
     .home-masthead {
         h1 {
@@ -58,14 +34,5 @@ homepage masthead (search, feature callouts)
 @media #{$mq-mobile-and-down} {
     h1 {
         @include set-font-size(34px);
-    }
-
-    .search-form {
-        width: 100%;
-        padding-top: $grid-spacing;
-
-        .search-icon {
-            top: ($grid-spacing + 7);
-        }
     }
 }

@@ -435,12 +435,14 @@ These are not dynamic but serve as mixins
 }
 
 @mixin big-search() {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    padding: ($grid-spacing / 2);
+    @include bidi-style(padding-left, 30px, padding-right, 0);
     background: #fff;
     @include set-larger-font-size();
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    padding: ($grid-spacing / 2);
+    @include set-placeholder-style(color, $text-color);
 }
 
 @mixin clearfix() {
