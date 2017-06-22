@@ -5,42 +5,39 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: 2017-06-22 20:44+0000\n"
+"Last-Translator: Georgianizator <georgianization@outlook.com>\n"
+"Language-Team: Georgian https://pontoon.mozilla.org/ka/\n"
+"Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-08-26 22:16:54+00:00\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: Georgian https://pontoon.mozilla.org/ka/\n"
-"Language: ka\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pontoon\n"
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
-msgstr ""
+msgstr "მნიშვნელობები URL-იდან ხელახლა ჩაიტვირთა."
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
-msgstr ""
+msgstr "მოდულის პარამეტრები შენახულია."
 
 #: promote-mdn.php:245
-msgid ""
-"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
-"JavaScript and other Web standards and open technologies."
-msgstr ""
+msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
+msgstr "MDN არის თქვენი ვებ-შემმუშავებლის ხელსაწყოების ნაკრები დოკუმენტებისთვის, სადემონსტრაციო პროექტებისთვის და ა.შ. HTML, CSS, JavaScript და სხვა ვებ სტანდარტებსა და ღია ტენქოლოგიებში."
 
 #: promote-mdn.php:248
-msgid ""
-"MDN is the best online resource - for web developers, by web developers."
-msgstr ""
+msgid "MDN is the best online resource - for web developers, by web developers."
+msgstr "MDN არის საუკეთესო ინტერნეტ საიტი - ვებ-შემმუშავებლებისთვის, ვებ-შემმუშავებლებისგან."
 
 #: promote-mdn.php:249
-msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
 msgstr ""
 
 #: promote-mdn.php:256
 msgid "Settings"
-msgstr ""
+msgstr "პარამეტრები"
 
 #: promote-mdn.php:257
 msgid "Load keywords from URL"
@@ -48,7 +45,7 @@ msgstr ""
 
 #: promote-mdn.php:257
 msgid "Preview"
-msgstr ""
+msgstr "გადახედვა"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
@@ -60,28 +57,26 @@ msgstr ""
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "ხელახლა ჩატვირთვა ახლავე"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "RSS არხებზე ბმულების დამატება"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "ბმულების ახალ ფანჯარაში გახსნა"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
-msgstr ""
+msgstr "გამონაკლისები"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
 msgstr ""
 
 #: promote-mdn.php:268
-msgid ""
-"Do not add links to the following posts or pages (comma-separated id, slug, "
-"name):"
+msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
 msgstr ""
 
 #: promote-mdn.php:270
@@ -90,7 +85,7 @@ msgstr ""
 
 #: promote-mdn.php:274
 msgid "Limits"
-msgstr ""
+msgstr "შეზღუდვები"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
@@ -109,15 +104,11 @@ msgid "Custom Keywords"
 msgstr ""
 
 #: promote-mdn.php:281
-msgid ""
-"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
-"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
 msgstr ""
 
 #: promote-mdn.php:288
-msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 
 #: promote-mdn.php:289
@@ -125,15 +116,11 @@ msgid "Update options"
 msgstr ""
 
 #: promote-mdn.php:312
-msgid ""
-"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
-"configure."
+msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
 msgstr ""
 
 #: promote-mdn.php:313
-msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
