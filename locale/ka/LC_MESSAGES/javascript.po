@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-20 07:47-0700\n"
-"PO-Revision-Date: 2017-06-22 19:30+0000\n"
+"PO-Revision-Date: 2017-06-22 19:36+0000\n"
 "Last-Translator: Georgianizator <georgianization@outlook.com>\n"
 "Language-Team: Georgian https://pontoon.mozilla.org/ka/\n"
 "Language: ka\n"
@@ -177,7 +177,7 @@ msgstr "Stack Overflow-ზე მოძიება"
 
 #: kuma/static/js/wiki.js:583
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
+msgstr "MathML არაა მხარდაჭერილი თქვენს ბრაუზერში. მის ნაცვლად გამოყენებული იქნება CSS fallback."
 
 #: kuma/static/js/wiki.js:798
 msgid "Details"
@@ -269,15 +269,15 @@ msgstr "შედეგი"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:53
 msgid "Insert Code Sample Template"
-msgstr ""
+msgstr "ჩასვით ნიმუშის მაგალითი"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
-msgstr ""
+msgstr "სინტაქსის აღმნიშვნელი"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:30
 msgid "No Highlight"
-msgstr ""
+msgstr "აღნიშვნების გარეშე"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
