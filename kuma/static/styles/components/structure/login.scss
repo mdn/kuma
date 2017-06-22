@@ -7,10 +7,6 @@ Header login link
     color: $link-color !important; /* stylelint-disable-line declaration-no-important */
 }
 
-.button.logout {
-    display: block;
-}
-
 @media #{$mq-mobile-and-down} {
     .login {
         @include nav-item();
