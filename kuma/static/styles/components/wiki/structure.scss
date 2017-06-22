@@ -3,6 +3,7 @@
 .wiki-main-content {
     background: #fff;
     min-height: 300px;
+    padding-bottom: $grid-spacing;
 
     .center {
         @include remove-center-spacing();

@@ -1,4 +1,5 @@
 .newsletter-teaser {
+    margin-top: 0;
     margin-bottom: $grid-spacing;
     @include set-font-size($h2-font-size);
 }
@@ -40,15 +41,16 @@ input.newsletter-input-email {
 }
 
 .newsletter-thanks h2 {
+    margin-top: 0;
     margin-bottom: $grid-spacing;
 }
 
 /* modifications for when it appears on articles */
 .newsletter-box {
     position: relative;
-    margin: $grid-spacing 0;
     border-top: 2px solid $text-color;
-    padding: $grid-spacing 0;
+    padding: $grid-spacing $mobile-center-spacing;
+    background-color: #fff;
 
 
     .newsletter-teaser {
