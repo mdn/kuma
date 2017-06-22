@@ -81,7 +81,7 @@ $see-also-outdent : 6px;
 
         #{$selector-icon} {
             @include set-font-size($body-font-size);
-            position: realtive;
+            position: relative;
             top: 3px;
             min-width: 15px;
             vertical-align: top;
