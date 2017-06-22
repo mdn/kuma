@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-22 18:11+0000\n"
+"PO-Revision-Date: 2017-06-22 18:15+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
 "Language: nl\n"
@@ -442,7 +442,7 @@ msgid ""
 "see the new look, and we’d love to hear what you think."
 msgstr ""
 "We werken de vormgeving en navigatie van MDN bij om onze toewijding aan het verschaffen van de beste (en meest platformonafhankelijke) webdocumenten ter wereld beter te weerspiegelen. Als bètatester"
-" bent u de eerste die de nieuwe vormgeving kunt zien, en we horen graag wat u ervan vindt."
+" bent u de eerste die de nieuwe vormgeving ziet, en we horen graag wat u ervan vindt."
 
 #: jinja2/includes/redesign_notice.html:17
 #, python-format
