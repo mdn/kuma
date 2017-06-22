@@ -14,9 +14,13 @@
   <h2>{{ _('Hello Beta Tester!') }}</h2>
   <p>{{ _('We’re updating the look and navigation of MDN to more closely reflect our dedication to providing the best (and most platform-agnostic) web docs in the world. As a beta tester, you’re the first to see the new look, and we’d love to hear what you think.') }}</p>
   <p>
-    {% trans profile_url=url('users.user_edit', username=user.username) %}
-    You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href="{{ profile_url }}">your profile page</a>.
-    {% endtrans %}
+    {% if user.is_authenticated() %}
+      {% trans profile_url=url('users.user_edit', username=user.username) %}
+      You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href="{{ profile_url }}">your profile page</a>.
+      {% endtrans %}
+    {% else %}
+      {{ _('You\'re seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on your profile page.') }}
+    {% endif %}
   </p>
   <p>{{ _('The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July.') }}</p>
   <p>{{ _('We hope you love it and find it useful!') }}</p>
