@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-22 17:05+0000\n"
-"Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
+"PO-Revision-Date: 2017-06-22 19:50+0000\n"
+"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -278,7 +278,7 @@ msgstr "Twitter"
 
 #: jinja2/base.html:263
 msgid "Github"
-msgstr ""
+msgstr "Github"
 
 #: jinja2/base.html:267 kuma/core/sections.py:13
 msgid "Mozilla"
@@ -291,12 +291,11 @@ msgstr "O mně"
 
 #: jinja2/base.html:272
 msgid "Contact Us"
-msgstr ""
+msgstr "Kontaktujte nás"
 
 #: jinja2/base.html:273
-#, fuzzy
 msgid "Donate"
-msgstr "Chci přispět"
+msgstr "Přispět"
 
 #: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
@@ -304,7 +303,7 @@ msgstr "Facebook"
 
 #: jinja2/base.html:276
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: jinja2/base.html:284 jinja2/base.html:310
 msgid "Terms"
