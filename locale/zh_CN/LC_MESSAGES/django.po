@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-22 23:31+0000\n"
+"PO-Revision-Date: 2017-06-22 23:40+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -114,9 +114,8 @@ msgid "Skip to search"
 msgstr "跳到搜索"
 
 #: jinja2/base.html:116 jinja2/base.html:254
-#, fuzzy
 msgid "MDN Web Docs"
-msgstr "MDN 文档"
+msgstr "MDN Web 文档"
 
 #: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -285,18 +284,16 @@ msgid "Mozilla"
 msgstr "Mozilla"
 
 #: jinja2/base.html:271
-#, fuzzy
 msgid "About"
-msgstr "关于我"
+msgstr "关于"
 
 #: jinja2/base.html:272
 msgid "Contact Us"
 msgstr "联系我们"
 
 #: jinja2/base.html:273
-#, fuzzy
 msgid "Donate"
-msgstr "立即捐款"
+msgstr "捐款"
 
 #: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
@@ -415,29 +412,28 @@ msgstr "正在施工"
 #: jinja2/includes/redesign_notice.html:6
 #, python-format
 msgid "Thanks for helping us test the <a href=\"%(blog_url)s\">new MDN look</a>. Find anything wrong? Please <a href=\"%(bug_url)s\">file a bug</a>."
-msgstr ""
+msgstr "感谢您帮助测试<a href=\"%(blog_url)s\">新版 MDN 外观</a>。有发现问题？请<a href=\"%(bug_url)s\">填报一个 bug</a>。"
 
 #: jinja2/includes/redesign_notice.html:14
-#, fuzzy
 msgid "Hello Beta Tester!"
-msgstr "Beta 测试者"
+msgstr "欢迎你，Beta 测试员！"
 
 #: jinja2/includes/redesign_notice.html:15
 msgid ""
 "We’re updating the look and navigation of MDN to more closely reflect our dedication to providing the best (and most platform-agnostic) web docs in the world. As a beta tester, you’re the first to "
 "see the new look, and we’d love to hear what you think."
-msgstr ""
+msgstr "我们正在更新 MDN 的外观和浏览方式，以更加密切地反映我们致力于提供世界上最好的（且最平台无关的）不断更新的 Web 文档。作为测试人员，您是第一批看到新外观的人，我们很乐意听取您的想法。"
 
 #: jinja2/includes/redesign_notice.html:17
 #, python-format
 msgid ""
 "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href=\"%(profile_url)s\">your "
 "profile page</a>."
-msgstr ""
+msgstr "您现在看到了我们新外观的预览版。如果您发现任何问题，请填报一个 Bug（链接在页脚处）；您也可以在<a href=\"%(profile_url)s\">您的个人资料页面</a>中选择退出 Beta 测试。"
 
 #: jinja2/includes/redesign_notice.html:21
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
-msgstr ""
+msgstr "变化将在接下来的几周提供给您（作为测试员），并将在7月中旬向所有人发布。"
 
 #: jinja2/includes/redesign_notice.html:22
 msgid "We hope you love it and find it useful!"
@@ -446,10 +442,9 @@ msgstr "我们希望您喜欢并感受到它的改进！"
 #: jinja2/includes/redesign_notice.html:24 jinja2/includes/redesign_notice.html:38
 #, python-format
 msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog post."
-msgstr ""
+msgstr "到我们的博客<a href=\"%(blog_url)s\">了解重新设计的更多细节</a>。"
 
 #: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:41
-#, fuzzy
 msgid "Thanks for using MDN!"
 msgstr "感谢您使用 MDN！"
 
@@ -469,11 +464,11 @@ msgstr "为什么 MDN 变样了？"
 msgid ""
 "MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the "
 "web technology docs you’re looking for."
-msgstr ""
+msgstr "MDN 正在转向专注于 Web 技术的文档网站。所有最好的内容依然在这里；我们只是改变了一些视觉元素和浏览方式，以帮助您更快速地找到要查询的 Web 技术文档。"
 
 #: jinja2/includes/redesign_notice.html:35
 msgid "But don’t worry, MDN and Mozilla are still together! In fact, we're updating MDN’s look to reflect Mozilla's new logo and colors."
-msgstr ""
+msgstr "但不用担心，MDN 与 Mozilla 仍在一起。我们也还在为 MDN 更新外观以反应 Mozilla 的新版标志和配色。"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
@@ -4002,9 +3997,9 @@ msgid_plural "More information about these errors"
 msgstr[0] "更多有关此错误的信息"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"%(troubleshooting_url)s\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr "任何有一个 MDN 个人资料的人都可以编辑此文档来修复错误。使用 <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript 故障排除指南</a> 作为一个起点。"
+msgstr "任何有 MDN 个人资料的人都可以编辑文档来修正错误。使用<a href=\"%(troubleshooting_url)s\">KumaScript 故障排除指南</a>作为一个起点。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4015,14 +4010,12 @@ msgid "In macro:"
 msgstr "宏："
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
-#, fuzzy
 msgid "Create Macro"
-msgstr "创建一个"
+msgstr "创建宏"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:43
-#, fuzzy
 msgid "View Macro"
-msgstr "查看个人资料"
+msgstr "查看宏"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Parsing macro:"
