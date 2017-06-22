@@ -1,0 +1,51 @@
+/*
+Full size form on home and search pages
+********************************************************************** */
+
+
+#search-form .search-form, // remove extra specificity when integrating redesign
+.search-form {
+    display: block;
+    margin: 0 auto;
+    padding: ($grid-spacing * 2) 0;
+    position: relative;
+    width: 60%;
+
+    > input#home-q,
+    > input#search-q, {
+        @include big-search();
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 48px;
+        @include bidi-style(left, $icon-margin, right, auto);
+    }
+}
+
+/* hack for search in redesign move to search.scss when integrating redesign */
+.results-search-form {
+
+    #search-q {
+        color: $form-text;
+        background: $form-background-color;
+        border: $form-border-width solid $form-border-color;
+        padding: $content-vertical-spacing $content-horizontal-spacing;
+        @include bidi-style(padding-left, 30px, padding-right, 0);
+        font-weight: bold;
+        border-radius: 0;
+
+        @include set-placeholder-style(color, $placeholder-text);
+    }
+}
+
+@media #{$mq-mobile-and-down} {
+    .search-form {
+        width: 100%;
+        padding-top: $grid-spacing;
+
+        .search-icon {
+            top: ($grid-spacing + 7);
+        }
+    }
+}
