@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-22 17:00+0000\n"
+"PO-Revision-Date: 2017-06-23 10:30+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -471,7 +471,7 @@ msgstr ""
 
 #: jinja2/includes/redesign_notice.html:33
 msgid "Why does MDN look different?"
-msgstr ""
+msgstr "Por que a MDN parece diferente?"
 
 #: jinja2/includes/redesign_notice.html:34
 msgid ""
