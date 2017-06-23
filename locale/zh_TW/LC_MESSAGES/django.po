@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-23 03:10+0000\n"
+"PO-Revision-Date: 2017-06-23 03:15+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: Chinese (Traditional) https://pontoon.mozilla.org/zh_TW/\n"
 "Language: zh_TW\n"
@@ -114,9 +114,8 @@ msgid "Skip to search"
 msgstr "跳到搜尋"
 
 #: jinja2/base.html:116 jinja2/base.html:254
-#, fuzzy
 msgid "MDN Web Docs"
-msgstr "MDN demo"
+msgstr "MDN Web Docs"
 
 #: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -288,18 +287,16 @@ msgstr "Mozilla"
 
 # 77%
 #: jinja2/base.html:271
-#, fuzzy
 msgid "About"
-msgstr "關於我"
+msgstr "關於"
 
 #: jinja2/base.html:272
 msgid "Contact Us"
 msgstr "聯絡我們"
 
 #: jinja2/base.html:273
-#, fuzzy
 msgid "Donate"
-msgstr "敬請捐款"
+msgstr "捐款"
 
 #: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
@@ -421,9 +418,8 @@ msgid "Thanks for helping us test the <a href=\"%(blog_url)s\">new MDN look</a>.
 msgstr "感謝您協助我們測試 <a href=\"%(blog_url)s\">MDN 的全新外觀</a>。有任何東西怪怪的嗎？請<a href=\"%(bug_url)s\">回報 Bug</a>。"
 
 #: jinja2/includes/redesign_notice.html:14
-#, fuzzy
 msgid "Hello Beta Tester!"
-msgstr "Beta 測試者"
+msgstr "嗨 Beta 測試者！"
 
 #: jinja2/includes/redesign_notice.html:15
 msgid ""
@@ -436,11 +432,11 @@ msgstr "我們正在更新 MDN 的外觀，以更能表現出我們致力於提�
 msgid ""
 "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href=\"%(profile_url)s\">your "
 "profile page</a>."
-msgstr ""
+msgstr "您看到的是我們的新版介面預覽，若您發現任何東西不正常，請回報 Bug 給我們（鏈結在頁尾）。您也可以在 <a href=\"%(profile_url)s\">個人資料頁面</a> 選擇不要成為 Beta 測試者。"
 
 #: jinja2/includes/redesign_notice.html:21
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
-msgstr ""
+msgstr "變更將在接下來幾週陸續推出給您測試，且在七月中旬正式上線。"
 
 #: jinja2/includes/redesign_notice.html:22
 msgid "We hope you love it and find it useful!"
@@ -452,9 +448,8 @@ msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog pos
 msgstr "到我們的部落格文章<a href=\"%(blog_url)s\">了解新設計的二三事</a>。"
 
 #: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:41
-#, fuzzy
 msgid "Thanks for using MDN!"
-msgstr "感謝您使用 MDN！"
+msgstr "感謝使用 MDN！"
 
 #: jinja2/includes/redesign_notice.html:28
 msgid "The MDN Web Docs Team"
@@ -472,11 +467,11 @@ msgstr "為什麼 MDN 長得不一樣了？"
 msgid ""
 "MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the "
 "web technology docs you’re looking for."
-msgstr ""
+msgstr "MDN 將目標轉移為提供 Web 技術資訊的網站。所有已經存在的內容都沒有異動，我們只有修改了一些視覺元素與頁面瀏覽流程，幫助您能更快找到想找的 Web 技術文件。"
 
 #: jinja2/includes/redesign_notice.html:35
 msgid "But don’t worry, MDN and Mozilla are still together! In fact, we're updating MDN’s look to reflect Mozilla's new logo and colors."
-msgstr ""
+msgstr "別擔心，MDN 跟 Mozilla 也還在一起！我們正在調整 MDN 的外觀，以符合 Mozilla 最新的商標與色彩。"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
@@ -4019,9 +4014,9 @@ msgid_plural "More information about these errors"
 msgstr[0] "此錯誤資訊的更多資訊"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"%(troubleshooting_url)s\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr "任何有 MDN 帳號的人都可以修改文件來修正錯誤。請用 <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript 疑難排解指南</a> 作為初步參考。"
+msgstr "任何有 MDN 帳號的人都可以編輯文件來修正錯誤。請用 <a href=\"%(troubleshooting_url)s\">KumaScript 疑難排解指南</a> 作為初步參考。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4032,14 +4027,12 @@ msgid "In macro:"
 msgstr "於巨集:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
-#, fuzzy
 msgid "Create Macro"
-msgstr "建立"
+msgstr "建立巨集"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:43
-#, fuzzy
 msgid "View Macro"
-msgstr "檢視個人資料"
+msgstr "檢視巨集"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Parsing macro:"
