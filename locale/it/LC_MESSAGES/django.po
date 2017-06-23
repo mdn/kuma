@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-23 09:33+0000\n"
+"PO-Revision-Date: 2017-06-23 11:13+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -455,7 +455,7 @@ msgstr "Grazie per aver scelto MDN."
 
 #: jinja2/includes/redesign_notice.html:28
 msgid "The MDN Web Docs Team"
-msgstr ""
+msgstr "Il team di MDN"
 
 #: jinja2/includes/redesign_notice.html:29 jinja2/includes/redesign_notice.html:43
 msgid "Hide redesign announcement"
@@ -473,7 +473,7 @@ msgstr ""
 
 #: jinja2/includes/redesign_notice.html:35
 msgid "But don’t worry, MDN and Mozilla are still together! In fact, we're updating MDN’s look to reflect Mozilla's new logo and colors."
-msgstr ""
+msgstr "Ma, stai tranquillo, il sodalizio tra MDN e Mozilla è più vivo che mai. il nuovo aspetto rifletterà infatti lo stile e i colori del nuovo logo Mozilla."
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
@@ -4088,14 +4088,12 @@ msgid "In macro:"
 msgstr "Macro di input:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
-#, fuzzy
 msgid "Create Macro"
-msgstr "Crea un"
+msgstr "Crea macro"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:43
-#, fuzzy
 msgid "View Macro"
-msgstr "Visualizza Profilo"
+msgstr "Visualizza macro"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Parsing macro:"
