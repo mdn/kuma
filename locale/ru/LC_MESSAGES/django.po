@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-22 18:34+0000\n"
-"Last-Translator: Alexander Slovesnik <unghost@mozilla-russia.org>\n"
+"PO-Revision-Date: 2017-06-23 20:18+0000\n"
+"Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -289,7 +289,7 @@ msgstr "О нас"
 
 #: jinja2/base.html:272
 msgid "Contact Us"
-msgstr ""
+msgstr "Связаться с нами"
 
 #: jinja2/base.html:273
 msgid "Donate"
@@ -848,7 +848,7 @@ msgstr "У этого документа нет вложений."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr "Можно прикрепить изображения, а затем встроить их в статье."
+msgstr "Можно прикрепить изображения, а затем вставить их в статье."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
