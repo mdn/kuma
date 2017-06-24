@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-23 20:18+0000\n"
+"PO-Revision-Date: 2017-06-23 19:59+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -414,7 +414,7 @@ msgstr "В разработке"
 #: jinja2/includes/redesign_notice.html:6
 #, python-format
 msgid "Thanks for helping us test the <a href=\"%(blog_url)s\">new MDN look</a>. Find anything wrong? Please <a href=\"%(bug_url)s\">file a bug</a>."
-msgstr ""
+msgstr "Спасибо за то, что помогаете нам тестировать <a href=\"%(blog_url)s\">новый дизайн MDN</a>. Что-то не так? Пожалуйста, <a href=\"%(bug_url)s\">сообщите об ошибке</a>."
 
 #: jinja2/includes/redesign_notice.html:14
 msgid "Hello Beta Tester!"
