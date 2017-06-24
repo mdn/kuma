@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-23 16:49+0000\n"
-"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
+"PO-Revision-Date: 2017-06-23 17:41+0000\n"
+"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -445,7 +445,7 @@ msgstr "La nuova interfaccia verrà implementata entro le prossime due settimane
 
 #: jinja2/includes/redesign_notice.html:22
 msgid "We hope you love it and find it useful!"
-msgstr ""
+msgstr "Ci auguriamo che troverai l’aggiornamento funzionale e di tuo gradimento."
 
 #: jinja2/includes/redesign_notice.html:24 jinja2/includes/redesign_notice.html:38
 #, python-format
