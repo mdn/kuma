@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-20 07:47-0700\n"
-"PO-Revision-Date: 2017-06-25 08:30+0000\n"
+"PO-Revision-Date: 2017-06-25 08:34+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -97,10 +97,12 @@ msgstr "Supprimer le brouillon."
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
 msgstr ""
+"Une version plus récente de cet article a été publiée depuis l'enregistrement du brouillon. Vous pouvez restaurer le contenu de ce brouillon afin d'en voir le contenu mais vous ne pourrez pas le "
+"publier."
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "Historique des révisions."
 
 #: kuma/static/js/wiki-edit-draft.js:103
 msgid "Published version"
@@ -108,7 +110,7 @@ msgstr "Version publiée"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
-msgstr ""
+msgstr "Veuillez comparer cette date avec la date de la dernière révision afin de vous assurer que vous n'écrasez pas de modifications intermédiaires."
 
 #: kuma/static/js/wiki-edit-draft.js:126
 #, python-format
@@ -117,7 +119,7 @@ msgstr "Vous avez un brouillon en date du : %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
-msgstr ""
+msgstr "Visualisation d'un ancien brouillon. Ce brouillon ne peut pas être publié."
 
 #: kuma/static/js/wiki-edit-draft.js:171
 msgid "Draft restored."
@@ -145,7 +147,7 @@ msgstr "Sauvegarde automatique activée."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "Publication des modifications…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -156,7 +158,6 @@ msgid "Changes saved."
 msgstr "Modifications enregistrées."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
 msgstr "La publication a échoué. Veuillez copier-coller vos modifications dans un endroit sûr et essayer de soumettre le formulaire en utilisant le bouton « Publier »."
 
