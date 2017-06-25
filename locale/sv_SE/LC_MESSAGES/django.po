@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-25 17:23+0000\n"
+"PO-Revision-Date: 2017-06-25 21:11+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -422,6 +422,8 @@ msgid ""
 "We’re updating the look and navigation of MDN to more closely reflect our dedication to providing the best (and most platform-agnostic) web docs in the world. As a beta tester, you’re the first to "
 "see the new look, and we’d love to hear what you think."
 msgstr ""
+"Vi uppdaterar utseendet och navigeringen på MDN för att bättre reflektera vårt engagemang för att tillhandahålla de bästa webbdokumenten i världen. Som beta-testare är du den första som ser det nya "
+"utseendet, och vi vill gärna höra vad du tycker."
 
 #: jinja2/includes/redesign_notice.html:17
 #, python-format
@@ -4046,11 +4048,9 @@ msgstr[0] "Mer information om detta fel"
 msgstr[1] "Mer information om dessa fel"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"%(troubleshooting_url)s\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr ""
-"Vem som helst med en MDN profil kan redigera ett dokument för att åtgärda ett fel. Använd <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript felsökningsguide</a> som "
-"utgångspunkt."
+msgstr "Alla med en MDN-profil kan redigera ett dokument för att åtgärda ett fel. Använd <a href=\"%(troubleshooting_url)s\">KumaScript felsökningsguide</a> som utgångspunkt."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
