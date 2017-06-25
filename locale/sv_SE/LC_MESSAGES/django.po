@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-24 13:58+0000\n"
-"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
+"PO-Revision-Date: 2017-06-25 17:23+0000\n"
+"Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -113,9 +113,8 @@ msgid "Skip to search"
 msgstr "Hoppa till sök"
 
 #: jinja2/base.html:116 jinja2/base.html:254
-#, fuzzy
 msgid "MDN Web Docs"
-msgstr "MDN demon"
+msgstr "MDN webbdokument"
 
 #: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -412,7 +411,7 @@ msgstr "Under uppbyggnad"
 #: jinja2/includes/redesign_notice.html:6
 #, python-format
 msgid "Thanks for helping us test the <a href=\"%(blog_url)s\">new MDN look</a>. Find anything wrong? Please <a href=\"%(bug_url)s\">file a bug</a>."
-msgstr ""
+msgstr "Tack för att du hjälper oss att testa <a href=\"%(blog_url)s\">det nya utseende på MDN</a>. Hittar du något fel? Var god <a href=\"%(bug_url)s\">skicka in problemet</a>."
 
 #: jinja2/includes/redesign_notice.html:14
 msgid "Hello Beta Tester!"
