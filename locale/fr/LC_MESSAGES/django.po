@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-25 08:50+0000\n"
+"PO-Revision-Date: 2017-06-25 09:07+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -369,7 +369,7 @@ msgstr "Recevez le meilleur du développement web"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
-msgstr ""
+msgstr "Recevez le meilleur de MDN, directement dans votre boîte de réception."
 
 #: jinja2/includes/newsletter.html:12
 msgid "E-mail"
@@ -416,12 +416,12 @@ msgstr "Suivant"
 
 #: jinja2/includes/redesign_notice.html:4
 msgid "Under Construction"
-msgstr ""
+msgstr "En construction"
 
 #: jinja2/includes/redesign_notice.html:6
 #, python-format
 msgid "Thanks for helping us test the <a href=\"%(blog_url)s\">new MDN look</a>. Find anything wrong? Please <a href=\"%(bug_url)s\">file a bug</a>."
-msgstr ""
+msgstr "Merci de nous aider à tester <a href=\"%(blog_url)s\">ce nouveau style pour MDN</a>. Vous rencontrez un problème ? N'hésitez pas à <a href=\"%(bug_url)s\">remplir un bug</a>."
 
 #: jinja2/includes/redesign_notice.html:14
 msgid "Hello Beta Tester!"
@@ -432,6 +432,8 @@ msgid ""
 "We’re updating the look and navigation of MDN to more closely reflect our dedication to providing the best (and most platform-agnostic) web docs in the world. As a beta tester, you’re the first to "
 "see the new look, and we’d love to hear what you think."
 msgstr ""
+"Nous mettons à jour l'apparence et la navigation sur MDN afin que celui-ci reflète mieux notre volonté de fournir la meilleure (et la plus agnostique) documentation des technologies web. En tant que"
+" bêta-testeur, vous faites partie des premiers à découvrir ce nouveau style et nous serions ravis de savoir ce que vous en pensez."
 
 #: jinja2/includes/redesign_notice.html:17
 #, python-format
@@ -439,19 +441,21 @@ msgid ""
 "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href=\"%(profile_url)s\">your "
 "profile page</a>."
 msgstr ""
+"Voici une prévisualisation du nouveau style. Si vous rencontrez un quelconque problème, merci de remplir un bug (le lien est indiqué dans le pied de page). Vous pouvez vous désinscrire de la bêta "
+"via <a href=\"%(profile_url)s\">votre page de profil</a>."
 
 #: jinja2/includes/redesign_notice.html:21
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
-msgstr ""
+msgstr "En tant que bêta-testeur, vous pourrez voir ces changements dans quelques semaines. Ils seront visibles de tous à partir de mi-juillet."
 
 #: jinja2/includes/redesign_notice.html:22
 msgid "We hope you love it and find it useful!"
-msgstr ""
+msgstr "Nous espérons que vous l'appréciez et le trouvez utile !"
 
 #: jinja2/includes/redesign_notice.html:24 jinja2/includes/redesign_notice.html:38
 #, python-format
 msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog post."
-msgstr ""
+msgstr "<a href=\"%(blog_url)s\">En savoir plus sur la refonte</a> avec notre billet de blog."
 
 #: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:41
 msgid "Thanks for using MDN!"
@@ -459,15 +463,15 @@ msgstr "Merci d'utiliser MDN !"
 
 #: jinja2/includes/redesign_notice.html:28
 msgid "The MDN Web Docs Team"
-msgstr ""
+msgstr "L'équipe de documentation du Web MDN"
 
 #: jinja2/includes/redesign_notice.html:29 jinja2/includes/redesign_notice.html:43
 msgid "Hide redesign announcement"
-msgstr ""
+msgstr "Masquer l'annonce à propos de la refonte"
 
 #: jinja2/includes/redesign_notice.html:33
 msgid "Why does MDN look different?"
-msgstr ""
+msgstr "Pourquoi MDN a-t-il changé de style ?"
 
 #: jinja2/includes/redesign_notice.html:34
 msgid ""
@@ -1448,7 +1452,7 @@ msgstr "Web ouvert et mobile"
 
 #: kuma/landing/jinja2/landing/homepage.html:123
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
-msgstr ""
+msgstr "Avez-vous quelques minutes pour répondre à notre sondage pour les développeurs ?"
 
 #: kuma/landing/jinja2/landing/homepage.html:125
 msgid "Take the Survey"
