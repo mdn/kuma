@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-20 07:47-0700\n"
-"PO-Revision-Date: 2017-05-01 17:43+0000\n"
-"Last-Translator: Alpha <adrien.gat@gmail.com>\n"
+"PO-Revision-Date: 2017-06-25 08:30+0000\n"
+"Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -83,19 +83,16 @@ msgid "an unknown date"
 msgstr "une date inconnue"
 
 #: kuma/static/js/wiki-edit-draft.js:77
-#, fuzzy
 msgid "View draft."
-msgstr "Voir la page"
+msgstr "Voir le brouillon."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "Appliquer le contenu du brouillon"
+msgstr "Restaurer le brouillon."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "Supprimer le brouillon"
+msgstr "Supprimer le brouillon."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
@@ -106,47 +103,41 @@ msgid "Revision history."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:103
-#, fuzzy
 msgid "Published version"
-msgstr "publié"
+msgstr "Version publiée"
 
 #: kuma/static/js/wiki-edit-draft.js:116
 msgid "Compare this date to the latest revision date to ensure you're not overwriting later changes."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "Vous avez un brouillon enregistré depuis :"
+msgstr "Vous avez un brouillon en date du : %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "restauré"
+msgstr "Brouillon restauré."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "supprimé"
+msgstr "Brouillon supprimé."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "publié"
+msgstr "Brouillon publié :"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "supprimé"
+msgstr "Brouillon supprimé :"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "enregistré automatiquement"
+msgstr "Brouillon enregistré automatiquement :"
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
