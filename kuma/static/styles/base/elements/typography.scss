@@ -19,13 +19,13 @@ h2 {
 h3 {
     margin: $grid-spacing 0 ($grid-spacing / 2) 0;
     @include set-font-size($h3-font-size);
-    @include set-subheading-font-family();
+    @include set-heading-font-family();
 }
 
 h4 {
     margin: $grid-spacing 0 ($grid-spacing / 2) 0;
     @include set-font-size($h4-font-size);
-    @include set-subheading-font-family();
+    @include set-heading-font-family();
 }
 
 h5 {

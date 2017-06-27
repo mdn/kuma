@@ -23,14 +23,6 @@ var mdn = window.mdn || {};
                 {'weight' : 'bold'},
                 {'style' : 'italic'}
             ]
-        },
-        {
-            'name' : 'zillahighlight',
-            'className' : 'ffo-zillahighlight',
-            'loaded': false,
-            'varient' : [
-                {'weight' : 'normal'}
-            ]
         }
     ];
 

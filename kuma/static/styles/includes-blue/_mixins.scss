@@ -42,13 +42,6 @@ Provides main mixins for use within the MDN theme.
     }
 }
 
-@mixin set-subheading-font-family() {
-    font-family: $subheading-font-family;
-    #{$selector-subheading-font-fallback} {
-        font-family: $subheading-font-family-fallback;
-    }
-}
-
 @mixin set-site-font-family() {
     font-family: $site-font-family;
     #{$selector-site-font-fallback} {
