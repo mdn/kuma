@@ -29,6 +29,11 @@ textarea {
     @include set-placeholder-style(color, $placeholder-text);
 }
 
+textarea {
+    color: $text-color;
+    font-weight: normal;
+}
+
 input[type='search'] {
     @include vendorize(appearance, textfield);
 
