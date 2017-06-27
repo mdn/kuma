@@ -114,8 +114,6 @@ $site-font-family-fallback : arial, sans-serif;
 $site-font-family : 'Open Sans', $site-font-family-fallback;
 $heading-font-family-fallback : 'Palatino', 'Palatino Linotype', serif;
 $heading-font-family : zillaslab, $heading-font-family-fallback;
-$subheading-font-family : zillahighlight, $heading-font-family-fallback;
-$subheading-font-family-fallback : $heading-font-family-fallback;
 $tiny-font-family : 'Helvetica', arial, sans-serif;
 $code-block-font-family : consolas, monaco, 'Andale Mono', monospace; /* prism */
 $code-inline-font-family : consolas, 'Liberation Mono', courier, monospace; /* inline */
@@ -266,7 +264,6 @@ selectors
 $selector-icon : 'i[class^="icon-"]';
 $selector-site-font-fallback : 'html[data-ffo-opensans="false"]:not(.no-js) &';
 $selector-heading-font-fallback : 'html[data-zillaslab="false"]:not(.no-js) &';
-$selector-subheading-font-fallback : 'html[data-zillahighlight="false"]:not(.no-js) &';
 
 
 /*
