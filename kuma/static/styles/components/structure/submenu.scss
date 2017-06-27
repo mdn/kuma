@@ -8,6 +8,10 @@
         @include set-heading-font-family;
         @include set-font-size($h4-font-size);
     }
+
+    #{$selector-icon} {
+        @include bidi-style(margin-left, 5px, margin-right, 0);
+    }
 }
 
 .zone #main-header .submenu a {
@@ -65,12 +69,10 @@
             }
         }
 
-        li {
-            margin-top: 15px;
-        }
-
-        #{$selector-icon} {
-            @include bidi-style(margin-left, 5px, margin-right, 0);
+        a {
+            display: block;
+            padding: 5px 0;
+            margin-bottom: 5px;
         }
 
         #nav-sec & {

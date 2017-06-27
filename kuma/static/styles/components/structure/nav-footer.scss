@@ -41,19 +41,18 @@
     margin-bottom: $mobile-center-spacing;
 
     a {
-        display: block;
-        margin: $content-vertical-spacing 0;
+        display: inline-block;
+        padding: ($grid-spacing / 2) 0;
     }
 }
 
 .footer-social {
     @include set-font-size($h4-font-size);
     display: inline-block;
-    @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+    @include bidi-style(margin-right, ($grid-spacing / 2 ), margin-left, 0);
 
     a {
-        margin-top: 0;
-        margin-bottom: 0;
+        @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
     }
 }
 
@@ -98,22 +97,24 @@
         margin-bottom: $gutter-width;
 
         a {
-            margin: ($grid-spacing / 2) 0;
+            padding: ($grid-spacing / 4) 0;
         }
     }
 
     .footer-social {
         a {
-            margin-top: 0;
-            margin-bottom: 0;
+            @include bidi-style(padding-right, ($grid-spacing / 2 ), padding-left, 0);
         }
     }
-
 
     .languages {
         @include clearfix();
         padding-bottom: $gutter-width;
         margin-bottom: $gutter-width;
+
+        select {
+            max-width: -calc-col-width(3);
+        }
     }
 
     .footer-tos {
