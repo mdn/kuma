@@ -250,4 +250,8 @@ def wiki_url(path):
     Create a URL pointing to Kuma.
     Look for a wiki page in the current locale, or default to given path
     """
-    return reverse('wiki.document', args=[path])
+    parts = urlparse.urlsplit(path)
+    new_path = reverse('wiki.document', args=[parts.path])
+    new_parts = list(parts)
+    new_parts[2] = new_path
+    return urlparse.urlunsplit(new_parts)

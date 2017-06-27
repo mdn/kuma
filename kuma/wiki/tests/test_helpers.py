@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import mock
+import pytest
 
 from django.contrib.sites.models import Site
 
@@ -12,7 +13,8 @@ from ..models import DocumentZone
 from ..templatetags.jinja_helpers import (absolutify,
                                           document_zone_management_links,
                                           revisions_unified_diff,
-                                          selector_content_find, tojson)
+                                          selector_content_find, tojson,
+                                          wiki_url)
 
 
 class HelpTests(WikiTestCase):
@@ -158,3 +160,15 @@ class SelectorContentFindTests(UserTestCase, WikiTestCase):
         revision(document=doc1, content=doc_content, save=True)
         content = selector_content_find(doc1, '.')
         assert content == ''
+
+
+@pytest.mark.parametrize(
+    "path, expected", (
+        ('MDN/Getting_started', '/docs/MDN/Getting_started'),
+        ('MDN/Getting_started#Option_1_I_like_words',
+         '/docs/MDN/Getting_started#Option_1_I_like_words'),
+    ), ids=('simple', 'fragment'))
+def test_wiki_url(path, expected):
+    """Test wiki_url, without client languages."""
+    out = wiki_url(path)
+    assert out == expected
