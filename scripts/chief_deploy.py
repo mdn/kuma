@@ -89,6 +89,7 @@ def restart_celery(ctx):
 # As far as I can tell, Chief does not pass the username to commander,
 # so I can't give a username here: (
 # also doesn't pass ref at this point... we have to backdoor that too!
+# TODO: Update to the v2 API
 @task
 def ping_newrelic(ctx):
     f = open(settings.SRC_DIR + "/media/revision.txt", "r")
@@ -169,7 +170,7 @@ def deploy(ctx):
     restart_web()
     restart_kumascript()
     restart_celery()
-    ping_newrelic()
+    # ping_newrelic()
 
 
 @task
