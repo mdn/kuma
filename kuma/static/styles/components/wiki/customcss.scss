@@ -19,7 +19,7 @@ eventually emptying this file.
     font-size: 60%;
 }
 
-/* In index, dim obsolete, deprecated or non-standard element instead of striking through them */
+/* In index & quicklinks, dim obsolete, deprecated or non-standard element instead of striking through them */
 s.deprecatedElement,
 s.obsoleteElement,
 s.nonStdElement {
@@ -72,56 +72,12 @@ div.index.widgeted li.webcomp::after {
     clear: left;
 }
 
-/* ltr page only ? */
-/* span.comment { display:none; }
- */
 #wikiArticle .breadcrumbs {
     display: block;
     margin-bottom: 1em;
 }
 
-
-/* -- */
-
-table.withoutBorder,
-table.withoutBorder td,
-table.withoutBorder tr,
-table.withoutBorder th {
-    border: none;
-}
-
-td.horizontalLine {
-    border-left: none;
-}
-
-td.column {
-    border-bottom: none;
-}
-
-td.bottomPart {
-    border-top: none;
-}
-
-/* Use the verticalText class on a table cell to rotate its contents 90deg */
-td.verticalText {
-    width: 3em;
-    @include vendorize(transform, rotate(-90deg));
-}
-
-table.blockTable {
-    border-collapse: collapse;
-}
-
-table.blockTable,
-table.blockTable td {
-    margin: 1px;
-    padding: 1px;
-}
-
-table.blockTable .verticalColumn {
-    border-left: none;
-    border-right: none;
-}
+/* --- */
 
 /* The index page for HTML / CSS */
 div.index {
@@ -141,123 +97,7 @@ div.index ol {
     list-style-type: none;
 }
 
-
-/* https://github.com/mozilla/kumascript/blob/master/macros/HTML-Element_Navigation.ejs */
-table.HTMLElmNav {
-    margin: 1em auto;
-    border-width: 5px;
-}
-
-table.HTMLElmNav th,
-table.HTMLElmNav td {
-    text-align: center;
-}
-
-.method {
-    margin-left: 10px;
-    margin-bottom: 2em;
-    margin-top: 1em;
-}
-
-.method > .name {
-    display: block;
-    font-size: 13pt;
-    margin-bottom: .2em;
-}
-
-.method > .name > .param:after {
-    content: ',';
-    padding-right: .5em;
-}
-
-.method > .name > .param:last-of-type:after {
-    content: '';
-}
-
-.method > .name > .param > .name:after {
-    content: ' as ';
-    font-weight: normal;
-}
-
-.method > .name > .param:not(.required) {
-    font-style: italic;
-}
-
-.method > .name > .param:not(.required):before {
-    content: '[';
-}
-
-.method > .name > .param:not(.required):after {
-    content: ']';
-}
-
-.method > .description {
-    display: block;
-    font-size: 10pt;
-    color: #444;
-    font-style: italic;
-    margin-bottom: 7px;
-}
-
-.method > .name > .returns:before {
-    content: ' returns ';
-    font-weight: normal;
-    font-style: italic;
-}
-
-.method > .name > .returns {
-    font-weight: 700;
-}
-
-.method > .params {
-    display: block;
-    color: #555;
-}
-
-.method > .params > .param {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.method > .params > .param > .name {
-    font-weight: 700;
-    margin-right: .5em;
-    min-width: 80px;
-    display: inline-block;
-}
-
-.method > .params > .param > .description {
-    display: inline-block;
-    width: 300px;
-    vertical-align: top;
-    margin-right: 30px;
-}
-
-.method > .params > .param > .type {
-    display: inline-block;
-    width: 150px;
-    vertical-align: top;
-    font-weight: 700;
-}
-
-.method > .params > .param > .type:before {
-    content: 'Type ';
-    color: #888;
-    font-weight: normal;
-}
-
-.method > .params > .param > .default {
-    display: inline-block;
-    width: 150px;
-    vertical-align: top;
-    font-weight: 700;
-}
-
-.method > .params > .param > .default:before {
-    content: 'Default ';
-    color: #888;
-    font-weight: normal;
-}
+/* --- */
 
 /* Used to to create icon-badged APIs inline */
 .indexListRow {
@@ -581,53 +421,6 @@ div.fxosLiveSampleWrapper {
 #wikiArticle i.icon-stethoscope {
     color: #483d8b;
 }
-
-/* unimplemented */
-
-/*
- * "Mozilla only" banners
- */
-
-.bannerWrapper {
-    overflow: hidden;
-    padding-right: 2px;
-}
-
-.mozOnlyBanner {
-    background-color: #c33b1d;
-    background-image: url('https://developer.mozilla.org/files/5429/firefox.png'), radial-gradient(circle 16px at 18px 18px, rgba(0, 0, 0, .7) 0, rgba(0, 0, 0, .5) 11px, rgba(0, 0, 0, 0) 18px), linear-gradient(to right, #c33b1d 40%, #dda820);
-    background-repeat: no-repeat;
-    background-size: contain;
-    border-top-left-radius: 18px;
-    border-bottom-left-radius: 18px;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    height: 36px;
-    overflow: hidden;
-    color: #fff;
-    box-shadow: 0 0 3px #111;
-    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', Lucida, Arial, Helvetica, sans-serif;
-}
-
-.mozOnlyBanner dt {
-    font-weight: bold;
-    font-size: 16px;
-    text-shadow: 1px 1px 0 #222;
-    padding-left: 42px;
-    margin-left: 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.mozOnlyBanner dd {
-    font-size: 11px;
-    text-shadow: 1px 1px 0 #222;
-    padding-left: 42px;
-    margin-left: 0;
-    margin-top: 0;
-    padding-top: 0;
-}
-
 
 /* Horizontal tab boxes */
 .htab {
