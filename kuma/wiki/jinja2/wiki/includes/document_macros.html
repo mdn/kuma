@@ -23,20 +23,16 @@
   </div>
 {%- endmacro %}
 
-{% macro revision_diff(revision_from, revision_to, revision_from_header=None, revision_to_header=None, show_picker=False) -%}
+{% macro revision_diff(revision_from, revision_to) -%}
   {% if revision_from and revision_to %}
     <section class="revision-diff">
       <a class="change-revisions" href="{{ url('wiki.document_revisions', revision_from.document.slug)|urlparams(locale=revision_from.document.locale, origin='translate') }}">{{ _('Change Revisions') }}</a>
       <header>
         <div class="rev-from">
-            <h3>
-            {% if revision_from_header %}
-              {{ revision_from_header }}
-            {% else %}
-              <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}" rel="nofollow, noindex">
-                {{ _('Revision %(num)s:', num=revision_from.id) }}
-              </a>
-            {% endif %}
+          <h3>
+            <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id, locale=revision_from.document.locale) }}" rel="nofollow, noindex">
+              {{ _('Revision %(num)s:', num=revision_from.id) }}
+            </a>
           </h3>
           <p>
           {% trans id=revision_from.id,
@@ -50,13 +46,9 @@
         </div>
         <div class="rev-to">
           <h3>
-            {% if revision_to_header %}
-              {{ revision_to_header }}
-            {% else %}
-              <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}" rel="nofollow, noindex">
-                {{ _('Revision %(num)s:', num=revision_to.id) }}
-              </a>
-            {% endif %}
+            <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id, locale=revision_to.document.locale) }}" rel="nofollow, noindex">
+              {{ _('Revision %(num)s:', num=revision_to.id) }}
+            </a>
           </h3>
           <p>
           {% trans id=revision_to.id,
