@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-30 01:46+0000\n"
+"PO-Revision-Date: 2017-06-30 02:10+0000\n"
 "Last-Translator: Arun Kumar|அருண் குமார் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil https://pontoon.mozilla.org/ta/\n"
 "Language: ta\n"
@@ -54,19 +54,22 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com\"\n"
+"rel=\"nofollow\">ஓட்மீல் நூலை</a> எழுதிய மத்தேயு இன்மான் தான் <a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" \n"
+"rel=\"nofollow\">Tumbeasts</a>நூலையும் எழுதனார்</small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
-msgstr ""
+msgstr "காணவில்லை"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
-msgstr ""
+msgstr "மன்னிக்கவும், நீங்கள் தேடுவதை எங்களால் கண்டுபிடிக்க முடியவில்லை."
 
 #: jinja2/404.html:24
 #, python-format
 msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
-msgstr ""
+msgstr "நீங்கள் ஒரு தேடலை முயற்சிக்கலாம் அல்லது <a href=\"%(homepage_url)s\"> முகப்பு பக்கத்தில் </a> தொடங்குங்கள்."
 
 #: jinja2/404.html:28
 #, python-format
@@ -104,43 +107,43 @@ msgstr ""
 
 #: jinja2/base.html:108
 msgid "Select language"
-msgstr ""
+msgstr "மொழியைத் தேர்"
 
 #: jinja2/base.html:109
 msgid "Skip to search"
-msgstr ""
+msgstr "தேடுவதற்குத் தவிர்"
 
 #: jinja2/base.html:116 jinja2/base.html:254
 msgid "MDN Web Docs"
-msgstr ""
+msgstr "MDN வலை ஆவணங்கள்"
 
 #: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr ""
+msgstr "கருவிகள்"
 
 #: jinja2/base.html:136
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "MDN திட்டத்திற்கு பங்களியுங்கள்"
 
 #: jinja2/base.html:138
 msgid "Get started"
-msgstr ""
+msgstr "தொடங்குங்கள்"
 
 #: jinja2/base.html:139
 msgid "Review or localize docs"
-msgstr ""
+msgstr "ஆவணங்களை மீளாய்வு செய் (அ) தமிழில் மொழிபெயருங்கள்"
 
 #: jinja2/base.html:142
 msgid "Site Tools"
-msgstr ""
+msgstr "தள கருவிகள்"
 
 #: jinja2/base.html:144
 msgid "Revision dashboard"
-msgstr ""
+msgstr "மறுபரிசீலனை முகப்புப்பெட்டி "
 
 #: jinja2/base.html:145
 msgid "Documentation status"
-msgstr ""
+msgstr "ஆவணமாக்கல் நிலவரம்"
 
 #: jinja2/base.html:154 jinja2/base.html:184
 msgid "Technologies"
