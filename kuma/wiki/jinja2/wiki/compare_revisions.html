@@ -13,7 +13,7 @@
     <h1>{{ _('Compare Revisions') }}</h1>
     <h2><a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h2>
 
-    {{ revision_diff(revision_from, revision_to) }}
+    {{ revision_diff(revision_from, revision_to, 'compare') }}
 
     <p><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{ _('Back to History') }}</a></p>
 
