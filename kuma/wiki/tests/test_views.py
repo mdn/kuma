@@ -34,7 +34,6 @@ from kuma.core.models import IPBan
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import urlparams
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase, user
@@ -185,53 +184,6 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         result_review_tags = sorted([str(x) for x in data['review_tags']])
         eq_(expected_review_tags, result_review_tags)
-
-    def test_history_view(self):
-        slug = 'history-view-test-doc'
-        html = 'history view test doc'
-
-        doc = document(title='History view test doc', slug=slug,
-                       html=html, save=True,
-                       locale=settings.WIKI_DEFAULT_LANGUAGE)
-
-        for i in xrange(1, 51):
-            revision(document=doc, content=html,
-                     comment='Revision %s' % i,
-                     is_approved=True, save=True)
-
-        url = reverse('wiki.document_revisions', args=(slug,),
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-
-        resp = self.client.get(url)
-        eq_(200, resp.status_code)
-
-        all_url = urlparams(reverse('wiki.document_revisions', args=(slug,),
-                                    locale=settings.WIKI_DEFAULT_LANGUAGE),
-                            limit='all')
-        resp = self.client.get(all_url)
-        eq_(403, resp.status_code)
-
-        self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(all_url)
-        eq_(200, resp.status_code)
-
-    def test_translation_history_has_based_on_revision_to_compare(self):
-        """In the history of a translation, there should be based on revision
-           So that its possible to compare a new translation with its based on"""
-
-        eng_rev = revision(is_approved=True, save=True)
-        trans_doc = document(locale='bn-BD', parent=eng_rev.document, save=True)
-        revision(document=trans_doc, based_on=eng_rev, save=True)
-
-        url = reverse('wiki.document_revisions', args=(trans_doc.slug,), locale=trans_doc.locale)
-        resp = self.client.get(url)
-        eq_(200, resp.status_code)
-        data = pq(resp.content)
-        list_content = data('.revision-list-contain').find('li')
-        # Check there are 2 revision in the list
-        eq_(2, len(list_content))
-        # Check parent_revision id is below to compare from
-        eq_(str(eng_rev.id), list_content.find('input[name=from]')[1].attrib['value'])
 
     def test_toc_view(self):
         slug = 'toc_test_doc'
