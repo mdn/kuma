@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-30 01:15+0000\n"
+"PO-Revision-Date: 2017-06-30 01:46+0000\n"
 "Last-Translator: Arun Kumar|அருண் குமார் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil https://pontoon.mozilla.org/ta/\n"
 "Language: ta\n"
@@ -42,12 +42,12 @@ msgstr "<P> மன்னிக்கவும், நாங்கள் அத�
 #: jinja2/403.html:48
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(logout_url)s\">வெளியேறி</a> மீண்டும் முயற்சியுங்கள்.</li>"
 
 #: jinja2/403.html:52 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(login_url)s\">உள்நுந்து</a> மீண்டும் முயற்சியுங்கள்.</li>"
 
 #: jinja2/403.html:60
 msgid ""
@@ -144,7 +144,7 @@ msgstr ""
 
 #: jinja2/base.html:154 jinja2/base.html:184
 msgid "Technologies"
-msgstr ""
+msgstr "தொழில்நுட்பங்கள்"
 
 #: jinja2/base.html:158 jinja2/base.html:186 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
@@ -160,7 +160,7 @@ msgstr ""
 
 #: jinja2/base.html:161 jinja2/base.html:189
 msgid "Graphics"
-msgstr ""
+msgstr "வரைகலை"
 
 #: jinja2/base.html:162 jinja2/base.html:190
 msgid "HTTP"
@@ -180,11 +180,11 @@ msgstr ""
 
 #: jinja2/base.html:167 jinja2/base.html:196
 msgid "References & Guides"
-msgstr ""
+msgstr "மேற்கோள்கள் & வழிகாட்டிகள்"
 
 #: jinja2/base.html:171 jinja2/base.html:198 kuma/landing/jinja2/landing/homepage.html:89
 msgid "Learn web development"
-msgstr ""
+msgstr "வலை உருவாக்கம் பற்றி அறியுங்கள்"
 
 #: jinja2/base.html:172 jinja2/base.html:199
 msgid "Tutorials"
@@ -204,7 +204,7 @@ msgstr "அணுகல்தன்மை"
 
 #: jinja2/base.html:176 jinja2/base.html:203
 msgid "Game development"
-msgstr "விளையாட்டு வளர்ச்சி"
+msgstr "விளையாட்டு உருவாக்கம்"
 
 #: jinja2/base.html:177 jinja2/base.html:204
 msgid "...more docs"
