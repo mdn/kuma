@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-30 01:07+0000\n"
+"PO-Revision-Date: 2017-06-30 01:15+0000\n"
 "Last-Translator: Arun Kumar|அருண் குமார் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil https://pontoon.mozilla.org/ta/\n"
 "Language: ta\n"
@@ -33,11 +33,11 @@ msgstr "எல்லா வரலாற்றையும் காண நீங
 #: jinja2/403.html:37 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<P> மன்னிக்கவும் %(name)s, நாங்கள் அதைச் செய்ய முடியாது என்று பயப்படுகிறோம். </ P>"
 
 #: jinja2/403.html:41 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<P> மன்னிக்கவும், நாங்கள் அதைச் செய்ய முடியாது என்று பயப்படுகிறோம். </ P>"
 
 #: jinja2/403.html:48
 #, python-format
@@ -188,23 +188,23 @@ msgstr ""
 
 #: jinja2/base.html:172 jinja2/base.html:199
 msgid "Tutorials"
-msgstr ""
+msgstr "பயிற்சிகள்"
 
 #: jinja2/base.html:173 jinja2/base.html:200
 msgid "References"
-msgstr ""
+msgstr "மேற்கோள்கள்"
 
 #: jinja2/base.html:174 jinja2/base.html:201
 msgid "Developer Guides"
-msgstr ""
+msgstr "உருவாக்குநர் வழிகாட்டிகள்"
 
 #: jinja2/base.html:175 jinja2/base.html:202
 msgid "Accessibility"
-msgstr ""
+msgstr "அணுகல்தன்மை"
 
 #: jinja2/base.html:176 jinja2/base.html:203
 msgid "Game development"
-msgstr ""
+msgstr "விளையாட்டு வளர்ச்சி"
 
 #: jinja2/base.html:177 jinja2/base.html:204
 msgid "...more docs"
