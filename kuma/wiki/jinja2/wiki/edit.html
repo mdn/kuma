@@ -181,7 +181,7 @@
 
             {% set tags = document.tags.all().order_by('name') %}
             <section id="page-tags" class="page-tags wiki-block">
-              <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ wiki_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
+              <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ wiki_url('MDN/Contribute/Editor/Basics#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
               <p>
               {% trans url=wiki_url('Project:MDN/Contributing/Tagging_standards') %}
                 Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
