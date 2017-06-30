@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-30 02:10+0000\n"
+"PO-Revision-Date: 2017-06-30 02:19+0000\n"
 "Last-Translator: Arun Kumar|அருண் குமார் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil https://pontoon.mozilla.org/ta/\n"
 "Language: ta\n"
@@ -74,11 +74,11 @@ msgstr "நீங்கள் ஒரு தேடலை முயற்சிக
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr ""
+msgstr "நீங்கள் ஆவணங்கள் தொடுப்பைப் பின்தொடர்ந்து உள்நுழைந்து, பக்கத்தை உருவாக்கலாம். இல்லையெனில், தயவுசெய்து <a href=\"%(bug_form_url)s\" rel=\"nofollow\"> வழுவைப் பதியுங்கள். </a>. நன்றி!"
 
 #: jinja2/404.html:35
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "இந்தப் பயனரின் சுயவிவரம் தடை செய்யப்பட்டுள்ளது."
 
 #: jinja2/404.html:42
 #, python-format
