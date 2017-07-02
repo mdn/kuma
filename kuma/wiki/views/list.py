@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.http import Http404
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.views.decorators.http import require_GET
 
@@ -145,17 +144,13 @@ def revisions(request, document_slug, document_locale):
     locale = request.GET.get('locale', document_locale)
 
     # Load document with only fields for history display
-    try:
-        document = (Document.objects
-                    .only('id', 'locale', 'slug', 'title',
-                          'current_revision_id', 'parent__slug',
-                          'parent__locale')
-                    .select_related('parent__slug', 'parent__locale')
-                    .get(locale=locale, slug=document_slug))
-    except Document.DoesNotExist:
-        raise Http404
-    if document.current_revision_id is None:
-        raise Http404
+    doc_query = (Document.objects
+                 .only('id', 'locale', 'slug', 'title',
+                       'parent__slug', 'parent__locale')
+                 .select_related('parent__slug', 'parent__locale')
+                 .exclude(current_revision__isnull=True)
+                 .filter(locale=locale, slug=document_slug))
+    document = get_object_or_404(doc_query)
 
     # Process the requested page size
     per_page = request.GET.get('limit', 10)
