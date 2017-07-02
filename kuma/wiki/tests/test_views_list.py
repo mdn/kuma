@@ -31,6 +31,26 @@ def test_revisions_of_translated_document(trans_doc, client):
     assert str(trans_doc.current_revision.based_on_id) == eng_rev_id
 
 
+def test_revisions_of_translated_doc_with_no_based_on(trans_revision, client):
+    """
+    $history for trans docs excludes the English revision if no based_on
+
+    This can happen for old translated docs, or ones manually associated with
+    the parent.
+    """
+    assert trans_revision.based_on
+    trans_revision.based_on = None
+    trans_revision.save()
+    trans_doc = trans_revision.document
+    url = reverse('wiki.document_revisions', args=(trans_doc.slug,),
+                  locale=trans_doc.locale)
+    resp = client.get(url)
+    assert resp.status_code == 200
+    page = pq(resp.content)
+    list_content = page('.revision-list-contain').find('li')
+    assert len(list_content) == 1  # The translation alone
+
+
 def test_revisions_bad_slug_is_not_found(db, client):
     """$history of unknown page returns 404."""
     url = reverse('wiki.document_revisions', args=('not_found',),

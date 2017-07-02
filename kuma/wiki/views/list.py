@@ -183,8 +183,9 @@ def revisions(request, document_slug, document_locale):
     earliest_id, earliest_prev_id = selected_revision_pairs[-1]
     if earliest_prev_id is None and document.parent:
         earliest = Revision.objects.only('based_on').get(id=earliest_id)
-        selected_revision_pairs[-1] = (earliest_id, earliest.based_on_id)
-        selected_revision_pairs.append((earliest.based_on_id, None))
+        if earliest.based_on is not None:
+            selected_revision_pairs[-1] = (earliest_id, earliest.based_on_id)
+            selected_revision_pairs.append((earliest.based_on_id, None))
 
     # Gather revisions on this history page, restricted to display fields
     selected_revision_ids = [rev_id for rev_id, _ in selected_revision_pairs]
