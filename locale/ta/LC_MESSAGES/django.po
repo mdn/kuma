@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-07-03 16:11+0000\n"
+"PO-Revision-Date: 2017-07-03 16:12+0000\n"
 "Last-Translator: Arun Kumar|அருண் குமார் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil https://pontoon.mozilla.org/ta/\n"
 "Language: ta\n"
@@ -330,7 +330,7 @@ msgstr "<Li> மீண்டும் முயற்சிக்க <a href=\"/
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr "பயர்பொக்ஸ் உதவியைத் தேடு"
+msgstr "பயர்பாக்ஸ் உதவியைத் தேடு"
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:91
 msgid "Other languages:"
@@ -338,23 +338,23 @@ msgstr "பிற மொழிகள்:"
 
 #: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:102
 msgid "Go"
-msgstr ""
+msgstr "செல்"
 
 #: jinja2/includes/login.html:9 kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
-msgstr ""
+msgstr "சுயவிவரம் காண"
 
 #: jinja2/includes/login.html:10 kuma/users/jinja2/account/email.html:60
 msgid "Edit profile"
-msgstr ""
+msgstr "சுயவிவரத்தைத் தொகு"
 
 #: jinja2/includes/login.html:14 jinja2/includes/login.html:24
 msgid "Sign out"
-msgstr ""
+msgstr "வெளியேறு"
 
 #: jinja2/includes/login.html:30
 msgid "Sign in"
-msgstr ""
+msgstr "உள்நுழை"
 
 #: jinja2/includes/newsletter.html:3
 msgid "Learn the best of web development"
@@ -366,7 +366,7 @@ msgstr ""
 
 #: jinja2/includes/newsletter.html:12
 msgid "E-mail"
-msgstr ""
+msgstr "மின்னஞ்சல்"
 
 #: jinja2/includes/newsletter.html:13
 msgid "you@example.com"
@@ -399,15 +399,15 @@ msgstr ""
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
 msgid "Previous"
-msgstr ""
+msgstr "முந்தைய"
 
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
-msgstr ""
+msgstr "அடுத்த"
 
 #: jinja2/includes/redesign_notice.html:4
 msgid "Under Construction"
-msgstr ""
+msgstr "கட்டமைக்கப்படுகிறது"
 
 #: jinja2/includes/redesign_notice.html:6
 #, python-format
@@ -676,7 +676,7 @@ msgstr ""
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tamil"
-msgstr ""
+msgstr "தமிழ்"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Thai"
@@ -729,7 +729,7 @@ msgstr ""
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:44
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:43 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
-msgstr ""
+msgstr "ரத்து"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
