@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-30 02:19+0000\n"
+"PO-Revision-Date: 2017-07-03 16:11+0000\n"
 "Last-Translator: Arun Kumar|அருண் குமார் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil https://pontoon.mozilla.org/ta/\n"
 "Language: ta\n"
@@ -87,23 +87,23 @@ msgstr ""
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr ""
+msgstr "உள்ளக சேவகன் பிழை"
 
 #: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:124 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
-msgstr ""
+msgstr "மொசில்லா உருவாக்குநர் சமூகம்"
 
 #: jinja2/base.html:95
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "MDN தற்போது பராமரிப்பு முறையில் உள்ளது."
 
 #: jinja2/base.html:96
 msgid "Learn more"
-msgstr ""
+msgstr "மேலும் அறிக"
 
 #: jinja2/base.html:106
 msgid "Skip to main content"
-msgstr ""
+msgstr "முக்கிய உள்ளடக்கத்திற்கு செல்க"
 
 #: jinja2/base.html:108
 msgid "Select language"
@@ -151,15 +151,15 @@ msgstr "தொழில்நுட்பங்கள்"
 
 #: jinja2/base.html:158 jinja2/base.html:186 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: jinja2/base.html:159 jinja2/base.html:187 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: jinja2/base.html:160 jinja2/base.html:188 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr ""
+msgstr "ஜாவாநிரல்"
 
 #: jinja2/base.html:161 jinja2/base.html:189
 msgid "Graphics"
@@ -167,19 +167,19 @@ msgstr "வரைகலை"
 
 #: jinja2/base.html:162 jinja2/base.html:190
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: jinja2/base.html:163 jinja2/base.html:191
 msgid "APIs / DOM"
-msgstr ""
+msgstr "APIs / DOM"
 
 #: jinja2/base.html:164 jinja2/base.html:192
 msgid "WebExtensions"
-msgstr ""
+msgstr "வலைநீட்டிசிகள்"
 
 #: jinja2/base.html:165 jinja2/base.html:193 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: jinja2/base.html:167 jinja2/base.html:196
 msgid "References & Guides"
@@ -211,109 +211,109 @@ msgstr "விளையாட்டு உருவாக்கம்"
 
 #: jinja2/base.html:177 jinja2/base.html:204
 msgid "...more docs"
-msgstr ""
+msgstr "... கூடுதல் ஆவணங்கள்"
 
 #: jinja2/base.html:181 jinja2/base.html:258 kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web Technologies"
-msgstr ""
+msgstr "வலை தொழில்நுட்பங்கள்"
 
 #: jinja2/base.html:208
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "மொசில்லா ஆவணங்கள்"
 
 #: jinja2/base.html:212 kuma/core/sections.py:6
 msgid "Add-ons"
-msgstr ""
+msgstr "துணை நிரல்கள்"
 
 #: jinja2/base.html:213 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
-msgstr ""
+msgstr "பயர்பாக்ஸ்"
 
 #: jinja2/base.html:217
 msgid "Developer Tools"
-msgstr ""
+msgstr "உருவாக்குநர் கருவிகள்"
 
 #: jinja2/base.html:217 jinja2/base.html:261
 msgid "Feedback"
-msgstr ""
+msgstr "கருத்து தெரிவி"
 
 #: jinja2/base.html:221
 msgid "Get Firefox help"
-msgstr ""
+msgstr "பயர்பாக்ஸ் உதவி பெறுக"
 
 #: jinja2/base.html:222
 msgid "Get web development help"
-msgstr ""
+msgstr "வலை உருவாக்க உதவியைப் பெறுக"
 
 #: jinja2/base.html:225
 msgid "Join the MDN community"
-msgstr ""
+msgstr "MDN சமூகத்தில் சேருங்கள்"
 
 #: jinja2/base.html:226
 msgid "Report a content problem"
-msgstr ""
+msgstr "உள்ளடக்க சிக்கலைப் புகாரளி"
 
 #: jinja2/base.html:227
 msgid "Report a bug"
-msgstr ""
+msgstr "வழு ஒன்றை தெரிவி"
 
 #: jinja2/base.html:233 jinja2/base.html:234 jinja2/base.html:236 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
 #: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr ""
+msgstr "தேடல்"
 
 #: jinja2/base.html:259 kuma/landing/jinja2/landing/homepage.html:130
 msgid "Learn Web Development"
-msgstr ""
+msgstr "வலை உருவாக்கம் பற்றி அறிக"
 
 #: jinja2/base.html:260 jinja2/base.html:309
 msgid "About MDN"
-msgstr ""
+msgstr "MDN பற்றி"
 
 #: jinja2/base.html:262 jinja2/base.html:274 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
-msgstr ""
+msgstr "ட்விட்டர்"
 
 #: jinja2/base.html:263
 msgid "Github"
-msgstr ""
+msgstr "கிட்ஹப்"
 
 #: jinja2/base.html:267 kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "மொசில்லா"
 
 #: jinja2/base.html:271
 msgid "About"
-msgstr ""
+msgstr "பற்றி"
 
 #: jinja2/base.html:272
 msgid "Contact Us"
-msgstr ""
+msgstr "தொடர்பு"
 
 #: jinja2/base.html:273
 msgid "Donate"
-msgstr ""
+msgstr "நன்கொடை"
 
 #: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
-msgstr ""
+msgstr "முகநூல்"
 
 #: jinja2/base.html:276
 msgid "Instagram"
-msgstr ""
+msgstr "படர்வி"
 
 #: jinja2/base.html:284 jinja2/base.html:310
 msgid "Terms"
-msgstr ""
+msgstr "விதிமுறைகள்"
 
 #: jinja2/base.html:285 jinja2/base.html:311
 msgid "Privacy"
-msgstr ""
+msgstr "தனியுரிமை"
 
 #: jinja2/base.html:286 jinja2/base.html:312
 msgid "Cookies"
-msgstr ""
+msgstr "நினைவிகள்"
 
 #: jinja2/base.html:291 jinja2/base.html:304
 #, python-format
@@ -322,19 +322,19 @@ msgstr ""
 
 #: jinja2/base.html:313
 msgid "Contribute to the code"
-msgstr ""
+msgstr "நிரலாக்கத்திற்கு பங்களிக்கவும்"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<Li> மீண்டும் முயற்சிக்க <a href=\"/logout\"> வெளியேறுக </a>. </ Li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "பயர்பொக்ஸ் உதவியைத் தேடு"
 
 #: jinja2/includes/lang_switcher.html:4 kuma/wiki/jinja2/wiki/document.html:91
 msgid "Other languages:"
-msgstr ""
+msgstr "பிற மொழிகள்:"
 
 #: jinja2/includes/lang_switcher.html:23 kuma/wiki/jinja2/wiki/document.html:102
 msgid "Go"
