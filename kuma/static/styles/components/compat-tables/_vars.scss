@@ -1,0 +1,31 @@
+/*
+Variables to support compat tables
+********************************************************************** */
+
+$android-browser: 'android';
+$chrome-android: 'chrome_for_android';
+$chrome-desktop: 'chrome_desktop';
+$firefox-android: 'firefox_android';
+$firefox-desktop: 'firefox_desktop';
+$firefox-fxos: 'firefox_os';
+$ie-desktop: 'ie_desktop';
+$ie-mobile: 'ie_mobile';
+$opera-desktop: 'opera_desktop';
+$opera-mobile: 'opera_mobile';
+$opera-mini: 'opera_mini';
+$safari-desktop: 'safari_desktop';
+$safari-ios: 'safari_ios';
+
+$bc-colors: (
+    yes: #ebf8e1,
+    no: #ffe7e8,
+    partial: #fff3d4,
+    unknown: #eee
+);
+
+$bc-color-text: #000;
+$bc-border-color: #000;
+$bc-border-width-thin: 1px;
+$bc-border-width-thick: 2px;
+$bc-support: yes, no, partial, unknown;
+$bc-grid-spacing: 10px;

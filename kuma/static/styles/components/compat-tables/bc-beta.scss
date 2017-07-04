@@ -1,0 +1,11 @@
+.bc-beta-menu {
+    position: relative;
+    display: inline-block;
+    @include bidi-value(float, right, left);
+
+    ul {
+        padding-left: $grid-spacing;
+        list-style-type: none;
+        text-align: left;
+    }
+}

@@ -1,0 +1,264 @@
+/*
+Table layout
+- uses display: block for smaller screen sizes;
+- requires .bc-table-{$num} modifier to display columns correctly
+********************************************************************** */
+
+.text-content table.bc-table { /* specificity to over-ride .text-content styles */
+    width: 100%;
+    table-layout: fixed;
+    border: none; /* to over-ride .text-content styles */
+    border-collapse: separate; /* to over-ride .text-content styles */
+    border-spacing: 0;
+    @include rgba-fallback('background-color', $table-blue, .5);
+}
+
+.bc-table,
+.bc-table thead,
+.bc-table tbody,
+.bc-table tr,
+.bc-table th,
+.bc-table td {
+    box-sizing: border-box;
+}
+
+/* tr
+====================================================================== */
+
+.bc-table tr {
+    position: relative;
+    border-bottom: 0 solid transparent;
+}
+
+/* th & td
+====================================================================== */
+
+.bc-table th,
+.bc-table td {
+    position: relative;
+    padding: 5px 3px;
+    border-color: $bc-border-color;
+    border-top: $bc-border-width-thin solid $bc-border-color;
+    border-right: 0;
+    border-bottom: 0 solid transparent;
+    border-left: $bc-border-width-thin solid $bc-border-color;
+    text-align: center;
+}
+
+/* first column, fixed at 200 */
+.bc-table thead td,
+.bc-table tbody th {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+}
+
+/* everything except first column, 12 columns */
+@for $num from 2 through 12 {
+    .bc-table-#{$num} thead th,
+    .bc-table-#{$num} tbody td {
+        width: (100 / $num) * 1%;
+    }
+}
+
+/* second column */
+.bc-table thead td + th,
+.bc-table tbody th + td {
+    border-left: 0;
+}
+
+/* thicker border between platforms */
+.text-content .bc-platform-border {
+    border-left: $bc-border-width-thick solid $bc-border-color;
+}
+
+
+/* th
+====================================================================== */
+
+.text-content .bc-table th {
+    background-color: transparent;
+    overflow: hidden;
+    padding: 5px 3px 5px 6px;
+}
+
+.bc-table .bc-platforms th {
+    width: auto;
+    padding: 5px 0 2px;
+    border-top: 0;
+    border-bottom: $bc-border-width-thick solid $bc-border-color;
+    @include set-font-size(28px);
+}
+
+.bc-table .bc-browsers th {
+    border-top: 0;
+    padding: 3px 0;
+    @include set-font-size(22px);
+}
+
+.bc-table tbody th {
+    border-right: $bc-border-width-thick solid $bc-border-color;
+    border-left: 0;
+    text-align: left;
+
+    code {
+        white-space: nowrap;
+    }
+}
+
+
+/* td
+====================================================================== */
+
+/* empty td in thead */
+.bc-table thead td {
+    border-top: 0;
+    border-right: $bc-border-width-thick solid $bc-border-color;
+    border-left: 0;
+}
+
+/* make outline more visible */
+.bc-table td:focus {
+    z-index: 1;
+}
+
+.bc-table td[tabindex] {
+    cursor: pointer;
+}
+
+.no-js .bc-table tbody td,
+.bc-table tbody td[tabindex] {
+    padding-top: 6px;
+    padding-bottom: 12px;
+}
+
+
+/* abbr
+====================================================================== */
+
+.bc-table abbr {
+    text-decoration: none;
+}
+
+/*
+tablet display
+- declarataions are a mixin
+- mixin is included in media queries below the mixin definition
+====================================================================== */
+
+
+@mixin bc-table-tablet-display-grid() {
+    /* convert rows into grids */
+    .bc-table tr {
+        display: grid;
+    }
+
+    /* assign number of columns based on table class */
+    @for $num from 1 through 14 {
+        .bc-table-#{$num} tr {
+            grid-template-columns: repeat(#{$num}, 1fr);
+        }
+    }
+
+    /* remove width constraints on all cells */
+    .text-content .bc-table td,
+    .text-content .bc-table th {
+        width: auto;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    /* hide empty cells in thead */
+    .bc-table thead td {
+        display: none;
+        z-index: 1; /* increase z-index for js to detect tablet display */
+    }
+
+
+    /* make platforms span correct number of columns */
+    @for $num from 2 through 14 {
+        th[class^=bc-platform][colspan='#{$num}'] {
+            grid-column-end: span #{$num};
+        }
+    }
+
+    /* make feature headings span entire row */
+    .bc-table tbody th {
+        grid-column-start: 1;
+        grid-column-end: last-line;
+        border-right: none;
+    }
+
+    /* remove left padding from history callouts */
+    .bc-history {
+        padding-left: 0;
+    }
+}
+
+@supports (display: grid) {
+
+    /* tablet */
+    @media #{$mq-tablet-only} {
+        @include bc-table-tablet-display-grid();
+    }
+
+    /* small desktop, but only if there's a left column */
+    @media #{$mq-small-desktop-only} {
+        .wiki-left-present {
+            @include bc-table-tablet-display-grid();
+        }
+    }
+}
+
+/*
+mobile display
+====================================================================== */
+
+@media #{$mq-mobile-and-down} {
+    .bc-table thead {
+        display: none;
+    }
+
+    .bc-table thead td {
+        z-index: 2; /* increase z-index for js to detect mobile display */
+    }
+
+    .bc-table tbody th {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        border-right: 0;
+        padding-top: $bc-grid-spacing;
+        padding-bottom: 0;
+    }
+
+    .bc-table tbody td {
+        position: relative;
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        box-sizing: border-box;
+        box-shadow: inset 50px 0 0 0 #eaeff2;
+        border-top: $bc-border-width-thin solid $bc-border-color;
+        border-left: 0;
+        padding-left: 60px;
+        padding-right: $bc-grid-spacing;
+        text-align: left;
+
+        &:last-child {
+            border-bottom: $bc-border-width-thick solid $bc-border-color;
+        }
+    }
+
+    .bc-table tbody td[tabindex] {
+        padding-bottom: 20px;
+    }
+
+    .bc-platforms th + th,
+    .text-content .bc-platform-border {
+        border-top: $bc-border-width-thick solid $bc-border-color;
+        border-left: none;
+    }
+}

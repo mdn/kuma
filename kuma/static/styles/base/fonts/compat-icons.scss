@@ -1,0 +1,10 @@
+@font-face {
+    font-family: compat-icons;
+    src: url('#{$path-to-fonts}#{'compat-icons.eot'}');
+    src: url('#{$path-to-fonts}#{'compat-icons.eot?#iefix'}') format('embedded-opentype'),
+         url('#{$path-to-fonts}#{'compat-icons.woff2'}') format('woff2'),
+         url('#{$path-to-fonts}#{'compat-icons.woff'}') format('woff'),
+         url('#{$path-to-fonts}#{'compat-icons.ttf'}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,16 @@
+/*
+Footnotes
+********************************************************************** */
+
+.bc-footnotes dt {
+    margin-top: $bc-grid-spacing;
+    font-weight: bold;
+}
+
+.bc-footnotes dl > dt:first-child {
+    margin-top: 0;
+}
+
+.bc-footnotes dd {
+    margin-left: 20px;
+}
