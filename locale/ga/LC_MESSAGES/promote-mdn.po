@@ -1,42 +1,40 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: Promote MDN 1.7.1\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2017-07-04 16:00+0000\n"
+"Last-Translator: kscanne <kscanne@gmail.com>\n"
 "Language-Team: Irish https://pontoon.mozilla.org/ga_IE/\n"
-"Language: ga\n"
+"Language: ga_IE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.9.0\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4;\n"
+"X-Generator: Pontoon\n"
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
-msgstr "Athluchtaíodh luachanna ón URL."
+msgstr "Athlódáladh luachanna ón URL."
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
 msgstr "Sábháladh socruithe an bhreiseáin."
 
 #: promote-mdn.php:245
-msgid ""
-"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
-"JavaScript and other Web standards and open technologies."
-msgstr "Is Bosca Uirlisí d'Fhorbróirí Gréasáin é MDN, áit a bhfaighidh tú doiciméadú, taispeántais, agus acmhainní eile a bhaineann le HTML, CSS, JavaScript, caighdeáin Ghréasáin agus teicneolaíochtaí oscailte eile."
+msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
+msgstr ""
+"Is Bosca Uirlisí d'Fhorbróirí Gréasáin é MDN, áit a bhfaighidh tú doiciméadú, taispeántais, agus acmhainní eile a bhaineann le HTML, CSS, JavaScript, caighdeáin Ghréasáin agus teicneolaíochtaí "
+"oscailte eile."
 
 #: promote-mdn.php:248
-msgid ""
-"MDN is the best online resource - for web developers, by web developers."
+msgid "MDN is the best online resource - for web developers, by web developers."
 msgstr "Is é MDN an acmhainn ar líne is fearr - déanta ag forbróirí Gréasáin ar son forbróirí Gréasáin."
 
 #: promote-mdn.php:249
-msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+msgid "Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs."
 msgstr "Déanann Promote MDN nascanna idir eochairfhocail agus frásaí i do chuid postálacha agus leathanaigh agus doiciméadú MDN go huathoibríoch."
 
 #: promote-mdn.php:256
@@ -45,7 +43,7 @@ msgstr "Socruithe"
 
 #: promote-mdn.php:257
 msgid "Load keywords from URL"
-msgstr "Luchtaigh eochairfhocail ó URL"
+msgstr "Lódáil eochairfhocail ó URL"
 
 #: promote-mdn.php:257
 msgid "Preview"
@@ -57,11 +55,11 @@ msgstr "Úsáid eochairfhocail agus nascanna a bhaineann go háirithe le %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr "Athluchtaigh eochairfhocail tar éis (soicindí):"
+msgstr "Athlódáil eochairfhocail tar éis (soicindí):"
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr "Athluchtaigh anois"
+msgstr "Athlódáil anois"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
@@ -80,9 +78,7 @@ msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
 msgstr "Ná cuir nascanna le clibeanna ceanntáisc (h1,h2,h3,h4,h5,h6)."
 
 #: promote-mdn.php:268
-msgid ""
-"Do not add links to the following posts or pages (comma-separated id, slug, "
-"name):"
+msgid "Do not add links to the following posts or pages (comma-separated id, slug, name):"
 msgstr "Ná cuir nascanna leis na postálacha nó leathanaigh seo a leanas (aitheantas, sluga, ainm, scartha ag camóga):"
 
 #: promote-mdn.php:270
@@ -110,31 +106,25 @@ msgid "Custom Keywords"
 msgstr "Eochairfhocail Shaincheaptha"
 
 #: promote-mdn.php:281
-msgid ""
-"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
-"target url at the end. Use a new line for new url and set of keywords. e.g.,"
-msgstr "Eochairfhocail sa bhreis a ndéanfar nascanna astu i gcónaí. Úsáid camóga idir eochairfhocail agus cuir an sprioc-URL ag an deireadh. Cuir gach URL nua agus na heochairfhocail a bhaineann leis ar líne nua.  Mar shampla,"
+msgid "Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"Eochairfhocail sa bhreis a ndéanfar nascanna astu i gcónaí. Úsáid camóga idir eochairfhocail agus cuir an sprioc-URL ag an deireadh. Cuir gach URL nua agus na heochairfhocail a bhaineann leis ar "
+"líne nua.  Mar shampla,"
 
 #: promote-mdn.php:288
-msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
-msgstr "Nod: Úsáidfear na heochairfhocail seo roimh na cinn atá luchtaithe ag an URL. Má tá an iomarca eochairfhocal saincheaptha anseo, seans nach ndéanfaidh tú nasc le MDN ar chor ar bith."
+msgid "Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all."
+msgstr "Nod: Úsáidfear na heochairfhocail seo roimh na cinn atá lódáilte ag an URL. Má tá an iomarca eochairfhocal saincheaptha anseo, seans nach ndéanfaidh tú nasc le MDN ar chor ar bith."
 
 #: promote-mdn.php:289
 msgid "Update options"
 msgstr "Nuashonraigh roghanna"
 
 #: promote-mdn.php:312
-msgid ""
-"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
-"configure."
+msgid "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure."
 msgstr "Go raibh maith agat as Promote MDN a shuiteáil! Féach ar na <a href=\"%s\">socruithe</a> chun cumraíocht a dhéanamh."
 
 #: promote-mdn.php:313
-msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+msgid "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr "An leagan Fraincise, <a href=\"%s\">giuirléid</a> nua don bharra taoibh, <a href=\"%s\">socrú</a> do URLanna atá dírithe ar theanga ar leith."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
