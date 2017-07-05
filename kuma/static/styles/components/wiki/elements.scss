@@ -10,6 +10,14 @@ article {
             text-decoration: underline;
         }
 
+        &[name] {
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none;
+            }
+        }
+
         /* 404 link */
         &.new {
             color: $error;
