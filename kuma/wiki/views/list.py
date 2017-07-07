@@ -146,6 +146,7 @@ def revisions(request, document_slug, document_locale):
     # Load document with only fields for history display
     doc_query = (Document.objects
                  .only('id', 'locale', 'slug', 'title',
+                       'current_revision_id',
                        'parent__slug', 'parent__locale')
                  .select_related('parent__slug', 'parent__locale')
                  .exclude(current_revision__isnull=True)
