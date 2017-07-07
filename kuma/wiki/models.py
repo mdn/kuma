@@ -43,7 +43,7 @@ from .exceptions import (DocumentRenderedContentNotAvailable,
 from .jobs import DocumentContributorsJob, DocumentNearestZoneJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
-                       TaggedDocumentManager, TransformManager)
+                       TaggedDocumentManager)
 from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content, get_doc_components_from_url
@@ -1691,8 +1691,6 @@ class Revision(models.Model):
 
     is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
                                                  help_text="Did this revision come from MindTouch?")
-
-    objects = TransformManager()
 
     def get_absolute_url(self):
         """Build the absolute URL to this revision"""
