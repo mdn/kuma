@@ -50,18 +50,17 @@ def format_comment(rev, previous_revision=None, load_previous=True):
     previous_revision - The previous revision (default None)
     load_previous - Try loading previous revision if None (default True)
     """
-    prev_rev = getattr(rev, 'previous_revision', previous_revision)
-    if prev_rev is None and load_previous:
-        prev_rev = rev.previous
+    if previous_revision is None and load_previous:
+        previous_revision = rev.previous
     comment = bugize_text(rev.comment if rev.comment else "")
 
     # If a page move, say so
-    if prev_rev and prev_rev.slug != rev.slug:
+    if previous_revision and previous_revision.slug != rev.slug:
         comment += jinja2.Markup(
             '<span class="slug-change">'
             '<span>%s</span>'
             ' <i class="icon-long-arrow-right" aria-hidden="true"></i> '
-            '<span>%s</span></span>') % (prev_rev.slug, rev.slug)
+            '<span>%s</span></span>') % (previous_revision.slug, rev.slug)
 
     return comment
 
