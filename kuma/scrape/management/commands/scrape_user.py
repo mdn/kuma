@@ -1,5 +1,5 @@
 """Scrape a user profile from a Kuma website."""
-
+from django.core.management.base import CommandError
 
 from . import ScrapeCommand
 
@@ -46,6 +46,6 @@ class Command(ScrapeCommand):
         scraper.scrape()
         source = scraper.sources['user:' + profile]
         if source.state == source.STATE_ERROR:
-            raise Exception('Unable to scrape user "%s".' % profile)
+            raise CommandError('Unable to scrape user "%s".' % profile)
         elif source.freshness == source.FRESH_NO and not options['force']:
             self.stderr.write('User "%s" already exists. Use --force to update.' % profile)

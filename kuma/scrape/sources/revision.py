@@ -36,9 +36,10 @@ class RevisionSource(Source):
             logger.warn(exception)
             self.state = self.STATE_ERROR
 
-    def split_path(self, path):
+    @classmethod
+    def split_path(cls, path):
         """Extract a revision parameters from a path."""
-        match = self.re_path.match(path)
+        match = cls.re_path.match(path)
         if match:
             locale, slug, raw_rev_id = match.groups()
             return locale, slug, int(raw_rev_id)

@@ -138,7 +138,7 @@ def test_gather_standard_doc_all_prereqs():
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2016', {})]
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     storage.save_document.assert_called_once_with(doc_data)
 
@@ -158,7 +158,7 @@ def test_gather_standard_doc_metdata_loses():
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2016', {})]
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     storage.save_document.assert_called_once_with(doc_data)
 
@@ -195,7 +195,7 @@ def test_gather_standard_doc_no_uuid():
         ('revisions', path + '$revision/2016', {})]
 
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     expected = doc_data.copy()
     del expected['uuid']
@@ -266,7 +266,8 @@ def test_gather_normalized_path_moved_page_followed():
         'redirect_to': '/en-US/docs/NewLocation'}
     storage.get_document.return_value = "Redirect Document"
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', '/en-US/docs/Origin',
+                          {'revisions': 1})]
     assert source.state == source.STATE_DONE
     expected_data = {
         'locale': 'en-US',
@@ -329,7 +330,7 @@ def test_gather_redirect_to_zone_page_complete():
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2017', {})]
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     expected = doc_data.copy()
     expected['slug'] = 'Root/Zone'
@@ -382,7 +383,7 @@ def test_gather_redirect_to_zone_subpage_complete():
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2018', {})]
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     expected = doc_data.copy()
     expected['slug'] = 'Root/Zone/Child'
@@ -475,7 +476,7 @@ def test_gather_localized_doc_sets_parent():
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2020', {})]
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     expected = doc_data.copy()
     expected['locale'] = 'fr'
@@ -517,6 +518,6 @@ def test_gather_document_children_loaded():
         ('revisions', doc_path + '$revision/2016', {})]
     storage.get_document_children.return_value = []
     resources = source.gather(None, storage)
-    assert resources == []
+    assert resources == [('document_current', doc_path, {'revisions': 1})]
     assert source.state == source.STATE_DONE
     assert source.freshness == source.FRESH_YES

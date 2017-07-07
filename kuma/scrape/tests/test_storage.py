@@ -262,6 +262,7 @@ def test_get_revision_missing():
 
 def test_save_revision_current(simple_doc, simple_user):
     """Creating the current revision updates the associated document."""
+    assert not simple_doc.html
     data = {
         'id': 1000,
         'creator': simple_user,
@@ -277,6 +278,7 @@ def test_save_revision_current(simple_doc, simple_user):
     Storage().save_revision(data)
     rev = Revision.objects.get(id=1000)
     assert rev.document == simple_doc
+    assert rev.document.html == rev.content
     assert rev.creator == simple_user
     assert rev.tags == '"One" "Two" "Three"'
     assert rev.content == '<p>My awesome content.</p>'
@@ -284,6 +286,8 @@ def test_save_revision_current(simple_doc, simple_user):
 
 def test_save_revision_not_current(root_doc, simple_user):
     """Creating an older revision does not update the associated document."""
+    old_content = root_doc.html
+    assert old_content
     data = {
         'id': 1000,
         'creator': simple_user,
@@ -299,6 +303,7 @@ def test_save_revision_not_current(root_doc, simple_user):
     Storage().save_revision(data)
     rev = Revision.objects.get(id=1000)
     assert rev.document == root_doc
+    assert rev.document.html == old_content
     assert rev.creator == simple_user
     assert rev.tags == ''
     assert rev.content == '<p>My awesome content.</p>'

@@ -25,9 +25,9 @@ class DocumentHistorySource(DocumentBaseSource):
 
     def load_and_validate_existing(self, storage):
         """Load history data from a previous operation."""
-        revs = storage.get_document_history(self.locale, self.slug)
-        if revs and len(revs) >= self.revisions:
-            requested_revisions = revs[:self.revisions]
+        data = storage.get_document_history(self.locale, self.slug)
+        if data and len(data['revisions']) >= self.revisions:
+            requested_revisions = data['revisions'][:self.revisions]
             requested_revisions.reverse()
             return True, requested_revisions
         else:
@@ -45,7 +45,9 @@ class DocumentHistorySource(DocumentBaseSource):
     def save_data(self, storage, data):
         """Extract revisions and save for next call."""
         revs = self.extract_data(data)
-        storage.save_document_history(self.locale, self.slug, revs)
+        is_all = len(revs) < self.revisions
+        data = {'revisions': revs, 'is_all': is_all}
+        storage.save_document_history(self.locale, self.slug, data)
         requested_revisions = revs[:self.revisions]
         requested_revisions.reverse()
         return requested_revisions

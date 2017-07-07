@@ -8,9 +8,9 @@ import time
 import requests
 
 from .sources import (
-    DocumentChildrenSource, DocumentHistorySource, DocumentMetaSource,
-    DocumentRenderedSource, DocumentSource, RevisionSource, Source, UserSource,
-    ZoneRootSource)
+    DocumentChildrenSource, DocumentCurrentSource, DocumentHistorySource,
+    DocumentMetaSource, DocumentRenderedSource, DocumentSource, LinksSource,
+    RevisionSource, Source, UserSource, ZoneRootSource)
 from .storage import Storage
 
 logger = logging.getLogger('kuma.scraper')
@@ -67,9 +67,11 @@ class Scraper(object):
     source_types = {
         'document': DocumentSource,
         'document_children': DocumentChildrenSource,
+        'document_current': DocumentCurrentSource,
         'document_history': DocumentHistorySource,
         'document_meta': DocumentMetaSource,
         'document_rendered': DocumentRenderedSource,
+        'links': LinksSource,
         'revision': RevisionSource,
         'user': UserSource,
         'zone_root': ZoneRootSource,
@@ -111,11 +113,12 @@ class Scraper(object):
                       ' Source %(source_key)s ')
     _report_done = (_report_prefix +
                     'complete, freshness=%(freshness)s, with %(dep_count)s'
-                    ' dependant source%(dep_s)s.')
+                    ' dependent source%(dep_s)s.')
     _report_error = (_report_prefix +
-                     'errored, with %(dep_count)s dependant source%(dep_s)s.')
+                     'errored %(err_msg)s, with %(dep_count)s dependent'
+                     ' source%(dep_s)s.')
     _report_progress = (_report_prefix +
-                        'in state "%(state)s" with %(dep_count)s dependant'
+                        'in state "%(state)s" with %(dep_count)s dependent'
                         ' source%(dep_s)s.')
 
     def scrape(self):
@@ -160,17 +163,22 @@ class Scraper(object):
                                     source_key)
 
                 # Detect unfinished work and report on changed state (in debug)
+                log_func = logger.debug
+                err_msg = ""
                 if source.state == Source.STATE_DONE:
-                    msg = self._report_done
+                    log_fmt = self._report_done
                 elif source.state == Source.STATE_ERROR:
-                    msg = self._report_error
+                    log_func = logger.warn
+                    err_msg = '"%s"' % source.error
+                    log_fmt = self._report_error
                 else:
                     repeat = True
-                    msg = self._report_progress
-                logger.debug(msg, {'cycle': cycle,
+                    log_fmt = self._report_progress
+                log_func(log_fmt, {'cycle': cycle,
                                    'source_num': source_num,
                                    'source_total': source_total,
                                    'source_key': source_key,
+                                   'err_msg': err_msg,
                                    'state': source.state,
                                    'freshness': source.freshness,
                                    'dep_count': dep_count,

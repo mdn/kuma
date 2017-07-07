@@ -1,12 +1,9 @@
 """Shared interface for data sources."""
 from __future__ import absolute_import, unicode_literals
-import logging
 import re
 
 from django.utils.six import binary_type, text_type, python_2_unicode_compatible
 from django.utils.six.moves.urllib.parse import unquote
-
-logger = logging.getLogger('kuma.scraper')
 
 
 class Source(object):
@@ -162,7 +159,7 @@ class Source(object):
             try:
                 load_return = self.load_and_validate_existing(storage)
             except self.SourceError as error:
-                logger.warn(error.format, *error.format_args)
+                self.error = error
                 self.state = self.STATE_ERROR
             else:
                 has_existing, next_sources = load_return
@@ -177,7 +174,7 @@ class Source(object):
             try:
                 has_prereqs, data = self.load_prereqs(requester, storage)
             except self.SourceError as error:
-                logger.warn(error.format, *error.format_args)
+                self.error = error
                 self.state = self.STATE_ERROR
             else:
                 if has_prereqs:
@@ -186,7 +183,7 @@ class Source(object):
                     try:
                         next_sources = self.save_data(storage, data)
                     except self.SourceError as error:
-                        logger.warn(error.format, *error.format_args)
+                        self.error = error
                         self.state = self.STATE_ERROR
                     else:
                         self.state = self.STATE_DONE

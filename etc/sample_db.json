@@ -1,0 +1,703 @@
+{
+  "sources": [
+    ["links", "/", {"translations": true, "revisions": 3}],
+    ["document", "/en-US/docs/Mozilla/Firefox", {"revisions": 15}],
+    ["document", "/en-US/docs/Web/Apps", {"translations": true, "revisions": 3}],
+    ["document", "/en-US/docs/MDN_at_ten/History_of_MDN", {}],
+    ["document", "/en-US/docs/Archive/JXON", {}],
+    ["document", "/en-US/docs/User:anonymous:uitest", {"translations": true, "revisions": 3}],
+    ["document", "/en-US/docs/User:teoli/In_content", {"translations": true, "revisions": 3}],
+    ["document", "/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators", {"translations": true, "revisions": 3}],
+    ["document", "/en-US/docs/Experiment:FrameworkTest/Comparison_Operators", {"translations": true, "revisions": 3}],
+    ["document", "/en-US/docs/Mozilla/Projects/Midas/Security_preferences", {}],
+    ["document", "/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach", {}],
+    ["document", "/en-US/docs/Web/Guide/CSS/Media_queries", {}],
+    ["document", "/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics", {}],
+    ["user", "Sheppy", {"social": true, "email": "sheppy@mozilla.com"}],
+    ["user", "jwhitlock", {"social": true, "email": "jwhitlock@mozilla.com"}]
+  ],
+  "fixtures": {
+    "database.constance": [
+      {
+        "key": "KUMASCRIPT_TIMEOUT",
+        "value": 30
+      }, {
+        "key": "KUMASCRIPT_MAX_AGE",
+        "value": 30
+      }
+    ],
+    "auth.group": [
+      {
+        "name": "Attachment Moderators",
+        "permissions": [
+          ["add_documentdeletionlog"],
+          ["add_logentry"],
+          ["add_trashedattachment"],
+          ["change_attachment"],
+          ["change_attachmentrevision"],
+          ["change_documentdeletionlog"],
+          ["change_trashedattachment"],
+          ["delete_attachment"],
+          ["delete_attachmentrevision"],
+          ["delete_documentattachment"],
+          ["delete_trashedattachment"]
+        ]
+      }, {
+        "name": "Beta Testers"
+      }, {
+        "name": "Known Authors"
+      }, {
+        "name": "Localization leaders",
+        "permissions": [
+          ["add_attachment"],
+          ["add_attachmentrevision"],
+          ["add_documentattachment"],
+          ["add_userban"],
+          ["change_attachment"],
+          ["change_attachmentrevision"],
+          ["change_documentattachment"],
+          ["change_userban"],
+          ["delete_userban"],
+          ["move_tree"]
+        ]
+      }, {
+        "name": "Page Creators"
+      }, {
+        "name": "Spam Admins",
+        "permissions": [
+          ["add_revisionakismetsubmission"],
+          ["add_userban"],
+          ["change_documentspamattempt"],
+          ["change_revisionakismetsubmission"],
+          ["change_revisionip"],
+          ["change_userban"]
+        ]
+      }, {
+        "name": "Topic drivers",
+        "permissions": [
+          ["add_attachment"],
+          ["add_documentattachment"],
+          ["change_attachment"],
+          ["change_documentattachment"],
+          ["move_tree"]
+        ]
+      }, {
+        "name": "Trusted writers",
+        "permissions": [
+          ["add_documentspamattempt"],
+          ["add_revisionakismetsubmission"],
+          ["change_documentspamattempt"],
+          ["change_revisionakismetsubmission"],
+          ["delete_documentspamattempt"],
+          ["delete_revisionakismetsubmission"]
+        ]
+      }, {
+        "name": "Uploaders",
+        "permissions": [
+          ["add_attachment"],
+          ["add_attachmentrevision"],
+          ["add_documentattachment"],
+          ["add_trashedattachment"],
+          ["change_attachment"],
+          ["change_attachmentrevision"],
+          ["change_documentattachment"]
+        ]
+      }, {
+        "name": "redesign_testers"
+      }
+    ],
+    "auth.permission": [
+      {
+        "codename": "add_attachment",
+        "name": "Can add attachment",
+        "content_type": ["attachments", "attachment"]
+      }, {
+        "codename": "add_attachmentrevision",
+        "name": "Can add attachment revision",
+        "content_type": ["attachments", "attachmentrevision"]
+      }, {
+        "codename": "add_document",
+        "name": "Can add document",
+        "content_type": ["wiki", "document"]
+      }, {
+        "codename": "add_documentattachment",
+        "name": "Can add document attachment",
+        "content_type": ["wiki", "documentattachment"]
+      }, {
+        "codename": "add_documentdeletionlog",
+        "name": "Can add document deletion log",
+        "content_type": ["wiki", "documentdeletionlog"]
+      }, {
+        "codename": "add_documentspamattempt",
+        "name": "Can add document spam attempt",
+        "content_type": ["wiki", "documentspamattempt"]
+      }, {
+        "codename": "add_logentry",
+        "name": "Can add log entry",
+        "content_type": ["admin", "logentry"]
+      }, {
+        "codename": "add_revisionakismetsubmission",
+        "name": "Can add Akismet submission",
+        "content_type": ["wiki", "revisionakismetsubmission"]
+      }, {
+        "codename": "add_trashedattachment",
+        "name": "Can add Trashed attachment",
+        "content_type": ["attachments", "trashedattachment"]
+      }, {
+        "codename": "add_userban",
+        "name": "Can add user ban",
+        "content_type": ["users", "userban"]
+      }, {
+        "codename": "change_attachment",
+        "name": "Can change attachment",
+        "content_type": ["attachments", "attachment"]
+      }, {
+        "codename": "change_attachmentrevision",
+        "name": "Can change attachment revision",
+        "content_type": ["attachments", "attachmentrevision"]
+      }, {
+        "codename": "change_documentattachment",
+        "name": "Can change document attachment",
+        "content_type": ["wiki", "documentattachment"]
+      }, {
+        "codename": "change_documentdeletionlog",
+        "name": "Can change document deletion log",
+        "content_type": ["wiki", "documentdeletionlog"]
+      }, {
+        "codename": "change_documentspamattempt",
+        "name": "Can change document spam attempt",
+        "content_type": ["wiki", "documentspamattempt"]
+      }, {
+        "codename": "change_revisionakismetsubmission",
+        "name": "Can change Akismet submission",
+        "content_type": ["wiki", "revisionakismetsubmission"]
+      }, {
+        "codename": "change_revisionip",
+        "name": "Can change revision ip",
+        "content_type": ["wiki", "revisionip"]
+      }, {
+        "codename": "change_trashedattachment",
+        "name": "Can change Trashed attachment",
+        "content_type": ["attachments", "trashedattachment"]
+      }, {
+        "codename": "change_userban",
+        "name": "Can change user ban",
+        "content_type": ["users", "userban"]
+      }, {
+        "codename": "delete_attachment",
+        "name": "Can delete attachment",
+        "content_type": ["attachments", "attachment"]
+      }, {
+        "codename": "delete_attachmentrevision",
+        "name": "Can delete attachment revision",
+        "content_type": ["attachments", "attachmentrevision"]
+      }, {
+        "codename": "delete_documentattachment",
+        "name": "Can delete document attachment",
+        "content_type": ["wiki", "documentattachment"]
+      }, {
+        "codename": "delete_documentspamattempt",
+        "name": "Can delete document spam attempt",
+        "content_type": ["wiki", "documentspamattempt"]
+      }, {
+        "codename": "delete_revisionakismetsubmission",
+        "name": "Can delete Akismet submission",
+        "content_type": ["wiki", "revisionakismetsubmission"]
+      }, {
+        "codename": "delete_trashedattachment",
+        "name": "Can delete Trashed attachment",
+        "content_type": ["attachments", "trashedattachment"]
+      }, {
+        "codename": "delete_userban",
+        "name": "Can delete user ban",
+        "content_type": ["users", "userban"]
+      }, {
+        "codename": "move_tree",
+        "name": "Can move a tree of documents",
+        "content_type": ["wiki", "document"]
+      }
+    ],
+    "contenttypes.contenttype": [
+      {
+        "app_label": "admin",
+        "model": "logentry"
+      }, {
+        "app_label": "attachments",
+        "model": "attachment"
+      }, {
+        "app_label": "attachments",
+        "model": "attachmentrevision"
+      }, {
+        "app_label": "attachments",
+        "model": "trashedattachment"
+      }, {
+        "app_label": "users",
+        "model": "userban"
+      }, {
+        "app_label": "wiki",
+        "model": "document"
+      }, {
+        "app_label": "wiki",
+        "model": "documentattachment"
+      }, {
+        "app_label": "wiki",
+        "model": "documentdeletionlog"
+      }, {
+        "app_label": "wiki",
+        "model": "documentspamattempt"
+      }, {
+        "app_label": "wiki",
+        "model": "revisionakismetsubmission"
+      }, {
+        "app_label": "wiki",
+        "model": "revisionip"
+      }
+    ],
+    "sites.site": [
+      {
+        "id": 1,
+        "name": "localhost:8000",
+        "domain": "localhost:8000"
+      }
+    ],
+    "users.user": [
+      {
+        "username": "test-super",
+        "email": "test-super@example.com",
+        "password": "test-password",
+        "is_staff": true,
+        "is_superuser": true
+      }, {
+        "username": "test-moderator",
+        "email": "test-moderator@example.com",
+        "password": "test-password",
+        "is_staff": true,
+        "groups": [
+          ["Attachment Moderators"],
+          ["Page Creators"],
+          ["Trusted writers"],
+          ["Spam Admins"],
+          ["Uploaders"]
+        ]
+      }, {
+        "username": "test-new",
+        "email": "test-new@example.com",
+        "password": "test-password",
+        "is_staff": true
+      }, {
+        "username": "test-banned",
+        "email": "test-banned@example.com",
+        "password": "test-password",
+        "is_staff": true
+      }, {
+        "username": "viagra-test-123",
+        "email": "test-spammer@example.com",
+        "password": "test-password",
+        "is_staff": true
+      }
+    ],
+    "users.userban": [
+      {
+        "user": ["test-banned"],
+        "by": ["test-super"],
+        "reason": "Spam"
+      }],
+    "waffle.flag": [
+      {
+        "name": "kumaediting",
+        "superusers": false,
+        "authenticated": true,
+        "note": "Use this to put the wiki into read-only mode.",
+        "created": "2014-01-14"
+      }, {
+        "name": "page_move",
+        "everyone": false,
+        "staff": true,
+        "created": "2014-01-14"
+      }, {
+        "name": "search_suggestions",
+        "superusers": false,
+        "created": "2014-10-14"
+      }, {
+        "name": "registration_disabled",
+        "everyone": false,
+        "superusers": false,
+        "created": "2015-02-25"
+      }, {
+        "name": "wiki_samples",
+        "note": "Add a button to open wiki doc samples in Codepen and/or jsFiddle",
+        "everyone": true,
+        "staff": true,
+        "created": "2015-07-20"
+      }, {
+        "name": "compat_api",
+        "created": "2015-10-01"
+      }, {
+        "name": "section_edit",
+        "note": "Show section edit buttons to signed-in users when mousing over section headers",
+        "created": "2015-10-07"
+      }, {
+        "name": "wiki_spam_exempted",
+        "note": "Exempted from spam checks (deprecated)",
+        "superusers": false,
+        "created": "2015-10-28",
+        "FORCE": true
+      }, {
+        "name": "spam_checks_enabled",
+        "note": "Decides whether spam checks are enabled site-wide.",
+        "everyone": true,
+        "superusers": false,
+        "created": "2015-10-28",
+        "FORCE": true
+      }, {
+        "name": "spam_submisions_enabled",
+        "note": "Decides whether ham and spam submissions are allowed to be done.",
+        "created": "2016-01-11"
+      }, {
+        "name": "spam_admin_override",
+        "note": "User's content should be trusted by Akismet",
+        "superusers": false,
+        "created": "2016-04-20"
+      }, {
+        "name": "spam_spammer_override",
+        "note": "User's content is always spam",
+        "superusers": false,
+        "created": "2016-04-20"
+      }, {
+        "name": "spam_testing_mode",
+        "note": "Edits are test content and should not train Akismet",
+        "superusers": false,
+        "created": "2016-04-20"
+      }, {
+        "name": "wiki_spam_training",
+        "note": "Do not block page changes when detected as spam",
+        "everyone": false,
+        "superusers": false,
+        "created": "2016-04-20"
+      }, {
+        "name": "iperceptions",
+        "note": "Enable the iPerceptions pop-up survey",
+        "everyone": false,
+        "superusers": false,
+        "created": "2016-08-03"
+      }, {
+        "name": "sg_task_completion",
+        "note": "Show Survey Gizmo link to task completion survey.",
+        "superusers": false,
+        "created": "2016-08-12"
+      }
+    ],
+    "waffle.switch": [
+      {
+        "name": "wiki_error_on_delete",
+        "active": false,
+        "note": "",
+        "created": "2014-01-14"
+      }, {
+        "name": "wiki_force_immediate_rendering",
+        "active": false,
+        "note": "",
+        "created": "2014-01-14"
+      }, {
+        "name": "enable_optimizely",
+        "active": false,
+        "note": "Enable this switch to include the Optimizely JavaScript.\n\nThis switch needs to be enabled to create or run experiments. The switch can be disabled to improve performance if experiments are not being run and no new experiments need to be created right now.",
+        "created": "2014-07-15"
+      }, {
+        "name": "welcome_email",
+        "active": true,
+        "note": "",
+        "created": "2014-08-07"
+      }, {
+        "name": "application_ACAO",
+        "active": true,
+        "note": "",
+        "created": "2014-12-23"
+      }, {
+        "name": "store_revision_ips",
+        "active": true,
+        "note": "",
+        "created": "2014-12-26"
+      }, {
+        "name": "dumb_doc_urls",
+        "active": true,
+        "note": "See https://github.com/mozilla/kuma/pull/3331",
+        "created": "2015-07-09"
+      }, {
+        "name": "newsletter",
+        "active": true,
+        "note": "Show newsletter signup.",
+        "created": "2016-11-02"
+      }, {
+        "name": "newsletter_article",
+        "active": true,
+        "note": "Show newsletter sign-up in article footers, also requires `newsletter` to be active.",
+        "created": "2016-11-02"
+      }
+    ],
+    "search.filtergroup": [
+      {
+        "name": "Topics",
+        "slug": "topic"
+      }
+    ],
+    "search.filter": [
+      {
+        "name": "APIs and DOM",
+        "slug": "api",
+        "enabled": true,
+        "default": true,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["API"]
+        ]
+      }, {
+        "name": "Add-ons & Extensions",
+        "slug": "addons",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Add-ons"],
+          ["Extensions"],
+          ["Plugins"],
+          ["Themes"]
+        ]
+      }, {
+        "name": "CSS",
+        "slug": "css",
+        "enabled": true,
+        "default": true,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["CSS"]
+        ]
+      }, {
+        "name": "Canvas",
+        "slug": "canvas",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Canvas"]
+        ]
+      }, {
+        "name": "Firefox OS",
+        "slug": "firefox-os",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Firefox OS"]
+        ]
+      }, {
+        "name": "Firefox for Android",
+        "slug": "firefox-mobile",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Firefox Mobile"]
+        ]
+      }, {
+        "name": "Firefox for Desktop",
+        "slug": "firefox-desktop",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Firefox Desktop"]
+        ]
+      }, {
+        "name": "Firefox",
+        "slug": "firefox",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Firefox"]
+        ]
+      }, {
+        "name": "Games",
+        "slug": "games",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Games"]
+        ]
+      }, {
+        "name": "HTML",
+        "slug": "html",
+        "enabled": true,
+        "default": true,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["HTML"]
+        ]
+      }, {
+        "name": "HTTP",
+        "slug": "http",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["HTTP"]
+        ]
+      }, {
+        "name": "JavaScript",
+        "slug": "js",
+        "enabled": true,
+        "default": true,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["JavaScript"]
+        ]
+      }, {
+        "name": "Marketplace",
+        "slug": "marketplace",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Marketplace"]
+        ]
+      }, {
+        "name": "MathML",
+        "slug": "mathml",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["MathML"]
+        ]
+      }, {
+        "name": "Mobile",
+        "slug": "mobile",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Mobile"]
+        ]
+      }, {
+        "name": "Open Web Apps",
+        "slug": "apps",
+        "enabled": true,
+        "default": true,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Apps"]
+        ]
+      }, {
+        "name": "SVG",
+        "slug": "svg",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["SVG"]
+        ]
+      }, {
+        "name": "Web Development",
+        "slug": "webdev",
+        "enabled": true,
+        "default": true,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["Web Development"]
+        ]
+      }, {
+        "name": "WebGL",
+        "slug": "webgl",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["WebGL"]
+        ]
+      }, {
+        "name": "Writing Documentation",
+        "slug": "docs",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["MDC_Project"],
+          ["MDC Project"],
+          ["Documentation"],
+          ["MDN Meta"],
+          ["MDN"]
+        ]
+      }, {
+        "name": "XPCOM",
+        "slug": "xpcom",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["XPCOM"]
+        ]
+      }, {
+        "name": "XUL",
+        "slug": "xul",
+        "enabled": true,
+        "default": false,
+        "group": ["Topics", "topic"],
+        "tags": [
+          ["XUL"]
+        ]
+      }
+    ],
+    "taggit.tag": [
+      {"name": "API"},
+      {"name": "Add-ons"},
+      {"name": "Apps"},
+      {"name": "CSS"},
+      {"name": "Canvas"},
+      {"name": "Documentation"},
+      {"name": "Extensions"},
+      {"name": "Firefox Desktop"},
+      {"name": "Firefox Mobile"},
+      {"name": "Firefox OS"},
+      {"name": "Firefox"},
+      {"name": "Games"},
+      {"name": "HTML"},
+      {"name": "HTTP"},
+      {"name": "JavaScript"},
+      {"name": "MDC Project"},
+      {"name": "MDC_Project"},
+      {"name": "MDN Meta"},
+      {"name": "MDN"},
+      {"name": "Marketplace"},
+      {"name": "MathML"},
+      {"name": "Mobile"},
+      {"name": "Plugins"},
+      {"name": "SVG"},
+      {"name": "Themes"},
+      {"name": "Web Development"},
+      {"name": "WebGL"},
+      {"name": "XPCOM"},
+      {"name": "XUL"}
+    ],
+    "feeder.feed": [
+      {
+        "shortname": "moz-hacks",
+        "title": "Mozilla Hacks - the Web developer blog",
+        "url": "https://hacks.mozilla.org/feed/",
+        "etag": "stale",
+        "last_modified": "2017-01-01",
+        "enabled": true,
+        "keep": 10
+      }
+    ],
+    "feeder.bundle": [
+      {
+        "shortname": "updates-moz-hacks",
+        "feeds": [
+          ["moz-hacks"]
+        ]
+      }
+    ]
+  }
+}
