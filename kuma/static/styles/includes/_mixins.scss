@@ -527,6 +527,33 @@ Placeholders
     @include vendorize(hyphens, none);
 }
 
+%highlight {
+
+    &.highlight-spanned { // needs to preceed .highlight-span definition or links aren't coloured
+        padding: inherit;
+        background-color: inherit;
+        color: inherit;
+
+        a {
+            color: inherit;
+        }
+    }
+
+    &,
+    & .highlight-span {
+        padding: 0 4px;
+        background-color: $text-color;
+        color: #fff;
+        font-weight: normal;
+        line-height: 1.25;
+        @include vendorize(box-decoration-break, clone);
+
+        a {
+            color: $accent-light;
+        }
+    }
+}
+
 
 /*
 Grid
