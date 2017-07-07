@@ -250,8 +250,8 @@ class FixtureLoader(object):
         """
         Attempt to create or update an item.
 
-        Returns the instance if attempt suceeded, or None if related items are
-        needed.
+        Returns the instance if attempt suceeded.
+        Raises NeedsDependency if a dependency must be created first.
         """
         natural_key_spec = metadata['natural_key']
         relations = metadata.get('relations', {})
