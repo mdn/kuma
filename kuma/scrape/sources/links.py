@@ -41,7 +41,7 @@ class LinksSource(Source):
             path = '/en-US/'  # Default to English homepage
         path = urlparse(path).path
         assert path.startswith('/')
-        self.locale = urlparse(path).path.split('/')[1]
+        self.locale = path.split('/')[1]
         assert self.locale in settings.MDN_LANGUAGES
         super(LinksSource, self).__init__(path, **options)
 
