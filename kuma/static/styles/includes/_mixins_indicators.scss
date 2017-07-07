@@ -15,7 +15,6 @@ block indicators aka banners
     clear: none; // over-rides default value assigned in clearfix
 
     background-color: $light-background-color;
-    font-style: italic;
     @include set-heading-font-family();
     @include set-font-size($note-font-size);
 

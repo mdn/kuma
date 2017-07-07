@@ -427,17 +427,6 @@ These are not dynamic but serve as mixins
     @include prevent-last-child-spacing(p, margin-bottom);
 }
 
-@mixin big-search() {
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    padding: ($grid-spacing / 2);
-    @include bidi-style(padding-left, 30px, padding-right, 0);
-    background: #fff;
-    @include set-larger-font-size();
-    @include set-placeholder-style(color, $text-color);
-}
-
 @mixin clearfix() {
     clear: both;
 
@@ -550,6 +539,34 @@ Placeholders
 
         a {
             color: $accent-light;
+        }
+    }
+}
+
+%cta-link {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    border-bottom: 2px solid;
+    padding-bottom: 10px;
+    @include bidi-style(padding-right, 30px, padding-left, 0);
+    @include bidi-value(text-align, left, right);
+
+    &:after {
+        position: absolute;
+        bottom: 10px;
+        @include bidi-style(right, 0, left, auto);
+        @include bidi-value(content, '\f061', '\f060');
+        font-family: fontAwesome;
+        transition: margin .1s ease-in-out;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        &:after {
+            @include bidi-style(margin-right, -4px, margin-left, 0);
         }
     }
 }

@@ -6,20 +6,74 @@ Full size form on home and search pages
 #search-form .search-form, // remove extra specificity when integrating redesign
 .search-form {
     display: block;
-    margin: 0 auto;
-    padding: ($grid-spacing * 2) 0;
+    margin: $grid-spacing auto ($grid-spacing * 2) auto;
+    padding: 0;
     position: relative;
-    width: 60%;
+    width: 100%;
+    max-width: 775px;
+
+    &.home-search-form {
+        margin: ($grid-spacing * 2) auto;
+    }
 
     > input#home-q,
-    > input#search-q, {
-        @include big-search();
+    > input#search-q {
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        padding: ($grid-spacing / 2);
+        @include bidi-style(padding-left, 48px, padding-right, 0);
+        background: #fff;
+        @include set-larger-font-size();
+        @include set-placeholder-style(color, $text-color);
     }
 
     .search-icon {
         position: absolute;
-        top: 48px;
-        @include bidi-style(left, $icon-margin, right, auto);
+        top: 0;
+        bottom: 0;
+        @include bidi-style(left, 0, right, auto);
+        width: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: ($grid-spacing / 2);
+            bottom: ($grid-spacing / 2);
+            @include bidi-style(left, 40px, right, auto);
+            display: block;
+            border-left: 1px solid $form-border-color;
+        }
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+
+    #search-form .search-form, // remove extra specificity when integrating redesign
+    .search-form {
+
+        &.home-search-form {
+            margin: 0 auto ($grid-spacing * 2) auto;
+        }
+
+        > input#home-q,
+        > input#search-q {
+            padding: $grid-spacing;
+            @include bidi-style(padding-left, 70px, padding-right, 0);
+        }
+
+        .search-icon {
+            width: 60px;
+
+            &:after {
+                top: $grid-spacing;
+                bottom: $grid-spacing;
+                @include bidi-style(left, 54px, right, auto);
+            }
+        }
     }
 }
 
@@ -36,16 +90,5 @@ Full size form on home and search pages
         border-radius: 0;
 
         @include set-placeholder-style(color, $placeholder-text);
-    }
-}
-
-@media #{$mq-mobile-and-down} {
-    .search-form {
-        width: 100%;
-        padding-top: $grid-spacing;
-
-        .search-icon {
-            top: ($grid-spacing + 7);
-        }
     }
 }
