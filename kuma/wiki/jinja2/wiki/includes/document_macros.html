@@ -23,10 +23,10 @@
   </div>
 {%- endmacro %}
 
-{% macro revision_diff(revision_from, revision_to) -%}
+{% macro revision_diff(revision_from, revision_to, origin) -%}
   {% if revision_from and revision_to %}
     <section class="revision-diff">
-      <a class="change-revisions" href="{{ url('wiki.document_revisions', revision_from.document.slug)|urlparams(locale=revision_from.document.locale, origin='translate') }}">{{ _('Change Revisions') }}</a>
+      <a class="change-revisions" href="{{ url('wiki.document_revisions', revision_to.document.slug)|urlparams(locale=revision_to.document.locale, origin=origin) }}">{{ _('Change Revisions') }}</a>
       <header>
         <div class="rev-from">
           <h3>
