@@ -113,12 +113,12 @@ class Scraper(object):
                       ' Source %(source_key)s ')
     _report_done = (_report_prefix +
                     'complete, freshness=%(freshness)s, with %(dep_count)s'
-                    ' dependant source%(dep_s)s.')
+                    ' dependent source%(dep_s)s.')
     _report_error = (_report_prefix +
-                     'errored %(err_msg)s, with %(dep_count)s dependant'
+                     'errored %(err_msg)s, with %(dep_count)s dependent'
                      ' source%(dep_s)s.')
     _report_progress = (_report_prefix +
-                        'in state "%(state)s" with %(dep_count)s dependant'
+                        'in state "%(state)s" with %(dep_count)s dependent'
                         ' source%(dep_s)s.')
 
     def scrape(self):

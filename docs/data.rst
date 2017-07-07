@@ -139,7 +139,7 @@ initial link scrape, but that are passed on to the scraped documents:
 
 Create the Sample Database
 ==========================
-These scraping tools are used to crete a sample database of public
+These scraping tools are used to create a sample database of public
 information, which is used for development environments and functional
 testing without exposing any private production data.
 
