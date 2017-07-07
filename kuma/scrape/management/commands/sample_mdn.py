@@ -12,7 +12,7 @@ class Command(ScrapeCommand):
     def add_arguments(self, parser):
         parser.add_argument('spec',
                             metavar='specification.json',
-                            help=('Sample specification file'))
+                            help='Sample specification file')
         parser.add_argument('--host',
                             help=('Where to sample MDN from (default'
                                   ' "developer.mozilla.org")'),
@@ -24,12 +24,12 @@ class Command(ScrapeCommand):
                             dest='ssl')
 
     def handle(self, *arg, **options):
-        self.setup_logging(options.get('verbosity'))
+        self.setup_logging(options['verbosity'])
         host = options['host']
         ssl = options['ssl']
         scraper = self.make_scraper(host=host, ssl=ssl)
-        spec_file = open(options['spec'])
-        data = json.load(spec_file)
+        with open(options['spec']) as spec_file:
+            data = json.load(spec_file)
 
         # Load fixtures, which may include flags and settings
         fl = FixtureLoader(data.get('fixtures', {}))
@@ -51,4 +51,4 @@ class Command(ScrapeCommand):
                 incomplete += 1
         if incomplete:
             raise CommandError("%d source%s incomplete." %
-                               (incomplete, 's' if incomplete != 0 else ''))
+                               (incomplete, '' if incomplete == 1 else 's'))

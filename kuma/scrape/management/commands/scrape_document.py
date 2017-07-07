@@ -1,5 +1,7 @@
 """Scrape a wiki document from a Kuma website."""
 
+from django.core.management.base import CommandError
+
 from . import ScrapeCommand
 
 
@@ -42,7 +44,7 @@ class Command(ScrapeCommand):
         scraper.scrape()
         source = scraper.sources['document:' + path]
         if source.state == source.STATE_ERROR:
-            raise Exception('Unable to scrape document "%s".' % path)
+            raise CommandError('Unable to scrape document "%s".' % path)
 
         elif source.freshness == source.FRESH_NO and not options['force']:
             self.stderr.write('Document "%s" already exists. Use --force to update.' % path)

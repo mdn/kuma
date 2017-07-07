@@ -1,4 +1,6 @@
-"""Scrape all the data from the homepage, so that all the links will work."""
+"""Scrape document links found on a MDN page, so that all the links will work."""
+from django.core.management.base import CommandError
+
 from . import ScrapeCommand
 
 
@@ -38,3 +40,6 @@ class Command(ScrapeCommand):
         scraper.add_source("links", path, **params)
 
         scraper.scrape()
+        source = scraper.sources['links:' + path]
+        if source.state == source.STATE_ERROR:
+            raise CommandError('Unable to scrape links on "%s".' % path)
