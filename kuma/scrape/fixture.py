@@ -12,8 +12,8 @@ class FixtureLoader(object):
 
     # Needed information about the supported Django models for fixtures
     # The key is the app_label.model_name, such as wiki.revision for Revision:
-    #  Revision._meta.app_label == wiki
-    #  Revision._meta.model_name == revision
+    #  Revision._meta.app_label == 'wiki'
+    #  Revision._meta.model_name == 'revision'
     # The value is a dictionary of:
     # - natural_key: Properties used to find existing database records
     # - relations: Details of properties that are foreign keys
@@ -155,8 +155,7 @@ class FixtureLoader(object):
             natural_key_spec = metadata['natural_key']
             relations = metadata.get('relations', {})
             filters = metadata.get('filters', {})
-            app_label, model_name = model_id.split('.')
-            assert apps.get_model(app_label, model_name)
+            assert apps.get_model(model_id)
 
             parsed.setdefault(model_id, [])
             for item_num, item in enumerate(items):
@@ -227,8 +226,7 @@ class FixtureLoader(object):
         existing, loaded, pending = 0, 0, 0
         for model_id, items in self.spec.items():
             metadata = self.model_metadata[model_id]
-            app_label, model_name = model_id.split('.')
-            Model = apps.get_model(app_label, model_name)
+            Model = apps.get_model(model_id)
 
             self.instances.setdefault(model_id, {})
             for item in items:
