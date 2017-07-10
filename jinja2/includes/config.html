@@ -22,7 +22,12 @@
         };
         win.mdn.assets = {
             css: {
-                'editor-content': [{% stylesheet 'editor-content' %}]
+                'editor-content': [
+                    {%- if waffle.flag('redesign') %}
+                        {%- stylesheet 'editor-content' %}
+                    {%- else %}
+                        {%- stylesheet 'editor-content-blue' %}
+                    {%- endif %}]
             },
             js: {
                 'syntax-prism': [{% javascript 'syntax-prism' %}]
