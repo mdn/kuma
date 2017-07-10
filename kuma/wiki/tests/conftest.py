@@ -348,6 +348,15 @@ def ks_toolbox():
              "args": ['TestError', {}, {'name': 'SomeMacro2'}],
              "time": "12:33:58 GMT-0400 (EDT)",
              "timestamp": "1331829238052000"},
+            {"level": "error",
+             "message": "Syntax error at line 88...",
+             "args": [
+                 'DocumentParsingError',
+                 'Syntax error at line 88...',
+                 {'error': {'line': 88, 'column': 65}}
+             ],
+             "time": "12:33:59 GMT-0400 (EDT)",
+             "timestamp": "1331829238053000"},
             {"level": "info",
              "message": "Message #3",
              "args": ['TestError'],
