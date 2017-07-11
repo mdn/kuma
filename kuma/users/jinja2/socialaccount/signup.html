@@ -131,7 +131,14 @@
                       {% else %}
                       <label for="{{ id_for_label }}">
                         {{ email_choice.tag() }}
-                        {{ email_choice.choice_label|safe }}
+                        {{ email_choice.choice_label }}
+                        {%- if email_choice.choice_value in email_addresses %}
+                          {%- if email_addresses[email_choice.choice_value].get('verified', False) %}
+                            <strong>{{ _('Verified') }}</strong>
+                          {%- else %}
+                            {{ _('Unverified') }}
+                          {%- endif %}
+                        {%- endif %}
                       </label>
                       {% endif %}
                     </li>

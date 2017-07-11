@@ -523,14 +523,11 @@ class SignupView(BaseSignupView):
                 }
             choices = []
             verified_emails = []
-            for email_address in self.email_addresses.values():
-                if email_address['verified']:
-                    label = _('%(email)s <b>Verified</b>')
-                    verified_emails.append(email_address['email'])
-                else:
-                    label = _('%(email)s Unverified')
-                next_email = email_address['email']
-                choices.append((next_email, label % {'email': next_email}))
+            for email_data in self.email_addresses.values():
+                email_address = email_data['email']
+                if email_data['verified']:
+                    verified_emails.append(email_address)
+                choices.append((email_address, email_address))
             if extra_email_addresses:
                 choices.append((form.other_email_value, _('Other:')))
             else:
