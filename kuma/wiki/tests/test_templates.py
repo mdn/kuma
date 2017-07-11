@@ -14,6 +14,7 @@ from django.core import mail
 from django.test.utils import override_settings
 from django.utils import translation
 from django.utils.http import urlquote
+from django.utils.six.moves.urllib.parse import urlparse, parse_qs
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import eq_, ok_
@@ -887,6 +888,30 @@ def test_compare_revisions(edit_revision, client):
     page = pq(response.content)
     assert page('span.diff_sub').text() == u'Getting\xa0started...'
     assert page('span.diff_add').text() == u'The\xa0root\xa0document.'
+
+    change_link = page('a.change-revisions')
+    assert change_link.text() == 'Change Revisions'
+    change_href = change_link.attr('href')
+    bits = urlparse(change_href)
+    assert bits.path == reverse('wiki.document_revisions', args=[doc.slug],
+                                locale=doc.locale)
+    assert parse_qs(bits.query) == {'locale': [doc.locale],
+                                    'origin': ['compare']}
+
+    rev_from_link = page('div.rev-from h3 a')
+    assert rev_from_link.text() == 'Revision %d:' % first_revision.id
+    from_href = rev_from_link.attr('href')
+    assert from_href == reverse('wiki.revision',
+                                args=[doc.slug, first_revision.id],
+                                locale=doc.locale)
+
+    rev_to_link = page('div.rev-to h3 a')
+    assert rev_to_link.text() == 'Revision %d:' % edit_revision.id
+    to_href = rev_to_link.attr('href')
+    assert to_href == reverse('wiki.revision',
+                              args=[doc.slug, edit_revision.id],
+                              locale=doc.locale)
+
 
 
 class TranslateTests(UserTestCase, WikiTestCase):
