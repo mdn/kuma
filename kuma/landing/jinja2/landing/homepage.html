@@ -126,34 +126,69 @@
 </div></div>
 
 <!-- callout area -->
-<div class="home-callouts">
-  <h2 class="offscreen">{{ _('Open Web and Mobile') }}</h2>
-  <div class="column-container center">
-    <div class="column-callout callout-devrel">
-      <a href="https://www.surveygizmo.com/s3/3544552/32ff08f6af8a">
-          <span>
-            <p>{{ _('Do you have a couple minutes to help us out by taking a developer survey?') }}</p>
-
-            <button type="button">{{ _('Take the Survey') }}</button>
-          </span>
-      </a>
+{% if waffle.flag('redesign') %}
+  <div class="home-callouts">
+    <h2 class="offscreen">{{ _('Featured') }}</h2>
+    <div class="column-container center">
+      {% if waffle.switch('foundation_callout') %}
+        <div class="column-callout callout-foundation">
+          <a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=tiles&utm_campaign=EOY2016&utm_content=pixelheart">
+            <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
+          </a>
+        </div>
+      {% else %}
+        <div class="column-callout callout-saucelabs">
+          <a href="https://www.saucelabs.com/cross-browser-testing-tutorial?utm_campaign=cbt&amp;utm_medium=banner&amp;utm_source=home-page">
+            <span>
+              <p>{{ _('Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs') }}</p>
+              <button type="button">{{ _('Test on Sauce Labs') }}</button>
+            </span>
+          </a>
+        </div>
+      {% endif %}
+      {% if waffle.switch('newsletter') %}
+      <div class="column-callout callout-newsletter">
+        {% include "includes/newsletter.html" %}
+      </div>
+      {% else %}
+        <div class="column-callout callout-learn">
+          <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
+        </div>
+        <div class="column-callout callout-deved">
+          <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
+        </div>
+      {% endif %}
     </div>
-    <div class="column-callout callout-learn">
-      <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
-    </div>
-  {% if waffle.switch('foundation_callout') %}
-    <div class="column-callout callout-foundation">
-      <a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=tiles&utm_campaign=EOY2016&utm_content=pixelheart">
-        <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
-      </a>
-    </div>
-  {% else %}
-    <div class="column-callout callout-deved">
-      <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
-    </div>
-  {% endif %}
   </div>
-</div>
+{% else %}
+  <div class="home-callouts">
+    <h2 class="offscreen">{{ _('Open Web and Mobile') }}</h2>
+    <div class="column-container center">
+      <div class="column-callout callout-saucelabs">
+        <a href="https://www.saucelabs.com/cross-browser-testing-tutorial?utm_campaign=cbt&amp;utm_medium=banner&amp;utm_source=home-page">
+          <span>
+            <p>{{ _('Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs') }}</p>
+            <button type="button">{{ _('Test on Sauce Labs') }}</button>
+          </span>
+        </a>
+      </div>
+      <div class="column-callout callout-learn">
+        <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
+      </div>
+    {% if waffle.switch('foundation_callout') %}
+      <div class="column-callout callout-foundation">
+        <a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=tiles&utm_campaign=EOY2016&utm_content=pixelheart">
+          <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
+        </a>
+      </div>
+    {% else %}
+      <div class="column-callout callout-deved">
+        <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
+      </div>
+    {% endif %}
+    </div>
+  </div>
+{% endif %}
 
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
