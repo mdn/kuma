@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-20 07:47-0700\n"
-"PO-Revision-Date: 2017-07-11 10:17+0000\n"
-"Last-Translator: Sahithi <sahithi.thinker@gmail.com>\n"
+"PO-Revision-Date: 2017-07-11 10:33+0000\n"
+"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -129,18 +129,16 @@ msgid "Draft discarded."
 msgstr "డ్రాఫ్ట్ విస్మరించబడింది."
 
 #: kuma/static/js/wiki-edit-draft.js:222
-#, fuzzy
 msgid "Draft published:"
-msgstr "ప్రచురించబడింది"
+msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:224
 msgid "Draft discarded:"
 msgstr "డ్రాఫ్ట్ విస్మరించబడింది:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
-#, fuzzy
 msgid "Draft autosaved:"
-msgstr "స్వయంగా భద్రపరచబడింది"
+msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:407
 msgid "Autosave enabled."
@@ -159,9 +157,8 @@ msgid "Changes saved."
 msgstr "మార్పులు చేయబడ్డాయి."
 
 #: kuma/static/js/wiki-edit.js:417
-#, fuzzy
 msgid "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the \"Publish\" button."
-msgstr "ప్రచురణ విఫలమయ్యింది. దయచేసి మీ మార్పులను ఒక భద్రమైన చోటుకి కాపీ చేసి, తర్వాత 'ప్రచురించు' బటన్ తో పత్రాన్ని తిరిగి పంపండి."
+msgstr "ప్రచురణ విఫలమయ్యింది. దయచేసి మీ మార్పులను ఒక భద్రమైన చోటుకి కాపీ చేసి, తర్వాత \"ప్రచురించు\" బటన్ తో పత్రాన్ని తిరిగి పంపండి."
 
 #: kuma/static/js/wiki-samples.js:99
 #, python-format

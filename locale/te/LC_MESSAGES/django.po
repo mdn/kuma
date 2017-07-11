@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-07-11 10:29+0000\n"
+"PO-Revision-Date: 2017-07-11 10:35+0000\n"
 "Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
@@ -95,7 +95,7 @@ msgstr "మోజిల్లా డెవలపర్ నెట్వర్క�
 
 #: jinja2/base.html:95
 msgid "MDN is currently in read-only maintenance mode."
-msgstr ""
+msgstr "MDN ప్రస్తుతానికి చదవడానికి మాత్రమె పనిచేయబడును."
 
 #: jinja2/base.html:96
 msgid "Learn more"
@@ -115,7 +115,7 @@ msgstr "అన్వేషణ దాటవేయి"
 
 #: jinja2/base.html:116 jinja2/base.html:254
 msgid "MDN Web Docs"
-msgstr ""
+msgstr "MDN వెబ్ డాక్స్"
 
 #: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -362,7 +362,7 @@ msgstr "జాల అభివృద్ధి గురించి ఉత్త
 
 #: jinja2/includes/newsletter.html:4
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
-msgstr ""
+msgstr "నేరుగా మీ ఇన్బాక్స్కు అందించిన MDN నుండి తాజా మరియు ఉత్తమమైనది పొందండి."
 
 #: jinja2/includes/newsletter.html:12
 msgid "E-mail"
@@ -423,6 +423,8 @@ msgid ""
 "We’re updating the look and navigation of MDN to more closely reflect our dedication to providing the best (and most platform-agnostic) web docs in the world. As a beta tester, you’re the first to "
 "see the new look, and we’d love to hear what you think."
 msgstr ""
+"మేము ప్రపంచంలోని ఉత్తమ (మరియు చాలా ప్లాట్ఫారమ్-అజ్ఞస్తిక్) వెబ్ పత్రాలను అందించడానికి మా అంకితభావాన్ని మరింత ప్రతిబింబించడానికి MDN యొక్క రూపాన్ని మరియు పేజీకి సంబంధించిన లింకులును నవీకరిస్తున్నాము."
+" ఒక beta టెస్టర్ వలె, మీరు క్రొత్త రూపాన్ని చూడడానికి మొదటివారు, మరియు మీ అభిప్రాయాన్ని వినడానికి మేము ఇష్టపడతాము."
 
 #: jinja2/includes/redesign_notice.html:17
 #, python-format
@@ -450,7 +452,7 @@ msgstr "MDN ఉపయోగించినందుకు ధన్యవాద�
 
 #: jinja2/includes/redesign_notice.html:28
 msgid "The MDN Web Docs Team"
-msgstr ""
+msgstr "MDN వెబ్ డాక్స్ బృందం"
 
 #: jinja2/includes/redesign_notice.html:29 jinja2/includes/redesign_notice.html:43
 msgid "Hide redesign announcement"
