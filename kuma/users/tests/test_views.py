@@ -1099,6 +1099,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         public_email = 'octocat-public@example.com'
         private_email = 'octocat-private@example.com'
         unverified_email = 'octocat-trash@example.com'
+        invalid_email = 'xss><svg/onload=alert(document.cookie)>@example.com'
         profile_data = self.github_profile_data.copy()
         profile_data['email'] = public_email
         email_data = [
@@ -1108,6 +1109,10 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 'primary': True
             }, {
                 'email': unverified_email,
+                'verified': False,
+                'primary': False
+            }, {
+                'email': invalid_email,
                 'verified': False,
                 'primary': False
             }
@@ -1130,6 +1135,8 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                          {'verified': True,
                           'email': private_email,
                           'primary': True})
+        # then check that the invalid email is not present
+        assert invalid_email not in email_address
         # then check if the radio button's default value is the public email
         # address
         self.assertEqual(response.context['form'].initial['email'],

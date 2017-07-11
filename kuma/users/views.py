@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
+from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
@@ -485,10 +486,18 @@ class SignupView(BaseSignupView):
             pass
 
         email = self.sociallogin.account.extra_data.get('email') or None
-        extra_email_addresses = (self.sociallogin
-                                     .account
-                                     .extra_data
-                                     .get('email_addresses')) or []
+        email_data = (self.sociallogin.account.extra_data.get(
+                      'email_addresses')) or []
+
+        # Discard email addresses that won't validate
+        extra_email_addresses = []
+        for data in email_data:
+            try:
+                validate_email(data['email'])
+            except ValidationError:
+                pass
+            else:
+                extra_email_addresses.append(data)
 
         # if we didn't get any extra email addresses from the provider
         # but the default email is available, simply hide the form widget
