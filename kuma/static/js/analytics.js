@@ -118,10 +118,10 @@
 
         trackLink: function(event, url, data) {
             // ctrl or cmd click or context menu
-            var newTab =
-                event.metaKey || event.ctrlKey || event.type == 'contextmenu';
+            // prettier-ignore
+            var newTab = event.metaKey || event.ctrlKey || event.type === 'contextmenu';
             // is a same page anchor
-            var isAnchor = url.indexOf('#') == 0;
+            var isAnchor = url.indexOf('#') === 0;
             // isBlank
             var isBlank = $(event.target).attr('target') === '_blank';
 
@@ -145,12 +145,12 @@
                 // probably javascript
                 if (e.originalEvent) {
                     var originalEvent = e.originalEvent;
-                    var lineAndColumnInfo = originalEvent.colno
-                        ? ' line:' +
-                          originalEvent.lineno +
-                          ', column:' +
-                          originalEvent.colno
-                        : ' line:' + originalEvent.lineno;
+                    var lineAndColumnInfo = ' line:' + originalEvent.lineno;
+
+                    if (originalEvent.colno) {
+                        lineAndColumnInfo = ' line:' + originalEvent.lineno + ', column:' + originalEvent.colno;
+                    }
+
                     analytics.trackError(
                         'JavaScript Error',
                         originalEvent.message,
