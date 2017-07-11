@@ -24,6 +24,23 @@ def test_compare_revisions(edit_revision, client, raw):
 
 
 @pytest.mark.parametrize('raw', [True, False])
+def test_compare_translation(trans_revision, client, raw):
+    """A localized revision can be compared to an English source revision."""
+    fr_doc = trans_revision.document
+    en_revision = trans_revision.based_on
+    en_doc = en_revision.document
+    assert en_doc != fr_doc
+    params = {'from': en_revision.id, 'to': trans_revision.id}
+    if raw:
+        params['raw'] = '1'
+    url = urlparams(reverse('wiki.compare_revisions', args=[fr_doc.slug],
+                            locale=fr_doc.locale), **params)
+
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize('raw', [True, False])
 def test_compare_revisions_without_tidied_content(edit_revision, client, raw):
     """Comparing revisions without tidied content displays a wait message."""
     doc = edit_revision.document

@@ -913,6 +913,45 @@ def test_compare_revisions(edit_revision, client):
                               locale=doc.locale)
 
 
+def test_compare_first_translation(trans_revision, client):
+    """A localized revision can be compared to an English source revision."""
+    fr_doc = trans_revision.document
+    en_revision = trans_revision.based_on
+    en_doc = en_revision.document
+    assert en_doc != fr_doc
+    params = {'from': en_revision.id, 'to': trans_revision.id}
+    url = urlparams(reverse('wiki.compare_revisions', args=[fr_doc.slug],
+                            locale=fr_doc.locale), **params)
+
+    response = client.get(url)
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert page('span.diff_sub').text() == u'Getting\xa0started...'
+    assert page('span.diff_add').text() == u'Mise\xa0en\xa0route...'
+
+    # Change Revisions link goes to the French document history page
+    change_link = page('a.change-revisions')
+    change_href = change_link.attr('href')
+    bits = urlparse(change_href)
+    assert bits.path == reverse('wiki.document_revisions', args=[fr_doc.slug],
+                                locale=fr_doc.locale)
+    assert parse_qs(bits.query) == {'locale': [fr_doc.locale],
+                                    'origin': ['compare']}
+
+    # From revision link goes to the English document
+    rev_from_link = page('div.rev-from h3 a')
+    from_href = rev_from_link.attr('href')
+    assert from_href == reverse('wiki.revision',
+                                args=[en_doc.slug, en_revision.id],
+                                locale=en_doc.locale)
+
+    # To revision link goes to the French document
+    rev_to_link = page('div.rev-to h3 a')
+    to_href = rev_to_link.attr('href')
+    assert to_href == reverse('wiki.revision',
+                              args=[fr_doc.slug, trans_revision.id],
+                              locale=fr_doc.locale)
+
 
 class TranslateTests(UserTestCase, WikiTestCase):
     """Tests for the Translate page"""
