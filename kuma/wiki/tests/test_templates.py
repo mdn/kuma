@@ -874,103 +874,19 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         eq_(1, len(doc('#document-list ul.document-list li')))
 
 
-class CompareRevisionTests(UserTestCase, WikiTestCase):
-    """Tests for Review Revisions"""
-    localizing_client = True
+def test_compare_revisions(edit_revision, client):
+    """Comparing two valid revisions of the same document works."""
+    doc = edit_revision.document
+    first_revision = doc.revisions.first()
+    params = {'from': first_revision.id, 'to': edit_revision.id}
+    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug],
+                            locale=doc.locale), **params)
 
-    def setUp(self):
-        super(CompareRevisionTests, self).setUp()
-        self.document = _create_document()
-        self.revision1 = self.document.current_revision
-        user = self.user_model.objects.get(username='testuser')
-        self.revision2 = Revision(summary="lipsum",
-                                  content='<div>Lorem Ipsum Dolor</div>',
-                                  keywords='kw1 kw2',
-                                  document=self.document, creator=user)
-        self.revision2.save()
-
-        self.client.login(username='admin', password='testpass')
-
-    def test_bad_parameters(self):
-        """Ensure badly-formed revision parameters do not cause errors"""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': '1e309', 'to': u'1e309'}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-    def test_no_tidied_content(self):
-        """
-        Verify revisions without tidied content show appropriate message.
-        """
-
-        # update() to skip the tidy_revision_content post_save signal handler
-        Revision.objects.filter(
-            id__in=[self.revision1.id, self.revision2.id]
-        ).update(
-            tidied_content=''
-        )
-
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': self.revision1.id, 'to': self.revision2.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        ok_('Please refresh this page in a few minutes.' in response.content)
-
-        url = url + '&raw=1'
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        ok_('Please refresh this page in a few minutes.' in response.content)
-
-    def test_compare_revisions(self):
-        """Compare two revisions"""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': self.revision1.id, 'to': self.revision2.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('Dolor', doc('span.diff_add').text())
-
-    def test_compare_revisions_invalid_to_int(self):
-        """Provide invalid 'to' int for revision ids."""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': '', 'to': 'invalid'}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-    def test_compare_revisions_invalid_from_int(self):
-        """Provide invalid 'from' int for revision ids."""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': 'invalid', 'to': ''}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-    def test_compare_revisions_missing_query_param(self):
-        """Try to compare two revisions, with a missing query string param."""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': self.revision1.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'to': self.revision1.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-    def test_compare_unmatched_document_url(self):
-        """Comparing two revisions of unlinked document should cause error."""
-        unmatched_document = _create_document(title='Invalid document')
-        url = reverse('wiki.compare_revisions', args=[unmatched_document.slug])
-        query = {'from': self.revision1.id, 'to': self.revision2.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
+    response = client.get(url)
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert page('span.diff_sub').text() == u'Getting\xa0started...'
+    assert page('span.diff_add').text() == u'The\xa0root\xa0document.'
 
 
 class TranslateTests(UserTestCase, WikiTestCase):
