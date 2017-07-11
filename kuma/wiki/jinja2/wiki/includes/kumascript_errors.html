@@ -30,9 +30,9 @@
               <dd class="kserror-type">
                 {{ error_type }}
               </dd>
-              {% set error_meta = error.args[2] %}
-              {% if error_meta %}
-                {% set macro_name = error_meta.name %}
+              {% set error_meta = error.args[2] if error.args|count > 2 else None %}
+              {% set macro_name = error_meta.get('name') if error_meta else None %}
+              {% if macro_name %}
                 {% set macro_relpath = macro_sources.get(macro_name.lower()) %}
                 <dt>{{ _('In macro:') }}</dt>
                 <dd>
@@ -46,7 +46,7 @@
                 <dt>{{ _('Parsing macro:') }}</dt>
                 <dd>
                   <code class="kserror-parse">{{ macro_name }}
-                    {% if error_meta.token %}
+                    {% if error_meta.get('token') %}
                       ({{ error_meta.token.args }})
                     {% endif %}
                   </code>
