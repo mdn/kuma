@@ -608,6 +608,21 @@ STATICI18N_DOMAIN = 'javascript'
 # Cache non-versioned static files for one week
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
+
+def pipeline_scss(output, sources):
+    """Define a CSS file generated from multiple SCSS files."""
+    definition = {
+        'source_filenames': tuple('styles/%s.scss' % src for src in sources),
+        'output_filename': 'build/styles/%s.css' % output
+    }
+    return definition
+
+
+def pipeline_one_scss(slug):
+    """Define a CSS file that shares the name with the one input SCSS."""
+    return pipeline_scss(slug, [slug])
+
+
 PIPELINE_CSS = {
     'mdn-blue': {
         'source_filenames': (
@@ -885,6 +900,7 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/samples.css',
     },
+    'locale-zh-CN': pipeline_one_scss('locales/zh-CN')
 }
 
 PIPELINE_JS = {

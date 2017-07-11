@@ -36,6 +36,9 @@
     {% stylesheet 'maintenance-mode-global' %}
   {%- endif %}
 
+  {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
+  {% stylesheet 'locale-%s' % LANG %}
+
   {%- if not is_sphinx %}
     <!-- common social tags -->
     {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}

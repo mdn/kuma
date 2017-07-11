@@ -9,12 +9,16 @@ const watch = require('gulp-watch');
 
 // compiles top-level .scss files
 gulp.task('styles', () => {
-    // only process files in /styles root
-    // all other .scss files are components/includes/libs
+    // Process files in /styles root
     gulp.src('./kuma/static/styles/*.scss')
         .pipe(sass().on('error', sass.logError))
         // send compiled files to where expected by Django Pipeline
         .pipe(gulp.dest('./static/styles'));
+    // Process files in /styles/locales
+    gulp.src('./kuma/static/styles/locales/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        // send compiled files to where expected by Django Pipeline
+        .pipe(gulp.dest('./static/styles/locales'));
 });
 
 // lints .scss files with stylelint
