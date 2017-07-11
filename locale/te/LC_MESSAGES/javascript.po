@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-20 07:47-0700\n"
-"PO-Revision-Date: 2016-11-16 09:44+0000\n"
-"Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
+"PO-Revision-Date: 2017-07-11 10:17+0000\n"
+"Last-Translator: Sahithi <sahithi.thinker@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
@@ -84,17 +84,15 @@ msgstr "తెలియని తేదీ"
 
 #: kuma/static/js/wiki-edit-draft.js:77
 msgid "View draft."
-msgstr ""
+msgstr "చిత్తుప్రతిని వీక్షించు."
 
 #: kuma/static/js/wiki-edit-draft.js:78
-#, fuzzy
 msgid "Restore draft."
-msgstr "డ్రాఫ్ట్ నుండి సమాచరాన్ని పునరుద్ధరించు"
+msgstr "డ్రాఫ్ట్ ను పునరుద్ధరించు."
 
 #: kuma/static/js/wiki-edit-draft.js:79
-#, fuzzy
 msgid "Discard draft."
-msgstr "డ్రాఫ్ట్ ని విస్మరించు"
+msgstr "డ్రాఫ్ట్ ని విస్మరించు."
 
 #: kuma/static/js/wiki-edit-draft.js:101
 msgid "A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing."
@@ -102,7 +100,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:102 kuma/static/js/wiki-edit-draft.js:117
 msgid "Revision history."
-msgstr ""
+msgstr "చరిత్ర పునర్విమర్శ."
 
 #: kuma/static/js/wiki-edit-draft.js:103
 #, fuzzy
@@ -114,23 +112,21 @@ msgid "Compare this date to the latest revision date to ensure you're not overwr
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:126
-#, fuzzy, python-format
+#, python-format
 msgid "You have a draft from: %(time)s."
-msgstr "మీకు ఒక డ్రాఫ్ట్ వచ్చినది:"
+msgstr "మీకు ఒక డ్రాఫ్ట్ వచ్చినది: %(time)s."
 
 #: kuma/static/js/wiki-edit-draft.js:152
 msgid "Viewing old draft. This draft cannot be published."
 msgstr ""
 
 #: kuma/static/js/wiki-edit-draft.js:171
-#, fuzzy
 msgid "Draft restored."
-msgstr "తిరిగివుంచుము"
+msgstr "డ్రాఫ్ట్ పునరుద్ధరించబడింది."
 
 #: kuma/static/js/wiki-edit-draft.js:188
-#, fuzzy
 msgid "Draft discarded."
-msgstr "విస్మరించు"
+msgstr "డ్రాఫ్ట్ విస్మరించబడింది."
 
 #: kuma/static/js/wiki-edit-draft.js:222
 #, fuzzy
@@ -138,9 +134,8 @@ msgid "Draft published:"
 msgstr "ప్రచురించబడింది"
 
 #: kuma/static/js/wiki-edit-draft.js:224
-#, fuzzy
 msgid "Draft discarded:"
-msgstr "విస్మరించు"
+msgstr "డ్రాఫ్ట్ విస్మరించబడింది:"
 
 #: kuma/static/js/wiki-edit-draft.js:226
 #, fuzzy
@@ -153,7 +148,7 @@ msgstr "ఆటోసేవ్ ఎనేబుల్ అయినది."
 
 #: kuma/static/js/wiki-edit.js:346
 msgid "Publishing changes…"
-msgstr ""
+msgstr "మార్పుల ప్రచురణ…"
 
 #: kuma/static/js/wiki-edit.js:385
 msgid "Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again."
@@ -251,7 +246,7 @@ msgstr "నమూనా శీర్షిక ఏమి ఉండాలి?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
@@ -259,16 +254,15 @@ msgstr "మాదిరి HTML విషయం"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
 msgstr "మాదిరి CSS విషయం"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
-#, fuzzy
 msgid "JavaScript"
-msgstr "JavaScript విషయం"
+msgstr "JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
