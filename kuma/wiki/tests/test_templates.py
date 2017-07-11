@@ -14,6 +14,7 @@ from django.core import mail
 from django.test.utils import override_settings
 from django.utils import translation
 from django.utils.http import urlquote
+from django.utils.six.moves.urllib.parse import urlparse, parse_qs
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import eq_, ok_
@@ -874,103 +875,82 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         eq_(1, len(doc('#document-list ul.document-list li')))
 
 
-class CompareRevisionTests(UserTestCase, WikiTestCase):
-    """Tests for Review Revisions"""
-    localizing_client = True
+def test_compare_revisions(edit_revision, client):
+    """Comparing two valid revisions of the same document works."""
+    doc = edit_revision.document
+    first_revision = doc.revisions.first()
+    params = {'from': first_revision.id, 'to': edit_revision.id}
+    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug],
+                            locale=doc.locale), **params)
 
-    def setUp(self):
-        super(CompareRevisionTests, self).setUp()
-        self.document = _create_document()
-        self.revision1 = self.document.current_revision
-        user = self.user_model.objects.get(username='testuser')
-        self.revision2 = Revision(summary="lipsum",
-                                  content='<div>Lorem Ipsum Dolor</div>',
-                                  keywords='kw1 kw2',
-                                  document=self.document, creator=user)
-        self.revision2.save()
+    response = client.get(url)
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert page('span.diff_sub').text() == u'Getting\xa0started...'
+    assert page('span.diff_add').text() == u'The\xa0root\xa0document.'
 
-        self.client.login(username='admin', password='testpass')
+    change_link = page('a.change-revisions')
+    assert change_link.text() == 'Change Revisions'
+    change_href = change_link.attr('href')
+    bits = urlparse(change_href)
+    assert bits.path == reverse('wiki.document_revisions', args=[doc.slug],
+                                locale=doc.locale)
+    assert parse_qs(bits.query) == {'locale': [doc.locale],
+                                    'origin': ['compare']}
 
-    def test_bad_parameters(self):
-        """Ensure badly-formed revision parameters do not cause errors"""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': '1e309', 'to': u'1e309'}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
+    rev_from_link = page('div.rev-from h3 a')
+    assert rev_from_link.text() == 'Revision %d:' % first_revision.id
+    from_href = rev_from_link.attr('href')
+    assert from_href == reverse('wiki.revision',
+                                args=[doc.slug, first_revision.id],
+                                locale=doc.locale)
 
-    def test_no_tidied_content(self):
-        """
-        Verify revisions without tidied content show appropriate message.
-        """
+    rev_to_link = page('div.rev-to h3 a')
+    assert rev_to_link.text() == 'Revision %d:' % edit_revision.id
+    to_href = rev_to_link.attr('href')
+    assert to_href == reverse('wiki.revision',
+                              args=[doc.slug, edit_revision.id],
+                              locale=doc.locale)
 
-        # update() to skip the tidy_revision_content post_save signal handler
-        Revision.objects.filter(
-            id__in=[self.revision1.id, self.revision2.id]
-        ).update(
-            tidied_content=''
-        )
 
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': self.revision1.id, 'to': self.revision2.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        ok_('Please refresh this page in a few minutes.' in response.content)
+def test_compare_first_translation(trans_revision, client):
+    """A localized revision can be compared to an English source revision."""
+    fr_doc = trans_revision.document
+    en_revision = trans_revision.based_on
+    en_doc = en_revision.document
+    assert en_doc != fr_doc
+    params = {'from': en_revision.id, 'to': trans_revision.id}
+    url = urlparams(reverse('wiki.compare_revisions', args=[fr_doc.slug],
+                            locale=fr_doc.locale), **params)
 
-        url = url + '&raw=1'
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        ok_('Please refresh this page in a few minutes.' in response.content)
+    response = client.get(url)
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert page('span.diff_sub').text() == u'Getting\xa0started...'
+    assert page('span.diff_add').text() == u'Mise\xa0en\xa0route...'
 
-    def test_compare_revisions(self):
-        """Compare two revisions"""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': self.revision1.id, 'to': self.revision2.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('Dolor', doc('span.diff_add').text())
+    # Change Revisions link goes to the French document history page
+    change_link = page('a.change-revisions')
+    change_href = change_link.attr('href')
+    bits = urlparse(change_href)
+    assert bits.path == reverse('wiki.document_revisions', args=[fr_doc.slug],
+                                locale=fr_doc.locale)
+    assert parse_qs(bits.query) == {'locale': [fr_doc.locale],
+                                    'origin': ['compare']}
 
-    def test_compare_revisions_invalid_to_int(self):
-        """Provide invalid 'to' int for revision ids."""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': '', 'to': 'invalid'}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
+    # From revision link goes to the English document
+    rev_from_link = page('div.rev-from h3 a')
+    from_href = rev_from_link.attr('href')
+    assert from_href == reverse('wiki.revision',
+                                args=[en_doc.slug, en_revision.id],
+                                locale=en_doc.locale)
 
-    def test_compare_revisions_invalid_from_int(self):
-        """Provide invalid 'from' int for revision ids."""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': 'invalid', 'to': ''}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-    def test_compare_revisions_missing_query_param(self):
-        """Try to compare two revisions, with a missing query string param."""
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'from': self.revision1.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-        url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {'to': self.revision1.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
-
-    def test_compare_unmatched_document_url(self):
-        """Comparing two revisions of unlinked document should cause error."""
-        unmatched_document = _create_document(title='Invalid document')
-        url = reverse('wiki.compare_revisions', args=[unmatched_document.slug])
-        query = {'from': self.revision1.id, 'to': self.revision2.id}
-        url = urlparams(url, **query)
-        response = self.client.get(url)
-        eq_(404, response.status_code)
+    # To revision link goes to the French document
+    rev_to_link = page('div.rev-to h3 a')
+    to_href = rev_to_link.attr('href')
+    assert to_href == reverse('wiki.revision',
+                              args=[fr_doc.slug, trans_revision.id],
+                              locale=fr_doc.locale)
 
 
 class TranslateTests(UserTestCase, WikiTestCase):
