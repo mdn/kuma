@@ -49,7 +49,7 @@ class Ckeditor(Region):
     @property
     def is_draft_container_displayed(self):
         try:
-             self.find_element(*self._draft_container_locator).is_displayed()
+            self.find_element(*self._draft_container_locator).is_displayed()
         except NoSuchElementException:
             return False
 

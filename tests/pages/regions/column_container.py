@@ -1,6 +1,7 @@
 from pypom import Region
 from selenium.webdriver.common.by import By
 
+
 # pass column container element to handle child columns
 # columns exist on homepage, article pages, profile page, etc.
 class ColumnContainer(Region):
@@ -24,12 +25,12 @@ class ColumnContainer(Region):
             this_y = column.location['y']
             # compare x values
             # in desktop columns should be to right of previous
-            if last_x != None and last_x <= this_x:
+            if last_x is not None and last_x <= this_x:
                 print 'column x values should be acending'
                 return False
             # compare y values
             # in desktop all columns should start at same page height
-            if last_y != None and last_y == this_y:
+            if last_y is not None and last_y == this_y:
                 print 'column y values should all match'
                 return False
             print type(this_x)
