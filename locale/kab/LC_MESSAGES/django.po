@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-06-22 08:57-0700\n"
-"PO-Revision-Date: 2017-06-29 11:36+0000\n"
+"PO-Revision-Date: 2017-07-12 20:37+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
 "Language: kab\n"
@@ -362,7 +362,7 @@ msgstr "Issin ayen yufraren deg tneflit web"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
-msgstr ""
+msgstr "Rmes-d ayen ifazen si MDN, srid deg tebwaṭ-ik n yimayl."
 
 #: jinja2/includes/newsletter.html:12
 msgid "E-mail"
@@ -407,7 +407,7 @@ msgstr "Γer zdat"
 
 #: jinja2/includes/redesign_notice.html:4
 msgid "Under Construction"
-msgstr ""
+msgstr "Ad d-yettali"
 
 #: jinja2/includes/redesign_notice.html:6
 #, python-format
@@ -458,7 +458,7 @@ msgstr ""
 
 #: jinja2/includes/redesign_notice.html:33
 msgid "Why does MDN look different?"
-msgstr ""
+msgstr "Acuɣer yettban MDN akken-nniḍen?"
 
 #: jinja2/includes/redesign_notice.html:34
 msgid ""
@@ -4045,11 +4045,9 @@ msgstr[0] "Ugar n telɣut ɣef tuccda agi"
 msgstr[1] "Ugar n telɣut ɣef tuccḍiwin agi"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"%(troubleshooting_url)s\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr ""
-"Yal yiwen yesɛan amaɣnu MDN yezmer ad isnifel isemli akken ad iseɣti tuccḍa. <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">Amnir n usellek n KumaScript</a> yezmer ad yettwaseqdecdi "
-"tazwara."
+msgstr "Yal yiwen yesɛan amaɣnu MDN yezmer ad isnifel isemli akken ad iseɣti tuccḍa. Aseqdec n <a href=\"%(troubleshooting_url)s\"> Amnir n usellek n KumaScript</a> si tazwara."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4112,9 +4110,9 @@ msgid "Tell us why you made additions and changes. It is optional, but will make
 msgstr "Ini yaɣ-d acuɣer tesnifleḍ asebter. D afrayan, acukan aɣ-yeǧǧ ad nẓeṛ amazray n ileqman akken iwata."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Sorry! We weren't able to save your contribution. Please copy and paste your changes into a safe place and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Suref-aɣ! Ur nsaweḍ ara ad nsekles attekki yinek. Ma ulac aɣilif, sekles asnifel s waddad arewway sakin <a href=\"%(admin_email)s\"> nermes inebdalen n usmel</a>."
+msgstr "Suref-aɣ! Ur nsaweḍ ara ad nsekles attekki yinek. Ma ulac aɣilif, nɣel sakin senteḍ asnifel-ik ɣer wadig aɣelsan sakin <a href=\"%(admin_email)s\"> nermes inebdalen n usmel</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:9
 msgid "We'll try to resolve the problem, and after that you will be able to resubmit your contribution."
