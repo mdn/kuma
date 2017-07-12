@@ -5,7 +5,6 @@ Main header, wraps all components of logo, main, and secondary navigation
 #main-header {
     @include clearfix();
     padding-top: $mobile-center-spacing;
-    padding-bottom: ($mobile-center-spacing - $content-vertical-spacing);
 
     > .center {
         @include clearfix();

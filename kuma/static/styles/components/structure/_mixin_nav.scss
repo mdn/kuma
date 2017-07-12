@@ -27,19 +27,23 @@
 
         html:not(.no-js) & {
             text-decoration: none;
+
+            #{$selector-icon} {
+                display: inline-block;
+                margin-left: 5px;
+            }
+        }
+
+        html[dir='rtl']:not(.no-js) & { // can't use bidi-style because html tag is in declaration
+            #{$selector-icon} {
+                margin-right: 5px;
+            }
         }
 
         &:hover,
         &:focus {
             background-color: $grey-light;
             color: $text-color !important; /* stylelint-disable-line declaration-no-important */
-        }
-
-        #{$selector-icon} {
-            html:not(.no-js) & {
-                display: inline-block;
-                @include bidi-style(margin-left, 5px, margin-right, 0);
-            }
         }
     }
 }

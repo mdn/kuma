@@ -19,10 +19,18 @@ Utility classes
     margin: 0 auto;
     position: relative;
     max-width: $max-width-default;
-    @include add-center-spacing();
+    @include add-center-spacing($mobile-center-spacing);
 
-    @media #{$mq-mobile-and-down} {
-        @include add-center-spacing($mobile-center-spacing);
+    main > & {
+        padding-top: $first-content-top-padding;
+    }
+
+    @media #{$mq-tablet-and-up} {
+        @include add-center-spacing();
+    }
+
+    .wiki-main-content & {
+        @include remove-center-spacing();
     }
 
     @media print {

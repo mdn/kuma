@@ -34,7 +34,11 @@
 
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
-    <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
+    {% if waffle.flag('redesign') %}
+        <h1 class="highlight highlight-spanned"><span class="highlight-span">{{ _('Resources for developers, by developers.') }}</span></h1>
+    {% else %}
+        <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
+    {% endif %}
 
     {% if waffle.flag('search_suggestions') %}
         <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
@@ -70,6 +74,13 @@
         </form>
     {% endif %}
 
+  {% if waffle.flag('redesign') %}
+  <ul class="home-features">
+    <li><a href="{{ wiki_url('Web') }}" class="cta-link">{{ _('Web Technologies') }}</a></li>
+    <li><a href="{{ wiki_url('Learn') }}" class="cta-link">{{ _('Learn web development') }}</a></li>
+    <li><a href="{{ wiki_url('Tools') }}" class="cta-link">{{ _('Developer Tools') }}</a></li>
+  </ul>
+  {% else %}
   <div class="home-features {% if waffle.switch('newsletter') %}home-features-newsletter{% endif %}">
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
     <div class="column-container">
@@ -110,6 +121,7 @@
       </div>
     {% endif %}
   </div>
+  {% endif %}
 
 </div></div>
 
