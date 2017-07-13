@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-22 08:57-0700\n"
+"POT-Creation-Date: 2017-07-13 13:29-0700\n"
 "PO-Revision-Date: 2017-07-04 16:00+0000\n"
 "Last-Translator: kscanne <kscanne@gmail.com>\n"
 "Language-Team: Irish https://pontoon.mozilla.org/ga_IE/\n"
@@ -87,257 +87,257 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "Earráid Inmheánach leis an bhFreastalaí"
 
-#: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:124 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:13 jinja2/base.html:47 jinja2/base.html:52 jinja2/base.html:127 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Líonra Forbróirí Mozilla"
 
-#: jinja2/base.html:95
+#: jinja2/base.html:98
 msgid "MDN is currently in read-only maintenance mode."
 msgstr ""
 
-#: jinja2/base.html:96
+#: jinja2/base.html:99
 #, fuzzy
 msgid "Learn more"
 msgstr "Tuilleadh Eolais"
 
-#: jinja2/base.html:106
+#: jinja2/base.html:109
 msgid "Skip to main content"
 msgstr "Léim go dtí an príomhábhar"
 
-#: jinja2/base.html:108
+#: jinja2/base.html:111
 msgid "Select language"
 msgstr "Roghnaigh teanga"
 
-#: jinja2/base.html:109
+#: jinja2/base.html:112
 msgid "Skip to search"
 msgstr "Léim go dtí an bosca cuardaigh"
 
-#: jinja2/base.html:116 jinja2/base.html:254
+#: jinja2/base.html:119 jinja2/base.html:257
 #, fuzzy
 msgid "MDN Web Docs"
 msgstr "Cáipéisí MDN"
 
-#: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:136 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Uirlisí"
 
-#: jinja2/base.html:136
+#: jinja2/base.html:139
 msgid "Contribute to MDN"
 msgstr ""
 
-#: jinja2/base.html:138
+#: jinja2/base.html:141
 #, fuzzy
 msgid "Get started"
 msgstr "Tús Maith"
 
-#: jinja2/base.html:139
+#: jinja2/base.html:142
 msgid "Review or localize docs"
 msgstr ""
 
-#: jinja2/base.html:142
+#: jinja2/base.html:145
 #, fuzzy
 msgid "Site Tools"
 msgstr "Uirlisí Cuardaigh"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:147
 #, fuzzy
 msgid "Revision dashboard"
 msgstr "Aitheantas an leagain:"
 
-#: jinja2/base.html:145
+#: jinja2/base.html:148
 #, fuzzy
 msgid "Documentation status"
 msgstr "Doiciméadú MDN"
 
-#: jinja2/base.html:154 jinja2/base.html:184
+#: jinja2/base.html:157 jinja2/base.html:187
 msgid "Technologies"
 msgstr "Teicneolaíochtaí"
 
-#: jinja2/base.html:158 jinja2/base.html:186 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:161 jinja2/base.html:189 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:91 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:159 jinja2/base.html:187 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:162 jinja2/base.html:190 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:92 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:160 jinja2/base.html:188 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:163 jinja2/base.html:191 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:93 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:161 jinja2/base.html:189
+#: jinja2/base.html:164 jinja2/base.html:192
 msgid "Graphics"
 msgstr "Grafaic"
 
-#: jinja2/base.html:162 jinja2/base.html:190
+#: jinja2/base.html:165 jinja2/base.html:193
 msgid "HTTP"
 msgstr ""
 
-#: jinja2/base.html:163 jinja2/base.html:191
+#: jinja2/base.html:166 jinja2/base.html:194
 msgid "APIs / DOM"
 msgstr "APIanna / DOM"
 
-#: jinja2/base.html:164 jinja2/base.html:192
+#: jinja2/base.html:167 jinja2/base.html:195
 #, fuzzy
 msgid "WebExtensions"
 msgstr "/en/Extensions"
 
-#: jinja2/base.html:165 jinja2/base.html:193 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:168 jinja2/base.html:196 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:167 jinja2/base.html:196
+#: jinja2/base.html:170 jinja2/base.html:199
 msgid "References & Guides"
 msgstr "Tagairt agus Treoirleabhair"
 
-#: jinja2/base.html:171 jinja2/base.html:198 kuma/landing/jinja2/landing/homepage.html:89
+#: jinja2/base.html:174 jinja2/base.html:201 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/homepage.html:100
 #, fuzzy
 msgid "Learn web development"
 msgstr "/en/Web_Development"
 
-#: jinja2/base.html:172 jinja2/base.html:199
+#: jinja2/base.html:175 jinja2/base.html:202
 msgid "Tutorials"
 msgstr "Cúrsaí Teagaisc"
 
-#: jinja2/base.html:173 jinja2/base.html:200
+#: jinja2/base.html:176 jinja2/base.html:203
 msgid "References"
 msgstr "Tagairt"
 
-#: jinja2/base.html:174 jinja2/base.html:201
+#: jinja2/base.html:177 jinja2/base.html:204
 msgid "Developer Guides"
 msgstr "Treoirleabhair d'Fhorbróirí"
 
-#: jinja2/base.html:175 jinja2/base.html:202
+#: jinja2/base.html:178 jinja2/base.html:205
 msgid "Accessibility"
 msgstr "Inrochtaineacht"
 
-#: jinja2/base.html:176 jinja2/base.html:203
+#: jinja2/base.html:179 jinja2/base.html:206
 #, fuzzy
 msgid "Game development"
 msgstr "/en/Web_Development"
 
-#: jinja2/base.html:177 jinja2/base.html:204
+#: jinja2/base.html:180 jinja2/base.html:207
 msgid "...more docs"
 msgstr ""
 
-#: jinja2/base.html:181 jinja2/base.html:258 kuma/landing/jinja2/landing/homepage.html:74
+#: jinja2/base.html:184 jinja2/base.html:261 kuma/landing/jinja2/landing/homepage.html:79 kuma/landing/jinja2/landing/homepage.html:85
 #, fuzzy
 msgid "Web Technologies"
 msgstr "Teicneolaíochtaí"
 
-#: jinja2/base.html:208
+#: jinja2/base.html:211
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Saotharlann Mozilla"
 
-#: jinja2/base.html:212 kuma/core/sections.py:6
+#: jinja2/base.html:215 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Breiseáin"
 
-#: jinja2/base.html:213 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:216 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:217
+#: jinja2/base.html:220 kuma/landing/jinja2/landing/homepage.html:81
 msgid "Developer Tools"
 msgstr "Uirlisí d'Fhorbróirí"
 
-#: jinja2/base.html:217 jinja2/base.html:261
+#: jinja2/base.html:220 jinja2/base.html:264
 #, fuzzy
 msgid "Feedback"
 msgstr "Fotha"
 
-#: jinja2/base.html:221
+#: jinja2/base.html:224
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Cuardaigh Cabhair Firefox"
 
-#: jinja2/base.html:222
+#: jinja2/base.html:225
 #, fuzzy
 msgid "Get web development help"
 msgstr "Na huirlisí forbartha Gréasáin go léir"
 
-#: jinja2/base.html:225
+#: jinja2/base.html:228
 #, fuzzy
 msgid "Join the MDN community"
 msgstr "Ábhar agus comhphobal MDN"
 
-#: jinja2/base.html:226
+#: jinja2/base.html:229
 #, fuzzy
 msgid "Report a content problem"
 msgstr "Déan Tuairisc ar Fhadhb"
 
-#: jinja2/base.html:227
+#: jinja2/base.html:230
 #, fuzzy
 msgid "Report a bug"
 msgstr "Déan Tuairisc ar Fhadhb"
 
-#: jinja2/base.html:233 jinja2/base.html:234 jinja2/base.html:236 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
-#: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
+#: jinja2/base.html:236 jinja2/base.html:237 jinja2/base.html:239 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:47
+#: kuma/landing/jinja2/landing/homepage.html:57 kuma/landing/jinja2/landing/homepage.html:64 kuma/landing/jinja2/landing/homepage.html:69 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Cuardaigh"
 
-#: jinja2/base.html:259 kuma/landing/jinja2/landing/homepage.html:130
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
 #, fuzzy
 msgid "Learn Web Development"
 msgstr "/en/Web_Development"
 
-#: jinja2/base.html:260 jinja2/base.html:309
+#: jinja2/base.html:263 jinja2/base.html:312
 msgid "About MDN"
 msgstr "Maidir le MDN"
 
-#: jinja2/base.html:262 jinja2/base.html:274 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
+#: jinja2/base.html:265 jinja2/base.html:277 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
 msgstr "Twitter"
 
-#: jinja2/base.html:263
-msgid "Github"
-msgstr ""
+#: jinja2/base.html:266 kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
+msgid "GitHub"
+msgstr "GitHub"
 
-#: jinja2/base.html:267 kuma/core/sections.py:13
+#: jinja2/base.html:270 kuma/core/sections.py:13
 msgid "Mozilla"
 msgstr "Mozilla"
 
-#: jinja2/base.html:271
+#: jinja2/base.html:274
 msgid "About"
 msgstr "Maidir Leis"
 
-#: jinja2/base.html:272
+#: jinja2/base.html:275
 msgid "Contact Us"
 msgstr "Teagmháil"
 
-#: jinja2/base.html:273
+#: jinja2/base.html:276
 msgid "Donate"
 msgstr ""
 
-#: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
+#: jinja2/base.html:278 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
 msgstr ""
 
-#: jinja2/base.html:276
+#: jinja2/base.html:279
 msgid "Instagram"
 msgstr ""
 
-#: jinja2/base.html:284 jinja2/base.html:310
+#: jinja2/base.html:287 jinja2/base.html:313
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:285 jinja2/base.html:311
+#: jinja2/base.html:288 jinja2/base.html:314
 #, fuzzy
 msgid "Privacy"
 msgstr "Polasaí Príobháideachta"
 
-#: jinja2/base.html:286 jinja2/base.html:312
+#: jinja2/base.html:289 jinja2/base.html:315
 msgid "Cookies"
 msgstr ""
 
-#: jinja2/base.html:291 jinja2/base.html:304
+#: jinja2/base.html:294 jinja2/base.html:307
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "Tá an t-ábhar ar fáil faoi <a href=\"%(copyright_url)s\">na ceadúnais seo</a>"
 
-#: jinja2/base.html:313
+#: jinja2/base.html:316
 msgid "Contribute to the code"
 msgstr ""
 
@@ -417,7 +417,7 @@ msgstr ""
 msgid "Hide Newsletter Sign-up"
 msgstr ""
 
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:59 kuma/wiki/tests/test_templates.py:1375
 msgid "Previous"
 msgstr "Roimhe Seo"
 
@@ -444,50 +444,54 @@ msgid ""
 "see the new look, and we’d love to hear what you think."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:17
+#: jinja2/includes/redesign_notice.html:18
 #, python-format
 msgid ""
 "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href=\"%(profile_url)s\">your "
 "profile page</a>."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:21
+#: jinja2/includes/redesign_notice.html:22
+msgid "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on your profile page."
+msgstr ""
+
+#: jinja2/includes/redesign_notice.html:25
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:22
+#: jinja2/includes/redesign_notice.html:26
 msgid "We hope you love it and find it useful!"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:24 jinja2/includes/redesign_notice.html:38
+#: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:42
 #, python-format
 msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog post."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:41
+#: jinja2/includes/redesign_notice.html:32 jinja2/includes/redesign_notice.html:45
 #, fuzzy
 msgid "Thanks for using MDN!"
 msgstr "Go raibh maith agat as clárú!"
 
-#: jinja2/includes/redesign_notice.html:28
+#: jinja2/includes/redesign_notice.html:32
 msgid "The MDN Web Docs Team"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:29 jinja2/includes/redesign_notice.html:43
+#: jinja2/includes/redesign_notice.html:33 jinja2/includes/redesign_notice.html:47
 msgid "Hide redesign announcement"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:33
+#: jinja2/includes/redesign_notice.html:37
 msgid "Why does MDN look different?"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:34
+#: jinja2/includes/redesign_notice.html:38
 msgid ""
 "MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the "
 "web technology docs you’re looking for."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:35
+#: jinja2/includes/redesign_notice.html:39
 msgid "But don’t worry, MDN and Mozilla are still together! In fact, we're updating MDN’s look to reflect Mozilla's new logo and colors."
 msgstr ""
 
@@ -551,7 +555,7 @@ msgstr ""
 msgid "Dutch"
 msgstr ""
 
-#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1405
+#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1385
 msgid "English (US)"
 msgstr ""
 
@@ -879,7 +883,7 @@ msgid "File"
 msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1965
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1963
 msgid "Title"
 msgstr "Teideal"
 
@@ -988,8 +992,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -1046,7 +1050,7 @@ msgstr ""
 msgid "Today at %s"
 msgstr "Inniu ag %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:308
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:156 kuma/wiki/jinja2/wiki/document.html:308
 msgid "Yes"
 msgstr "Bhí"
 
@@ -1295,7 +1299,7 @@ msgstr ""
 msgid "Trends Over Time, Ending %(date)s"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1918
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1916
 #, fuzzy
 msgid "Revision"
 msgstr "Aitheantas an leagain:"
@@ -1398,153 +1402,158 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:19
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:37
+#: kuma/landing/jinja2/landing/homepage.html:38
+#, fuzzy
+msgid "Resources for developers, by developers."
+msgstr "Acmhainní le haghaidh Forbróirí Feidhmchláir"
+
+#: kuma/landing/jinja2/landing/homepage.html:40
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:47 kuma/landing/jinja2/landing/homepage.html:64 kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:51 kuma/landing/jinja2/landing/homepage.html:68 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "Cuardaigh an doiciméadú"
 
-#: kuma/landing/jinja2/landing/homepage.html:50
+#: kuma/landing/jinja2/landing/homepage.html:54
 #, fuzzy
 msgid "Show topics"
 msgstr "Taispeáin Stair"
 
-#: kuma/landing/jinja2/landing/homepage.html:77
+#: kuma/landing/jinja2/landing/homepage.html:88
 #, fuzzy
 msgid "Web<br />Technologies"
 msgstr "Teicneolaíochtaí"
 
-#: kuma/landing/jinja2/landing/homepage.html:79
+#: kuma/landing/jinja2/landing/homepage.html:90
 msgid "Web APIs &amp; DOM"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:83 kuma/landing/jinja2/landing/homepage.html:103
+#: kuma/landing/jinja2/landing/homepage.html:94 kuma/landing/jinja2/landing/homepage.html:114
 msgid "more..."
 msgstr "tuilleadh..."
 
-#: kuma/landing/jinja2/landing/homepage.html:87
+#: kuma/landing/jinja2/landing/homepage.html:98
 msgid "Learn"
 msgstr "Foghlaim"
 
-#: kuma/landing/jinja2/landing/homepage.html:90
+#: kuma/landing/jinja2/landing/homepage.html:101
 #, fuzzy
 msgid "Getting started with the Web"
 msgstr "Tús Maith JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:91
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Learn HTML"
 msgstr "Foghlaim HTML"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Learn CSS"
 msgstr "Foghlaim CSS"
 
-#: kuma/landing/jinja2/landing/homepage.html:93
+#: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn JavaScript"
 msgstr "Foghlaim JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:97
+#: kuma/landing/jinja2/landing/homepage.html:108
 msgid "Developer<br />Tools"
 msgstr "Uirlisí<br />Forbartha"
 
-#: kuma/landing/jinja2/landing/homepage.html:99
+#: kuma/landing/jinja2/landing/homepage.html:110
 msgid "Page Inspector"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:100
+#: kuma/landing/jinja2/landing/homepage.html:111
 msgid "Web Console"
 msgstr "Consól Gréasáin"
 
-#: kuma/landing/jinja2/landing/homepage.html:101
+#: kuma/landing/jinja2/landing/homepage.html:112
 msgid "JavaScript Debugger"
 msgstr "Dífhabhtóir JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:102
+#: kuma/landing/jinja2/landing/homepage.html:113
 #, fuzzy
 msgid "Performance Tools"
 msgstr "Feidhmíocht"
 
-#: kuma/landing/jinja2/landing/homepage.html:118
+#: kuma/landing/jinja2/landing/homepage.html:130
 #, fuzzy
 msgid "Open Web and Mobile"
 msgstr "Teicneolaíochtaí oscailte Gréasáin"
 
-#: kuma/landing/jinja2/landing/homepage.html:123
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:137
 msgid "Take the Survey"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Proudly non-profit."
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Donate before Dec 31."
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Donate Now"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:140
+#: kuma/landing/jinja2/landing/homepage.html:152
 msgid "Get The Browser For Developers Like You"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:149
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:154
+#: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Get Involved"
 msgstr "Glac Páirt"
 
-#: kuma/landing/jinja2/landing/homepage.html:156
+#: kuma/landing/jinja2/landing/homepage.html:168
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:163 kuma/landing/jinja2/landing/homepage.html:170
+#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
 msgid "Help improve MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:174
+#: kuma/landing/jinja2/landing/homepage.html:186
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:180
+#: kuma/landing/jinja2/landing/homepage.html:192
 #, fuzzy
 msgid "Getting started"
 msgstr "Tús Maith"
 
-#: kuma/landing/jinja2/landing/homepage.html:181
+#: kuma/landing/jinja2/landing/homepage.html:193
 msgid "Editorial review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:194
 msgid "Technical review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:187
+#: kuma/landing/jinja2/landing/homepage.html:199
 #, fuzzy
 msgid "Translating"
 msgstr "{title} á aistriú"
 
-#: kuma/landing/jinja2/landing/homepage.html:188
+#: kuma/landing/jinja2/landing/homepage.html:200
 msgid "Promoting MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:189
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Contributing to the MDN codebase"
 msgstr ""
 
@@ -1597,8 +1606,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1931,8 +1940,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1950,18 +1959,6 @@ msgstr "Úsáideoir"
 #: kuma/users/apps.py:69
 #, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
-msgstr ""
-
-#: kuma/users/backends.py:34
-msgid "algorithm"
-msgstr ""
-
-#: kuma/users/backends.py:35
-msgid "salt"
-msgstr ""
-
-#: kuma/users/backends.py:36
-msgid "hash"
 msgstr ""
 
 #: kuma/users/constants.py:6
@@ -1988,10 +1985,6 @@ msgstr "Saineolas"
 #: kuma/users/forms.py:53
 msgid "Username"
 msgstr "Ainm úsáideora"
-
-#: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
-msgid "GitHub"
-msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 #, fuzzy
@@ -2445,8 +2438,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
@@ -3220,7 +3213,7 @@ msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
 #: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:894 kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:72 kuma/wiki/jinja2/wiki/edit.html:120
-#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:74 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Teideal:"
 
@@ -3228,7 +3221,7 @@ msgstr "Teideal:"
 msgid "Title of article"
 msgstr "Teideal an ailt"
 
-#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:78
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "Sluga:"
@@ -3241,7 +3234,7 @@ msgstr "URL an Ailt"
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:83 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "Clibeanna:"
 
@@ -3261,11 +3254,11 @@ msgstr "Achoimre ar thorthaí an chuardaigh:"
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:94
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
 msgstr "Ábhar:"
 
-#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:89
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
 msgstr "Nóta Tráchta:"
 
@@ -3349,80 +3342,80 @@ msgstr ""
 msgid "H4 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1748
+#: kuma/wiki/models.py:1746
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr ""
 
-#: kuma/wiki/models.py:1878
+#: kuma/wiki/models.py:1876
 #, fuzzy
 msgid "IP address"
 msgstr "Seoladh ríomhphoist"
 
-#: kuma/wiki/models.py:1886
+#: kuma/wiki/models.py:1884
 msgid "User-Agent"
 msgstr ""
 
-#: kuma/wiki/models.py:1891
+#: kuma/wiki/models.py:1889
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1899 kuma/wiki/models.py:1984
+#: kuma/wiki/models.py:1897 kuma/wiki/models.py:1982
 #, fuzzy
 msgid "Data submitted to Akismet"
 msgstr "dáta ar ar seoladh é"
 
-#: kuma/wiki/models.py:1924
+#: kuma/wiki/models.py:1922
 #, fuzzy
 msgid "Akismet submission"
 msgstr "Taispeántais"
 
-#: kuma/wiki/models.py:1925
+#: kuma/wiki/models.py:1923
 #, fuzzy
 msgid "Akismet submissions"
 msgstr "Taispeántais"
 
-#: kuma/wiki/models.py:1969
+#: kuma/wiki/models.py:1967
 #, fuzzy
 msgid "Slug"
 msgstr "Sluga:"
 
-#: kuma/wiki/models.py:1977
+#: kuma/wiki/models.py:1975
 #, fuzzy
 msgid "Document (optional)"
 msgstr "Doiciméadú MDN"
 
-#: kuma/wiki/models.py:1987
+#: kuma/wiki/models.py:1985
 #, fuzzy
 msgid "reviewed"
 msgstr "Réamhamharc"
 
-#: kuma/wiki/models.py:1998
+#: kuma/wiki/models.py:1996
 #, fuzzy
 msgid "Needs Review"
 msgstr "Léirmheas Teicniúil De Dhíth"
 
-#: kuma/wiki/models.py:1999
+#: kuma/wiki/models.py:1997
 msgid "Ham / False Positive"
 msgstr ""
 
-#: kuma/wiki/models.py:2000
+#: kuma/wiki/models.py:1998
 msgid "Confirmed as Spam"
 msgstr ""
 
-#: kuma/wiki/models.py:2001
+#: kuma/wiki/models.py:1999
 msgid "Review Unavailable"
 msgstr ""
 
-#: kuma/wiki/models.py:2002
+#: kuma/wiki/models.py:2000
 msgid "Akismet Error"
 msgstr ""
 
-#: kuma/wiki/models.py:2007
+#: kuma/wiki/models.py:2005
 msgid "Review of Akismet's classification as spam"
 msgstr ""
 
-#: kuma/wiki/models.py:2014
+#: kuma/wiki/models.py:2012
 msgid "Staff reviewer"
 msgstr ""
 
@@ -3438,8 +3431,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3597,15 +3590,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:234
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:243
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:254
@@ -3673,7 +3666,7 @@ msgstr ""
 msgid "Your Changes"
 msgstr "Do Chuid Athruithe"
 
-#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:54
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> on %(date)s"
 msgstr ""
@@ -3879,7 +3872,7 @@ msgstr ""
 msgid "Revision Source"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:76
+#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "Revert to this revision"
 msgstr ""
 
@@ -4096,75 +4089,75 @@ msgstr ""
 msgid "Change Revisions"
 msgstr "Cuir Leaganacha i gComparáid"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:57
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:34 kuma/wiki/jinja2/wiki/includes/document_macros.html:50
 #, fuzzy, python-format
 msgid "Revision %(num)s:"
 msgstr "Leagan {num}:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:96 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:116
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 #, fuzzy
 msgid "Subscribe to this article and all its sub-articles"
 msgstr "Chaith tú vóta ar an Alt seo cheana."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 #, fuzzy
 msgid "Unsubscribe from this article and all its sub-articles"
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 #, fuzzy
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "Chaith tú vóta ar an Alt seo cheana."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 #, fuzzy
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:131
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 #, fuzzy
 msgid "Subscribe to this article"
 msgstr "Liostáil le fógraí eagarthóireachta"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 #, fuzzy
 msgid "Unsubscribe from this article"
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "Chaith tú vóta ar an Alt seo cheana."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:147
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, fuzzy, python-format
 msgid "Subscribe to the %(language)s version"
 msgstr "Liostáil le fotha de thaispeántais de chuid {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, fuzzy, python-format
 msgid "Unsubscribe from the %(language)s version"
 msgstr "Liostáil le fotha de thaispeántais de chuid {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, fuzzy, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "Tá tú díliostáilte anois."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, fuzzy, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "Tá tú díliostáilte anois."
@@ -4411,7 +4404,7 @@ msgstr "Cuir na hAistriúcháin Roghnaithe i gComparáid"
 msgid "Compare Selected Revisions"
 msgstr "Cuir na Leaganacha Roghnaithe i gComparáid"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:84
+#: kuma/wiki/jinja2/wiki/list/revisions.html:86
 msgid "This document has no revisions."
 msgstr ""
 
@@ -4489,12 +4482,12 @@ msgstr ""
 msgid "Select an Akismet submission for more details"
 msgstr ""
 
-#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
+#: kuma/wiki/templatetags/jinja_helpers.py:104 kuma/wiki/templatetags/jinja_helpers.py:105 kuma/wiki/templatetags/jinja_helpers.py:120 kuma/wiki/templatetags/jinja_helpers.py:121
 #, python-format
 msgid "Revision %s"
 msgstr ""
 
-#: kuma/wiki/templatetags/jinja_helpers.py:106
+#: kuma/wiki/templatetags/jinja_helpers.py:110
 msgid "There was an error generating the content."
 msgstr ""
 
@@ -5036,7 +5029,8 @@ msgstr ""
 
 #~ msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
 #~ msgstr ""
-#~ "Sa tsonraíocht CSS3-Font gheobhaidh tú sainghnéithe feabhsaithe clóchuradóireachta mar shampla cumas do chlófhoirne féin a leabú trí @font-face, nó gnéithe cló OpenType a rialú go díreach trí CSS."
+#~ "Sa tsonraíocht CSS3-Font gheobhaidh tú sainghnéithe feabhsaithe clóchuradóireachta mar shampla cumas do chlófhoirne féin a leabú trí @font-face, nó gnéithe cló OpenType a rialú go díreach trí "
+#~ "CSS."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
@@ -5050,8 +5044,10 @@ msgstr ""
 #~ msgid "Forms"
 #~ msgstr "Foirmeacha"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
-#~ msgstr "Soláthraíonn eilimintí agus aitreabúidí foirmeacha in HTML5 marcáil shéimeantacha níos mine ná in HTML4 agus ní gá le formhór an scriptithe agus stílithe mhaslaigh a bhí riachtanach in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgstr ""
+#~ "Soláthraíonn eilimintí agus aitreabúidí foirmeacha in HTML5 marcáil shéimeantacha níos mine ná in HTML4 agus ní gá le formhór an scriptithe agus stílithe mhaslaigh a bhí riachtanach in HTML4."
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -5404,13 +5400,13 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
-#~ " standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Fáilte go Stiúideo Taispeántas Mozilla, áit inar féidir le forbróirí a gcuid oibre a chomhroinnt agus chur ar taispeáint, agus tuilleadh eolais a fháil faoi theicneolaíochtaí Gréasáin.  Taiscéal "
-#~ "an Stiúideo agus féach ar na rudaí go léir is féidir a dhéanamh:</p> <ul> <li>Féach ar thaispeántais a léiríonn cumhacht HTML, CSS, agus JavaScript.</li> <li>Iniúch cód foinseach na dtaispeántas sin"
-#~ " sa chaoi go dtuigfidh tú an chaoi a n-oibríonn siad.</li> <li>Léigh doiciméadú chun tuilleadh eolais a fháil faoi na teicneolaíochtaí agus na caighdeáin oscailte a chumhachtaíonn an Gréasán.</li> "
-#~ "</ul>"
+#~ "<p>Fáilte go Stiúideo Taispeántas Mozilla, áit inar féidir le forbróirí a gcuid oibre a chomhroinnt agus chur ar taispeáint, agus tuilleadh eolais a fháil faoi theicneolaíochtaí Gréasáin.  "
+#~ "Taiscéal an Stiúideo agus féach ar na rudaí go léir is féidir a dhéanamh:</p> <ul> <li>Féach ar thaispeántais a léiríonn cumhacht HTML, CSS, agus JavaScript.</li> <li>Iniúch cód foinseach na "
+#~ "dtaispeántas sin sa chaoi go dtuigfidh tú an chaoi a n-oibríonn siad.</li> <li>Léigh doiciméadú chun tuilleadh eolais a fháil faoi na teicneolaíochtaí agus na caighdeáin oscailte a "
+#~ "chumhachtaíonn an Gréasán.</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "Go dtí an taispeántas roimhe seo, {demo_title}"
@@ -5630,11 +5626,12 @@ msgstr ""
 #~ msgstr "Seol Taispeántas Nua Chugainn"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
 #~ "<p>An bhfuil bealach úrnua le sult a bhaint as an nGréasán agat?  Nó nach bhfuil tú ach ag baint triail as na teicneolaíochtaí is déanaí?  Is cuma linn agus fearaimid fáilte romhat do chuid "
-#~ "taispeántas a chur faoinár mbráid chun iad a chomhroinnt le forbróirí Gréasáin eile.</p> <p>Líon isteach an fhoirm thíos chun bheith cinnte go mbeidh do thaispeántas seolta chugainn gan fadhb.</p>"
+#~ "taispeántas a chur faoinár mbráid chun iad a chomhroinnt le forbróirí Gréasáin eile.</p> <p>Líon isteach an fhoirm thíos chun bheith cinnte go mbeidh do thaispeántas seolta chugainn gan fadhb.</"
+#~ "p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "Déan Cur Síos ar do Thaispeántas"
@@ -5661,16 +5658,16 @@ msgstr ""
 #~ msgstr "Do Thaispeántas a Ullmhú"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Caithfidh tú cód foinseach do thaispeántais a phacáistiú i gcomhad ZIP.</li> <li>Ba chóir duit príomhleathanach do thaispeántais a chur i bhfréamhchomhadlann an ZIP leis an ainm "
-#~ "<code>index.html</code>.</li> <li>Ní mór duit do thaispeántas a chruthú le teicneolaíocht ar thaobh an chliaint (HTML, CSS, Javascript). Ní thacaítear le PHP, Ruby, nó teangacha eile ar thaobh an "
-#~ "fhreastalaí.</li> <li>Má tá acmhainní seachtracha de dhíth ar do thaispeántas, ba chóir dó AJAX a úsáid.</li> <li>Chun do thaispeántas a chur faoinár mbráid, tá <a href=\"%(signup_url)s\">cuntas "
-#~ "MDN</a> de dhíth ort.</li> <li>Cuir in iúl dúinn i mbosca mionsonraithe an taispeántais aon ábhar nach féidir cur ar fáil faoi cheadúnas CC-BY-SA agus cuir naisc le suímh Ghréasáin na n-údar ann "
-#~ "chomh maith.</li> </ul>"
+#~ "<code>index.html</code>.</li> <li>Ní mór duit do thaispeántas a chruthú le teicneolaíocht ar thaobh an chliaint (HTML, CSS, Javascript). Ní thacaítear le PHP, Ruby, nó teangacha eile ar thaobh "
+#~ "an fhreastalaí.</li> <li>Má tá acmhainní seachtracha de dhíth ar do thaispeántas, ba chóir dó AJAX a úsáid.</li> <li>Chun do thaispeántas a chur faoinár mbráid, tá <a href=\"%(signup_url)s"
+#~ "\">cuntas MDN</a> de dhíth ort.</li> <li>Cuir in iúl dúinn i mbosca mionsonraithe an taispeántais aon ábhar nach féidir cur ar fáil faoi cheadúnas CC-BY-SA agus cuir naisc le suímh Ghréasáin na "
+#~ "n-údar ann chomh maith.</li> </ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "Soláthair an Cód Foinseach"
@@ -5694,8 +5691,8 @@ msgstr ""
 #~ msgstr "Nuashonraigh Do Phróifíl"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr ""
 #~ "<p>An bhfuil bealach úrnua le sult a bhaint as an nGréasán agat?  Nó nach bhfuil tú ach ag baint triail as na teicneolaíochtaí is déanaí?  Is cuma linn agus fearaimid fáilte romhat do chuid "
 #~ "taispeántas a chur faoinár mbráid chun iad a chomhroinnt le forbróirí Gréasáin eile.</p>"
@@ -5704,25 +5701,25 @@ msgstr ""
 #~ msgstr "I dTosach Báire"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>Caithfidh tú <strong>cód foinseach do thaispeántais a sholáthar</strong>. Beidh na taispeántais óstáilte ar fhreastalaithe an Stiúideo Taispeántas.</li> <li>Ní mór duit cód foinseach do "
-#~ "thaispeántas a chur ar fáil faoi <strong>cheadúnas oscailte</strong>, mar shampla MPL, GPL, nó BSD.</li> <li>Ba chóir don taispeántas <strong>teicneolaíochtaí oscailte an Ghréasáin</strong> a chur "
-#~ "ar taispeáint, mar shampla HTML5 agus CSS3.</li> <li>Ba chóir don taispeántas tacú le raon leathan de <strong>bhrabhsálaithe nua-aimseartha</strong>, mar shampla Firefox, Chrome, Safari and "
+#~ "thaispeántas a chur ar fáil faoi <strong>cheadúnas oscailte</strong>, mar shampla MPL, GPL, nó BSD.</li> <li>Ba chóir don taispeántas <strong>teicneolaíochtaí oscailte an Ghréasáin</strong> a "
+#~ "chur ar taispeáint, mar shampla HTML5 agus CSS3.</li> <li>Ba chóir don taispeántas tacú le raon leathan de <strong>bhrabhsálaithe nua-aimseartha</strong>, mar shampla Firefox, Chrome, Safari and "
 #~ "Opera.</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Caithfidh tú cód foinseach do thaispeántais a phacáistiú <strong>i gcomhad ZIP</strong>.</li> <li>Ba chóir duit príomhleathanach do thaispeántais a chur i bhfréamhchomhadlann an ZIP leis an"
-#~ " ainm <strong><code>index.html</code></strong>.</li> <li>Ní mór duit do thaispeántas a chruthú le <strong>teicneolaíocht ar thaobh an chliaint</strong> (HTML, CSS, Javascript). Ní thacaítear le PHP,"
-#~ " Ruby, nó teangacha eile ar thaobh an fhreastalaí.</li> <li>Má tá acmhainní seachtracha de dhíth ar do thaispeántas, ba chóir dó <strong>AJAX</strong> a úsáid.</li> <li>Cuir in iúl dúinn i mbosca "
-#~ "mionsonraithe an taispeántais aon ábhar atá ann nach féidir chur ar fáil faoi cheadúnas CC-BY-SA agus cuir nasc le suímh Ghréasáin na n-údar ann chomh maith.</li> </ul>"
+#~ "<ul> <li>Caithfidh tú cód foinseach do thaispeántais a phacáistiú <strong>i gcomhad ZIP</strong>.</li> <li>Ba chóir duit príomhleathanach do thaispeántais a chur i bhfréamhchomhadlann an ZIP "
+#~ "leis an ainm <strong><code>index.html</code></strong>.</li> <li>Ní mór duit do thaispeántas a chruthú le <strong>teicneolaíocht ar thaobh an chliaint</strong> (HTML, CSS, Javascript). Ní "
+#~ "thacaítear le PHP, Ruby, nó teangacha eile ar thaobh an fhreastalaí.</li> <li>Má tá acmhainní seachtracha de dhíth ar do thaispeántas, ba chóir dó <strong>AJAX</strong> a úsáid.</li> <li>Cuir in "
+#~ "iúl dúinn i mbosca mionsonraithe an taispeántais aon ábhar atá ann nach féidir chur ar fáil faoi cheadúnas CC-BY-SA agus cuir nasc le suímh Ghréasáin na n-údar ann chomh maith.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Chun do thaispeántas a chur faoinár mbráid, teastaíonn uait <strong><a href=\"%(signup_url)s\">cuntas MDN</a></strong>.</p>"
@@ -6019,11 +6016,11 @@ msgstr ""
 #~ msgstr "Dúirt <cite class=\"author fn\">%(comment_profile_link)s</cite>,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Postáilte <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Nasc buan leis an nóta seo le %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\""
-#~ " title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Postáilte <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Nasc buan leis an nóta seo le %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Tabhair freagra ar an nóta tráchta seo le {full_name}"
@@ -6188,8 +6185,8 @@ msgstr ""
 #~ msgstr "SDK agus Tógálaí Breiseán"
 
 #~ msgid ""
-#~ "Using the Add-on SDK and Builder, you don't have to work with XUL and XPCOM any more, but can develop Firefox add-ons using only JavaScript, HTML, and CSS. The SDK and Builder also simplify running,"
-#~ " testing, and packaging your add-on, leaving you free to concentrate on writing the code."
+#~ "Using the Add-on SDK and Builder, you don't have to work with XUL and XPCOM any more, but can develop Firefox add-ons using only JavaScript, HTML, and CSS. The SDK and Builder also simplify "
+#~ "running, testing, and packaging your add-on, leaving you free to concentrate on writing the code."
 #~ msgstr ""
 #~ "Leis an SDK agus Tógálaí Breiseán, ní gá duit obair a dhéanamh le XUL ná XPCOM a thuilleadh. Beidh tú ábalta breiseáin a fhorbairt le JavaScript, HTML, agus CSS amháin. Beidh sé níos éasca an "
 #~ "breiseán a rith, a thástáil, agus a chur i bpacáiste, sa chaoi go mbeidh níos mó ama agat an cód féin a scríobh."
@@ -6648,9 +6645,9 @@ msgstr ""
 #~ "Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
 #~ "helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
 #~ msgstr ""
-#~ "Is é Firefox an chéad bhrabhsálaí ar domhan a thacaíonn le breiseáin shoghluaiste. Faigh <a href=\"%(basics_url)s\">Buneolas ar Eisínteachtaí</a>, <a href=\"%(best_practices_url)s\">Scothchleachtas "
-#~ "Eisínteachtaí</a>, <a href=\"%(snippets_url)s\">Blúirí Cóid</a> úsáideacha, agus tuilleadh sa chaoi go mbeidh tú in ann breiseáin nuálacha a thógáil le haghaidh Firefox ar Android agus Firefox ar "
-#~ "ardán Meego de chuid Nokio."
+#~ "Is é Firefox an chéad bhrabhsálaí ar domhan a thacaíonn le breiseáin shoghluaiste. Faigh <a href=\"%(basics_url)s\">Buneolas ar Eisínteachtaí</a>, <a href=\"%(best_practices_url)s"
+#~ "\">Scothchleachtas Eisínteachtaí</a>, <a href=\"%(snippets_url)s\">Blúirí Cóid</a> úsáideacha, agus tuilleadh sa chaoi go mbeidh tú in ann breiseáin nuálacha a thógáil le haghaidh Firefox ar "
+#~ "Android agus Firefox ar ardán Meego de chuid Nokio."
 
 #~ msgid "Location-Aware Applications"
 #~ msgstr "Feidhmchláir atá eolach ar shuíomh"
@@ -6659,8 +6656,8 @@ msgstr ""
 #~ "Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
 #~ "innovative apps that delight your audience."
 #~ msgstr ""
-#~ "Foghlaim conas is féidir an <a href=\"%(geo_url)s\">API Suite Domhanda</a> a úsáid chun daoine a chur ar an mbealach ceart. Is riachtanas é brabhsáil atá eolach ar do shuíomh nuair a bhíonn tú amach"
-#~ " ar d'fhón póca.  Faigh tuilleadh eolais maidir le forbairt feidhmchlár nuálach a chuirfidh gliondar ar do lucht leanúna."
+#~ "Foghlaim conas is féidir an <a href=\"%(geo_url)s\">API Suite Domhanda</a> a úsáid chun daoine a chur ar an mbealach ceart. Is riachtanas é brabhsáil atá eolach ar do shuíomh nuair a bhíonn tú "
+#~ "amach ar d'fhón póca.  Faigh tuilleadh eolais maidir le forbairt feidhmchlár nuálach a chuirfidh gliondar ar do lucht leanúna."
 
 #~ msgid "Help build Firefox for Mobile"
 #~ msgstr "Cabhraigh linn Firefox Soghluaiste a thógáil"
@@ -6669,8 +6666,8 @@ msgstr ""
 #~ "Your help is vital to the success of Firefox. Provide feedback on our <a href=\"%(irc_url)s\">IRC channel</a>, <a href=\"%(meeting_url)s\">join our Wednesday development meeting</a>, or even <a "
 #~ "href=\"%(bugzilla_url)s\">file some bugs</a>."
 #~ msgstr ""
-#~ "Tá do chabhair barrthábhachtach le Firefox a chur chun cinn.  Tabhair aiseolas dúinn ar ár <a href=\"%(irc_url)s\">gcainéal IRC</a>, <a href=\"%(meeting_url)s\">glac páirt inár gcruinniú forbartha "
-#~ "gach Céadaoin</a>, nó fiú <a href=\"%(bugzilla_url)s\">déan tuairisc ar fhabhtanna</a>."
+#~ "Tá do chabhair barrthábhachtach le Firefox a chur chun cinn.  Tabhair aiseolas dúinn ar ár <a href=\"%(irc_url)s\">gcainéal IRC</a>, <a href=\"%(meeting_url)s\">glac páirt inár gcruinniú "
+#~ "forbartha gach Céadaoin</a>, nó fiú <a href=\"%(bugzilla_url)s\">déan tuairisc ar fhabhtanna</a>."
 
 #~ msgid "All mobile development documentation"
 #~ msgstr "An doiciméadú forbartha Firefox Soghluaiste go léir"
@@ -6697,11 +6694,11 @@ msgstr ""
 #~ msgstr "Firefox Soghluaiste: Rudaí le teacht"
 
 #~ msgid ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
-#~ "best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
+#~ "world's best mobile Web browser."
 #~ msgstr ""
-#~ "Tá na tionscadail agus an phleanáil ag dul ar aghaidh gan stad gan staonadh. Táimid ag obair ar ghnéithe nua iontacha agus feabhsúcháin eile sa chéad mhórleagan eile. Bain triail as agus féach an "
-#~ "mbeifeá in ann cabhrú linn feabhas a chur ar an mbrabhsálaí soghluaiste is fearr ar domhan."
+#~ "Tá na tionscadail agus an phleanáil ag dul ar aghaidh gan stad gan staonadh. Táimid ag obair ar ghnéithe nua iontacha agus feabhsúcháin eile sa chéad mhórleagan eile. Bain triail as agus féach "
+#~ "an mbeifeá in ann cabhrú linn feabhas a chur ar an mbrabhsálaí soghluaiste is fearr ar domhan."
 
 #~ msgid "\"HTML5 is Great for Mobile, Developers Say\""
 #~ msgstr "\"HTML5 is Great for Mobile, Developers Say\""
@@ -6710,11 +6707,11 @@ msgstr ""
 #~ msgstr "Éist le forbróirí eile maidir leis na buntáistí a bhaineann le HTML5 agus forbairt don Ghréasán soghluaiste san alt seo ó ReadWriteWeb:"
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 
 #~ msgid "Android APIs"
 #~ msgstr "APIanna Android"
@@ -6753,8 +6750,8 @@ msgstr ""
 #~ "Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
 #~ "applications/extensions localizable."
 #~ msgstr ""
-#~ "Is éard atá i logánú (l10n) ná aistriúchán ar chomhéadan bogearraí ó theanga amháin go teanga eile, agus an bogearra a chur in oiriúint do chultúr eile.  Sna hacmhainní seo tá eolas maidir le conas "
-#~ "is féidir feidhmchláir/eisínteachtaí inlogánaithe bunaithe ar Mozilla a chruthú."
+#~ "Is éard atá i logánú (l10n) ná aistriúchán ar chomhéadan bogearraí ó theanga amháin go teanga eile, agus an bogearra a chur in oiriúint do chultúr eile.  Sna hacmhainní seo tá eolas maidir le "
+#~ "conas is féidir feidhmchláir/eisínteachtaí inlogánaithe bunaithe ar Mozilla a chruthú."
 
 #~ msgid "All applications development documentation"
 #~ msgstr "An doiciméadú forbartha feidhmchlár go léir"
@@ -6785,8 +6782,8 @@ msgstr ""
 
 #~ msgid "Do you want to show the world what the Web can do? Demo Studio is your place for sharing awesome demos and experiments with the latest Web standards and open technologies."
 #~ msgstr ""
-#~ "Ar mhaith leat cumhacht an Ghréasáin a chur ar taispeáint? Is féidir leat taispeántais agus turgnaimh a úsáideann na caighdeáin agus na teicneolaíochtaí oscailte is déanaí a chur ar fáil sa Stiúideo"
-#~ " Taispeántas."
+#~ "Ar mhaith leat cumhacht an Ghréasáin a chur ar taispeáint? Is féidir leat taispeántais agus turgnaimh a úsáideann na caighdeáin agus na teicneolaíochtaí oscailte is déanaí a chur ar fáil sa "
+#~ "Stiúideo Taispeántas."
 
 #~ msgid "Hacks Blog"
 #~ msgstr "Hacks Blog"
@@ -6834,11 +6831,11 @@ msgstr ""
 #~ msgstr "Cabhair le Suímh Mhozilla!"
 
 #~ msgid ""
-#~ "<p>Did you know Mozilla's websites are open-source? We want you to build sites like MDN with us. Thank you for helping us help you help us all.</p> <p><a href=\"%(mdn_getinvolved_href)s\" "
-#~ "class=\"go\">Get involved with MDN</a></p> <p><a href=\"%(webdev_getinvolved_href)s\" class=\"go\">Get involved with Mozilla Webdev</a></p>"
+#~ "<p>Did you know Mozilla's websites are open-source? We want you to build sites like MDN with us. Thank you for helping us help you help us all.</p> <p><a href=\"%(mdn_getinvolved_href)s\" class="
+#~ "\"go\">Get involved with MDN</a></p> <p><a href=\"%(webdev_getinvolved_href)s\" class=\"go\">Get involved with Mozilla Webdev</a></p>"
 #~ msgstr ""
-#~ "<p>An raibh a fhios agat gur suíomh foinse oscailte é seo, agus gach suíomh de chuid Mozilla? Tá fáilte romhat suímh cosúil le MDN a chruthú linn. Go raibh maith agat as cabhrú linn cabhrú leat.</p>"
-#~ " <p><a href=\"%(mdn_getinvolved_href)s\" class=\"go\">Glac páirt in MDN</a></p> <p><a href=\"%(webdev_getinvolved_href)s\" class=\"go\">Glac páirt i bhForbairt Ghréasáin Mozilla</a></p>"
+#~ "<p>An raibh a fhios agat gur suíomh foinse oscailte é seo, agus gach suíomh de chuid Mozilla? Tá fáilte romhat suímh cosúil le MDN a chruthú linn. Go raibh maith agat as cabhrú linn cabhrú leat."
+#~ "</p> <p><a href=\"%(mdn_getinvolved_href)s\" class=\"go\">Glac páirt in MDN</a></p> <p><a href=\"%(webdev_getinvolved_href)s\" class=\"go\">Glac páirt i bhForbairt Ghréasáin Mozilla</a></p>"
 
 #~ msgid "Be part of the Mozilla Labs Apps project. Learn More."
 #~ msgstr "Glac páirt sa Tionscadal Feidhmchlár ó Shaotharlann Mhozilla. Tuilleadh eolais."
@@ -7123,13 +7120,13 @@ msgstr ""
 #~ msgstr "Formáidí Íosluchtaithe:"
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a></li> <li><a href=\"http://www.opera.com/\">Opera</a></li> <li><a "
-#~ "href=\"http://www.google.com/chrome\">Chrome</a></li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links "
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a></li> <li><a href=\"http://www.opera.com/\">Opera</a></li> <li><a href="
+#~ "\"http://www.google.com/chrome\">Chrome</a></li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links "
 #~ "provided."
 #~ msgstr ""
-#~ "Chun an físeán a sheinm, teastaíonn uait brabhsálaí a thacaíonn le fís oscailte: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a></li> <li><a "
-#~ "href=\"http://www.opera.com/\">Opera</a></li> <li><a href=\"http://www.google.com/chrome\">Chrome</a></li> </ul> nó <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Is é "
-#~ "sin, nó úsáid na nascanna chun an físeán a íosluchtú."
+#~ "Chun an físeán a sheinm, teastaíonn uait brabhsálaí a thacaíonn le fís oscailte: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a></li> <li><a href=\"http://www.opera.com/"
+#~ "\">Opera</a></li> <li><a href=\"http://www.google.com/chrome\">Chrome</a></li> </ul> nó <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Is é sin, nó úsáid na nascanna "
+#~ "chun an físeán a íosluchtú."
 
 #~ msgid "Other Languages"
 #~ msgstr "Teangacha Eile"
@@ -7294,17 +7291,17 @@ msgstr ""
 #~ msgstr "Dúshláin Nua i 2012"
 
 #~ msgid ""
-#~ "<h1>Prizes</h1> <img src=\"%(MEDIA_URL)simg/devderby/prize-androids.png\" alt=\"Android mobile device\" width=\"135\" height=\"150\" class=\"prize\"/> <ol> <li class=\"first\"> <h3>Android mobile "
-#~ "device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-Phones/\">Motorola</a> or <a "
-#~ "rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag"
-#~ " from <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN "
-#~ "t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
+#~ "<h1>Prizes</h1> <img src=\"%(MEDIA_URL)simg/devderby/prize-androids.png\" alt=\"Android mobile device\" width=\"135\" height=\"150\" class=\"prize\"/> <ol> <li class=\"first\"> <h3>Android "
+#~ "mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-Phones/\">Motorola</a> or "
+#~ "<a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop "
+#~ "messenger bag from <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third"
+#~ "\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
 #~ "<h1>Duaiseanna</h1> <img src=\"%(MEDIA_URL)simg/devderby/prize-androids.png\" alt=\"Gléas soghluaiste Android\" width=\"135\" height=\"150\" class=\"prize\"/> <ol> <li class=\"first\"> <h3>Gléas "
-#~ "soghluaiste Android</h3> <p>Gheobhaidh an buaiteoir gléas soghluaiste Android ó <a rel=\"external\" href=\"http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-"
-#~ "Phones/\">Motorola</a> nó <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Mála Rickshaw do ríomhaire glúine</h3> "
-#~ "<p>Gheobhaidh an duine sa dara háit mála lámhdéanta ó <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-"
-#~ "black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>T-Léine MDN</h3> <p>Gheobhaidh an duine sa tríú háit t-léine speisialta MDN.</p> </li> </ol>"
+#~ "soghluaiste Android</h3> <p>Gheobhaidh an buaiteoir gléas soghluaiste Android ó <a rel=\"external\" href=\"http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-Phones/"
+#~ "\">Motorola</a> nó <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Mála Rickshaw do ríomhaire glúine</h3> <p>Gheobhaidh "
+#~ "an duine sa dara háit mála lámhdéanta ó <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </"
+#~ "li> <li class=\"third\"> <h3>T-Léine MDN</h3> <p>Gheobhaidh an duine sa tríú háit t-léine speisialta MDN.</p> </li> </ol>"
 
 #~ msgid "Flag content"
 #~ msgstr "Bratach a chur leis an ábhar"
@@ -7456,9 +7453,6 @@ msgstr ""
 #~ msgid "https://wiki.mozilla.org/Apps"
 #~ msgstr "https://wiki.mozilla.org/Apps"
 
-#~ msgid "Resources for App Developers"
-#~ msgstr "Acmhainní le haghaidh Forbróirí Feidhmchláir"
-
 #~ msgid "/en/Apps/For_mobile_developers"
 #~ msgstr "/en/Apps/For_mobile_developers"
 
@@ -7511,11 +7505,11 @@ msgstr ""
 #~ msgstr "Fáilte go Líonra Forbartha Mozilla."
 
 #~ msgid ""
-#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together we "
-#~ "can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
+#~ "We are an open community of developers building resources for a better web, regardless of brand, browser or platform. Anyone can contribute and each person who does makes us stronger. Together "
+#~ "we can continue to drive innovation on the Web to serve the greater good. It starts here, with you."
 #~ msgstr ""
-#~ "Is comhphobal oscailte forbróirí é seo, atá ag iarraidh an Gréasán a fheabhsú trí acmhainní níos fearr, gan aird ar bhranda, ar bhrabhsálaí, nó ar ardán. Fáilte roimh chách, agus tugann gach duine "
-#~ "nua neart dúinn. Is féidir linn nuálaíocht a spreagadh ar an nGréasán ar mhaithe leis an bpobal. Tosaíonn sé anseo, leatsa féin."
+#~ "Is comhphobal oscailte forbróirí é seo, atá ag iarraidh an Gréasán a fheabhsú trí acmhainní níos fearr, gan aird ar bhranda, ar bhrabhsálaí, nó ar ardán. Fáilte roimh chách, agus tugann gach "
+#~ "duine nua neart dúinn. Is féidir linn nuálaíocht a spreagadh ar an nGréasán ar mhaithe leis an bpobal. Tosaíonn sé anseo, leatsa féin."
 
 #~ msgid "Browse Thousands of Docs for <b>Web Developers</b>"
 #~ msgstr "Brabhsáil na mílte cáipéisí dírithe ar <b>Fhorbróirí Gréasáin</b>"
@@ -7541,10 +7535,11 @@ msgstr ""
 #~ msgid "and more"
 #~ msgstr "agus tuilleadh"
 
-#~ msgid "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
+#~ msgid ""
+#~ "And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> &middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%(mozilla_url)s\">Mozilla Applications</a>"
 #~ msgstr ""
-#~ "Agus tuilleadh acmhainní le haghaidh: <a href=\"%(mobile_url)s\">Feidhmchláir Shoghluaiste</a> &middot; <a href=\"%(addons_url)s\">Breiseáin Firefox</a> &middot; <a "
-#~ "href=\"%(mozilla_url)s\">Feidhmchláir Mozilla</a>"
+#~ "Agus tuilleadh acmhainní le haghaidh: <a href=\"%(mobile_url)s\">Feidhmchláir Shoghluaiste</a> &middot; <a href=\"%(addons_url)s\">Breiseáin Firefox</a> &middot; <a href=\"%(mozilla_url)s"
+#~ "\">Feidhmchláir Mozilla</a>"
 
 #~ msgid "Our collection of resources shows you how to use the technologies that power the Web."
 #~ msgstr "Foghlaim conas is féidir teicneolaíochtaí an Ghréasáin a úsáid ónár mbailiúchán acmhainní."
@@ -7713,19 +7708,20 @@ msgstr ""
 
 #~ msgid ""
 #~ "<h3>What's this?</h3> <p>MDN has switched to <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a "
-#~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using BrowserID</a>.</p> <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your MDN"
-#~ " profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>"
+#~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using BrowserID</a>.</p> <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your "
+#~ "MDN profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>"
 #~ msgstr ""
-#~ "<h3>Cad é seo?</h3> <p>Tá MDN ag úsáid <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">BrowserID</a> anois, bealach simplí sábháilte chun logáil isteach le do sheoladh ríomhphoist "
-#~ "amháin. <a href=\"%(why_browserid)s\" rel=\"external\">Cén fáth a mbaineann Mozilla úsáid as BrowserID</a>.</p> <p><strong>Más ball thú:</strong> logáil isteach le BrowserID agus beidh tú ceangailte"
-#~ " le do phróifíl MDN (tá d'fhaisnéis go léir againn anseo).</p> <p><strong>Baill nua:</strong> logáil isteach le BrowserID i dtosach báire, ansin beidh tú in ann do phróifíl úrnua MDN a shocrú.</p>"
+#~ "<h3>Cad é seo?</h3> <p>Tá MDN ag úsáid <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">BrowserID</a> anois, bealach simplí sábháilte chun logáil isteach le do sheoladh "
+#~ "ríomhphoist amháin. <a href=\"%(why_browserid)s\" rel=\"external\">Cén fáth a mbaineann Mozilla úsáid as BrowserID</a>.</p> <p><strong>Más ball thú:</strong> logáil isteach le BrowserID agus "
+#~ "beidh tú ceangailte le do phróifíl MDN (tá d'fhaisnéis go léir againn anseo).</p> <p><strong>Baill nua:</strong> logáil isteach le BrowserID i dtosach báire, ansin beidh tú in ann do phróifíl "
+#~ "úrnua MDN a shocrú.</p>"
 
 #~ msgid "BrowserID is here!"
 #~ msgstr "Tá BrowserID anseo!"
 
 #~ msgid ""
-#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" "
-#~ "rel=\"external\">Learn more about it.</a>"
+#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external"
+#~ "\">Learn more about it.</a>"
 #~ msgstr ""
 #~ "Tá MDN ag úsáid <a href=\"%(browserid_href)s\" rel=\"external\">BrowserID</a> anois, bealach sábháilte simplí chun logáil isteach le do sheoladh ríomhphoist amháin. <a href=\"%(why_browserid)s\" "
 #~ "rel=\"external\">Tuilleadh eolais faoi.</a>"
@@ -7740,8 +7736,8 @@ msgstr ""
 #~ "<h3>What's this?</h3> <p>MDN has switched to <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a "
 #~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using BrowserID</a>.</p>"
 #~ msgstr ""
-#~ "<h3>Cad é seo?</h3> <p>Tá MDN ag úsáid <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">BrowserID</a> anois, bealach simplí sábháilte chun logáil isteach le do sheoladh ríomhphoist "
-#~ "amháin. <a href=\"%(why_browserid)s\" rel=\"external\">Cén fáth a mbaineann Mozilla úsáid as BrowserID</a>.</p>"
+#~ "<h3>Cad é seo?</h3> <p>Tá MDN ag úsáid <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">BrowserID</a> anois, bealach simplí sábháilte chun logáil isteach le do sheoladh "
+#~ "ríomhphoist amháin. <a href=\"%(why_browserid)s\" rel=\"external\">Cén fáth a mbaineann Mozilla úsáid as BrowserID</a>.</p>"
 
 #~ msgid "Change my email"
 #~ msgstr "Athraigh mo sheoladh ríomhphoist"
@@ -7804,8 +7800,8 @@ msgstr ""
 #~ msgstr "Comhphobal"
 
 #~ msgid ""
-#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our mailing "
-#~ "list</a> to discuss ways to help create great documentation."
+#~ "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Join our "
+#~ "mailing list</a> to discuss ways to help create great documentation."
 #~ msgstr ""
 #~ "Cad a cheapann tú faoin MDN nua? <a href=\"%(uservoice_url)s\">Tabhair aiseolas</a> dúinn. <a id=\"dev-mdc-link\" href=\"https://lists.mozilla.org/listinfo/dev-mdc\">Cláraigh lenár liostaí "
 #~ "ríomhphoist</a> agus pléigh linn conas is féidir doiciméadú níos fearr a chruthú."
@@ -7829,11 +7825,11 @@ msgstr ""
 #~ msgstr "Drochúsáid Trádmharcanna"
 
 #~ msgid ""
-#~ "Except where otherwise <a href=\"http://mozilla.com/about/legal.html#site\">noted</a>, content on this site is licensed under the <br /> <a href=\"http://creativecommons.org/licenses/by-sa/3.0/\"> "
-#~ "Creative Commons Attribution Share-Alike License v3.0 </a> or any later version."
+#~ "Except where otherwise <a href=\"http://mozilla.com/about/legal.html#site\">noted</a>, content on this site is licensed under the <br /> <a href=\"http://creativecommons.org/licenses/by-sa/3.0/"
+#~ "\"> Creative Commons Attribution Share-Alike License v3.0 </a> or any later version."
 #~ msgstr ""
-#~ "Ach amháin in aon áit <a href=\"http://mozilla.com/about/legal.html#site\">ina ndeirtear a mhalairt</a>, cuirtear an t-ábhar ar an suíomh seo ar fáil faoin <br/> <a "
-#~ "href=\"http://creativecommons.org/licenses/by-sa/3.0/\"> Creative Commons Attribution Share-Alike License v3.0</a>, nó aon leagan níos déanaí"
+#~ "Ach amháin in aon áit <a href=\"http://mozilla.com/about/legal.html#site\">ina ndeirtear a mhalairt</a>, cuirtear an t-ábhar ar an suíomh seo ar fáil faoin <br/> <a href=\"http://creativecommons."
+#~ "org/licenses/by-sa/3.0/\"> Creative Commons Attribution Share-Alike License v3.0</a>, nó aon leagan níos déanaí"
 
 #~ msgid "skip to navigation"
 #~ msgstr "léim go dtí an nascleanúint"
@@ -7970,7 +7966,9 @@ msgstr ""
 #~ msgid "<a href=\"%(builder_url)s\">Build your own add-ons</a> and discuss them with the <a href=\"%(dev_url)s\">add-on developer community</a>."
 #~ msgstr "<a href=\"%(builder_url)s\">Tóg do bhreiseáin féin</a> agus pléigh leis an <a href=\"%(dev_url)s\">gcomhphobal forbróirí breiseán</a> iad."
 
-#~ msgid "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums.</li>"
+#~ msgid ""
+#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums."
+#~ "</li>"
 #~ msgstr ""
 #~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Logáil isteach</a> chun triail eile a bhaint as.</li> <li><a href=\"/Special:UserRegistration\">Cláraigh</a> chun cáipéisí a chur in "
 #~ "eagar, taispeántais a uasluchtú, agus scríobh sna fóraim.</li>"
@@ -7985,14 +7983,14 @@ msgstr ""
 #~ msgstr "<p>Tá brón orm, is oth liom nach féidir liom é sin a dhéanamh.</p>"
 
 #~ msgid ""
-#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> <li>View "
-#~ "<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
+#~ "<li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
 #~ "<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Fáilte go Stiúideo Taispeántas Mozilla, áit inar féidir le forbróirí a gcuid oibre a chomhroinnt agus chur ar taispeáint, agus tuilleadh eolais a fháil faoi theicneolaíochtaí Gréasáin.  Taiscéal "
-#~ "an Stiúideo agus féach ar na rudaí go léir is féidir a dhéanamh:</p> <ul> <li>Féach ar <strong>thaispeántais</strong> a léiríonn cumhacht HTML, CSS, agus JavaScript.</li> <li>Iniúch <strong>cód "
-#~ "foinseach</strong> na dtaispeántas sin sa chaoi go dtuigfidh tú an chaoi a n-oibríonn siad.</li> <li>Léigh <strong>doiciméadú</strong> chun tuilleadh eolais a fháil faoi na teicneolaíochtaí agus na "
-#~ "caighdeáin oscailte a chumhachtaíonn an Gréasán.</li> </ul>"
+#~ "<p>Fáilte go Stiúideo Taispeántas Mozilla, áit inar féidir le forbróirí a gcuid oibre a chomhroinnt agus chur ar taispeáint, agus tuilleadh eolais a fháil faoi theicneolaíochtaí Gréasáin.  "
+#~ "Taiscéal an Stiúideo agus féach ar na rudaí go léir is féidir a dhéanamh:</p> <ul> <li>Féach ar <strong>thaispeántais</strong> a léiríonn cumhacht HTML, CSS, agus JavaScript.</li> <li>Iniúch "
+#~ "<strong>cód foinseach</strong> na dtaispeántas sin sa chaoi go dtuigfidh tú an chaoi a n-oibríonn siad.</li> <li>Léigh <strong>doiciméadú</strong> chun tuilleadh eolais a fháil faoi na "
+#~ "teicneolaíochtaí agus na caighdeáin oscailte a chumhachtaíonn an Gréasán.</li> </ul>"
 
 #~ msgid "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
 #~ msgstr "Acmhainn chuimsitheach chruinn inúsáidte do gach duine atá ag forbairt an Ghréasáin Oscailte."
@@ -8095,16 +8093,16 @@ msgstr ""
 
 #~ msgid ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
-#~ "careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
+#~ "build careers on open web technology."
 #~ msgstr ""
-#~ "Tá Mozilla agus <a href=\"%(p2pu)s\">P2PU</a> ag cruthú <a href=\"%(p2pu_drumbeat)s\">Scoil Ealaíon an Ghréasáin</a>, bealach nua le scileanna forbartha Gréasáin a fhoghlaim.  Tá na ranganna 100%% "
-#~ "saor in aisce, ar fáil ar fud an domhain, agus is é na foghlaimeoirí, na comhairleoirí agus na rannpháirtithe atá i gceannas. An sprioc atá againn: córas beo, faoi chinnireacht comhghleacaithe, a "
-#~ "chabhraíonn le daoine timpeall an domhain slí bheatha a thógáil bunaithe ar theicneolaíocht oscailte Ghréasáin."
+#~ "Tá Mozilla agus <a href=\"%(p2pu)s\">P2PU</a> ag cruthú <a href=\"%(p2pu_drumbeat)s\">Scoil Ealaíon an Ghréasáin</a>, bealach nua le scileanna forbartha Gréasáin a fhoghlaim.  Tá na ranganna 100%"
+#~ "% saor in aisce, ar fáil ar fud an domhain, agus is é na foghlaimeoirí, na comhairleoirí agus na rannpháirtithe atá i gceannas. An sprioc atá againn: córas beo, faoi chinnireacht "
+#~ "comhghleacaithe, a chabhraíonn le daoine timpeall an domhain slí bheatha a thógáil bunaithe ar theicneolaíocht oscailte Ghréasáin."
 
 #~ msgid ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
-#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 #~ msgstr ""
 #~ "Tá Mozilla chun tosaigh sa chur i bhfeidhm de HTML5 agus teicneolaíochtaí oscailte Gréasáin eile atá i mbéal forbartha fós.  Faigh tuilleadh eolais faoin <a href=\"%(devmo_html5)s\">tsonraíocht "
 #~ "HTML5</a> agus na feabhsúcháin is déanaí in HTML5, CSS3 agus <a href=\"%(devmo_fx4dev)s\">gnéithe eile d'fhorbróirí i bhFirefox 4</a>."
@@ -8125,7 +8123,9 @@ msgstr ""
 #~ msgstr "Scoil Ealaíon an Ghréasáin"
 
 #~ msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
-#~ msgstr "Conas is féidir <a href=\"%(devmo_participate)s\">páirt a ghlacadh</a> i <a href=\"%(devmo_l10n)s\">logánú</a>, <a href=\"%(devmo_qa)s\">dearbhú cáilíochta</a>, agus tionscadail eile de chuid Mozilla."
+#~ msgstr ""
+#~ "Conas is féidir <a href=\"%(devmo_participate)s\">páirt a ghlacadh</a> i <a href=\"%(devmo_l10n)s\">logánú</a>, <a href=\"%(devmo_qa)s\">dearbhú cáilíochta</a>, agus tionscadail eile de chuid "
+#~ "Mozilla."
 
 #~ msgid "See more about {title} by {author}"
 #~ msgstr "Tuilleadh eolais faoi {title} le {author}"
@@ -8146,23 +8146,21 @@ msgstr ""
 #~ msgstr "Níl clib \"%s\" sa tacar de chlibeanna a bhfuil cur síos orthu"
 
 #~ msgid ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
-#~ "chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
+#~ "\">big chart full of check marks</a> to prove it."
 #~ msgstr ""
-#~ "Bain triail as <a href=\"%(fx4_features)s\">an chéad leagan eile de Firefox</a> agus cabhraigh linn feabhas a chur ar an mbrabhsálaí is fearr ar domhan. Cuireann Firefox 4 an Gréasán nua-aimseartha "
-#~ "chun tosaigh agus tá <a href=\"%(fx4_tech)s\">cairt mhór lán de thiceanna</a> againn mar chruthú."
+#~ "Bain triail as <a href=\"%(fx4_features)s\">an chéad leagan eile de Firefox</a> agus cabhraigh linn feabhas a chur ar an mbrabhsálaí is fearr ar domhan. Cuireann Firefox 4 an Gréasán nua-"
+#~ "aimseartha chun tosaigh agus tá <a href=\"%(fx4_tech)s\">cairt mhór lán de thiceanna</a> againn mar chruthú."
 
 #~ msgid "The Document Object Model describes the layout and content of web pages."
 #~ msgstr "Déanann DOM (Document Object Model) cur síos ar leagan amach agus inneachar leathanach Gréasáin."
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
-#~ "download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
+#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
 #~ msgstr ""
-#~ "Chun an físeán a sheinm, teastaíonn uait brabhsálaí a thacaíonn le fís oscailte: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 nó níos nuaí</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 nó níos nuaí</li> </ul> nó <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Is é sin, nó úsáid na nascanna chun an "
-#~ "físeán a íosluchtú."
+#~ "Chun an físeán a sheinm, teastaíonn uait brabhsálaí a thacaíonn le fís oscailte: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 nó níos nuaí</li> <li><a href=\"http://www."
+#~ "apple.com/safari/\">Safari</a> 3.1 nó níos nuaí</li> </ul> nó <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Is é sin, nó úsáid na nascanna chun an físeán a íosluchtú."
 
 #~ msgid "Upload demo file&hellip;"
 #~ msgstr "Uasluchtaigh comhad an taispeántais&hellip;"
@@ -8171,8 +8169,8 @@ msgstr ""
 #~ msgstr "Úsáid an Tógálaí Breiseán chun eisínteacht le haghaidh Firefox a fhorbairt go tapaidh agus gan aon stró le teicneolaíochtaí coitianta Gréasáin."
 
 #~ msgid ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
-#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
+#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 #~ msgstr ""
 #~ "Úsáid an Tógálaí Breiseán chun eisínteacht le haghaidh Firefox a fhorbairt go tapaidh agus gan aon stró le teicneolaíochtaí coitianta Gréasáin. Tá <a href=\"%(tutorial)s\">cúrsa teagaisc</a> ann "
 #~ "agus <a href=\"%(api)s\">APIanna éagsúla sa bhunleabharlann</a> lenar féidir feidhmiúlacht a chur le Firefox."

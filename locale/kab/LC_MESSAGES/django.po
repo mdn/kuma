@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-22 08:57-0700\n"
+"POT-Creation-Date: 2017-07-13 13:29-0700\n"
 "PO-Revision-Date: 2017-07-12 20:37+0000\n"
 "Last-Translator: Moḥend Belqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle https://pontoon.mozilla.org/kab/\n"
@@ -55,8 +55,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> sɣur Matthew Inman n <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The"
-" Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> sɣur Matthew Inman n <a href=\"http://theoatmeal.com\" rel=\"nofollow"
+"\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -89,238 +89,238 @@ msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> Sɣuṛ Mat
 msgid "Internal Server Error"
 msgstr "Tuccḍa tagensant n uqeddac"
 
-#: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:124 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:13 jinja2/base.html:47 jinja2/base.html:52 jinja2/base.html:127 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Aẓeṭṭa n ineflayen n Mozilla"
 
-#: jinja2/base.html:95
+#: jinja2/base.html:98
 msgid "MDN is currently in read-only maintenance mode."
 msgstr "MDN hata tura deg uskar n useggem n tɣuri kan."
 
-#: jinja2/base.html:96
+#: jinja2/base.html:99
 msgid "Learn more"
 msgstr "Issin ugar"
 
-#: jinja2/base.html:106
+#: jinja2/base.html:109
 msgid "Skip to main content"
 msgstr "Ddu ɣer ugbur agejdan"
 
-#: jinja2/base.html:108
+#: jinja2/base.html:111
 msgid "Select language"
 msgstr "Fren tutlayt"
 
-#: jinja2/base.html:109
+#: jinja2/base.html:112
 msgid "Skip to search"
 msgstr "Ddu ɣer unadi"
 
-#: jinja2/base.html:116 jinja2/base.html:254
+#: jinja2/base.html:119 jinja2/base.html:257
 msgid "MDN Web Docs"
 msgstr "Isemliyen Web n MDN"
 
-#: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:136 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "Ifecka"
 
-#: jinja2/base.html:136
+#: jinja2/base.html:139
 msgid "Contribute to MDN"
 msgstr "Ttekki ɣer MDN"
 
-#: jinja2/base.html:138
+#: jinja2/base.html:141
 msgid "Get started"
 msgstr "Bdu"
 
-#: jinja2/base.html:139
+#: jinja2/base.html:142
 msgid "Review or localize docs"
 msgstr "Seɣti neɣ sideg tasemlit"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:145
 msgid "Site Tools"
 msgstr "Ifecka n usmel"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:147
 msgid "Revision dashboard"
 msgstr "Tafelwit n usenqed n uɛawed n tmuɣli"
 
-#: jinja2/base.html:145
+#: jinja2/base.html:148
 msgid "Documentation status"
 msgstr "Addad n tsemlit"
 
-#: jinja2/base.html:154 jinja2/base.html:184
+#: jinja2/base.html:157 jinja2/base.html:187
 msgid "Technologies"
 msgstr "Titiknulujiyin"
 
-#: jinja2/base.html:158 jinja2/base.html:186 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:161 jinja2/base.html:189 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:91 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:159 jinja2/base.html:187 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:162 jinja2/base.html:190 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:92 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:160 jinja2/base.html:188 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:163 jinja2/base.html:191 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:93 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:161 jinja2/base.html:189
+#: jinja2/base.html:164 jinja2/base.html:192
 msgid "Graphics"
 msgstr "Idlifen"
 
-#: jinja2/base.html:162 jinja2/base.html:190
+#: jinja2/base.html:165 jinja2/base.html:193
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:163 jinja2/base.html:191
+#: jinja2/base.html:166 jinja2/base.html:194
 msgid "APIs / DOM"
 msgstr "APIs / DOM"
 
-#: jinja2/base.html:164 jinja2/base.html:192
+#: jinja2/base.html:167 jinja2/base.html:195
 msgid "WebExtensions"
 msgstr "Webisiɣzaf "
 
-#: jinja2/base.html:165 jinja2/base.html:193 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:168 jinja2/base.html:196 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:167 jinja2/base.html:196
+#: jinja2/base.html:170 jinja2/base.html:199
 msgid "References & Guides"
 msgstr "Timsisɣal & Imniren"
 
-#: jinja2/base.html:171 jinja2/base.html:198 kuma/landing/jinja2/landing/homepage.html:89
+#: jinja2/base.html:174 jinja2/base.html:201 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/homepage.html:100
 msgid "Learn web development"
 msgstr "Issin taneflit Web"
 
-#: jinja2/base.html:172 jinja2/base.html:199
+#: jinja2/base.html:175 jinja2/base.html:202
 msgid "Tutorials"
 msgstr "tuṭuṛyel"
 
-#: jinja2/base.html:173 jinja2/base.html:200
+#: jinja2/base.html:176 jinja2/base.html:203
 msgid "References"
 msgstr "Timsisɣal"
 
-#: jinja2/base.html:174 jinja2/base.html:201
+#: jinja2/base.html:177 jinja2/base.html:204
 msgid "Developer Guides"
 msgstr "Imniren  n uneflay"
 
-#: jinja2/base.html:175 jinja2/base.html:202
+#: jinja2/base.html:178 jinja2/base.html:205
 msgid "Accessibility"
 msgstr "Tuffart"
 
-#: jinja2/base.html:176 jinja2/base.html:203
+#: jinja2/base.html:179 jinja2/base.html:206
 msgid "Game development"
 msgstr "Taneflit n wuraren"
 
-#: jinja2/base.html:177 jinja2/base.html:204
+#: jinja2/base.html:180 jinja2/base.html:207
 msgid "...more docs"
 msgstr "...ugar n isemliyen"
 
-#: jinja2/base.html:181 jinja2/base.html:258 kuma/landing/jinja2/landing/homepage.html:74
+#: jinja2/base.html:184 jinja2/base.html:261 kuma/landing/jinja2/landing/homepage.html:79 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Web Technologies"
 msgstr "Titiknulujiyin Web"
 
-#: jinja2/base.html:208
+#: jinja2/base.html:211
 msgid "Mozilla Docs"
 msgstr "Tasemlit n Mozilla"
 
-#: jinja2/base.html:212 kuma/core/sections.py:6
+#: jinja2/base.html:215 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "Izegrar"
 
-#: jinja2/base.html:213 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:216 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:217
+#: jinja2/base.html:220 kuma/landing/jinja2/landing/homepage.html:81
 msgid "Developer Tools"
 msgstr "Ifecka n tneflit"
 
-#: jinja2/base.html:217 jinja2/base.html:261
+#: jinja2/base.html:220 jinja2/base.html:264
 msgid "Feedback"
 msgstr "Tikti"
 
-#: jinja2/base.html:221
+#: jinja2/base.html:224
 msgid "Get Firefox help"
 msgstr "Sis-d tallalt n Firefox"
 
-#: jinja2/base.html:222
+#: jinja2/base.html:225
 msgid "Get web development help"
 msgstr "Sis-d tallalt n tneflit web"
 
-#: jinja2/base.html:225
+#: jinja2/base.html:228
 msgid "Join the MDN community"
 msgstr "Ddu ɣer tmezdagnut MDN"
 
-#: jinja2/base.html:226
+#: jinja2/base.html:229
 msgid "Report a content problem"
 msgstr "Azen ugur n ugbur"
 
-#: jinja2/base.html:227
+#: jinja2/base.html:230
 msgid "Report a bug"
 msgstr "Azen abug"
 
-#: jinja2/base.html:233 jinja2/base.html:234 jinja2/base.html:236 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
-#: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
+#: jinja2/base.html:236 jinja2/base.html:237 jinja2/base.html:239 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:47
+#: kuma/landing/jinja2/landing/homepage.html:57 kuma/landing/jinja2/landing/homepage.html:64 kuma/landing/jinja2/landing/homepage.html:69 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Nadi"
 
-#: jinja2/base.html:259 kuma/landing/jinja2/landing/homepage.html:130
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
 msgid "Learn Web Development"
 msgstr "Issin taneflit Web"
 
-#: jinja2/base.html:260 jinja2/base.html:309
+#: jinja2/base.html:263 jinja2/base.html:312
 msgid "About MDN"
 msgstr "Γef MDN"
 
-#: jinja2/base.html:262 jinja2/base.html:274 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
+#: jinja2/base.html:265 jinja2/base.html:277 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
 msgstr "Twitter"
 
-#: jinja2/base.html:263
-msgid "Github"
-msgstr "Github"
+#: jinja2/base.html:266 kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
+msgid "GitHub"
+msgstr "GitHub"
 
-#: jinja2/base.html:267 kuma/core/sections.py:13
+#: jinja2/base.html:270 kuma/core/sections.py:13
 msgid "Mozilla"
 msgstr "Mozilla"
 
-#: jinja2/base.html:271
+#: jinja2/base.html:274
 msgid "About"
 msgstr "Fell-aɣ"
 
-#: jinja2/base.html:272
+#: jinja2/base.html:275
 msgid "Contact Us"
 msgstr "Nermes-aɣ-d"
 
-#: jinja2/base.html:273
+#: jinja2/base.html:276
 msgid "Donate"
 msgstr "Mudd tawsa"
 
-#: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
+#: jinja2/base.html:278 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
 msgstr "Facebook"
 
-#: jinja2/base.html:276
+#: jinja2/base.html:279
 msgid "Instagram"
 msgstr "Instagram"
 
-#: jinja2/base.html:284 jinja2/base.html:310
+#: jinja2/base.html:287 jinja2/base.html:313
 msgid "Terms"
 msgstr "Tiwtilin"
 
-#: jinja2/base.html:285 jinja2/base.html:311
+#: jinja2/base.html:288 jinja2/base.html:314
 msgid "Privacy"
 msgstr "Tabaḍnit"
 
-#: jinja2/base.html:286 jinja2/base.html:312
+#: jinja2/base.html:289 jinja2/base.html:315
 msgid "Cookies"
 msgstr "Inagan n tuqqna"
 
-#: jinja2/base.html:291 jinja2/base.html:304
+#: jinja2/base.html:294 jinja2/base.html:307
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network akked ittekkiyen iman-nsen.</p> <p>Akk igburen llan ddaw <a href=\"%(copyright_url)s\">n turagin-a</a>.</p>"
 
-#: jinja2/base.html:313
+#: jinja2/base.html:316
 msgid "Contribute to the code"
 msgstr "Ttekki deg tengalt"
 
@@ -397,7 +397,7 @@ msgstr "Ma yella ur tsentmeḍ ara ajerred inek ar tebratt n isallen icudden ar 
 msgid "Hide Newsletter Sign-up"
 msgstr "Ffer ajerred ɣer tebratt n isallen"
 
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:59 kuma/wiki/tests/test_templates.py:1375
 msgid "Previous"
 msgstr "Γeṛ deffir"
 
@@ -424,49 +424,53 @@ msgid ""
 "see the new look, and we’d love to hear what you think."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:17
+#: jinja2/includes/redesign_notice.html:18
 #, python-format
 msgid ""
 "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href=\"%(profile_url)s\">your "
 "profile page</a>."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:21
+#: jinja2/includes/redesign_notice.html:22
+msgid "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on your profile page."
+msgstr ""
+
+#: jinja2/includes/redesign_notice.html:25
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:22
+#: jinja2/includes/redesign_notice.html:26
 msgid "We hope you love it and find it useful!"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:24 jinja2/includes/redesign_notice.html:38
+#: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:42
 #, python-format
 msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog post."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:41
+#: jinja2/includes/redesign_notice.html:32 jinja2/includes/redesign_notice.html:45
 msgid "Thanks for using MDN!"
 msgstr "Tanemmirt imi tseqdaceḍ MDN!"
 
-#: jinja2/includes/redesign_notice.html:28
+#: jinja2/includes/redesign_notice.html:32
 msgid "The MDN Web Docs Team"
 msgstr "Tarbaɛt n tsemlit Web MDN"
 
-#: jinja2/includes/redesign_notice.html:29 jinja2/includes/redesign_notice.html:43
+#: jinja2/includes/redesign_notice.html:33 jinja2/includes/redesign_notice.html:47
 msgid "Hide redesign announcement"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:33
+#: jinja2/includes/redesign_notice.html:37
 msgid "Why does MDN look different?"
 msgstr "Acuɣer yettban MDN akken-nniḍen?"
 
-#: jinja2/includes/redesign_notice.html:34
+#: jinja2/includes/redesign_notice.html:38
 msgid ""
 "MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the "
 "web technology docs you’re looking for."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:35
+#: jinja2/includes/redesign_notice.html:39
 msgid "But don’t worry, MDN and Mozilla are still together! In fact, we're updating MDN’s look to reflect Mozilla's new logo and colors."
 msgstr ""
 
@@ -530,7 +534,7 @@ msgstr "Tačikit"
 msgid "Dutch"
 msgstr "Tahulandit"
 
-#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1405
+#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1385
 msgid "English (US)"
 msgstr "Taglizit (Marikan)"
 
@@ -853,7 +857,7 @@ msgid "File"
 msgstr "Afaylu"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1965
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1963
 msgid "Title"
 msgstr "Azwel"
 
@@ -933,8 +937,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"D tisura yinek API. Laqent akken ad d-saliḍ isnasen i yettegen tiwuriwin di MDN s yisem-ik. Ma yella tesḥebseḍ aseqdec n yiwet seg-sent, neɣ tcukkeḍ d akken yiwet seg-sent tettuweǧeh ɣer wis kraḍ ur"
-" tettamneḍ ara s useqdec n umiḍan inek ihi ɣas kkes-itt. Timerna n tsarutt nniḍen d ayen  fessusen melmi tebɣiḍ."
+"D tisura yinek API. Laqent akken ad d-saliḍ isnasen i yettegen tiwuriwin di MDN s yisem-ik. Ma yella tesḥebseḍ aseqdec n yiwet seg-sent, neɣ tcukkeḍ d akken yiwet seg-sent tettuweǧeh ɣer wis kraḍ "
+"ur tettamneḍ ara s useqdec n umiḍan inek ihi ɣas kkes-itt. Timerna n tsarutt nniḍen d ayen  fessusen melmi tebɣiḍ."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -960,8 +964,8 @@ msgstr "Teriḍ tasiregt timeẓlit akken ad tesqedceḍ tisura API. Tzemreḍ a
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 "<p>Mudd-d aglam daw-a aseqdec iheggan i tsarutt agi. <p><strong>Tazmilt :</strong> D wagi kan i d allal n usulu n tsarutt agi ɣer zdat, akked wazemz d wakud n tmerna yines. Ihi ili-k zeddigeḍ akken "
 "tzemreḍ.</p>"
@@ -976,8 +980,9 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>Tasarutt inek tamaynut tettwarna. Ma ulac aɣilif aru talqayt agi daw-a (amedya. s unɣal ɣer iɣewwaṛen n usnas inek). Talɣut agi ur d-ttwaskan ara tikelt nniḍen, ihi ur tezmireḍ ara ad tt-id-erreḍ"
-" ma yella tṛuḥ.</p> <p><strong> Tazmilt;</strong> ticki tfukeḍ, <a class=\"button\" href=\"%(list_url)s\">uɣal ɣer tebdart n tsura</a>. Asali tikelt nniḍen n usebter ad yernu tasarutt nniḍen.</p>"
+"<p>Tasarutt inek tamaynut tettwarna. Ma ulac aɣilif aru talqayt agi daw-a (amedya. s unɣal ɣer iɣewwaṛen n usnas inek). Talɣut agi ur d-ttwaskan ara tikelt nniḍen, ihi ur tezmireḍ ara ad tt-id-"
+"erreḍ ma yella tṛuḥ.</p> <p><strong> Tazmilt;</strong> ticki tfukeḍ, <a class=\"button\" href=\"%(list_url)s\">uɣal ɣer tebdart n tsura</a>. Asali tikelt nniḍen n usebter ad yernu tasarutt nniḍen.</"
+"p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -1022,7 +1027,7 @@ msgstr "Moz Hacks"
 msgid "Today at %s"
 msgstr "Ass-a di %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:308
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:156 kuma/wiki/jinja2/wiki/document.html:308
 msgid "Yes"
 msgstr "Ih"
 
@@ -1248,7 +1253,7 @@ msgstr "Imzizdig"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "Akken iteddu umahil deg akud, Ad ifak di %(date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1918
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1916
 msgid "Revision"
 msgstr "Aɛiwed n tmuɣli"
 
@@ -1346,113 +1351,118 @@ msgstr "Ahil Mozilla Developer Network (MDN) Fellowship yettaɛṛad-d ineflayen
 
 #: kuma/landing/jinja2/landing/homepage.html:19
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 "Mozilla Developer Network (MDN) yettmuddu-d talɣut ɣef titiknulujiyin Web yeldin am HTML, CSS akked APIs yettuseqdacen deg ismal web akked isnasen HTML5. Ad naf daɣen tasemlit ɣef ifarisen Mozilla "
 "am Firefox OS."
 
-#: kuma/landing/jinja2/landing/homepage.html:37
+#: kuma/landing/jinja2/landing/homepage.html:38
+#, fuzzy
+msgid "Resources for developers, by developers."
+msgstr "I yineflayen, sɣur ineflayen"
+
+#: kuma/landing/jinja2/landing/homepage.html:40
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "Tamusni yettwabḍan <span>di Web yeldin</span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:47 kuma/landing/jinja2/landing/homepage.html:64 kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:51 kuma/landing/jinja2/landing/homepage.html:68 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "Nadi di tsemlit"
 
-#: kuma/landing/jinja2/landing/homepage.html:50
+#: kuma/landing/jinja2/landing/homepage.html:54
 msgid "Show topics"
 msgstr "Wali isental"
 
-#: kuma/landing/jinja2/landing/homepage.html:77
+#: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Web<br />Technologies"
 msgstr "Titiknulujiyin <br /> Web"
 
-#: kuma/landing/jinja2/landing/homepage.html:79
+#: kuma/landing/jinja2/landing/homepage.html:90
 msgid "Web APIs &amp; DOM"
 msgstr "API Web akked DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:83 kuma/landing/jinja2/landing/homepage.html:103
+#: kuma/landing/jinja2/landing/homepage.html:94 kuma/landing/jinja2/landing/homepage.html:114
 msgid "more..."
 msgstr "ugar..."
 
-#: kuma/landing/jinja2/landing/homepage.html:87
+#: kuma/landing/jinja2/landing/homepage.html:98
 msgid "Learn"
 msgstr "Lmed"
 
-#: kuma/landing/jinja2/landing/homepage.html:90
+#: kuma/landing/jinja2/landing/homepage.html:101
 msgid "Getting started with the Web"
 msgstr "Bdu s Web"
 
-#: kuma/landing/jinja2/landing/homepage.html:91
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Learn HTML"
 msgstr "Issin HTML"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Learn CSS"
 msgstr "Issin CSS"
 
-#: kuma/landing/jinja2/landing/homepage.html:93
+#: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn JavaScript"
 msgstr "Issin JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:97
+#: kuma/landing/jinja2/landing/homepage.html:108
 msgid "Developer<br />Tools"
 msgstr "Ifecka n <br /> tneflit"
 
-#: kuma/landing/jinja2/landing/homepage.html:99
+#: kuma/landing/jinja2/landing/homepage.html:110
 msgid "Page Inspector"
 msgstr "Amaswaḍ n usebter"
 
-#: kuma/landing/jinja2/landing/homepage.html:100
+#: kuma/landing/jinja2/landing/homepage.html:111
 msgid "Web Console"
 msgstr "Tadiwent web"
 
-#: kuma/landing/jinja2/landing/homepage.html:101
+#: kuma/landing/jinja2/landing/homepage.html:112
 msgid "JavaScript Debugger"
 msgstr "Tamseɣtayt n JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:102
+#: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Performance Tools"
 msgstr "Ifecka n tmellit"
 
-#: kuma/landing/jinja2/landing/homepage.html:118
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Open Web and Mobile"
 msgstr "Web aziraz yeldin"
 
-#: kuma/landing/jinja2/landing/homepage.html:123
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:137
 msgid "Take the Survey"
 msgstr "Err i uḥedqis"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Proudly non-profit."
 msgstr "Nettzuxxu, ur neṭṭafaṛ ara adrim."
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Donate before Dec 31."
 msgstr "Mudd send 31 Duj."
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Donate Now"
 msgstr "Mudd tura"
 
-#: kuma/landing/jinja2/landing/homepage.html:140
+#: kuma/landing/jinja2/landing/homepage.html:152
 msgid "Get The Browser For Developers Like You"
 msgstr "Sider iminig yettwarnan i yineflayenam kečč"
 
-#: kuma/landing/jinja2/landing/homepage.html:149
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">ɣeṛ ugar di hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:154
+#: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Get Involved"
 msgstr "Ttekki"
 
-#: kuma/landing/jinja2/landing/homepage.html:156
+#: kuma/landing/jinja2/landing/homepage.html:168
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1461,35 +1471,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Ddu ɣer<span class=\"number\">%(contributors)s</span> imttekkiyen</span> <span class=\"row2\">n<span class=\"number\">%(locales)s</span> tutlayin akked "
 "temnadin</span> <span class=\"row3\"> deg umaḍal imeṛṛa.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:163 kuma/landing/jinja2/landing/homepage.html:170
+#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
 msgid "Help improve MDN"
 msgstr "Mudd afus i tneflit n MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:174
+#: kuma/landing/jinja2/landing/homepage.html:186
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Akk tigezmiyin n MDN (tasemlit akked usmel iman-is) rnan-ten tmezdagnut yeldin n ineflayen akked imyura. Ddu-d ɣer-neɣ! Wali amek tzemreḍ aɣ-d-muddeḍ tallalt:"
 
-#: kuma/landing/jinja2/landing/homepage.html:180
+#: kuma/landing/jinja2/landing/homepage.html:192
 msgid "Getting started"
 msgstr "Bdu"
 
-#: kuma/landing/jinja2/landing/homepage.html:181
+#: kuma/landing/jinja2/landing/homepage.html:193
 msgid "Editorial review"
 msgstr "Taɣuṛi tis snat n tira"
 
-#: kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:194
 msgid "Technical review"
 msgstr "Aɛiwed n tmuɣli tatiknikant"
 
-#: kuma/landing/jinja2/landing/homepage.html:187
+#: kuma/landing/jinja2/landing/homepage.html:199
 msgid "Translating"
 msgstr "Suqel"
 
-#: kuma/landing/jinja2/landing/homepage.html:188
+#: kuma/landing/jinja2/landing/homepage.html:200
 msgid "Promoting MDN"
 msgstr "Mmeslay ɣef MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:189
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Contributing to the MDN codebase"
 msgstr "Ttekki di tengalt n MDN"
 
@@ -1540,12 +1550,12 @@ msgstr "Suffeɣ awal ɣef tayri n uneflay."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol><li><strong>Awi-d tiqeffalin:</strong> seqdec tiferkit-nneɣn daw-a akken ad ternuḍ taqeffalt tudmawant akked tengalt ibes aɣbalu i usnerni n  MDN ɣef ublug neɣ asmel "
-"inek?</li><li><strong>Suffeɣ-d tiqeffalin :</strong> Nɣel tangalt aɣbalu sakin senṭeḍ-it ɣe usmel neɣ ablug inek akken ad tmuddeḍ afus i yemdanen ad ddun ɣerr MDN.</li><li><strong>Ḥemmel :</strong> "
-"Zux imi tesneḍ ad tmuddeḍ tudert i yineflayen s cwit akked beṭṭu n MDN d umaḍal imeṛṛa.</li></ol>"
+"<ol><li><strong>Awi-d tiqeffalin:</strong> seqdec tiferkit-nneɣn daw-a akken ad ternuḍ taqeffalt tudmawant akked tengalt ibes aɣbalu i usnerni n  MDN ɣef ublug neɣ asmel inek?</"
+"li><li><strong>Suffeɣ-d tiqeffalin :</strong> Nɣel tangalt aɣbalu sakin senṭeḍ-it ɣe usmel neɣ ablug inek akken ad tmuddeḍ afus i yemdanen ad ddun ɣerr MDN.</li><li><strong>Ḥemmel :</strong> Zux "
+"imi tesneḍ ad tmuddeḍ tudert i yineflayen s cwit akked beṭṭu n MDN d umaḍal imeṛṛa.</li></ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
@@ -1844,11 +1854,11 @@ msgstr "anaw"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
-"Suref-aɣ, acku yessefk ad tesɛuḍ ɣarsum yiwen n umiḍan yeqqnen akked ad tesulud iman-ik. Qqen di tazwara s umiḍan akken ad tekksed wagi. Akken ad tekkseḍ amaɣnu yinek MDN, ma ulac aɣilif <a "
-"href=\"%(bug_form_url)s\" rel=\"nofollow\">azen-d abug</a>."
+"Suref-aɣ, acku yessefk ad tesɛuḍ ɣarsum yiwen n umiḍan yeqqnen akked ad tesulud iman-ik. Qqen di tazwara s umiḍan akken ad tekksed wagi. Akken ad tekkseḍ amaɣnu yinek MDN, ma ulac aɣilif <a href="
+"\"%(bug_form_url)s\" rel=\"nofollow\">azen-d abug</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1866,18 +1876,6 @@ msgstr "Aseqdac"
 #, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "Tfuked amecwaṛ amezwaru n umnir n <a href=\"%s\"> Bdu di MDN </a>"
-
-#: kuma/users/backends.py:34
-msgid "algorithm"
-msgstr "alguritm"
-
-#: kuma/users/backends.py:35
-msgid "salt"
-msgstr "salt"
-
-#: kuma/users/backends.py:36
-msgid "hash"
-msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
@@ -1902,10 +1900,6 @@ msgstr "Tamusni leqqayen"
 #: kuma/users/forms.py:53
 msgid "Username"
 msgstr "Isem n useqdac"
-
-#: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
-msgid "GitHub"
-msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
@@ -2334,11 +2328,11 @@ msgstr "Yella yakan umaɣnu s tansa agi imayl yettwafernen. <a href=\"%(login_ur
 #: kuma/users/jinja2/socialaccount/signup.html:141
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Anta tansa imayl i tebɣiḍ ad tesqedceḍ akken ad d-remseḍ iznan akked ilɣa n MDN? tansa agi imayl ur <strong>pas</strong> d-ttwaskan ara di MDN udiɣ ad tettwasefrek akken tella <a "
-"href=\"%(privacy_url)s\">tasertit-nneɣ n tbaḍnit</a>."
+"Anta tansa imayl i tebɣiḍ ad tesqedceḍ akken ad d-remseḍ iznan akked ilɣa n MDN? tansa agi imayl ur <strong>pas</strong> d-ttwaskan ara di MDN udiɣ ad tettwasefrek akken tella <a href="
+"\"%(privacy_url)s\">tasertit-nneɣ n tbaḍnit</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:157
 msgid "Terms and Privacy"
@@ -2643,8 +2637,8 @@ msgstr "Aqlak tesnifleḍ amaɣnu mačči yinek. Ɛur-k!"
 #: kuma/users/jinja2/users/user_edit.html:55
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
-"Nebɣa ad nẓeṛ tikti yinek ɣef usnifel deg usmel ! Imsekyaden beta aemren ad kecmen ɣer tmahilin timaynutin send ad d-ffɣent udiɣ ad d-remsen si sya ɣer da iznan yessuturen tallalt nneɣ deg usekyed n"
-" kra n tɣawsiwin."
+"Nebɣa ad nẓeṛ tikti yinek ɣef usnifel deg usmel ! Imsekyaden beta aemren ad kecmen ɣer tmahilin timaynutin send ad d-ffɣent udiɣ ad d-remsen si sya ɣer da iznan yessuturen tallalt nneɣ deg usekyed "
+"n kra n tɣawsiwin."
 
 #: kuma/users/jinja2/users/user_edit.html:58
 msgid "Primary Email"
@@ -3092,7 +3086,7 @@ msgid "Changing this document's slug requires moving it and its children."
 msgstr "Asnifel n unegzum n isemli agi yesra ad yettwasenkez netta akked isemliyen ines isnawanen."
 
 #: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:894 kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:72 kuma/wiki/jinja2/wiki/edit.html:120
-#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:74 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Azwel:"
 
@@ -3100,7 +3094,7 @@ msgstr "Azwel:"
 msgid "Title of article"
 msgstr "Azwel n umagrad"
 
-#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:78
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "Asulay n tensa URL :"
@@ -3113,7 +3107,7 @@ msgstr "Tansa URL n umagrad"
 msgid "Parent:"
 msgstr "Asaraw:"
 
-#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:83 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "Tibzimin:"
 
@@ -3133,11 +3127,11 @@ msgstr "Agzul n igmaḍ n unadi:"
 msgid "Only displayed on search results page"
 msgstr "Yettwaskan kan ɣef usebter n igmaḍ n unadi"
 
-#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:94
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
 msgstr "Agbur:"
 
-#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:89
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
 msgstr "Awennit:"
 
@@ -3219,72 +3213,72 @@ msgstr "H3 neɣ ugar"
 msgid "H4 and higher"
 msgstr "H4 neɣ ugar"
 
-#: kuma/wiki/models.py:1748
+#: kuma/wiki/models.py:1746
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Yessefk aɛiwed n tmuɣli ad yebnu ɣef uɛid n tmuɣli n isemli %(locale)s. Asulay ID n uɛiwed n tmuɣli %(id)s ur imeɣri  ara akked usebdad agi."
 
-#: kuma/wiki/models.py:1878
+#: kuma/wiki/models.py:1876
 msgid "IP address"
 msgstr "Tansa IP"
 
-#: kuma/wiki/models.py:1886
+#: kuma/wiki/models.py:1884
 msgid "User-Agent"
 msgstr "Aseqdac-Ameggi"
 
-#: kuma/wiki/models.py:1891
+#: kuma/wiki/models.py:1889
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1899 kuma/wiki/models.py:1984
+#: kuma/wiki/models.py:1897 kuma/wiki/models.py:1982
 msgid "Data submitted to Akismet"
 msgstr "Isefka ttwaznen i Akismet"
 
-#: kuma/wiki/models.py:1924
+#: kuma/wiki/models.py:1922
 msgid "Akismet submission"
 msgstr "Anekcum Akismet"
 
-#: kuma/wiki/models.py:1925
+#: kuma/wiki/models.py:1923
 msgid "Akismet submissions"
 msgstr "Inekcumen Akismet"
 
-#: kuma/wiki/models.py:1969
+#: kuma/wiki/models.py:1967
 msgid "Slug"
 msgstr "Asulay n tensa URL"
 
-#: kuma/wiki/models.py:1977
+#: kuma/wiki/models.py:1975
 msgid "Document (optional)"
 msgstr "Isemli (afrayan)"
 
-#: kuma/wiki/models.py:1987
+#: kuma/wiki/models.py:1985
 msgid "reviewed"
 msgstr "yettuwal/yettwaɣṛa tikelt nniḍen"
 
-#: kuma/wiki/models.py:1998
+#: kuma/wiki/models.py:1996
 msgid "Needs Review"
 msgstr "Yesra awal/taɣuri tikelt nniḍen"
 
-#: kuma/wiki/models.py:1999
+#: kuma/wiki/models.py:1997
 msgid "Ham / False Positive"
 msgstr "Agbur ameɣtu / Mačči d ummid"
 
-#: kuma/wiki/models.py:2000
+#: kuma/wiki/models.py:1998
 msgid "Confirmed as Spam"
 msgstr "Yettwasentem d aspam"
 
-#: kuma/wiki/models.py:2001
+#: kuma/wiki/models.py:1999
 msgid "Review Unavailable"
 msgstr "Aɛiwed n tmuɣli ulac-it"
 
-#: kuma/wiki/models.py:2002
+#: kuma/wiki/models.py:2000
 msgid "Akismet Error"
 msgstr "Tuucḍa Akismet"
 
-#: kuma/wiki/models.py:2007
+#: kuma/wiki/models.py:2005
 msgid "Review of Akismet's classification as spam"
 msgstr "Taɣuṛi nniḍen n usmizzwer s uspam sɣuṛ Akismet"
 
-#: kuma/wiki/models.py:2014
+#: kuma/wiki/models.py:2012
 msgid "Staff reviewer"
 msgstr "Amseɣtay n terbaɛt"
 
@@ -3300,8 +3294,8 @@ msgstr "Ad tettaɛraḍeḍ ad ternuḍ asebter amaynut."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 "Yessefk ad tesɛuḍ tisirag akken ad ternuḍ asebter amaynut. Akken ad tessutreḍ timerna n usebter amaunyt, ma ulac aɣilif, <a href=\"%(request_page_url)s\">azen-d abug</a>. Ma yella tebɣiḍ ad tesɣuḍ "
 "tisirag iwalmen, <a href=\"%(email_link)s\">nermes-aɣ-d</a> ma ulac aɣilif."
@@ -3453,8 +3447,8 @@ msgstr "Isemli agi yerna-t unagraw i tikelt tamezwarut. Ma ulac aɣilif <a href=
 #: kuma/wiki/jinja2/wiki/document.html:234
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 "Aleqqem n isemli agi <abbr title=\"%(started_at)s\">iteddu akka tura</abbr>. Ma yella agbur n daw-a yettban ur yemmid ara neɣ yella wayen ixuṣṣen, ma ulac aɣilif <a href=\"%(url)s\">smiren asebter "
 "agi</a> di kra n tesdatin."
@@ -3462,11 +3456,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:243
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
-"Asnifel n isemli agi <abbr title=\"%(scheduled_at)s\">ihegga yakan</abbr>. Ma yella gbur daw-a ur yemmid aneɣ yella wayen ixuṣṣen,  <a href=\"%(url)s\">smiren asebter agi</a> ma ulac aɣilif akka kra"
-" n tesdatin."
+"Asnifel n isemli agi <abbr title=\"%(scheduled_at)s\">ihegga yakan</abbr>. Ma yella gbur daw-a ur yemmid aneɣ yella wayen ixuṣṣen,  <a href=\"%(url)s\">smiren asebter agi</a> ma ulac aɣilif akka "
+"kra n tesdatin."
 
 #: kuma/wiki/jinja2/wiki/document.html:254
 msgid "This is an experimental page."
@@ -3535,7 +3529,7 @@ msgstr ""
 msgid "Your Changes"
 msgstr "Isnifal inek"
 
-#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:54
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> on %(date)s"
 msgstr "Aɛiwed n tmuɣli %(id)s sɣuṛ <a href=\"%(user_profile_url)s\">%(user)s</a> di %(date)s"
@@ -3738,7 +3732,7 @@ msgstr "Agbur n tɣuṛi/awali nniḍen"
 msgid "Revision Source"
 msgstr "Aɣbalu n tɣrui/awali nniḍen"
 
-#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:76
+#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "Revert to this revision"
 msgstr "Uɣal ɣer tɣuri/Awali agi"
 
@@ -3757,8 +3751,8 @@ msgid ""
 "&copy; 2005-%(this_year)s Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 - %(this_year)s Mozilla Developer Network akked imttekkiyen <br /> Agbur yettunef-d s turagt n usenfaṛ agi. &middot; <a href=\"%(about_url)s\">Ɣef MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Ttekki di tengalt</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Tasertit n tbaḍnit</a>"
+"&copy; 2005-2015 - %(this_year)s Mozilla Developer Network akked imttekkiyen <br /> Agbur yettunef-d s turagt n usenfaṛ agi. &middot; <a href=\"%(about_url)s\">Ɣef MDN</a> &middot; <a href=\"//"
+"github.com/mozilla/kuma\">Ttekki di tengalt</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Tasertit n tbaḍnit</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3941,69 +3935,69 @@ msgstr "Wali daɣen"
 msgid "Change Revisions"
 msgstr "Snifel taɣuri/awali nniḍen"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:57
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:34 kuma/wiki/jinja2/wiki/includes/document_macros.html:50
 #, python-format
 msgid "Revision %(num)s:"
 msgstr "Taɣuri nniḍen %(num)s:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:96 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr "Aqeddac ad yeskan amgired gar igburen. Ma ulac aɣilif, smiren asebter agi di kra n tesdatin."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:116
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 msgid "Subscribe to this article and all its sub-articles"
 msgstr "Jerred ɣer umagrad-agi akked akk imagraden icudden ɣur-s"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Unsubscribe from this article and all its sub-articles"
 msgstr "Ffeɣ seg ujerred n numagrad-agi akked d imagraden icudden ɣur-s"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "Tettwajerdeḍ ɣer umagrad agi akked imagraden meṛṛa icudden ɣur-s."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "Teffɣed seg ujerred n umagrad agi akked imagraden meṛṛa icudden ɣur-s."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:131
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
 msgstr "Aleqqem n waddad n ujerred"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 msgid "Subscribe to this article"
 msgstr "Jerred ar umagrad-agi"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 msgid "Unsubscribe from this article"
 msgstr "Ffeɣ seg ujerred n umagrad-agi"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "Tettwajerdeḍ akka tura ɣer %(title)s."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "Teffɣeḍ seg ujettwajerd akka tura n %(title)s."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:147
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, python-format
 msgid "Subscribe to the %(language)s version"
 msgstr "Jerred ar lqem  %(language)s"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, python-format
 msgid "Unsubscribe from the %(language)s version"
 msgstr "Ffeɣ seg ujerred n lqem  %(language)s"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "Tettwajerded akka tura ɣer lqem %(language)s n umagrad agi."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "Teffɣeḍ akka tura seg ujerred n lqem %(language)s n umagrad agi."
@@ -4231,7 +4225,7 @@ msgstr "Wali amgire gar tisuqilin yettwafernen"
 msgid "Compare Selected Revisions"
 msgstr "Wali amgired gar iɛiwad yettwafernen"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:84
+#: kuma/wiki/jinja2/wiki/list/revisions.html:86
 msgid "This document has no revisions."
 msgstr "Isemli agi ur ɣer-s ara taɣuri/awali yettraǧun."
 
@@ -4307,12 +4301,12 @@ msgstr "Akken ad ternuḍ anekcul i Akismet, sekles ma ulac aɣilif tiferkit agi
 msgid "Select an Akismet submission for more details"
 msgstr "Fren anekcum Akismet i wugar n telqayt"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
+#: kuma/wiki/templatetags/jinja_helpers.py:104 kuma/wiki/templatetags/jinja_helpers.py:105 kuma/wiki/templatetags/jinja_helpers.py:120 kuma/wiki/templatetags/jinja_helpers.py:121
 #, python-format
 msgid "Revision %s"
 msgstr "Aɛiwed n tmuɣli %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:106
+#: kuma/wiki/templatetags/jinja_helpers.py:110
 msgid "There was an error generating the content."
 msgstr "Teḍra-d tuccḍa deg usirew n ugbur."
 
@@ -4364,6 +4358,18 @@ msgstr "Ur tezmireḍ ara ad tessuqleḍ isemli agi."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Aqeddac Elasticsearch : %(backend)s"
+
+#~ msgid "Github"
+#~ msgstr "Github"
+
+#~ msgid "algorithm"
+#~ msgstr "alguritm"
+
+#~ msgid "salt"
+#~ msgstr "salt"
+
+#~ msgid "hash"
+#~ msgstr "hash"
 
 #~ msgid "Create Template"
 #~ msgstr "Rnu taneɣruft"
@@ -4431,18 +4437,18 @@ msgstr "Aqeddac Elasticsearch : %(backend)s"
 #~ msgstr "Snefli isnasen web yeldin"
 
 #~ msgid ""
-#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-#~ "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+#~ "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+#~ "\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 #~ msgstr ""
-#~ "Ayen i d-izneḍ yegber ayen ur nlaq ara i MDN. Ma tuzned-d deqs n tikal ayen ur n laq ara, amiḍan inek ad s-yettwakkses urmad. Ma ulac aɣilif, wali amnir nneɣ “<a "
-#~ "href=\"%(does_this_belong_url)s\">Wagi yezmer ad d-yeffeq di MDN?</a>” akken ad tegzuḍ s telqayt ayen ilaqen i MDN."
+#~ "Ayen i d-izneḍ yegber ayen ur nlaq ara i MDN. Ma tuzned-d deqs n tikal ayen ur n laq ara, amiḍan inek ad s-yettwakkses urmad. Ma ulac aɣilif, wali amnir nneɣ “<a href=\"%(does_this_belong_url)s"
+#~ "\">Wagi yezmer ad d-yeffeq di MDN?</a>” akken ad tegzuḍ s telqayt ayen ilaqen i MDN."
 
 #~ msgid ""
-#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so you"
-#~ " can continue to sign in to MDN."
+#~ "You signed in with Persona. On November 1st you will no longer be able to sign in to MDN this way.<br> Please <a href=\"%(persona_info)s\">link your GitHub account to your MDN profile now</a> so "
+#~ "you can continue to sign in to MDN."
 #~ msgstr ""
-#~ "Tkecmeḍ s Persona. Des ass a 1 n Number ur tettizmireḍ ara ad teqqneḍ ɣer MDN s Persona.<br> Ma ulac aɣilif <a href=\"%(persona_info)s\">qqen amiḍan inek n GitHub ɣer umaɣnu yinek MDN tura</a> akken"
-#~ " ad tizmireḍ ad tkemmleḍ di MDN."
+#~ "Tkecmeḍ s Persona. Des ass a 1 n Number ur tettizmireḍ ara ad teqqneḍ ɣer MDN s Persona.<br> Ma ulac aɣilif <a href=\"%(persona_info)s\">qqen amiḍan inek n GitHub ɣer umaɣnu yinek MDN tura</a> "
+#~ "akken ad tizmireḍ ad tkemmleḍ di MDN."
 
 #~ msgid "Sign in:"
 #~ msgstr "Kcem:"
@@ -4478,12 +4484,13 @@ msgstr "Aqeddac Elasticsearch : %(backend)s"
 #~ "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 #~ "connect with my MDN profile</a>"
 #~ msgid_plural ""
-#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-#~ "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
-#~ msgstr[0] "Amaɣnu yella yakan s yimayl agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu yinu MDN</a>"
+#~ "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+#~ "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+#~ msgstr[0] ""
+#~ "Amaɣnu yella yakan s yimayl agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu yinu MDN</a>"
 #~ msgstr[1] ""
-#~ "Amaɣnu yella yakan s yiwen seg imaylen agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu yinu "
-#~ "MDN</a>"
+#~ "Amaɣnu yella yakan s yiwen seg imaylen agi daw-a. Ɣur-k yakan amaɣnu MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ih, qqen s umaɣnu "
+#~ "yinu MDN</a>"
 
 #~ msgid "Signed in with Persona"
 #~ msgstr "Yeqqen s Persona"
@@ -4546,11 +4553,11 @@ msgstr "Aqeddac Elasticsearch : %(backend)s"
 #~ msgstr "Isemli agi yettusnifel makken telliḍ ad txeddmed fell-as."
 
 #~ msgid ""
-#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-#~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+#~ "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; "
+#~ "<a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 #~ msgstr ""
-#~ "Agbur yella daw n turagt n usenfaṛ. &middot; <a href=\"%(about_url)s\">Ɣef MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Ttekki di tengalt</a> &middot; <a href=\"//www.mozilla.org/en-"
-#~ "US/privacy\">Tasertit n uqadeṛ n tudert tusligt</a>"
+#~ "Agbur yella daw n turagt n usenfaṛ. &middot; <a href=\"%(about_url)s\">Ɣef MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Ttekki di tengalt</a> &middot; <a href=\"//www.mozilla.org/en-US/"
+#~ "privacy\">Tasertit n uqadeṛ n tudert tusligt</a>"
 
 #~ msgid "\"Load documents\""
 #~ msgstr "\"Sali-d isemliyen\""

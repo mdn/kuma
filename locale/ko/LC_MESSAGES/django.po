@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-06-22 08:57-0700\n"
+"POT-Creation-Date: 2017-07-13 13:29-0700\n"
 "PO-Revision-Date: 2017-06-21 01:46+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -98,246 +98,246 @@ msgid "Internal Server Error"
 msgstr "내부 서버 오류"
 
 # 메인 페이지 제목
-#: jinja2/base.html:13 jinja2/base.html:44 jinja2/base.html:49 jinja2/base.html:124 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:13 jinja2/base.html:47 jinja2/base.html:52 jinja2/base.html:127 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla 개발자 네트워크"
 
-#: jinja2/base.html:95
+#: jinja2/base.html:98
 msgid "MDN is currently in read-only maintenance mode."
 msgstr "MDN은 현재 보수 작업 중으로 읽기-전용으로만 사용하실 수 있습니다."
 
-#: jinja2/base.html:96
+#: jinja2/base.html:99
 msgid "Learn more"
 msgstr "더 알아보기"
 
-#: jinja2/base.html:106
+#: jinja2/base.html:109
 msgid "Skip to main content"
 msgstr "메인 콘텐트로 건너 뛰기"
 
-#: jinja2/base.html:108
+#: jinja2/base.html:111
 msgid "Select language"
 msgstr "언어 선택"
 
-#: jinja2/base.html:109
+#: jinja2/base.html:112
 msgid "Skip to search"
 msgstr "검색으로 건너뛰기"
 
-#: jinja2/base.html:116 jinja2/base.html:254
+#: jinja2/base.html:119 jinja2/base.html:257
 #, fuzzy
 msgid "MDN Web Docs"
 msgstr "MDN 문서"
 
-#: jinja2/base.html:133 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:136 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr "개발 도구"
 
-#: jinja2/base.html:136
+#: jinja2/base.html:139
 msgid "Contribute to MDN"
 msgstr "MDN 공헌하기"
 
-#: jinja2/base.html:138
+#: jinja2/base.html:141
 msgid "Get started"
 msgstr "시작하기"
 
-#: jinja2/base.html:139
+#: jinja2/base.html:142
 msgid "Review or localize docs"
 msgstr "검토 또는 문서 번역"
 
-#: jinja2/base.html:142
+#: jinja2/base.html:145
 msgid "Site Tools"
 msgstr "사이트 도구"
 
-#: jinja2/base.html:144
+#: jinja2/base.html:147
 msgid "Revision dashboard"
 msgstr "변경 사항 대시보드"
 
-#: jinja2/base.html:145
+#: jinja2/base.html:148
 msgid "Documentation status"
 msgstr "문서화 상태"
 
-#: jinja2/base.html:154 jinja2/base.html:184
+#: jinja2/base.html:157 jinja2/base.html:187
 msgid "Technologies"
 msgstr "기술 목록"
 
-#: jinja2/base.html:158 jinja2/base.html:186 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:161 jinja2/base.html:189 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:91 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
 # docs, Key Topics for Web Developers - 목록 항목,
 # web, Popular Web Documentation - 링크 텍스트
-#: jinja2/base.html:159 jinja2/base.html:187 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:81 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:162 jinja2/base.html:190 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:92 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:160 jinja2/base.html:188 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:82 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:163 jinja2/base.html:191 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:93 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "자바스크립트"
 
-#: jinja2/base.html:161 jinja2/base.html:189
+#: jinja2/base.html:164 jinja2/base.html:192
 msgid "Graphics"
 msgstr "그래픽"
 
-#: jinja2/base.html:162 jinja2/base.html:190
+#: jinja2/base.html:165 jinja2/base.html:193
 msgid "HTTP"
 msgstr "HTTP"
 
-#: jinja2/base.html:163 jinja2/base.html:191
+#: jinja2/base.html:166 jinja2/base.html:194
 msgid "APIs / DOM"
 msgstr "API 및 DOM"
 
-#: jinja2/base.html:164 jinja2/base.html:192
+#: jinja2/base.html:167 jinja2/base.html:195
 msgid "WebExtensions"
 msgstr "확장 기능"
 
-#: jinja2/base.html:165 jinja2/base.html:193 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:168 jinja2/base.html:196 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr "MathML"
 
-#: jinja2/base.html:167 jinja2/base.html:196
+#: jinja2/base.html:170 jinja2/base.html:199
 msgid "References & Guides"
 msgstr "문서 참조 및 가이드"
 
-#: jinja2/base.html:171 jinja2/base.html:198 kuma/landing/jinja2/landing/homepage.html:89
+#: jinja2/base.html:174 jinja2/base.html:201 kuma/landing/jinja2/landing/homepage.html:80 kuma/landing/jinja2/landing/homepage.html:100
 msgid "Learn web development"
 msgstr "웹 개발 배우기"
 
-#: jinja2/base.html:172 jinja2/base.html:199
+#: jinja2/base.html:175 jinja2/base.html:202
 msgid "Tutorials"
 msgstr "튜토리얼"
 
-#: jinja2/base.html:173 jinja2/base.html:200
+#: jinja2/base.html:176 jinja2/base.html:203
 msgid "References"
 msgstr "참조문서"
 
-#: jinja2/base.html:174 jinja2/base.html:201
+#: jinja2/base.html:177 jinja2/base.html:204
 msgid "Developer Guides"
 msgstr "개발자 가이드"
 
-#: jinja2/base.html:175 jinja2/base.html:202
+#: jinja2/base.html:178 jinja2/base.html:205
 msgid "Accessibility"
 msgstr "...문서 더보기"
 
-#: jinja2/base.html:176 jinja2/base.html:203
+#: jinja2/base.html:179 jinja2/base.html:206
 msgid "Game development"
 msgstr "게임 개발"
 
-#: jinja2/base.html:177 jinja2/base.html:204
+#: jinja2/base.html:180 jinja2/base.html:207
 msgid "...more docs"
 msgstr "...문서 더 보기"
 
-#: jinja2/base.html:181 jinja2/base.html:258 kuma/landing/jinja2/landing/homepage.html:74
+#: jinja2/base.html:184 jinja2/base.html:261 kuma/landing/jinja2/landing/homepage.html:79 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Web Technologies"
 msgstr "웹 기술"
 
-#: jinja2/base.html:208
+#: jinja2/base.html:211
 msgid "Mozilla Docs"
 msgstr "Mozilla 문서"
 
-#: jinja2/base.html:212 kuma/core/sections.py:6
+#: jinja2/base.html:215 kuma/core/sections.py:6
 msgid "Add-ons"
 msgstr "부가 기능"
 
 # 77%
-#: jinja2/base.html:213 kuma/core/translations/search/filter/firefox/name.py:4
+#: jinja2/base.html:216 kuma/core/translations/search/filter/firefox/name.py:4
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:217
+#: jinja2/base.html:220 kuma/landing/jinja2/landing/homepage.html:81
 msgid "Developer Tools"
 msgstr "개발자 도구"
 
-#: jinja2/base.html:217 jinja2/base.html:261
+#: jinja2/base.html:220 jinja2/base.html:264
 msgid "Feedback"
 msgstr "사용자 의견"
 
-#: jinja2/base.html:221
+#: jinja2/base.html:224
 msgid "Get Firefox help"
 msgstr "Firefox 도움 받기"
 
-#: jinja2/base.html:222
+#: jinja2/base.html:225
 msgid "Get web development help"
 msgstr "웹 개발 도움 받기"
 
-#: jinja2/base.html:225
+#: jinja2/base.html:228
 msgid "Join the MDN community"
 msgstr "MDN 커뮤니티 참여"
 
-#: jinja2/base.html:226
+#: jinja2/base.html:229
 msgid "Report a content problem"
 msgstr "내용 문제 보고"
 
 # 100%
-#: jinja2/base.html:227
+#: jinja2/base.html:230
 msgid "Report a bug"
 msgstr "문제점 알려주기"
 
 # 검색 버튼
-#: jinja2/base.html:233 jinja2/base.html:234 jinja2/base.html:236 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:43
-#: kuma/landing/jinja2/landing/homepage.html:53 kuma/landing/jinja2/landing/homepage.html:60 kuma/landing/jinja2/landing/homepage.html:65 kuma/search/jinja2/search/base.html:2
+#: jinja2/base.html:236 jinja2/base.html:237 jinja2/base.html:239 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:47
+#: kuma/landing/jinja2/landing/homepage.html:57 kuma/landing/jinja2/landing/homepage.html:64 kuma/landing/jinja2/landing/homepage.html:69 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "검색"
 
-#: jinja2/base.html:259 kuma/landing/jinja2/landing/homepage.html:130
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
 msgid "Learn Web Development"
 msgstr "웹 개발 배우기"
 
-#: jinja2/base.html:260 jinja2/base.html:309
+#: jinja2/base.html:263 jinja2/base.html:312
 msgid "About MDN"
 msgstr "MDN 소개"
 
 # 각 페이지 2단째 헤더 - Twitter 링크
-#: jinja2/base.html:262 jinja2/base.html:274 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
+#: jinja2/base.html:265 jinja2/base.html:277 kuma/users/forms.py:60 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:74
 msgid "Twitter"
 msgstr "Twitter"
 
-#: jinja2/base.html:263
-msgid "Github"
-msgstr ""
+#: jinja2/base.html:266 kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
+msgid "GitHub"
+msgstr "GitHub"
 
-#: jinja2/base.html:267 kuma/core/sections.py:13
+#: jinja2/base.html:270 kuma/core/sections.py:13
 msgid "Mozilla"
 msgstr "Mozilla"
 
-#: jinja2/base.html:271
+#: jinja2/base.html:274
 msgid "About"
 msgstr "소개"
 
-#: jinja2/base.html:272
+#: jinja2/base.html:275
 msgid "Contact Us"
 msgstr "연락처"
 
-#: jinja2/base.html:273
+#: jinja2/base.html:276
 #, fuzzy
 msgid "Donate"
 msgstr "지금 기부하기"
 
-#: jinja2/base.html:275 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
+#: jinja2/base.html:278 kuma/users/forms.py:105 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:100
 msgid "Facebook"
 msgstr "페이스북"
 
-#: jinja2/base.html:276
+#: jinja2/base.html:279
 msgid "Instagram"
 msgstr ""
 
-#: jinja2/base.html:284 jinja2/base.html:310
+#: jinja2/base.html:287 jinja2/base.html:313
 msgid "Terms"
 msgstr "이용약관"
 
-#: jinja2/base.html:285 jinja2/base.html:311
+#: jinja2/base.html:288 jinja2/base.html:314
 msgid "Privacy"
 msgstr "개인 정보 보호"
 
-#: jinja2/base.html:286 jinja2/base.html:312
+#: jinja2/base.html:289 jinja2/base.html:315
 msgid "Cookies"
 msgstr "쿠키"
 
-#: jinja2/base.html:291 jinja2/base.html:304
+#: jinja2/base.html:294 jinja2/base.html:307
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozilla 개발자 네트워크 및 개별 공헌자에게 있습니다.</p> <p> 콘텐츠는 <a href=\"%(copyright_url)s\">이 라이센스</a> 아래 이용할 수 있습니다.</p>"
 
-#: jinja2/base.html:313
+#: jinja2/base.html:316
 msgid "Contribute to the code"
 msgstr "코드 공헌"
 
@@ -414,7 +414,7 @@ msgstr "이전에 Mozilla 관련 뉴스레터 구독을 확인하지 않은 경�
 msgid "Hide Newsletter Sign-up"
 msgstr "뉴스레터 신청 숨기기"
 
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:57 kuma/wiki/tests/test_templates.py:1395
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:59 kuma/wiki/tests/test_templates.py:1375
 msgid "Previous"
 msgstr "이전"
 
@@ -442,50 +442,54 @@ msgid ""
 "see the new look, and we’d love to hear what you think."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:17
+#: jinja2/includes/redesign_notice.html:18
 #, python-format
 msgid ""
 "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href=\"%(profile_url)s\">your "
 "profile page</a>."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:21
+#: jinja2/includes/redesign_notice.html:22
+msgid "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on your profile page."
+msgstr ""
+
+#: jinja2/includes/redesign_notice.html:25
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:22
+#: jinja2/includes/redesign_notice.html:26
 msgid "We hope you love it and find it useful!"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:24 jinja2/includes/redesign_notice.html:38
+#: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:42
 #, python-format
 msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog post."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:41
+#: jinja2/includes/redesign_notice.html:32 jinja2/includes/redesign_notice.html:45
 #, fuzzy
 msgid "Thanks for using MDN!"
 msgstr "MDN을 이용해 주셔서 감사합니다!"
 
-#: jinja2/includes/redesign_notice.html:28
+#: jinja2/includes/redesign_notice.html:32
 msgid "The MDN Web Docs Team"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:29 jinja2/includes/redesign_notice.html:43
+#: jinja2/includes/redesign_notice.html:33 jinja2/includes/redesign_notice.html:47
 msgid "Hide redesign announcement"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:33
+#: jinja2/includes/redesign_notice.html:37
 msgid "Why does MDN look different?"
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:34
+#: jinja2/includes/redesign_notice.html:38
 msgid ""
 "MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the "
 "web technology docs you’re looking for."
 msgstr ""
 
-#: jinja2/includes/redesign_notice.html:35
+#: jinja2/includes/redesign_notice.html:39
 msgid "But don’t worry, MDN and Mozilla are still together! In fact, we're updating MDN’s look to reflect Mozilla's new logo and colors."
 msgstr ""
 
@@ -549,7 +553,7 @@ msgstr "체코어"
 msgid "Dutch"
 msgstr "네델란드어"
 
-#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1405
+#: jinja2/includes/translate_locales.html:18 kuma/wiki/tests/test_templates.py:1385
 msgid "English (US)"
 msgstr "영어 (미국)"
 
@@ -883,7 +887,7 @@ msgstr "파일"
 
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1965
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1963
 msgid "Title"
 msgstr "직함"
 
@@ -1057,7 +1061,7 @@ msgstr "개발자 블로그"
 msgid "Today at %s"
 msgstr "%s의 오늘"
 
-#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:155 kuma/wiki/jinja2/wiki/document.html:308
+#: kuma/core/templatetags/jinja_helpers.py:88 kuma/scrape/sources/revision.py:156 kuma/wiki/jinja2/wiki/document.html:308
 msgid "Yes"
 msgstr "네"
 
@@ -1285,7 +1289,7 @@ msgstr "항목"
 msgid "Trends Over Time, Ending %(date)s"
 msgstr "시간경과에 따른 동향, 종료 %(date)s"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1918
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1916
 msgid "Revision"
 msgstr "리비전"
 
@@ -1387,108 +1391,113 @@ msgid ""
 "Firefox OS."
 msgstr "Mozilla 개발자 네트워크(MDN)은 HTML, CSS, 및 웹 사이트와 HTML5 앱을 위한 API 등 다양한 오픈 웹 기술에 대한 정보를 제공합니다. 또한 Firefox OS 및 Mozilla 제품에 대한 문서도 포함합니다."
 
-#: kuma/landing/jinja2/landing/homepage.html:37
+#: kuma/landing/jinja2/landing/homepage.html:38
+#, fuzzy
+msgid "Resources for developers, by developers."
+msgstr "앱 개발자를 위한 리소스"
+
+#: kuma/landing/jinja2/landing/homepage.html:40
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "오픈 웹 정보 <span>공유하기</span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:47 kuma/landing/jinja2/landing/homepage.html:64 kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:51 kuma/landing/jinja2/landing/homepage.html:68 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "문서 검색"
 
 # 100%
-#: kuma/landing/jinja2/landing/homepage.html:50
+#: kuma/landing/jinja2/landing/homepage.html:54
 msgid "Show topics"
 msgstr "주제 보기"
 
-#: kuma/landing/jinja2/landing/homepage.html:77
+#: kuma/landing/jinja2/landing/homepage.html:88
 msgid "Web<br />Technologies"
 msgstr "웹<br/>기술"
 
-#: kuma/landing/jinja2/landing/homepage.html:79
+#: kuma/landing/jinja2/landing/homepage.html:90
 msgid "Web APIs &amp; DOM"
 msgstr "Web API 및 DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:83 kuma/landing/jinja2/landing/homepage.html:103
+#: kuma/landing/jinja2/landing/homepage.html:94 kuma/landing/jinja2/landing/homepage.html:114
 msgid "more..."
 msgstr "자세히..."
 
-#: kuma/landing/jinja2/landing/homepage.html:87
+#: kuma/landing/jinja2/landing/homepage.html:98
 msgid "Learn"
 msgstr "배우기"
 
-#: kuma/landing/jinja2/landing/homepage.html:90
+#: kuma/landing/jinja2/landing/homepage.html:101
 msgid "Getting started with the Web"
 msgstr "웹 시작하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:91
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Learn HTML"
 msgstr "HTML 배우기"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Learn CSS"
 msgstr "CSS 배우기"
 
-#: kuma/landing/jinja2/landing/homepage.html:93
+#: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn JavaScript"
 msgstr "자바 스크립트 배우기"
 
-#: kuma/landing/jinja2/landing/homepage.html:97
+#: kuma/landing/jinja2/landing/homepage.html:108
 msgid "Developer<br />Tools"
 msgstr "개발자 도구"
 
-#: kuma/landing/jinja2/landing/homepage.html:99
+#: kuma/landing/jinja2/landing/homepage.html:110
 msgid "Page Inspector"
 msgstr "페이지 검사기"
 
-#: kuma/landing/jinja2/landing/homepage.html:100
+#: kuma/landing/jinja2/landing/homepage.html:111
 msgid "Web Console"
 msgstr "웹 콘솔"
 
-#: kuma/landing/jinja2/landing/homepage.html:101
+#: kuma/landing/jinja2/landing/homepage.html:112
 msgid "JavaScript Debugger"
 msgstr "자바스크립트 디버거"
 
-#: kuma/landing/jinja2/landing/homepage.html:102
+#: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Performance Tools"
 msgstr "성능 측정 도구"
 
-#: kuma/landing/jinja2/landing/homepage.html:118
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "Open Web and Mobile"
 msgstr "오픈 웹 및 모바일"
 
-#: kuma/landing/jinja2/landing/homepage.html:123
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Do you have a couple minutes to help us out by taking a developer survey?"
 msgstr "개발자 설문에 참여해서 도와주실 시간이 되시나요?"
 
-#: kuma/landing/jinja2/landing/homepage.html:125
+#: kuma/landing/jinja2/landing/homepage.html:137
 msgid "Take the Survey"
 msgstr "설문 참여"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Proudly non-profit."
 msgstr "비영리 단체입니다."
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Donate before Dec 31."
 msgstr "12월 31일 전에 기부하세요."
 
-#: kuma/landing/jinja2/landing/homepage.html:135
+#: kuma/landing/jinja2/landing/homepage.html:147
 msgid "Donate Now"
 msgstr "지금 기부하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:140
+#: kuma/landing/jinja2/landing/homepage.html:152
 msgid "Get The Browser For Developers Like You"
 msgstr "개발자를 위한 웹 브라우저"
 
-#: kuma/landing/jinja2/landing/homepage.html:149
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.or.kr\">Mozilla Hacks 블로그 <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:154
+#: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Get Involved"
 msgstr "참여하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:156
+#: kuma/landing/jinja2/landing/homepage.html:168
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1497,35 +1506,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:163 kuma/landing/jinja2/landing/homepage.html:170
+#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
 msgid "Help improve MDN"
 msgstr "MDN 참여하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:174
+#: kuma/landing/jinja2/landing/homepage.html:186
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN의 모든 영역(문서, 데모, 웹 사이트)는 개발자 커뮤니티에 의해 만들어집니다! 지금 참여하셔서 함께 만들어 주십시오:"
 
-#: kuma/landing/jinja2/landing/homepage.html:180
+#: kuma/landing/jinja2/landing/homepage.html:192
 msgid "Getting started"
 msgstr "시작하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:181
+#: kuma/landing/jinja2/landing/homepage.html:193
 msgid "Editorial review"
 msgstr "문서 리뷰"
 
-#: kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:194
 msgid "Technical review"
 msgstr "기술 리뷰"
 
-#: kuma/landing/jinja2/landing/homepage.html:187
+#: kuma/landing/jinja2/landing/homepage.html:199
 msgid "Translating"
 msgstr "번역하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:188
+#: kuma/landing/jinja2/landing/homepage.html:200
 msgid "Promoting MDN"
 msgstr "MDN 홍보하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:189
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Contributing to the MDN codebase"
 msgstr "MDN 웹 사이트 개발 참여"
 
@@ -1897,18 +1906,6 @@ msgstr "사용자"
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "<a href=\"%s\">MDN 시작하기</a>의 첫 단계를 완료하였습니다"
 
-#: kuma/users/backends.py:34
-msgid "algorithm"
-msgstr "알고리즘"
-
-#: kuma/users/backends.py:35
-msgid "salt"
-msgstr "솔트"
-
-#: kuma/users/backends.py:36
-msgid "hash"
-msgstr "해시"
-
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr "사용자이름은 문자와 숫자, 그리고 . - _ + 만 입력 가능합니다"
@@ -1934,10 +1931,6 @@ msgstr "전문 기술"
 #: kuma/users/forms.py:53
 msgid "Username"
 msgstr "사용자이름"
-
-#: kuma/users/forms.py:69 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:79 kuma/users/jinja2/users/includes/user_title_info.html:83
-msgid "GitHub"
-msgstr "GitHub"
 
 #: kuma/users/forms.py:78 kuma/users/models.py:171 kuma/users/jinja2/users/includes/user_title_info.html:88
 msgid "Stack Overflow"
@@ -3133,7 +3126,7 @@ msgstr "현재 문서 짧은 URL을 변경하려면 하위 문서로 이동이 �
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
 # 83%
 #: kuma/wiki/forms.py:340 kuma/wiki/forms.py:410 kuma/wiki/forms.py:894 kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:72 kuma/wiki/jinja2/wiki/edit.html:120
-#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:74 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "제목:"
 
@@ -3141,7 +3134,7 @@ msgstr "제목:"
 msgid "Title of article"
 msgstr "문서 제목"
 
-#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:78
+#: kuma/wiki/forms.py:349 kuma/wiki/forms.py:424 kuma/wiki/jinja2/wiki/create.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "슬러그:"
@@ -3156,7 +3149,7 @@ msgid "Parent:"
 msgstr "부모:"
 
 # 80%
-#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:83 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:436 kuma/wiki/jinja2/wiki/edit.html:78 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "태그:"
 
@@ -3178,13 +3171,13 @@ msgstr "검색 결과 페이지에만 보이기"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:94
+#: kuma/wiki/forms.py:465 kuma/wiki/jinja2/wiki/edit.html:96 kuma/wiki/jinja2/wiki/includes/document_macros.html:86
 msgid "Content:"
 msgstr "내용:"
 
 # 87%
 # 100%
-#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:89
+#: kuma/wiki/forms.py:477 kuma/wiki/jinja2/wiki/includes/document_macros.html:81
 msgid "Comment:"
 msgstr "의견:"
 
@@ -3270,74 +3263,74 @@ msgstr "H3 이상"
 msgid "H4 and higher"
 msgstr "H4 이상"
 
-#: kuma/wiki/models.py:1748
+#: kuma/wiki/models.py:1746
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "리비전은 %(locale)s 문서의 리비전을 기초로 해야한다. 리비전 ID %(id)s는 기준에 적합하지 않다."
 
-#: kuma/wiki/models.py:1878
+#: kuma/wiki/models.py:1876
 msgid "IP address"
 msgstr "IP 주소"
 
-#: kuma/wiki/models.py:1886
+#: kuma/wiki/models.py:1884
 msgid "User-Agent"
 msgstr "사용자 도구"
 
-#: kuma/wiki/models.py:1891
+#: kuma/wiki/models.py:1889
 msgid "HTTP Referrer"
 msgstr "HTTP 레퍼러"
 
-#: kuma/wiki/models.py:1899 kuma/wiki/models.py:1984
+#: kuma/wiki/models.py:1897 kuma/wiki/models.py:1982
 msgid "Data submitted to Akismet"
 msgstr "Akismet에 제출된 데이터"
 
 # DevDerby 부메뉴
-#: kuma/wiki/models.py:1924
+#: kuma/wiki/models.py:1922
 msgid "Akismet submission"
 msgstr "Akismet 제출"
 
 # DevDerby 부메뉴
-#: kuma/wiki/models.py:1925
+#: kuma/wiki/models.py:1923
 msgid "Akismet submissions"
 msgstr "Akismet 제출"
 
-#: kuma/wiki/models.py:1969
+#: kuma/wiki/models.py:1967
 msgid "Slug"
 msgstr "슬러그"
 
-#: kuma/wiki/models.py:1977
+#: kuma/wiki/models.py:1975
 msgid "Document (optional)"
 msgstr "문서(선택사항)"
 
-#: kuma/wiki/models.py:1987
+#: kuma/wiki/models.py:1985
 msgid "reviewed"
 msgstr "검토됨"
 
-#: kuma/wiki/models.py:1998
+#: kuma/wiki/models.py:1996
 msgid "Needs Review"
 msgstr "검토 필요"
 
-#: kuma/wiki/models.py:1999
+#: kuma/wiki/models.py:1997
 msgid "Ham / False Positive"
 msgstr "스팸아님 / 오판"
 
-#: kuma/wiki/models.py:2000
+#: kuma/wiki/models.py:1998
 msgid "Confirmed as Spam"
 msgstr "스팸으로 확인"
 
-#: kuma/wiki/models.py:2001
+#: kuma/wiki/models.py:1999
 msgid "Review Unavailable"
 msgstr "검토 이용 불가"
 
-#: kuma/wiki/models.py:2002
+#: kuma/wiki/models.py:2000
 msgid "Akismet Error"
 msgstr "Akismet 오류"
 
-#: kuma/wiki/models.py:2007
+#: kuma/wiki/models.py:2005
 msgid "Review of Akismet's classification as spam"
 msgstr "Akismet 스팸 분류 검토"
 
-#: kuma/wiki/models.py:2014
+#: kuma/wiki/models.py:2012
 msgid "Staff reviewer"
 msgstr "검토 담당 스태프"
 
@@ -3591,7 +3584,7 @@ msgstr "변경하신 것과 편집을 시작할 때부터 저장된 변경 사�
 msgid "Your Changes"
 msgstr "변경 사항"
 
-#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:39 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:38 kuma/wiki/jinja2/wiki/includes/document_macros.html:54
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> on %(date)s"
 msgstr "개정판 %(id)s 작성자 <a href=\"%(user_profile_url)s\" %(rel)s>%(user)s</a> 작성일 %(date)s"
@@ -3795,7 +3788,7 @@ msgstr "리비전 내용"
 msgid "Revision Source"
 msgstr "리비전 소스"
 
-#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:76
+#: kuma/wiki/jinja2/wiki/revision.html:73 kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "Revert to this revision"
 msgstr "현재 리비전 복원"
 
@@ -4003,69 +3996,69 @@ msgstr "더 보기"
 msgid "Change Revisions"
 msgstr "개정판 변경"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:57
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:34 kuma/wiki/jinja2/wiki/includes/document_macros.html:50
 #, python-format
 msgid "Revision %(num)s:"
 msgstr "개정판 %(num)s:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:96 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:88 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr "서버가 콘텐츠 비교를 렌더링 중입니다. 몇 분 뒤에 이 페이지를 새로 고침해 주세요."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:116
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:108
 msgid "Subscribe to this article and all its sub-articles"
 msgstr "이 문서와 하위 문서의 소식 구독하기"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Unsubscribe from this article and all its sub-articles"
 msgstr "이 문서와 하위 문서의 소식 구독 취소하기"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "이제 이 글과 하위 글 모두 구독했습니다."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:120
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:112
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "이 글과 하위 글 모두 구독 취소했습니다."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:131
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:123
 msgid "Updating subscription status"
 msgstr "구독 현황 갱신중"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:124
 msgid "Subscribe to this article"
 msgstr "이 문서 소식 구독하기"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:125
 msgid "Unsubscribe from this article"
 msgstr "이 문서 소식 구독 취소하기"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "이제 %(title)s 구독했습니다."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:136
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "%(title)s 구독 취소했습니다."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:147
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:139
 #, python-format
 msgid "Subscribe to the %(language)s version"
 msgstr "%(language)s 버전으로 구독하기"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:140
 #, python-format
 msgid "Unsubscribe from the %(language)s version"
 msgstr "%(language)s 으로 구독 취소하기"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "이제 이 글의 %(language)s 판을 구독했습니다."
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:151
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "이 글의 %(language)s 판을 구독 취소했습니다."
@@ -4295,7 +4288,7 @@ msgstr "선택된 번역 비교"
 msgid "Compare Selected Revisions"
 msgstr "선택된 리비전 비교"
 
-#: kuma/wiki/jinja2/wiki/list/revisions.html:84
+#: kuma/wiki/jinja2/wiki/list/revisions.html:86
 msgid "This document has no revisions."
 msgstr "이 문서는 리비전이 없습니다."
 
@@ -4369,13 +4362,13 @@ msgstr "Akismet으로 의견을 전송하기 위해, 아래 양식을 저장해�
 msgid "Select an Akismet submission for more details"
 msgstr "더 자세한 내용에 대한 Akismet 제출 선택"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
+#: kuma/wiki/templatetags/jinja_helpers.py:104 kuma/wiki/templatetags/jinja_helpers.py:105 kuma/wiki/templatetags/jinja_helpers.py:120 kuma/wiki/templatetags/jinja_helpers.py:121
 #, python-format
 msgid "Revision %s"
 msgstr "리비전 (%s):"
 
 # 100%
-#: kuma/wiki/templatetags/jinja_helpers.py:106
+#: kuma/wiki/templatetags/jinja_helpers.py:110
 msgid "There was an error generating the content."
 msgstr "콘텐츠 생성중에 오류가 발생했습니다."
 
@@ -4427,6 +4420,15 @@ msgstr "이 문서를 번역할 수 없습니다."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 서버: %(backend)s"
+
+#~ msgid "algorithm"
+#~ msgstr "알고리즘"
+
+#~ msgid "salt"
+#~ msgstr "솔트"
+
+#~ msgid "hash"
+#~ msgstr "해시"
 
 #~ msgid "Create Template"
 #~ msgstr "템플릿 작성"
@@ -9045,9 +9047,6 @@ msgstr "Elasticsearch 서버: %(backend)s"
 
 #~ msgid "<p>Mozilla unlocks the power of the Web as the world's largest marketplace. Learn more about Open Web apps.</p>"
 #~ msgstr "<p>모질라는 세계에서 가장 강력한 시장으로서의 웹의 능력을 열 것입니다. 오픈 웹 어플리케이션에 대해서 더 알아보세요.</p>"
-
-#~ msgid "Resources for App Developers"
-#~ msgstr "앱 개발자를 위한 리소스"
 
 #~ msgid "Web technologies for building build cross-browser, cross-device app experiences."
 #~ msgstr "크로스 브라우저, 크로스 디바이스 앱 경험을 만드는 웹 기술"
