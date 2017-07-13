@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-13 21:50+0000\n"
+"PO-Revision-Date: 2017-07-13 21:51+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -1382,9 +1382,8 @@ msgstr ""
 "Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:38
-#, fuzzy
 msgid "Resources for developers, by developers."
-msgstr "De Desenvolvedores, para Desenvolvedores"
+msgstr "Recursos de desenvolvedores para desenvolvedores."
 
 #: kuma/landing/jinja2/landing/homepage.html:40
 msgid "Shared knowledge <span>for the Open Web</span>"
