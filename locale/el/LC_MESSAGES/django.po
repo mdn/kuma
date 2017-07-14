@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-14 14:10+0000\n"
+"PO-Revision-Date: 2017-07-14 14:13+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -293,7 +293,7 @@ msgstr "Σχετικά"
 
 #: jinja2/base.html:275
 msgid "Contact Us"
-msgstr ""
+msgstr "Επικοινωνήστε μαζί μας"
 
 #: jinja2/base.html:276
 msgid "Donate"
@@ -421,9 +421,8 @@ msgid "Thanks for helping us test the <a href=\"%(blog_url)s\">new MDN look</a>.
 msgstr ""
 
 #: jinja2/includes/redesign_notice.html:14
-#, fuzzy
 msgid "Hello Beta Tester!"
-msgstr "Δοκιμαστής beta"
+msgstr "Γεια σας δοκιμαστή beta!"
 
 #: jinja2/includes/redesign_notice.html:15
 msgid ""
@@ -922,7 +921,7 @@ msgstr ""
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "Περιγραφή προγραμματισμένης χρήσης"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
@@ -945,7 +944,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "Δημιουργία νέου κλειδιού"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
@@ -953,7 +952,7 @@ msgstr "Δεν έχετε κανένα κλειδί API ακόμα."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
-msgstr ""
+msgstr "Προβολή ιστορικού χρήσης κλειδιού"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
