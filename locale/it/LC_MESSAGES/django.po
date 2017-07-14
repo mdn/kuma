@@ -1370,9 +1370,8 @@ msgstr ""
 "documentazione sui prodotti Mozilla come Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:38
-#, fuzzy
 msgid "Resources for developers, by developers."
-msgstr "Per sviluppatori, da sviluppatori"
+msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:40
 msgid "Shared knowledge <span>for the Open Web</span>"
