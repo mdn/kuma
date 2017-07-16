@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-14 14:13+0000\n"
+"PO-Revision-Date: 2017-07-16 17:05+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -173,11 +173,11 @@ msgstr "HTTP"
 
 #: jinja2/base.html:166 jinja2/base.html:194
 msgid "APIs / DOM"
-msgstr "APIs / DOM"
+msgstr "APIs/DOM"
 
 #: jinja2/base.html:167 jinja2/base.html:195
 msgid "WebExtensions"
-msgstr "Επεκτάσεις ιστού"
+msgstr "WebExtensions"
 
 #: jinja2/base.html:168 jinja2/base.html:196 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -269,7 +269,7 @@ msgstr "Αναζήτηση"
 
 #: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Μάθετε προγραμματισμό ιστού"
 
 #: jinja2/base.html:263 jinja2/base.html:312
 msgid "About MDN"
@@ -366,7 +366,7 @@ msgstr "Μάθετε τα καλύτερα της ανάπτυξης ιστού"
 
 #: jinja2/includes/newsletter.html:4
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
-msgstr ""
+msgstr "Λάβετε τα τελευταία και σπουδαιότερα νέα από το MDN απευθείας στα εισερχόμενά σας."
 
 #: jinja2/includes/newsletter.html:12
 msgid "E-mail"
