@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-16 17:24+0000\n"
+"PO-Revision-Date: 2017-07-16 17:44+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -787,7 +787,7 @@ msgstr ""
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
-msgstr ""
+msgstr "Αρχεία αυτού του τύπου δεν επιτρέπονται."
 
 #: kuma/attachments/models.py:112
 msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
@@ -1019,7 +1019,7 @@ msgstr "Διαδικτυο"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/utils.py:425
 #, python-format
@@ -1739,7 +1739,7 @@ msgstr "Αποτελέσματα αναζήτησης για \"%(query)s\""
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr ""
+msgstr "μεταφράστηκε από <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
@@ -1753,36 +1753,36 @@ msgstr "Αποτελέσματα"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο για \"%(query)s\" στα %(locale_native)s."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα για \"%(query)s\" στα %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο για \"%(query)s\" στα %(locale_native)s και στα %(default_locale_native)s."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα για \"%(query)s\" στα %(locale_native)s και στα %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο στα %(locale_native)s."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα στα %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο στα %(locale_native)s και στα %(default_locale_native)s."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα στα %(locale_native)s και στα %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Βρέθηκε %(count)s έγγραφο για \"%(query)s\"."
+msgstr[1] "Βρέθηκαν %(count)s έγγραφα για \"%(query)s\"."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
@@ -1840,7 +1840,7 @@ msgstr ""
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "εστάλη στις"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1912,11 +1912,11 @@ msgstr ""
 
 #: kuma/users/forms.py:146
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Αυτό το πεδίο δεν μπορεί να είναι κενό."
 
 #: kuma/users/forms.py:152
 msgid "Username already in use."
-msgstr ""
+msgstr "Το όνομα χρήστη χρησιμοποιείται ήδη."
 
 #: kuma/users/forms.py:162
 msgid "Email"
@@ -1930,7 +1930,7 @@ msgstr ""
 #: kuma/users/models.py:37
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (μη ενεργό πλέον)"
 
 #: kuma/users/models.py:56
 msgid "Language"
@@ -2034,12 +2034,12 @@ msgstr "Διεύθυνση email"
 #: kuma/users/views.py:519
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Επαληθευμένο</b>"
 
 #: kuma/users/views.py:522
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Μη επαληθευμένο"
 
 #: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
@@ -2064,11 +2064,11 @@ msgstr "Διευθύνσεις email"
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "Το %(email)s είναι η <em>κύρια</em> διεύθυνση e-mail σας"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "Έχετε προσθέσει τις ακόλουθες διευθύνσεις e-mail:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
@@ -2380,7 +2380,7 @@ msgstr ""
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:27
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
-msgstr ""
+msgstr "Ο χρήστης <a href=\"%(url)s\">%(user)s</a> έχει απαγορευτεί."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:30
 #, python-format
@@ -2442,7 +2442,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66
 msgid "Reverted:"
-msgstr ""
+msgstr "Ανεστράφη:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
 msgid "The user did not have any revisions that were reverted."
@@ -2575,7 +2575,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
-msgstr ""
+msgstr "Αναφέρετε ένα σφάλμα για να κλείσετε το λογαριασμό σας"
 
 #: kuma/users/jinja2/users/user_detail.html:37
 msgid "Recent Docs Activity"
@@ -3243,7 +3243,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1998
 msgid "Confirmed as Spam"
-msgstr ""
+msgstr "Επιβεβαιώθηκε ως ανεπιθύμητο"
 
 #: kuma/wiki/models.py:1999
 msgid "Review Unavailable"
@@ -3268,7 +3268,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
-msgstr ""
+msgstr "Προσπαθείτε να δημιουργήσετε μια νέα σελίδα."
 
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
@@ -3656,7 +3656,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/preview.html:14
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "Αυτή είναι μια προεπισκόπηση ενός μη αποθηκευμένου εγγράφου."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
