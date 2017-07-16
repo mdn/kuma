@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-14 00:26+0000\n"
-"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
+"PO-Revision-Date: 2017-07-16 07:16+0000\n"
+"Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -114,9 +114,8 @@ msgid "Skip to search"
 msgstr "Přejít k vyhledávání"
 
 #: jinja2/base.html:119 jinja2/base.html:257
-#, fuzzy
 msgid "MDN Web Docs"
-msgstr "MDN dema"
+msgstr "Webová dokumentace MDN"
 
 #: jinja2/base.html:136 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -440,6 +439,8 @@ msgstr ""
 #: jinja2/includes/redesign_notice.html:22
 msgid "You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on your profile page."
 msgstr ""
+"Díváte se na náhled našeho nového vzhledu. Pokud uvidíte něco, co je špatně, nahlaste nám to prosím (odkaz najdete v patičce). Můžete se také odhlásit z programu betatesterů na vaší profilové "
+"stránce."
 
 #: jinja2/includes/redesign_notice.html:25
 msgid "The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July."
@@ -1366,9 +1367,8 @@ msgstr ""
 "například FirefoxOS."
 
 #: kuma/landing/jinja2/landing/homepage.html:38
-#, fuzzy
 msgid "Resources for developers, by developers."
-msgstr "Pro vývojáře, od vývojářů"
+msgstr "Zdroje pro vývojáře, od vývojářů."
 
 #: kuma/landing/jinja2/landing/homepage.html:40
 msgid "Shared knowledge <span>for the Open Web</span>"
