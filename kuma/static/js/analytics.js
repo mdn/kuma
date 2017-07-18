@@ -3,6 +3,17 @@
 
     // Adding to globally available mdn object
     var analytics = mdn.analytics = {
+        /**
+         * Handles postMessage events from the interactive editor, passing of
+         * the data to `trackEvent` if the origin of the message is what we expect.
+         * @param {Object} event - The event Object received from the postMessage
+         */
+        interactiveExamplesEvent: function(event) {
+            if (event.origin !== 'https://mdn.github.io') {
+                return false;
+            }
+            this.trackEvent(event.data);
+        },
         /*
             Tracks generic events passed to the method
         */
@@ -171,4 +182,6 @@
             });
         }
     };
+    // add event listener for postMessages from the interactive editor
+    win.addEventListener('message', analytics.interactiveExamplesEvent, false);
 })(window, document, jQuery);
