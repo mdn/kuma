@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-19 20:45+0000\n"
+"PO-Revision-Date: 2017-07-19 21:16+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -2133,11 +2133,11 @@ msgstr "Παρακαλώ συνδεθείτε"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Όλο το περιεχόμενο στο MDN είναι δωρεάν και διαθέσιμο χωρίς εγγραφή."
 
 #: kuma/users/jinja2/account/login.html:20
 msgid "In order to contribute, you need to sign in to an existing MDN profile."
-msgstr ""
+msgstr "Για να συνεισφέρετε, πρέπει να συνδεθείτε σε ένα υπάρχον προφίλ του MDN."
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
@@ -2145,7 +2145,7 @@ msgstr "Λυπούμαστε, αλλά η δημιουργία προφίλ εί
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr ""
+msgstr "Για να συνεισφέρετε, πρέπει να συνδεθείτε στο MDN. Μπορείτε να συνδεθείτε με το GitHub και θα δημιουργηθεί ένα προφίλ στο MDN αν δεν έχετε ήδη ένα."
 
 #: kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
@@ -2428,7 +2428,7 @@ msgstr "Αποκλείστηκε:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:32
 msgid "Submitted to Akismet as spam:"
-msgstr ""
+msgstr "Υποβλήθηκε στο Akismet ως spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:45
 msgid "The user did not have any revisions that were reported as spam."
@@ -2791,7 +2791,7 @@ msgstr "Θέλετε να μεταφράσετε το MDN στη γλώσσα σ
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "Λίστα αλληλογραφίας: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
@@ -2801,13 +2801,13 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Συνομιλία σε πραγματικό χρόνο: κανάλι #mdn στο irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "Δείτε το %(irc_link)s για περισσότερες πληροφορίες σχετικά με το IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
