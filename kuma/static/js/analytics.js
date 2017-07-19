@@ -12,7 +12,7 @@
             if (event.origin !== 'https://mdn.github.io') {
                 return false;
             }
-            this.trackEvent(event.data);
+            mdn.analytics.trackEvent(event.data);
         },
         /*
             Tracks generic events passed to the method
