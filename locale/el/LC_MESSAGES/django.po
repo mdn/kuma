@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-16 17:44+0000\n"
+"PO-Revision-Date: 2017-07-19 20:45+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
@@ -447,12 +447,12 @@ msgstr ""
 
 #: jinja2/includes/redesign_notice.html:26
 msgid "We hope you love it and find it useful!"
-msgstr ""
+msgstr "Ελπίζουμε να το λατρέψετε και να το βρείτε χρήσιμο!"
 
 #: jinja2/includes/redesign_notice.html:28 jinja2/includes/redesign_notice.html:42
 #, python-format
 msgid "<a href=\"%(blog_url)s\">Read more about the redesign</a> in our blog post."
-msgstr ""
+msgstr "<a href=\"%(blog_url)s\">Διαβάστε περισσότερα σχετικά με τον ανασχεδιασμό</a> στη δημοσίευση ιστολογίου μας."
 
 #: jinja2/includes/redesign_notice.html:32 jinja2/includes/redesign_notice.html:45
 msgid "Thanks for using MDN!"
@@ -934,7 +934,7 @@ msgstr "Διαγραφή"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr ""
+msgstr "Αυτό το κλειδί δεν έχει χρησιμοποιηθεί ακόμα."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
@@ -1456,7 +1456,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
-msgstr ""
+msgstr "<a href=\"http://hacks.mozilla.org\">διαβάστε περισσότερα στο hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Get Involved"
@@ -1468,6 +1468,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">Γίνετε <span class=\"number\">%(contributors)s</span> εθελοντής</span> <span class=\"row2\">σε <span class=\"number\">%(locales)s</span> γλώσσες</span> "
+"<span class=\"row3\">παγκοσμίως.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
 msgid "Help improve MDN"
@@ -1925,7 +1927,7 @@ msgstr "Email"
 #: kuma/users/models.py:34
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "Ο/Η %(banned_user)s αποκλείστηκε από τον/την %(banned_by)s"
 
 #: kuma/users/models.py:37
 #, python-format
@@ -2139,7 +2141,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:24 kuma/users/jinja2/account/signup_closed.html:4
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "Λυπούμαστε, αλλά η δημιουργία προφίλ είναι ανενεργή αυτή τη στιγμή."
 
 #: kuma/users/jinja2/account/login.html:27
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -2394,19 +2396,19 @@ msgstr ""
 # Χωρίς τόνους λόγω του css text-transform: uppercase.
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:51
 msgid "Submit Spam"
-msgstr ""
+msgstr "Υποβολή spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:53
 msgid "Ban User for Spam"
-msgstr ""
+msgstr "Αποκλεισμός χρήστη για spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:55
 msgid "Ban User for Spam & Submit Spam"
-msgstr ""
+msgstr "Αποκλεισμός χρήστη για spam & υποβολή spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "Αποκλεισμός χρήστη για άλλους λόγους."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:62
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
@@ -2926,7 +2928,7 @@ msgstr "Πρόσφατες αλλαγές εγγράφων MDN"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Πρόσφατες αλλαγές σε έγγραφα MDN"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
@@ -2935,7 +2937,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Έγγραφα MDN σε ανάγκη για αξιολόγηση"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
@@ -2948,7 +2950,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr ""
+msgstr "Έγγραφα MDN προς αξιολόγηση"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
@@ -2957,7 +2959,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr ""
+msgstr "Πρόσφατες αναθεωρήσεις MDN"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
@@ -3014,7 +3016,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:52
 msgid "Please provide a summary."
-msgstr ""
+msgstr "Παρακαλώ παραθέστε μια περίληψη."
 
 #: kuma/wiki/forms.py:53
 #, python-format
@@ -3028,7 +3030,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:58
 msgid "Please provide content."
-msgstr ""
+msgstr "Παρακαλώ παραθέστε περιεχόμενο."
 
 #: kuma/wiki/forms.py:59
 #, python-format
@@ -3571,7 +3573,7 @@ msgstr "Προβολή γονέα στα %(locale)s"
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
 msgid "last modified at %(modified)s"
-msgstr ""
+msgstr "τελευταία τροποποίηση στις %(modified)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
@@ -4244,7 +4246,7 @@ msgstr "Φόρτωση εγγράφων"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Παρακαλώ διορθώστε το παρακάτω σφάλμα."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
@@ -4252,7 +4254,7 @@ msgstr "Φόρτωση"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr ""
+msgstr "Λεπτομέρειες υποβολής Akismet"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
@@ -4269,7 +4271,7 @@ msgstr "Αναθεώρηση %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:110
 msgid "There was an error generating the content."
-msgstr ""
+msgstr "Προέκυψε σφάλμα με την δημιουργία του περιεχομένου."
 
 #: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
