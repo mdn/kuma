@@ -108,12 +108,12 @@ compiled to their binary form::
 
 Dozens of lines of warnings will be printed::
 
-    cd locale; ./compile-mo.sh . ; cd --
+    cd locale; ./compile-mo.sh .
     ./af/LC_MESSAGES/django.po:2: warning: header field 'PO-Revision-Date' still has the initial default value
     ./af/LC_MESSAGES/django.po:2: warning: header field 'Last-Translator' still has the initial default value
     ...
-    ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'PO-Revision-Date' still has the initial default value
-    ./zu/LC_MESSAGES/promote-mdn.po:4: warning: header field 'Last-Translator' still has the initial default value
+    ./zu/LC_MESSAGES/javascript.po:2: warning: header field 'PO-Revision-Date' still has the initial default value
+    ./zu/LC_MESSAGES/javascript.po:2: warning: header field 'Last-Translator' still has the initial default value
 
 Warnings are OK, and will be fixed as translators update the strings on
 Pontoon_. If there is an error, the output will end with the error, such as::
