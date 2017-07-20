@@ -1,0 +1,37 @@
+@import '../includes/vars';
+
+/*
+Styles for Korean
+********************************************************************** */
+/* stylelint-disable value-keyword-case  */
+
+
+/* Bug 993704 */
+
+@font-face {
+    font-family: x-locale-body;
+    font-weight: normal;
+    src: /* OS X */
+       local(AppleSDGothicNeo-Regular),
+       /* Windows */
+       local('Malgun Gothic');
+}
+
+@font-face {
+    font-family: x-locale-body;
+    font-weight: bold;
+    src: /* OS X */
+       local(AppleSDGothicNeo-Bold),
+       /* Windows */
+       local('Malgun Gothic Bold');
+}
+
+
+/* Bug 973171 */
+
+* {
+    /* !important required for locale specific override */
+    font-style: normal !important; /* stylelint-disable-line declaration-no-important */
+}
+
+/* stylelint-enable */

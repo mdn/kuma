@@ -110,14 +110,14 @@ $error: #900;
 /*
 typography
 ====================================================================== */
-$site-font-family-fallback : arial, sans-serif;
-$site-font-family : 'Open Sans', $site-font-family-fallback;
-$heading-font-family-fallback : 'Palatino', 'Palatino Linotype', serif;
-$heading-font-family : zillaslab, $heading-font-family-fallback;
-$tiny-font-family : 'Helvetica', arial, sans-serif;
-$code-block-font-family : consolas, monaco, 'Andale Mono', monospace; /* prism */
-$code-inline-font-family : consolas, 'Liberation Mono', courier, monospace; /* inline */
-$diff-font-family : $code-inline-font-family;
+$site-font-family-fallback: arial, x-locale-body, sans-serif;
+$site-font-family: 'Open Sans', $site-font-family-fallback;
+$heading-font-family-fallback: 'Palatino', 'Palatino Linotype', x-locale-heading-secondary, serif;
+$heading-font-family: x-locale-heading-primary, zillaslab, $heading-font-family-fallback;
+$tiny-font-family: 'Helvetica', arial, sans-serif;
+$code-block-font-family: consolas, monaco, 'Andale Mono', monospace; /* prism */
+$code-inline-font-family: consolas, 'Liberation Mono', courier, monospace; /* inline */
+$diff-font-family: $code-inline-font-family;
 
 /*
 sizes
@@ -273,6 +273,7 @@ $path-to-assets : '../';
 $path-to-images : $path-to-assets + 'img/';
 $path-to-embedded-images : $path-to-images + 'embed/';
 $path-to-fonts : $path-to-assets + 'fonts/';
+$path-to-locale-fonts : '../../' + 'fonts/locales/';
 $logo-sprite-url : $path-to-images + 'web-docs-sprite.svg';
 
 
