@@ -264,7 +264,7 @@ $saucelabs-callout-image-spacing: 129px + 20px;
 
         &:after {
             display: none;
-            @include bidi-style(right, 20px, left, 20px);
+            @include bidi-style(right, 20px, left, auto);
             background-image: url($path-to-embedded-images + 'promos/sauce-labs-home.png');
             height: 140px;
             top: 15px;
