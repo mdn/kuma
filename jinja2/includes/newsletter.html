@@ -1,19 +1,24 @@
 <div class="newsletter">
     <form id="newsletterForm" class="newsletter-form nodisable" name="newsletter-form" action="https://www.mozilla.org/en-US/newsletter/" method="post">
-        <h2 class="newsletter-teaser">{{ _('Learn the best of web development') }}</h2>
-        <p class="newsletter-description">{{ _('Get the latest and greatest from MDN delivered straight to your inbox.') }}</p>
-        <input type="hidden" id="fmt" name="fmt" value="H">
-        <input type="hidden" id="newsletterNewslettersInput" name="newsletters" value="app-dev" />
+        <div class="newsletter-head">
+            <h2 class="newsletter-teaser">{{ _('Learn the best of web development') }}</h2>
+            <p class="newsletter-description">{{ _('Get the latest and greatest from MDN delivered straight to your inbox.') }}</p>
+            {% if request.LANGUAGE_CODE != 'en-US' %}
+            <p class="newsletter-lang">{{ _('The newsletter is offered in English only at the moment.') }}</p>
+            {% endif %}
+        </div>
 
         <div class="newsletter-fields">
+            <input type="hidden" id="fmt" name="fmt" value="H">
+            <input type="hidden" id="newsletterNewslettersInput" name="newsletters" value="app-dev" />
             <div id="newsletterErrors" class="newsletter-errors"></div>
 
-            <div id="newsletterEmail" class="form-group">
+            <div id="newsletterEmail" class="form-group newsletter-group-email">
                 <label for="newsletterEmailInput" class="form-label offscreen">{{ _('E-mail') }}</label>
                 <input type="email" id="newsletterEmailInput" name="email" class="form-input newsletter-input-email" required placeholder="{{ _('you@example.com') }}" size="30">
             </div>
 
-            <div id="newsletterPrivacy" class="form-group form-group-agree hidden">
+            <div id="newsletterPrivacy" class="form-group form-group-agree newsletter-group-privacy hidden">
                 <input type="checkbox" id="newsletterPrivacyInput" name="privacy" required>
                 <label for="newsletterPrivacyInput">
                 {% trans policy_url="https://www.mozilla.org/privacy/" %}
@@ -21,13 +26,10 @@
                 {% endtrans %}
                 </label>
             </div>
-            <div id="newsletterSubmit">
+            <div id="newsletterSubmit" class="newsletter-group-submit">
                 <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">{{ _('Sign up now') }}</button>
             </div>
         </div>
-        {% if request.LANGUAGE_CODE != 'en-US' %}
-        <p class="newsletter-lang">{{ _('The newsletter is offered in English only at the moment.') }}</p>
-        {% endif %}
     </form>
     <div id="newsletterThanks" class="newsletter-thanks hidden">
         <h2>{{ _('Thanks! Please check your inbox to confirm your subscription.') }}</h2>
