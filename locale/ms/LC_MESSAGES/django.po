@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-13 23:27+0000\n"
+"PO-Revision-Date: 2017-07-23 01:26+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -130,7 +130,7 @@ msgstr "Mulakan"
 
 #: jinja2/base.html:142
 msgid "Review or localize docs"
-msgstr "Semak atau terjemah dokumen"
+msgstr "Ulas atau terjemahkan dokumen"
 
 #: jinja2/base.html:145
 msgid "Site Tools"
@@ -767,7 +767,7 @@ msgstr "Anda telah nyahlanggan."
 #: kuma/attachments/admin.py:60
 #, python-format
 msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
-msgstr "Fai lampiran berikut telah dialih ke sampah: %(filenames)s. Anda mungkin mahu semak semula sebelum dihapuskan secara automatik selepas %(days)s hari dalam storan fail."
+msgstr "Fail lampiran berikut telah dialih ke sampah: %(filenames)s. Anda mungkin mahu mengulasnya sebelum dihapuskan secara automatik selepas %(days)s hari dalam storan fail."
 
 #: kuma/attachments/admin.py:64
 msgid "and"
@@ -776,7 +776,7 @@ msgstr "dan"
 #: kuma/attachments/admin.py:127
 #, python-format
 msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
-msgstr "Fai lampiran \"%(filename)s\" telah dialih ke sampah. Anda mungkin mahu semak semula fail sebelum dihapuskan secara automatik selepas %(days)s hari dalam sistem storan fail."
+msgstr "Fail lampiran \"%(filename)s\" telah dialih ke sampah. Anda mungkin mahu mengulas fail itu sebelum dihapuskan secara automatik selepas %(days)s hari dalam sistem storan fail."
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
@@ -1344,13 +1344,13 @@ msgstr "Dapatkan e-mel apabila semakan Bahasa Malaysia diluluskan"
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr "Hentikan e-mel apabila sedang menunggu semakan Bahasa Malaysia"
+msgstr "Hentikan e-mel apabila sedang menunggu ulasan Bahasa Inggeris"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr "Dapatkan e-mel apabila sedang menunggu semakan Bahasa Malaysia"
+msgstr "Dapatkan e-mel apabila sedang menunggu ulasan Bahasa Inggeris"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -1491,11 +1491,11 @@ msgstr "Mulakan"
 
 #: kuma/landing/jinja2/landing/homepage.html:193
 msgid "Editorial review"
-msgstr "Semakan Editorial"
+msgstr "Ulasan editorial"
 
 #: kuma/landing/jinja2/landing/homepage.html:194
 msgid "Technical review"
-msgstr "Semakan Teknikal"
+msgstr "Ulasan teknikal"
 
 #: kuma/landing/jinja2/landing/homepage.html:199
 msgid "Translating"
@@ -2397,7 +2397,7 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> telah disekat."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:30
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr "%(user)s telah disekat. Anda boleh semak dan pinda semakan mereka di bawah."
+msgstr "%(user)s telah disekat. Anda boleh semak dan pinda ulasan mereka di bawah."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:47
 msgid "You cannot ban yourself for spam."
@@ -3274,7 +3274,7 @@ msgstr "Disahkan sebagai Spam"
 
 #: kuma/wiki/models.py:1999
 msgid "Review Unavailable"
-msgstr "Semakan Tidak Tersedia"
+msgstr "Ulasan Tidak Tersedia"
 
 #: kuma/wiki/models.py:2000
 msgid "Akismet Error"
