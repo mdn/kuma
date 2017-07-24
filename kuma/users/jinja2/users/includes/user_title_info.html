@@ -74,7 +74,7 @@
     <li class="twitter"><i class="icon-twitter" aria-hidden="true"></i><a href="{{ detail_user.twitter_url }}" rel="me external" class="url">{{ _("Twitter") }}</a></li>
   {% endif %}
 
-  {% if accounts.github %}
+  {% if accounts.github and user.is_github_url_public %}
     {% for github_account in accounts.github %}{% if github_account.extra_data %}
     <li class="github"><i class="icon-github" aria-hidden="true"></i><a href="{{ github_account.get_profile_url() }}" rel="me external" class="url">{{ _("GitHub") }}</a></li>
     {% endif %}{% endfor %}
