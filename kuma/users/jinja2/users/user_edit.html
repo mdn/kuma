@@ -12,135 +12,141 @@
 {% block robots_value %}noindex, nofollow{% endblock %}
 
 {% block site_css %}
-  {{ super() }}
-  {% stylesheet 'jquery-ui' %}
-  {% stylesheet 'users' %}
-  {% stylesheet 'submission' %}
+{{ super() }}
+{% stylesheet 'jquery-ui' %}
+{% stylesheet 'users' %}
+{% stylesheet 'submission' %}
 {% endblock %}
 
 {% block site_js %}
-  {{ super() }}
-  {% javascript 'jquery-ui' %}
-  {% javascript 'users' %}
+{{ super() }}
+{% javascript 'jquery-ui' %}
+{% javascript 'users' %}
 {% endblock %}
 
 {% block content %}
-    <div class="column-container">
+<div class="column-container">
 
-      <div class="column-2 smaller">
-        <figure class="acc-avatar">
-          <img src="{{ gravatar_url(edit_user.email, size=200) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />
-          <figcaption>
-              {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
-          </figcaption>
-        </figure>
-      </div>
+  <div class="column-2 smaller">
+    <figure class="acc-avatar">
+      <img src="{{ gravatar_url(edit_user.email, size=200) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />
+      <figcaption>
+        {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
+      </figcaption>
+    </figure>
+  </div>
 
-      <div id="user-edit" class="column-half">
-        <h1 class="user-title">{{ edit_user.username }} <a class="user-title-profile" href="{{ edit_user.get_absolute_url() }}">{{ _('View profile') }}</a></h1>
+  <div id="user-edit" class="column-half">
+    <h1 class="user-title">{{ edit_user.username }} <a class="user-title-profile" href="{{ edit_user.get_absolute_url() }}">{{ _('View profile') }}</a></h1>
 
-              {% if not is_me %}
-              <div class="notification warning">
-              {% trans %}You're editing a different profile than your own. Please take care!{% endtrans %}
-              </div>
-              {% endif %}
-
-            <form class="submission" method="post" action="">
-              {% csrf_token %}
-
-              <fieldset class="section notitle" id="personal">
-                <ul>
-                  <li id="field-beta" class="field">
-                    <label for="{{ user_form.beta.id_for_label }}">{{ user_form.beta.label }}</label> {{ user_form.beta }}
-                    <p class="field-note">{{ _("We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things.") }}</p>
-                  </li>
-                  <li id="field_email" class="field type_email required">
-                    <label>{{ _('Primary Email') }} <a class="field-management" href="{{ url('account_email') }}">{{ _('Edit email') }}</a></label>
-                    {{ edit_user.email }}
-                  </li>
-                  {{ li_field(user_form, 'username') }}
-                  {{ li_field(user_form, 'fullname') }}
-                  {{ li_field(user_form, 'title') }}
-                  {{ li_field(user_form, 'organization') }}
-                  {{ li_field(user_form, 'location') }}
-                  {{ li_field(user_form, 'locale') }}
-                  {{ li_field(user_form, 'timezone') }}
-                  {{ li_field(user_form, 'irc_nickname') }}
-
-                  <li class="{{ ' error' if user_form.interests.errors }}">
-                    <label for="{{ user_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
-                    <p class="field-note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
-                    {{ user_form.interests }}
-                    {{ user_form.interests.errors }}
-                  </li>
-
-                  <li class="{{ ' error' if user_form.expertise.errors }}">
-                    <label for="{{ user_form.expertise.id_for_label }}">{{ _('Areas of expertise') }}</label>
-                    <p class="field-note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
-                    {{ user_form.expertise }}
-                    {{ user_form.expertise.errors }}
-                  </li>
-                </ul>
-              </fieldset>
-
-              <fieldset class="section" id="users">
-                <legend><b>{{ _('My Profiles') }}</b></legend>
-                <ul>
-
-                  <li id="field_github_url" class="field site github">
-                  {% if accounts.github %}
-                    <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
-                    <div class="field-account">
-                      {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
-                    </div>
-                  {% else %}
-                      <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
-                          <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
-                            {{ _('Use your GitHub account to sign in.') }}
-                          </a>
-                      </label>
-                      {{ user_form.github_url }}
-                  {% endif %}
-                  </li>
-
-                  {{ li_field(user_form, 'twitter_url', classes='site twitter') }}
-
-                  {{ li_field(user_form, 'stackoverflow_url', classes='site stackoverflow') }}
-
-                  {{ li_field(user_form, 'linkedin_url', classes='site linkedin') }}
-
-                  {{ li_field(user_form, 'mozillians_url', classes='site mozillians') }}
-
-                  {{ li_field(user_form, 'facebook_url', classes='site facebook') }}
-
-                </ul>
-              </fieldset>
-              <p><button type="submit" class="positive">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button></p>
-              {% if is_me %}
-              <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
-              {% endif %}
-            </form>
-      </div>
-      <div class="column-4">
-        {% if waffle.switch('newsletter') %}
-            {% include "includes/newsletter.html" %}
-          <h3>Unsubscribe</h3>
-          <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
-        {% endif %}
-      </div>
+    {% if not is_me %}
+    <div class="notification warning">
+      {% trans %}You're editing a different profile than your own. Please take care!{% endtrans %}
     </div>
+    {% endif %}
+
+    <form class="submission" method="post" action="">
+      {% csrf_token %}
+
+      <fieldset class="section notitle" id="personal">
+        <ul>
+          <li id="field-beta" class="field">
+            <label for="{{ user_form.beta.id_for_label }}">{{ user_form.beta.label }}</label> {{ user_form.beta }}
+            <p class="field-note">{{ _("We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things.") }}</p>
+          </li>
+          <li id="field_email" class="field type_email required">
+            <label>{{ _('Primary Email') }} <a class="field-management" href="{{ url('account_email') }}">{{ _('Edit email') }}</a></label>
+            {{ edit_user.email }}
+          </li>
+          {{ li_field(user_form, 'username') }}
+          {{ li_field(user_form, 'fullname') }}
+          {{ li_field(user_form, 'title') }}
+          {{ li_field(user_form, 'organization') }}
+          {{ li_field(user_form, 'location') }}
+          {{ li_field(user_form, 'locale') }}
+          {{ li_field(user_form, 'timezone') }}
+          {{ li_field(user_form, 'irc_nickname') }}
+
+          <li class="{{ ' error' if user_form.interests.errors }}">
+            <label for="{{ user_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
+            <p class="field-note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
+            {{ user_form.interests }}
+            {{ user_form.interests.errors }}
+          </li>
+
+          <li class="{{ ' error' if user_form.expertise.errors }}">
+            <label for="{{ user_form.expertise.id_for_label }}">{{ _('Areas of expertise') }}</label>
+            <p class="field-note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
+            {{ user_form.expertise }}
+            {{ user_form.expertise.errors }}
+          </li>
+        </ul>
+      </fieldset>
+
+      <fieldset class="section" id="users">
+        <legend><b>{{ _('My Profiles') }}</b></legend>
+        <ul>
+
+          <li id="field_github_url" class="field site github">
+            {% if accounts.github %}
+            <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
+            <div class="field-account">
+              {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
+            </div>
+
+            <div id="field_is_github_url_public">
+              <label for="{{ user_form.is_github_url_public.id_for_label }}">
+                {{ user_form.is_github_url_public.label }}
+              </label> {{ user_form.is_github_url_public }}
+            </div>
+            {% else %}
+            <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
+              <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
+                {{ _('Use your GitHub account to sign in.') }}
+              </a>
+            </label>
+            {{ user_form.github_url }}
+            {% endif %}
+          </li>
+
+          {{ li_field(user_form, 'twitter_url', classes='site twitter') }}
+
+          {{ li_field(user_form, 'stackoverflow_url', classes='site stackoverflow') }}
+
+          {{ li_field(user_form, 'linkedin_url', classes='site linkedin') }}
+
+          {{ li_field(user_form, 'mozillians_url', classes='site mozillians') }}
+
+          {{ li_field(user_form, 'facebook_url', classes='site facebook') }}
+
+        </ul>
+      </fieldset>
+      <p><button type="submit" class="positive">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button></p>
+      {% if is_me %}
+      <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
+      {% endif %}
+    </form>
+  </div>
+  <div class="column-4">
+    {% if waffle.switch('newsletter') %}
+    {% include "includes/newsletter.html" %}
+    <h3>Unsubscribe</h3>
+    <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}
 
 {% block js %}
-  <script type="text/javascript">
+<script type="text/javascript">
   // <![CDATA[
     var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS|jsonencode }};
   // ]]>
-  </script>
+</script>
 
-  {% if waffle.switch('newsletter') %}
-    {% javascript 'newsletter' %}
-  {% endif %}
+{% if waffle.switch('newsletter') %}
+{% javascript 'newsletter' %}
+{% endif %}
 
 {% endblock %}

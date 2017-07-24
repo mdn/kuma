@@ -398,6 +398,7 @@ def user_edit(request, username):
         initial = {
             'beta': edit_user.is_beta_tester,
             'username': edit_user.username,
+            'is_github_url_public': edit_user.is_github_url_public,
         }
 
         # Form fields to receive tags filtered by namespace.

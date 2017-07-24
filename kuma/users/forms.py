@@ -74,6 +74,10 @@ class UserEditForm(forms.ModelForm):
             'data-fa-icon': 'icon-github',
         }),
     )
+    is_github_url_public = forms.BooleanField(
+        label=_('Display a link to GitHub on my profile'),
+        required=False
+    )
     stackoverflow_url = forms.CharField(
         label=_('Stack Overflow'),
         required=False,
@@ -115,7 +119,7 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ('fullname', 'title', 'organization', 'location',
                   'locale', 'timezone', 'irc_nickname', 'interests',
-                  'twitter_url', 'github_url',
+                  'twitter_url', 'github_url', 'is_github_url_public',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
                   'facebook_url', 'username')
 
