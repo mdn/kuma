@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-07-13 13:29-0700\n"
+"POT-Creation-Date: 2017-07-25 11:24-0700\n"
 "PO-Revision-Date: 2017-06-22 22:09+0000\n"
 "Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
@@ -265,7 +265,7 @@ msgstr "Повідомити про помилку"
 msgid "Search"
 msgstr "Пошук"
 
-#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:155 kuma/landing/jinja2/landing/homepage.html:176
 msgid "Learn Web Development"
 msgstr "Вивчайте веб розробку"
 
@@ -359,45 +359,45 @@ msgstr "Вийти"
 msgid "Sign in"
 msgstr "Увійти"
 
-#: jinja2/includes/newsletter.html:3
+#: jinja2/includes/newsletter.html:4
 msgid "Learn the best of web development"
 msgstr "Вивчайте найкраще з веб-розробки"
 
-#: jinja2/includes/newsletter.html:4
+#: jinja2/includes/newsletter.html:5
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
 msgstr "Отримуйте найкращі свіжі новини від MDN прямо на свою електронну пошту."
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:7
+msgid "The newsletter is offered in English only at the moment."
+msgstr "Поки що розсилка пропонується лише англійською мовою."
+
+#: jinja2/includes/newsletter.html:17
 msgid "E-mail"
 msgstr "Ел. пошта"
 
-#: jinja2/includes/newsletter.html:13
+#: jinja2/includes/newsletter.html:18
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:19
+#: jinja2/includes/newsletter.html:24
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr "Я погоджуюсь з тим, як Mozilla поводиться з моїми даними згідно з <a href=\"%(policy_url)s\">цією Політикою приватності</a>."
 
-#: jinja2/includes/newsletter.html:25
+#: jinja2/includes/newsletter.html:30
 msgid "Sign up now"
 msgstr "Підписатися зараз"
 
-#: jinja2/includes/newsletter.html:29
-msgid "The newsletter is offered in English only at the moment."
-msgstr "Поки що розсилка пропонується лише англійською мовою."
-
-#: jinja2/includes/newsletter.html:33
+#: jinja2/includes/newsletter.html:35
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "Дякуємо! Будь ласка, перевірте свою пошту для підтвердження підписки."
 
-#: jinja2/includes/newsletter.html:34
+#: jinja2/includes/newsletter.html:36
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
 "Якщо ви раніше не підтверджували підписку на Mozilla, то вам це, можливо, треба зробити. Будь ласка, відкрийте теку Вхідні або Спам своєї ел. пошти, щоб перевірити, чи не прийшов від нас лист."
 
-#: jinja2/includes/newsletter.html:41
+#: jinja2/includes/newsletter.html:43
 msgid "Hide Newsletter Sign-up"
 msgstr "Приховати підписку на розсилку"
 
@@ -1433,43 +1433,47 @@ msgstr "Зневаджувач JavaScript"
 msgid "Performance Tools"
 msgstr "Інструменти швидкодії"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
-msgid "Open Web and Mobile"
-msgstr "Відкритий веб і мобільний інтернет"
+#: kuma/landing/jinja2/landing/homepage.html:131
+msgid "Featured"
+msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:135
-msgid "Do you have a couple minutes to help us out by taking a developer survey?"
-msgstr "Чи є у вас кілька хвилин, щоб допомогти нам, пройшовши опитування для розробників?"
-
-#: kuma/landing/jinja2/landing/homepage.html:137
-msgid "Take the Survey"
-msgstr "Взяти участь в опитуванні"
-
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Proudly non-profit."
 msgstr "З гордістю некомерційна."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate before Dec 31."
 msgstr "Зробіть внесок до 31 грудня."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate Now"
 msgstr "Зробити внесок"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:143 kuma/landing/jinja2/landing/homepage.html:170
+msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgstr "Випробовуйте в Firefox та в понад 800 комбінаціях браузер/ОС з Mozilla і Sauce Labs"
+
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:171
+msgid "Test on Sauce Labs"
+msgstr "Випробовуйте в Sauce Labs"
+
+#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:186
 msgid "Get The Browser For Developers Like You"
 msgstr "Отримайте браузер для розробників, як ви"
 
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:165
+msgid "Open Web and Mobile"
+msgstr "Відкритий веб і мобільний інтернет"
+
+#: kuma/landing/jinja2/landing/homepage.html:196
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">детальніше на hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Get Involved"
 msgstr "Приєднатися"
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:203
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1478,35 +1482,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Приєднуйтесь до <span class=\"number\">%(contributors)s</span> учасників</span> <span class=\"row2\">на <span class=\"number\">%(locales)s</span> мовах і "
 "регіонах</span> <span class=\"row3\">по всьому світу.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:210 kuma/landing/jinja2/landing/homepage.html:217
 msgid "Help improve MDN"
 msgstr "Допоможіть нам покращити MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:186
+#: kuma/landing/jinja2/landing/homepage.html:221
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Всі частини MDN (документація і сам сайт) створені відкритим співтовариством розробників. Будь ласка, приєднуйтесь до нас! Виберіть один з цих способів допомоги:"
 
-#: kuma/landing/jinja2/landing/homepage.html:192
+#: kuma/landing/jinja2/landing/homepage.html:227
 msgid "Getting started"
 msgstr "Починаємо"
 
-#: kuma/landing/jinja2/landing/homepage.html:193
+#: kuma/landing/jinja2/landing/homepage.html:228
 msgid "Editorial review"
 msgstr "Редакційний огляд"
 
-#: kuma/landing/jinja2/landing/homepage.html:194
+#: kuma/landing/jinja2/landing/homepage.html:229
 msgid "Technical review"
 msgstr "Технічний огляд"
 
-#: kuma/landing/jinja2/landing/homepage.html:199
+#: kuma/landing/jinja2/landing/homepage.html:234
 msgid "Translating"
 msgstr "Переклад"
 
-#: kuma/landing/jinja2/landing/homepage.html:200
+#: kuma/landing/jinja2/landing/homepage.html:235
 msgid "Promoting MDN"
 msgstr "Просування MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:201
+#: kuma/landing/jinja2/landing/homepage.html:236
 msgid "Contributing to the MDN codebase"
 msgstr "Вклад в кодову базу MDN"
 
@@ -2048,25 +2052,15 @@ msgstr "Я погоджуюся"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Зробіть наступний крок до участі в MDN!"
 
-#: kuma/users/views.py:473
+#: kuma/users/views.py:474
 msgid "Email address"
 msgstr "Адреса ел. пошти"
 
-#: kuma/users/views.py:519
-#, python-format
-msgid "%(email)s <b>Verified</b>"
-msgstr "%(email)s <b>Підтверджений</b>"
-
-#: kuma/users/views.py:522
-#, python-format
-msgid "%(email)s Unverified"
-msgstr "%(email)s Не підтверджений"
-
-#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:532 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Інше:"
 
-#: kuma/users/views.py:528
+#: kuma/users/views.py:534
 msgid "Email:"
 msgstr "Ел. пошта:"
 
@@ -2346,7 +2340,16 @@ msgstr ""
 "Обліковий запис з обраною адресою електронної пошти вже існує. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Під'єднайте до нього свій обліковий запис "
 "%(provider_name)s.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:141
+#: kuma/users/jinja2/socialaccount/signup.html:137
+msgid "Verified"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:139
+#, fuzzy
+msgid "Unverified"
+msgstr "%(email)s Не підтверджений"
+
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
@@ -2355,16 +2358,16 @@ msgstr ""
 "На яку адресу електронної пошти нам слід надсилати повідомлення та сповіщення MDN? Ця адреса <strong>не буде</strong> відображена на MDN і буде використовуватися відповідно до нашої <a href="
 "\"%(privacy_url)s\">політики приватності</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:157
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr "Умови та конфіденційність"
 
-#: kuma/users/jinja2/socialaccount/signup.html:166
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "з <a href=\"%(terms_url)s\">Умовами користування</a> й <a href=\"%(privacy_url)s\">Політикою приватності</a> Mozilla."
 
-#: kuma/users/jinja2/socialaccount/signup.html:176
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "Створити свій MDN профіль"
 
@@ -4389,6 +4392,15 @@ msgstr "Ви не можете перекладати цей документ."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Сервер Elasticsearch: %(backend)s"
 
+#~ msgid "Do you have a couple minutes to help us out by taking a developer survey?"
+#~ msgstr "Чи є у вас кілька хвилин, щоб допомогти нам, пройшовши опитування для розробників?"
+
+#~ msgid "Take the Survey"
+#~ msgstr "Взяти участь в опитуванні"
+
+#~ msgid "%(email)s <b>Verified</b>"
+#~ msgstr "%(email)s <b>Підтверджений</b>"
+
 #~ msgid "Github"
 #~ msgstr "Github"
 
@@ -4421,12 +4433,6 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "Next Search Result"
 #~ msgstr "Наступний результат пошуку"
-
-#~ msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-#~ msgstr "Випробовуйте в Firefox та в понад 800 комбінаціях браузер/ОС з Mozilla і Sauce Labs"
-
-#~ msgid "Test on Sauce Labs"
-#~ msgstr "Випробовуйте в Sauce Labs"
 
 #~ msgid "Create a New Template"
 #~ msgstr "Створити новий шаблон"

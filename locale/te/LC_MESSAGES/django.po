@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-07-13 13:29-0700\n"
+"POT-Creation-Date: 2017-07-25 11:24-0700\n"
 "PO-Revision-Date: 2017-07-11 10:35+0000\n"
 "Last-Translator: Dinesh <dineshmv38@gmail.com>\n"
 "Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
@@ -263,7 +263,7 @@ msgstr "బగ్ తెలియపరుచు"
 msgid "Search"
 msgstr "వెతుకు"
 
-#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:155 kuma/landing/jinja2/landing/homepage.html:176
 msgid "Learn Web Development"
 msgstr "జాల అభివృద్ధి ని నేర్చుకో"
 
@@ -356,44 +356,44 @@ msgstr "సైన్ ఔట్"
 msgid "Sign in"
 msgstr "సైన్ ఇన్"
 
-#: jinja2/includes/newsletter.html:3
+#: jinja2/includes/newsletter.html:4
 msgid "Learn the best of web development"
 msgstr "జాల అభివృద్ధి గురించి ఉత్తమంగా నేర్చుకోండి"
 
-#: jinja2/includes/newsletter.html:4
+#: jinja2/includes/newsletter.html:5
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
 msgstr "నేరుగా మీ ఇన్బాక్స్కు అందించిన MDN నుండి తాజా మరియు ఉత్తమమైనది పొందండి."
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:7
+msgid "The newsletter is offered in English only at the moment."
+msgstr "ప్రస్తుతానికి వార్తాప్రతి ఆంగ్లంలో మాత్రమే ప్రచురింపబడుతుంది."
+
+#: jinja2/includes/newsletter.html:17
 msgid "E-mail"
 msgstr "ఈమెయిలు"
 
-#: jinja2/includes/newsletter.html:13
+#: jinja2/includes/newsletter.html:18
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:19
+#: jinja2/includes/newsletter.html:24
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr "ఈ <a href=\"%(policy_url)s\">గోప్యత విధానాన్ని</a> అనుసరించి Mozillaనా సమాచారాన్ని ఉపయోగించుకోవడానికి సమ్మతిస్తున్నాను."
 
-#: jinja2/includes/newsletter.html:25
+#: jinja2/includes/newsletter.html:30
 msgid "Sign up now"
 msgstr "ఇప్పుడే ఖాతా సృష్టించుకోండి"
 
-#: jinja2/includes/newsletter.html:29
-msgid "The newsletter is offered in English only at the moment."
-msgstr "ప్రస్తుతానికి వార్తాప్రతి ఆంగ్లంలో మాత్రమే ప్రచురింపబడుతుంది."
-
-#: jinja2/includes/newsletter.html:33
+#: jinja2/includes/newsletter.html:35
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "ధన్యవాదాలు! మీ చందాని ధృవపరచటానికి మీ ఇన్ బాక్స్ ను సందర్శించండి."
 
-#: jinja2/includes/newsletter.html:34
+#: jinja2/includes/newsletter.html:36
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr "మీరు ఒకవేళ Mozillaసంబంధిత వార్తాప్రతి కి చందాని ఇంతకమునుపు ధృవీకరించనట్లైతే , మీరు ఆ పని చెయ్యాలి. దయచేసి మీ ఇన్ బాక్స్ గానీ స్పామ్ లో గానీ మానుంచి వచ్చిన ఈమెయిల్ను చూడండి."
 
-#: jinja2/includes/newsletter.html:41
+#: jinja2/includes/newsletter.html:43
 msgid "Hide Newsletter Sign-up"
 msgstr "వార్తాప్రతి చందాను దాచు"
 
@@ -1424,43 +1424,47 @@ msgstr "JavaScript డీబగ్గర్"
 msgid "Performance Tools"
 msgstr "పనితీరు పరికరాలు"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
-msgid "Open Web and Mobile"
-msgstr "స్వేచ్ఛా జాలము మరియు చరవాణి"
-
-#: kuma/landing/jinja2/landing/homepage.html:135
-msgid "Do you have a couple minutes to help us out by taking a developer survey?"
+#: kuma/landing/jinja2/landing/homepage.html:131
+msgid "Featured"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:137
-msgid "Take the Survey"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Proudly non-profit."
 msgstr "సగర్వంగా లాభాపేక్షలేని."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate before Dec 31."
 msgstr "31 డిసెంబర్ ముందు దానం చేయండి."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate Now"
 msgstr "ఇప్పుడు దానం చేయండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:143 kuma/landing/jinja2/landing/homepage.html:170
+msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgstr ""
+
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:171
+msgid "Test on Sauce Labs"
+msgstr "Sauce Labs లో పరీక్షించు"
+
+#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:186
 msgid "Get The Browser For Developers Like You"
 msgstr "మీ లాంటి అభివృద్ధికారుల కోసం తయారు చేయబడ్డ విహారిణిని పొందు"
 
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:165
+msgid "Open Web and Mobile"
+msgstr "స్వేచ్ఛా జాలము మరియు చరవాణి"
+
+#: kuma/landing/jinja2/landing/homepage.html:196
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">మరిన్ని వివరాలు hacks.mozilla.org వద్ద చదవండి <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Get Involved"
 msgstr "పాల్గొనండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:203
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1469,35 +1473,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">ప్రపంచ వ్యాప్తంగా</span> <span class=\"row2\"> <span class=\"number\">%(locales)s</span> భాషలు మరియు స్థానికీకరణలో </span><span class=\"row3\"><span class=\"number\">"
 "%(contributors)s</span>భాగస్వాములలో మీరూ చేరండి.</span></p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:210 kuma/landing/jinja2/landing/homepage.html:217
 msgid "Help improve MDN"
 msgstr "MDNను మెరుగుపరచడంలో తోడ్పడండి"
 
-#: kuma/landing/jinja2/landing/homepage.html:186
+#: kuma/landing/jinja2/landing/homepage.html:221
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN యొక్క అన్ని భాగాలూ (పత్రాలు మరియు జాలగూటితో సహా) ఒక స్వేచ్ఛా జాల అభివృద్ధికారుల సంఘం చేత సృష్టింపబడ్డాయి. దయచేసి మీరూ మాతో చేరండి! సహాయం చేయటానికి కింది వాటిలో ఏదో ఒక మార్గాన్ని ఎన్నుకోండి:"
 
-#: kuma/landing/jinja2/landing/homepage.html:192
+#: kuma/landing/jinja2/landing/homepage.html:227
 msgid "Getting started"
 msgstr "మొదలుపెట్టడం"
 
-#: kuma/landing/jinja2/landing/homepage.html:193
+#: kuma/landing/jinja2/landing/homepage.html:228
 msgid "Editorial review"
 msgstr "సంపాదక సమీక్ష"
 
-#: kuma/landing/jinja2/landing/homepage.html:194
+#: kuma/landing/jinja2/landing/homepage.html:229
 msgid "Technical review"
 msgstr "సాంకేతిక సమీక్ష"
 
-#: kuma/landing/jinja2/landing/homepage.html:199
+#: kuma/landing/jinja2/landing/homepage.html:234
 msgid "Translating"
 msgstr "అనువదించడం"
 
-#: kuma/landing/jinja2/landing/homepage.html:200
+#: kuma/landing/jinja2/landing/homepage.html:235
 msgid "Promoting MDN"
 msgstr "MDN ను వృద్ధిపరచటం"
 
-#: kuma/landing/jinja2/landing/homepage.html:201
+#: kuma/landing/jinja2/landing/homepage.html:236
 msgid "Contributing to the MDN codebase"
 msgstr "MDN కోడ్ బేస్ కి తోడ్పడటం"
 
@@ -2026,25 +2030,15 @@ msgstr "నేను అంగేకరిస్తున్నాను"
 msgid "Take the next step to get involved on MDN!"
 msgstr "MDNలో చేరడానికి తరువాతి అడుగు వేయండి!"
 
-#: kuma/users/views.py:473
+#: kuma/users/views.py:474
 msgid "Email address"
 msgstr "ఈ మెయిల్ చిరునామా"
 
-#: kuma/users/views.py:519
-#, python-format
-msgid "%(email)s <b>Verified</b>"
-msgstr "%(email)s<b>ధ్రువీకరించబడినవి</b>"
-
-#: kuma/users/views.py:522
-#, python-format
-msgid "%(email)s Unverified"
-msgstr "%(email)s ధ్రువీకరించబడలేదు"
-
-#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:532 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "ఇతర:"
 
-#: kuma/users/views.py:528
+#: kuma/users/views.py:534
 msgid "Email:"
 msgstr "ఇమెయిల్:"
 
@@ -2317,23 +2311,32 @@ msgstr ""
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:141
+#: kuma/users/jinja2/socialaccount/signup.html:137
+msgid "Verified"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:139
+#, fuzzy
+msgid "Unverified"
+msgstr "%(email)s ధ్రువీకరించబడలేదు"
+
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
 "\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:157
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr "నిబంధనలు మరియు గోప్యత"
 
-#: kuma/users/jinja2/socialaccount/signup.html:166
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:176
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "నా MDN ఖాతా సృష్టించు"
 
@@ -4318,6 +4321,9 @@ msgstr "మేరు ఈ డాక్యుమెంట్ ని తర్జ�
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
+#~ msgid "%(email)s <b>Verified</b>"
+#~ msgstr "%(email)s<b>ధ్రువీకరించబడినవి</b>"
+
 #~ msgid "Github"
 #~ msgstr "గిట్‌హబ్"
 
@@ -4332,9 +4338,6 @@ msgstr ""
 
 #~ msgid "Sign up for our newsletter:"
 #~ msgstr "వార్తాపత్రానికి చందాదారులవ్వండి:"
-
-#~ msgid "Test on Sauce Labs"
-#~ msgstr "Sauce Labs లో పరీక్షించు"
 
 #~ msgid "All templates"
 #~ msgstr "అన్ని మూసలు"

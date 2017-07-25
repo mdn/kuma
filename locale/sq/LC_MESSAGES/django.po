@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-07-13 13:29-0700\n"
+"POT-Creation-Date: 2017-07-25 11:24-0700\n"
 "PO-Revision-Date: 2017-03-02 08:47+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -266,7 +266,7 @@ msgstr "Njoftoni një të metë"
 msgid "Search"
 msgstr "Kërkoni"
 
-#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:155 kuma/landing/jinja2/landing/homepage.html:176
 msgid "Learn Web Development"
 msgstr "Mësoni Programim Web"
 
@@ -361,46 +361,46 @@ msgstr "Dilni"
 msgid "Sign in"
 msgstr "Hyni"
 
-#: jinja2/includes/newsletter.html:3
+#: jinja2/includes/newsletter.html:4
 msgid "Learn the best of web development"
 msgstr "Mësoni ajkën e programimit për Web"
 
-#: jinja2/includes/newsletter.html:4
+#: jinja2/includes/newsletter.html:5
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
 msgstr ""
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:7
+msgid "The newsletter is offered in English only at the moment."
+msgstr "Buletini hëpërhë ofrohet vetëm në anglisht."
+
+#: jinja2/includes/newsletter.html:17
 msgid "E-mail"
 msgstr "Email"
 
-#: jinja2/includes/newsletter.html:13
+#: jinja2/includes/newsletter.html:18
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:19
+#: jinja2/includes/newsletter.html:24
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr "Nuk kam problem që Mozilla t’i trajtojë të dhënat e mia ashtu siç shpjegohet në këto <a href=\"%(policy_url)s\">Rregulla Privatësie</a>."
 
-#: jinja2/includes/newsletter.html:25
+#: jinja2/includes/newsletter.html:30
 msgid "Sign up now"
 msgstr "Regjistrohuni që tani"
 
-#: jinja2/includes/newsletter.html:29
-msgid "The newsletter is offered in English only at the moment."
-msgstr "Buletini hëpërhë ofrohet vetëm në anglisht."
-
-#: jinja2/includes/newsletter.html:33
+#: jinja2/includes/newsletter.html:35
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "Faleminderit! Ju lutemi kontrolloni email-et tuaj që të ripohoni pajtimin tuaj."
 
-#: jinja2/includes/newsletter.html:34
+#: jinja2/includes/newsletter.html:36
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
 "Nëse s’e keni ripohuar më parë pajtimin te një buletin i Mozilla-s, mund t’ju duhet ta bëni. Ju lutemi, kontrolloni email-et e marrë ose filtrin tuaj për mesazhe të padëshiruar për një email prej "
 "nesh."
 
-#: jinja2/includes/newsletter.html:41
+#: jinja2/includes/newsletter.html:43
 msgid "Hide Newsletter Sign-up"
 msgstr "Fshihe Pajtimin te Buletini"
 
@@ -1438,43 +1438,47 @@ msgstr "Diagnostikues JavaScript"
 msgid "Performance Tools"
 msgstr "Mjete Punimi"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
-msgid "Open Web and Mobile"
-msgstr "Web-i i Hapur dhe për Celular"
+#: kuma/landing/jinja2/landing/homepage.html:131
+msgid "Featured"
+msgstr "E zgjedhur"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
-msgid "Do you have a couple minutes to help us out by taking a developer survey?"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:137
-msgid "Take the Survey"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Proudly non-profit."
 msgstr "Me krenari jofitimprurës."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate before Dec 31."
 msgstr "Dhuroni përpara 31 Dhjetorit."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate Now"
 msgstr "Dhuroni Tani"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:143 kuma/landing/jinja2/landing/homepage.html:170
+msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgstr "Testojeni në Firefox dhe nën mbi 800 dyshe shfletues/OS, me Mozilla-n dhe Sauce Labs"
+
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:171
+msgid "Test on Sauce Labs"
+msgstr "Testojeni në Sauce Labs"
+
+#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:186
 msgid "Get The Browser For Developers Like You"
 msgstr "Merrni Shfletuesin Për Programues Si Ju"
 
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:165
+msgid "Open Web and Mobile"
+msgstr "Web-i i Hapur dhe për Celular"
+
+#: kuma/landing/jinja2/landing/homepage.html:196
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">lexoni më tepër te hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Get Involved"
 msgstr "Përfshihuni"
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:203
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1483,35 +1487,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Bashkojuni <span class=\"number\">%(contributors)s</span> kontribuesve</span> <span class=\"row2\">nga <span class=\"number\">%(locales)s</span> gjuhë dhe "
 "vendore</span> <span class=\"row3\">anembanë botës.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:210 kuma/landing/jinja2/landing/homepage.html:217
 msgid "Help improve MDN"
 msgstr "Ndihmoni të përmirësohet MDN-ja"
 
-#: kuma/landing/jinja2/landing/homepage.html:186
+#: kuma/landing/jinja2/landing/homepage.html:221
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Krejt pjesët e MDN-së (dokumente dhe vetë sajti) janë krijuar nga një bashkësi e hapur programuesish. Ju lutemi, bëhuni pjesë e jona! Zgjidhni një nga këto rrugët për të na ndihmuar:"
 
-#: kuma/landing/jinja2/landing/homepage.html:192
+#: kuma/landing/jinja2/landing/homepage.html:227
 msgid "Getting started"
 msgstr "Si t’ia fillohet"
 
-#: kuma/landing/jinja2/landing/homepage.html:193
+#: kuma/landing/jinja2/landing/homepage.html:228
 msgid "Editorial review"
 msgstr "Shqyrtim redaktorial"
 
-#: kuma/landing/jinja2/landing/homepage.html:194
+#: kuma/landing/jinja2/landing/homepage.html:229
 msgid "Technical review"
 msgstr "Shqyrtim teknik"
 
-#: kuma/landing/jinja2/landing/homepage.html:199
+#: kuma/landing/jinja2/landing/homepage.html:234
 msgid "Translating"
 msgstr "Përkthim"
 
-#: kuma/landing/jinja2/landing/homepage.html:200
+#: kuma/landing/jinja2/landing/homepage.html:235
 msgid "Promoting MDN"
 msgstr "Promovim i MDN-së"
 
-#: kuma/landing/jinja2/landing/homepage.html:201
+#: kuma/landing/jinja2/landing/homepage.html:236
 msgid "Contributing to the MDN codebase"
 msgstr "Si të kontribuohet te kodi bazë i MDN-së"
 
@@ -2049,25 +2053,15 @@ msgstr "Pajtohem"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Bëni hapin pasues për t’u përfshirë te MDN-ja!"
 
-#: kuma/users/views.py:473
+#: kuma/users/views.py:474
 msgid "Email address"
 msgstr "Adresë email"
 
-#: kuma/users/views.py:519
-#, python-format
-msgid "%(email)s <b>Verified</b>"
-msgstr "%(email)s <b>I Verifikuar</b>"
-
-#: kuma/users/views.py:522
-#, python-format
-msgid "%(email)s Unverified"
-msgstr "%(email)s I paverifikuar"
-
-#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:532 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "Tjetër:"
 
-#: kuma/users/views.py:528
+#: kuma/users/views.py:534
 msgid "Email:"
 msgstr "Email:"
 
@@ -2345,7 +2339,16 @@ msgstr "Ju lutemi, jepni emrin që do të donit t’u shfaqet përdoruesve të t
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
 msgstr "Ka tashmë një profil me adresën email të përzgjedhur. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Lidheni llogarinë tuaj %(provider_name)s me të.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:141
+#: kuma/users/jinja2/socialaccount/signup.html:137
+msgid "Verified"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:139
+#, fuzzy
+msgid "Unverified"
+msgstr "%(email)s I paverifikuar"
+
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
@@ -2354,16 +2357,16 @@ msgstr ""
 "Cilën adresë email do të duhej të përdornim për t’ju dërguar mesazhe dhe njoftime MDN? Kjo adresë <strong>nuk</strong> do të shfaqet te MDN-ja dhe do të përdoret në pajtim me <a href="
 "\"\"%(privacy_url)s\">rregullat tona mbi privatësinë</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:157
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr "Kushte dhe Privatësi"
 
-#: kuma/users/jinja2/socialaccount/signup.html:166
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "te <a href=\"%(terms_url)s\">Kushtet</a> dhe <a href=\"%(privacy_url)s\">Shënimi i Privatësisë</a> së Mozilla-s."
 
-#: kuma/users/jinja2/socialaccount/signup.html:176
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "Krijoje profilin tim MDN"
 
@@ -4401,6 +4404,9 @@ msgstr "S’ mund ta përktheni këtë dokument."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Shërbyes Elasticsearch: %(backend)s"
 
+#~ msgid "%(email)s <b>Verified</b>"
+#~ msgstr "%(email)s <b>I Verifikuar</b>"
+
 #~ msgid "algorithm"
 #~ msgstr "algoritëm"
 
@@ -4427,12 +4433,6 @@ msgstr "Shërbyes Elasticsearch: %(backend)s"
 
 #~ msgid "Next Search Result"
 #~ msgstr "Përfundimi Pasues i Kërkimit"
-
-#~ msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-#~ msgstr "Testojeni në Firefox dhe nën mbi 800 dyshe shfletues/OS, me Mozilla-n dhe Sauce Labs"
-
-#~ msgid "Test on Sauce Labs"
-#~ msgstr "Testojeni në Sauce Labs"
 
 #~ msgid "Create a New Template"
 #~ msgstr "Krijoni Gjedhe të Re"
@@ -6084,9 +6084,6 @@ msgstr "Shërbyes Elasticsearch: %(backend)s"
 
 #~ msgid "Finalist"
 #~ msgstr "Finalist"
-
-#~ msgid "Featured"
-#~ msgstr "E zgjedhur"
 
 #~ msgid "year"
 #~ msgid_plural "years"
