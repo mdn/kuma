@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-13 13:29-0700\n"
-"PO-Revision-Date: 2017-07-16 07:16+0000\n"
+"PO-Revision-Date: 2017-07-25 16:37+0000\n"
 "Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -159,7 +159,7 @@ msgstr "CSS"
 
 #: jinja2/base.html:163 jinja2/base.html:191 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:93 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
-msgstr "Javascript"
+msgstr "JavaScript"
 
 #: jinja2/base.html:164 jinja2/base.html:192
 msgid "Graphics"
