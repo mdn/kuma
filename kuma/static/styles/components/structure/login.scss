@@ -40,6 +40,9 @@ Header login link
             &:hover,
             &:focus {
                 background-color: #000;
+                /* needs !important to over ride zone styles */
+                color: #fff !important; /* stylelint-disable-line declaration-no-important */
+                text-decoration: underline !important; /* stylelint-disable-line declaration-no-important */
             }
         }
     }

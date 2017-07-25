@@ -43,6 +43,7 @@
         &:hover,
         &:focus {
             background-color: $grey-light;
+            /* needs !important to handle zones */
             color: $text-color !important; /* stylelint-disable-line declaration-no-important */
         }
     }
