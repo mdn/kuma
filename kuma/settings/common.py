@@ -609,18 +609,19 @@ STATICI18N_DOMAIN = 'javascript'
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
 
-def pipeline_scss(output, sources):
+def pipeline_scss(output, sources, **kwargs):
     """Define a CSS file generated from multiple SCSS files."""
     definition = {
         'source_filenames': tuple('styles/%s.scss' % src for src in sources),
         'output_filename': 'build/styles/%s.css' % output
     }
+    definition.update(kwargs)
     return definition
 
 
-def pipeline_one_scss(slug):
+def pipeline_one_scss(slug, **kwargs):
     """Define a CSS file that shares the name with the one input SCSS."""
-    return pipeline_scss(slug, [slug])
+    return pipeline_scss(slug, [slug], **kwargs)
 
 
 PIPELINE_CSS = {
@@ -912,6 +913,9 @@ LOCALE_CSS.update({locale: 'locales/en-US' for locale in LOCALE_USE_ZILLA})
 for locale, slug in LOCALE_CSS.items():
     key = 'locale-%s' % locale
     PIPELINE_CSS[key] = pipeline_scss(key, [slug])
+    editor_key = 'editor-locale-%s' % locale
+    PIPELINE_CSS[editor_key] = pipeline_scss(
+        editor_key, [slug], template_name='pipeline/javascript-array.jinja')
 
 
 PIPELINE_JS = {
