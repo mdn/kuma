@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-07-13 13:29-0700\n"
+"POT-Creation-Date: 2017-07-25 11:24-0700\n"
 "PO-Revision-Date: 2017-01-16 00:24+0000\n"
 "Last-Translator: S M Sarwar Nobin <smsarwar1996@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -266,7 +266,7 @@ msgstr "সমস্যাটি জানান"
 msgid "Search"
 msgstr "খোঁজা"
 
-#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:155 kuma/landing/jinja2/landing/homepage.html:176
 msgid "Learn Web Development"
 msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
@@ -361,45 +361,45 @@ msgstr "সাইন আউট"
 msgid "Sign in"
 msgstr "সাইন ইন"
 
-#: jinja2/includes/newsletter.html:3
+#: jinja2/includes/newsletter.html:4
 #, fuzzy
 msgid "Learn the best of web development"
 msgstr "ওয়েব ডেভেলপমেন্ট শিখুন"
 
-#: jinja2/includes/newsletter.html:4
+#: jinja2/includes/newsletter.html:5
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
 msgstr ""
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:7
+msgid "The newsletter is offered in English only at the moment."
+msgstr "নিউজলেটারটি এই মুহূর্তে শুধুমাত্র ইংরেজিতে প্রদান করা হচ্ছে।"
+
+#: jinja2/includes/newsletter.html:17
 msgid "E-mail"
 msgstr "ই-মেইল"
 
-#: jinja2/includes/newsletter.html:13
+#: jinja2/includes/newsletter.html:18
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:19
+#: jinja2/includes/newsletter.html:24
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr ""
 
-#: jinja2/includes/newsletter.html:25
+#: jinja2/includes/newsletter.html:30
 msgid "Sign up now"
 msgstr "এখন সাইন আপ করুন"
 
-#: jinja2/includes/newsletter.html:29
-msgid "The newsletter is offered in English only at the moment."
-msgstr "নিউজলেটারটি এই মুহূর্তে শুধুমাত্র ইংরেজিতে প্রদান করা হচ্ছে।"
-
-#: jinja2/includes/newsletter.html:33
+#: jinja2/includes/newsletter.html:35
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "ধন্যবাদ! দয়া করে আপনার সাবস্ক্রিপশন নিশ্চিত করতে ইনবক্স চেক করুন।"
 
-#: jinja2/includes/newsletter.html:34
+#: jinja2/includes/newsletter.html:36
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr ""
 
-#: jinja2/includes/newsletter.html:41
+#: jinja2/includes/newsletter.html:43
 msgid "Hide Newsletter Sign-up"
 msgstr "নিউজলেটার সাইন-আপ লুকান"
 
@@ -1443,78 +1443,82 @@ msgstr "জাভাস্ক্রিপ্ট ডিবাগার"
 msgid "Performance Tools"
 msgstr "পারফরম্যান্স টুল"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
-msgid "Open Web and Mobile"
-msgstr "মুক্ত ওয়েব এবং মোবাইল"
+#: kuma/landing/jinja2/landing/homepage.html:131
+msgid "Featured"
+msgstr "ফিচার করা"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
-msgid "Do you have a couple minutes to help us out by taking a developer survey?"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:137
-msgid "Take the Survey"
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Proudly non-profit."
 msgstr "গর্বের সহিত অলাভজনক।"
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate before Dec 31."
 msgstr "31 শে ডিসেম্বরের পূর্বে দান করুন।"
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate Now"
 msgstr "দান করুন"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:143 kuma/landing/jinja2/landing/homepage.html:170
+msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgstr ""
+
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:171
+msgid "Test on Sauce Labs"
+msgstr ""
+
+#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:186
 msgid "Get The Browser For Developers Like You"
 msgstr "আপনার মত ডেভেলপারদের জন্য ব্রাউজার পান"
 
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:165
+msgid "Open Web and Mobile"
+msgstr "মুক্ত ওয়েব এবং মোবাইল"
+
+#: kuma/landing/jinja2/landing/homepage.html:196
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">hacks.mozilla.org সাইটে বিস্তারিত দেখুন <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Get Involved"
 msgstr "যুক্ত হোন"
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:203
 #, fuzzy, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr "<span class=\"row2\">বিশ্বব্যাপি <span class=\"number\">৩১</span> টি ভাষা এবং locale</span> এর <span class=\"number\">৩,৪১৪</span> জন কন্ট্রিবিউটরদের সাথে যোগ দিন</span> ।"
 
-#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:210 kuma/landing/jinja2/landing/homepage.html:217
 msgid "Help improve MDN"
 msgstr "এমডিএন উন্নিতকরণে সাহায্য করুন"
 
-#: kuma/landing/jinja2/landing/homepage.html:186
+#: kuma/landing/jinja2/landing/homepage.html:221
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN (নথিসমূহ এবং সাইটটি) এর সবগুলো অংশ ডেভেলপারদের একটি ওপেন কম্যুনিটি তৈরি করেছেন। অনুগ্রহ করে আমাদের সাথে যোগ দিন! আমাদের সাহায্য করার জন্য যেকোন একটি ক্ষেত্র নির্বাচন করুন:"
 
-#: kuma/landing/jinja2/landing/homepage.html:192
+#: kuma/landing/jinja2/landing/homepage.html:227
 msgid "Getting started"
 msgstr "শুরু"
 
-#: kuma/landing/jinja2/landing/homepage.html:193
+#: kuma/landing/jinja2/landing/homepage.html:228
 msgid "Editorial review"
 msgstr "সম্পাদকীয় পর্যালোচনা"
 
-#: kuma/landing/jinja2/landing/homepage.html:194
+#: kuma/landing/jinja2/landing/homepage.html:229
 msgid "Technical review"
 msgstr "প্রযুক্তি সংক্রান্ত পর্যালোচনা"
 
-#: kuma/landing/jinja2/landing/homepage.html:199
+#: kuma/landing/jinja2/landing/homepage.html:234
 msgid "Translating"
 msgstr "অনুবাদ করা হচ্ছে"
 
-#: kuma/landing/jinja2/landing/homepage.html:200
+#: kuma/landing/jinja2/landing/homepage.html:235
 msgid "Promoting MDN"
 msgstr "MDN প্রচার করা"
 
-#: kuma/landing/jinja2/landing/homepage.html:201
+#: kuma/landing/jinja2/landing/homepage.html:236
 msgid "Contributing to the MDN codebase"
 msgstr "MDN কোডবেসে অবদান রাখা"
 
@@ -2058,25 +2062,15 @@ msgstr "আমি একমত"
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:473
+#: kuma/users/views.py:474
 msgid "Email address"
 msgstr "ই-মেইল ঠিকানা"
 
-#: kuma/users/views.py:519
-#, python-format
-msgid "%(email)s <b>Verified</b>"
-msgstr ""
-
-#: kuma/users/views.py:522
-#, python-format
-msgid "%(email)s Unverified"
-msgstr "%(email)s অানভেরিফাইড"
-
-#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:532 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "অন্যান্য:"
 
-#: kuma/users/views.py:528
+#: kuma/users/views.py:534
 msgid "Email:"
 msgstr "ইমেইল:"
 
@@ -2350,23 +2344,32 @@ msgstr ""
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:141
+#: kuma/users/jinja2/socialaccount/signup.html:137
+msgid "Verified"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:139
+#, fuzzy
+msgid "Unverified"
+msgstr "%(email)s অানভেরিফাইড"
+
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
 "\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:157
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr "শর্তাবলী এবং গোপনীয়তা"
 
-#: kuma/users/jinja2/socialaccount/signup.html:166
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, fuzzy, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "আমি <a href=\"%(terms_url)s#tfc\">অবদানকারীদের জন্যে নিয়ম</a> এবং <a href=\"%(terms_url)s#rrd\"> প্রতিনিধির অধিকারের বিস্তারিত</a> সমর্থন করলাম।"
 
-#: kuma/users/jinja2/socialaccount/signup.html:176
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "আমার MDN প্রোফাইল তৈরি করুন"
 
@@ -5890,9 +5893,6 @@ msgstr ""
 
 #~ msgid "Finalist"
 #~ msgstr "চূড়ান্ত প্রতিযোগী"
-
-#~ msgid "Featured"
-#~ msgstr "ফিচার করা"
 
 #~ msgid "year"
 #~ msgid_plural "years"

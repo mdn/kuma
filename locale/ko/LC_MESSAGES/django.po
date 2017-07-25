@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2017-07-13 13:29-0700\n"
+"POT-Creation-Date: 2017-07-25 11:24-0700\n"
 "PO-Revision-Date: 2017-06-21 01:46+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -278,7 +278,7 @@ msgstr "문제점 알려주기"
 msgid "Search"
 msgstr "검색"
 
-#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:142
+#: jinja2/base.html:262 kuma/landing/jinja2/landing/homepage.html:155 kuma/landing/jinja2/landing/homepage.html:176
 msgid "Learn Web Development"
 msgstr "웹 개발 배우기"
 
@@ -373,44 +373,44 @@ msgstr "로그 아웃"
 msgid "Sign in"
 msgstr "로그인"
 
-#: jinja2/includes/newsletter.html:3
+#: jinja2/includes/newsletter.html:4
 msgid "Learn the best of web development"
 msgstr "웹 개발 배우기"
 
-#: jinja2/includes/newsletter.html:4
+#: jinja2/includes/newsletter.html:5
 msgid "Get the latest and greatest from MDN delivered straight to your inbox."
 msgstr "받은 편지함으로 바로 배달되는 MDN의 최신 뉴스와 좋은 글을 받아보세요."
 
-#: jinja2/includes/newsletter.html:12
+#: jinja2/includes/newsletter.html:7
+msgid "The newsletter is offered in English only at the moment."
+msgstr "지금은 뉴스레터가 영어로만 제공됩니다."
+
+#: jinja2/includes/newsletter.html:17
 msgid "E-mail"
 msgstr "메일 주소"
 
-#: jinja2/includes/newsletter.html:13
+#: jinja2/includes/newsletter.html:18
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: jinja2/includes/newsletter.html:19
+#: jinja2/includes/newsletter.html:24
 #, python-format
 msgid "I'm okay with Mozilla handling my info as explained in this <a href=\"%(policy_url)s\">Privacy Policy</a>."
 msgstr "저는 <a href=\"%(policy_url)s\">개인정보 취급방침</a>에 설명된 대로 Mozilla가 정보를 다루는 것에 동의합니다."
 
-#: jinja2/includes/newsletter.html:25
+#: jinja2/includes/newsletter.html:30
 msgid "Sign up now"
 msgstr "회원가입"
 
-#: jinja2/includes/newsletter.html:29
-msgid "The newsletter is offered in English only at the moment."
-msgstr "지금은 뉴스레터가 영어로만 제공됩니다."
-
-#: jinja2/includes/newsletter.html:33
+#: jinja2/includes/newsletter.html:35
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr "감사합니다! 구독 확인을 위해 받은 편지함을 확인해 주세요."
 
-#: jinja2/includes/newsletter.html:34
+#: jinja2/includes/newsletter.html:36
 msgid "If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us."
 msgstr "이전에 Mozilla 관련 뉴스레터 구독을 확인하지 않은 경우, 이를 확인할 필요가 있습니다. 받은 편지함 또는 우리 email에 대한 스팸 필터를 확인해 주세요."
 
-#: jinja2/includes/newsletter.html:41
+#: jinja2/includes/newsletter.html:43
 msgid "Hide Newsletter Sign-up"
 msgstr "뉴스레터 신청 숨기기"
 
@@ -1461,43 +1461,47 @@ msgstr "자바스크립트 디버거"
 msgid "Performance Tools"
 msgstr "성능 측정 도구"
 
-#: kuma/landing/jinja2/landing/homepage.html:130
-msgid "Open Web and Mobile"
-msgstr "오픈 웹 및 모바일"
+#: kuma/landing/jinja2/landing/homepage.html:131
+msgid "Featured"
+msgstr "중요"
 
-#: kuma/landing/jinja2/landing/homepage.html:135
-msgid "Do you have a couple minutes to help us out by taking a developer survey?"
-msgstr "개발자 설문에 참여해서 도와주실 시간이 되시나요?"
-
-#: kuma/landing/jinja2/landing/homepage.html:137
-msgid "Take the Survey"
-msgstr "설문 참여"
-
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Proudly non-profit."
 msgstr "비영리 단체입니다."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate before Dec 31."
 msgstr "12월 31일 전에 기부하세요."
 
-#: kuma/landing/jinja2/landing/homepage.html:147
+#: kuma/landing/jinja2/landing/homepage.html:136 kuma/landing/jinja2/landing/homepage.html:181
 msgid "Donate Now"
 msgstr "지금 기부하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:143 kuma/landing/jinja2/landing/homepage.html:170
+msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
+msgstr "FIrefox를 포함한 800개 이상의 브라우저와 OS에서 Mozilla와 Sauce Labs를 테스트해보세요"
+
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:171
+msgid "Test on Sauce Labs"
+msgstr "Sauce Labs 테스트하기"
+
+#: kuma/landing/jinja2/landing/homepage.html:158 kuma/landing/jinja2/landing/homepage.html:186
 msgid "Get The Browser For Developers Like You"
 msgstr "개발자를 위한 웹 브라우저"
 
-#: kuma/landing/jinja2/landing/homepage.html:161
+#: kuma/landing/jinja2/landing/homepage.html:165
+msgid "Open Web and Mobile"
+msgstr "오픈 웹 및 모바일"
+
+#: kuma/landing/jinja2/landing/homepage.html:196
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.or.kr\">Mozilla Hacks 블로그 <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:201
 msgid "Get Involved"
 msgstr "참여하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:168
+#: kuma/landing/jinja2/landing/homepage.html:203
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1506,35 +1510,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:175 kuma/landing/jinja2/landing/homepage.html:182
+#: kuma/landing/jinja2/landing/homepage.html:210 kuma/landing/jinja2/landing/homepage.html:217
 msgid "Help improve MDN"
 msgstr "MDN 참여하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:186
+#: kuma/landing/jinja2/landing/homepage.html:221
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN의 모든 영역(문서, 데모, 웹 사이트)는 개발자 커뮤니티에 의해 만들어집니다! 지금 참여하셔서 함께 만들어 주십시오:"
 
-#: kuma/landing/jinja2/landing/homepage.html:192
+#: kuma/landing/jinja2/landing/homepage.html:227
 msgid "Getting started"
 msgstr "시작하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:193
+#: kuma/landing/jinja2/landing/homepage.html:228
 msgid "Editorial review"
 msgstr "문서 리뷰"
 
-#: kuma/landing/jinja2/landing/homepage.html:194
+#: kuma/landing/jinja2/landing/homepage.html:229
 msgid "Technical review"
 msgstr "기술 리뷰"
 
-#: kuma/landing/jinja2/landing/homepage.html:199
+#: kuma/landing/jinja2/landing/homepage.html:234
 msgid "Translating"
 msgstr "번역하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:200
+#: kuma/landing/jinja2/landing/homepage.html:235
 msgid "Promoting MDN"
 msgstr "MDN 홍보하기"
 
-#: kuma/landing/jinja2/landing/homepage.html:201
+#: kuma/landing/jinja2/landing/homepage.html:236
 msgid "Contributing to the MDN codebase"
 msgstr "MDN 웹 사이트 개발 참여"
 
@@ -2069,25 +2073,15 @@ msgstr "동의"
 msgid "Take the next step to get involved on MDN!"
 msgstr "MDN 참여하기 위한 다음 단계"
 
-#: kuma/users/views.py:473
+#: kuma/users/views.py:474
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: kuma/users/views.py:519
-#, python-format
-msgid "%(email)s <b>Verified</b>"
-msgstr "%(email)s <b>인증됨</b>"
-
-#: kuma/users/views.py:522
-#, python-format
-msgid "%(email)s Unverified"
-msgstr "%(email)s 미인증됨"
-
-#: kuma/users/views.py:526 kuma/users/jinja2/socialaccount/signup.html:128
+#: kuma/users/views.py:532 kuma/users/jinja2/socialaccount/signup.html:128
 msgid "Other:"
 msgstr "또 다른 것들:"
 
-#: kuma/users/views.py:528
+#: kuma/users/views.py:534
 msgid "Email:"
 msgstr "이메일:"
 
@@ -2361,7 +2355,16 @@ msgstr "다른 사람들이 알아보거나 문서에 표시할 이름을 입력
 msgid "A profile already exists with the selected email address. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">Connect your %(provider_name)s account to it.</a>"
 msgstr "선택된 이메일 주소의 프로필이 이미 존재합니다. <a href=\"%(login_url)s\" class=\"launch-login\" data-next=\"%(next_url)s\">%(provider_name)s 계정을 연결</a>하세요."
 
-#: kuma/users/jinja2/socialaccount/signup.html:141
+#: kuma/users/jinja2/socialaccount/signup.html:137
+msgid "Verified"
+msgstr "인증 완료"
+
+#: kuma/users/jinja2/socialaccount/signup.html:139
+#, fuzzy
+msgid "Unverified"
+msgstr "인증 완료"
+
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
@@ -2369,16 +2372,16 @@ msgid ""
 msgstr ""
 "MDN 관련 메시지와 알림을 보내는 데 어떤 이메일 주소를 사용해야 합니까? 이 주소는 MDN 상에 표시되지 <strong>않</strong>으며 <a href=\"%(privacy_url)s\">개인 정보 보호 정책</a>에 따라 사용됩니다."
 
-#: kuma/users/jinja2/socialaccount/signup.html:157
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr "약관 및 개인정보 보호"
 
-#: kuma/users/jinja2/socialaccount/signup.html:166
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "Mozilla의 <a href=\"%(terms_url)s\">이용 약관</a>과 <a href=\"%(privacy_url)s\">개인 정보 보호 정책</a>을 확인하세요."
 
-#: kuma/users/jinja2/socialaccount/signup.html:176
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "MDN 프로필 만들기"
 
@@ -4421,6 +4424,18 @@ msgstr "이 문서를 번역할 수 없습니다."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 서버: %(backend)s"
 
+#~ msgid "Do you have a couple minutes to help us out by taking a developer survey?"
+#~ msgstr "개발자 설문에 참여해서 도와주실 시간이 되시나요?"
+
+#~ msgid "Take the Survey"
+#~ msgstr "설문 참여"
+
+#~ msgid "%(email)s <b>Verified</b>"
+#~ msgstr "%(email)s <b>인증됨</b>"
+
+#~ msgid "%(email)s Unverified"
+#~ msgstr "%(email)s 미인증됨"
+
 #~ msgid "algorithm"
 #~ msgstr "알고리즘"
 
@@ -4450,12 +4465,6 @@ msgstr "Elasticsearch 서버: %(backend)s"
 
 #~ msgid "Next Search Result"
 #~ msgstr "다음 검색 결과"
-
-#~ msgid "Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs"
-#~ msgstr "FIrefox를 포함한 800개 이상의 브라우저와 OS에서 Mozilla와 Sauce Labs를 테스트해보세요"
-
-#~ msgid "Test on Sauce Labs"
-#~ msgstr "Sauce Labs 테스트하기"
 
 #~ msgid "Create a New Template"
 #~ msgstr "새 템플릿 만들기"
@@ -6073,9 +6082,6 @@ msgstr "Elasticsearch 서버: %(backend)s"
 #~ msgid "Finalist"
 #~ msgstr "최종 참가자"
 
-#~ msgid "Featured"
-#~ msgstr "중요"
-
 #~ msgid "year"
 #~ msgid_plural "years"
 #~ msgstr[0] "년"
@@ -7039,9 +7045,6 @@ msgstr "Elasticsearch 서버: %(backend)s"
 
 #~ msgid "The following e-mail addresses are associated with your account:"
 #~ msgstr "아래 이메일 주소가 계정과 연결되어 있습니다:"
-
-#~ msgid "Verified"
-#~ msgstr "인증 완료"
 
 #~ msgid "Primary"
 #~ msgstr "기본 "
