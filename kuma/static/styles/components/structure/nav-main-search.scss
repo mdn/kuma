@@ -63,7 +63,7 @@ search items in .main-nav
         @include vendorize(transition-duration, $default-animation-duration);
 
         &.expanded {
-            width: 300px;
+            width: 500px;
         }
     }
 
@@ -75,21 +75,5 @@ search items in .main-nav
         border-color: #fff;
         @include bidi-style(padding-left, 0, padding-right, 0);
         border-bottom: 1px solid $grey;
-    }
-}
-
-@media #{$mq-small-desktop-and-up} {
-    .search-wrap {
-        &.expanded {
-            width: 500px;
-        }
-    }
-}
-
-@media #{$mq-large-desktop-and-up} {
-    .search-wrap {
-        &.expanded {
-            width: 500px;
-        }
     }
 }

@@ -22,7 +22,7 @@
 
     > a {
         display: inline-block;
-        line-height: 48px + ($grid-spacing * 2); // logo height + grid spacing *2
+        line-height: $logo-height + ($grid-spacing * 2); // logo height + grid spacing *2
         padding: 0 ($grid-spacing / 2);
 
         html:not(.no-js) & {
