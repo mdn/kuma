@@ -15,7 +15,7 @@ Secondary navigation, site tools and login info
         @include bidi-value(float, right, left);
         position: relative;
         @include bidi-style(right, ($gutter-width * -1), left, auto);
-        z-index: 2;
+        z-index: 3; /* bring it above search trigger in tablet view */
         background-color: #000;
 
         > ul > li {

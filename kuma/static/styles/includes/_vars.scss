@@ -184,11 +184,11 @@ break points
 - divide pixels by browser default font size (16px)
 - and multiply by 1em to convert unit to em.
 */
-$max-width-default : (1400px / 16px) * 1em;
-$small-desktop-ends : (1200px / 16px) * 1em;
-$tablet-ends : (1024px / 16px) * 1em;
-$mobile-ends : (768px / 16px) * 1em;
-$small-mobile-ends : (480px / 16px) * 1em;
+$max-width-default : (1399px / 16px) * 1em;
+$small-desktop-ends : (1199px / 16px) * 1em;
+$tablet-ends : (1023px / 16px) * 1em;
+$mobile-ends : (767px / 16px) * 1em;
+$small-mobile-ends : (479px / 16px) * 1em;
 
 $small-desktop-starts : $tablet-ends + .001em;
 $tablet-starts : $mobile-ends + .001em;
@@ -251,6 +251,7 @@ $list-item-spacing : $content-horizontal-spacing;
 
 $icon-margin : ($grid-spacing / 2);
 
+$logo-height: 48px;
 
 /*
 forms
