@@ -73,6 +73,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 1; /* raise above links it might over-lap */
 }
 
 /* not mobile first because this is an exeption for main-header only and it's
@@ -101,5 +102,14 @@ everything else */
                 }
             }
         }
+    }
+}
+
+
+@media #{$mq-large-desktop-and-up} {
+    /* Ideally this is hidden on non touch screens. Until we have
+    @media pointer we use screen size as a surrogate */
+    .submenu-close {
+        display: none;
     }
 }
