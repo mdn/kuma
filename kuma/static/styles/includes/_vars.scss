@@ -242,7 +242,8 @@ dimensions
 $gutter-width : 24px;
 $content-block-margin : $gutter-width;
 
-$first-content-top-padding : ($grid-spacing * 1.5);
+$first-content-top-padding: ($grid-spacing * 1.5);
+$last-content-bottom-padding: ($grid-spacing * 1.5);
 $mobile-center-spacing: 15px;
 
 $content-horizontal-spacing : 8px;

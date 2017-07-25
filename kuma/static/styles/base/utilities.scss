@@ -23,6 +23,7 @@ Utility classes
 
     main > & {
         padding-top: $first-content-top-padding;
+        padding-bottom: $last-content-bottom-padding;
     }
 
     @media #{$mq-tablet-and-up} {
