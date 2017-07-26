@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /*
 Used for revision diff'ing tables, in the wiki and the dashboards
@@ -45,19 +45,19 @@ td.diff_header {
 }
 
 .diff_next {
-    background-color: #c0c0c0;
+    background-color: $grey-light;
 }
 
 .diff_add {
-    background-color: #aaffaa;
+    background-color: $green-light;
 }
 
 .diff_chg {
-    background-color: #ffff77;
+    background-color: $yellow-light;
 }
 
 .diff_sub {
-    background-color: #ffaaaa;
+    background-color: $red-light;
 }
 
 /*

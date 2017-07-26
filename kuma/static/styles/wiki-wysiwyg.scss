@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
 html,
@@ -64,7 +64,7 @@ pre:before {
     top: 10px;
     right: 20px;
     z-index: 10;
-    color: #666;
+    color: $grey;
 }
 
 pre {
@@ -105,7 +105,7 @@ $languages: (
 /* Notify the user that a given list item will open */
 li[data-default-state='open'] > a:after {
     content: '(defaults to "open")';
-    color: #666;
+    color: $grey;
     @include set-smaller-font-size();
     font-family: arial, sans-serif;
     font-style: italic;

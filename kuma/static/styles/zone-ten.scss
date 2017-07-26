@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /*
 MDN at 10 zone
@@ -9,11 +9,11 @@ MDN at 10 zone
 /*
 imports
 ====================================================================== */
-@import 'zones-blue/base';
-@import 'zones-blue/components/chapters';
-@import 'zones-blue/components/learnmore';
-@import 'zones-blue/components/promo10';
-@import 'zones-blue/components/quote';
+@import 'zones/base';
+@import 'zones/components/chapters';
+@import 'zones/components/learnmore';
+@import 'zones/components/promo10';
+@import 'zones/components/quote';
 
 
 /*
@@ -35,7 +35,6 @@ header modifications
         @include heading-1();
         margin-bottom: $grid-spacing;
         font-family: $heading-font-family;
-        font-weight: $light-font-weight;
         line-height: 1.2;
     }
 }
@@ -54,7 +53,6 @@ header modifications
         .masthead-text {
             width: -calc-col-width(6);
             margin-top: -180px;
-            margin-bottom: 110px;
             text-align: center;
         }
     }

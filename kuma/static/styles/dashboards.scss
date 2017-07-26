@@ -2,9 +2,9 @@
 Used to style the dashboard widgets in the dashboard apps
 ********************************************************************** */
 
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
-@import 'components-blue/banned';
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'components/banned';
 
 /* New revision dashboard styles */
 .dashboard-table {
@@ -234,7 +234,7 @@ td.dashboard-comment {
     }
 
     .diff thead tr {
-        background-color: #adadad;
+        background-color: $grey;
     }
 }
 

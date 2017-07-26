@@ -23,11 +23,8 @@
         win.mdn.assets = {
             css: {
                 'editor-content': [
-                    {%- if waffle.flag('redesign') %}
-                        {%- stylesheet 'editor-content' %}
-                    {%- else %}
-                        {%- stylesheet 'editor-content-blue' %}
-                    {%- endif %}]
+                    {%- stylesheet 'editor-content' %}
+                ]
             },
             js: {
                 'syntax-prism': [{% javascript 'syntax-prism' %}]

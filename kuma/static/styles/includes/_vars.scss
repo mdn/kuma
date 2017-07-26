@@ -84,13 +84,12 @@ $neutral : $blue;
 $default : $grey;
 
 $text-color : #333;
-$heading-color : $text-color;
 $link-color : darken($blue, 5);
 $menu-link-color : $text-color;
 $blue-background-text-color : #fff;
 $light-background-color : #{map-get( map-get($colors-lookup, 'default'), 'light')};
 $header-background-color : $light-background-color;
-$homepage-background-color : $blue-dark;
+$zone-background-color : $blue-dark;
 $border-width : 5px;
 $code-block-background-color : #{map-get( map-get($colors-lookup, 'default'), 'light')};
 $code-block-background-alt-color : #{map-get( map-get($colors-lookup, 'neutral'), 'light')}; /* TODO */

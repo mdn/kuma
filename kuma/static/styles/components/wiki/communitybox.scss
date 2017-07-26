@@ -71,11 +71,11 @@ ul.communitymailinglist { /* needs specificity to get past .text-content ul */
 .communitycontact a {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    @include rgba-fallback(border-bottom-color, #fff, .6, $homepage-background-color);
+    @include rgba-fallback(border-bottom-color, #fff, .6, $blue-dark);
 }
 
 .communitycontact a:hover,
 .communitycontact a:focus {
     text-decoration: none;
-    @include rgba-fallback(border-bottom-color, #fff, .9, $homepage-background-color);
+    @include rgba-fallback(border-bottom-color, #fff, .9, $blue-dark);
 }
