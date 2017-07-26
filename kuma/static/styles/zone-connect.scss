@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /*
 Connect zone
@@ -9,9 +9,9 @@ Connect zone
 /*
 imports
 ====================================================================== */
-@import 'zones-blue/base';
-@import 'zones-blue/components/dev-program';
-@import 'zones-blue/components/stack-form';
+@import 'zones/base';
+@import 'zones/components/dev-program';
+@import 'zones/components/stack-form';
 
 
 /*

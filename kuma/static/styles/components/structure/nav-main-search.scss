@@ -2,11 +2,6 @@
 search items in .main-nav
 ********************************************************************** */
 
-.nav-main-search-link {
-    // remove this and corresponding HTML after redesign lanuched
-    display: none;
-}
-
 .nav-main-search {
     display: block; // JS uses this to determine if we're in mobile or not
     position: relative;
@@ -40,7 +35,7 @@ search items in .main-nav
 }
 
 @media #{$mq-tablet-and-up} {
-    .main-nav-search {
+    .nav-main-search {
         display: list-item; // JS uses this to determine if we're in mobile or not
         @include bidi-value(float, right, left);
         @include bidi-value(text-align, right, left);

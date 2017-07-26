@@ -1,38 +1,4 @@
-{% if waffle.flag('redesign_beta') %}
-<div class="redesign-footer">
-<div class="center">
-  <h2>{{ _('Under Construction') }}</h2>
-  <p>
-    {% trans blog_url='https://blog.mozilla.org/opendesign/future-mdn-focus-web-docs/',
-             bug_url='https://bugzilla.mozilla.org/form.mdn#h=detail%7Cbug' %}
-    Thanks for helping us test the <a href="{{ blog_url }}">new MDN look</a>. Find anything wrong? Please <a href="{{ bug_url }}">file a bug</a>.
-    {% endtrans %}
-  </p>
-</div>
-</div>
-<div id="redesignNotice" class="redesign-notice hidden">
-  <h2>{{ _('Hello Beta Tester!') }}</h2>
-  <p>{{ _('We’re updating the look and navigation of MDN to more closely reflect our dedication to providing the best (and most platform-agnostic) web docs in the world. As a beta tester, you’re the first to see the new look, and we’d love to hear what you think.') }}</p>
-  <p>
-    {% if user.is_authenticated() %}
-      {% trans profile_url=url('users.user_edit', username=user.username) %}
-      You're seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on <a href="{{ profile_url }}">your profile page</a>.
-      {% endtrans %}
-    {% else %}
-      {{ _('You\'re seeing a preview of our new look. If you find anything wrong please file a bug (the link is in the footer) and you can opt out of being a beta tester on your profile page.') }}
-    {% endif %}
-  </p>
-  <p>{{ _('The changes will roll out to you (as a beta tester) over the next couple weeks, and to the world in mid-July.') }}</p>
-  <p>{{ _('We hope you love it and find it useful!') }}</p>
-  <p>
-    {% trans blog_url='https://blog.mozilla.org/opendesign/future-mdn-focus-web-docs/' %}
-    <a href="{{ blog_url }}">Read more about the redesign</a> in our blog post.
-    {% endtrans %}
-  </p>
-  <p>{{ _('Thanks for using MDN!') }} <br> {{ _('The MDN Web Docs Team') }}</p>
-<button id="redesignHide" type="button" class="only-icon transparent redesign-hide"><span>{{ _('Hide redesign announcement') }}</span><i aria-hidden="true" class="icon-times"></i></button>
-</div>
-{% elif waffle.flag('redesign_live') %}
+{% if waffle.flag('redesign_live') %}
 <div id="redesignNotice" class="redesign-notice hidden">
   <h2>{{ _('Why does MDN look different?') }}</h2>
   <p>{{ _('MDN is changing to focus just on documenting web technologies. All the same great content is still here; we’re just changing some visual elements and navigation, to help you more quickly find the web technology docs you’re looking for.') }}</p>

@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 main {
     background: inherit;
@@ -32,6 +32,18 @@ fieldset #{$selector-icon} {
     margin: 0 auto ($grid-spacing * 2);
     position: relative;
     width: 60%;
+
+    #search-q {
+        color: $form-text;
+        background: $form-background-color;
+        border: $form-border-width solid $form-border-color;
+        padding: $content-vertical-spacing $content-horizontal-spacing;
+        @include bidi-style(padding-left, 30px, padding-right, 0);
+        font-weight: bold;
+        border-radius: 0;
+
+        @include set-placeholder-style(color, $placeholder-text);
+    }
 
     .search-icon {
         position: absolute;
