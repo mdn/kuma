@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 .home-search-form {
     position: relative;
@@ -7,7 +7,6 @@
 
 .search-form {
     .search-filter-wrapper {
-        @include big-search();
         cursor: text;
         padding: $input-padding;
         position: relative;
@@ -44,7 +43,6 @@
     }
 
     .suggestions {
-        @include big-search();
         border-radius: 0;
         color: #fff;
         max-height: 300px;
@@ -76,7 +74,7 @@
                 &:hover,
                 &:focus,
                 &.selected {
-                    background: $homepage-background-color;
+                    background: $blue-dark;
                     color: #fff !important; /* stylelint-disable-line declaration-no-important */
                     text-decoration: none;
                 }
@@ -100,7 +98,7 @@
         span.topic {
             /* stylelint-disable declaration-no-important */
             display: inline-block;
-            background-color: $homepage-background-color !important;
+            background-color: $blue-dark !important;
             box-shadow: none;
             color: #fff !important;
             cursor: default !important;

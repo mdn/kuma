@@ -1,0 +1,49 @@
+/*
+Zone styles
+********************************************************************** */
+
+/*
+All zones need these styles
+====================================================================== */
+@import 'components/article-header';
+@import 'components/callout';
+@import 'components/image';
+@import 'components/landing';
+@import 'components/subnav';
+
+.zone {
+    @include use-white-logo();
+    @include remove-main-spacing();
+    @include override-main-header-color($blue-background-text-color, $zone-background-color);
+    background-color: $zone-background-color;
+
+    #main-header {
+        @include rgba-fallback(border-bottom-color, #fff, .2, $zone-background-color);
+    }
+
+    /* zone content area needs to be adjusted for zone pages */
+    main {
+        background: transparent;
+    }
+
+    .wiki-main-content {
+        padding-top: $first-content-top-padding !important; /* stylelint-disable-line declaration-no-important */
+
+        .center {
+            @include add-center-spacing();
+        }
+    }
+
+    .masthead-text {
+        width: -calc-col-width(6);
+
+        p {
+            /* margin causes space between bottom of .zone-landing-header-preview
+               and top of wiki-main-content which causes some zone landing
+               images to appear cut-off if there is no subnav present so we spap
+               margin for padding */
+            margin-bottom: 0;
+            padding-bottom: $grid-spacing;
+        }
+    }
+}

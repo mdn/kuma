@@ -624,14 +624,6 @@ def pipeline_one_scss(slug):
 
 
 PIPELINE_CSS = {
-    'mdn-blue': {
-        'source_filenames': (
-            'styles/font-awesome.scss',
-            'styles/main-blue.scss',
-        ),
-        'output_filename': 'build/styles/mdn-blue.css',
-        'variant': 'datauri',
-    },
     'mdn': {
         'source_filenames': (
             'styles/font-awesome.scss',
@@ -654,13 +646,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/gaia.css',
     },
-    'home-blue': {
-        'source_filenames': (
-            'styles/home-blue.scss',
-        ),
-        'output_filename': 'build/styles/home-blue.css',
-        'variant': 'datauri',
-    },
     'home': {
         'source_filenames': (
             'styles/home.scss',
@@ -679,21 +664,6 @@ PIPELINE_CSS = {
             'styles/search-suggestions.scss',
         ),
         'output_filename': 'build/styles/search-suggestions.css',
-    },
-    'wiki-blue': {
-        'source_filenames': (
-            'styles/wiki-blue.scss',
-            'styles/diff.scss',
-
-            # Custom build of our Prism theme
-            'styles/libs/prism/prism.css',
-            'styles/libs/prism/prism-line-highlight.css',
-            'styles/libs/prism/prism-line-numbers.css',
-
-            'js/prism-mdn/components/prism-json.css',
-            'styles/wiki-syntax.scss',
-        ),
-        'output_filename': 'build/styles/wiki-blue.css',
     },
     'wiki': {
         'source_filenames': (
@@ -868,17 +838,6 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
-    'editor-content-blue': {
-        'source_filenames': (
-            'styles/main-blue.scss',
-            'styles/wiki-blue.scss',
-            'styles/wiki-wysiwyg.scss',
-            'styles/wiki-syntax.scss',
-            'styles/libs/font-awesome/css/font-awesome.min.css',
-        ),
-        'output_filename': 'build/styles/editor-content-blue.css',
-        'template_name': 'pipeline/javascript-array.jinja',
-    },
     # for maintenance mode page
     'maintenance-mode': {
         'source_filenames': (
@@ -945,12 +904,6 @@ PIPELINE_JS = {
             'js/font-check.js',
         ),
         'output_filename': 'build/js/font-check.js',
-    },
-    'font-check-blue': {
-        'source_filenames': (
-            'js/font-check-blue.js',
-        ),
-        'output_filename': 'build/js/font-check-blue.js',
     },
     'main': {
         'source_filenames': (

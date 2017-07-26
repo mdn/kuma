@@ -2,8 +2,6 @@
 Full size form on home and search pages
 ********************************************************************** */
 
-
-#search-form .search-form, // remove extra specificity when integrating redesign
 .search-form {
     display: block;
     margin: $grid-spacing auto ($grid-spacing * 2) auto;
@@ -52,7 +50,6 @@ Full size form on home and search pages
 
 @media #{$mq-small-desktop-and-up} {
 
-    #search-form .search-form, // remove extra specificity when integrating redesign
     .search-form {
 
         &.home-search-form {
@@ -74,21 +71,5 @@ Full size form on home and search pages
                 @include bidi-style(left, 54px, right, auto);
             }
         }
-    }
-}
-
-/* hack for search in redesign move to search.scss when integrating redesign */
-.results-search-form {
-
-    #search-q {
-        color: $form-text;
-        background: $form-background-color;
-        border: $form-border-width solid $form-border-color;
-        padding: $content-vertical-spacing $content-horizontal-spacing;
-        @include bidi-style(padding-left, 30px, padding-right, 0);
-        font-weight: bold;
-        border-radius: 0;
-
-        @include set-placeholder-style(color, $placeholder-text);
     }
 }

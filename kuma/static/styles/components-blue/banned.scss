@@ -1,9 +1,0 @@
-/*
-A style for highlighting information about user bans
-********************************************************************** */
-
-.banned {
-    color: $negative;
-    @include set-smaller-font-size();
-    font-style: italic;
-}

@@ -2,45 +2,45 @@
 Styles for the new article, article edit, article translation, and page move templates.
 ********************************************************************** */
 
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
-@import 'components-blue/tagit';
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'components/tagit';
 
-@import 'components-blue/wiki/edit/vars';
-@import 'components-blue/wiki/edit/editing';
-@import 'components-blue/wiki/edit/cke';
-@import 'components-blue/wiki/edit/page-attachments';
-@import 'components-blue/wiki/edit/save-and-edit-target';
-@import 'components-blue/wiki/edit/guide-links';
-@import 'components-blue/wiki/edit/draft-status';
-@import 'components-blue/wiki/edit/first-contrib-welcome';
-@import 'components-blue/wiki/edit/page-comment';
-@import 'components-blue/wiki/edit/description';
+@import 'components/wiki/edit/vars';
+@import 'components/wiki/edit/editing';
+@import 'components/wiki/edit/cke';
+@import 'components/wiki/edit/page-attachments';
+@import 'components/wiki/edit/save-and-edit-target';
+@import 'components/wiki/edit/guide-links';
+@import 'components/wiki/edit/draft-status';
+@import 'components/wiki/edit/first-contrib-welcome';
+@import 'components/wiki/edit/page-comment';
+@import 'components/wiki/edit/description';
 
 
 /*
 Meta data for pages
 ====================================================================== */
 
-@import 'components-blue/wiki/edit/metadata';
-@import 'components-blue/wiki/edit/duration-container';
+@import 'components/wiki/edit/metadata';
+@import 'components/wiki/edit/duration-container';
 
 
 /*
 Move page
 ====================================================================== */
 
-@import 'components-blue/wiki/edit/move-page';
+@import 'components/wiki/edit/move-page';
 
 
 /*
 Translate interface.
 ====================================================================== */
 
-@import 'components-blue/wiki/edit/translate/structure';
-@import 'components-blue/wiki/edit/translate/translate-document';
-@import 'components-blue/wiki/edit/translate/content-fields';
-@import 'components-blue/wiki/edit/translate/translate-source';
-@import 'components-blue/wiki/edit/translate/translate-buttons';
-@import 'components-blue/wiki/edit/translate/approved-localized';
-@import 'components-blue/wiki/edit/translate/change-locale';
+@import 'components/wiki/edit/translate/structure';
+@import 'components/wiki/edit/translate/translate-document';
+@import 'components/wiki/edit/translate/content-fields';
+@import 'components/wiki/edit/translate/translate-source';
+@import 'components/wiki/edit/translate/translate-buttons';
+@import 'components/wiki/edit/translate/approved-localized';
+@import 'components/wiki/edit/translate/change-locale';

@@ -3,13 +3,9 @@
 {% block body_attributes %}id="home"{% endblock %}
 
 {% block site_css %}
-	{{ super() }}
+  {{ super() }}
 
-    {% if waffle.flag('redesign') %}
-        {% stylesheet 'home' %}
-    {% else %}
-        {% stylesheet 'home-blue' %}
-    {% endif %}
+  {% stylesheet 'home' %}
 {% endblock %}
 
 {% block extrahead %}
@@ -34,11 +30,7 @@
 
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
-    {% if waffle.flag('redesign') %}
-        <h1 class="highlight highlight-spanned"><span class="highlight-span">{{ _('Resources for developers, by developers.') }}</span></h1>
-    {% else %}
-        <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
-    {% endif %}
+    <h1 class="highlight highlight-spanned"><span class="highlight-span">{{ _('Resources for developers, by developers.') }}</span></h1>
 
     {% if waffle.flag('search_suggestions') %}
         <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
@@ -74,96 +66,24 @@
         </form>
     {% endif %}
 
-  {% if waffle.flag('redesign') %}
-  <ul class="home-features">
-    <li><a href="{{ wiki_url('Web') }}" class="cta-link">{{ _('Web Technologies') }}</a></li>
-    <li><a href="{{ wiki_url('Learn') }}" class="cta-link">{{ _('Learn web development') }}</a></li>
-    <li><a href="{{ wiki_url('Tools') }}" class="cta-link">{{ _('Developer Tools') }}</a></li>
-  </ul>
-  {% else %}
-  <div class="home-features {% if waffle.switch('newsletter') %}home-features-newsletter{% endif %}">
-    <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
-    <div class="column-container">
-      <div class="column-feature">
-        <h3><i aria-hidden="true" class="icon-file-text"></i><span>{{ _('Web<br />Technologies') }}</span></h3>
-        <ul>
-          <li><a href="{{ wiki_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
-          <li><a href="{{ wiki_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
-          <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
-          <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
-          <li><a href="{{ wiki_url('Web') }}">{{ _('more...') }}</a></li>
-        </ul>
-      </div>
-      <div class="column-feature">
-        <h3><i aria-hidden="true" class="icon-graduation-cap"></i><span>{{ _('Learn') }}</span></h3>
-        <ul>
-          <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn web development') }}</a></li>
-          <li><a href="{{ wiki_url('Learn/Getting_started_with_the_web') }}">{{ _('Getting started with the Web') }}</a></li>
-          <li><a href="{{ wiki_url('Learn/HTML/') }}">{{ _('Learn HTML') }}</a></li>
-          <li><a href="{{ wiki_url('Learn/CSS/') }}">{{ _('Learn CSS') }}</a></li>
-          <li><a href="{{ wiki_url('Learn/JavaScript/') }}">{{ _('Learn JavaScript') }}</a></li>
-        </ul>
-      </div>
-      <div class="column-feature">
-        <h3><i aria-hidden="true" class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
-        <ul>
-          <li><a href="{{ wiki_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
-          <li><a href="{{ wiki_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
-          <li><a href="{{ wiki_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
-          <li><a href="{{ wiki_url('Tools/Performance') }}">{{ _('Performance Tools') }}</a></li>
-          <li><a href="{{ wiki_url('Tools') }}">{{ _('more...') }}</a></li>
-        </ul>
-      </div>
-    </div>
-    {% if waffle.switch('newsletter') %}
-      <div class="feature-newsletter">
-        {% include "includes/newsletter.html" %}
-      </div>
-    {% endif %}
-  </div>
-  {% endif %}
-
+    <ul class="home-features">
+      <li><a href="{{ wiki_url('Web') }}" class="cta-link">{{ _('Web Technologies') }}</a></li>
+      <li><a href="{{ wiki_url('Learn') }}" class="cta-link">{{ _('Learn web development') }}</a></li>
+      <li><a href="{{ wiki_url('Tools') }}" class="cta-link">{{ _('Developer Tools') }}</a></li>
+    </ul>
 </div></div>
 
 <!-- callout area -->
-{% if waffle.flag('redesign') %}
-  <div class="home-callouts">
-    <h2 class="offscreen">{{ _('Featured') }}</h2>
-    <div class="column-container center">
-      {% if waffle.switch('foundation_callout') %}
-        <div class="column-callout callout-foundation">
-          <a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=tiles&utm_campaign=EOY2016&utm_content=pixelheart">
-            <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
-          </a>
-        </div>
-      {% else %}
-        <div class="column-callout callout-saucelabs">
-          <a href="https://www.saucelabs.com/cross-browser-testing-tutorial?utm_campaign=cbt&amp;utm_medium=banner&amp;utm_source=home-page">
-            <span>
-              <p>{{ _('Test in Firefox and over 800 browser/OS combos with Mozilla and Sauce Labs') }}</p>
-              <button type="button">{{ _('Test on Sauce Labs') }}</button>
-            </span>
-          </a>
-        </div>
-      {% endif %}
-      {% if waffle.switch('newsletter') %}
-      <div class="column-callout callout-newsletter">
-        {% include "includes/newsletter.html" %}
+<div class="home-callouts">
+  <h2 class="offscreen">{{ _('Featured') }}</h2>
+  <div class="column-container center">
+    {% if waffle.switch('foundation_callout') %}
+      <div class="column-callout callout-foundation">
+        <a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=tiles&utm_campaign=EOY2016&utm_content=pixelheart">
+          <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
+        </a>
       </div>
-      {% else %}
-        <div class="column-callout callout-learn">
-          <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
-        </div>
-        <div class="column-callout callout-deved">
-          <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
-        </div>
-      {% endif %}
-    </div>
-  </div>
-{% else %}
-  <div class="home-callouts">
-    <h2 class="offscreen">{{ _('Open Web and Mobile') }}</h2>
-    <div class="column-container center">
+    {% else %}
       <div class="column-callout callout-saucelabs">
         <a href="https://www.saucelabs.com/cross-browser-testing-tutorial?utm_campaign=cbt&amp;utm_medium=banner&amp;utm_source=home-page">
           <span>
@@ -172,23 +92,21 @@
           </span>
         </a>
       </div>
+    {% endif %}
+    {% if waffle.switch('newsletter') %}
+    <div class="column-callout callout-newsletter">
+      {% include "includes/newsletter.html" %}
+    </div>
+    {% else %}
       <div class="column-callout callout-learn">
         <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
       </div>
-    {% if waffle.switch('foundation_callout') %}
-      <div class="column-callout callout-foundation">
-        <a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=tiles&utm_campaign=EOY2016&utm_content=pixelheart">
-          <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
-        </a>
-      </div>
-    {% else %}
       <div class="column-callout callout-deved">
         <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
       </div>
     {% endif %}
-    </div>
   </div>
-{% endif %}
+</div>
 
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">

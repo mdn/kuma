@@ -1,0 +1,42 @@
+/*
+fancy quotes in MDN 10 zone
+********************************************************************** */
+
+.quote {
+    margin-bottom: $grid-spacing;
+    padding: $grid-spacing;
+    border: 1px solid $zone-background-color;
+    color: $zone-background-color;
+    text-align: center;
+
+    blockquote {
+        position: relative;
+        border: none;
+        padding: 0;
+        background-color: inherit;
+
+        font-family: $heading-font-family;
+        font-style: italic;
+        font-size: $larger-font-size;
+        #{$selector-heading-font-fallback} {
+            font-family: $heading-font-family-fallback;
+        }
+    }
+
+    blockquote:before,
+    blockquote:after {
+        position: static;
+        color: $zone-background-color;
+        font-size: 2rem;
+        font-family: sans-serif;
+        line-height: 1;
+    }
+
+    blockquote:before {
+        content: '“ ';
+    }
+
+    blockquote:after {
+        content: ' ”';
+    }
+}
