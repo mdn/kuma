@@ -167,21 +167,7 @@
 
       <!-- heading -->
       <div id="wiki-document-head" class="document-head">
-        {% if has_contributors and not waffle.flag('redesign')%}
-        <div class="contributor-avatars" data-all-text="{{ _('see all contributors') }}" data-alternate-message="{{ _('hide contributors') }}" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
-            <ul>
-            {% for contributor in contributors %}
-                <li class="{% if loop.index > contributors_limit %}hidden{% else %}shown{% endif %}">
-                <a href="{{ url('users.user_detail', username=contributor.username) }}" title="{% trans username=contributor.username %}View profile: {{ username }}{% endtrans %}">
-                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ contributor.gravatar_34 }}">{{ contributor.username }}</noscript></a>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
         <h1 class="{% if document.title|length > 12 %}small-mobile-overflow{% endif %}{% if document.title|length > 19 %} mobile-overflow{% endif %}{% if document.title|length > 31 %} tablet-overflow{% endif %}{% if document.title|length > 42 %} small-desktop-overflow{% endif %}{% if document.title|length > 37 %} large-desktop-overflow{% endif %}">{{ document.title }}</h1>
-
       </div>
       {% endif %}
 
@@ -345,12 +331,6 @@
                   {% endif %}
                 </div>
               {% endif %}
-
-              {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') and not waffle.flag('redesign') %}
-                  <div class="newsletter-box">
-                    {% include "includes/newsletter.html" %}
-                  </div>
-              {% endif %}
             </div>
 
             {% if show_left %}
@@ -383,7 +363,7 @@
       </div>
     </div> <!-- ends "main-content" -->
 
-    {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') and waffle.flag('redesign') %}
+    {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') %}
       <div class="newsletter-box">
       {% include "includes/newsletter.html" %}
       </div>

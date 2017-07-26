@@ -11,11 +11,7 @@
 {% block site_css %}
     {{ super() }}
 
-    {% if waffle.flag('redesign') %}
-        {% stylesheet 'wiki' %}
-    {% else %}
-        {% stylesheet 'wiki-blue' %}
-    {% endif %}
+    {% stylesheet 'wiki' %}
 
 {% endblock %}
 

@@ -1,9 +1,0 @@
-.draft-container {
-    margin-bottom: $content-vertical-spacing;
-    @include set-smaller-font-size();
-    font-weight: bold;
-}
-
-.draft-container em {
-    font-weight: normal;
-}
