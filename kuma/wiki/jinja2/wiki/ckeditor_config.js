@@ -54,7 +54,7 @@
       'mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,' +
       'mdn-toggle-block,mdn-wrapstyle,mdn-youtube,' +
       // Other plugins.
-      'descriptionlist,tablesort,texzilla';
+      'descriptionlist,tablesort,texzilla,wordcount';
 
     config.removeButtons = 'Cut,Copy,PasteFromWord,Language';
     config.toolbarGroups = [
@@ -157,6 +157,7 @@
         { name: 'Hidden When Reading', element: 'div', attributes: { 'class': 'hidden' }, type: 'wrap' }
       ]);
     }
+
     config.keystrokes = [
       // CTRL+0
       [ CKEDITOR.CTRL + 48, 'removeFormat' ],
@@ -190,6 +191,41 @@
       // CTRL+P
       CKEDITOR.CTRL + 80
     ] );
+
+    // Configure the word count plugin. It will ignore the following:
+    //
+    // * <div> and <p> blocks with the class "hidden" applied
+    // * <div> blocks with the class "prevnext" (that is, Previous and
+    //   Next buttons at the top and/or bottom of pages)
+    //
+    // NOTE: The docs for the wordcount plugin say that the notification
+    //       plugin is required; that is only true if you set maximum
+    //       character, word, or paragraph counts, which we do not.
+
+    config.wordcount = {
+        showParagraphs: true,
+        showWordCount: true,
+/*--- For more on filters:
+ *        https://github.com/w8tcha/CKEditor-WordCount-Plugin
+ *        http://docs.ckeditor.com/#!/api/CKEDITOR.htmlParser.filter
+ *        https://github.com/w8tcha/CKEditor-WordCount-Plugin/blob/master/wordcount/plugin.js#L58
+*/
+        filter: new CKEDITOR.htmlParser.filter({
+            elements: {
+                div: function(element) {
+                    if (element.hasClass("hidden") ||
+                        element.hasClass("prevnext")) {
+                        element.setHtml("");
+                    }
+                },
+                p: function(element) {
+                    if (element.hasClass("hidden")) {
+                        element.setHtml("");
+                    }
+                }
+            }
+        })
+    };
 
     {{ editor_config|safe }}
   };
