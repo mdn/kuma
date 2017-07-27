@@ -3,8 +3,7 @@ wiki article cookie crumbs
 ********************************************************************** */
 
 .crumbs {
-    margin-bottom: ($grid-spacing / 2);
-
+    display: inline-block;
     @include set-smaller-font-size();
 
     li {
