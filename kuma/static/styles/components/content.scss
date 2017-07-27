@@ -14,11 +14,7 @@ $table-cell-border: 2px solid #fff;
     headings
     ====================================================================== */
 
-    h3 {
-        @extend %highlight;
-    }
-
-    h4 {
+    h2 {
         @extend %highlight;
     }
 
