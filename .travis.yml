@@ -51,6 +51,9 @@ matrix:
     allow_failures:
         - env: TOXENV=locales INSTALL_DOCKER_COMPOSE=1
         - env: TOXENV=py27 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
+        # http://status.quay.io - heavy DB usage on Jul 26
+        - env: TOXENV=docker INSTALL_DOCKER_COMPOSE=1 UID=0
+
 install:
     - nvm install 6
     - nvm use 6
