@@ -45,14 +45,14 @@ def test_gather_homepage(client, db):
     # The exact list of resources will change as the homepage changes
     expected_paths = [
         '/en-US/docs/Learn',
-        '/en-US/docs/Mozilla/Firefox',
+        '/en-US/docs/Tools',
         '/en-US/docs/Web/JavaScript',
     ]
     for path in expected_paths:
         spec = ('document', path, {})
         assert spec in resources
 
-    # These appear on the homepage, but shouldn't in the paths to scrape
+    # These appear on the homepage, but shouldn't be in the paths to scrape
     unexpected_paths = [
         '/en-US/search',
     ]
