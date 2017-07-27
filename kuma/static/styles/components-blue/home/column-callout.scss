@@ -108,49 +108,6 @@ Colours and icons
     }
 }
 
-/*
-DevRel Survey promo
--------------------------------------------------------------- */
-.callout-devrel {
-    background-color: #80cff7;
-
-    a {
-        @include set-font-size(14px);
-
-        &:after {
-            @include bidi-style(right, 20px, right, auto);
-            @include bidi-style(left, auto, left, 20px);
-            background-image: url($path-to-embedded-images + 'promos/devrel-survey-icon.png');
-            top: 15px;
-            height: 140px;
-            width: 129px;
-        }
-
-        &:before {
-            content: none;
-            display: none;
-        }
-
-        p {
-            color: #000;
-            margin-bottom: 0;
-        }
-
-        button {
-            @include bidi-style(text-align, left, text-align, right);
-            display: inline-block;
-            background: #80cff7;
-            color: #000;
-            margin-top: 14px;
-            padding: 10px 15px;
-            border: 3px solid #fff;
-            border-radius: 0;
-            box-shadow: none;
-            font-weight: bold;
-            text-transform: none;
-        }
-    }
-}
 
 /*
 Promos
