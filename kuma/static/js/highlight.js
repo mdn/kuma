@@ -10,7 +10,7 @@
     }
 
     // call on aritcle body with h3 and h4 as targets
-    var $articleSubHeads = $('#wikiArticle h3, #wikiArticle h4');
+    var $articleSubHeads = $('#wikiArticle h2');
     highlight($articleSubHeads);
 
 })(jQuery);

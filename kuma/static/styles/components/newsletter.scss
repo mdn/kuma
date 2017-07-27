@@ -291,7 +291,7 @@ article page modifications
     .newsletter-box {
 
         .newsletter-teaser {
-            @include set-font-size($large-screen-h2-font-size);
+            @include set-font-size($h1-font-size);
         }
 
         .newsletter-description {

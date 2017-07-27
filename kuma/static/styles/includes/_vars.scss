@@ -122,19 +122,15 @@ $diff-font-family: $code-inline-font-family;
 /*
 sizes
 ====================================================================== */
-$h1-font-size: 50px;
-$h2-font-size: 38px;
-$h3-font-size: 24px;
+$h1-font-size: 48px;
+$h2-font-size: 24px;
+$h3-font-size: 22px;
 $h4-font-size: 20px;
 $callout-font-size: 22px;
 $note-font-size: 18px;
 $body-font-size: 16px;
 $form-font-size: $body-font-size;
 $tiny-font-size: 12px;
-
-/* for large screens */
-$large-screen-h1-font-size: 72px;
-$large-screen-h2-font-size: 48px;
 
 /* bumps */
 $larger-font-size: $callout-font-size;

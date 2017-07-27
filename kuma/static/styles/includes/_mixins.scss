@@ -397,10 +397,6 @@ These are not dynamic but serve as mixins
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
-
-    @media #{$mq-small-desktop-and-up} {
-        @include set-font-size($large-screen-h1-font-size);
-    }
 }
 
 @mixin heading-2() {
@@ -409,10 +405,6 @@ These are not dynamic but serve as mixins
     line-height: 1;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
-    }
-
-    @media #{$mq-small-desktop-and-up} {
-        @include set-font-size($large-screen-h2-font-size);
     }
 }
 
