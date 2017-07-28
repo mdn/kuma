@@ -255,6 +255,7 @@ article page modifications
     position: relative;
     border-top: 2px solid $text-color;
     padding: $grid-spacing 0;
+    margin-top: $grid-spacing * 2;
     background-color: #fff;
 
     &.hidden {
