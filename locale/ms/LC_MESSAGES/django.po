@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2017-07-25 11:24-0700\n"
-"PO-Revision-Date: 2017-07-26 00:21+0000\n"
+"PO-Revision-Date: 2017-07-28 02:07+0000\n"
 "Last-Translator: manxmensch <manxmensch@gmail.com>\n"
 "Language-Team: Malay https://pontoon.mozilla.org/ms/\n"
 "Language: ms\n"
@@ -947,7 +947,7 @@ msgid ""
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
 "Ini ialah kunci API anda. Kunci ini berguna untuk anda membina aplikasi yang melaksanakan tugasan di MDN bagi pihak anda. Jika anda berhenti menggunakannya, atau anda syak akaun anda telah terdedah "
-"kepada pihak yang anda tidak percaya, hapuskan kunci ini. Mudah sahaja untuk mencipta kunci gantian pada bila-bila masa."
+"kepada pihak yang anda tidak percaya, hapus kunci ini. Mudah sahaja untuk mencipta kunci gantian pada bila-bila masa."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -1283,7 +1283,7 @@ msgstr "baru"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:38 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
-msgstr "dihapus"
+msgstr "dihapuskan"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:55
 msgid "IP:"
@@ -1863,7 +1863,7 @@ msgid ""
 "rel=\"nofollow\">file a bug</a>."
 msgstr ""
 "Maaf, anda perlu ada sekurang-kurangnya satu akaun yang dihubungkan supaya anda boleh mendaftar masuk. Untuk memutuskan hubungan akaun ini, hubungkan dengan akaun lain terlebih dahulu. Untuk "
-"menghapus profil MDN sila <a href=\"%(bug_form_url)s\" rel=\"nofollow\">failkan pepijat</a>."
+"menghapuskan profil MDN sila <a href=\"%(bug_form_url)s\" rel=\"nofollow\">failkan pepijat</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -2569,7 +2569,7 @@ msgstr "Kami sedih kerana kehilangan anda."
 #: kuma/users/jinja2/users/user_delete.html:31
 msgid "While it's possible delete your account, we can't delete any revisions (page changes) you've made, and our content license requires that your revisions have an attribution."
 msgstr ""
-"Walaupun akaun anda mungkin dihapus, kami tidak akan menghapuskan sebarang semakan (pindaan dalam halaman) yang telah anda buat kerana kandungan lesen kami mensyaratkan bahawa semakan anda itu "
+"Walaupun anda boleh hapus akaun anda, kami tidak akan menghapuskan sebarang semakan (pindaan dalam halaman) yang telah anda buat kerana kandungan lesen kami mensyaratkan bahawa semakan anda itu "
 "diiktiraf sebagai sumbangan."
 
 #: kuma/users/jinja2/users/user_delete.html:38
@@ -2578,15 +2578,15 @@ msgstr "Sila failkan pepijat untuk permintaan menutup akaun anda, dan pastikan s
 
 #: kuma/users/jinja2/users/user_delete.html:57
 msgid "I haven't changed any pages; just delete my account."
-msgstr "Saya tidak pernah meminda mana-mana halaman; hapuskan sahaja akaun saya."
+msgstr "Saya tidak pernah meminda mana-mana halaman; hapus sahaja akaun saya."
 
 #: kuma/users/jinja2/users/user_delete.html:62
 msgid "Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again."
-msgstr "Kekalkan sumbangan saya meminda halaman; hapuskan alamat e-mel saya dan bekukan akaun saya supaya saya tidak boleh lagi log masuk."
+msgstr "Kekalkan sumbangan saya meminda halaman; hapus alamat e-mel saya dan bekukan akaun saya supaya saya tidak boleh lagi log masuk."
 
 #: kuma/users/jinja2/users/user_delete.html:67
 msgid "Switch all my attributions for page changes to \"Anonymous\", and delete my account."
-msgstr "Tukar semua sumbangan pindaan halaman saya menjadi \"Anonimus\", dan hapuskan akaun saya."
+msgstr "Tukar semua sumbangan pindaan halaman saya menjadi \"Anonimus\", dan hapus akaun saya."
 
 #: kuma/users/jinja2/users/user_delete.html:70
 msgid "File a bug to close your account"
@@ -2685,7 +2685,7 @@ msgstr "Terbitkan"
 
 #: kuma/users/jinja2/users/user_edit.html:120
 msgid "Delete your account."
-msgstr "Hapuskan akaun anda."
+msgstr "Hapus akaun anda."
 
 #: kuma/users/jinja2/users/user_edit.html:128
 msgid "Manage your Mozilla Newsletter Subscriptions."
@@ -3338,7 +3338,7 @@ msgstr "Hapus Dokumen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:10
 msgid "Cannot delete pages with children until we fix this bug:"
-msgstr "Tidak dapat menghapus halaman dengan anak dokumen sehingga kami memperbaiki pepijat ini:"
+msgstr "Tidak dapat menghapuskan halaman dengan dokumen berkaitan sehingga kami memperbaiki pepijat ini:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:18 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:22
 msgid "Creator"
@@ -3358,7 +3358,7 @@ msgstr "Tarikh Terakhir Diubah"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:34
 msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
-msgstr "Anda akan hapuskan dokumen ini dan semua semakannya. Maklumkan kepada kami alasan untuk halaman ini perlu dihapuskan."
+msgstr "Anda akan menghapuskan dokumen ini dan semua semakannya. Maklumkan kepada kami alasan untuk halaman ini perlu dihapuskan."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:41
 msgid "Are you sure you want to continue?"
@@ -4318,7 +4318,7 @@ msgstr "Ada ralat menjana kandungan."
 
 #: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr "Dokumen sudah wujud. Nota: Anda tidak boleh pinda dokumen yang telah dialih sehingga anda hapus hala semula."
+msgstr "Dokumen sudah wujud. Nota: Anda tidak boleh pinda dokumen yang telah dialih sehingga anda menghapuskan hala semulanya."
 
 #: kuma/wiki/views/document.py:656
 #, python-format
