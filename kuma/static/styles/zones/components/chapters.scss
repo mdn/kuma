@@ -42,21 +42,17 @@ individual boxes
     }
 
     h2 {
+        margin-top: 0;
+        padding: 0 !important; /* stylelint-disable declaration-no-important */
         @include vendorize(hyphens, none);
 
         small {
-            display: block;
             margin: 12px 0;
-
             @include set-font-size(18px);
-            font-family: $heading-font-family;
-            line-height: 1;
-            letter-spacing: -.014em;
-            #{$selector-site-font-fallback} {
-                font-family: $heading-font-family-fallback;
-                line-height: 1;
-                letter-spacing: -.044em;
-                word-spacing: .22em;
+
+            &:before {
+                content: '\A';
+                white-space: pre;
             }
         }
     }

@@ -27,10 +27,6 @@ Main header, wraps all components of logo, main, and secondary navigation
     overflow: hidden;
 }
 
-.zone #main-header .logo {
-    background-position: 100% -58px !important; /* stylelint-disable-line declaration-no-important */
-}
-
 @media #{$mq-tablet-and-up} {
     #main-header {
         padding-top: 0;

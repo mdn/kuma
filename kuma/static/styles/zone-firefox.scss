@@ -16,12 +16,4 @@ imports
 header modifications
 ====================================================================== */
 
-.zone-image {
-    background-image: url($path-to-images + 'zones/firefox_logo.png');
-
-    .zone-landing-header & {
-        @include bidi-value(background-position, top right, top left);
-        background-size: 100% auto;
-        bottom: 0;
-    }
-}
+@include zone-image('firefox.svg', 53.55, 52.72);

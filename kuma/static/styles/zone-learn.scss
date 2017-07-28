@@ -16,6 +16,4 @@ imports
 header modifications
 ====================================================================== */
 
-.zone-image {
-    background-image: url($path-to-images + 'zones/learning-logo-small.png');
-}
+@include zone-image('learn.svg', 46.59, 57);

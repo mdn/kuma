@@ -17,25 +17,8 @@ imports
 /*
 header modifications
 ====================================================================== */
-.zone {
-    background-color: rgb(245, 241, 232);
-}
 
-.zone-image {
-    background-image: url($path-to-images + 'zones/firefox_logo.png');
-
-    .zone-landing-header & {
-        @include bidi-value(background-position, top right, top left);
-        background-size: 100% auto;
-        bottom: 0;
-    }
-}
-
-.masthead-text,
-.zone-landing h1 {
-    color: rgb(52, 52, 52) !important; /* stylelint-disable-line declaration-no-important */
-    padding-bottom: 20px;
-}
+@include zone-image('firefox.svg', 53.55, 52.72);
 
 
 /* =================================================================== */

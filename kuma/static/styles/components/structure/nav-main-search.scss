@@ -19,15 +19,6 @@ search items in .main-nav
     }
 }
 
-.zone .search-wrap {
-    background-color: transparent !important; /* stylelint-disable-line declaration-no-important */
-}
-
-.zone #main-header  .search-wrap input,
-.zone #main-header .search-wrap i {
-    color: $form-text !important; /* stylelint-disable-line declaration-no-important */
-}
-
 #main-q {
     width: 100%;
     margin: $content-vertical-spacing auto;
@@ -60,10 +51,6 @@ search items in .main-nav
         &.expanded {
             width: 500px;
         }
-    }
-
-    .zone #main-header .search-wrap i {
-        color: #fff !important; /* stylelint-disable-line declaration-no-important */
     }
 
     #main-q {

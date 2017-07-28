@@ -7,11 +7,6 @@ $see-also-outdent : 6px;
 
     @include set-smaller-font-size();
 
-    /* need to give it a fake border when appearing on zones */
-    .zone-landing-header-preview-base & {
-        box-shadow: ($see-also-outdent * -1) 0 0 #fff;
-    }
-
     a {
         color: $text-color;
         display: inline-block;

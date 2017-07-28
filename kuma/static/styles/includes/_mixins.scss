@@ -274,53 +274,6 @@ Spacing
     padding-right: 0;
 }
 
-/*
-Home & Zones
-====================================================================== */
-
-/* generates a background property for header and zones */
-@mixin create-gradient-background($color : '', $use-gradient : false) {
-    @if ($use-gradient) {
-        background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'mdn-header-gradient.png');
-        background-repeat: repeat, repeat-x;
-    }
-    @else {
-        background-image: url($path-to-images + 'header-background.png');
-        background-repeat: repeat;
-    }
-    background-position: 0 0, 0 0, 0 0;
-    @if ($color) {
-        background-color: $color;
-    }
-}
-
-/* overrides the navigation menu color - zones and homepage */
-@mixin override-main-header-color($hex, $bg) {
-    #tabzilla:before {
-        background-color: transparent;
-    }
-
-    #main-header,
-    #main-header a,
-    #main-header .logout {
-        color: $hex;
-    }
-
-    .search-wrap {
-        @include rgba-fallback(background-color, #fff, .4, $bg);
-
-        input,
-        i,
-        .search-trigger {
-            color: $hex !important; /* stylelint-disable-line declaration-no-important */
-        }
-
-        input {
-            @include set-placeholder-style(color, $hex);
-        }
-    }
-}
-
 
 /* =================================================================== */
 

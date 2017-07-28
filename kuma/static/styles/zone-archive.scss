@@ -17,6 +17,4 @@ imports
 header modifications
 ====================================================================== */
 
-.zone-image {
-    background-image: url($path-to-images + 'zones/Nuvola_apps_important.png');
-}
+@include zone-image('archive.svg', 47.71, 53.22);

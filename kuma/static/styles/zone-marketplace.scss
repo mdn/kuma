@@ -15,16 +15,5 @@ imports
 /*
 header modifications
 ====================================================================== */
-.zone-image {
-    background-image: url($path-to-images + 'zones/fx-marketplace-icon.png');
 
-    .zone-landing-header & {
-        @include bidi-value(background-position, 0 0, 0 0);
-        background-size: 120% auto;
-        bottom: 0;
-
-        @media #{$mq-tablet-and-down} {
-            @include bidi-value(background-position, bottom center, bottom center);
-        }
-    }
-}
+@include zone-image('marketplace.svg', 59.21, 55.56);
