@@ -1,3 +1,6 @@
 [submodule "kumascript"]
 	path = kumascript
 	url = git://github.com/mozilla/kumascript.git
+[submodule "locale"]
+	path = locale
+	url = git://github.com/mozilla-l10n/mdn-l10n.git
