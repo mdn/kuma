@@ -70,7 +70,7 @@ localeextract:
 	python manage.py merge
 
 localecompile:
-	cd locale; ./compile-mo.sh .
+	cd locale; ../scripts/compile-mo.sh .
 
 localerefresh: localeextract localetest localecompile compilejsi18n collectstatic
 	@echo
