@@ -49,7 +49,6 @@ env:
 
 matrix:
     allow_failures:
-        - env: TOXENV=locales INSTALL_DOCKER_COMPOSE=1
         - env: TOXENV=py27 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
 install:
     - nvm install 6
