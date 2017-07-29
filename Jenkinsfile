@@ -30,6 +30,8 @@ node {
     sh 'git submodule sync'
     sh 'git submodule update --init --recursive'
     setGitEnvironmentVariables()
+    // Set UID to jenkins
+    env['UID'] = 1000
 
     // When checking in a file exists in another directory start with './' or
     // prepare to fail.
