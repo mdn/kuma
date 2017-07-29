@@ -11,6 +11,9 @@ Pontoon allows translators to use the web UI as well as download the PO files,
 use whatever tool the translator feels comfortable with and upload it back to
 Pontoon.
 
+The strings are stored in a separate repository,
+https://github.com/mozilla-l10n/mdn-l10n
+
 .. Note::
 
    We do not accept pull requests for updating translated strings. Please
@@ -30,16 +33,21 @@ files are owned by your development user.
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _Django documentation on Translations: https://docs.djangoproject.com/en/dev/topics/i18n/translation/
 
-Getting the localizations
-=========================
+Build the localizations
+=======================
 Localizations are found in this repository under the ``locale`` folder.
+This folder is a `git submodule`, linked to the mdn-l10n_ repository.
 
 The gettext portable object (``.po``) files need to be compiled into the
 gettext machine object (``.mo``) files before translations will appear. This
 is done once during initial setup and provisioning, but will be out of date
 when the kuma locales are updated.
 
-To refresh the translations, enter the development environment, then:
+To refresh the translations, first update the submodule in your host system::
+
+    git submodule update --init --depth=10 locale
+
+Next, enter the development environment, then:
 
 #. Compile the ``.po`` files::
 
@@ -53,20 +61,80 @@ To refresh the translations, enter the development environment, then:
 
     make collectstatic
 
+.. _`git submodule`: https://www.git-scm.com/docs/git-submodule
+.. _`mdn-l10n`: https://github.com/mozilla-l10n/mdn-l10n
+
 .. _Update the Localizations:
 
-Updating the localizations
-==========================
-When localizable strings are added, changed, or removed in the code, they need
-to be gathered into ``.po`` files for translation.
+Update the localizations in Kuma
+================================
+
+To get the latest localization from Pontoon users, you need to update the
+submodule.
 
 .. Note::
 
-   This work is done only during the preparation to push to production. You do
-   not need to do this for your PR.
+   This task is done by MDN staff or by automated tools during the push to
+   production. You should not do this as part of a code-based Pull Request.
 
+On the host system:
 
-To update the localizations:
+#. Create a new branch from kuma master::
+
+    git remote -v | grep origin  # Should be main kuma repo
+    git fetch origin
+    git checkout origin/master
+    git checkout -b update-locales  # Pick your own name. Can be combined
+                                    # with updating the kumascript submodule.
+
+#. Update the locale submodule to master::
+
+    cd locale
+    git fetch
+    git checkout origin/master
+    cd ..
+
+#. Commit the update::
+
+    git commit locale -m "Updating localizations"
+
+#. Push to GitHub (your fork or main repository), and open a Pull Request.
+
+It is possible to break deployments by adding a bad translation. The TravisCI_
+job ``TOXENV=locales`` will test that the deployment should pass, and should
+pass before merging the PR.
+
+.. _`TravisCI`: https://travis-ci.org/mozilla/kuma
+
+.. _Updating the localizable strings in Pontoon:
+
+Update the localizable strings in Pontoon
+=========================================
+When localizable strings are added, changed, or removed in the code, they need
+to be gathered into ``.po`` files for translation. The TravisCI_ job
+``TOXENV=locales`` attempts to detect when strings change by displaying the
+differences in ``locale/templates/LC_MESSAGES/django.pot``, but only when a
+``msgid`` changes.
+
+When this happens, the strings need to be exported to the mdn-l10n_ repository
+so that they are available in Pontoon. If done incorrectly, then the work of
+localizers can be lost.
+
+.. Note::
+
+   This task is done by MDN staff or by automated tools, usually during the
+   push to production. You should not do this as part of a code-based Pull
+   Request.
+
+To update the localizations, on the host system.:
+
+#. Start a new branch from Kuma master.
+
+#. Update the locale submodule to master::
+
+    cd locale
+    git fetch
+    git checkout origin/master
 
 #. Update ``kuma/settings/common.py``, and bump the version in
    ``PUENTE['VERSION']``.
@@ -77,26 +145,62 @@ To update the localizations:
 
 #. On the host system, review the changes to source English strings::
 
-    git diff locale/templates/LC_MESSAGES
+    cd locale
+    git diff templates/LC_MESSAGES
 
-#. Finally, commit the files::
+#. Commit the files in the locale submodule::
 
-    git add --all locale
+    git add --all .
     git commit
 
-Adding a new locale (UI strings)
-================================
+   For the commit message, use the ``PUENTE['VERSION']`` in the commit
+   subject, and summarize the string changes in the commit body, like::
+
+    Update strings 2017.14
+
+    * Updated survey on homepage
+
+#. Attempt to push to the mdn-l10n_ repository::
+
+    git push
+
+   If this fails, **do not force with --force**, or attempt to pull and
+   create a merge commit.  Someone has added a translation while you were
+   working, and you need to start over to preserve their work::
+
+    git fetch
+    git reset --hard @{u}
+
+   This resets your locale submodule to the new master. Start over on step 4
+   (``make localerefresh``).
+
+#. If the push to mdn-l10n_ is a success, commit your Kuma changes::
+
+    cd ..
+    git commit kuma/settings/common.py locale
+
+   Push to GitHub (your fork or main repository), and open a Pull Request.
+
+
+Add a new locale to Pontoon
+===========================
 The process for getting a new locale on MDN is documented at
 `Starting a new MDN localization`_. One step is to enable translation of the
-UI strings.
+UI strings. This will also enable the locale in development environments and
+on https://developer.allizom.org.
+
+.. Note::
+
+   This task is done by MDN staff.
 
 This example shows adding a Bulgarian (bg) locale. Change ``bg`` to the locale
 code of the language you are adding.
 
-#. `Update the Localizations`_ as above, so that your commit will be limited to
-   the new locale.
+#. `Updating the localizable strings in Pontoon`_ as above, so that your
+   commit will be limited to the new locale.
 
-#. Add the locale to ``CANDIDATE_LANGUAGES`` in ``kuma/settings/common.py``.
+#. In ``kuma/settings/common.py``, add the locale to ``CANDIDATE_LANGUAGES``,
+   and increase ``PUENTE['VERSION']``.
 
 #. Download the latest ``languages.json`` from
    https://product-details.mozilla.org/1.0/languages.json
@@ -110,20 +214,32 @@ code of the language you are adding.
 
     make localerefresh
 
-#. Commit the changes to ``locale``,
-   ``jinja2/includes/translate_locales.html``, and ``kuma/settings``.
-   The other locales should include a new string representing the new language.
+#. Restart the web server and verify that Django loads the new locale without
+   errors by visiting the locale's home page, for example
+   http://localhost:8000/bg/.
 
-When the change is merged to master, enable the language in Pontoon_ as well,
-and notify the language community to start UI translation.
+#. Commit the locale submodule and push to `mdn-l10n`_, as described above in
+   `Updating the localizable strings in Pontoon`_.  The other locales should
+   include a new string representing the new language.
+
+#. Commit the changes to ``locale``,
+   ``jinja2/includes/translate_locales.html``, and ``kuma/settings``, and open
+   a Pull Request.
+
+#. Enable the language in Pontoon_, and notify the language community to start
+   UI translations.
 
 .. _Starting a new MDN localization: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
 
-Adding a New Locale (Page Translations)
-=======================================
+Enable a new locale on MDN
+==========================
 Once the new translation community has completed the rest of the process for
 `starting a new MDN localization`_, it is time to enable the language for page
 translations:
+
+.. Note::
+
+   This task is done by MDN staff.
 
 #. Move the locale from ``CANDIDATE_LANGUAGES`` to ``MDN_LANGUAGES`` in
    ``kuma/settings/common.py``.
@@ -132,7 +248,7 @@ translations:
    errors by visiting the locale's home page, for example
    http://localhost:8000/bg/.
 
-#. Commit the change to ``kuma/settings/common.py``.
+#. Commit the change to ``kuma/settings/common.py`` and open a Pull Request.
 
 When the change is merged and deployed, inform the localization lead and the
 community that they can begin translating content.
