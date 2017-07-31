@@ -27,6 +27,8 @@ env:
         - PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor
         - PIPELINE_SASS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/node-sass
         - PIPELINE_UGLIFYJS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/uglifyjs
+        - PIPELINE_POSTCSS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/postcss
+        - PIPELINE_POSTCSS_ARGUMENTS="--config $TRAVIS_BUILD_DIR/postcss.config.js"
     matrix:
         - TOXENV=py27
           CREATE_DB=kuma

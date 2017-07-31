@@ -32,6 +32,8 @@ then
     npm install
     npm install cssmin@0.4.3
     npm install uglify-js@2.4.13
+    npm install postcss-cli@4.0.0
+    npm install autoprefixer@7.1.1
 fi
 
 # Install docker-compose

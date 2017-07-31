@@ -1125,12 +1125,15 @@ PIPELINE = {
     'SHOW_ERRORS_INLINE': False,  # django-pipeline issue #614
     'COMPILERS': (
         ('kuma.core.pipeline.sass.DebugSassCompiler'
-            if DEBUG else
-            'pipeline.compilers.sass.SASSCompiler'),
+         if DEBUG else
+         'kuma.core.pipeline.sass.SassThenPostCssCompiler'),
     ),
     'SASS_BINARY': config('PIPELINE_SASS_BINARY',
                           default='/usr/bin/env node-sass'),
     'SASS_ARGUMENTS': config('PIPELINE_SASS_ARGUMENTS', default=''),
+    'POSTCSS_BINARY': config('PIPELINE_POSTCSS_BINARY',
+                             default='/usr/bin/postcss'),
+    'POSTCSS_ARGUMENTS': config('PIPELINE_POSTCSS_ARGUMENTS', default='--no-map'),
     'CSS_COMPRESSOR': config('PIPELINE_CSS_COMPRESSOR',
                              default='kuma.core.pipeline.cleancss.CleanCSSCompressor'),
     'JS_COMPRESSOR': config('PIPELINE_JS_COMPRESSOR',

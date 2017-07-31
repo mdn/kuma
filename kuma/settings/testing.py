@@ -45,7 +45,7 @@ PIPELINE['PIPELINE_COLLECTOR_ENABLED'] = True
 
 # We need the real Sass compiler here instead of the pass-through used for
 # local dev.
-PIPELINE['COMPILERS'] = ('pipeline.compilers.sass.SASSCompiler',)
+PIPELINE['COMPILERS'] = ('kuma.core.pipeline.sass.SassThenPostCssCompiler',)
 
 # Testing with django-pipeline 1.6.8, PipelineStorage
 # Enabled=T, Collector=T -   482s
