@@ -108,49 +108,6 @@ Colours and icons
     }
 }
 
-/*
-DevRel Survey promo
--------------------------------------------------------------- */
-.callout-devrel {
-    background-color: #80cff7;
-
-    a {
-        @include set-font-size(14px);
-
-        &:after {
-            @include bidi-style(right, 20px, right, auto);
-            @include bidi-style(left, auto, left, 20px);
-            background-image: url($path-to-embedded-images + 'promos/devrel-survey-icon.png');
-            top: 15px;
-            height: 140px;
-            width: 129px;
-        }
-
-        &:before {
-            content: none;
-            display: none;
-        }
-
-        p {
-            color: #000;
-            margin-bottom: 0;
-        }
-
-        button {
-            @include bidi-style(text-align, left, text-align, right);
-            display: inline-block;
-            background: #80cff7;
-            color: #000;
-            margin-top: 14px;
-            padding: 10px 15px;
-            border: 3px solid #fff;
-            border-radius: 0;
-            box-shadow: none;
-            font-weight: bold;
-            text-transform: none;
-        }
-    }
-}
 
 /*
 Promos
@@ -205,32 +162,12 @@ Media queries
         background-image: url($path-to-embedded-images + 'promos/sauce-labs-home-high-res.png');
         background-size: 129px 140px;
     }
-
-    .callout-devrel a:after {
-        background-image: url($path-to-embedded-images + 'promos/devrel-survey-icon-high-res.png');
-        background-size: 129px 140px;
-    }
 }
 
 @media #{$mq-small-desktop-and-down} {
     .callout-saucelabs a:after {
         @include bidi-style(right, -20px, right, auto);
         @include bidi-style(left, auto, left, -20px);
-    }
-
-    .callout-devrel {
-        a {
-            @include set-font-size(12px);
-
-            &:after {
-                @include bidi-style(right, 0, right, auto);
-                @include bidi-style(left, auto, left, 0);
-            }
-        }
-
-        span {
-            @include bidi-value(padding, 0 50px ($grid-spacing * 2) $grid-spacing, 0 $grid-spacing ($grid-spacing * 2) 50px);
-        }
     }
 }
 
@@ -240,8 +177,7 @@ Media queries
         @include bidi-style(right, $grid-spacing, left, auto);
     }
 
-    .callout-saucelabs,
-    .callout-devrel {
+    .callout-saucelabs {
         a {
             @include set-font-size(12px);
 
@@ -253,17 +189,6 @@ Media queries
 
         span {
             width: 90%;
-        }
-    }
-
-    .callout-devrel {
-        a:after {
-            @include bidi-style(right, -50px, right, auto);
-            @include bidi-style(left, auto, left, -50px);
-        }
-
-        span {
-            @include bidi-value(padding, ($grid-spacing / 2) 50px ($grid-spacing + 10) $grid-spacing, ($grid-spacing / 2) $grid-spacing ($grid-spacing + 10) 50px);
         }
     }
 }
@@ -278,8 +203,7 @@ Media queries
         @include bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
     }
 
-    .callout-saucelabs,
-    .callout-devrel {
+    .callout-saucelabs {
         a {
             @include set-font-size(14px);
 
@@ -291,12 +215,6 @@ Media queries
 
         span {
             max-width: 300px;
-        }
-    }
-
-    .callout-devrel {
-        a:after {
-            top: 15px;
         }
     }
 }
@@ -317,15 +235,6 @@ Media queries
 
         span {
             max-width: 250px;
-        }
-    }
-
-    .callout-devrel a {
-        &:after {
-            background-repeat: no-repeat;
-            background-size: 109px auto;
-            @include bidi-style(right, -25px, right, auto);
-            @include bidi-style(left, auto, left, 5px);
         }
     }
 }
