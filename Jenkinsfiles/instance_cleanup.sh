@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-TARGET_CTX="virginia.moz.works"
+TARGET_CTX="portland.moz.works"
 KEEP_ANNOTATION="mozilla.org/keep-instance"
 
 #-----------------------------------------------------------------------
@@ -30,7 +30,7 @@ check_k8s() {
     CURRENT_CTX=$(kubectl config current-context)
 
     if [ ! "${CURRENT_CTX}" = "${TARGET_CTX}" ]; then
-        echo "Please set KUBECONFIG to point at the virginia.moz.works cluster"
+        echo "Please set KUBECONFIG to point at the portland.moz.works cluster"
         exit 1
     fi
 }
