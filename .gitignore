@@ -21,9 +21,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-# Translations
-*.mo
-
 # Sphinx documentation
 docs/_build/
 

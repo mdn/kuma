@@ -70,12 +70,9 @@ localeextract:
 	python manage.py merge
 
 localecompile:
-	cd locale; ./compile-mo.sh .
+	cd locale; ../scripts/compile-mo.sh .
 
 localerefresh: localeextract localetest localecompile compilejsi18n collectstatic
-	@echo
-	@echo Commit the new files with:
-	@echo git add --all locale\; git commit -m \"MDN string update $(shell date +%Y-%m-%d)\"
 
 pull-base:
 	docker pull ${BASE_IMAGE}
