@@ -4,6 +4,7 @@ import urllib
 from django.conf import settings
 from django.core import urlresolvers
 from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -35,7 +36,10 @@ class LocaleURLMiddleware(object):
             new_path = prefixer.fix(prefixer.shortened_path)
             query = dict((smart_str(k), v) for
                          k, v in request.GET.iteritems() if k != 'lang')
-            return HttpResponsePermanentRedirect(urlparams(new_path, **query))
+
+            # Never use HttpResponsePermanentRedirect here.
+            # Its a temporary redirect and should return with http 302, not 301
+            return HttpResponseRedirect(urlparams(new_path, **query))
 
         if full_path != request.path:
             query_string = request.META.get('QUERY_STRING', '')
@@ -44,7 +48,7 @@ class LocaleURLMiddleware(object):
             if query_string:
                 full_path = '%s?%s' % (full_path, query_string)
 
-            response = HttpResponsePermanentRedirect(full_path)
+            response = HttpResponseRedirect(full_path)
 
             # Vary on Accept-Language if we changed the locale
             old_locale = prefixer.locale
