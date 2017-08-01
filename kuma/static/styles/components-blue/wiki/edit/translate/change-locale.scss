@@ -1,7 +1,0 @@
-.change-locale {
-    margin-top: ($grid-spacing * -1);
-    margin-bottom: ($grid-spacing / 2);
-    @include bidi-value(clear, left, right);
-    @include bidi-value(float, left, right);
-    @include set-smaller-font-size();
-}

@@ -21,11 +21,7 @@
 
   {% block site_css %}
 
-    {% if waffle.flag('redesign') %}
-        {% stylesheet 'mdn' %}
-    {% else %}
-        {% stylesheet 'mdn-blue' %}
-    {% endif %}
+    {% stylesheet 'mdn' %}
 
     {% for style in styles %}
       {% stylesheet style %}
@@ -74,11 +70,7 @@
   {% javascript 'html5shiv' %}
   <![endif]-->
 
-  {% if waffle.flag('redesign') %}
-      {% javascript 'font-check' %}
-  {% else %}
-      {% javascript 'font-check-blue' %}
-  {% endif %}
+  {% javascript 'font-check' %}
 
   {% block extrahead %}{% endblock %}
 
@@ -115,19 +107,7 @@
 
   <!-- Header -->
   <header id="main-header"><div class="center">
-    {% if waffle.flag('redesign') %}
-        <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
-    {% else %}
-      <div id="tabzilla">
-        <a href="//www.mozilla.org/" class="no-track">mozilla</a>
-      </div>
-
-      <div class="clear header-clear"></div>
-
-      <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
-    {% endif %}
-
-
+    <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
 
     <div id="nav-sec">
     {% if not is_sphinx %}
@@ -154,7 +134,7 @@
     {% endif %}
     </div>
 
-    <nav id="main-nav" class="nav-main" role="navigation"><ul>{% if waffle.flag('redesign') %}<li class="nav-main-item"><a href="{{ wiki_url('Web') }}">{{ _('Technologies') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+    <nav id="main-nav" class="nav-main" role="navigation"><ul><li class="nav-main-item"><a href="{{ wiki_url('Web') }}">{{ _('Technologies') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
       <div class="submenu js-submenu" id="nav-tech-submenu">
         <div class="submenu-column">
           <ul>
@@ -181,43 +161,7 @@
           </ul>
         </div>
       </div>
-      </li>{% else %}<li class="nav-main-item"><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-      <div class="submenu submenu-cols-2 js-submenu" id="nav-platform-submenu">
-        <div class="submenu-column">
-          <div class="title">{{ _('Technologies') }}</div>
-          <ul>
-            <li><a href="{{ wiki_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
-            <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
-            <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
-            <li><a href="{{ wiki_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
-            <li><a href="{{ wiki_url('Web/HTTP') }}">{{ _('HTTP') }}</a></li>
-            <li><a href="{{ wiki_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
-            <li><a href="{{ wiki_url('Mozilla/Add-ons/WebExtensions') }}">{{ _('WebExtensions') }}</a></li>
-            <li><a href="{{ wiki_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
-          </ul>
-        </div><div class="submenu-column last">
-          <div class="title">{{ _('References & Guides') }}</div>
-          <ul>
-            <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn web development') }}</a></li>
-            <li><a href="{{ wiki_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
-            <li><a href="{{ wiki_url('Web/Reference') }}">{{ _('References') }}</a></li>
-            <li><a href="{{ wiki_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-            <li><a href="{{ wiki_url('Web/Accessibility') }}">{{ _('Accessibility') }}</a></li>
-            <li><a href="{{ wiki_url('Games') }}">{{ _('Game development') }}</a></li>
-            <li><a href="{{ wiki_url('Web') }}">{{ _('...more docs') }}</a></li>
-          </ul>
-        </div>
-      </div>
-      </li><li class="nav-main-item"><a href="{{ wiki_url('Zones') }}">{{ _('Mozilla Docs') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-        <div class="submenu js-submenu" id="nav-zones-submenu">
-          <div class="submenu-column">
-            <ul>
-              <li><a href="{{ wiki_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
-              <li><a href="{{ wiki_url('Mozilla/Firefox') }}">{{ _('Firefox') }}</a></li>
-            </ul>
-          </div>
-        </div>
-      </li><li class="nav-main-item"><a href="{{ wiki_url('Tools') }}">{{ _('Developer Tools') }}</a></li>{% endif %}<li class="nav-main-item"><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+      </li><li class="nav-main-item"><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
         <div class="submenu js-submenu" id="nav-contact-submenu">
           <div class="submenu-column">
             <ul>
@@ -231,7 +175,7 @@
             </ul>
           </div>
         </div>
-      </li><li class="nav-search-link nav-main-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search nav-main-search"><form action="{{ url('search') }}" method="get" role="search">
+      </li>{% if not is_sphinx %}<li class="nav-main-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
@@ -251,83 +195,56 @@
 
 
   <!-- Footer -->
-  {% if waffle.flag('redesign') %}
-      <footer id="nav-footer" class="nav-footer">
-        <div class="center">
-            <a href="{{ url('home') }}" class="nav-footer-logo">{{ _('MDN Web Docs') }}</a>
-            <div class="footer-group footer-group-mdn">
-              <h2 class="footer-title">MDN</h2>
-              <ul class="footer-list">
-                <li><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}</a></li>
-                <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn Web Development') }}</a></li>
-                <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
-                <li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}</a></li>
-                <li class="footer-social"><a href="https://twitter.com/mozdevnet" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>{{ _('Twitter') }}</span></a></li>
-                <li class="footer-social"><a href="https://github.com/mdn/" class="only-icon"><i aria-hidden="true" class="icon-github"></i> <span>{{ _('GitHub') }}</span></a></li>
-              </ul>
-            </div>
+    <footer id="nav-footer" class="nav-footer">
+      <div class="center">
+          <a href="{{ url('home') }}" class="nav-footer-logo">{{ _('MDN Web Docs') }}</a>
+          <div class="footer-group footer-group-mdn">
+            <h2 class="footer-title">MDN</h2>
+            <ul class="footer-list">
+              <li><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}</a></li>
+              <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn Web Development') }}</a></li>
+              <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
+              <li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}</a></li>
+              <li class="footer-social"><a href="https://twitter.com/mozdevnet" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>{{ _('Twitter') }}</span></a></li>
+              <li class="footer-social"><a href="https://github.com/mdn/" class="only-icon"><i aria-hidden="true" class="icon-github"></i> <span>{{ _('GitHub') }}</span></a></li>
+            </ul>
+          </div>
 
-            <a href="https://mozilla.org" class="nav-footer-mozilla">{{ _('Mozilla') }}</a>
-            <div class="footer-group footer-group-mozilla">
-              <h2 class="footer-title">Mozilla</h2>
-              <ul class="footer-list">
-                <li><a href="https://www.mozilla.org/about/">{{ _('About') }}</a></li>
-                <li><a href="https://www.mozilla.org/contact/">{{ _('Contact Us') }}</a></li>
-                <li><a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=referral&utm_content=footer">{{ _('Donate') }}</a></li>
-                <li class="footer-social"><a href="https://twitter.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>{{ _('Twitter') }}</span></a></li>
-                <li class="footer-social"><a href="https://www.facebook.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-facebook"></i> <span>{{ _('Facebook') }}</span></a></li>
-                <li class="footer-social"><a href="https://www.instagram.com/mozillagram/" class="only-icon"><i aria-hidden="true" class="icon-instagram"></i> <span>{{ _('Instagram') }}</span></a></li>
-              </ul>
-            </div>
+          <a href="https://mozilla.org" class="nav-footer-mozilla">{{ _('Mozilla') }}</a>
+          <div class="footer-group footer-group-mozilla">
+            <h2 class="footer-title">Mozilla</h2>
+            <ul class="footer-list">
+              <li><a href="https://www.mozilla.org/about/">{{ _('About') }}</a></li>
+              <li><a href="https://www.mozilla.org/contact/">{{ _('Contact Us') }}</a></li>
+              <li><a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=referral&utm_content=footer">{{ _('Donate') }}</a></li>
+              <li class="footer-social"><a href="https://twitter.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>{{ _('Twitter') }}</span></a></li>
+              <li class="footer-social"><a href="https://www.facebook.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-facebook"></i> <span>{{ _('Facebook') }}</span></a></li>
+              <li class="footer-social"><a href="https://www.instagram.com/mozillagram/" class="only-icon"><i aria-hidden="true" class="icon-instagram"></i> <span>{{ _('Instagram') }}</span></a></li>
+            </ul>
+          </div>
 
-            {# TODO: when switching to redesign, integrate lang_switcher block and sphinx exeption #}
-            {% include "includes/lang_switcher.html" %}
+          {% if not is_sphinx %}
+            {% block lang_switcher %}
+                {% include "includes/lang_switcher.html" %}
+            {% endblock %}
+          {% endif %}
 
+          {% block footer_copyright %}
             <ul class="footer-tos">
               <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
               <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
               <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
             </ul>
 
-            {# TODO: when switching to redesign, integrate footer_copyright block and sphinx exeption #}
             <div class="contentinfo">
               {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
                 <p>&copy; 2005-{{ thisyear }} Mozilla Developer Network and individual contributors.</p>
                 <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
               {% endtrans %}
             </div>
-        </div>
-      </footer>
-  {% else %}
-      <footer id="main-footer"><div class="center">
-        <div class="column-container">
-          <div class="column-main">
-            {% block footer_copyright %}
-            <div class="contentinfo">
-              {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
-                <p>&copy; 2005-{{ thisyear }} Mozilla Developer Network and individual contributors.</p>
-                <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
-              {% endtrans %}
-              <ul>
-                <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
-                <li><a href="//www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
-                <li><a href="//www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
-                <li><a href="//www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
-                <li><a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a></li>
-              </ul>
-            </div>
-            {% endblock %}
-          </div>
-          <div class="column-strip">
-            {% if not is_sphinx %}
-              {% block lang_switcher %}
-                  {% include "includes/lang_switcher.html" %}
-              {% endblock %}
-            {% endif %}
-          </div>
-        </div>
-      </div></footer>
-  {% endif %}
+          {% endblock %}
+      </div>
+    </footer>
 
   <!-- site js -->
   {% block site_js %}

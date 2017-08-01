@@ -52,8 +52,8 @@
 
     (function() {
         var $nav = $('#main-nav');
-        var $navItems = $nav.find('ul > li:not(.nav-search-link, .main-nav-search)');
-        var $mainNavSearch = $nav.find('.main-nav-search');
+        var $navItems = $nav.find('ul > li:not(.nav-main-search)');
+        var $mainNavSearch = $nav.find('.nav-main-search');
         var $searchWrap = $nav.find('.search-wrap');
         var $input = $searchWrap.find('input');
         var $searchTrigger = $searchWrap.find('.search-trigger');
@@ -101,16 +101,6 @@
             on('focus', createExpander(true)).
             on('blur', createExpander());
     })();
-
-    /*
-        Mobile search to display search box in menu
-    */
-    $('.nav-search-link a').on('click', function(e) {
-        e.preventDefault();
-        $('.main-nav-search').css('display', 'block').find('#main-q').get(0).focus();
-        $('.nav-search-link').css('display', 'none');
-    });
-
 
     /*
         Account for the footer language change dropdown and other dropdowns marked as autosubmit

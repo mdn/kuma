@@ -1,5 +1,5 @@
-@import 'includes-blue/vars';
-@import 'includes-blue/mixins';
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /*
 B2G / FxOS zone
@@ -9,6 +9,6 @@ B2G / FxOS zone
 /*
 imports
 ====================================================================== */
-@import 'zones-blue/base';
-@import 'zones-blue/components/archive';
-@import 'zones-blue/components/outer-apps-box';
+@import 'zones/base';
+@import 'zones/components/archive';
+@import 'zones/components/outer-apps-box';

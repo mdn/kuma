@@ -1,0 +1,108 @@
+/*
+Zone landing page styles
+********************************************************************** */
+
+.zone-landing {
+    h1 {
+        @include column-6();
+        clear: both;
+        color: $blue-background-text-color;
+    }
+
+    .zone-landing-header-preview {
+        margin-top: $grid-spacing;
+
+        .column-strip {
+            position: relative;
+
+            .zone-landing-header-preview-base {
+                position: absolute;
+                width: 100%;
+                z-index: 2;
+            }
+
+            .zone-landing-header-spacing {
+                float: left;
+            }
+        }
+    }
+
+    .crumbs {
+        color: $blue-background-text-color;
+
+        a {
+            @include rgba-fallback(color, $blue-background-text-color, .7, $zone-background-color);
+        }
+    }
+
+    .summary {
+        display: none;
+    }
+
+    h3.title {
+        @include set-font-size($body-font-size);
+        margin: 6px 0 0 0;
+    }
+}
+
+/* the zone landing page masthead    */
+.zone-landing-header {
+    position: relative;
+    color: $blue-background-text-color;
+
+    > .center {
+        padding-top: $first-content-top-padding;
+    }
+
+    .masthead-text {
+        p {
+            @include set-larger-font-size();
+        }
+    }
+
+    a.button,
+    button {
+        border-color: $blue-background-text-color;
+        color: $blue-background-text-color;
+
+        &:not(.transparent) {
+            @include rgba-fallback(background-color, #000, .1);
+            box-shadow: inset 0 -1px rgba(0, 0, 0, .1);
+        }
+    }
+}
+
+.zone-landing-lists li {
+    padding: $content-vertical-spacing 0;
+    @include prevent-last-child-spacing(padding-bottom);
+}
+
+
+@media #{$mq-tablet-and-down} {
+    .zone-landing {
+        .zone-landing-header-preview .column-strip,
+        .zone-landing-header-preview .masthead-text {
+            .zone-landing-header-preview-base {
+                position: static;
+            }
+        }
+    }
+
+    .zone-landing-header-preview {
+        .column-strip,
+        .masthead-text {
+            width: 48%;
+        }
+    }
+}
+
+
+@media #{$mq-mobile-and-down} {
+    .zone-landing h1 {
+        width: auto;
+    }
+
+    .zone-landing-header {
+        display: block;
+    }
+}

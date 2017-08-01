@@ -159,7 +159,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         user_link = login_info.children('.user-url')
         assert user_link.attr['href'] == user_url
 
-        form = login_info.children('form')
+        form = login_info.find('form')
         # There should be signout link in the form action
         expected = signout_url.replace('%2F', '/')  # decode slashes
         assert form.attr['action'] == expected
@@ -216,7 +216,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         user_link = login_info.children('.user-url')
         assert user_link.attr['href'] == user_url
 
-        form = login_info.children('form')
+        form = login_info.find('form')
         # There should be signout link in the form action
         expected = signout_url.replace('%2F', '/')  # decode slashes
         assert form.attr['action'] == expected
