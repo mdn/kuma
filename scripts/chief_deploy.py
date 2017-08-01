@@ -36,7 +36,6 @@ os.environ['PATH'] = os.pathsep.join([
 def update_code(ctx, tag):
     with ctx.lcd(settings.SRC_DIR):
         ctx.local("git fetch")
-        ctx.local("find locale -name '*.mo' -delete")  # bug 1385405
         ctx.local("git checkout -f %s" % tag)
         ctx.local("git submodule sync")
         ctx.local("git submodule update --init --recursive")
