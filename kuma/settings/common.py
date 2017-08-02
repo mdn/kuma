@@ -609,18 +609,19 @@ STATICI18N_DOMAIN = 'javascript'
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
 
-def pipeline_scss(output, sources):
+def pipeline_scss(output, sources, **kwargs):
     """Define a CSS file generated from multiple SCSS files."""
     definition = {
         'source_filenames': tuple('styles/%s.scss' % src for src in sources),
         'output_filename': 'build/styles/%s.css' % output
     }
+    definition.update(kwargs)
     return definition
 
 
-def pipeline_one_scss(slug):
+def pipeline_one_scss(slug, **kwargs):
     """Define a CSS file that shares the name with the one input SCSS."""
-    return pipeline_scss(slug, [slug])
+    return pipeline_scss(slug, [slug], **kwargs)
 
 
 PIPELINE_CSS = {
@@ -859,44 +860,63 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/samples.css',
     },
-    'locale-ar': pipeline_one_scss('locales/ar'),
-    'locale-az': pipeline_one_scss('locales/az'),
-    'locale-ca': pipeline_one_scss('locales/ca'),
-    'locale-cs': pipeline_one_scss('locales/cs'),
-    'locale-de': pipeline_one_scss('locales/de'),
-    'locale-ee': pipeline_one_scss('locales/ee'),
-    'locale-en-US': pipeline_one_scss('locales/en-US'),
-    'locale-es': pipeline_one_scss('locales/es'),
-    'locale-fa': pipeline_one_scss('locales/fa'),
-    'locale-ff': pipeline_one_scss('locales/ff'),
-    'locale-fi': pipeline_one_scss('locales/fi'),
-    'locale-fr': pipeline_one_scss('locales/fr'),
-    'locale-fy-NL': pipeline_one_scss('locales/fy-NL'),
-    'locale-ga-IE': pipeline_one_scss('locales/ga-IE'),
-    'locale-ha': pipeline_one_scss('locales/ha'),
-    'locale-hr': pipeline_one_scss('locales/hr'),
-    'locale-hu': pipeline_one_scss('locales/hu'),
-    'locale-id': pipeline_one_scss('locales/id'),
-    'locale-ig': pipeline_one_scss('locales/ig'),
-    'locale-it': pipeline_one_scss('locales/it'),
-    'locale-ja': pipeline_one_scss('locales/ja'),
-    'locale-kab': pipeline_one_scss('locales/kab'),
-    'locale-ko': pipeline_one_scss('locales/ko'),
-    'locale-ln': pipeline_one_scss('locales/ln'),
-    'locale-mg': pipeline_one_scss('locales/mg'),
-    'locale-ms': pipeline_one_scss('locales/ms'),
-    'locale-nl': pipeline_one_scss('locales/nl'),
-    'locale-pl': pipeline_one_scss('locales/pl'),
-    'locale-pt-BR': pipeline_one_scss('locales/pt-BR'),
-    'locale-pt-PT': pipeline_one_scss('locales/pt-PT'),
-    'locale-ro': pipeline_one_scss('locales/ro'),
-    'locale-sq': pipeline_one_scss('locales/sq'),
-    'locale-sv-SE': pipeline_one_scss('locales/sv-SE'),
-    'locale-sw': pipeline_one_scss('locales/sw'),
-    'locale-tl': pipeline_one_scss('locales/tl'),
-    'locale-zh-CN': pipeline_one_scss('locales/zh-CN'),
-    'locale-zh-TW': pipeline_one_scss('locales/zh-TW')
 }
+
+# Locales with locale-specific fonts
+LOCALE_USE_CUSTOM = [
+    'ar',
+    'az',
+    'fa',
+    'ff',
+    'ja',
+    'ko',
+    'ro',
+    'zh-CN',
+    'zh-TW',
+]
+LOCALE_CSS = {locale: 'locales/%s' % locale for locale in LOCALE_USE_CUSTOM}
+
+# Locales that are well supported by the Zilla family
+LOCALE_USE_ZILLA = [
+    'ca',
+    'cs',
+    'de',
+    'ee',
+    'en-US',
+    'es',
+    'fi',
+    'fr',
+    'fy-NL',
+    'ga-IE',
+    'ha',
+    'hr',
+    'hu',
+    'id',
+    'ig',
+    'it',
+    'kab',
+    'ln',
+    'mg',
+    'ms',
+    'nl',
+    'pl',
+    'pt-BR',
+    'pt-PT',
+    'sq',
+    'sv-SE',
+    'sw',
+    'tl',
+]
+LOCALE_CSS.update({locale: 'locales/en-US' for locale in LOCALE_USE_ZILLA})
+
+# Omitted locales get the browser-default fonts
+for locale, slug in LOCALE_CSS.items():
+    key = 'locale-%s' % locale
+    PIPELINE_CSS[key] = pipeline_scss(key, [slug])
+    editor_key = 'editor-locale-%s' % locale
+    PIPELINE_CSS[editor_key] = pipeline_scss(
+        editor_key, [slug], template_name='pipeline/javascript-array.jinja')
+
 
 PIPELINE_JS = {
     'font-check': {
