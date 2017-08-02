@@ -188,9 +188,9 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
 
     response_html = pq(response.content)
     macro_link = ('#kserrors-list a[href="https://github.com/'
-                  'mozilla/kumascript/blob/master/macros/{}.ejs"]')
+                  'mdn/kumascript/blob/master/macros/{}.ejs"]')
     create_link = ('#kserrors-list a[href="https://github.com/'
-                   'mozilla/kumascript#updating-macros"]')
+                   'mdn/kumascript#updating-macros"]')
     assert len(response_html.find(macro_link.format('SomeMacro'))) == 1
     assert len(response_html.find(create_link)) == 1
 

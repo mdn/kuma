@@ -94,7 +94,7 @@ def test_macros(base_url, selenium):
     name = first_source_link.text
     href = first_source_link.get_attribute('href')
     assert href.startswith(
-        'https://github.com/mozilla/kumascript/blob/master/macros/' + name)
+        'https://github.com/mdn/kumascript/blob/master/macros/' + name)
 
     # Click link to Github
     first_source_link.click()
