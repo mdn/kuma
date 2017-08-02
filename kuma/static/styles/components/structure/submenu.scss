@@ -68,7 +68,7 @@
 .submenu-close {
     position: absolute;
     top: 0;
-    right: 0;
+    @include bidi-style(right, 0, left, auto);
     z-index: 1; /* raise above links it might over-lap */
 }
 

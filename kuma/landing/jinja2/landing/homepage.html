@@ -26,7 +26,7 @@
 
 {% endblock %}
 
-{% block content %}
+{% block document_head %}
 
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
@@ -72,6 +72,11 @@
       <li><a href="{{ wiki_url('Tools') }}" class="cta-link">{{ _('Developer Tools') }}</a></li>
     </ul>
 </div></div>
+
+{% endblock %}
+
+
+{% block content %}
 
 <!-- callout area -->
 <div class="home-callouts">

@@ -274,7 +274,6 @@ Spacing
     padding-right: 0;
 }
 
-
 /* =================================================================== */
 
 /* sets an input tag's placeholder styles */
@@ -364,8 +363,8 @@ These are not dynamic but serve as mixins
 @mixin callout() {
     @include set-font-size(22px);
     border: 5px solid $accent-light;
-    border-width: 5px 0 5px 0;
-    border-image: linear-gradient(to right, $accent-light, $accent-dark) 10;
+    border-width: 5px 0;
+    border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
     padding: $grid-spacing 0;
     margin-bottom: $grid-spacing;
 

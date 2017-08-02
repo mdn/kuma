@@ -6,10 +6,20 @@
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% block robots_value %}noindex, nofollow{% endblock %}
 
+{% block document_head %}
+  <!-- heading -->
+  <div class="document-head">
+    <div class="center">
+      <div class="document-title">
+        <h1><a href="{{ url('dashboards.revisions') }}">{{ title }}</a></h1>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
 {% block content %}
 
     <div class="dashboard">
-        <h1><a href="{{ url('dashboards.revisions') }}">{{ title }}</a></h1>
         <form method="get" id="revision-filter" action="{{ url('dashboards.revisions') }}">
             <div class="revision-field">
                 <label for="id_locale">{{ _('Locale:') }}</label>

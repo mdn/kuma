@@ -26,29 +26,41 @@ Custom images which appear in zone headers
 }
 
 @mixin zone-image($img, $width, $height) {
-    $width-at-40: $width * 40 / $height * 1px;
-    $width-at-48: $width * 48 / $height * 1px;
+    $image-small-size: $mobile-document-title-font-size;
+    $image-big-size: $h1-font-size;
+    $image-landing-size: 90px;
+    $image-small-width: round($width * $image-small-size / $height);
+    $image-big-width: round($width * $image-big-size / $height);
+    $image-landing-width: round($width * $image-landing-size / $height);
 
     .zone-parent {
         background-image: url($path-to-images + 'zones/' + $img);
         direction: ltr; // ltr should be set with negative text indent
-        height: 40px;
+        height: $image-small-size;
         overflow: hidden;
         text-indent: -9999px;
-        width: $width-at-40;
+        width: $image-small-width;
 
         .zone-landing & {
             // icon is not duplicate text, go ahead and display
             display: block;
             // but grey it out so it doesn't look like a link
             filter: saturate(0);
+            @include bidi-style(margin-right, 0, margin-left, 0);
+            border: none;
         }
     }
 
-    @media #{$mq-tablet-and-up} {
+    @media #{$mq-mobile-and-up} {
         .zone-parent {
-            height: 48px;
-            width: $width-at-48;
+            height: $image-big-size;
+            width: $image-big-width;
+
+            .zone-landing & {
+                height: $image-landing-size;
+                width: $image-landing-width;
+                margin-top: $image-big-size - $image-landing-size - 7px;
+            }
         }
     }
 }

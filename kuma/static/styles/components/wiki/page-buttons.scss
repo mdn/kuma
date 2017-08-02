@@ -17,6 +17,7 @@ edit, language, settings, save, and cancel buttons
 }
 
 @media #{$mq-mobile-and-down} {
+    .page-buttons > li.page-buttons-advanced,
     .page-buttons > li.page-buttons-edit {
         display: none;
     }

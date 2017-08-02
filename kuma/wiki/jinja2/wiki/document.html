@@ -104,30 +104,38 @@
   {% endif %}
 {% endblock %}
 
-{% block content %}
+{% block document_head %}
+  <!-- heading -->
+  <div id="wiki-document-head" class="document-head">
+    <div class="center">
+      {% if not is_zone_root %}
+        <!-- crumbs -->
+        {{ crumbs }}
+      {% endif %}
 
-    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
-      <div class="article-meta">
-        <!-- action buttons -->
+      <!-- action buttons -->
+      <div class="document-actions">
         {{ buttons }}
-
-        {% if not is_zone_root %}
-          <!-- crumbs -->
-          {{ crumbs }}
-        {% endif %}
       </div>
 
-      <!-- heading -->
-      <div id="wiki-document-head" class="document-head">
-
-        {% if is_zone %}
+      <div class="document-title">
+        {% if is_zone_root %}
           <!-- zone image -->
+          <span class="zone-parent"></span>
+        {% elif is_zone %}
+          <!-- zone image, link to zone root -->
           <a class="zone-parent" href="{{ nearest_zone.document.get_absolute_url() }}">{{ nearest_zone.document.title }}</a>
         {% endif %}
 
         <h1>{{ document.title }}</h1>
       </div>
+    </div>
+  </div>
+{% endblock%}
 
+{% block content %}
+
+    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
       <!-- start the main content container -->
         <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
 
