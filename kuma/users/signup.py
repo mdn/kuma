@@ -34,7 +34,9 @@ class SignupForm(BaseSignupForm):
     terms = forms.BooleanField(label=_(u'I agree'),
                                required=True,
                                error_messages={'required': TERMS_REQUIRED})
-
+    is_github_url_public = forms.BooleanField(
+        label=_(u'I would like to make my GitHub profile URL public'),
+        required=False)
     other_email_value = '_other'
     duplicate_email_error_label = '_duplicate_email'
 
