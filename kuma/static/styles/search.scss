@@ -87,10 +87,6 @@ fieldset #{$selector-icon} {
 
 .search-meta {
     margin-top: ($grid-spacing / 4);
-
-    a {
-        color: lighten($link-color, 50);
-    }
 }
 
 .result-list-link {
