@@ -92,6 +92,10 @@
                 align-items: center;
                 @include bidi-value(text-align, left, right);
             }
+
+            &.hidden {
+                display: none;
+            }
         }
 
         .helpful-survey-content {
