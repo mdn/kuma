@@ -1,11 +1,14 @@
 # Modeled after https://github.com/github/gitignore/blob/master/Python.gitignore
+# .gitignore directory matching:
+# /foo/ - Directory foo in the root of the project
+# foo/  - Directory foo anywhere in the project
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 
 # Distribution / packaging
-build/
+/build/
 
 # Installer logs
 pip-log.txt
@@ -25,7 +28,7 @@ coverage.xml
 *.mo
 
 # Sphinx documentation
-docs/_build/
+/docs/_build/
 
 # pyenv
 .python-version
@@ -57,15 +60,15 @@ docker-compose.dev.yml
 docker-compose.locust.yml
 humans.txt
 james.ini
-kuma/static/js/libs/ckeditor/source/ckbuilder
+kuma/static/js/libs/ckeditor/source/ckbuilder/
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
-mdntests/
-media/attachments
-media/sitemap*
-media/uploads
-media/revision.txt
-media/kumascript-revision.txt
+/mdntests/
+/media/attachments
+/media/sitemap*
+/media/uploads
+/media/revision.txt
+/media/kumascript-revision.txt
 node_modules/
 /static/
 tmp
@@ -84,8 +87,8 @@ geckodriver.log
 
 # Legacy
 .awsconfig
-logs/
-xfers/*
+/logs/
+/xfers/
 wheelhouse
-uploads/
+/uploads/
 kumascript.log
