@@ -122,14 +122,14 @@ URLS = flatten((
     url_test("/En/Core_JavaScript_1.5_Reference/foo",
              "/en-US/docs/JavaScript/Reference/foo"),
 
-    url_test("/foo/HTML5", "/foo/docs/HTML/HTML5"),
-    url_test("/fo-o/HTML5", "/fo-o/docs/HTML/HTML5"),
+    url_test("/en-US/HTML5", "/en-US/docs/HTML/HTML5"),
+    url_test("/es/HTML5", "/es/docs/HTML/HTML5"),
 
     url_test("/web-tech/2008/09/12/css-transforms",
              "/docs/CSS/Using_CSS_transforms"),
 
-    url_test("/foo/docs", "/foo/docs/Web"),
-    url_test("/foo/docs/", "/foo/docs/Web"),
+    url_test("/en-US/docs", "/en-US/docs/Web"),
+    url_test("/es/docs/", "/es/docs/Web"),
 
     url_test("/en-US/devnews/index.php/feed.foo",
              "https://blog.mozilla.org/feed/"),
