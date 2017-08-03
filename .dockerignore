@@ -1,10 +1,19 @@
+# Files excluded from Docker context
 #
-# From kuma .gitigore
+# This is useful to test changes, find files to exclude:
+# https://stackoverflow.com/questions/38946683/how-to-test-dockerignore-file
+#
+# Patterns from kuma .gitignore, but with changes for
+# .dockerignore directory matching:
+# foo/     - Directory foo in the root of the repo
+# **/foo/  - Directory foo anywhere in the repo
+# foo/*    - Files under foo in the root of the repo, keep directory
+# **/foo/* - Files under foo anywhere in the repo, keep directory
 #
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+**/__pycache__/
+**/*.py[cod]
 
 # Distribution / packaging
 build/
@@ -38,8 +47,8 @@ celeryev.pid
 
 # Virtualenv
 .venv
-venv/
-ENV/
+**/venv/
+**/ENV/
 
 # Swapfiles
 *.sw?
@@ -56,7 +65,7 @@ docker-compose.dev.yml
 docker-compose.locust.yml
 humans.txt
 james.ini
-kuma/static/js/libs/ckeditor/source/ckbuilder
+kuma/static/js/libs/ckeditor/source/ckbuilder/
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
 mdntests/
@@ -65,8 +74,8 @@ media/sitemap*
 media/uploads
 media/revision.txt
 media/kumascript-revision.txt
-node_modules/
-/static/
+**/node_modules/
+static/
 tmp
 
 # SCL3-specific files
@@ -84,23 +93,15 @@ geckodriver.log
 # Legacy
 .awsconfig
 logs/
-xfers/*
+xfers/
 wheelhouse
 uploads/
 kumascript.log
 
 #
-# End kuma .gitignore
+# End adjusted kuma .gitignore
 #
 
-# Different patterns for .dockerignore syntax
-static/*
-**/__pycache__/
-**/__pycache__/*
-**/*.pyc
-**/*.pyo
-**/*.pyd
-docs/_build/*
 
 # Additional ignores
 .git
@@ -111,7 +112,7 @@ docker-compose*
 Dockerfile
 Dockerfile*
 # Not needed in kuma image
-kumascript/*
+kumascript/
 # Rebuilt in Docker
 locale/*/LC_MESSAGES/*.mo
 *.pot

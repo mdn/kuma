@@ -84,6 +84,7 @@ var CKBUILDER_CONFIG = {
 		'mdn-youtube': 1,
 		descriptionlist: 1,
 		tablesort: 1,
-		texzilla: 1
+		texzilla: 1,
+		wordcount: 1
 	}
 };

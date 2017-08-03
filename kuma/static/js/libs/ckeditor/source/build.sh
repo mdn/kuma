@@ -14,7 +14,7 @@ CKBUILDER_URL="http://download.cksource.com/CKBuilder/$CKBUILDER_VERSION/ckbuild
 DESCRIPTION_LIST_VERSION="e365ac622a995d535266c22f0c44b743f8fffa14"
 SCAYT_VERSION="release.4.8.4.0"
 WSC_VERSION="release.4.8.4.0"
-
+WORDCOUNT_VERSION="v1.16"
 
 set -e
 
@@ -60,6 +60,14 @@ function download_plugin
 	git checkout $2
 	cd -
 	rm -rf plugins/$1/.git
+
+	# For plugins whose packages have them in a subdirectory,
+	# move them
+
+	if [[ "$1" == "wordcount" ]]; then
+	  mv plugins/wordcount/wordcount/* plugins/wordcount
+	  rm -r plugins/wordcount/wordcount
+  fi
 }
 
 # Move to the script directory.
@@ -95,6 +103,8 @@ download_plugin "descriptionlist" $DESCRIPTION_LIST_VERSION "https://github.com/
 download_plugin "scayt" $SCAYT_VERSION "https://github.com/WebSpellChecker/ckeditor-plugin-scayt.git"
 
 download_plugin "wsc" $WSC_VERSION "https://github.com/WebSpellChecker/ckeditor-plugin-wsc.git"
+
+download_plugin "wordcount" $WORDCOUNT_VERSION "https://github.com/w8tcha/CKEditor-WordCount-Plugin.git"
 
 cp -R plugins/* ckeditor/plugins/
 
