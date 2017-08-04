@@ -89,7 +89,7 @@ pull-kuma-latest:
 pull-latest: pull-base-latest pull-kuma-latest
 
 build-base:
-	docker build -f Dockerfile-base -t ${BASE_IMAGE} .
+	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
 
 build-kuma:
 	docker build -t ${KUMA_IMAGE} .
