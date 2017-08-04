@@ -92,7 +92,7 @@ build-base:
 	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
 
 build-kuma:
-	docker build -t ${KUMA_IMAGE} .
+	docker build -f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
 
 build: build-base build-kuma
 
