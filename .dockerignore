@@ -106,13 +106,9 @@ kumascript.log
 # Additional ignores
 .git
 .gitignore
-k8s
-docker
+k8s/
+docker/
 docker-compose*
-Dockerfile
-Dockerfile*
-# Not needed in kuma image
-kumascript/
 # Rebuilt in Docker
 locale/*/LC_MESSAGES/*.mo
 *.pot
