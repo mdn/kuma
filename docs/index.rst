@@ -25,3 +25,4 @@ Contents:
    ckeditor
    data
    documentation
+   docker
