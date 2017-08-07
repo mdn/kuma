@@ -1,6 +1,8 @@
 VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
+KS_VERSION ?= $(shell cd kumascript && git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
 BASE_IMAGE_NAME ?= kuma_base
 KUMA_IMAGE_NAME ?= kuma
+KUMASCRIPT_IMAGE_NAME ?= kumascript
 REGISTRY ?= quay.io/
 IMAGE_PREFIX ?= mozmar
 BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
@@ -8,6 +10,8 @@ BASE_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
 IMAGE ?= $(BASE_IMAGE_LATEST)
 KUMA_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
 KUMA_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
+KUMASCRIPT_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:${KS_VERSION}
+KUMASCRIPT_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
 TEST ?= test #other options in docker-compose.test.yml
 DEIS_PROFILE ?= dev-usw
 DEIS_APP ?= mdn-dev
@@ -89,12 +93,15 @@ pull-kuma-latest:
 pull-latest: pull-base-latest pull-kuma-latest
 
 build-base:
-	docker build -f Dockerfile-base -t ${BASE_IMAGE} .
+	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
 
 build-kuma:
-	docker build -t ${KUMA_IMAGE} .
+	docker build -f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
 
-build: build-base build-kuma
+build-kumascript:
+	docker build -f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+
+build: build-base build-kuma build-kumascript
 
 push-base:
 	docker push ${BASE_IMAGE}

@@ -1,0 +1,32 @@
+======
+Docker
+======
+
+Docker__ is used for development and (soon) for deployment.
+
+.. __: https://www.docker.com
+
+Docker Images
+=============
+Docker images are used in development, usually with the local
+working files mounted in the images to set behaviour.
+
+Images are built by Jenkins__, after tests pass, and are
+published to quay.io__.  We try to
+`store the configuration in the environment`_, so that the
+published images can be used in deployments by setting
+environment variables to deployment-specific values.
+
+.. __: https://ci.us-west.moz.works
+.. __: https://quay.io/repository/mozmar/kuma
+.. _`store the configuration in the environment`: https://12factor.net/config
+
+Here are some of the images used in the Kuma project:
+
+.. Published images
+.. include:: ../docker/images/kuma/README.rst
+.. include:: ../docker/images/kuma_base/README.rst
+.. include:: ../docker/images/kumascript/README.rst
+
+.. Development and support images
+.. include:: ../docker/images/integration-tests/README.rst

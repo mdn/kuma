@@ -3,7 +3,7 @@ services:
   worker: &worker
     build:
       context: .
-      dockerfile: Dockerfile-base
+      dockerfile: docker/images/kuma_base/Dockerfile
     environment:
       - DJANGO_SETTINGS_MODULE
 
