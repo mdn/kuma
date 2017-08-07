@@ -276,7 +276,7 @@ def macro_sources(force_lowercase_keys=False):
 
     Return is a dict with the case-sensitive macro name as key, and the subpath
     on GitHub as the value.  The full URL of the GitHub source is:
-    https://github.com/mozilla/kumascript/tree/master/macros/{subpath}
+    https://github.com/mdn/kumascript/tree/master/macros/{subpath}
     """
     ks_macro_url = urljoin(KUMASCRIPT_BASE_URL, 'macros/')
     response = requests.get(ks_macro_url)

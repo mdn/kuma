@@ -38,9 +38,9 @@
                 <dd>
                   <code class="kserror-macro">{{ macro_name }}</code>
                   {% if ('unable to load: ' + macro_name) in error.message %}
-                    (<a href="https://github.com/mozilla/kumascript#updating-macros">{{ _('Create Macro') }}</a>)
+                    (<a href="https://github.com/mdn/kumascript#updating-macros">{{ _('Create Macro') }}</a>)
                   {% elif macro_relpath %}
-                    (<a href="{{ 'https://github.com/mozilla/kumascript/blob/master/macros/' + macro_relpath }}">{{ _('View Macro') }}</a>)
+                    (<a href="{{ 'https://github.com/mdn/kumascript/blob/master/macros/' + macro_relpath }}">{{ _('View Macro') }}</a>)
                   {% endif %}
                 </dd>
                 <dt>{{ _('Parsing macro:') }}</dt>

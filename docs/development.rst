@@ -51,7 +51,7 @@ To run the front-end (selenium) tests, see
 Kumascript tests
 ----------------
 If you're changing Kumascript, be sure to run its tests too.
-See https://github.com/mozilla/kumascript.
+See https://github.com/mdn/kumascript.
 
 Front-end Development and Compiling Sass files
 ==============================================
