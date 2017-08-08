@@ -3,8 +3,7 @@ import urllib
 
 from django.conf import settings
 from django.core import urlresolvers
-from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
