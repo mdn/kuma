@@ -3,10 +3,6 @@
 Header login link
 ********************************************************************** */
 
-.zone #main-header .logout {
-    color: $link-color !important; /* stylelint-disable-line declaration-no-important */
-}
-
 @media #{$mq-mobile-and-down} {
     .login {
         @include nav-item();
@@ -40,9 +36,8 @@ Header login link
             &:hover,
             &:focus {
                 background-color: #000;
-                /* needs !important to over ride zone styles */
-                color: #fff !important; /* stylelint-disable-line declaration-no-important */
-                text-decoration: underline !important; /* stylelint-disable-line declaration-no-important */
+                color: #fff;
+                text-decoration: underline;
             }
         }
     }

@@ -4,7 +4,20 @@ Red background & stripped border for archived pages
 ********************************************************************** */
 
 .wiki-main-content {
-    background-color: rgba(255, 217, 217, 1);
-    border: 20px solid #f00;
-    border-image: repeating-linear-gradient(-45deg, rgba(255, 0, 0, 1) 0, rgba(255, 0, 0, 1) 10px, rgba(255, 168, 0, 1) 10px, rgba(255, 168, 0, 1) 20px, rgba(255, 0, 0, 1) 20px) 20 20 repeat;
+    background-color: $red-light;
+    border: 10px solid $red;
+    border-image: repeating-linear-gradient(-45deg, $red 0, $red 5px, $yellow 5px, $yellow 10px, $red 10px) 10 10 repeat;
+    // negative margins to make border flush to outside
+    margin: ($first-content-top-padding * -1) ($mobile-center-spacing * -1);
+    padding: $mobile-center-spacing;
+}
+
+@media #{$mq-tablet-and-up} {
+    .wiki-main-content {
+        border-width: 20px;
+        border-image: repeating-linear-gradient(-45deg, $red 0, $red 10px, $yellow 10px, $yellow 20px, $red 20px) 20 20 repeat;
+        // negative margins to make border flush to outside
+        margin: ($first-content-top-padding * -1) ($gutter-width * -1);
+        padding: $gutter-width;
+    }
 }

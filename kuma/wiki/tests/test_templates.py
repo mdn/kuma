@@ -985,7 +985,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(1, len(doc('form textarea[name="content"]')))
         # initial translation should include slug input
         eq_(1, len(doc('form input[name="slug"]')))
-        assert (u'Espa' in doc('div.change-locale').text())
+        assert (u'Espa' in doc('div.title-locale').text())
 
     def test_translate_disallow(self):
         """HTTP GET to translate URL returns 400 when not localizable."""
@@ -1294,14 +1294,14 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
     """
     Check document page for zone-style-related features.
     """
-    zone_title = 'div.zone-title'
+    zone_title = 'a.zone-parent'
     css_link = 'link[type="text/css"][href$="build/styles/{}.css"]'
 
     if doc_name == 'root':
         doc = root_doc
     elif doc_name == 'bottom':
         doc = doc_hierarchy_with_zones.bottom
-        zone_title = 'div.zone-title > a[href="{}"]'.format(
+        zone_title = 'a.zone-parent[href="{}"]'.format(
             doc_hierarchy_with_zones.middle_top.get_absolute_url()
         )
     else:
@@ -1319,10 +1319,11 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
 
     assert count('body.zone') == one_if('bottom', 'de', 'fr', 'it')
     assert count('body.zone-landing') == one_if('de', 'fr', 'it')
-    assert (count('#document-main.zone-landing-header') ==
-            one_if('de', 'fr', 'it'))
-    assert count('#document-main.zone-article-header') == one_if('bottom')
+    assert count('span.zone-parent') == one_if('de', 'fr', 'it')
+    assert (count('.document-title') ==
+            one_if('root', 'bottom', 'de', 'fr', 'it'))
     assert count(zone_title) == one_if('bottom')
+    assert count('.crumbs') == one_if('root', 'bottom')
     assert count(css_link.format('zones')) == one_if('it')
     assert count(css_link.format('zone-bobby')) == one_if('bottom')
     assert count(css_link.format('zone-berlin')) == one_if('de')

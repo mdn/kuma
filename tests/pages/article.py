@@ -17,7 +17,7 @@ class ArticlePage(BasePage):
     _edit_button_locator = (By.ID, 'edit-button')
     _advanced_button_locator = (By.ID, 'advanced-menu')
     # article head
-    _article_title_locator = (By.CSS_SELECTOR, '#wiki-document-head h1')
+    _article_title_locator = (By.CSS_SELECTOR, '.document-head h1')
     # article columns
     _article_column_container_locator = (By.ID, 'wiki-column-container')
     _article_left_column_locator = (By.ID, 'wiki-left')

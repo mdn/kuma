@@ -16,6 +16,4 @@ imports
 header modifications
 ====================================================================== */
 
-.zone-image {
-    background-image: url($path-to-images + 'zones/owg-logo.svg');
-}
+@include zone-image('games.svg', 56.47, 49.48);

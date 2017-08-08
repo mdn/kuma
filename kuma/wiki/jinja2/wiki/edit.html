@@ -14,6 +14,22 @@
     {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
+{% block document_head %}
+  <!-- heading -->
+  <div class="document-head">
+    <div class="center">
+      <div class="document-title">
+        <h1>{{ _('<span class="title-prefix">Editing</span> <em>%(title)s</em>'|safe, title=revision.title) }}</h1>
+        <div class="title-properties">
+          {% if not section_id %}
+            <button class="button link" id="btn-properties">{{ _('Edit Page Title and Properties') }}</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
 {% block content %}
   <article id="edit-document">
     <form id="wiki-page-edit" class="editing" method="post" action="">
@@ -103,17 +119,6 @@
 
         <header id="article-head">
 
-          <div class="doc-title">
-            <h1>{{ _('<span class="title-prefix">Editing</span> <em>%(title)s</em>'|safe, title=revision.title) }}</h1>
-            <p class="doc-title-properties">
-              {% if not section_id %}
-                <a href="" id="btn-properties">{{ _('Edit Page Title and Properties') }}</a><br />
-              {% endif %}
-            </p>
-          </div>
-
-          {{ page_buttons(wiki, document, discard_href, 'top') }}
-
           {% if revision_form and not section_id %}
             <ul class="metadata">
                 <li class="clear">
@@ -149,6 +154,8 @@
                 </li>
             </ul>
           {% endif %}
+
+          {{ page_buttons(wiki, document, discard_href, 'top') }}
 
           {% if not collision %}
             {{ revision_form.current_rev | safe }}

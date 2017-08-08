@@ -56,6 +56,10 @@ Three grey boxes
 .callout-link-container {
     position: relative;
     height: 100%;
+
+    h2 {
+        margin-top: 0;
+    }
 }
 
 .callout-link-wrapper {
@@ -77,6 +81,10 @@ Content
 ====================================================================== */
 .dev-program-explanation {
     @extend %dev-program-pad;
+
+    h2 {
+        margin-top: 0;
+    }
 }
 
 

@@ -17,6 +17,4 @@ imports
 header modifications
 ====================================================================== */
 
-.zone-image {
-    background-image: url($path-to-images + 'zones/phq-blue.svg');
-}
+@include zone-image('apps.svg', 55.2, 44.95);

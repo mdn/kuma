@@ -104,73 +104,38 @@
   {% endif %}
 {% endblock %}
 
-{% block content %}
-
-  {% if is_zone %}
-      {% if is_zone_root %}
-
-        <div class="zone-landing-header" id="document-main"><div class="center">
-          <!-- edit, settings buttons -->
-          {{ buttons }}
-
-          <!-- crumbs -->
-          {{ crumbs }}
-
-          <h1>{{ document.title }}</h1>
-
-          {% set summary = document|selector_content_find('.summary') %}
-          {% if (zone_subnav_html or quick_links_html) %}
-          <div class="column-container zone-landing-header-preview">
-            <div class="column-strip">
-              <div class="zone-landing-header-preview-base">
-                {% if zone_subnav_html %}
-                  <!-- zone subnav -->
-                  {{ get_document_subnav(zone_subnav_html) }}
-                {% endif %}
-
-                {% if quick_links_html %}
-                  <!-- quick links -->
-                  {{ get_document_quick_links(quick_links_html) }}
-                {% endif %}
-              </div>
-              <div class="zone-landing-header-spacing"></div>
-            </div>
-            <div class="column-5 masthead-text"><p>{{ summary }}</p></div>
-          </div>
-          {% else %}
-            <div class="column-5 masthead-text"><p>{{ summary }}</p></div>
-          {% endif %}
-
-          <div class="zone-image"></div>
-        </div></div>
-      {% else %}
-        <div class="zone-article-header" id="document-main"><div class="center">
-          <!-- zone title -->
-          <div class="zone-title"><a href="{{ nearest_zone.document.get_absolute_url() }}">{{ nearest_zone.document.title }}</a></div>
-          <!-- zone image -->
-          <div class="zone-image"></div>
-        </div></div>
-      {% endif %}
-
-    {% endif %} <!-- end is_zone -->
-
-
-    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
+{% block document_head %}
+  <!-- heading -->
+  <div id="wiki-document-head" class="document-head">
+    <div class="center">
       {% if not is_zone_root %}
-      <div class="article-meta">
-        <!-- action buttons -->
-        {{ buttons }}
-
         <!-- crumbs -->
         {{ crumbs }}
-      </div>
-
-      <!-- heading -->
-      <div id="wiki-document-head" class="document-head">
-        <h1>{{ document.title }}</h1>
-      </div>
       {% endif %}
 
+      <!-- action buttons -->
+      <div class="document-actions">
+        {{ buttons }}
+      </div>
+
+      <div class="document-title">
+        {% if is_zone_root %}
+          <!-- zone image -->
+          <span class="zone-parent"></span>
+        {% elif is_zone %}
+          <!-- zone image, link to zone root -->
+          <a class="zone-parent" href="{{ nearest_zone.document.get_absolute_url() }}">{{ nearest_zone.document.title }}</a>
+        {% endif %}
+
+        <h1>{{ document.title }}</h1>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
+{% block content %}
+
+    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
       <!-- start the main content container -->
         <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
 
@@ -306,38 +271,33 @@
               {% endif %}
               </article>
 
-              {% if not is_zone_root %}
+              <!-- contributors -->
+              <div class="wiki-block contributors">
+                <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
+                {% set tags = document.tags.all().order_by('name') %}
+                {% include "wiki/includes/document_tag.html" %}
 
-                <!-- contributors -->
-                <div class="wiki-block contributors">
-                  <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
-                  {% set tags = document.tags.all().order_by('name') %}
-                  {% include "wiki/includes/document_tag.html" %}
+                {% if has_contributors %}
+                  <div class="contributors-sub">
+                    <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>{{ _('Contributors to this page:') }}</strong> {{ contributor_links(contributors) }}
+                  </div>
+                {% endif %}
 
-                  {% if has_contributors %}
-                    <div class="contributors-sub">
-                      <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>{{ _('Contributors to this page:') }}</strong> {{ contributor_links(contributors) }}
-                    </div>
-                  {% endif %}
-
-                  {% if current_revision.creator %}
-                    <div class="contributors-sub">
-                      <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>{{ _('Last updated by:') }}</strong>
-                      <a href="{{ current_revision.creator.get_absolute_url() }}"
-                         {%- if not current_revision.creator.is_active %} rel="nofollow"{% endif -%}
-                         >{{ current_revision.creator }}</a>,
-                      {{ datetimeformat(current_revision.created, format='datetime') }}
-                    </div>
-                  {% endif %}
-                </div>
-              {% endif %}
+                {% if current_revision.creator %}
+                  <div class="contributors-sub">
+                    <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>{{ _('Last updated by:') }}</strong>
+                    <a href="{{ current_revision.creator.get_absolute_url() }}"
+                       {%- if not current_revision.creator.is_active %} rel="nofollow"{% endif -%}
+                       >{{ current_revision.creator }}</a>,
+                    {{ datetimeformat(current_revision.created, format='datetime') }}
+                  </div>
+                {% endif %}
+              </div>
             </div>
 
             {% if show_left %}
               <!-- quick links and zone subnav strip -->
               <div id="wiki-left" class="column-strip wiki-column">
-
-              {% if not is_zone_root %}
 
                 {% if zone_subnav_html %}
                   <!-- zone subnav -->
@@ -353,8 +313,6 @@
                 {% if approvals_html %}
                   {{ approvals_html }}
                 {% endif %}
-
-              {% endif %}
 
               </div>
             {% endif %}

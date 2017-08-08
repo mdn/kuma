@@ -18,6 +18,20 @@
     {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
+{% block document_head %}
+  <!-- heading -->
+  <div class="document-head">
+    <div class="center">
+      <div class="document-title">
+        <h1>{{ _('<span class="title-prefix">Translating</span> <em>%(title)s</em>'|safe, title=parent.title) }}</h1>
+        <div class="title-locale">
+          {{ _('Translating article to %(locale)s', locale=language) }}.
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
 {% block content %}
     <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
       {% csrf_token %}
@@ -25,14 +39,6 @@
 
       <div id="localize-document" class="editing">
         <header id="article-head">
-          <div class="doc-title">
-           <h1>{{ _('<span class="title-prefix">Translating</span> <em>%(title)s</em>'|safe, title=parent.title) }}</h1>
-          </div>
-
-          <div class="change-locale">
-            {{ _('Translating article to %(locale)s', locale=language) }}.
-          </div>
-
           {{ page_buttons(wiki, document, discard_href, 'top') }}
         </header>
 

@@ -10,12 +10,18 @@
     {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
-{% block content %}
-
-      <div class="doc-title">
+{% block document_head %}
+  <!-- heading -->
+  <div class="document-head">
+    <div class="center">
+      <div class="document-title">
         <h1>{{ _('<span class="title-prefix">Moving</span> <em>%(title)s</em>'|safe, title=document.title) }}</h1>
       </div>
+    </div>
+  </div>
+{% endblock%}
 
+{% block content %}
       <div class="text-content">
           <p>{{ _('Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:') }}</p>
           <ul>

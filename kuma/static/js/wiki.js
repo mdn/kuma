@@ -130,7 +130,7 @@
     /*
         Add intelligent break points to long article titles
     */
-    $('#wiki-document-head h1').each(function() {
+    $('.document .document-head h1').each(function() {
         var $title = $(this);
         var text = $title.text();
         // split on . - : ( or capital letter, only if followed by 2 letters

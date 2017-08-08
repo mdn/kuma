@@ -5,8 +5,8 @@ Blue "join us!" promo in MDN 10 zone
 .promo10 {
     margin-bottom: $grid-spacing;
     padding: $grid-spacing;
-    background-color: $zone-background-color;
-    color: $blue-background-text-color;
+    background-color: $blue-dark;
+    color: #fff;
     text-align: center;
 
 
@@ -17,12 +17,12 @@ Blue "join us!" promo in MDN 10 zone
     }
 
     h3 {
-        color: $blue-background-text-color;
+        color: #fff;
     }
 }
 
 .promo10-globe {
-    background: $zone-background-color center -30% no-repeat url($path-to-images + '/zones/mdn10/globe.png');
+    background: $blue-dark center -30% no-repeat url($path-to-images + '/zones/mdn10/globe.png');
 }
 
 .promo10-img {

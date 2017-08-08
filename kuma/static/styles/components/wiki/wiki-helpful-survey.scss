@@ -19,6 +19,10 @@
             font-family: $heading-font-family-fallback;
         }
     }
+
+    .zone & {
+        display: none;
+    }
 }
 
 .helpful-survey-buttons {

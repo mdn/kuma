@@ -186,9 +186,12 @@
   </div></header>
 
   <!-- Content will go here -->
-  <main id="content"><div class="center clear">
-  {% block content %}{% endblock %}
-  </div></main>
+  <main id="content">
+      {% block document_head %}{% endblock %}
+      <div class="center clear">
+      {% block content %}{% endblock %}
+      </div>
+  </main>
 
   <!-- redesign notices -->
   {% include "includes/redesign_notice.html" %}

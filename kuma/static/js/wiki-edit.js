@@ -276,7 +276,6 @@
 
         if ($('#article-head .metadata').length) {
             var showMeta = function () {
-                $('#article-head .doc-title').hide();
                 $('#article-head .metadata').show();
                 $('#article-head .metadata #id_title').focus();
             };

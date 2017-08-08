@@ -1,0 +1,66 @@
+/*
+Custom images which appear in zone headers
+********************************************************************** */
+
+.zone-parent {
+    @include heading-1();
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0 solid #d7d7d7;
+    @include bidi-style(border-right-width, 1px, border-left-width, 0);
+    @include bidi-value(float, left, right);
+    @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+    @include bidi-style(padding-right, ($grid-spacing / 2), padding-left, 0);
+
+    .zone-landing & {
+        // Don't display by default, it will look like duplicate text
+        display: none;
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .zone-parent {
+        @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+        @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+    }
+}
+
+@mixin zone-image($img, $width, $height) {
+    $image-small-size: $mobile-document-title-font-size;
+    $image-big-size: $h1-font-size;
+    $image-landing-size: 90px;
+    $image-small-width: round($width * $image-small-size / $height);
+    $image-big-width: round($width * $image-big-size / $height);
+    $image-landing-width: round($width * $image-landing-size / $height);
+
+    .zone-parent {
+        background-image: url($path-to-images + 'zones/' + $img);
+        direction: ltr; // ltr should be set with negative text indent
+        height: $image-small-size;
+        overflow: hidden;
+        text-indent: -9999px;
+        width: $image-small-width;
+
+        .zone-landing & {
+            // icon is not duplicate text, go ahead and display
+            display: block;
+            // but grey it out so it doesn't look like a link
+            filter: saturate(0);
+            @include bidi-style(margin-right, 0, margin-left, 0);
+            border: none;
+        }
+    }
+
+    @media #{$mq-mobile-and-up} {
+        .zone-parent {
+            height: $image-big-size;
+            width: $image-big-width;
+
+            .zone-landing & {
+                height: $image-landing-size;
+                width: $image-landing-width;
+                margin-top: $image-big-size - $image-landing-size - 7px;
+            }
+        }
+    }
+}

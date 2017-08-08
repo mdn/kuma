@@ -4,13 +4,17 @@ Main header, wraps all components of logo, main, and secondary navigation
 
 #main-header {
     @include clearfix();
+    position: relative;
+    z-index: 1;
     padding-top: $mobile-center-spacing;
+    border: 5px solid $accent-light;
+    border-width: 5px 0 0;
+    border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
+    background-color: #fff;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, .3);
 
     > .center {
         @include clearfix();
-        border: 5px solid $accent-light;
-        border-width: 0 0 5px 0;
-        border-image: linear-gradient(to right, $accent-light, $accent-dark) 10;
     }
 }
 
@@ -25,10 +29,6 @@ Main header, wraps all components of logo, main, and secondary navigation
     direction: ltr; // ltr should be set with negative text indent
     text-indent: -9999px;
     overflow: hidden;
-}
-
-.zone #main-header .logo {
-    background-position: 100% -58px !important; /* stylelint-disable-line declaration-no-important */
 }
 
 @media #{$mq-tablet-and-up} {

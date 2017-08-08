@@ -14,6 +14,18 @@
     {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
+{% block document_head %}
+  <!-- heading -->
+  <div class="document-head">
+    <div class="center">
+      <div class="document-title">
+        <h1><span class="title-prefix">{{ _('Create a') }} </span><em>{{ _('New Document') }}</em></h1>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
+
 {% block content %}
     <article id="new-document">
     {{ errorlist(document_form) }}
@@ -24,10 +36,6 @@
       <header id="article-head">
 
         {{ page_buttons(wiki, document, discard_href, 'top') }}
-
-        <div class="doc-title">
-            <h1><span class="title-prefix">{{ _('Create a') }} </span><em>{{ _('New Document') }}</em></h1>
-        </div>
 
         <ul class="metadata">
             <li class="clear">

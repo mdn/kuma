@@ -3,8 +3,8 @@ wiki article cookie crumbs
 ********************************************************************** */
 
 .crumbs {
+    @include bidi-value(float, left, right);
     display: inline-block;
-    @include set-smaller-font-size();
 
     li {
         @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
@@ -17,6 +17,7 @@ wiki article cookie crumbs
 
     a {
         display: block;
+        line-height: 1;
 
         &:before {
             @include bidi-style(margin-right, 4px, margin-left, 0, true);
@@ -24,12 +25,25 @@ wiki article cookie crumbs
             display: inline-block;
             font-family: FontAwesome;
             text-decoration: none;
-            color: $grey;
+            color: $text-color;
             @include set-font-size(70%);
+            vertical-align: middle;
         }
     }
 
     @include reverse-link-decoration();
+}
+
+@media #{$mq-mobile-and-up} {
+    // make them sit inline with .page-actions buttons
+    .crumbs {
+        padding: 5px 0;
+
+        a {
+            border: $form-border-width solid transparent;
+            padding: 5px 0;
+        }
+    }
 }
 
 @media print {
