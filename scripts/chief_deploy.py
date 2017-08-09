@@ -5,6 +5,7 @@ Requires commander (https://github.com/oremj/commander) which is installed on
 the systems that need it.
 """
 
+import json
 import os
 import sys
 
@@ -89,13 +90,27 @@ def restart_celery(ctx):
 # As far as I can tell, Chief does not pass the username to commander,
 # so I can't give a username here: (
 # also doesn't pass ref at this point... we have to backdoor that too!
-# TODO: Update to the v2 API
 @task
 def ping_newrelic(ctx):
     f = open(settings.SRC_DIR + "/media/revision.txt", "r")
-    tag = f.read()
+    tag = f.read().strip()
     f.close()
-    ctx.local('curl --silent -H "x-api-key:%s" -d "deployment[app_name]=%s" -d "deployment[revision]=%s" -d "deployment[user]=Chief" https://rpm.newrelic.com/deployments.xml' % (settings.NEWRELIC_API_KEY, settings.REMOTE_HOSTNAME, tag))
+    url = ('https://api.newrelic.com/v2/applications/%s/deployments.json' %
+           settings.NEWRELIC_APP_ID)
+    deployment = {
+        'deployment': {
+            'revision': tag,
+            'user': 'Chief'
+        }
+    }
+    ctx.local(("curl --silent"
+               " -X POST '%(URL)s'"
+               " -H 'X-Api-Key:%(API_KEY)s'"
+               " -H 'Content-Type: application/json'"
+               " -d '%(DEPLOYMENT_JSON)s'"
+               % {'URL': url,
+                  'API_KEY': settings.NEWRELIC_API_KEY,
+                  'DEPLOYMENT_JSON': json.dumps(deployment)}))
 
 
 @task
@@ -170,7 +185,7 @@ def deploy(ctx):
     restart_web()
     restart_kumascript()
     restart_celery()
-    # ping_newrelic()
+    ping_newrelic()
 
 
 @task
