@@ -883,4 +883,11 @@
         }
     }
 
+    function tmpHideSidebar() {
+        $('#wiki-right').hide();
+        $('#wiki-content').css('width', '70%');
+    }
+
+    tmpHideSidebar();
+
 })(window, document, jQuery);
