@@ -353,7 +353,7 @@ LOCALE_PATHS = (
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = path('media')
+MEDIA_ROOT = config('MEDIA_ROOT', default=path('media'))
 
 # Absolute path to the directory for the humans.txt file.
 HUMANSTXT_ROOT = MEDIA_ROOT
