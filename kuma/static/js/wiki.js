@@ -883,4 +883,17 @@
         }
     }
 
+    // listens for post message from interactive editor
+    window.addEventListener('message', function(event) {
+        // get the interactive editor iframe
+        var iframe = document.querySelector('iframe.interactive');
+        var isExpectedOrigin = event.origin === 'https://interactive-examples.mdn.mozilla.net';
+
+        /* there may be other post messages so, ensure that the origin is the
+        expected and, that `event.data` contains an `iframeHeight` property */
+        if (isExpectedOrigin && event.data.iframeHeight) {
+            iframe.setAttribute('height', event.data.iframeHeight);
+        }
+    }, false);
+
 })(window, document, jQuery);

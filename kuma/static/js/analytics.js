@@ -9,7 +9,7 @@
          * @param {Object} event - The event Object received from the postMessage
          */
         interactiveExamplesEvent: function(event) {
-            if (event.origin !== 'https://mdn.github.io') {
+            if (event.origin !== 'https://interactive-examples.mdn.mozilla.net') {
                 return false;
             }
             mdn.analytics.trackEvent(event.data);
