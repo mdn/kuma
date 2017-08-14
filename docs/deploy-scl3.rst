@@ -32,15 +32,7 @@ Pre-Deployment: Update Submodules
 
 * Update the submodules::
 
-    git submodule update --init
-    cd kumascript
-    git fetch origin
-    git checkout origin/master
-    cd ..
-    cd locale
-    git fetch origin
-    git checkout origin/master
-    cd ..
+    git submodule update --remote
     git diff
     git commit kumascript locale
 
