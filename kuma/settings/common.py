@@ -1153,7 +1153,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS',
 MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
-ATTACHMENT_HOST = 'mdn.mozillademos.org'
+ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
