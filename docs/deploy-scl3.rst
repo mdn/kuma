@@ -49,7 +49,18 @@ Pre-Deployment: Update Submodules
 
   This will add references to the PRs back to the commit where there were
   deployed. You can see the commits from the `What's Deployed`_ page, or by
-  using `GitHub's compare view`_.
+  using `GitHub's compare view`_::
+
+    # This long command is needed once
+    # On OSX, change "echo" to "open" to open in browser
+    git config --add alias.submodule-compare-urls "submodule foreach --quiet 'echo \"https://github.com/\`git remote get-url origin | cut -d: -f2 | cut -d. -f1\`/compare/\$sha1...\`git rev-parse @\`\"'"
+
+    # And then can be used to print the URLs
+    git submodule-compare-urls
+
+  You can just see the merge commits with ``git log --merges``::
+
+    git submodule foreach 'git log --merges HEAD...$sha1'
 
 .. _`What's Deployed`: https://whatsdeployed.io/s-FHK
 .. _`GitHub's compare view`: https://github.com/blog/612-introducing-github-compare-view
