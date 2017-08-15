@@ -1,6 +1,7 @@
 from .common import *  # noqa
 
-ATTACHMENT_HOST = 'developer-samples.allizom.org'
+ATTACHMENT_HOST = config('ATTACHMENT_HOST',
+                         default='developer-samples.allizom.org')
 
 EMAIL_SUBJECT_PREFIX = '[mdn stage] '
 

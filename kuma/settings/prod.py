@@ -1,6 +1,6 @@
 from .common import *  # noqa
 
-ATTACHMENT_HOST = 'mdn.mozillademos.org'
+ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
 ALLOW_ROBOTS = True
 
 # Email

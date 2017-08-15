@@ -7,7 +7,8 @@ from .common import *  # noqa
 DEFAULT_FILE_STORAGE = 'kuma.core.storage.KumaHttpStorage'
 LOCALDEVSTORAGE_HTTP_FALLBACK_DOMAIN = PRODUCTION_URL + '/media/'
 
-ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
+ATTACHMENT_HOST = config('ATTACHMENT_HOST',
+                         default='mdn-local.mozillademos.org')
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.10.1', '172.18.0.1')
 
