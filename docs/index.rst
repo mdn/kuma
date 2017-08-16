@@ -25,4 +25,6 @@ Contents:
    ckeditor
    data
    documentation
+
    docker
+   deploy-scl3
