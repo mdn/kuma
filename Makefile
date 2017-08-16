@@ -109,6 +109,9 @@ push-base:
 push-kuma:
 	docker push ${KUMA_IMAGE}
 
+push-kumascript:
+	docker push ${KUMASCRIPT_IMAGE}
+
 push: push-base push-kuma
 
 deis-create:
