@@ -91,6 +91,15 @@ if settings.SERVE_MEDIA:
             {'document_root': settings.MEDIA_ROOT}),
     ]
 
+if settings.SERVE_LEGACY and settings.LEGACY_ROOT:
+    urlpatterns.append(
+        url(
+            r'^(?P<path>(diagrams|presentations|samples)/.+)$',
+            serve,
+            {'document_root': settings.LEGACY_ROOT}
+        )
+    )
+
 # Legacy MindTouch redirects. These go last so that they don't mess
 # with local instances' ability to serve media.
 urlpatterns += [
