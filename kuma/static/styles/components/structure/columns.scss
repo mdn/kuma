@@ -11,11 +11,41 @@
 .column-x elements is automatically floated and assigned a right margin.
 .column-container clears the .column-x floats and removes margin from the last column
 .column-container-reverse reverses the floats so that the last visual element appears first in the child list
+
+This file was formerly _mixin_draw-grid.scss if you want to follow the history
 ********************************************************************** */
 
-/* Outputs relevant grid styles once */
-@mixin draw-grid() {
-    /* this is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
+/*
+mobile - everything is it's own column, by default just need clearfix
+- but clearfix will screw up columns so can't apply without mq restrictions
+====================================================================== */
+@media #{$mq-mobile-and-down} {
+    .column-1,
+    .column-2,
+    .column-3,
+    .column-4,
+    .column-5,
+    .column-6,
+    .column-7,
+    .column-8,
+    .column-9,
+    .column-10,
+    .column-11,
+    .column-12,
+    .column-strip,
+    .column-quarter,
+    .column-third,
+    .column-half,
+    .column-all,
+    .column-container #{$grid-column-selector} {
+        @include clearfix();
+    }
+}
+
+/*
+tablet & up - change to columns
+====================================================================== */
+@media #{$mq-tablet-and-up} {
     .column-container {
         @include clearfix();
 
@@ -23,6 +53,10 @@
             margin-right: $grid-margin;
             @include bidi-value(float, left, right);
             min-height: 1px;
+
+            &:first-child {
+                @include bidi-value(margin-right, $grid-margin, 0);
+            }
 
             &:last-child {
                 @include bidi-value(margin-right, 0, $grid-margin);
@@ -40,15 +74,6 @@
                 &:last-child {
                     @include bidi-value(margin-right, $grid-margin, 0);
                 }
-            }
-        }
-    }
-
-    /* adjustments to reverse the column containers in RTL */
-    html[dir='rtl'] .column-container {
-        #{$grid-column-selector} {
-            &:first-child {
-                margin-right: 0;
             }
         }
     }
@@ -109,47 +134,5 @@
     .column-12,
     .column-all {
         @include column-12();
-    }
-
-    /*  tablet grid width */
-    @media #{$mq-tablet-and-down} {
-        .column-container {
-            &.column-container-reverse {
-                margin-left: 0;
-            }
-        }
-    }
-
-    /*
-    mobile - just make everything its own column
-    preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
-    ====================================================================== */
-    @media #{$mq-mobile-and-down} {
-        .column-1,
-        .column-2,
-        .column-3,
-        .column-4,
-        .column-5,
-        .column-6,
-        .column-7,
-        .column-8,
-        .column-9,
-        .column-10,
-        .column-11,
-        .column-12,
-        .column-strip,
-        .column-quarter,
-        .column-third,
-        .column-half,
-        .column-all,
-        .column-container #{$grid-column-selector} {
-            /* stylelint-disable declaration-no-important  */
-            @include clearfix();
-            width: auto !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            float: none !important;
-            /* stylelint-enable */
-        }
     }
 }

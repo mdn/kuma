@@ -22,7 +22,6 @@ class ArticlePage(BasePage):
     _article_column_container_locator = (By.ID, 'wiki-column-container')
     _article_left_column_locator = (By.ID, 'wiki-left')
     _article_content_column_locator = (By.ID, 'wiki-content')
-    _article_right_column_locator = (By.ID, 'wiki-right')
     # article
     _article_locator = (By.ID, 'wikiArticle')
     _article_links_locator = (By.CSS_SELECTOR, '#wikiArticle a[href]')
@@ -123,17 +122,6 @@ class ArticlePage(BasePage):
     def is_article_column_content_present(self):
         content_column = self.find_element(*self._article_content_column_locator)
         return content_column.is_displayed()
-
-    @property
-    def article_column_right_present(self):
-        column_container = self.find_element(*self._article_column_container_locator)
-        column_container_class = column_container.get_attribute('class')
-        right_column = self.find_element(*self._article_right_column_locator)
-        # parent container expects right
-        right_expected = 'wiki-right-present' in column_container_class
-        # right column is present
-        right_present = right_column.is_displayed()
-        return right_expected and right_present
 
     # article wrapper is displayed
     @property

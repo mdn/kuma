@@ -1,8 +1,20 @@
-/* wiki structure */
+/*
+Column structure for main wiki content
 
-.wiki-main-content {
-    background: #fff;
-    min-height: 300px;
+<div id="wiki-column-container" class="(wiki-left-present | wiki-left-closed wiki-left-none)">
+    <div class="column-container column-container-reverse">
+        <div id="wiki-content" class="column-main wiki-column"></div>
+        <!-- if left column is present -->
+        <div id="wiki-left" class="column-strip wiki-column"></div>
+********************************************************************** */
+
+#wiki-column-container {
+    overflow: auto; /* don't let wiki content escape the article - BUG 1325569 */
+    clear: both;
+}
+
+.wiki-column {
+    padding-bottom: ($grid-spacing * 2);
 }
 
 /* the subnav and quick link column of the layout */
@@ -10,76 +22,31 @@
     position: relative;
 }
 
-/* set minimum heights on main columns */
-#wiki-right,
-#wiki-left,
-#wiki-content {
-    min-height: 1px; /* ensures the column has width when empty */
-}
+@media #{$mq-tablet-and-up} {
 
-/* don't let wiki content escape the article - BUG 1325569 */
-#wiki-column-container {
-    overflow: auto;
-    clear: both;
-}
-
-/* adjustments to columns based on show/hide and media query */
-#wiki-column-container.wiki-right-closed #wiki-content,
-#wiki-column-container.wiki-left-closed #wiki-content {
-    @include column-9();
-}
-
-#wiki-column-container.wiki-right-closed.wiki-left-closed {
-    #wiki-content {
-        @include column-all();
-        float: none;
-        width: auto;
+    .wiki-main-content {
+        min-height: 300px;
     }
 
-    .column-container-reverse {
-        margin-left: 0;
+    .wiki-column {
+        min-height: 1px; /* ensures the column has width when empty */
     }
-}
 
-@media #{$mq-large-desktop-and-down} {
-    /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
-    .wiki-left-present:not(.wiki-left-closed) {
-        #wiki-right,
+    #wiki-column-container.wiki-left-closed {
         #wiki-content {
-            width: $grid-width-column-main;
-            margin-right: 0;
-        }
-
-        #wiki-right {
-            @include enable-toc-toggle();
-            padding-bottom: ($grid-spacing * 2);
-        }
-
-        #wiki-left {
+            @include column-all();
             float: none;
+            width: auto;
         }
     }
 }
 
-@media #{$mq-tablet-and-down} {
-    @include make-wiki-blocks-flat();
-
-    #wiki-right {
-        @include enable-toc-toggle();
-    }
-
-    #wiki-column-container,
-    #wiki-content {
-        width: auto !important; /* stylelint-disable-line declaration-no-important */
-    }
-}
 
 /* print styling */
 @media print {
 
     /* hide sections not important to the article */
-    #wiki-left,
-    #wiki-right {
+    #wiki-left {
         display: none;
     }
 }

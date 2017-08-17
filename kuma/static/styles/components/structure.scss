@@ -3,16 +3,8 @@ Main CSS file for MDN.  Holds the site structure and key styles.
 ********************************************************************** */
 
 
-/*
-Classes which should be mirror extensions and mixins - mixins.styl
-These classes are used within wiki content sowe must have them available as classes as well.
-====================================================================== */
-
-/* grid setup for direct class uses */
-@import '../includes/mixin_draw-grid';
-@include draw-grid();
-
 /* columns */
+@import 'structure/columns';
 @import 'structure/cols';
 
 

@@ -23,7 +23,6 @@ def test_feedback_layout(base_url, selenium):
     assert page.is_article_displayed
     assert page.is_article_column_left_present
     assert page.is_article_column_content_present
-    assert page.article_column_right_present
     column_container = page.article_column_container_region
     assert column_container.is_expected_stacking
 
