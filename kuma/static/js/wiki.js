@@ -24,7 +24,9 @@
         var $subnavList = $subnav.find(' > ol');
         var minHeightFn = $('.zone-landing-header-preview-base').length ? setMinHeight : noop;
 
-        if(!$subnavList.length) return; // Exit if the subnav isn't set up properly
+        if (!$subnavList.length) {
+            return; // Exit if the subnav isn't set up properly
+        }
 
         // Set the list items as togglers where needed
         setupTogglers($subnavList.find('li'));
@@ -43,7 +45,7 @@
             var $togglers = $(this).parents('.toggleable').find('.toggler');
 
             $togglers.each(function() {
-                if($.contains($(this).parent('li').get(0), self) && used.indexOf(this) === -1) {
+                if ($.contains($(this).parent('li').get(0), self) && used.indexOf(this) === -1) {
                     $(this).trigger('mdn:click');
                     used.push(this);
                 }
@@ -55,7 +57,7 @@
 
         function noop(){}
         function setMinHeight() {
-            if($('.zone-landing-header-preview-base').css('position') === 'absolute') {
+            if ($('.zone-landing-header-preview-base').css('position') === 'absolute') {
                 $('.wiki-main-content').css('min-height', $subnav.height());
             }
         }
@@ -71,7 +73,9 @@
         e.preventDefault();
 
         var $link = $(this);
-        if($link.hasClass('disabled')) return;
+        if ($link.hasClass('disabled')) {
+            return;
+        }
 
         mdn.analytics.trackEvent({
             category: 'Page Watch',
@@ -90,7 +94,7 @@
         }).done(function(data) {
 
             var message;
-            if(Number(data.status) === 1) {
+            if (Number(data.status) === 1) {
                 $link.text($link.data('unsubscribe-text'));
                 message = $link.data('subscribe-message');
             }
@@ -111,7 +115,7 @@
             var $li = $(this);
             var $sublist = $li.find('> ul, > ol');
 
-            if($sublist.length) {
+            if ($sublist.length) {
                 $li.addClass('toggleable closed');
                 $li.find('> a').addClass('toggler').prepend('<i aria-hidden="true" class="icon-caret-up"></i>');
                 $sublist.addClass('toggle-container');
@@ -124,7 +128,9 @@
     */
     $('.external').each(function() {
         var $link = $(this);
-        if(!$link.find('img').length) $link.addClass('external-icon');
+        if (!$link.find('img').length) {
+            $link.addClass('external-icon');
+        }
     });
 
     /*
@@ -148,132 +154,32 @@
     /*
         Syntax highlighting scripts
     */
-    if($('article pre').length && ('querySelectorAll' in doc)) (function() {
-        if(mdn.assets && mdn.assets.js.hasOwnProperty('syntax-prism')) {
-            mdn.assets.js['syntax-prism'].forEach(function(url, index, array) {
-                /*
-                   Note: In development, multiple scripts are loaded, and the
-                   later scripts use Prism, which is declared in the first
-                   script.  This means syntax highlighting often doesn't work
-                   on the first page load. Refresh, and syntax highlighing
-                   should work.
+    if ($('article pre').length && ('querySelectorAll' in doc)) {
+        if (mdn.assets && mdn.assets.js.hasOwnProperty('syntax-prism')) {
+            (function() {
+                mdn.assets.js['syntax-prism'].forEach(function(url, index, array) {
+                    /*
+                       Note: In development, multiple scripts are loaded, and the
+                       later scripts use Prism, which is declared in the first
+                       script.  This means syntax highlighting often doesn't work
+                       on the first page load. Refresh, and syntax highlighing
+                       should work.
 
-                   To fix this, we'd have to use something like require.js or
-                   in-client merging of JS files.  Maybe django-pipeline will
-                   help as well.
-                 */
-                var syntaxScript = doc.createElement('script');
-                syntaxScript.async = array.length === 1;
-                if(index === 0) {
-                    syntaxScript.setAttribute('data-manual', 'true');
-                }
-                syntaxScript.src = url;
-                doc.head.appendChild(syntaxScript);
-            });
-        }
-    })();
-
-    /*
-        Add link to syntax explanations
-    */
-    (function(){
-        // possible syntax languages and links to resources for reading them
-        var syntaxSections = {
-            css:  {
-                link: '/docs/Web/CSS/Value_definition_syntax',
-                title: gettext('How to read CSS syntax.'),
-                urlTest: '/docs/Web/CSS/',
-                classTest: 'brush:css'
-            },
-            /* these languages do not have syntax articles yet but it's important
-                to have the classTest and section tests available when deciding
-                if there is a matching language for the purposes of creating the
-                link, adding a link and title later will cause them to be linked */
-            html: {
-                urlTest: '/docs/Web/HTML/',
-                classTest: 'brush:html'
-            },
-            js: {
-                urlTest: '/docs/Web/JavaScript/',
-                classTest: 'brush:js'
-            },
-            api: {
-                urlTest: '/docs/Web/API/',
-                classTest: 'brush:js'
-            }
-        };
-
-        // check if there is any syntax on the page to add links to
-        var $boxes = $('.syntaxbox, .twopartsyntaxbox');
-
-        if($boxes.length) {
-            /* run the section and page matching logic
-               - isLinkMatch becomes true if we're already on one of the syntax articles
-               - sectionMatch becomes the link to a wiki article if we're in a section of
-                 the site that has a matching wiki syntax article
-             */
-            var isLinkMatch = false;
-            var sectionMatch;
-            for (var section in syntaxSections) {
-                var sectionLink = syntaxSections[section].link;
-                var sectionTest = syntaxSections[section].urlTest;
-                if(window.location.href.indexOf(sectionLink) > -1) {
-                    isLinkMatch = true;
-                }
-                if(window.location.href.indexOf(sectionTest) > -1) {
-                    sectionMatch = syntaxSections[section];
-                }
-            }
-
-            // if we're not already reading an article on syntax...
-            if(!isLinkMatch){
-                // loop through boxes
-                $boxes.each(function() {
-                    var $thisBox = $(this);
-
-                    // determine language
-                    var syntaxLanguage;
-
-                    // pick CSS if it has class twopartsyntaxbox, this should only ever have CSS in it
-                    if($thisBox.hasClass('twopartsyntaxbox')) {
-                        syntaxLanguage = syntaxSections.css;
+                       To fix this, we'd have to use something like require.js or
+                       in-client merging of JS files.  Maybe django-pipeline will
+                       help as well.
+                     */
+                    var syntaxScript = doc.createElement('script');
+                    syntaxScript.async = array.length === 1;
+                    if (index === 0) {
+                        syntaxScript.setAttribute('data-manual', 'true');
                     }
-
-                    // check if there is a class on the box matching a language (sets to last match)
-                    // overrides .twopartsyntaxbox, that's good
-                    for (var section in syntaxSections) {
-                        var classTest = syntaxSections[section].classTest;
-                        if($thisBox.hasClass(classTest)) {
-                            syntaxLanguage = syntaxSections[section];
-                        }
-                    }
-
-                    // if we still don't have a match fall back to the language the section is in
-                    if (!syntaxLanguage && sectionMatch) {
-                        syntaxLanguage = sectionMatch;
-                    }
-
-                    // check we have identified matching help text and links
-                    if(syntaxLanguage) {
-                        // check that we have the objects we need to add the help text for this language
-                        if(syntaxLanguage.link && syntaxLanguage.title) {
-                            var syntaxLink = syntaxLanguage.link;
-                            var syntaxTitle = syntaxLanguage.title;
-
-                            // add the help text and link to the page
-                            var $helpLink = $('<a href="' + syntaxLink + '" class="syntaxbox-help icon-only" lang="en"><i aria-hidden="true" class="icon-question-sign"></i><span>' + syntaxTitle + '</span></a>');
-                            $thisBox.before($helpLink);
-
-                            // show help text on mouseover (CSS handles focus)
-                            $thisBox.on('mouseenter', function(){$helpLink.addClass('isOpaque');});
-                            $thisBox.on('mouseleave', function(){$helpLink.removeClass('isOpaque');});
-                        }
-                    }
+                    syntaxScript.src = url;
+                    doc.head.appendChild(syntaxScript);
                 });
-            }
+            })();
         }
-    })();
-
+    }
 
     /*
         Track clicks on access menu items
@@ -291,7 +197,9 @@
         mdn.analytics.trackLink(event, url, data);
 
         // dimension11 is "skiplinks user"
-        if(win.ga) ga('set', 'dimension11', 'Yes');
+        if (win.ga) {
+            ga('set', 'dimension11', 'Yes');
+        }
     });
 
     /*
@@ -347,19 +255,19 @@
         var $toggler = $toc.find('> .toggler');
 
         function tocToggle(e) {
-            if(!e || e.type === 'resize') {
+            if (!e || e.type === 'resize') {
                 // Should the TOC be one-column (auto-closed) or sidebar'd
-                if($toc.length) {
+                if ($toc.length) {
                     // look for toggle icon to see if toggleable
-                    if($toggler.find('i').css('display') !== 'none') {
+                    if ($toggler.find('i').css('display') !== 'none') {
                         // TOC is toggleable
-                        if(!$toc.attr('data-closed')) {
+                        if (!$toc.attr('data-closed')) {
                             // TOC is open
                             $toggler.trigger('mdn:click'); // close TOC
                         }
                     } else {
                         // TOC not togglable
-                        if($toc.attr('data-closed') === 'true') {
+                        if ($toc.attr('data-closed') === 'true') {
                             // TOC is closed
                             $toggler.trigger('mdn:click'); // open TOC
                         }
@@ -369,12 +277,12 @@
         }
 
         // If there is no ToC on the page
-        if(!$toc.length) {
+        if (!$toc.length) {
             return;
         }
 
         // Set it forth!
-        if($toc.length) {
+        if ($toc.length) {
             tocToggle();
             $(win).on('resize', tocToggle);
         }
@@ -384,29 +292,29 @@
         Compat table table setup
     */
     $('.htab').each(function(index) {
-            var $htab = $(this);
-            var $items = $htab.find('>ul>li');
+        var $htab = $(this);
+        var $items = $htab.find('>ul>li');
 
-            $htab.append($('div[id=compat-desktop]')[index]);
-            $htab.append($('div[id=compat-mobile]')[index]);
+        $htab.append($('div[id=compat-desktop]')[index]);
+        $htab.append($('div[id=compat-mobile]')[index]);
 
-            $items.find('a').on('click mdn:click', function(e) {
-                    var $this = $(this);
-                    if(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                    $items.removeClass('selected');
-                    $this.parent().addClass('selected');
-                    $htab.find('>div').hide().eq($items.index($this.parent())).show();
-            }).eq(0).trigger('mdn:click');
+        $items.find('a').on('click mdn:click', function(e) {
+            var $this = $(this);
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            $items.removeClass('selected');
+            $this.parent().addClass('selected');
+            $htab.find('>div').hide().eq($items.index($this.parent())).show();
+        }).eq(0).trigger('mdn:click');
     });
 
     /*
         Bottom language checker autosubmit
     */
     $('.wiki-l10n').on('change', function() {
-        if(this.value) {
+        if (this.value) {
             win.location = this.value;
         }
     });
@@ -415,19 +323,18 @@
         Adds a context menu to edit page or view history
     */
     $('body[contextmenu=edit-history-menu]').mozContextMenu(function(target, $contextMenu) {
-            var $menuitems = $contextMenu.find('menuitem');
-            var $body = $('body');
-            var isTextSelected = !document.getSelection().isCollapsed;
-            var isLinkTargeted = ($(target).is('a') || $(target).parents().is('a'));
-            var isImageTargeted = $(target).is('img');
+        var $body = $('body');
+        var isTextSelected = !document.getSelection().isCollapsed;
+        var isLinkTargeted = ($(target).is('a') || $(target).parents().is('a'));
+        var isImageTargeted = $(target).is('img');
 
-            if(isLinkTargeted || isTextSelected || isImageTargeted) {
-                $body.attr('contextmenu', '');
-            }
+        if (isLinkTargeted || isTextSelected || isImageTargeted) {
+            $body.attr('contextmenu', '');
+        }
 
-            $contextMenu.on('click', function(e) {
-                window.location.href = $(e.target).data('action') + '?src=context';
-            });
+        $contextMenu.on('click', function(e) {
+            window.location.href = $(e.target).data('action') + '?src=context';
+        });
     });
 
     /*
@@ -435,7 +342,7 @@
     */
     // is there an error?
     var $kserrors = $('#kserrors');
-    if($kserrors.length){
+    if ($kserrors.length){
         // enable the details toggle
         var $kserrorsToggle = $kserrors.find('.kserrors-details-toggle');
         var $kserrorsDetails = $kserrors.find('.kserrors-details');
@@ -446,7 +353,7 @@
         });
         // loop through error list and log errors
         var $kserrorsList = $('#kserrors-list');
-        if($kserrorsList.length){
+        if ($kserrorsList.length){
             $kserrorsList.each(function(){
                 var $thisError = $(this);
                 var errorType = $thisError.find('.kserror-type').text().trim();
@@ -465,7 +372,7 @@
     */
     // is there an translation banner?
     var $docPending = $('#doc-pending-fallback');
-    if($docPending.length){
+    if ($docPending.length){
         mdn.analytics.trackError('Translation Pending', 'displayed');
     }
 
@@ -478,87 +385,10 @@
 
         var value = $(this).find('#stack-search').val();
 
-        if(value !== '') {
+        if (value !== '') {
             win.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
         }
     });
-
-    /*
-        if many contributors, dont show all at once.
-    */
-    (function (){
-        var hiddenClass = 'hidden';
-        var shownClass = 'shown';
-        var $contributors = $('.contributor-avatars');
-        var $showAllContributors;
-
-        function loadImages(selector) {
-            return $contributors.find(selector).mozLazyloadImage();
-        }
-
-        function initToggle() {
-            $showAllContributors = $('<button id="contributors-toggle" type="button" class="transparent" data-alternate-message="' + $contributors.data('alternate-message') + '">' + $contributors.data('all-text') + '</button>');
-
-            // toggle message and state of hidden
-            $showAllContributors.toggleMessage({
-                toggleCallback: toggleImages
-            });
-
-            // Inject the show all button
-            $showAllContributors.appendTo($contributors);
-        }
-
-        function toggleImages() {
-            var $hiddenContributors;
-            $hiddenContributors = $contributors.find('li.' + hiddenClass);
-            $contributors.toggleClass('contributor-avatars-open');
-            if($hiddenContributors.length) {
-                mdn.analytics.trackEvent({
-                    category: 'Top Contributors',
-                    action: 'Show all'
-                });
-
-                // Show all LI elements
-                $hiddenContributors.removeClass(hiddenClass);
-
-                // Start loading images which were hidden
-                loadImages('noscript');
-            } else {
-                $contributors.find('li:not(.' + shownClass + ')' ).addClass(hiddenClass);
-            }
-        }
-
-
-        // Track clicks on avatars for the sake of Google Analytics tracking
-        $contributors.on('click', 'a', function(event) {
-            var url = this.href;
-            var index = $(this).parent().index() + 1;
-            var data = {
-                category: 'Top Contributors',
-                action: 'Click position',
-                label: index
-            };
-
-            mdn.analytics.trackLink(event, url, data);
-        });
-
-        // Don't bother with contributor bar if it starts hidden
-        if($contributors.css('display') === 'none') return;
-
-        // Start displaying first contributors in list
-        loadImages('li.' + shownClass + ' noscript');
-
-
-        // Setup "Show all Contributors block"
-        if ($contributors.data('has-hidden')) {
-            initToggle();
-        }
-
-        // Trigger CSS on focus into and out of the list itself
-        $contributors.find('ul').on('focusin focusout', function(event) {
-            $(this)[(event.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
-        });
-    })();
 
 
     /*
@@ -568,28 +398,30 @@
        https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
        and https://github.com/fred-wang/mathml.css.
     */
-    if($('math').length) (function() {
-        // Test for MathML support
-        var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
-        var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
-        $div.remove();
+    if ($('math').length) {
+        (function() {
+            // Test for MathML support
+            var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
+            var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
+            $div.remove();
 
-        var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
-        if (!supportsMathML) {
-            // Add CSS fallback
-            $('<link href="' + mdn.staticPath + 'styles/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
+            var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
+            if (!supportsMathML) {
+                // Add CSS fallback
+                $('<link href="' + mdn.staticPath + 'styles/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
 
-            // Add notification
-            $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
-        }
-    })();
+                // Add notification
+                $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
+            }
+        })();
+    }
 
     /*
       Make Compare selected revisions button sticky when scrolling history page
     */
     (function() {
         var $button = $('.revision-list-controls .link-btn');
-        if($button.length) {
+        if ($button.length) {
             var revisionButtonOffset = $button.offset().top;
             $(win).on('scroll', function() {
                 var $compareButton = $button;
@@ -598,21 +430,6 @@
             });
         }
     })();
-
-    function debounce(func, wait, immediate) {
-        var timeout;
-        return function() {
-            var context = this, args = arguments;
-            var later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            var callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    }
 
     /*
         Track YouTube videos
@@ -627,17 +444,19 @@
             var fraction;
             timeoutFlag = 1;
             $.each(players, function(index, player) {
-                if(player.getPlayerState() !== 1) return;
+                if (player.getPlayerState() !== 1) {
+                    return;
+                }
 
                 timeoutFlag = 0;
 
                 fraction = player.getCurrentTime() / player.getDuration();
 
-                if(!player.checkpoint) {
+                if (!player.checkpoint) {
                     player.checkpoint = 0.1 + Math.round(fraction * 10) / 10;
                 }
 
-                if(fraction > player.checkpoint) {
+                if (fraction > player.checkpoint) {
                     mdn.analytics.trackEvent({
                         category: 'YouTube',
                         action: 'Percent Completed',
@@ -650,15 +469,19 @@
                 }
             });
 
-            if(timeoutFlag) {
-                if(timer) clearTimeout(timer);
-            }else{
+            if (timeoutFlag) {
+                if (timer) {
+                    clearTimeout(timer);
+                }
+            } else {
                 timer = setTimeout(timeout, 6000);
             }
         }
 
         // If the page does not have any YouTube videos
-        if(!$youtubeIframes.length) return;
+        if (!$youtubeIframes.length) {
+            return;
+        }
 
         var origin = win.location.protocol + '//' + win.location.hostname +
                     (win.location.port ? ':' + win.location.port: '');
@@ -678,30 +501,30 @@
 
 
         // Method executed by YouTube API, needs to be global
-        win.onYouTubeIframeAPIReady = function(event) {
+        win.onYouTubeIframeAPIReady = function() {
             $youtubeIframes.each(function(i){
-                players[i] = new YT.Player($(this).get(0));
+                players[i] = new window.YT.Player($(this).get(0));
 
                 players[i].addEventListener('onStateChange', function(event) {
                     var action;
                     switch(event.data) {
                         case 0: // YT.PlayerState.ENDED
-                          action = 'Finished';
-                          break;
+                            action = 'Finished';
+                            break;
                         case 1: // YT.PlayerState.PLAYING
-                          action = 'Play';
-                          if(timeoutFlag){
-                            timeout();
-                          }
-                          break;
+                            action = 'Play';
+                            if (timeoutFlag){
+                                timeout();
+                            }
+                            break;
                         case 2: // YT.PlayerState.PAUSED
-                          action = 'Pause';
-                          break;
+                            action = 'Pause';
+                            break;
                         case 3: // YT.PlayerState.BUFFERING
-                          action = 'Buffering';
-                          break;
+                            action = 'Buffering';
+                            break;
                         default:
-                          return;
+                            return;
                     }
                     mdn.analytics.trackEvent({
                         category: 'YouTube',
@@ -770,7 +593,7 @@
             root.appendChild(el);
             diff = el.offsetHeight;
             el.open = true;
-            diff = diff != el.offsetHeight;
+            diff = diff !== el.offsetHeight;
             root.removeChild(el);
             if (isFake) {
                 root.parentNode.removeChild(root);
@@ -779,7 +602,9 @@
         }(document));
 
         // No reason to move further if details are supported!
-        if(supportsDetails) return;
+        if (supportsDetails) {
+            return;
+        }
 
         // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
         $('details').addClass('no-details').each(function() {
@@ -833,7 +658,7 @@
                 $detailsNotSummary.slideToggle();
                 $details.toggleClass('open');
             }).on('keyup', function(ev) {
-                if (32 == ev.keyCode || 13 == ev.keyCode) {
+                if (32 === ev.keyCode || 13 === ev.keyCode) {
                     // Opera already seems to trigger the `click` event when Enter is pressed
                     ev.preventDefault();
                     $detailsSummary.click();
@@ -843,7 +668,7 @@
     }
 
 
-    if($('details').length){
+    if ($('details').length){
         initDetailsTags();
     }
 
@@ -867,7 +692,7 @@
     // check for rev_saved in query string
     var revisionSaved = win.mdn.getUrlParameter('rev_saved');
     var storageKey = getDraftStorageKey();
-    if(win.location.href.indexOf('rev_saved') > -1 && win.mdn.features.localStorage) {
+    if (win.location.href.indexOf('rev_saved') > -1 && win.mdn.features.localStorage) {
         var draftRevision = localStorage.getItem(storageKey + '#revision');
         // check for drafts matching query string
         if (draftRevision === revisionSaved) {
