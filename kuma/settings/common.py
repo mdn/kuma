@@ -367,6 +367,10 @@ STATIC_ROOT = path('static')
 
 SERVE_MEDIA = False
 
+# Serve diagrams, presentations, and samples from 2005-2012
+SERVE_LEGACY = config('SERVE_LEGACY', default=False, cast=bool)
+LEGACY_ROOT = config('LEGACY_ROOT', default=None)
+
 # Paths that don't require a locale prefix.
 LANGUAGE_URL_IGNORED_PATHS = (
     'healthz',
@@ -383,6 +387,9 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '__debug__',
     '.well-known',
     'users/github/login/callback/',
+    'diagrams',
+    'presentations',
+    'samples',
 )
 
 # Make this unique, and don't share it with anybody.
