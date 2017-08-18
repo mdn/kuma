@@ -136,7 +136,7 @@ pushing to production.
 
 Deploy to Production
 --------------------
-The production site is located at https://developer.allizom.org. It is
+The production site is located at https://developer.mozilla.org. It is
 monitored by the development team and WebOps.
 
 * Pick a push song on https://www.youtube.com. Post link to IRC.
