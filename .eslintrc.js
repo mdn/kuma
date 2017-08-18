@@ -8,15 +8,14 @@ module.exports = {
         "no-global-assign": 1,
         "indent": [
             1,
-            4
+            4,
+            {SwitchCase: 1}
         ],
         "linebreak-style": [
             1,
             "unix"
         ],
-        "camelcase": 1,
-        "indent": 1,
-        "no-cond-assign": 1,
+        "no-cond-assign": 1,
         "no-console": 1,
         "no-empty": 1,
         "no-extra-semi": 1,
