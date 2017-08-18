@@ -367,7 +367,8 @@ STATIC_ROOT = path('static')
 
 SERVE_MEDIA = False
 
-SERVE_LEGACY = config('SERVE_LEGACY', default=False)
+# Serve diagrams, presentations, and samples from 2005-2012
+SERVE_LEGACY = config('SERVE_LEGACY', default=False, cast=bool)
 LEGACY_ROOT = config('LEGACY_ROOT', default=None)
 
 # Paths that don't require a locale prefix.
