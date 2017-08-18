@@ -3,14 +3,14 @@ Provides main mixins for use within the MDN theme.
 ********************************************************************** */
 
 @function -remify($value) {
-    $u : unit($value);
-    $v : 0;
+    $u: unit($value);
+    $v: 0;
 
     @if $u == 'px' {
-        $v : $value/$body-font-size * 1rem;
+        $v: $value/$body-font-size * 1rem;
     }
     @else {
-        $v : unit($value, u);
+        $v: unit($value, u);
     }
 
     @return $v;
@@ -21,7 +21,7 @@ Provides main mixins for use within the MDN theme.
 
     @if ($value != 'inherit') {
         // make sure we're working with px otherwise remify will just spit out what we spat out before
-        $u : unit($value);
+        $u: unit($value);
         @if $u == 'px' {
             font-size: -remify($value);
         }
@@ -59,7 +59,7 @@ Vendor prefixes
 
     // might be a quoted because it has commas in it, example: transition-property
     @if (type-of($value) == 'string') {
-        $value : unquote($value);
+        $value: unquote($value);
     }
 
     @if (map-has-key($prefix-properties, $property)) {
@@ -80,7 +80,7 @@ Vendor prefixes
 }
 
 // vendorizes a value indescriminately by adding the prefixes defined by VENDOR-PREFIXES
-@mixin vendorize-value($property, $value, $more : '') {
+@mixin vendorize-value($property, $value, $more: '') {
     @each $prefix in $VENDOR-PREFIXES {
         #{$property}: unquote($prefix + $value + $more);
     }
@@ -93,9 +93,9 @@ Prevent last child spacing
 ====================================================================== */
 
 // prevents spacing of a given element if it's the last child
-@mixin prevent-last-child-spacing($element : '*', $property : 'padding-bottom') {
+@mixin prevent-last-child-spacing($element: '*', $property: 'padding-bottom') {
     @if ($element == '*') {
-        $element : unquote($element);
+        $element: unquote($element);
     }
 
     & > #{$element}:last-child {
@@ -103,7 +103,7 @@ Prevent last child spacing
     }
 }
 
-@mixin prevent-last-child-bottom-spacing($element : '*') {
+@mixin prevent-last-child-bottom-spacing($element: '*') {
     @include prevent-last-child-spacing($element, margin-bottom);
     @include prevent-last-child-spacing($element, padding-bottom);
 }
@@ -135,13 +135,13 @@ Colours
     creates a hex fallback of a property using an rgba value
     will use white as the background matte if no colour is provided
     */
-@mixin rgba-fallback($property, $color, $opacity, $bg : #fff) {
+@mixin rgba-fallback($property, $color, $opacity, $bg: #fff) {
     #{$property}: mix($color, $bg, $opacity * 100); // hex fallback
     #{$property}: rgba($color, $opacity); // rgba value
 }
 
 /* generates a cross-browser gradient */
-@mixin create-gradient($start-color, $end-color, $direction : false) {
+@mixin create-gradient($start-color, $end-color, $direction: false) {
     @if $direction {
         @include vendorize-value(background, linear-gradient, '(' + $direction + ', ' + $start-color + ', ' + $end-color + ')');
     }
@@ -207,7 +207,7 @@ coloured boxes
 
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
-@mixin generate-arrow($arrow-width : 10px) {
+@mixin generate-arrow($arrow-width: 10px) {
     &:before,
     &:after {
         content: ' ';
@@ -222,7 +222,7 @@ coloured boxes
 /* =================================================================== */
 
 /* used to create sliding animations */
-@mixin slider($duration : $default-animation-duration, $maximum-height : 10000px) {
+@mixin slider($duration: $default-animation-duration, $maximum-height: 10000px) {
     overflow-y: hidden;
     max-height: $maximum-height;
     @include vendorize(transition-property, all);
@@ -238,7 +238,7 @@ coloured boxes
 /* =================================================================== */
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
-@mixin set-message-base($remove-last-spacing : true) {
+@mixin set-message-base($remove-last-spacing: true) {
     overflow: hidden;
     margin-bottom: $grid-spacing;
     @include bidi-style(border-left-width, $border-width, border-right-width, 0);
@@ -264,7 +264,7 @@ Spacing
     }
 }
 
-@mixin add-center-spacing($spacing : $gutter-width) {
+@mixin add-center-spacing($spacing: $gutter-width) {
     padding-left: $spacing;
     padding-right: $spacing;
 }
@@ -301,7 +301,7 @@ Bidi / l10n
 
 // Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
 // example: @include bidi-style(left, 20px, right, auto)
-@mixin bidi-style($ltr-prop, $value, $inverse-prop, $inverse-value, $make-important : false) {
+@mixin bidi-style($ltr-prop, $value, $inverse-prop, $inverse-value, $make-important: false) {
     $make-important: if($make-important, unquote('!important'), unquote(''));
 
     #{$ltr-prop}: $value $make-important;
@@ -314,12 +314,12 @@ Bidi / l10n
     }
 }
 
-@mixin bidi-value($prop, $ltr, $rtl, $make-important : false) {
+@mixin bidi-value($prop, $ltr, $rtl, $make-important: false) {
     @include bidi-style($prop, $ltr, $prop, $rtl, $make-important);
 }
 
-@mixin bidi-value-vendorize($prop, $ltr, $rtl, $make-important : false) {
-    $make-important : if($make-important, unquote('!important'), unquote(''));
+@mixin bidi-value-vendorize($prop, $ltr, $rtl, $make-important: false) {
+    $make-important: if($make-important, unquote('!important'), unquote(''));
 
     @include vendorize($prop, $ltr $make-important);
 
