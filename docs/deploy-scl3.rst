@@ -22,6 +22,7 @@ Pre-Deployment: Update Submodules
 .. _Kuma: https://travis-ci.org/mozilla/kuma/
 .. _KumaScript: https://travis-ci.org/mdn/kumascript
 
+* Commit or stash any changes you have to prepare to change branches
 * Create a pre-push branch from master::
 
     git remote -v | grep origin
@@ -118,7 +119,7 @@ pushing to production.
 
 * Merge and push to the ``stage-integration-tests`` branch::
 
-    git checkout state-integration-tests
+    git checkout stage-integration-tests
     git merge --ff-only origin/master
     git push
 
