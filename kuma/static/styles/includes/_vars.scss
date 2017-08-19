@@ -154,19 +154,10 @@ grid
 /*
 grid - 12 columns assuming a 3% margin
 -------------------------------------------------------------- */
-@function -calc-col-width($col-span) {
-    $grid-margin-numb : $grid-margin / 1%; // remove percent unit
-    $col-percent : (100 - $grid-margin-numb * 11) / 12 * $col-span + $grid-margin-numb * ($col-span - 1);
-    $col-percent : if($col-percent > 100, 100, $col-percent); // not over 100
-    $col-percent : $col-percent;
-    $col-percent : $col-percent * 1%; // add % unit
-    @return $col-percent;
-}
-
-$grid-spacing : 20px;
-$grid-margin : 3%;
-$grid-column-selector : '> [class^="column-"]';
-$grid-width-column-main : -calc-col-width(9);
+$grid-spacing: 20px;
+$grid-margin: 3%;
+$grid-column-selector: '> [class^="column-"]';
+$grid-width-column-main: 9;
 
 $max-line-length: 42rem; // approx 72ch for base font size and HHGTTG reference
 

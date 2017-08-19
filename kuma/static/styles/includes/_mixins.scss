@@ -610,10 +610,10 @@ grid - 12 columns assuming a 3% margin
     width: -calc-col-width(8); // 65.667%;
 }
 @mixin column-9() {
-    width: $grid-width-column-main; // 74.25%
+    width: -calc-col-width($grid-width-column-main); // 74.25%
 }
 @mixin column-main() {
-    width: $grid-width-column-main; // 74.25%
+    width: -calc-col-width($grid-width-column-main); // 74.25%
 }
 @mixin column-10() {
     width: -calc-col-width(10); // 82.833%;

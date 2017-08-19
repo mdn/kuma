@@ -21,6 +21,10 @@
             @include bidi-style(margin-right, $icon-margin, margin-left, 0);
             display: inline-block;
             color: $link-color;
+
+            .no-js & {
+                display: none;
+            }
         }
     }
 

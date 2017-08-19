@@ -253,10 +253,7 @@
     (function() {
         var $toc = $('#toc');
 
-        // If there is no ToC on the page
-        if (!$toc.length) {
-            return;
-        } else {
+        if ($toc.length) {
             var $toggler = $toc.find('> .toggler');
             $toggler.trigger('mdn:click');
         }
