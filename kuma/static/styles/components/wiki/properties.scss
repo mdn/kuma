@@ -14,6 +14,7 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
 .summary-box-events {
     .text-content & {
         /* could be defined one level up but that creates duplicate classes in output */
+        @include full-width-content();
         display: table;
         margin: 0 0 $grid-spacing 0;
         border-style: solid;
@@ -39,6 +40,7 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
 
     li dfn {
         display: table-cell;
+        width: 30%;
         @include bidi-value(padding, $properties-item-spacing ($properties-item-spacing * 2) $properties-item-spacing $properties-item-spacing, $properties-item-spacing $properties-item-spacing $properties-item-spacing ($properties-item-spacing* 2 ));
         border-bottom: none;
         font-weight: bold;

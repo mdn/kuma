@@ -18,6 +18,22 @@ $table-cell-border: 2px solid #fff;
         @extend %highlight;
     }
 
+    /*
+    content width restrictions
+    ====================================================================== */
+
+    p,
+    ul,
+    ol,
+    dl {
+        @include restrict-line-length();
+    }
+
+    table,
+    pre,
+    table {
+        @include full-width-content();
+    }
 
     /*
     tables
@@ -303,6 +319,7 @@ Classes created by the WYSIWYG
 ====================================================================== */
 .twocolumns {
     @include vendorize(column-count, 2);
+    @include vendorize(column-gap, $grid-spacing);
 
     body[contenteditable] & {
         border: $editor-box-border;
@@ -312,6 +329,7 @@ Classes created by the WYSIWYG
 
 .threecolumns {
     @include vendorize(column-count, 3);
+    @include vendorize(column-gap, $grid-spacing);
 
     body[contenteditable] & {
         border: $editor-box-border;
@@ -328,7 +346,7 @@ Classes created by the WYSIWYG
 
 /* =================================================================== */
 
-/* apply to any container to restrict width to 60em */
+/* apply to any container to restrict width */
 .readable-line-length {
-    max-width: 60em;
+    max-width: $max-line-length;
 }

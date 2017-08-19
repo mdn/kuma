@@ -10,6 +10,7 @@ block indicators aka banners
 ====================================================================== */
 
 %indicator-block {
+    @include full-width-content();
     @include set-message-base(true);
     @include clearfix();
     clear: none; // over-rides default value assigned in clearfix
@@ -41,6 +42,7 @@ block indicators aka banners
 }
 
 %indicator-system {
+    @include full-width-content();
     /* need to specifically declare RTL to over-ride RTL inherited from set-message-base */
     @include bidi-value(border-width, 2px, 2px);
     @include bidi-value(border-style, solid, solid);

@@ -168,6 +168,7 @@ $grid-margin : 3%;
 $grid-column-selector : '> [class^="column-"]';
 $grid-width-column-main : -calc-col-width(9);
 
+$max-line-length: 42rem; // approx 72ch for base font size and HHGTTG reference
 
 /*
 breakpoints & media queries
@@ -207,7 +208,8 @@ $mq-small-desktop-and-up: 'all and (min-width: #{$small-desktop-starts})';
 $mq-tablet-and-up: 'all and (min-width: #{$tablet-starts})';
 $mq-mobile-and-up: 'all and (min-width: #{$mobile-starts})';
 
-$mq-small-desktop-only: 'all and (min-width: #{$small-desktop-starts})';
+$mq-large-desktop-only: 'all and (min-width: #{$small-desktop-ends})';
+$mq-small-desktop-only: 'all and (min-width: #{$small-desktop-starts}) and (max-width: #{$small-desktop-ends})';
 $mq-tablet-only: 'all and (min-width: #{$tablet-starts}) and (max-width: #{$tablet-ends})';
 $mq-mobile-only: 'all and (min-width: #{$mobile-starts}) and (max-width: #{$mobile-ends})';
 $mq-small-mobile-only: 'all and (max-width: #{$small-mobile-ends})';

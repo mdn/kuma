@@ -8,7 +8,7 @@ Two columns
 
 body .topicpage-table { // need the extra specificity of body to over-ride .textcontent table {} declaration
     clear: both;
-    width: auto;
+    width: 100%;
     border: none;
     display: block;
     border-collapse: collapse;
@@ -42,8 +42,7 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
 @media #{$mq-small-desktop-and-up} {
     body .topicpage-table {
         display: table;
-        border-collapse: separate;
-        border-spacing: $grid-spacing 0;
+        border-collapse: collapse;
 
         tr {
             display: table-row;
@@ -54,11 +53,16 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
         .section {
             display: table-cell;
             width: 50%;
+            padding: 0 $grid-spacing;
+            @include bidi-style(border-left, solid 6px #eaeff2, border-right, none);
 
-            &:first-of-type {
-                @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
-                @include bidi-style(margin-right, $grid-spacing, padding-left, 0);
-                @include bidi-style(border-right, solid 6px #eaeff2, border-left, none);
+            &:first-child {
+                @include bidi-style(border-left, 0, border-right, solid 6px #eaeff2);
+                @include bidi-style(padding-left, 0, padding-right, $grid-spacing);
+            }
+
+            &:last-child {
+                @include bidi-style(padding-right, 0, padding-left, $grid-spacing);
             }
         }
     }

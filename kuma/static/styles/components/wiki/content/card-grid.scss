@@ -3,7 +3,8 @@ side by side calls to action
 ********************************************************************** */
 
 .text-content .card-grid {
-    margin: 0 ($grid-spacing / 2) $grid-spacing;
+    @include full-width-content();
+    margin: 0 0 $grid-spacing;
     @include bidi-value(padding, 0, 0); /* need some extra specificity for RTL */
     list-style-type: none;
 

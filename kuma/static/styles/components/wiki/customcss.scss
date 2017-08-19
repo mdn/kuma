@@ -11,6 +11,11 @@ eventually emptying this file.
 
 ********************************************************************** */
 
+
+.prevnext p {
+    @include full-width-content();
+}
+
 /* Used for footnotes in {{PricePointTable}}
  (footnotes styles should be unified) */
 
@@ -425,7 +430,6 @@ div.fxosLiveSampleWrapper {
 /* Horizontal tab boxes */
 .htab {
     margin: 0 auto 1em;
-    display: inline-block;
 
     > ul {
         width: 150px;

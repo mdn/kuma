@@ -43,7 +43,7 @@ block indicators aka banners
 .warning + .overheadIndicator,
 .overheadIndicator + .overheadIndicator,
 .note + .note {
-    margin-top: ($grid-spacing * -1) + 2;
+    margin-top: ($grid-spacing * -1) + 5px;
 }
 
 /* code block looks funny without it's padding,
