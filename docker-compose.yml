@@ -5,7 +5,7 @@ services:
     command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
     user: ${UID:-33}
     volumes:
-      - ./:/app
+      - ./:/app:z
     depends_on:
       - memcached
       - mysql
