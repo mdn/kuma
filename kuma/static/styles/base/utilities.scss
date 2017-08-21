@@ -44,7 +44,8 @@ Utility classes
     display: none;
 
     html.cke_panel_container &,
-    body[contenteditable] & {
+    body[contenteditable] &,
+    .translate-rendered & {
         position: relative;
         display: block;
         border: 2px dotted #000;
