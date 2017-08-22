@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set counter = ngettext('Found %(num)s document.', 'Found %(num)s documents', count) %}
+{% set counter = ngettext('Found %(num)s document.', 'Found %(num)s documents', documents.paginator.count) %}
 {% if tag %}
   {% set title = _('Articles tagged: %(tag)s', tag=tag) %}
 {% elif errors %}

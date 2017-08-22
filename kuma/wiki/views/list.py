@@ -31,7 +31,6 @@ def documents(request, tag=None):
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
-        'count': docs.count(),
         'tag': tag,
     }
     return render(request, 'wiki/list/documents.html', context)
@@ -97,7 +96,6 @@ def with_errors(request):
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
-        'count': docs.count(),
         'errors': True,
     }
     return render(request, 'wiki/list/documents.html', context)
@@ -112,7 +110,6 @@ def without_parent(request):
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
-        'count': docs.count(),
         'noparent': True,
     }
     return render(request, 'wiki/list/documents.html', context)
@@ -127,7 +124,6 @@ def top_level(request):
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
-        'count': docs.count(),
         'toplevel': True,
     }
     return render(request, 'wiki/list/documents.html', context)
