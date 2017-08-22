@@ -41,6 +41,10 @@ class BaseDocumentManager(models.Manager):
 
     def filter_for_list(self, locale=None, tag=None, tag_name=None,
                         errors=None, noparent=None, toplevel=None):
+        """
+        Returns a filtered queryset for a list of names and urls.
+        """
+
         docs = (self.filter(is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
@@ -63,9 +67,8 @@ class BaseDocumentManager(models.Manager):
         if toplevel:
             docs = docs.filter(parent_topic__isnull=True)
 
-        # Leave out the html, since that leads to huge cache objects and we
-        # never use the content in lists.
-        docs = docs.defer('html')
+        # Only include fields needed for a list of links to docs
+        docs = docs.only('id', 'locale', 'slug', 'deleted', 'summary_text')
         return docs
 
     def filter_for_review(self, locale=None, tag=None, tag_name=None):
