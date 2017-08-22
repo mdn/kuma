@@ -68,34 +68,35 @@ class BaseDocumentManager(models.Manager):
             docs = docs.filter(parent_topic__isnull=True)
 
         # Only include fields needed for a list of links to docs
-        docs = docs.only('id', 'locale', 'slug', 'deleted', 'summary_text')
+        docs = docs.only('id', 'locale', 'slug', 'deleted', 'title',
+                         'summary_text')
         return docs
 
     def filter_for_review(self, locale=None, tag=None, tag_name=None):
         """Filter for documents with current revision flagged for review"""
-        query = 'current_revision__review_tags__%s'
+        docs = self.filter_for_list(locale=locale)
+        docs = docs.exclude(slug__startswith='Archive/')
+        filter_name = 'current_revision__review_tags__'
         if tag_name:
-            query = {query % 'name': tag_name}
+            docs = docs.filter(**{filter_name + 'name': tag_name})
         elif tag:
-            query = {query % 'in': [tag]}
+            docs = docs.filter(**{filter_name + 'in': [tag]})
         else:
-            query = {query % 'name__isnull': False}
-        if locale:
-            query['locale'] = locale
-        return self.filter(**query).distinct()
+            docs = docs.filter(**{filter_name + 'name__isnull': False})
+        return docs.distinct()
 
     def filter_with_localization_tag(self, locale=None, tag=None, tag_name=None):
         """Filter for documents with a localization tag on current revision"""
-        query = 'current_revision__localization_tags__%s'
+        docs = self.filter_for_list(locale=locale)
+        docs = docs.exclude(slug__startswith='Archive/')
+        filter_name = 'current_revision__localization_tags__'
         if tag_name:
-            query = {query % 'name': tag_name}
+            docs = docs.filter(**{filter_name + 'name': tag_name})
         elif tag:
-            query = {query % 'in': [tag]}
+            docs = docs.filter(**{filter_name + 'in': [tag]})
         else:
-            query = {query % 'name__isnull': False}
-        if locale:
-            query['locale'] = locale
-        return self.filter(**query).distinct()
+            docs = docs.filter(**{filter_name + 'name__isnull': False})
+        return docs.distinct()
 
 
 class DocumentManager(BaseDocumentManager):

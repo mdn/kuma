@@ -177,18 +177,18 @@ def test_documents_filter_for_review_by_tag(create_revision):
     assert resp == [create_revision.document]
 
 
-def test_documents_filter_for_review_includes_redirects(redirect_doc):
-    """bug 1274874: filter_for_review includes redirects."""
+def test_documents_filter_for_review_excludes_redirects(redirect_doc):
+    """bug 1274874: filter_for_review excludes redirects."""
     redirect_doc.current_revision.review_tags.set('editorial')
     resp = Document.objects.filter_for_review(tag_name='editorial')
-    assert list(resp) == [redirect_doc]
+    assert len(resp) == 0
 
 
-def test_documents_filter_for_review_includes_archive(archive_doc):
-    """bug 1274874: filter_for_review includes archive documents."""
+def test_documents_filter_for_review_excludes_archive(archive_doc):
+    """bug 1274874: filter_for_review excludes archive documents."""
     archive_doc.current_revision.review_tags.set('editorial')
     resp = Document.objects.filter_for_review(tag_name='editorial')
-    assert list(resp) == [archive_doc]
+    assert len(resp) == 0
 
 
 def test_documents_filter_with_localization_tag(create_revision):
@@ -234,18 +234,18 @@ def test_documents_filter_with_localization_tag_by_tag(create_revision):
     assert list(resp) == [create_revision.document]
 
 
-def test_documents_filter_with_localization_tag_includes_redirects(
+def test_documents_filter_with_localization_tag_excludes_redirects(
         redirect_doc):
-    """bug 1274874: filter_with_localization_tag includes redirects."""
+    """bug 1274874: filter_with_localization_tag excludes redirects."""
     tag = 'inprogress'
     redirect_doc.current_revision.localization_tags.set(tag)
     resp = Document.objects.filter_with_localization_tag(tag_name=tag)
-    assert list(resp) == [redirect_doc]
+    assert len(resp) == 0
 
 
-def test_documents_filter_with_localization_tag_includes_archive(archive_doc):
-    """bug 1274874: filter_with_localization_tag includes archive docs."""
+def test_documents_filter_with_localization_tag_excludes_archive(archive_doc):
+    """bug 1274874: filter_with_localization_tag excludes archive docs."""
     tag = 'inprogress'
     archive_doc.current_revision.localization_tags.set(tag)
     resp = Document.objects.filter_with_localization_tag(tag_name=tag)
-    assert list(resp) == [archive_doc]
+    assert len(resp) == 0
