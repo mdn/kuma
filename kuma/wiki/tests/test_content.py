@@ -856,6 +856,8 @@ FILTERIFRAME_ACCEPTED = {
     'jsfiddle': 'https://jsfiddle.net/78dg25ax/embedded/js,result/',
     'github.io': ('https://mdn.github.io/webgl-examples/'
                   'tutorial/sample6/index.html'),
+    'ie_moz_net': ('https://interactive-examples.mdn.mozilla.net/'
+                   'pages/js/array-push.html'),
 }
 
 FILTERIFRAME_REJECTED = {
