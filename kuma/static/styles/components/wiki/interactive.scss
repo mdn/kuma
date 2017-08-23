@@ -1,14 +1,25 @@
+.interactive,
+.interactive-js {
+    box-sizing: border-box;
+}
+
 .interactive {
-    height: 600px;
+    background-color: #f5f9fa;
+    color: #333;
+    padding: .7em;
+    border: 1px solid #eaf2f4;
+    height: 550px;
     width: 100%;
 }
 
-.interactive-js {
-    height: 400px;
+.interactive.interactive-js {
+    height: 490px;
 }
 
-.interactive-large {
-    height: 665px;
+.no-js .interactive {
+    background-color: #f8f8f8;
+    border: 1px solid #eaf2f4;
+    height: 240px;
 }
 
 .interactive-editor-survey {
@@ -19,10 +30,6 @@
 
 @media #{$mq-tablet-and-up} {
     .interactive {
-        height: 420px;
-    }
-
-    .interactive-large {
-        height: 455px;
+        height: 390px;
     }
 }

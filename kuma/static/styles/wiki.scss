@@ -8,13 +8,11 @@ General element over-rides
 ====================================================================== */
 @import 'components/wiki/elements';
 
-
 /*
 Utitlity classes (reused in a variety of contexts)
 ====================================================================== */
 @import 'components/wiki/document-list';
 @import 'components/wiki/external-icon';
-
 
 /*
 Components that may appear on most wiki pages
@@ -39,7 +37,6 @@ Components that may appear on most wiki pages
 @import 'components/wiki/mega';
 @import 'components/wiki/interactive';
 
-
 /*
 Article meta
 - contains breadcrumbs and page buttons.
@@ -47,7 +44,6 @@ Article meta
 @import 'components/wiki/article-head';
 @import 'components/wiki/crumbs';
 @import 'components/wiki/page-buttons';
-
 
 /*
 Styling for article content
@@ -65,7 +61,6 @@ Styling for article content
 @import 'components/wiki/sample-code';
 @import 'components/wiki/section-edit';
 
-
 /*
 Delete, move or revert pages.
 ====================================================================== */
@@ -75,7 +70,6 @@ Delete, move or revert pages.
 @import 'components/wiki/doc-source';
 @import 'components/wiki/delete-document';
 @import 'components/wiki/delete-revision';
-
 
 /*
 Promos
