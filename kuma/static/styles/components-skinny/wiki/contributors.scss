@@ -1,0 +1,19 @@
+/*
+contributors block at the bottom of the article
+********************************************************************** */
+
+.contributors {
+    color: $grey;
+
+    @include set-smaller-font-size();
+}
+
+.contributors-sub {
+    padding: 4px 0;
+}
+
+@media print {
+    .contributors {
+        display: none;
+    }
+}

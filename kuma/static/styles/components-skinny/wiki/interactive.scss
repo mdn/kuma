@@ -1,0 +1,23 @@
+.interactive {
+    height: 600px;
+    width: 100%;
+    margin-bottom: $grid-spacing;
+}
+
+.interactive-js {
+    height: 400px;
+}
+
+.interactive-large {
+    height: 665px;
+}
+
+@media #{$mq-tablet-and-up} {
+    .interactive {
+        height: 420px;
+    }
+
+    .interactive-large {
+        height: 455px;
+    }
+}

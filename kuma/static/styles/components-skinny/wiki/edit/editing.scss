@@ -1,0 +1,27 @@
+/*
+The forms on the edit, translate, move and create document pages.
+********************************************************************** */
+
+.editing {
+    position: relative;
+
+    h2 {
+        margin-bottom: $grid-spacing;
+        text-transform: none;
+    }
+
+    summary h2 {
+        margin-bottom: 0; /* summaries already have bottom margin */
+    }
+
+    h2 #{$selector-icon},
+    h3 #{$selector-icon} {
+        @include right-icons();
+    }
+
+    summary {
+        @include clearfix();
+        @include set-font-size(20px);
+        cursor: pointer;
+    }
+}

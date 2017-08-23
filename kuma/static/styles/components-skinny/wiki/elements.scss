@@ -1,0 +1,26 @@
+article {
+    position: relative;
+
+    a {
+        text-decoration: none;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: underline;
+        }
+
+        &[name] {
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none;
+            }
+        }
+
+        /* 404 link */
+        &.new {
+            color: $error;
+        }
+    }
+}

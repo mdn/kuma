@@ -1,0 +1,44 @@
+/*
+side by side calls to action
+********************************************************************** */
+
+.text-content .card-grid {
+    margin: 0 ($grid-spacing / 2) $grid-spacing;
+    @include bidi-value(padding, 0, 0); /* need some extra specificity for RTL */
+    list-style-type: none;
+
+    > li {
+        padding: ($grid-spacing / 2);
+        background-color: $light-background-color;
+        @include bidi-value(box-shadow, 3px 3px 0 3px $header-background-color, -3px 3px 0 3px $header-background-color);
+
+        > span:first-child,
+        > a:first-child {
+            display: block;
+            margin-bottom: 12px;
+
+            @include set-font-size(22px);
+            line-height: 1;
+            @include set-heading-font-family();
+        }
+    }
+
+    @media #{$mq-tablet-and-up} {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        > li {
+            flex: 1;
+            min-width: calc(25% - #{($grid-spacing * 2.5)}); /* minus margin and padding */
+            max-width: 200px;
+            margin: 0 ($grid-spacing * .75) $grid-spacing;
+        }
+    }
+
+    @media #{$mq-mobile-and-down} {
+        > li {
+            margin-bottom: $grid-spacing;
+        }
+    }
+}

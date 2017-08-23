@@ -1,0 +1,25 @@
+/*
+Media query detection for use with javascript
+********************************************************************** */
+
+#feature-test-element {
+    position: absolute;
+    left: 0;
+    top: -999999px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: 1;
+
+    @media #{$mq-small-desktop-and-down} {
+        z-index: 2;
+    }
+
+    @media #{$mq-tablet-and-down} {
+        z-index: 3;
+    }
+
+    @media #{$mq-mobile-and-down} {
+        z-index: 4;
+    }
+}

@@ -1,0 +1,67 @@
+.document-head {
+    position: relative;
+    clear: both;
+    background-color: #f5f9fa;
+    padding: $first-content-top-padding 0 $last-content-bottom-padding 0;
+}
+
+.document-title {
+    clear: both;
+    position: relative;
+
+    h1 {
+        @include set-font-size($mobile-document-title-font-size);
+    }
+
+    em {
+        font-style: normal;
+        @include bidi-style(margin-left, -3px, margin-right, 0);
+        text-transform: none;
+    }
+}
+
+.document-actions {
+    @include bidi-value(float, right, left);
+    width: 100%;
+    margin-bottom: ($grid-spacing / 2);
+
+    .crumbs + & {
+        margin-top: ($grid-spacing / 2);
+    }
+}
+
+@media #{$mq-mobile-and-up} {
+    .document-title {
+        h1 {
+            @include set-font-size($h1-font-size);
+        }
+    }
+
+    .document-actions {
+        width: auto;
+        margin-bottom: $grid-spacing;
+
+        .crumbs + & {
+            margin-top: 0;
+        }
+    }
+}
+
+/* small writing above the page title that says what action the user is
+   performing on it Editing/Moving/Translating. In a perfect world this
+   class wouild be document-title-prefix but it's part of the translation
+   string and I didn't want to lose the translations by changing it */
+.title-prefix {
+    @include set-font-size($larger-font-size);
+    display: block;
+    color: $grey;
+}
+
+.title-properties button.link {
+    @include set-smaller-font-size();
+    font-weight: bold;
+}
+
+.title-locale {
+    @include set-smaller-font-size();
+}

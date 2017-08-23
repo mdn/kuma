@@ -1,0 +1,39 @@
+/*
+homepage masthead (search, feature callouts)
+********************************************************************** */
+
+.home-masthead {
+    @include clearfix();
+    position: relative;
+    box-sizing: border-box;
+    padding-top: ($grid-spacing * 2);
+    padding-bottom: ($grid-spacing * 2);
+    background: url($path-to-images + 'home-bg.gif') 50% 0 $accent-light;
+    text-align: center;
+
+    h1 {
+        @include set-font-size(36px);
+        margin: 0 0 ($grid-spacing * 2);
+        line-height: 1;
+    }
+}
+
+
+@media #{$mq-tablet-and-up} {
+    .home-masthead {
+        min-height: 444px;
+        padding-top: 150px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: $grid-spacing;
+            left: 50%;
+            height: 200px;
+            width: 246px;
+            margin-left: 246px / 2 * -1; // centers it, does not need to be changed for RTL
+            background: url($path-to-images + 'home-dino.gif');
+            background-size: auto 200px;
+        }
+    }
+}

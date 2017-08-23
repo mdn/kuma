@@ -1,0 +1,54 @@
+/*
+Main header, wraps all components of logo, main, and secondary navigation
+********************************************************************** */
+
+#main-header {
+    @include clearfix();
+    position: relative;
+    z-index: 1;
+    padding-top: $mobile-center-spacing;
+    border: 5px solid $accent-light;
+    border-width: 5px 0 0;
+    border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
+    background-color: #fff;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, .3);
+
+    > .center {
+        @include clearfix();
+    }
+}
+
+.logo {
+    position: relative;
+    z-index: 2; // get above nav-main
+    width: 170px;
+    height: 30px;
+    background: url($logo-sprite-url) 100% 0 no-repeat;
+    background-size: 219px auto;
+    display: block;
+    direction: ltr; // ltr should be set with negative text indent
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+@media #{$mq-tablet-and-up} {
+    #main-header {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .logo {
+        position: relative;
+        top: $grid-spacing;
+        height: 48px;
+        @include bidi-value(float, left, right);
+        @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .logo {
+        width: 219px;
+        background-size: 100% auto;
+    }
+}

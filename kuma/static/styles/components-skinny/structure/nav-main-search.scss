@@ -1,0 +1,61 @@
+/*
+search items in .main-nav
+********************************************************************** */
+
+.nav-main-search {
+    display: block; // JS uses this to determine if we're in mobile or not
+    position: relative;
+}
+
+.search-trigger {
+    position: absolute;
+    top: 12px;
+    @include bidi-style(left, 15px, right, auto);
+    z-index: 2;
+    cursor: pointer;
+
+    #{$selector-icon} {
+        cursor: pointer;
+    }
+}
+
+#main-q {
+    width: 100%;
+    margin: $content-vertical-spacing auto;
+    @include bidi-style(padding-left, 2.5em, padding-right, 0);
+}
+
+@media #{$mq-tablet-and-up} {
+    .nav-main-search {
+        display: list-item; // JS uses this to determine if we're in mobile or not
+        @include bidi-value(float, right, left);
+        @include bidi-value(text-align, right, left);
+    }
+
+    .search-trigger {
+        position: absolute;
+        top: 0;
+    }
+
+    .search-wrap {
+        position: absolute;
+        top: 0;
+        @include bidi-style(right, 0, left, auto);
+        width: 0;
+        overflow: hidden;
+        @include bidi-style(padding-left, 45px, padding-right, 0);
+        line-height: 48px + ($grid-spacing * 2);
+        @include vendorize(transition-property, 'width, opacity');
+        @include vendorize(transition-duration, $default-animation-duration);
+
+        &.expanded {
+            width: 500px;
+        }
+    }
+
+    #main-q {
+        border-color: #fff;
+        @include bidi-style(padding-left, 0, padding-right, 0);
+        border-bottom: 1px solid $grey;
+    }
+}

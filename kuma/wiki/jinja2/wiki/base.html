@@ -11,11 +11,21 @@
 {% block site_css %}
     {{ super() }}
 
-    {% stylesheet 'wiki' %}
+    {% if waffle.flag('line_length') %}
+        {% stylesheet 'wiki' %}
+    {% else %}
+        {% stylesheet 'wiki-skinny' %}
+    {% endif %}
 
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {% javascript 'wiki' %}
+
+    {% if waffle.flag('line_length') %}
+        {% javascript 'wiki' %}
+    {% else %}
+        {% javascript 'wiki-skinny' %}
+    {% endif %}
+
 {% endblock %}

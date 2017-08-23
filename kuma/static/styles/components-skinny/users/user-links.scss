@@ -1,0 +1,15 @@
+.user-links {
+    display: inline-block;
+    @include bidi-style(margin-left, ($icon-margin * -1), margin-right, 0);
+
+    li {
+        display: inline-block;
+        @include bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+        margin-bottom: $grid-spacing;
+    }
+
+    i {
+        @include right-icons();
+        @include set-font-size($body-font-size);
+    }
+}

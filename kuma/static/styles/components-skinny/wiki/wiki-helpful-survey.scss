@@ -1,0 +1,130 @@
+.helpful-survey {
+    float: none;
+    margin: $grid-spacing auto;
+    box-sizing: border-box;
+    width: 100%;
+    border: 0;
+    background: $blue-light;
+    text-align: center;
+
+    #{$selector-icon} {
+        font-size: 26px;
+    }
+
+    > p {
+        @include set-font-size(30px);
+        font-family: $heading-font-family;
+        line-height: 1;
+        #{$selector-heading-font-fallback} {
+            font-family: $heading-font-family-fallback;
+        }
+    }
+
+    .zone & {
+        display: none;
+    }
+}
+
+.helpful-survey-buttons {
+    @include vendorize(transition, opacity .2s ease);
+    position: relative;
+    z-index: 2;
+}
+
+.helpful-survey-thankyou {
+    @include vendorize(transition, opacity .2s ease .25s);
+    opacity: 0;
+    z-index: 1;
+    position: absolute;
+    bottom: $grid-spacing;
+    left: 0;
+    right: 0;
+}
+
+.helpful-survey-vote {
+    @include vendorize(transition, 'transform 0.2s ease, background 0.2s ease, box-shadow 0.25s ease');
+    margin: 0 10px;
+    color: $blue-dark;
+    background: #fff;
+    border: $form-border-width solid $blue;
+    padding: ($content-vertical-spacing * 2) ($content-horizontal-spacing * 2);
+    font-weight: bold;
+    text-align: center;
+
+    &:hover {
+        @include vendorize(transform, translateY(-3px));
+        background: #fff;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+    }
+
+    #{$selector-icon} {
+        margin: 0 auto !important; /* stylelint-disable-line declaration-no-important */
+    }
+}
+
+.helpful-survey-no {
+    &:hover {
+        @include vendorize(transform, translateY(3px));
+        box-shadow: 0 -3px 8px rgba(0, 0, 0, .4);
+    }
+}
+
+.helpful-survey {
+    &.submitted {
+        .helpful-survey-thankyou {
+            opacity: 1;
+        }
+
+        .helpful-survey-buttons {
+            pointer-events: none; // no more button clicks!
+            opacity: 0;
+        }
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    @supports (display: grid) {
+        .helpful-survey {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-column-gap: $grid-spacing;
+            align-items: center;
+
+            > p {
+                display: grid;
+                margin-bottom: 0;
+                align-items: center;
+                @include bidi-value(text-align, left, right);
+            }
+
+            &.hidden {
+                display: none;
+            }
+        }
+
+        .helpful-survey-content {
+            grid-column: 2 / 3;
+            grid-row: 1 / 1;
+            display: grid;
+            @include bidi-value(text-align, right, left);
+        }
+
+        .helpful-survey-buttons,
+        .helpful-survey-thankyou {
+            position: static;
+            grid-column: 1 / 1;
+            grid-row: 1 / 1;
+        }
+
+        .helpful-survey-thankyou {
+            display: grid;
+            align-items: center;
+        }
+    }
+}
+
+@media print {
+    .helpful-survey {
+        display: none;
+    }
+}

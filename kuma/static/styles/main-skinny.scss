@@ -1,0 +1,25 @@
+@import 'includes-skinny/vars';
+@import 'includes-skinny/mixins';
+
+/*
+Main stylesheet for the site, standalone
+********************************************************************** */
+
+@import 'base/fonts/opensans';
+
+/* stylesheets used only in main  */
+@import 'base/elements';
+@import 'base/icons';
+
+/* components also used elsewhere */
+@import 'components-skinny/components';
+@import 'components-skinny/content';
+@import 'components-skinny/cta';
+@import 'components-skinny/structure';
+@import 'components-skinny/form';
+@import 'components-skinny/highlight';
+@import 'components-skinny/tags';
+@import 'components-skinny/errorlist';
+@import 'components-skinny/compact';
+@import 'components-skinny/newsletter';
+@import 'components-skinny/redesign';

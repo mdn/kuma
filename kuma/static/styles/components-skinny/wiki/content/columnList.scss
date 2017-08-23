@@ -1,0 +1,20 @@
+/*
+Multi-column lists of different widths
+********************************************************************** */
+
+
+/* used extentisvly in release notes */
+.multiColumnList {
+    @include vendorize(column-width, 250px);
+}
+
+/* used extensively on doc status pages */
+.wideColumnBox {
+    @include vendorize(column-width, 375px);
+}
+
+.multiColumnList li,
+.wideColumnBoxList li {
+    list-style-type: none;
+    page-break-inside: avoid;
+}
