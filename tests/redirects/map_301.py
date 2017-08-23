@@ -2,7 +2,7 @@ from utils.urls import flatten, url_test
 
 import requests
 
-URLS = flatten((
+REDIRECT_URLS = flatten((
     url_test("/media/redesign/css/foo-min.css",
              "/static/build/styles/foo.css"),
     url_test("/media/css/foo-min.css", "/static/build/styles/foo.css"),
@@ -309,4 +309,13 @@ MOZILLADEMOS_URLS = flatten((
              "https://mdn.mozillademos.org/files/5397/rhino.jpg"),
     url_test("/samples/canvas-tutorial/images/wallpaper.png",
              "https://mdn.mozillademos.org/files/222/Canvas_createpattern.png"),
+))
+
+LEGACY_URLS = flatten((
+    # bug 1362438
+    url_test('/index.php', status_code=404),
+    url_test('/index.php?title=Special:Recentchanges&feed=atom',
+             status_code=404),
+    url_test('/index.php?title=En/HTML/Canvas&revision=11',
+             status_code=404),
 ))

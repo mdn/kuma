@@ -390,6 +390,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'diagrams',
     'presentations',
     'samples',
+    'index.php',  # Legacy MediaWiki endpoint, return 404
 )
 
 # Make this unique, and don't share it with anybody.
