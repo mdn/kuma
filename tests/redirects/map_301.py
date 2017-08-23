@@ -326,4 +326,8 @@ LEGACY_URLS = flatten((
     url_test('/web-tech/feed/atom/', status_code=404),
     url_test('/css/wiki.css', status_code=404),
     url_test('/css/base.css', status_code=404),
+    url_test('/contests', 'http://www.mozillalabs.com/', status_code=302),
+    url_test('/contests/', 'http://www.mozillalabs.com/', status_code=302),
+    url_test('/contests/extendfirefox/faq.php', 'http://www.mozillalabs.com/',
+             status_code=302),
 ))

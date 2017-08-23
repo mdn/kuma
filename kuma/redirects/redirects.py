@@ -752,4 +752,8 @@ redirectpatterns = [
         r'^?demos',
         '/docs/Web/Demos_of_open_web_technologies',
         permanent=True),
+
+    # Legacy off-site redirects (bug 1362438)
+    # RewriteRule ^contests/ http://www.mozillalabs.com/ [R=302,L]
+    redirect(r'^contests', 'http://www.mozillalabs.com/', permanent=False),
 ]

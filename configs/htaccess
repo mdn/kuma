@@ -55,9 +55,8 @@ RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread/launch$ https://krip
 # All other Demo Studio and Dev Derby paths (bug 1238037)
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos /$1docs/Web/Demos_of_open_web_technologies? [R=301,L]
 
-# Miscellaneous off-site redirects
-RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
-RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
+# Legacy off-site redirects (bug 1362438)
+RewriteRule ^contests/ http://www.mozillalabs.com/ [R=302,L]
 RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
 
 # HACK: Django will eventually redirect the user to the right spot, but skip a
