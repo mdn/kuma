@@ -318,4 +318,12 @@ LEGACY_URLS = flatten((
              status_code=404),
     url_test('/index.php?title=En/HTML/Canvas&revision=11',
              status_code=404),
+    url_test('/index.php?title=En/HTML/Canvas&revision=11',
+             status_code=404),
+    url_test('/patches', status_code=404),
+    url_test('/patches/foo', status_code=404),
+    url_test('/web-tech', status_code=404),
+    url_test('/web-tech/feed/atom/', status_code=404),
+    url_test('/css/wiki.css', status_code=404),
+    url_test('/css/base.css', status_code=404),
 ))

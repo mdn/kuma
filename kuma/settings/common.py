@@ -387,9 +387,14 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '__debug__',
     '.well-known',
     'users/github/login/callback/',
+    # Legacy files, circa 2008, served in AWS
     'diagrams',
     'presentations',
     'samples',
+    # Legacy files, circa 2008, now return 404
+    'patches',
+    'web-tech',
+    'css',
     'index.php',  # Legacy MediaWiki endpoint, return 404
 )
 
