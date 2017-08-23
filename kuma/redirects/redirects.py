@@ -756,4 +756,8 @@ redirectpatterns = [
     # Legacy off-site redirects (bug 1362438)
     # RewriteRule ^contests/ http://www.mozillalabs.com/ [R=302,L]
     redirect(r'^contests', 'http://www.mozillalabs.com/', permanent=False),
+
+    # RewriteRule ^es4 http://www.ecma-international.org/memento/TC39.htm [R=302,L]
+    redirect(r'^es4', 'http://www.ecma-international.org/memento/TC39.htm',
+             permanent=False),
 ]

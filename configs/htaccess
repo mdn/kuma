@@ -57,7 +57,7 @@ RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos /$1docs/Web/Demos_of_open_web_technolog
 
 # Legacy off-site redirects (bug 1362438)
 RewriteRule ^contests/ http://www.mozillalabs.com/ [R=302,L]
-RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
+RewriteRule ^es4 http://www.ecma-international.org/memento/TC39.htm [R=302,L]
 
 # HACK: Django will eventually redirect the user to the right spot, but skip a
 # couple of redirects for these known legacy locales

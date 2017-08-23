@@ -330,4 +330,11 @@ LEGACY_URLS = flatten((
     url_test('/contests/', 'http://www.mozillalabs.com/', status_code=302),
     url_test('/contests/extendfirefox/faq.php', 'http://www.mozillalabs.com/',
              status_code=302),
+    url_test('/es4', 'http://www.ecma-international.org/memento/TC39.htm',
+             status_code=302),
+    url_test('/es4/', 'http://www.ecma-international.org/memento/TC39.htm',
+             status_code=302),
+    url_test('/es4/proposals/slice_syntax.html',
+             'http://www.ecma-international.org/memento/TC39.htm',
+             status_code=302),
 ))
