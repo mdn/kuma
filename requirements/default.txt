@@ -246,6 +246,11 @@ requests-mock==0.7.0 \
     --hash=sha256:ee2816992d4505596ec3c98c7b4ab57475539ac037d08dd3a81370b1e3cdd568 \
     --hash=sha256:e61056cdb809fcc6ed47771b74054fe3ab4c3659d7f66c32a5256e8cf013e0af
 
+# Parse SQL statements, needed for RunSQL migrations
+sqlparse==0.2.3 \
+    --hash=sha256:740a023ef38ce11bbb99a9d143856f56ef4ec5b0d7a853f58c02c65b035114c4 \
+    --hash=sha256:becd7cc7cebbdf311de8ceedfcf2bd2403297024418801947f8c953025beeff8
+
 # Utility class for manipulating URLs, used in util functions
 URLObject==2.4.0 \
     --hash=sha256:f51272b12846db98af530b0a64f6593d2b1e8405f0aa580285b37ce8009b8d9c

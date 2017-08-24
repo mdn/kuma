@@ -100,6 +100,12 @@ if settings.SERVE_LEGACY and settings.LEGACY_ROOT:
         )
     )
 
+if getattr(settings, 'DEBUG_TOOLBAR_INSTALLED', False):
+    import debug_toolbar
+    urlpatterns.append(
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
+
 # Legacy MindTouch redirects. These go last so that they don't mess
 # with local instances' ability to serve media.
 urlpatterns += [
