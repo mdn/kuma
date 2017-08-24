@@ -37,3 +37,10 @@ if DEBUG:
     WHITENOISE_MAX_AGE = 0
     if DEBUG_TOOLBAR:
         INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+        MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES)
+        common_index = MIDDLEWARE_CLASSES.index(
+            'django.middleware.common.CommonMiddleware')
+        MIDDLEWARE_CLASSES.insert(
+            common_index + 1,
+            'debug_toolbar.middleware.DebugToolbarMiddleware')
+        DEBUG_TOOLBAR_INSTALLED = 1
