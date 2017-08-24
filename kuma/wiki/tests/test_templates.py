@@ -854,26 +854,6 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
 
-    @pytest.mark.xfail(reason='Requires migrations')
-    @pytest.mark.tags
-    def test_tag_list_duplicates(self):
-        """
-        Verify the tagged documents list view, even for duplicate tags
-
-        http://bugzil.la/871638
-        """
-        en_tag = DocumentTag(name='CSS Reference', slug='css-reference')
-        en_tag.save()
-        fr_tag = DocumentTag(name=u'CSS Référence', slug='css-reference_1')
-        fr_tag.save()
-        self.doc.tags.add(en_tag)
-        self.doc.tags.add(fr_tag)
-        response = self.client.get(reverse('wiki.tag',
-                                   args=[en_tag.name]))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(1, len(doc('#document-list ul.document-list li')))
-
 
 def test_compare_revisions(edit_revision, client):
     """Comparing two valid revisions of the same document works."""
