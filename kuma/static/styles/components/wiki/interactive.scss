@@ -1,7 +1,6 @@
 .interactive {
     height: 600px;
     width: 100%;
-    margin-bottom: $grid-spacing;
 }
 
 .interactive-js {
@@ -10,6 +9,12 @@
 
 .interactive-large {
     height: 665px;
+}
+
+.interactive-editor-survey {
+    margin: 0 auto $grid-spacing;
+    max-width: 600px;
+    text-align: center;
 }
 
 @media #{$mq-tablet-and-up} {
