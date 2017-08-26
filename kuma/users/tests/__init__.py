@@ -1,5 +1,4 @@
 import requests_mock
-from allauth.account.models import EmailAddress
 from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.models import SocialApp
@@ -40,18 +39,6 @@ def user(save=False, **kwargs):
     if groups:
         user.groups = groups
     return user
-
-
-def email(save=False, **kwargs):
-    if 'user' not in kwargs:
-        kwargs['user'] = user(save=True)
-    if 'email' not in kwargs:
-        kwargs['email'] = '%s@%s.com' % (get_random_string(),
-                                         get_random_string())
-    email = EmailAddress(**kwargs)
-    if save:
-        email.save()
-    return email
 
 
 class SampleRevisionsMixin(object):
