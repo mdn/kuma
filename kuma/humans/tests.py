@@ -1,11 +1,9 @@
 import json
-from os.path import dirname, exists, isdir
-
-import fileinput
+from os.path import dirname
 
 from django.test import TestCase
+from django.utils.six import StringIO
 
-from kuma.core.tests import ok_
 from .models import HumansTXT, Human
 
 APP_DIR = dirname(__file__)
@@ -43,8 +41,6 @@ class HumansTest(TestCase):
         assert human.name == "chengwang"
 
     def test_write_to_file(self):
-        assert isdir("%s/tmp/" % APP_DIR)
-        target = open("%s/tmp/humans.txt" % APP_DIR, 'w')
         human1 = Human()
         human1.name = "joe"
         human1.website = "http://example.com"
@@ -57,18 +53,17 @@ class HumansTest(TestCase):
         humans.append(human2)
 
         ht = HumansTXT()
+        target = StringIO()
         ht.write_to_file(humans, target, "Banner Message", "Developer")
 
-        ok_(True, exists("%s/tmp/humans.txt" % APP_DIR))
-
-        message = False
-        name = False
-
-        for line in fileinput.input("%s/tmp/humans.txt" % APP_DIR):
-            if line == "Banner Message":
-                message = True
-            if line == "joe":
-                name = True
-
-        ok_(True, message)
-        ok_(True, name)
+        output = target.getvalue()
+        expected = '\n'.join((
+            "Banner Message ",
+            "Developer: joe ",
+            "Website: http://example.com ",
+            "",
+            "Developer: john ",
+            "",
+            ""
+        ))
+        assert output == expected
