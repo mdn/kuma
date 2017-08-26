@@ -1,7 +1,6 @@
 from django.conf import settings
 
 from elasticsearch_dsl.connections import connections
-from elasticsearch.exceptions import RequestError
 
 from kuma.core.tests import eq_, ok_
 from kuma.wiki.models import Document
@@ -101,8 +100,5 @@ class TestIndexes(ElasticTestCase):
         index.delete()
 
         es = connections.get_connection()
-        try:
-            es.indices.create(index.prefixed_name)
-        except RequestError:
-            assert False
+        es.indices.create(index.prefixed_name)
         es.indices.delete(index.prefixed_name)

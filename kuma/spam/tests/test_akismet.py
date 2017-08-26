@@ -74,6 +74,7 @@ class AkismetClientTests(SimpleTestCase):
         self.assertFalse(client.ready)
         self.assertTrue(mock_record_exception.called)
 
+    @override_config(AKISMET_KEY='comment')
     @requests_mock.mock()
     def test_exception_attributes(self, mock_requests):
         mock_requests.post(
@@ -83,12 +84,7 @@ class AkismetClientTests(SimpleTestCase):
         )
 
         client = Akismet()
-        try:
-            client.verify_key()
-        except AkismetError as exc:
-            self.assertEqual(exc.status_code, 200)
-            self.assertEqual(exc.debug_help, 'err0r!')
-            self.assertIsInstance(exc.response, requests.Response)
+        assert not client.verify_key()
 
     @override_config(AKISMET_KEY='comment')
     @requests_mock.mock()
@@ -122,14 +118,13 @@ class AkismetClientTests(SimpleTestCase):
         mock_requests.post(VERIFY_URL, content='valid')
         client = Akismet()
         mock_requests.post(CHECK_URL, content='wat', status_code=202)
-        try:
-            valid = client.check_comment('0.0.0.0', 'Mozilla',
-                                         comment_content='yada yada')
-            self.assertFalse(valid)
-        except AkismetError as exc:
-            self.assertEqual(exc.status_code, 202)
-            self.assertEqual(exc.debug_help, 'Not provided')
-            self.assertIsInstance(exc.response, requests.Response)
+        with pytest.raises(AkismetError) as excinfo:
+            client.check_comment('0.0.0.0', 'Mozilla',
+                                 comment_content='yada yada')
+        exc = excinfo.value
+        assert exc.status_code == 202
+        assert exc.debug_help == 'Not provided'
+        assert isinstance(exc.response, requests.Response)
 
     @override_config(AKISMET_KEY='spam')
     @requests_mock.mock()

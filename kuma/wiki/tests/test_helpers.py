@@ -45,21 +45,15 @@ class RevisionsUnifiedDiffTests(UserTestCase, WikiTestCase):
 
     def test_from_revision_none(self):
         rev = revision()
-        try:
-            diff = revisions_unified_diff(None, rev)
-        except AttributeError:
-            self.fail("Should not throw AttributeError")
-        eq_("Diff is unavailable.", diff)
+        diff = revisions_unified_diff(None, rev)  # No AttributeError
+        assert diff == "Diff is unavailable."
 
     def test_from_revision_non_ascii(self):
         doc1 = document(title=u'Gänsefüßchen', save=True)
         rev1 = revision(document=doc1, content=u'spam', save=True)
         doc2 = document(title=u'Außendienstüberwachlösung', save=True)
         rev2 = revision(document=doc2, content=u'eggs', save=True)
-        try:
-            revisions_unified_diff(rev1, rev2)
-        except UnicodeEncodeError:
-            self.fail("Should not throw UnicodeEncodeError")
+        revisions_unified_diff(rev1, rev2)  # No UnicodeEncodeError
 
 
 class DocumentZoneTests(UserTestCase, WikiTestCase):

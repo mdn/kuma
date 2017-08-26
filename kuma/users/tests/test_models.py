@@ -87,10 +87,7 @@ class TestUser(UserTestCase):
         gravatar URLs"""
         user = self.user_model.objects.get(username='testuser')
         user.email = u"Someguy Dude\xc3\xaas Lastname"
-        try:
-            gravatar_url(user.email)
-        except UnicodeEncodeError:
-            self.fail("There should be no UnicodeEncodeError")
+        gravatar_url(user.email)  # Should not raise UnicodeEncodingError
 
     def test_locale_timezone_fields(self):
         """We've added locale and timezone fields. Verify defaults."""

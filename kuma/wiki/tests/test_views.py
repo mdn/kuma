@@ -16,7 +16,6 @@ from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.db.models import Q
-from django.http import Http404
 from django.template.loader import render_to_string
 from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
@@ -127,12 +126,8 @@ class LocaleRedirectTests(UserTestCase, WikiTestCase):
         """Bug 775241: Fix exception in redirect for URL with ui-locale"""
         loc = settings.WIKI_DEFAULT_LANGUAGE
         url = '/%s/docs/%s/' % (loc, loc)
-        try:
-            self.client.get(url, follow=True)
-        except Http404, e:
-            pass
-        except Exception as e:
-            self.fail("The only exception should be a 404, not this: %s" % e)
+        response = self.client.get(url, follow=True)
+        assert response.status_code == 404
 
     def _create_en_and_de_docs(self):
         en = settings.WIKI_DEFAULT_LANGUAGE
@@ -769,10 +764,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
         self.client.login(username='admin', password='testpass')
         self.client.post(reverse('wiki.preview'), {'content': content})
-        try:
-            mock_requests.request_history[0].body.decode('utf8')
-        except UnicodeDecodeError:
-            self.fail("Data wasn't posted as utf8")
+        # No UnicodeDecodeError
+        mock_requests.request_history[0].body.decode('utf8')
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @mock.patch('kuma.wiki.kumascript.post')
@@ -799,11 +792,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
     def test_get_seo_parent_doesnt_throw_404(self):
         """bug 1190212"""
         slug_dict = {'seo_root': 'Root/Does/Not/Exist'}
-        try:
-            _get_seo_parent_title(slug_dict, 'bn-BD')
-        except Http404:
-            self.fail('Missing parent should not cause 404 from '
-                      '_get_seo_parent_title')
+        _get_seo_parent_title(slug_dict, 'bn-BD')  # Should not raise Http404
 
     def test_seo_title(self):
         self.client.login(username='admin', password='testpass')
@@ -1066,8 +1055,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             if opt_element.attr('selected'):
                 found_selected = True
                 eq_(str(Revision.TOC_DEPTH_H4), opt_element.attr('value'))
-        if not found_selected:
-            raise AssertionError("No ToC depth initially selected.")
+        assert found_selected, "No ToC depth initially selected."
 
     @pytest.mark.retitle
     def test_retitling_solo_doc(self):
@@ -1094,11 +1082,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.post(url, data)
         eq_(new_title,
             Document.objects.get(slug=doc.slug, locale=doc.locale).title)
-        try:
-            Document.objects.get(title=old_title)
-            self.fail("Should not find doc by old title after retitling.")
-        except Document.DoesNotExist:
-            pass
+        assert not Document.objects.filter(title=old_title).exists()
 
     @pytest.mark.retitle
     def test_retitling_parent_doc(self):
@@ -1128,11 +1112,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.post(url, data)
         eq_(new_title,
             Document.objects.get(slug=d.slug, locale=d.locale).title)
-        try:
-            Document.objects.get(title=old_title)
-            self.fail("Should not find doc by old title after retitling.")
-        except Document.DoesNotExist:
-            pass
+        assert not Document.objects.filter(title=old_title).exists()
 
     def test_slug_change_ignored_for_iframe(self):
         """When the title of an article is edited in an iframe, the change is

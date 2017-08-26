@@ -10,7 +10,6 @@ from django.test.client import Client
 from django.utils.translation import trans_real
 
 from ..cache import memcache
-from ..exceptions import FixtureMissingError
 from ..urlresolvers import split_path
 
 
@@ -37,12 +36,7 @@ def ok_(pred, msg=None):
 def get_user(username='testuser'):
     """Return a django user or raise FixtureMissingError"""
     User = get_user_model()
-    try:
-        return User.objects.get(username=username)
-    except User.DoesNotExist:
-        raise FixtureMissingError(
-            'Username "%s" not found. You probably forgot to import a'
-            ' users fixture.' % username)
+    return User.objects.get(username=username)
 
 
 class SessionAwareClient(Client):

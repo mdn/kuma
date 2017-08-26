@@ -9,7 +9,6 @@ from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
 from django.conf import settings
 from django.core import mail
-from django.core.paginator import PageNotAnInteger
 from django.db import IntegrityError
 from django.http import Http404
 from django.test import RequestFactory
@@ -786,10 +785,7 @@ class UserViewsTest(UserTestCase):
         url = '%s?page=asdf' % reverse('users.user_detail',
                                        args=(testuser.username,))
 
-        try:
-            self.client.get(url, follow=True)
-        except PageNotAnInteger:
-            self.fail("Non-numeric page number should not cause an error")
+        self.client.get(url, follow=True)  # Does not raise PageNotAnInteger
 
     def test_user_edit(self):
         testuser = self.user_model.objects.get(username='testuser')

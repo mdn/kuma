@@ -122,13 +122,11 @@ class DocumentTests(UserTestCase):
             d = document()
             d.save()
 
-            try:
-                d.delete()
-                if active:
-                    self.fail('Exception on delete when active')
-            except Exception:
-                if not active:
-                    self.fail('No exception on delete when not active')
+            if active:
+                with pytest.raises(Exception):
+                    d.delete()
+            else:
+                d.delete()  # No exception
 
     def test_delete_tagged_document(self):
         """Make sure deleting a tagged doc deletes its tag relationships."""
@@ -797,12 +795,8 @@ class DeferredRenderingTests(UserTestCase):
         mock_kumascript_get.return_value = (self.rendered_content, None)
         self.d1.render_started_at = datetime.now()
         self.d1.save()
-        try:
+        with pytest.raises(DocumentRenderingInProgress):
             self.d1.render('', 'http://testserver/')
-            self.fail("An attempt to render while another appears to be in "
-                      "progress should be disallowed")
-        except DocumentRenderingInProgress:
-            pass
 
     @mock.patch('kuma.wiki.kumascript.get')
     @override_config(KUMA_DOCUMENT_RENDER_TIMEOUT=5.0)
@@ -814,11 +808,8 @@ class DeferredRenderingTests(UserTestCase):
         self.d1.render_started_at = (datetime.now() -
                                      timedelta(seconds=5.0 + 1))
         self.d1.save()
-        try:
-            self.d1.render('', 'http://testserver/')
-        except DocumentRenderingInProgress:
-            self.fail("A timed-out rendering should not be considered as "
-                      "still in progress")
+        # No DocumentRenderingInProgress raised
+        self.d1.render('', 'http://testserver/')
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_long_render_sets_deferred(self, mock_kumascript_get):
@@ -911,13 +902,9 @@ class DeferredRenderingTests(UserTestCase):
         self.d1.rendered_html = ''
         self.d1.defer_rendering = True
         self.d1.save()
-        try:
-            result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
-            self.fail("We should have gotten a "
-                      "DocumentRenderedContentNotAvailable exception")
-        except DocumentRenderedContentNotAvailable:
-            pass
-        ok_(mock_render_document_delay.called)
+        with pytest.raises(DocumentRenderedContentNotAvailable):
+            self.d1.get_rendered(None, 'http://testserver/')
+        assert mock_render_document_delay.called
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_errors_stored_correctly(self, mock_kumascript_get):
@@ -1352,11 +1339,8 @@ class PageMoveTests(UserTestCase):
                        slug='doc1', is_approved=True, save=True)
         doc = rev.document
 
-        try:
+        with pytest.raises(Exception):
             doc._move_tree('slug-that-doesnt-exist/doc1')
-            ok_(False, "Moving page under non-existing doc should error.")
-        except Exception:
-            pass
 
     @pytest.mark.move
     def test_move_top_level_docs(self):

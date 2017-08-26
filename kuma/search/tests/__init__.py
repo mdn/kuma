@@ -29,11 +29,7 @@ class ElasticTestCase(UserTestCase):
 
     @classmethod
     def setUpClass(cls):
-        try:
-            super(ElasticTestCase, cls).setUpClass()
-        except AttributeError:
-            # python 2.6 has no setUpClass, but that's okay
-            pass
+        super(ElasticTestCase, cls).setUpClass()
 
         if not getattr(settings, 'ES_URLS', None):
             cls.skipme = True
@@ -52,11 +48,7 @@ class ElasticTestCase(UserTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            super(ElasticTestCase, cls).tearDownClass()
-        except AttributeError:
-            # python 2.6 has no tearDownClass, but that's okay
-            pass
+        super(ElasticTestCase, cls).tearDownClass()
 
         if not cls.skipme:
             # Restore old setting.
