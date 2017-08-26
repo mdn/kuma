@@ -74,18 +74,6 @@ def revision(save=False, **kwargs):
     return rev
 
 
-def translated_revision(locale='de', **kwargs):
-    """Return a revision that is the translation of a default-language one."""
-    parent_rev = revision(is_approved=True)
-    parent_rev.save()
-    translation = document(parent=parent_rev.document,
-                           locale=locale)
-    translation.save()
-    new_kwargs = {'document': translation, 'based_on': parent_rev}
-    new_kwargs.update(kwargs)
-    return revision(**new_kwargs)
-
-
 def make_translation():
     # Create translation parent...
     d1 = document(title="Doc1", locale='en-US', save=True)

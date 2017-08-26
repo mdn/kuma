@@ -33,19 +33,6 @@ from ..utils import tidy_content
 from ..signals import render_done
 
 
-def _objects_eq(manager, list_):
-    """Assert that the objects contained by `manager` are those in `list_`."""
-    eq_(set(manager.all()), set(list_))
-
-
-def redirect_rev(title, redirect_to):
-    return revision(
-        document=document(title=title, save=True),
-        content='REDIRECT [[%s]]' % redirect_to,
-        is_approved=True,
-        save=True)
-
-
 class DocumentTests(UserTestCase):
     """Tests for the Document model"""
 

@@ -34,12 +34,6 @@ def ok_(pred, msg=None):
     assert pred, msg
 
 
-def attrs_eq(received, **expected):
-    """Compares received's attributes with expected's kwargs."""
-    for k, v in expected.iteritems():
-        eq_(v, getattr(received, k))
-
-
 def get_user(username='testuser'):
     """Return a django user or raise FixtureMissingError"""
     User = get_user_model()

@@ -1,10 +1,5 @@
-from django.http import HttpResponseServerError
 from django.conf.urls import url
 from django.core.exceptions import SuspiciousOperation
-
-
-def handler500(request):
-    return HttpResponseServerError('error')
 
 
 def suspicious(request):

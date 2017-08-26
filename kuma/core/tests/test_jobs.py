@@ -71,9 +71,7 @@ class GenerationKeyJobTest(KumaTestCase):
 
 
 class EncodingJob(KumaJob):
-
-    def fetch(self, spam):
-        return spam
+    pass
 
 
 class TestCacheKeyWithDifferentEncoding(KumaTestCase):

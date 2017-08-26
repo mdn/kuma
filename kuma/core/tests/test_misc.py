@@ -1,21 +1,8 @@
-from StringIO import StringIO
-
-from django.contrib.auth.models import AnonymousUser
-from django.core.handlers.wsgi import WSGIRequest
 from django.test import RequestFactory
 
 from kuma.core.tests import KumaTestCase, eq_
 
 from ..context_processors import next_url
-
-
-def _make_request(path):
-    req = WSGIRequest({
-        'REQUEST_METHOD': 'GET',
-        'PATH_INFO': path,
-        'wsgi.input': StringIO()})
-    req.user = AnonymousUser()
-    return req
 
 
 class TestNextUrl(KumaTestCase):

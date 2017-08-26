@@ -786,11 +786,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         """
         self.doc.defer_rendering = True
         self.doc.save()
-
-        def should_not_post(*args, **kwargs):
-            self.fail("Preview doc with deferred rendering should not "
-                      "post to KumaScript.")
-        mock_post.side_effect = should_not_post
+        mock_post.side_effect = Exception("Should not be called")
 
         self.client.login(username='admin', password='testpass')
         self.client.post(reverse('wiki.preview'), {'doc_id': self.doc.id})
