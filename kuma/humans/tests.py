@@ -1,5 +1,4 @@
 import json
-from os import makedirs
 from os.path import dirname, exists, isdir
 
 import fileinput
@@ -44,9 +43,7 @@ class HumansTest(TestCase):
         assert human.name == "chengwang"
 
     def test_write_to_file(self):
-        if not isdir("%s/tmp/" % APP_DIR):
-            makedirs("%s/tmp/" % APP_DIR)
-
+        assert isdir("%s/tmp/" % APP_DIR)
         target = open("%s/tmp/humans.txt" % APP_DIR, 'w')
         human1 = Human()
         human1.name = "joe"

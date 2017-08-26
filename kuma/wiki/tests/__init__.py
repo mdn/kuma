@@ -132,28 +132,25 @@ def normalize_html(input):
 
 def create_document_editor_group():
     """Get or create a group that can edit documents."""
-    group, group_created = Group.objects.get_or_create(name='editor')
-    if group_created:
-        actions = ('add', 'change', 'delete', 'view', 'restore')
-        perms = [Permission.objects.get(codename='%s_document' % action)
-                 for action in actions]
-        group.permissions = perms
-        group.save()
+    group = Group.objects.create(name='editor')
+    actions = ('add', 'change', 'delete', 'view', 'restore')
+    perms = [Permission.objects.get(codename='%s_document' % action)
+             for action in actions]
+    group.permissions = perms
+    group.save()
     return group
 
 
 def create_document_editor_user():
     """Get or create a user empowered with document editing."""
     User = get_user_model()
-    user, user_created = User.objects.get_or_create(
-        username='conantheeditor',
-        defaults=dict(email='user_%s@example.com',
-                      is_active=True, is_staff=False, is_superuser=False))
-    if user_created:
-        user.set_password('testpass')
-        user.groups = [create_document_editor_group()]
-        user.save()
-
+    user = User.objects.create(username='conantheeditor',
+                               email='conantheeditor@example.com',
+                               is_active=True, is_staff=False,
+                               is_superuser=False)
+    user.set_password('testpass')
+    user.groups = [create_document_editor_group()]
+    user.save()
     return user
 
 

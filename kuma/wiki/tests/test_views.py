@@ -3451,8 +3451,6 @@ class AutosuggestDocumentsTests(WikiTestCase):
             d.title = doc['title']
             if 'html' in doc:
                 d.html = doc['html']
-            if 'slug' in doc:
-                d.slug = doc['slug']
             if 'is_redirect' in doc:
                 d.is_redirect = 1
             d.save()
@@ -4115,11 +4113,8 @@ class APITests(UserTestCase, WikiTestCase):
         else:
             # Encode the content so that the byte representation is correct.
             match = CONTENT_TYPE_RE.match(content_type)
-            if match:
-                charset = match.group(1)
-            else:
-                charset = settings.DEFAULT_CHARSET
-            post_data = smart_str(data, encoding=charset)
+            assert not match
+            post_data = smart_str(data, encoding=settings.DEFAULT_CHARSET)
 
         parsed = urlparse(path)
         params = {
@@ -4133,8 +4128,7 @@ class APITests(UserTestCase, WikiTestCase):
         params.update(extra)
 
         response = self.client.request(**params)
-        if follow:
-            response = self.client._handle_redirects(response, **extra)
+        assert not follow
         return response
 
 

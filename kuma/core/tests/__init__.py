@@ -44,25 +44,24 @@ class SessionAwareClient(Client):
     Just a small override to patch the session property to be able to
     use the sessions.
     """
-    def _session(self):
+    @property
+    def session(self):
         """
         Obtains the current session variables.
 
         Backported the else clause from Django 1.7 to make sure there
         is a session available during tests.
         """
-        if 'django.contrib.sessions' in settings.INSTALLED_APPS:
-            engine = import_module(settings.SESSION_ENGINE)
-            cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
-            if cookie:
-                return engine.SessionStore(cookie.value)
-            else:
-                session = engine.SessionStore()
-                session.save()
-                self.cookies[settings.SESSION_COOKIE_NAME] = session.session_key
-                return session
-        return {}
-    session = property(_session)
+        assert 'django.contrib.sessions' in settings.INSTALLED_APPS
+        engine = import_module(settings.SESSION_ENGINE)
+        cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
+        if cookie:
+            return engine.SessionStore(cookie.value)
+        else:
+            session = engine.SessionStore()
+            session.save()
+            self.cookies[settings.SESSION_COOKIE_NAME] = session.session_key
+            return session
 
 
 class LocalizingMixin(object):

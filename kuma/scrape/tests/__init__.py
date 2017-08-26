@@ -23,9 +23,7 @@ def mock_requester(
     if requester_spec is None:
         requester_spec = ['request']
     if response_spec is None:
-        response_spec = ['content', 'history']
-        if status_code is not None:
-            response_spec.append('status_code')
+        response_spec = ['content', 'history', 'status_code']
 
     requester = mock.Mock(spec_set=requester_spec)
     if 'request' in requester_spec:

@@ -173,8 +173,7 @@ def test_save_document_integrity_error():
         locale='en-US', slug='MDN/About', title='About MDN',
         parent_topic=en_root_doc)
     ca_id = 1000
-    while Document.objects.filter(id=ca_id).exists():
-        ca_id += 1
+    assert not Document.objects.filter(id=ca_id).exists()
     ca_data = {
         'locale': 'ca',
         'slug': 'Project:Quant_a',
@@ -255,8 +254,7 @@ def test_get_revision_existing(root_doc):
 @pytest.mark.django_db
 def test_get_revision_missing():
     rev_id = 666
-    while Revision.objects.filter(id=rev_id).exists():
-        rev_id += 1
+    assert not Revision.objects.filter(id=rev_id).exists()
     assert Storage().get_revision(rev_id) is None
 
 
