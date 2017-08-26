@@ -131,7 +131,9 @@ def user_lookup(request):
     if request.is_ajax():
         user = request.GET.get('user', '')
         if user:
-            matches = get_user_model().objects.filter(username__istartswith=user)
+            matches = (get_user_model().objects
+                       .filter(username__istartswith=user)
+                       .order_by('username'))
             for match in matches:
                 userlist.append({'label': match.username})
 

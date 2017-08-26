@@ -1,4 +1,5 @@
 import datetime
+import json
 import mock
 import pytest
 from pyquery import PyQuery as pq
@@ -116,15 +117,13 @@ class RevisionsDashTest(UserTestCase):
         url = urlparams(reverse('dashboards.user_lookup', locale='en-US'),
                         user='test')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        for revision in revisions:
-            author = pq(revision).find('.dashboard-author').text()
-            ok_('test' in author)
-            ok_('admin' not in author)
+        assert response.status_code == 200
+        assert response['CONTENT-TYPE'] == 'application/json; charset=utf-8'
+        data = json.loads(response.content)
+        expected = [{"label": "testuser"},
+                    {"label": "testuser01"},
+                    {"label": "testuser2"}]
+        assert data == expected
 
     def test_creator_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='en-US'),
