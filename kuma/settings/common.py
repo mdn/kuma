@@ -226,6 +226,7 @@ LOCALE_ALIASES = {
     'pt': 'pt-PT',
     'sr': 'sr-Cyrl',
     'zh': 'zh-CN',
+    'cn': 'zh-CN',
 
     # Create aliases for locales which do not share a prefix.
     'nb-NO': 'no',
@@ -234,6 +235,10 @@ LOCALE_ALIASES = {
     # Create aliases for locales which use region subtags to assume scripts.
     'zh-Hans': 'zh-CN',
     'zh-Hant': 'zh-TW',
+
+    # Map locale whose region subtag is separated by `_`(underscore)
+    'zh_cn': 'zh-CN',
+    'zh_tw': 'zh-TW',
 }
 
 LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
