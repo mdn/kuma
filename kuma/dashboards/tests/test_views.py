@@ -145,15 +145,11 @@ class RevisionsDashTest(UserTestCase):
         url = urlparams(reverse('dashboards.topic_lookup', locale='en-US'),
                         topic='lorem')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        for revision in revisions:
-            slug = pq(revision).find('.dashboard-title').html()
-            ok_('lorem' in slug)
-            ok_('article' not in slug)
+        assert response.status_code == 200
+        assert response['CONTENT-TYPE'] == 'application/json; charset=utf-8'
+        data = json.loads(response.content)
+        expected = [{u'label': u'lorem-ipsum'}]
+        assert data == expected
 
     def test_topic_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='en-US'),

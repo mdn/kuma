@@ -3467,13 +3467,9 @@ class AutosuggestDocumentsTests(WikiTestCase):
         eq_(len(data), len(valid_documents))
 
         # Ensure that the valid docs found are all in the valid list
-        for d in data:
-            found = False
-            for v in valid_documents:
-                if v['title'] in d['title']:
-                    found = True
-                    break
-            eq_(True, found)
+        titles_returned = sorted(item['title'] for item in data)
+        valid_titles = sorted(item['title'] for item in valid_documents)
+        assert titles_returned == valid_titles
 
     def test_list_no_redirects(self):
         Document.objects.all().delete()
