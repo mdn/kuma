@@ -1381,55 +1381,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             eq_(0, len(Document.objects.filter(title=missing_title,
                                                locale=locale)))
 
-            def _run_edit_tests(edit_slug, edit_data, edit_doc,
-                                edit_parent_path):
-                """EDIT DOCUMENT TESTING"""
-                # Load "Edit" page for the root doc, ensure no "/" in the slug
-                # Also ensure the 'parent' link is not present
-                response = self.client.get(reverse('wiki.edit',
-                                                   args=[edit_doc.slug], locale=locale))
-                eq_(200, response.status_code)
-                page = pq(response.content)
-                eq_(edit_data['slug'], page.find('input[name=slug]')[0].value)
-                eq_(edit_parent_path,
-                    page.find('.metadataDisplay').attr('href'))
-
-                # Attempt an invalid edit of the root,
-                # ensure the slug stays the same (i.e. no parent prepending)
-                def test_invalid_slug_edit(inv_slug, url, data):
-                    data['slug'] = inv_slug
-                    data['form'] = 'rev'
-                    response = self.client.post(url, data)
-                    eq_(200, response.status_code)  # 200 = bad, invalid data
-                    page = pq(response.content)
-                    # Slug doesn't add parent
-                    eq_(inv_slug, page.find('input[name=slug]')[0].value)
-                    eq_(edit_parent_path,
-                        page.find('.metadataDisplay').attr('href'))
-                    self.assertContains(response,
-                                        'The slug provided is not valid.')
-                    # Ensure no redirect
-                    redirect_title = data['title'] + ' Redirect 1'
-                    eq_(0, len(Document.objects.filter(title=redirect_title,
-                                                       locale=locale)))
-
-                # Push a valid edit, without changing the slug
-                edit_data['slug'] = edit_slug
-                edit_data['form'] = 'rev'
-                response = self.client.post(reverse('wiki.edit',
-                                                    args=[edit_doc.slug],
-                                                    locale=locale),
-                                            edit_data)
-                eq_(302, response.status_code)
-                # Ensure no redirect
-                redirect_title = edit_data['title'] + ' Redirect 1'
-                eq_(0, len(Document.objects.filter(title=redirect_title,
-                                                   locale=locale)))
-                doc_url = reverse('wiki.document', args=[edit_doc.slug], locale=foreign_locale)
-                params = {'rev_saved': ''}
-                doc_url = '%s?%s' % (doc_url, urlencode(params))
-                self.assertRedirects(response, doc_url)
-
             def _run_translate_tests(translate_slug, translate_data,
                                      translate_doc):
                 """TRANSLATION DOCUMENT TESTING"""
@@ -1449,23 +1400,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 eq_(translate_data['slug'],
                     page.find('input[name=slug]')[0].value)
 
-                # Attempt an invalid edit of the root
-                # ensure the slug stays the same (i.e. no parent prepending)
-                def test_invalid_slug_translate(inv_slug, url, data):
-                    data['slug'] = inv_slug
-                    data['form-type'] = 'both'
-                    response = self.client.post(url, data)
-                    eq_(200, response.status_code)  # 200 = bad, invalid data
-                    page = pq(response.content)
-                    # Slug doesn't add parent
-                    eq_(inv_slug, page.find('input[name=slug]')[0].value)
-                    self.assertContains(response,
-                                        'The slug provided is not valid.')
-                    # Ensure no redirect
-                    eq_(0, len(Document.objects.filter(title=data['title'] +
-                                                       ' Redirect 1',
-                                                       locale=foreign_locale)))
-
                 # Push a valid translation
                 translate_data['slug'] = translate_slug
                 translate_data['form-type'] = 'both'
@@ -1484,76 +1418,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             _run_translate_tests(child_slug, child_data, child_doc)
             _run_translate_tests(grandchild_slug, grandchild_data,
                                  grandchild_doc)
-
-            def _run_translate_edit_tests(edit_slug, edit_data, edit_doc):
-                """TEST BASIC EDIT OF TRANSLATION"""
-
-                # Hit the initial URL
-                response = self.client.get(reverse('wiki.edit',
-                                                   args=[edit_doc.slug],
-                                                   locale=foreign_locale))
-                eq_(200, response.status_code)
-                page = pq(response.content)
-                eq_(edit_data['slug'], page.find('input[name=slug]')[0].value)
-
-                # Attempt an invalid edit of the root, ensure the slug stays
-                # the same (i.e. no parent prepending)
-                edit_data['slug'] = invalid_slug
-                edit_data['form-type'] = 'both'
-                response = self.client.post(reverse('wiki.edit',
-                                                    args=[edit_doc.slug],
-                                                    locale=foreign_locale),
-                                            edit_data)
-                eq_(200, response.status_code)  # 200 = bad, invalid data
-                page = pq(response.content)
-                # Slug doesn't add parent
-                eq_(invalid_slug, page.find('input[name=slug]')[0].value)
-                self.assertContains(response, page.find('ul.errorlist li'
-                                                        ' a[href="#id_slug"]').
-                                    text())
-                # Ensure no redirect
-                eq_(0, len(Document.objects.filter(title=edit_data['title'] +
-                                                   ' Redirect 1',
-                                                   locale=foreign_locale)))
-
-                # Push a valid edit, without changing the slug
-                edit_data['slug'] = edit_slug
-                response = self.client.post(reverse('wiki.edit',
-                                                    args=[edit_doc.slug],
-                                                    locale=foreign_locale),
-                                            edit_data)
-                eq_(302, response.status_code)
-                # Ensure no redirect
-                eq_(0, len(Document.objects.filter(title=edit_data['title'] +
-                                                   ' Redirect 1',
-                                                   locale=foreign_locale)))
-                doc_url = reverse('wiki.document', args=[edit_doc.slug], locale=foreign_locale)
-                params = {'rev_saved': ''}
-                doc_url = '%s?%s' % (doc_url, urlencode(params))
-                self.assertRedirects(response, doc_url)
-
-            """ TEST EDITING SLUGS AND TRANSLATIONS """
-            def _run_slug_edit_tests(edit_slug, edit_data, edit_doc, loc):
-
-                edit_data['slug'] = edit_data['slug'] + '_Updated'
-                edit_data['form-type'] = 'rev'
-                response = self.client.post(reverse('wiki.edit',
-                                                    args=[edit_doc.slug],
-                                                    locale=loc),
-                                            edit_data)
-                eq_(302, response.status_code)
-                # HACK: the es doc gets a 'Redirigen 1' if locale/ is updated
-                # Ensure *1* redirect
-                eq_(1,
-                    len(Document.objects.filter(
-                        title__contains=edit_data['title'] + ' Redir',
-                        locale=loc)))
-                self.assertRedirects(response,
-                                     reverse('wiki.document',
-                                             locale=loc,
-                                             args=[edit_doc.slug.replace(
-                                                 edit_slug,
-                                                 edit_data['slug'])]))
 
         # Run all of the tests
         _createAndRunTests("parent")
