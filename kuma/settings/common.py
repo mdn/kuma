@@ -1040,6 +1040,7 @@ PIPELINE_JS = {
     'wiki': {
         'source_filenames': (
             'js/wiki.js',
+            'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-helpful-survey.js',
         ),
