@@ -1,0 +1,41 @@
+@import '_mixin_nav';
+
+/*
+Secondary navigation, site tools and login info
+********************************************************************** */
+
+@media #{$mq-tablet-and-down} {
+    .nav-tools {
+        display: none;
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    #nav-sec {
+        @include bidi-value(float, right, left);
+        position: relative;
+        @include bidi-style(right, ($gutter-width * -1), left, auto);
+        z-index: 3; /* bring it above search trigger in tablet view */
+        background-color: #000;
+
+        > ul > li {
+            @include inline-nav-item();
+
+            > a {
+                color: #fff;
+
+                &:hover,
+                &:focus {
+                    background-color: #000;
+                    color: #fff !important; /* stylelint-disable-line declaration-no-important */
+                }
+            }
+        }
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    > ul > li {
+        @include large-inline-nav-item();
+    }
+}

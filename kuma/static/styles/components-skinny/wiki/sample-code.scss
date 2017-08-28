@@ -1,0 +1,19 @@
+.sample-code-frame {
+    border: 1px solid #9b9b9b;
+    padding: $grid-spacing;
+
+    .sample-code-table & {
+        padding: 0;
+        border: 0;
+    }
+}
+
+.open-in-host {
+    @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+}
+
+@media print {
+    .open-in-host-container {
+        display: none;
+    }
+}

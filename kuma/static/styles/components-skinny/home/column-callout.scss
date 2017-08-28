@@ -1,0 +1,253 @@
+/*
+colorful callouts
+********************************************************************** */
+
+$callout-icon-width: 90px;
+$callout-icon-space: 90px + $grid-spacing;
+$callout-arrow-space: 3em; // arrow is text so increases in size, ems will scale too
+$callout-min-height: 170px;
+
+.column-callout {
+    margin-bottom: $grid-spacing;
+    background: #00539f;
+
+    > a {
+        color: #fff !important; /* stylelint-disable-line declaration-no-important */
+        display: block;
+        min-height: $callout-min-height;
+        position: relative;
+        overflow: hidden;
+        @include set-larger-font-size();
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: $grid-spacing;
+            @include bidi-style(right, $grid-spacing, left, auto);
+            height: $callout-icon-width;
+            width: $callout-icon-width;
+            background-image: url($path-to-embedded-images + 'promo-sprite.png');
+        }
+
+        &:before {
+            @include bidi-style(content, '\f061', content, '\f060');
+            @include bidi-style(right, $grid-spacing, left, auto);
+            font-family: FontAwesome;
+            bottom: 11px;
+            position: absolute;
+            @include set-font-size(24px);
+            z-index: 4;
+        }
+    }
+
+    span {
+        position: absolute;
+        z-index: 1;
+        bottom: -2px;
+        @include bidi-value(padding, $grid-spacing $callout-icon-space $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing $callout-icon-space);
+        box-sizing: border-box;
+    }
+}
+
+@media #{$mq-tablet-only} {
+    .column-callout {
+
+        a:after {
+            display: none;
+        }
+
+        span {
+            @include bidi-value(padding, $grid-spacing $callout-arrow-space $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing $callout-arrow-space);
+        }
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .column-callout {
+        @include column-4();
+        margin-bottom: 0;
+    }
+}
+
+
+/*
+Newsletter block, double wide
+-------------------------------------------------------------- */
+
+.callout-newsletter {
+    background-color: #c2e8f9;
+    margin-bottom: $grid-spacing;
+
+    .newsletter-form,
+    .newsletter-thanks {
+        padding: $grid-spacing;
+        min-height: $callout-min-height - ($grid-spacing * 2);
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .callout-newsletter {
+        @include column-8();
+        margin-bottom: 0;
+    }
+}
+
+
+/*
+Learn callout
+-------------------------------------------------------------- */
+
+.callout-learn {
+    background-color: $green;
+}
+
+
+/*
+Dev Edition callout
+-------------------------------------------------------------- */
+
+.callout-deved {
+    background-color: $accent-dark;
+
+    a:after {
+        background-position: 0 -300px;
+    }
+}
+
+
+/*
+Foundation callout
+-------------------------------------------------------------- */
+
+.callout-foundation {
+    background: #523e53;
+
+    strong {
+        content: '';
+        display: block;
+        height: 30px;
+        width: 109px;
+        margin-bottom: 2px;
+        background-image: url($path-to-images + 'home-foundation.gif');
+        direction: ltr; // ltr should be set with negative text indent
+        text-indent: 100%;
+        overflow: hidden;
+    }
+
+    a:before {
+        display: none;
+    }
+
+    a:after {
+        height: 79px;
+        background-image: url($path-to-images + 'home-foundation.gif');
+        background-position: 0 -29px;
+    }
+
+    button {
+        margin-top: 6px;
+        border: 3px solid;
+    }
+}
+
+@media #{$mq-tablet-only} {
+    .callout-foundation {
+        a:before {
+            display: block;
+        }
+
+        button {
+            display: none;
+        }
+    }
+}
+
+
+/*
+SauceLabs
+-------------------------------------------------------------- */
+
+$saucelabs-callout-image-width: 129px;
+$saucelabs-callout-image-spacing: 129px + 20px;
+
+.callout-saucelabs {
+    background-color: $accent-light;
+
+    a {
+        @include set-font-size(14px);
+        color: #000 !important; /* stylelint-disable-line declaration-no-important */
+        font-weight: bold;
+
+        &:after {
+            display: none;
+            @include bidi-style(right, 20px, left, auto);
+            background-image: url($path-to-embedded-images + 'promos/sauce-labs-home.png');
+            height: 140px;
+            top: 15px;
+            width: $saucelabs-callout-image-width;
+        }
+
+        &:before {
+            content: none;
+            display: none;
+        }
+    }
+
+    span {
+        padding: $grid-spacing;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    button {
+        @include bidi-style(text-align, left, text-align, right);
+        background: #fff;
+        border: 2px solid;
+        border-radius: 0;
+        box-shadow: none;
+        color: #000;
+        display: inline-block;
+        font-weight: bold;
+        margin-top: 14px;
+        padding: 9px;
+        text-transform: none;
+    }
+}
+
+/*
+larger teaser image gets hidden and shown at a different rate than the usual callouts
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+@media #{$mq-mobile-only} {
+    .callout-saucelabs {
+        a:after {
+            display: block;
+        }
+
+        span {
+            @include bidi-value(padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing));
+        }
+    }
+}
+
+@media #{$mq-large-desktop-and-up} {
+    .callout-saucelabs {
+        a:after {
+            display: block;
+        }
+
+        span {
+            @include bidi-value(padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing));
+        }
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+    .callout-saucelabs a:after {
+        background-image: url($path-to-embedded-images + 'promos/sauce-labs-home-high-res.png');
+        background-size: 129px 140px;
+    }
+}

@@ -26,7 +26,7 @@
 {% set other_translations = document.other_translations %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
-{% set show_right = (not is_zone_root and toc_html) %}
+{% set show_right = (not is_zone_root and toc_html) and not waffle.flag('line_length') %}
 
 {% set buttons = get_document_buttons(document, help_link) %}
 {% set crumbs = build_document_crumbs(document) %}
@@ -239,6 +239,15 @@
                   {% if not document_html %}
                     {{ _("This article doesn't have any content yet.") }}
                   {% else %}
+                    {% if toc_html and waffle.flag('line_length') %}
+                    <!-- table of contents -->
+                    <div id="toc" class="toc toggleable">
+                      <a href="#toc" class="title toggler" data-open-icon="icon-caret-right" data-closed-icon="icon-caret-down"><i></i>{{ _('In This Article') }}</a>
+                      <ol class="toggle-container">
+                        {{ toc_html|safe }}
+                      </ol>
+                    </div>
+                    {% endif %}
                     {{ body_html|safe }}
                   {% endif %}
                 {% elif fallback_reason == 'no_translation' %}

@@ -248,43 +248,14 @@
 
 
     /*
-        Set up the TOC menu toggle
+        Close the TOC menu by default
     */
     (function() {
         var $toc = $('#toc');
-        var $toggler = $toc.find('> .toggler');
 
-        function tocToggle(e) {
-            if (!e || e.type === 'resize') {
-                // Should the TOC be one-column (auto-closed) or sidebar'd
-                if ($toc.length) {
-                    // look for toggle icon to see if toggleable
-                    if ($toggler.find('i').css('display') !== 'none') {
-                        // TOC is toggleable
-                        if (!$toc.attr('data-closed')) {
-                            // TOC is open
-                            $toggler.trigger('mdn:click'); // close TOC
-                        }
-                    } else {
-                        // TOC not togglable
-                        if ($toc.attr('data-closed') === 'true') {
-                            // TOC is closed
-                            $toggler.trigger('mdn:click'); // open TOC
-                        }
-                    }
-                }
-            }
-        }
-
-        // If there is no ToC on the page
-        if (!$toc.length) {
-            return;
-        }
-
-        // Set it forth!
         if ($toc.length) {
-            tocToggle();
-            $(win).on('resize', tocToggle);
+            var $toggler = $toc.find('> .toggler');
+            $toggler.trigger('mdn:click');
         }
     })();
 

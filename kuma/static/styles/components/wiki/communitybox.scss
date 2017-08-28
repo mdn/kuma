@@ -5,9 +5,10 @@
     https://github.com/mdn/kumascript/blob/master/macros/CommunityBox.ejs
 ********************************************************************** */
 
-$communitybox-spacing : 13px;
+$communitybox-spacing: 13px;
 
 .communitybox {
+    @include full-width-content();
     padding: $communitybox-spacing;
     background-color: $blue-light;
     @include bidi-value(border, 0, 0);
@@ -24,7 +25,7 @@ $communitybox-spacing : 13px;
     }
 
     h2 {
-        margin-bottom: 0;
+        margin: 0;
     }
 
     h3 {

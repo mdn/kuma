@@ -1,43 +1,57 @@
 #toc {
     @include reverse-link-decoration();
     background: $light-background-color;
-    padding: 20px 15px;
+    @include bidi-value(padding, ($grid-spacing / 2) $grid-spacing ($grid-spacing / 2) ($grid-spacing - 2px), ($grid-spacing / 2) ($grid-spacing - 2px) ($grid-spacing / 2) $grid-spacing);
+    margin-bottom: $grid-spacing;
 
-    > ol {
+    // toggle button
+    .toggler {
+        position: relative;
+        color: $link-color;
+
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+
+        i {
+            position: static;
+            @include bidi-style(margin-right, $icon-margin, margin-left, 0);
+            display: inline-block;
+            color: $link-color;
+
+            .no-js & {
+                display: none;
+            }
+        }
+    }
+
+    // menu
+    .toggle-container {
+        // hide by default if JS enabled
+        display: none;
+
+        // display by default if no JS
+        .no-js & {
+            display: block;
+        }
+    }
+
+    ol {
+        margin-bottom: 0;
+        @include bidi-style(padding-left, 0 , padding-right, 0);
         @include set-smaller-font-size();
+        list-style-type: none;
     }
 
     li {
         padding-top: ($grid-spacing / 2);
         position: relative;
-
-        &:before {
-            @include bidi-value(text-align, left, right);
-            @include bidi-style(left, -($grid-spacing * 1.5), right, auto);
-            position: absolute;
-            color: $grey-dark;
-        }
     }
 
     li li {
-        padding-left: $grid-spacing;
-    }
-
-    .toggler {
-        pointer-events: none;
-        color: inherit;
-
-        i {
-            display: none;
-        }
-    }
-
-    .title {
-        margin-bottom: 0;
-    }
-
-    a.title {
-        position: relative;
-        text-decoration: none;
+        @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 }

@@ -1,0 +1,36 @@
+.redesign-notice {
+    background-color: $green-light;
+    border: 5px solid $green;
+    margin: $grid-spacing;
+    padding: $grid-spacing;
+    position: relative;
+}
+
+.redesign-new-logo,
+.redesign-old-logo {
+    position: relative;
+    display: inline-block;
+    direction: ltr; // ltr should be set with negative text indent
+    text-indent: -9999px;
+    overflow: hidden;
+    @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+}
+
+.redesign-old-logo {
+    width: 205px;
+    height: 40px;
+    background: url($path-to-images + 'logo_sprite.svg') 0 0 no-repeat;
+}
+
+.redesign-new-logo {
+    width: 219px;
+    height: 48px;
+    background: url($logo-sprite-url) 100% 0 no-repeat;
+    background-size: 219px auto;
+}
+
+.redesign-hide {
+    position: absolute;
+    top: 5px;
+    @include bidi-style(right, 10px, left, auto);
+}

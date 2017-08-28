@@ -131,6 +131,10 @@ $notification-button-padding: 2px 5px 3px;
         margin-bottom: 0;
     }
 
+    .text-content & {
+        @include full-width-content;
+    }
+
     &.closed {
         display: none;
     }

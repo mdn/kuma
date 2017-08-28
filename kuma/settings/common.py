@@ -640,6 +640,14 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/mdn.css',
         'variant': 'datauri',
     },
+    'mdn-skinny': {
+        'source_filenames': (
+            'styles/font-awesome.scss',
+            'styles/main-skinny.scss',
+        ),
+        'output_filename': 'build/styles/mdn-skinny.css',
+        'variant': 'datauri',
+    },
     'jquery-ui': {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
@@ -687,6 +695,21 @@ PIPELINE_CSS = {
             'styles/wiki-syntax.scss',
         ),
         'output_filename': 'build/styles/wiki.css',
+    },
+    'wiki-skinny': {
+        'source_filenames': (
+            'styles/wiki-skinny.scss',
+            'styles/diff.scss',
+
+            # Custom build of our Prism theme
+            'styles/libs/prism/prism.css',
+            'styles/libs/prism/prism-line-highlight.css',
+            'styles/libs/prism/prism-line-numbers.css',
+
+            'js/prism-mdn/components/prism-json.css',
+            'styles/wiki-syntax.scss',
+        ),
+        'output_filename': 'build/styles/wiki-skinny.css',
     },
     'wiki-revisions': {
         'source_filenames': (
@@ -837,8 +860,8 @@ PIPELINE_CSS = {
     },
     'editor-content': {
         'source_filenames': (
-            'styles/main.scss',
-            'styles/wiki.scss',
+            'styles/main-skinny.scss',
+            'styles/wiki-skinny.scss',
             'styles/wiki-wysiwyg.scss',
             'styles/wiki-syntax.scss',
             'styles/libs/font-awesome/css/font-awesome.min.css',
@@ -1021,6 +1044,17 @@ PIPELINE_JS = {
             'js/wiki-helpful-survey.js',
         ),
         'output_filename': 'build/js/wiki.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'wiki-skinny': {
+        'source_filenames': (
+            'js/wiki-skinny.js',
+            'js/wiki-samples.js',
+            'js/wiki-helpful-survey.js',
+        ),
+        'output_filename': 'build/js/wiki-skinny.js',
         'extra_context': {
             'async': True,
         },

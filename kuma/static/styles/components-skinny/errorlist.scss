@@ -1,0 +1,12 @@
+ul.errorlist {
+    color: $error;
+    font-weight: bold;
+
+    li {
+        margin: 5px 0;
+    }
+}
+
+.notification.error .errorlist {
+    color: $text-color;
+}

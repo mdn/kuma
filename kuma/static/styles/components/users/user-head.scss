@@ -21,7 +21,7 @@
     .user-buttons {
         position: relative;
         top: auto;
-        right: auto;
+        @include bidi-style(right, auto, left, auto);
         margin: 0 0 $grid-spacing 0;
 
         a {

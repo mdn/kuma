@@ -1,0 +1,53 @@
+/*
+wiki article cookie crumbs
+********************************************************************** */
+
+.crumbs {
+    @include bidi-value(float, left, right);
+    display: inline-block;
+
+    li {
+        @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+        display: none;
+    }
+
+    li:nth-last-child(2) {
+        display: block;
+    }
+
+    a {
+        display: block;
+        line-height: 1;
+
+        &:before {
+            @include bidi-style(margin-right, 4px, margin-left, 0, true);
+            @include bidi-style(content, '\f053', content, '\f054');
+            display: inline-block;
+            font-family: FontAwesome;
+            text-decoration: none;
+            color: $text-color;
+            @include set-font-size(70%);
+            vertical-align: middle;
+        }
+    }
+
+    @include reverse-link-decoration();
+}
+
+@media #{$mq-mobile-and-up} {
+    // make them sit inline with .page-actions buttons
+    .crumbs {
+        padding: 5px 0;
+
+        a {
+            border: $form-border-width solid transparent;
+            padding: 5px 0;
+        }
+    }
+}
+
+@media print {
+    .crumbs {
+        display: none;
+    }
+}

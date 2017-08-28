@@ -10,6 +10,7 @@
 
 .open-in-host {
     @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+    margin-bottom: $grid-spacing;
 }
 
 @media print {

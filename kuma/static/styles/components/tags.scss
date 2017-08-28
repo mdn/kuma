@@ -40,7 +40,7 @@ ul.tags li {
 small
 ====================================================================== */
 
-$small-tag-spacing : 3px;
+$small-tag-spacing: 3px;
 
 ul.tags-small li {
     @include bidi-value(margin, 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2) 0, 0 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2));

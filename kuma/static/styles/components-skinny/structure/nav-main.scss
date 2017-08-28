@@ -1,0 +1,53 @@
+@import '_mixin_nav';
+
+/*
+Main navigation menu
+********************************************************************** */
+
+.nav-main {
+    position: relative;
+}
+
+html:not(.no-js) .nav-main-item > a {
+    color: $text-color;
+}
+
+@media #{$mq-mobile-and-down} {
+    .nav-main-item {
+        @include nav-item();
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .nav-main {
+        min-height: $logo-height + ($grid-spacing * 2);  // logo height + grid spacing *2
+        padding-top: $logo-height + ($grid-spacing * 2);  // logo height + grid spacing *2
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: $logo-height + ($grid-spacing * 2);
+            left: ($gutter-width * -1);
+            width: 100%;
+            padding: 0 $gutter-width;
+            border-top: 5px solid $grey-light;
+        }
+    }
+    .nav-main-item {
+        @include inline-nav-item();
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .nav-main {
+        min-height: 0;
+        padding-top: 0;
+
+        &:after {
+            display: none;
+        }
+    }
+    .nav-main-item {
+        @include large-inline-nav-item();
+    }
+}

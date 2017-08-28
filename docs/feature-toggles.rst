@@ -45,6 +45,7 @@ other advanced criteria.
 
 * ``kumabanned`` - (deprecated) added to users to mark them as banned.
 * ``kumaediting`` - Enable/disable wiki editing.
+* ``line_length`` - Enable/disable readable line length.
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``registration_disabled`` - Enable/disable new user registration.
 * ``search_suggestions`` - Show the advanced search filter suggestions
