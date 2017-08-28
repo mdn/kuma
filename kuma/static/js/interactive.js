@@ -1,8 +1,7 @@
 (function() {
     'use strict';
 
-    var mediaQuery = window.matchMedia('(max-width: 1024px)');
-    var iframe = document.querySelector('iframe.interactive');
+    var mediaQuery = window.matchMedia('(min-width: 63.9385em)');
 
     /**
      * A simple wrapper function for the `postMessage`s sent
@@ -11,6 +10,7 @@
      * remove the `small-desktop-and-below` class
      */
     function postToEditor(isSmallViewport) {
+        var iframe = document.querySelector('iframe.interactive');
         iframe.contentWindow.postMessage({ smallViewport: isSmallViewport },
             'https://interactive-examples.mdn.mozilla.net'
         );
@@ -21,15 +21,15 @@
     viewport state to the interactive editor */
     mediaQuery.addListener(function(event) {
         if (event.matches) {
-            postToEditor(true);
-        } else {
             postToEditor(false);
+        } else {
+            postToEditor(true);
         }
     });
 
     window.onload = function() {
-        // if the mediaQuery matches on load
-        if (mediaQuery.matches) {
+        // if the mediaQuery does not match on load
+        if (!mediaQuery.matches) {
             // add the class `small-desktop-and-below`
             postToEditor(true);
         }

@@ -1,12 +1,8 @@
-.interactive,
-.interactive-js {
-    box-sizing: border-box;
-}
-
 .interactive {
+    box-sizing: border-box;
     background-color: #f5f9fa;
-    color: #333;
-    padding: .7em;
+    color: $text-color;
+    padding: 10px;
     border: 1px solid #eaf2f4;
     height: 550px;
     width: 100%;
@@ -18,7 +14,6 @@
 
 .no-js .interactive {
     background-color: #f8f8f8;
-    border: 1px solid #eaf2f4;
     height: 240px;
 }
 
@@ -28,7 +23,7 @@
     text-align: center;
 }
 
-@media #{$mq-tablet-and-up} {
+@media #{$mq-small-desktop-and-up} {
     .interactive {
         height: 390px;
     }
