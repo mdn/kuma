@@ -1,23 +1,30 @@
 .interactive {
-    height: 600px;
+    box-sizing: border-box;
+    background-color: #f5f9fa;
+    color: $text-color;
+    padding: 10px;
+    border: 1px solid #eaf2f4;
+    height: 550px;
     width: 100%;
-    margin-bottom: $grid-spacing;
 }
 
-.interactive-js {
-    height: 400px;
+.interactive.interactive-js {
+    height: 490px;
 }
 
-.interactive-large {
-    height: 665px;
+.no-js .interactive {
+    background-color: #f8f8f8;
+    height: 240px;
 }
 
-@media #{$mq-tablet-and-up} {
+.interactive-editor-survey {
+    margin: 0 auto $grid-spacing;
+    max-width: 600px;
+    text-align: center;
+}
+
+@media #{$mq-small-desktop-and-up} {
     .interactive {
-        height: 420px;
-    }
-
-    .interactive-large {
-        height: 455px;
+        height: 390px;
     }
 }
