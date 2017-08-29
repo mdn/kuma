@@ -81,36 +81,41 @@ and documented in the admin site's `constance section`_.
 Using Traffic Cop for A/B Testing
 ==================================
 
-Traffic Cop is a lightweight JavaScript library that allows conducting content experiments on MDN without the need for third party tools such as Optimizely. Traffic Cop also respects user privacy, and will not run if Do Not Track is enabled.
+Traffic Cop is a lightweight JavaScript library that allows conducting content experiments on MDN without the need for third party tools such as Optimizely. Traffic Cop also respects user privacy, and will not run if `Do Not Track <https://en.wikipedia.org/wiki/Do_Not_Track>`_ is enabled.
 
-On MDN, Traffic Cop will also not run for logged in users. Below follows the steps a developer needs to follow to implement a Traffic Cop content experiment.
+On MDN, Traffic Cop will also not run for logged in users. Here's how to implement a Traffic Cop content experiment.
 
-The first task is to choose, or create, your control, and test pages. We will here use a scenario of testing a new feature on MDN. The new feature involved replacing the static examples on top, with an interactive editor.
+The first task is to choose your control page and create your tests pages Here we will use the scenario of testing a new feature on MDN. The new feature involved replacing the static examples on top, with an interactive editor.
 
 First we choose our control page. For this example, we will use:
 
-    https://developer.mozilla.com/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+`https://developer.mozilla.org/docs/Experiment:ExperimentName/Array.prototype.push() <https://developer.mozilla.org/docs/Experiment:ExperimentName/Array.prototype.push()>`_
 
 Next we need our test page. The convention on MDN is to first create a base page that follows a naming convention such as:
 
-    https://developer.mozilla.org/docs/Experiment:ExperimentName/
+`https://developer.mozilla.org/docs/Experiment:ExperimentName/
+<https://developer.mozilla.org/docs/Experiment:ExperimentName/>`_
 
 With the base page created, we next create out test variation of our chosen page. To do this, navigate to:
 
-    https://developer.mozilla.org/docs/Experiment:ExperimentName/Array.prototype.push()
+`https://developer.mozilla.org/docs/Experiment:ExperimentName/Array.prototype.push()
+<https://developer.mozilla.org/docs/Experiment:ExperimentName/Array.prototype.push()>`_
 
 You should should now be presented with an editing interface to create the new page.
 
 Switch back to the control page, and click the ``Edit`` button. Switch the editor to source mode and copy all of the contents inside the editor. Switch back to our test, ensure the editor is set to source mode, and paste the content you just copied.
 
-You can now go ahead and make the changes you wish to user test. Once you are complete, go ahead and puclish the page.
+You can now go ahead and make the changes you wish to user test. Once you are complete, go ahead and publish the page.
 
 The JavaScript
-==============
+--------------
 
 Let us first add the JavaScript code to initialise and configure Traffic Cop.
 
-Inisde ``kuma\static\js``, create a new file called some like ``experiment-experiment-name.js`` and paste the following code into the file:
+Inside ``kuma\static\js``, create a new file called some like ``experiment-experiment-name.js`` and paste the following code into the file:
+
+.. code-block:: javascript
+    :linenos:
 
     (function() {
         'use strict';
@@ -126,16 +131,19 @@ Inisde ``kuma\static\js``, create a new file called some like ``experiment-exper
         cop.init();
     })(window.Mozilla);
 
-This will initialise Traffic Cop, set up an experiment with the id ``experiment-experiment-name``, and lastely define a 50/50 split between the control, and the test page.
+This will initialise Traffic Cop, set up an experiment with the id ``experiment-experiment-name``, and lastly define a 50/50 split between the control, and the test page.
 
 Define your bundle
-==================
+------------------
 
-Next we need to add an entry into ``kuma\settings\common.py`` to identify the test, and the related JS that will be injected. Find the following line in ``common.py``:
+Next we need to add an entry into ``kuma\settings\common.py`` to identify the test, and the related JS that will be injected. Find the following line in ``common.py``::
 
         PIPELINE_JS = {
 
 Just before the closing ``}`` add a block such as the following:
+
+.. code-block:: python
+    :linenos:
 
         'experiment-experiment-name': {
             'source_filenames': (
@@ -150,9 +158,12 @@ Just before the closing ``}`` add a block such as the following:
 NOTE: The key here ``experiment-experiment-name`` needs to match the ``id`` you specified in your JS file above.
 
 Identify your A/B test pages
-============================
+----------------------------
 
 The final step is to identify the pages to the back-end so it will know where to direct traffic based on the URL parameter that will be added by Traffic Cop. Inside ``kuma\settings\content_experiments.json`` add the following:
+
+.. code-block:: json
+    :linenos:
 
         [
             {
@@ -177,11 +188,12 @@ There are a couple of important points to note here:
 5. The key for the two pages listed next, needs to match the values you used as the parameter value inside ``variations`` in your JS file earlier.
 
 Testing your experiment
-=======================
+-----------------------
 
 With you local instance of Kuma running, navigate to the page you defined as your control. In this example:
 
-    http://localhost:8000/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+`http://localhost:8000/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+<http://localhost:8000/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push>`_
 
 NOTE: You should not be logged in to MDN, and ensure that Do Not Track is disabled.
 
