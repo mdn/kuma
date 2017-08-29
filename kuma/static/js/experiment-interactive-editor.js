@@ -11,4 +11,4 @@
     });
 
     cop.init();
-})(window.Mozilla);
+})();
