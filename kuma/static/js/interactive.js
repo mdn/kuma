@@ -1,7 +1,14 @@
 (function() {
     'use strict';
 
+    var iframe = document.querySelector('iframe.interactive');
     var mediaQuery = window.matchMedia('(min-width: 63.9385em)');
+
+    /* The mediaQuery code below is only intended for the CSS
+    example editor so, if this is a JS example, just return. */
+    if (iframe.classList.contains('interactive-js')) {
+        return;
+    }
 
     /**
      * A simple wrapper function for the `postMessage`s sent
@@ -10,8 +17,8 @@
      * remove the `small-desktop-and-below` class
      */
     function postToEditor(isSmallViewport) {
-        var iframe = document.querySelector('iframe.interactive');
-        iframe.contentWindow.postMessage({ smallViewport: isSmallViewport },
+        iframe.contentWindow.postMessage(
+            { smallViewport: isSmallViewport },
             'https://interactive-examples.mdn.mozilla.net'
         );
     }
@@ -34,5 +41,4 @@
             postToEditor(true);
         }
     };
-
 })();

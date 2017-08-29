@@ -1052,6 +1052,7 @@ PIPELINE_JS = {
     'wiki-skinny': {
         'source_filenames': (
             'js/wiki-skinny.js',
+            'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-helpful-survey.js',
         ),
