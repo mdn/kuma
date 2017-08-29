@@ -137,19 +137,19 @@ class FakeSource(Source):
             self.remaining_length = self.length
             self.state = self.STATE_PREREQ
 
-        if self.state == self.STATE_PREREQ:
-            if self.depth:
-                sources.append(('fake', "%s%d" % (self.name, self.depth),
-                                {'length': self.length,
-                                'depth': self.depth - 1}))
+        assert self.state == self.STATE_PREREQ
+        if self.depth:
+            sources.append(('fake', "%s%d" % (self.name, self.depth),
+                            {'length': self.length,
+                            'depth': self.depth - 1}))
 
-            if self.remaining_length == 0:
-                if self.error:
-                    self.state = self.STATE_ERROR
-                else:
-                    self.state = self.STATE_DONE
+        if self.remaining_length == 0:
+            if self.error:
+                self.state = self.STATE_ERROR
             else:
-                self.remaining_length -= 1
+                self.state = self.STATE_DONE
+        else:
+            self.remaining_length -= 1
 
         return sources
 

@@ -1,11 +1,9 @@
 import requests_mock
-from allauth.account.models import EmailAddress
 from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.models import SocialApp
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.sites.models import Site
 from django.utils.crypto import get_random_string
 from django.utils.six.moves.urllib_parse import urlparse, parse_qs
 
@@ -40,18 +38,6 @@ def user(save=False, **kwargs):
     if groups:
         user.groups = groups
     return user
-
-
-def email(save=False, **kwargs):
-    if 'user' not in kwargs:
-        kwargs['user'] = user(save=True)
-    if 'email' not in kwargs:
-        kwargs['email'] = '%s@%s.com' % (get_random_string(),
-                                         get_random_string())
-    email = EmailAddress(**kwargs)
-    if save:
-        email.save()
-    return email
 
 
 class SampleRevisionsMixin(object):
@@ -190,13 +176,5 @@ class SocialTestMixin(object):
     def ensure_github_app(self):
         """Ensure a GitHub SocialApp is installed, configured."""
         provider = registry.by_id(KumaGitHubProvider.id)
-        app, created = SocialApp.objects.get_or_create(
-            provider=provider.id,
-            defaults={
-                'name': provider.id,
-                'client_id': 'app123id',
-                'key': provider.id,
-                'secret': 'dummy'})
-        if created:
-            app.sites.add(Site.objects.get_current())
+        app = SocialApp.objects.get(provider=provider.id)
         return app

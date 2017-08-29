@@ -224,10 +224,12 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.assertEqual(len(type_inputs), 2)
 
         for type_input in type_inputs:
-            if type_input.value == 'spam':
-                self.assertTrue(not type_input.checked)
-            elif type_input.value == 'ham':
-                self.assertTrue(type_input.checked)
+            value = type_input.attrib['value']
+            assert value in ('spam', 'ham')
+            if value == 'spam':
+                assert not type_input.checked
+            else:
+                assert type_input.checked
 
     @requests_mock.mock()
     def test_spam_submission_submitted(self, mock_requests):

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from urlparse import urljoin
 
-from cssselect.parser import SelectorSyntaxError
 from django.conf import settings
 from django.test import TestCase
 from jinja2 import escape, Markup
@@ -640,11 +639,8 @@ class FilterOutNoIncludeTests(TestCase):
         """Bug 777475: The noinclude filter and pyquery seems to really dislike
         empty string as input"""
         doc_src = ''
-        try:
-            result = kuma.wiki.content.filter_out_noinclude(doc_src)
-            eq_('', result)
-        except Exception:
-            self.fail("There should not have been an exception")
+        result = kuma.wiki.content.filter_out_noinclude(doc_src)
+        assert result == ''
 
 
 class ExtractCodeSampleTests(UserTestCase):
@@ -784,10 +780,7 @@ class ExtractCodeSampleTests(UserTestCase):
         """
         rev = revision(is_approved=True, save=True,
                        content="""<pre id="Bug:1173170">Bug 1173170</pre>""")
-        try:
-            rev.document.extract.code_sample('Bug:1173170')
-        except SelectorSyntaxError:
-            self.fail("There should be no SelectorSyntaxError")
+        rev.document.extract.code_sample('Bug:1173170')  # No SelectorSyntaxError
 
 
 class BugizeTests(TestCase):

@@ -9,7 +9,6 @@ from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
 from django.conf import settings
 from django.core import mail
-from django.core.paginator import PageNotAnInteger
 from django.db import IntegrityError
 from django.http import Http404
 from django.test import RequestFactory
@@ -26,7 +25,7 @@ from kuma.wiki.models import (Document, Revision, RevisionAkismetSubmission,
 from kuma.wiki.tests import document as create_document
 
 
-from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, email, user
+from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, user
 from ..models import User, UserBan
 from ..signup import SignupForm
 from ..views import delete_document, revert_document
@@ -786,10 +785,7 @@ class UserViewsTest(UserTestCase):
         url = '%s?page=asdf' % reverse('users.user_detail',
                                        args=(testuser.username,))
 
-        try:
-            self.client.get(url, follow=True)
-        except PageNotAnInteger:
-            self.fail("Non-numeric page number should not cause an error")
+        self.client.get(url, follow=True)  # Does not raise PageNotAnInteger
 
     def test_user_edit(self):
         testuser = self.user_model.objects.get(username='testuser')
@@ -1218,8 +1214,8 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         testemail = 'account_token@acme.com'
         testuser = user(username='user', is_active=True,
                         email=testemail, password='test', save=True)
-        email(user=testuser, email=testemail,
-              primary=True, verified=True, save=True)
+        EmailAddress.objects.create(user=testuser, email=testemail,
+                                    primary=True, verified=True)
         self.client.login(username=testuser.username, password='test')
 
         token = 'access_token'
@@ -1245,8 +1241,8 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         testemail = 'account_token@acme.com'
         testuser = user(username='user', is_active=True,
                         email=testemail, password='test', save=True)
-        email(user=testuser, email=testemail,
-              primary=True, verified=True, save=True)
+        EmailAddress.objects.create(user=testuser, email=testemail,
+                                    primary=True, verified=True)
         token = 'access_token'
         refresh_token = 'refresh_token'
         app = self.ensure_github_app()

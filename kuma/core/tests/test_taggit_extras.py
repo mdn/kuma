@@ -10,11 +10,10 @@ from .taggit_extras.models import Food
 class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
-    def assert_tags_equal(self, qs, tags, sort=True, attr="name"):
+    def assert_tags_equal(self, qs, tags, attr="name"):
         got = map(lambda tag: getattr(tag, attr), qs)
-        if sort:
-            got.sort()
-            tags.sort()
+        got.sort()
+        tags.sort()
         self.assertEqual(got, tags)
 
     def test_all_ns(self):

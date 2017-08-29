@@ -1,7 +1,5 @@
 from __future__ import absolute_import
 
-import time
-
 from django.conf import settings
 
 from elasticsearch_dsl.connections import connections
@@ -29,11 +27,7 @@ class ElasticTestCase(UserTestCase):
 
     @classmethod
     def setUpClass(cls):
-        try:
-            super(ElasticTestCase, cls).setUpClass()
-        except AttributeError:
-            # python 2.6 has no setUpClass, but that's okay
-            pass
+        super(ElasticTestCase, cls).setUpClass()
 
         if not getattr(settings, 'ES_URLS', None):
             cls.skipme = True
@@ -52,11 +46,7 @@ class ElasticTestCase(UserTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            super(ElasticTestCase, cls).tearDownClass()
-        except AttributeError:
-            # python 2.6 has no tearDownClass, but that's okay
-            pass
+        super(ElasticTestCase, cls).tearDownClass()
 
         if not cls.skipme:
             # Restore old setting.
@@ -72,15 +62,13 @@ class ElasticTestCase(UserTestCase):
         self.teardown_indexes()
         reset_url_prefixer()
 
-    def refresh(self, index=None, timesleep=0):
+    def refresh(self, index=None):
         index = index or Index.objects.get_current().prefixed_name
         # Any time we're doing a refresh, we're making sure that the
         # index is ready to be queried.  Given that, it's almost
         # always the case that we want to run all the generated tasks,
         # then refresh.
         connections.get_connection().indices.refresh(index=index)
-        if timesleep > 0:
-            time.sleep(timesleep)
 
     def setup_indexes(self):
         """Clear and repopulate the current index."""
