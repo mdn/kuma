@@ -12,8 +12,8 @@
                 "a": "Web/JavaScript/Reference/Global_Objects/Array/concat",
                 "b": "Experiment:InteractiveEditor/Array.prototype.concat()"
             },
-            "en-US:Web/JavaScript/Reference/Global_Objects/Array/reduce": {
-                "a": "Web/JavaScript/Reference/Global_Objects/Array/reduce",
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/Reduce": {
+                "a": "Web/JavaScript/Reference/Global_Objects/Array/Reduce",
                 "b": "Experiment:InteractiveEditor/Array.prototype.reduce()"
             },
             "en-US:Web/CSS/transform": {
