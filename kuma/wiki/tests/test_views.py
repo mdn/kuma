@@ -3390,7 +3390,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
          'expected': '/zh-CN/docs/XHTML'},
         {'title': 'JavaScript', 'mt_locale': 'zh_cn', 'kuma_locale': 'zh-CN',
          'expected': '/zh-CN/docs/JavaScript'},
-        {'title': 'XHTML6', 'mt_locale': 'zh_tw', 'kuma_locale': 'zh-CN',
+        {'title': 'XHTML6', 'mt_locale': 'zh_tw', 'kuma_locale': 'zh-TW',
          'expected': '/zh-TW/docs/XHTML6'},
         {'title': 'HTML7', 'mt_locale': 'fr', 'kuma_locale': 'fr',
          'expected': '/fr/docs/HTML7'},
@@ -3413,9 +3413,10 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         d.title = 'FooFoo'
         d.save()
         mt_url = '/cn/%s/' % (d.slug,)
-        resp = self.client.get(mt_url)
-        eq_(301, resp.status_code)
-        eq_('http://testserver%s' % d.get_absolute_url(), resp['Location'])
+        resp = self.client.get(mt_url, follow=True)
+        eq_(200, resp.status_code)
+        # Check the last redirect chain url is the expected url
+        eq_('http://testserver%s' % d.get_absolute_url(), resp.redirect_chain[-1][0])
 
     def test_document_urls(self):
         for doc in self.documents:
@@ -3425,9 +3426,11 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
             d.locale = doc['kuma_locale']
             d.save()
             mt_url = '/%s' % '/'.join([doc['mt_locale'], doc['title']])
-            resp = self.client.get(mt_url)
-            eq_(301, resp.status_code)
-            eq_('http://testserver%s' % doc['expected'], resp['Location'])
+            resp = self.client.get(mt_url, follow=True)
+            eq_(200, resp.status_code)
+
+            # Check the last redirect chain url is the expected url
+            eq_('http://testserver%s' % doc['expected'], resp.redirect_chain[-1][0])
 
     def test_view_param(self):
         d = document()
