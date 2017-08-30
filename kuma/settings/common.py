@@ -213,6 +213,7 @@ LOCALE_ALIASES = {
 
     # Create aliases for over-specific locales.
     'bn': 'bn-BD',
+    'cn': 'zh-CN',
     'fy': 'fy-NL',
     'ga': 'ga-IE',
     'gu': 'gu-IN',
@@ -226,7 +227,6 @@ LOCALE_ALIASES = {
     'pt': 'pt-PT',
     'sr': 'sr-Cyrl',
     'zh': 'zh-CN',
-    'cn': 'zh-CN',
 
     # Create aliases for locales which do not share a prefix.
     'nb-NO': 'no',
