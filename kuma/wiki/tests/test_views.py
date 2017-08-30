@@ -3225,17 +3225,6 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
          'kuma': '%s/User:Foo' % server_prefix},
     )
 
-    documents = (
-        {'title': 'XHTML', 'mt_locale': 'cn', 'kuma_locale': 'zh-CN',
-         'expected': '/zh-CN/docs/XHTML'},
-        {'title': 'JavaScript', 'mt_locale': 'zh_cn', 'kuma_locale': 'zh-CN',
-         'expected': '/zh-CN/docs/JavaScript'},
-        {'title': 'XHTML6', 'mt_locale': 'zh_tw', 'kuma_locale': 'zh-CN',
-         'expected': '/zh-TW/docs/XHTML6'},
-        {'title': 'HTML7', 'mt_locale': 'fr', 'kuma_locale': 'fr',
-         'expected': '/fr/docs/HTML7'},
-    )
-
     def test_namespace_urls(self):
         new_doc = document()
         new_doc.title = 'User:Foo'
@@ -3246,28 +3235,17 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
             eq_(301, resp.status_code)
             eq_(namespace_test['kuma'], resp['Location'])
 
-    def test_trailing_slash(self):
-        d = document()
-        d.locale = 'zh-CN'
-        d.slug = 'foofoo'
-        d.title = 'FooFoo'
-        d.save()
-        mt_url = '/cn/%s/' % (d.slug,)
-        resp = self.client.get(mt_url)
-        eq_(301, resp.status_code)
-        eq_('http://testserver%s' % d.get_absolute_url(), resp['Location'])
-
     def test_document_urls(self):
-        for doc in self.documents:
-            d = document()
-            d.title = doc['title']
-            d.slug = doc['title']
-            d.locale = doc['kuma_locale']
-            d.save()
-            mt_url = '/%s' % '/'.join([doc['mt_locale'], doc['title']])
-            resp = self.client.get(mt_url)
-            eq_(301, resp.status_code)
-            eq_('http://testserver%s' % doc['expected'], resp['Location'])
+        """Check the url redirect to proper document when the url like
+         /<locale>/<document_slug>"""
+        d = document(locale='zh-CN')
+        d.save()
+        mt_url = '{locale}/{slug}'.format(locale=d.locale, slug=d.slug)
+        resp = self.client.get(mt_url, follow=True)
+        assert resp.status_code == 200
+
+        # Check the last redirect chain url is correct document url
+        eq_('http://testserver' + d.get_absolute_url(), resp.redirect_chain[-1][0])
 
     def test_view_param(self):
         d = document()

@@ -20,13 +20,6 @@ MINDTOUCH_NAMESPACES = (
     'User',
 )
 
-MINDTOUCH_PROBLEM_LOCALES = {
-    'cn': 'zh-CN',
-    'en': 'en-US',
-    'zh_cn': 'zh-CN',
-    'zh_tw': 'zh-TW',
-}
-
 
 def mindtouch_namespace_redirect(request, namespace, slug):
     """
@@ -68,7 +61,6 @@ def mindtouch_to_kuma_redirect(request, path):
     Given a request to a Mindtouch-generated URL, generate a redirect
     to the correct corresponding kuma URL.
     """
-    new_locale = None
     if path.startswith('Template:MindTouch'):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.
@@ -84,31 +76,6 @@ def mindtouch_to_kuma_redirect(request, path):
         # special-case handling.
         if namespace in MINDTOUCH_NAMESPACES:
             return mindtouch_namespace_redirect(request, namespace, slug)
-
-    if '/' in path:
-        maybe_locale, _, slug = path.partition('/')
-        # There are three problematic locales that MindTouch had which
-        # can still be in the path we see after the locale
-        # middleware's done its bit. Since those are easy, we check
-        # them first.
-        if maybe_locale in MINDTOUCH_PROBLEM_LOCALES:
-            new_locale = MINDTOUCH_PROBLEM_LOCALES[maybe_locale]
-            # We do not preserve UI locale here -- these locales won't
-            # be picked up correctly by the locale middleware, and
-            # anyone trying to view the document in its locale with
-            # their own UI locale will have the correct starting URL
-            # anyway.
-            new_url = '/%s/docs/%s' % (new_locale, slug)
-            if 'view' in request.GET:
-                new_url = '%s$%s' % (new_url, request.GET['view'])
-            return redirect(new_url, permanent=True)
-
-        # Next we try looking up a Document with the possible locale
-        # we've pulled out.
-        try:
-            doc = Document.objects.get(slug=slug, locale=maybe_locale)
-        except Document.DoesNotExist:
-            pass
 
     # Last attempt: we try the request locale as the document locale,
     # and see if that matches something.

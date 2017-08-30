@@ -59,13 +59,6 @@ RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos /$1docs/Web/Demos_of_open_web_technolog
 RewriteRule ^contests/ http://www.mozillalabs.com/ [R=302,L]
 RewriteRule ^es4 http://www.ecma-international.org/memento/TC39.htm [R=302,L]
 
-# HACK: Django will eventually redirect the user to the right spot, but skip a
-# couple of redirects for these known legacy locales
-RewriteRule ^en/(.*)$     /mwsgi/en-US/$1 [L,QSA,NE,NC]
-RewriteRule ^cn/(.*)$     /mwsgi/zh-CN/$1 [L,QSA,NE,NC]
-RewriteRule ^zh_cn/(.*)$  /mwsgi/zh-CN/$1 [L,QSA,NE,NC]
-RewriteRule ^zh_tw/(.*)$  /mwsgi/zh-TW/$1 [L,QSA,NE,NC]
-
 # These are some known static files
 RewriteCond %{REQUEST_URI} !/favicon.ico
 # TODO: Should Django handle robots.txt?
