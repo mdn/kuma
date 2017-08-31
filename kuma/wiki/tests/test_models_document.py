@@ -10,6 +10,7 @@ import json
 from datetime import timedelta
 
 import mock
+import pytest
 
 from ..models import Document
 
@@ -218,3 +219,59 @@ def test_build_json_data_with_summary(trans_doc):
     en_json = en_doc.build_json_data()
     assert en_json['summary'] == en_comment
     assert en_json['translations'][0]['summary'] == fr_comment
+
+
+def test_nearest_zone(doc_hierarchy_with_zones, cleared_cacheback_cache):
+    """
+    Test the nearest zone property of English and non-English documents.
+    """
+    top_doc = doc_hierarchy_with_zones.top
+    top_zone = top_doc.zone
+
+    fr_top_doc = top_doc.translations.get(locale='fr')
+    de_top_doc = top_doc.translations.get(locale='de')
+
+    assert fr_top_doc.parent == top_doc
+    assert de_top_doc.parent == top_doc
+    assert top_doc.nearest_zone == top_zone
+    # The French translation of the top doc doesn't have its own locale-
+    # specific nearest zone, so it'll return the nearest zone of its parent.
+    assert fr_top_doc.nearest_zone == top_doc.nearest_zone
+    # The German translation of the top doc does have its own
+    # locale-specific nearest zone.
+    assert de_top_doc.nearest_zone == de_top_doc.zone
+
+
+def test_nearest_zone_when_no_parent(doc_hierarchy_with_zones,
+                                     cleared_cacheback_cache):
+    """
+    Silly end-case test of the nearest-zone property of a non-English document
+    without a parent.
+    """
+    top_doc = doc_hierarchy_with_zones.top
+    fr_top_doc = top_doc.translations.get(locale='fr')
+    fr_top_doc.parent = None
+    fr_top_doc.save()
+
+    assert not fr_top_doc.nearest_zone
+
+
+@pytest.mark.parametrize('doc_name,expected_result', [
+    ('top', True),
+    ('bottom', False),
+    ('de', True),
+    ('fr', True),
+    ('root', False),
+])
+def test_is_zone_root(doc_hierarchy_with_zones, root_doc,
+                      cleared_cacheback_cache, doc_name, expected_result):
+    """
+    Test is_zone_root.
+    """
+    if doc_name == 'root':
+        doc = root_doc
+    elif doc_name in ('de', 'fr'):
+        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
+    else:
+        doc = getattr(doc_hierarchy_with_zones, doc_name)
+    assert doc.is_zone_root is expected_result
