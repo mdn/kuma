@@ -76,28 +76,6 @@ def cache_with_field(field_name):
     return decorator
 
 
-def _inherited(parent_attr, direct_attr):
-    """Return a descriptor delegating to an attr of the original document.
-
-    If `self` is a translation, the descriptor delegates to the attribute
-    `parent_attr` from the original document. Otherwise, it delegates to the
-    attribute `direct_attr` from `self`.
-
-    Use this only on a reference to another object, like a ManyToMany or a
-    ForeignKey. Using it on a normal field won't work well, as it'll preclude
-    the use of that field in QuerySet field lookups. Also, ModelForms that are
-    passed instance=this_obj won't see the inherited value.
-
-    """
-    getter = lambda self: (getattr(self.parent, parent_attr)
-                           if self.parent and self.parent.id != self.id
-                           else getattr(self, direct_attr))
-    setter = lambda self, val: (setattr(self.parent, parent_attr, val)
-                                if self.parent and self.parent.id != self.id
-                                else setattr(self, direct_attr, val))
-    return property(getter, setter)
-
-
 def valid_slug_parent(slug, locale):
     slug_bits = slug.split('/')
     slug_bits.pop()
@@ -810,36 +788,6 @@ class Document(NotificationsMixin, models.Model):
                                   'not localizable.' %
                                   (unicode(self), self.translations.count()))
 
-    def _attr_for_redirect(self, attr, template):
-        """Return the slug or title for a new redirect.
-
-        `template` is a Python string template with "old" and "number" tokens
-        used to create the variant.
-
-        """
-        def unique_attr():
-            """Return a variant of getattr(self, attr) such that there is no
-            Document of my locale with string attribute `attr` equal to it.
-
-            Never returns the original attr value.
-
-            """
-            # "My God, it's full of race conditions!"
-            i = 1
-            while True:
-                new_value = template % dict(old=getattr(self, attr), number=i)
-                if not self._existing(attr, new_value).exists():
-                    return new_value
-                i += 1
-
-        old_attr = 'old_' + attr
-        if hasattr(self, old_attr):
-            # My slug (or title) is changing; we can reuse it for the redirect.
-            return getattr(self, old_attr)
-        else:
-            # Come up with a unique slug (or title):
-            return unique_attr()
-
     def revert(self, revision, user, comment=None):
         """
         Reverts the given revision by creating a new one.
@@ -1283,12 +1231,6 @@ Full traceback:
         # Finally, assign the new default parent topic
         self.parent_topic = new_parent
         self.save()
-
-    @property
-    def content_parsed(self):
-        if not self.current_revision:
-            return None
-        return self.current_revision.content_parsed
 
     def populate_attachments(self):
         """
