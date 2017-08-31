@@ -788,36 +788,6 @@ class Document(NotificationsMixin, models.Model):
                                   'not localizable.' %
                                   (unicode(self), self.translations.count()))
 
-    def _attr_for_redirect(self, attr, template):
-        """Return the slug or title for a new redirect.
-
-        `template` is a Python string template with "old" and "number" tokens
-        used to create the variant.
-
-        """
-        def unique_attr():
-            """Return a variant of getattr(self, attr) such that there is no
-            Document of my locale with string attribute `attr` equal to it.
-
-            Never returns the original attr value.
-
-            """
-            # "My God, it's full of race conditions!"
-            i = 1
-            while True:
-                new_value = template % dict(old=getattr(self, attr), number=i)
-                if not self._existing(attr, new_value).exists():
-                    return new_value
-                i += 1
-
-        old_attr = 'old_' + attr
-        if hasattr(self, old_attr):
-            # My slug (or title) is changing; we can reuse it for the redirect.
-            return getattr(self, old_attr)
-        else:
-            # Come up with a unique slug (or title):
-            return unique_attr()
-
     def revert(self, revision, user, comment=None):
         """
         Reverts the given revision by creating a new one.
