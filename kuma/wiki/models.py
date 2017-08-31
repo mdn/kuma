@@ -1232,12 +1232,6 @@ Full traceback:
         self.parent_topic = new_parent
         self.save()
 
-    @property
-    def content_parsed(self):
-        if not self.current_revision:
-            return None
-        return self.current_revision.content_parsed
-
     def populate_attachments(self):
         """
         File attachments are stored at the DB level and synced here
