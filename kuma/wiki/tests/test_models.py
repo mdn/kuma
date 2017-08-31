@@ -1,4 +1,3 @@
-import json
 import time
 from datetime import date, datetime, timedelta
 from xml.sax.saxutils import escape
@@ -35,69 +34,6 @@ from ..signals import render_done
 
 class DocumentTests(UserTestCase):
     """Tests for the Document model"""
-
-    def test_json_data(self):
-        """bug 875349"""
-        # Set up a doc with tags
-        rev = revision(is_approved=True, save=True, content='Sample document')
-        doc = rev.document
-        expected_tags = sorted(['foo', 'bar', 'baz'])
-        expected_review_tags = sorted(['tech', 'editorial'])
-        doc.tags.set(*expected_tags)
-        doc.current_revision.review_tags.set(*expected_review_tags)
-
-        # Create a translation with some tags
-        de_doc = document(parent=doc, locale='de', save=True)
-        revision(document=de_doc, save=True)
-        expected_l10n_tags = ['inprogress']
-        de_doc.current_revision.localization_tags.set(*expected_l10n_tags)
-        de_doc.tags.set(*expected_tags)
-        de_doc.current_revision.review_tags.set(*expected_review_tags)
-
-        # Ensure the doc's json field is empty at first
-        assert doc.json is None
-
-        # Get JSON data for the doc, and ensure the doc's json field is now
-        # properly populated.
-        data = doc.get_json_data()
-        assert doc.json == json.dumps(data)
-
-        # Load up another copy of the doc from the DB, and check json
-        saved_doc = Document.objects.get(pk=doc.pk)
-        assert saved_doc.json == json.dumps(data)
-
-        # Check the fields stored in JSON of the English doc
-        # (the fields are created in build_json_data in models.py)
-        assert data['title'] == doc.title
-        assert data['label'] == doc.title
-        assert data['url'] == doc.get_absolute_url()
-        assert data['id'] == doc.id
-        assert data['uuid'] == str(doc.uuid)
-        assert data['slug'] == doc.slug
-        result_tags = sorted([str(x) for x in data['tags']])
-        assert result_tags == expected_tags
-        result_review_tags = sorted([str(x) for x in data['review_tags']])
-        assert result_review_tags == expected_review_tags
-        assert data['locale'] == doc.locale
-        assert data['summary'] == doc.current_revision.summary
-        assert data['modified'] == doc.modified.isoformat()
-        assert data['last_edit'] == doc.current_revision.created.isoformat()
-
-        # Check fields of translated doc
-        assert 'translations' in data
-        assert len(data['translations']) == 1
-        de_data = data['translations'][0]
-        assert de_data['locale'] == de_doc.locale
-        result_l10n_tags = sorted([str(x) for x
-                                   in de_data['localization_tags']])
-        assert result_l10n_tags == expected_l10n_tags
-        result_tags = sorted([str(x) for x in de_data['tags']])
-        assert result_tags == expected_tags
-        result_review_tags = sorted([str(x) for x in de_data['review_tags']])
-        assert result_review_tags == expected_review_tags
-        assert de_data['summary'] == de_doc.current_revision.summary
-        assert de_data['title'] == de_doc.title
-        assert de_data['uuid'] == str(de_doc.uuid)
 
     def test_document_is_experiment(self):
         d = document(title='test', save=True)
