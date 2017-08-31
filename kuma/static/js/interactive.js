@@ -4,9 +4,9 @@
     var iframe = document.querySelector('iframe.interactive');
     var mediaQuery = window.matchMedia('(min-width: 63.9385em)');
 
-    /* The mediaQuery code below is only intended for the CSS
-    example editor so, if this is a JS example, just return. */
-    if (iframe.classList.contains('interactive-js')) {
+    /* If there is no `iframe`, or if this is a JS example,
+    simply return */
+    if (!iframe || iframe.classList.contains('interactive-js')) {
         return;
     }
 
