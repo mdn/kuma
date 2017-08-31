@@ -2,7 +2,7 @@
 hacks blog row, wrapper, entries, and get involved teaser
 ********************************************************************** */
 
-$home-involved-background-y : 50px;
+$home-involved-background-y: 50px;
 
 .home-hacks {
     padding: $first-content-top-padding 0;
@@ -42,10 +42,9 @@ $home-involved-background-y : 50px;
 
     h2 {
         @include set-larger-font-size();
-        padding-bottom: ($grid-spacing / 2);
+        padding: $grid-spacing $grid-spacing 12px;
         border-bottom: 1px solid #e0e2e4;
-        margin-bottom: 110px;
-        @include bidi-style(margin-right, -($grid-spacing), margin-left, 0);
+        margin: 0 0 110px;
         font-weight: bold;
     }
 
@@ -58,7 +57,7 @@ $home-involved-background-y : 50px;
     a {
         color: #fff;
         text-decoration: none;
-        padding: $grid-spacing;
+        padding: 0 0 $grid-spacing;
         display: block;
     }
 
@@ -80,17 +79,12 @@ $home-involved-background-y : 50px;
 }
 
 @media #{$mq-mobile-and-down} {
-    .column-hacks,
-    .column-involved {
+    .column-hacks {
         float: none;
         width: auto;
     }
 
     .column-involved {
-        margin-top: ($grid-spacing * 2);
-    }
-
-    .home-involved-card {
-        background-position: center $home-involved-background-y;
+        display: none;
     }
 }
