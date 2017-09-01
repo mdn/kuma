@@ -100,21 +100,7 @@ input[type='button'] {
     }
 
     &.link {
-        @include vendorize(appearance, none);
-        font-size: inherit;
-        font-weight: inherit;
-        letter-spacing: inherit;
-        line-height: inherit;
-        background-color: transparent;
-        text-transform: inherit;
-        border: 0;
-        padding: 0;
-        color: $link-color;
-
-        &:hover,
-        &:focus {
-            text-decoration: underline;
-        }
+        @include button-link();
     }
 
     &::-moz-focus-inner {

@@ -1,5 +1,5 @@
 .sample-code-frame {
-    border: 1px solid #9b9b9b;
+    border: 2px solid #9b9b9b;
     padding: $grid-spacing;
 
     .sample-code-table & {
@@ -16,5 +16,45 @@
 @media print {
     .open-in-host-container {
         display: none;
+    }
+}
+
+/* experiment */
+.waffle-sample {
+    .sample-code-frame {
+        border: 1px $code-block-border-style $code-block-border-color;
+        @include bidi-value(border-width, 1px 1px 1px $code-block-border-width, 1px $code-block-border-width 1px 1px);
+        padding: $grid-spacing;
+        width: calc(100% - #{$grid-spacing * 2} - #{1px + $code-block-border-width});
+        max-width: calc(100% - #{$grid-spacing * 2} - #{1px + $code-block-border-width});
+    }
+
+    .sample-code-table .sample-code-frame {
+        @include bidi-value(border-width, 0, 0);
+        max-width: 100%;
+        padding: 0;
+        width: auto;
+    }
+
+    .open-in-host-container {
+        @include bidi-value(text-align, right, left);
+        margin-bottom: $grid-spacing;
+        width: calc(100% - 5px);
+    }
+
+    .open-in-host {
+        @extend %cta-link;
+        width: 100%;
+    }
+
+    @media #{$mq-mobile-and-up} {
+        .open-in-host {
+            @include bidi-style(margin-right, $grid-spacing * 2, margin-left, 0);
+            width: auto;
+
+            &:last-child {
+                @include bidi-style(margin-right, 0, margin-left, 0);
+            }
+        }
     }
 }

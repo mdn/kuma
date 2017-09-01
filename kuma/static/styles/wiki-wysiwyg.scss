@@ -40,16 +40,6 @@ body {
     }
 }
 
-.summary {
-    background: $light-background-color;
-    font-weight: bold;
-    padding: $grid-spacing;
-    margin-bottom: $grid-spacing;
-
-    p:last-child {
-        margin-bottom: 0;
-    }
-}
 
 /* syntax highlighter update */
 pre {

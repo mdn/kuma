@@ -57,7 +57,7 @@ other advanced criteria.
 * ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.
 * ``spam_checks_enabled`` - Toggle spam checks site wide.
 * ``spam_submissions_enabled`` - Toggle Akismet spam/spam submission ability.
-* ``wiki_samples`` - Add button to open samples in Codepen or jsFiddle.
+* ``sample_frame`` - Enable .sample-code-frame width, colour, and button styles
 * ``wiki_spam_exempted`` - Exempt users and user groups from checking.
   submissions for spam.
 * ``wiki_spam_training`` - Call Akismet to check submissions, but don't block

@@ -126,6 +126,25 @@ Links
     }
 }
 
+// make a button look like a link
+@mixin button-link() {
+    @include vendorize(appearance, none);
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    background-color: transparent;
+    text-transform: inherit;
+    border: 0;
+    padding: 0;
+    color: $link-color;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
 
 /*
 Colours
@@ -513,12 +532,12 @@ Placeholders
 }
 
 %cta-link {
+    @include button-link();
     position: relative;
     box-sizing: border-box;
     display: inline-block;
     border-bottom: 2px solid;
-    padding-bottom: 10px;
-    @include bidi-style(padding-right, 30px, padding-left, 0);
+    @include bidi-style(padding, 10px 30px 10px 0, padding-left, 10px 0 10px 30px);
     @include bidi-value(text-align, left, right);
 
     &:after {
@@ -537,6 +556,10 @@ Placeholders
         &:after {
             @include bidi-style(margin-right, -4px, margin-left, 0);
         }
+    }
+
+    #{$selector-icon} {
+        margin-top: 4px;
     }
 }
 

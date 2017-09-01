@@ -324,12 +324,6 @@
         "superusers": false,
         "created": "2015-02-25"
       }, {
-        "name": "wiki_samples",
-        "note": "Add a button to open wiki doc samples in Codepen and/or jsFiddle",
-        "everyone": true,
-        "staff": true,
-        "created": "2015-07-20"
-      }, {
         "name": "compat_api",
         "created": "2015-10-01"
       }, {
