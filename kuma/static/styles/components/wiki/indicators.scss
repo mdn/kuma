@@ -25,6 +25,10 @@ block indicators aka banners
 .geckoVersionNote {
     @extend %indicator-block;
 
+    code {
+        @include set-font-size($body-font-size);
+    }
+
     /* heading */
     p > strong {
         @extend %indicator-block-heading;
