@@ -14,7 +14,8 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
 .summary-box-events {
     .text-content & {
         /* could be defined one level up but that creates duplicate classes in output */
-        @include full-width-content();
+        @include restrict-line-length();
+        width: $max-line-length;
         display: table;
         margin: 0 0 $grid-spacing 0;
         border-style: solid;

@@ -1,4 +1,5 @@
 #toc {
+    @include restrict-line-length();
     @include reverse-link-decoration();
     background: $light-background-color;
     @include bidi-value(padding, ($grid-spacing / 2) $grid-spacing ($grid-spacing / 2) ($grid-spacing - 2px), ($grid-spacing / 2) ($grid-spacing - 2px) ($grid-spacing / 2) $grid-spacing);
