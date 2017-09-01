@@ -34,6 +34,7 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
+      - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:

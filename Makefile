@@ -24,6 +24,8 @@ target = kuma
 requirements = -r requirements/local.txt
 # set Django settings module if not already set as env var
 export DJANGO_SETTINGS_MODULE ?= kuma.settings.testing
+export KUMA_REVISION_HASH ?= $(shell git rev-parse HEAD)
+export KUMASCRIPT_REVISION_HASH ?= $(shell cd kumascript && git rev-parse HEAD)
 
 # Note: these targets should be run from the kuma vm
 test:
@@ -96,10 +98,12 @@ build-base:
 	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
 
 build-kuma:
-	docker build -f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
+	docker build --build-arg REVISION_HASH=${KUMA_REVISION_HASH} \
+	-f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
 
 build-kumascript:
-	docker build -f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+	docker build --build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
+	-f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
 
 build: build-base build-kuma build-kumascript
 
