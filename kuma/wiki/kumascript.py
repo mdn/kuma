@@ -369,3 +369,8 @@ def macro_usage():
     annotate_counts(macro_page_count('en-US'), 'en_count')
 
     return macros
+
+
+def request_revision_hash():
+    ks_revision_url = urljoin(KUMASCRIPT_BASE_URL, 'revision/')
+    return requests.get(ks_revision_url, timeout=config.KUMASCRIPT_TIMEOUT)

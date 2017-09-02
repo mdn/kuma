@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.static import serve
 from django.views.generic import RedirectView
+from django.views.decorators.http import require_safe
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
@@ -74,6 +75,19 @@ else:
 
 urlpatterns += [
     # Services and sundry.
+    url('', include('kuma.revision.urls')),
+
+    # Serve sitemap files for AWS (these are never hit in SCL3).
+    url(r'^sitemap.xml$',
+        require_safe(serve),
+        {'document_root': settings.MEDIA_ROOT, 'path': 'sitemap.xml'},
+        name='sitemap'),
+    url(r'^(?P<path>sitemaps/.+)$',
+        require_safe(serve),
+        {'document_root': settings.MEDIA_ROOT},
+        name='sitemaps'),
+
+    # Serve the humans.txt file.
     url(r'^humans.txt$',
         serve,
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
