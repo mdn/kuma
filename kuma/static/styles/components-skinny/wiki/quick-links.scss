@@ -43,6 +43,11 @@ $see-also-outdent : 6px;
         @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 
+    code {
+        background-color: transparent;
+        padding: 0;
+    }
+
     /* don't allow empty paragraphs by CKEditor */
     p:empty,
     div:empty {

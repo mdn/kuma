@@ -89,7 +89,12 @@ mono space elements (pre, code, kbd)
 ====================================================================== */
 
 code {
+    background-color: $code-block-background-color;
+    border-radius: 2px;
+    box-decoration-break: clone;
+    color: $text-color;
     font-family: $code-inline-font-family;
+    padding: 2px 5px;
     word-wrap: break-word;
 }
 
