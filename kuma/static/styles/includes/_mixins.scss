@@ -239,6 +239,7 @@ coloured boxes
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
 @mixin set-message-base($remove-last-spacing: true) {
+    @include restrict-line-length();
     overflow: hidden;
     margin-bottom: $grid-spacing;
     @include bidi-style(border-left-width, $border-width, border-right-width, 0);
@@ -361,6 +362,7 @@ These are not dynamic but serve as mixins
 }
 
 @mixin callout() {
+    @include restrict-line-length();
     @include set-font-size(22px);
     border: 5px solid $accent-light;
     border-width: 5px 0;
@@ -369,11 +371,6 @@ These are not dynamic but serve as mixins
     margin-bottom: $grid-spacing;
 
     @include prevent-last-child-spacing(p, margin-bottom);
-
-    .text-content &,
-    .text-content & p {
-        @include full-width-content();
-    }
 }
 
 @mixin clearfix() {
@@ -431,19 +428,6 @@ Placeholders
 @mixin restrict-line-length {
     box-sizing: border-box;
     max-width: $max-line-length;
-
-    /* This makes the restricted line length about 50% of the screen. It becomes
-       practical to do that on large desktops. The vw units mean we can't keep
-       using this technique after the width of the site is frozen at 1400px.
-       I expected that we would need to define a new value to make it 50% of
-       the max width but as it turns out the $max-line-length of 42rem is about
-       half of 1400px so we just have to restrict this enhancement to the
-       narrow range where it makes sense */
-    @media all and (min-width: #{$small-desktop-ends}) and (max-width: #{$max-width-default}) {
-        .wiki-left-none & {
-            max-width: calc(50vw - #{$grid-spacing});
-        }
-    }
 }
 
 

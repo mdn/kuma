@@ -30,8 +30,7 @@ $table-cell-border: 2px solid #fff;
     }
 
     table,
-    pre,
-    table {
+    pre {
         @include full-width-content();
     }
 
