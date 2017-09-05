@@ -132,7 +132,7 @@ $notification-button-padding: 2px 5px 3px;
     }
 
     .text-content & {
-        @include full-width-content;
+        @include restrict-line-length;
     }
 
     &.closed {

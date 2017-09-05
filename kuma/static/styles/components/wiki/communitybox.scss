@@ -8,7 +8,7 @@
 $communitybox-spacing: 13px;
 
 .communitybox {
-    @include full-width-content();
+    @include restrict-line-length();
     padding: $communitybox-spacing;
     background-color: $blue-light;
     @include bidi-value(border, 0, 0);

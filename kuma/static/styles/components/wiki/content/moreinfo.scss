@@ -3,7 +3,7 @@ moreinfo styling
 ********************************************************************** */
 
 .moreinfo {
-    @include full-width-content();
+    @include restrict-line-length();
     position: relative;
     padding: ($grid-spacing / 2) $grid-spacing $grid-spacing 30px;
     margin-bottom: $grid-spacing;
