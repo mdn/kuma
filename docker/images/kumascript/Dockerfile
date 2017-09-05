@@ -1,5 +1,9 @@
 FROM debian:jessie
 
+ARG REVISION_HASH
+# Make the git commit hash permanently available within this image.
+ENV REVISION_HASH $REVISION_HASH
+
 # First install curl so we can use it to get the Node.js debian package.
 RUN apt-get update && apt-get install -y curl
 # We need "python" and "build-essential" for building "node-gyp".

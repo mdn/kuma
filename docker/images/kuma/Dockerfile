@@ -1,4 +1,9 @@
 FROM quay.io/mozmar/kuma_base:latest
+
+ARG REVISION_HASH
+# Make the git commit hash permanently available within this image.
+ENV REVISION_HASH $REVISION_HASH
+
 COPY . /app
 # the following is needed until the --user flag is added to COPY
 # see https://github.com/moby/moby/issues/30110

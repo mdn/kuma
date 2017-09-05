@@ -1,5 +1,16 @@
+ifeq ($(shell which git),)
+# git is not available
+VERSION ?= undefined
+KS_VERSION ?= undefined
+export KUMA_REVISION_HASH ?= undefined
+export KUMASCRIPT_REVISION_HASH ?= undefined
+else
+# git is available
 VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
 KS_VERSION ?= $(shell cd kumascript && git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
+export KUMA_REVISION_HASH ?= $(shell git rev-parse HEAD)
+export KUMASCRIPT_REVISION_HASH ?= $(shell cd kumascript && git rev-parse HEAD)
+endif
 BASE_IMAGE_NAME ?= kuma_base
 KUMA_IMAGE_NAME ?= kuma
 KUMASCRIPT_IMAGE_NAME ?= kumascript
@@ -96,10 +107,12 @@ build-base:
 	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
 
 build-kuma:
-	docker build -f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
+	docker build --build-arg REVISION_HASH=${KUMA_REVISION_HASH} \
+	-f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
 
 build-kumascript:
-	docker build -f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+	docker build --build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
+	-f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
 
 build: build-base build-kuma build-kumascript
 
