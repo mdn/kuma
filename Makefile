@@ -1,5 +1,16 @@
+ifeq ($(shell which git),)
+# git is not available
+VERSION ?= undefined
+KS_VERSION ?= undefined
+export KUMA_REVISION_HASH ?= undefined
+export KUMASCRIPT_REVISION_HASH ?= undefined
+else
+# git is available
 VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
 KS_VERSION ?= $(shell cd kumascript && git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
+export KUMA_REVISION_HASH ?= $(shell git rev-parse HEAD)
+export KUMASCRIPT_REVISION_HASH ?= $(shell cd kumascript && git rev-parse HEAD)
+endif
 BASE_IMAGE_NAME ?= kuma_base
 KUMA_IMAGE_NAME ?= kuma
 KUMASCRIPT_IMAGE_NAME ?= kumascript
@@ -24,8 +35,6 @@ target = kuma
 requirements = -r requirements/local.txt
 # set Django settings module if not already set as env var
 export DJANGO_SETTINGS_MODULE ?= kuma.settings.testing
-export KUMA_REVISION_HASH ?= $(shell git rev-parse HEAD)
-export KUMASCRIPT_REVISION_HASH ?= $(shell cd kumascript && git rev-parse HEAD)
 
 # Note: these targets should be run from the kuma vm
 test:
