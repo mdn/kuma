@@ -15,32 +15,34 @@
         <ul>
           <li>
             <mark>{{ _('Revision slug:') }}</mark>
-            <span>{{ revision.slug }}</span>
+            <span data-name="slug">{{ revision.slug }}</span>
           </li>
           <li>
             <mark>{{ _('Revision title:') }}</mark>
-            <span>{{ revision.title }}</span>
+            <span data-name="title">{{ revision.title }}</span>
           </li>
-          <li class="revision-id">
+          <li>
             <mark>{{ _('Revision id:') }}</mark>
-            <span>{{ revision.id }}</span>
+            <span data-name="id">{{ revision.id }}</span>
           </li>
-          <li class="revision-created">
+          <li>
             <mark>{{ _('Created:') }}</mark>
-            <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
+            <span data-name="created">{{ datetimeformat(revision.created, format='datetime') }}</span>
           </li>
           <li>
             <mark>{{ _('Creator:') }}</mark>
-            <span>{{ revision.creator }}</span>
+            <span data-name="creator">{{ revision.creator }}</span>
             {{ ban_links(revision.creator, request.user) }}
           </li>
           <li>
             <mark>{{ _('Is current revision?') }}</mark>
-            <span>{{ (revision == document.current_revision)|yesno }}</span>
+            <span data-name="is-current" data-value="{{ 1 if (revision == document.current_revision) else 0 }}">
+                {{ (revision == document.current_revision)|yesno }}
+            </span>
           </li>
           <li>
             <mark>{{ _('Comment') }}</mark>
-            <span>{{ comment }}</span>
+            <span data-name="comment">{{ comment }}</span>
           </li>
           {#
           {% if user.is_authenticated() %}

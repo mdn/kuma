@@ -344,7 +344,7 @@ def test_gather_based_on_is_available(translated_doc, client):
     expected_data = {
         'id': rev.id,
         'based_on_id': rev.based_on.id,
-        'comment': '',
+        'comment': 'Root Racine',
         'content': '<p>Commencer...</p>',
         'created': datetime(2017, 6, 1, 15, 28),
         'creator': {u'username': u'creator'},

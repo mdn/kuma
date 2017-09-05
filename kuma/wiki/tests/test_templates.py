@@ -446,13 +446,18 @@ def test_revision_template(root_doc, client):
     response = client.get(url)
     assert response.status_code == 200
     page = pq(response.content)
-    id_div = page('div.revision-info li.revision-id')
-    assert id_div.text() == 'Revision id: %s' % rev.id
     assert page('h1').text() == 'Revision %s of %s' % (rev.id, root_doc.title)
     assert page('#doc-source pre').text() == rev.content
-    created_div = page('div.revision-info li.revision-created')
+    assert page('span[data-name="slug"]').text() == root_doc.slug
+    assert page('span[data-name="title"]').text() == root_doc.title
+    assert page('span[data-name="id"]').text() == str(rev.id)
     expected_date = 'Apr 14, 2017, 12:15:00 PM'
-    assert created_div.text().strip() == 'Created: ' + expected_date
+    assert page('span[data-name="created"]').text() == expected_date
+    assert page('span[data-name="creator"]').text() == rev.creator.username
+    assert page('span[data-name="comment"]').text() == rev.comment
+    is_current = page('span[data-name="is-current"]')
+    assert is_current.text() == "Yes"
+    assert is_current.attr['data-value'] == "1"
 
 
 class NewDocumentTests(UserTestCase, WikiTestCase):
