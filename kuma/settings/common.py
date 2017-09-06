@@ -1442,6 +1442,7 @@ CONSTANCE_CONFIG = dict(
          '|mdn.mozillademos.org'                    # Production demos
          '|testserver'                              # Unit test demos
          '|localhost\:8000'                         # Docker development demos
+         '|localhost\:8080'                         # Embedded samples server
          '|rpm.newrelic.com\/public\/charts\/.*'    # MDN/Kuma/Server_charts
          '|(www.)?youtube.com\/embed\/(\.*)'        # Embedded videos
          '|jsfiddle.net\/.*embedded.*'              # Embedded samples
