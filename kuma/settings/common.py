@@ -45,6 +45,10 @@ PRODUCTION_URL = SITE_URL
 STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
+INTERACTIVE_EXAMPLES_BASE = config(
+    'https://interactive-examples.mdn.mozilla.net',
+    default='https://interactive-examples.mdn.mozilla.net')
+
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
 ALLOW_ROBOTS = config('ALLOW_ROBOTS', default=False, cast=bool)
 

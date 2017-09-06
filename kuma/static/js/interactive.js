@@ -3,6 +3,11 @@
 
     var iframe = document.querySelector('iframe.interactive');
     var mediaQuery = window.matchMedia('(min-width: 63.9385em)');
+    var siteUrl =
+        window.mdn.interactiveEditor.siteUrl || 'https://developer.mozilla.org';
+    var targetOrigin =
+        window.mdn.interactiveEditor.editorUrl ||
+        'https://interactive-examples.mdn.mozilla.net';
 
     /* If there is no `iframe`, or if this is a JS example,
     simply return */
@@ -13,14 +18,22 @@
     /**
      * A simple wrapper function for the `postMessage`s sent
      * to the interactive editor iframe
-     * @param {Boolean} isSmallViewport - Boolean indicating whether to add, or
-     * remove the `small-desktop-and-below` class
+     * @param {Object} message - The message object sent to the interactive editor
      */
-    function postToEditor(isSmallViewport) {
-        iframe.contentWindow.postMessage(
-            { smallViewport: isSmallViewport },
-            'https://interactive-examples.mdn.mozilla.net'
-        );
+    function postToEditor(message) {
+        iframe.contentWindow.postMessage(message, targetOrigin);
+    }
+
+    /**
+     * Posts back the current site URL.
+     * @param {Object} event - The event Object received from postMessage
+     */
+    function postSiteUrl(event) {
+        /* only post the site url if the correct property
+        exists on the message object, and its value is true */
+        if (event.data.siteUrl) {
+            postToEditor({ siteUrl: siteUrl });
+        }
     }
 
     /* As the user sizes the browser or tilts their device,
@@ -28,9 +41,9 @@
     viewport state to the interactive editor */
     mediaQuery.addListener(function(event) {
         if (event.matches) {
-            postToEditor(false);
+            postToEditor({ smallViewport: false });
         } else {
-            postToEditor(true);
+            postToEditor({ smallViewport: true });
         }
     });
 
@@ -38,7 +51,10 @@
         // if the mediaQuery does not match on load
         if (!mediaQuery.matches) {
             // add the class `small-desktop-and-below`
-            postToEditor(true);
+            postToEditor({ smallViewport: true });
         }
+
+        // add event listener for postMessages from the interactive editor
+        window.addEventListener('message', postSiteUrl, false);
     };
 })();

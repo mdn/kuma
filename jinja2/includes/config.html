@@ -45,5 +45,12 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+
+        // interactive editor config
+        win.mdn.interactiveEditor = {
+            siteUrl: "{{ settings.SITE_URL }}",
+            editorUrl: "{{ settings.INTERACTIVE_EXAMPLES_BASE }}"
+        };
+
     })(this);
 </script>
