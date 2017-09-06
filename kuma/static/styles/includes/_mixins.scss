@@ -480,6 +480,11 @@ Placeholders
         @include full-width-content();
     }
 
+    code {
+        background-color: transparent;
+        padding: 0;
+    }
+
     @include vendorize(tab-size, 4);
     @include vendorize(hyphens, none);
 }
