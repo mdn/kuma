@@ -9,7 +9,7 @@
          * @param {Object} event - The event Object received from the postMessage
          */
         interactiveExamplesEvent: function(event) {
-            var allowedOrigin = document.documentElement.dataset['editorUrl'];
+            var allowedOrigin = win.mdn.interactiveEditor.editorUrl || 'https://interactive-examples.mdn.mozilla.net';
             if (event.origin !== allowedOrigin) {
                 return false;
             }

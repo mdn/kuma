@@ -3,8 +3,11 @@
 
     var iframe = document.querySelector('iframe.interactive');
     var mediaQuery = window.matchMedia('(min-width: 63.9385em)');
-    var siteUrl = document.documentElement.dataset['siteUrl'];
-    var targetOrigin = document.documentElement.dataset['editorUrl'];
+    var siteUrl =
+        window.mdn.interactiveEditor.siteUrl || 'https://developer.mozilla.org';
+    var targetOrigin =
+        window.mdn.interactiveEditor.editorUrl ||
+        'https://interactive-examples.mdn.mozilla.net';
 
     /* If there is no `iframe`, or if this is a JS example,
     simply return */
