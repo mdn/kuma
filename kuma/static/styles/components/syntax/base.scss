@@ -42,6 +42,15 @@ pre em code[class*='language-'] {
     border-left: 0;
 }
 
+/* don't give operators, strings, etc a background color */
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    background-color: transparent;
+}
+
 /*
 Line Highlight
 ====================================================================== */
