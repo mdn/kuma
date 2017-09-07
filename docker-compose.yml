@@ -24,6 +24,7 @@ services:
       - DEBUG=${DEBUG:-True}
       - DOMAIN=localhost
       - ES_URLS=elasticsearch:9200
+      - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - MEMCACHE_SERVERS=memcached:11211
       - PROD_DETAILS_DIR=/app/product_details_json
@@ -90,6 +91,7 @@ services:
       - api
       - memcached
     environment:
+      - interactive_examples__base_url=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - log__console=true
       - log__file=
       - server__template_root_dir=macros
