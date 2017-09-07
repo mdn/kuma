@@ -7,8 +7,8 @@ urlpatterns = [
     # Serve the revision hashes.
     url(r'^media/revision.txt$',
         views.revision_hash,
-        name='misc.revision'),
+        name='version.kuma'),
     url(r'^media/kumascript-revision.txt$',
         views.kumascript_revision_hash,
-        name='misc.kumascript_revision'),
+        name='version.kumascript'),
 ]

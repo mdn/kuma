@@ -10,7 +10,7 @@ from kuma.wiki.constants import KUMASCRIPT_BASE_URL
 
 @pytest.mark.parametrize('method', ['get', 'head'])
 def test_revision_hash(client, db, method):
-    response = getattr(client, method)(reverse('misc.revision'))
+    response = getattr(client, method)(reverse('version.kuma'))
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
     if method == 'get':
@@ -22,7 +22,7 @@ def test_revision_hash(client, db, method):
     ['post', 'put', 'delete', 'options', 'patch']
 )
 def test_revision_hash_405s(client, db, method):
-    response = getattr(client, method)(reverse('misc.revision'))
+    response = getattr(client, method)(reverse('version.kuma'))
     assert response.status_code == 405
 
 
@@ -36,7 +36,7 @@ def test_kumascript_revision_hash(client, db, method):
             text=hash,
             headers={'content-type': 'text/plain; charset=utf-8'}
         )
-        response = client.get(reverse('misc.kumascript_revision'))
+        response = client.get(reverse('version.kumascript'))
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
     if method == 'get':
@@ -48,5 +48,5 @@ def test_kumascript_revision_hash(client, db, method):
     ['post', 'put', 'delete', 'options', 'patch']
 )
 def test_kumascript_revision_hash_405s(client, db, method):
-    response = getattr(client, method)(reverse('misc.kumascript_revision'))
+    response = getattr(client, method)(reverse('version.kumascript'))
     assert response.status_code == 405

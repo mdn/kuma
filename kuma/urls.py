@@ -75,7 +75,7 @@ else:
 
 urlpatterns += [
     # Services and sundry.
-    url('', include('kuma.revision.urls')),
+    url('', include('kuma.version.urls')),
 
     # Serve sitemap files for AWS (these are never hit in SCL3).
     url(r'^sitemap.xml$',
