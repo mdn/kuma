@@ -3,7 +3,6 @@ from __future__ import absolute_import, unicode_literals
 import re
 import logging
 
-from django.utils.translation import gettext, override
 from pyquery import PyQuery as pq
 import dateutil
 
@@ -142,23 +141,21 @@ class RevisionSource(Source):
         parsed = pq(html)
 
         # Parse revision-info list
-        rev_info = parsed.find('div.revision-info li span')
-        for key, span in zip(keys, rev_info):
-            raw = span.text
+        for key in keys:
+            name = key.replace('_', '-')
+            span = parsed('span[data-name="%s"]' % name)
             if key == 'id':
-                value = int(raw)
+                value = int(span.text())
             elif key == 'created':
-                created = span.cssselect('time')[0].attrib['datetime']
+                created = span[0].cssselect('time')[0].attrib['datetime']
                 value = dateutil.parser.parse(created)
                 value = value.replace(tzinfo=None)
             elif key == 'is_current':
-                with override(self.locale):
-                    yes = gettext('Yes')
-                value = (raw == yes.decode('utf8'))
+                value = span.attr['data-value'] == '1'
             elif key == 'comment':
-                value = raw or ''
+                value = span.text() or ''
             else:
-                value = raw
+                value = span.text()
             data[key] = value
 
         # Parse tags

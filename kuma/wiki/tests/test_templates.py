@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
 import urllib
-from datetime import datetime
 
 import mock
 import pytest
@@ -440,27 +439,25 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert self.dim18 in content
 
 
-class RevisionTests(UserTestCase, WikiTestCase):
-    """Tests for the Revision template"""
-    localizing_client = True
-
-    def test_revision_view(self):
-        """Load the revision view page and verify the title and content."""
-        d = _create_document()
-        r = d.current_revision
-        r.created = datetime(2011, 1, 1)
-        r.save()
-        url = reverse('wiki.revision', args=[d.slug, r.id])
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('Revision id: %s' % r.id,
-            doc('div.revision-info li.revision-id').text())
-        eq_('Revision %s of %s' % (r.id, d.title), doc('h1').text())
-        eq_(r.content,
-            doc('#doc-source pre').text())
-        eq_('Created: Jan 1, 2011, 12:00:00 AM',
-            doc('div.revision-info li.revision-created').text().strip())
+def test_revision_template(root_doc, client):
+    """Verify the revision template."""
+    rev = root_doc.current_revision
+    url = reverse('wiki.revision', args=[root_doc.slug, rev.id], locale=root_doc.locale)
+    response = client.get(url)
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert page('h1').text() == 'Revision %s of %s' % (rev.id, root_doc.title)
+    assert page('#doc-source pre').text() == rev.content
+    assert page('span[data-name="slug"]').text() == root_doc.slug
+    assert page('span[data-name="title"]').text() == root_doc.title
+    assert page('span[data-name="id"]').text() == str(rev.id)
+    expected_date = 'Apr 14, 2017, 12:15:00 PM'
+    assert page('span[data-name="created"]').text() == expected_date
+    assert page('span[data-name="creator"]').text() == rev.creator.username
+    assert page('span[data-name="comment"]').text() == rev.comment
+    is_current = page('span[data-name="is-current"]')
+    assert is_current.text() == "Yes"
+    assert is_current.attr['data-value'] == "1"
 
 
 class NewDocumentTests(UserTestCase, WikiTestCase):
