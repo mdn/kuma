@@ -77,12 +77,12 @@ def test_header_signin(base_url, selenium):
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
-def test_header_platform_submenu(base_url, selenium):
+def test_header_tech_submenu(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
-    assert page.header.is_platform_submenu_trigger_displayed
-    assert not page.header.is_platform_submenu_displayed
-    page.header.show_platform_submenu()
-    assert page.header.is_platform_submenu_displayed
+    assert page.header.is_tech_submenu_trigger_displayed
+    assert not page.header.is_tech_submenu_displayed
+    page.header.show_tech_submenu()
+    assert page.header.is_tech_submenu_displayed
 
 
 @pytest.mark.smoke
