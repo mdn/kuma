@@ -405,6 +405,9 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'web-tech',
     'css',
     'index.php',  # Legacy MediaWiki endpoint, return 404
+    # Served in AWS
+    'sitemap.xml',
+    'sitemaps/'
 )
 
 # Make this unique, and don't share it with anybody.

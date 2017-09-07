@@ -3,11 +3,21 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.static import serve
 from django.views.generic import RedirectView
+from django.views.decorators.http import require_safe
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.wiki.admin import purge_view
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
+
+
+@require_safe
+def serve_from_media_root(request, path):
+    """
+    A convenience function which also makes it easy to override the
+    settings within tests.
+    """
+    return serve(request, path, document_root=settings.MEDIA_ROOT)
 
 
 admin.autodiscover()
@@ -72,8 +82,19 @@ else:
         url(r'^', include('tidings.urls')),
     )
 
+
 urlpatterns += [
     # Services and sundry.
+    url('', include('kuma.version.urls')),
+
+    # Serve sitemap files for AWS (these are never hit in SCL3).
+    url(r'^sitemap.xml$',
+        serve_from_media_root,
+        {'path': 'sitemap.xml'},
+        name='sitemap'),
+    url(r'^(?P<path>sitemaps/.+)$', serve_from_media_root, name='sitemaps'),
+
+    # Serve the humans.txt file.
     url(r'^humans.txt$',
         serve,
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
@@ -86,9 +107,7 @@ urlpatterns += [
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
     urlpatterns += [
-        url(r'^%s/(?P<path>.*)$' % media_url,
-            serve,
-            {'document_root': settings.MEDIA_ROOT}),
+        url(r'^%s/(?P<path>.*)$' % media_url, serve_from_media_root),
     ]
 
 if settings.SERVE_LEGACY and settings.LEGACY_ROOT:
