@@ -96,6 +96,10 @@ code {
     font-family: $code-inline-font-family;
     padding: 2px 5px;
     word-wrap: break-word;
+
+    a & {
+        color: $link-color;
+    }
 }
 
 /* pre is a block element so it gets a bit more fancy styling */
