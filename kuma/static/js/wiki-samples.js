@@ -1,9 +1,7 @@
 (function(win, doc, $) {
-    "use strict";
+    'use strict';
 
-    if(!win.waffle || !win.waffle.flag_is_active('wiki_samples')) return;
-
-    var sites = ['codepen', 'jsfiddle'];
+    var sites = ['CodePen', 'JSFiddle'];
     var frameLength = 'frame_'.length;
 
     var sourceURL = $('link[rel=canonical]').attr('href') || win.location.href.split('#')[0];
@@ -27,7 +25,7 @@
     });
 
     function openJSFiddle(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" action="https://jsfiddle.net/api/mdn/" class="hidden" target="_blank">' +
+        var $form = $('<form method="post" action="https://jsfiddle.net/api/mdn/" class="hidden" target="_blank">' +
             '<input type="hidden" name="html" />' +
             '<input type="hidden" name="css" />' +
             '<input type="hidden" name="js" />' +
@@ -36,27 +34,27 @@
             '<input type="submit" />' +
         '</form>').appendTo(doc.body);
 
-       $form.find('input[name=html]').val(plug + htmlCode);
-       $form.find('input[name=css]').val(cssCode);
-       $form.find('input[name=js]').val(jsCode);
-       $form.find('input[name=title]').val(title);
-       $form.get(0).submit();
+        $form.find('input[name=html]').val(plug + htmlCode);
+        $form.find('input[name=css]').val(cssCode);
+        $form.find('input[name=js]').val(jsCode);
+        $form.find('input[name=title]').val(title);
+        $form.get(0).submit();
     }
 
     function openCodepen(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" action="https://codepen.io/pen/define" class="hidden" target="_blank">' +
+        var $form = $('<form method="post" action="https://codepen.io/pen/define" class="hidden" target="_blank">' +
             '<input type="hidden" name="data">' + analytics +
             '<input type="submit" />' +
         '</form>').appendTo(doc.body);
 
-       var data = {'title': title, 'html': plug + htmlCode, 'css': cssCode, 'js': jsCode};
-       $form.find('input[name=data]').val(JSON.stringify(data));
-       $form.get(0).submit();
+        var data = {'title': title, 'html': plug + htmlCode, 'css': cssCode, 'js': jsCode};
+        $form.find('input[name=data]').val(JSON.stringify(data));
+        $form.get(0).submit();
     }
 
     function openSample(sampleCodeHost, section, title, htmlCode, cssCode, jsCode) {
         // replace &nbsp; in CSS Samples to fix bug 1284781
-        var cssCleanCode = cssCode.replace(/\xA0/g, " ");
+        var cssCleanCode = cssCode.replace(/\xA0/g, ' ');
         //track the click and sample code host as event
         mdn.analytics.trackEvent({
             category: 'Samples',
@@ -64,7 +62,9 @@
             label: section
         });
         // add user to segement that has used samples
-        if(win.ga) ga('set', 'dimension8', 'Yes');
+        if(win.ga) {
+            ga('set', 'dimension8', 'Yes');
+        }
 
         if(sampleCodeHost === 'jsfiddle') {
             openJSFiddle(title, htmlCode, cssCleanCode, jsCode);
@@ -107,7 +107,7 @@
                         openSample(sampleCodeHost, section, title, htmlCode, cssCode, jsCode);
                     });
                 });
-            } else if($sample.children().length == 0) {
+            } else if($sample.children().length === 0) {
                 // no content, log error
                 mdn.analytics.trackError('embedLiveSample Error', '$sample was empty', section);
             } else {

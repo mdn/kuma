@@ -53,7 +53,7 @@ Full size form on home and search pages
     .search-form {
 
         &.home-search-form {
-            margin: 0 auto ($grid-spacing * 2) auto;
+            margin: 0 auto 30px auto;
         }
 
         > input#home-q,
