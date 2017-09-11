@@ -104,6 +104,8 @@ def test_content_exp_logged_in(base_url, selenium, exp_id, locale, slug):
     assert selenium.title == data['expected_title']
     assert selenium.current_url == page.seed_url
     assert page.has_edit_button
+    if page.has_google_analytics:
+        assert page.ga_value('siteSpeedSampleRate') == 1
 
 
 @pytest.mark.nondestructive
@@ -122,3 +124,7 @@ def test_content_exp_variant(
         expected_dim15 = "%s:%s" % (data['ga_name'], variant)
         assert page.ga_value('dimension15') == expected_dim15
         assert page.ga_value('dimension16') == "/%s/docs/%s" % (locale, slug)
+        if exp_id == 'experiment-interactive-editor':
+            assert page.ga_value('siteSpeedSampleRate') == 100
+        else:
+            assert page.ga_value('siteSpeedSampleRate') == 1

@@ -21,14 +21,3 @@ class VariantPage(ArticlePage):
     def canonical_url(self):
         canon_link = self.find_element(*self._canonical_locator)
         return canon_link and canon_link.get_attribute('href')
-
-    @property
-    def has_google_analytics(self):
-        return self.selenium.execute_script(
-            'return ((typeof(ga) !== "undefined") &&'
-            '        (typeof(ga.getByName("t0")) !== "undefined"));')
-
-    def ga_value(self, name):
-        """Value of a Google Analytics variable."""
-        return self.selenium.execute_script(
-            'return ga.getByName("t0").get("%s");' % name)

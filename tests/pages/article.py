@@ -164,3 +164,14 @@ class ArticlePage(BasePage):
     def is_error_list_displayed(self):
         error_list = self.find_element(*self._error_list)
         return error_list.is_displayed()
+
+    @property
+    def has_google_analytics(self):
+        return self.selenium.execute_script(
+            'return ((typeof(ga) !== "undefined") &&'
+            '        (typeof(ga.getByName("t0")) !== "undefined"));')
+
+    def ga_value(self, name):
+        """Value of a Google Analytics variable."""
+        return self.selenium.execute_script(
+            'return ga.getByName("t0").get("%s");' % name)
