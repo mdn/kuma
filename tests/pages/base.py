@@ -36,17 +36,17 @@ class BasePage(Page):
         mmb = self.find_element(By.CSS_SELECTOR, self.MM_BANNER_SELECTOR)
         return mmb.is_displayed() and (self.MM_BANNER_TEXT in mmb.text)
 
-    def be_unhelpful(self):
-        """Avoid the helpfulness popup."""
-        self.selenium.execute_script("localStorage.setItem('helpful-ignore','true');")
+    def disable_survey_popup(self):
+        """Avoid the task completion survey popup for 5 minutes."""
+        self.selenium.execute_script(
+            "localStorage.setItem('taskTracker', Date.now() + (1000*60*5));")
         self.selenium.refresh()
         self.wait_for_page_to_load()
 
-    def be_helpful(self):
-        """Allow the helpfulness popup (Untested)."""
+    def enable_survey_popup(self):
+        """Allow the task completion survey popup."""
         self.selenium.execute_script(
-            "localStorage.removeItem('helpful-ignore');"
-            "localStorage.removeItem('task-tracker');")
+            "localStorage.removeItem('taskTracker');")
         self.selenium.refresh()
         self.wait_for_page_to_load()
 
