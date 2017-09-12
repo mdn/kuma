@@ -3,8 +3,6 @@
 
     var iframe = document.querySelector('iframe.interactive');
     var mediaQuery = window.matchMedia('(min-width: 63.9385em)');
-    var siteUrl =
-        window.mdn.interactiveEditor.siteUrl || 'https://developer.mozilla.org';
     var targetOrigin =
         window.mdn.interactiveEditor.editorUrl ||
         'https://interactive-examples.mdn.mozilla.net';
@@ -24,18 +22,6 @@
         iframe.contentWindow.postMessage(message, targetOrigin);
     }
 
-    /**
-     * Posts back the current site URL.
-     * @param {Object} event - The event Object received from postMessage
-     */
-    function postSiteUrl(event) {
-        /* only post the site url if the correct property
-        exists on the message object, and its value is true */
-        if (event.data.siteUrl) {
-            postToEditor({ siteUrl: siteUrl });
-        }
-    }
-
     /* As the user sizes the browser or tilts their device,
     listen for mediaQuery events and communicate the new
     viewport state to the interactive editor */
@@ -53,8 +39,5 @@
             // add the class `small-desktop-and-below`
             postToEditor({ smallViewport: true });
         }
-
-        // add event listener for postMessages from the interactive editor
-        window.addEventListener('message', postSiteUrl, false);
     };
 })();
