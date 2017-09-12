@@ -370,8 +370,9 @@ HUMANSTXT_ROOT = MEDIA_ROOT
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/media/'
-STATIC_URL = '/static/'
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+
+STATIC_URL = config('STATIC_URL', default='/static/')
 STATIC_ROOT = path('static')
 
 SERVE_MEDIA = False

@@ -10,7 +10,7 @@ SERVER_EMAIL = 'mdn-prod-noreply@mozilla.com'
 # Cache
 CACHES['memcache']['TIMEOUT'] = 60 * 60 * 24
 
-MEDIA_URL = 'https://developer.cdn.mozilla.net/media/'
+MEDIA_URL = config('MEDIA_URL', default='https://developer.cdn.mozilla.net/media/')
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
 
 CELERY_ALWAYS_EAGER = False
