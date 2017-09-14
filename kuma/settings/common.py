@@ -75,6 +75,10 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
                             'character_set_connection=utf8,'
                             'collation_connection=utf8_general_ci',
         },
+        'TEST': {
+            'CHARSET': 'utf8',
+            'COLLATION': 'utf8_general_ci',
+        },
     })
 
 DATABASES = {
