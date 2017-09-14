@@ -38,11 +38,6 @@ ADMINS = zip(
     config('ADMIN_NAMES', default='MDN devs', cast=Csv()),
     config('ADMIN_EMAILS', default='mdn-dev@mozilla.com', cast=Csv())
 )
-CELERYD_MAX_TASKS_PER_CHILD = config(
-    'CELERYD_MAX_TASKS_PER_CHILD',
-    default=0,
-    cast=int
-) or None
 
 PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
@@ -1268,6 +1263,11 @@ CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
+CELERYD_MAX_TASKS_PER_CHILD = config(
+    'CELERYD_MAX_TASKS_PER_CHILD',
+    default=0,
+    cast=int
+) or None
 
 if MAINTENANCE_MODE:
     # In maintenance mode, we're going to avoid using the database, and
