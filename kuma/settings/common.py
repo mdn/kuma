@@ -42,7 +42,7 @@ CELERYD_MAX_TASKS_PER_CHILD = config(
     'CELERYD_MAX_TASKS_PER_CHILD',
     default=0,
     cast=int
-)
+) or None
 
 PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
@@ -64,9 +64,9 @@ DEFAULT_DATABASE = config('DATABASE_URL',
                           default='mysql://kuma:kuma@localhost:3306/kuma',
                           cast=dj_database_url.parse)
 if 'mysql' in DEFAULT_DATABASE['ENGINE']:
+    # These are the production settings for OPTIONS.
     DEFAULT_DATABASE.update({
         'OPTIONS': {
-            'sql_mode': 'TRADITIONAL',
             'charset': 'utf8',
             'use_unicode': True,
             'init_command': 'SET '
@@ -74,11 +74,6 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
                             'storage_engine=INNODB,'
                             'character_set_connection=utf8,'
                             'collation_connection=utf8_general_ci',
-        },
-        'ATOMIC_REQUESTS': True,
-        'TEST': {
-            'CHARSET': 'utf8',
-            'COLLATION': 'utf8_general_ci',
         },
     })
 
@@ -480,10 +475,7 @@ AUTHENTICATION_BACKENDS = (
 )
 AUTH_USER_MODEL = 'users.User'
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = config(
-    'DEFAULT_AVATAR',
-    default=STATIC_URL + 'img/avatar.png'
-)
+DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
 
 AVATAR_SIZES = [  # in pixels
     34,   # wiki document page

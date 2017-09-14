@@ -17,10 +17,6 @@ SERVER_EMAIL = config(
 CACHES['memcache']['TIMEOUT'] = 60 * 60 * 24
 
 MEDIA_URL = config('MEDIA_URL', default='https://developer.cdn.mozilla.net/media/')
-DEFAULT_AVATAR = config(
-    'DEFAULT_AVATAR',
-    default=MEDIA_URL + 'img/avatar.png'
-)
 
 CELERY_ALWAYS_EAGER = False
 CELERYD_MAX_TASKS_PER_CHILD = 500
