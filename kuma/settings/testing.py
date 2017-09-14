@@ -4,7 +4,7 @@ DEBUG = False
 TEMPLATES[0]['OPTIONS']['debug'] = True  # Enable recording of templates
 CELERY_ALWAYS_EAGER = True
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
-ES_LIVE_INDEX = False
+ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 
 # SHA1 because it is fast, and hard-coded in the test fixture JSON.
 PASSWORD_HASHERS = (

@@ -34,9 +34,15 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 
-ADMINS = config('ADMIN_EMAILS',
-                default='mdn-dev@mozilla.com',
-                cast=TupleCsv())
+ADMINS = zip(
+    config('ADMIN_NAMES', default='MDN devs', cast=Csv()),
+    config('ADMIN_EMAILS', default='mdn-dev@mozilla.com', cast=Csv())
+)
+CELERYD_MAX_TASKS_PER_CHILD = config(
+    'CELERYD_MAX_TASKS_PER_CHILD',
+    default=0,
+    cast=int
+)
 
 PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
@@ -114,8 +120,14 @@ vars().update(config('EMAIL_URL',
 EMAIL_SUBJECT_PREFIX = '[mdn] '
 
 # Addresses email comes from
-DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
-SERVER_EMAIL = 'server-error@developer.mozilla.org'
+DEFAULT_FROM_EMAIL = config(
+    'DEFAULT_FROM_EMAIL',
+    default='notifications@developer.mozilla.org'
+)
+SERVER_EMAIL = config(
+    'SERVER_EMAIL',
+    default='server-error@developer.mozilla.org'
+)
 
 PLATFORM_NAME = platform.node()
 
@@ -468,7 +480,11 @@ AUTHENTICATION_BACKENDS = (
 )
 AUTH_USER_MODEL = 'users.User'
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
+DEFAULT_AVATAR = config(
+    'DEFAULT_AVATAR',
+    default=STATIC_URL + 'img/avatar.png'
+)
+
 AVATAR_SIZES = [  # in pixels
     34,   # wiki document page
     48,   # user_link helper
@@ -1240,7 +1256,10 @@ IMAGE_UPLOAD_PATH = 'uploads/images/'
 IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
 
 # Email
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = config(
+    'EMAIL_BACKEND',
+    default='django.core.mail.backends.smtp.EmailBackend'
+)
 EMAIL_FILE_PATH = '/tmp/kuma-messages'
 
 BROKER_URL = config('BROKER_URL',
@@ -1525,11 +1544,11 @@ KUMASCRIPT_URL_TEMPLATE = config('KUMASCRIPT_URL_TEMPLATE',
 ES_DEFAULT_NUM_REPLICAS = 1
 ES_DEFAULT_NUM_SHARDS = 5
 ES_DEFAULT_REFRESH_INTERVAL = '5s'
-ES_INDEX_PREFIX = 'mdn'
+ES_INDEX_PREFIX = config('ES_INDEX_PREFIX', default='mdn')
 ES_INDEXES = {'default': 'main_index'}
 # Specify the extra timeout in seconds for the indexing ES connection.
 ES_INDEXING_TIMEOUT = 30
-ES_LIVE_INDEX = False
+ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
 
 LOG_LEVEL = logging.WARN

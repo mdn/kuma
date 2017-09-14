@@ -30,7 +30,7 @@ SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 0
 ES_DEFAULT_NUM_SHARDS = 1
-ES_LIVE_INDEX = True
+ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=True, cast=bool)
 
 # Don't cache non-versioned static files in DEBUG mode
 if DEBUG:
