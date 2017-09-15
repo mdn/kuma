@@ -1208,6 +1208,8 @@ pipeline_overrides = (
     'CSSTIDY_ARGUMENTS',
     'CSSMIN_BINARY',
     'CSSMIN_ARGUMENTS',
+    'CLEANCSS_BINARY',
+    'CLEANCSS_ARGUMENTS',
 )
 for override in pipeline_overrides:
     env_value = config('PIPELINE_' + override, default=None)

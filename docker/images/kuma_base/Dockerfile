@@ -34,15 +34,14 @@ RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 
 RUN npm install -g \
     fibers@1.0.15 \
-    cssmin@0.4.3 \
     csslint@0.10.0 \
     jshint@2.7.0 \
     node-sass@4.3.0 \
     uglify-js@2.4.13 \
     clean-css@3.4.23 \
     stylelint@7.10.1
-ENV PIPELINE_CSS_COMPRESSOR=pipeline.compressors.cssmin.CSSMinCompressor \
-    PIPELINE_CSSMIN_BINARY=/usr/bin/cssmin \
+ENV PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor \
+    PIPELINE_CLEANCSS_BINARY=/usr/bin/cleancss \
     PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor \
     PIPELINE_UGLIFYJS_BINARY=/usr/bin/uglifyjs
 

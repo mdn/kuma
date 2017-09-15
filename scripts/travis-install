@@ -30,12 +30,12 @@ fi
 if [ ${INSTALL_PIPELINE:-0} -ne 0 ]
 then
     npm install
-    npm install cssmin@0.4.3
+    npm install clean-css@3.4.23
     npm install uglify-js@2.4.13
 fi
 
 # Install docker-compose
-if [ ${INSTALL_DOCKER_COMPOSE:--} -ne 0 ]
+if [ ${INSTALL_DOCKER_COMPOSE:-0} -ne 0 ]
 then
     if [ -x $(command -v docker-compose) ]
     then
