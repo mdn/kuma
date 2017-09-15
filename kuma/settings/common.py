@@ -438,6 +438,7 @@ _CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.security.SecurityMiddleware',
     # must come before LocaleURLMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
     # LocaleURLMiddleware must be before any middleware that uses
@@ -1620,8 +1621,17 @@ ABSOLUTE_URL_OVERRIDES = {
 
 USE_X_FORWARDED_HOST = True
 
-# Honor the X-Forwarded-Proto header for environments like local dev VM that
-# uses Apache mod_proxy instead of mod_wsgi
+# Set header X-XSS-Protection: 1; mode=block
+SECURE_BROWSER_XSS_FILTER = True
+
+# Set header X-Content-Type-Options: nosniff
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Set header Strict-Transport-Security header
+# 63072000 in production (730 days)
+SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=0, cast=int)
+
+# Honor the X-Forwarded-Proto header, to assume HTTPS instead of HTTP
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Auth and permissions related constants
