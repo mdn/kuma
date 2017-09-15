@@ -1,0 +1,39 @@
+version: '2.1'
+services:
+  # Emulation of abstract services (settings without a running container)
+  # Discussion of adding as a feature to docker-compose
+  # https://github.com/docker/compose/issues/1988
+  base:
+    image: quay.io/mozmar/kuma_base
+    command: echo "Hello, world!"
+    user: ${UID:-33}
+    volumes:
+      - ./:/app:z
+    environment:
+      # Django settings overrides:
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
+      - ALLOWED_HOSTS=*
+      - ATTACHMENT_HOST=localhost:8000
+      - BROKER_URL=redis://redis:6379/0
+      - CELERY_ALWAYS_EAGER=False
+      - CSRF_COOKIE_SECURE=False
+      - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
+      - DEBUG=${DEBUG:-True}
+      - DOMAIN=localhost
+      - ES_URLS=elasticsearch:9200
+      - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
+      - MEMCACHE_SERVERS=memcached:11211
+      - PROTOCOL=http://
+      - SESSION_COOKIE_SECURE=False
+      - SITE_URL=http://localhost:8000
+      # Other environment overrides
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=True
+      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
+      - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
+
+  webbase:
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    extends:
+      service: base
