@@ -91,7 +91,6 @@ services:
   nginx:
     build: ./docker/images/nginx
     volumes:
-      - ./static:/app/static
       - ./ssl:/etc/nginx/ssl
     ports:
       - "80:80"
