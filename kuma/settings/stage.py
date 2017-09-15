@@ -15,11 +15,15 @@ SERVER_EMAIL = config(
     default='server-error@developer-dev.allizom.org'
 )
 
-DOMAIN = STAGING_DOMAIN
-SITE_URL = STAGING_URL
+DOMAIN = config('DOMAIN', default=STAGING_DOMAIN)
+SITE_URL = config('SITE_URL', default=STAGING_URL)
 
-CELERY_ALWAYS_EAGER = False
-CELERYD_MAX_TASKS_PER_CHILD = 3000
+CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', False, cast=bool)
+CELERYD_MAX_TASKS_PER_CHILD = config(
+    'CELERYD_MAX_TASKS_PER_CHILD',
+    default=3000,
+    cast=int
+) or None
 
 ES_INDEX_PREFIX = config('ES_INDEX_PREFIX', default='mdnstage')
 ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=True, cast=bool)
