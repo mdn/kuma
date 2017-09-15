@@ -59,6 +59,8 @@ build.py
 developer.mozilla.org.tar.gz
 docker-compose.dev.yml
 docker-compose.locust.yml
+etc/nginx/ssl/server.crt
+etc/nginx/ssl/server.key
 humans.txt
 james.ini
 kuma/static/js/libs/ckeditor/source/ckbuilder/
