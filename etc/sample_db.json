@@ -1,6 +1,7 @@
 {
   "sources": [
     ["links", "/", {"translations": true, "revisions": 3}],
+    ["links", "/en-US/docs/Experiment:InteractiveEditor", {}],
     ["document", "/en-US/docs/Mozilla/Firefox", {"revisions": 15}],
     ["document", "/en-US/docs/Web/Apps", {"translations": true, "revisions": 3}],
     ["document", "/en-US/docs/MDN_at_ten/History_of_MDN", {}],
@@ -324,7 +325,13 @@
         "superusers": false,
         "created": "2015-02-25"
       }, {
+        "name": "wiki_samples",
+        "everyone": true,
+        "staff": true,
+        "created": "2015-07-20"
+      }, {
         "name": "compat_api",
+        "note": "Groups with the rights: Beta Testers\nVolunteers with the rights: SebastianZ and SphinxKnight",
         "created": "2015-10-01"
       }, {
         "name": "section_edit",
@@ -369,16 +376,28 @@
         "superusers": false,
         "created": "2016-04-20"
       }, {
-        "name": "iperceptions",
-        "note": "Enable the iPerceptions pop-up survey",
-        "everyone": false,
-        "superusers": false,
-        "created": "2016-08-03"
-      }, {
         "name": "sg_task_completion",
         "note": "Show Survey Gizmo link to task completion survey.",
         "superusers": false,
         "created": "2016-08-12"
+      }, {
+        "name": "redesign_beta",
+        "note": "Display a beta notice to beta users.",
+        "created": "2017-06-22"
+      }, {
+        "name": "redesign_live",
+        "note": "Display a notice for the 2017 redesign rollout",
+        "everyone": false,
+        "superusers": false,
+        "created": "2017-06-22"
+      }, {
+        "name": "line_length",
+        "note": "Full width code, restricted line length.",
+        "created": "2017-08-28"
+      }, {
+        "name": "sample_frame",
+        "note": "Frame live sample output.",
+        "created": "2017-09-05"
       }
     ],
     "waffle.switch": [
@@ -427,6 +446,16 @@
         "active": true,
         "note": "Show newsletter sign-up in article footers, also requires `newsletter` to be active.",
         "created": "2016-11-02"
+      }, {
+        "name": "foundation_callout",
+        "note": "Show foundation donate homepage tile?",
+        "active": false,
+        "created": "2016-12-1"
+      }, {
+        "name": "helpful-survey-2",
+        "note": "Enable 2017 Helpfulness Survey",
+        "active": true,
+        "created": "2017-02-14"
       }
     ],
     "search.filtergroup": [
