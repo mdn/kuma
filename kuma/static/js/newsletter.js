@@ -1,4 +1,4 @@
-;(function(doc) {
+(function(doc) {
     'use strict';
 
     // !! this file assumes only one signup form per page !!

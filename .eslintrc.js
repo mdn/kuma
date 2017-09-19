@@ -59,6 +59,7 @@ module.exports = {
         "interpolate": true,
         "mdn": true,
         "Mozilla": true,
-        "waffle": true
+        "waffle": true,
+        "Prism": true
     }
 };
