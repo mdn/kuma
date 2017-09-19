@@ -20,7 +20,7 @@ class BasePage(Page):
     def wait_for_page_to_load(self):
         self.wait.until(lambda s: self.seed_url in s.current_url)
         el = self.find_element(By.TAG_NAME, 'html')
-        self.wait.until(lambda s: el.get_attribute('data-ffo-opensanslight'))
+        self.wait.until(lambda s: el.get_attribute('data-ffo-opensans'))
         return self
 
     @property
@@ -36,6 +36,20 @@ class BasePage(Page):
         mmb = self.find_element(By.CSS_SELECTOR, self.MM_BANNER_SELECTOR)
         return mmb.is_displayed() and (self.MM_BANNER_TEXT in mmb.text)
 
+    def disable_survey_popup(self):
+        """Avoid the task completion survey popup for 5 minutes."""
+        self.selenium.execute_script(
+            "localStorage.setItem('taskTracker', Date.now() + (1000*60*5));")
+        self.selenium.refresh()
+        self.wait_for_page_to_load()
+
+    def enable_survey_popup(self):
+        """Allow the task completion survey popup."""
+        self.selenium.execute_script(
+            "localStorage.removeItem('taskTracker');")
+        self.selenium.refresh()
+        self.wait_for_page_to_load()
+
     class Header(Region):
         report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
         report_bug_form_url = 'https://bugzilla.mozilla.org/form.mdn'
@@ -44,11 +58,10 @@ class BasePage(Page):
 
         _root_locator = (By.ID, 'main-header')
         _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
-        _platform_submenu_trigger_locator = (By.XPATH,
-                                             'id(\'nav-platform-submenu\')/..')
-        _platform_submenu_locator = (By.ID, 'nav-platform-submenu')
-        _platform_submenu_link_locator = (By.CSS_SELECTOR,
-                                          '#nav-platform-submenu a')
+        _tech_submenu_trigger_locator = (By.XPATH,
+                                         'id(\'nav-tech-submenu\')/..')
+        _tech_submenu_locator = (By.ID, 'nav-tech-submenu')
+        _tech_submenu_link_locator = (By.CSS_SELECTOR, '#nav-tech-submenu a')
         _feedback_link_locator = (By.XPATH, 'id(\'nav-contact-submenu\')/../a')
         _feedback_submenu_trigger_locator = (By.XPATH,
                                              'id(\'nav-contact-submenu\')/..')
@@ -58,6 +71,7 @@ class BasePage(Page):
         _report_bug_locator = (By.CSS_SELECTOR,
                                'a[href^="' + report_bug_form_url + '"]')
         _search_field_locator = (By.ID, 'main-q')
+        _search_trigger_locator = (By.CSS_SELECTOR, 'span.search-trigger')
 
         # is displayed?
         @property
@@ -81,20 +95,20 @@ class BasePage(Page):
         def menu_top_links_list(self):
             return self.find_element(*self._menu_top_links)
 
-        # platform submenu
+        # technology submenu (HTML, CSS, JavaScript)
         @property
-        def is_platform_submenu_trigger_displayed(self):
-            submenu_trigger = self.find_element(*self._platform_submenu_trigger_locator)
+        def is_tech_submenu_trigger_displayed(self):
+            submenu_trigger = self.find_element(*self._tech_submenu_trigger_locator)
             return submenu_trigger.is_displayed()
 
         @property
-        def is_platform_submenu_displayed(self):
-            submenu = self.find_element(*self._platform_submenu_locator)
+        def is_tech_submenu_displayed(self):
+            submenu = self.find_element(*self._tech_submenu_locator)
             return submenu.is_displayed()
 
-        def show_platform_submenu(self):
-            submenu_trigger = self.find_element(*self._platform_submenu_trigger_locator)
-            submenu = self.find_element(*self._platform_submenu_locator)
+        def show_tech_submenu(self):
+            submenu_trigger = self.find_element(*self._tech_submenu_trigger_locator)
+            submenu = self.find_element(*self._tech_submenu_locator)
             hover = ActionChains(self.selenium).move_to_element(submenu_trigger)
             hover.perform()
             self.wait.until(lambda s: submenu.is_displayed())
@@ -170,8 +184,8 @@ class BasePage(Page):
             return search_field.size['width']
 
         def search_field_focus(self):
-            plaform_submenu_trigger = self.find_element(*self._platform_submenu_trigger_locator)
-            search_field = self.find_element(*self._search_field_locator)
+            plaform_submenu_trigger = self.find_element(*self._tech_submenu_trigger_locator)
+            search_field = self.find_element(*self._search_trigger_locator)
             focus = ActionChains(self.selenium).move_to_element(search_field).click()
             focus.perform()
             # this can be a bit flaky sometimes
@@ -184,7 +198,7 @@ class BasePage(Page):
             return SearchPage(self.selenium, self.page.base_url, term=term).wait_for_page_to_load()
 
     class Footer(Region):
-        privacy_url = '//www.mozilla.org/privacy/websites/'
+        privacy_url = 'https://www.mozilla.org/privacy/websites/'
         copyright_url = '/docs/MDN/About#Copyrights_and_licenses'
         # locators
         _root_locator = (By.CSS_SELECTOR, 'body > footer')

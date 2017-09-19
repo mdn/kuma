@@ -52,6 +52,8 @@ def test_search_home_header(base_url, selenium):
 def test_search_article_header(base_url, selenium):
     # open article page
     page = ArticlePage(selenium, base_url).open()
+    # avoid the task completion popup
+    page.disable_survey_popup()
     # focus on search in nav menu
     width_before = page.header.search_field_width
     page.header.search_field_focus()

@@ -30,8 +30,8 @@ def test_hacks_blog(base_url, selenium):
 @pytest.mark.nondestructive
 def test_callouts(base_url, selenium):
     page = HomePage(selenium, base_url).open()
-    # three of them?
-    assert page.callout_items_length == 3
+    # two of them?
+    assert page.callout_items_length == 2
     # in a row
     callout_container = page.callout_container
     assert callout_container.is_expected_stacking()
@@ -54,12 +54,12 @@ def test_header_displays(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
-def test_header_platform_submenu(base_url, selenium):
+def test_header_tech_submenu(base_url, selenium):
     page = HomePage(selenium, base_url).open()
-    assert page.header.is_platform_submenu_trigger_displayed
-    assert not page.header.is_platform_submenu_displayed
-    page.header.show_platform_submenu()
-    assert page.header.is_platform_submenu_displayed
+    assert page.header.is_tech_submenu_trigger_displayed
+    assert not page.header.is_tech_submenu_displayed
+    page.header.show_tech_submenu()
+    assert page.header.is_tech_submenu_displayed
 
 
 @pytest.mark.smoke
