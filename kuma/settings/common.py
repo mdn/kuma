@@ -373,6 +373,9 @@ MEDIA_ROOT = config('MEDIA_ROOT', default=path('media'))
 # Absolute path to the directory for the humans.txt file.
 HUMANSTXT_ROOT = MEDIA_ROOT
 
+# Absolute path to the directory for the robots files.
+ROBOTS_ROOT = config('ROBOTS_ROOT', default=MEDIA_ROOT)
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"

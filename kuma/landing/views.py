@@ -64,4 +64,4 @@ def robots_txt(request):
         robots = 'robots.txt'
     else:
         robots = 'robots-go-away.txt'
-    return static.serve(request, robots, document_root=settings.MEDIA_ROOT)
+    return static.serve(request, robots, document_root=settings.ROBOTS_ROOT)
