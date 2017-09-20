@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import static
 
+from kuma.settings.common import path
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
 from kuma.feeder.models import Bundle
@@ -64,4 +65,4 @@ def robots_txt(request):
         robots = 'robots.txt'
     else:
         robots = 'robots-go-away.txt'
-    return static.serve(request, robots, document_root=settings.MEDIA_ROOT)
+    return static.serve(request, robots, document_root=path('media'))
