@@ -326,9 +326,9 @@
             });
 
             // The toggler can be initially opened via a data- attribute
-            if($self.attr('data-default-state') === 'open') {
-                toggle($self);
-            }
+            //if($self.attr('data-default-state') === 'open') {
+            //   toggle($self);
+            //}
 
             function toggle($li, forceClose) {
                 var pieces = getTogglerComponents($li);
@@ -354,8 +354,8 @@
             }
 
             function setIcon($tog, $li) {
-                var openIcon = $tog.attr('data-open-icon') || 'icon-caret-right';
-                var closedIcon = $tog.attr('data-closed-icon') || 'icon-caret-down';
+                var openIcon = $tog.attr('data-open-icon') || 'icon-plus-circle';
+                var closedIcon = $tog.attr('data-closed-icon') || 'icon-minus-circle';
                 $tog.find('i').attr('class', (getState($li) ? openIcon : closedIcon));
             }
 

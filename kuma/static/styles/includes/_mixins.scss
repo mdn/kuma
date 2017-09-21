@@ -374,7 +374,7 @@ These are not dynamic but serve as mixins
 @mixin heading-2() {
     @include set-font-size($h2-font-size);
     font-family: $heading-font-family;
-    line-height: 1;
+    line-height: 1.2;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
@@ -522,7 +522,7 @@ Placeholders
 
     &,
     & .highlight-span {
-        padding: 0 4px;
+        padding: 0 80px 0 4px;
         background-color: $text-color;
         color: #fff;
         font-weight: normal;
@@ -531,6 +531,11 @@ Placeholders
 
         a {
             color: $accent-light;
+        }
+
+        code {
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #fff !important;
         }
     }
 }

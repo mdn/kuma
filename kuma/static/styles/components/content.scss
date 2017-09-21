@@ -15,6 +15,24 @@ $table-cell-border: 2px solid #fff;
     ====================================================================== */
 
     h2 {
+        position: relative;
+        margin-top: -80px;
+        margin-bottom: 25px;
+        padding-top: 100px;
+        font-size: 32px;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 80px;
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #d8d8d8;
+        }
+    }
+
+    h3,
+    h5 {
         @extend %highlight;
     }
 

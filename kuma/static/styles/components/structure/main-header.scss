@@ -11,7 +11,6 @@ Main header, wraps all components of logo, main, and secondary navigation
     border-width: 5px 0 0;
     border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
     background-color: #fff;
-    box-shadow: 0 0 9px 0 rgba(0, 0, 0, .3);
 
     > .center {
         @include clearfix();
