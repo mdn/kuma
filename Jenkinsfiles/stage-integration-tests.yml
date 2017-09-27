@@ -7,3 +7,4 @@ job:
   selenium_nodes: 5
   base_url: 'https://developer.allizom.org'
   tests: "not login"
+  maintenance_mode: false
