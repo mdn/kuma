@@ -23,6 +23,7 @@ services:
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=localhost
+      - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
       - ES_URLS=elasticsearch:9200
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}

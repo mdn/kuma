@@ -439,6 +439,7 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
+    'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
     # must come before LocaleURLMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
     # LocaleURLMiddleware must be before any middleware that uses
@@ -467,6 +468,7 @@ MIDDLEWARE_CLASSES += (
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'kuma.users.middleware.BanMiddleware',
     'waffle.middleware.WaffleMiddleware',
+    'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
 
 # Auth
@@ -1235,6 +1237,13 @@ MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
+
+# This should never be false for the production and stage deployments.
+ENABLE_RESTRICTIONS_BY_HOST = config(
+    'ENABLE_RESTRICTIONS_BY_HOST',
+    default=True,
+    cast=bool
+)
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
