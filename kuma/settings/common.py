@@ -1681,6 +1681,25 @@ REST_FRAMEWORK = {
 SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:
+    from raven.transport.requests import RequestsHTTPTransport
+    RAVEN_CONFIG = {
+        'dsn': SENTRY_DSN,
+        'transport': RequestsHTTPTransport,  # Sync transport
+        'repos': {
+            'kuma': {
+                'name': 'mozilla/kuma',
+            },
+            'kumascript': {
+                'name': 'mdn/kumascript',
+            },
+        },
+        'ignore_exception': [
+            'django.core.exceptions.DisallowedHost',
+        ],
+    }
+    release = config('REVISION_HASH', default='')
+    if release:
+        RAVEN_CONFIG['release'] = release
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )
