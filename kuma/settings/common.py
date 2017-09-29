@@ -1685,14 +1685,6 @@ if SENTRY_DSN:
     RAVEN_CONFIG = {
         'dsn': SENTRY_DSN,
         'transport': RequestsHTTPTransport,  # Sync transport
-        'repos': {
-            'kuma': {
-                'name': 'mozilla/kuma',
-            },
-            'kumascript': {
-                'name': 'mdn/kumascript',
-            },
-        },
         'ignore_exception': [
             'django.core.exceptions.DisallowedHost',
         ],
