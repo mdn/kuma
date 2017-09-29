@@ -16,7 +16,7 @@ services:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
       - ALLOWED_HOSTS=*
-      - ATTACHMENT_HOST=localhost:8000
+      - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
       - CSRF_COOKIE_SECURE=False
@@ -32,6 +32,7 @@ services:
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=http://localhost:8000
+      - STATIC_URL=${STATIC_URL:-/static/}
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
