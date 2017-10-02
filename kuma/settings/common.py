@@ -403,6 +403,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '__debug__',
     '.well-known',
     'users/github/login/callback/',
+    'favicon.ico',
     # Legacy files, circa 2008, served in AWS
     'diagrams',
     'presentations',

@@ -30,3 +30,9 @@ def test_robots_enabled(client, db, settings, allowed):
         assert 'Sitemap: ' in content
     else:
         assert 'Disallow: /' in content
+
+
+def test_favicon_ico(client):
+    response = client.get('favicon.ico')
+    assert response.status_code == 302
+    assert response['Location'].endswith('static/img/favicon.ico')

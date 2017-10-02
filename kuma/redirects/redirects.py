@@ -1,5 +1,3 @@
-from django.contrib.staticfiles.storage import staticfiles_storage
-
 from redirect_urls import redirect as lib_redirect
 
 
@@ -761,10 +759,5 @@ redirectpatterns = [
 
     # RewriteRule ^es4 http://www.ecma-international.org/memento/TC39.htm [R=302,L]
     redirect(r'^es4', 'http://www.ecma-international.org/memento/TC39.htm',
-             permanent=False),
-
-    # /favicon.ico - requested by some tools
-    redirect(r'^favicon.ico',
-             staticfiles_storage.url('img/favicon.ico'),
              permanent=False),
 ]
