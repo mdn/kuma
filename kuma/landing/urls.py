@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^robots.txt$',
         views.robots_txt,
         name='robots_txt'),
+    url(r'^favicon.ico$',
+        views.FaviconRedirect.as_view(icon='favicon.ico'),
+        name='favicon_ico'),
 ]

@@ -1,6 +1,8 @@
 from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.shortcuts import redirect, render
 from django.views import static
+from django.views.generic import RedirectView
 
 from kuma.settings.common import path
 from kuma.core.sections import SECTION_USAGE
@@ -66,3 +68,13 @@ def robots_txt(request):
     else:
         robots = 'robots-go-away.txt'
     return static.serve(request, robots, document_root=path('media'))
+
+
+class FaviconRedirect(RedirectView):
+    """Redirect to the favicon in the static img folder (bug 1402497)"""
+    icon = None
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        assert self.icon
+        return staticfiles_storage.url('img/%s' % self.icon)
