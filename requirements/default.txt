@@ -261,9 +261,9 @@ wheel==0.29.0 \
     --hash=sha256:1ebb8ad7e26b448e9caa4773d2357849bf80ff9e313964bcaf79cbf0201a1648
 
 # Serve static files with compression, etc. from Django
-whitenoise==2.0.6 \
-    --hash=sha256:826ffe5d608c9dc8daebef1b0b43d01f7958f17c2fce36e75c80e26160172c4f \
-    --hash=sha256:5aea935dfc09ef2beeb76960b4a808b0bbe65e85fb0b0312434b9c365ca02a41
+whitenoise==3.3.1 \
+    --hash=sha256:15f43b2e701821b95c9016cf469d29e2a546cb1c7dead584ba82c36f843995cf \
+    --hash=sha256:9d81515f2b5b27051910996e1e860b1332e354d9e7bcf30c98f21dcb6713e0dd
 
 # Fix gunicorn worker timeout problems with default sync worker
 meinheld==0.6.1 \
@@ -274,4 +274,3 @@ meinheld==0.6.1 \
 django-redirect-urls==0.1 \
     --hash=sha256:cd8499424e4920dc929bf1d64c5563349471353143af8e631033336570c42445 \
     --hash=sha256:267f20cc44de96fc574b5b02e9efcd80f4aab4146539dea1f4228f62f34bb4f5
-

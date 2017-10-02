@@ -1,11 +1,14 @@
-from mock import MagicMock
+from mock import patch, MagicMock
 
 from django.test import RequestFactory
 
 from kuma.core.tests import KumaTestCase, eq_
 from kuma.core.middleware import (
+    WhiteNoiseMiddleware,
     SetRemoteAddrFromForwardedFor,
-    ForceAnonymousSessionMiddleware
+    ForceAnonymousSessionMiddleware,
+    RestrictedEndpointsMiddleware,
+    RestrictedWhiteNoiseMiddleware,
 )
 
 
@@ -56,3 +59,42 @@ def test_force_anonymous_session_middleware(rf, settings):
     response = middleware.process_response(request, MagicMock())
 
     assert not response.method_calls
+
+
+def test_restricted_endpoints_middleware(rf, settings):
+    settings.ATTACHMENT_HOST = 'demos'
+    settings.ENABLE_RESTRICTIONS_BY_HOST = True
+    middleware = RestrictedEndpointsMiddleware()
+
+    request = rf.get('/foo', HTTP_HOST='demos')
+    middleware.process_request(request)
+    assert request.urlconf == 'kuma.urls_untrusted'
+
+    request = rf.get('/foo', HTTP_HOST='not-demos')
+    middleware.process_request(request)
+    assert not hasattr(request, 'urlconf')
+
+    settings.ENABLE_RESTRICTIONS_BY_HOST = False
+    request = rf.get('/foo', HTTP_HOST='demos')
+    middleware.process_request(request)
+    assert not hasattr(request, 'urlconf')
+
+
+def test_restricted_whitenoise_middleware(rf, settings):
+    settings.ATTACHMENT_HOST = 'demos'
+    settings.ENABLE_RESTRICTIONS_BY_HOST = True
+    middleware = RestrictedWhiteNoiseMiddleware()
+
+    sentinel = object()
+
+    with patch.object(WhiteNoiseMiddleware, 'process_request',
+                      return_value=sentinel):
+        request = rf.get('/foo', HTTP_HOST='demos')
+        assert middleware.process_request(request) is None
+
+        request = rf.get('/foo', HTTP_HOST='not-demos')
+        assert middleware.process_request(request) is sentinel
+
+        settings.ENABLE_RESTRICTIONS_BY_HOST = False
+        request = rf.get('/foo', HTTP_HOST='demos')
+        assert middleware.process_request(request) is sentinel

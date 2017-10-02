@@ -16,13 +16,14 @@ services:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
       - ALLOWED_HOSTS=*
-      - ATTACHMENT_HOST=localhost:8000
+      - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=localhost
+      - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
       - ES_URLS=elasticsearch:9200
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
@@ -31,6 +32,7 @@ services:
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=http://localhost:8000
+      - STATIC_URL=${STATIC_URL:-/static/}
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True

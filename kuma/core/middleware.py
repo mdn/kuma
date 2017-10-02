@@ -7,6 +7,7 @@ from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect, Ht
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
+from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .utils import urlparams
@@ -166,3 +167,28 @@ class ForceAnonymousSessionMiddleware(SessionMiddleware):
         Override the base-class method to ensure we do nothing.
         """
         return response
+
+
+class RestrictedEndpointsMiddleware(object):
+
+    def process_request(self, request):
+        """
+        Restricts the accessible endpoints based on the host.
+        """
+        if (settings.ENABLE_RESTRICTIONS_BY_HOST and
+                (request.get_host() == settings.ATTACHMENT_HOST)):
+            request.urlconf = 'kuma.urls_untrusted'
+
+
+class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
+
+    def process_request(self, request):
+        """
+        Restricts the use of WhiteNoiseMiddleware based on the host.
+        """
+        if (settings.ENABLE_RESTRICTIONS_BY_HOST and
+                (request.get_host() == settings.ATTACHMENT_HOST)):
+            return None
+        return super(RestrictedWhiteNoiseMiddleware, self).process_request(
+            request
+        )
