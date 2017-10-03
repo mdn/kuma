@@ -136,7 +136,7 @@
     /*
         Add intelligent break points to long article titles
     */
-    $('.document .document-head h1').each(function() {
+    $('.document .document-head h1, .quick-links li li code').each(function() {
         var $title = $(this);
         var text = $title.text();
         // split on . - : ( or capital letter, only if followed by 2 letters

@@ -15,7 +15,6 @@ Utitlity classes (reused in a variety of contexts)
 @import 'components/wiki/document-list';
 @import 'components/wiki/external-icon';
 
-
 /*
 Components that may appear on most wiki pages
 ====================================================================== */
@@ -88,3 +87,42 @@ Helpfulness survey 2
 ====================================================================== */
 
 @import 'components/wiki/wiki-helpful-survey';
+
+/*
+Sticky TOC
+====================================================================== */
+
+#stickyTOC {
+    position: sticky;
+    top: -1px;
+    z-index: 100;
+    background-color: #f5f9fa;
+    box-shadow: 0 9px 9px -9px rgba(0, 0, 0, .3);
+    padding: 25px 0 30px 0;
+    background-color: #000;
+    color: #fff;
+
+    a {
+        display: inline-block;
+        padding: 0 30px 0 0;
+        font-size: 18px;
+        font-weight: bold;
+        white-space: nowrap;
+        color: #2EB3EE;
+    }
+
+    .visible {
+        background-color: #00f;
+    }
+}
+
+.sticky-head {
+    display: inline-block;
+    font-family: $heading-font-family;
+    font-size: 24px;
+    padding-right: 30px;
+}
+
+#Summary {
+    display: none;
+}

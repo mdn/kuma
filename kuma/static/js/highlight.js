@@ -9,8 +9,8 @@
         });
     }
 
-    // call on aritcle body with h3 and h4 as targets
-    var $articleSubHeads = $('#wikiArticle h2');
+    // call on aritcle body with targets
+    var $articleSubHeads = $('#wikiArticle h3, #wikiArticle h5');
     highlight($articleSubHeads);
 
 })(jQuery);

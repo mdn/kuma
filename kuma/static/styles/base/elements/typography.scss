@@ -14,24 +14,35 @@ h1 {
 h2 {
     @include heading-2();
     margin: $grid-spacing 0;
+    line-height: 1.2;
 }
 
 h3 {
-    margin: $grid-spacing 0 ($grid-spacing / 2) 0;
+    margin: $grid-spacing 0;
     @include set-font-size($h3-font-size);
     @include set-heading-font-family();
+    line-height: 1.2;
 }
 
 h4 {
     margin: $grid-spacing 0 ($grid-spacing / 2) 0;
     @include set-font-size($h4-font-size);
     @include set-heading-font-family();
+    line-height: 1.2;
+}
+
+h5 {
+    margin: ($grid-spacing / 2) 0;
+    @include set-font-size($h2-font-size);
+    @include set-heading-font-family();
+    line-height: 1.2;
 }
 
 h5 {
     margin: ($grid-spacing / 2) 0;
     @include set-font-size($body-font-size);
     @include set-heading-font-family();
+    line-height: 1.2;
 }
 
 /*

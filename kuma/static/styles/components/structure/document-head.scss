@@ -3,11 +3,15 @@
     clear: both;
     background-color: #f5f9fa;
     padding: $first-content-top-padding 0 $last-content-bottom-padding 0;
+
+    .hasStickyTOC & {
+        padding-bottom: 30px;
+    }
 }
 
 .document-title {
-    clear: both;
     position: relative;
+    clear: both;
 
     h1 {
         @include set-font-size($mobile-document-title-font-size);
@@ -18,6 +22,11 @@
         @include bidi-style(margin-left, -3px, margin-right, 0);
         text-transform: none;
     }
+
+    .hasStickyTOC & {
+        clear: none;
+    }
+
 }
 
 .document-actions {

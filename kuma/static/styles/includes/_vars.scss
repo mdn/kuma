@@ -84,7 +84,7 @@ $neutral: $blue;
 $default: $grey;
 
 $text-color: #333;
-$link-color: darken($blue, 5);
+$link-color: #3F87A6;
 $menu-link-color: $text-color;
 $blue-background-text-color: #fff;
 $light-background-color: #{map-get( map-get($colors-lookup, 'default'), 'light')};
@@ -121,9 +121,10 @@ $diff-font-family: $code-inline-font-family;
 sizes
 ====================================================================== */
 $h1-font-size: 48px;
-$h2-font-size: 24px;
+$h2-font-size: 32px;
 $h3-font-size: 22px;
-$h4-font-size: 20px;
+$h4-font-size: 22px;
+$h5-font-size: 18px;
 $callout-font-size: 22px;
 $note-font-size: 18px;
 $body-font-size: 16px;
