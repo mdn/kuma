@@ -12,8 +12,8 @@ eventually emptying this file.
 ********************************************************************** */
 
 
-.prevnext p {
-    @include full-width-content();
+.prevnext {
+    @include restrict-line-length();
 }
 
 /* Used for footnotes in {{PricePointTable}}
