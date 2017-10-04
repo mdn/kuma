@@ -1,3 +1,4 @@
+from functools import wraps
 import re
 
 from selenium.webdriver.common.by import By
@@ -6,6 +7,23 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
 
 from pypom import Page, Region
+
+
+def wait_for_window(fn):
+    """
+    Wait for the tab or window opened by the action.
+
+    Firefox will sometimes return from click methods before the tab
+    or window is fully opened. Chrome waits for the new window.
+    """
+    @wraps(fn)
+    def with_wait_for_window(self=None, *args, **kwargs):
+        page = self.page
+        window_count = len(page.selenium.window_handles)
+        fn(self, *args, **kwargs)
+        self.wait.until(lambda s: len(s.window_handles) > window_count)
+
+    return with_wait_for_window
 
 
 class BasePage(Page):
@@ -163,9 +181,9 @@ class BasePage(Page):
             path = re.sub(r'^' + locale + '\/', '', path)
             return path
 
+        @wait_for_window
         def open_report_content(self):
             self.find_element(*self._report_content_locator).click()
-            # launches new window, cannot return new page object like other opens
 
         def is_report_content_url_expected(self, selenium, article_url):
             current_url = selenium.current_url
@@ -175,6 +193,7 @@ class BasePage(Page):
             # TODO check url contains article url in query variable
             return url_matches
 
+        @wait_for_window
         def open_report_bug(self):
             self.find_element(*self._report_bug_locator).click()
 

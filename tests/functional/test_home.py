@@ -68,9 +68,11 @@ def test_header_tech_submenu(base_url, selenium):
 @skip_if_maintenance_mode
 def test_header_signin(base_url, selenium):
     page = HomePage(selenium, base_url).open()
+    old_url = selenium.current_url
     # click on sign in widget
     page.header.trigger_signin()
     # assert it's fowarded to github
+    page.wait.until(lambda s: s.current_url != old_url)
     assert 'https://github.com' in str(selenium.current_url)
 
 
