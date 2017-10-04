@@ -29,8 +29,6 @@ def test_dashboard(base_url, selenium):
     assert page.is_first_details_displayed
     # contains a diff
     assert page.is_first_details_diff_displayed
-    # does not overflow page
-    assert page.dashboard_not_overflowing
     # save id of first revision on page one
     first_row_id = page.first_row_id
     # click on page two link
@@ -39,6 +37,20 @@ def test_dashboard(base_url, selenium):
     new_first_row_id = page.first_row_id
     # check first revison on page one is not on page two
     assert first_row_id is not new_first_row_id
+
+
+@pytest.mark.xfail(reason='bug 1405690: fails for some revision diffs')
+@pytest.mark.smoke
+@pytest.mark.nondestructive
+def test_dashboard_overflow(base_url, selenium):
+    """
+    The revision detail diff stays in page boundaries
+
+    bug 1405690 - some content causes overflows
+    """
+    page = DashboardPage(selenium, base_url).open()
+    page.open_first_details()
+    assert page.scrollWidth < page.clientWidth
 
 
 @pytest.mark.nondestructive

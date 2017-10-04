@@ -89,9 +89,14 @@ class DashboardPage(BasePage):
         self.wait.until(lambda s: 'opacity' not in self.find_element(*self._parent_locator).get_attribute('style'))
 
     @property
-    def dashboard_not_overflowing(self):
-        crawlBar = self.selenium.execute_script("return document.documentElement.scrollWidth>document.documentElement.clientWidth;")
-        return not crawlBar
+    def scroll_width(self):
+        script = "return document.documentElement.scrollWidth;"
+        return int(self.selenium.execute_script(script))
+
+    @property
+    def client_width(self):
+        script = "return document.documentElement.clientWidth;"
+        return int(self.selenium.execute_script(script))
 
 
 class DashboardRow(Region):
