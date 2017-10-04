@@ -19,6 +19,7 @@ def test_report_content(base_url, selenium):
     page.header.open_report_content()
     # bugzilla loads in new window
     selenium.switch_to_window(selenium.window_handles[1])
+    page.wait.until(lambda s: 'about:blank' not in s.current_url)
     # check form loaded and has reporting URL in query
     assert page.header.is_report_content_url_expected(selenium, report_url)
 
