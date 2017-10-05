@@ -18,7 +18,9 @@
         win.mdn.staticPath = '{{ STATIC_URL }}';
         win.mdn.optimizely = win['optimizely'] || [];
         win.mdn.wiki = {
+            {%- if not untrusted %}
             autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
+            {%- endif %}
         };
         win.mdn.assets = {
             css: {

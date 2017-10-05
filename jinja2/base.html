@@ -1,20 +1,21 @@
 {% from "includes/common_macros.html" import optimizely_script with context -%}
+{% set untrusted = request.get_host() == settings.ATTACHMENT_HOST %}
 
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" class="no-js" data-ffo-opensans="false" data-ffo-zillaslab="false">
-<head {%- if not is_sphinx %} prefix="og: http://ogp.me/ns#"{% endif %}>
+<head {%- if not untrusted and not is_sphinx %} prefix="og: http://ogp.me/ns#"{% endif %}>
   <meta charset="utf-8">
   {%- block experiment_js %}{% endblock %}
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
-  {% if not is_sphinx %}
+  {% if not untrusted and not is_sphinx %}
     {{ optimizely_script() }}
   {% endif %}
   <title>{% block title %}{{ _('MDN Web Docs') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
-  {%- if not is_sphinx %}
+  {%- if not untrusted and not is_sphinx %}
     <link rel="home" href="{{ url('home') }}">
     <link rel="copyright" href="#copyright">
   {% endif %}
@@ -39,7 +40,7 @@
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
-  {%- if not is_sphinx %}
+  {%- if not untrusted and not is_sphinx %}
     <!-- common social tags -->
     {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
     <meta property="og:type" content="website">
@@ -92,7 +93,9 @@
         <p>
           <bdi>
             {{ _('MDN is currently in read-only maintenance mode.') }}
+            {%- if not untrusted %}
             <a href="{{ url('maintenance_mode') }}">{{ _('Learn more') }}</a>.
+            {%- endif %}
           </bdi>
         </p>
       </div>
@@ -101,6 +104,7 @@
     {{ soapbox_messages(get_soapbox_messages(request.path)) }}
   {%- endif %}
 
+  {%- if not untrusted %}
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
     {%- if not is_sphinx %}
@@ -188,6 +192,7 @@
         </div>
       </form></li>{% endif %}</ul></nav>
   </div></header>
+  {%- endif %} {# if not untrusted #}
 
   <!-- Content will go here -->
   <main id="content">
@@ -201,6 +206,7 @@
   {% include "includes/redesign_notice.html" %}
 
 
+  {%- if not untrusted %}
   <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
       <div class="center">
@@ -253,6 +259,7 @@
           {% endblock %}
       </div>
     </footer>
+    {%- endif %} {# if not untrusted #}
 
   <!-- site js -->
   {% block site_js %}
