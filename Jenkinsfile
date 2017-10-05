@@ -32,14 +32,22 @@ node {
     setGitEnvironmentVariables()
     // Set UID to jenkins
     env['UID'] = 1000
+    // Prepare for junit test results
+    sh "mkdir -p test_results"
+    sh "rm -f test_results/*.xml"
 
     // When checking in a file exists in another directory start with './' or
     // prepare to fail.
-    if (fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.groovy") || fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.yml")) {
-      loadBranch(env.BRANCH_NAME)
+    try {
+      if (fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.groovy") || fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.yml")) {
+        loadBranch(env.BRANCH_NAME)
+      }
+      else {
+        loadBranch("default")
+      }
     }
-    else {
-      loadBranch("default")
+    finally {
+      junit 'test_results/*.xml'
     }
   }
 }

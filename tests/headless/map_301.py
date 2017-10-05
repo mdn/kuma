@@ -337,4 +337,15 @@ LEGACY_URLS = flatten((
     url_test('/es4/proposals/slice_syntax.html',
              'http://www.ecma-international.org/memento/TC39.htm',
              status_code=302),
+    # bug 962148
+    url_test('/en/docs/Web/CSS/Attribute_selectors',
+             '/en-US/docs/Web/CSS/Attribute_selectors', status_code=302),
+    url_test('/en/docs/Web/CSS/Attribute_selectors',
+             '/en-US/docs/Web/CSS/Attribute_selectors', status_code=302),
+    url_test('/cn/docs/Talk:Kakurady', '/zh-CN/docs/Talk%3AKakurady',
+             status_code=302),
+    url_test('/zh_cn/docs/Web/API/RTCPeerConnection/addTrack',
+             '/zh-CN/docs/Web/API/RTCPeerConnection/addTrack',
+             status_code=302),
+    url_test('/zh_tw/docs/AJAX', '/zh-TW/docs/AJAX', status_code=302),
 ))

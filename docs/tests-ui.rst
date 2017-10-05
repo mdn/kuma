@@ -11,7 +11,7 @@ The tests directory comprises of:
 * ``/functional`` contains pytest tests.
 * ``/pages`` contains Python `PyPOM`_ page objects.
 * ``/utils`` contains helper functions.
-* ``/redirects`` contains HTTP redirection tests.
+* ``/headless`` contains tests that don't require a browser
 
 .. _`Selenium`: http://docs.seleniumhq.org/
 .. _`pytest`: http://pytest.org/latest/
@@ -58,7 +58,7 @@ server.
 
 In the virtual environment run::
 
-   $ py.test -m "not login" tests/functional/ --driver Chrome --driver-path /path/to/chromedriver
+   $ pytest -m "not login" tests --driver Chrome --driver-path /path/to/chromedriver
 
 You will be prompted "Do you want the application 'python' to accept incoming
 network connections?" The tests seem to run fine no matter how you answer.
@@ -73,7 +73,8 @@ Only running tests in one file
 
 Add the name of the file to the test location::
 
-   $ py.test -m "not login" tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
+   $ pytest -m "not login" tests/functional/test_search.py --driver Chrome --driver-path /path/to/chromedriver
+
 
 Run the tests against a different url
 -------------------------------------
@@ -82,7 +83,14 @@ By default the tests will run against the staging server. If you'd like to run
 the tests against a different URL (e.g., your local environment) pass the
 desired URL to the command with ``--base-url``::
 
-   $ py.test -m "not login" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+   $ pytest -m "not login" tests --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+
+Only running headless tests
+---------------------------
+
+Headless tests do not require Selenium or markers::
+
+   $ pytest tests/headless --base-url http://localhost:8000
 
 Run the tests in parallel
 -------------------------
@@ -90,18 +98,18 @@ Run the tests in parallel
 By default the tests will run one after the other but you can run several at
 the same time by specifying a value for ``-n``::
 
-   $ py.test -m "not login" tests/functional/ -n auto --driver Chrome --driver-path /path/to/chromedriver
+   $ pytest -m "not login" tests -n auto --driver Chrome --driver-path /path/to/chromedriver
 
 Run the tests against a server configured in maintenance mode
 -------------------------------------------------------------
 
 By default the tests will run against a server assumed to be configured
 normally. If you'd like to run them against a server configured in
-maintenance mode, simply add ``--maintenance-mode`` to the ``py.test`` command
+maintenance mode, simply add ``--maintenance-mode`` to the ``pytest`` command
 line. For example, if you've configured your local environment to run in
 maintenance mode::
 
-   $ py.test --maintenance-mode -m "not search" tests/functional/ --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
+   $ pytest --maintenance-mode -m "not search" tests --base-url http://localhost:8000 --driver Chrome --driver-path /path/to/chromedriver
 
 Note that the tests marked "search" were excluded assuming you've loaded the
 sample database. If you've loaded a full copy of the production database, you
@@ -126,7 +134,7 @@ machine.
 #. Run a test specifying ``SauceLabs`` as your driver, and pass your credentials
    and the browser to test::
 
-   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 py.test -m "not login" tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
+   $ SAUCELABS_USERNAME=thedude SAUCELABS_API_KEY=123456789 pytest -m "not login" tests/functional/ --driver SauceLabs --capability browsername MicrosoftEdge
 
 Alternatively you can save your credentials `in a configuration file`_ so you
 don't have to type them each time.

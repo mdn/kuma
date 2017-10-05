@@ -7,3 +7,4 @@ job:
   selenium_nodes: 5
   base_url: 'https://developer.mozilla.org'
   tests: "not login"
+  maintenance_mode: false

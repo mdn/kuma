@@ -23,6 +23,7 @@ htmlcov/
 .noserc
 nosetests.xml
 coverage.xml
+/test_results/
 
 # Sphinx documentation
 /docs/_build/

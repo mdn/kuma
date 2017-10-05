@@ -6,7 +6,7 @@ services:
     user: ${UID:-0}
     volumes:
       - ./:/app
-    command: py.test --nomigrations kuma/humans kuma/spam
+    command: py.test --nomigrations --junit-xml=/app/test_results/smoke.xml kuma/humans kuma/spam
     environment:
       - DATABASE_URL=sqlite:///
       - PYTHONDONTWRITEBYTECODE=1
@@ -45,7 +45,7 @@ services:
     user: ${UID:-0}
     volumes:
       - ./:/app
-    command: py.test --nomigrations kuma
+    command: py.test --nomigrations --junit-xml=/app/test_results/django.xml kuma
     depends_on:
       - memcached
       - mysql
