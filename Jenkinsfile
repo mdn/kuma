@@ -1,6 +1,9 @@
+#!groovy
+
 @Library('github.com/mozmar/jenkins-pipeline@master')
 
 def loadBranch(String branch) {
+  utils = load 'Jenkinsfiles/utils.groovy'
   if (fileExists("./Jenkinsfiles/${branch}.yml")) {
     config = readYaml file: "./Jenkinsfiles/${branch}.yml"
     println "config ==> ${config}"
