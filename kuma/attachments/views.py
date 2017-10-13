@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.http import last_modified
+from django.views.decorators.cache import cache_control
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from kuma.core.decorators import login_required
@@ -12,7 +14,7 @@ from kuma.wiki.decorators import process_document_path
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import allow_add_attachment_by, convert_to_http_date
+from .utils import allow_add_attachment_by, convert_to_utc
 
 
 # Mime types used on MDN
@@ -32,6 +34,10 @@ def raw_file(request, attachment_id, filename):
     """
     Serve up an attachment's file.
     """
+
+    # Stop SessionMiddleware from adding "Cookie" to the "Vary" header.
+    request.session.accessed = False
+
     qs = Attachment.objects.select_related('current_revision')
     attachment = get_object_or_404(qs, pk=attachment_id)
     if attachment.current_revision is None:
@@ -39,18 +45,28 @@ def raw_file(request, attachment_id, filename):
 
     if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
-        if settings.DEBUG:
-            # to work around an issue of the localdevstorage with streamed
-            # files we'll have to read some of the file here first
-            rev.file.read(rev.file.DEFAULT_CHUNK_SIZE)
-        response = StreamingHttpResponse(rev.file, content_type=rev.mime_type)
-        response['Last-Modified'] = convert_to_http_date(rev.created)
-        try:
-            response['Content-Length'] = rev.file.size
-        except OSError:
-            pass
-        response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
-        return response
+
+        def get_last_modified(*args):
+            return convert_to_utc(rev.created)
+
+        @cache_control(public=True,
+                       max_age=settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE)
+        @last_modified(get_last_modified)
+        def stream_raw_file(*args):
+            if settings.DEBUG:
+                # to work around an issue of the localdevstorage with streamed
+                # files we'll have to read some of the file here first
+                rev.file.read(rev.file.DEFAULT_CHUNK_SIZE)
+            response = StreamingHttpResponse(rev.file,
+                                             content_type=rev.mime_type)
+            try:
+                response['Content-Length'] = rev.file.size
+            except OSError:
+                pass
+            response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
+            return response
+
+        return stream_raw_file(request)
     else:
         return redirect(attachment.get_file_url(), permanent=True)
 

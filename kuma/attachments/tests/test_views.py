@@ -1,16 +1,16 @@
-import datetime
 import json
+import datetime
 
 from constance.test import override_config
-from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db import transaction
-from django.utils.http import parse_http_date_safe
+from django.utils.six.moves.urllib.parse import urlparse
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentAttachment
 from kuma.wiki.tests import WikiTestCase, document, revision
+from kuma.attachments.utils import convert_to_http_date
 
 from ..models import Attachment, AttachmentRevision
 from . import make_test_file
@@ -42,50 +42,6 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
                                     data=post_data)
         return response
 
-    def test_legacy_redirect(self):
-        test_user = self.user_model.objects.get(username='testuser2')
-        test_file_content = 'Meh meh I am a test file.'
-        test_files = (
-            {'file_id': 97, 'filename': 'Canvas_rect.png',
-             'title': 'Canvas rect'},
-            {'file_id': 107, 'filename': 'Canvas_smiley.png',
-             'title': 'Canvas smiley'},
-            {'file_id': 86, 'filename': 'Canvas_lineTo.png',
-             'title': 'Canvas lineTo'},
-            {'file_id': 55, 'filename': 'Canvas_arc.png',
-             'title': 'Canvas arc'},
-        )
-        for test_file in test_files:
-            attachment = Attachment(
-                title=test_file['title'],
-                mindtouch_attachment_id=test_file['file_id'],
-            )
-            attachment.save()
-            now = datetime.datetime.now()
-            revision = AttachmentRevision(
-                attachment=attachment,
-                mime_type='text/plain',
-                title=test_file['title'],
-                description='',
-                created=now,
-                is_approved=True)
-            revision.creator = test_user
-            revision.file.save(test_file['filename'],
-                               ContentFile(test_file_content))
-            revision.make_current()
-            mindtouch_url = reverse('attachments.mindtouch_file_redirect',
-                                    args=(),
-                                    kwargs={'file_id': test_file['file_id'],
-                                            'filename': test_file['filename']})
-            response = self.client.get(mindtouch_url)
-            self.assertRedirects(response, attachment.get_file_url(),
-                                 status_code=301,
-                                 fetch_redirect_response=False)
-
-    def test_get_request(self):
-        response = self.client.get(self.files_url, follow=True)
-        self.assertRedirects(response, self.document.get_edit_url())
-
     def test_edit_attachment(self):
         response = self._post_attachment()
         self.assertRedirects(response, self.document.get_edit_url())
@@ -96,26 +52,6 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         self.assertEqual(rev.description, 'A test file uploaded into kuma.')
         self.assertEqual(rev.comment, 'Initial upload')
         self.assertTrue(rev.is_approved)
-
-    def test_attachment_raw_requires_attachment_host(self):
-        response = self._post_attachment()
-        attachment = Attachment.objects.get(title='Test uploaded file')
-
-        url = attachment.get_file_url()
-        response = self.client.get(url)
-        self.assertRedirects(response, url,
-                             fetch_redirect_response=False,
-                             status_code=301)
-
-        response = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
-        self.assertTrue(response.streaming)
-        self.assertEqual(response['x-frame-options'],
-                         'ALLOW-FROM %s' % settings.DOMAIN)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('Last-Modified', response)
-        self.assertNotIn('1970', response['Last-Modified'])
-        self.assertIn('GMT', response['Last-Modified'])
-        self.assertIsNotNone(parse_http_date_safe(response['Last-Modified']))
 
     def test_get_previous(self):
         """
@@ -233,3 +169,76 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         self.assertEqual(data[0]['title'], revision.title)
         self.assertEqual(data[0]['link'], revision.attachment.get_file_url())
         self.assertEqual(data[0]['author_name'], test_user.username)
+
+
+def test_legacy_redirect(client, file_attachment):
+    mindtouch_url = reverse(
+        'attachments.mindtouch_file_redirect',
+        args=(),
+        kwargs={
+            'file_id': file_attachment['file']['id'],
+            'filename': file_attachment['file']['name']
+        }
+    )
+    response = client.get(mindtouch_url)
+    assert response.status_code == 301
+    assert 'Location' in response
+    assert response['Location'] == file_attachment['attachment'].get_file_url()
+
+
+def test_edit_attachment_get(admin_client, root_doc):
+    url = reverse(
+        'attachments.edit_attachment',
+        kwargs={'document_path': root_doc.slug},
+        locale='en-US'
+    )
+    response = admin_client.get(url)
+    assert response.status_code == 302
+    assert 'Location' in response
+    assert urlparse(response['Location']).path == root_doc.get_edit_url()
+
+
+def test_raw_file_requires_attachment_host(client, settings, file_attachment):
+    settings.ATTACHMENT_HOST = 'demos'
+    settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE = 3600
+    attachment = file_attachment['attachment']
+    created = attachment.current_revision.created
+    url = attachment.get_file_url()
+
+    # Force the HOST header to look like something other than "demos".
+    response = client.get(url, HTTP_HOST='localhost')
+    assert response.status_code == 301
+    assert response['Location'] == url
+    assert 'Vary' not in response
+
+    response = client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
+    assert response.status_code == 200
+    assert response.streaming
+    assert response['x-frame-options'] == 'ALLOW-FROM %s' % settings.DOMAIN
+    assert 'Last-Modified' in response
+    assert response['Last-Modified'] == convert_to_http_date(created)
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=3600' in response['Cache-Control']
+    assert 'Vary' not in response
+
+
+def test_raw_file_if_modified_since(client, settings, file_attachment):
+    settings.ATTACHMENT_HOST = 'demos'
+    settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE = 3600
+    attachment = file_attachment['attachment']
+    created = attachment.current_revision.created
+    url = attachment.get_file_url()
+
+    response = client.get(
+        url,
+        HTTP_HOST=settings.ATTACHMENT_HOST,
+        HTTP_IF_MODIFIED_SINCE=convert_to_http_date(created)
+    )
+    assert response.status_code == 304
+    assert 'Last-Modified' in response
+    assert response['Last-Modified'] == convert_to_http_date(created)
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=3600' in response['Cache-Control']
+    assert 'Vary' not in response
