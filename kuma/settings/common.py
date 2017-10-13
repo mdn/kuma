@@ -34,9 +34,11 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 
+ADMIN_EMAILS = config('ADMIN_EMAILS', default='mdn-dev@mozilla.com',
+                      cast=Csv())
 ADMINS = zip(
     config('ADMIN_NAMES', default='MDN devs', cast=Csv()),
-    config('ADMIN_EMAILS', default='mdn-dev@mozilla.com', cast=Csv())
+    ADMIN_EMAILS
 )
 
 PROTOCOL = config('PROTOCOL', default='https://')
@@ -636,7 +638,7 @@ PUENTE = {
         ],
     },
     'PROJECT': 'MDN',
-    'MSGID_BUGS_ADDRESS': 'dev-mdn@lists.mozilla.org',
+    'MSGID_BUGS_ADDRESS': ADMIN_EMAILS[0],
 }
 
 STATICI18N_ROOT = 'build/locale'

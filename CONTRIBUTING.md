@@ -5,14 +5,14 @@ Things to know when contributing code
 =====================================
 
   * You agree to license your contributions under [MPL 2][MPL2].
-  * Discuss large changes on the [dev-mdn mailing list][dev-mdn]
+  * Discuss large changes in [Discourse][discourse]
     or on a [bugzilla bug][mdn-backlog] before coding.
   * Python code style should follow [PEP8 standards][pep8] whenever possible.
   * We don't accept pull requests for translated strings (i.e. anything under locale/).
     Please use [Pontoon][pontoon] instead.
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
-[dev-mdn]: https://lists.mozilla.org/listinfo/dev-mdn
+[discourse]: https://discourse.mozilla.org/c/mdn
 [mdn-backlog]: http://mzl.la/mdn_backlog
 [pep8]: http://www.python.org/dev/peps/pep-0008/
 [pontoon]: https://pontoon.mozilla.org/projects/mdn/

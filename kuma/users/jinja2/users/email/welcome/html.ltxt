@@ -35,8 +35,8 @@
         <p>{{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}</p>
         <ul>
             <li>
-              {% trans list_link=add_utm('https://lists.mozilla.org/listinfo/dev-mdc', 'welcome') %}
-                Mailing list: <a href="{{ list_link }}">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site.
+              {% trans list_link=add_utm('https://discourse.mozilla.org/c/mdn', 'welcome') %}
+                Discussion forum: <a href="{{ list_link }}">join</a> to tell us about what you're interested in on MDN and ask questions about the site.
               {% endtrans %}
             </li>
             <li>
