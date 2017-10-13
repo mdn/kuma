@@ -37,21 +37,29 @@ def full_attachment_url(attachment_id, filename):
     return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, path)
 
 
-def convert_to_http_date(dt):
+def convert_to_utc(dt):
     """
-    Given a timezone naive or aware datetime return the HTTP date
-    formatted string to be used in HTTP response headers.
+    Given a timezone naive or aware datetime return it converted to UTC.
     """
-    # first check if the given dt is timezone aware and if not make it aware
+    # Check if the given dt is timezone aware and if not make it aware.
     if timezone.is_naive(dt):
         default_timezone = timezone.get_default_timezone()
         dt = timezone.make_aware(dt, default_timezone)
 
-    # then convert the datetime to UTC (which epoch time is based on)
-    utc_dt = dt.astimezone(timezone.utc)
-    # convert the UTC time to the seconds since the epch
+    # Convert the datetime to UTC.
+    return dt.astimezone(timezone.utc)
+
+
+def convert_to_http_date(dt):
+    """
+    Given a timezone naive or aware datetime return the HTTP date-formatted
+    string to be used in HTTP response headers.
+    """
+    # Convert the datetime to UTC.
+    utc_dt = convert_to_utc(dt)
+    # Convert the UTC datetime to seconds since the epoch.
     epoch_dt = calendar.timegm(utc_dt.utctimetuple())
-    # format the thing as a RFC1123 datetime
+    # Format the thing as a RFC1123 datetime.
     return http_date(epoch_dt)
 
 
