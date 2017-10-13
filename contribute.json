@@ -13,7 +13,6 @@
         "irc": "irc://irc.mozilla.org/#mdndev",
         "irc-contacts": [
             "jgmize",
-            "jpetto",
             "jwhitlock",
             "metadave",
             "rjohnson",
@@ -38,7 +37,6 @@
         "jquery",
         "ckeditor",
         "docker",
-        "ansible",
         "mysql",
         "elasticsearch"
     ]
