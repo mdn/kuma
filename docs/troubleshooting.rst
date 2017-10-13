@@ -82,9 +82,9 @@ Getting more help
 If you have more problems running Kuma, please:
 
 #. Paste errors to `pastebin`_.
-#. Email the `dev-mdn`_ list.
+#. Start a thread on `Discourse`_.
 #. After you email dev-mdn, you can also ask in `IRC`_.
 
 .. _pastebin: https://pastebin.mozilla.org/
-.. _dev-mdn: https://lists.mozilla.org/listinfo/dev-mdn
+.. _Discourse: https://discourse.mozilla.org/c/mdn
 .. _IRC: irc://irc.mozilla.org:6697/#mdndev

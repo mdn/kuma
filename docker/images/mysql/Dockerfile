@@ -1,6 +1,5 @@
 FROM mysql:5.6
 
-MAINTAINER MDN Developer <dev-mdn@lists.mozilla.org>
 ENV MYSQL_ROOT_PASSWORD kuma
 COPY kuma.cnf /etc/mysql/conf.d/
 COPY Index.xml /usr/share/mysql/charsets/

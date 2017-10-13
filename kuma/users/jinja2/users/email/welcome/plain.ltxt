@@ -30,10 +30,10 @@
 {{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}
 
 {# L10n: This is an email. Whitespace matters! #}
-* {{ _('Mailing list: %(list_link)s', list_link=add_utm('https://lists.mozilla.org/listinfo/dev-mdc', 'welcome')) }}
+* {{ _('Discussion forum: %(list_link)s', list_link=add_utm('https://discourse.mozilla.org/c/mdn', 'welcome')) }}
 
 {# L10n: This is an email. Whitespace matters! #}
-    {{ _("Subscribe to tell us about what you're interested in on MDN and ask questions about the site.") }}
+    {{ _("Join to tell us about what you're interested in on MDN and ask questions about the site.") }}
 
 {# L10n: This is an email. Whitespace matters! #}
 * {{ _('Real-time chat: #mdn channel on irc.mozilla.org') }}

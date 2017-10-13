@@ -32,7 +32,7 @@ Development
                 `Pull Request Queues`_
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
 :CI Server:     https://travis-ci.org/mozilla/kuma
-:Mailing list:  https://lists.mozilla.org/listinfo/dev-mdn
+:Forum:         https://discourse.mozilla.org/c/mdn
 :IRC:           irc://irc.mozilla.org/mdndev
 
                 http://logs.glob.uno/?c=mozilla%23mdndev (logs)
