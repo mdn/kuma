@@ -28,7 +28,6 @@ services:
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - MEMCACHE_SERVERS=memcached:11211
-      - PROD_DETAILS_DIR=/app/product_details_json
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=http://localhost:8000
