@@ -12,7 +12,7 @@ class SmokeBehavior(TaskSet):
     """
 
     def on_start(self):
-        locust_host = os.environ.get('LOCUST_HOST', 'developer.allizom.org')
+        locust_host = os.environ.get('LOCUST_HOST', 'stage.mdn.moz.works')
         self.client.headers['Host'] = locust_host
 
     @task(weight=265)

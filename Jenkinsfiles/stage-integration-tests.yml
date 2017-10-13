@@ -5,6 +5,6 @@ job:
   dockerfile: "docker/images/integration-tests/Dockerfile"
   selenium: "2.48.2"
   selenium_nodes: 5
-  base_url: 'https://developer.allizom.org'
+  base_url: 'https://stage.mdn.moz.works'
   tests: "not login"
   maintenance_mode: false
