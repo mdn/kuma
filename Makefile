@@ -111,7 +111,8 @@ build-kuma:
 	-f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
 
 build-kumascript:
-	docker build --build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
+	docker build --no-cache \
+	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
 	-f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
 
 build: build-base build-kuma build-kumascript
