@@ -24,7 +24,7 @@ def test_ban_middleware_anon_user(db, client):
     assert resp.status_code == 200
     templates = [template.name for template in resp.templates]
     assert 'users/user_banned.html' not in templates
-    assert resp['Vary'] == 'Cookie'
+    assert not resp.has_header('Vary')
 
 
 def test_ban_middleware_unbanned_user(user_client):
