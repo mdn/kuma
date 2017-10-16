@@ -34,10 +34,6 @@ def raw_file(request, attachment_id, filename):
     """
     Serve up an attachment's file.
     """
-
-    # Stop SessionMiddleware from adding "Cookie" to the "Vary" header.
-    request.session.accessed = False
-
     qs = Attachment.objects.select_related('current_revision')
     attachment = get_object_or_404(qs, pk=attachment_id)
     if attachment.current_revision is None:
