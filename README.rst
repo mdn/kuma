@@ -38,12 +38,12 @@ Development
                 http://logs.glob.uno/?c=mozilla%23mdndev (logs)
 :Servers:       `What's Deployed on MDN?`_
 
-                https://developer.allizom.org/ (stage)
+                https://stage.mdn.moz.works/ (stage)
 
                 https://developer.mozilla.org/ (prod)
 
 .. _`Pull Request Queues`: http://prs.mozilla.io/mozilla:kuma,kuma-lib,kumascript,mozhacks
-.. _`What's Deployed on MDN?`: https://whatsdeployed.io/?owner=mozilla&repo=kuma&name[]=Stage&url[]=https://developer.allizom.org/media/revision.txt&name[]=Prod&url[]=https://developer.mozilla.org/media/revision.txt
+.. _`What's Deployed on MDN?`: https://whatsdeployed.io/s-NyD
 
 
 Getting started

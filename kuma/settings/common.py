@@ -45,7 +45,7 @@ PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
 SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
 PRODUCTION_URL = SITE_URL
-STAGING_DOMAIN = 'developer.allizom.org'
+STAGING_DOMAIN = 'stage.mdn.moz.works'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 INTERACTIVE_EXAMPLES_BASE = config(
@@ -1477,7 +1477,8 @@ CONSTANCE_CONFIG = dict(
     ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         ('^https?\:\/\/'
-         '(developer.allizom.org'                   # Staging demos
+         '(stage-files.mdn.moz.works'               # Staging demos
+         '|developer.allizom.org'                   # Staging demos (SCL3)
          '|mdn.mozillademos.org'                    # Production demos
          '|testserver'                              # Unit test demos
          '|localhost\:8000'                         # Docker development demos

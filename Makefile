@@ -47,7 +47,7 @@ coveragetesthtml: coveragetest
 	coverage html
 
 locust:
-	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
+	locust -f tests/performance/smoke.py --host=https://stage.mdn.moz.works
 
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"

@@ -2,7 +2,10 @@
 Deploying to SCL3
 =================
 
-MDN is served from SLC3, a data center in Santa Clara, California.  It is
+.. warning:: MDN is now deployed to AWS, and this process is no longer used.
+   We are still working on the process and docs for deploying to AWS
+
+MDN was served from SLC3, a data center in Santa Clara, California.  It is
 deployed on several persistent virtual machines, managed by Mozilla WebOps.
 Deploying new code to SCL3 takes several steps.  It takes a couple of hours to
 deploy, and the deployer is responsible for emergency issues for the next 24
@@ -87,7 +90,7 @@ Pre-Deployment: Update Submodules
 
 Deploy to Staging
 -----------------
-The staging site is located at https://developer.allizom.org.  It runs on the
+The staging site was located at https://developer.allizom.org.  It runs on the
 same Kuma code as production, but against a different database, other backing
 services, and with less resources. It is used for verifying code changes before
 pushing to production.

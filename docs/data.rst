@@ -269,4 +269,4 @@ We suspect that a clever user could de-anonymize the data in the full
 anonymized database, so we do not distribute it, and try to limit our own use
 of the database.
 
-.. _`staging site`: https://developer.allizom.org
+.. _`staging site`: https://stage.mdn.moz.works

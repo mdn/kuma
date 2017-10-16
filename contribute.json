@@ -27,7 +27,7 @@
     },
     "urls": {
         "prod": "https://developer.mozilla.org/",
-        "stage": "https://developer.allizom.org/"
+        "stage": "https://stage.mdn.moz.works/"
     },
     "keywords": [
         "python",

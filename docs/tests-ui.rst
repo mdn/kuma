@@ -148,7 +148,7 @@ Run tests on MDN's Continuous Integration (CI) infrastructure
 If you have commit rights on the `mozilla/kuma GitHub repository`_
 you can run the UI tests using the `MDN CI Infrastructure`_. Just force push
 to `mozilla/kuma@stage-integration-tests`_ to run the tests
-against https://developer.allizom.org.
+against https://stage.mdn.moz.works.
 
 You can check the status, progress, and logs of the
 test runs at `MDN's Jenkins-based multi-branch pipeline`_.
