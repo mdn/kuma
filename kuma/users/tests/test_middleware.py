@@ -1,27 +1,48 @@
 from email.utils import parsedate
 from time import gmtime
 
-from . import UserTestCase
-from ..models import UserBan
+from ..models import User, UserBan
+
+import pytest
 
 
-class BanTestCase(UserTestCase):
-    localizing_client = True
+@pytest.fixture()
+def test_user(db):
+    return User.objects.create(username='user', email='user@example.com')
 
-    def test_ban_middleware(self):
-        """Ban middleware functions correctly."""
-        self.client.login(username='testuser', password='testpass')
 
-        resp = self.client.get('/')
-        self.assertTemplateNotUsed(resp, 'users/user_banned.html')
+@pytest.fixture()
+def user_client(test_user, client):
+    test_user.set_password('password')
+    test_user.save()
+    client.login(username='user', password='password')
+    return client
 
-        admin = self.user_model.objects.get(username='admin')
-        testuser = self.user_model.objects.get(username='testuser')
-        ban = UserBan(user=testuser, by=admin,
-                      reason='Banned by unit test.',
-                      is_active=True)
-        ban.save()
 
-        resp = self.client.get('/')
-        self.assertTemplateUsed(resp, 'users/user_banned.html')
-        assert parsedate(resp['Expires']) <= gmtime()
+def test_ban_middleware_anon_user(db, client):
+    resp = client.get('/en-US/')
+    assert resp.status_code == 200
+    templates = [template.name for template in resp.templates]
+    assert 'users/user_banned.html' not in templates
+    assert not resp.has_header('Vary')
+
+
+def test_ban_middleware_unbanned_user(user_client):
+    resp = user_client.get('/en-US/')
+    assert resp.status_code == 200
+    templates = [template.name for template in resp.templates]
+    assert 'users/user_banned.html' not in templates
+    assert resp['Vary'] == 'Cookie'
+
+
+def test_ban_middleware_banned_user(test_user, user_client, admin_user):
+    UserBan.objects.create(user=test_user, by=admin_user,
+                           reason='Banned by unit test.', is_active=True)
+    resp = user_client.get('/en-US/')
+    assert resp.status_code == 200
+    templates = [template.name for template in resp.templates]
+    assert 'users/user_banned.html' in templates
+    assert parsedate(resp['Expires']) <= gmtime()
+    assert not resp.has_header('Vary')
+    never_cache = 'no-cache, no-store, must-revalidate, max-age=0'
+    assert resp['Cache-Control'] == never_cache

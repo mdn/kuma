@@ -12,7 +12,15 @@ class BanMiddleware(object):
     banned.
     """
     def process_request(self, request):
-        if hasattr(request, 'user') and request.user.is_authenticated():
+        # Checking request.user.is_authenticated() will access the session,
+        # and the SessionMiddleware will add Vary: Cookie. Avoid it by
+        # checking, then resetting request.session.accessed to the previous
+        # value (hopefully False).
+        old_session_accessed = request.session.accessed
+        is_auth = hasattr(request, 'user') and request.user.is_authenticated()
+        request.session.accessed = old_session_accessed
+
+        if is_auth:
             bans = UserBan.objects.filter(user=request.user,
                                           is_active=True)
             if not bans:
