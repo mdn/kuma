@@ -1,5 +1,4 @@
 from allauth.account.models import EmailAddress
-from allauth.socialaccount import providers
 from allauth.socialaccount.providers.github.provider import (GitHubProvider,
                                                              GitHubAccount)
 
@@ -25,6 +24,7 @@ class KumaGitHubProvider(GitHubProvider):
     It'll use the "user:email" OAuth2 scope to be able to fetch the
     private email addresses from users.
     """
+    id = 'github'
     package = 'kuma.users.providers.github'
     account_class = KumaGitHubAccount
 
@@ -41,8 +41,5 @@ class KumaGitHubProvider(GitHubProvider):
                                                 primary=email_address['primary']))
         return email_addresses
 
-    def get_default_scope(self):
-        return ['user:email']
 
-
-providers.registry.register(KumaGitHubProvider)
+provider_classes = [KumaGitHubProvider]

@@ -95,14 +95,14 @@ click==6.6 \
     --hash=sha256:cc6a19da8ebff6e7074f731447ef7e112bd23adf3de5c597cf9989f2fd8defe9
 
 # django-allauth
-oauthlib==1.0.3 \
-    --hash=sha256:ef4bfe4663ca3b97a995860c0173b967ebd98033d02f38c9e1b2cbb6c191d9ad
+oauthlib==2.0.4 \
+    --hash=sha256:514e293cb356dd53d596692207d48d9231b997995c9a4167eefa868583d74d13
 python-openid==2.2.5 \
     --hash=sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef \
     --hash=sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782
-requests-oauthlib==0.6.1 \
-    --hash=sha256:905306080ec0cc6b3c65c8101f471fccfdb9994c16dd116524fd3fc0790d46d7 \
-    --hash=sha256:7c708e8e2a4aa6a905cf91f28420d75db37270e0ec8fc951915c098dd8bde53e
+requests-oauthlib==0.8.0 \
+    --hash=sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468 \
+    --hash=sha256:50a8ae2ce8273e384895972b56193c7409601a66d4975774c60c2aed869639ca
 
 
 # django-statici18n
