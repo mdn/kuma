@@ -63,8 +63,8 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     response = client.get(url, HTTP_HOST='testserver')
     assert response.status_code == 200
     assert response['Access-Control-Allow-Origin'] == '*'
+    assert not response.has_header('Vary')
     assert response.content.startswith('<!DOCTYPE html>')
-    assert response['Vary'] == 'Cookie'
 
     normalized = normalize_html(response.content)
     expected = (
@@ -138,4 +138,4 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     response = admin_client.get(file_url)
     assert response.status_code == 302
     assert response.url == attachment.get_file_url()
-    assert response['Vary'] == 'Cookie'
+    assert not response.has_header('Vary')

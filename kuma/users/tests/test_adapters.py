@@ -1,5 +1,7 @@
 from django.contrib import messages as django_messages
+from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
+import pytest
 
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialLogin, SocialAccount
@@ -7,7 +9,7 @@ from allauth.socialaccount.models import SocialLogin, SocialAccount
 from kuma.core.tests import eq_
 from kuma.core.urlresolvers import reverse
 from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
-
+from kuma.users.models import User, UserBan
 
 from . import UserTestCase
 
@@ -140,6 +142,35 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
         self.adapter.pre_social_login(request, github2_login)
         eq_(request.session['sociallogin_provider'], 'github')
+
+    def test_pre_social_login_banned_user(self):
+        """A banned user is not allowed to login."""
+        # Set up a GitHub SocialLogin in the session
+        github_account = SocialAccount.objects.get(user__username='testuser2')
+        github_login = SocialLogin(account=github_account,
+                                   user=github_account.user)
+
+        request = self.rf.get('/')
+        session = self.client.session
+        session['sociallogin_provider'] = 'github'
+        session['socialaccount_sociallogin'] = github_login.serialize()
+        session.save()
+        request.session = session
+        request.user = AnonymousUser()
+        request.LANGUAGE_CODE = 'en-US'
+
+        # Ban the user
+        banned_by = User.objects.get(username='testuser')
+        UserBan.objects.create(user=github_account.user, by=banned_by,
+                               reason='Banned by unit test.')
+
+        with pytest.raises(ImmediateHttpResponse) as e_info:
+            self.adapter.pre_social_login(request, github_login)
+        resp = e_info.value.response
+        assert 'Banned by unit test.' in resp.content
+        assert not resp.has_header('Vary')
+        never_cache = 'no-cache, no-store, must-revalidate, max-age=0'
+        assert resp['Cache-Control'] == never_cache
 
 
 class KumaAccountAdapterTestCase(UserTestCase):
