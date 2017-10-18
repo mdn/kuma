@@ -184,6 +184,7 @@ def test_legacy_redirect(client, file_attachment):
     assert response.status_code == 301
     assert 'Location' in response
     assert response['Location'] == file_attachment['attachment'].get_file_url()
+    assert response['Vary'] == 'Cookie'
 
 
 def test_edit_attachment_get(admin_client, root_doc):
