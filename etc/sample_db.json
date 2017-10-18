@@ -394,10 +394,6 @@
         "name": "line_length",
         "note": "Full width code, restricted line length.",
         "created": "2017-08-28"
-      }, {
-        "name": "sample_frame",
-        "note": "Frame live sample output.",
-        "created": "2017-09-05"
       }
     ],
     "waffle.switch": [
