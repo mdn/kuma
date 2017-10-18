@@ -295,7 +295,8 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
 
     # src attribute of the content experiment <script> tag
     # Can't use pyquery for <head> elements
-    script_src = 'src="/static/build/js/experiment-framework-test.js"'
+    script_src = ('src="%sbuild/js/experiment-framework-test.js"' %
+                  settings.STATIC_URL)
 
     # Googla Analytics custom dimension calls
     expected_15 = "ga('set', 'dimension15', 'experiment-test:test')"
