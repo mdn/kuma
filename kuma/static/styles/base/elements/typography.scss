@@ -89,16 +89,21 @@ mono space elements (pre, code, kbd)
 ====================================================================== */
 
 code {
-    background-color: $code-block-background-color;
+    /*
+      #dcdcdc at 50% on white is roughly $code-block-background-color
+      can't blend fallback on white though because text is white in .highlight
+      #999 blend makes #bbb which is good for black or white text
+    */
+    @include rgba-fallback(background-color, #dcdcdc, .5, #999);
     border-radius: 2px;
     box-decoration-break: clone;
-    color: $text-color;
     font-family: $code-inline-font-family;
-    padding: 2px 5px;
+    padding: 0 2px;
     word-wrap: break-word;
 
-    a & {
-        color: $link-color;
+    .indexListTerm & {
+        background-color: transparent;
+        padding: 0;
     }
 }
 
