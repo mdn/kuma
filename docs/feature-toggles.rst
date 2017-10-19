@@ -27,7 +27,6 @@ Switches
 * ``newsletter`` - Show newsletter sign-up site wide.
 * ``newsletter_article`` - Show newsletter sign-up in article footer (must be
   used in combination with ``newsletter``).
-* ``redesign_live`` - show redesign notice for launch period
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
