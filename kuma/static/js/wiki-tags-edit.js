@@ -1,5 +1,5 @@
 (function($) {
-    "use strict";
+    'use strict';
 
     var $form = $('#wiki-page-edit');
     var $idTagsField = $('#tagit_tags');
@@ -15,10 +15,12 @@
             var itemTexts = [];
 
             // Don't add list items we're going to remove
-            if(!isRemove) listItems.push(li);
+            if(!isRemove) {
+                listItems.push(li);
+            }
 
             // Cycling through each list item,
-            listItems.each(function(i, e, a) {
+            listItems.each(function() {
                 if(!(isRemove && this === li[0])) {
                     itemTexts.push('"' + $(this).find('.tagit-label').text() + '"');
                 }

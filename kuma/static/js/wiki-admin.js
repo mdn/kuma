@@ -1,6 +1,6 @@
 // See also: http://stackoverflow.com/questions/6086651/minimize-the-list-filter-in-django-admin
 (function($){
-    "use strict";
+    'use strict';
 
     var ListFilterCollapsePrototype = {
         bindToggle: function(){
@@ -25,7 +25,7 @@
 
     $(document).ready(function(){
         $('#changelist-filter').each(function(){
-            var collapser = new ListFilterCollapse(this);
+            new ListFilterCollapse(this);
         });
     });
 })(window.django.jQuery);
