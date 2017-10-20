@@ -469,14 +469,14 @@ MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
-    'kuma.users.middleware.BanMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'kuma.users.auth_backends.KumaAuthBackend',  # Handles User Bans
+    'allauth.account.auth_backends.AuthenticationBackend',  # Legacy
 )
 AUTH_USER_MODEL = 'users.User'
 USER_AVATAR_PATH = 'uploads/avatars/'
