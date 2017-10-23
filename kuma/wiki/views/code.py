@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import re
 
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.http import require_GET
+from django.views.decorators.cache import cache_control
 
 from constance import config
 
@@ -18,6 +20,10 @@ from ..models import Document
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
+@cache_control(
+    public=True,
+    max_age=settings.CODE_SAMPLES_CACHE_CONTROL_MAX_AGE
+)
 def code_sample(request, document_slug, document_locale, sample_name):
     """
     Extract a code sample from a document and render it as a standalone
@@ -40,6 +46,10 @@ def code_sample(request, document_slug, document_locale, sample_name):
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
+@cache_control(
+    public=True,
+    max_age=settings.CODE_SAMPLE_FILE_REDIRECT_CACHE_CONTROL_MAX_AGE
+)
 def raw_code_sample_file(request, document_slug, document_locale,
                          sample_name, attachment_id, filename):
     """
