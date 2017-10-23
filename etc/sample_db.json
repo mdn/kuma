@@ -385,12 +385,6 @@
         "note": "Display a beta notice to beta users.",
         "created": "2017-06-22"
       }, {
-        "name": "redesign_live",
-        "note": "Display a notice for the 2017 redesign rollout",
-        "everyone": false,
-        "superusers": false,
-        "created": "2017-06-22"
-      }, {
         "name": "line_length",
         "note": "Full width code, restricted line length.",
         "created": "2017-08-28"
