@@ -15,6 +15,7 @@ from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 
+from .exceptions import DocumentRenderedContentNotAvailable
 from .utils import locale_and_slug_from_path
 
 
@@ -121,7 +122,7 @@ class Extractor(object):
             src, errors = self.document.get_rendered()
             if errors:
                 src = self.document.html
-        except:
+        except DocumentRenderedContentNotAvailable:
             src = self.document.html
 
         if not src:
