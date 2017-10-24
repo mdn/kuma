@@ -137,15 +137,15 @@ urllib3==1.22 \
 # flake8
 configparser==3.5.0 \
     --hash=sha256:5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a
-mccabe==0.5.2 \
-    --hash=sha256:91cc38b2c7636aaf1903e06d96ee960fb3dff9ca3afc595627c9a638f8e86d2b \
-    --hash=sha256:3473f06c8b757bbb5cdf295099bf64032e5f7d6fe0ec2f97ee9b23cb0a435aff
-pycodestyle==2.1.0 \
-    --hash=sha256:14588a4a51f464b784eb199ade0a04103e93f9ed7d69551f29f295a9e9668030 \
-    --hash=sha256:5b540e4f19b4938c082cfd13f5d778d1ad2308b337abbc687ab9335233f5f3e2
-pyflakes==1.3.0 \
-    --hash=sha256:ad89dafee8ca32282116209a0ca4dff050bdc343af958721d5517d242c1215d5 \
-    --hash=sha256:a4f93317c97a9d9ed71d6ecfe08b68e3de9fea3f4d94dcd1d9d83ccbf929bc31
+mccabe==0.6.1 \
+    --hash=sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42 \
+    --hash=sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f
+pycodestyle==2.3.1 \
+    --hash=sha256:6c4245ade1edfad79c3446fadfc96b0de2759662dc29d07d80a6f27ad1ca6ba9 \
+    --hash=sha256:682256a5b318149ca0d2a9185d365d8864a768a28db66a84a2ea946bcc426766
+pyflakes==1.6.0 \
+    --hash=sha256:08bd6a50edf8cffa9fa09a463063c425ecaaf10d1eb0335a7e8b1401aef89e6f \
+    --hash=sha256:8d616a382f243dbf19b54743f280b80198be0bca3a5396f1d2e1fca6223e8805
 
 # google-api-python-client
 httplib2==0.9.2 \

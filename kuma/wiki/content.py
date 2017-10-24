@@ -15,6 +15,7 @@ from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 
+from .exceptions import DocumentRenderedContentNotAvailable
 from .utils import locale_and_slug_from_path
 
 
@@ -68,16 +69,12 @@ class Extractor(object):
         """
         Extract a unique set of KumaScript macro names used in the content
         """
-        names = set()
-        try:
-            txt = []
-            for token in parse(self.document.html).stream:
-                if token['type'] in ('Characters', 'SpaceCharacters'):
-                    txt.append(token['data'])
-            txt = ''.join(txt)
-            names.update(MACRO_RE.findall(txt))
-        except:
-            pass
+        text_items = []
+        for token in parse(self.document.html).stream:
+            if token['type'] in ('Characters', 'SpaceCharacters'):
+                text_items.append(token['data'])
+        text = ''.join(text_items)
+        names = set(MACRO_RE.findall(text))
         return list(names)
 
     @newrelic.agent.function_trace()
@@ -97,15 +94,12 @@ class Extractor(object):
         """
         Extract the unique set of HTML attributes used in the content
         """
-        try:
-            attribs = []
-            for token in parse(self.document.rendered_html).stream:
-                if token['type'] == 'StartTag':
-                    for (namespace, name), value in token['data'].items():
-                        attribs.append((name, value))
-            return ['%s="%s"' % (k, v) for k, v in attribs]
-        except:
-            return []
+        attribs = []
+        for token in parse(self.document.rendered_html).stream:
+            if token['type'] == 'StartTag':
+                for (namespace, name), value in token['data'].items():
+                    attribs.append((name, value))
+        return ['%s="%s"' % (k, v) for k, v in attribs]
 
     @newrelic.agent.function_trace()
     def code_sample(self, name):
@@ -128,7 +122,7 @@ class Extractor(object):
             src, errors = self.document.get_rendered()
             if errors:
                 src = self.document.html
-        except:
+        except DocumentRenderedContentNotAvailable:
             src = self.document.html
 
         if not src:
