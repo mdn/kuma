@@ -70,7 +70,6 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     assert not response.has_header('Vary')
     assert 'Last-Modified' not in response
     assert 'ETag' in response
-    assert response['ETag'] == '"afc6fe6de98e9426818b7779f57c42ed"'
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
@@ -86,25 +85,19 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
         % settings.STATIC_URL)
     assert normalized == expected
 
+    current_etag = response['ETag']
 
-def test_code_sample_if_none_match(code_sample_doc, constance_config, client,
-                                   settings):
-    """The ETag header is."""
-    Switch.objects.create(name='application_ACAO', active=True)
-    url = reverse('wiki.code_sample', locale='en-US',
-                  args=[code_sample_doc.slug, 'sample1'])
-    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*testserver'
     response = client.get(
         url,
         HTTP_HOST='testserver',
-        HTTP_IF_NONE_MATCH='"afc6fe6de98e9426818b7779f57c42ed"'
+        HTTP_IF_NONE_MATCH=current_etag
     )
     assert response.status_code == 304
     assert response['Access-Control-Allow-Origin'] == '*'
     assert 'Vary' not in response
     assert 'Last-Modified' not in response
     assert 'ETag' in response
-    assert response['ETag'] == '"afc6fe6de98e9426818b7779f57c42ed"'
+    assert response['ETag'] == current_etag
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
