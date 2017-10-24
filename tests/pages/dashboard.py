@@ -1,4 +1,5 @@
 from pypom import Region
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -29,9 +30,9 @@ class DashboardPage(BasePage):
     def is_ip_toggle_present(self):
         try:
             self.find_element(*self._ip_toggle_locator)
-            return True
-        except:
+        except NoSuchElementException:
             return False
+        return True
 
     @property
     def first_row(self):
@@ -113,17 +114,17 @@ class DashboardRow(Region):
     def is_ip_ban_present(self):
         try:
             self.find_element(*self._ban_ip_locator)
-            return True
-        except:
+        except NoSuchElementException:
             return False
+        return True
 
     @property
     def is_spam_ham_button_present(self):
         try:
             self.find_element(*self._spam_ham_button_locator)
-            return True
-        except:
+        except NoSuchElementException:
             return False
+        return True
 
 
 class DashboardDetail(Region):
