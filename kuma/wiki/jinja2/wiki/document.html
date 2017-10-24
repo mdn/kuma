@@ -47,7 +47,7 @@
   {%- endif -%}
 {% endblock %}
 
-{% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %} {% if waffle.flag('sample_frame') %}waffle-sample{% endif %}{% endblock %}
+{% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
 {% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu" data-search-url="{{ search_url }}"{% endblock body_attributes %}
 
 {% block main_content_id %}document-main{% endblock %}

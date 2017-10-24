@@ -92,7 +92,7 @@
                     // convert sitename to lowercase for icon name and host identifier
                     var sampleCodeHost = this.toLowerCase();
                     // create button
-                    var $button = $('<button />', { 'class': 'open-in-host' });
+                    var $button = $('<button />', { 'class': 'open-in-host button neutral' });
                     // create icon
                     var $icon = $('<i />', { 'class': 'icon-' + sampleCodeHost, 'aria-hidden': 'true' });
                     // create text
