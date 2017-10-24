@@ -45,8 +45,7 @@ def raw_file(request, attachment_id, filename):
         def get_last_modified(*args):
             return convert_to_utc(rev.created)
 
-        @cache_control(public=True,
-                       max_age=settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE)
+        @cache_control(public=True, max_age=60 * 5)
         @last_modified(get_last_modified)
         def stream_raw_file(*args):
             if settings.DEBUG:

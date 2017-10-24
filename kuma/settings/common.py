@@ -1239,21 +1239,6 @@ MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
-ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
-    'ATTACHMENTS_CACHE_CONTROL_MAX_AGE',
-    default=60 * 5,
-    cast=int
-)
-CODE_SAMPLES_CACHE_CONTROL_MAX_AGE = config(
-    'CODE_SAMPLES_CACHE_CONTROL_MAX_AGE',
-    default=60 * 60 * 24,
-    cast=int
-)
-CODE_SAMPLE_FILE_REDIRECT_CACHE_CONTROL_MAX_AGE = config(
-    'CODE_SAMPLE_FILE_REDIRECT_CACHE_CONTROL_MAX_AGE',
-    default=60 * 60 * 24 * 5,
-    cast=int
-)
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
