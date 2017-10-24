@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import re
+import hashlib
 
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.clickjacking import xframe_options_exempt
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, etag
+from django.views.decorators.cache import cache_control
 
 from constance import config
 
@@ -33,13 +35,24 @@ def code_sample(request, document_slug, document_locale, sample_name):
     job = DocumentCodeSampleJob(generation_args=[document.pk])
     data = job.get(document.pk, sample_name)
     data['document'] = document
-    return render(request, 'wiki/code_sample.html', data)
+    response = render(request, 'wiki/code_sample.html', data)
+
+    def get_etag(*args):
+        return '{}'.format(hashlib.md5(response.content).hexdigest())
+
+    @cache_control(public=True, max_age=60 * 60 * 24)
+    @etag(get_etag)
+    def render_code_sample(request, *args):
+        return response
+
+    return render_code_sample(request)
 
 
 @require_GET
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
+@cache_control(public=True, max_age=60 * 60 * 24 * 5)
 def raw_code_sample_file(request, document_slug, document_locale,
                          sample_name, attachment_id, filename):
     """

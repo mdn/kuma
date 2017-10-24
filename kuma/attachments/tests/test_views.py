@@ -201,7 +201,6 @@ def test_edit_attachment_get(admin_client, root_doc):
 
 def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     settings.ATTACHMENT_HOST = 'demos'
-    settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE = 3600
     attachment = file_attachment['attachment']
     created = attachment.current_revision.created
     url = attachment.get_file_url()
@@ -220,13 +219,12 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
-    assert 'max-age=3600' in response['Cache-Control']
+    assert 'max-age=300' in response['Cache-Control']
     assert 'Vary' not in response
 
 
 def test_raw_file_if_modified_since(client, settings, file_attachment):
     settings.ATTACHMENT_HOST = 'demos'
-    settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE = 3600
     attachment = file_attachment['attachment']
     created = attachment.current_revision.created
     url = attachment.get_file_url()
@@ -241,5 +239,5 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
-    assert 'max-age=3600' in response['Cache-Control']
+    assert 'max-age=300' in response['Cache-Control']
     assert 'Vary' not in response

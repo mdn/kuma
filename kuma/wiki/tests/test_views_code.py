@@ -60,10 +60,19 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     url = reverse('wiki.code_sample', locale='en-US',
                   args=[code_sample_doc.slug, 'sample1'])
     constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*testserver'
-    response = client.get(url, HTTP_HOST='testserver')
+    response = client.get(
+        url,
+        HTTP_HOST='testserver',
+        HTTP_IF_NONE_MATCH='"some-old-etag"'
+    )
     assert response.status_code == 200
     assert response['Access-Control-Allow-Origin'] == '*'
     assert not response.has_header('Vary')
+    assert 'Last-Modified' not in response
+    assert 'ETag' in response
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=86400' in response['Cache-Control']
     assert response.content.startswith('<!DOCTYPE html>')
 
     normalized = normalize_html(response.content)
@@ -76,6 +85,23 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
         % settings.STATIC_URL)
     assert normalized == expected
 
+    current_etag = response['ETag']
+
+    response = client.get(
+        url,
+        HTTP_HOST='testserver',
+        HTTP_IF_NONE_MATCH=current_etag
+    )
+    assert response.status_code == 304
+    assert response['Access-Control-Allow-Origin'] == '*'
+    assert 'Vary' not in response
+    assert 'Last-Modified' not in response
+    assert 'ETag' in response
+    assert response['ETag'] == current_etag
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=86400' in response['Cache-Control']
+
 
 def test_code_sample_host_restriction(code_sample_doc, constance_config,
                                       client):
@@ -85,6 +111,9 @@ def test_code_sample_host_restriction(code_sample_doc, constance_config,
     constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
     response = client.get(url, HTTP_HOST='testserver')
     assert response.status_code == 403
+    assert 'ETag' not in response
+    assert 'Last-Modified' not in response
+    assert 'Cache-Control' not in response
     response = client.get(url, HTTP_HOST='sampleserver')
     assert response.status_code == 200
 
@@ -139,3 +168,6 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     assert response.status_code == 302
     assert response.url == attachment.get_file_url()
     assert not response.has_header('Vary')
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=432000' in response['Cache-Control']
