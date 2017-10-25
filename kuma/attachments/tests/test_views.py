@@ -1,6 +1,8 @@
 import json
 import datetime
 
+import pytest
+from pyquery import PyQuery as pq
 from constance.test import override_config
 from django.core.files.base import ContentFile
 from django.db import transaction
@@ -197,6 +199,32 @@ def test_edit_attachment_get(admin_client, root_doc):
     assert response.status_code == 302
     assert 'Location' in response
     assert urlparse(response['Location']).path == root_doc.get_edit_url()
+
+
+@pytest.mark.parametrize('mode', ['empty-file', 'no-file'])
+def test_edit_attachment_post_with_vacant_file(admin_client, root_doc, tmpdir,
+                                               mode):
+    post_data = {
+        'title': 'Test uploaded file',
+        'description': 'A test file uploaded into kuma.',
+        'comment': 'Initial upload',
+    }
+
+    if mode == 'empty-file':
+        empty_file = tmpdir.join('empty')
+        empty_file.write('')
+        post_data['file'] = empty_file
+        expected = 'The submitted file is empty.'
+    else:
+        expected = 'This field is required.'
+
+    url = reverse('attachments.edit_attachment',
+                  kwargs={'document_path': root_doc.slug},
+                  locale='en-US')
+    response = admin_client.post(url, data=post_data)
+    assert response.status_code == 200
+    doc = pq(response.content)
+    assert doc('ul.errorlist a[href="#id_file"]').html() == expected
 
 
 def test_raw_file_requires_attachment_host(client, settings, file_attachment):

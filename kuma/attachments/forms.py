@@ -39,7 +39,7 @@ class AttachmentRevisionForm(forms.ModelForm):
         nulls = EMPTY_VALUES + (AttachmentRevision.DEFAULT_MIME_TYPE,)
         submitted_mime_type = cleaned_data.get('mime_type')
 
-        if submitted_mime_type in nulls:
+        if (submitted_mime_type in nulls) and ('file' in cleaned_data):
             self.mime_type = self.mime_type_from_file(cleaned_data['file'])
             allowed_mime_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
             if self.mime_type not in allowed_mime_types:
