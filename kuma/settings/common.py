@@ -1239,6 +1239,7 @@ MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
+ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=ATTACHMENT_HOST)
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(

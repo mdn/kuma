@@ -8,6 +8,7 @@ from django.views.decorators.http import last_modified
 from django.views.decorators.cache import cache_control
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
+from kuma.core.utils import is_untrusted
 from kuma.core.decorators import login_required
 from kuma.wiki.models import Document
 from kuma.wiki.decorators import process_document_path
@@ -39,7 +40,7 @@ def raw_file(request, attachment_id, filename):
     if attachment.current_revision is None:
         raise Http404
 
-    if request.get_host() == settings.ATTACHMENT_HOST:
+    if is_untrusted(request):
         rev = attachment.current_revision
 
         def get_last_modified(*args):
