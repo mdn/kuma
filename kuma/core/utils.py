@@ -33,6 +33,13 @@ from .jobs import IPBanJob
 log = logging.getLogger('kuma.core.utils')
 
 
+def is_untrusted(request):
+    return request.get_host() in (
+        settings.ATTACHMENT_ORIGIN,
+        settings.ATTACHMENT_HOST,
+    )
+
+
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
     paginator = Paginator(queryset, per_page)

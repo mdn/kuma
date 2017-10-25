@@ -10,7 +10,7 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .utils import urlparams
+from .utils import urlparams, is_untrusted
 from .views import handler403
 
 
@@ -175,8 +175,7 @@ class RestrictedEndpointsMiddleware(object):
         """
         Restricts the accessible endpoints based on the host.
         """
-        if (settings.ENABLE_RESTRICTIONS_BY_HOST and
-                (request.get_host() == settings.ATTACHMENT_HOST)):
+        if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
             request.urlconf = 'kuma.urls_untrusted'
 
 
@@ -186,8 +185,7 @@ class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
         """
         Restricts the use of WhiteNoiseMiddleware based on the host.
         """
-        if (settings.ENABLE_RESTRICTIONS_BY_HOST and
-                (request.get_host() == settings.ATTACHMENT_HOST)):
+        if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
             return None
         return super(RestrictedWhiteNoiseMiddleware, self).process_request(
             request
