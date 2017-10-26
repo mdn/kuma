@@ -727,19 +727,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 class UserViewsTest(UserTestCase):
     localizing_client = True
 
-    def setUp(self):
-        super(UserViewsTest, self).setUp()
-        self.old_debug = settings.DEBUG
-        settings.DEBUG = True
-        self.client.logout()
-
-    def tearDown(self):
-        settings.DEBUG = self.old_debug
-
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
         fields = ('username', 'email', 'fullname', 'title', 'organization',
-                  'location', 'irc_nickname', 'interests')
+                  'location', 'irc_nickname', 'interests',
+                  'is_github_url_public')
         form = dict()
         lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
         prefix = 'user-'
@@ -1022,6 +1014,24 @@ class UserViewsTest(UserTestCase):
                 response.context['user_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
 
+    def test_user_edit_github_is_public(self):
+        """A user can set that they want their GitHub to be public."""
+        testuser = self.user_model.objects.get(username='testuser')
+        assert not testuser.is_github_url_public
+        self.client.login(username=testuser.username,
+                          password=TESTUSER_PASSWORD)
+
+        url = reverse('users.user_edit', locale='en-US',
+                      args=(testuser.username,))
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
+        form = self._get_current_form_field_values(doc)
+        assert not form['user-is_github_url_public']
+        form['user-is_github_url_public'] = True
+        self.client.post(url, form, follow=True)
+        testuser.refresh_from_db()
+        assert testuser.is_github_url_public
+
 
 class Test404Case(UserTestCase):
 
@@ -1182,6 +1192,23 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login(profile_data=profile_data, email_data=[])
         response = self.client.get(self.signup_url)
         self.assertEqual(response.context["form"].initial["email"], '')
+
+    def test_signup_public_github(self, is_public=True):
+        resp = self.github_login()
+        assert resp.redirect_chain[-1][0].endswith(self.signup_url)
+
+        data = {'website': '',
+                'username': 'octocat',
+                'email': 'octo.cat@github-inc.com',
+                'terms': True,
+                'is_github_url_public': is_public}
+        response = self.client.post(self.signup_url, data=data, follow=True)
+        assert response.status_code == 200
+        user = User.objects.get(username='octocat')
+        assert user.is_github_url_public == is_public
+
+    def test_signup_private_github(self):
+        self.test_signup_public_github(is_public=False)
 
     def test_matching_accounts(self):
         """

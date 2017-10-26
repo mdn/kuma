@@ -1466,3 +1466,21 @@ class ProfileDetailTestCase(UserTestCase):
         ban_cleanup_link = page.find('#cleanup_link')
         eq_("Banned", ban_link.text())
         eq_("Clean Up Revisions", ban_cleanup_link.text())
+
+    def test_user_github_link(self):
+        testuser = self.user_model.objects.get(username='testuser')
+        assert not testuser.is_github_url_public
+
+        profile_url = reverse('users.user_detail', locale='en-US',
+                              kwargs={'username': testuser.username})
+        resp = self.client.get(profile_url)
+        assert resp.status_code == 200
+        page = pq(resp.content)
+        assert len(page.find('ul.user-links li.github')) == 0
+
+        testuser.is_github_url_public = True
+        testuser.save()
+        resp = self.client.get(profile_url)
+        assert resp.status_code == 200
+        page = pq(resp.content)
+        assert len(page.find('ul.user-links li.github')) == 1
