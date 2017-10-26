@@ -1,5 +1,5 @@
 {% from "includes/common_macros.html" import optimizely_script with context -%}
-{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and (request.get_host() == settings.ATTACHMENT_HOST) %}
+{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and (request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST)) %}
 
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" class="no-js" data-ffo-opensans="false" data-ffo-zillaslab="false">
