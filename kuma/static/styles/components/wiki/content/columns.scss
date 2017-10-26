@@ -1,0 +1,29 @@
+/*
+Classes created by the WYSIWYG
+====================================================================== */
+.twocolumns {
+    @include vendorize(column-count, 2);
+    @include vendorize(column-gap, $grid-spacing);
+
+    body[contenteditable] & {
+        border: $editor-box-border;
+        column-rule: $editor-box-border;
+    }
+}
+
+.threecolumns {
+    @include vendorize(column-count, 3);
+    @include vendorize(column-gap, $grid-spacing);
+
+    body[contenteditable] & {
+        border: $editor-box-border;
+        column-rule: $editor-box-border;
+    }
+}
+
+@media #{$mq-small-mobile-and-down} {
+    .twocolumns,
+    .threecolumns {
+        @include vendorize(column-count, 1);
+    }
+}

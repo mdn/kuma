@@ -1,0 +1,43 @@
+ul.directory-tree {
+    @include bidi-style(padding-left, 0, padding-right, 0);
+
+    &,
+    ul {
+        @include bidi-style(margin-left, 0, margin-right, 0);
+        list-style: none;
+    }
+
+    ul {
+        @include bidi-style(padding-left, ($grid-spacing + $content-horizontal-spacing), padding-right, 0);
+
+        li {
+            position: relative;
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                @include bidi-style(left, -15px, right, auto);
+                display: block;
+            }
+
+            &:before {
+                top: 0;
+                height: .75em;
+                width: 10px;
+                border-bottom: 1px solid $grey;
+                @include bidi-style(border-left, 1px solid $grey, border-right, none);
+            }
+
+            &:after {
+                bottom: -7px;
+                height: 100%;
+                @include bidi-style(border-left, 1px solid $grey, border-right, none);
+            }
+
+            &:last-child:after {
+                display: none;
+            }
+        }
+    }
+}

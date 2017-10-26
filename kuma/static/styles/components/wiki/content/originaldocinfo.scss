@@ -1,0 +1,14 @@
+/* some documents have different lisences for historic reasons */
+.licenseblock,
+.originaldocinfo {
+    @include set-message-base(true);
+    background: $grey-light;
+    border: 2px solid $grey;
+    @include set-font-size($smaller-font-size);
+}
+
+.originaldocinfo {
+    h2 {
+        @include set-font-size($body-font-size);
+    }
+}
