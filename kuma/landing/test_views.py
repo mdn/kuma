@@ -20,16 +20,22 @@ def test_promote_buttons(client, db):
 
 
 @pytest.mark.parametrize('allowed', [True, False])
-def test_robots_enabled(client, db, settings, allowed):
+@pytest.mark.parametrize(
+    'host', [None, 'ATTACHMENT_HOST', 'ATTACHMENT_ORIGIN'])
+def test_robots(client, db, settings, host, allowed):
     settings.ALLOW_ROBOTS = allowed
-    response = client.get(reverse('robots_txt'))
+    settings.ATTACHMENT_HOST = 'demos'
+    settings.ATTACHMENT_ORIGIN = 'demos-origin'
+    settings.ENABLE_RESTRICTIONS_BY_HOST = True
+    headers = {'HTTP_HOST': getattr(settings, host)} if host else {}
+    response = client.get(reverse('robots_txt'), **headers)
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain'
     content = ''.join(response.streaming_content)
-    if allowed:
-        assert 'Sitemap: ' in content
-    else:
+    if host or not allowed:
         assert 'Disallow: /' in content
+    else:
+        assert 'Sitemap: ' in content
 
 
 def test_favicon_ico(client):
