@@ -13,11 +13,8 @@
 
     > p {
         @include set-font-size(30px);
-        font-family: $heading-font-family;
+        @include set-heading-font-family();
         line-height: 1;
-        #{$selector-heading-font-fallback} {
-            font-family: $heading-font-family-fallback;
-        }
     }
 
     .zone & {

@@ -15,12 +15,9 @@ fancy quotes in MDN 10 zone
         padding: 0;
         background-color: inherit;
 
-        font-family: $heading-font-family;
+        @include set-heading-font-family();
         font-style: italic;
         font-size: $larger-font-size;
-        #{$selector-heading-font-fallback} {
-            font-family: $heading-font-family-fallback;
-        }
     }
 
     blockquote:before,

@@ -9,12 +9,8 @@ Blue "join us!" promo in MDN 10 zone
     color: #fff;
     text-align: center;
 
-
-    font-family: $heading-font-family;
+    @include set-heading-font-family();
     font-size: $larger-font-size;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
 
     h3 {
         color: #fff;
