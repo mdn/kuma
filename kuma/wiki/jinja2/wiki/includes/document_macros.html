@@ -159,3 +159,41 @@
                   {% endif %}
 
 {%- endmacro %}
+
+{% macro add_interactive_editor() %}
+<link href="https://interactive-examples.mdn.mozilla.net/css/codemirror.css" rel="stylesheet">
+<link href="https://interactive-examples.mdn.mozilla.net/css/editor-js.css" rel="stylesheet">
+
+<section id="static" class="hidden">
+<pre><code id="static-js">// create an array
+var numbers = [0, 1, 2, 3];
+
+/* call reduce() on the array, passing a callback
+that adds all the values together */
+var result = numbers.reduce(function(accumulator, currentValue) {
+    return accumulator + currentValue;
+});
+
+// log the result
+console.log(result);
+// expected output: 6
+</code>
+</pre>
+</section>
+
+<section id="live" class="live">
+    <header><h4>JavaScript Demo: Array.reduce()</h4></header>
+    <div id="editor" class="editor"></div>
+
+    <div class="output-container">
+      <div class="buttons-container">
+          <button id="execute" class="button run" type="button">Run ›</button>
+          <button id="reset" type="button" class="button">Reset</button>
+      </div>
+      <div id="output" class="output"><code></code></div>
+    </div>
+</section>
+
+<script data-main="https://interactive-examples.mdn.mozilla.net/js/codemirrorLoader" src="https://interactive-examples.mdn.mozilla.net/js/require.js"></script>
+<script src="https://interactive-examples.mdn.mozilla.net/js/editor-js.js"></script>
+{%- endmacro %}
