@@ -56,3 +56,9 @@ PIPELINE['COMPILERS'] = ('pipeline.compilers.sass.SASSCompiler',)
 # Enabled=T, Collector=F -   535s
 # Enabled=F, Collector=T - 18262s
 # Enabled=F, Collector=F -  2043s
+
+# Defer to django-pipeline's finders for testing
+# This avoids reading the static folder for each test client request, for
+# a 10x speedup on Docker on MacOS.
+WHITENOISE_AUTOREFRESH = True
+WHITENOISE_USE_FINDERS = True
