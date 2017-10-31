@@ -38,9 +38,9 @@ setuptools==26.1.1 \
     --hash=sha256:475ce28993d7cb75335942525b9fac79f7431a7f6e8a0079c0f2680641379481 \
     --hash=sha256:02a06e1a547b16c25143d2bb898008286a3cbd600a7dbe47234ce57dc51abbf6
 # bleach, django-appconf, django-cacheback, django-extensions, mock, etc.
-six==1.10.0 \
-    --hash=sha256:0ff78c403d9bccf5a425a6d31a12aa6b47f1c21ca4dc2573a7e2f32a97335eb1 \
-    --hash=sha256:105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a
+six==1.11.0 \
+    --hash=sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb \
+    --hash=sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9
 # cryptography, flake8
 enum34==1.1.6 \
     --hash=sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79 \
