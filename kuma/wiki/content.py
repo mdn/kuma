@@ -335,12 +335,6 @@ class ContentSectionTool(object):
         return self
 
     @newrelic.agent.function_trace()
-    def filterAHrefProtocols(self, blocked_protocols):
-        # TODO: Remove, deprecated by bleach 1.5.0
-        self.stream = AHrefProtocolFilter(self.stream, blocked_protocols)
-        return self
-
-    @newrelic.agent.function_trace()
     def filterIframeHosts(self, hosts):
         self.stream = IframeHostFilter(self.stream, hosts)
         return self
@@ -1066,27 +1060,4 @@ class IframeHostFilter(html5lib_Filter):
             if token['type'] == 'EndTag' and token['name'] == 'iframe':
                 in_iframe = False
             if not in_iframe:
-                yield token
-
-
-class AHrefProtocolFilter(html5lib_Filter):
-    """
-    Filter which scans through <a> tags and strips the href attribute if
-    it contains a blocked protocol.
-    """
-    def __init__(self, source, blocked_protocols):
-        html5lib_Filter.__init__(self, source)
-        self.blocked_protocols = blocked_protocols
-
-    def __iter__(self):
-        for token in html5lib_Filter.__iter__(self):
-            if token['type'] == 'StartTag' and token['name'] == 'a':
-                attrs = dict(token['data'])
-                for (namespace, name), value in attrs.items():
-                    if name == 'href' and value:
-                        if re.search(self.blocked_protocols, value):
-                            attrs[(namespace, 'href')] = ''
-                    token['data'] = attrs
-                yield token
-            else:
                 yield token
