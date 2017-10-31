@@ -4,9 +4,9 @@
 -c constraints.txt
 
 # Sanitize HTML with a whitelist
-bleach==2.0.0 \
-    --hash=sha256:a6d9d5f5b7368c1689ad7f128af8e792beea23393688872b576c0271e6564a16 \
-    --hash=sha256:b9522130003e4caedf4f00a39c120a906dcd4242329c1c8f621f5370203cbc30
+bleach==2.1.1 \
+    --hash=sha256:7a316eac1eef1e98b9813636ebe05878aab1a658d2708047fb00fe2bcbc49f84 \
+    --hash=sha256:760a9368002180fb8a0f4ea48dc6275378e6f311c39d0236d7b904fca1f5ea0d
 
 # Process tasks in the background
 celery==3.1.20 \
