@@ -247,7 +247,7 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
-    assert 'max-age=300' in response['Cache-Control']
+    assert 'max-age=900' in response['Cache-Control']
     assert 'Vary' not in response
 
 
@@ -267,5 +267,5 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
-    assert 'max-age=300' in response['Cache-Control']
+    assert 'max-age=900' in response['Cache-Control']
     assert 'Vary' not in response
