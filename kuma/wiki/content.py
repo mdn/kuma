@@ -452,8 +452,7 @@ class LinkAnnotationFilter(html5lib_Filter):
             # Remove the slugs that pass existence check.
             for slug in existing_slugs:
                 lslug = slug.lower()
-                if lslug in slug_hrefs:
-                    del slug_hrefs[lslug]
+                del slug_hrefs[lslug]
 
             # Mark all the links whose slugs did not come back from the DB
             # query as "new"
@@ -474,15 +473,14 @@ class LinkAnnotationFilter(html5lib_Filter):
                             # Squash site-absolute URLs to site-relative paths.
                             href = href_parsed.path
 
-                        if href in links:
-                            # Update class names on this link element.
-                            if 'class' in names:
-                                classes = set(attrs[(namespace, 'class')].split(u' '))
-                            else:
-                                classes = set()
-                            classes.update(links[href]['classes'])
-                            if classes:
-                                attrs[(namespace, u'class')] = u' '.join(sorted(classes))
+                        # Update class names on this link element.
+                        if 'class' in names:
+                            classes = set(attrs[(namespace, 'class')].split(u' '))
+                        else:
+                            classes = set()
+                        classes.update(links[href]['classes'])
+                        if classes:
+                            attrs[(namespace, u'class')] = u' '.join(sorted(classes))
 
                 token['data'] = attrs
 
