@@ -22,6 +22,8 @@ from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
 from ..models import Document
 from ..templatetags.jinja_helpers import bugize_text
 
+AL_BASE_URL = 'https://example.com'  # Base URL for annotateLinks tests
+
 
 class GetContentSectionsTests(TestCase):
     def test_section_pars_for_empty_docs(self):
@@ -912,97 +914,119 @@ class BleachTests(TestCase):
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
 
-class AnnotateLinksTests(UserTestCase):
-    def test_link_annotation(self):
-        rev = revision(is_approved=True, save=True,
-                       content="This document exists")
+def test_annotate_links_encoded_utf8(db):
+    """Encoded UTF8 characters in links are decoded."""
+    Document.objects.create(locale='fr', slug=u'CSS/Héritage',
+                            title=u'Héritée')
+    html = normalize_html(
+        u'<li><a href="/fr/docs/CSS/H%c3%a9ritage">Héritée</a></li>')
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
 
-        document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
-                 save=True)
-        document(title=u'DOM/StyleSheet', locale=u'en-US',
-                 slug=u'DOM/StyleSheet', save=True)
 
-        base_url = u'https://testserver'
-        doc_url = rev.document.get_absolute_url()
-        vars = dict(
-            base_url=base_url,
-            exist_url=doc_url,
-            exist_url_with_base=urljoin(base_url, doc_url),
-            uilocale_url=u'/en-US/docs/%s/%s' % (rev.document.locale,
-                                                 rev.document.slug),
-            noexist_url=u'/en-US/docs/no-such-doc',
-            noexist_url_with_base=urljoin(base_url,
-                                          u'/en-US/docs/no-such-doc'),
-            noexist_uilocale_url=u'/en-US/docs/en-US/blah-blah-blah',
-            nonen_slug='/fr/docs/CSS/H%c3%a9ritage',
-            tag_url='/en-US/docs/tag/foo',
-            feed_url='/en-US/docs/feeds/atom/all',
-            templates_url='/en-US/docs/templates',
-        )
-        doc_src = u"""
-                <li><a href="%(nonen_slug)s">Héritée</a></li>
-                <li><a href="%(exist_url)s">This doc should exist</a></li>
-                <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(uilocale_url)s">This doc should exist</a></li>
-                <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
-                <li><a href="%(noexist_url)s#withanchor">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_url)s">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_url_with_base)s#withanchor">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
-                <li><a class="foobar" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
-                <li><a href="http://mozilla.org/">This is an external link</a></li>
-                <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
-                <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
-                <a href="%(tag_url)s">Tag link</a>
-                <a href="%(feed_url)s">Feed link</a>
-                <a href="%(templates_url)s">Templates link</a>
-                <a href="/en-US/docs/DOM/stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/Stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/StyleSheet">Case sensitive 1</a>
-                <a href="/en-us/docs/dom/StyleSheet">Case sensitive 1</a>
-                <a href="/en-US/docs/dom/Styles">For good measure</a>
-        """ % vars
-        expected = u"""
-                <li><a href="%(nonen_slug)s">Héritée</a></li>
-                <li><a href="%(exist_url)s">This doc should exist</a></li>
-                <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(uilocale_url)s">This doc should exist</a></li>
-                <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
-                <li><a class="new" href="%(noexist_url)s#withanchor">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_url)s">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_url_with_base)s#withanchor">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
-                <li><a class="foobar new" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
-                <li><a class="external" href="http://mozilla.org/">This is an external link</a></li>
-                <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
-                <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
-                <a href="%(tag_url)s">Tag link</a>
-                <a href="%(feed_url)s">Feed link</a>
-                <a href="%(templates_url)s">Templates link</a>
-                <a href="/en-US/docs/DOM/stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/Stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/StyleSheet">Case sensitive 1</a>
-                <a href="/en-us/docs/dom/StyleSheet">Case sensitive 1</a>
-                <a class="new" href="/en-US/docs/dom/Styles">For good measure</a>
-        """ % vars
+@pytest.mark.parametrize('has_class', ('hasClass', 'noClass'))
+@pytest.mark.parametrize('anchor', ('withAnchor', 'noAnchor'))
+@pytest.mark.parametrize('full_url', ('fullURL', 'pathOnly'))
+def test_annotate_links_existing_doc(root_doc, anchor, full_url, has_class):
+    """Links to existing docs are unmodified."""
+    if full_url == 'fullURL':
+        url = root_doc.get_full_url()
+        assert url.startswith(AL_BASE_URL)
+    else:
+        url = root_doc.get_absolute_url()
+    if anchor == 'withAnchor':
+        url += "#anchor"
+    if has_class == 'hasClass':
+        link_class = ' class="extra"'
+    else:
+        link_class = ''
+    html = normalize_html('<li><a %s href="%s"></li>' % (link_class, url))
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
 
-        # Split the markup into lines, to better see failures
-        doc_lines = doc_src.strip().split("\n")
-        expected_lines = expected.strip().split("\n")
-        for idx in range(0, len(doc_lines)):
-            doc_line = doc_lines[idx]
-            expected_line = expected_lines[idx]
-            result_line = (kuma.wiki.content.parse(doc_line)
-                                            .annotateLinks(
-                                                base_url=vars['base_url'])
-                                            .serialize())
-            self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
+
+@pytest.mark.parametrize('has_class', ('hasClass', 'noClass'))
+@pytest.mark.parametrize('anchor', ('withAnchor', 'noAnchor'))
+@pytest.mark.parametrize('full_url', ('fullURL', 'pathOnly'))
+def test_annotate_links_nonexisting_doc(db, anchor, full_url, has_class):
+    """Links to existing docs are unmodified."""
+    url = 'en-US/docs/Root'
+    if full_url == 'fullURL':
+        url = urljoin(AL_BASE_URL, url)
+    if anchor == 'withAnchor':
+        url += "#anchor"
+    if has_class == 'hasClass':
+        link_class = ' class="extra"'
+        expected_class = ' class="new extra"'
+    else:
+        link_class = ''
+        expected_class = ' class="new"'
+    html = '<li><a %s href="%s"></li>' % (link_class, url)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected_raw = '<li><a %s href="%s"></li>' % (expected_class, url)
+    assert normalize_html(actual_raw) == normalize_html(expected_raw)
+
+
+def test_annotate_links_uilocale_to_existing_doc(root_doc):
+    """Links to existing docs with embeded locales are unmodified."""
+    assert root_doc.get_absolute_url() == '/en-US/docs/Root'
+    url = '/en-US/docs/en-US/Root'  # Notice the 'en-US' after '/docs/'
+    html = normalize_html('<li><a href="%s"></li>' % url)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+def test_annotate_links_uilocale_to_nonexisting_doc(db):
+    """Links to new docs with embeded locales are unmodified."""
+    url = '/en-US/docs/en-US/Root'  # Notice the 'en-US' after '/docs/'
+    html = '<li><a href="%s"></li>' % url
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected = normalize_html('<li><a class="new" href="%s"></li>' % url)
+    assert normalize_html(actual_raw) == expected
+
+
+@pytest.mark.parametrize('attributes', ('', 'class="foobar" name="quux"'))
+def test_annotate_links_no_href(attributes):
+    """Links without an href do not break the annotator."""
+    html = normalize_html('<li><a %s>No href</a></li>' % attributes)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+@pytest.mark.parametrize('slug', ('tag/foo', 'feeds/atom/all', 'templates'))
+def test_annotate_links_docs_but_not_wiki_urls(slug):
+    """Links to /docs/ URLs that are not wiki docs are not annotated."""
+    html = normalize_html('<li><a href="/en-US/docs/%s">Other</a></li>' % slug)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+@pytest.mark.parametrize('slug', ('', '/dashboards/revisions'))
+def test_annotate_links_not_docs_urls(slug):
+    """Links that are not /docs/ are not annotated."""
+    html = normalize_html('<li><a href="%s">Other</a></li>' % slug)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+@pytest.mark.parametrize('slug', ('root', 'ROOT', 'rOoT'))
+def test_annotate_links_case_insensitive(root_doc, slug):
+    """Links to existing docs are case insensitive."""
+    url = '/en-US/docs/' + slug
+    assert url != root_doc.get_absolute_url()
+    html = normalize_html('<li><a href="%s"></li>' % url)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+def test_annotate_links_external_link():
+    """Links to external sites get an external class."""
+    html = '<li><a href="https://mozilla.org">External link</a>.</li>'
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected = normalize_html(
+        '<li><a class="external" href="https://mozilla.org">'
+        'External link</a>.</li>')
+    assert normalize_html(actual_raw) == expected
 
 
 class FilterEditorSafetyTests(TestCase):
