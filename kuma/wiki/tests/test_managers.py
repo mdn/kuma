@@ -61,7 +61,9 @@ def test_get_natural_key(root_doc):
     ('User:ethertank',
      'Talk:Developer_Guide/Build_Instructions/Windows_Prerequisites',
      'User_talk:ethertank',
-     'Template_talk:anch'))
+     'Template_talk:anch',
+     'Project_talk:To-do_list',
+     ))
 def test_documents_filter_for_list_exclude_slug_prefixes(root_doc, legacy_slug):
     """filter_for_list excludes some slug prefixes."""
     Document.objects.create(locale='en-US', slug=legacy_slug)
