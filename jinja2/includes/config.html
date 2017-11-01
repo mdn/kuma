@@ -27,10 +27,12 @@
                 'editor-content': [
                     {%- stylesheet 'editor-content' %}
                     {%- stylesheet 'editor-locale-%s' % LANG %}
-                ]
+                ],
+                'wiki-compat-tables': [{% stylesheet 'wiki-compat-tables' %}]
             },
             js: {
-                'syntax-prism': [{% javascript 'syntax-prism' %}]
+                'syntax-prism': [{% javascript 'syntax-prism' %}],
+                'wiki-compat-tables': [{% javascript 'wiki-compat-tables' %}]
             }
         };
 

@@ -42,6 +42,7 @@ Flags
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.
 
+* ``compat_data`` - View the new JSON backed compat tables.
 * ``kumabanned`` - (deprecated) added to users to mark them as banned.
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``line_length`` - Enable/disable readable line length.

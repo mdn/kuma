@@ -1,0 +1,29 @@
+/*
+Legend
+********************************************************************** */
+
+.bc-legend {
+    margin-bottom: $grid-spacing;
+
+    dl {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+    }
+
+    dt {
+        display: block;
+        grid-column: 1 / 2;
+        margin: 0 0 ($bc-grid-spacing / 2) 0;
+    }
+
+    dd {
+        display: block;
+        grid-column: 2 / 3;
+        margin: 0 $bc-grid-spacing ($bc-grid-spacing / 2) $bc-grid-spacing;
+
+        &:after {
+            content: '\a';
+            white-space: pre;
+        }
+    }
+}

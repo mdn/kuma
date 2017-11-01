@@ -1,0 +1,43 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
+@import 'components/compat-tables/vars';
+
+/*
+Icons
+====================================================================== */
+@import 'components/compat-tables/ic';
+@import 'components/compat-tables/bc-icons';
+@import 'components/compat-tables/bc-browser';
+
+
+/*
+Table Layout
+====================================================================== */
+@import 'components/compat-tables/bc-table';
+
+
+/*
+Support cells
+====================================================================== */
+@import 'components/compat-tables/bc-supports';
+
+
+/*
+History
+====================================================================== */
+@import 'components/compat-tables/bc-history-link';
+@import 'components/compat-tables/bc-history';
+
+
+/*
+Footnotes & Legend
+====================================================================== */
+@import 'components/compat-tables/bc-footnotes';
+@import 'components/compat-tables/bc-legend';
+
+
+/*
+Beta menu
+====================================================================== */
+@import 'components/compat-tables/bc-beta';

@@ -1,0 +1,78 @@
+/*
+Icons in mobile view
+********************************************************************** */
+
+@media #{$mq-mobile-and-down} {
+    [class*='bc-browser-']:before {
+        position: absolute;
+        top: 8px;
+        left: 0;
+        height: 25px;
+        width: 50px;
+        font-family: compat-icons;
+        speak: none;
+        color: $text-color;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        line-height: 1;
+        text-align: center;
+        text-transform: none;
+    }
+
+    /*
+    vendor icons
+    ====================================================================== */
+
+    .bc-browser-webview_android:before {
+        content: '\f17b\0020\f17b';
+    }
+
+    .bc-browser-chrome:before {
+        content: '\f108\0020\eae5';
+    }
+    .bc-browser-chrome_android:before {
+        content: '\f17b\0020\eae5';
+    }
+
+    .bc-browser-firefox:before {
+        content: '\f108\0020\eae6';
+    }
+
+    .bc-browser-firefox_android:before {
+        content: '\f17b\0020\eae6';
+    }
+
+    .bc-browser-edge:before {
+        content: '\f108\0020\e605';
+    }
+
+    .bc-browser-edge_mobile:before {
+        content: '\f10a\0020\e605';
+    }
+
+    .bc-browser-ie:before {
+        content: '\f108\0020\eae7';
+    }
+
+    .bc-browser-ie_mobile:before {
+        content: '\f10a\0020\eae7';
+    }
+
+    .bc-browser-opera:before {
+        content: '\f108\0020\eae8';
+    }
+    .bc-browser-opera_android:before {
+        content: '\f17b\0020\eae8';
+    }
+    .bc-browser-opera_mini:before {
+        content: '\f10b\0020\eae8';
+    }
+
+    .bc-browser-safari:before {
+        content: '\f108\0020\e94a';
+    }
+    .bc-browser-safari_ios:before {
+        content: '\f10a\0020\e94a';
+    }
+}

@@ -1,0 +1,23 @@
+/*
+Icons denooting complicatons with support (footnote, altname, prefix, etc)
+********************************************************************** */
+
+.bc-icons {
+    position: relative;
+    z-index: 12; /* raise z-index so tool tips still appear even if overlapping history link */
+
+    /* TODO: center icons if they wrap, :first-line? only on mobile?  */
+    float: right;
+    margin: 0 2px;
+}
+
+.bc-icons a {
+    text-decoration: none;
+}
+
+@media all and (max-width: 800px) {
+    th .bc-icons {
+        float: none;
+        display: inline-block;
+    }
+}
