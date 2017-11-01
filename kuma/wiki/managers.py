@@ -72,11 +72,12 @@ class BaseDocumentManager(models.Manager):
                          'summary_text')
         return docs
 
-    def filter_for_review(self, locale=None, tag=None, tag_name=None):
-        """Filter for documents with current revision flagged for review"""
+    def _filter_by_revision_flag(self, revision_tag, locale=None, tag=None,
+                                 tag_name=None):
+        """Filter documents by moderator flags on the current revision."""
         docs = self.filter_for_list(locale=locale)
         docs = docs.exclude(slug__startswith='Archive/')
-        filter_name = 'current_revision__review_tags__'
+        filter_name = 'current_revision__%s_tags__' % revision_tag
         if tag_name:
             docs = docs.filter(**{filter_name + 'name': tag_name})
         elif tag:
@@ -85,18 +86,14 @@ class BaseDocumentManager(models.Manager):
             docs = docs.filter(**{filter_name + 'name__isnull': False})
         return docs.distinct()
 
+    def filter_for_review(self, locale=None, tag=None, tag_name=None):
+        """Filter for documents with current revision flagged for review"""
+        return self._filter_by_revision_flag('review', locale, tag, tag_name)
+
     def filter_with_localization_tag(self, locale=None, tag=None, tag_name=None):
         """Filter for documents with a localization tag on current revision"""
-        docs = self.filter_for_list(locale=locale)
-        docs = docs.exclude(slug__startswith='Archive/')
-        filter_name = 'current_revision__localization_tags__'
-        if tag_name:
-            docs = docs.filter(**{filter_name + 'name': tag_name})
-        elif tag:
-            docs = docs.filter(**{filter_name + 'in': [tag]})
-        else:
-            docs = docs.filter(**{filter_name + 'name__isnull': False})
-        return docs.distinct()
+        return self._filter_by_revision_flag('localization', locale, tag,
+                                             tag_name)
 
 
 class DocumentManager(BaseDocumentManager):
