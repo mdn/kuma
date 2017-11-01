@@ -7,7 +7,16 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/{{ GA_FILE }}.js','ga');
 
+    {%- if not request.user.is_authenticated() and
+           content_experiment and
+           content_experiment.selection_is_valid and
+           content_experiment.ga_name == 'interactive-editor' %}
+    // Increase site speed sample rate for the interactive-editor experiment
+    ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org',
+       {'siteSpeedSampleRate': 100});
+    {%- else %}
     ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
+    {%- endif %}
     ga('set', 'anonymizeIp', true);
 
     {% if request.user.is_authenticated() %}

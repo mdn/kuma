@@ -6,29 +6,76 @@ from pages.content_experiment import VariantPage
 
 # Currently no enabled experiments
 # TODO: Investigate importing from /kuma/settings/content_experiments.json
-CONTENT_EXPERIMENTS = []
-EXPECTED_TITLES = {}
+CONTENT_EXPERIMENTS = [
+    {
+        "id": "experiment-interactive-editor",
+        "ga_name": "interactive-editor",
+        "param": "v",
+        "pages": {
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/push": {
+                "a": "Web/JavaScript/Reference/Global_Objects/Array/push",
+                "b": "Experiment:InteractiveEditor/Array.prototype.push()"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/concat": {
+                "a": "Web/JavaScript/Reference/Global_Objects/Array/concat",
+                "b": "Experiment:InteractiveEditor/Array.prototype.concat()"
+            },
+            "en-US:Web/JavaScript/Reference/Global_Objects/Array/Reduce": {
+                "a": "Web/JavaScript/Reference/Global_Objects/Array/Reduce",
+                "b": "Experiment:InteractiveEditor/Array.prototype.reduce()"
+            },
+            "en-US:Web/CSS/transform": {
+                "a": "Web/CSS/transform",
+                "b": "Experiment:InteractiveEditor/transform"
+            },
+            "en-US:Web/CSS/box-shadow": {
+                "a": "Web/CSS/box-shadow",
+                "b": "Experiment:InteractiveEditor/box-shadow"
+            },
+            "en-US:Web/CSS/background-color": {
+                "a": "Web/CSS/background-color",
+                "b": "Experiment:InteractiveEditor/background-color"
+            }
+        }
+    }
+]
+
+EXPECTED_TITLES = {
+    "en-US:Web/JavaScript/Reference/Global_Objects/Array/push":
+        "Array.prototype.push() - JavaScript | MDN",
+    "en-US:Web/JavaScript/Reference/Global_Objects/Array/concat":
+        "Array.prototype.concat() - JavaScript | MDN",
+    "en-US:Web/JavaScript/Reference/Global_Objects/Array/Reduce":
+        "Array.prototype.reduce() - JavaScript | MDN",
+    "en-US:Web/CSS/transform":
+        "transform - CSS | MDN",
+    "en-US:Web/CSS/box-shadow":
+        "box-shadow - CSS | MDN",
+    "en-US:Web/CSS/background-color":
+        "background-color - CSS | MDN",
+}
 
 # Create nicer parameter lists for tests, verbose output
 CONTENT_PAGES, CONTENT_VARIANTS = [], []
 for exp in CONTENT_EXPERIMENTS:
-    for page in exp['pages']:
-        CONTENT_PAGES.append((exp['id'], page['locale'], page['slug']))
-        for variant in page['variants']:
-            CONTENT_VARIANTS.append((exp['id'], page['locale'], page['slug'],
-                                     variant[0]))
+    for page, variants in exp['pages'].items():
+        locale, slug = page.split(':', 1)
+        CONTENT_PAGES.append((exp['id'], locale, slug))
+        for key in variants.keys():
+            CONTENT_VARIANTS.append((exp['id'], locale, slug, key))
 
 
 def get_experiment_data(exp_id, locale, slug):
     for exp in CONTENT_EXPERIMENTS:
         if exp['id'] == exp_id:
-            for page in exp['pages']:
-                if page['locale'] == locale and page['slug'] == slug:
+            for page, variants in exp['pages'].items():
+                page_locale, page_slug = page.split(':', 1)
+                if page_locale == locale and page_slug == slug:
                     return {
                         'ga_name': exp['ga_name'],
                         'param': exp['param'],
-                        'expected_title': EXPECTED_TITLES[(locale, slug)],
-                        'variants': [name for name, src in page['variants']],
+                        'expected_title': EXPECTED_TITLES[page],
+                        'variants': list(variants.keys())
                     }
     raise Exception("Invalid experiment")
 
@@ -57,6 +104,8 @@ def test_content_exp_logged_in(base_url, selenium, exp_id, locale, slug):
     assert selenium.title == data['expected_title']
     assert selenium.current_url == page.seed_url
     assert page.has_edit_button
+    if page.has_google_analytics:
+        assert page.ga_value('siteSpeedSampleRate') == 1
 
 
 @pytest.mark.nondestructive
@@ -75,3 +124,7 @@ def test_content_exp_variant(
         expected_dim15 = "%s:%s" % (data['ga_name'], variant)
         assert page.ga_value('dimension15') == expected_dim15
         assert page.ga_value('dimension16') == "/%s/docs/%s" % (locale, slug)
+        if exp_id == 'experiment-interactive-editor':
+            assert page.ga_value('siteSpeedSampleRate') == 100
+        else:
+            assert page.ga_value('siteSpeedSampleRate') == 1
