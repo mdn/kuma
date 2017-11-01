@@ -117,211 +117,134 @@ class InjectSectionIDsTests(TestCase):
         self.assertHTMLEqual(result_src, expected)
 
 
-class ExtractSectionTests(TestCase):
-    def test_simple_implicit_section_extract(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
+def test_extractSection_by_header_id():
+    """extractSection can extract by header element id."""
+    doc_src = """
+        <h1 id="s1">Head 1</h1><p>test 1</p>
+        <h1 id="s2">Head 2</h1><p>test 2</p>
+    """
+    expected = """
+        <h1 id="s1">Head 1</h1><p>test 1</p>
+    """
+    result = parse(doc_src).extractSection(id="s1").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s2">Head 2</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s1")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
-    def test_contained_implicit_section_extract(self):
-        doc_src = """
-            <h1 id="s4-next">Head</h1>
+def test_extractSection_heading_in_section():
+    """extractSection can extract a header inside a section."""
+    doc_src = """
+        <h1 id="s4">Head</h1><p>test</p>
+        <section id="parent-s5">
+          <h1 id="s5">Head 5</h1>
             <p>test</p>
-
-            <section id="parent-s5">
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-                <h1 id="s5-next">Head 5 next</h1>
-                <p>test</p>
-                <p>test</p>
+            <section>
+              <h1>head subsection</h1>
             </section>
-
-            <h1 id="s7">Head 7</h1>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+          <h1 id="s5-next">Head 5 next</h1><p>test</p>
+        </section>
+        <h1 id="s7">Head 7</h1><p>test</p>
+    """
+    expected = """
+          <h1 id="s5">Head 5</h1>
             <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s5")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
-
-    def test_explicit_section_extract(self):
-        doc_src = """
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-
-            <section id="parent-s5">
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-                <h1 id="s5-next">Head 5 next</h1>
-                <p>test</p>
-                <p>test</p>
+            <section>
+              <h1>head subsection</h1>
             </section>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+    """  # h1 and h2, but not the next h1
+    result = parse(doc_src).extractSection(id="s5").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s7">Head 7</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-                <h1 id="s5-next">Head 5 next</h1>
-                <p>test</p>
-                <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="parent-s5")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
-    def test_multilevel_implicit_section_extract(self):
-        doc_src = """
+def test_extractSection_by_section():
+    """extractSection can extract the contents of a section."""
+    doc_src = """
+        <h1 id="s4">Head</h1><p>test</p>
+        <section id="parent-s5">
+          <h1 id="s5">Head 5</h1>
             <p>test</p>
+            <section>
+              <h1>head subsection</h1>
+            </section>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+          <h1 id="s5-next">Head 5 next</h1><p>test</p>
+        </section>
+        <h1 id="s7">Head 7</h1><p>test</p>
+    """  # Same as test_extractSection_heading_in_section
+    expected = """
+          <h1 id="s5">Head 5</h1>
+            <p>test</p>
+            <section>
+              <h1>head subsection</h1>
+            </section>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+          <h1 id="s5-next">Head 5 next</h1><p>test</p>
+    """  # All headings inside the section
+    result = parse(doc_src).extractSection(id="parent-s5").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h2>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test</p>
-            <p>test</p>
 
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s4")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+def test_extractSection_descending_heading_levels():
+    """extractSection extracts simple sub-headings."""
+    doc_src = """
+        <p>test</p>
+        <h1 id="s4">Head 4</h1><p>test 4</p>
+        <h2 id="s4-1">Head 4-1</h2><p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-2</p>
+        <h1 id="s4-next">Head</h1><p>test next</p>
+    """
+    expected = """
+        <h1 id="s4">Head 4</h1><p>test 4</p>
+        <h2 id="s4-1">Head 4-1</h2><p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-2</p>
+    """  # All headings up to the next h1
+    result = parse(doc_src).extractSection(id="s4").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-    def test_morelevels_implicit_section_extract(self):
-        doc_src = """
-            <h1 id="s7">Head 7</h1>
-            <p>test</p>
-            <p>test</p>
 
-            <h1 id="s8">Head</h1>
-            <p>test</p>
-            <h2 id="s8-1">Head</h1>
-            <p>test</p>
-            <h3 id="s8-1-1">Head</h3>
-            <p>test</p>
-            <h2 id="s8-2">Head</h1>
-            <p>test</p>
-            <h3 id="s8-2-1">Head</h3>
-            <p>test</p>
-            <h4 id="s8-2-1-1">Head</h4>
-            <p>test</p>
-            <h2 id="s8-3">Head</h1>
-            <p>test</p>
+def test_extractSection_complex_heading_levels():
+    """extractSection extracts complex sub-headings."""
+    doc_src = """
+        <h1 id="s7">Head 7</h1><p>test 7</p>
+        <h1 id="s8">Head</h1><p>test 8</p>
+        <h2 id="s8-1">Head</h1><p>test 8-1</p>
+        <h3 id="s8-1-1">Head</h3><p>test 8-1-1</p>
+        <h2 id="s8-2">Head</h1><p>test 8-2</p>
+        <h3 id="s8-2-1">Head</h3><p>test 8-2-1</p>
+        <h4 id="s8-2-1-1">Head</h4><p>test 8-2-1-1</p>
+        <h2 id="s8-3">Head</h1><p>test 8-3</p>
+        <h1 id="s9">Head</h1><p>test 9</p>
+    """
+    expected = """
+        <h1 id="s8">Head</h1><p>test 8</p>
+        <h2 id="s8-1">Head</h1><p>test 8-1</p>
+        <h3 id="s8-1-1">Head</h3><p>test 8-1-1</p>
+        <h2 id="s8-2">Head</h1><p>test 8-2</p>
+        <h3 id="s8-2-1">Head</h3><p>test 8-2-1</p>
+        <h4 id="s8-2-1-1">Head</h4><p>test 8-2-1-1</p>
+        <h2 id="s8-3">Head</h1><p>test 8-3</p>
+    """  # All headings up to the next h1
+    result = parse(doc_src).extractSection(id="s8").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s9">Head</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s8">Head</h1>
-            <p>test</p>
-            <h2 id="s8-1">Head</h1>
-            <p>test</p>
-            <h3 id="s8-1-1">Head</h3>
-            <p>test</p>
-            <h2 id="s8-2">Head</h1>
-            <p>test</p>
-            <h3 id="s8-2-1">Head</h3>
-            <p>test</p>
-            <h4 id="s8-2-1-1">Head</h4>
-            <p>test</p>
-            <h2 id="s8-3">Head</h1>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s8")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
-    def test_ignore_heading_section_extract(self):
-        doc_src = """
-            <p>test</p>
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h2>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test s4-2</p>
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-        """
-        expected = """
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test s4-2</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s4-1",
-                                                   ignore_heading=True)
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+def test_extractSection_ignore_heading():
+    """extractSection can exclude the header element."""
+    doc_src = """
+        <p>test</p>
+        <h1 id="s4">Head 4</h1><p>test 4</p>
+        <h2 id="s4-1">Head 4-1</h2><p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-1-1</p>
+        <h1 id="s4-next">Head</h1><p>test next</p>
+    """
+    expected = """
+                                   <p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-1-1</p>
+    """  # h2 contents without the h2
+    result = (parse(doc_src).extractSection(id="s4-1", ignore_heading=True)
+                            .serialize())
+    assert normalize_html(result) == normalize_html(expected)
 
 
 class ReplaceSectionTests(TestCase):
