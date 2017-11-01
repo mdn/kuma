@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('github.com/mozmar/jenkins-pipeline@master')
+@Library('github.com/mozmeao/jenkins-pipeline@master')
 
 def loadBranch(String branch) {
   utils = load 'Jenkinsfiles/utils.groovy'
@@ -50,7 +50,9 @@ node {
       }
     }
     finally {
-      junit 'test_results/*.xml'
+      if (findFiles(glob: 'test_results/*.xml')) {
+        junit 'test_results/*.xml'
+      }
     }
   }
 }
