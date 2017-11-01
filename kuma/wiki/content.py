@@ -482,7 +482,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                                 classes = set()
                             classes.update(links[href]['classes'])
                             if classes:
-                                attrs[(namespace, u'class')] = u' '.join(classes)
+                                attrs[(namespace, u'class')] = u' '.join(sorted(classes))
 
                 token['data'] = attrs
 

@@ -957,7 +957,7 @@ def test_annotate_links_nonexisting_doc(db, anchor, full_url, has_class):
         url += "#anchor"
     if has_class == 'hasClass':
         link_class = ' class="extra"'
-        expected_class = ' class="new extra"'
+        expected_class = ' class="extra new"'
     else:
         link_class = ''
         expected_class = ' class="new"'
