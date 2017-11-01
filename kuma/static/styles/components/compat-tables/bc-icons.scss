@@ -15,9 +15,22 @@ Icons denooting complicatons with support (footnote, altname, prefix, etc)
     text-decoration: none;
 }
 
-@media all and (max-width: 800px) {
+/* tablet display */
+@mixin bc-icons-tablet-display() {
     th .bc-icons {
         float: none;
         display: inline-block;
+    }
+}
+
+/* tablet */
+@media #{$mq-tablet-only} {
+    @include bc-icons-tablet-display();
+}
+
+/* small desktop, but only if there's a left column */
+@media #{$mq-small-desktop-only} {
+    .wiki-left-present {
+        @include bc-icons-tablet-display();
     }
 }
