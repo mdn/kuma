@@ -325,11 +325,6 @@ class ContentSectionTool(object):
         return self
 
     @newrelic.agent.function_trace()
-    def absolutizeAddresses(self, base_url, tag_attributes):
-        self.stream = URLAbsolutionFilter(self.stream, base_url, tag_attributes)
-        return self
-
-    @newrelic.agent.function_trace()
     def annotateLinks(self, base_url):
         self.stream = LinkAnnotationFilter(self.stream, base_url)
         return self
@@ -362,46 +357,6 @@ class ContentSectionTool(object):
         self.stream = SectionFilter(self.stream, id, replace_stream,
                                     ignore_heading=ignore_heading)
         return self
-
-
-class URLAbsolutionFilter(html5lib_Filter):
-    """
-    Filter which turns relative links into absolute links.
-    Originally created for generating sphinx templates.
-    """
-    def __init__(self, source, base_url, tag_attributes):
-        html5lib_Filter.__init__(self, source)
-        self.base_url = base_url
-        self.tag_attributes = tag_attributes
-
-    def __iter__(self):
-        input = html5lib_Filter.__iter__(self)
-
-        for token in input:
-
-            if (token['type'] == 'StartTag' and
-                    token['name'] in self.tag_attributes):
-                attrs = dict(token['data'])
-
-                # If the element has the attribute we're looking for
-                desired_attr = self.tag_attributes[token['name']]
-
-                for (namespace, name), value in attrs.items():
-                    if desired_attr == name:
-                        if not value.startswith('http'):
-                            if value.startswith('//') or value.startswith('{{'):
-                                # Do nothing for absolute addresses or apparent
-                                # template variable output
-                                attrs[(namespace, name)] = value
-                            elif value.startswith('/'):
-                                # Starts with "/", so just add the base url
-                                attrs[(namespace, name)] = self.base_url + value
-                            else:
-                                attrs[(namespace, name)] = self.base_url + '/' + value
-                            token['data'] = attrs
-                        break
-
-            yield token
 
 
 class LinkAnnotationFilter(html5lib_Filter):

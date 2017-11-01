@@ -828,13 +828,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/zones.css',
     },
-    'sphinx': {
-        'source_filenames': (
-            'styles/wiki.scss',
-            'styles/sphinx.scss',
-        ),
-        'output_filename': 'build/styles/sphinx.css',
-    },
     'users': {
         'source_filenames': (
             'styles/users.scss',

@@ -5,9 +5,7 @@
     (function(win) {
         'use strict';
 
-        {% if not is_sphinx %}
-            {{ waffle.wafflejs() }}
-        {% endif %}
+        {{ waffle.wafflejs() }}
 
         // This needs to be set before ckeditor.js loads
         window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';

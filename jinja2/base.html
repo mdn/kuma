@@ -3,19 +3,19 @@
 
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" class="no-js" data-ffo-opensans="false" data-ffo-zillaslab="false">
-<head {%- if not untrusted and not is_sphinx %} prefix="og: http://ogp.me/ns#"{% endif %}>
+<head {%- if not untrusted %} prefix="og: http://ogp.me/ns#"{% endif %}>
   <meta charset="utf-8">
   {%- block experiment_js %}{% endblock %}
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
-  {% if not untrusted and not is_sphinx %}
+  {% if not untrusted %}
     {{ optimizely_script() }}
   {% endif %}
   <title>{% block title %}{{ _('MDN Web Docs') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
-  {%- if not untrusted and not is_sphinx %}
+  {%- if not untrusted %}
     <link rel="home" href="{{ url('home') }}">
     <link rel="copyright" href="#copyright">
   {% endif %}
@@ -40,7 +40,7 @@
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
-  {%- if not untrusted and not is_sphinx %}
+  {%- if not untrusted %}
     <!-- common social tags -->
     {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
     <meta property="og:type" content="website">
@@ -79,9 +79,7 @@
 
   {% block extrahead %}{% endblock %}
 
-  {% if not is_sphinx %}
-    {% include "includes/google_analytics.html" %}
-  {% endif %}
+  {% include "includes/google_analytics.html" %}
 </head>
 <body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}{% if settings.MAINTENANCE_MODE %} maintenance-mode{% endif %}"{% if request.user and request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
@@ -107,10 +105,8 @@
   {%- if not untrusted %}
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
-    {%- if not is_sphinx %}
     <li><a id="skip-language" href="#language">{{ _('Select language') }}</a></li>
     <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
-    {%- endif %}
   </ul>
 
   <!-- Header -->
@@ -118,7 +114,6 @@
     <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
 
     <div id="nav-sec">
-    {% if not is_sphinx %}
       <ul>
       {% if user.is_authenticated() %}
         <li class="nav-tools"><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Tools') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
@@ -139,7 +134,6 @@
           </div>
       </li>{% endif %}<li class="nav-login">{% include "includes/login.html" %}</li>
       </ul>
-    {% endif %}
     </div>
 
     <nav id="main-nav" class="nav-main" role="navigation"><ul><li class="nav-main-item"><a href="{{ wiki_url('Web') }}">{{ _('Technologies') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
@@ -183,14 +177,16 @@
             </ul>
           </div>
         </div>
-      </li>{% if not is_sphinx %}<li class="nav-main-search"><form action="{{ url('search') }}" method="get" role="search">
+      </li>
+      <li class="nav-main-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
           <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>
           <button type="submit" class="offscreen">{{ _('Search') }}</button>
         </div>
-      </form></li>{% endif %}</ul></nav>
+      </form></li>
+    </ul></nav>
   </div></header>
   {%- endif %} {# if not untrusted #}
 
@@ -233,11 +229,9 @@
             </ul>
           </div>
 
-          {% if not is_sphinx %}
-            {% block lang_switcher %}
-                {% include "includes/lang_switcher.html" %}
-            {% endblock %}
-          {% endif %}
+          {% block lang_switcher %}
+            {% include "includes/lang_switcher.html" %}
+          {% endblock %}
 
           {% block footer_copyright %}
             <ul class="footer-tos">
@@ -264,11 +258,9 @@
     {{ providers_media_js() }}
     <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'main' %}
-    {% if not is_sphinx %}
-      <script>
-        if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-      </script>
-    {% endif %}
+    <script>
+      if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+    </script>
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
