@@ -386,7 +386,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                             href = href_parsed.path
 
                         # Prepare annotations record for this path.
-                        links[href] = {'classes': []}
+                        links[href] = {'classes': [], 'rel': []}
 
         needs_existence_check = defaultdict(lambda: defaultdict(set))
 
@@ -459,6 +459,7 @@ class LinkAnnotationFilter(html5lib_Filter):
             for slug, hrefs in slug_hrefs.items():
                 for href in hrefs:
                     links[href]['classes'].append('new')
+                    links[href]['rel'].append('nofollow')
 
         # Pass #2: Filter the content, annotating links
         for token in buffer:
@@ -473,14 +474,21 @@ class LinkAnnotationFilter(html5lib_Filter):
                             # Squash site-absolute URLs to site-relative paths.
                             href = href_parsed.path
 
-                        # Update class names on this link element.
-                        if 'class' in names:
-                            classes = set(attrs[(namespace, 'class')].split(u' '))
-                        else:
-                            classes = set()
-                        classes.update(links[href]['classes'])
-                        if classes:
-                            attrs[(namespace, u'class')] = u' '.join(sorted(classes))
+                        # Update attributes on this link element.
+                        def add_to_attr(attr_name, add_list):
+                            """Add values to the attribute dictionary."""
+                            if attr_name in names:
+                                values = set(
+                                    attrs[(namespace, attr_name)].split(u' '))
+                            else:
+                                values = set()
+                            values.update(add_list)
+                            if values:
+                                attrs[(namespace, attr_name)] = (
+                                    u' '.join(sorted(values)))
+
+                        add_to_attr(u'class', links[href]['classes'])
+                        add_to_attr(u'rel', links[href]['rel'])
 
                 token['data'] = attrs
 

@@ -365,7 +365,7 @@ def test_get_body_html(doc_with_sections):
     <h2 id="Second">Second</h2>
     <p>Another section, with an
       <a href="/en-US/docs/Root">existing link</a> and a
-      <a class="new" href="/en-US/docs/NewPage">new link</a>.
+      <a class="new" rel="nofollow" href="/en-US/docs/NewPage">new link</a>.
     </p>
     <h2 id="Short">Short</h2>
     <p>This is the short section.</p>

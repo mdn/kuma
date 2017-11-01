@@ -879,13 +879,13 @@ def test_annotate_links_nonexisting_doc(db, anchor, full_url, has_class):
         url += "#anchor"
     if has_class == 'hasClass':
         link_class = ' class="extra"'
-        expected_class = ' class="extra new"'
+        expected_attrs = ' class="extra new" rel="nofollow"'
     else:
         link_class = ''
-        expected_class = ' class="new"'
+        expected_attrs = ' class="new" rel="nofollow"'
     html = '<li><a %s href="%s"></li>' % (link_class, url)
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
-    expected_raw = '<li><a %s href="%s"></li>' % (expected_class, url)
+    expected_raw = '<li><a %s href="%s"></li>' % (expected_attrs, url)
     assert normalize_html(actual_raw) == normalize_html(expected_raw)
 
 
@@ -903,7 +903,8 @@ def test_annotate_links_uilocale_to_nonexisting_doc(db):
     url = '/en-US/docs/en-US/Root'  # Notice the 'en-US' after '/docs/'
     html = '<li><a href="%s"></li>' % url
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
-    expected = normalize_html('<li><a class="new" href="%s"></li>' % url)
+    expected = normalize_html(
+        '<li><a rel="nofollow" class="new" href="%s"></li>' % url)
     assert normalize_html(actual_raw) == expected
 
 
