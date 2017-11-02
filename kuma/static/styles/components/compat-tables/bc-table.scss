@@ -45,12 +45,10 @@ Table layout
     text-align: center;
 }
 
-/* first column, fixed at 200 */
+/* first column, fixed at $feature-name-width */
 .bc-table thead td,
 .bc-table tbody th {
-    width: 200px;
-    min-width: 200px;
-    max-width: 200px;
+    width: $feature-name-width;
     overflow: hidden;
 }
 
@@ -165,8 +163,6 @@ tablet display
     .text-content .bc-table td,
     .text-content .bc-table th {
         width: auto;
-        min-width: 0;
-        max-width: 100%;
     }
 
     /* hide empty cells in thead */

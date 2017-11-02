@@ -31,10 +31,6 @@ Custom icon font for compat tables
     content: '\e603';
 }
 
-.ic-obsolete:before {
-    content: '\f014';
-}
-
 .ic-disabled:before {
     content: '\f024';
 }
@@ -55,16 +51,25 @@ Custom icon font for compat tables
     content: '\f132';
 }
 
+.ic-deprecated:before {
+    content: '\f088';
+    font-family: FontAwesome;
+}
+
 /*
 platform icons
 ====================================================================== */
 
 .ic-desktop:before {
-    content: '\f108';
+    content: '\e956';
 }
 
 .ic-mobile:before {
-    content: '\f10a';
+    content: '\f108';
+}
+
+.ic-server:before {
+    content: '\e963';
 }
 
 /*
@@ -105,6 +110,10 @@ browser icons
 
 .ic-ie_mobile:before {
     content: '\eae7';
+}
+
+.ic-nodejs:before {
+    content: '\e900';
 }
 
 .ic-opera:before {

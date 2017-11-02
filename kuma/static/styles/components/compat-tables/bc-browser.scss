@@ -29,14 +29,14 @@ Icons in mobile view
     }
 
     .bc-browser-chrome:before {
-        content: '\f108\0020\eae5';
+        content: '\e956\0020\eae5';
     }
     .bc-browser-chrome_android:before {
         content: '\f17b\0020\eae5';
     }
 
     .bc-browser-firefox:before {
-        content: '\f108\0020\eae6';
+        content: '\e956\0020\eae6';
     }
 
     .bc-browser-firefox_android:before {
@@ -44,23 +44,27 @@ Icons in mobile view
     }
 
     .bc-browser-edge:before {
-        content: '\f108\0020\e605';
+        content: '\e956\0020\e605';
     }
 
     .bc-browser-edge_mobile:before {
-        content: '\f10a\0020\e605';
+        content: '\f108\0020\e605';
     }
 
     .bc-browser-ie:before {
-        content: '\f108\0020\eae7';
+        content: '\e956\0020\eae7';
     }
 
     .bc-browser-ie_mobile:before {
-        content: '\f10a\0020\eae7';
+        content: '\f108\0020\eae7';
+    }
+
+    .bc-browser-nodejs:before {
+        content: '\e900';
     }
 
     .bc-browser-opera:before {
-        content: '\f108\0020\eae8';
+        content: '\e956\0020\eae8';
     }
     .bc-browser-opera_android:before {
         content: '\f17b\0020\eae8';
@@ -70,9 +74,9 @@ Icons in mobile view
     }
 
     .bc-browser-safari:before {
-        content: '\f108\0020\e94a';
+        content: '\e956\0020\e94a';
     }
     .bc-browser-safari_ios:before {
-        content: '\f10a\0020\e94a';
+        content: '\f108\0020\e94a';
     }
 }
