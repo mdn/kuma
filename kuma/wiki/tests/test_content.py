@@ -6,7 +6,6 @@ from django.test import TestCase
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 import bleach
-import mock
 import pytest
 
 import kuma.wiki.content
@@ -19,7 +18,7 @@ from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
                        H3TOCFilter, SectionIDFilter, SectionTOCFilter,
                        get_content_sections, get_seo_description, parse)
-from ..models import Document
+from ..models import Document, Revision
 from ..templatetags.jinja_helpers import bugize_text
 
 AL_BASE_URL = 'https://example.com'  # Base URL for annotateLinks tests
@@ -1088,96 +1087,92 @@ class AllowedHTMLTests(KumaTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class ExtractorTests(UserTestCase):
-    """Tests for document parsers that extract content"""
+def test_extractor_css_classnames(root_doc, wiki_user):
+    """The Extractor can return the CSS class names in use."""
+    classes = ('foobar', 'barfoo', 'bazquux')
+    content = """
+        <p class="%s">Test</p>
+        <p class="%s">Test</p>
+        <div class="%s">Test</div>
+        <div>No Class</div>
+    """ % classes
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    root_doc.render()  # Also saves
+    result = root_doc.extract.css_classnames()
+    assert sorted(result) == sorted(classes)
 
-    def test_css_classname_extraction(self):
-        expected = ('foobar', 'barfoo', 'bazquux')
-        rev = revision(is_approved=True, save=True, content="""
-            <p class="%s">Test</p>
-            <p class="%s">Test</p>
-            <div class="%s">Test</div>
-        """ % expected)
-        rev.document.render()
-        result = rev.document.extract.css_classnames()
-        eq_(sorted(expected), sorted(result))
 
-    def test_html_attribute_extraction(self):
-        expected = (
-            'class="foobar"',
-            'id="frazzy"',
-            'lang="farb"',
-        )
-        rev = revision(is_approved=True, save=True, content="""
-            <p %s>Test</p>
-            <p %s>Test</p>
-            <div %s>Test</div>
-        """ % expected)
-        rev.document.render()
-        doc = Document.objects.get(pk=rev.document.pk)
-        result = doc.extract.html_attributes()
-        eq_(sorted(expected), sorted(result))
+def test_extractor_html_attributes(root_doc, wiki_user):
+    """The Extractor can return the HTML attributes."""
+    attributes = (
+        'class="foobar"',
+        'id="frazzy"',
+        'lang="farb"',
+    )
+    content = """
+        <p %s>Test</p>
+        <p %s>Test</p>
+        <div %s>Test</div>
+    """ % attributes
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    root_doc.render()  # Also saves
+    result = root_doc.extract.html_attributes()
+    assert sorted(result) == sorted(attributes)
 
-    def test_kumascript_macro_extraction(self):
-        expected = ('foobar', 'barfoo', 'bazquux', 'banana')
-        rev = revision(is_approved=True, save=True, content="""
-            <p>{{ %s }}</p>
-            <p>{{ %s("foo", "bar", "baz") }}</p>
-            <p>{{ %s    ("quux") }}</p>
-            <p>{{%s}}</p>
-        """ % expected)
-        result = rev.document.extract.macro_names()
-        eq_(sorted(expected), sorted(result))
 
-    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples(self):
-        expected = {
-            'html': 'Some HTML',
-            'css': '.some-css { color: red; }',
-            'js': 'window.alert("HI THERE")',
-        }
-        rev = revision(is_approved=True, save=True, content="""
-            <div id="sample" class="code-sample">
-                <pre class="brush: html">%(html)s</pre>
-                <pre class="brush: css">%(css)s</pre>
-                <pre class="brush: js">%(js)s</pre>
-            </div>
-            {{ LinkCodeSample('sample1') }}
-        """ % expected)
-        result = rev.document.extract.code_sample('sample')
-        eq_(expected, result)
+def test_extractor_macro_names(root_doc, wiki_user):
+    """The Extractor can return the names of KumaScript macros."""
+    macros = ('foobar', 'barfoo', 'bazquux', 'banana')
+    content = """
+        <p>{{ %s }}</p>
+        <p>{{ %s("foo", "bar", "baz") }}</p>
+        <p>{{ %s    ("quux") }}</p>
+        <p>{{%s}}</p>
+    """ % macros
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.macro_names()
+    assert sorted(result) == sorted(macros)
 
-    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples_with_null_character_in_sample_name(self):
-        rev = revision(is_approved=True, save=True, content="""
-            <div id="sample" class="code-sample">
-                <pre class="brush: html">Some HTML</pre>
-                <pre class="brush: css">.some-css { color: red; }</pre>
-                <pre class="brush: js">window.alert("HI THERE")</pre>
-            </div>
-            {{ LinkCodeSample('sample1') }}
-        """)
-        # The real test here is to ensure that no exception is raised, but
-        # might as well also check that the sample section was not found.
-        sample_name = u"sam\x00ple"  # Null character in name
-        result = rev.document.extract.code_sample(sample_name)
-        eq_(dict(html=None, css=None, js=None), result)
 
-    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples_with_escapable_characters_in_sample_name(self):
-        rev = revision(is_approved=True, save=True, content="""
-            <div id="sample" class="code-sample">
-                <pre class="brush: html">Some HTML</pre>
-                <pre class="brush: css">.some-css { color: red; }</pre>
-                <pre class="brush: js">window.alert("HI THERE")</pre>
-            </div>
-            {{ LinkCodeSample('sample1') }}
-        """)
-        # The real test here is to ensure that no exception is raised, but
-        # might as well also check that the sample section was not found.
-        sample_name = u"""sam<'&">ple"""  # One of "<>'& in name
-        result = rev.document.extract.code_sample(sample_name)
-        eq_(dict(html=None, css=None, js=None), result)
+def test_extractor_code_sample(root_doc, wiki_user):
+    """The Extractor can return the sections of a code sample."""
+    code_sample = {
+        'html': 'Some HTML',
+        'css': '.some-css { color: red; }',
+        'js': 'window.alert("HI THERE")',
+    }
+    content = """
+        <div id="sample" class="code-sample">
+            <pre class="brush: html">%(html)s</pre>
+            <pre class="brush: css">%(css)s</pre>
+            <pre class="brush: js">%(js)s</pre>
+        </div>
+        {{ EmbedLiveSample('sample1') }}
+    """ % code_sample
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample('sample')
+    assert result == code_sample
+
+
+@pytest.mark.parametrize('sample_id', (u'sam\x00ple', u"""sam<'&">ple"""))
+def test_extractor_code_sample_garbage_in_id(root_doc, wiki_user, sample_id):
+    """The Extractor does not error if the code sample ID is bad."""
+    content = """
+        <div id="sample" class="code-sample">
+            <pre class="brush: html">Some HTML</pre>
+            <pre class="brush: css">.some-css { color: red; }</pre>
+            <pre class="brush: js">window.alert("HI THERE")</pre>
+        </div>
+        {{ EmbedLiveSample('sample1') }}
+    """
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample(sample_id)
+    assert result == {'html': None, 'css': None, 'js': None}
 
 
 class GetSEODescriptionTests(KumaTestCase):
