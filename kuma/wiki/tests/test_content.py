@@ -1176,6 +1176,25 @@ def test_extractor_code_sample_garbage_in_id(root_doc, wiki_user, sample_id):
     assert result == {'html': None, 'css': None, 'js': None}
 
 
+def test_extractor_section(root_doc, wiki_user):
+    """The Extractor can extract a section."""
+    quick_links = """
+    <ul>
+      <li><a href="/en-US/docs/Root">Existing</a></li>
+      <li><a href="/en-US/docs/New">New/a></li>
+    </ul>
+    """
+    content = """
+        <div>
+          <section id="Quick_Links" class="Quick_Links">
+            %s
+          </section>
+        </div>
+    """ % quick_links
+    result = root_doc.extract.section(content, "Quick_Links")
+    assert normalize_html(result) == normalize_html(quick_links)
+
+
 class GetSEODescriptionTests(KumaTestCase):
 
     def test_summary_section(self):
