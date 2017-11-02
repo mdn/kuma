@@ -380,7 +380,7 @@ def test_get_quick_links_html(doc_with_sections):
     <p>Quick Links:</p>
     <ul>
       <li><a href="/en-US/docs/Root">Existing link</a></li>
-      <li><a href="/en-US/docs/NewPage">New link</a></li>
+      <li><a class="new" rel="nofollow" href="/en-US/docs/NewPage">New link</a></li>
     </ul>
     """
     assert normalize_html(result) == normalize_html(expected)
@@ -393,7 +393,7 @@ def test_get_zone_subnav_local_html(doc_with_sections):
     <p>Subnav:</p>
     <ul>
       <li><a href="/en-US/docs/Root">Existing link</a></li>
-      <li><a href="/en-US/docs/NewPage">New link</a></li>
+      <li><a class="new" rel="nofollow" href="/en-US/docs/NewPage">New link</a></li>
     </ul>
     """
     assert normalize_html(result) == normalize_html(expected)

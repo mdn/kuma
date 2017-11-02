@@ -8,6 +8,7 @@ from xml.sax.saxutils import quoteattr
 
 import html5lib
 import newrelic.agent
+from django.conf import settings
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
@@ -58,10 +59,13 @@ class Extractor(object):
     def __init__(self, document):
         self.document = document
 
-    def section(self, content, section_id, ignore_heading=False):
+    def section(self, content, section_id, ignore_heading=False,
+                annotate_links=False):
+        """Extract a section, optionally annotating links to missing pages."""
         parsed_content = parse(content)
-        extracted = parsed_content.extractSection(section_id,
-                                                  ignore_heading=ignore_heading)
+        extracted = parsed_content.extractSection(section_id, ignore_heading)
+        if annotate_links:
+            extracted.annotateLinks(base_url=settings.SITE_URL)
         return extracted.serialize()
 
     @newrelic.agent.function_trace()
