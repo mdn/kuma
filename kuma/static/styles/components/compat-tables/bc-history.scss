@@ -15,7 +15,12 @@ $support-dt-width: 120px;
     border-bottom: $bc-border-width-thick solid $bc-border-color;
     cursor: default;
     background-color: #eaeff2;
-    padding-left: $feature-name-width + $support-dt-width;
+}
+
+@each $type, $config in $table-types {
+    .bc-table_#{$type} .bc-history {
+        padding-left: map-get($config, feature-name-width) + $support-dt-width;
+    }
 }
 
 .active .bc-history {

@@ -45,18 +45,22 @@ Table layout
     text-align: center;
 }
 
-/* first column, fixed at $feature-name-width */
 .bc-table thead td,
 .bc-table tbody th {
-    width: $feature-name-width;
     overflow: hidden;
 }
 
-/* everything except first column, 12 columns */
-@for $num from 2 through 12 {
-    .bc-table-#{$num} thead th,
-    .bc-table-#{$num} tbody td {
-        width: (100 / $num) * 1%;
+@each $type, $config in $table-types {
+    /* fix width of feature name column */
+    .bc-table_#{$type} thead td,
+    .bc-table_#{$type} tbody th {
+        width: map-get($config, feature-name-width);
+    }
+
+    /* set width of support cells */
+    .bc-table_#{$type} thead th,
+    .bc-table_#{$type} tbody td {
+        width: (100 / map-get($config, size)) * 1%;
     }
 }
 
@@ -67,8 +71,13 @@ Table layout
 }
 
 /* thicker border between platforms */
-.text-content .bc-platform-border {
-    border-left: $bc-border-width-thick solid $bc-border-color;
+@each $type, $config in $table-types {
+    @each $border in map-get($config, platform-border) {
+        .bc-table_#{$type} th:nth-child(#{$border}),
+        .bc-table_#{$type} td:nth-child(#{$border}) {
+            border-left: $bc-border-width-thick solid $bc-border-color;
+        }
+    }
 }
 
 
@@ -86,7 +95,12 @@ Table layout
     padding: 5px 0 2px;
     border-top: 0;
     border-bottom: $bc-border-width-thick solid $bc-border-color;
+    border-left: $bc-border-width-thick solid $bc-border-color;
     @include set-font-size(28px);
+}
+
+.bc-table .bc-platforms td + th {
+    border-left: 0;
 }
 
 .bc-table .bc-browsers th {
@@ -153,9 +167,9 @@ tablet display
     }
 
     /* assign number of columns based on table class */
-    @for $num from 1 through 14 {
-        .bc-table-#{$num} tr {
-            grid-template-columns: repeat(#{$num}, 1fr);
+    @each $type, $config in $table-types {
+        .bc-table_#{$type} tr {
+            grid-template-columns: repeat(#{map-get($config, size)}, 1fr);
         }
     }
 
@@ -172,8 +186,8 @@ tablet display
     }
 
 
-    /* make platforms span correct number of columns */
-    @for $num from 2 through 14 {
+    /* make platforms span correct number of columns, max 7 */
+    @for $num from 2 through 7 {
         th[class^=bc-platform][colspan='#{$num}'] {
             grid-column-end: span #{$num};
         }
@@ -220,12 +234,13 @@ mobile display
         z-index: 2; /* increase z-index for js to detect mobile display */
     }
 
-    .bc-table tbody th {
+    .text-content .bc-table tbody th {
         width: 100%;
         max-width: 100%;
         display: block;
         border-right: 0;
-        padding-top: $bc-grid-spacing;
+        border-bottom: $bc-border-width-thin solid $bc-border-color;
+        padding-top: $grid-spacing;
         padding-bottom: 0;
     }
 
@@ -242,19 +257,20 @@ mobile display
         padding-left: 60px;
         padding-right: $bc-grid-spacing;
         text-align: left;
-
-        &:last-child {
-            border-bottom: $bc-border-width-thick solid $bc-border-color;
-        }
     }
 
     .bc-table tbody td[tabindex] {
         padding-bottom: 20px;
     }
 
-    .bc-platforms th + th,
-    .text-content .bc-platform-border {
-        border-top: $bc-border-width-thick solid $bc-border-color;
-        border-left: none;
+    /* thicker border between platforms */
+    @each $type, $config in $table-types {
+        @each $border in map-get($config, platform-border) {
+            .bc-table_#{$type} th:nth-child(#{$border}),
+            .bc-table_#{$type} td:nth-child(#{$border}) {
+                border-top: $bc-border-width-thick solid $bc-border-color;
+                border-left: none;
+            }
+        }
     }
 }

@@ -30,4 +30,20 @@ $bc-border-width-thick: 2px;
 $bc-support: yes, no, partial, unknown;
 $bc-grid-spacing: 10px;
 
-$feature-name-width: 200px;
+$table-types: (
+	web: (
+		size: 13,
+		feature-name-width: 200px,
+		platform-border: (8)
+	),
+	js: (
+		size: 14,
+		feature-name-width: 200px,
+		platform-border: (8, 15)
+	),
+	ext: (
+		size: 5,
+		feature-name-width: 300px,
+		platform-border: (6)
+	)
+);
