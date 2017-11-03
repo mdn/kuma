@@ -37,7 +37,9 @@
             var brick = settings.brickOnClick;
             if(brick && $submenu.length) {
                 $self.on('click', function(e) {
-                    if((typeof brick === 'function' && brick(e)) || brick) e.preventDefault();
+                    if((typeof brick === 'function' && brick(e)) || brick) {
+                        e.preventDefault();
+                    }
                 });
             }
 
@@ -57,12 +59,16 @@
                 }
 
                 // If this is a fake focus set by us, ignore this
-                if($submenu.ignoreFocus) return;
+                if($submenu.ignoreFocus) {
+                    return;
+                }
 
                 // If no submenu, go
                 if(!$submenu.length) {
                     clear(showTimeout);
-                    if($.fn.mozMenu.$openMenu) closeSubmenu($.fn.mozMenu.$openMenu.submenu);
+                    if($.fn.mozMenu.$openMenu) {
+                        closeSubmenu($.fn.mozMenu.$openMenu.submenu);
+                    }
                     return;
                 }
 
@@ -86,7 +92,9 @@
                     $submenu.on('mouseleave focusout', function(e) {
                         // "focuseout" is firing on child elements and sending off a bunch of moot
                         // close requests, so we stop that
-                        if(e.type === 'focusout' && e.target !== $submenu.get(0)) return;
+                        if(e.type === 'focusout' && e.target !== $submenu.get(0)) {
+                            return;
+                        }
 
                         clear(showTimeout);
                         closeSubmenu($submenu);
@@ -166,7 +174,9 @@
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
-            if(timeout) clearTimeout(timeout);
+            if(timeout) {
+                clearTimeout(timeout);
+            }
         }
 
         // Closes a given submenu
@@ -200,7 +210,9 @@
         return this.each(function() {
 
             var $items = $(this).find(settings.itemSelector);
-            if(!$items.length) return;
+            if(!$items.length) {
+                return;
+            }
 
             var $self = $(this);
 
@@ -239,7 +251,9 @@
                     var $prev = $($items.get(index - 1));
 
                     if(code === 38) {    // up
-                        if($prev.length) selectItem($prev);
+                        if($prev.length) {
+                            selectItem($prev);
+                        }
                     }
                     else if(code === 40) {    // down
                         selectItem($next.length ? $next : $items.first());
@@ -248,7 +262,9 @@
                 // Number keys: 1, 2, 3, etc.
                 else if(charCode >= numberKeyStart && charCode <= 57) {
                     var item = $items.get(charCode - numberKeyStart);
-                    if(item) selectItem(item);
+                    if(item) {
+                        selectItem(item);
+                    }
                 }
                 // Enter key
                 else if(code === 13) {
@@ -486,7 +502,9 @@
         function closeItem($item, callback) {
             $item.fadeOut(300, function() {
                 $item.addClass('closed');
-                if(callback) callback.apply($item, null);
+                if(callback) {
+                    callback.apply($item, null);
+                }
             });
         }
 
@@ -554,9 +572,11 @@
             }
 
             // Add automatic closer
-            if(options.duration) setTimeout(function() {
-                closeItem($item, options.onclose);
-            }, options.duration);
+            if(options.duration) {
+                setTimeout(function() {
+                    closeItem($item, options.onclose);
+                }, options.duration);
+            }
         }
 
         // The actual Notifier object component
@@ -631,8 +651,12 @@
                         $item.addClass(className);
                         $item.find('.notification-img i').attr('class', stateObj.iconName);
 
-                        if(message) updateFunc($item, message);
-                        if(delay) this.close(delay);
+                        if(message) {
+                            updateFunc($item, message);
+                        }
+                        if(delay) {
+                            this.close(delay);
+                        }
 
                         return this;
                     };
