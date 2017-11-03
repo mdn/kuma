@@ -372,24 +372,50 @@ These are not dynamic but serve as mixins
 }
 
 @mixin heading-2() {
-    @include set-font-size($h2-font-size);
+    @include set-font-size($mobile-h2-font-size);
     font-family: $heading-font-family;
-    line-height: 1;
+    line-height: $heading-line-height;
     #{$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
+    }
+
+    @media #{$mq-tablet-and-up} {
+        @include set-font-size($h2-font-size);
+    }
+}
+
+@mixin heading-2-section() {
+    position: relative;
+    margin-top: $grid-spacing * 5 + $section-border-width;
+
+    &:before {
+        @include bidi-style(left, 0, right, auto);
+        border-top: $section-border;
+        content: '';
+        display: block;
+        position: absolute;
+        top: $grid-spacing * 2.5 * -1;
+        width: 100%;
     }
 }
 
 @mixin callout() {
     @include restrict-line-length();
-    @include set-font-size(22px);
-    border: 5px solid $accent-light;
-    border-width: 5px 0;
+    @include set-font-size(20px);
+    border: $section-border-width solid $accent-light;
+    border-width: $section-border-width 0;
     border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
     padding: $grid-spacing 0;
     margin-bottom: $grid-spacing;
 
     @include prevent-last-child-spacing(p, margin-bottom);
+
+    article > &:first-child,
+    article > div:first-child:empty + &,
+    article > p:first-child:empty + & {
+        border-top-width: 0;
+        padding-top: 0;
+    }
 }
 
 @mixin clearfix() {
@@ -522,15 +548,20 @@ Placeholders
 
     &,
     & .highlight-span {
-        padding: 0 4px;
         background-color: $text-color;
         color: #fff;
         font-weight: normal;
         line-height: 1.25;
+        padding: 0 4px;
         @include vendorize(box-decoration-break, clone);
 
         a {
             color: $accent-light;
+        }
+
+        code {
+            background-color: rgba(255, 255, 255, .4) !important; /* stylelint-disable-line declaration-no-important */
+            color: #fff !important; /* stylelint-disable-line declaration-no-important */
         }
     }
 }
@@ -541,7 +572,7 @@ Placeholders
     box-sizing: border-box;
     display: inline-block;
     border-bottom: 2px solid;
-    @include bidi-style(padding, 10px 30px 10px 0, padding-left, 10px 0 10px 30px);
+    @include bidi-value(padding, 10px 30px 10px 0, 10px 0 10px 30px);
     @include bidi-value(text-align, left, right);
 
     &:after {

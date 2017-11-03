@@ -113,6 +113,7 @@ $site-font-family: 'Open Sans', $site-font-family-fallback;
 $heading-font-family-fallback: 'Palatino', 'Palatino Linotype', x-locale-heading-secondary, serif;
 $heading-font-family: x-locale-heading-primary, zillaslab, $heading-font-family-fallback;
 $tiny-font-family: 'Helvetica', arial, sans-serif;
+$heading-line-height: 1.2;
 $code-block-font-family: consolas, monaco, 'Andale Mono', monospace; /* prism */
 $code-inline-font-family: consolas, 'Liberation Mono', courier, monospace; /* inline */
 $diff-font-family: $code-inline-font-family;
@@ -124,6 +125,7 @@ $h1-font-size: 48px;
 $h2-font-size: 24px;
 $h3-font-size: 22px;
 $h4-font-size: 20px;
+$h5-font-size: 16px;
 $callout-font-size: 22px;
 $note-font-size: 18px;
 $body-font-size: 16px;
@@ -249,6 +251,9 @@ $list-item-spacing : $content-horizontal-spacing;
 $icon-margin : ($grid-spacing / 2);
 
 $logo-height: 48px;
+
+$section-border-width: 1px;
+$section-border: $section-border-width solid #000;
 
 /*
 forms

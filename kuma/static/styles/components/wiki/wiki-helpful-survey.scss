@@ -1,6 +1,10 @@
 .helpful-survey {
+    @include heading-2-section();
     float: none;
-    margin: $grid-spacing auto;
+    /* don't specify margin-top to avoid conflict with heeading-2-section() */
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 20px;
     box-sizing: border-box;
     width: 100%;
     border: 0;

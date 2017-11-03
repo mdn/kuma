@@ -110,10 +110,19 @@ inline in a heading
 -------------------------------------------------------------- */
 
 .headingWithIndicator {
+    position: relative;
     @include clearfix();
 
-    h1,
-    h2,
+    h2 {
+        @include heading-2-section();
+
+        & + .indicatorInHeadline {
+            position: absolute;
+            top: 6px;
+            @include bidi-style(right, 0, left, auto);
+        }
+    }
+
     h3,
     h4,
     h5,

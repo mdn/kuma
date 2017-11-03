@@ -11,7 +11,6 @@ side by side calls to action
     > li {
         padding: ($grid-spacing / 2);
         background-color: $light-background-color;
-        @include bidi-value(box-shadow, 3px 3px 0 3px $header-background-color, -3px 3px 0 3px $header-background-color);
 
         > span:first-child,
         > a:first-child {
@@ -28,18 +27,19 @@ side by side calls to action
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        margin: 0 0 ($grid-spacing / 2); /* margins on items don't collapse with margin on box, reduce so two together add up to $grid-spacing */
 
         > li {
             flex: 1;
-            min-width: calc(25% - #{($grid-spacing * 2.5)}); /* minus margin and padding */
-            max-width: 200px;
-            margin: 0 ($grid-spacing * .75) $grid-spacing;
-        }
-    }
+            margin: 0 ($grid-spacing / 2) ($grid-spacing / 2);
 
-    @media #{$mq-mobile-and-down} {
-        > li {
-            margin-bottom: $grid-spacing;
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 }

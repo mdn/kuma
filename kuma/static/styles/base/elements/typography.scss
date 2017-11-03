@@ -17,21 +17,31 @@ h2 {
 }
 
 h3 {
-    margin: $grid-spacing 0 ($grid-spacing / 2) 0;
+    margin: $grid-spacing 0;
     @include set-font-size($h3-font-size);
     @include set-heading-font-family();
+    line-height: $heading-line-height;
 }
 
 h4 {
-    margin: $grid-spacing 0 ($grid-spacing / 2) 0;
+    margin: ($grid-spacing * 1.5) 0 $grid-spacing 0;
     @include set-font-size($h4-font-size);
     @include set-heading-font-family();
+    line-height: $heading-line-height;
 }
 
 h5 {
     margin: ($grid-spacing / 2) 0;
+    @include set-font-size($h5-font-size);
+    @include set-heading-font-family();
+    line-height: $heading-line-height;
+}
+
+h6 {
+    margin: ($grid-spacing / 2) 0;
     @include set-font-size($body-font-size);
     @include set-heading-font-family();
+    line-height: $heading-line-height;
 }
 
 /*
@@ -101,6 +111,7 @@ code {
     padding: 0 2px;
     word-wrap: break-word;
 
+    .index &,
     .indexListTerm & {
         background-color: transparent;
         padding: 0;
