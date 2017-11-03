@@ -67,7 +67,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(d2.title, doc('main#content div.document-head h1').text())
-        crumbs = "MDN %s %s" % (d1.title, d2.title)
+        crumbs = " %s %s" % (d1.title, d2.title)
         eq_(crumbs, doc('nav.crumbs').text())
 
     def test_english_document_no_approved_content(self):
@@ -1301,7 +1301,7 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
     assert (count('.document-title') ==
             one_if('root', 'bottom', 'de', 'fr', 'it'))
     assert count(zone_title) == one_if('bottom')
-    assert count('.crumbs') == one_if('root', 'bottom')
+    assert count('.crumbs') == one_if('bottom')
     assert count(css_link.format('zones')) == one_if('it')
     assert count(css_link.format('zone-bobby')) == one_if('bottom')
     assert count(css_link.format('zone-berlin')) == one_if('de')

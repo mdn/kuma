@@ -1,47 +1,73 @@
 /*
-wiki article cookie crumbs
+wiki article bread crumbs
 ********************************************************************** */
 
 .crumbs {
-    @include bidi-value(float, left, right);
-    display: inline-block;
+    border: 1px solid #d7d7d7;
+    border-width: 1px 0;
+    margin: $grid-spacing 0;
+    padding: $grid-spacing 0;
+    @include set-font-size($left-nav-font-size);
 
     li {
-        @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
-        display: none;
+        display: inline;
     }
 
-    li:nth-last-child(2) {
-        display: block;
-    }
+    a { // @include reverse-link-decoration has buggy behaviour in .crumbs for some reason
+        text-decoration: none;
 
-    a {
-        display: block;
-        line-height: 1;
-
-        &:before {
-            @include bidi-style(margin-right, 4px, margin-left, 0, true);
-            @include bidi-style(content, '\f053', content, '\f054');
-            display: inline-block;
-            font-family: FontAwesome;
-            text-decoration: none;
-            color: $text-color;
-            @include set-font-size(70%);
-            vertical-align: middle;
+        &:hover span,
+        &:focus span {
+            text-decoration: underline;
         }
     }
 
-    @include reverse-link-decoration();
+    span {
+        display: inline-block;
+        position: relative;
+        @include bidi-style(padding-right, 5px, padding-left, 0);
+        /* borders increase hit area for mobile without messing with position of arrow */
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        line-height: 1;
+
+        &:after {
+            @include bidi-style(content, '\00a0\00a0\f054', content, '\00a0\00a0\f053');
+            font-family: FontAwesome;
+            color: $text-color;
+            @include set-font-size(70%);
+        }
+    }
+
+    li:last-child span:after {
+        display: none;
+    }
 }
 
-@media #{$mq-mobile-and-up} {
-    // make them sit inline with .page-actions buttons
-    .crumbs {
-        padding: 5px 0;
+@media #{$mq-tablet-and-up} {
+    $crumb-vertical-spacing: $grid-spacing / 2;
 
-        a {
-            border: $form-border-width solid transparent;
-            padding: 5px 0;
+    .crumbs {
+        border-top-width: 0;
+        margin-top: 0;
+        padding-bottom: $grid-spacing - $crumb-vertical-spacing;
+        padding-top: 0;
+
+        span {
+            border-top: none;
+            border-bottom: $crumb-vertical-spacing solid transparent;
+        }
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    $crumb-vertical-spacing: 5px;
+
+    .crumbs {
+        padding-bottom: $grid-spacing - $crumb-vertical-spacing;
+
+        span {
+            border-bottom: $crumb-vertical-spacing solid transparent;
         }
     }
 }

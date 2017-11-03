@@ -118,11 +118,6 @@
   <!-- heading -->
   <div id="wiki-document-head" class="document-head">
     <div class="center">
-      {% if not is_zone_root %}
-        <!-- crumbs -->
-        {{ crumbs }}
-      {% endif %}
-
       <!-- action buttons -->
       <div class="document-actions">
         {{ buttons }}
@@ -321,6 +316,11 @@
             {% if show_left %}
               <!-- quick links and zone subnav strip -->
               <div id="wiki-left" class="column-strip wiki-column">
+
+                {% if not is_zone_root %}
+                  <!-- crumbs -->
+                  {{ crumbs }}
+                {% endif %}
 
                 {% if zone_subnav_html %}
                   <!-- zone subnav -->
