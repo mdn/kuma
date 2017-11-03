@@ -8,11 +8,14 @@ Icons denooting complicatons with support (footnote, altname, prefix, etc)
 
     /* TODO: center icons if they wrap, :first-line? only on mobile?  */
     float: right;
-    margin: 0 2px;
-}
 
-.bc-icons a {
-    text-decoration: none;
+    abbr {
+        margin: 0 2px;
+    }
+
+    a {
+        text-decoration: none;
+    }
 }
 
 /* tablet display */
