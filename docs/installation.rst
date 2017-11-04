@@ -26,12 +26,17 @@ transitioning to Docker containers for deployment as well.
   tests using Docker.
 * We are documenting tips and tricks on the
   :doc:`Troubleshooting page <troubleshooting>`.
+* Kuma uses multiple docker containers this might take a use of your system ram 
+  so make sure you have good processor you can contact the #moz-dev on IRC for 
+  more details.
+* Feel free to ask for help on IRC at ``#mdndev`` or on `discourse`_.  
 
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
 .. _TravisCI: https://travis-ci.org/mozilla/kuma/
 .. _Jenkins: https://ci.us-west.moz.works/view/MDN/job/mdn_multibranch_pipeline/
+.. _discourse: https://discourse.mozilla.org/
 
 Docker setup
 ============
@@ -41,11 +46,14 @@ Docker setup
    `Linux distribution`_.  Linux users will also want to install
    `Docker Compose`_ and follow `post-install instructions`_ to confirm that
    the development user can run Docker commmands.
-
+   
    To confirm that Docker is installed correctly, run::
 
         docker run hello-world
-
+        
+   If you find any error using docker commands without ``sudo`` visit using 
+   `docker as non-root`_ user.
+   
 #. Clone the kuma Git repository, if you haven't already::
 
         git clone --recursive git@github.com:mozilla/kuma.git
@@ -74,6 +82,7 @@ Docker setup
 .. _Linux distribution: https://docs.docker.com/engine/installation/linux/
 .. _Docker Compose: https://docs.docker.com/compose/install/
 .. _post-install instructions: https://docs.docker.com/engine/installation/linux/linux-postinstall/
+.. _docker as non-root: https://docs.docker.com/engine/installation/linux/linux-postinstall/ 
 
 The following instructions assume that you are running from a folder named
 ``kuma``, so that the containers created are named ``kuma_web_1``,
