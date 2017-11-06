@@ -6,7 +6,9 @@
   <meta charset="utf-8">
   {%- block experiment_js %}{% endblock %}
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <!--[if lte IE 9]>
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  <![endif]-->
   <title>{% block title %}{{ _('MDN Web Docs') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,19 +19,22 @@
   {% endif %}
 
   {% block site_css %}
-
     {% stylesheet 'mdn' %}
 
     {% for style in styles %}
       {% stylesheet style %}
     {% endfor %}
+
+    <!--[if lte IE 9]>
+      {% stylesheet 'fallback' %}
+    <![endif]-->
   {% endblock %}
 
   {%- if settings.MAINTENANCE_MODE %}
     {% stylesheet 'maintenance-mode-global' %}
   {%- endif %}
 
-  {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
+  {#- If the stylesheet exists, include it. Otherwise, do nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
   {% block site_analytics %}
@@ -58,11 +63,11 @@
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static('img/favicon72.png') }}">
   <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
+
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ static('img/favicon32.png') }}">
   <!--[if IE]>
-  <meta http-equiv="imagetoolbar" content="no">
-  {% javascript 'html5shiv' %}
+    {% javascript 'html5shiv' %}
   <![endif]-->
 
   {% javascript 'font-check' %}
@@ -240,21 +245,28 @@
     {%- endif %} {# if not untrusted #}
 
   <!-- site js -->
+  <![if !lte IE 9]>
   {% block site_js %}
-    <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
-
     {{ providers_media_js() }}
-    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+
+    <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+
     {% javascript 'main' %}
+
     <script>
-      if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+      if (window.mdn && mdn.analytics) {
+        mdn.analytics.trackOutboundLinks();
+      }
     </script>
+
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
-
   {% endblock %}
+  <![endif]>
 
-  {% block js %}{% endblock %}
+  <![if !lte IE 9]>
+    {% block js %}{% endblock %}
+  <![endif]>
 </body>
 </html>

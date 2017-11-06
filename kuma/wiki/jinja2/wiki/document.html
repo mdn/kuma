@@ -51,6 +51,7 @@
 
 {% block site_css %}
     {{ super() }}
+    <![if !lte IE 9]>
     {% if nearest_zone %}
       {% if nearest_zone.css_slug %}
         {% stylesheet 'zone-' + nearest_zone.css_slug %}
@@ -58,6 +59,7 @@
         {% stylesheet 'zones' %}
       {% endif %}
     {% endif %}
+    <![endif]>
 {% endblock %}
 
 {% block extrahead %}

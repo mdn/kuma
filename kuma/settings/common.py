@@ -673,6 +673,12 @@ def pipeline_one_scss(slug, **kwargs):
 
 
 PIPELINE_CSS = {
+    'fallback': {
+        'source_filenames': (
+            'styles/fallback.scss',
+        ),
+        'output_filename': 'build/styles/fallback.css',
+    },
     'mdn': {
         'source_filenames': (
             'styles/font-awesome.scss',
