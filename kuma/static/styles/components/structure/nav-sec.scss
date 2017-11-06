@@ -16,7 +16,7 @@ Secondary navigation, site tools and login info
         position: relative;
         @include bidi-style(right, ($gutter-width * -1), left, auto);
         z-index: 3; /* bring it above search trigger in tablet view */
-        background-color: #000;
+        background-color: $bg-dark;
 
         > ul > li {
             @include inline-nav-item();
@@ -26,7 +26,7 @@ Secondary navigation, site tools and login info
 
                 &:hover,
                 &:focus {
-                    background-color: #000;
+                    background-color: $bg-dark;
                     color: #fff !important; /* stylelint-disable-line declaration-no-important */
                 }
             }

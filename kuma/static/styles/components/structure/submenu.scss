@@ -53,7 +53,7 @@
     }
 
     #nav-sec & {
-        border-top-color: #000;
+        border-top-color: $bg-dark;
         @include bidi-style(left, auto, right, auto);
         @include bidi-style(right, 0, left, auto);
     }
