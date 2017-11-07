@@ -52,14 +52,14 @@ Table layout
 
 @each $type, $config in $table-types {
     /* fix width of feature name column */
-    .bc-table_#{$type} thead td,
-    .bc-table_#{$type} tbody th {
+    .bc-table-#{$type} thead td,
+    .bc-table-#{$type} tbody th {
         width: map-get($config, feature-name-width);
     }
 
     /* set width of support cells */
-    .bc-table_#{$type} thead th,
-    .bc-table_#{$type} tbody td {
+    .bc-table-#{$type} thead th,
+    .bc-table-#{$type} tbody td {
         width: (100 / map-get($config, size)) * 1%;
     }
 }
@@ -73,8 +73,8 @@ Table layout
 /* thicker border between platforms */
 @each $type, $config in $table-types {
     @each $border in map-get($config, platform-border) {
-        .bc-table_#{$type} th:nth-child(#{$border}),
-        .bc-table_#{$type} td:nth-child(#{$border}) {
+        .bc-table-#{$type} th:nth-child(#{$border}),
+        .bc-table-#{$type} td:nth-child(#{$border}) {
             border-left: $bc-border-width-thick solid $bc-border-color;
         }
     }
@@ -168,7 +168,7 @@ tablet display
 
     /* assign number of columns based on table class */
     @each $type, $config in $table-types {
-        .bc-table_#{$type} tr {
+        .bc-table-#{$type} tr {
             grid-template-columns: repeat(#{map-get($config, size)}, 1fr);
         }
     }
@@ -266,8 +266,8 @@ mobile display
     /* thicker border between platforms */
     @each $type, $config in $table-types {
         @each $border in map-get($config, platform-border) {
-            .bc-table_#{$type} th:nth-child(#{$border}),
-            .bc-table_#{$type} td:nth-child(#{$border}) {
+            .bc-table-#{$type} th:nth-child(#{$border}),
+            .bc-table-#{$type} td:nth-child(#{$border}) {
                 border-top: $bc-border-width-thick solid $bc-border-color;
                 border-left: none;
             }
