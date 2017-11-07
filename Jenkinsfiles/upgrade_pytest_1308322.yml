@@ -1,0 +1,9 @@
+pipeline:
+  enabled: true
+  script: "integration-tests"
+job:
+  dockerfile: "docker/images/integration-tests/Dockerfile"
+  selenium: "3.8.1"
+  selenium_nodes: 5
+  base_url: 'https://stage.mdn.moz.works'
+  tests: "not login"
