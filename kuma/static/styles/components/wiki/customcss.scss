@@ -30,6 +30,12 @@ s.obsoleteElement,
 s.nonStdElement {
     text-decoration: none;
     opacity: .3;
+
+    /* brighten them to be readable if the user hovers or focuses */
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
 }
 
 /* Add widgeted index, here adding an HTML5 badge as the bullet of the li element if class="html5" */

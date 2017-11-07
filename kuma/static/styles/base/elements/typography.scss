@@ -105,6 +105,19 @@ code {
         background-color: transparent;
         padding: 0;
     }
+
+    .toc & {
+        background-color: inherit;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        padding: 0;
+    }
+
+    .quick-links & {
+        background-color: transparent;
+        padding: 0;
+    }
 }
 
 /* pre is a block element so it gets a bit more fancy styling */

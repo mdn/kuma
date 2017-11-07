@@ -134,20 +134,31 @@
     });
 
     /*
-        Add intelligent break points to long article titles
+        Add intelligent break points to:
+        - long article titles in document head
+        - left nav
+        - breadcrumbs
+        Don't use this on anything that might have child elements
     */
-    $('.document .document-head h1').each(function() {
-        var $title = $(this);
-        var text = $title.text();
-        // split on . - : ( or capital letter, only if followed by 2 letters
-        var split = text.split(/(?=[\.:\-\(A-Z][\.:\-\(A-Z]{0,}[a-zA-Z]{3})/g);
-        // empty h1
-        $title.empty();
-        // put array back into h1 seperated by <wbr> tags
+    $('.document .document-head h1, .quick-links a code, .crumbs span[property=name]').each(function() {
+        var $wrapper = $(this);
+        var text = $wrapper.text();
+        // don't do anything if there are any child elements, they would be removed
+        if ($wrapper.children().length > 0) {
+            return;
+        }
+        // split on . : - ( [ OR capital letter
+        // IF followed by more than 2 letters or matching characters (including @)
+        var split = text.split(/(?=[\[\.:\-\(A-Z][@\.:\-\(A-Z]{0,}[a-zA-Z]{3})/g);
+        // empty wrapper
+        $wrapper.empty();
+        // put array back into wrapper seperated by <wbr> tags
         $.each(split, function(key, value) {
-            $title.append('<wbr>');
+            if(key > 0) {
+                $wrapper.append('<wbr>');
+            }
             // add text back, make sure it goes back as text, not code to run
-            $title.append(doc.createTextNode(value));
+            $wrapper.append(doc.createTextNode(value));
         });
     });
 

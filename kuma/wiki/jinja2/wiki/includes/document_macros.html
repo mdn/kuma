@@ -18,7 +18,7 @@
 
 {% macro get_document_quick_links(html) %}
   <div class="quick-links" id="quick-links">
-    <div class="title see-also">{{ _('See also') }}</div>
+    <div class="quick-links-head">{{ _('Related Topics') }}</div>
     {{ html|safe }}
   </div>
 {%- endmacro %}
