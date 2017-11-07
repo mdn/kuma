@@ -143,7 +143,8 @@ p.field-note {
     clear: both;
 }
 
-#field-beta {
+#field-beta,
+#field_is_github_url_public {
     @extend %checkbox-label-container;
 }
 

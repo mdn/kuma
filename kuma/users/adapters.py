@@ -95,6 +95,16 @@ class KumaAccountAdapter(DefaultAccountAdapter):
                                                     extra_tags,
                                                     *args, **kwargs)
 
+    def save_user(self, request, user, form, commit=True):
+        super(KumaAccountAdapter, self).save_user(request, user, form,
+                                                  commit=False)
+        is_github_url_public = form.cleaned_data.get('is_github_url_public')
+        user.is_github_url_public = is_github_url_public
+        if commit:  # pragma: no cover
+            # commit will be True, unless extended by a derived class
+            user.save()
+        return user
+
 
 class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
 

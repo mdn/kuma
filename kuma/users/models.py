@@ -152,6 +152,10 @@ class User(AbstractUser):
         blank=True,
         validators=[WEBSITE_VALIDATORS['github']],
     )
+    is_github_url_public = models.BooleanField(
+        _(u'Public Github URL'),
+        default=False,
+    )
     twitter_url = models.TextField(
         _(u'Twitter'),
         blank=True,

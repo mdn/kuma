@@ -173,7 +173,13 @@
                           {% trans terms_url='https://www.mozilla.org/about/legal/terms/mozilla', privacy_url='https://www.mozilla.org/privacy/websites/' %}
                           to Mozilla's <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_url }}">Privacy Notice</a>.
                           {% endtrans %}
-                      </label>
+                        </label>
+
+                      </li>
+                      <li id="github_url_public">
+                        <label for="{{ form.is_github_url_public.id_for_label }}">
+                          {{ form.is_github_url_public }} {{ form.is_github_url_public.label }}
+                        </label>
                       </li>
                   </ol>
                 </fieldset>
