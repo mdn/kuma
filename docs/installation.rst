@@ -54,8 +54,9 @@ Docker setup
 
         cd kuma
 
-#. Initialize and customize ``.env``. Linux users should set the ``UID`` parameter in ``.env``
-   (i.e remove the "#" before ``UDI``,example: change ``#UDI=1000`` to ``UDI=1000``) to avoid 
+#. Initialize and customize ``.env``. Linux users should set the ``UID``
+   parameter in ``.env``
+   (i.e. change ``#UID=1000`` to ``UID=1000``) to avoid file permission
    issues when mixing ``docker-compose`` and ``docker`` commands::
 
         cp .env-dist.dev .env
