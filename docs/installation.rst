@@ -11,6 +11,9 @@ transitioning to Docker containers for deployment as well.
 * Kuma developers are using Docker for daily development and maintenance tasks.
   Staff developers primarily use `Docker for Mac`_. Other staff
   members and contributors use `Docker's Ubuntu packages`_.
+* The development environment can use a lot of resources. On Docker for Mac,
+  the environment runs well with 6 CPUs and 10 GB of memory dedicated to
+  Docker. It can be run successfully on 2 CPUs and 2 GB of memory.
 * The Docker development environment is evolving rapidly, to address issues
   found during development and to move toward a containerized design. You may
   need to regularly reset your environment to get the current changes.
@@ -26,17 +29,14 @@ transitioning to Docker containers for deployment as well.
   tests using Docker.
 * We are documenting tips and tricks on the
   :doc:`Troubleshooting page <troubleshooting>`.
-* Kuma uses multiple docker containers this might take a use of your system ram 
-  so make sure you have good processor you can contact the #moz-dev on IRC for 
-  more details.
-* Feel free to ask for help on IRC at ``#mdndev`` or on `discourse`_.  
+* Feel free to ask for help on IRC at ``#mdndev`` or on `discourse`_.
 
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
 .. _TravisCI: https://travis-ci.org/mozilla/kuma/
 .. _Jenkins: https://ci.us-west.moz.works/view/MDN/job/mdn_multibranch_pipeline/
-.. _discourse: https://discourse.mozilla.org/
+.. _discourse: https://discourse.mozilla.org/c/MDN
 
 Docker setup
 ============
