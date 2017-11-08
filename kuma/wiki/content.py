@@ -8,6 +8,7 @@ from xml.sax.saxutils import quoteattr
 
 import html5lib
 import newrelic.agent
+from django.conf import settings
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
@@ -58,10 +59,13 @@ class Extractor(object):
     def __init__(self, document):
         self.document = document
 
-    def section(self, content, section_id, ignore_heading=False):
+    def section(self, content, section_id, ignore_heading=False,
+                annotate_links=False):
+        """Extract a section, optionally annotating links to missing pages."""
         parsed_content = parse(content)
-        extracted = parsed_content.extractSection(section_id,
-                                                  ignore_heading=ignore_heading)
+        extracted = parsed_content.extractSection(section_id, ignore_heading)
+        if annotate_links:
+            extracted.annotateLinks(base_url=settings.SITE_URL)
         return extracted.serialize()
 
     @newrelic.agent.function_trace()
@@ -386,7 +390,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                             href = href_parsed.path
 
                         # Prepare annotations record for this path.
-                        links[href] = {'classes': []}
+                        links[href] = {'classes': [], 'rel': []}
 
         needs_existence_check = defaultdict(lambda: defaultdict(set))
 
@@ -452,14 +456,14 @@ class LinkAnnotationFilter(html5lib_Filter):
             # Remove the slugs that pass existence check.
             for slug in existing_slugs:
                 lslug = slug.lower()
-                if lslug in slug_hrefs:
-                    del slug_hrefs[lslug]
+                del slug_hrefs[lslug]
 
             # Mark all the links whose slugs did not come back from the DB
             # query as "new"
             for slug, hrefs in slug_hrefs.items():
                 for href in hrefs:
                     links[href]['classes'].append('new')
+                    links[href]['rel'].append('nofollow')
 
         # Pass #2: Filter the content, annotating links
         for token in buffer:
@@ -474,15 +478,21 @@ class LinkAnnotationFilter(html5lib_Filter):
                             # Squash site-absolute URLs to site-relative paths.
                             href = href_parsed.path
 
-                        if href in links:
-                            # Update class names on this link element.
-                            if 'class' in names:
-                                classes = set(attrs[(namespace, 'class')].split(u' '))
+                        # Update attributes on this link element.
+                        def add_to_attr(attr_name, add_list):
+                            """Add values to the attribute dictionary."""
+                            if attr_name in names:
+                                values = set(
+                                    attrs[(namespace, attr_name)].split(u' '))
                             else:
-                                classes = set()
-                            classes.update(links[href]['classes'])
-                            if classes:
-                                attrs[(namespace, u'class')] = u' '.join(classes)
+                                values = set()
+                            values.update(add_list)
+                            if values:
+                                attrs[(namespace, attr_name)] = (
+                                    u' '.join(sorted(values)))
+
+                        add_to_attr(u'class', links[href]['classes'])
+                        add_to_attr(u'rel', links[href]['rel'])
 
                 token['data'] = attrs
 

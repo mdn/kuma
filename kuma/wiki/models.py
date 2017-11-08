@@ -330,11 +330,11 @@ class Document(NotificationsMixin, models.Model):
 
     @cache_with_field('quick_links_html')
     def get_quick_links_html(self, *args, **kwargs):
-        return self.get_section_content('Quick_Links')
+        return self.get_section_content('Quick_Links', annotate_links=True)
 
     @cache_with_field('zone_subnav_local_html')
     def get_zone_subnav_local_html(self, *args, **kwargs):
-        return self.get_section_content('Subnav')
+        return self.get_section_content('Subnav', annotate_links=True)
 
     @cache_with_field('toc_html')
     def get_toc_html(self, *args, **kwargs):
@@ -417,7 +417,8 @@ class Document(NotificationsMixin, models.Model):
             src = self.nearest_zone.document.get_zone_subnav_local_html()
         return src
 
-    def get_section_content(self, section_id, ignore_heading=True):
+    def get_section_content(self, section_id, ignore_heading=True,
+                            annotate_links=False):
         """
         Convenience method to extract the rendered content for a single section
         """
@@ -425,7 +426,8 @@ class Document(NotificationsMixin, models.Model):
             content = self.rendered_html
         else:
             content = self.html
-        return self.extract.section(content, section_id, ignore_heading)
+        return self.extract.section(content, section_id, ignore_heading,
+                                    annotate_links)
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""

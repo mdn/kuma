@@ -6,7 +6,6 @@ from django.test import TestCase
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 import bleach
-import mock
 import pytest
 
 import kuma.wiki.content
@@ -19,8 +18,10 @@ from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
                        H3TOCFilter, SectionIDFilter, SectionTOCFilter,
                        get_content_sections, get_seo_description, parse)
-from ..models import Document
+from ..models import Document, Revision
 from ..templatetags.jinja_helpers import bugize_text
+
+AL_BASE_URL = 'https://example.com'  # Base URL for annotateLinks tests
 
 
 class GetContentSectionsTests(TestCase):
@@ -115,211 +116,134 @@ class InjectSectionIDsTests(TestCase):
         self.assertHTMLEqual(result_src, expected)
 
 
-class ExtractSectionTests(TestCase):
-    def test_simple_implicit_section_extract(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
+def test_extractSection_by_header_id():
+    """extractSection can extract by header element id."""
+    doc_src = """
+        <h1 id="s1">Head 1</h1><p>test 1</p>
+        <h1 id="s2">Head 2</h1><p>test 2</p>
+    """
+    expected = """
+        <h1 id="s1">Head 1</h1><p>test 1</p>
+    """
+    result = parse(doc_src).extractSection(id="s1").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s2">Head 2</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s1")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
-    def test_contained_implicit_section_extract(self):
-        doc_src = """
-            <h1 id="s4-next">Head</h1>
+def test_extractSection_heading_in_section():
+    """extractSection can extract a header inside a section."""
+    doc_src = """
+        <h1 id="s4">Head</h1><p>test</p>
+        <section id="parent-s5">
+          <h1 id="s5">Head 5</h1>
             <p>test</p>
-
-            <section id="parent-s5">
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-                <h1 id="s5-next">Head 5 next</h1>
-                <p>test</p>
-                <p>test</p>
+            <section>
+              <h1>head subsection</h1>
             </section>
-
-            <h1 id="s7">Head 7</h1>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+          <h1 id="s5-next">Head 5 next</h1><p>test</p>
+        </section>
+        <h1 id="s7">Head 7</h1><p>test</p>
+    """
+    expected = """
+          <h1 id="s5">Head 5</h1>
             <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s5")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
-
-    def test_explicit_section_extract(self):
-        doc_src = """
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-
-            <section id="parent-s5">
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-                <h1 id="s5-next">Head 5 next</h1>
-                <p>test</p>
-                <p>test</p>
+            <section>
+              <h1>head subsection</h1>
             </section>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+    """  # h1 and h2, but not the next h1
+    result = parse(doc_src).extractSection(id="s5").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s7">Head 7</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-                <h1 id="s5">Head 5</h1>
-                <p>test</p>
-                <p>test</p>
-                <section>
-                    <h1>head subsection</h1>
-                </section>
-                <h2 id="s5-1">Head 5-1</h2>
-                <p>test</p>
-                <p>test</p>
-                <h1 id="s5-next">Head 5 next</h1>
-                <p>test</p>
-                <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="parent-s5")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
-    def test_multilevel_implicit_section_extract(self):
-        doc_src = """
+def test_extractSection_by_section():
+    """extractSection can extract the contents of a section."""
+    doc_src = """
+        <h1 id="s4">Head</h1><p>test</p>
+        <section id="parent-s5">
+          <h1 id="s5">Head 5</h1>
             <p>test</p>
+            <section>
+              <h1>head subsection</h1>
+            </section>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+          <h1 id="s5-next">Head 5 next</h1><p>test</p>
+        </section>
+        <h1 id="s7">Head 7</h1><p>test</p>
+    """  # Same as test_extractSection_heading_in_section
+    expected = """
+          <h1 id="s5">Head 5</h1>
+            <p>test</p>
+            <section>
+              <h1>head subsection</h1>
+            </section>
+          <h2 id="s5-1">Head 5-1</h2><p>test</p>
+          <h1 id="s5-next">Head 5 next</h1><p>test</p>
+    """  # All headings inside the section
+    result = parse(doc_src).extractSection(id="parent-s5").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h2>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test</p>
-            <p>test</p>
 
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s4")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+def test_extractSection_descending_heading_levels():
+    """extractSection extracts simple sub-headings."""
+    doc_src = """
+        <p>test</p>
+        <h1 id="s4">Head 4</h1><p>test 4</p>
+        <h2 id="s4-1">Head 4-1</h2><p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-2</p>
+        <h1 id="s4-next">Head</h1><p>test next</p>
+    """
+    expected = """
+        <h1 id="s4">Head 4</h1><p>test 4</p>
+        <h2 id="s4-1">Head 4-1</h2><p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-2</p>
+    """  # All headings up to the next h1
+    result = parse(doc_src).extractSection(id="s4").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-    def test_morelevels_implicit_section_extract(self):
-        doc_src = """
-            <h1 id="s7">Head 7</h1>
-            <p>test</p>
-            <p>test</p>
 
-            <h1 id="s8">Head</h1>
-            <p>test</p>
-            <h2 id="s8-1">Head</h1>
-            <p>test</p>
-            <h3 id="s8-1-1">Head</h3>
-            <p>test</p>
-            <h2 id="s8-2">Head</h1>
-            <p>test</p>
-            <h3 id="s8-2-1">Head</h3>
-            <p>test</p>
-            <h4 id="s8-2-1-1">Head</h4>
-            <p>test</p>
-            <h2 id="s8-3">Head</h1>
-            <p>test</p>
+def test_extractSection_complex_heading_levels():
+    """extractSection extracts complex sub-headings."""
+    doc_src = """
+        <h1 id="s7">Head 7</h1><p>test 7</p>
+        <h1 id="s8">Head</h1><p>test 8</p>
+        <h2 id="s8-1">Head</h1><p>test 8-1</p>
+        <h3 id="s8-1-1">Head</h3><p>test 8-1-1</p>
+        <h2 id="s8-2">Head</h1><p>test 8-2</p>
+        <h3 id="s8-2-1">Head</h3><p>test 8-2-1</p>
+        <h4 id="s8-2-1-1">Head</h4><p>test 8-2-1-1</p>
+        <h2 id="s8-3">Head</h1><p>test 8-3</p>
+        <h1 id="s9">Head</h1><p>test 9</p>
+    """
+    expected = """
+        <h1 id="s8">Head</h1><p>test 8</p>
+        <h2 id="s8-1">Head</h1><p>test 8-1</p>
+        <h3 id="s8-1-1">Head</h3><p>test 8-1-1</p>
+        <h2 id="s8-2">Head</h1><p>test 8-2</p>
+        <h3 id="s8-2-1">Head</h3><p>test 8-2-1</p>
+        <h4 id="s8-2-1-1">Head</h4><p>test 8-2-1-1</p>
+        <h2 id="s8-3">Head</h1><p>test 8-3</p>
+    """  # All headings up to the next h1
+    result = parse(doc_src).extractSection(id="s8").serialize()
+    assert normalize_html(result) == normalize_html(expected)
 
-            <h1 id="s9">Head</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s8">Head</h1>
-            <p>test</p>
-            <h2 id="s8-1">Head</h1>
-            <p>test</p>
-            <h3 id="s8-1-1">Head</h3>
-            <p>test</p>
-            <h2 id="s8-2">Head</h1>
-            <p>test</p>
-            <h3 id="s8-2-1">Head</h3>
-            <p>test</p>
-            <h4 id="s8-2-1-1">Head</h4>
-            <p>test</p>
-            <h2 id="s8-3">Head</h1>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s8")
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
 
-    def test_ignore_heading_section_extract(self):
-        doc_src = """
-            <p>test</p>
-            <h1 id="s4">Head 4</h1>
-            <p>test</p>
-            <h2 id="s4-1">Head 4-1</h2>
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test s4-2</p>
-            <h1 id="s4-next">Head</h1>
-            <p>test</p>
-        """
-        expected = """
-            <p>test</p>
-            <h3 id="s4-2">Head 4-1-1</h3>
-            <p>test s4-2</p>
-        """
-        result = (kuma.wiki.content.parse(doc_src)
-                                   .extractSection(id="s4-1",
-                                                   ignore_heading=True)
-                                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+def test_extractSection_ignore_heading():
+    """extractSection can exclude the header element."""
+    doc_src = """
+        <p>test</p>
+        <h1 id="s4">Head 4</h1><p>test 4</p>
+        <h2 id="s4-1">Head 4-1</h2><p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-1-1</p>
+        <h1 id="s4-next">Head</h1><p>test next</p>
+    """
+    expected = """
+                                   <p>test 4-1</p>
+        <h3 id="s4-2">Head 4-1-1</h3><p>test 4-1-1</p>
+    """  # h2 contents without the h2
+    result = (parse(doc_src).extractSection(id="s4-1", ignore_heading=True)
+                            .serialize())
+    assert normalize_html(result) == normalize_html(expected)
 
 
 class ReplaceSectionTests(TestCase):
@@ -912,97 +836,120 @@ class BleachTests(TestCase):
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
 
-class AnnotateLinksTests(UserTestCase):
-    def test_link_annotation(self):
-        rev = revision(is_approved=True, save=True,
-                       content="This document exists")
+def test_annotate_links_encoded_utf8(db):
+    """Encoded UTF8 characters in links are decoded."""
+    Document.objects.create(locale='fr', slug=u'CSS/Héritage',
+                            title=u'Héritée')
+    html = normalize_html(
+        u'<li><a href="/fr/docs/CSS/H%c3%a9ritage">Héritée</a></li>')
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
 
-        document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
-                 save=True)
-        document(title=u'DOM/StyleSheet', locale=u'en-US',
-                 slug=u'DOM/StyleSheet', save=True)
 
-        base_url = u'https://testserver'
-        doc_url = rev.document.get_absolute_url()
-        vars = dict(
-            base_url=base_url,
-            exist_url=doc_url,
-            exist_url_with_base=urljoin(base_url, doc_url),
-            uilocale_url=u'/en-US/docs/%s/%s' % (rev.document.locale,
-                                                 rev.document.slug),
-            noexist_url=u'/en-US/docs/no-such-doc',
-            noexist_url_with_base=urljoin(base_url,
-                                          u'/en-US/docs/no-such-doc'),
-            noexist_uilocale_url=u'/en-US/docs/en-US/blah-blah-blah',
-            nonen_slug='/fr/docs/CSS/H%c3%a9ritage',
-            tag_url='/en-US/docs/tag/foo',
-            feed_url='/en-US/docs/feeds/atom/all',
-            templates_url='/en-US/docs/templates',
-        )
-        doc_src = u"""
-                <li><a href="%(nonen_slug)s">Héritée</a></li>
-                <li><a href="%(exist_url)s">This doc should exist</a></li>
-                <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(uilocale_url)s">This doc should exist</a></li>
-                <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
-                <li><a href="%(noexist_url)s#withanchor">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_url)s">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_url_with_base)s#withanchor">This doc should NOT exist</a></li>
-                <li><a href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
-                <li><a class="foobar" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
-                <li><a href="http://mozilla.org/">This is an external link</a></li>
-                <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
-                <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
-                <a href="%(tag_url)s">Tag link</a>
-                <a href="%(feed_url)s">Feed link</a>
-                <a href="%(templates_url)s">Templates link</a>
-                <a href="/en-US/docs/DOM/stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/Stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/StyleSheet">Case sensitive 1</a>
-                <a href="/en-us/docs/dom/StyleSheet">Case sensitive 1</a>
-                <a href="/en-US/docs/dom/Styles">For good measure</a>
-        """ % vars
-        expected = u"""
-                <li><a href="%(nonen_slug)s">Héritée</a></li>
-                <li><a href="%(exist_url)s">This doc should exist</a></li>
-                <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
-                <li><a href="%(exist_url_with_base)s#withanchor">This doc should exist</a></li>
-                <li><a href="%(uilocale_url)s">This doc should exist</a></li>
-                <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
-                <li><a class="new" href="%(noexist_url)s#withanchor">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_url)s">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_url_with_base)s#withanchor">This doc should NOT exist</a></li>
-                <li><a class="new" href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
-                <li><a class="foobar new" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
-                <li><a class="external" href="http://mozilla.org/">This is an external link</a></li>
-                <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
-                <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
-                <a href="%(tag_url)s">Tag link</a>
-                <a href="%(feed_url)s">Feed link</a>
-                <a href="%(templates_url)s">Templates link</a>
-                <a href="/en-US/docs/DOM/stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/Stylesheet">Case sensitive 1</a>
-                <a href="/en-US/docs/DOM/StyleSheet">Case sensitive 1</a>
-                <a href="/en-us/docs/dom/StyleSheet">Case sensitive 1</a>
-                <a class="new" href="/en-US/docs/dom/Styles">For good measure</a>
-        """ % vars
+@pytest.mark.parametrize('has_class', ('hasClass', 'noClass'))
+@pytest.mark.parametrize('anchor', ('withAnchor', 'noAnchor'))
+@pytest.mark.parametrize('full_url', ('fullURL', 'pathOnly'))
+def test_annotate_links_existing_doc(root_doc, anchor, full_url, has_class):
+    """Links to existing docs are unmodified."""
+    if full_url == 'fullURL':
+        url = root_doc.get_full_url()
+        assert url.startswith(AL_BASE_URL)
+    else:
+        url = root_doc.get_absolute_url()
+    if anchor == 'withAnchor':
+        url += "#anchor"
+    if has_class == 'hasClass':
+        link_class = ' class="extra"'
+    else:
+        link_class = ''
+    html = normalize_html('<li><a %s href="%s"></li>' % (link_class, url))
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
 
-        # Split the markup into lines, to better see failures
-        doc_lines = doc_src.strip().split("\n")
-        expected_lines = expected.strip().split("\n")
-        for idx in range(0, len(doc_lines)):
-            doc_line = doc_lines[idx]
-            expected_line = expected_lines[idx]
-            result_line = (kuma.wiki.content.parse(doc_line)
-                                            .annotateLinks(
-                                                base_url=vars['base_url'])
-                                            .serialize())
-            self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
+
+@pytest.mark.parametrize('has_class', ('hasClass', 'noClass'))
+@pytest.mark.parametrize('anchor', ('withAnchor', 'noAnchor'))
+@pytest.mark.parametrize('full_url', ('fullURL', 'pathOnly'))
+def test_annotate_links_nonexisting_doc(db, anchor, full_url, has_class):
+    """Links to missing docs get extra attributes."""
+    url = 'en-US/docs/Root'
+    if full_url == 'fullURL':
+        url = urljoin(AL_BASE_URL, url)
+    if anchor == 'withAnchor':
+        url += "#anchor"
+    if has_class == 'hasClass':
+        link_class = ' class="extra"'
+        expected_attrs = ' class="extra new" rel="nofollow"'
+    else:
+        link_class = ''
+        expected_attrs = ' class="new" rel="nofollow"'
+    html = '<li><a %s href="%s"></li>' % (link_class, url)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected_raw = '<li><a %s href="%s"></li>' % (expected_attrs, url)
+    assert normalize_html(actual_raw) == normalize_html(expected_raw)
+
+
+def test_annotate_links_uilocale_to_existing_doc(root_doc):
+    """Links to existing docs with embeded locales are unmodified."""
+    assert root_doc.get_absolute_url() == '/en-US/docs/Root'
+    url = '/en-US/docs/en-US/Root'  # Notice the 'en-US' after '/docs/'
+    html = normalize_html('<li><a href="%s"></li>' % url)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+def test_annotate_links_uilocale_to_nonexisting_doc(db):
+    """Links to new docs with embeded locales are modified."""
+    url = '/en-US/docs/en-US/Root'  # Notice the 'en-US' after '/docs/'
+    html = '<li><a href="%s"></li>' % url
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected = normalize_html(
+        '<li><a rel="nofollow" class="new" href="%s"></li>' % url)
+    assert normalize_html(actual_raw) == expected
+
+
+@pytest.mark.parametrize('attributes', ('', 'class="foobar" name="quux"'))
+def test_annotate_links_no_href(attributes):
+    """Links without an href do not break the annotator."""
+    html = normalize_html('<li><a %s>No href</a></li>' % attributes)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+@pytest.mark.parametrize('slug', ('tag/foo', 'feeds/atom/all', 'templates'))
+def test_annotate_links_docs_but_not_wiki_urls(slug):
+    """Links to /docs/ URLs that are not wiki docs are not annotated."""
+    html = normalize_html('<li><a href="/en-US/docs/%s">Other</a></li>' % slug)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+@pytest.mark.parametrize('slug', ('', '/dashboards/revisions'))
+def test_annotate_links_not_docs_urls(slug):
+    """Links that are not /docs/ are not annotated."""
+    html = normalize_html('<li><a href="%s">Other</a></li>' % slug)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+@pytest.mark.parametrize('slug', ('root', 'ROOT', 'rOoT'))
+def test_annotate_links_case_insensitive(root_doc, slug):
+    """Links to existing docs are case insensitive."""
+    url = '/en-US/docs/' + slug
+    assert url != root_doc.get_absolute_url()
+    html = normalize_html('<li><a href="%s"></li>' % url)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    assert normalize_html(actual_raw) == html
+
+
+def test_annotate_links_external_link():
+    """Links to external sites get an external class."""
+    html = '<li><a href="https://mozilla.org">External link</a>.</li>'
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected = normalize_html(
+        '<li><a class="external" href="https://mozilla.org">'
+        'External link</a>.</li>')
+    assert normalize_html(actual_raw) == expected
 
 
 class FilterEditorSafetyTests(TestCase):
@@ -1141,96 +1088,118 @@ class AllowedHTMLTests(KumaTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class ExtractorTests(UserTestCase):
-    """Tests for document parsers that extract content"""
+def test_extractor_css_classnames(root_doc, wiki_user):
+    """The Extractor can return the CSS class names in use."""
+    classes = ('foobar', 'barfoo', 'bazquux')
+    content = """
+        <p class="%s">Test</p>
+        <p class="%s">Test</p>
+        <div class="%s">Test</div>
+        <div>No Class</div>
+    """ % classes
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    root_doc.render()  # Also saves
+    result = root_doc.extract.css_classnames()
+    assert sorted(result) == sorted(classes)
 
-    def test_css_classname_extraction(self):
-        expected = ('foobar', 'barfoo', 'bazquux')
-        rev = revision(is_approved=True, save=True, content="""
-            <p class="%s">Test</p>
-            <p class="%s">Test</p>
-            <div class="%s">Test</div>
-        """ % expected)
-        rev.document.render()
-        result = rev.document.extract.css_classnames()
-        eq_(sorted(expected), sorted(result))
 
-    def test_html_attribute_extraction(self):
-        expected = (
-            'class="foobar"',
-            'id="frazzy"',
-            'lang="farb"',
-        )
-        rev = revision(is_approved=True, save=True, content="""
-            <p %s>Test</p>
-            <p %s>Test</p>
-            <div %s>Test</div>
-        """ % expected)
-        rev.document.render()
-        doc = Document.objects.get(pk=rev.document.pk)
-        result = doc.extract.html_attributes()
-        eq_(sorted(expected), sorted(result))
+def test_extractor_html_attributes(root_doc, wiki_user):
+    """The Extractor can return the HTML attributes."""
+    attributes = (
+        'class="foobar"',
+        'id="frazzy"',
+        'lang="farb"',
+    )
+    content = """
+        <p %s>Test</p>
+        <p %s>Test</p>
+        <div %s>Test</div>
+    """ % attributes
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    root_doc.render()  # Also saves
+    result = root_doc.extract.html_attributes()
+    assert sorted(result) == sorted(attributes)
 
-    def test_kumascript_macro_extraction(self):
-        expected = ('foobar', 'barfoo', 'bazquux', 'banana')
-        rev = revision(is_approved=True, save=True, content="""
-            <p>{{ %s }}</p>
-            <p>{{ %s("foo", "bar", "baz") }}</p>
-            <p>{{ %s    ("quux") }}</p>
-            <p>{{%s}}</p>
-        """ % expected)
-        result = rev.document.extract.macro_names()
-        eq_(sorted(expected), sorted(result))
 
-    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples(self):
-        expected = {
-            'html': 'Some HTML',
-            'css': '.some-css { color: red; }',
-            'js': 'window.alert("HI THERE")',
-        }
-        rev = revision(is_approved=True, save=True, content="""
-            <div id="sample" class="code-sample">
-                <pre class="brush: html">%(html)s</pre>
-                <pre class="brush: css">%(css)s</pre>
-                <pre class="brush: js">%(js)s</pre>
-            </div>
-            {{ LinkCodeSample('sample1') }}
-        """ % expected)
-        result = rev.document.extract.code_sample('sample')
-        eq_(expected, result)
+def test_extractor_macro_names(root_doc, wiki_user):
+    """The Extractor can return the names of KumaScript macros."""
+    macros = ('foobar', 'barfoo', 'bazquux', 'banana')
+    content = """
+        <p>{{ %s }}</p>
+        <p>{{ %s("foo", "bar", "baz") }}</p>
+        <p>{{ %s    ("quux") }}</p>
+        <p>{{%s}}</p>
+    """ % macros
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.macro_names()
+    assert sorted(result) == sorted(macros)
 
-    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples_with_null_character_in_sample_name(self):
-        rev = revision(is_approved=True, save=True, content="""
-            <div id="sample" class="code-sample">
-                <pre class="brush: html">Some HTML</pre>
-                <pre class="brush: css">.some-css { color: red; }</pre>
-                <pre class="brush: js">window.alert("HI THERE")</pre>
-            </div>
-            {{ LinkCodeSample('sample1') }}
-        """)
-        # The real test here is to ensure that no exception is raised, but
-        # might as well also check that the sample section was not found.
-        sample_name = u"sam\x00ple"  # Null character in name
-        result = rev.document.extract.code_sample(sample_name)
-        eq_(dict(html=None, css=None, js=None), result)
 
-    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
-    def test_code_samples_with_escapable_characters_in_sample_name(self):
-        rev = revision(is_approved=True, save=True, content="""
-            <div id="sample" class="code-sample">
-                <pre class="brush: html">Some HTML</pre>
-                <pre class="brush: css">.some-css { color: red; }</pre>
-                <pre class="brush: js">window.alert("HI THERE")</pre>
-            </div>
-            {{ LinkCodeSample('sample1') }}
-        """)
-        # The real test here is to ensure that no exception is raised, but
-        # might as well also check that the sample section was not found.
-        sample_name = u"""sam<'&">ple"""  # One of "<>'& in name
-        result = rev.document.extract.code_sample(sample_name)
-        eq_(dict(html=None, css=None, js=None), result)
+def test_extractor_code_sample(root_doc, wiki_user):
+    """The Extractor can return the sections of a code sample."""
+    code_sample = {
+        'html': 'Some HTML',
+        'css': '.some-css { color: red; }',
+        'js': 'window.alert("HI THERE")',
+    }
+    content = """
+        <div id="sample" class="code-sample">
+            <pre class="brush: html">%(html)s</pre>
+            <pre class="brush: css">%(css)s</pre>
+            <pre class="brush: js">%(js)s</pre>
+        </div>
+        {{ EmbedLiveSample('sample1') }}
+    """ % code_sample
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample('sample')
+    assert result == code_sample
+
+
+@pytest.mark.parametrize('sample_id', (u'sam\x00ple', u"""sam<'&">ple"""))
+def test_extractor_code_sample_garbage_in_id(root_doc, wiki_user, sample_id):
+    """The Extractor does not error if the code sample ID is bad."""
+    content = """
+        <div id="sample" class="code-sample">
+            <pre class="brush: html">Some HTML</pre>
+            <pre class="brush: css">.some-css { color: red; }</pre>
+            <pre class="brush: js">window.alert("HI THERE")</pre>
+        </div>
+        {{ EmbedLiveSample('sample1') }}
+    """
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample(sample_id)
+    assert result == {'html': None, 'css': None, 'js': None}
+
+
+@pytest.mark.parametrize('annotate_links', [True, False])
+def test_extractor_section(root_doc, annotate_links):
+    """The Extractor can extract a section, optionally annotating links."""
+    quick_links_template = """
+    <ul>
+      <li><a href="/en-US/docs/Root">Existing</a></li>
+      <li><a %s href="/en-US/docs/New">New</a></li>
+    </ul>
+    """
+    quick_links = quick_links_template % ''
+    if annotate_links:
+        expected = quick_links_template % 'rel="nofollow" class="new"'
+    else:
+        expected = quick_links
+    content = """
+        <div>
+          <section id="Quick_Links" class="Quick_Links">
+            %s
+          </section>
+        </div>
+    """ % quick_links
+    result = root_doc.extract.section(content, "Quick_Links",
+                                      annotate_links=annotate_links)
+    assert normalize_html(result) == normalize_html(expected)
 
 
 class GetSEODescriptionTests(KumaTestCase):
