@@ -211,7 +211,7 @@ def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
     Revision.objects.create(
         document=bottom_doc,
         creator=wiki_user,
-        content='<p>Bottom...</p>',
+        content='<p>Bottom...</p><div id="Quick_Links"><p>sidebar</p></div>',
         title='Bottom Document',
         created=datetime(2017, 4, 24, 13, 52)
     )
