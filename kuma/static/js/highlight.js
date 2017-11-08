@@ -1,4 +1,4 @@
-(function($) {
+(function($, win) {
     'use strict';
 
     // find all targets and wrap appropriately
@@ -9,8 +9,13 @@
         });
     }
 
+    var $articleSubHeads;
     // call on aritcle body with targets
-    var $articleSubHeads = $('#wikiArticle h3, #wikiArticle h5');
+    if(!win.waffle || !win.waffle.flag_is_active('line_length')) {
+        $articleSubHeads = $('#wikiArticle h2');
+    } else {
+        $articleSubHeads = $('#wikiArticle h3, #wikiArticle h5');
+    }
     highlight($articleSubHeads);
 
-})(jQuery);
+})(jQuery, window);
