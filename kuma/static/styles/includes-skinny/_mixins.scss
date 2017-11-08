@@ -407,6 +407,16 @@ These are not dynamic but serve as mixins
     display: block;
 }
 
+
+@mixin restrict-line-length() {
+    /* empty here but not in waffled version of code */
+}
+
+
+@mixin full-width-content() {
+    /* empty here but not in waffled version of code */
+}
+
 /*
 pull aside
 - assumes content has a bottom margin of its own

@@ -253,7 +253,7 @@ article page modifications
 -------------------------------------------------------------- */
 .newsletter-box {
     position: relative;
-    border-top: 2px solid $text-color;
+    border-top: $section-border-width solid $text-color;
     padding: $grid-spacing 0;
     margin-top: $grid-spacing * 2;
     background-color: #fff;

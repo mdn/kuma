@@ -84,7 +84,7 @@ $neutral: $blue;
 $default: $grey;
 
 $text-color: #333;
-$link-color: darken($blue, 5);
+$link-color: #3f87a6;
 $menu-link-color: $text-color;
 $blue-background-text-color: #fff;
 $light-background-color: #{map-get( map-get($colors-lookup, 'default'), 'light')};
@@ -113,6 +113,7 @@ $site-font-family-fallback: arial, x-locale-body, sans-serif;
 $site-font-family: 'Open Sans', $site-font-family-fallback;
 $heading-font-family-fallback: 'Palatino', 'Palatino Linotype', x-locale-heading-secondary, serif;
 $heading-font-family: x-locale-heading-primary, zillaslab, $heading-font-family-fallback;
+$heading-line-height: 1.2;
 $tiny-font-family: 'Helvetica', arial, sans-serif;
 $code-block-font-family: consolas, monaco, 'Andale Mono', monospace; /* prism */
 $code-inline-font-family: consolas, 'Liberation Mono', courier, monospace; /* inline */
@@ -122,9 +123,10 @@ $diff-font-family: $code-inline-font-family;
 sizes
 ====================================================================== */
 $h1-font-size: 48px;
-$h2-font-size: 24px;
-$h3-font-size: 22px;
-$h4-font-size: 20px;
+$h2-font-size: 40px;
+$h3-font-size: 24px;
+$h4-font-size: 22px;
+$h5-font-size: 16px;
 $callout-font-size: 22px;
 $note-font-size: 18px;
 $body-font-size: 16px;
@@ -133,6 +135,7 @@ $tiny-font-size: 12px;
 $left-nav-font-size: 14px;
 
 $mobile-document-title-font-size: 32px;
+$mobile-h2-font-size: 32px;
 
 /* bumps */
 $larger-font-size: $callout-font-size;
@@ -244,6 +247,9 @@ $list-item-spacing: $content-horizontal-spacing;
 $icon-margin: ($grid-spacing / 2);
 
 $logo-height: 48px;
+
+$section-border-width: 3px;
+$section-border: $section-border-width solid $blue;
 
 /*
 forms

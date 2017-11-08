@@ -3,8 +3,8 @@
 .landingPageBox {
     width: 100%;
     padding: 0;
-    border-bottom: 1px solid #bbb;
-    margin-bottom: 3px;
+    border-bottom: $section-border;
+    margin-bottom: $grid-spacing;
 }
 
 .landingPageBox ul {

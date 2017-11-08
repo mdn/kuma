@@ -1,14 +1,16 @@
 /* some documents have different lisences for historic reasons */
 .licenseblock,
 .originaldocinfo {
-    @include set-message-base(true);
+    @include set-font-size($smaller-font-size);
+    @include heading-2-section();
     background: $grey-light;
     border: 2px solid $grey;
-    @include set-font-size($smaller-font-size);
+    padding: $grid-spacing $grid-spacing 0;
 }
 
 .originaldocinfo {
     h2 {
         @include set-font-size($body-font-size);
+        margin-top: 0;
     }
 }

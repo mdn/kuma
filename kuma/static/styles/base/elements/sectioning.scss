@@ -67,9 +67,10 @@ summary {
 }
 
 hr {
-    border-top: 1px solid $text-color;
+    border-top: $section-border;
     height: 0;
     margin: $grid-spacing 0;
+    @include restrict-line-length();
 }
 
 @media print {

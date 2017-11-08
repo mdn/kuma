@@ -76,6 +76,11 @@ Misc - needs sorting
     display: none; /* bug 1305178: hide empty first paragraph */
 }
 
+#wikiArticle {
+    padding-bottom: $grid-spacing;
+    border-bottom: $section-border;
+}
+
 p.field-explanation {
     margin-bottom: 0;
 }

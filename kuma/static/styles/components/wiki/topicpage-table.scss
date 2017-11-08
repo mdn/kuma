@@ -12,6 +12,7 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
     border: none;
     display: block;
     border-collapse: collapse;
+    margin-bottom: $grid-spacing;
 
     tr,
     th,
@@ -27,6 +28,7 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
 .topicpage-table {
     h2 {
         @include set-heading-font-family();
+        margin-top: 0;
     }
 
     ul {
