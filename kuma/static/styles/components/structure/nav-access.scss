@@ -6,7 +6,7 @@ Keyboard & screen reader skip link menu
     width: 100%;
     position: absolute;
     top: -20em;
-    z-index: 1001;
+    z-index: $nav-access-z;
 
     a {
         @include rgba-fallback(background, #fff, .9);

@@ -6,6 +6,7 @@ Main navigation menu
 
 .nav-main {
     position: relative;
+    z-index: $main-nav-z;
 }
 
 html:not(.no-js) .nav-main-item > a {

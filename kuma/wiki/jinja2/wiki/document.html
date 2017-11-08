@@ -136,6 +136,16 @@
       </div>
     </div>
   </div>
+  {% if toc_html and waffle.flag('line_length') %}
+  <div id="toc" class="toc">
+    <div class="center">
+      <div class="toc-head">Jump to:</div>
+        <ol class="toc-links">
+          {{ toc_html|safe }}
+        </ol>
+    </div>
+  </div>
+  {% endif %}
 {% endblock%}
 
 {% block content %}
@@ -248,15 +258,6 @@
                   {% if not document_html %}
                     {{ _("This article doesn't have any content yet.") }}
                   {% else %}
-                    {% if toc_html and waffle.flag('line_length') %}
-                    <!-- table of contents -->
-                    <div id="toc" class="toc toggleable">
-                      <a href="#toc" class="title toggler" data-open-icon="icon-caret-right" data-closed-icon="icon-caret-down"><i></i>{{ _('In This Article') }}</a>
-                      <ol class="toggle-container">
-                        {{ toc_html|safe }}
-                      </ol>
-                    </div>
-                    {% endif %}
                     {{ body_html|safe }}
                   {% endif %}
                 {% elif fallback_reason == 'no_translation' %}

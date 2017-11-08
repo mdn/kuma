@@ -280,3 +280,16 @@ $logo-sprite-url: $path-to-images + 'web-docs-sprite.svg';
 edit-mode customizations - applied to blocks only in edit mode
 ====================================================================== */
 $editor-box-border: 2px dotted #adf;
+
+/*
+z-index
+====================================================================== */
+$nav-access-z: 1001;
+$submenu-z: 99;
+$logo-z: 97; /* needs to be above main-nav */
+$nav-sec-z: 97; /* needs to be above main-nav */
+$main-header-z: 96;
+$main-nav-z: 95;
+$document-actions-z: 89;
+$document-head-z: 88;
+$toc-z: 79;

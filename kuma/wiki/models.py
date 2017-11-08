@@ -340,13 +340,12 @@ class Document(NotificationsMixin, models.Model):
     def get_toc_html(self, *args, **kwargs):
         if not self.current_revision:
             return ''
-        toc_depth = self.current_revision.toc_depth
-        if not toc_depth:
+        if not self.current_revision.toc_depth:
             return ''
         html = self.rendered_html and self.rendered_html or self.html
         return (parse_content(html)
                 .injectSectionIDs()
-                .filter(self.TOC_FILTERS[toc_depth])
+                .filter(self.TOC_FILTERS[2])
                 .serialize())
 
     @cache_with_field('summary_html')

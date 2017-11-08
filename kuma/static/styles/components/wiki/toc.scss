@@ -1,58 +1,115 @@
-#toc {
-    @include restrict-line-length();
-    @include reverse-link-decoration();
-    background: $light-background-color;
-    @include bidi-value(padding, ($grid-spacing / 2) $grid-spacing ($grid-spacing / 2) ($grid-spacing - 2px), ($grid-spacing / 2) ($grid-spacing - 2px) ($grid-spacing / 2) $grid-spacing);
-    margin-bottom: $grid-spacing;
+/*
+Sticky TOC
+====================================================================== */
+$padding-vertical: 15px;
+$padding-horizontal: 30px;
 
-    // toggle button
-    .toggler {
-        position: relative;
-        color: $link-color;
 
-        &,
-        &:hover,
-        &:focus,
-        &:active {
-            text-decoration: none;
-        }
+.toc {
+    display: none;
+    background-color: $bg-dark;
+    color: #fff;
+    line-height: 1;
+    top: 0;
+    z-index: $toc-z;
 
-        i {
-            position: static;
-            @include bidi-style(margin-right, $icon-margin, margin-left, 0);
-            display: inline-block;
-            color: $link-color;
-
-            .no-js & {
-                display: none;
-            }
-        }
-    }
-
-    // menu
-    .toggle-container {
-        // hide by default if JS enabled
+    .no-js .toc {
         display: none;
-
-        // display by default if no JS
-        .no-js & {
-            display: block;
-        }
     }
 
+    &.hidden {
+        display: none;
+    }
+}
+
+.toc-head {
+    display: inline-block;
+    font-family: $heading-font-family;
+    @include set-font-size(22px);
+    @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+}
+
+.toc-links {
+    display: inline;
+
+    /* submenus are still being included in HTML, but we don't want them in TOC */
     ol {
-        margin-bottom: 0;
-        @include bidi-style(padding-left, 0 , padding-right, 0);
-        @include set-smaller-font-size();
-        list-style-type: none;
+        display: none;
     }
 
     li {
-        padding-top: ($grid-spacing / 2);
-        position: relative;
+        display: inline-block;
+        word-wrap: nowrap;
     }
 
-    li li {
-        @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
+    a {
+        position: relative;
+        color: $accent-light;
+        display: inline-block;
+        @include set-font-size(17px);
+        font-weight: bold;
+        letter-spacing: .02em;
+        @include bidi-value(padding, $padding-vertical $padding-horizontal $padding-vertical 0, $padding-vertical 0 $padding-vertical $padding-horizontal);
+        white-space: nowrap;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: #fff;
+        }
+    }
+
+    li:last-child a {
+        @include bidi-value(padding, $padding-vertical 0 $padding-vertical 0, $padding-vertical 0 $padding-vertical 0);
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .toc {
+        display: block;
+    }
+}
+
+$emify-tablet-height: (680px / 16px) * 1em;
+@media #{$mq-tablet-and-up} and (min-height: #{$emify-tablet-height}) {
+    .toc {
+        position: sticky;
+    }
+
+    .toc_tall {
+        position: static;
+    }
+
+    .toc-links {
+        li {
+            a {
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    @include bidi-style(left, 0, right, $padding-horizontal);
+                    width: calc(100% - #{$padding-horizontal});
+                    height: 0;
+                    background-color: $accent-light;
+                    transition: height .1s;
+                }
+
+                &.toc-current:after {
+                    height: 3px;
+
+                    /* no underline if it's not sticky because its too tall */
+                    .toc_tall & {
+                        height: 0;
+                    }
+                }
+            }
+
+            &:last-child a {
+                &:after {
+                    width: 100%;
+                }
+            }
+        }
     }
 }

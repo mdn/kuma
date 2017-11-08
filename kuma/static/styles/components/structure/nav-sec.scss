@@ -4,6 +4,11 @@
 Secondary navigation, site tools and login info
 ********************************************************************** */
 
+#nav-sec {
+    position: relative;
+    z-index: $nav-sec-z;
+}
+
 @media #{$mq-tablet-and-down} {
     .nav-tools {
         display: none;
@@ -13,9 +18,7 @@ Secondary navigation, site tools and login info
 @media #{$mq-tablet-and-up} {
     #nav-sec {
         @include bidi-value(float, right, left);
-        position: relative;
         @include bidi-style(right, ($gutter-width * -1), left, auto);
-        z-index: 3; /* bring it above search trigger in tablet view */
         background-color: $bg-dark;
 
         > ul > li {
