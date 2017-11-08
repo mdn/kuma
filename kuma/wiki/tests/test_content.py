@@ -871,7 +871,7 @@ def test_annotate_links_existing_doc(root_doc, anchor, full_url, has_class):
 @pytest.mark.parametrize('anchor', ('withAnchor', 'noAnchor'))
 @pytest.mark.parametrize('full_url', ('fullURL', 'pathOnly'))
 def test_annotate_links_nonexisting_doc(db, anchor, full_url, has_class):
-    """Links to existing docs are unmodified."""
+    """Links to missing docs get extra attributes."""
     url = 'en-US/docs/Root'
     if full_url == 'fullURL':
         url = urljoin(AL_BASE_URL, url)
@@ -899,7 +899,7 @@ def test_annotate_links_uilocale_to_existing_doc(root_doc):
 
 
 def test_annotate_links_uilocale_to_nonexisting_doc(db):
-    """Links to new docs with embeded locales are unmodified."""
+    """Links to new docs with embeded locales are modified."""
     url = '/en-US/docs/en-US/Root'  # Notice the 'en-US' after '/docs/'
     html = '<li><a href="%s"></li>' % url
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
