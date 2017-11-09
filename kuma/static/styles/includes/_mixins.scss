@@ -221,6 +221,19 @@ coloured boxes
     border-color: #{map-get( map-get($colors-lookup, $color), 'medium')};
 }
 
+@mixin example-box($bg-color, $border-color) {
+    @include set-font-size($body-font-size);
+    background: $bg-color;
+    border: 0 $code-block-border-style $border-color;
+    @include bidi-style(border-left-width, $code-block-border-width, border-right-width, 0);
+    color: $text-color;
+    margin-top: 0;
+    margin-bottom: $grid-spacing;
+    padding: 15px;
+    position: relative;
+
+    @include prevent-last-child-bottom-spacing();
+}
 
 /* =================================================================== */
 
@@ -508,18 +521,20 @@ Placeholders
     }
 }
 
-
 /* Styles for code blocks - used for wiki document and WYSIWYG editor */
 %code-block {
-    background: $code-block-background-color;
-    border-left: $code-block-border-width $code-block-border-style $code-block-border-color;
-    background-position: top center;
-    background-repeat: repeat;
-    color: $text-color;
+    @include example-box($code-block-background-color, $code-block-border-color);
     font-family: $code-block-font-family;
+    font-style: normal;
     font-weight: normal;
+    line-height: 1.5;
+    overflow: auto;
+
+    /* code is always LTR */
     direction: ltr;
     text-align: left;
+    @include bidi-value(border-left-width, $code-block-border-width, $code-block-border-width, !important);
+    @include bidi-value(border-right-width, 0, 0, !important);
 
     p {
         @include full-width-content();
@@ -527,6 +542,8 @@ Placeholders
 
     code {
         background-color: transparent;
+        font-style: normal;
+        font-weight: inherit;
         padding: 0;
     }
 

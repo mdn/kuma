@@ -267,7 +267,7 @@ selectors
 $selector-icon : 'i[class^="icon-"]';
 $selector-site-font-fallback : 'html[data-ffo-opensans="false"]:not(.no-js) &';
 $selector-heading-font-fallback : 'html[data-zillaslab="false"]:not(.no-js) &';
-
+$selector-prism: 'pre[class*="language-"]';
 
 /*
 paths
