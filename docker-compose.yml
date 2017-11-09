@@ -58,15 +58,6 @@ services:
     ports:
       - "8001:8000"
 
-  #nginx:
-  #  build: ./docker/images/nginx
-  #  volumes:
-  #    - ./static:/app/static
-  #  ports:
-  #    - "80:80"
-  #  depends_on:
-  #    - web
-
   memcached:
     image: memcached
 
