@@ -6,7 +6,6 @@
 }
 
 .document-title {
-    clear: both;
     position: relative;
 
     h1 {
@@ -21,13 +20,11 @@
 }
 
 .document-actions {
+    position: relative;
+    z-index: 1; // raise above the h1 in the document-title
     @include bidi-value(float, right, left);
     width: 100%;
     margin-bottom: ($grid-spacing / 2);
-
-    .crumbs + & {
-        margin-top: ($grid-spacing / 2);
-    }
 }
 
 @media #{$mq-mobile-and-up} {
@@ -39,11 +36,8 @@
 
     .document-actions {
         width: auto;
-        margin-bottom: $grid-spacing;
-
-        .crumbs + & {
-            margin-top: 0;
-        }
+        @include bidi-style(margin-left, $grid-spacing, margin-right, 0);
+        margin-bottom: 0;
     }
 }
 

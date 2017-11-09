@@ -1,11 +1,21 @@
 {% macro build_document_crumbs(document) %}
-  <nav class="crumbs" role="navigation"><ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="{{ _('breadcrumbs') }}">
-    <li typeof="v:Breadcrumb"><a href="/{{ request.LANGUAGE_CODE }}" rel="v:url" property="v:title">MDN</a></li>
-    {% for doc in document.parents %}
-      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ doc.get_absolute_url() }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
-    {% endfor %}
-    <li class="crumb" typeof="v:Breadcrumb" property="v:title">{{ document.title }}</li>
-  </ol></nav>
+  {% if document.parents %}
+    <nav class="crumbs" role="navigation">
+      <ol typeof="BreadcrumbList" vocab="https://schema.org/" aria-label="{{ _('breadcrumbs') }}">
+        {% for doc in document.parents %}
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="{{ doc.get_absolute_url() }}" property="item" typeof="WebPage">
+              <span property="name">{{ doc.title }}</span>
+            </a>
+            <meta property="position" content="{{ loop.index }}">
+          </li>
+        {% endfor %}
+        <li property="itemListElement" typeof="ListItem" class="crumb">
+          <span property="name">{{ document.title }}</span>
+        </li>
+      </ol>
+    </nav>
+  {% endif %}
 {%- endmacro %}
 
 {% macro get_document_subnav(html) %}

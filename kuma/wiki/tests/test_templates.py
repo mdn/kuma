@@ -55,20 +55,42 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(r.document.html, doc('article#wikiArticle').text())
 
     @pytest.mark.breadcrumbs
-    def test_document_breadcrumbs(self):
-        """Create docs with topical parent/child rel, verify breadcrumbs."""
+    def test_document_no_breadcrumbs(self):
+        """Create docs with topical parent/child rel, verify no breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
         response = self.client.get(d1.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(d1.title, doc('main#content div.document-head h1').text())
-        eq_(d1.title, doc('nav.crumbs li:last-child').text())
+        assert len(doc('nav.crumbs')) == 0
+
         response = self.client.get(d2.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(d2.title, doc('main#content div.document-head h1').text())
-        crumbs = "MDN %s %s" % (d1.title, d2.title)
-        eq_(crumbs, doc('nav.crumbs').text())
+        assert len(doc('nav.crumbs')) == 0
+
+    @pytest.mark.breadcrumbs
+    def test_document_has_breadcrumbs(self):
+        """Documents with parents and a left column have breadcrumbs."""
+        d1, d2 = create_topical_parents_docs()
+        d1.quick_links_html = '<ul><li>Quick Link</li></ul>'
+        d1.save()
+        d2.quick_links_html = '<ul><li>Quick Link</li></ul>'
+        d2.save()
+
+        response = self.client.get(d1.get_absolute_url())
+        assert response.status_code == 200
+        doc = pq(response.content)
+        assert doc('main#content div.document-head h1').text() == d1.title
+        assert len(doc('nav.crumbs')) == 0  # No parents, no breadcrumbs
+
+        response = self.client.get(d2.get_absolute_url())
+        assert response.status_code == 200
+        doc = pq(response.content)
+        assert doc('main#content div.document-head h1').text() == d2.title
+        crumbs = "%s %s" % (d1.title, d2.title)
+        assert doc('nav.crumbs').text() == crumbs
 
     def test_english_document_no_approved_content(self):
         """Load an English document with no approved content."""
@@ -1301,7 +1323,7 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
     assert (count('.document-title') ==
             one_if('root', 'bottom', 'de', 'fr', 'it'))
     assert count(zone_title) == one_if('bottom')
-    assert count('.crumbs') == one_if('root', 'bottom')
+    assert count('.crumbs') == one_if('bottom')
     assert count(css_link.format('zones')) == one_if('it')
     assert count(css_link.format('zone-bobby')) == one_if('bottom')
     assert count(css_link.format('zone-berlin')) == one_if('de')
