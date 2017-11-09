@@ -26,11 +26,53 @@ Supports colouring
 .bc-supports-partial,
 .bc-supports-partial .bc-history {
     background: map-get($bc-colors, partial);
+    background-image: linear-gradient(to bottom right,
+        rgba($yellow, .3) 0,
+        rgba($yellow, .3) 1px,
+        transparent 1px,
+        transparent 67px,
+        rgba($yellow, .3) 67px,
+        rgba($yellow, .3) 73px,
+        transparent 73px,
+        transparent 138px,
+        rgba($yellow, .3) 138px,
+        rgba($yellow, .3) 144px,
+        transparent 144px);
+    background-size: 100px 100px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
 }
 
 .bc-supports-no,
 .bc-supports-no .bc-history {
     background-color: map-get($bc-colors, no);
+    background-image: linear-gradient(to bottom right,
+        rgba($red, .2) 0,
+        rgba($red, .2) 1px,
+        transparent 1px,
+        transparent 67px,
+        rgba($red, .2) 67px,
+        rgba($red, .2) 73px,
+        transparent 73px,
+        transparent 138px,
+        rgba($red, .2) 138px,
+        rgba($red, .2) 144px,
+        transparent 144px),
+    linear-gradient(to bottom left,
+        rgba($red, .2) 0,
+        rgba($red, .2) 1px,
+        transparent 1px,
+        transparent 67px,
+        rgba($red, .2) 67px,
+        rgba($red, .2) 73px,
+        transparent 73px,
+        transparent 138px,
+        rgba($red, .2) 138px,
+        rgba($red, .2) 144px,
+        transparent 144px);
+    background-size: 100px 100px, 100px 100px;
+    background-position: 50% 50%, 50% 50%;
+    background-repeat: no-repeat;
 }
 
 .bc-supports-unknown,

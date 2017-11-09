@@ -17,14 +17,14 @@ $safari-desktop: 'safari_desktop';
 $safari-ios: 'safari_ios';
 
 $bc-colors: (
-    yes: #ebf8e1,
-    no: #ffe7e8,
-    partial: #fff3d4,
-    unknown: #eee
+    yes: $green-light,
+    no: $red-light,
+    partial: $yellow-light,
+    unknown: $grey-light
 );
 
-$bc-color-text: #000;
-$bc-border-color: #000;
+$bc-color-text: $bg-dark;
+$bc-border-color: $bg-dark;
 $bc-border-width-thin: 1px;
 $bc-border-width-thick: 2px;
 $bc-support: yes, no, partial, unknown;
