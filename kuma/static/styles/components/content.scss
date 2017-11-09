@@ -83,15 +83,15 @@ We cannot put these styles in the base/elements/ files because they don't apply 
 
     /* direct decendants h2s get styled like section seperators
        so do things we think are h2s added by macros */
-    article[id=wikiArticle] > h2,
-    article[id=wikiArticle] > div:not([class]) > h2 {
+    article[id='wikiArticle'] > h2,
+    article[id='wikiArticle'] > div:not([class]) > h2 {
         @include heading-2-section();
     }
 
     /*  remove top spacing if h2 is effectivly first element in article */
-    article[id=wikiArticle] > h2:first-child,
-    article[id=wikiArticle] > div:first-child:empty + h2,
-    article[id=wikiArticle] > p:first-child:empty + h2,
+    article[id='wikiArticle'] > h2:first-child,
+    article[id='wikiArticle'] > div:first-child:empty + h2,
+    article[id='wikiArticle'] > p:first-child:empty + h2,
     .Quick_links + h2 {
         margin-top: 0;
         padding-top: 0;
@@ -102,9 +102,9 @@ We cannot put these styles in the base/elements/ files because they don't apply 
     }
 
     /* fix spacing and line if h2 directly follows a hr, summary, or blockquote */
-    article[id=wikiArticle] > hr + h2,
-    article[id=wikiArticle] > .summary + h2,
-    article[id=wikiArticle] > blockquote + h2 {
+    article[id='wikiArticle'] > hr + h2,
+    article[id='wikiArticle'] > .summary + h2,
+    article[id='wikiArticle'] > blockquote + h2 {
         margin-top: ($grid-spacing + $section-border-width) * -1;
         padding-top: $grid-spacing * 2 + $section-border-width;
         background-color: #fff;
@@ -119,14 +119,17 @@ We cannot put these styles in the base/elements/ files because they don't apply 
         @extend %highlight;
     }
 
-    h3,
-    h3 .highlight-span {
+    /* indent if we think this is a top level h3 */
+    article[id='wikiArticle'] > h3:not(.highlight-spanned),
+    article[id='wikiArticle'] > h3 .highlight-span,
+    article[id='wikiArticle'] > div:not([class]) > h3 .highlight-span {
         @include bidi-value(padding, 0 4px 0 $grid-spacing, 0 $grid-spacing 0 4px);
     }
 
     @media #{$mq-tablet-and-up} {
-        h3,
-        h3 .highlight-span {
+        article[id='wikiArticle'] > h3:not(.highlight-spanned),
+        article[id='wikiArticle'] > h3 .highlight-span,
+        article[id='wikiArticle'] > div:not([class]) > h3 .highlight-span {
             @include bidi-value(padding, 0 4px 0 $grid-spacing * 2, 0 $grid-spacing * 2 0 4px);
         }
     }
