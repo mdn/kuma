@@ -1,10 +1,22 @@
 $bg-good: mix($positive, #fff, 5%);
 $bg-bad: mix($negative, #fff, 5%);
 
+.example:not(pre),
+.example-good:not(pre),
+.example-bad:not(pre) {
+    position: relative;
+    padding: $grid-spacing;
+    margin: 0 0 $grid-spacing 0;
+
+    @include prevent-last-child-spacing(p, margin-bottom);
+}
+
 /*
 Pseudo element for icons
 ====================================================================== */
 
+.example-good:not(pre),
+.example-bad:not(pre),
 :not(pre) > code.example-good[class*='language-'],
 pre.example-good[class*='language-'],
 :not(pre) > code.example-bad[class*='language-'],
@@ -23,6 +35,7 @@ pre.example-bad[class*='language-'] {
     }
 }
 
+.example-good:not(pre):before,
 :not(pre) > code.example-good[class*='language-']:before,
 pre.example-good[class*='language-']:before {
     background: $bg-good;
@@ -30,6 +43,7 @@ pre.example-good[class*='language-']:before {
     content: '\f118';
 }
 
+.example-bad:not(pre):before,
 :not(pre) > code.example-bad[class*='language-']:before,
 pre.example-bad[class*='language-']:before {
     background: $bg-bad;
@@ -41,12 +55,19 @@ pre.example-bad[class*='language-']:before {
 Background colouration
 -------------------------------------------------------------- */
 
+.example:not(pre) {
+    background-color: $grey-light;
+    border-left: $code-block-border-width $code-block-border-style $grey;
+}
+
+.example-good:not(pre),
 :not(pre) > code.example-good[class*='language-'],
 pre.example-good[class*='language-'] {
     background: $bg-good;
     border-left: $code-block-border-width $code-block-border-style $positive;
 }
 
+.example-bad:not(pre),
 :not(pre) > code.example-bad[class*='language-'],
 pre.example-bad[class*='language-'] {
     background: $bg-bad;
