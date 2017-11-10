@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.translation import ugettext
 from django.views.decorators.cache import cache_page
+from ratelimit.decorators import ratelimit
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 
@@ -127,7 +128,12 @@ class SearchView(ListAPIView):
         return FacetedFilterSerializer(sorted_filters, many=True).data
 
 
-search = SearchView.as_view()
+# Since the search endpoint accepts user input (via query parameters) and its
+# response is compressed, use rate limiting to mitigate the BREACH attack
+# (see http://breachattack.com/).
+search = ratelimit(key='user_or_ip', rate='10/m', block=True)(
+    SearchView.as_view()
+)
 
 
 @cache_page(60 * 15)  # 15 minutes.

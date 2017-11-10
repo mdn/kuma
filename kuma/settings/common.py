@@ -438,6 +438,7 @@ _CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.next_url',
 
     'constance.context_processors.config',
+    'debreach.context_processors.csrf',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -448,6 +449,7 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
+    'django.middleware.gzip.GZipMiddleware',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
      'django.contrib.sessions.middleware.SessionMiddleware'),
@@ -463,7 +465,10 @@ MIDDLEWARE_CLASSES = (
 if not MAINTENANCE_MODE:
     # We don't want this in maintence mode, as it adds "Cookie"
     # to the Vary header, which in turn, kills caching.
-    MIDDLEWARE_CLASSES += ('django.middleware.csrf.CsrfViewMiddleware',)
+    MIDDLEWARE_CLASSES += (
+        'debreach.middleware.CSRFCryptMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+    )
 
 MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -524,6 +529,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
+    'debreach',
 
     # MDN
     'kuma.core',

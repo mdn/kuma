@@ -239,7 +239,11 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert response['Location'] == url
     assert 'Vary' not in response
 
-    response = client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
+    response = client.get(
+        url,
+        HTTP_ACCEPT_ENCODING='gzip',
+        HTTP_HOST=settings.ATTACHMENT_HOST
+    )
     assert response.status_code == 200
     assert response.streaming
     assert response['x-frame-options'] == 'ALLOW-FROM %s' % settings.DOMAIN
@@ -248,7 +252,8 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
-    assert 'Vary' not in response
+    assert response['Content-Encoding'] == 'gzip'
+    assert response['Vary'] == 'Accept-Encoding'
 
 
 def test_raw_file_if_modified_since(client, settings, file_attachment):
