@@ -23,9 +23,15 @@
         win.mdn.assets = {
             css: {
                 'editor-content': [
-                    {%- stylesheet 'editor-content' %}
-                    {%- stylesheet 'editor-locale-%s' % LANG %}
+                    {%- if waffle.flag('line_length') %}
+                        {%- stylesheet 'editor-content' %}
+                        {%- stylesheet 'editor-locale-%s' % LANG %}
+                    {%- else %}
+                        {%- stylesheet 'editor-content-skinny' %}
+                        {%- stylesheet 'editor-locale-%s' % LANG %}
+                    {%- endif %}
                 ],
+
                 'wiki-compat-tables': [{% stylesheet 'wiki-compat-tables' %}]
             },
             js: {

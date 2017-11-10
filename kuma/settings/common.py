@@ -892,13 +892,24 @@ PIPELINE_CSS = {
     },
     'editor-content': {
         'source_filenames': (
+            'styles/main.scss',
+            'styles/wiki.scss',
+            'styles/wiki-wysiwyg.scss',
+            'styles/wiki.scss',
+            'styles/libs/font-awesome/css/font-awesome.min.css',
+        ),
+        'output_filename': 'build/styles/editor-content.css',
+        'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'editor-content-skinny': {
+        'source_filenames': (
             'styles/main-skinny.scss',
             'styles/wiki-skinny.scss',
             'styles/wiki-wysiwyg.scss',
             'styles/wiki-syntax.scss',
             'styles/libs/font-awesome/css/font-awesome.min.css',
         ),
-        'output_filename': 'build/styles/editor-content.css',
+        'output_filename': 'build/styles/editor-content-skinny.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
     # for maintenance mode page
