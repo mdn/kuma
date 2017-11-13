@@ -96,12 +96,16 @@ def revisions(request):
         revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)
 
     # prefetch_related needs to come after all filters have been applied to qs
-    revisions = (revisions.prefetch_related('akismet_submissions',
-                                            'creator__bans')
-                          .prefetch_related(
-                              Prefetch('document',
-                                       queryset=Document.objects.only(
-                                           'deleted', 'locale', 'slug'))))
+    revisions = revisions.prefetch_related('creator__bans').prefetch_related(
+        Prefetch('document', queryset=Document.objects.only(
+                 'deleted', 'locale', 'slug')))
+
+    show_spam_submission = (
+        request.user.is_authenticated() and
+        request.user.has_perm('wiki.add_revisionakismetsubmission'))
+    if show_spam_submission:
+        revisions = revisions.prefetch_related('akismet_submissions')
+
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
     context = {
@@ -111,10 +115,7 @@ def revisions(request):
             waffle.switch_is_active('store_revision_ips') and
             request.user.is_superuser
         ),
-        'show_spam_submission': (
-            request.user.is_authenticated() and
-            request.user.has_perm('wiki.add_revisionakismetsubmission')
-        ),
+        'show_spam_submission': show_spam_submission,
     }
 
     # Serve the response HTML conditionally upon request type
