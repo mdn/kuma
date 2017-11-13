@@ -39,9 +39,3 @@
     {{ field|safe }}
   </div>
 {% endmacro %}
-
-{% macro optimizely_script() %}
-  {% if waffle.switch('enable_optimizely') and config.OPTIMIZELY_PROJECT_ID and config.OPTIMIZELY_PROJECT_ID != '0' %}
-  <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
-  {% endif %}
-{% endmacro %}

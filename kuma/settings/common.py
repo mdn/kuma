@@ -1498,10 +1498,6 @@ CONSTANCE_CONFIG = dict(
         '{}',
         'Google Analytics (read-only) API credentials',
     ),
-    OPTIMIZELY_PROJECT_ID=(
-        '',
-        'The ID value for optimizely Project Code script'
-    ),
     WIKI_DOCUMENT_TAG_SUGGESTIONS=(
         json.dumps([
             "Accessibility", "AJAX", "API", "Apps", "B2G OS",

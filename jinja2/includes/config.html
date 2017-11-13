@@ -14,7 +14,6 @@
         win.mdn.ckeditor = {};
         win.mdn.features = {};
         win.mdn.staticPath = '{{ STATIC_URL }}';
-        win.mdn.optimizely = win['optimizely'] || [];
         win.mdn.wiki = {
             {%- if not untrusted %}
             autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
