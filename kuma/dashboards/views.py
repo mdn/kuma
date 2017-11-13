@@ -27,11 +27,7 @@ def revisions(request):
     filter_form = RevisionDashboardForm(request.GET)
     page = request.GET.get('page', 1)
 
-    revisions = (Revision.objects.prefetch_related('creator__bans',
-                                                   'document',
-                                                   'akismet_submissions')
-                                 .order_by('-id')
-                                 .defer('content'))
+    revisions = Revision.objects.order_by('-id').defer('content')
 
     query_kwargs = False
     exclude_kwargs = False
@@ -97,6 +93,13 @@ def revisions(request):
 
     if query_kwargs or exclude_kwargs:
         revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)
+
+    # prefetch_related needs to come after all filters have been applied to qs
+    revisions = revisions.prefetch_related('creator__bans',
+                                           'document__deleted',
+                                           'document__locale',
+                                           'document__slug',
+                                           'akismet_submissions')
 
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
