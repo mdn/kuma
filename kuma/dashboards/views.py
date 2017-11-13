@@ -4,6 +4,7 @@ import json
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
+from django.db.models import Prefetch
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -95,12 +96,12 @@ def revisions(request):
         revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)
 
     # prefetch_related needs to come after all filters have been applied to qs
-    revisions = revisions.prefetch_related('creator__bans',
-                                           'document__deleted',
-                                           'document__locale',
-                                           'document__slug',
-                                           'akismet_submissions')
-
+    revisions = (revisions.prefetch_related('akismet_submissions',
+                                            'creator__bans')
+                          .prefetch_related(
+                              Prefetch('document',
+                                       queryset=Document.objects.only(
+                                           'deleted', 'locale', 'slug'))))
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
     context = {
