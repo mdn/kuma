@@ -460,6 +460,11 @@ pull aside
     @include bidi-value(float, right, left);
     @include bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
 
+    h3:first-child,
+    h4:first-child {
+        margin-top: 0;
+    }
+
     @media #{$mq-small-mobile-and-down} {
         width: 100%;
         @include bidi-value(margin, 0, 0);

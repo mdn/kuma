@@ -8,11 +8,15 @@ aside {
     @include column-half();
     @include prevent-last-child-bottom-spacing();
     float: right;
-    border: 1px solid $header-background-color;
     background: $light-background-color;
     padding: $grid-spacing;
     margin-left: $grid-spacing;
     margin-bottom: $grid-spacing;
+
+    h3:first-child,
+    h4:first-child {
+        margin-top: 0;
+    }
 }
 
 main {
