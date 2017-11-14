@@ -53,6 +53,11 @@ django-constance==1.1.2 \
 django-dbgettext==0.1.2 \
     --hash=sha256:f5a115b2338a9d71a333a4b89cec14afbd8fd0180f98ff35a9c7f5d96ee969a8
 
+# Basic/extra mitigation against the BREACH attack
+django-debreach==1.4.0 \
+    --hash=sha256:bdbf8b87c58b438630038648c5b0e168b59220c04f02e208927e08e11bcddbc4 \
+    --hash=sha256:2474c6e8762b72e12140364f0c869b0b212e0dfc76ca614e02d6a71ad6f3fdfb
+
 # Add CreationDateTimeField, management commands
 django-extensions==1.6.1 \
     --hash=sha256:4799534f35eba1c07cb6f9859aa5bb719886769f5d35d2a38e7490ce90c0ce69 \
