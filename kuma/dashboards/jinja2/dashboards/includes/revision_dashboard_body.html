@@ -48,21 +48,23 @@
                         <a href="{{ revision.creator.get_absolute_url() }}"
                            {%- if not revision.creator.is_active %} rel="nofollow"{% endif -%}
                            >{{ revision.creator }}</a><br>
-                        {% set revision_ip = revision.revisionip_set.first() %}
-                        {% if show_ips and revision_ip %}
-                            {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
-                            <dl class="revision_ip compact hidden">
-                                <dt>{{ _('IP:') }}</dt>
-                                <dd>{{ revision_ip.ip }} <br> <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a></dd>
-                                {% if revision_ip.user_agent %}
-                                <dt>{{ _('User agent:') }}</dt>
-                                <dd>{{ revision_ip.user_agent }}</dd>
-                                {% endif %}
-                                {% if revision_ip.referrer %}
-                                <dt>{{ _('Referrer:') }}</dt>
-                                <dd>{{ revision_ip.referrer }}</dd>
-                                {% endif %}
-                            </dl>
+                        {% if show_ips %}
+                            {% set revision_ip = revision.revisionip_set.first() %}
+                            {% if revision_ip %}
+                                {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
+                                <dl class="revision_ip compact hidden">
+                                    <dt>{{ _('IP:') }}</dt>
+                                    <dd>{{ revision_ip.ip }} <br> <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a></dd>
+                                    {% if revision_ip.user_agent %}
+                                    <dt>{{ _('User agent:') }}</dt>
+                                    <dd>{{ revision_ip.user_agent }}</dd>
+                                    {% endif %}
+                                    {% if revision_ip.referrer %}
+                                    <dt>{{ _('Referrer:') }}</dt>
+                                    <dd>{{ revision_ip.referrer }}</dd>
+                                    {% endif %}
+                                </dl>
+                            {% endif %}
                         {% endif %}
                         {% if request.user.has_perm('users.add_userban') and revision.creator.active_ban %}
                             <div class="banned">
