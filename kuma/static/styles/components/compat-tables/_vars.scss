@@ -16,9 +16,11 @@ $opera-mini: 'opera_mini';
 $safari-desktop: 'safari_desktop';
 $safari-ios: 'safari_ios';
 
+/* not using site default colours, to increase difference between colours for
+   colour blind users */
 $bc-colors: (
-    yes: $green-light,
-    no: $red-light,
+    yes: #e4f8e1,
+    no: #f8e1e1,
     partial: $yellow-light,
     unknown: $grey-light
 );
