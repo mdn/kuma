@@ -430,7 +430,8 @@ _CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
-    'django.core.context_processors.csrf',
+    # todo: re-enable with Django 1.11
+    # 'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
     'kuma.core.context_processors.global_settings',
