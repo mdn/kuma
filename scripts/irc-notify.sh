@@ -8,8 +8,6 @@ set -eo pipefail
 NICK="jenkins"
 CHANNEL="#mdndev"
 SERVER="irc.mozilla.org:6697"
-BLUE_BUILD_URL="https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline"
-BLUE_BUILD_URL="${BLUE_BUILD_URL}/detail/${BRANCH_NAME/\//%2f}/${BUILD_NUMBER}/pipeline"
 # colors and styles: values from the following links
 # http://www.mirc.com/colors.html
 # http://stackoverflow.com/a/13382032
@@ -76,7 +74,7 @@ fi
 
 if [[ -n "$STAGE" ]]; then
     MESSAGE="${STATUS}${STAGE}:"
-    MESSAGE="$MESSAGE Branch ${BOLD}${BRANCH_NAME}${NORMAL} build #${BUILD_NUMBER}: ${BLUE_BUILD_URL}"
+    MESSAGE="$MESSAGE Branch ${BOLD}${BRANCH_NAME}${NORMAL} build #${BUILD_NUMBER}: ${RUN_DISPLAY_URL}"
 elif [[ -n "$MESSAGE" ]]; then
     MESSAGE="${STATUS}${MESSAGE}"
 else
