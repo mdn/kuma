@@ -17,11 +17,6 @@
                 action: 'Started sign-in',
                 label: serviceUsed
             });
-
-            // We use data-optimizely-hook and associated Optimizely element
-            // targeting for most click goals, but if we are maintaining this
-            // selector for Google Analytics anyway, we might as well use it.
-            mdn.optimizely.push(['trackEvent', 'click-login-button-' + serviceUsed]);
         };
 
         // Track clicks on all login launching links
@@ -30,8 +25,6 @@
 
     // Track users successfully logging in
     $doc.on('mdn:login', function(e, service) {
-        mdn.optimizely.push(['trackEvent', 'login']);
-        mdn.optimizely.push(['trackEvent', 'login-' + service]);
         mdn.analytics.trackEvent({
             category: 'Authentication',
             action: 'Finished sign-in',
@@ -41,8 +34,6 @@
 
     // Track users successfully logging out
     $doc.on('mdn:logout', function(e, service) {
-        mdn.optimizely.push(['trackEvent', 'logout']);
-        mdn.optimizely.push(['trackEvent', 'logout-' + service]);
         mdn.analytics.trackEvent({
             category: 'Authentication',
             action: 'Signed out',

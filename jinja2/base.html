@@ -1,4 +1,3 @@
-{% from "includes/common_macros.html" import optimizely_script with context -%}
 {% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and (request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST)) %}
 
 <!DOCTYPE html>
@@ -8,9 +7,6 @@
   {%- block experiment_js %}{% endblock %}
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
-  {% if not untrusted %}
-    {{ optimizely_script() }}
-  {% endif %}
   <title>{% block title %}{{ _('MDN Web Docs') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">

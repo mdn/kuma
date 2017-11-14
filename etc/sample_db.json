@@ -402,11 +402,6 @@
         "note": "",
         "created": "2014-01-14"
       }, {
-        "name": "enable_optimizely",
-        "active": false,
-        "note": "Enable this switch to include the Optimizely JavaScript.\n\nThis switch needs to be enabled to create or run experiments. The switch can be disabled to improve performance if experiments are not being run and no new experiments need to be created right now.",
-        "created": "2014-07-15"
-      }, {
         "name": "welcome_email",
         "active": true,
         "note": "",

@@ -167,13 +167,6 @@
 
 {% block js %}
   {{ super() }}
-  {% if settings.DEBUG %}
-      <script>
-      jQuery('#home-search-form').on('submit', function() {
-    mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
-});
-</script>
-  {% endif %}
   {% if waffle.flag('search_suggestions') %}
     <script>
         window.mdn.searchFilters = {{ command_search_filters|jsonencode }};

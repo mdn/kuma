@@ -25,6 +25,9 @@ nosetests.xml
 coverage.xml
 /test_results/
 
+# Atom
+.ropeproject
+
 # Sphinx documentation
 /docs/_build/
 
