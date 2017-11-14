@@ -67,7 +67,7 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     )
     assert response.status_code == 200
     assert response['Access-Control-Allow-Origin'] == '*'
-    assert not response.has_header('Vary')
+    assert response['Vary'] == 'Accept-Encoding'
     assert 'Last-Modified' not in response
     assert 'ETag' in response
     assert 'Cache-Control' in response
