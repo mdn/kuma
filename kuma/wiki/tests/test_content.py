@@ -967,7 +967,7 @@ def test_annotate_links_external_link():
     html = '<li><a href="https://mozilla.org">External link</a>.</li>'
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
     expected = normalize_html(
-        '<li><a class="external" href="https://mozilla.org">'
+        '<li><a class="external" rel="noopener" href="https://mozilla.org">'
         'External link</a>.</li>')
     assert normalize_html(actual_raw) == expected
 

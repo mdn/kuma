@@ -405,6 +405,8 @@ class LinkAnnotationFilter(html5lib_Filter):
                     break
             if is_external:
                 links[href]['classes'].append('external')
+                # https://mathiasbynens.github.io/rel-noopener/
+                links[href]['rel'].append('noopener')
                 continue
 
             # TODO: Should this also check for old-school mindtouch URLs? Or
