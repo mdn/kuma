@@ -1,14 +1,17 @@
-stage('compose-test') {
-  sh 'make compose-test TEST=noext' // "smoke" tests with no external deps
-  sh 'make compose-test TEST="noext make build-static"' // required for many tests
-  sh 'docker-compose build'
-  sh 'make compose-test'
+stage('Test') {
+    utils.compose_test()
 }
 
 stage('Build & push kuma_base image') {
-  sh 'make build-base push-base'
+    utils.sh_with_notify(
+        'make build-base push-base',
+        'Build and push of commit-tagged Kuma base image'
+    )
 }
 
 stage('Build & push kuma image') {
-  sh 'make build-kuma push-kuma'
+    utils.sh_with_notify(
+        'make build-kuma push-kuma',
+        "Build & push of commit-tagged Kuma image"
+    )
 }

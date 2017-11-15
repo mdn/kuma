@@ -55,32 +55,36 @@ def notify_irc(Map args) {
     sh command
 }
 
-def make(cmd, cmd_display) {
-    def target = get_target()
-    def tag = get_commit_tag()
-    def nick = "mdn${target}push"
-    def repo_upper = get_repo_name().toUpperCase()
+def sh_with_notify(cmd, display, notify_on_success=false) {
+    def nick = "mdn-${env.BRANCH_NAME}"
     try {
-        /*
-         * Run the actual make command within the proper environment.
-         */
-        sh """
-            . regions/portland/${target}.sh
-            make ${cmd} ${repo_upper}_IMAGE_TAG=${tag}
-        """
-        notify_irc([
-            irc_nick: nick,
-            stage: cmd_display,
-            status: 'success'
-        ])
+        sh cmd
+        if (notify_on_success) {
+            notify_irc([
+                irc_nick: nick,
+                stage: display,
+                status: 'success'
+            ])
+        }
     } catch(err) {
         notify_irc([
             irc_nick: nick,
-            stage: cmd_display,
+            stage: display,
             status: 'failure'
         ])
         throw err
     }
+}
+
+def make(cmd, display) {
+    def target = get_target()
+    def tag = get_commit_tag()
+    def repo_upper = get_repo_name().toUpperCase()
+    def cmds = """
+        . regions/portland/${target}.sh
+        make ${cmd} ${repo_upper}_IMAGE_TAG=${tag}
+    """
+    sh_with_notify(cmds, display, true)
 }
 
 def migrate_db() {
@@ -116,10 +120,24 @@ def announce_push() {
     def repo = get_repo_name()
     def tag = get_commit_tag()
     notify_irc([
-        irc_nick: "mdn${target}push",
+        irc_nick: "mdn-${env.BRANCH_NAME}",
         status: "Pushing to ${target}",
         message: "${repo} image ${tag}"
     ])
+}
+
+def compose_test() {
+    def dc = 'docker-compose -f docker-compose.yml -f docker-compose.test.yml'
+    // Pre-test tear down to ensure we're starting with a clean slate.
+    sh_with_notify("${dc} down", 'Pre-test tear-down')
+    // Run the "smoke" tests with no external dependencies.
+    sh_with_notify("${dc} run noext", 'Smoke tests')
+    // Build the static assets required for many tests.
+    sh_with_notify("${dc} run noext make build-static", 'Build static assets')
+    // Run the Kuma tests, building the mysql image before starting.
+    sh_with_notify("${dc} up --build test", 'Kuma tests')
+    // Tear everything down.
+    sh_with_notify("${dc} down", 'Post-test tear-down')
 }
 
 return this;

@@ -1,15 +1,21 @@
 stage('Build base') {
-  sh 'make build-base VERSION=latest'
+    utils.sh_with_notify(
+        'make build-base VERSION=latest',
+        'Build of latest-tagged Kuma base image'
+    )
 }
 
-stage('compose-test') {
-  sh 'make compose-test TEST=noext' // "smoke" tests with no external deps
-  sh 'make compose-test TEST="noext make build-static"' // required for many tests
-  sh 'docker-compose build'
-  sh 'make compose-test'
+stage('Test') {
+    utils.compose_test()
 }
 
 stage('Build & push images') {
-  sh 'make build-kuma push-kuma'
-  sh 'make push-base VERSION=latest'
+    utils.sh_with_notify(
+        'make build-kuma push-kuma',
+        "Build & push of commit-tagged Kuma image"
+    )
+    utils.sh_with_notify(
+        'make push-base VERSION=latest',
+        'Push of latest-tagged Kuma base image'
+    )
 }
