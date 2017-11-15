@@ -942,6 +942,26 @@ def test_annotate_links_case_insensitive(root_doc, slug):
     assert normalize_html(actual_raw) == html
 
 
+def test_annotate_links_collation_insensitive(db):
+    """Links to existing docs are collation-insensitive.
+
+    Under MySQL's utf8_general_ci collation, é == e
+    """
+    accent = u'Récursion'
+    no_accent = u'Recursion'
+    assert accent.lower() != no_accent.lower
+    Document.objects.create(locale='fr', slug=u'Glossaire/' + accent,
+                            title=accent)
+    html = normalize_html(
+        u'<li><a href="/fr/docs/Absent"></li>' +
+        u'<li><a href="/fr/docs/Glossaire/%s"></li>' % no_accent)
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected = normalize_html(
+        u'<li><a class="new" rel="nofollow" href="/fr/docs/Absent"></li>' +
+        u'<li><a href="/fr/docs/Glossaire/%s"></li>' % no_accent)
+    assert normalize_html(actual_raw) == expected
+
+
 def test_annotate_links_external_link():
     """Links to external sites get an external class."""
     html = '<li><a href="https://mozilla.org">External link</a>.</li>'

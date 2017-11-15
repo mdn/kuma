@@ -454,9 +454,24 @@ class LinkAnnotationFilter(html5lib_Filter):
                                       .values_list('slug', flat=True))
 
             # Remove the slugs that pass existence check.
+            check_collation = False
             for slug in existing_slugs:
                 lslug = slug.lower()
-                del slug_hrefs[lslug]
+                try:
+                    del slug_hrefs[lslug]
+                except KeyError:
+                    # Same slug by MySQL collation rules
+                    check_collation = True
+
+            # Some slugs are matched by collation rules, so use single checks
+            if check_collation:
+                to_delete = set()
+                for slug in slug_hrefs.keys():
+                    match = Document.objects.filter(locale=locale, slug=slug)
+                    if match.exists():
+                        to_delete.add(slug)
+                for slug in to_delete:
+                    del slug_hrefs[slug]
 
             # Mark all the links whose slugs did not come back from the DB
             # query as "new"
