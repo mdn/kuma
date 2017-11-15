@@ -171,7 +171,7 @@
 {%- endmacro %}
 
 {% macro add_interactive_editor() %}
-<link href="https://interactive-examples.mdn.mozilla.net/css/codemirror.css" rel="stylesheet">
+<link href="https://interactive-examples.mdn.mozilla.net/css/codemirror-5-31-0.css" rel="stylesheet">
 <link href="https://interactive-examples.mdn.mozilla.net/css/editor-js.css" rel="stylesheet">
 
 <section id="static" class="hidden">
@@ -204,7 +204,6 @@ console.log(result);
     </div>
 </section>
 
-<script src="https://interactive-examples.mdn.mozilla.net/js/lib/codemirror.js" defer></script>
-<script src="https://interactive-examples.mdn.mozilla.net/js/mode/javascript/javascript.js" defer></script>
+<script src="https://interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" defer></script>
 <script src="https://interactive-examples.mdn.mozilla.net/js/editor-js.js" defer></script>
 {%- endmacro %}
