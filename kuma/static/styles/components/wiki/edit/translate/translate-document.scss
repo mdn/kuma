@@ -25,6 +25,21 @@
         .approved-title {
             display: inline-block;
             float: left;
+            margin-top: 0;
+        }
+    }
+
+    .translate-rendered,
+    .translate-source {
+        padding-top: 223px; /* approximate height of tool bar on translation side */
+    }
+}
+
+@media #{$mq-max-width-and-up} {
+    #translate-document {
+        .translate-rendered,
+        .translate-source {
+            padding-top: 155px; /* approximate height of tool bar on translation side */
         }
     }
 }
