@@ -181,10 +181,6 @@ bash: up
 shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
 
-compose-test:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml run $(TEST)
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop
-
 create-demo:
 	@ ./Jenkinsfiles/create_demo_instance.sh
 
