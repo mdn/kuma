@@ -266,27 +266,6 @@
                 {% else %}
                   {{ _("This article doesn't have approved content yet.") }}
                 {% endif %}
-
-              {% if waffle.switch('helpful-survey-2') %}
-                <aside class="helpful-survey hidden" id="helpful-survey">
-                  <p>{{ _('Was this article helpful?') }}</p>
-
-                  <div class="helpful-survey-content">
-                    <div class="helpful-survey-buttons">
-                      <button type="button" class="helpful-survey-vote helpful-survey-yes">
-                        <span class="offscreen">{{ _('Yes') }}</span>
-                        <i class="icon-thumbs-o-up" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="helpful-survey-vote helpful-survey-no">
-                        <span class="offscreen">{{ _('No') }}</span>
-                        <i class="icon-thumbs-o-down" aria-hidden="true"></i>
-                      </button>
-                    </div>
-
-                    <div class="helpful-survey-thankyou">{{ _('Thank you!') }}</div>
-                  </div>
-                </aside>
-              {% endif %}
               </article>
 
               <!-- contributors -->

@@ -1092,7 +1092,6 @@ PIPELINE_JS = {
             'js/wiki.js',
             'js/interactive.js',
             'js/wiki-samples.js',
-            'js/wiki-helpful-survey.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
@@ -1104,7 +1103,6 @@ PIPELINE_JS = {
             'js/wiki-skinny.js',
             'js/interactive.js',
             'js/wiki-samples.js',
-            'js/wiki-helpful-survey.js',
         ),
         'output_filename': 'build/js/wiki-skinny.js',
         'extra_context': {

@@ -436,11 +436,6 @@
         "note": "Show foundation donate homepage tile?",
         "active": false,
         "created": "2016-12-1"
-      }, {
-        "name": "helpful-survey-2",
-        "note": "Enable 2017 Helpfulness Survey",
-        "active": true,
-        "created": "2017-02-14"
       }
     ],
     "search.filtergroup": [
