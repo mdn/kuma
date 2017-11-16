@@ -20,10 +20,6 @@
   <meta name="twitter:title" content="{{ social_title }}">
   <meta property="og:title" content="{{ social_title }}">
 
-  {% if waffle.flag('search_suggestions') %}
-  {% stylesheet 'search-suggestions' %}
-  {% endif %}
-
 {% endblock %}
 
 {% block document_head %}
@@ -32,39 +28,19 @@
 <div class="home-masthead"><div class="center">
     <h1 class="highlight highlight-spanned"><span class="highlight-span">{{ _('Resources for developers, by developers.') }}</span></h1>
 
-    {% if waffle.flag('search_suggestions') %}
-        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
-            <div class="home-search-form search-form">
-                <div class="search-filter-wrapper">
-                    <label for="home-q" class="offscreen">{{ _('Search') }}</label>
-                    <span class="search-icon">
-                        <i class="icon-search" aria-hidden="true"></i>
-                    </span>
-                    <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
-                    <div class="filters" data-default="{{ default_filters|jsonencode|forceescape }}"></div>
-                    <button class="show-topics only-icon" type="button">
-                        <span>{{ _('Show topics') }}</span>
-                        <i class="icon-caret-down" aria-hidden="true"></i>
-                    </button>
-                    <button type="submit" class="offscreen">{{ _('Search') }}</button>
-                </div>
-            </div>
-        </form>
-    {% else %}
-        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
-            <div class="home-search-form search-form">
-                <label for="home-q" class="offscreen">{{ _('Search') }}</label>
-                <span class="search-icon">
-                    <i class="icon-search" aria-hidden="true"></i>
-                </span>
-                <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
-                <button type="submit" class="offscreen">{{ _('Search') }}</button>
-                {% for group, tag, shortcut in default_filters %}
-                  <input type="hidden" name="{{ group }}" value="{{ shortcut|default(tag, true) }}">
-                {% endfor %}
-            </div>
-        </form>
-    {% endif %}
+    <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
+        <div class="home-search-form search-form">
+            <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+            <span class="search-icon">
+                <i class="icon-search" aria-hidden="true"></i>
+            </span>
+            <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+            <button type="submit" class="offscreen">{{ _('Search') }}</button>
+            {% for group, tag, shortcut in default_filters %}
+              <input type="hidden" name="{{ group }}" value="{{ shortcut|default(tag, true) }}">
+            {% endfor %}
+        </div>
+    </form>
 
     <ul class="home-features">
       <li><a href="{{ wiki_url('Web') }}" class="cta-link">{{ _('Web Technologies') }}</a></li>
@@ -167,15 +143,6 @@
 
 {% block js %}
   {{ super() }}
-  {% if waffle.flag('search_suggestions') %}
-    <script>
-        window.mdn.searchFilters = {{ command_search_filters|jsonencode }};
-    </script>
-    {% javascript 'search-suggestions' %}
-    <script>
-    jQuery('#home-search-form').searchSuggestions();
-</script>
-  {% endif %}
   {% if waffle.switch('newsletter') %}
     {% javascript 'newsletter' %}
   {% endif %}

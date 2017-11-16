@@ -8,8 +8,7 @@ from kuma.settings.common import path
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
 from kuma.feeder.models import Bundle
-from kuma.search.models import Filter, FilterGroup
-from kuma.search.serializers import GroupWithFiltersSerializer
+from kuma.search.models import Filter
 
 
 def contribute_json(request):
@@ -32,14 +31,11 @@ def home(request):
     if not community_stats:
         community_stats = {'contributors': 5453, 'locales': 36}
 
-    groups = FilterGroup.objects.all()
-    serializer = GroupWithFiltersSerializer(groups, many=True)
     default_filters = Filter.objects.default_filters()
 
     context = {
         'updates': updates,
         'stats': community_stats,
-        'command_search_filters': serializer.data,
         'default_filters': default_filters,
     }
     return render(request, 'landing/homepage.html', context)

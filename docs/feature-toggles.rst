@@ -47,8 +47,6 @@ other advanced criteria.
 * ``line_length`` - Enable/disable readable line length.
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``registration_disabled`` - Enable/disable new user registration.
-* ``search_suggestions`` - Show the advanced search filter suggestions
-  interface.
 * ``section_edit`` - Show section edit buttons.
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``spam_admin_override`` - Tell Akismet that edits are never spam.

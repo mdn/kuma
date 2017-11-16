@@ -16,12 +16,6 @@
   {% endif %}
 {% endblock %}
 
-{% block extrahead %}
-  {% if waffle.flag('search_suggestions') %}
-  {% stylesheet 'search-suggestions' %}
-  {% endif %}
-{% endblock %}
-
 {% block robots_value %}noindex, follow{% endblock %}
 
 {% block bodyclass %}search-results search-results-no-demo search-navigator-flush{% endblock %}
@@ -226,39 +220,3 @@
   </div>
 </form>
 {% endblock %}
-
-{% block js %}
-  {% if waffle.flag('search_suggestions') %}
-  {% javascript 'search-suggestions' %}
-  <script>
-  (function($) {
-    var get_filters = function() {
-        var filtersData = window.mdn.searchFilters || [];
-        var groupSlugs = [];
-        $.each(filtersData, function(idx_group, group){
-            groupSlugs.push(group.slug);
-        });
-
-        var url = window.location.href;
-        var filters_sel = [];
-        var searchIndex = url.indexOf('?');
-        if (searchIndex != -1 ) {
-            var sPageURL = url.substring(searchIndex +1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++) {
-                var sParameterName = sURLVariables[i].split('=');
-                if($.inArray(sParameterName[0], groupSlugs) != -1){
-                    filters_sel.push({ 'slug': sParameterName[1], 'group': sParameterName[0] });
-                }
-            }
-            return filters_sel;
-        }
-    };
-
-    $('#search-form').searchSuggestions({
-        filters: get_filters()
-    });
-  })(jQuery);
-  </script>
-  {% endif %}
-{% endblock js %}

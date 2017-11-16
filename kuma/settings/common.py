@@ -714,12 +714,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/search.css',
     },
-    'search-suggestions': {
-        'source_filenames': (
-            'styles/search-suggestions.scss',
-        ),
-        'output_filename': 'build/styles/search-suggestions.css',
-    },
     'wiki': {
         'source_filenames': (
             'styles/wiki.scss',
@@ -1080,12 +1074,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/syntax-prism.js',
         'template_name': 'pipeline/javascript-array.jinja',
-    },
-    'search-suggestions': {
-        'source_filenames': (
-            'js/search-suggestions.js',
-        ),
-        'output_filename': 'build/js/search-suggestions.js',
     },
     'wiki': {
         'source_filenames': (

@@ -316,10 +316,6 @@
         "staff": true,
         "created": "2014-01-14"
       }, {
-        "name": "search_suggestions",
-        "superusers": false,
-        "created": "2014-10-14"
-      }, {
         "name": "registration_disabled",
         "everyone": false,
         "superusers": false,
