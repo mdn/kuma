@@ -23,13 +23,6 @@ KUMA_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
 KUMA_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
 KUMASCRIPT_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:${KS_VERSION}
 KUMASCRIPT_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
-TEST ?= test #other options in docker-compose.test.yml
-DEIS_PROFILE ?= dev-usw
-DEIS_APP ?= mdn-dev
-DEIS_BIN ?= deis
-WORKER_SCALE ?= 1
-API_SCALE ?= 1
-DB_PASS ?= kuma # default for ephemeral demo DBs
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -128,42 +121,6 @@ push-kumascript:
 
 push: push-base push-kuma
 
-deis-create:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} create ${DEIS_APP} --no-remote || \
-	${DEIS_BIN} apps | grep -q ${DEIS_APP}
-
-deis-config:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} config:set -a ${DEIS_APP} $(shell cat .env-dist.deis) || true
-
-deis-create-and-or-config:
-	make deis-create || echo already created
-	sleep 5
-	make deis-config
-
-deis-pull:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} pull ${KUMA_IMAGE} -a ${DEIS_APP}
-
-deis-scale-api-and-worker:
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} ps:scale \
-	    api=${API_SCALE} worker=${WORKER_SCALE} -a ${DEIS_APP}
-
-demo-db-import:
-	Jenkinsfiles/import-demo-db.sh
-
-k8s-migrate:
-	kubectl --namespace ${DEIS_APP} exec \
-	$(shell kubectl --namespace ${DEIS_APP} get pods | grep ${DEIS_APP}-cmd | awk '{print $$1}') \
-	python manage.py migrate
-
-render-k8s-templates:
-	k8s/api-svc.yaml.template.sh ${DEIS_APP} > k8s/api-svc.yaml
-
-wait-mysql:
-	bash -c "if ! kubectl -n ${DEIS_APP} get pods | grep mysql | grep -q Running; then sleep 2; make wait-mysql; fi"
-
-deis-migrate: wait-mysql
-	DEIS_PROFILE=${DEIS_PROFILE} ${DEIS_BIN} run -a ${DEIS_APP} python manage.py migrate
-
 tag-latest:
 	docker tag ${BASE_IMAGE} ${BASE_IMAGE_LATEST}
 	docker tag ${KUMA_IMAGE} ${KUMA_IMAGE_LATEST}
@@ -180,9 +137,6 @@ bash: up
 
 shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
-
-create-demo:
-	@ ./Jenkinsfiles/create_demo_instance.sh
 
 lint:
 	flake8 kuma docs tests
