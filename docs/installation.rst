@@ -56,7 +56,7 @@ Docker setup
    
 #. Clone the kuma Git repository, if you haven't already::
 
-        git clone --recursive git@github.com:mozilla/kuma.git
+        git clone --recursive https://github.com/mozilla/kuma.git
 
 #. Ensure you are in the existing or newly cloned kuma working copy::
 
@@ -108,6 +108,12 @@ It takes a few seconds to load, with this expected output::
 
 This command can be adjusted to restore from an uncompressed database, or
 directly from a ``mysqldump`` command.
+
+Then run the following command::
+
+    docker-compose exec web ./manage.py migrate
+
+This will ensure the sample database is in sync with your version of Kuma.
 
 Compile locales
 ===============
