@@ -1190,15 +1190,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'experiment-interactive-editor': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-            'js/libs/mozilla.cookiehelper.js',
-            'js/libs/mozilla.trafficcop.js',
-            'js/experiment-interactive-editor.js',
-        ),
-        'output_filename': 'build/js/experiment-interactive-editor.js',
-    },
 }
 
 PIPELINE = {
