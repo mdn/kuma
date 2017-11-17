@@ -1,3 +1,0 @@
-pipeline:
-  enabled: true
-  script: demo
