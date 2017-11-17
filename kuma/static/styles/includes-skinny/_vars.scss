@@ -133,6 +133,7 @@ $form-font-size: $body-font-size;
 $tiny-font-size: 12px;
 
 $mobile-document-title-font-size: 32px;
+$mobile-h2-font-size: 32px;
 
 /* bumps */
 $larger-font-size: $callout-font-size;
@@ -266,7 +267,7 @@ selectors
 ====================================================================== */
 $selector-icon : 'i[class^="icon-"]';
 $selector-site-font-fallback : 'html[data-ffo-opensans="false"]:not(.no-js) &';
-$selector-heading-font-fallback : 'html[data-zillaslab="false"]:not(.no-js) &';
+$selector-heading-font-fallback : 'html[data-ffo-zillaslab="false"]:not(.no-js) &';
 $selector-prism: 'pre[class*="language-"]';
 
 /*

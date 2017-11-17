@@ -5,13 +5,12 @@ Main header, wraps all components of logo, main, and secondary navigation
 #main-header {
     @include clearfix();
     position: relative;
-    z-index: 1;
+    z-index: $main-header-z;
     padding-top: $mobile-center-spacing;
     border: 5px solid $accent-light;
     border-width: 5px 0 0;
     border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
     background-color: #fff;
-    box-shadow: 0 0 9px 0 rgba(0, 0, 0, .3);
 
     > .center {
         @include clearfix();
@@ -20,7 +19,7 @@ Main header, wraps all components of logo, main, and secondary navigation
 
 .logo {
     position: relative;
-    z-index: 2; // get above nav-main
+    z-index: $logo-z;
     width: 170px;
     height: 30px;
     background: url($logo-sprite-url) 100% 0 no-repeat;

@@ -1,0 +1,42 @@
+h2 > .collapse-trigger {
+    /* over-ride button styles */
+    @include set-font-size($mobile-h2-font-size);
+    background-color: inherit;
+    border: inherit;
+    color: inherit;
+    display: block;
+    font-family: inherit;
+    font-weight: normal;
+    letter-spacing: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-decoration: inherit;
+    text-align: left;
+    width: 100%;
+
+    /* add toggle symbol */
+    &:before {
+        display: inline-block;
+        color: $link-color;
+        @include bidi-value(content, '\f0da', '\f0d9');
+        cursor: pointer;
+        font-family: FontAwesome;
+        line-height: 39px;
+        padding-right: 10px;
+        vertical-align: top;
+    }
+
+    &[aria-expanded='true']:before {
+        @include bidi-value-vendorize(transform, rotate(90deg), rotate(-90deg));
+    }
+}
+
+.collapsible > :first-child {
+    margin-top: 0;
+}
+
+.collapsible[aria-hidden='true'] {
+    display: none;
+}

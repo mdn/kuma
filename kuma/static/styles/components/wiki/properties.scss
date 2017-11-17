@@ -15,7 +15,7 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
     .text-content & {
         /* could be defined one level up but that creates duplicate classes in output */
         @include restrict-line-length();
-        width: $max-line-length;
+        width: 100%;
         display: table;
         margin: 0 0 $grid-spacing 0;
         border-style: solid;

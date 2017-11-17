@@ -377,20 +377,14 @@ These are not dynamic but serve as mixins
 
 @mixin heading-1() {
     @include set-font-size($h1-font-size);
-    font-family: $heading-font-family;
+    @include set-heading-font-family();
     line-height: 1;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
 }
 
 @mixin heading-2() {
     @include set-font-size($mobile-h2-font-size);
-    font-family: $heading-font-family;
+    @include set-heading-font-family();
     line-height: $heading-line-height;
-    #{$selector-heading-font-fallback} {
-        font-family: $heading-font-family-fallback;
-    }
 
     @media #{$mq-tablet-and-up} {
         @include set-font-size($h2-font-size);

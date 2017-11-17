@@ -1,13 +1,12 @@
 .document-head {
     position: relative;
+    z-index: $document-head-z;
     clear: both;
     background-color: #f5f9fa;
     padding: $first-content-top-padding 0 $last-content-bottom-padding 0;
 }
 
 .document-title {
-    position: relative;
-
     h1 {
         @include set-font-size($mobile-document-title-font-size);
     }
@@ -21,7 +20,7 @@
 
 .document-actions {
     position: relative;
-    z-index: 1; // raise above the h1 in the document-title
+    z-index: $document-actions-z;
     @include bidi-value(float, right, left);
     width: 100%;
     margin-bottom: ($grid-spacing / 2);
