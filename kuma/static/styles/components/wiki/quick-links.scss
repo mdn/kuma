@@ -1,7 +1,7 @@
 .quick-links-head {
     @include set-font-size(20px);
+    @include set-heading-font-family();
     display: inline-block;
-    font-family: $heading-font-family;
     margin-bottom: $grid-spacing;
     width: 100%;
 }
