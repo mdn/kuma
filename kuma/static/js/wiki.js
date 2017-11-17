@@ -213,21 +213,6 @@
         }
     });
 
-    /*
-        Track clicks on TOC links
-    */
-    $('#toc').on('click contextmenu', 'a', function(event) {
-        var $thisLink = $(this);
-        var url = $thisLink.attr('href');
-
-        var linkData = {
-            category: 'TOC Links',
-            action: $thisLink.text(),
-            label: $thisLink.attr('href')
-        };
-
-        mdn.analytics.trackLink(event, url, linkData);
-    });
 
     /*
         Track clicks on main nav links
@@ -256,19 +241,6 @@
 
         mdn.analytics.trackLink(event, url, data);
     });
-
-
-    /*
-        Close the TOC menu by default
-    */
-    (function() {
-        var $toc = $('#toc');
-
-        if ($toc.length) {
-            var $toggler = $toc.find('> .toggler');
-            $toggler.trigger('mdn:click');
-        }
-    })();
 
     /*
         Compat table table setup

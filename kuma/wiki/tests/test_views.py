@@ -193,9 +193,9 @@ class ViewTests(UserTestCase, WikiTestCase):
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
         self.assertHTMLEqual(
-            resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
-            '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
-            '</ol></li></ol>')
+            resp.content, '<ol><li>'
+            '<a href="#Head_2" rel="internal">Head 2</a>'
+            '</ol>')
 
     def test_children_view(self):
         """bug 875349"""

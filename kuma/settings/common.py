@@ -1093,6 +1093,7 @@ PIPELINE_JS = {
             'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-helpful-survey.js',
+            'js/wiki-toc.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
