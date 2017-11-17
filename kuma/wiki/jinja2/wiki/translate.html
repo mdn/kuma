@@ -84,7 +84,7 @@
             {% endif %}
 
             <div id="content-fields">
-              <article class="approved text-content">
+              <article class="approved">
                 <header>
                     <h3 class="approved-title">{{ _('Approved %(locale)s version:', locale=default_locale) }}</h3>
                     <div class="translate-buttons">
@@ -92,7 +92,7 @@
                         <button class="hide-original-btn" data-alternate-message="{{ _('Show %(locale)s', locale=default_locale) }}">{{ _('Hide %(locale)s', locale=default_locale) }}</button>
                     </div>
                 </header>
-                <div class="boxed translate-rendered">
+                <div class="boxed translate-rendered text-content">
                   {{ based_on.content_cleaned|safe }}
                 </div>
                 <div class="boxed translate-source hidden">
