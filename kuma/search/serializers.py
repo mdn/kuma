@@ -78,23 +78,6 @@ class FilterSerializer(serializers.ModelSerializer):
         return ugettext(obj.name)
 
 
-class GroupWithFiltersSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField('get_localized_name')
-    slug = serializers.ReadOnlyField()
-    order = serializers.ReadOnlyField()
-    filters = FilterSerializer(source='filters.visible_only',
-                               read_only=True,
-                               many=True)
-
-    class Meta:
-        model = models.FilterGroup
-        depth = 1
-        fields = ('name', 'slug', 'order', 'filters')
-
-    def get_localized_name(self, obj):
-        return ugettext(obj.name)
-
-
 class GroupSerializer(serializers.Serializer):
     name = serializers.ReadOnlyField()
     slug = serializers.ReadOnlyField()
