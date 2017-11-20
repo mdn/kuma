@@ -16,7 +16,7 @@ from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
                                  SPAM_CHECKS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase
 
-from ..constants import SPAM_EXEMPTED_FLAG, SPAM_TRAINING_FLAG
+from ..constants import SPAM_TRAINING_FLAG
 from ..forms import AkismetHistoricalData, RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision, RevisionIP
 from ..tests import document, normalize_html, revision
@@ -261,7 +261,6 @@ class RevisionFormViewTests(UserTestCase):
 
     def tearDown(self):
         super(RevisionFormViewTests, self).tearDown()
-        Flag.objects.filter(name=SPAM_EXEMPTED_FLAG).delete()
         Flag.objects.update_or_create(
             name=SPAM_CHECKS_FLAG,
             defaults={'everyone': None},
@@ -450,19 +449,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
             'Reference'
         )
         assert parameters['comment_content'] == expected_content
-
-    @pytest.mark.spam
-    @requests_mock.mock()
-    def test_akismet_enabled(self, mock_requests):
-        rev_form = self.setup_form(mock_requests)
-        assert rev_form.akismet_enabled()
-
-        # create the waffle flag and add the test user to it
-        flag, created = Flag.objects.get_or_create(name=SPAM_EXEMPTED_FLAG)
-        flag.users.add(self.testuser)
-
-        # now disabled because the test user is exempted from the spam check
-        assert not rev_form.akismet_enabled()
 
     @requests_mock.mock()
     @pytest.mark.spam

@@ -334,12 +334,6 @@
         "note": "Show section edit buttons to signed-in users when mousing over section headers",
         "created": "2015-10-07"
       }, {
-        "name": "wiki_spam_exempted",
-        "note": "Exempted from spam checks (deprecated)",
-        "superusers": false,
-        "created": "2015-10-28",
-        "FORCE": true
-      }, {
         "name": "spam_checks_enabled",
         "note": "Decides whether spam checks are enabled site-wide.",
         "everyone": true,
