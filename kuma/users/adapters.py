@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
 from django.utils.cache import add_never_cache_headers
 from django.utils.translation import ugettext_lazy as _
-from waffle import flag_is_active
+from waffle import switch_is_active
 
 from kuma.core.urlresolvers import reverse
 
@@ -115,7 +115,7 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         as the default.
         """
         allowed = True
-        if flag_is_active(request, 'registration_disabled'):
+        if switch_is_active('registration_disabled'):
             allowed = False
 
         # bug 1291892: Don't confuse next login with connecting accounts
