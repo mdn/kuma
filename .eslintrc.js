@@ -16,7 +16,9 @@ module.exports = {
             "unix"
         ],
         "no-cond-assign": 1,
-        "no-console": 1,
+        "no-console": [1, {
+            "allow": ["error"]
+        }],
         "no-empty": 1,
         "no-extra-semi": 1,
         "no-fallthrough": 1,
