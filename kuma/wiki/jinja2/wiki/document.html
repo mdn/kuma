@@ -118,6 +118,10 @@
   <!-- heading -->
   <div id="wiki-document-head" class="document-head">
     <div class="center">
+      {% if not is_zone_root and not waffle.flag('line_length') %}
+        <!-- crumbs -->
+        {{ crumbs }}
+      {% endif %}
       <!-- action buttons -->
       <div class="document-actions">
         {{ buttons }}
@@ -314,7 +318,7 @@
               <!-- quick links and zone subnav strip -->
               <div id="wiki-left" class="column-strip wiki-column">
 
-                {% if not is_zone_root %}
+                {% if not is_zone_root and waffle.flag('line_length') %}
                   <!-- crumbs -->
                   {{ crumbs }}
                 {% endif %}
