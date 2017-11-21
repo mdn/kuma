@@ -407,15 +407,6 @@
         "note": "See https://github.com/mozilla/kuma/pull/3331",
         "created": "2015-07-09"
       }, {
-        "name": "newsletter",
-        "active": true,
-        "note": "Show newsletter signup.",
-        "created": "2016-11-02"
-      }, {
-        "name": "newsletter_article",
-        "active": true,
-        "note": "Show newsletter sign-up in article footers, also requires `newsletter` to be active.",
-        "created": "2016-11-02"
       },  {
         "name": "registration_disabled",
         "active": false,
