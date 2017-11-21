@@ -1268,9 +1268,9 @@ IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
 # Email
 EMAIL_BACKEND = config(
     'EMAIL_BACKEND',
-    default='django.core.mail.backends.smtp.EmailBackend'
+    default='django.core.mail.backends.filebased.EmailBackend'
 )
-EMAIL_FILE_PATH = '/tmp/kuma-messages'
+EMAIL_FILE_PATH = '/app/tmp/emails'
 
 BROKER_URL = config('BROKER_URL',
                     default='amqp://kuma:kuma@developer-local:5672/kuma')
