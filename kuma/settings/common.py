@@ -1713,6 +1713,9 @@ NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
 # Tell django-taggit to use case-insensitive search for existing tags
 TAGGIT_CASE_INSENSITIVE = True
 
+# Ad Banner Settings
+FOUNDATION_CALLOUT = config('FOUNDATION_CALLOUT', False, cast=bool)
+
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
 #  configuration. The 'id' should be a key in PIPELINE_JS, that loads

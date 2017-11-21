@@ -416,16 +416,11 @@
         "active": true,
         "note": "Show newsletter sign-up in article footers, also requires `newsletter` to be active.",
         "created": "2016-11-02"
-      }, {
-        "name": "foundation_callout",
-        "note": "Show foundation donate homepage tile?",
+      },  {
+        "name": "registration_disabled",
         "active": false,
-        "created": "2016-12-1"
-    },  {
-      "name": "registration_disabled",
-      "active": false,
-      "created": "2015-02-25"
-    }
+        "created": "2015-02-25"
+      }
     ],
     "search.filtergroup": [
       {
