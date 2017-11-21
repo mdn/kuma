@@ -22,6 +22,7 @@ WORKDIR /
 # install the Node.js dependencies, but only the versions
 # specified in "npm-shrinkwrap.json" (if it exists)
 COPY kumascript/package.json kumascript/npm-shrinkwrap.json /
+RUN npm config set python /usr/bin/python2.7
 RUN npm install
 # update any top-level npm packages listed in package.json,
 # as allowed by each package's given "semver".
