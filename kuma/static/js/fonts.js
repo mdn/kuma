@@ -1,14 +1,9 @@
 (function(win, $) {
-    /*
-        Font Loading
-    */
-
-    /*
-        Note that sessionStorage is checked in the <head> to avoid font flicker.
-
-        mdn.fonts is defined in font-check.js
-    */
-
+    /**
+     * Font Loading
+     * Note that sessionStorage is checked in the <head> to avoid font flicker.
+     * mdn.fonts is defined in font-check.js
+     */
     var $html = $('html');
 
     // time to wait for each font varient to load
@@ -40,7 +35,9 @@
             // remember that this font family has been loaded (font-check.js)
             try {
                 sessionStorage.setItem(fontObj.name, true);
-            } catch(e) {}
+            } catch(e) {
+                console.error('Fonts.js :: Error while reading from sessionStorage', e);
+            }
         });
     }
 
