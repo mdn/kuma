@@ -139,7 +139,7 @@
   {% if toc_html and waffle.flag('line_length') %}
   <div id="toc" class="toc">
     <div class="center">
-      <div class="toc-head">Jump to:</div>
+      <div class="toc-head">{{ _("Jump to:") }}</div>
         <ol class="toc-links">
           {{ toc_html|safe }}
         </ol>
