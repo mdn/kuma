@@ -355,12 +355,6 @@
         "superusers": false,
         "created": "2016-04-20"
       }, {
-        "name": "wiki_spam_training",
-        "note": "Do not block page changes when detected as spam",
-        "everyone": false,
-        "superusers": false,
-        "created": "2016-04-20"
-      }, {
         "name": "sg_task_completion",
         "note": "Show Survey Gizmo link to task completion survey.",
         "superusers": false,
@@ -420,6 +414,11 @@
         "name": "registration_disabled",
         "active": false,
         "created": "2015-02-25"
+      }, {
+        "name": "wiki_spam_training",
+        "note": "Do not block page changes when detected as spam",
+        "active": false,
+        "created": "2016-04-20"
       }
     ],
     "search.filtergroup": [

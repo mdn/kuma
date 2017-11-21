@@ -33,6 +33,8 @@ Switches
 * ``wiki_force_immediate_rendering`` - Force wiki pages to render immediately
   in the same http request in which they are saved (not in a background
   process).
+* ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
+    due to detected spam or Akismet errors.
 
 
 Flags
@@ -53,8 +55,6 @@ other advanced criteria.
 * ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.
 * ``spam_checks_enabled`` - Toggle spam checks site wide.
 * ``spam_submissions_enabled`` - Toggle Akismet spam/spam submission ability.
-* ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
-  due to detected spam or Akismet errors.
 
 Constance features
 ==================
