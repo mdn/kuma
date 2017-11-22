@@ -157,7 +157,7 @@
                                 firstLink.focus();
                             }
                             catch(e){
-                                console.log('Menu focus exception! ', e);
+                                console.error('Menu focus exception! ', e);
                             }
                         }
                     }
@@ -165,12 +165,6 @@
                 }, $submenu.settings.showDelay);
             });
         });
-
-        /* Gets the open parent (un-used)
-        function getOpenParent() {
-            return $.fn.mozMenu.$openMenu.submenu;
-        }
-        */
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
