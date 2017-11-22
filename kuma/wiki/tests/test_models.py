@@ -6,7 +6,6 @@ import mock
 import pytest
 from constance import config
 from constance.test import override_config
-from waffle.models import Switch
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -792,31 +791,15 @@ class DeferredRenderingTests(UserTestCase):
                                              mock_kumascript_get):
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
-        switch = Switch.objects.create(name='wiki_force_immediate_rendering')
-
         # When defer_rendering == False, the rendering should be immediate.
-        switch.active = False
-        switch.save()
         self.d1.rendered_html = ''
         self.d1.defer_rendering = False
         self.d1.save()
         result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
         ok_(not mock_render_document_delay.called)
 
-        # When defer_rendering == True but the waffle switch forces immediate,
-        # the rendering should be immediate.
-        switch.active = True
-        switch.save()
-        self.d1.rendered_html = ''
-        self.d1.defer_rendering = True
-        self.d1.save()
-        result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
-        ok_(not mock_render_document_delay.called)
-
         # When defer_rendering == True, the rendering should be deferred and an
         # exception raised if the content is blank.
-        switch.active = False
-        switch.save()
         self.d1.rendered_html = ''
         self.d1.defer_rendering = True
         self.d1.save()

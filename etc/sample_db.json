@@ -363,11 +363,6 @@
     ],
     "waffle.switch": [
       {
-        "name": "wiki_force_immediate_rendering",
-        "active": false,
-        "note": "",
-        "created": "2014-01-14"
-      }, {
         "name": "welcome_email",
         "active": true,
         "note": "",
