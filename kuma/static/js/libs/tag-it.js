@@ -48,7 +48,7 @@
             //
             // The easiest way to use singleField is to just instantiate tag-it
             // on an INPUT element, in which case singleField is automatically
-            // set to true, and singleFieldNode is set to that element. This 
+            // set to true, and singleFieldNode is set to that element. This
             // way, you don't need to fiddle with these options.
             singleField: false,
 
@@ -60,7 +60,7 @@
             // delimited by singleFieldDelimiter.
             //
             // If this is not set, we create an input node for it,
-            // with the name given in settings.fieldName, 
+            // with the name given in settings.fieldName,
             // ignoring settings.itemName.
             singleFieldNode: null,
 
@@ -153,7 +153,7 @@
             this._tagInput
                 .keydown(function(event) {
                     // Backspace is not detected within a keypress, so it must use keydown.
-                    if (event.which == $.ui.keyCode.BACKSPACE && that._tagInput.val() === '') {
+                    if (event.which === $.ui.keyCode.BACKSPACE && that._tagInput.val() === '') {
                         var tag = that._lastTag();
                         if (!that.options.removeConfirmation || tag.hasClass('remove')) {
                             // When backspace is pressed, the last tag is deleted.
@@ -169,20 +169,20 @@
                     // except when there is an open quote or if setting allowSpaces = true.
                     // Tab will also create a tag, unless the tag input is empty, in which case it isn't caught.
                     if (
-                        event.which == $.ui.keyCode.COMMA ||
-                        event.which == $.ui.keyCode.ENTER ||
+                        event.which === $.ui.keyCode.COMMA ||
+                        event.which === $.ui.keyCode.ENTER ||
                         (
-                            event.which == $.ui.keyCode.TAB &&
+                            event.which === $.ui.keyCode.TAB &&
                             that._tagInput.val() !== ''
                         ) ||
                         (
-                            event.which == $.ui.keyCode.SPACE &&
+                            event.which === $.ui.keyCode.SPACE &&
                             that.options.allowSpaces !== true &&
                             (
-                                $.trim(that._tagInput.val()).replace( /^s*/, '' ).charAt(0) != '"' ||
+                                $.trim(that._tagInput.val()).replace( /^s*/, '' ).charAt(0) !== '"' ||
                                 (
-                                    $.trim(that._tagInput.val()).charAt(0) == '"' &&
-                                    $.trim(that._tagInput.val()).charAt($.trim(that._tagInput.val()).length - 1) == '"' &&
+                                    $.trim(that._tagInput.val()).charAt(0) === '"' &&
+                                    $.trim(that._tagInput.val()).charAt($.trim(that._tagInput.val()).length - 1) === '"' &&
                                     $.trim(that._tagInput.val()).length - 1 !== 0
                                 )
                             )
@@ -195,11 +195,11 @@
                         // So let's ensure that it closes.
                         that._tagInput.autocomplete('close');
                     }
-                }).blur(function(e){
+                }).blur(function(){
                     // Create a tag when the element loses focus (unless it's empty).
                     that.createTag(that._cleanedInput());
                 });
-                
+
 
             // Autocomplete.
             if (this.options.availableTags || this.options.tagSource) {
@@ -257,7 +257,7 @@
         _subtractArray: function(a1, a2) {
             var result = [];
             for (var i = 0; i < a1.length; i++) {
-                if ($.inArray(a1[i], a2) == -1) {
+                if ($.inArray(a1[i], a2) === -1) {
                     result.push(a1[i]);
                 }
             }
@@ -277,7 +277,7 @@
             var that = this;
             var isNew = true;
             this.tagList.children('.tagit-choice').each(function(i) {
-                if (that._formatStr(value) == that._formatStr(that.tagLabel(this))) {
+                if (that._formatStr(value) === that._formatStr(that.tagLabel(this))) {
                     isNew = false;
                     return false;
                 }
@@ -293,7 +293,7 @@
         },
 
         createTag: function(value, additionalClass) {
-            that = this;
+            var that = this;
             // Automatically trims the value of leading and trailing whitespace.
             value = $.trim(value);
 
@@ -315,7 +315,7 @@
             var removeTag = $('<a><span class="text-icon">\xd7</span></a>') // \xd7 is an X
                 .addClass('close')
                 .append(removeTagIcon)
-                .click(function(e) {
+                .click(function() {
                     // Removes a tag when the little 'x' is clicked.
                     that.removeTag(tag);
                 });
@@ -339,7 +339,7 @@
             // insert tag
             this._tagInput.parent().before(tag);
         },
-        
+
         removeTag: function(tag, animate) {
             if (typeof animate === 'undefined') { animate = true; }
 
@@ -351,7 +351,7 @@
                 var tags = this.assignedTags();
                 var removedTagLabel = this.tagLabel(tag);
                 tags = $.grep(tags, function(el){
-                    return el != removedTagLabel;
+                    return el !== removedTagLabel;
                 });
                 this._updateSingleTagsField(tags);
             }
@@ -376,5 +376,3 @@
     });
 
 })(jQuery);
-
-
