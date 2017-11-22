@@ -67,12 +67,8 @@
   <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
-  {% if doc_abs_url == '/en-US/docs/Experiment:InteractiveEditor/Array.prototype.reduce()' %}
-    <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/lib/codemirror.js" as="script" />
-    <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/mode/javascript/javascript.js" as="script" />
-    <!-- At the time of writing the below only works in Chrome -->
-    <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/pages/js/array-reduce.html" as="document" />
-  {% endif %}
+  <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" as="script" />
+  <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/editor-js.js" as="script" />
 
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) }}">
   <link rel="canonical" href="{{ canonical }}" >
