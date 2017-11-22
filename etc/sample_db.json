@@ -330,10 +330,6 @@
         "staff": true,
         "created": "2015-07-20"
       }, {
-        "name": "compat_api",
-        "note": "Groups with the rights: Beta Testers\nVolunteers with the rights: SebastianZ and SphinxKnight",
-        "created": "2015-10-01"
-      }, {
         "name": "section_edit",
         "note": "Show section edit buttons to signed-in users when mousing over section headers",
         "created": "2015-10-07"
