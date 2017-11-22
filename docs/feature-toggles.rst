@@ -29,7 +29,6 @@ Switches
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
-* ``wiki_error_on_delete`` - Throw an error if a user tries to delete a page.
 * ``wiki_force_immediate_rendering`` - Force wiki pages to render immediately
   in the same http request in which they are saved (not in a background
   process).

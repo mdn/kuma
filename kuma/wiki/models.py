@@ -925,33 +925,23 @@ class Document(NotificationsMixin, models.Model):
         self.fill_last_modified_cache()
 
     def delete(self, *args, **kwargs):
-        if waffle.switch_is_active('wiki_error_on_delete'):
-            # bug 863692: Temporary while we investigate disappearing pages.
-            raise Exception("Attempt to delete document %s: %s" %
-                            (self.id, self.title))
-        else:
-            if self.is_redirect or 'purge' in kwargs:
-                if 'purge' in kwargs:
-                    kwargs.pop('purge')
-                return super(Document, self).delete(*args, **kwargs)
-            signals.pre_delete.send(sender=self.__class__,
-                                    instance=self)
-            if not self.deleted:
-                Document.objects.filter(pk=self.pk).update(deleted=True)
-                memcache.delete(self.last_modified_cache_key)
+        if self.is_redirect or 'purge' in kwargs:
+            if 'purge' in kwargs:
+                kwargs.pop('purge')
+            return super(Document, self).delete(*args, **kwargs)
+        signals.pre_delete.send(sender=self.__class__,
+                                instance=self)
+        if not self.deleted:
+            Document.objects.filter(pk=self.pk).update(deleted=True)
+            memcache.delete(self.last_modified_cache_key)
 
-            signals.post_delete.send(sender=self.__class__, instance=self)
+        signals.post_delete.send(sender=self.__class__, instance=self)
 
     def purge(self):
-        if waffle.switch_is_active('wiki_error_on_delete'):
-            # bug 863692: Temporary while we investigate disappearing pages.
-            raise Exception("Attempt to purge document %s: %s" %
+        if not self.deleted:
+            raise Exception("Attempt tp purge non-deleted document %s: %s" %
                             (self.id, self.title))
-        else:
-            if not self.deleted:
-                raise Exception("Attempt tp purge non-deleted document %s: %s" %
-                                (self.id, self.title))
-            self.delete(purge=True)
+        self.delete(purge=True)
 
     def restore(self):
         """

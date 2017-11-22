@@ -388,11 +388,6 @@
     ],
     "waffle.switch": [
       {
-        "name": "wiki_error_on_delete",
-        "active": false,
-        "note": "",
-        "created": "2014-01-14"
-      }, {
         "name": "wiki_force_immediate_rendering",
         "active": false,
         "note": "",
