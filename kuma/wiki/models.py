@@ -323,7 +323,8 @@ class Document(NotificationsMixin, models.Model):
         sections_to_hide = ('Quick_Links', 'Subnav')
         doc = parse_content(html)
         for sid in sections_to_hide:
-            doc = doc.replaceSection(sid, '<!-- -->')
+            doc = doc.replaceSection(sid, '')
+            doc = doc.removeSection(sid)
         doc.injectSectionIDs()
         doc.annotateLinks(base_url=settings.SITE_URL)
         return doc.serialize()

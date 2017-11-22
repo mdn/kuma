@@ -360,10 +360,6 @@ def test_get_body_html(doc_with_sections):
     expected = """
     <h2 id="First">First</h2>
     <p>This is a document</p>
-    <section class="Quick_Links" id="Quick_Links">
-      <!-- -->
-    </section>
-    <!-- -->
     <h2 id="Second">Second</h2>
     <p>Another section, with an
       <a href="/en-US/docs/Root">existing link</a> and a
