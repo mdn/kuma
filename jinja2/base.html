@@ -18,11 +18,7 @@
 
   {% block site_css %}
 
-    {% if waffle.flag('line_length') %}
-          {% stylesheet 'mdn' %}
-      {% else %}
-          {% stylesheet 'mdn-skinny' %}
-      {% endif %}
+    {% stylesheet 'mdn' %}
 
     {% for style in styles %}
       {% stylesheet style %}

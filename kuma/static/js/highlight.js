@@ -10,12 +10,7 @@
     }
 
     var $articleSubHeads;
-    // call on aritcle body with targets
-    if(!win.waffle || !win.waffle.flag_is_active('line_length')) {
-        $articleSubHeads = $('#wikiArticle h2');
-    } else {
-        $articleSubHeads = $('#wikiArticle h3, #wikiArticle h5');
-    }
+    $articleSubHeads = $('#wikiArticle h3, #wikiArticle h5');
     highlight($articleSubHeads);
 
 })(jQuery, window);
