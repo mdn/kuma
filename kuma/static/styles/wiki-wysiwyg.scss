@@ -19,6 +19,10 @@ body {
     @include set-site-font-family();
 }
 
+body > h2 {
+    @include heading-2-section(); /* give headings section styling */
+    @include set-font-size($h2-font-size); /* bug 1415969 */
+}
 
 /* seo and callout plugin styles */
 .seoSummary {
