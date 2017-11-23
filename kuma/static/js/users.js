@@ -4,8 +4,6 @@
 (function ($) {
     'use strict';
 
-    var DEBOUNCE_DELAY = 25;
-
     // Translate multiple rapid calls to a function into a single call after a
     // short delay. Also serves to allow UI updates to complete due to yielding
     // the event loop.
@@ -15,15 +13,23 @@
     function debounce(func, wait, immediate) {
         var timeout;
         return function() {
-            var context = this, args = arguments;
+            var context = this;
+            var args = arguments;
             var later = function() {
                 timeout = null;
-                if (!immediate) func.apply(context, args);
+                if (!immediate) {
+                    func.apply(context, args);
+                }
             };
             var callNow = immediate && !timeout;
+
             clearTimeout(timeout);
+
             timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
+
+            if (callNow) {
+                func.apply(context, args);
+            }
         };
     }
 
@@ -31,15 +37,19 @@
     var rebuildExpertiseTaglist = debounce(function () {
         var taglist = $('#tags-expertise');
         var interests = $('#id_user-interests');
-        var i_tags = interests.val().split(",");
+        var iTags = interests.val().split(',');
 
         // Completely rebuild the list of expertise tags. Seems wasteful, but
         // the number of elements should be relatively tiny vs the code to do
         // it more surgically.
         taglist.empty();
-        $.each(i_tags, function (idx, tag) {
+
+        $.each(iTags, function (idx, tag) {
             tag = $.trim(tag);
-            if(window.INTEREST_SUGGESTIONS.indexOf(tag) === -1) return;
+
+            if(window.INTEREST_SUGGESTIONS.indexOf(tag) === -1) {
+                return;
+            }
 
             taglist.append('<li class="tag-expert">' +
                 '<label for="expert-' + idx + '">' +
@@ -63,7 +73,6 @@
 
     // Update the checked tags in expertise tag list from the text field
     var updateTaglistFromField = debounce(function () {
-        var taglist = $('#tags-expertise');
         var expertise = $('#id_user-expertise');
         var eTags = expertise.val().split(',');
 
