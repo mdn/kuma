@@ -52,6 +52,6 @@
 
     li {
         display: inline;
-        @include bidi-style(margin-right, 10px, margin-left, 0);
+        @include bidi(((margin-right, 10px, margin-left, 0),));
     }
 }

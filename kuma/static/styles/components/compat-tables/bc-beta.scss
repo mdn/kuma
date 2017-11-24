@@ -1,7 +1,7 @@
 .bc-beta-menu {
     position: relative;
     display: inline-block;
-    @include bidi-value(float, right, left);
+    @include bidi(((float, right, left),));
 
     ul {
         padding-left: $grid-spacing;

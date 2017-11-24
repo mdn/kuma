@@ -31,7 +31,7 @@
     }
 
     li li {
-        @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
+        @include bidi(((padding-left, $grid-spacing, padding-right, 0),));
         padding-bottom: $grid-spacing / 2;
 
         &:first-child {
@@ -49,12 +49,12 @@
         }
 
         > a {
-            @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
+            @include bidi(((padding-left, $grid-spacing, padding-right, 0),));
             color: $text-color;
             display: inline-block;
 
             #{$selector-icon} {
-                @include bidi-style(left, 0, right, auto);
+                @include bidi(((left, 0, right, auto),));
                 @include set-font-size($body-font-size);
                 color: $link-color;
                 position: absolute;
@@ -79,14 +79,18 @@
 
     /* sidebar icons - deprecated, obsolete, experiemental, etc */
     .sidebar-icon {
-        @include bidi-value(margin-left, $grid-spacing * -1, 5px);
-        @include bidi-value(margin-right, 5px, $grid-spacing * -1);
+        @include bidi((
+            (margin-left, $grid-spacing * -1, 5px),
+            (margin-right, 5px, $grid-spacing * -1),
+        ));
         opacity: .3;
 
         /* only the first sidebar-icon gets pulled into the gutter */
         & + .sidebar-icon {
-            @include bidi-value(margin-left, 0, 5px);
-            @include bidi-value(margin-right, 5px, 0);
+            @include bidi((
+                (margin-left, 0, 5px),
+                (margin-right, 5px, 0),
+            ));
         }
 
         #{$selector-icon} {

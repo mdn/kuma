@@ -199,15 +199,19 @@ dl {
 /* style for next and previous pages in tutorial */
 
 .previousPage {
-    @include bidi-value(float, left, right);
-    @include bidi-style(margin-right, ($grid-spacing), margin-left, 0);
+    @include bidi((
+        (float, left, right),
+        (margin-right, ($grid-spacing), margin-left, 0)
+    ));
     margin-bottom: $grid-spacing;
 }
 
 
 .nextPage {
-    @include bidi-value(float, right, left);
-    @include bidi-style(margin-left, ($grid-spacing), margin-right, 0);
+    @include bidi((
+        (float, right, left),
+        (margin-left, ($grid-spacing), margin-right, 0)
+    ));
     margin-top: $grid-spacing;
 }
 
@@ -239,9 +243,11 @@ a.liveSample:focus {
 .standardSidebar {
     background: $light-background-color;
     padding: $grid-spacing 15px;
-    @include bidi-value(margin, 0 0 15px 15px, 0 15px 15px 0);
+    @include bidi((
+        (margin, 0 0 15px 15px, 0 15px 15px 0),
+        (float, right, left)
+    ));
     padding: 5px 15px;
-    @include bidi-value(float, right, left);
     background: #eee;
     font-size: .85em;
     position: relative;

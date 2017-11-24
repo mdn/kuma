@@ -11,7 +11,7 @@ ul.option-list {
     list-style-type: none;
     max-width: 100%;
     overflow: hidden;
-    @include bidi-style(padding-left, ($grid-spacing), padding-right, 0);
+    @include bidi(((padding-left, ($grid-spacing), padding-right, 0),));
 
     li {
         @include clearfix();
@@ -19,9 +19,11 @@ ul.option-list {
 }
 
 .option-list-options {
-    @include bidi-value(float, right, left);
-    @include bidi-style(margin-left, $grid-spacing, margin-right, $grid-spacing );
-    @include bidi-value(text-align, right, left);
+    @include bidi((
+        (float, right, left),
+        (margin-left, $grid-spacing, margin-right, $grid-spacing ),
+        (text-align, right, left),
+    ));
 }
 
 /* options drop beneath text on smaller screens */

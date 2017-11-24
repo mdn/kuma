@@ -9,11 +9,13 @@
 .user-buttons {
     position: absolute;
     top: $grid-spacing;
-    @include bidi-style(right, $grid-spacing, left, auto);
+    @include bidi(((right, $grid-spacing, left, auto),));
 
     & > a {
-        @include bidi-value(float, left, right);
-        @include bidi-value(margin, 0 5px 0 0, 0 0 0 5px);
+        @include bidi((
+            (float, left, right),
+            (margin, 0 5px 0 0, 0 0 0 5px),
+        ));
     }
 }
 
@@ -21,7 +23,7 @@
     .user-buttons {
         position: relative;
         top: auto;
-        @include bidi-style(right, auto, left, auto);
+        @include bidi(((right, auto, left, auto),));
         margin: 0 0 $grid-spacing 0;
 
         a {
@@ -37,17 +39,17 @@
 
     li {
         display: inline;
-        @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+        @include bidi(((margin-right, ($grid-spacing / 2), margin-left, 0),));
 
         &:before {
             color: $user-head-secondary-text-color;
             content: '/';
-            @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+            @include bidi(((margin-right, ($grid-spacing / 2), margin-left, 0),));
         }
 
         &:first-child:before {
             content: '';
-            @include bidi-style(margin-right, 0, margin-left, 0);
+            @include bidi(((margin-right, 0, margin-left, 0),));
         }
     }
 }

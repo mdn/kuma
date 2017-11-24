@@ -13,7 +13,7 @@
 
     em {
         font-style: normal;
-        @include bidi-style(margin-left, -3px, margin-right, 0);
+        @include bidi(((margin-left, -3px, margin-right, 0),));
         text-transform: none;
     }
 }
@@ -21,7 +21,7 @@
 .document-actions {
     position: relative;
     z-index: $document-actions-z;
-    @include bidi-value(float, right, left);
+    @include bidi(((float, right, left),));
     width: 100%;
     margin-bottom: ($grid-spacing / 2);
 }
@@ -35,7 +35,7 @@
 
     .document-actions {
         width: auto;
-        @include bidi-style(margin-left, $grid-spacing, margin-right, 0);
+        @include bidi(((margin-left, $grid-spacing, margin-right, 0),));
         margin-bottom: 0;
     }
 }

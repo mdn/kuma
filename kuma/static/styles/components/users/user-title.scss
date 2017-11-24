@@ -9,7 +9,7 @@
 }
 
 .user-title-profile {
-    @include bidi-value(float, right, left);
+    @include bidi(((float, right, left),));
     @include set-font-size($small-bump-font-size);
 }
 

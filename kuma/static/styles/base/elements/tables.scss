@@ -12,5 +12,5 @@ caption {
 
 caption,
 th {
-    @include bidi-value(text-align, left, right);
+    @include bidi(((text-align, left, right),));
 }

@@ -20,7 +20,7 @@ Full size form on home and search pages
         width: 100%;
         margin: 0 auto;
         padding: ($grid-spacing / 2);
-        @include bidi-style(padding-left, 48px, padding-right, 0);
+        @include bidi(((padding-left, 48px, padding-right, 0),));
         background: #fff;
         @include set-larger-font-size();
         @include set-placeholder-style(color, $text-color);
@@ -30,7 +30,7 @@ Full size form on home and search pages
         position: absolute;
         top: 0;
         bottom: 0;
-        @include bidi-style(left, 0, right, auto);
+        @include bidi(((left, 0, right, auto),));
         width: 48px;
         display: flex;
         align-items: center;
@@ -41,7 +41,7 @@ Full size form on home and search pages
             position: absolute;
             top: ($grid-spacing / 2);
             bottom: ($grid-spacing / 2);
-            @include bidi-style(left, 40px, right, auto);
+            @include bidi(((left, 40px, right, auto),));
             display: block;
             border-left: 1px solid $form-border-color;
         }
@@ -59,7 +59,7 @@ Full size form on home and search pages
         > input#home-q,
         > input#search-q {
             padding: $grid-spacing;
-            @include bidi-style(padding-left, 70px, padding-right, 0);
+            @include bidi(((padding-left, 70px, padding-right, 0),));
         }
 
         .search-icon {
@@ -68,7 +68,7 @@ Full size form on home and search pages
             &:after {
                 top: $grid-spacing;
                 bottom: $grid-spacing;
-                @include bidi-style(left, 54px, right, auto);
+                @include bidi(((left, 54px, right, auto),));
             }
         }
     }

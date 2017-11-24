@@ -4,7 +4,7 @@ edit, language, settings, save, and cancel buttons
 
 .page-buttons,
 #page-buttons {
-    @include bidi-value(float, right, left);
+    @include bidi(((float, right, left),));
     padding: 5px 0;
     width: auto;
 
@@ -12,7 +12,7 @@ edit, language, settings, save, and cancel buttons
         margin-left: ($grid-spacing / 2);
         display: inline-block;
         position: relative;
-        @include bidi-value(text-align, left, right);
+        @include bidi(((text-align, left, right),));
     }
 }
 
@@ -61,7 +61,7 @@ edit, language, settings, save, and cancel buttons
 #translate-document,
 .move-page {
     .page-buttons {
-        @include bidi-value(text-align, right, left);
+        @include bidi(((text-align, right, left),));
         float: none;
         padding: 0;
         margin-bottom: -10px;

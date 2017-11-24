@@ -9,6 +9,8 @@
 }
 
 label #{$selector-icon}:first-child {
-    @include bidi-value(margin-left, 0, $icon-margin);
-    @include bidi-value(margin-right, $icon-margin, 0);
+    @include bidi((
+        (margin-left, 0, $icon-margin),
+        (margin-right, $icon-margin, 0),
+    ));
 }

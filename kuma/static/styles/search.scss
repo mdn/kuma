@@ -15,7 +15,7 @@ main {
 /* block mentioning the number of results returned */
 h3 #{$selector-icon},
 fieldset #{$selector-icon} {
-    @include bidi-style(margin-right, ($grid-spacing * .75), margin-left, 0);
+    @include bidi(((margin-right, ($grid-spacing * .75), margin-left, 0),));
 }
 
 .search-results-explanation {
@@ -152,7 +152,7 @@ fieldset #{$selector-icon} {
         }
 
         .filter-count {
-            @include bidi-value(float, right, left);
+            @include bidi(((float, right, left),));
         }
     }
 }

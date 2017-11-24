@@ -89,7 +89,7 @@ Used to style the dashboard widgets in the dashboard apps
     #page-buttons {
         li {
             display: inline-block;
-            @include bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+            @include bidi(((margin-right, $content-horizontal-spacing, margin-left, 0),));
             margin-top: $content-vertical-spacing;
         }
     }

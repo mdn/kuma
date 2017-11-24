@@ -3,7 +3,7 @@
     position: absolute;
     z-index: $submenu-z;
     top: 100%;
-    @include bidi-style(left, 0, right, auto);
+    @include bidi(((left, 0, right, auto),));
     width: 250px; // fallback, IE & Edge
     padding: 15px;
     border-top: 5px solid $grey-light;
@@ -18,7 +18,7 @@
         box-sizing: border-box;
         display: inline-block;
         vertical-align: text-top;
-        @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+        @include bidi(((padding-right, $grid-spacing, padding-left, 0),));
         width: 250px; // fallback, IE & Edge
     }
 
@@ -32,7 +32,7 @@
             @include vendorize-value(width, max-content);
 
             + .submenu-column {
-                @include bidi-style(padding-left, ($grid-spacing * 2), padding-right, $grid-spacing);
+                @include bidi(((padding-left, ($grid-spacing * 2), padding-right, $grid-spacing),));
             }
         }
     }
@@ -43,7 +43,7 @@
     }
 
     #{$selector-icon} {
-        @include bidi-style(margin-left, 5px, margin-right, 0);
+        @include bidi(((margin-left, 5px, margin-right, 0),));
     }
 
     a {
@@ -54,13 +54,17 @@
 
     #nav-sec & {
         border-top-color: $bg-dark;
-        @include bidi-style(left, auto, right, auto);
-        @include bidi-style(right, 0, left, auto);
+        @include bidi((
+            (left, auto, right, auto),
+            (right, 0, left, auto),
+        ));
     }
 
     .page-buttons & {
-        @include bidi-style(left, auto, right, auto);
-        @include bidi-style(right, 0, left, auto);
+        @include bidi((
+            (left, auto, right, auto),
+            (right, 0, left, auto),
+        ));
         border-top: 5px solid $form-border-color;
     }
 }
@@ -68,7 +72,7 @@
 .submenu-close {
     position: absolute;
     top: 0;
-    @include bidi-style(right, 0, left, auto);
+    @include bidi(((right, 0, left, auto),));
     z-index: 1; /* raise above links it might over-lap */
 }
 
@@ -94,7 +98,7 @@ everything else */
                 width: 100%;
 
                 + .submenu-column {
-                    @include bidi-style(padding-left, 0, padding-right, 0);
+                    @include bidi(((padding-left, 0, padding-right, 0),));
                 }
             }
         }

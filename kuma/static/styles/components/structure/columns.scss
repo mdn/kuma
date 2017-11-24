@@ -51,28 +51,28 @@ tablet & up - change to columns
 
         #{$grid-column-selector} {
             margin-right: $grid-margin;
-            @include bidi-value(float, left, right);
+            @include bidi(((float, left, right),));
             min-height: 1px;
 
             &:first-child {
-                @include bidi-value(margin-right, $grid-margin, 0);
+                @include bidi(((margin-right, $grid-margin, 0),));
             }
 
             &:last-child {
-                @include bidi-value(margin-right, 0, $grid-margin);
+                @include bidi(((margin-right, 0, $grid-margin),));
             }
         }
 
         &.column-container-reverse {
             #{$grid-column-selector} {
-                @include bidi-value(float, right, left);
+                @include bidi(((float, right, left),));
 
                 &:first-child {
-                    @include bidi-value(margin-right, 0, $grid-margin);
+                    @include bidi(((margin-right, 0, $grid-margin),));
                 }
 
                 &:last-child {
-                    @include bidi-value(margin-right, $grid-margin, 0);
+                    @include bidi(((margin-right, $grid-margin, 0),));
                 }
             }
         }

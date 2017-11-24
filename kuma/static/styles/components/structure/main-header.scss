@@ -39,8 +39,10 @@ Main header, wraps all components of logo, main, and secondary navigation
         position: relative;
         top: $grid-spacing;
         height: 48px;
-        @include bidi-value(float, left, right);
-        @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+        @include bidi((
+            (float, left, right),
+            (margin-right, $grid-spacing, margin-left, 0)
+        ));
     }
 }
 

@@ -117,8 +117,10 @@ input[type='button'] {
     }
 
     &:not(.only-icon) #{$selector-icon} {
-        @include bidi-value(float, left, right);
-        @include bidi-style(margin-right, $icon-margin, margin-left, 0);
+        @include bidi((
+            (float, left, right),
+            (margin-right, $icon-margin, margin-left, 0),
+        ));
     }
 }
 

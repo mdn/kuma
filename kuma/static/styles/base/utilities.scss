@@ -117,16 +117,20 @@ Utility classes
 }
 
 .media-side {
-    @include bidi-value(float, left, right);
-    @include bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
+    @include bidi((
+        (float, left, right),
+        (margin-right, ($grid-spacing / 2), margin-left, 0),
+    ));
 
     img {
         display: block;
     }
 
     .media-reverse & {
-        @include bidi-value(float, right, left);
-        @include bidi-style(margin-left, ($grid-spacing / 2), margin-right, 0);
+        @include bidi((
+            (float, right, left),
+            (margin-left, ($grid-spacing / 2), margin-right, 0),
+        ));
     }
 }
 

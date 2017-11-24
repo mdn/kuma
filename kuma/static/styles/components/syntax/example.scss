@@ -14,7 +14,7 @@ $bg-bad: mix($negative, #fff, 5%);
             line-height: 1;
             position: absolute;
             bottom: 2px;
-            @include bidi-style(right, 2px, left, auto);
+            @include bidi(((right, 2px, left, auto),));
             z-index: 10;
             speak: none;
         }

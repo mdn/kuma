@@ -19,17 +19,19 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
         display: table;
         margin: 0 0 $grid-spacing 0;
         border-style: solid;
-        @include bidi-value(clear, left, right);
+        @include bidi(((clear, left, right),));
         background: $code-block-background-alt-color;
 
         /* need extra level of specificity to override default text-content styles */
         border-collapse: separate;
-        @include bidi-value(padding, $properties-spacing $properties-indent $properties-spacing $properties-spacing, $properties-spacing $properties-spacing $properties-spacing $properties-indent);
-        @include bidi-value(border-width, 0 0 0 $border-width, 0 $border-width 0 0);
+        @include bidi((
+            (padding, $properties-spacing $properties-indent $properties-spacing $properties-spacing, $properties-spacing $properties-spacing $properties-spacing $properties-indent),
+            (border-width, 0 0 0 $border-width, 0 $border-width 0 0),
+        ));
         border-color: $code-block-border-color;
 
         @media #{$mq-small-mobile-and-down} {
-            @include bidi-value(padding, $properties-item-spacing, $properties-item-spacing);
+            @include bidi(((padding, $properties-item-spacing, $properties-item-spacing),));
         }
     }
 
@@ -42,7 +44,7 @@ $properties-indent: ($grid-spacing * 2) - $properties-item-spacing;
     li dfn {
         display: table-cell;
         width: 30%;
-        @include bidi-value(padding, $properties-item-spacing ($properties-item-spacing * 2) $properties-item-spacing $properties-item-spacing, $properties-item-spacing $properties-item-spacing $properties-item-spacing ($properties-item-spacing* 2 ));
+        @include bidi(((padding, $properties-item-spacing ($properties-item-spacing * 2) $properties-item-spacing $properties-item-spacing, $properties-item-spacing $properties-item-spacing $properties-item-spacing ($properties-item-spacing* 2 )),));
         border-bottom: none;
         font-weight: bold;
         white-space: pre;
