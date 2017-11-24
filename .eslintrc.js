@@ -17,7 +17,7 @@ module.exports = {
         ],
         "no-cond-assign": 1,
         "no-console": [1, {
-            "allow": ["error"]
+            "allow": ["error", "info"]
         }],
         "no-empty": 1,
         "no-extra-semi": 1,
