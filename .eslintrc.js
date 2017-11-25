@@ -62,6 +62,7 @@ module.exports = {
         "mdn": true,
         "Mozilla": true,
         "waffle": true,
-        "Prism": true
+        "Prism": true,
+        "Promise": true
     }
 };

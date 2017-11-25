@@ -62,10 +62,11 @@
     // When an item is clicked, load its detail
     $revisionReplaceBlock.on('click mdn:click', '.dashboard-row', function (e) {
         var $this = $(this);
-        var $detail;
 
         // Don't interrupt links or spam buttons, and stop if a request is already running
-        if (e.target.tagName === 'A' || $(e.target).hasClass('spam-ham-button') || $this.attr('data-running')) return;
+        if (e.target.tagName === 'A' || $(e.target).hasClass('spam-ham-button') || $this.attr('data-running')) {
+            return;
+        }
 
         if ($this.attr('data-loaded')) {
             $this.next('.dashboard-detail').find('.dashboard-detail-details').slideToggle();
@@ -81,7 +82,8 @@
                               .replace('$editurl', $this.attr('data-edit-url'))
                               .replace('$historyurl', $this.attr('data-history-url'));
 
-                $detail = $('<tr class="dashboard-detail"><td colspan="5"><div class="dashboard-detail-details">' + controls + content + '</div></td></tr>').insertAfter($this);
+                $('<tr class="dashboard-detail"><td colspan="5"><div class="dashboard-detail-details">' + controls + content + '</div></td></tr>').insertAfter($this);
+
                 $this.next('.dashboard-detail').find('.dashboard-detail-details').slideToggle();
                 $this.attr('data-loaded', 1);
                 $this.removeAttr('data-running');
@@ -130,35 +132,39 @@
         var $this = $(this),
             $tdObject = $(this).parent(),
             $trObject = $tdObject.parent(),
-            revisionId = $trObject.data("revisionId"),
+            revisionId = $trObject.data('revisionId'),
             type = this.value,
-            url = $trObject.data("spamUrl");
+            url = $trObject.data('spamUrl');
 
         $this.prop('disabled', true);
         $tdObject.find('.error , .submit').remove();
         $tdObject.append('<strong class="submit"><br>' + gettext('Submitting...') + '</strong>');
 
-        $.post(url, {"revision": revisionId, "type": type})
+        $.post(url, {'revision': revisionId, 'type': type})
           .done( function(data) {
-            var $dl = $("<dl></dl>");
+              var $dl = $('<dl></dl>');
 
-            $.each(data, function(index, value) {
-                var subMessage = '<dt class="submission-' + value.type + '">' +
-                  interpolate(gettext("Submitted as %(submission_type)s"), {submission_type: value.type}, true) + '</dt><dd>' +
-                  interpolate(gettext('%(sent_date)s by %(user)s'), {sent_date: value.sent, user: value.sender}, true);
+              $.each(data, function(index, value) {
+                  var subMessage = '<dt class="submission-' + value.type + '">' +
+                  interpolate(gettext('Submitted as %(submissionType)s'), {
+                      submissionType: value.type
+                  }, true) + '</dt><dd>' +
+                  interpolate(gettext('%(sentDate)s by %(user)s'), {
+                      sentDate: value.sent, user: value.sender
+                  }, true);
 
-                $dl.append(subMessage);
-            });
+                  $dl.append(subMessage);
+              });
 
-            $tdObject.html($dl);
+              $tdObject.html($dl);
 
           })
           .fail( function() {
-            $this.prop('disabled', false);
-            var errorMessage = '<strong class="error"><br>' + interpolate(gettext('Error submitting as %(type)s'), {type: type}, true) + '</strong>';
+              $this.prop('disabled', false);
+              var errorMessage = '<strong class="error"><br>' + interpolate(gettext('Error submitting as %(type)s'), {type: type}, true) + '</strong>';
 
-            $tdObject.find('.error , .submit').remove();
-            $tdObject.append(errorMessage);
+              $tdObject.find('.error , .submit').remove();
+              $tdObject.append(errorMessage);
           });
 
     });

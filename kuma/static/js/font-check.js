@@ -36,7 +36,9 @@ var mdn = window.mdn || {};
                 // skip the FFO loading routine
                 fonts[i].loaded = true;
             }
-        } catch(e) {}
+        } catch(e) {
+            console.error('Font-Check :: Error while reading from sessionStorage', e);
+        }
     }
 
     // expose fonts site-wide for use in fonts.js
