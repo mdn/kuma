@@ -102,6 +102,11 @@ Download and load the sample database::
     wget -N https://mdn-downloads.s3-us-west-2.amazonaws.com/mdn_sample_db.sql.gz
     docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < mdn_sample_db.sql.gz
 
+Alternatively, you can use ``curl`` (installed by default on macOS)::
+
+    curl -O https://mdn-downloads.s3-us-west-2.amazonaws.com/mdn_sample_db.sql.gz
+    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < mdn_sample_db.sql.gz
+
 It takes a few seconds to load, with this expected output::
 
     mysql: [Warning] Using a password on the command line interface can be insecure.
