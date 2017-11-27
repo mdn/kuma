@@ -72,7 +72,7 @@ mdn_sample_db.sql.gz
 /media/kumascript-revision.txt
 node_modules/
 /static/
-tmp
+/tmp/emails/*.log
 
 # SCL3-specific files
 # TODO: Remove when AWS move is complete
