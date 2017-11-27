@@ -208,6 +208,7 @@ MDN_LANGUAGES = (
 # localization in Pontoon, but pages can not be translated into this language.
 # https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
 CANDIDATE_LANGUAGES = [
+    'te',       # Telegu
 ]
 
 RTL_LANGUAGES = (
@@ -625,7 +626,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2017.18',
+    'VERSION': '2017.19',
     'BASE_DIR': ROOT,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function

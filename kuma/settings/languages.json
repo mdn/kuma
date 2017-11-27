@@ -35,6 +35,10 @@
         "English": "Azerbaijani",
         "native": "Az\u0259rbaycanca"
     },
+    "azz": {
+        "English": "Highland Puebla Nahuatl",
+        "native": "nahuatl sierra norte Puebla"
+    },
     "be": {
         "English": "Belarusian",
         "native": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f"
@@ -271,6 +275,10 @@
         "English": "Armenian",
         "native": "\u0540\u0561\u0575\u0565\u0580\u0565\u0576"
     },
+    "ia": {
+        "English": "Interlingua",
+        "native": "Interlingua"
+    },
     "id": {
         "English": "Indonesian",
         "native": "Bahasa Indonesia"
@@ -353,7 +361,7 @@
     },
     "lt": {
         "English": "Lithuanian",
-        "native": "lietuvi\u0173 kalba"
+        "native": "Lietuvi\u0173"
     },
     "ltg": {
         "English": "Latgalian",
@@ -558,6 +566,10 @@
     "tr": {
         "English": "Turkish",
         "native": "T\u00fcrk\u00e7e"
+    },
+    "trs": {
+        "English": "Triqui",
+        "native": "Triqui"
     },
     "ts": {
         "English": "Tsonga",
