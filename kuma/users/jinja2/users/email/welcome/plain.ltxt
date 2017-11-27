@@ -4,7 +4,7 @@
 {{ _('Hi %(username)s', username=username) }}
 
 {# L10n: This is an email. Whitespace matters! #}
-{{ _('Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you.') }}
+{{ _('Thanks for creating a profile on MDN Web Docs -- a community making great resources for developers like you.') }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _("You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your interests.") }}
@@ -42,10 +42,7 @@
     ({{ _('See %(irc_link)s for more info about IRC.', irc_link=add_utm('https://wiki.mozilla.org/IRC', 'welcome')) }})
 
 {# L10n: This is an email. Whitespace matters! #}
-    {{ _("You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager.") }}
-
-{# L10n: This is an email. Whitespace matters! #}
-* {{ _('Blog: %(blog_link)s', blog_link=add_utm('https://blog.mozilla.org/community/category/developer-engagement', 'welcome')) }}
+    {{ _("You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jswisher), MDN's community manager.") }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _("Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help.") }}
