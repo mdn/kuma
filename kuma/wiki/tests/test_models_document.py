@@ -236,24 +236,13 @@ def test_build_json_data_with_tags(trans_doc):
 
 
 def test_build_json_data_with_summary(trans_doc):
-    """
-    If a revision has a comment, use that for the summary.
-
-    If no summary is given, the summary is the SEO description
-    parsed from the content.
-
-    TODO: This seems wrong. Change to always use SEO description.
-    """
-    en_comment = "A good start."
+    """The summary is the cached HTML SEO description."""
     en_doc = trans_doc.parent
-    en_doc.current_revision.summary = en_comment
+    en_doc.summary_html = 'Cached Summary'
     en_doc.save()
-    fr_comment = "Google m'a traduit pour moi."
-    trans_doc.current_revision.summary = fr_comment
-    trans_doc.current_revision.save()
     en_json = en_doc.build_json_data()
-    assert en_json['summary'] == en_comment
-    assert en_json['translations'][0]['summary'] == fr_comment
+    assert en_json['summary'] == 'Cached Summary'
+    assert en_json['translations'][0]['summary'] == 'Mise en route...'
 
 
 def test_build_json_data_uses_rendered_html(root_doc):

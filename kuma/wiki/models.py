@@ -653,10 +653,7 @@ class Document(NotificationsMixin, models.Model):
                                          .localization_tags
                                          .names())
             last_edit = self.current_revision.created.isoformat()
-            if self.current_revision.summary:
-                summary = self.current_revision.summary
-            else:
-                summary = self.get_summary(strip_markup=False)
+            summary = self.get_summary_html()
         else:
             review_tags = []
             localization_tags = []
