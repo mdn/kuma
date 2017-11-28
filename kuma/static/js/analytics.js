@@ -15,6 +15,21 @@
             }
             mdn.analytics.trackEvent(event.data);
         },
+        /**
+         * Sets the value for a specific dimension.
+         * For example setting dimension14 to Yes, means:
+         * Saw Survey Gizmo Task Completion survey = Yes
+         * @param {Object} data - The dimension data to set ex.
+         * {
+         *     dimension: 'dimension14',
+         *     value: 'Yes'
+         * }
+         */
+        setDimension: function(data) {
+            if (win.ga) {
+                win.ga('set', data.dimension, data.value);
+            }
+        },
         /*
             Tracks generic events passed to the method
         */
@@ -48,6 +63,12 @@
                 eventValue: eventObject.value || 0,
                 hitCallback: callback || null
             };
+
+            // task-completion.js sends an additional metric
+            if(eventObject.nonInteraction !== undefined) {
+                // append it to the data object sent to GA
+                data.nonInteraction = eventObject.nonInteraction;
+            }
 
             // If Analytics has loaded, go ahead with tracking
             // Checking for ".create" due to Ghostery mocking of ga

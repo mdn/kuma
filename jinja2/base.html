@@ -32,6 +32,11 @@
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
+  {% block site_analytics %}
+    {% javascript 'dnt-helper' %}
+    {% include "includes/google_analytics.html" %}
+  {% endblock %}
+
   {%- if not untrusted %}
     <!-- common social tags -->
     {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
@@ -63,8 +68,6 @@
   {% javascript 'font-check' %}
 
   {% block extrahead %}{% endblock %}
-
-  {% include "includes/google_analytics.html" %}
 </head>
 <body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}{% if settings.MAINTENANCE_MODE %} maintenance-mode{% endif %}"{% if request.user and request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
