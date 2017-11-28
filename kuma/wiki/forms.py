@@ -24,8 +24,8 @@ from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
 from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
-                        SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG,
-                        SPAM_OTHER_HEADERS, SPAM_SUBMISSION_REVISION_FIELDS,
+                        SLUG_CLEANSING_RE, SPAM_OTHER_HEADERS,
+                        SPAM_SUBMISSION_REVISION_FIELDS,
                         SPAM_TRAINING_FLAG)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
@@ -684,14 +684,6 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         except Document.DoesNotExist:
             # If there's no document yet, just bail.
             return current_rev
-
-    def akismet_enabled(self):
-        """
-        Disables Akismet for users with SPAM_EXEMPTED_FLAG
-        """
-        client_ready = super(RevisionForm, self).akismet_enabled()
-        user_exempted = waffle.flag_is_active(self.request, SPAM_EXEMPTED_FLAG)
-        return client_ready and not user_exempted
 
     @property
     def akismet_error_message(self):
