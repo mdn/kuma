@@ -26,6 +26,7 @@ Switches
 * ``newsletter`` - Show newsletter sign-up site wide.
 * ``newsletter_article`` - Show newsletter sign-up in article footer (must be
   used in combination with ``newsletter``).
+* ``registration_disabled`` - Enable/disable new user registration.
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
@@ -46,7 +47,6 @@ other advanced criteria.
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``line_length`` - Enable/disable readable line length.
 * ``page_move`` - (deprecated) enable/disable page move feature.
-* ``registration_disabled`` - Enable/disable new user registration.
 * ``section_edit`` - Show section edit buttons.
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``spam_admin_override`` - Tell Akismet that edits are never spam.

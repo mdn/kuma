@@ -5,7 +5,7 @@ from constance.test.utils import override_config
 from django.conf import settings
 from mock import patch
 from pyquery import PyQuery as pq
-from waffle.models import Flag
+from waffle.models import Switch
 from django.db import IntegrityError
 
 from kuma.core.tests import eq_, ok_
@@ -40,9 +40,9 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertEqual(session['sociallogin_provider'], 'github')
 
     def test_signup_page_disabled(self):
-        registration_disabled = Flag.objects.create(
+        registration_disabled = Switch.objects.create(
             name='registration_disabled',
-            everyone=True
+            active=True
         )
         response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
@@ -52,7 +52,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertNotIn('sociallogin_provider', session)
 
         # re-enable registration
-        registration_disabled.everyone = False
+        registration_disabled.active = False
         registration_disabled.save()
         response = self.github_login()
         test_strings = ['Create your MDN profile to continue',

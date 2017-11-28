@@ -316,11 +316,6 @@
         "staff": true,
         "created": "2014-01-14"
       }, {
-        "name": "registration_disabled",
-        "everyone": false,
-        "superusers": false,
-        "created": "2015-02-25"
-      }, {
         "name": "wiki_samples",
         "everyone": true,
         "staff": true,
@@ -432,7 +427,11 @@
         "note": "Show foundation donate homepage tile?",
         "active": false,
         "created": "2016-12-1"
-      }
+    },  {
+      "name": "registration_disabled",
+      "active": false,
+      "created": "2015-02-25"
+    }
     ],
     "search.filtergroup": [
       {

@@ -16,7 +16,7 @@
       All content on MDN is free and available without signing in.
       {% endtrans %}</p>
 
-      {% if waffle.flag('registration_disabled') -%}
+      {% if waffle.switch('registration_disabled') -%}
       <p>{% trans %}
       In order to contribute, you need to sign in to an existing MDN profile.
       {% endtrans %}</p>
