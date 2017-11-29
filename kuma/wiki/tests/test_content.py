@@ -313,6 +313,26 @@ class ReplaceSectionTests(TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
+class RemoveSectionTests(TestCase):
+    def test_basic_section_remove(self):
+        doc_src = """
+            <h1 id="s1">Head 1</h1>
+            <div id="here">Remove <span>this</span>.</div>
+            <p>test</p>
+            <div class="here">Leave <span>this</span>.</div>
+        """
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <div class="here">Leave <span>this</span>.</div>
+        """
+        result = (kuma.wiki.content
+                  .parse(doc_src)
+                  .removeSection('here')
+                  .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+
 class InjectSectionEditingLinksTests(TestCase):
     def test_section_edit_links(self):
         doc_src = """

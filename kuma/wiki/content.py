@@ -356,6 +356,11 @@ class ContentSectionTool(object):
                                     ignore_heading=ignore_heading)
         return self
 
+    @newrelic.agent.function_trace()
+    def removeSection(self, id):
+        self.stream = RemoveFilter(self.stream, id)
+        return self
+
 
 class LinkAnnotationFilter(html5lib_Filter):
     """
@@ -977,6 +982,54 @@ class SectionFilter(html5lib_Filter):
             # encountered in the stream. Not doing that right now.
             # For now, just assume an hgroup is equivalent to h1
             return 1
+
+
+class RemoveFilter(html5lib_Filter):
+
+    def __init__(self, source, id):
+        html5lib_Filter.__init__(self, source)
+
+        self.section_id = id
+
+        self.open_level = 0
+        self.parent_level = None
+        self.in_section = False
+        self.skip = False
+
+    def __iter__(self):
+        input = html5lib_Filter.__iter__(self)
+
+        # loop through all 'tokens'
+        for token in input:
+
+            # if this token is a start tag...
+            if token['type'] == 'StartTag':
+                # increment counter that tracks nesting
+                self.open_level += 1
+
+                for key in token['data']:
+                    if 'id' == key[1] and token['data'][key] == self.section_id:
+                        # note we're in the matching section
+                        self.in_section = True
+                        # keep track of how nested we were when section started
+                        self.parent_level = self.open_level
+
+            elif token['type'] == 'EndTag':
+                # If the parent of the section has ended, end the section.
+                if (self.parent_level is not None and
+                        self.open_level is self.parent_level):
+                    self.in_section = False
+                    self.skip = True
+                    self.parent_level = None
+
+                # reduce nesting counter
+                self.open_level -= 1
+
+            # emit tokens if we're not in the section being removed
+            if not self.in_section and not self.skip:
+                yield token
+            else:
+                self.skip = False
 
 
 class CodeSyntaxFilter(html5lib_Filter):
