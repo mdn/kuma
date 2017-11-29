@@ -121,7 +121,7 @@ Foundation callout
 -------------------------------------------------------------- */
 
 .callout-foundation {
-    background: #523e53;
+    background: $blue-light;
 
     strong {
         content: '';
@@ -129,25 +129,44 @@ Foundation callout
         height: 30px;
         width: 109px;
         margin-bottom: 2px;
-        background-image: url($path-to-images + 'home-foundation.gif');
+        background-image: url($path-to-images + 'web-docs-sprite.svg');
+        background-size: 400px auto;
+        background-position: -91px -57px;
         direction: ltr; // ltr should be set with negative text indent
         text-indent: 100%;
         overflow: hidden;
     }
 
-    a:before {
-        display: none;
-    }
+    a {
+        &:before {
+            display: none;
+            color: $text-color;
+        }
 
-    a:after {
-        height: 79px;
-        background-image: url($path-to-images + 'home-foundation.gif');
-        background-position: 0 -29px;
+        &:after {
+            height: 84px;
+            background-image: url($path-to-images + 'home-foundation.png');
+            background-size: 90px auto;
+        }
+
+        span {
+            color: $text-color;
+        }
     }
 
     button {
+        position: relative;
         margin-top: 6px;
-        border: 3px solid;
+        @include bidi-style(padding-right, 2em, padding-left, inherit);
+
+        &:after {
+            position: absolute;
+            top: 50%;
+            @include bidi-style(right, 10px, left, auto);
+            @include bidi-value(content, '\f061', '\f060');
+            font-family: fontAwesome;
+            transform: translateY(-50%);
+        }
     }
 }
 
