@@ -22,12 +22,12 @@ def doc_with_sections(root_doc, wiki_user):
     <h2 id="First">First</h2>
     <p>This is a document</p>
 
-    <h3 id="Quick_Links">Quick Links</h3>
-    <p>Quick Links:</p>
-    <ul>
-      <li><a href="%(root_url)s">Existing link</a></li>
-      <li><a href="/en-US/docs/NewPage">New link</a></li>
-    </ul>
+    <section id="Quick_Links" class="Quick_Links">
+      <ol>
+        <li><a href="%(root_url)s">Existing link</a></li>
+        <li><a href="/en-US/docs/NewPage">New link</a></li>
+      </ol>
+    </section>
 
     <h3 id="Subnav">Subnav</h3>
     <p>Subnav:</p>
@@ -360,7 +360,9 @@ def test_get_body_html(doc_with_sections):
     expected = """
     <h2 id="First">First</h2>
     <p>This is a document</p>
-    <!-- -->
+    <section class="Quick_Links" id="Quick_Links">
+      <!-- -->
+    </section>
     <!-- -->
     <h2 id="Second">Second</h2>
     <p>Another section, with an
@@ -377,11 +379,10 @@ def test_get_quick_links_html(doc_with_sections):
     """The quick_links HTML can be extracted from the revision."""
     result = doc_with_sections.get_quick_links_html()
     expected = """
-    <p>Quick Links:</p>
-    <ul>
+    <ol>
       <li><a href="/en-US/docs/Root">Existing link</a></li>
       <li><a class="new" rel="nofollow" href="/en-US/docs/NewPage">New link</a></li>
-    </ul>
+    </ol>
     """
     assert normalize_html(result) == normalize_html(expected)
 
