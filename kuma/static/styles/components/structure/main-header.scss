@@ -9,7 +9,6 @@ Main header, wraps all components of logo, main, and secondary navigation
     padding-top: $mobile-center-spacing;
     border: 5px solid $accent-light;
     border-width: 5px 0 0;
-    border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
     background-color: #fff;
 
     > .center {
