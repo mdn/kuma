@@ -8,7 +8,7 @@ from django.test import RequestFactory
 import pytest
 import requests_mock
 from constance.test import override_config
-from waffle.models import Flag
+from waffle.models import Flag, Switch
 
 from kuma.core.urlresolvers import reverse
 from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
@@ -16,7 +16,7 @@ from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
                                  SPAM_CHECKS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase
 
-from ..constants import SPAM_TRAINING_FLAG
+from ..constants import SPAM_TRAINING_SWITCH
 from ..forms import AkismetHistoricalData, RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision, RevisionIP
 from ..tests import document, normalize_html, revision
@@ -523,8 +523,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
     @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_spam_training(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
-        flag.users.add(self.testuser)
+        Switch.objects.create(name=SPAM_TRAINING_SWITCH, active=True)
         assert not DocumentSpamAttempt.objects.exists()
         rev_form = self.setup_form(mock_requests, is_spam='true')
         assert rev_form.is_valid()
@@ -536,8 +535,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
     @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_error_training(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
-        flag.users.add(self.testuser)
+        Switch.objects.create(name=SPAM_TRAINING_SWITCH, active=True)
         assert not DocumentSpamAttempt.objects.exists()
         rev_form = self.setup_form(mock_requests, is_spam='error')
         assert rev_form.is_valid()

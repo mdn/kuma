@@ -26,7 +26,7 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_OTHER_HEADERS,
                         SPAM_SUBMISSION_REVISION_FIELDS,
-                        SPAM_TRAINING_FLAG)
+                        SPAM_TRAINING_SWITCH)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
                      RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
@@ -728,7 +728,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 review=review
             )
         finally:
-            if not waffle.flag_is_active(self.request, SPAM_TRAINING_FLAG):
+            if not waffle.switch_is_active(SPAM_TRAINING_SWITCH):
                 super(RevisionForm, self).akismet_error(parameters, exception)
 
     def akismet_parameters(self):
