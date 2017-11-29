@@ -22,7 +22,6 @@ Switches
 * ``application_ACAO`` - Enable Access-Control-Allow-Origin=0 header.
 * ``dumb_doc_urls`` - (deprecated) Disable the render-time changing of /docs/
   URLs to the equivalent Zone URLs (see `PR 3331`_ for reasoning).
-* ``foundation_callout`` - show Foundation donation tile on homepage.
 * ``newsletter`` - Show newsletter sign-up site wide.
 * ``newsletter_article`` - Show newsletter sign-up in article footer (must be
   used in combination with ``newsletter``).
