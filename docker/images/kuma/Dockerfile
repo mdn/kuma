@@ -13,5 +13,7 @@ USER kuma
 
 ENV DJANGO_SETTINGS_MODULE=kuma.settings.prod
 
-RUN make localecompile
-RUN make build-static && rm -rf build
+# Temporarily enable candidate languages so assets are built for all
+# environments, but still defaults to disabled in production.
+RUN ENABLE_CANDIDATE_LANGUAGES=True \
+    make localecompile build-static && rm -rf build
