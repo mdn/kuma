@@ -316,9 +316,9 @@
       </div>
     </div> <!-- ends "main-content" -->
 
-    {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') %}
+    {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
       <div class="newsletter-box">
-      {% include "includes/newsletter.html" %}
+        {% include "includes/newsletter.html" %}
       </div>
     {% endif %}
 
@@ -367,7 +367,7 @@
     {% javascript 'task-completion' %}
   {% endif %}
 
-  {% if waffle.switch('newsletter') and waffle.switch('newsletter_article') %}
+  {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
     {% javascript 'newsletter' %}
   {% endif %}
 

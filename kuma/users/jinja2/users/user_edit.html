@@ -128,7 +128,7 @@
     </form>
   </div>
   <div class="column-4">
-    {% if waffle.switch('newsletter') %}
+    {% if settings.NEWSLETTER %}
     {% include "includes/newsletter.html" %}
     <h3>Unsubscribe</h3>
     <p><a href="https://www.mozilla.org/en-US/newsletter/recovery/">{{ _('Manage your Mozilla Newsletter Subscriptions.') }}</a></p>
@@ -145,8 +145,8 @@
   // ]]>
 </script>
 
-{% if waffle.switch('newsletter') %}
-{% javascript 'newsletter' %}
+{% if settings.NEWSLETTER %}
+  {% javascript 'newsletter' %}
 {% endif %}
 
 {% endblock %}

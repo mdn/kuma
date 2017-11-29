@@ -1719,6 +1719,8 @@ TAGGIT_CASE_INSENSITIVE = True
 
 # Ad Banner Settings
 FOUNDATION_CALLOUT = config('FOUNDATION_CALLOUT', False, cast=bool)
+NEWSLETTER = True
+NEWSLETTER_ARTICLE = True
 
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
