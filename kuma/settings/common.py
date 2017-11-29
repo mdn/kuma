@@ -1600,6 +1600,10 @@ LOGGING = {
             'propagate': True,
             'level': logging.ERROR,
         },
+        'django.security': {
+            'handlers': ['console'],
+            'propagate': False,
+        },
         'elasticsearch': {
             'handlers': ['console'],
             'level': logging.ERROR,
