@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 @pytest.mark.parametrize('http_method',
                          ['get', 'head', 'put', 'post', 'delete', 'options'])
-def test_liveness(db, client, http_method):
+def test_liveness(client, http_method):
     url = reverse('health.liveness')
     response = getattr(client, http_method)(url)
     assert (response.status_code ==
