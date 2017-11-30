@@ -29,9 +29,9 @@
             // Shows an 'invalid' style if something good isn't picked
             requireValidOption: false,
             // Callback for selection;  true selection or 'silent' selection
-            onSelect: function(selectionObj, isSilent){},
+            onSelect: function(selectionObj, isSilent){}, // eslint-disable-line no-unused-vars
             // Callback for when a selection is deselected via this plugin
-            onDeselect: function(oldSelection){},
+            onDeselect: function(oldSelection){}, // eslint-disable-line no-unused-vars
             // URL to hit to retrieve results
             autocompleteURL: '',
             // Element to style and add 'valid' and 'invalid' classes to
@@ -117,10 +117,12 @@
             $.ui.autocomplete.prototype._create.call(this);
 
             // Create the cache
-            if(!this.cache) var cache = this.cache = {
-                terms: {},
-                keys: {}
-            };
+            if(!this.cache) {
+                var cache = this.cache = {
+                    terms: {},
+                    keys: {}
+                };
+            }
 
             // Keep focus state
             this.isFocused = false;
@@ -141,7 +143,6 @@
             this.styleElement = $(this.options.styleElement || this.element);
 
             // Set the 'source' method -- the one that executes searches or returns the filtered static array
-            var oldSource = this.source;
             this.source = $.isArray(this.options.source) ?
                 function(request, response) {
                     assignLabel(self.options.source);
@@ -200,9 +201,15 @@
                 var selection = self.selection = ui.item;
                 if(selection.value !== undefined) {
                         // Call the select method if present
-                    if(select) select.call(self, event, ui);
+                    if(select) {
+                        select.call(self, event, ui);
+                    }
+
                     // Set the INPUT element's value to the item value
-                    if(selection) self.element.val(selection.value);
+                    if(selection) {
+                        self.element.val(selection.value);
+                    }
+
                     // Add the valid class
                     self.updateStyles(true);
                     // Set the title attribute
@@ -292,7 +299,7 @@
             var valCheck = function() {
                 var box = $input[0];
                 if(box.value === placeholder) {
-                     box.value = '';
+                    box.value = '';
                 }
             };
 

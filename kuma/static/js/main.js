@@ -1,21 +1,20 @@
 (function(win, doc, $) {
     'use strict';
 
-    /*
-        Track clientside errors
-    */
+    /**
+     * Track clientside errors
+     */
     mdn.analytics.trackClientErrors();
 
-    /*
-        Feature detection
-    */
-
+    /**
+     * Feature detection
+     */
     win.mdn.features.localStorage = (function() {
         var uid = new Date;
         var result;
         try {
             localStorage.setItem(uid, uid);
-            result = localStorage.getItem(uid) == uid;
+            result = localStorage.getItem(uid) === uid.toString();
             localStorage.removeItem(uid);
             return result;
         } catch (exception) {
@@ -57,9 +56,8 @@
         var $searchWrap = $nav.find('.search-wrap');
         var $input = $searchWrap.find('input');
         var $searchTrigger = $searchWrap.find('.search-trigger');
-        var placeholder = $input.attr('placeholder');
 
-        $searchTrigger.on('click', function(e) {
+        $searchTrigger.on('click', function() {
             $input.get(0).focus();
         });
 
@@ -76,8 +74,14 @@
                     return;
                 }
 
-                if(e) e.preventDefault();
-                if(timeout) clearTimeout(timeout);
+                if(e) {
+                    e.preventDefault();
+                }
+
+                if(timeout) {
+                    clearTimeout(timeout);
+                }
+
                 timeout = setTimeout(function() {
                     if(isAdd) {
                         $navItems.fadeOut(100, function() {
@@ -119,7 +123,9 @@
             var $this = $(this);
 
             // Allow for a special CSS class to prevent this functionality
-            if($this.hasClass('nodisable')) return;
+            if($this.hasClass('nodisable')) {
+                return;
+            }
 
             if ($this.data(disabled)) {
                 ev.preventDefault();
@@ -157,11 +163,11 @@
             // url could be relative or scheme relative or absolute
             var host = doc.location.host; // host + port
             var protocol = doc.location.protocol;
-            var sr_origin = '//' + host;
-            var origin = protocol + sr_origin;
+            var srOrigin = '//' + host;
+            var origin = protocol + srOrigin;
             // Allow absolute or scheme relative URLs to same origin
             return (url === origin || url.slice(0, origin.length + 1) === origin + '/') ||
-                (url === sr_origin || url.slice(0, sr_origin.length + 1) === sr_origin + '/') ||
+                (url === srOrigin || url.slice(0, srOrigin.length + 1) === srOrigin + '/') ||
                 // or any other URL that isn't scheme relative or absolute i.e relative.
                 !(/^(\/\/|http:|https:).*/.test(url));
         }
@@ -185,7 +191,9 @@
     });
     $('#skip-main').each(function() { // Only one, so using each as closure
         var id = this.href.split('#')[1];
-        if(id) $('#' + id).attr('role', 'main');
+        if(id) {
+            $('#' + id).attr('role', 'main');
+        }
     });
 
     /*
