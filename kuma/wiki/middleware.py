@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.shortcuts import render
 
@@ -28,6 +29,12 @@ class DocumentZoneMiddleware(object):
         # Don't redirect POST $subscribe requests to GET zone url
         if (request.method == 'POST' and
                 ('$subscribe' in request.path or '$files' in request.path)):
+            return None
+
+        # Skip slugs that don't have locales, and won't be in a zone
+        request_slug = request.path_info.lstrip('/')
+        if any(request_slug.startswith(slug)
+               for slug in settings.LANGUAGE_URL_IGNORED_PATHS):
             return None
 
         remaps = DocumentZoneURLRemapsJob().get(request.LANGUAGE_CODE)

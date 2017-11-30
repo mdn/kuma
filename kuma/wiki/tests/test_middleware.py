@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.test import RequestFactory
 
 from kuma.core.cache import memcache
@@ -121,6 +122,12 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         for endpoint in ['$subscribe', '$files']:
             request = self.rf.post('/en-US/docs/%s%s?raw' %
                                    (self.other_doc.slug, endpoint))
+            self.assertIsNone(middleware.process_request(request))
+
+    def test_skip_no_language_urls(self):
+        middleware = DocumentZoneMiddleware()
+        for path in settings.LANGUAGE_URL_IGNORED_PATHS:
+            request = self.rf.get('/' + path)
             self.assertIsNone(middleware.process_request(request))
 
     def test_zone_url_ends_with_slash(self):
