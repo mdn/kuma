@@ -5,9 +5,9 @@ from . import views
 
 urlpatterns = [
     url(r'^healthz/?$',
-        views.liveness,
+        views.basic_health,
         name='health.liveness'),
     url(r'^readiness/?$',
-        views.readiness,
+        views.basic_health,
         name='health.readiness'),
 ]
