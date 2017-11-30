@@ -411,7 +411,6 @@ These are not dynamic but serve as mixins
     @include set-font-size(20px);
     border: $section-border-width solid $accent-light;
     border-width: $section-border-width 0;
-    border-image: linear-gradient(to right, $accent-dark, $accent-light) 10;
     padding: $grid-spacing 0;
     margin-bottom: $grid-spacing;
 
