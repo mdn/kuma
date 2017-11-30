@@ -15,7 +15,6 @@ from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.db.models import Q
 from django.template.loader import render_to_string
 from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
@@ -490,50 +489,6 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(200, resp.status_code)
-
-    def test_banned_users(self):
-        """ kumaediting: everyone, kumabanned: testuser2 """
-        self.kumaediting_flag.everyone = True
-        self.kumaediting_flag.save()
-        # ban testuser2
-        kumabanned = Flag.objects.create(name='kumabanned')
-        kumabanned.users = self.user_model.objects.filter(username='testuser2')
-        kumabanned.save()
-
-        # testuser can still access
-        self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.edit_url)
-        eq_(200, resp.status_code)
-        self.client.logout()
-
-        # testuser2 cannot
-        self.client.login(username='testuser2', password='testpass')
-        resp = self.client.get(self.edit_url)
-        eq_(403, resp.status_code)
-        ok_('Your profile has been banned from making edits.' in resp.content)
-
-        # ban testuser01 and testuser2
-        kumabanned.users = self.user_model.objects.filter(
-            Q(username='testuser2') | Q(username='testuser01'))
-        kumabanned.save()
-
-        # testuser can still access
-        self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.edit_url)
-        eq_(200, resp.status_code)
-        self.client.logout()
-
-        # testuser2 cannot access
-        self.client.login(username='testuser2', password='testpass')
-        resp = self.client.get(self.edit_url)
-        eq_(403, resp.status_code)
-        ok_('Your profile has been banned from making edits.' in resp.content)
-
-        # testuser01 cannot access
-        self.client.login(username='testuser01', password='testpass')
-        resp = self.client.get(self.edit_url)
-        eq_(403, resp.status_code)
-        ok_('Your profile has been banned from making edits.' in resp.content)
 
 
 class BannedIPTests(UserTestCase, WikiTestCase):

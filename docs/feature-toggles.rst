@@ -41,7 +41,6 @@ Flags
 other advanced criteria.
 
 * ``compat_data`` - View the new JSON backed compat tables.
-* ``kumabanned`` - (deprecated) added to users to mark them as banned.
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``line_length`` - Enable/disable readable line length.
 * ``page_move`` - (deprecated) enable/disable page move feature.
