@@ -1,7 +1,13 @@
 version: '2.1'
 services:
+  mysql-ready:
+    image: mysql:5.6
+    depends_on:
+      - mysql
+    command: sh -c "while ! mysqladmin --host=mysql --user=root --password=kuma ping; do sleep 1; done"
+
   noext:
-    #run tests with no external dependencies 
+    #run tests with no external dependencies
     image: quay.io/mozmar/kuma_base
     user: ${UID:-0}
     volumes:
@@ -34,7 +40,7 @@ services:
     command: py.test --nomigrations kuma --ignore=kuma/search
     depends_on:
       - memcached
-      - mysql
+      - mysql-ready
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - MEMCACHE_SERVERS=memcached:11211
@@ -48,7 +54,7 @@ services:
     command: py.test --nomigrations --junit-xml=/app/test_results/django.xml kuma
     depends_on:
       - memcached
-      - mysql
+      - mysql-ready
       - elasticsearch
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
