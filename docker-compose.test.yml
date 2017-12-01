@@ -1,10 +1,12 @@
 version: '2.1'
 services:
   mysql-ready:
-    image: mysql:5.6
+    build: ./docker/images/urlwait
+    environment:
+      - DATABASE_URL=mysql://root:kuma@mysql:3306
+      - URLWAIT_TIMEOUT=120
     depends_on:
       - mysql
-    command: sh -c "while ! mysqladmin --host=mysql --user=root --password=kuma ping; do sleep 1; done"
 
   noext:
     #run tests with no external dependencies
