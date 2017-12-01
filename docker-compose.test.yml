@@ -4,7 +4,7 @@ services:
     build: ./docker/images/urlwait
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306
-      - URLWAIT_TIMEOUT=120
+      - URLWAIT_TIMEOUT=300
     depends_on:
       - mysql
 
