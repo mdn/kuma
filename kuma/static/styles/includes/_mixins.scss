@@ -572,6 +572,11 @@ Placeholders
 
         a {
             color: $accent-light;
+
+            &[name] {
+                color: inherit;
+                text-decoration: none;
+            }
         }
 
         code {
