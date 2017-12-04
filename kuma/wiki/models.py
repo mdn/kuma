@@ -939,7 +939,7 @@ class Document(NotificationsMixin, models.Model):
 
     def purge(self):
         if not self.deleted:
-            raise Exception("Attempt tp purge non-deleted document %s: %s" %
+            raise Exception("Attempt to purge non-deleted document %s: %s" %
                             (self.id, self.title))
         self.delete(purge=True)
 
