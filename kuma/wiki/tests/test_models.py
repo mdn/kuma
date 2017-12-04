@@ -46,23 +46,6 @@ class DocumentTests(UserTestCase):
         d.save()
         assert not d.is_experiment
 
-    def test_error_on_delete(self):
-        """Ensure error-on-delete is only thrown when waffle switch active"""
-        switch = Switch.objects.create(name='wiki_error_on_delete')
-
-        for active in (True, False):
-            switch.active = active
-            switch.save()
-
-            d = document()
-            d.save()
-
-            if active:
-                with pytest.raises(Exception):
-                    d.delete()
-            else:
-                d.delete()  # No exception
-
     def test_delete_tagged_document(self):
         """Make sure deleting a tagged doc deletes its tag relationships."""
         # TODO: Move to wherever the tests for TaggableMixin are.
