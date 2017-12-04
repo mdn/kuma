@@ -5,6 +5,7 @@
   {% set locale_native = settings.LOCALES[locale].native %}
 {% endif %}
 {% set default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
+{% set override_language_filter = request.GET.get('locale', None) == '*' %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
 
@@ -62,50 +63,66 @@
           <div class="search-pane search-results-explanation">
             <h2>{{ _('Results') }}</h2>
             <p>
-            {% if locale_native %}
+            {% if override_language_filter %}
               {% if query %}
-                {% if locale_native == default_locale_native %}
-                    {% trans count=count %}
-                      {{ count }} document found for "{{ query }}" in {{ locale_native }}.
-                    {% pluralize %}
-                      {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
-                    {% endtrans %}
-                {% else %}
-                    {% trans count=count %}
-                      {{ count }} document found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
-                    {% pluralize %}
-                      {{ count }} documents found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
-                    {% endtrans %}
-                {% endif %}
+                {% trans count=count %}
+                  {{ count }} document found for "{{ query }}" in all locales.
+                {% pluralize %}
+                  {{ count }} documents found for "{{ query }}" in all locales.
+                {% endtrans %}
               {% else %}
-                {% if locale_native == default_locale_native %}
-                    {% trans count=count %}
-                      {{ count }} document found in {{ locale_native }}.
-                    {% pluralize %}
-                      {{ count }} documents found in {{ locale_native }}.
-                    {% endtrans %}
-                {% else %}
-                    {% trans count=count %}
-                      {{ count }} document found in {{ locale_native }} and {{ default_locale_native }}.
-                    {% pluralize %}
-                      {{ count }} documents found in {{ locale_native }} and {{ default_locale_native }}.
-                    {% endtrans %}
-                {% endif %}
-
+                {% trans count=count %}
+                  {{ count }} document found in all locales.
+                {% pluralize %}
+                  {{ count }} documents found in all locales.
+                {% endtrans %}
               {% endif %}
             {% else %}
-              {% if query %}
-                {% trans count=count %}
-                  {{ count }} document found for "{{ query }}".
-                {% pluralize %}
-                  {{ count }} documents found for "{{ query }}".
-                {% endtrans %}
+              {% if locale_native %}
+                {% if query %}
+                  {% if locale_native == default_locale_native %}
+                      {% trans count=count %}
+                        {{ count }} document found for "{{ query }}" in {{ locale_native }}.
+                      {% pluralize %}
+                        {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+                      {% endtrans %}
+                  {% else %}
+                      {% trans count=count %}
+                        {{ count }} document found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                      {% pluralize %}
+                        {{ count }} documents found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                      {% endtrans %}
+                  {% endif %}
+                {% else %}
+                  {% if locale_native == default_locale_native %}
+                      {% trans count=count %}
+                        {{ count }} document found in {{ locale_native }}.
+                      {% pluralize %}
+                        {{ count }} documents found in {{ locale_native }}.
+                      {% endtrans %}
+                  {% else %}
+                      {% trans count=count %}
+                        {{ count }} document found in {{ locale_native }} and {{ default_locale_native }}.
+                      {% pluralize %}
+                        {{ count }} documents found in {{ locale_native }} and {{ default_locale_native }}.
+                      {% endtrans %}
+                  {% endif %}
+
+                {% endif %}
               {% else %}
-                {% trans count=count %}
-                  {{ count }} document found.
-                {% pluralize %}
-                  {{ count }} documents found.
-                {% endtrans %}
+                {% if query %}
+                  {% trans count=count %}
+                    {{ count }} document found for "{{ query }}".
+                  {% pluralize %}
+                    {{ count }} documents found for "{{ query }}".
+                  {% endtrans %}
+                {% else %}
+                  {% trans count=count %}
+                    {{ count }} document found.
+                  {% pluralize %}
+                    {{ count }} documents found.
+                  {% endtrans %}
+                {% endif %}
               {% endif %}
             {% endif %}
             {% if count %}
