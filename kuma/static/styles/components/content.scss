@@ -119,6 +119,11 @@ We cannot put these styles in the base/elements/ files because they don't apply 
         }
     }
 
+    /* h2 inside of English article display on translation page  */
+    &.boxed > h2 {
+        @include heading-2-section();
+    }
+
     h3,
     h5 {
         @extend %highlight;
