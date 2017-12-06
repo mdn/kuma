@@ -3,6 +3,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.shortcuts import redirect, render
 from django.views import static
 from django.views.generic import RedirectView
+from ratelimit.decorators import ratelimit
 
 from kuma.settings.common import path
 from kuma.core.sections import SECTION_USAGE
@@ -20,6 +21,7 @@ def fellowship(request):
     return render(request, 'landing/fellowship.html')
 
 
+@ratelimit(key='user_or_ip', rate='400/m', block=True)
 def home(request):
     """Home page."""
     updates = []

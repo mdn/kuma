@@ -21,6 +21,7 @@ from ..templatetags.jinja_helpers import format_comment
 @block_user_agents
 @prevent_indexing
 @process_document_path
+@ratelimit(key='user_or_ip', rate='15/m', block=True)
 def revision(request, document_slug, document_locale, revision_id):
     """
     View a wiki document revision.
