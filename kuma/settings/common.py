@@ -1689,3 +1689,4 @@ with open(ce_path, 'r') as ce_file:
     CONTENT_EXPERIMENTS = json.load(ce_file)
 
 RATELIMIT_ENABLE = config('RATELIMIT_ENABLE', default=True, cast=bool)
+RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='memcache')
