@@ -55,6 +55,22 @@ def notify_irc(Map args) {
     sh command
 }
 
+def ensure_pull() {
+    /*
+     * This can be used to avoid deploying images to Kubernetes that don't
+     * exist in the registry, since the deployment to Kubernetes will succeed
+     * (the deployment just cares that an image URL is provided, not that
+     * it actually exists) but each pod's image download will then fail
+     * causing the pod to loop in an image-pull error.
+     */
+    def repo = get_repo_name()
+    def tag = get_commit_tag()
+    utils.sh_with_notify(
+        "make pull-${repo}",
+        "Ensure pull of ${repo} image ${tag} works"
+    )
+}
+
 def sh_with_notify(cmd, display, notify_on_success=false) {
     def nick = "mdn-${env.BRANCH_NAME}"
     try {

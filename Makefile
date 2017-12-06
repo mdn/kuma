@@ -88,6 +88,9 @@ pull-base:
 pull-kuma:
 	docker pull ${KUMA_IMAGE}
 
+pull-kumascript:
+	docker pull ${KUMASCRIPT_IMAGE}
+
 pull-base-latest:
 	docker pull ${BASE_IMAGE_LATEST}
 
