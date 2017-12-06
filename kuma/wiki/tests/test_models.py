@@ -787,19 +787,23 @@ class DeferredRenderingTests(UserTestCase):
 
     @mock.patch('kuma.wiki.kumascript.get')
     @mock.patch.object(tasks.render_document, 'delay')
-    def test_deferred_vs_immediate_rendering(self, mock_render_document_delay,
-                                             mock_kumascript_get):
+    def test_immediate_rendering(self, mock_render_document_delay,
+                                 mock_kumascript_get):
+        '''Rendering is immediate when defer_rendering is False'''
         mock_kumascript_get.return_value = (self.rendered_content, None)
-
-        # When defer_rendering == False, the rendering should be immediate.
+        mock_render_document_delay.side_effect = Exception('Should not be called')
         self.d1.rendered_html = ''
         self.d1.defer_rendering = False
         self.d1.save()
         result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
-        ok_(not mock_render_document_delay.called)
+        assert not mock_render_document_delay.called
 
-        # When defer_rendering == True, the rendering should be deferred and an
-        # exception raised if the content is blank.
+    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch.object(tasks.render_document, 'delay')
+    def test_deferred_rendering(self, mock_render_document_delay,
+                                mock_kumascript_get):
+        '''Rendering is deferred when defer_rendering is True.'''
+        mock_kumascript_get.side_effect = Exception('Should not be called')
         self.d1.rendered_html = ''
         self.d1.defer_rendering = True
         self.d1.save()
