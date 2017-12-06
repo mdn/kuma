@@ -22,6 +22,7 @@ from django.views.decorators.http import (condition, require_GET,
                                           require_http_methods, require_POST)
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
+from ratelimit.decorators import ratelimit
 
 import kuma.wiki.content
 from kuma.authkeys.decorators import accepts_auth_key
@@ -578,6 +579,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
 @process_document_path
 @condition(last_modified_func=document_last_modified)
 @newrelic.agent.function_trace()
+@ratelimit(key='user_or_ip', rate='200/m', block=True)
 def document(request, document_slug, document_locale):
     """
     View a wiki document.
