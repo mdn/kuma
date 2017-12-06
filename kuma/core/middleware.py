@@ -1,9 +1,14 @@
 import contextlib
 import urllib
+from urlparse import urljoin
 
 from django.conf import settings
 from django.core import urlresolvers
-from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import (
+    HttpResponseRedirect,
+    HttpResponseForbidden,
+    HttpResponsePermanentRedirect,
+)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -190,3 +195,16 @@ class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
         return super(RestrictedWhiteNoiseMiddleware, self).process_request(
             request
         )
+
+
+class LegacyDomainRedirectsMiddleware(object):
+
+    def process_request(self, request):
+        """
+        Permanently redirects all requests from legacy domains.
+        """
+        if request.get_host() in settings.LEGACY_HOSTS:
+            return HttpResponsePermanentRedirect(
+                urljoin(settings.SITE_URL, request.get_full_path())
+            )
+        return None

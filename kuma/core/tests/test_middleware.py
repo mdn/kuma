@@ -1,5 +1,6 @@
 from mock import patch, MagicMock
 
+import pytest
 from django.test import RequestFactory
 
 from kuma.core.tests import KumaTestCase, eq_
@@ -9,6 +10,7 @@ from kuma.core.middleware import (
     ForceAnonymousSessionMiddleware,
     RestrictedEndpointsMiddleware,
     RestrictedWhiteNoiseMiddleware,
+    LegacyDomainRedirectsMiddleware,
 )
 
 
@@ -98,3 +100,22 @@ def test_restricted_whitenoise_middleware(rf, settings):
         settings.ENABLE_RESTRICTIONS_BY_HOST = False
         request = rf.get('/foo', HTTP_HOST='demos')
         assert middleware.process_request(request) is sentinel
+
+
+@pytest.mark.parametrize('host', ['old1', 'old2', 'old3', 'new'])
+@pytest.mark.parametrize('site_url', ['http://new', 'https://new'])
+def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
+    path = '/foo/bar?x=3&y=yes'
+    settings.SITE_URL = site_url
+    settings.LEGACY_HOSTS = ['old1', 'old2', 'old3']
+    middleware = LegacyDomainRedirectsMiddleware()
+
+    request = rf.get(path, HTTP_HOST=host)
+    response = middleware.process_request(request)
+
+    if host in settings.LEGACY_HOSTS:
+        assert response.status_code == 301
+        assert 'Location' in response
+        assert response['Location'] == site_url + path
+    else:
+        assert response is None

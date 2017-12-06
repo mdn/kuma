@@ -445,6 +445,7 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
+    'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
     # must come before LocaleURLMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
@@ -1187,9 +1188,13 @@ SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE',
 SESSION_COOKIE_HTTPONLY = True
 
 # bug 856061
-ALLOWED_HOSTS = config('ALLOWED_HOSTS',
-                       default='developer-local.allizom.org, mdn-local.mozillademos.org',
-                       cast=Csv())
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='developer-local.allizom.org, mdn-local.mozillademos.org',
+    cast=Csv()
+)
+
+LEGACY_HOSTS = config('LEGACY_HOSTS', default='', cast=Csv())
 
 # Maximum length of the filename. Forms should use this and raise
 # ValidationError if the length is exceeded.
