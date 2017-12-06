@@ -7,7 +7,6 @@ from functools import wraps
 from uuid import uuid4
 
 import newrelic.agent
-import waffle
 from constance import config
 from django.apps import apps
 from django.conf import settings
@@ -542,15 +541,14 @@ class Document(NotificationsMixin, models.Model):
         Document.objects.filter(pk=self.pk).update(render_scheduled_at=now)
         self.render_scheduled_at = now
 
-        if (waffle.switch_is_active('wiki_force_immediate_rendering') or
-                not self.defer_rendering):
-            # Attempt an immediate rendering.
-            self.render(cache_control, base_url)
-        else:
+        if self.defer_rendering:
             # Attempt to queue a rendering. If celery.conf.ALWAYS_EAGER is
             # True, this is also an immediate rendering.
-            from . import tasks
-            tasks.render_document.delay(self.pk, cache_control, base_url)
+            from .tasks import render_document
+            render_document.delay(self.pk, cache_control, base_url)
+        else:
+            # Attempt an immediate rendering.
+            self.render(cache_control, base_url)
 
     def render(self, cache_control=None, base_url=None, timeout=None):
         """

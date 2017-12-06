@@ -26,11 +26,8 @@ Switches
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
-* ``wiki_force_immediate_rendering`` - Force wiki pages to render immediately
-  in the same http request in which they are saved (not in a background
-  process).
 * ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
-    due to detected spam or Akismet errors.
+  due to detected spam or Akismet errors.
 
 
 Flags
