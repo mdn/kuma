@@ -384,6 +384,7 @@ def repair_breadcrumbs(request, document_slug, document_locale):
 @allow_CORS_GET
 @process_document_path
 @prevent_indexing
+@ratelimit(key='user_or_ip', rate='400/m', block=True)
 def toc(request, document_slug=None, document_locale=None):
     """
     Return a document's table of contents as HTML.
@@ -579,7 +580,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
 @process_document_path
 @condition(last_modified_func=document_last_modified)
 @newrelic.agent.function_trace()
-@ratelimit(key='user_or_ip', rate='200/m', block=True)
+@ratelimit(key='user_or_ip', rate='400/m', block=True)
 def document(request, document_slug, document_locale):
     """
     View a wiki document.

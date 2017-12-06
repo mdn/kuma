@@ -21,7 +21,7 @@ def fellowship(request):
     return render(request, 'landing/fellowship.html')
 
 
-@ratelimit(key='user_or_ip', rate='200/m', block=True)
+@ratelimit(key='user_or_ip', rate='400/m', block=True)
 def home(request):
     """Home page."""
     updates = []

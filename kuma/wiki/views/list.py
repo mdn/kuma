@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.views.decorators.http import require_GET
+from ratelimit.decorators import ratelimit
 
 from kuma.core.decorators import block_user_agents
 from kuma.core.utils import paginate
@@ -13,6 +14,7 @@ from ..models import (Document, DocumentTag, ReviewTag, Revision,
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='40/m', block=True)
 def documents(request, tag=None):
     """
     List wiki documents depending on the optionally given tag.
@@ -38,6 +40,7 @@ def documents(request, tag=None):
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='40/m', block=True)
 def tags(request):
     """
     Returns listing of all tags
@@ -49,6 +52,7 @@ def tags(request):
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='40/m', block=True)
 def needs_review(request, tag=None):
     """
     Lists wiki documents with revisions flagged for review
@@ -68,6 +72,7 @@ def needs_review(request, tag=None):
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='40/m', block=True)
 def with_localization_tag(request, tag=None):
     """
     Lists wiki documents with localization tag
@@ -87,6 +92,7 @@ def with_localization_tag(request, tag=None):
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='40/m', block=True)
 def with_errors(request):
     """
     Lists wiki documents with (KumaScript) errors
@@ -103,6 +109,7 @@ def with_errors(request):
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='40/m', block=True)
 def without_parent(request):
     """Lists wiki documents without parent (no English source document)"""
     docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
@@ -117,6 +124,7 @@ def without_parent(request):
 
 @block_user_agents
 @require_GET
+@ratelimit(key='user_or_ip', rate='400/m', block=True)
 def top_level(request):
     """Lists documents directly under /docs/"""
     docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
@@ -133,6 +141,7 @@ def top_level(request):
 @require_GET
 @process_document_path
 @prevent_indexing
+@ratelimit(key='user_or_ip', rate='20/m', block=True)
 def revisions(request, document_slug, document_locale):
     """
     List all the revisions of a given document.
