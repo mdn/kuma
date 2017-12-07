@@ -50,7 +50,7 @@ def test_dashboard_overflow(base_url, selenium):
     """
     page = DashboardPage(selenium, base_url).open()
     page.open_first_details()
-    assert page.scrollWidth < page.clientWidth
+    assert page.scroll_width <= page.client_width
 
 
 @pytest.mark.nondestructive
