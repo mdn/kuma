@@ -28,7 +28,7 @@ def test_dashboard(base_url, selenium):
     assert page.details_items_length is 1
     assert page.is_first_details_displayed
     # contains a diff
-    assert page.is_first_details_diff_displayed
+    page.wait_for_first_details_diff_displayed()
     # save id of first revision on page one
     first_row_id = page.first_row_id
     # click on page two link
