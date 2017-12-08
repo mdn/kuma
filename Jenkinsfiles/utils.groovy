@@ -151,7 +151,8 @@ def compose_test() {
     // Build the static assets required for many tests.
     sh_with_notify("${dc} run noext make build-static", 'Build static assets')
     // Run the Kuma tests, building the mysql image before starting.
-    sh_with_notify("${dc} up --build test", 'Kuma tests')
+    sh_with_notify("${dc} build mysql", 'Build mysql')
+    sh_with_notify("${dc} run test", 'Kuma tests')
     // Tear everything down.
     sh_with_notify("${dc} down", 'Post-test tear-down')
 }
