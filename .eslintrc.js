@@ -1,68 +1,68 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "jquery": true
+    'env': {
+        'browser': true,
+        'jquery': true
     },
-    "extends": "eslint:recommended",
-    "rules": {
-        "no-global-assign": 1,
-        "indent": [
-            1,
+    'extends': 'eslint:recommended',
+    'rules': {
+        'no-global-assign': 'error',
+        'indent': [
+            'error',
             4,
             {SwitchCase: 1}
         ],
-        "linebreak-style": [
-            1,
-            "unix"
+        'linebreak-style': [
+            'error',
+            'unix'
         ],
-        "no-cond-assign": 1,
-        "no-console": [1, {
-            "allow": ["error", "info"]
+        'no-cond-assign': 'error',
+        'no-console': ['error', {
+            'allow': ['error', 'info']
         }],
-        "no-empty": 1,
-        "no-extra-semi": 1,
-        "no-fallthrough": 1,
-        "no-redeclare": 1,
-        "no-undef": 1,
-        "no-unused-vars": 1,
-        "quotes": [
-            1,
-            "single"
+        'no-empty': 'error',
+        'no-extra-semi': 'error',
+        'no-fallthrough': 'error',
+        'no-redeclare': 'error',
+        'no-undef': 'error',
+        'no-unused-vars': 'error',
+        'quotes': [
+            'error',
+            'single'
         ],
-        "semi": [
-            1,
-            "always"
+        'semi': [
+            'error',
+            'always'
         ],
-        "curly": [
-            1,
-            "all"
+        'curly': [
+            'error',
+            'all'
         ],
-        "camelcase": [
-            1,
+        'camelcase': [
+            'error',
             {
-                "properties": "always"
+                'properties': 'always'
             }
         ],
-        "eqeqeq": [
-            1,
-            "smart"
+        'eqeqeq': [
+            'error',
+            'smart'
         ],
-        "one-var-declaration-per-line": [
-            1,
-            "always"
+        'one-var-declaration-per-line': [
+            'error',
+            'always'
         ],
-        "new-cap": 1
+        'new-cap': 'error'
     },
-    "globals": {
-        "CKEDITOR": true,
-        "FontFaceObserver": true,
-        "ga": true,
-        "gettext": true,
-        "interpolate": true,
-        "mdn": true,
-        "Mozilla": true,
-        "waffle": true,
-        "Prism": true,
-        "Promise": true
+    'globals': {
+        'CKEDITOR': true,
+        'FontFaceObserver': true,
+        'ga': true,
+        'gettext': true,
+        'interpolate': true,
+        'mdn': true,
+        'Mozilla': true,
+        'waffle': true,
+        'Prism': true,
+        'Promise': true
     }
 };
