@@ -961,6 +961,12 @@ for locale, slug in LOCALE_CSS.items():
 
 
 PIPELINE_JS = {
+    'dnt-helper': {
+        'source_filenames': (
+            'js/libs/mozilla.dnthelper.js',
+        ),
+        'output_filename': 'build/js/mozilla-dnthelper.js',
+    },
     'font-check': {
         'source_filenames': (
             'js/font-check.js',

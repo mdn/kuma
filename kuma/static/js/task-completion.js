@@ -15,11 +15,16 @@
     }
 
     function inquire() {
-
         // dimension14 is "Saw Survey Gizmo Task Completion survey"
-        ga('set', 'dimension14', 'Yes');
+        mdn.analytics.setDimension({
+            dimension: 'dimension14',
+            value: 'Yes'
+        });
 
-        ga('send', 'event', 'survey', 'prompt', 'impression', {
+        mdn.analytics.trackEvent({
+            category: 'survey',
+            action: 'prompt',
+            value: 'impression',
             nonInteraction: true
         });
 
@@ -38,16 +43,21 @@
         // don't ask task completion again for 32 days (waffle flags last 31)
         localStorage.setItem('taskTracker', Date.now() + (1000*60*60*24)*32);
 
-        // get ga to append the clientId once it has initialized
-        ga(function(tracker) {
-            var clientId = tracker.get('clientId');
-            surveyLink += '&c=' + clientId;
-            $('#task-link').attr('href', surveyLink);
-        });
+        if (win.ga) {
+            // get ga to append the clientId once it has initialized
+            ga(function(tracker) {
+                var clientId = tracker.get('clientId');
+                surveyLink += '&c=' + clientId;
+                $('#task-link').attr('href', surveyLink);
+            });
+        }
 
         // listen for clicks
         $('#task-link').on('click', function() {
-            ga('send', 'event', 'survey', 'prompt', 'participate', {
+            mdn.analytics.trackEvent({
+                category: 'survey',
+                action: 'prompt',
+                value: 'participate',
                 nonInteraction: false
             });
 
