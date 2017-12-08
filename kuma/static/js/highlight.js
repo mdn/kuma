@@ -1,4 +1,4 @@
-(function($, win) {
+(function($) {
     'use strict';
 
     // find all targets and wrap appropriately
@@ -13,4 +13,4 @@
     $articleSubHeads = $('#wikiArticle h3, #wikiArticle h5');
     highlight($articleSubHeads);
 
-})(jQuery, window);
+})(jQuery);
