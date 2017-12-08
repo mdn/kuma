@@ -1,6 +1,8 @@
 from functools import wraps
+import pytest
 import re
 
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
@@ -76,6 +78,7 @@ class BasePage(Page):
 
         _root_locator = (By.ID, 'main-header')
         _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
+        _logo_locator = (By.CSS_SELECTOR, 'a.logo')
         _tech_submenu_trigger_locator = (By.XPATH,
                                          'id(\'nav-tech-submenu\')/..')
         _tech_submenu_locator = (By.ID, 'nav-tech-submenu')
@@ -124,12 +127,37 @@ class BasePage(Page):
             submenu = self.find_element(*self._tech_submenu_locator)
             return submenu.is_displayed()
 
+        def show_submenu(self, menu_element, revealed_element,
+                         off_element=None):
+            """Hover over a menu element that reveals another element.
+
+            For Chrome and local Firefox, it is sufficent to move to the
+            element to get a hover.
+
+            For the Remote driver with Firefox, it is more reliable if the
+            mouse is first moved off-element, and then on-element. It still
+            occasionally fails in some contexts, such as the homepage.
+            (geckodriver 0.19.1, Selenium 3.8.1, Firefox 57).
+            """
+            if off_element is None:
+                # Use the logo as the element that isn't the hover menu
+                off_element = self.find_element(*self._logo_locator)
+            hover = (ActionChains(self.selenium)
+                     .move_to_element(off_element)
+                     .move_to_element(menu_element))
+            hover.perform()
+            try:
+                self.wait.until(lambda s: revealed_element.is_displayed())
+            except TimeoutException:
+                if self.selenium._is_remote and self.selenium.name == 'firefox':
+                    pytest.xfail("Known issue with hover"
+                                 " (Selenium 3 w/ Remote Firefox)")
+                raise
+
         def show_tech_submenu(self):
             submenu_trigger = self.find_element(*self._tech_submenu_trigger_locator)
             submenu = self.find_element(*self._tech_submenu_locator)
-            hover = ActionChains(self.selenium).move_to_element(submenu_trigger)
-            hover.perform()
-            self.wait.until(lambda s: submenu.is_displayed())
+            self.show_submenu(submenu_trigger, submenu)
 
         # feedback submenu
         @property
@@ -155,9 +183,7 @@ class BasePage(Page):
         def show_feedback_submenu(self):
             submenu_trigger = self.find_element(*self._feedback_submenu_trigger_locator)
             submenu = self.find_element(*self._feedback_submenu_locator)
-            hover = ActionChains(self.selenium).move_to_element(submenu_trigger)
-            hover.perform()
-            self.wait.until(lambda s: submenu.is_displayed())
+            self.show_submenu(submenu_trigger, submenu)
 
         def open_feedback(self, locale=None):
             self.find_element(*self._feedback_link_locator).click()

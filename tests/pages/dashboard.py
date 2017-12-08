@@ -63,6 +63,10 @@ class DashboardPage(BasePage):
         first_details_diff = self.find_element(*self._first_details_diff_locator)
         return first_details_diff.is_displayed()
 
+    def wait_for_first_details_diff_displayed(self):
+        first_details_diff = self.find_element(*self._first_details_diff_locator)
+        self.wait.until(lambda s: first_details_diff.is_displayed())
+
     def click_page_two(self):
         revision_filter_form = self.find_element(*self._revision_filter_form_locator)
         page_two_link = self.find_element(*self._page_two_link)
