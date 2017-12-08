@@ -144,8 +144,9 @@ def announce_push() {
 
 def compose_test() {
     def dc = 'docker-compose -f docker-compose.yml -f docker-compose.test.yml'
+    def dc_down = "${dc} down --volumes --remove-orphans"
     // Pre-test tear down to ensure we're starting with a clean slate.
-    sh_with_notify("${dc} down", 'Pre-test tear-down')
+    sh_with_notify(dc_down, 'Pre-test tear-down')
     // Run the "smoke" tests with no external dependencies.
     sh_with_notify("${dc} run noext", 'Smoke tests')
     // Build the static assets required for many tests.
@@ -154,7 +155,7 @@ def compose_test() {
     sh_with_notify("${dc} build mysql", 'Build mysql')
     sh_with_notify("${dc} run test", 'Kuma tests')
     // Tear everything down.
-    sh_with_notify("${dc} down", 'Post-test tear-down')
+    sh_with_notify(dc_down, 'Post-test tear-down')
 }
 
 return this;
