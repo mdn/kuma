@@ -121,6 +121,9 @@ signin link works), and include the tests that only make sense in maintenance
 mode (e.g., making sure that endpoints related to editing redirect to the
 maintenance-mode page).
 
+Using Alternate Environments
+============================
+
 Run tests on SauceLabs
 ----------------------
 
@@ -156,6 +159,39 @@ test runs at `MDN's Jenkins-based multi-branch pipeline`_.
 .. _`mozilla/kuma GitHub repository`: https://github.com/mozilla/kuma
 .. _`mozilla/kuma@stage-integration-tests`: https://github.com/mozilla/kuma/tree/stage-integration-tests
 .. _`MDN's Jenkins-based multi-branch pipeline`: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/branches/
+
+Run tests locally using Selenium Docker images
+----------------------------------------------
+Running Selenium locally will take over your browser, and may make it
+difficult to do other things with your development system. One option is to
+use Selenium's Docker images, which contain browsers, drivers, and the
+selenium agent.
+
+.. note:: This feature is in development, and some tests will fail against
+          the local environment.
+
+To run dockerized Selenium against your local development environment::
+
+    $ scripts/run_functional_tests.sh
+
+This uses the "standalone" Docker images, and runs the tests in Chrome and
+Firefox. It places test results in a subdirectory of ``test_results``, which
+includes logs, screenshots, and other details.
+
+To run with Selenium Grid, like the MDN CI Infrastructure, use::
+
+    $ SELENIUM_HUB=1 scripts/run_functional_tests.sh
+
+You can test staging by setting a new base URL::
+
+    $ BASE_URL=https://stage.mdn.moz.works scripts/run_functional_tests.sh
+
+You can adjust what is tested by passing arguments (except for the
+``--base-url`` argument, which must be passed as an environment variable)::
+
+    $ scripts/run_functional_tests.sh -m "not login" tests/functional/test_home.py
+
+See ``scripts/run_functional_tests.sh`` for the all the configuration options.
 
 MDN CI Infrastructure
 =====================
