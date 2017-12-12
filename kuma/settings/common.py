@@ -113,7 +113,9 @@ CACHEBACK_CACHE_ALIAS = 'memcache'
 vars().update(config('EMAIL_URL',
                      default='console://',
                      cast=dj_email_url.parse))
-EMAIL_SUBJECT_PREFIX = '[mdn] '
+EMAIL_SUBJECT_PREFIX = config('EMAIL_SUBJECT_PREFIX', default='[mdn]')
+# Ensure EMAIL_SUBJECT_PREFIX has one trailing space
+EMAIL_SUBJECT_PREFIX = EMAIL_SUBJECT_PREFIX.strip() + ' '
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = config(
@@ -1249,6 +1251,9 @@ CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
+
+# Maximum tasks run before auto-restart of child process,
+# to mitigate memory leaks. None / 0 means unlimited tasks
 CELERYD_MAX_TASKS_PER_CHILD = config(
     'CELERYD_MAX_TASKS_PER_CHILD',
     default=0,
