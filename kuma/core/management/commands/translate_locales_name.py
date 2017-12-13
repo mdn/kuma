@@ -15,11 +15,9 @@ class Command(BaseCommand):
                            "Do not edit it manually\n"
                            "Background: https://bugzil.la/859499#c11\n")
 
-        to_translate = (set(settings.MDN_LANGUAGES) |
-                        set(settings.CANDIDATE_LANGUAGES))
         LANGUAGES = sorted([lang_info.english
                             for lang_code, lang_info in settings.LOCALES.items()
-                            if lang_code in to_translate])
+                            if lang_code in settings.ENABLED_LOCALES])
 
         for lang in LANGUAGES:
             template_string += u"{{ _('%s') }}\n" % lang
