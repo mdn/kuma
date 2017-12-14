@@ -20,7 +20,7 @@ h2 > .collapse-trigger {
     &:before {
         display: inline-block;
         color: $link-color;
-        @include bidi-value(content, '\f0da', '\f0d9');
+        @include bidi(((content, '\f0da', '\f0d9'),));
         cursor: pointer;
         font-family: FontAwesome;
         line-height: 39px;

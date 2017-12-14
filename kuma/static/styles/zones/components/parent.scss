@@ -17,10 +17,12 @@ Custom images which appear in zone headers
 @media #{$mq-tablet-and-up} {
     .zone-parent {
         @include heading-1();
-        @include bidi-style(border-right-width, 1px, border-left-width, 0);
-        @include bidi-value(float, left, right);
-        @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
-        @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+        @include bidi((
+            (border-right-width, 1px, border-left-width, 0),
+            (float, left, right),
+            (margin-right, $grid-spacing, margin-left, 0),
+            (padding-right, $grid-spacing, padding-left, 0),
+        ));
     }
 }
 
@@ -31,8 +33,10 @@ Custom images which appear in zone headers
     $image-big-width: round($width * $image-big-size / $height);
 
     .zone-parent {
-        @include bidi-value(float, left, right);
-        @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+        @include bidi((
+            (float, left, right),
+            (margin-right, $grid-spacing, margin-left, 0),
+        ));
         display: block;
         background-image: url($path-to-images + 'zones/' + $img);
         direction: ltr; // ltr should be set with negative text indent

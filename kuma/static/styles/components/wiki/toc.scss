@@ -26,7 +26,7 @@ $padding-horizontal: 30px;
     display: inline-block;
     font-family: $heading-font-family;
     @include set-font-size(22px);
-    @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+    @include bidi(((padding-right, $grid-spacing, padding-left, 0),));
 }
 
 .toc-links {
@@ -49,7 +49,7 @@ $padding-horizontal: 30px;
         @include set-font-size(17px);
         font-weight: bold;
         letter-spacing: .02em;
-        @include bidi-value(padding, $padding-vertical $padding-horizontal $padding-vertical 0, $padding-vertical 0 $padding-vertical $padding-horizontal);
+        @include bidi(((padding, $padding-vertical $padding-horizontal $padding-vertical 0, $padding-vertical 0 $padding-vertical $padding-horizontal),));
         white-space: nowrap;
         text-decoration: none;
 
@@ -60,7 +60,7 @@ $padding-horizontal: 30px;
     }
 
     li:last-child a {
-        @include bidi-value(padding, $padding-vertical 0 $padding-vertical 0, $padding-vertical 0 $padding-vertical 0);
+        @include bidi(((padding, ($padding-vertical 0 $padding-vertical 0), ($padding-vertical 0 $padding-vertical 0)),));
     }
 }
 
@@ -88,7 +88,7 @@ $emify-tablet-height: (680px / 16px) * 1em;
                     display: block;
                     position: absolute;
                     bottom: 0;
-                    @include bidi-style(left, 0, right, $padding-horizontal);
+                    @include bidi(((left, 0, right, $padding-horizontal),));
                     width: calc(100% - #{$padding-horizontal});
                     height: 0;
                     background-color: $accent-light;

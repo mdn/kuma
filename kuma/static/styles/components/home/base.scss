@@ -12,8 +12,10 @@
             position: relative;
             top: -5px; // try to center icon vertically
             @include set-font-size(30px);
-            @include bidi-value(margin-right, $icon-margin, 0);
-            @include bidi-value(margin-left, 0, $icon-margin);
+            @include bidi((
+                (margin-right, $icon-margin, 0),
+                (margin-left, 0, $icon-margin),
+            ));
         }
     }
 

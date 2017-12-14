@@ -1,6 +1,6 @@
 .callout-box {
     @include pull-aside();
-    @include bidi-value(margin-bottom, $grid-spacing, $grid-spacing); /* override behaviour of pull-aside */
+    @include bidi(((margin-bottom, $grid-spacing, $grid-spacing),)); /* override behaviour of pull-aside */
     box-sizing: border-box;
     background: $light-background-color;
     border: 1px solid #f1f1f1;
@@ -12,6 +12,6 @@
 
     /* override behaviour of pull-aside */
     @media #{$mq-small-mobile-and-down} {
-        @include bidi-value(margin-bottom, $grid-spacing, $grid-spacing);
+        @include bidi(((margin-bottom, $grid-spacing, $grid-spacing),));
     }
 }

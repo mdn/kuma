@@ -10,7 +10,7 @@ overrides for tagit widget
     font-size: 1em;
 
     .close {
-        @include bidi-style(margin-left, 4px, margin-right, 0);
+        @include bidi(((margin-left, 4px, margin-right, 0),));
 
         .text-icon {
             display: none;
@@ -22,7 +22,7 @@ overrides for tagit widget
             display: inline-block;
             height: 15px;
             margin: 0 0 -3px 0;
-            @include bidi-style(margin-left, 3px, margin-right, 0);
+            @include bidi(((margin-left, 3px, margin-right, 0),));
             overflow: hidden;
             direction: ltr; // ltr should be set with negative text indent
             text-indent: -9999px;

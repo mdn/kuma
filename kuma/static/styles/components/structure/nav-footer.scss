@@ -49,10 +49,10 @@
 .footer-social {
     @include set-font-size($h4-font-size);
     display: inline-block;
-    @include bidi-style(margin-right, ($grid-spacing / 2 ), margin-left, 0);
+    @include bidi(((margin-right, ($grid-spacing / 2 ), margin-left, 0),));
 
     a {
-        @include bidi-style(padding-right, $grid-spacing, padding-left, 0);
+        @include bidi(((padding-right, $grid-spacing, padding-left, 0),));
     }
 }
 
@@ -73,7 +73,7 @@
 
     li {
         display: inline-block;
-        @include bidi-style(margin-right, $grid-spacing, margin-left, 0);
+        @include bidi(((margin-right, $grid-spacing, margin-left, 0),));
     }
 }
 
@@ -103,7 +103,7 @@
 
     .footer-social {
         a {
-            @include bidi-style(padding-right, ($grid-spacing / 2 ), padding-left, 0);
+            @include bidi(((padding-right, ($grid-spacing / 2 ), padding-left, 0),));
         }
     }
 
@@ -149,14 +149,14 @@
         position: absolute;
         top: $grid-spacing;
         width: -calc-col-width(3);
-        @include bidi-style(left, -calc-col-width(5), right, auto);
+        @include bidi(((left, -calc-col-width(5), right, auto),));
     }
 
     .footer-group-mozilla {
         position: absolute;
         top: $grid-spacing;
         width: -calc-col-width(3);
-        @include bidi-style(left, -calc-col-width(8), right, auto);
+        @include bidi(((left, -calc-col-width(8), right, auto),));
     }
 
     .languages {

@@ -56,8 +56,10 @@ submenu
 @mixin submenu() {
     position: absolute;
     top: 40px;
-    @include bidi-style(left, auto, right, 0);
-    @include bidi-style(right, 0, left, auto);
+    @include bidi((
+        (left, auto, right, 0),
+        (right, 0, left, auto),
+    ));
     z-index: 3;
     display: none;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, .4);
@@ -73,15 +75,19 @@ submenu
     &:before {
         position: absolute;
         z-index: 2;
-        @include bidi-style(left, auto, right, 10px);
-        @include bidi-style(right, 10px, left, auto);
+        @include bidi((
+            (left, auto, right, 10px),
+            (right, 10px, left, auto),
+        ));
     }
 
     &:after {
         position: absolute;
         z-index: 1;
-        @include bidi-style(left, auto, right, 10px);
-        @include bidi-style(right, 10px, left, auto);
+        @include bidi((
+            (left, auto, right, 10px),
+            (right, 10px, left, auto),
+        ));
     }
 
     /* lists */
@@ -110,7 +116,7 @@ submenu
 
     /* for language menu */
     bdi {
-        @include bidi-value(text-align, left, right);
+        @include bidi(((text-align, left, right),));
     }
 
     /* columns */
@@ -121,9 +127,11 @@ submenu
             display: inline-block;
 
             &:nth-child(even) {
-                @include bidi-style(margin-left, $grid-spacing, margin-right, 0);
-                @include bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
-                @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
+                @include bidi((
+                    (margin-left, $grid-spacing, margin-right, 0),
+                    (border-left, 1px dotted #d4dde4, border-right, 0),
+                    (padding-left, $grid-spacing, padding-right, 0),
+                ));
             }
         }
     }
@@ -139,7 +147,7 @@ submenu
            since this button should have a bit of size and the
            rabbit hole that lead me here is pleanty deep enough */
         padding: 10px !important; /* stylelint-disable-line declaration-no-important */
-        @include bidi-style(right, 0, left, auto);
+        @include bidi(((right, 0, left, auto),));
         color: inherit;
 
         i {

@@ -225,7 +225,7 @@ coloured boxes
     @include set-font-size($body-font-size);
     background: $bg-color;
     border: 0 $code-block-border-style $border-color;
-    @include bidi-style(border-left-width, $code-block-border-width, border-right-width, 0);
+    @include bidi(((border-left-width, $code-block-border-width, border-right-width, 0),));
     color: $text-color;
     margin-top: 0;
     margin-bottom: $grid-spacing;
@@ -274,8 +274,10 @@ coloured boxes
     @include restrict-line-length();
     overflow: hidden;
     margin-bottom: $grid-spacing;
-    @include bidi-style(border-left-width, $border-width, border-right-width, 0);
-    @include bidi-style(border-left-style, solid, border-right-style, none);
+    @include bidi((
+        (border-left-width, $border-width, border-right-width, 0),
+        (border-left-style, solid, border-right-style, none),
+    ));
     padding: ($grid-spacing / 2);
 
     @if ($remove-last-spacing) {
@@ -330,26 +332,104 @@ Spacing
 
 /*
 Bidi / l10n
+- The bidi mixins are used to declare both the LTR and RTL values for
+  a property together and output appropriate declarations
+- This makes it easier to maintain the RTL version since you only have
+  to update values in one place.
 ====================================================================== */
 
-// Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
-// example: @include bidi-style(left, 20px, right, auto)
-@mixin bidi-style($ltr-prop, $value, $inverse-prop, $inverse-value, $make-important: false) {
-    $make-important: if($make-important, unquote('!important'), unquote(''));
+/*
+    @mixin bidi
+    accepts: a list of lists - each list must have 3 or 4 values
 
-    #{$ltr-prop}: $value $make-important;
+    A list with three properties overrides the ltr value in rtl locales
+    @include bidi(((float, left, right),))
+    LTR: float: left;
+    RTL: float: right;
+
+    A list with four properties overrides the ltr value in rtl locales
+    AND provides a new rtl only property value
+    @include bidi(((margin-right, 20px, margin-left, 0),))
+    LTR: margin-right: 10px;
+    RTL: margin-right: 0;
+         margin-left: 10px;
+
+    Example input:
+    .test {
+        @include bidi((
+            (float, left, right),
+            (margin-right, ($grid-spacing / 2), margin-left, 0),
+        ));
+    }
+
+    Example output:
+    .test {
+        float: left;
+        margin-right: 10px;
+    }
+    html[dir='rtl'] .test {
+        float: right;
+        margin-right: 0;
+        margin-left: 10px;
+    }
+}
+*/
+@mixin bidi($list) {
+    & {
+        @each $property, $ltr-value, $inverse-val-or-prop, $inverse-value in $list {
+            @if type-of($ltr-value) == 'null' or type-of($inverse-val-or-prop) == 'null' {
+                @warn $list; /* I don't know why this won't output as part of the error */
+                @error 'Error processing @mixin bidi(), see previous warning for stack trace';
+                /*
+                    Trouble shooting:
+                    - Check that you have the right number of nested (((parentheses)))
+                    - Check that there is a trailing comma:
+                      @include bidi(((float, left, right),));
+                */
+            }
+            #{$property}: $ltr-value;
+        }
+    }
 
     html[dir='rtl'] & {
-        @if ($ltr-prop != $inverse-prop) {
-            #{$inverse-prop}: $value $make-important;
+        @each $property, $ltr-value, $inverse-val-or-prop, $inverse-value in $list {
+            @if $inverse-value {
+                #{$property}: $inverse-value;
+                #{$inverse-val-or-prop}: $ltr-value;
+            }
+            @else {
+                #{$property}: $inverse-val-or-prop;
+            }
         }
-        #{$ltr-prop}: $inverse-value $make-important;
     }
 }
 
-@mixin bidi-value($prop, $ltr, $rtl, $make-important: false) {
-    @include bidi-style($prop, $ltr, $prop, $rtl, $make-important);
+/*
+    @mixin bidi-value-vendorize
+    - adds vendor prefixes to property
+    - does not support multiple declarations
+    - does support !important with optional 4th parameter
+
+    Example input:
+
+    .test {
+        @include bidi-value-vendorize(transform, rotate(90deg), rotate(-90deg));
+    }
+
+    Example output:
+
+    .test {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    html[dir='rtl'] .test {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
 }
+*/
 
 @mixin bidi-value-vendorize($prop, $ltr, $rtl, $make-important: false) {
     $make-important: if($make-important, unquote('!important'), unquote(''));
@@ -361,12 +441,15 @@ Bidi / l10n
     }
 }
 
+
+/* =================================================================== */
+
 @mixin right-icons() {
-    @include bidi-value(margin-right, $icon-margin, 0);
+    @include bidi(((margin-right, $icon-margin, 0),));
 }
 
 @mixin left-icons() {
-    @include bidi-value(margin-left, $icon-margin, 0);
+    @include bidi(((margin-left, $icon-margin, 0),));
 }
 
 
@@ -396,7 +479,7 @@ These are not dynamic but serve as mixins
     margin-top: $grid-spacing * 5 + $section-border-width;
 
     &:before {
-        @include bidi-style(left, 0, right, auto);
+        @include bidi(((left, 0, right, auto),));
         border-top: $section-border;
         content: '';
         display: block;
@@ -450,8 +533,10 @@ pull aside
 @mixin pull-aside() {
     @include column-4();
     min-width: 200px;
-    @include bidi-value(float, right, left);
-    @include bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
+    @include bidi((
+        (float, right, left),
+        (margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0),
+    ));
 
     h3:first-child,
     h4:first-child {
@@ -460,7 +545,7 @@ pull aside
 
     @media #{$mq-small-mobile-and-down} {
         width: 100%;
-        @include bidi-value(margin, 0, 0);
+        @include bidi(((margin, 0, 0),));
     }
 }
 
@@ -506,16 +591,16 @@ Placeholders
     @include clearfix();
 
     input[type='checkbox'] {
-        @include bidi-value(float, left, right);
+        @include bidi(((float, left, right),));
     }
 
     label {
         position: absolute;
-        @include bidi-style(margin-left, 25px, margin-right, 0);
+        @include bidi(((margin-left, 25px, margin-right, 0),));
     }
 
     > p {
-        @include bidi-value(clear, left, right);
+        @include bidi(((clear, left, right),));
     }
 }
 
@@ -529,10 +614,12 @@ Placeholders
     overflow: auto;
 
     /* code is always LTR */
-    direction: ltr;
-    text-align: left;
-    @include bidi-value(border-left-width, $code-block-border-width, $code-block-border-width, !important);
-    @include bidi-value(border-right-width, 0, 0, !important);
+    /* stylelint-disable declaration-no-important  */
+    direction: ltr !important;
+    text-align: left !important;
+    border-left-width: $code-block-border-width !important;
+    border-right-width: 0 !important;
+    /* stylelint-enable */
 
     p {
         @include full-width-content();
@@ -592,14 +679,18 @@ Placeholders
     box-sizing: border-box;
     display: inline-block;
     border-bottom: 2px solid;
-    @include bidi-value(padding, 10px 30px 10px 0, 10px 0 10px 30px);
-    @include bidi-value(text-align, left, right);
+    @include bidi((
+        (padding, 10px 30px 10px 0, 10px 0 10px 30px),
+        (text-align, left, right),
+    ));
 
     &:after {
         position: absolute;
         bottom: 10px;
-        @include bidi-style(right, 0, left, auto);
-        @include bidi-value(content, '\f061', '\f060');
+        @include bidi((
+            (right, 0, left, auto),
+            (content, '\f061', '\f060'),
+        ));
         font-family: fontAwesome;
         transition: margin .1s ease-in-out;
     }
@@ -609,7 +700,7 @@ Placeholders
         text-decoration: none;
 
         &:after {
-            @include bidi-style(margin-right, -4px, margin-left, 0);
+            @include bidi(((margin-right, -4px, margin-left, 0),));
         }
     }
 

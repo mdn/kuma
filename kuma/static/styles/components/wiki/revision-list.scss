@@ -77,12 +77,12 @@ html[dir=rtl] .revision-list-controls:before {
 }
 
 .revision-list-prev {
-    @include bidi-value(padding, 0 0 0 10px, 0 10px 0 0);
+    @include bidi(((padding, 0 0 0 10px, 0 10px 0 0),));
     width: 45px;
 }
 
 .revision-list-date {
-    @include bidi-value(padding, 0 0 0 10px, 0 10px 0 0);
+    @include bidi(((padding, 0 0 0 10px, 0 10px 0 0),));
     width: 190px;
 }
 
@@ -104,5 +104,5 @@ html[dir=rtl] .revision-list-controls:before {
 
 /* make the Compare selected revisions button align to layout */
 .revision-list-controls .fixed {
-    @include bidi-style(left, 24px, right, auto);
+    @include bidi(((left, 24px, right, auto),));
 }

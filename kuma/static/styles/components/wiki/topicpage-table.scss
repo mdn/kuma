@@ -56,15 +56,17 @@ body .topicpage-table { // need the extra specificity of body to over-ride .text
             display: table-cell;
             width: 50%;
             padding: 0 $grid-spacing;
-            @include bidi-style(border-left, solid 6px #eaeff2, border-right, none);
+            @include bidi(((border-left, solid 6px #eaeff2, border-right, none),));
 
             &:first-child {
-                @include bidi-style(border-left, 0, border-right, solid 6px #eaeff2);
-                @include bidi-style(padding-left, 0, padding-right, $grid-spacing);
+                @include bidi((
+                    (border-left, none, border-right, solid 6px #eaeff2),
+                    (padding-left, 0, padding-right, $grid-spacing),
+                ));
             }
 
             &:last-child {
-                @include bidi-style(padding-right, 0, padding-left, $grid-spacing);
+                @include bidi(((padding-right, 0, padding-left, $grid-spacing),));
             }
         }
     }

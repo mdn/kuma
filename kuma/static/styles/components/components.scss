@@ -15,7 +15,7 @@ toggler component: a basic slide up and slide now system
     #{$selector-icon} {
         position: absolute;
         top: 3px;
-        @include bidi-style(right, $icon-margin, left, auto);
+        @include bidi(((right, $icon-margin, left, auto),));
         color: $text-color;
     }
 
@@ -56,7 +56,7 @@ subnav component:  used within the wiki
 
     #{$selector-icon} {
         top: 23px;
-        @include bidi-style(right, 20px, left, auto);
+        @include bidi(((right, 20px, left, auto),));
     }
 
     .toggle-container {

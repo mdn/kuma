@@ -24,15 +24,17 @@ $callout-min-height: 170px;
             display: block;
             position: absolute;
             top: $grid-spacing;
-            @include bidi-style(right, $grid-spacing, left, auto);
+            @include bidi(((right, $grid-spacing, left, auto),));
             height: $callout-icon-width;
             width: $callout-icon-width;
             background-image: url($path-to-embedded-images + 'promo-sprite.png');
         }
 
         &:before {
-            @include bidi-style(content, '\f061', content, '\f060');
-            @include bidi-style(right, $grid-spacing, left, auto);
+            @include bidi((
+                (content, '\f061', content, '\f060'),
+                (right, $grid-spacing, left, auto),
+            ));
             font-family: FontAwesome;
             bottom: 11px;
             position: absolute;
@@ -45,7 +47,7 @@ $callout-min-height: 170px;
         position: absolute;
         z-index: 1;
         bottom: -2px;
-        @include bidi-value(padding, $grid-spacing $callout-icon-space $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing $callout-icon-space);
+        @include bidi(((padding, $grid-spacing $callout-icon-space $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing $callout-icon-space),));
         box-sizing: border-box;
     }
 }
@@ -58,7 +60,7 @@ $callout-min-height: 170px;
         }
 
         span {
-            @include bidi-value(padding, $grid-spacing $callout-arrow-space $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing $callout-arrow-space);
+            @include bidi(((padding, $grid-spacing $callout-arrow-space $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing $callout-arrow-space),));
         }
     }
 }
@@ -157,13 +159,13 @@ Foundation callout
     button {
         position: relative;
         margin-top: 6px;
-        @include bidi-style(padding-right, 2em, padding-left, inherit);
+        @include bidi(((padding-right, 2em, padding-left, inherit),));
 
         &:after {
             position: absolute;
             top: 50%;
-            @include bidi-style(right, 10px, left, auto);
-            @include bidi-value(content, '\f061', '\f060');
+            @include bidi(((right, 10px, left, auto),));
+            @include bidi(((content, '\f061', '\f060'),));
             font-family: fontAwesome;
             transform: translateY(-50%);
         }
@@ -200,7 +202,7 @@ $saucelabs-callout-image-spacing: 129px + 20px;
 
         &:after {
             display: none;
-            @include bidi-style(right, 20px, left, auto);
+            @include bidi(((right, 20px, left, auto),));
             background-image: url($path-to-embedded-images + 'promos/sauce-labs-home.png');
             height: 140px;
             top: 15px;
@@ -222,7 +224,7 @@ $saucelabs-callout-image-spacing: 129px + 20px;
     }
 
     button {
-        @include bidi-style(text-align, left, text-align, right);
+        @include bidi(((text-align, left, text-align, right),));
         background: #fff;
         border: 2px solid;
         border-radius: 0;
@@ -247,7 +249,7 @@ larger teaser image gets hidden and shown at a different rate than the usual cal
         }
 
         span {
-            @include bidi-value(padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing));
+            @include bidi(((padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing)),));
         }
     }
 }
@@ -259,7 +261,7 @@ larger teaser image gets hidden and shown at a different rate than the usual cal
         }
 
         span {
-            @include bidi-value(padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing));
+            @include bidi(((padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing)),));
         }
     }
 }

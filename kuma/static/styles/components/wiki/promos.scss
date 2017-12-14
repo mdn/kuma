@@ -30,8 +30,10 @@
         }
 
         &:after {
-            @include bidi-style(margin-left, 6px, margin-right, 6px);
-            @include bidi-style(content, '\f105', content, '\f104');
+            @include bidi((
+                (margin-left, 6px, margin-right, 6px),
+                (content, '\f105', content, '\f104'),
+            ));
             @include set-font-size(30px);
             font-family: FontAwesome;
             padding: 0 15px;
@@ -41,19 +43,21 @@
 
 #wiki-promo-sauce-labs-a {
     @include clearfix();
-    @include bidi-style(background-position, bottom 20px right 20px, background-position, bottom 20px left 20px);
-    @include bidi-style(padding, 20px 350px 20px 25px, padding, 20px 25px 20px 350px);
+    @include bidi((
+        (background-position, bottom 20px right 20px, background-position, bottom 20px left 20px),
+        (padding, 20px 350px 20px 25px, padding, 20px 25px 20px 350px),
+    ));
     background-image: url($path-to-embedded-images + 'promos/sauce-labs-wiki-a.png');
     min-height: 106px;
 
     .wiki-promo-copy,
     .wiki-promo-cta {
-        @include bidi-style(float, left, float, right);
+        @include bidi(((float, left, float, right),));
         box-sizing: border-box;
     }
 
     .wiki-promo-copy {
-        @include bidi-style(padding, 0 20px 0 0, padding, 0 0 0 20px);
+        @include bidi(((padding, 0 20px 0 0, padding, 0 0 0 20px),));
         width: 50%;
 
         p {
@@ -69,15 +73,19 @@
 }
 
 #wiki-promo-sauce-labs-b {
-    @include bidi-style(background-position, bottom right 20px, background-position, bottom left 20px);
-    @include bidi-style(padding, 20px 250px 20px 25px, padding, 20px 25px 20px 250px);
+    @include bidi((
+        (background-position, bottom right 20px, background-position, bottom left 20px),
+        (padding, 20px 250px 20px 25px, padding, 20px 25px 20px 250px),
+    ));
     background-image: url($path-to-embedded-images + 'promos/sauce-labs-wiki-b.png');
     min-height: 139px;
 }
 
 #wiki-promo-sauce-labs-c {
-    @include bidi-style(background-position, bottom right 20px, background-position, bottom left 20px);
-    @include bidi-style(padding, 0 230px 0 0, padding, 0 0 0 230px);
+    @include bidi((
+        (background-position, bottom right 20px, background-position, bottom left 20px),
+        (padding, 0 230px 0 0, padding, 0 0 0 230px),
+    ));
     background-color: transparent;
     background-image: url($path-to-embedded-images + 'promos/sauce-labs-wiki-c.png');
     margin-top: 20px;
@@ -113,12 +121,12 @@
     #wiki-promo-sauce-labs-a {
         .wiki-promo-copy,
         .wiki-promo-cta {
-            @include bidi-style(float, none, float, none);
+            @include bidi(((float, none, float, none),));
             width: auto;
         }
 
         .wiki-promo-cta {
-            @include bidi-style(text-align, left, text-align, right);
+            @include bidi(((text-align, left, text-align, right),));
             padding-top: 15px;
         }
     }
@@ -127,35 +135,40 @@
 // max 1200px
 @media #{$mq-small-desktop-and-down} {
     #wiki-promo-sauce-labs-b .wiki-promo-copy {
-        @include bidi-style(padding, 0 120px 0 0, padding, 0 0 0 120px);
+        @include bidi(((padding, 0 120px 0 0, padding, 0 0 0 120px),));
     }
 }
 
 // max 1024px
 @media #{$mq-tablet-and-down} {
     #wiki-promo-sauce-labs-b {
-        @include bidi-style(background-position, bottom right 40px, background-position, bottom left 40px);
-        @include bidi-style(padding, 20px 350px 20px 25px, padding, 20px 25px 20px 350px);
+        @include bidi((
+            (background-position, bottom right 40px, background-position, bottom left 40px),
+            (padding, 20px 350px 20px 25px, padding, 20px 25px 20px 350px),
+        ));
 
         .wiki-promo-copy {
-            @include bidi-style(padding, 0 0 0 0, padding, 0 0 0 0);
+            @include bidi(((padding, 0 0 0 0, padding, 0 0 0 0),));
         }
     }
 
     #wiki-promo-sauce-labs-c .wiki-promo-copy {
-        @include bidi-style(padding, 0 120px 0 0, padding, 0 0 0 120px);
+        @include bidi(((padding, 0 120px 0 0, padding, 0 0 0 120px),));
     }
 }
 
 // max 768px
 @media #{$mq-mobile-and-down} {
     #wiki-promo-sauce-labs-a {
-        @include bidi-style(background-position, bottom 20px center, background-position, bottom 20px center);
-        @include bidi-style(padding, 20px 10px 140px, padding, 20px 10px 140px);
+        /* need bidi to get specificity to override previoius bidi declarations */
+        @include bidi((
+            (background-position, bottom 20px center, background-position, bottom 20px center),
+            (padding, 20px 10px 140px, padding, 20px 10px 140px),
+        ));
 
         .wiki-promo-copy,
         .wiki-promo-cta {
-            @include bidi-style(text-align, center, text-align, center);
+            @include bidi(((text-align, center, text-align, center),));
         }
 
         .wiki-promo-copy {
@@ -168,8 +181,11 @@
     }
 
     #wiki-promo-sauce-labs-b {
-        @include bidi-style(background-position, bottom center, background-position, bottom center);
-        @include bidi-style(padding, 20px 20px 160px, padding, 20px 20px 160px);
+        /* need bidi to get specificity to override previoius bidi declarations */
+        @include bidi((
+            (background-position, bottom center, background-position, bottom center),
+            (padding, 20px 20px 160px, padding, 20px 20px 160px),
+        ));
 
         .wiki-promo-copy,
         .wiki-promo-cta {
@@ -177,32 +193,36 @@
         }
 
         .wiki-promo-copy {
-            @include bidi-style(padding, 0 40px, padding, 0 40px);
+            @include bidi(((padding, 0 40px, padding, 0 40px),));
         }
     }
 
     #wiki-promo-sauce-labs-c .wiki-promo-copy {
-        @include bidi-style(padding, 0, padding, 0);
+        @include bidi(((padding, 0, padding, 0),));
     }
 }
 
 // max 480px
 @media #{$mq-small-mobile-and-down} {
     #wiki-promo-sauce-labs-a .wiki-promo-copy {
-        @include bidi-style(padding, 0, padding, 0);
+        @include bidi(((padding, 0, padding, 0),));
     }
 
     #wiki-promo-sauce-labs-b {
-        @include bidi-style(padding, 20px 10px 160px, padding, 20px 10px 160px);
+        /* need bidi to get specificity to override previoius bidi declarations */
+        @include bidi(((padding, 20px 10px 160px, padding, 20px 10px 160px),));
 
         .wiki-promo-copy {
-            @include bidi-style(padding, 0, padding, 0);
+            @include bidi(((padding, 0, padding, 0),));
         }
     }
 
     #wiki-promo-sauce-labs-c {
-        @include bidi-style(background-position, bottom center, background-position, bottom center);
-        @include bidi-style(padding, 0 0 175px, padding, 0 0 175px);
+        /* need bidi to get specificity to override previoius bidi declarations */
+        @include bidi((
+            (background-position, bottom center, background-position, bottom center),
+            (padding, 0 0 175px, padding, 0 0 175px),
+        ));
         min-height: 0;
     }
 }

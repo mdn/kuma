@@ -30,7 +30,7 @@ input.newsletter-input-email {
 .newsletter-hide {
     position: absolute;
     top: ($grid-spacing / 2);
-    @include bidi-style(right, ($grid-spacing / 2), left, auto);
+    @include bidi(((right, ($grid-spacing / 2), left, auto),));
     z-index: 11;
     border: none;
     padding: 0;
@@ -38,7 +38,7 @@ input.newsletter-input-email {
 
 /* error messages */
 .newsletter-errors .errorlist {
-    @include bidi-style(padding-left, 0, padding-right, 0);
+    @include bidi(((padding-left, 0, padding-right, 0),));
     list-style-type: none;
 }
 
@@ -61,14 +61,16 @@ input.newsletter-input-email {
     position: relative;
     width: 100%;
     padding: ($grid-spacing / 2);
-    @include bidi-style(padding-right, 2em, padding-left, inherit);
+    @include bidi(((padding-right, 2em, padding-left, inherit),));
     text-align: left;
 
     &:after {
         position: absolute;
         top: 50%;
-        @include bidi-style(right, 10px, left, auto);
-        @include bidi-value(content, '\f061', '\f060');
+        @include bidi((
+            (right, 10px, left, auto),
+            (content, '\f061', '\f060'),
+        ));
         font-family: fontAwesome;
         transition: margin .1s ease-in-out;
         transform: translateY(-50%);
@@ -79,7 +81,7 @@ input.newsletter-input-email {
         text-decoration: none;
 
         &:after {
-            @include bidi-style(margin-right, -4px, margin-left, 0);
+            @include bidi(((margin-right, -4px, margin-left, 0),));
         }
     }
 }
@@ -119,7 +121,7 @@ input and submit on same line
         .newsletter-group-submit {
             box-sizing: border-box;
             width: 40%;
-            @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
+            @include bidi(((padding-left, $grid-spacing, padding-right, 0),));
         }
 
         .newsletter-submit {
@@ -170,7 +172,7 @@ text side by side with form fields
 
             .newsletter-group-submit {
                 width: auto;
-                @include bidi-style(padding-left, 0, padding-right, 0);
+                @include bidi(((padding-left, 0, padding-right, 0),));
             }
 
             .newsletter-submit {
@@ -267,7 +269,7 @@ article page modifications
         &:before {
             content: '';
             display: block;
-            @include bidi-value(float, right, left);
+            @include bidi(((float, right, left),));
             height: .5em;
             width: 1.5em;
         }

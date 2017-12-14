@@ -35,12 +35,12 @@ We cannot put these styles in the base/elements/ files because they don't apply 
 
     ul,
     ol {
-        @include bidi-style(padding-left, ($grid-spacing * 2), padding-right, 0);
+        @include bidi(((padding-left, ($grid-spacing * 2), padding-right, 0),));
         margin-bottom: $content-block-margin;
 
         &.no-bullets {
             list-style-type: none;
-            @include bidi-style(padding-left, 0, padding-right, 0);
+            @include bidi(((padding-left, 0, padding-right, 0),));
         }
     }
 
@@ -60,7 +60,7 @@ We cannot put these styles in the base/elements/ files because they don't apply 
 
     dd {
         margin-bottom: $content-block-margin;
-        @include bidi-style(padding-left, $grid-spacing, padding-right, 0);
+        @include bidi(((padding-left, $grid-spacing, padding-right, 0),));
     }
 
     /*
@@ -134,11 +134,11 @@ We cannot put these styles in the base/elements/ files because they don't apply 
         > h3:not(.highlight-spanned),
         > h3 .highlight-span,
         > div:not([class]) > h3 .highlight-span {
-            @include bidi-value(padding, 0 4px 0 $grid-spacing, 0 $grid-spacing 0 4px);
+            @include bidi(((padding, 0 4px 0 $grid-spacing, 0 $grid-spacing 0 4px),));
 
             /* indent more on larger screen */
             @media #{$mq-tablet-and-up} {
-                @include bidi-value(padding, 0 4px 0 $grid-spacing * 2, 0 $grid-spacing * 2 0 4px);
+                @include bidi(((padding, 0 4px 0 $grid-spacing * 2, 0 $grid-spacing * 2 0 4px),));
             }
         }
     }
@@ -199,7 +199,7 @@ We cannot put these styles in the base/elements/ files because they don't apply 
             td {
                 border: 1px solid #ccc;
                 padding: 5px;
-                @include bidi-value(text-align, left, right);
+                @include bidi(((text-align, left, right),));
                 vertical-align: top;
             }
 
@@ -217,7 +217,7 @@ We cannot put these styles in the base/elements/ files because they don't apply 
         border: solid #e0e0dc;
         border-width: 0 1px 1px 0;
         padding: $content-vertical-spacing $content-horizontal-spacing;
-        @include bidi-value('text-align', left, right);
+        @include bidi((('text-align', left, right),));
     }
 
     thead th {

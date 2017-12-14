@@ -35,7 +35,7 @@ table.html5ArticleToc { // need specificity to override table.text-content
 .html5ArticleToc ul {
     @include vendorize(column-width, 100px);
     margin-bottom: 0;
-    @include bidi-style(padding-left, 0, padding-right, 0);
+    @include bidi(((padding-left, 0, padding-right, 0),));
     list-style-type: none;
 }
 

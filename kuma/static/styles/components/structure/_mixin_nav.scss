@@ -7,7 +7,7 @@
         padding: $content-vertical-spacing 0;
 
         #{$selector-icon} {
-            @include bidi-value(float, right, left);
+            @include bidi(((float, right, left),));
         }
     }
 }
@@ -34,7 +34,7 @@
             }
         }
 
-        html[dir='rtl']:not(.no-js) & { // can't use bidi-style because html tag is in declaration
+        html[dir='rtl']:not(.no-js) & { // can't use bidi because html tag is in declaration
             #{$selector-icon} {
                 margin-right: 5px;
             }

@@ -25,14 +25,14 @@ wiki article bread crumbs
     span {
         display: inline-block;
         position: relative;
-        @include bidi-style(padding-right, 5px, padding-left, 0);
+        @include bidi(((padding-right, 5px, padding-left, 0),));
         /* borders increase hit area for mobile without messing with position of arrow */
         border-top: 15px solid transparent;
         border-bottom: 15px solid transparent;
         line-height: 1;
 
         &:after {
-            @include bidi-style(content, '\00a0\00a0\f054', content, '\00a0\00a0\f053');
+            @include bidi(((content, '\00a0\00a0\f054', content, '\00a0\00a0\f053'),));
             font-family: FontAwesome;
             color: $text-color;
             @include set-font-size(70%);

@@ -119,7 +119,7 @@ inline in a heading
         & + .indicatorInHeadline {
             position: absolute;
             top: 6px;
-            @include bidi-style(right, 0, left, auto);
+            @include bidi(((right, 0, left, auto),));
         }
     }
 
@@ -127,12 +127,12 @@ inline in a heading
     h4,
     h5,
     h6 {
-        @include bidi-value(float, left, right);
+        @include bidi(((float, left, right),));
     }
 }
 
 .indicatorInHeadline {
-    @include bidi-value(float, right, left);
+    @include bidi(((float, right, left),));
 }
 
 

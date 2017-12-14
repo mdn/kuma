@@ -17,8 +17,10 @@ Secondary navigation, site tools and login info
 
 @media #{$mq-tablet-and-up} {
     #nav-sec {
-        @include bidi-value(float, right, left);
-        @include bidi-style(right, ($gutter-width * -1), left, auto);
+        @include bidi((
+            (float, right, left),
+            (right, ($gutter-width * -1), left, auto),
+        ));
         background-color: $bg-dark;
 
         > ul > li {

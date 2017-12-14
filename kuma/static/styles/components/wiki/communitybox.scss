@@ -11,7 +11,7 @@ $communitybox-spacing: 13px;
     @include restrict-line-length();
     padding: $communitybox-spacing;
     background-color: $blue-light;
-    @include bidi-value(border, 0, 0);
+    @include bidi(((border, 0, 0),));
     @include set-font-size($body-font-size);
 
     strong {
@@ -60,7 +60,7 @@ ul.communitymailinglist { /* needs specificity to get past .text-content ul */
     display: inline-block;
     color: #fff;
     padding: 3px 6px;
-    @include bidi-style(margin-right, 3px, margin-left, 0);
+    @include bidi(((margin-right, 3px, margin-left, 0),));
     border-radius: 3px;
 }
 
