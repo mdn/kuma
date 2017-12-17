@@ -13,7 +13,7 @@
   <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
   {%- if not untrusted %}
     <link rel="home" href="{{ url('home') }}">
-    <link rel="license" href="#copyright">
+    <link rel="license" href="#license">
   {% endif %}
 
   {% block site_css %}
@@ -228,7 +228,7 @@
               <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
             </ul>
 
-            <div class="contentinfo">
+            <div id="license" class="contentinfo">
               {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
                 <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
                 <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
