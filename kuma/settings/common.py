@@ -192,6 +192,7 @@ ACCEPTED_LOCALES = (
     'sv-SE',    # Swedish (Sweden)
     'sw',       # Swahili
     'ta',       # Tamil
+    'te',       # Telugu
     'th',       # Thai
     'tl',       # Tagalog
     'tn',       # Tswana *** not in Pontoon
@@ -210,7 +211,6 @@ ACCEPTED_LOCALES = (
 # localization in Pontoon, but pages can not be translated into this language.
 # https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
 CANDIDATE_LOCALES = (
-    'te',       # Telegu
 )
 
 ENABLE_CANDIDATE_LANGUAGES = config('ENABLE_CANDIDATE_LANGUAGES',
