@@ -199,7 +199,7 @@ code of the language you are adding.
 #. `Updating the localizable strings in Pontoon`_ as above, so that your
    commit will be limited to the new locale.
 
-#. In ``kuma/settings/common.py``, add the locale to ``CANDIDATE_LANGUAGES``,
+#. In ``kuma/settings/common.py``, add the locale to ``CANDIDATE_LOCALES``,
    and increase ``PUENTE['VERSION']``.
 
 #. Download the latest ``languages.json`` from
@@ -222,6 +222,10 @@ code of the language you are adding.
    `Updating the localizable strings in Pontoon`_.  The other locales should
    include a new string representing the new language.
 
+#. (Optional) Generate migrations that includes the new locale::
+
+   ./manage.py makemigrations users wiki --name update_locale
+
 #. Commit the changes to ``locale``,
    ``jinja2/includes/translate_locales.html``, and ``kuma/settings``, and open
    a Pull Request.
@@ -241,7 +245,7 @@ translations:
 
    This task is done by MDN staff.
 
-#. Move the locale from ``CANDIDATE_LANGUAGES`` to ``MDN_LANGUAGES`` in
+#. Move the locale from ``CANDIDATE_LOCALES`` to ``ACCEPTED_LOCALES`` in
    ``kuma/settings/common.py``.
 
 #. Restart the web server and verify that Django loads the new locale without

@@ -42,7 +42,7 @@ class LinksSource(Source):
         path = urlparse(path).path
         assert path.startswith('/')
         self.locale = path.split('/')[1]
-        assert self.locale in settings.MDN_LANGUAGES
+        assert self.locale in settings.ENABLED_LOCALES
         super(LinksSource, self).__init__(path, **options)
 
     def load_prereqs(self, requester, storage):

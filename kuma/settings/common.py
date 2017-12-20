@@ -113,7 +113,9 @@ CACHEBACK_CACHE_ALIAS = 'memcache'
 vars().update(config('EMAIL_URL',
                      default='console://',
                      cast=dj_email_url.parse))
-EMAIL_SUBJECT_PREFIX = '[mdn] '
+EMAIL_SUBJECT_PREFIX = config('EMAIL_SUBJECT_PREFIX', default='[mdn]')
+# Ensure EMAIL_SUBJECT_PREFIX has one trailing space
+EMAIL_SUBJECT_PREFIX = EMAIL_SUBJECT_PREFIX.strip() + ' '
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = config(
@@ -139,7 +141,7 @@ TIME_ZONE = 'US/Pacific'
 LANGUAGE_CODE = 'en-US'
 
 # Accepted locales
-MDN_LANGUAGES = (
+ACCEPTED_LOCALES = (
     'en-US',    # English
     'af',       # Akrikaans
     'ar',       # Arabic
@@ -207,9 +209,23 @@ MDN_LANGUAGES = (
 # Locales being considered for MDN. This makes the UI strings available for
 # localization in Pontoon, but pages can not be translated into this language.
 # https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
-CANDIDATE_LANGUAGES = [
+CANDIDATE_LOCALES = (
     'te',       # Telegu
-]
+)
+
+ENABLE_CANDIDATE_LANGUAGES = config('ENABLE_CANDIDATE_LANGUAGES',
+                                    default=DEBUG,
+                                    cast=bool)
+
+FIRST_LOCALE = ACCEPTED_LOCALES[0]
+assert FIRST_LOCALE == LANGUAGE_CODE
+if ENABLE_CANDIDATE_LANGUAGES:
+    ENABLED_LOCALES_TO_SORT = set(ACCEPTED_LOCALES[1:] + CANDIDATE_LOCALES)
+else:
+    ENABLED_LOCALES_TO_SORT = set(ACCEPTED_LOCALES[1:])
+
+# Ensure en-US is the first entry
+ENABLED_LOCALES = [FIRST_LOCALE] + sorted(ENABLED_LOCALES_TO_SORT)
 
 RTL_LANGUAGES = (
     'ar',
@@ -254,10 +270,10 @@ LOCALE_ALIASES = {
     'zh_tw': 'zh-TW',
 }
 
-LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
+LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in ENABLED_LOCALES])
 
 for requested_lang, delivered_lang in LOCALE_ALIASES.items():
-    if delivered_lang in MDN_LANGUAGES:
+    if delivered_lang in ENABLED_LOCALES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
@@ -279,21 +295,7 @@ def _get_locales():
 
 
 LOCALES = _get_locales()
-LANGUAGES = [(locale, LOCALES[locale].native) for locale in MDN_LANGUAGES]
-
-
-def enable_candidate_languages():
-    # Enable candidate languages for display and translation
-    for locale in CANDIDATE_LANGUAGES:
-        LANGUAGE_URL_MAP[locale.lower()] = locale
-        LANGUAGES.append((locale, LOCALES[locale].native))
-
-
-ENABLE_CANDIDATE_LANGUAGES = config('ENABLE_CANDIDATE_LANGUAGES',
-                                    default=DEBUG,
-                                    cast=bool)
-if ENABLE_CANDIDATE_LANGUAGES:
-    enable_candidate_languages()
+LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
 
 # List of MindTouch locales mapped to Kuma locales.
 #
@@ -1249,6 +1251,9 @@ CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
+
+# Maximum tasks run before auto-restart of child process,
+# to mitigate memory leaks. None / 0 means unlimited tasks
 CELERYD_MAX_TASKS_PER_CHILD = config(
     'CELERYD_MAX_TASKS_PER_CHILD',
     default=0,
