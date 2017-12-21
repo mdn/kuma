@@ -147,14 +147,21 @@
         if ($wrapper.children().length > 0) {
             return;
         }
-        // split on . : - ( [ OR capital letter
-        // IF followed by more than 2 letters or matching characters (including @)
-        var split = text.split(/(?=[\[\.:\-\(A-Z][@\.:\-\(A-Z]{0,}[a-zA-Z]{3})/g);
+
+        /*
+         * split on 3 lowercase characters in a row (try to avoid breaking acronyms)
+         *     - splitting here is a bit of a hack to get around lack of look behind in jS
+         * IF followed by [ . : ( OR capital letter
+         * IF followed by 3 letters or [ @ . : (
+         */
+        var split = text.split(/([a-z]{3})(?=[\[\.:\(A-Z][@\.:\(A-Z]{0,}[a-zA-Z]{3})/g);
         // empty wrapper
         $wrapper.empty();
-        // put array back into wrapper seperated by <wbr> tags
+        // put split string back into wrapper
         $.each(split, function(key, value) {
-            if(key > 0) {
+            // skip first match and even values (as it matches the 3 charcters before the split)
+            if(key > 0 && key % 2 === 0) {
+                // add <wbr>
                 $wrapper.append('<wbr>');
             }
             // add text back, make sure it goes back as text, not code to run
