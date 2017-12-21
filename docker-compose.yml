@@ -62,11 +62,20 @@ services:
     image: memcached
 
   mysql:
-    build: ./docker/images/mysql
+    image: mysql:5.6
     environment:
       - MYSQL_USER=kuma
       - MYSQL_PASSWORD=kuma
       - MYSQL_DATABASE=developer_mozilla_org
+      - MYSQL_ROOT_PASSWORD=kuma
+    command:
+      - mysqld
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+      - --innodb-buffer-pool-size=1G
+      - --innodb-flush-log-at-trx-commit=0
+      - --innodb-log-file-size=1G
+      - --max-allowed-packet=100M
     volumes:
       - mysqlvolume:/var/lib/mysql
 
