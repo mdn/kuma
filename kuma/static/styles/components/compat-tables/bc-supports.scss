@@ -37,7 +37,7 @@ Supports colouring
         rgba($yellow, .3) 144px,
         transparent 144px);
     background-size: 100px 100px;
-    background-position: 50% 50%;
+    background-position: 50%  50%;
     background-repeat: no-repeat;
 }
 
@@ -68,10 +68,21 @@ Supports colouring
         rgba($red, .2) 144px,
         transparent 144px);
     background-size: 100px 100px, 100px 100px;
-    background-position: 50% 50%, 50% 50%;
+    background-position: 50%  50%, 50%  50%;
     background-repeat: no-repeat;
 }
 
 .bc-supports-unknown {
     background-color: map-get($bc-colors, unknown);
+}
+
+@media #{$mq-mobile-and-down} {
+    /* centers the background accounting for space icons take on the left */
+    td.bc-supports-partial {
+        background-position: calc(50% + #{$bc-mobile-icon-width / 2})  50%;
+    }
+
+    td.bc-supports-no {
+        background-position: calc(50% + #{$bc-mobile-icon-width / 2})  50%, calc(50% + #{$bc-mobile-icon-width / 2})  50%;
+    }
 }
