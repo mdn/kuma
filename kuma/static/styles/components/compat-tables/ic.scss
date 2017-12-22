@@ -24,7 +24,7 @@ Custom icon font for compat tables
 }
 
 .ic-footnote:before {
-    content: '\e602';
+    content: '\e903';
 }
 
 .ic-prefix:before {
@@ -89,11 +89,11 @@ browser icons
 }
 
 .ic-firefox:before {
-    content: '\eae6';
+    content: '\e901';
 }
 
 .ic-firefox_android:before {
-    content: '\eae6\0020\f17b';
+    content: '\e901\0020\f17b';
 }
 
 .ic-edge:before {
@@ -105,11 +105,11 @@ browser icons
 }
 
 .ic-ie:before {
-    content: '\eae7';
+    content: '\eae6';
 }
 
 .ic-ie_mobile:before {
-    content: '\eae7';
+    content: '\eae6';
 }
 
 .ic-nodejs:before {
@@ -134,4 +134,8 @@ browser icons
 
 .ic-safari_ios:before {
     content: '\e94a';
+}
+
+.ic-samsunginternet_android:before {
+    content: '\e902';
 }
