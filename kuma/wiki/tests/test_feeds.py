@@ -1,262 +1,464 @@
 # -*- coding: utf-8 -*-
-import datetime
-import hashlib
+from datetime import datetime
 import json
-import time
 
-from django.utils.html import escape
+from django.utils.six.moves.urllib_parse import urlparse, parse_qs
 from pyquery import PyQuery as pq
+import pytest
 
 from kuma.core.urlresolvers import reverse
-from kuma.users.tests import UserTestCase
+from kuma.wiki.feeds import DocumentJSONFeedGenerator
+from kuma.wiki.models import Document
 
-from . import WikiTestCase, document, make_translation, revision, wait_add_rev
+from . import normalize_html
 
 
-class FeedTests(UserTestCase, WikiTestCase):
-    """Tests for the wiki feeds"""
-    localizing_client = True
+def test_l10n_updates_no_updates(trans_doc, client):
+    """When translations are up-to-date, l10n-updates feed is empty."""
+    feed_url = reverse('wiki.feeds.l10n_updates', locale=trans_doc.locale,
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 0  # No entries, translation is up to date
 
-    def test_updated_translation_parent_feed(self):
-        # Get the feed URL for reuse.
-        feed_url = reverse('wiki.feeds.l10n_updates', locale='de',
-                           args=(), kwargs={'format': 'json'})
 
-        d1, d2 = make_translation()
+def test_l10n_updates_parent_updated(trans_doc, edit_revision, client):
+    """Out-of-date translations appear in the l10n-updates feed."""
+    feed_url = reverse('wiki.feeds.l10n_updates', locale=trans_doc.locale,
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+    assert trans_doc.get_absolute_url() in data[0]['link']
 
-        # There should be no entries in this feed yet.
-        resp = self.client.get(feed_url)
-        data = json.loads(resp.content)
-        self.assertEqual(0, len(data))
 
-        wait_add_rev(d1)
+def test_l10n_updates_include_campaign(trans_doc, create_revision,
+                                       edit_revision, client):
+    """Translation URLs include GA campaign data."""
+    feed_url = reverse('wiki.feeds.l10n_updates', locale=trans_doc.locale,
+                       kwargs={'format': 'rss'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 1
+    desc_text = pq(items).find('description').text()
+    desc_html = pq(desc_text)  # Description is encoded HTML
+    links = desc_html.find('a')
+    assert len(links) == 3
+    for link in links:
+        href = link.attrib['href']
+        querystring = parse_qs(urlparse(href).query)
+        assert querystring['utm_campaign'] == ['feed']
+        assert querystring['utm_medium'] == ['rss']
+        assert querystring['utm_source'] == ['developer.mozilla.org']
 
-        # Now, there should be an item in the feed.
-        resp = self.client.get(feed_url)
-        data = json.loads(resp.content)
-        self.assertEqual(1, len(data))
-        self.assertTrue(d2.get_absolute_url() in data[0]['link'])
 
-    def test_updated_translation_parent_feed_mod_link(self):
-        d1, d2 = make_translation()
-        first_rev_id = d1.current_revision.id
-        wait_add_rev(d1)
-        wait_add_rev(d1)
+create_revision_rss = normalize_html("""
+<h3>Created by:</h3>
+  <p>wiki_user</p>
+<h3>Content changes:</h3>
+  &lt;p&gt;Getting started...&lt;/p&gt;
+<table border="0" width="80%">
+  <tr>
+    <td><a href="/en-US/docs/Root?utm_campaign=feed&utm_medium=rss&\
+utm_source=developer.mozilla.org">View Page</a></td>
+    <td><a href="/en-US/docs/Root$edit?utm_campaign=feed&\
+utm_medium=rss&utm_source=developer.mozilla.org">Edit Page</a></td>
+    <td><a href="/en-US/docs/Root$history?utm_campaign=feed&\
+utm_medium=rss&utm_source=developer.mozilla.org">History</a></td>
+  </tr>
+</table>""")
 
-        feed_url = reverse('wiki.feeds.l10n_updates', locale='de',
-                           args=(), kwargs={'format': 'rss'})
-        resp = self.client.get(feed_url)
-        feed = pq(resp.content)
-        self.assertEqual(1, len(feed.find('item')))
-        for i, item in enumerate(feed.find('item')):
-            desc_text = pq(item).find('description').text()
-            compare_url = '%s$compare?to=%s&from=%s&utm_campaign=feed' % (
-                d1.slug, d1.current_revision.id, first_rev_id)
-            edit_url = '%s$edit?utm_campaign=feed&utm_medium=rss' % d2.slug
-            self.assertTrue(escape(compare_url) in desc_text)
-            self.assertTrue(escape(edit_url) in desc_text)
+# TODO: Investigate encoding issue w/ <h3> Content changes
+edit_revision_rss_template = normalize_html("""
+<h3>Edited by:</h3>
+  <p>wiki_user</p>
+<h3>Comment:</h3>
+  <p>Done with initial version.</p>
+&lt;h3&gt;Content changes:&lt;/h3&gt;
+<table class="diff" id="difflib_chg_to%(diff_id)s__top"
+       cellspacing="0" cellpadding="0" rules="groups" >
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th class="diff_next"><br /></th>
+      <th colspan="2" class="diff_header">Revision %(from_id)s</th>
+      <th class="diff_next"><br /></th>
+      <th colspan="2" class="diff_header">Revision %(to_id)s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="diff_next" id="difflib_chg_to%(diff_id)s__0">
+        <a href="#difflib_chg_to%(diff_id)s__top">t</a>
+      </td>
+      <td class="diff_header" id="from%(diff_id)s_8">8</td>
+      <td nowrap="nowrap">
+        <span class="diff_sub">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Getting&nbsp;started...
+        </span>
+      </td>
+      <td class="diff_next"><a href="#difflib_chg_to%(diff_id)s__top">t</a></td>
+      <td class="diff_header" id="to%(diff_id)s_8">8</td>
+      <td nowrap="nowrap">
+        <span class="diff_add">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;root&nbsp;document.
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table border="0" width="80%%">
+  <tr>
+    <td>
+      <a href="/en-US/docs/Root?utm_campaign=feed&utm_medium=rss&\
+utm_source=developer.mozilla.org">View Page</a>
+    </td>
+    <td>
+      <a href="/en-US/docs/Root$edit?utm_campaign=feed&utm_medium=rss&\
+utm_source=developer.mozilla.org">Edit Page</a>
+    </td>
+    <td>
+      <a href="/en-US/docs/Root$compare?to=%(to_id)s&from=%(from_id)s&\
+utm_campaign=feed&utm_medium=rss&utm_source=developer.mozilla.org">
+        Show comparison
+      </a>
+    </td>
+    <td>
+      <a href="/en-US/docs/Root$history?utm_campaign=feed&utm_medium=rss\
+&utm_source=developer.mozilla.org">History</a>
+    </td>
+  </tr>
+</table>""")
 
-    def test_revisions_feed(self):
-        d = document(title='HTML9')
-        d.save()
-        now = datetime.datetime.now()
-        for i in xrange(1, 6):
-            created = now + datetime.timedelta(seconds=5 * i)
-            revision(save=True,
-                     document=d,
-                     title='HTML9',
-                     comment='Revision %s' % i,
-                     content="Some Content %s" % i,
-                     is_approved=True,
-                     created=created)
 
-        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}))
-        self.assertEqual(200, resp.status_code)
-        feed = pq(resp.content)
-        self.assertEqual(5, len(feed.find('item')))
-        for i, item in enumerate(feed.find('item')):
-            desc_text = pq(item).find('description').text()
-            self.assertTrue('by:</h3><p>testuser</p>' in desc_text)
-            self.assertTrue('<h3>Comment:</h3><p>Revision' in desc_text)
-            if "Edited" in desc_text:
-                self.assertTrue('$compare?to' in desc_text)
-                self.assertTrue('diff_chg' in desc_text)
-            self.assertTrue('$edit' in desc_text)
-            self.assertTrue('$history' in desc_text)
+def extract_description(feed_item):
+    """Extract the description and diff ID (if set) from a feed item."""
+    desc_text = pq(feed_item).find('description').text()
+    desc = pq(desc_text)
+    table = desc.find('table.diff')
+    if table:
+        # Format is difflib_chg_to[DIFF ID]__top
+        assert len(table) == 1
+        table_id = table[0].attrib['id']
+        prefix = 'difflib_chg_to'
+        suffix = '__top'
+        assert table_id.startswith(prefix)
+        assert table_id.endswith(suffix)
+        diff_id = int(table_id[len(prefix):-len(suffix)])
+    else:
+        diff_id = None
+    return normalize_html(desc_text), diff_id
 
-        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}) +
-                               '?limit=2')
-        feed = pq(resp.content)
-        self.assertEqual(2, len(feed.find('item')))
 
-        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}) +
-                               '?limit=2&page=1')
-        self.assertTrue('Revision 5' in resp.content)
-        self.assertTrue('Revision 4' in resp.content)
+def test_recent_revisions(create_revision, edit_revision, client):
+    """The revisions feed includes recent revisions."""
+    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+                       kwargs={'format': 'rss'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 2
+    desc1, diff_id1 = extract_description(items[0])
+    assert desc1 == create_revision_rss
+    assert diff_id1 is None
 
-        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}) +
-                               '?limit=2&page=2')
-        self.assertTrue('Revision 3' in resp.content)
-        self.assertTrue('Revision 2' in resp.content)
+    desc2, diff_id2 = extract_description(items[1])
+    expected = edit_revision_rss_template % {'from_id': create_revision.id,
+                                             'to_id': edit_revision.id,
+                                             'diff_id': diff_id2}
+    assert desc2 == expected
 
-    def test_bug869301_revisions_feed_locale(self):
-        """Links to documents in revisions feed with ?all_locales should
-        reflect proper document locale, regardless of requestor's locale"""
-        d = document(title='HTML9', locale="fr")
-        d.save()
-        now = datetime.datetime.now()
-        for i in xrange(1, 6):
-            created = now + datetime.timedelta(seconds=5 * i)
-            revision(save=True,
-                     document=d,
-                     title='HTML9',
-                     comment='Revision %s' % i,
-                     content="Some Content %s" % i,
-                     is_approved=True,
-                     created=created)
 
-        resp = self.client.get('%s?all_locales' %
-                               reverse('wiki.feeds.recent_revisions',
-                                       args=(),
-                                       kwargs={'format': 'rss'},
-                                       locale='en-US'))
-        self.assertEqual(200, resp.status_code)
-        feed = pq(resp.content)
-        self.assertEqual(5, len(feed.find('item')))
-        for i, item in enumerate(feed.find('item')):
-            href = pq(item).find('link').text()
-            self.assertTrue('/fr/' in href)
+def test_recent_revisions_pages(create_revision, edit_revision, client):
+    """The revisions feed can be paginated."""
+    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+                       kwargs={'format': 'rss'})
+    resp = client.get(feed_url, {'limit': 1})
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 1
+    desc_text, diff_id = extract_description(items[0])
+    expected = edit_revision_rss_template % {'from_id': create_revision.id,
+                                             'to_id': edit_revision.id,
+                                             'diff_id': diff_id}
+    assert desc_text == expected
 
-    def test_revisions_feed_diffs(self):
-        d = document(title='HTML9')
-        d.save()
-        revision(save=True,
-                 document=d,
-                 title='HTML9',
-                 comment='Revision 1',
-                 content="First Content",
-                 is_approved=True,
-                 created=datetime.datetime.now())
-        r = revision(save=True,
-                     document=d,
-                     title='HTML9',
-                     comment='Revision 2',
-                     content="First Content",
-                     is_approved=True,
-                     created=(datetime.datetime.now() +
-                              datetime.timedelta(seconds=1)),
-                     tags='"some", "more", "tags"')
-        r.review_tags.set(*[u'editorial'])
+    resp = client.get(feed_url, {'limit': 1, 'page': 2})
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 1
+    desc_text2, diff_id2 = extract_description(items[0])
+    assert desc_text2 == create_revision_rss
 
-        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}))
-        self.assertEqual(200, resp.status_code)
-        feed = pq(resp.content)
-        for i, item in enumerate(feed.find('item')):
-            desc_text = pq(item).find('description').text()
-            if "Edited" in desc_text:
-                self.assertTrue('<h3>Tag changes:</h3>' in desc_text)
-                self.assertTrue(
-                    '<span class="diff_add" style="background-color: #afa; '
-                    'text-decoration: none;">"more"<br />&nbsp;</span>'
-                    in desc_text)
-                self.assertTrue('<h3>Review changes:</h3>' in desc_text)
-                self.assertTrue(
-                    '<span class="diff_add" style="background-color: #afa; '
-                    'text-decoration: none;">editorial</span>' in desc_text)
 
-    def test_feed_unchanged_after_render(self):
-        """Rendering a document shouldn't affect feed contents, unless the
-        document content has actually been changed."""
-        d1 = document(title="FeedDoc1", locale='en-US', save=True)
-        revision(document=d1, save=True)
+def test_recent_revisions_limit_0(edit_revision, client):
+    """
+    For the revisions feed, a limit of 0 gets no results.
 
-        time.sleep(1)  # Let timestamps tick over.
-        d2 = document(title="FeedDoc2", locale='en-US', save=True)
-        revision(document=d2, save=True)
+    TODO: the limit should probably be MAX_FEED_ITEMS instead, and applied
+    before the start and finish positions are picked.
+    """
+    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+                       kwargs={'format': 'rss'})
+    resp = client.get(feed_url, {'limit': 0})
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 0
 
-        time.sleep(1)  # Let timestamps tick over.
-        d3 = document(title="FeedDoc3", locale='en-US', save=True)
-        revision(document=d3, save=True)
 
-        time.sleep(1)  # Let timestamps tick over.
-        d4 = document(title="FeedDoc4", locale='en-US', save=True)
-        # No r4, so we can trigger the no-current-rev edge case
+def test_recent_revisions_all_locales(trans_edit_revision, client):
+    """The ?all_locales parameter returns mixed locales (bug 869301)."""
+    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+                       kwargs={'format': 'rss'})
+    resp = client.get(feed_url, {'all_locales': ''},
+                      HTTP_HOST='example.com',
+                      HTTP_X_FORWARDED_PROTO='https')
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 4
 
-        feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
-                           args=(), kwargs={'format': 'rss'})
+    # Test that links use host domain
+    actual_links = [pq(item).find('link').text() for item in items]
+    actual_domains = [urlparse(link).netloc for link in actual_links]
+    assert actual_domains == ['example.com'] * 4
 
-        # Force a render, hash the feed
-        for d in (d1, d2, d3, d4):
-            d.render(cache_control="no-cache")
-        resp = self.client.get(feed_url)
-        feed_hash_1 = hashlib.md5(resp.content).hexdigest()
+    # Test that links are a mix of en-US and translated documents
+    trans_doc = trans_edit_revision.document
+    root_doc = trans_doc.parent
+    expected_paths = [
+        root_doc.get_absolute_url(),
+        trans_doc.get_absolute_url(),
+        root_doc.get_absolute_url(),
+        trans_doc.get_absolute_url(),
+    ]
+    actual_paths = [urlparse(link).path for link in actual_links]
+    assert expected_paths == actual_paths
 
-        # Force another render, hash the feed
-        time.sleep(1)  # Let timestamps tick over.
-        for d in (d1, d2, d3, d4):
-            d.render(cache_control="no-cache")
-        resp = self.client.get(feed_url)
-        feed_hash_2 = hashlib.md5(resp.content).hexdigest()
 
-        # The hashes should match
-        self.assertEqual(feed_hash_1, feed_hash_2)
+def test_recent_revisions_diff_includes_tags(create_revision, client):
+    """The revision feed includes document tags and editorial flags."""
+    new_revision = create_revision.document.revisions.create(
+        title=create_revision.title,
+        content=create_revision.content,
+        creator=create_revision.creator,
+        tags='"NewTag"'
+    )
+    new_revision.review_tags.add('editorial')
+    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+                       kwargs={'format': 'rss'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 2
+    desc1, desc2 = [pq(item).find('description').text() for item in items]
+    assert 'Edited' not in desc1  # Created revision
+    assert 'Edited' in desc2  # New revision
+    assert '<h3>Tag changes:</h3>' in desc2
+    assert ('<span class="diff_add" style="background-color: #afa; '
+            'text-decoration: none;">"NewTag"</span>') in desc2
+    assert '<h3>Review changes:</h3>' in desc2
+    assert ('<span class="diff_add" style="background-color: #afa; '
+            'text-decoration: none;">editorial</span>') in desc2
 
-        # Make a real edit.
-        time.sleep(1)  # Let timestamps tick over.
-        revision(document=d2, content="Hah! An edit!", save=True)
-        for d in (d1, d2, d3, d4):
-            d.render(cache_control="no-cache")
 
-        # This time, the hashes should *not* match
-        resp = self.client.get(feed_url)
-        feed_hash_3 = hashlib.md5(resp.content).hexdigest()
-        self.assertTrue(feed_hash_2 != feed_hash_3)
+def test_recent_revisions_feed_ignores_render(edit_revision, client):
+    """Re-rendering a document does not update the feed."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       args=(), kwargs={'format': 'rss'})
+    resp = client.get(feed_url)
+    start_content = resp.content
 
-    def test_feed_locale_filter(self):
-        """Documents and Revisions in feeds should be filtered by locale"""
-        d1 = document(title="Doc1", locale='en-US', save=True)
-        r1 = revision(document=d1, save=True)
-        r1.review_tags.set('editorial')
-        d1.tags.set('foobar')
+    # Re-render document, RSS feed doesn't change
+    edit_revision.document.render(cache_control="no-cache")
+    resp = client.get(feed_url)
+    assert resp.content == start_content
 
-        d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
-        r2 = revision(document=d2, save=True)
-        r2.review_tags.set('editorial')
-        d2.tags.set('foobar')
+    # Create a new edit, RSS feed changes
+    edit_revision.document.revisions.create(
+        title=edit_revision.title,
+        content=edit_revision.content + '\n<p>New Line</p>',
+        creator=edit_revision.creator)
+    resp = client.get(feed_url)
+    assert resp.content != start_content
 
-        d3 = document(title="TransDoc1", locale='fr', parent=d1, save=True)
-        r3 = revision(document=d3, save=True)
-        r3.review_tags.set('editorial')
-        d3.tags.set('foobar')
 
-        show_alls = (False, True)
-        locales = ('en-US', 'de', 'fr')
-        for show_all in show_alls:
-            for locale in locales:
-                feed_urls = (
-                    reverse('wiki.feeds.recent_revisions', locale=locale,
-                            args=(), kwargs={'format': 'json'}),
-                    reverse('wiki.feeds.recent_documents', locale=locale,
-                            args=(), kwargs={'format': 'json'}),
-                    reverse('wiki.feeds.recent_documents', locale=locale,
-                            args=(), kwargs={'format': 'json',
-                                             'tag': 'foobar'}),
-                    reverse('wiki.feeds.list_review', locale=locale,
-                            args=('json',)),
-                    reverse('wiki.feeds.list_review_tag', locale=locale,
-                            args=('json', 'editorial',)),
-                )
-                for feed_url in feed_urls:
-                    if show_all:
-                        feed_url = '%s?all_locales' % feed_url
-                    resp = self.client.get(feed_url)
-                    data = json.loads(resp.content)
-                    if show_all:
-                        self.assertEqual(3, len(data))
-                    else:
-                        self.assertEqual(1, len(data))
+def test_recent_revisions_feed_omits_docs_without_rev(edit_revision, client):
+    """Documents without a current revision are omitted from the feed."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       args=(), kwargs={'format': 'rss'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 1
+
+    Document.objects.create(locale='en-US', slug='NoCurrentRev',
+                            title='No Current Rev')
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    feed = pq(resp.content)
+    items = feed.find('item')
+    assert len(items) == 1
+
+
+@pytest.mark.parametrize("locale", ('en-US', 'fr'))
+def test_recent_revisions_feed_filter_by_locale(locale, trans_edit_revision,
+                                                client):
+    """The recent revisions feed can be filtered by locale."""
+    feed_url = reverse('wiki.feeds.recent_revisions', locale=locale,
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 2
+    for item in data:
+        path = urlparse(item['link']).path
+        assert path.startswith('/' + locale + '/')
+
+
+@pytest.mark.parametrize("locale", ('en-US', 'fr'))
+def test_recent_documents_feed_filter_by_locale(locale, trans_edit_revision,
+                                                client):
+    """The recent documents feed can be filtered by locale."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale=locale,
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+    path = urlparse(data[0]['link']).path
+    assert path.startswith('/' + locale + '/')
+
+
+def test_recent_documents_atom_feed(root_doc, client):
+    """The recent documents feed can be formatted as an Atom feed."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       kwargs={'format': 'atom'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    assert resp['Content-Type'] == 'application/atom+xml; charset=utf-8'
+
+
+def test_recent_documents_as_jsonp(root_doc, client):
+    """The recent documents feed can be called with a JSONP wrapper."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    raw_json = resp.content
+
+    resp = client.get(feed_url, {'callback': 'jsonp_callback'})
+    assert resp.status_code == 200
+    wrapped = resp.content
+    assert wrapped == 'jsonp_callback(%s)' % raw_json
+
+    # Invalid callback names are rejected
+    resp = client.get(feed_url, {'callback': 'try'})
+    assert resp.status_code == 200
+    assert resp.content == raw_json
+
+
+def test_recent_documents_optional_items(create_revision, client):
+    """The recent documents JSON feed includes some items if set."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+    assert data[0]['author_avatar'].startswith(
+        'https://secure.gravatar.com/avatar/')
+    assert 'summary' not in data[0]
+
+    create_revision.creator.email = None
+    create_revision.creator.save()
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert 'author_avatar' not in data[0]
+
+    create_revision.summary = 'The summary'
+    create_revision.save()
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert data[0]['summary'] == 'The summary'
+
+
+def test_recent_documents_feed_filter_by_tag(edit_revision, client):
+    """The recent documents feed can be filtered by tag."""
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       kwargs={'format': 'json', 'tag': 'TheTag'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 0
+
+    edit_revision.document.revisions.create(
+        title=edit_revision.title,
+        content=edit_revision.content,
+        creator=edit_revision.creator,
+        tags='"TheTag"')
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+
+
+def test_list_review(edit_revision, client):
+    """The documents needing review feed shows documents needing any review."""
+    feed_url = reverse('wiki.feeds.list_review', locale='en-US',
+                       kwargs={'format': 'json'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 0
+
+    edit_revision.review_tags.add('editorial')
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+
+
+def test_list_review_tag(edit_revision, client):
+    """The documents needing editorial review feed works."""
+    feed_url = reverse('wiki.feeds.list_review_tag', locale='en-US',
+                       kwargs={'format': 'json', 'tag': 'editorial'})
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 0
+
+    edit_revision.review_tags.add('editorial')
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+
+
+def test_documentjsonfeedgenerator_encode():
+    """
+    The DocumentJSONFeedGenerator encodes datetimes, but no other extra types.
+
+    TODO: The function should raise TypeError instead of returning None.
+    """
+    generator = DocumentJSONFeedGenerator('Title', '/feed', 'Description')
+    dt = datetime(2017, 12, 21, 22, 25)
+    assert generator._encode_complex(dt) == '2017-12-21T22:25:00'
+    assert generator._encode_complex(dt.date()) is None
