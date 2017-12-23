@@ -96,7 +96,7 @@
             /** add beta notice & associated functonality */
             function addBetaNotice($table) {
                 var $betaMenuWrapper = $('<div />', { 'class': 'bc-beta-menu' });
-                var $betaMenuTrigger = $('<a />', { text: gettext('New compatibility tables are in beta '), href: '/en-US/docs/New_Compatibility_Tables_Beta' }).append($('<i />', { class: 'icon-caret-down', 'aria-hidden': 'true' }));
+                var $betaMenuTrigger = $('<a />', { text: gettext('New compatibility tables are in beta '), href: '/docs/New_Compatibility_Tables_Beta' }).append($('<i />', { class: 'icon-caret-down', 'aria-hidden': 'true' }));
                 var $betaSubmenu = $('<ul />', { 'class': 'submenu js-submenu' });
                 var betaSubmenuItems = [];
 
