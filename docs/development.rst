@@ -397,3 +397,23 @@ Now you should be ready for a successful test run::
 Note that the "search" tests are excluded. This is because the tests marked
 "search" are not currently designed to run against the sample database.
 
+Serving over SSL / HTTPS
+========================
+Kuma can be served over HTTPS locally with a self-signed certificate. Browsers
+consider self-signed certificates to be unsafe, and you'll have to confirm
+that you want an exception for this.
+
+#. Include the SSL containers by updating ``.env``::
+
+    COMPOSE_FILE=docker_compose.yml:docker-compose.ssl.yml
+
+#. Run the new containers::
+
+    docker-compose up -d
+
+#. Load https://localhost/en-US/ in your browser, and add an exception for the
+   self-signed certificate.
+
+Some features of SSL-protected sites may not be available, because the browser
+does not fully trust the self-signed SSL certificate. The HTTP-only website
+will still be available at http://localhost:8000/en-US/.

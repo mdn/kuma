@@ -1,0 +1,30 @@
+version: "2.1"
+services:
+  webssl:
+    extends:
+      file: docker-compose.base.yml
+      service: webbase
+    command: /bin/bash -c "scripts/generate_dev_ssl_cert.sh /etc/nginx/ssl localhost && gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application"
+    environment:
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=https
+      - ALLOWED_HOSTS=localhost
+      - ATTACHMENT_HOST=localhost
+      - CSRF_COOKIE_SECURE=True
+      - PROTOCOL=https://
+      - SESSION_COOKIE_SECURE=True
+      - SITE_URL=https://localhost
+    volumes:
+      - ./:/app:z
+      - ./etc/nginx/ssl:/etc/nginx/ssl
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./etc/nginx/ssl:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - webssl
+

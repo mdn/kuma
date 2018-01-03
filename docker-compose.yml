@@ -1,60 +1,42 @@
 version: '2.1'
 services:
-  worker: &worker
-    image: quay.io/mozmar/kuma_base
+  worker:
+    extends:
+      file: docker-compose.base.yml
+      service: base
     command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
-    user: ${UID:-33}
-    volumes:
-      - ./:/app:z
     depends_on:
       - memcached
       - mysql
       - elasticsearch
       - redis
       - kumascript
-    environment:
-      # Django settings overrides:
-      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-      - ALLOWED_HOSTS=*
-      - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
-      - BROKER_URL=redis://redis:6379/0
-      - CELERY_ALWAYS_EAGER=False
-      - CSRF_COOKIE_SECURE=False
-      - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
-      - DEBUG=${DEBUG:-True}
-      - DOMAIN=localhost
-      - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
-      - ES_URLS=elasticsearch:9200
-      - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
-      - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
-      - MEMCACHE_SERVERS=memcached:11211
-      - PROTOCOL=http://
-      - SESSION_COOKIE_SECURE=False
-      - SITE_URL=http://localhost:8000
-      - STATIC_URL=${STATIC_URL:-/static/}
-      # Other environment overrides
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=True
-      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
-      - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
 
-  # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
-    <<: *worker
+    extends:
+      file: docker-compose.base.yml
+      service: webbase
     command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
     ports:
       - "8000:8000"
-
-  # API is used by KumaScript for content and metadata
-  api:
-    <<: *worker
-    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
     depends_on:
       - memcached
       - mysql
       - elasticsearch
       - redis
-      # Drop kumascript link
+      - kumascript
+
+  # API is used by KumaScript for content and metadata
+  api:
+    extends:
+      file: docker-compose.base.yml
+      service: webbase
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    depends_on:
+      - memcached
+      - mysql
+      - elasticsearch
+      - redis
     ports:
       - "8001:8000"
 
