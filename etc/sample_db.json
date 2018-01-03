@@ -383,7 +383,6 @@
         "note": "See https://github.com/mozilla/kuma/pull/3331",
         "created": "2015-07-09"
       }, {
-      },  {
         "name": "registration_disabled",
         "active": false,
         "created": "2015-02-25"
