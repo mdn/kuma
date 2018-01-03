@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .decorators import never_cache
 
 
 def _error_page(request, status):
@@ -9,3 +10,11 @@ def _error_page(request, status):
 handler403 = lambda request: _error_page(request, 403)
 handler404 = lambda request: _error_page(request, 404)
 handler500 = lambda request: _error_page(request, 500)
+
+
+@never_cache
+def rate_limited(request, exception):
+    """Render a rate-limited exception."""
+    response = render(request, '429.html', status=429)
+    response['Retry-After'] = '60'
+    return response

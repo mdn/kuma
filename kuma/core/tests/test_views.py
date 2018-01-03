@@ -1,11 +1,13 @@
 import logging
-from pyquery import PyQuery as pq
-from soapbox.models import Message
 
-import pytest
 from django.core import mail
 from django.test import override_settings
 from django.utils.log import AdminEmailHandler
+from pyquery import PyQuery as pq
+from ratelimit.exceptions import Ratelimited
+from soapbox.models import Message
+import mock
+import pytest
 
 from kuma.core.tests import KumaTestCase, eq_, ok_
 
@@ -175,3 +177,15 @@ def test_sitemaps_405s(client, db, method):
         )
     )
     assert response.status_code == 405
+
+
+def test_ratelimit_429(client, db):
+    '''Custom 429 view is used for Ratelimited exception.'''
+    url = reverse('home', locale='en-US')
+    with mock.patch('kuma.landing.views.render') as render:
+        render.side_effect = Ratelimited()
+        response = client.get(url)
+    assert response.status_code == 429
+    assert '429.html' in [t.name for t in response.templates]
+    assert response['Retry-After'] == '60'
+    assert response['Cache-Control'] == 'no-cache, no-store, must-revalidate'
