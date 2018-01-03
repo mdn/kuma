@@ -15,7 +15,7 @@
     var $historyCloseButton = $('<button class="bc-history-button only-icon"><abbr title="' + gettext('Return to compatibility table.') + '"><span>' + gettext('Close') + '</span><i class="icon-times" aria-hidden="true"></i></abbr></button>');
 
     var animationProps = {
-        duration: 250,
+        duration: 150,
         queue: false,
         easing: 'linear'
     };

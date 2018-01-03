@@ -5,9 +5,7 @@ Icons denooting complicatons with support (footnote, altname, prefix, etc)
 .bc-icons {
     position: relative;
     z-index: 12; /* raise z-index so tool tips still appear even if overlapping history link */
-
-    /* TODO: center icons if they wrap, :first-line? only on mobile?  */
-    float: right;
+    display: inline-block;
 
     abbr {
         margin: 0 2px;
@@ -18,22 +16,8 @@ Icons denooting complicatons with support (footnote, altname, prefix, etc)
     }
 }
 
-/* tablet display */
-@mixin bc-icons-tablet-display() {
-    th .bc-icons {
-        float: none;
-        display: inline-block;
-    }
-}
-
-/* tablet */
-@media #{$mq-tablet-only} {
-    @include bc-icons-tablet-display();
-}
-
-/* small desktop, but only if there's a left column */
-@media #{$mq-small-desktop-only} {
-    .wiki-left-present {
-        @include bc-icons-tablet-display();
+@media #{$mq-small-desktop-and-up} {
+    .bc-icons {
+        float: right;
     }
 }

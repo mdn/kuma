@@ -18,13 +18,11 @@ Supports colouring
     text-decoration: underline;
 }
 
-.bc-supports-yes,
-.bc-supports-yes .bc-history {
+.bc-supports-yes {
     background-color: map-get($bc-colors, yes);
 }
 
-.bc-supports-partial,
-.bc-supports-partial .bc-history {
+.bc-supports-partial {
     background: map-get($bc-colors, partial);
     background-image: linear-gradient(to bottom right,
         rgba($yellow, .3) 0,
@@ -39,12 +37,11 @@ Supports colouring
         rgba($yellow, .3) 144px,
         transparent 144px);
     background-size: 100px 100px;
-    background-position: 50% 50%;
+    background-position: 50%  50%;
     background-repeat: no-repeat;
 }
 
-.bc-supports-no,
-.bc-supports-no .bc-history {
+.bc-supports-no {
     background-color: map-get($bc-colors, no);
     background-image: linear-gradient(to bottom right,
         rgba($red, .2) 0,
@@ -71,11 +68,21 @@ Supports colouring
         rgba($red, .2) 144px,
         transparent 144px);
     background-size: 100px 100px, 100px 100px;
-    background-position: 50% 50%, 50% 50%;
+    background-position: 50%  50%, 50%  50%;
     background-repeat: no-repeat;
 }
 
-.bc-supports-unknown,
-.bc-supports-unknown .bc-history {
+.bc-supports-unknown {
     background-color: map-get($bc-colors, unknown);
+}
+
+@media #{$mq-mobile-and-down} {
+    /* centers the background accounting for space icons take on the left */
+    td.bc-supports-partial {
+        background-position: calc(50% + #{$bc-mobile-icon-width / 2})  50%;
+    }
+
+    td.bc-supports-no {
+        background-position: calc(50% + #{$bc-mobile-icon-width / 2})  50%, calc(50% + #{$bc-mobile-icon-width / 2})  50%;
+    }
 }
