@@ -30,3 +30,4 @@ def test_edit_banned_ip_not_allowed(method, editor_client, root_doc,
     caller = getattr(editor_client, method.lower())
     response = caller(url, REMOTE_ADDR=ip)
     assert response.status_code == 403
+    assert 'Your IP address has been banned.' in response.content

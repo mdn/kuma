@@ -3,10 +3,15 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from .managers import IPBanManager
-from .jobs import IPBanJob
+from .jobs import BannedIPsJob
 
 
 class IPBan(models.Model):
+    """
+    Ban an IP address.
+
+    Currently, this only bans an IP address from editing.
+    """
     ip = models.GenericIPAddressField()
     created = models.DateTimeField(default=timezone.now, db_index=True)
     deleted = models.DateTimeField(null=True, blank=True)
@@ -24,4 +29,4 @@ class IPBan(models.Model):
 @receiver(models.signals.post_save, sender=IPBan)
 @receiver(models.signals.pre_delete, sender=IPBan)
 def invalidate_ipban_caches(sender, instance, **kwargs):
-    IPBanJob().invalidate(instance.ip)
+    BannedIPsJob().invalidate()

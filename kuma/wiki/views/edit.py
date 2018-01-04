@@ -14,9 +14,10 @@ from ratelimit.decorators import ratelimit
 
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import block_user_agents, login_required, never_cache
+from kuma.core.decorators import (block_banned_ips, block_user_agents,
+                                  login_required, never_cache)
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import limit_banned_ip_to_0, urlparams
+from kuma.core.utils import urlparams
 
 from ..decorators import (check_readonly, prevent_indexing,
                           process_document_path)
@@ -75,7 +76,8 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
 @block_user_agents
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in Document.allows_editing_by.
-@ratelimit(key='user', rate=limit_banned_ip_to_0, block=True)
+@ratelimit(key='user', rate='60/m', block=True)
+@block_banned_ips
 @process_document_path
 @check_readonly
 @prevent_indexing

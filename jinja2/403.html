@@ -23,6 +23,8 @@
       <p class="notice">{{ _('The wiki is in read-only mode.') }}</p>
     {% elif reason == 'revisions_login_required' %}
       <p class="notice">{{ _("You must sign in to view all history") }}</p>
+    {% elif reason == 'ip_banned' %}
+      <p class="notice">{{ _("Your IP address has been banned.") }}</p>
     {% endif %}
     {% endblock reason %}
 

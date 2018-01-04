@@ -81,15 +81,23 @@ class GenerationKeyJob(Job):
                 'generation_args': self.generation_args}
 
 
-class IPBanJob(KumaJob):
+class BannedIPsJob(KumaJob):
+    '''Get the current set of banned IPs.'''
     lifetime = 60 * 60 * 3
     refresh_timeout = 60
 
-    def fetch(self, ip):
+    def fetch(self):
+        """Get a (JSON-serializable) list of banned IPs."""
         from .models import IPBan
-        if IPBan.objects.active(ip=ip).exists():
-            return "0/s"
-        return "60/m"
+        ips = list(IPBan.objects
+                   .filter(deleted__isnull=True)
+                   .values_list('ip', flat=True))
+        return ips
 
     def empty(self):
-        return "60/m"
+        """Return an empty list of IPs."""
+        return []
+
+    def process_result(self, result, call, cache_status, sync_fetch=None):
+        """Convert list into a set before returning to caller."""
+        return set(result)

@@ -2,7 +2,7 @@ import re
 from functools import wraps, partial
 
 from django.conf import settings
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
@@ -10,7 +10,8 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils.decorators import available_attrs
 from django.utils.http import urlquote
 
-from kuma.core.urlresolvers import reverse
+from .jobs import BannedIPsJob
+from .urlresolvers import reverse
 
 
 def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,
@@ -137,6 +138,21 @@ def block_user_agents(view_func):
 
     return wraps(view_func,
                  assigned=available_attrs(view_func))(agent_blocked_view)
+
+
+def block_banned_ips(view_func):
+    """Block banned IP addresses."""
+
+    @wraps(view_func)
+    def block_if_banned(request, *args, **kwargs):
+        ip = request.META.get('REMOTE_ADDR', '10.0.0.1')
+        banned_ips = BannedIPsJob().get()
+        if ip in banned_ips:
+            return render(request, '403.html',
+                          {'reason': 'ip_banned'}, status=403)
+        return view_func(request, *args, **kwargs)
+
+    return block_if_banned
 
 
 def skip_in_maintenance_mode(func):
