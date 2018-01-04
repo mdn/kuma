@@ -1267,7 +1267,7 @@ if MAINTENANCE_MODE:
     # loader (see djcelery.setup_loader() above) so we, among other things,
     # acquire the Celery settings from among Django's settings.
     CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
-    CELERY_RESULT_BACKEND = (
+    DEFAULT_CELERY_RESULT_BACKEND = (
         'cache+memcached://' + ';'.join(
             config('MEMCACHE_SERVERS',
                    default='127.0.0.1:11211',
@@ -1276,8 +1276,12 @@ if MAINTENANCE_MODE:
     )
 else:
     CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-    CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+    DEFAULT_CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',
+                               default=DEFAULT_CELERY_RESULT_BACKEND)
+
+# TODO: Default serializer in Celery 4.0 is JSON, need to switch
 CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
