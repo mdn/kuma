@@ -27,7 +27,6 @@ from taggit.utils import split_strip
 
 from .cache import memcache
 from .exceptions import DateTimeFormatError
-from .jobs import IPBanJob
 
 
 log = logging.getLogger('kuma.core.utils')
@@ -304,11 +303,6 @@ def chord_flow(pre_task, tasks, post_task):
         return chain(*tasks)
     else:
         return chain(pre_task, chord(header=tasks, body=post_task))
-
-
-def limit_banned_ip_to_0(group, request):
-    ip = request.META.get('REMOTE_ADDR', '10.0.0.1')
-    return IPBanJob().get(ip)
 
 
 def get_unique(content_type, object_pk, name=None, request=None,

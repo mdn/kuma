@@ -8,8 +8,9 @@ import pytest
 import requests_mock
 from pyquery import PyQuery as pq
 
-from kuma.wiki.models import Document
+from kuma.core.models import IPBan
 from kuma.core.urlresolvers import reverse
+from kuma.wiki.models import Document
 from kuma.wiki.views.document import _apply_content_experiment
 
 
@@ -137,6 +138,14 @@ def test_apply_content_experiment_valid_selection_no_doc(ce_settings, rf):
     assert experiment_doc == doc
     assert params['selected'] is None
     assert not params['selection_is_valid']
+
+
+def test_document_banned_ip_can_read(client, root_doc):
+    '''Banned IPs are still allowed to read content, just not edit.'''
+    ip = '127.0.0.1'
+    IPBan.objects.create(ip=ip)
+    response = client.get(root_doc.get_absolute_url(), REMOTE_ADDR=ip)
+    assert response.status_code == 200
 
 
 @pytest.mark.parametrize('endpoint', ['document', 'preview'])

@@ -462,6 +462,7 @@ MIDDLEWARE_CLASSES = (
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
+    'ratelimit.middleware.RatelimitMiddleware',
     'django.middleware.common.CommonMiddleware',
     'kuma.core.middleware.RemoveSlashMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -1708,5 +1709,7 @@ ce_path = path('kuma', 'settings', 'content_experiments.json')
 with open(ce_path, 'r') as ce_file:
     CONTENT_EXPERIMENTS = json.load(ce_file)
 
+# django-ratelimit
 RATELIMIT_ENABLE = config('RATELIMIT_ENABLE', default=True, cast=bool)
 RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='memcache')
+RATELIMIT_VIEW = 'kuma.core.views.rate_limited'

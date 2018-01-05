@@ -10,6 +10,8 @@ from kuma.wiki.models import Document, Revision
 @pytest.fixture()
 def cleared_cacheback_cache():
     caches[settings.CACHEBACK_CACHE_ALIAS].clear()
+    yield
+    caches[settings.CACHEBACK_CACHE_ALIAS].clear()
 
 
 @pytest.fixture
