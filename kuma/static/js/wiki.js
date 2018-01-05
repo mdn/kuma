@@ -668,48 +668,5 @@
             win.history.replaceState({}, '', location.pathname);
         }
     }
-
-    // listens for post message from interactive editor
-    window.addEventListener('message', function(event) {
-        // get the interactive editor iframe
-        var iframe = document.querySelector('iframe.interactive');
-        var isExpectedOrigin = event.origin === 'https://interactive-examples.mdn.mozilla.net';
-
-        /* there may be other post messages so, ensure that the origin is the
-        expected and, that `event.data` contains an `iframeHeight` property */
-        if (isExpectedOrigin && event.data.iframeHeight) {
-            iframe.setAttribute('height', event.data.iframeHeight);
-        }
-    }, false);
-
-    // Insert notice about permanent language switch
-    var changedLocaleTo = localStorage.getItem('changed-locale-to');
-    if (changedLocaleTo) {
-        var locale = JSON.parse(changedLocaleTo),
-            text = gettext('You are now viewing this article in %(localeName)s.' +
-                           ' Do you always want to view MDN articles in %(locale_name)s?'),
-            html = interpolate('<div id="locale-permanent-banner" class="primary overheadIndicator"><p>' + text +
-                               '<br><button id="locale-permanent-yes" data-locale="%(localeCode)s">' +
-                               gettext('Yes') + '</button> <button id="locale-permanent-no">' +
-                               gettext('No') + '</button></p></div>',
-                {localeCode: locale.code, localeName: locale.name}, true);
-
-        $('#wiki-content').prepend(html);
-
-        // Add event listener to the buttons
-        $('#locale-permanent-yes').on('click', function () {
-            $.post('/i18n/setlang/', {language: this.dataset.locale})
-                .success(function () {
-                    $('#locale-permanent-banner').remove();
-                    localStorage.removeItem('changed-locale-to');
-                });
-        }
-        );
-
-        $('#locale-permanent-no').on('click', function () {
-            $('#locale-permanent-banner').remove();
-            localStorage.removeItem('changed-locale-to');
-        }
-        );
-    }
+    
 })(window, document, jQuery);
