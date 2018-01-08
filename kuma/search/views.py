@@ -130,8 +130,10 @@ class SearchView(ListAPIView):
 
 # Since the search endpoint accepts user input (via query parameters) and its
 # response is compressed, use rate limiting to mitigate the BREACH attack
-# (see http://breachattack.com/).
-search = ratelimit(key='user_or_ip', rate='10/m', block=True)(
+# (see http://breachattack.com/). It still needs to allow a user to click
+# the filter switches (bug 1426968).
+# Alternate: forbid gzip by setting Content-Encoding: identity
+search = ratelimit(key='user_or_ip', rate='25/m', block=True)(
     SearchView.as_view()
 )
 
