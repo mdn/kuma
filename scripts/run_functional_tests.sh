@@ -160,7 +160,7 @@ if [ $? -eq 0 ]; then
         fi
 
         # Set hub name
-        if [[ "SELENIUM_HUB" == "0" ]]; then
+        if [[ "$SELENIUM_HUB" == "0" ]]; then
             HUB_NAME="selenium-${browser}-${PROJECT_NAME}"
         else
             HUB_NAME="selenium-hub-${PROJECT_NAME}"
