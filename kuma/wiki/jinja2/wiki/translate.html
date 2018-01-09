@@ -130,7 +130,7 @@
                         <ul class="tags">
                           {% for parent_tag in parent_tags %}
                           <li>
-                              <a href="{{url('wiki.tag', parent_tag.name)}}" rel="nofollow, noindex">{{ parent_tag.name }}</a>
+                              <a href="{{url('wiki.tag', parent_tag.name)}}" rel="nofollow">{{ parent_tag.name }}</a>
                           </li>
                           {% endfor %}
                         </ul>

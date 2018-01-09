@@ -40,7 +40,7 @@
       <header>
         <div class="rev-from">
           <h3>
-            <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id, locale=revision_from.document.locale) }}" rel="nofollow, noindex">
+            <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id, locale=revision_from.document.locale) }}" rel="nofollow">
               {{ _('Revision %(num)s:', num=revision_from.id) }}
             </a>
           </h3>
@@ -56,7 +56,7 @@
         </div>
         <div class="rev-to">
           <h3>
-            <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id, locale=revision_to.document.locale) }}" rel="nofollow, noindex">
+            <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id, locale=revision_to.document.locale) }}" rel="nofollow">
               {{ _('Revision %(num)s:', num=revision_to.id) }}
             </a>
           </h3>

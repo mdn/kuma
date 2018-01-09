@@ -219,7 +219,7 @@
                 <div id="doc-pending-fallback" class="warning">
                   <p><bdi>{% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native, parent_language=document.language %}
                     Our volunteers haven't translated this article into <bdi>{{ locale }}</bdi> yet.
-                    <a href="{{ help_link }}" rel="nofollow, noindex">Join us and help get the job done!</a><br>
+                    <a href="{{ help_link }}" rel="nofollow">Join us and help get the job done!</a><br>
                     You can also read the article in <a href="{{ doc_abs_url }}">{{ parent_language }}</a>.
                   {% endtrans %}</bdi></p>
                 </div>

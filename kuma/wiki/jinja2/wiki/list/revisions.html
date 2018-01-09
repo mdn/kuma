@@ -19,7 +19,7 @@
       <ul>
         {% if document.parent %}
           <li>
-            <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}" rel="nofollow, noindex">{{ document.parent.language }}</a>
+            <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}" rel="nofollow">{{ document.parent.language }}</a>
           </li>
         {% endif %}
         <li>
@@ -56,11 +56,11 @@
               </div>
                <div class="revision-list-cell revision-list-prev">
               {% if prev_id %}
-                <a href="{{ url('wiki.compare_revisions', document.slug) }}?to={{ rev.id }}&amp;from={{ prev_id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
+                <a href="{{ url('wiki.compare_revisions', document.slug) }}?to={{ rev.id }}&amp;from={{ prev_id }}" rel="nofollow">{{ _('Previous') }}</a>
               {% endif %}
               </div>
               <div class="revision-list-cell revision-list-date">
-                <a href="{{ url('wiki.revision', rev.document.slug, rev.id, locale=rev.document.locale) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
+                <a href="{{ url('wiki.revision', rev.document.slug, rev.id, locale=rev.document.locale) }}" rel="nofollow">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
               <div class="revision-list-cell revision-list-creator">
                 <a href="{{ rev.creator.get_absolute_url() }}"
@@ -75,7 +75,7 @@
               </div>
               {% if document.current_revision_id != rev_id and document.id == rev.document_id and user_can_delete %}
               <div class="revision-list-cell revision-list-revert">
-                <a href="{{ url('wiki.revert_document', rev.document.slug, rev.id, locale=rev.document.locale) }}" class="button revert-revision" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
+                <a href="{{ url('wiki.revert_document', rev.document.slug, rev.id, locale=rev.document.locale) }}" class="button revert-revision" rel="nofollow">{{ _('Revert to this revision') }}</a>
               </div>
               {% endif %}
             </li>
@@ -106,7 +106,7 @@
       {% set class='hidden' if not request.user.is_authenticated() %}
 
       if($next.length) {
-      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}" rel="nofollow, noindex">' + gettext('View All') + '</a></li>');
+      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}" rel="nofollow">' + gettext('View All') + '</a></li>');
       }
     });
   </script>
