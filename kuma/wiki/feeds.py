@@ -8,6 +8,7 @@ from django.db.models import F
 from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
                                         SyndicationFeed)
 from django.utils.html import escape
+from django.utils.timezone import get_current_timezone, is_naive
 from django.utils.translation import ugettext as _
 
 from kuma.core.templatetags.jinja_helpers import add_utm
@@ -52,7 +53,33 @@ class DocumentsFeed(Feed):
             self.feed_type = Atom1Feed
 
     def item_pubdate(self, document):
-        return document.current_revision.created
+        """
+        Force pubdate to be timezone-aware.
+
+        When switching to standard time in the second half of the year, an hour
+        occurs twice. In the United States, 2:00 am becomes 1:00 am again.
+        The naive datetimes stored in our database can't distinguish beteween
+        the first and second time the hour occurs. An error is raised, and no
+        usable feed returned.
+
+        This handler assumes that it is the first hour, so it will be wrong 50%
+        of the time, but this is better than an errored feed. We can do better
+        when we convert to storing timezone-aware datetimes, by assuming
+        revision IDs increase and finding the transition point.
+
+        https://stackoverflow.com/questions/21465528/resolving-ambiguoustimeerror-from-djangos-make-aware
+        TODO: In Django 1.9, can pass is_dst=False to make_aware
+        TODO: Enable timezone-aware dates in database, remove check
+        """
+        raw_pubdate = document.current_revision.created
+        if is_naive(raw_pubdate):
+            # USE_TZ is False, database has naive timestamps
+            timezone = get_current_timezone()
+            pubdate = timezone.localize(raw_pubdate, is_dst=True)
+        else:  # pragma: no cover
+            # USE_TZ is True, database has timezone-aware timestamps
+            pubdate = raw_pubdate
+        return pubdate
 
     def item_title(self, document):
         return document.title

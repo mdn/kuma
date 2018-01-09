@@ -3,12 +3,14 @@ from datetime import datetime
 import json
 
 from django.utils.six.moves.urllib_parse import urlparse, parse_qs
+from django.utils.timezone import make_aware
 from pyquery import PyQuery as pq
+from pytz import AmbiguousTimeError
 import pytest
 
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.feeds import DocumentJSONFeedGenerator
-from kuma.wiki.models import Document
+from kuma.wiki.models import Document, Revision
 
 from . import normalize_html
 
@@ -414,6 +416,25 @@ def test_recent_documents_feed_filter_by_tag(edit_revision, client):
         content=edit_revision.content,
         creator=edit_revision.creator,
         tags='"TheTag"')
+    resp = client.get(feed_url)
+    assert resp.status_code == 200
+    data = json.loads(resp.content)
+    assert len(data) == 1
+
+
+def test_recent_documents_handles_ambiguous_time(root_doc, client):
+    """The recent_documents feed handles times during DST transition."""
+    ambiguous = datetime(2017, 11, 5, 1, 8, 42)
+    with pytest.raises(AmbiguousTimeError):
+        make_aware(ambiguous)
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc,
+        creator=root_doc.current_revision.creator,
+        content='<p>Happy Daylight Savings Time!</p>',
+        title=root_doc.title,
+        created=ambiguous)
+    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                       kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
     data = json.loads(resp.content)
