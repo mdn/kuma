@@ -33,7 +33,7 @@
               {% endif %}
 
               {% if document.is_localizable %}
-                <li><a href="{{ translate_url }}" rel="nofollow, noindex" id="translations-add">{{ _('Add a translation') }}</a></li>
+                <li><a href="{{ translate_url }}" rel="nofollow" id="translations-add">{{ _('Add a translation') }}</a></li>
               {% endif %}
             </ul>
           </div>
@@ -44,7 +44,7 @@
             content_experiment and
             content_experiment.selection_is_valid) %}
       {% if (not is_experiment) %}
-      <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button neutral" id="edit-button" rel="nofollow, noindex">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
+      <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button neutral" id="edit-button" rel="nofollow">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
       {% endif %}
 
         {% if user.is_authenticated() and document %}
@@ -64,16 +64,16 @@
           <div class="submenu-column">
             <div class="title">{{ _('Advanced') }}</div>
             <ul>
-                <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
+                <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow">{{_('History')}}</a></li>
                 {% if user.is_authenticated() %}
-                  <li><a href="{{ url('wiki.create') }}?parent={{ document.id }}" rel="nofollow, noindex">{{ _('New sub-article') }}</a></li>
-                  <li><a href="{{ url('wiki.create') }}?clone={{ document.id }}{% if document.parent_topic %}&amp;parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow, noindex">{{ _('Clone this article') }}</a></li>
+                  <li><a href="{{ url('wiki.create') }}?parent={{ document.id }}" rel="nofollow">{{ _('New sub-article') }}</a></li>
+                  <li><a href="{{ url('wiki.create') }}?clone={{ document.id }}{% if document.parent_topic %}&amp;parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow">{{ _('Clone this article') }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
-                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow, noindex">{{ _('Move this article') }}</a></li>
+                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow">{{ _('Move this article') }}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
-                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}" rel="nofollow, noindex">{{ _('View in admin') }}</a></li>
+                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}" rel="nofollow">{{ _('View in admin') }}</a></li>
                 {% endif %}
 
 {#
@@ -81,15 +81,15 @@
     # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
 #}
                 {% if user.has_perm('wiki.delete_document') and not document.children.exists() %}
-                  <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow, noindex">{{ _('Delete this article') }}</a></li>
+                  <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow">{{ _('Delete this article') }}</a></li>
                 {% endif %}
 
                 {% set zone_links = document_zone_management_links(request.user, document) %}
                 {% if zone_links['change'] %}
-                  <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow, noindex">{{ _('Manage content zone') }}</a></li>
+                  <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow">{{ _('Manage content zone') }}</a></li>
                 {% endif %}
                 {% if zone_links['add'] %}
-                  <li><a target="_blank" href="{{ zone_links['add'] }}" rel="nofollow, noindex">{{ _('Convert to content zone') }}</a></li>
+                  <li><a target="_blank" href="{{ zone_links['add'] }}" rel="nofollow">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
                 <li class="page-print"><a href="#" onclick="return window.print();">{{ _('Print this article') }}</a></li>
             </ul>
