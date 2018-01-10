@@ -23,12 +23,13 @@ def test_request():
     """A successful request calls raise_for_status by default."""
     requester = Requester('example.com', True)
     mock_session = mock.Mock(spec_set=['get'])
-    mock_response = mock.Mock(spec_set=['raise_for_status'])
+    mock_response = mock.Mock(spec_set=['raise_for_status', 'status_code'])
+    mock_response.status_code = 400
     mock_session.get.return_value = mock_response
     requester._session = mock_session
 
     response = requester.request('/path')
-    assert response == mock_response
+    assert response is mock_response
     mock_session.get.assert_called_once_with(
         'https://example.com/path', timeout=1.0)
     mock_response.raise_for_status.assert_called_once_with()
@@ -38,12 +39,13 @@ def test_request_no_raise():
     """The call to raise_for_status can be omitted."""
     requester = Requester('example.net', False)
     mock_session = mock.Mock(spec_set=['get'])
-    mock_response = mock.Mock(spec_set=['raise_for_status'])
+    mock_response = mock.Mock(spec_set=['raise_for_status', 'status_code'])
+    mock_response.status_code = 400
     mock_session.get.return_value = mock_response
     requester._session = mock_session
 
     response = requester.request('/path', raise_for_status=False)
-    assert response == mock_response
+    assert response is mock_response
     mock_session.get.assert_called_once_with(
         'http://example.net/path', timeout=1.0)
     assert not mock_response.raise_for_status.called
@@ -54,14 +56,16 @@ def test_timeout_success(mock_sleep):
     """Requests are retried with back off after a Timeout."""
     requester = Requester('example.com', True)
     mock_session = mock.Mock(spec_set=['get'])
+    mock_response = mock.Mock(spec_set=['status_code'])
+    mock_response.status_code = 200
     mock_session.get.side_effect = [
         requests.exceptions.Timeout(),
         requests.exceptions.Timeout(),
-        'response']
+        mock_response]
     requester._session = mock_session
 
     response = requester.request('/path', raise_for_status=False)
-    assert response == 'response'
+    assert response is mock_response
     full_path = 'https://example.com/path'
     expected_calls = [
         mock.call(full_path, timeout=1.0),
@@ -77,14 +81,16 @@ def test_connectionerror_success():
     """Requests are retried after expected exceptions."""
     requester = Requester('example.com', True)
     mock_session = mock.Mock(spec_set=['get'])
+    mock_response = mock.Mock(spec_set=['status_code'])
+    mock_response.status_code = 200
     mock_session.get.side_effect = [
         requests.exceptions.ConnectionError(),
         requests.exceptions.ConnectionError(),
-        'response']
+        mock_response]
     requester._session = mock_session
 
     response = requester.request('/path', raise_for_status=False)
-    assert response == 'response'
+    assert response is mock_response
     full_path = 'https://example.com/path'
     expected_calls = [mock.call(full_path, timeout=1.0)] * 3
     assert mock_session.get.call_args_list == expected_calls
@@ -93,10 +99,10 @@ def test_connectionerror_success():
 @mock.patch('kuma.scrape.scraper.time.sleep')
 def test_timeout_failure(mock_sleep):
     """Request fail after too many Timeouts."""
-    assert Requester.MAX_ATTEMPTS == 3
+    assert Requester.MAX_ATTEMPTS == 4
     requester = Requester('example.com', True)
     mock_session = mock.Mock(spec_set=['get'])
-    mock_session.get.side_effect = [requests.exceptions.Timeout] * 3
+    mock_session.get.side_effect = [requests.exceptions.Timeout] * 4
     requester._session = mock_session
 
     with pytest.raises(requests.exceptions.Timeout):
@@ -106,10 +112,67 @@ def test_timeout_failure(mock_sleep):
         mock.call(full_path, timeout=1.0),
         mock.call(full_path, timeout=2.0),
         mock.call(full_path, timeout=4.0),
+        mock.call(full_path, timeout=8.0),
     ]
     assert mock_session.get.call_args_list == expected_calls
-    expected_sleep_calls = [mock.call(1.0), mock.call(2.0), mock.call(4.0)]
+    expected_sleep_calls = [mock.call(1.0), mock.call(2.0), mock.call(4.0),
+                            mock.call(8.0)]
     assert mock_sleep.call_args_list == expected_sleep_calls
+
+
+rate_limit_tests = {
+    'Retry-After as seconds': ('65', 65),
+    'Retry-After as date': ('Wed, 21 Oct 2015 07:28:00 GMT', 30),
+    'Retry-After as 0 seconds': ('0', 1),
+}
+
+
+@mock.patch('kuma.scrape.scraper.time.sleep')
+@pytest.mark.parametrize('retry_after,sleep_time',
+                         rate_limit_tests.values(),
+                         ids=rate_limit_tests.keys())
+def test_request_429_is_retried(mock_sleep, retry_after, sleep_time):
+    """Requests are retried after a 429 Too Many Requests status."""
+    requester = Requester('example.com', True)
+    mock_session = mock.Mock(spec_set=['get'])
+    mock_response1 = mock.Mock(spec_set=['status_code', 'headers'])
+    mock_response1.status_code = 429
+    mock_response1.headers.get.return_value = retry_after
+    mock_response2 = mock.Mock(spec_set=['status_code'])
+    mock_response2.status_code = 200
+    mock_session.get.side_effect = [mock_response1, mock_response2]
+    requester._session = mock_session
+
+    response = requester.request('/path', raise_for_status=False)
+    assert response is mock_response2
+    full_path = 'https://example.com/path'
+    expected_calls = [mock.call(full_path, timeout=1.0)] * 2
+    assert mock_session.get.call_args_list == expected_calls
+    mock_response1.headers.get.assert_called_once_with('retry-after', 30)
+    mock_sleep.assert_called_once_with(sleep_time)
+
+
+@mock.patch('kuma.scrape.scraper.time.sleep')
+def test_request_504_is_retried(mock_sleep):
+    """Requests are retried after a 504 Gateway Timeout status."""
+    requester = Requester('example.com', True)
+    mock_session = mock.Mock(spec_set=['get'])
+    mock_response1 = mock.Mock(spec_set=['status_code'])
+    mock_response1.status_code = 504
+    mock_response2 = mock.Mock(spec_set=['status_code'])
+    mock_response2.status_code = 200
+    mock_session.get.side_effect = [mock_response1, mock_response2]
+    requester._session = mock_session
+
+    response = requester.request('/path', raise_for_status=False)
+    assert response is mock_response2
+    full_path = 'https://example.com/path'
+    expected_calls = [
+        mock.call(full_path, timeout=1.0),
+        mock.call(full_path, timeout=2.0),
+    ]
+    assert mock_session.get.call_args_list == expected_calls
+    mock_sleep.assert_called_once_with(1)
 
 
 #
