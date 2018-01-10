@@ -4,6 +4,7 @@
 
 PROD_BRANCH_NAME = 'prod-push'
 STAGE_BRANCH_NAME = 'stage-push'
+STANDBY_BRANCH_NAME = 'standby-push'
 KUMA_PIPELINE = 'mdn_multibranch_pipeline'
 KUMASCRIPT_PIPELINE= 'kumascript_multibranch_pipeline'
 
@@ -11,15 +12,48 @@ def get_commit_tag() {
     return env.GIT_COMMIT.take(7)
 }
 
-def get_target() {
+def get_target_name() {
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
     if (env.BRANCH_NAME == STAGE_BRANCH_NAME) {
         return 'stage'
     }
+    if (env.BRANCH_NAME == STANDBY_BRANCH_NAME) {
+        return 'standby'
+    }
     throw new Exception(
-        'Unable to determine the target from the branch name.'
+        'Unable to determine the target name from the branch name.'
+    )
+}
+
+def get_target_script() {
+    if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
+        return 'prod'
+    }
+    if (env.BRANCH_NAME == STAGE_BRANCH_NAME) {
+        return 'stage'
+    }
+    if (env.BRANCH_NAME == STANDBY_BRANCH_NAME) {
+        return 'prod.mm'
+    }
+    throw new Exception(
+        'Unable to determine the target script from the branch name.'
+    )
+}
+
+def get_region() {
+    if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
+        return 'portland'
+    }
+    if (env.BRANCH_NAME == STAGE_BRANCH_NAME) {
+        return 'portland'
+    }
+    if (env.BRANCH_NAME == STANDBY_BRANCH_NAME) {
+        return 'frankfurt'
+    }
+    throw new Exception(
+        'Unable to determine the region from the branch name.'
     )
 }
 
@@ -93,11 +127,12 @@ def ensure_pull() {
 }
 
 def make(cmd, display) {
-    def target = get_target()
+    def target = get_target_script()
+    def region = get_region()
     def tag = get_commit_tag()
     def repo_upper = get_repo_name().toUpperCase()
     def cmds = """
-        . regions/portland/${target}.sh
+        . regions/${region}/${target}.sh
         make ${cmd} ${repo_upper}_IMAGE_TAG=${tag}
     """
     sh_with_notify(cmds, display, true)
@@ -132,7 +167,7 @@ def announce_push() {
     /*
      * Announce the push.
      */
-    def target = get_target()
+    def target = get_target_name()
     def repo = get_repo_name()
     def tag = get_commit_tag()
     notify_irc([
