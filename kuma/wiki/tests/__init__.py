@@ -1,5 +1,4 @@
 from datetime import datetime
-import time
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
@@ -86,13 +85,6 @@ def make_translation():
     return d1, d2
 
 
-def wait_add_rev(document):
-    # Let the clock tick, then update the translation parent.
-    time.sleep(1.0)
-    revision(document=document, save=True)
-    return document
-
-
 # End model makers.
 
 
@@ -119,13 +111,13 @@ class WhitespaceRemovalFilter(html5lib_Filter):
             yield token
 
 
-def normalize_html(input):
+def normalize_html(html):
     """
     Normalize HTML5 input, discarding parts not significant for
     equivalence in tests
     """
     return (kuma.wiki.content
-            .parse(unicode(input))
+            .parse(unicode(html))
             .filter(WhitespaceRemovalFilter)
             .serialize(alphabetical_attributes=True))
 
