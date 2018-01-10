@@ -148,7 +148,7 @@ the commamd in the the container::
 
     time scripts/create_sample_db.sh
 
-This takes 30 - 60 minutes with a good internet connection.  This is then
+This takes 2 to 2½ hours with a good internet connection.  This is then
 uploaded to the ``mdn-downloads`` site:
 
 * https://mdn-downloads.s3-us-west-2.amazonaws.com/index.html

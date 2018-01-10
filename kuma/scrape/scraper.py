@@ -19,7 +19,7 @@ logger = logging.getLogger('kuma.scraper')
 class Requester(object):
     """Request pages from a running MDN instance."""
 
-    MAX_ATTEMPTS = 3
+    MAX_ATTEMPTS = 4
     TIMEOUT = 1.0
 
     def __init__(self, host, ssl):
@@ -40,10 +40,12 @@ class Requester(object):
         logger.debug("GET %s", url)
         attempts = 0
         response = None
+        retry = True
         timeout = self.TIMEOUT
-        while response is None and 0 <= attempts < self.MAX_ATTEMPTS:
+        while retry and 0 <= attempts < self.MAX_ATTEMPTS:
             attempts += 1
             err = None
+            retry = False
             try:
                 response = self.session.get(url, timeout=timeout)
             except requests.exceptions.Timeout as err:
@@ -52,8 +54,26 @@ class Requester(object):
                 timeout *= 2
             except requests.exceptions.ConnectionError as err:
                 logger.warn("Error request %d for %s: %s", attempts, url, err)
-            if response is None and attempts >= self.MAX_ATTEMPTS:
-                raise err
+            if response is None:
+                if attempts >= self.MAX_ATTEMPTS:
+                    raise err
+                else:
+                    retry = True
+            elif response.status_code == 429:
+                retry = True
+                pause_raw = response.headers.get('retry-after', 30)
+                try:
+                    pause = max(1, int(pause_raw))
+                except ValueError:
+                    pause = 30
+                logger.warn(("Request limit (429) returned for %s."
+                             " Pausing for %d seconds."), url, pause)
+                time.sleep(pause)
+            elif response.status_code == 504:
+                retry = True
+                logger.warn("Gateway timeout (504) returned for $s.", url)
+                time.sleep(timeout)
+                timeout *= 2
 
         assert response is not None
         if raise_for_status:
