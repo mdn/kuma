@@ -22,17 +22,32 @@ if [[ "$DEBUG_SCRIPT" != "0" ]]; then
     set -x
 fi
 
+# BASE_URL: Protocol + domain to test against, such as https://stage.mdn.moz.works
+BASE_URL=${BASE_URL:-http://web:8000}
+
 # PYTEST_ARGS: Arguments to pytest, i.e. what to run
-PYTEST_ARGS="${@}"
-if [ -z "$PYTEST_ARGS" ]; then
-    PYTEST_ARGS="tests/functional -m \"not login\" -vv --reruns=1"
+PYTEST_ARGS=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --base-url)
+            BASE_URL="$2"
+            shift
+            ;;
+        --base-url=*)
+            BASE_URL="${1#*=}"
+            ;;
+        *)
+            PYTEST_ARGS+=("$1")
+            ;;
+    esac
+    shift
+done
+if [ "${#PYTEST_ARGS[*]}" == 0 ]; then
+    PYTEST_ARGS=( "tests/functional" "-m" "not login" "-vv" "--reruns=1")
 fi
 
 # PROJECT_NAME: Added to names as flavor, should match your source checkout name
 PROJECT_NAME=${PROJECT_NAME:-kuma}
-
-# BASE_URL: Protocol + domain to test against, such as https://stage.mdn.moz.works
-BASE_URL=${BASE_URL:-http://web:8000}
 
 # TEST_DEV: Test against the local development environment
 TEST_DEV=${TEST_DEV:-unset}
@@ -171,7 +186,8 @@ if [ $? -eq 0 ]; then
         cmd+=" --driver Remote --capability browserName ${browser}"
         cmd+=" --host hub"
         cmd+=" --base-url=${BASE_URL}"
-        cmd+=" ${RESULTS_HTML} ${PYTEST_ARGS}"
+        cmd+=" ${RESULTS_HTML}"
+        cmd+="$( printf " %q" "${PYTEST_ARGS[@]}")"
 
         echo "*** Running integration tests against ${browser}..."
         docker run -it \

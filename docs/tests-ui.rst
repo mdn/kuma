@@ -175,21 +175,27 @@ To run dockerized Selenium against your local development environment::
     $ scripts/run_functional_tests.sh
 
 This uses the "standalone" Docker images, and runs the tests in Chrome and
-Firefox. It places test results in a subdirectory of ``test_results``, which
+Firefox. It runs ``pytest`` with the options
+``tests/functional -m "not login" -vv --reruns=1`` (run functional tests,
+skip those requiring a login, be very verbose, and try failing tests again).
+It places test results in a subdirectory of ``test_results``, which
 includes logs, screenshots, and other details.
 
 To run with Selenium Grid, like the MDN CI Infrastructure, use::
 
     $ SELENIUM_HUB=1 scripts/run_functional_tests.sh
 
-You can test staging by setting a new base URL::
+You can replace the default ``pytest`` options by passing arguments::
+
+    $ scripts/run_functional_tests.sh -m "not login" tests/functional/test_article_edit.py
+
+You can test staging by setting a new base URL as a ``pytest`` argument::
+
+    $ scripts/run_functional_tests.sh --base-url https://stage.mdn.moz.works -m "not login" tests/functional/test_article_edit.py
+
+You can also use an environment variable and get the default ``pytest`` arguments::
 
     $ BASE_URL=https://stage.mdn.moz.works scripts/run_functional_tests.sh
-
-You can adjust what is tested by passing arguments (except for the
-``--base-url`` argument, which must be passed as an environment variable)::
-
-    $ scripts/run_functional_tests.sh -m "not login" tests/functional/test_home.py
 
 See ``scripts/run_functional_tests.sh`` for the all the configuration options.
 
