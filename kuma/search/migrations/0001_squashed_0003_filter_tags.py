@@ -8,8 +8,6 @@ import taggit.managers
 
 class Migration(migrations.Migration):
 
-    replaces = [(b'search', '0001_initial'), (b'search', '0002_filter_default'), (b'search', '0003_filter_tags')]
-
     dependencies = [
         ('taggit', '0001_initial'),
         ('contenttypes', '0001_initial'),

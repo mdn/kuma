@@ -13,8 +13,6 @@ import uuid
 
 class Migration(migrations.Migration):
 
-    replaces = [(b'wiki', '0001_initial'), (b'wiki', '0002_auto_20150430_0805'), (b'wiki', '0003_auto_20150703_0419'), (b'wiki', '0004_remove_document_team'), (b'wiki', '0005_delete_teamwork_contenttypes'), (b'wiki', '0006_revision_tidied_content'), (b'wiki', '0007_update_locale_fields'), (b'wiki', '0008_add_share_url'), (b'wiki', '0009_remove_share_url'), (b'wiki', '0010_auto_20150915_1211'), (b'wiki', '0011_create_spam_data'), (b'wiki', '0012_rm_category'), (b'wiki', '0013_remove_helpfulvote'), (b'wiki', '0014_spam_set_null'), (b'wiki', '0015_add_revision_akismet_submission'), (b'wiki', '0016_extend_revision_ip'), (b'wiki', '0017_spam_field_updates'), (b'wiki', '0018_update_locale_fields'), (b'wiki', '0019_rename_documentattachment_related_name'), (b'wiki', '0020_add_is_linked_is_original'), (b'wiki', '0021_document_attachments_populated'), (b'wiki', '0022_remove_document_attachments_populated'), (b'wiki', '0023_add_document_uuid'), (b'wiki', '0024_add_review_to_documentspamattempt'), (b'wiki', '0025_set_documentspamattempt_unavailable'), (b'wiki', '0026_document_uuid_default'), (b'wiki', '0027_populate_document_uuid'), (b'wiki', '0028_require_document_uuid'), (b'wiki', '0029_add_dsa_review_type_error'), (b'wiki', '0030_add_page_creators_group'), (b'wiki', '0031_add_data_to_revisionip'), (b'wiki', '0032_alt-zone-css'), (b'wiki', '0033_drop_template_perms'), (b'wiki', '0034_utf8_general_ci_tags'), (b'wiki', '0035_utf8_general_ci_collation'), (b'wiki', '0036_update_locales')]
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('contenttypes', '__latest__'),
