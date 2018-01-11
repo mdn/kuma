@@ -1,14 +1,23 @@
 (function (win, doc, $) {
+    var sessionStorageKey = 'changed-locale-to';
     function storeLocaleChange(code, name) {
-        localStorage.setItem('changed-locale-to', JSON.stringify({code: code, name: name}));
+        sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
     }
 
-    if(win.mdn.features.localStorage) {
-        var langSwitcherSelector = document.getElementById('language'),
-            langSwitcherButton = document.getElementById('translations');
+    function removeLocaleChange() {
+        sessionStorage.removeItem(sessionStorageKey);
+    }
+
+    function getLocaleChange() {
+        return sessionStorage.getItem(sessionStorageKey);
+    }
+
+    if(win.sessionStorage) {
+        var langSwitcherSelector = document.getElementById('language');
+        var langSwitcherButton = document.getElementById('translations');
 
         if (langSwitcherSelector) {
-            langSwitcherSelector.addEventListener('change', function () {
+            langSwitcherSelector.addEventListener('change', function() {
                 var element = this.options[this.options.selectedIndex];
                 storeLocaleChange(element.dataset.locale, element.label);
             });
@@ -18,41 +27,37 @@
             var transChoices = langSwitcherButton.querySelectorAll('li a');
 
             for (var i = 0; i < transChoices.length; i++) {
-
-                transChoices[i].addEventListener('click', function () {
+                transChoices[i].addEventListener('click', function() {
                     storeLocaleChange(this.dataset.locale, this.text);
                 });
             }
         }
 
         // Insert notice about permanent language switch
-        var changedLocaleTo = localStorage.getItem('changed-locale-to');
+        var changedLocaleTo = getLocaleChange();
         if (changedLocaleTo) {
-            var locale = JSON.parse(changedLocaleTo),
-                text = gettext('You are now viewing this site in %(localeName)s.' +
-                               ' Do you always want to view this site in %(localeName)s?'),
-                html = interpolate(text +
+            var locale = JSON.parse(changedLocaleTo);
+            var text = gettext('You are now viewing this site in %(localeName)s.' +
+                               ' Do you always want to view this site in %(localeName)s?');
+            var html = interpolate(text +
                     '<br><button id="locale-permanent-yes" type="button" data-locale="%(localeCode)s">' +
                     gettext('Yes') + '</button> <button id="locale-permanent-no" type="button">' + gettext('No') +
-                    '</button></p></div>', {localeCode: locale.code, localeName: locale.name}, true),
-                notification = mdn.Notifier.growl(html, {closable: true, duration: 0}).question();
+                    '</button></p></div>', {localeCode: locale.code, localeName: locale.name}, true);
+            var notification = mdn.Notifier.growl(html, {closable: true, duration: 0});
+            notification.question();
+            removeLocaleChange();
 
             // Add event listener to the buttons
-            $('#locale-permanent-yes').on('click', function () {
+            $('#locale-permanent-yes').on('click', function() {
                 $.post('/i18n/setlang/', {language: this.dataset.locale})
-                    .success(function () {
+                    .success(function() {
                         notification.close();
-                        localStorage.removeItem('changed-locale-to');
                     });
-            }
-            );
+            });
 
-            $('#locale-permanent-no').on('click', function () {
+            $('#locale-permanent-no').on('click', function() {
                 notification.close();
-                localStorage.removeItem('changed-locale-to');
-            }
-            );
+            });
         }
     }
-
 })(window, document, jQuery);
