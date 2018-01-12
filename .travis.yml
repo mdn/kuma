@@ -45,10 +45,15 @@ env:
           CREATE_DB=kuma
           INSTALL_PIPELINE=1
           INSTALL_ELASTICSEARCH=1
+        - TOXENV=next
+          CREATE_DB=kuma
+          INSTALL_PIPELINE=1
+          INSTALL_ELASTICSEARCH=1
 
 matrix:
     allow_failures:
         - env: TOXENV=py27 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
+        - env: TOXENV=next CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
 install:
     - nvm install 6
     - nvm use 6
