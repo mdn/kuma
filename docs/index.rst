@@ -27,4 +27,4 @@ Contents:
    documentation
 
    docker
-   deploy-scl3
+   deploy
