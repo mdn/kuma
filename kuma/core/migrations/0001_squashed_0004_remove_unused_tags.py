@@ -7,8 +7,6 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    replaces = [(b'core', '0001_initial'), (b'core', '0002_remove_demos'), (b'core', '0003_remove_unused_taggeditems'), (b'core', '0004_remove_unused_tags')]
-
     dependencies = [
         ('taggit', '0002_auto_20150616_2121'),
     ]

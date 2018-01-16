@@ -10,8 +10,6 @@ from django.conf import settings
 
 class Migration(migrations.Migration):
 
-    replaces = [(b'attachments', '0001_initial'), (b'attachments', '0002_auto_20150430_0752'), (b'attachments', '0003_auto_20160126_0210'), (b'attachments', '0004_auto_20160204_1248'), (b'attachments', '0005_auto_20160204_1444'), (b'attachments', '0006_auto_20160204_1516'), (b'attachments', '0007_trashedattachment'), (b'attachments', '0008_attachment_on_delete')]
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]

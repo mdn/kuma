@@ -12,8 +12,6 @@ import kuma.core.managers
 
 class Migration(migrations.Migration):
 
-    replaces = [(b'users', '0001_initial'), (b'users', '0002_auto_20151118_1326'), (b'users', '0003_rm_contentflagging'), (b'users', '0004_update_locales'), (b'users', '0005_update_tz'), (b'users', '0006_stackoverflow_validator'), (b'users', '0007_user_is_github_url_public'), (b'users', '0008_update_locales_tz_help')]
-
     dependencies = [
         ('auth', '0001_initial'),
         ('taggit', '0001_initial'),
