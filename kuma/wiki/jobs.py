@@ -35,7 +35,7 @@ class DocumentNearestZoneJob(KumaJob):
                                  .get)
         while pk:
             try:
-                return DocumentZone.objects.get(document=pk)
+                return DocumentZone.objects.select_related('document').get(document=pk)
             except DocumentZone.DoesNotExist:
                 pk = get_parent_id(pk=pk)
 
@@ -127,3 +127,27 @@ class DocumentCodeSampleJob(GenerationJob):
 
     def empty(self):
         return {}
+
+
+class DocumentTagsJob(KumaJob):
+    """
+    Given a wiki document returns a list of tags.
+
+    We invalidate this when a document is saved only.
+    Longer lifetime as tags are rarely modified
+    """
+    refresh_timeout = 180
+
+    @property
+    def lifetime(self):
+        # Spread the life time across a random
+        # number of days from 1 to 10 (in units of seconds).
+        # So that all the document cache do not get expired at same time
+        seconds_per_day = 24 * 60 * 60
+        return random.randint(1 * seconds_per_day, 10 * seconds_per_day)
+
+    def fetch(self, pk):
+        from .models import Document
+
+        tags = Document.objects.filter(id=pk).values_list('tags__name', flat=True).order_by('tags__name')
+        return list(tags)

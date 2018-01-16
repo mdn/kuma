@@ -39,7 +39,7 @@ from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision, NotDocumentView)
-from .jobs import DocumentContributorsJob, DocumentNearestZoneJob
+from .jobs import DocumentContributorsJob, DocumentNearestZoneJob, DocumentTagsJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager)
@@ -338,7 +338,7 @@ class Document(NotificationsMixin, models.Model):
 
     @cache_with_field('toc_html')
     def get_toc_html(self, *args, **kwargs):
-        if not self.current_revision:
+        if not self.current_revision_id:
             return ''
         if not self.current_revision.toc_depth:
             return ''
@@ -1283,7 +1283,7 @@ Full traceback:
 
     @property
     def show_toc(self):
-        return self.current_revision and self.current_revision.toc_depth
+        return self.current_revision_id and self.current_revision.toc_depth
 
     @cached_property
     def language(self):
@@ -1375,14 +1375,7 @@ Full traceback:
         """
         Return a list of Documents - other translations of this Document
         """
-        if self.parent is None:
-            return list(self.translations.all().order_by('locale'))
-        else:
-            translations = list(self.parent.translations
-                                .exclude(id=self.id)
-                                .order_by('locale'))
-            # The parent doc should be at first
-            return [self.parent] + translations
+        return self.get_other_translations()
 
     @property
     def parents(self):
@@ -1390,7 +1383,7 @@ Full traceback:
         Return the list of topical parent documents above this one,
         or an empty list if none exist.
         """
-        if self.parent_topic is None:
+        if self.parent_topic_id is None:
             return []
         current_parent = self.parent_topic
         parents = [current_parent]
@@ -1398,6 +1391,19 @@ Full traceback:
             parents.insert(0, current_parent.parent_topic)
             current_parent = current_parent.parent_topic
         return parents
+
+    def get_other_translations(self, fields=[]):
+        """
+        Return a list of Documents - other translations of this Document
+        :param fields: Model Fields that should only be fetched
+
+        """
+        if not self.parent_id:
+            return list(self.translations.all().order_by('locale').only(*fields))
+        else:
+            translations = list(self.parent.translations.exclude(id=self.id).order_by('locale').only(*fields))
+            # The parent doc should be at first
+            return [self.parent] + translations
 
     def is_child_of(self, other):
         """
@@ -1449,6 +1455,10 @@ Full traceback:
         return DocumentContributorsJob().get(self.pk)
 
     @cached_property
+    def all_tags_name(self):
+        return DocumentTagsJob().get(pk=self.pk)
+
+    @cached_property
     def nearest_zone(self):
         """
         The nearest zone for this document, starting from this document and
@@ -1466,7 +1476,7 @@ Full traceback:
     @cached_property
     def is_zone_root(self):
         zone = self.nearest_zone
-        return bool(zone) and (zone.document in (self, self.parent))
+        return bool(zone) and (zone.document_id in (self.id, self.parent_id))
 
     def get_full_url(self):
         return absolutify(self.get_absolute_url())

@@ -57,8 +57,7 @@ def document_last_modified(request, document_slug, document_locale):
     try:
         last_mod = memcache.get(cache_key)
         if last_mod is None:
-            doc = Document.objects.get(locale=document_locale,
-                                       slug=document_slug)
+            doc = Document.objects.only('slug', 'locale', 'modified').get(locale=document_locale, slug=document_slug)
             last_mod = doc.fill_last_modified_cache()
 
         # Convert the cached Unix epoch seconds back to Python datetime

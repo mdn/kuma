@@ -7,7 +7,7 @@ from elasticsearch_dsl.connections import connections as es_connections
 
 from .models import Document, DocumentZone
 from .jobs import (DocumentContributorsJob, DocumentNearestZoneJob,
-                   DocumentZoneURLRemapsJob, DocumentCodeSampleJob)
+                   DocumentZoneURLRemapsJob, DocumentCodeSampleJob, DocumentTagsJob)
 from .signals import render_done
 
 
@@ -114,6 +114,7 @@ class WikiConfig(AppConfig):
         invalidate_nearest_zone_cache(instance.pk, async=async)
 
         DocumentContributorsJob().invalidate(instance.pk)
+        DocumentTagsJob().invalidate(instance.pk)
 
         code_sample_job = DocumentCodeSampleJob(generation_args=[instance.pk])
         code_sample_job.invalidate_generation()

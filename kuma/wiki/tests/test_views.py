@@ -709,8 +709,9 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
 
     def test_get_seo_parent_doesnt_throw_404(self):
         """bug 1190212"""
+        doc = document(save=True)
         slug_dict = {'seo_root': 'Root/Does/Not/Exist'}
-        _get_seo_parent_title(slug_dict, 'bn-BD')  # Should not raise Http404
+        _get_seo_parent_title(doc, slug_dict, 'bn-BD')  # Should not raise Http404
 
     def test_seo_title(self):
         self.client.login(username='admin', password='testpass')

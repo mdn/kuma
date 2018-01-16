@@ -23,11 +23,10 @@
 {% set nearest_zone = document.nearest_zone %}
 {% set is_zone = nearest_zone %}
 {% set is_zone_root = document.is_zone_root %}
-{% set other_translations = document.other_translations %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
 
-{% set buttons = get_document_buttons(document, help_link) %}
+{% set buttons = get_document_buttons(document, help_link, other_translations) %}
 {% set crumbs = build_document_crumbs(document) %}
 
 
@@ -202,7 +201,7 @@
                 {% include 'wiki/includes/kumascript_errors.html' %}
               {% endif %}
 
-              {% if document.current_revision %}
+              {% if document.parent_id and document.current_revision %}
                 {% if document.current_revision.localization_in_progress %}
                   {% if not settings.MAINTENANCE_MODE and document.current_revision.translation_age >= 10 %}
                     <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=document.get_edit_url() %}
@@ -245,7 +244,7 @@
               <!-- contributors -->
               <div class="wiki-block contributors">
                 <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
-                {% set tags = document.tags.all().order_by('name') %}
+                {% set tags = document.all_tags_name %}
                 {% include "wiki/includes/document_tag.html" %}
 
                 {% if has_contributors %}

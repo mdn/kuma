@@ -111,18 +111,27 @@ def _make_doc_structure(document, level, expand, depth):
     return result
 
 
-def _get_seo_parent_title(slug_dict, document_locale):
+def _get_seo_parent_title(document, slug_dict, document_locale):
     """
     Get parent-title information for SEO purposes.
     """
-    if slug_dict['seo_root']:
-        try:
-            seo_root_doc = Document.objects.get(locale=document_locale,
-                                                slug=slug_dict['seo_root'])
-            return u' - %s' % seo_root_doc.title
-        except Document.DoesNotExist:
-            pass
-    return ''
+    seo_doc_slug = slug_dict['seo_root']
+    seo_root_doc = None
+
+    if seo_doc_slug:
+        # If the SEO root doc is the parent topic, save a query
+        if document.parent_topic_id and document.parent_topic.slug == seo_doc_slug:
+            seo_root_doc = document.parent_topic
+        else:
+            try:
+                seo_root_doc = Document.objects.only('title').get(locale=document_locale, slug=seo_doc_slug)
+            except Document.DoesNotExist:
+                pass
+
+    if seo_root_doc:
+        return u' - {}'.format(seo_root_doc.title)
+    else:
+        return ''
 
 
 def _filter_doc_html(request, doc, doc_html, rendering_params):
@@ -227,14 +236,27 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     doc = None
     fallback_reason = None
 
+    current_revision_fields = ['current_revision__{}'.format(field) for field in
+                               ('toc_depth', 'created', 'creator__id', 'creator__username', 'creator__is_active')]
+    parent_fields = ['parent__{}'.format(field) for field in ('locale', 'slug', 'current_revision__slug')]
+    parent_topic_fields = ['parent_topic__{}'.format(field) for field in ('id', 'title', 'slug')]
+
+    related_fields = current_revision_fields + parent_fields + parent_topic_fields
+
+    fields = ['html', 'rendered_html', 'zone_subnav_local_html', 'body_html',
+              'locale', 'slug', 'title', 'is_localizable', 'rendered_errors',
+              'toc_html', 'summary_html', 'summary_text', 'quick_links_html'] + related_fields
+
     try:
-        doc = Document.objects.get(locale=document_locale, slug=document_slug)
-        if (not doc.current_revision and doc.parent and
+        doc = (Document.objects.only(*fields).select_related(*related_fields)
+                               .get(locale=document_locale, slug=document_slug))
+
+        if (not doc.current_revision_id and doc.parent and
                 doc.parent.current_revision):
             # This is a translation but its current_revision is None
             # and OK to fall back to parent (parent is approved).
             fallback_reason = 'translation_not_approved'
-        elif not doc.current_revision:
+        elif not doc.current_revision_id:
             fallback_reason = 'no_content'
     except Document.DoesNotExist:
         pass
@@ -695,7 +717,7 @@ def document(request, document_slug, document_locale):
     seo_summary = doc.get_summary_text()
 
     # Get the additional title information, if necessary.
-    seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
+    seo_parent_title = _get_seo_parent_title(original_doc, slug_dict, document_locale)
 
     # Retrieve pre-parsed content hunks
     quick_links_html = doc.get_quick_links_html()
@@ -705,7 +727,7 @@ def document(request, document_slug, document_locale):
     # Record the English slug in Google Analytics, to associate translations
     if original_doc.locale == 'en-US':
         en_slug = original_doc.slug
-    elif original_doc.parent and original_doc.parent.locale == 'en-US':
+    elif original_doc.parent_id and original_doc.parent.locale == 'en-US':
         en_slug = original_doc.parent.slug
     else:
         en_slug = ''
@@ -716,6 +738,7 @@ def document(request, document_slug, document_locale):
     contributors = doc.contributors
     contributors_count = len(contributors)
     has_contributors = contributors_count > 0
+    other_translations = original_doc.get_other_translations(fields=['title', 'locale', 'slug', 'parent'])
 
     # Bundle it all up and, finally, return.
     context = {
@@ -742,6 +765,7 @@ def document(request, document_slug, document_locale):
         'analytics_page_revision': doc.current_revision_id,
         'analytics_en_slug': en_slug,
         'content_experiment': rendering_params['experiment'],
+        'other_translations': other_translations,
     }
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
