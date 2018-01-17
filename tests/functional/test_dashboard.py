@@ -22,6 +22,14 @@ def test_dashboard(base_url, selenium):
     assert not first_row.is_spam_ham_button_present
     # no dashboard-details
     assert page.details_items_length is 0
+
+
+@pytest.mark.smoke
+@pytest.mark.nondestructive
+def test_dashboard_open_details(base_url, selenium):
+    page = DashboardPage(selenium, base_url).open()
+    # no dashboard-details
+    assert page.details_items_length is 0
     # click first cell
     page.open_first_details()
     # dashboard-details exist and are visible
@@ -29,6 +37,12 @@ def test_dashboard(base_url, selenium):
     assert page.is_first_details_displayed
     # contains a diff
     page.wait_for_first_details_diff_displayed()
+
+
+@pytest.mark.smoke
+@pytest.mark.nondestructive
+def test_dashboard_load_page_two(base_url, selenium):
+    page = DashboardPage(selenium, base_url).open()
     # save id of first revision on page one
     first_row_id = page.first_row_id
     # click on page two link
