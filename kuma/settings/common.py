@@ -54,6 +54,7 @@ INTERACTIVE_EXAMPLES_BASE = config(
 
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
 ALLOW_ROBOTS = config('ALLOW_ROBOTS', default=False, cast=bool)
+REVISION_HASH = config('REVISION_HASH', default='undefined')
 
 MANAGERS = ADMINS
 
@@ -1676,9 +1677,8 @@ if SENTRY_DSN:
             'django.core.exceptions.DisallowedHost',
         ],
     }
-    release = config('REVISION_HASH', default='')
-    if release:
-        RAVEN_CONFIG['release'] = release
+    if REVISION_HASH and REVISION_HASH != 'undefined':
+        RAVEN_CONFIG['release'] = REVISION_HASH
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )

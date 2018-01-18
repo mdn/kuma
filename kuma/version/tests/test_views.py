@@ -1,4 +1,3 @@
-import os
 from urlparse import urljoin
 
 import pytest
@@ -9,12 +8,13 @@ from kuma.wiki.constants import KUMASCRIPT_BASE_URL
 
 
 @pytest.mark.parametrize('method', ['get', 'head'])
-def test_revision_hash(client, db, method):
+def test_revision_hash(client, db, method, settings):
+    settings.REVISION_HASH = 'the_revision_hash'
     response = getattr(client, method)(reverse('version.kuma'))
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
     if method == 'get':
-        assert response.content == os.getenv('REVISION_HASH', 'undefined')
+        assert response.content == 'the_revision_hash'
 
 
 @pytest.mark.parametrize(
