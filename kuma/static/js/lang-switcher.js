@@ -1,5 +1,7 @@
 (function (win, doc, $) {
     var sessionStorageKey = 'changed-locale-to';
+    var neverShowNoticeKey = 'never-show-locale-notice';
+    var neverShowNotice = getNeverShowNotice();
     function storeLocaleChange(code, name) {
         sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
     }
@@ -12,7 +14,15 @@
         return sessionStorage.getItem(sessionStorageKey);
     }
 
-    if(win.sessionStorage) {
+    function storeNeverShowNotice() {
+        localStorage.setItem(neverShowNoticeKey, true);
+    }
+
+    function getNeverShowNotice() {
+        return localStorage.getItem(neverShowNoticeKey) || false;
+    }
+
+    if(win.sessionStorage && win.mdn.features.localStorage && !neverShowNotice) {
         var langSwitcherSelector = document.getElementById('language');
         var langSwitcherButton = document.getElementById('translations');
 
@@ -39,11 +49,14 @@
             var locale = JSON.parse(changedLocaleTo);
             var text = gettext('You are now viewing this site in %(localeName)s.' +
                                ' Do you always want to view this site in %(localeName)s?');
-            var html = interpolate(text +
-                    '<br><button id="locale-permanent-yes" type="button" data-locale="%(localeCode)s">' +
-                    gettext('Yes') + '</button> <button id="locale-permanent-no" type="button">' + gettext('No') +
-                    '</button></p></div>', {localeCode: locale.code, localeName: locale.name}, true);
+            var message = interpolate(text, {localeName: locale.name}, true);
+            var button = '<button id="%s" type="button" data-locale="' + locale.code + '">%s</button> ';
+            var yesButton = interpolate(button, ['locale-permanent-yes', gettext('Yes')]);
+            var noButton = interpolate(button, ['locale-permanent-no', gettext('No')]);
+            var neverButton = interpolate(button, ['locale-permanent-never', gettext('Never')]);
+            var html = message + '<br>' + yesButton + noButton + neverButton;
             var notification = mdn.Notifier.growl(html, {closable: true, duration: 0});
+
             notification.question();
             removeLocaleChange();
 
@@ -56,6 +69,11 @@
             });
 
             $('#locale-permanent-no').on('click', function() {
+                notification.close();
+            });
+
+            $('#locale-permanent-never').on('click', function() {
+                storeNeverShowNotice();
                 notification.close();
             });
         }
