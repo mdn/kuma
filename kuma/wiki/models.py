@@ -428,13 +428,13 @@ class Document(NotificationsMixin, models.Model):
         return self.extract.section(content, section_id, ignore_heading,
                                     annotate_links)
 
-    def calculate_etag(self, section_id=None):
-        """Calculate an etag-suitable hash for document content or a section"""
-        if not section_id:
-            content = self.html
-        else:
-            content = self.extract.section(self.html, section_id)
-        return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
+    def get_html(self, section_id=None):
+        """
+        Get the document's html attribute or a section of it.
+        """
+        if section_id:
+            return self.extract.section(self.html, section_id)
+        return self.html
 
     def current_or_latest_revision(self):
         """Returns current revision if there is one, else the last created

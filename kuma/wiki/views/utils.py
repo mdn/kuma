@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import hashlib
 
 import newrelic.agent
 
@@ -77,3 +78,7 @@ def document_form_initial(document):
         'is_localizable': document.is_localizable,
         'tags': list(document.tags.names())
     }
+
+
+def calculate_etag(content):
+    return hashlib.md5(content).hexdigest()

@@ -15,10 +15,11 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.http import parse_etags
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import (condition, require_GET,
+from django.views.decorators.http import (etag, require_GET,
                                           require_http_methods, require_POST)
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
@@ -42,7 +43,7 @@ from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
                       DocumentRenderedContentNotAvailable, DocumentZone)
 from ..tasks import move_page
-from .utils import document_last_modified, split_slug
+from .utils import calculate_etag, split_slug
 
 
 def _get_html_and_errors(request, doc, rendering_params):
@@ -181,12 +182,10 @@ def _filter_doc_html(request, doc, doc_html, rendering_params):
     return doc_html
 
 
-def _set_common_headers(doc, section_id, response):
+def _add_kuma_revision_header(doc, response):
     """
-    Perform some response-header manipulation that gets used in
-    several places.
+    Add the X-kuma-revision header to the response if applicable.
     """
-    response['ETag'] = doc.calculate_etag(section_id)
     if doc.current_revision_id:
         response['X-kuma-revision'] = doc.current_revision_id
     return response
@@ -204,8 +203,10 @@ def _default_locale_fallback(request, document_slug, document_locale):
     fallback_reason = None
 
     try:
-        fallback_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
-                                            slug=document_slug)
+        fallback_doc = Document.objects.get(
+            slug=document_slug,
+            locale=settings.WIKI_DEFAULT_LANGUAGE
+        )
 
         # If there's a translation to the requested locale, take it:
         translation = fallback_doc.translated_to(document_locale)
@@ -565,14 +566,13 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
 
 
 @newrelic.agent.function_trace()
-@allow_CORS_GET
 @prevent_indexing
 def _document_deleted(request, deletion_logs):
-    """When a Document has been deleted return a 404.
+    """
+    When a Document has been deleted return a 404.
 
     If the user can restore documents, then return a 404 but also include the
     template with the form to restore the document.
-
     """
     if request.user and request.user.has_perm('wiki.restore_document'):
         deletion_log = deletion_logs.order_by('-pk')[0]
@@ -583,38 +583,26 @@ def _document_deleted(request, deletion_logs):
 
 
 @newrelic.agent.function_trace()
-@allow_CORS_GET
-def _document_raw(request, doc, doc_html, rendering_params):
+def _document_raw(doc_html):
     """
     Display a raw Document.
     """
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
     response['X-Robots-Tag'] = 'noindex'
-    return _set_common_headers(doc, rendering_params['section'], response)
+    return response
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'PUT', 'HEAD'])
-@redirect_in_maintenance_mode(methods=['PUT'])
+@require_http_methods(['GET', 'HEAD'])
 @allow_CORS_GET
-@accepts_auth_key
 @process_document_path
-@condition(last_modified_func=document_last_modified)
 @newrelic.agent.function_trace()
 @ratelimit(key='user_or_ip', rate='400/m', block=True)
 def document(request, document_slug, document_locale):
     """
     View a wiki document.
     """
-    # PUT requests go to the write API.
-    if request.method == 'PUT':
-        if (not request.authkey and not request.user.is_authenticated()):
-            raise PermissionDenied
-        return _document_PUT(request,
-                             document_slug,
-                             document_locale)
-
     fallback_reason = None
     slug_dict = split_slug(document_slug)
 
@@ -709,70 +697,123 @@ def document(request, document_slug, document_locale):
         toc_html = None
     doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
 
-    # If we're doing raw view, bail out to that now.
     if rendering_params['raw']:
-        return _document_raw(request, doc, doc_html, rendering_params)
-
-    # Get the SEO summary
-    seo_summary = doc.get_summary_text()
-
-    # Get the additional title information, if necessary.
-    seo_parent_title = _get_seo_parent_title(original_doc, slug_dict, document_locale)
-
-    # Retrieve pre-parsed content hunks
-    quick_links_html = doc.get_quick_links_html()
-    zone_subnav_html = doc.get_zone_subnav_html()
-    body_html = doc.get_body_html()
-
-    # Record the English slug in Google Analytics, to associate translations
-    if original_doc.locale == 'en-US':
-        en_slug = original_doc.slug
-    elif original_doc.parent_id and original_doc.parent.locale == 'en-US':
-        en_slug = original_doc.parent.slug
+        response = _document_raw(doc_html)
     else:
-        en_slug = ''
+        # Get the SEO summary
+        seo_summary = doc.get_summary_text()
 
-    share_text = ugettext(
-        'I learned about %(title)s on MDN.') % {"title": doc.title}
+        # Get the additional title information, if necessary.
+        seo_parent_title = _get_seo_parent_title(
+            original_doc, slug_dict, document_locale)
 
-    contributors = doc.contributors
-    contributors_count = len(contributors)
-    has_contributors = contributors_count > 0
-    other_translations = original_doc.get_other_translations(fields=['title', 'locale', 'slug', 'parent'])
+        # Retrieve pre-parsed content hunks
+        quick_links_html = doc.get_quick_links_html()
+        zone_subnav_html = doc.get_zone_subnav_html()
+        body_html = doc.get_body_html()
 
-    # Bundle it all up and, finally, return.
-    context = {
-        'document': original_doc,
-        'document_html': doc_html,
-        'toc_html': toc_html,
-        'quick_links_html': quick_links_html,
-        'zone_subnav_html': zone_subnav_html,
-        'body_html': body_html,
-        'contributors': contributors,
-        'contributors_count': contributors_count,
-        'contributors_limit': 6,
-        'has_contributors': has_contributors,
-        'fallback_reason': fallback_reason,
-        'kumascript_errors': ks_errors,
-        'macro_sources': (kumascript.macro_sources(force_lowercase_keys=True)
-                          if ks_errors else
-                          None),
-        'render_raw_fallback': rendering_params['render_raw_fallback'],
-        'seo_summary': seo_summary,
-        'seo_parent_title': seo_parent_title,
-        'share_text': share_text,
-        'search_url': get_search_url_from_referer(request) or '',
-        'analytics_page_revision': doc.current_revision_id,
-        'analytics_en_slug': en_slug,
-        'content_experiment': rendering_params['experiment'],
-        'other_translations': other_translations,
-    }
-    response = render(request, 'wiki/document.html', context)
-    return _set_common_headers(doc, rendering_params['section'], response)
+        # Record the English slug in Google Analytics,
+        # to associate translations
+        if original_doc.locale == 'en-US':
+            en_slug = original_doc.slug
+        elif original_doc.parent_id and original_doc.parent.locale == 'en-US':
+            en_slug = original_doc.parent.slug
+        else:
+            en_slug = ''
+
+        share_text = ugettext(
+            'I learned about %(title)s on MDN.') % {"title": doc.title}
+
+        contributors = doc.contributors
+        contributors_count = len(contributors)
+        has_contributors = contributors_count > 0
+        other_translations = original_doc.get_other_translations(
+            fields=['title', 'locale', 'slug', 'parent']
+        )
+
+        # Bundle it all up and, finally, return.
+        context = {
+            'document': original_doc,
+            'document_html': doc_html,
+            'toc_html': toc_html,
+            'quick_links_html': quick_links_html,
+            'zone_subnav_html': zone_subnav_html,
+            'body_html': body_html,
+            'contributors': contributors,
+            'contributors_count': contributors_count,
+            'contributors_limit': 6,
+            'has_contributors': has_contributors,
+            'fallback_reason': fallback_reason,
+            'kumascript_errors': ks_errors,
+            'macro_sources': (
+                kumascript.macro_sources(force_lowercase_keys=True)
+                if ks_errors else
+                None
+            ),
+            'render_raw_fallback': rendering_params['render_raw_fallback'],
+            'seo_summary': seo_summary,
+            'seo_parent_title': seo_parent_title,
+            'share_text': share_text,
+            'search_url': get_search_url_from_referer(request) or '',
+            'analytics_page_revision': doc.current_revision_id,
+            'analytics_en_slug': en_slug,
+            'content_experiment': rendering_params['experiment'],
+            'other_translations': other_translations,
+        }
+        response = render(request, 'wiki/document.html', context)
+
+    def get_etag(*args):
+        return calculate_etag(response.content)
+
+    # The etag decorator not only adds the ETag header to the response,
+    # but also handles conditional responses based on the incoming and
+    # outgoing ETag headers.
+    @etag(get_etag)
+    def get_response(request, *args):
+        return _add_kuma_revision_header(doc, response)
+
+    return get_response(request)
 
 
-def _document_PUT(request, document_slug, document_locale):
-    """Handle PUT requests as document write API"""
+@csrf_exempt
+@require_http_methods(['GET', 'HEAD', 'PUT'])
+@redirect_in_maintenance_mode(methods=['PUT'])
+@allow_CORS_GET
+@accepts_auth_key
+@process_document_path
+@newrelic.agent.function_trace()
+@ratelimit(key='user_or_ip', rate='100/m', block=True)
+def document_api(request, document_slug, document_locale):
+    """
+    View/modify the content of a wiki document, or create a new wiki document.
+    """
+    if request.method == 'PUT':
+        if not (request.authkey and request.user.is_authenticated()):
+            raise PermissionDenied
+        return _document_api_PUT(request, document_slug, document_locale)
+
+    try:
+        doc = Document.objects.get(locale=document_locale, slug=document_slug)
+    except Document.DoesNotExist:
+        raise Http404
+
+    section_id = request.GET.get('section', None)
+    response = HttpResponse(doc.get_html(section_id))
+
+    def get_etag(*args):
+        return calculate_etag(response.content)
+
+    @etag(get_etag)
+    def get_response(request, *args):
+        return _add_kuma_revision_header(doc, response)
+
+    return get_response(request)
+
+
+def _document_api_PUT(request, document_slug, document_locale):
+    """
+    Handle PUT requests for the document_api view.
+    """
 
     # Try parsing one of the supported content types from the request
     try:
@@ -822,17 +863,20 @@ def _document_PUT(request, document_slug, document_locale):
 
     try:
         # Look for existing document to edit:
-        doc = Document.objects.get(locale=document_locale,
-                                   slug=document_slug)
+        doc = Document.objects.get(locale=document_locale, slug=document_slug)
         section_id = request.GET.get('section', None)
         is_new = False
 
         # Use ETags to detect mid-air edit collision
         # see: http://www.w3.org/1999/04/Editing/
-        expected_etag = request.META.get('HTTP_IF_MATCH', False)
-        if expected_etag:
-            curr_etag = doc.calculate_etag(section_id)
-            if curr_etag != expected_etag:
+        if_match = request.META.get('HTTP_IF_MATCH')
+        if if_match:
+            try:
+                expected_etags = parse_etags(if_match)
+            except ValueError:
+                expected_etags = []
+            current_etag = calculate_etag(doc.get_html(section_id))
+            if current_etag not in expected_etags:
                 resp = HttpResponse()
                 resp.status_code = 412
                 resp.content = ugettext('ETag precondition failed')
@@ -862,17 +906,14 @@ def _document_PUT(request, document_slug, document_locale):
     new_rev = doc.revise(request.user, data, section_id)
     doc.schedule_rendering('max-age=0')
 
-    request.authkey.log(is_new and 'created' or 'updated',
+    request.authkey.log('created' if is_new else 'updated',
                         new_rev, data.get('summary', None))
 
     resp = HttpResponse()
-    if not is_new:
-        resp.content = 'RESET'
-        resp.status_code = 205
-    else:
-        resp.content = 'CREATED'
-        new_loc = request.build_absolute_uri(doc.get_absolute_url())
-        resp['Location'] = new_loc
+    if is_new:
+        resp['Location'] = request.build_absolute_uri(doc.get_absolute_url())
         resp.status_code = 201
+    else:
+        resp.status_code = 205
 
     return resp
