@@ -102,6 +102,8 @@ urlpatterns += [
     url(r'^miel$',
         handler500,
         name='users.honeypot'),
+    # We use our own views for setting language in cookies. But to just align with django, set it like this.
+    url(r'^i18n/setlang/', core_views.set_language, name='set-language-cookie'),
 ]
 
 if settings.SERVE_MEDIA:

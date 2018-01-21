@@ -1,16 +1,16 @@
 import logging
 
+import mock
+import pytest
+from django.conf import settings
 from django.core import mail
 from django.test import override_settings
 from django.utils.log import AdminEmailHandler
 from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
-import mock
-import pytest
 
 from kuma.core.tests import KumaTestCase, eq_, ok_
-
 from ..urlresolvers import reverse
 
 
@@ -128,6 +128,29 @@ class EventsRedirectTest(KumaTestCase):
         response = self.client.get(url)
         eq_(302, response.status_code)
         eq_('https://mozilla.org/contribute/events', response['Location'])
+
+
+class LanguageCookieTest(KumaTestCase):
+
+    def test_setting_language_cookie_working(self):
+        url = reverse('set-language-cookie')
+        response = self.client.post(url, {'language': 'bn-BD'})
+        assert response.status_code == 204
+
+        language_cookie = response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
+
+        # Check language cookie is set
+        assert language_cookie
+        assert language_cookie.value == 'bn-BD'
+
+    def test_not_possible_to_set_non_locale_cookie(self):
+        url = reverse('set-language-cookie')
+        response = self.client.post(url, {'language': 'foo'})
+        assert response.status_code == 204
+
+        language_cookie = response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
+        # No language cookie should be saved as `foo` is not a supported locale
+        assert not language_cookie
 
 
 @pytest.mark.parametrize('method', ['get', 'head'])

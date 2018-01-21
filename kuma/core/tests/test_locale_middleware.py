@@ -1,3 +1,4 @@
+from django.conf import settings
 from kuma.core.tests import KumaTestCase
 
 
@@ -43,3 +44,10 @@ class TestLocaleMiddleware(KumaTestCase):
         """/en-us should redirect to /en-US."""
         response = self.client.get('/en-us/', follow=True)
         self.assertRedirects(response, '/en-US/', status_code=302)
+
+    def test_language_cookie_support(self):
+        """Request with language cookie should redirect to the cookie locale"""
+        # Add appropriate language cookie to the client
+        self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+        response = self.client.get('/')
+        self.assertRedirects(response, '/bn-BD/', status_code=302)

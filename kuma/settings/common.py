@@ -420,7 +420,8 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'index.php',  # Legacy MediaWiki endpoint, return 404
     # Served in AWS
     'sitemap.xml',
-    'sitemaps/'
+    'sitemaps/',
+    'i18n'
 )
 
 # Make this unique, and don't share it with anybody.
@@ -988,6 +989,7 @@ PIPELINE_JS = {
             # FFO lib contains Promise polyfill
             'js/libs/fontfaceobserver/fontfaceobserver.2.0.7.js',
             'js/fonts.js',
+            'js/lang-switcher.js'
         ),
         'output_filename': 'build/js/main.js',
     },

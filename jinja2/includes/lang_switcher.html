@@ -9,12 +9,12 @@
   {% endfor %}
   <select id="language" class="autosubmit" name="lang">
     {# The default locale should always be in the first choice -#}
-    <option title="{{ get_locale_localized(default_locale) }}" value="{{ default_locale }}">
+    <option title="{{ get_locale_localized(default_locale) }}" data-locale="{{ default_locale }}" value="{{ default_locale }}">
       {{ default_language }} ({{ default_locale }})
     </option>
     {% for code, name in settings.LANGUAGES -%}
       {% if code != default_locale %}
-        <option title="{{ get_locale_localized(code) }}" value="{{ code }}"{% if code == LANG %} selected{% endif %}>
+        <option title="{{ get_locale_localized(code) }}" data-locale="{{ code }}" value="{{ code }}"{% if code == LANG %} selected{% endif %}>
           {{ name }} ({{ code }})
         </option>
       {% endif %}

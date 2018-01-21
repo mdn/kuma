@@ -111,9 +111,10 @@ class Prefixer(object):
     def __init__(self, request=None, locale=None):
         """If request is omitted, fall back to a default locale."""
         self.request = request or RequestFactory(REQUEST_METHOD='bogus').request()
-        self.locale, self.shortened_path = split_path(self.request.path_info)
-        if locale:
-            self.locale = locale
+        path_locale, self.shortened_path = split_path(self.request.path_info)
+
+        # Set Self locale according to priority.
+        self.locale = locale or path_locale or self.get_chosen_language() or ""
 
     def get_language(self):
         """
@@ -134,6 +135,14 @@ class Prefixer(object):
 
         return settings.LANGUAGE_CODE
 
+    def get_chosen_language(self):
+        """If the request has a cookie set for language, return that language."""
+        language = self.request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
+
+        # Need to check if his cookie language is supported by Kuma.
+        if language and language in dict(settings.LANGUAGES):
+            return language
+
     def fix(self, path):
         path = path.lstrip('/')
         url_parts = [self.request.META['SCRIPT_NAME']]
@@ -142,7 +151,8 @@ class Prefixer(object):
         else:
             check_path = path + '/'
         if not check_path.startswith(settings.LANGUAGE_URL_IGNORED_PATHS):
-            locale = self.locale if self.locale else self.get_language()
+            # Set locale according to order
+            locale = self.locale or self.get_language()
             url_parts.append(locale)
 
         url_parts.append(path)

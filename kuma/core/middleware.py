@@ -4,11 +4,7 @@ from urlparse import urljoin
 
 from django.conf import settings
 from django.core import urlresolvers
-from django.http import (
-    HttpResponseRedirect,
-    HttpResponseForbidden,
-    HttpResponsePermanentRedirect,
-)
+from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -33,8 +29,9 @@ class LocaleURLMiddleware(object):
         prefixer = Prefixer(request)
         set_url_prefixer(prefixer)
         full_path = prefixer.fix(prefixer.shortened_path)
+        lang = request.GET.get('lang')
 
-        if 'lang' in request.GET:
+        if lang in dict(settings.LANGUAGES):
             # Blank out the locale so that we can set a new one. Remove lang
             # from the query params so we don't have an infinite loop.
             prefixer.locale = ''

@@ -668,5 +668,4 @@
             win.history.replaceState({}, '', location.pathname);
         }
     }
-
 })(window, document, jQuery);
