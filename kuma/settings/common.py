@@ -410,6 +410,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '.well-known',
     'users/github/login/callback/',
     'favicon.ico',
+    '_kuma_status.json',
     # Legacy files, circa 2008, served in AWS
     'diagrams',
     'presentations',
