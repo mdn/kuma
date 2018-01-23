@@ -631,7 +631,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2018.01',
+    'VERSION': '2018.02',
     'BASE_DIR': ROOT,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
