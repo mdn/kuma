@@ -480,7 +480,6 @@ if not MAINTENANCE_MODE:
 MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
@@ -1381,10 +1380,6 @@ CELERY_ROUTES = {
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
 WIKI_REBUILD_ON_DEMAND = False
-
-# Anonymous user cookie
-ANONYMOUS_COOKIE_NAME = 'KUMA_ANONID'
-ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
 
 # Top contributors cache settings
 TOP_CONTRIBUTORS_CACHE_KEY = 'kuma:TopContributors'
