@@ -6,11 +6,6 @@
         var compatCSS;
         var compatJS;
 
-        // don't run if waffle not active
-        if(!win.waffle || !win.waffle.flag_is_active('compat_data')) {
-            return;
-        }
-
         // don't run if no compat table on page with min 1 row
         var $compatFeatureRows = $('.bc-table tbody tr');
         if(!$compatFeatureRows.length) {

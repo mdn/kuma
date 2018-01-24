@@ -36,7 +36,6 @@ Flags
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.
 
-* ``compat_data`` - View the new JSON backed compat tables.
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``section_edit`` - Show section edit buttons.
