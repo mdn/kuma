@@ -24,6 +24,14 @@ def wiki_user(db, django_user_model):
 
 
 @pytest.fixture
+def user_client(client, wiki_user):
+    wiki_user.set_password('password')
+    wiki_user.save()
+    client.login(username=wiki_user.username, password='password')
+    return client
+
+
+@pytest.fixture
 def root_doc(wiki_user):
     """A newly-created top-level English document."""
     root_doc = Document.objects.create(
