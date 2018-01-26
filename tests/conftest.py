@@ -1,4 +1,7 @@
+from urlparse import urlsplit, urlunsplit
+
 import pytest
+import requests
 
 
 VIEWPORT = {
@@ -38,3 +41,21 @@ def sensitive_url(request, base_url):
     return not any(base_url.startswith(url)
                    for url in ('http://localhost',
                                'https://developer-local'))
+
+
+@pytest.fixture(scope='session')
+def kuma_status(base_url):
+    base_parts = urlsplit(base_url)
+    url = urlunsplit((base_parts.scheme, base_parts.netloc,
+                      '_kuma_status.json', '', ''))
+    response = requests.get(url, headers={'Accept': 'application/json'})
+    if not response or response.status_code != 200:
+        return {}
+    return response.json()
+
+
+@pytest.fixture(scope='session')
+def is_debug(kuma_status):
+    if not kuma_status:
+        return False  # Assume production / staging
+    return kuma_status['settings']['DEBUG']

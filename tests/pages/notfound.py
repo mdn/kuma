@@ -5,13 +5,19 @@ from pages.base import BasePage
 
 class NotFoundPage(BasePage):
 
-    URL_TEMPLATE = '/{locale}/skwiz'
+    SLUG = 'skwiz'
+    URL_TEMPLATE = '/{locale}/' + SLUG
 
     _page_title = (By.CSS_SELECTOR, '#content-main > h1')
     report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
     _report_content_locator = (By.CSS_SELECTOR,
                                '#content-main a[href^="' +
                                report_content_form_url + '"]')
+
+    def wait_for_page_to_load(self):
+        """The page varies on DEBUG=True, so just look for URL."""
+        self.wait.until(lambda s: self.seed_url in s.current_url)
+        return self
 
     @property
     def page_title_text(self):
