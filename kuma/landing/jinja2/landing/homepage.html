@@ -4,8 +4,9 @@
 
 {% block site_css %}
   {{ super() }}
-
-  {% stylesheet 'home' %}
+  <![if !lte IE 9]>
+    {% stylesheet 'home' %}
+  <![endif]>
 {% endblock %}
 
 {% block extrahead %}
@@ -142,8 +143,10 @@
 {% endblock %}
 
 {% block js %}
+<![if !lte IE 9]>
   {{ super() }}
   {% if settings.NEWSLETTER %}
     {% javascript 'newsletter' %}
   {% endif %}
+<![endif]>
 {% endblock %}

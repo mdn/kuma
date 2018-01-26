@@ -1,0 +1,129 @@
+body {
+    margin: 10px 20px;
+}
+
+pre {
+    margin-top: 20px;
+    max-height: 250px;
+    overflow: scroll;
+}
+
+.logo {
+    position: relative;
+    z-index: 2; // get above nav-main
+    width: 219px;
+    height: 50px;
+    background: url($logo-sprite-url) 100% 0 no-repeat;
+    background-size: 219px auto;
+    display: block;
+    direction: ltr; // ltr should be set with negative text indent
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+.nav-main {
+    margin: 20px 0;
+}
+
+.home-masthead {
+    h1 {
+        margin-bottom: 20px;
+    }
+}
+
+.crumbs {
+    float: none;
+    display: block;
+    margin: 20px 0;
+}
+
+.toc,
+.quick-links {
+    margin-top: 20px;
+}
+
+.quick-links {
+    .title {
+        margin-bottom: 20px;
+        font-size: $note-font-size;
+        font-weight: bold;
+    }
+}
+
+.summary {
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 5px solid #83d0f2;
+    border-bottom: 5px solid #83d0f2;
+}
+
+.topicpage-table {
+    dd {
+        margin-bottom: 20px;
+    }
+
+    ul > li {
+        margin-bottom: 10px;
+    }
+
+    li > ul {
+        margin-top: 20px;
+    }
+
+    ul > li li {
+        margin-left: 20px;
+        list-style-type: disc;
+    }
+}
+
+.search-results-filters {
+    legend {
+        margin: 20px 0;
+    }
+
+    label {
+        display: block;
+    }
+}
+
+.newsletter-group-submit {
+    margin-top: 20px;
+}
+
+table.properties {
+    th {
+        vertical-align: top;
+    }
+}
+
+.compat-table {
+    width: 95%;
+
+    tbody tr:nth-child(2n) {
+        background-color: #eaeef2;
+    }
+}
+
+.contributors-sub {
+    margin-top: 20px;
+}
+
+/* hidden elements */
+#nav-access {
+    width: 100%;
+    position: absolute;
+    top: -20em;
+    z-index: 1001;
+}
+
+#nav-sec,
+.bc-data,
+.document-actions,
+.helpful-survey,
+.home-masthead form,
+.nav-footer-logo,
+.newsletter-thanks,
+.newsletter-hide,
+.zone-parent {
+    display: none;
+}
