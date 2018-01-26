@@ -94,6 +94,9 @@ def test_search_layout(base_url, selenium):
     search_results_links = page.search_results_link_list
     for link in search_results_links:
         this_link = link.get_attribute('href')
+        # When running scripts/run_functional_tests.sh,
+        # base_url's hostname is web, but links are localhost
+        this_link = this_link.replace('http://localhost:8000', base_url)
         assert_valid_url(this_link, follow_redirects=True)
 
 
