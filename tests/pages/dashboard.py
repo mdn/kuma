@@ -1,7 +1,8 @@
 from pypom import Region
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+import pytest
 
 from pages.base import BasePage
 
@@ -72,7 +73,15 @@ class DashboardPage(BasePage):
         page_two_link = self.find_element(*self._page_two_link)
         page_two_link.click()
         # revsion-page updates to not 1
-        self.wait.until(lambda s: int(self.find_element(*self._revision_page_input).get_attribute('value')) is not 1)
+        try:
+            self.wait.until(lambda s: int(
+                            self.find_element(*self._revision_page_input)
+                            .get_attribute('value'))
+                            is not 1)
+        except TimeoutException:
+            if self.selenium._is_remote and self.selenium.name == 'firefox':
+                pytest.xfail("Known issue with AJAX refresh"
+                             " (Selenium 3 w/ Remote Firefox)")
         # form is disabled when ajax request made
         self.wait.until(lambda s: 'disabled' in revision_filter_form.get_attribute('class'))
         # wait for tray to be added
