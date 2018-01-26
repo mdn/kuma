@@ -207,7 +207,7 @@ def document_zone_management_links(user, document):
 
     # Enable "add" link if there is no zone for this document, or if there's a
     # zone but the document is not itself the root (ie. to add sub-zones).
-    if ((not zone or zone.document != document) and
+    if ((not zone or zone.document_id != document.id) and
             user.has_perm('wiki.add_documentzone')):
         links['add'] = '%s?document=%s' % (
             reverse('admin:wiki_documentzone_add'), document.id)

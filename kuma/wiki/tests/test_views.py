@@ -709,8 +709,9 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
 
     def test_get_seo_parent_doesnt_throw_404(self):
         """bug 1190212"""
+        doc = document(save=True)
         slug_dict = {'seo_root': 'Root/Does/Not/Exist'}
-        _get_seo_parent_title(slug_dict, 'bn-BD')  # Should not raise Http404
+        _get_seo_parent_title(doc, slug_dict, 'bn-BD')  # Should not raise Http404
 
     def test_seo_title(self):
         self.client.login(username='admin', password='testpass')
@@ -1681,65 +1682,61 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(str(parent.id) in content.html())
 
     @pytest.mark.tags
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_document_tags(self, get_current):
-        """Document tags can be edited through revisions"""
+    def test_tags_while_document_create(self):
         data = new_document_data()
-        locale = data['locale']
-        slug = data['slug']
-        path = slug
+        tags = ('JavaScript', 'AJAX', 'DOM')
+        data['tags'] = ','.join(tags)
+
+        self.client.login(username='admin', password='testpass')
+        response = self.client.post(reverse('wiki.create'), data, follow=True)
+        assert response.status_code == 200
+
+        doc = Document.objects.all().get(slug=data['slug'], locale=data['locale'])
+        doc_tags = doc.tags.all().values_list('name', flat=True)
+        assert sorted(doc_tags) == sorted(tags)
+
+    @pytest.mark.tags
+    def test_tags_while_document_update(self):
+        self.client.login(username='admin', password='testpass')
         ts1 = ('JavaScript', 'AJAX', 'DOM')
         ts2 = ('XML', 'JSON')
+        # Create a revision with some tags
+        rev = revision(save=True, tags=','.join(ts1))
+        doc = rev.document
 
-        get_current.return_value.domain = 'su.mo.com'
-        self.client.login(username='admin', password='testpass')
-
-        def assert_tag_state(yes_tags, no_tags):
-
-            # Ensure the tags are found for the Documents
-            doc = Document.objects.get(locale=locale, slug=slug)
-            doc_tags = [x.name for x in doc.tags.all()]
-            for t in yes_tags:
-                ok_(t in doc_tags)
-            for t in no_tags:
-                ok_(t not in doc_tags)
-
-            # Ensure the tags are found in the Document view
-            response = self.client.get(reverse('wiki.document',
-                                               args=[doc.slug]), data)
-            page = pq(response.content)
-            for t in yes_tags:
-                eq_(1, page.find('.tags li a:contains("%s")' % t).length,
-                    '%s should NOT appear in document view tags' % t)
-            for t in no_tags:
-                eq_(0, page.find('.tags li a:contains("%s")' % t).length,
-                    '%s should appear in document view tags' % t)
-
-            # Check for the document slug (title in feeds) in the tag listing
-            for t in yes_tags:
-                response = self.client.get(reverse('wiki.tag', args=[t]))
-                self.assertContains(response, doc.slug, msg_prefix=t)
-                response = self.client.get(reverse('wiki.feeds.recent_documents',
-                                                   args=['atom', t]))
-                self.assertContains(response, doc.title)
-
-            for t in no_tags:
-                response = self.client.get(reverse('wiki.tag', args=[t]))
-                ok_(doc.slug not in response.content.decode('utf-8'))
-                response = self.client.get(reverse('wiki.feeds.recent_documents',
-                                                   args=['atom', t]))
-                self.assertNotContains(response, doc.title)
-
-        # Create a new doc with tags
-        data.update({'slug': slug, 'tags': ','.join(ts1)})
-        self.client.post(reverse('wiki.create'), data)
-        assert_tag_state(ts1, ts2)
-
-        # Now, update the tags.
+        # Update the document with some other tags
+        data = new_document_data()
         data.update({'form-type': 'rev', 'tags': ', '.join(ts2)})
-        self.client.post(reverse('wiki.edit',
-                                 args=[path]), data)
-        assert_tag_state(ts2, ts1)
+        response = self.client.post(reverse('wiki.edit', args=[doc.slug]), data, follow=True)
+        assert response.status_code == 200
+
+        # Check only last added tags are related with the documents
+        doc_tags = doc.tags.all().values_list('name', flat=True)
+        assert sorted(doc_tags) == sorted(ts2)
+
+    @pytest.mark.tags
+    def test_tags_showing_correctly_after_doc_update(self):
+        """After any update to the document, the new tags should show correctly"""
+        self.client.login(username='admin', password='testpass')
+        ts1 = ('JavaScript', 'AJAX', 'DOM')
+        ts2 = ('XML', 'JSON')
+        rev = revision(save=True, tags=','.join(ts1))
+        doc = rev.document
+
+        # Update the document with some other tags
+        data = new_document_data()
+        del data['slug']
+        data.update({'form-type': 'rev', 'tags': ', '.join(ts2)})
+        response = self.client.post(reverse('wiki.edit', args=[doc.slug]), data, follow=True)
+        assert response.status_code == 200
+
+        # Check document is showing the new tags
+        response = self.client.get(doc.get_absolute_url(), follow=True)
+        assert response.status_code == 200
+
+        page = pq(response.content)
+        response_tags = page.find('.tags li a').contents()
+        assert response_tags == sorted(ts2)
 
     @pytest.mark.review_tags
     @mock.patch.object(Site.objects, 'get_current')
@@ -3800,6 +3797,47 @@ class ListDocumentTests(UserTestCase, WikiTestCase):
     """Tests for list_documents view"""
     localizing_client = True
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+
+    def _get_documents_from_list(self, tag):
+        response = self.client.get(reverse('wiki.tag', args=[tag]))
+        page = pq(response.content)
+        cache.clear()
+        return page.find('.document-list li a').contents()
+
+    def test_document_list_by_tag(self):
+        tags = ['foo', 'bar', 'web']
+        rev = revision(save=True, tags=','.join(tags))
+        doc = rev.document
+
+        for t in tags:
+            docs = self._get_documents_from_list(tag=t)
+            assert len(docs) == 1
+            assert doc.slug in docs
+
+    @pytest.mark.tags
+    def test_doc_list_by_tag_after_update(self):
+        """After updating tag of a document, the list should also be updated"""
+        tags1 = ['foo', 'bar', 'js']
+        tags2 = ['lorem', 'ipsum']
+        # Create a document with some tags
+        rev1 = revision(save=True, tags=','.join(tags1))
+        doc = rev1.document
+
+        # Create another revision of the document with other tags
+        revision(save=True, document=doc, tags=','.join(tags2))
+
+        # Check document slug is present in the document list
+        for t in tags2:
+            docs = self._get_documents_from_list(tag=t)
+            assert len(docs) == 1
+            assert doc.slug in docs
+
+        # As the new tag has been added to the document
+        # The document should not be listed in previous tags list
+        for t in tags1:
+            docs = self._get_documents_from_list(tag=t)
+            assert len(docs) == 0
+            assert doc.slug not in docs
 
     def test_case_insensitive_tags(self):
         """

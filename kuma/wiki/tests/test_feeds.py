@@ -422,6 +422,30 @@ def test_recent_documents_feed_filter_by_tag(edit_revision, client):
     assert len(data) == 1
 
 
+@pytest.mark.tags
+def test_feeds_update_after_doc_tag_change(client, wiki_user, root_doc):
+    """Tag feeds should be updated after document tags change"""
+    tags1 = ['foo', 'bar', 'js']
+    tags2 = ['lorem', 'ipsum']
+    # Create a revision with some tags
+    Revision.objects.create(document=root_doc, tags=','.join(tags1), creator=wiki_user)
+
+    # Create another revision with some other tags
+    Revision.objects.create(document=root_doc, tags=','.join(tags2), creator=wiki_user)
+
+    # Check document is latest tags feed
+    for tag in tags2:
+        response = client.get(reverse('wiki.feeds.recent_documents', args=['atom', tag]), follow=True)
+        assert response.status_code == 200
+        assert root_doc.title in response.content
+
+    # Check document is not in the previous tags feed
+    for tag in tags1:
+        response = client.get(reverse('wiki.feeds.recent_documents', args=['atom', tag]), follow=True)
+        assert response.status_code == 200
+        assert root_doc.title not in response.content
+
+
 def test_recent_documents_handles_ambiguous_time(root_doc, client):
     """The recent_documents feed handles times during DST transition."""
     ambiguous = datetime(2017, 11, 5, 1, 8, 42)

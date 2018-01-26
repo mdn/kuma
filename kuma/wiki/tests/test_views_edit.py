@@ -7,12 +7,9 @@ from kuma.core.urlresolvers import reverse
 
 
 @pytest.fixture
-def editor_client(client, wiki_user):
+def editor_client(user_client):
     Flag.objects.create(name='kumaediting', everyone=True)
-    wiki_user.set_password('password')
-    wiki_user.save()
-    assert client.login(username=wiki_user.username, password='password')
-    return client
+    return user_client
 
 
 def test_edit_get(editor_client, root_doc):

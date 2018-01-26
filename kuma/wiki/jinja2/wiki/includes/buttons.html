@@ -1,5 +1,5 @@
 {% from "wiki/includes/document_macros.html" import watch_menu_items with context%}
-{% macro get_document_buttons(document, edit_link) %}
+{% macro get_document_buttons(document, edit_link, other_translations) %}
 
   {% if document.parent %}
     {# If there is a parent doc, use it for translating. #}
@@ -20,12 +20,12 @@
         <div class="submenu js-submenu" id="languages-menu-submenu">
           <div class="submenu-column">
             <ul id="translations">
-              {% if document.other_translations or fallback_reason %}
+              {% if other_translations or fallback_reason %}
                 {# show the parent locale in choices if fall back to parent for any reason #}
                 {% if fallback_reason=='no_translation' %}
                   <li><bdi><a rel="internal" href="{{ document.get_absolute_url() }}" data-locale="{{ document.locale }}" title="{{ get_locale_localized(document.locale) }}">{{ document.language }} ({{ document.locale }})</a></bdi></li>
                 {% endif %}
-                {% for translation in document.other_translations %}
+                {% for translation in other_translations %}
                   <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.slug, locale=translation.locale) }}" data-locale="{{ translation.locale }}" title="{{ get_locale_localized(translation.locale) }}">{{ translation.language }} ({{ translation.locale }})</a></bdi></li>
                 {% endfor %}
               {% else %}
