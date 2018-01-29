@@ -792,10 +792,11 @@ def document_api(request, document_slug, document_locale):
             raise PermissionDenied
         return _document_api_PUT(request, document_slug, document_locale)
 
-    try:
-        doc = Document.objects.get(locale=document_locale, slug=document_slug)
-    except Document.DoesNotExist:
-        raise Http404
+    doc = get_object_or_404(
+        Document,
+        slug=document_slug,
+        locale=document_locale
+    )
 
     section_id = request.GET.get('section', None)
     response = HttpResponse(doc.get_html(section_id))
