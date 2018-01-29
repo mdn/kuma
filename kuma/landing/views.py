@@ -17,10 +17,6 @@ def contribute_json(request):
                         document_root=settings.ROOT)
 
 
-def fellowship(request):
-    return render(request, 'landing/fellowship.html')
-
-
 @ratelimit(key='user_or_ip', rate='400/m', block=True)
 def home(request):
     """Home page."""

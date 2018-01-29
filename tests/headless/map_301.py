@@ -355,4 +355,6 @@ LEGACY_URLS = list(flatten((
 
 # Redirects added after 2017 AWS move
 REDIRECT_URLS = list(flatten((
+    url_test('/en-US/fellowship',
+             '/en-US/docs/Archive/2015_MDN_Fellowship_Program'),
 )))
