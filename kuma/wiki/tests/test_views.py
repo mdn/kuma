@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-import base64
 import datetime
 import HTMLParser
 import json
-import time
 from urllib import urlencode
-from urlparse import urlparse, parse_qs
+from urlparse import parse_qs
 
 import mock
 import pytest
