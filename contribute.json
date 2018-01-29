@@ -1,6 +1,6 @@
 {
     "name": "Kuma",
-    "description": "The app powering the MDN Web Docs.",
+    "description": "The app powering MDN Web Docs.",
     "repository": {
         "url": "https://github.com/mozilla/kuma",
         "license": "MPL2",
