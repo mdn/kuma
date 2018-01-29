@@ -2,7 +2,7 @@
 CKEditor
 ========
 
-The Mozilla Developer Network uses a WYSIWYG editor called CKEditor_.  CKEditor
+MDN Web Docs uses a WYSIWYG editor called CKEditor_.  CKEditor
 is an open source utility which brings the power of rich text editing to the
 web.  This document details how to update CKEditor within the MDN codebase.
 

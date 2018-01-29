@@ -42,12 +42,12 @@
     {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
     <meta property="og:type" content="website">
     <meta property="og:image" content="{{ social_logo }}">
-    <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
+    <meta property="og:site_name" content="{{ _('MDN Web Docs') }}">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:image" content="{{ social_logo }}">
     <meta name="twitter:site" content="@MozDevNet">
     <meta name="twitter:creator" content="@MozDevNet">
-    <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
+    <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('MDN Web Docs') }}">
   {% endif %}
 
   <!-- third-generation iPad with high-resolution Retina display: -->
