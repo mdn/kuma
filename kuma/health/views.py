@@ -2,7 +2,8 @@ from django.conf import settings
 from django.db import DatabaseError
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_safe
-from elasticsearch.exceptions import ConnectionError as ES_ConnectionError
+from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
+                                      NotFoundError)
 
 from requests.exceptions import ConnectionError as Requests_ConnectionError
 
@@ -123,6 +124,8 @@ def status(request):
         search_count = WikiDocumentType.search().count()
     except ES_ConnectionError:
         search_data['available'] = False
+    except NotFoundError:
+        pass  # available but unpopulated (and maybe uncreated)
     else:
         if search_count:
             search_data['populated'] = True

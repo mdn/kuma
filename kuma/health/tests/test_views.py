@@ -2,7 +2,8 @@ import json
 
 from django.db import DatabaseError
 from django.core.urlresolvers import reverse
-from elasticsearch.exceptions import ConnectionError as ES_ConnectionError
+from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
+                                      NotFoundError)
 from requests.exceptions import ConnectionError as Requests_ConnectionError
 import mock
 import pytest
@@ -234,6 +235,19 @@ def test_status_failed_search(client, mock_status_externals):
     data = json.loads(response.content)
     assert data['services']['search'] == {
         'available': False,
+        'populated': False,
+        'count': 0,
+    }
+
+
+def test_status_missing_index(client, mock_status_externals):
+    """The status JSON shows if the ElasticSearch index is not found."""
+    mock_status_externals['search'].side_effect = NotFoundError('No Index')
+    url = reverse('health.status')
+    response = client.get(url)
+    data = json.loads(response.content)
+    assert data['services']['search'] == {
+        'available': True,
         'populated': False,
         'count': 0,
     }
