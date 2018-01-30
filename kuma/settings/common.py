@@ -57,12 +57,28 @@ ALLOW_ROBOTS = config('ALLOW_ROBOTS', default=False, cast=bool)
 
 MANAGERS = ADMINS
 
+
+# CONN_MAX_AGE: 'persistent' to keep open connection, or max requests before
+# releasing. Default is 0 for a new connection per request.
+def parse_conn_max_age(value):
+    try:
+        return int(value)
+    except ValueError:
+        assert value.lower() == 'persistent', 'Must be int or "persistent"'
+        return None
+
+
+CONN_MAX_AGE = config('CONN_MAX_AGE', default=60,
+                      cast=parse_conn_max_age)
 DEFAULT_DATABASE = config('DATABASE_URL',
                           default='mysql://kuma:kuma@localhost:3306/kuma',
                           cast=dj_database_url.parse)
+
+
 if 'mysql' in DEFAULT_DATABASE['ENGINE']:
     # These are the production settings for OPTIONS.
     DEFAULT_DATABASE.update({
+        'CONN_MAX_AGE': CONN_MAX_AGE,
         'OPTIONS': {
             'charset': 'utf8',
             'use_unicode': True,
