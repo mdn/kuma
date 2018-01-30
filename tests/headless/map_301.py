@@ -2,7 +2,8 @@ from utils.urls import flatten, url_test
 
 import requests
 
-REDIRECT_URLS = flatten((
+# Converted from SCL3 Apache files
+SCL3_REDIRECT_URLS = list(flatten((
     url_test("/media/redesign/css/foo-min.css",
              "/static/build/styles/foo.css"),
     url_test("/media/css/foo-min.css", "/static/build/styles/foo.css"),
@@ -159,10 +160,10 @@ REDIRECT_URLS = flatten((
 
     url_test("/en-US/demos", "/en-US/docs/Web/Demos_of_open_web_technologies"),
     url_test("/en/demos", "/en/docs/Web/Demos_of_open_web_technologies"),
+)))
 
-))
-
-GITHUB_IO_URLS = flatten((
+# Converted from SCL3 Apache files - demos moved to GitHub
+GITHUB_IO_URLS = list(flatten((
     # http://mdn.github.io
     # canvas raycaster
     url_test("/samples/raycaster/input.js",
@@ -279,9 +280,10 @@ GITHUB_IO_URLS = flatten((
              "http://mdn.github.io/webgl-examples/tutorial/sample8/webgl-demo.js"),
     url_test("/samples/webgl/sample8/webgl.css",
              "http://mdn.github.io/webgl-examples/tutorial/webgl.css"),
-))
+)))
 
-MOZILLADEMOS_URLS = flatten((
+# Converted from SCL3 Apache files - move to untrusted domain
+MOZILLADEMOS_URLS = list(flatten((
     # https://mdn.mozillademos.org/
     url_test("/samples/canvas-tutorial/images/backdrop.png",
              "https://mdn.mozillademos.org/files/5395/backdrop.png"),
@@ -309,9 +311,10 @@ MOZILLADEMOS_URLS = flatten((
              "https://mdn.mozillademos.org/files/5397/rhino.jpg"),
     url_test("/samples/canvas-tutorial/images/wallpaper.png",
              "https://mdn.mozillademos.org/files/222/Canvas_createpattern.png"),
-))
+)))
 
-LEGACY_URLS = flatten((
+# Converted from SCL3 Apache files - MindTouch / old hosted files
+LEGACY_URLS = list(flatten((
     # bug 1362438
     url_test('/index.php', status_code=404),
     url_test('/index.php?title=Special:Recentchanges&feed=atom',
@@ -348,4 +351,10 @@ LEGACY_URLS = flatten((
              '/zh-CN/docs/Web/API/RTCPeerConnection/addTrack',
              status_code=302),
     url_test('/zh_tw/docs/AJAX', '/zh-TW/docs/AJAX', status_code=302),
-))
+)))
+
+# Redirects added after 2017 AWS move
+REDIRECT_URLS = list(flatten((
+    url_test('/en-US/fellowship',
+             '/en-US/docs/Archive/2015_MDN_Fellowship_Program'),
+)))

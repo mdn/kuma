@@ -867,12 +867,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/error-403-alternate.css',
     },
-    'fellowship': {
-        'source_filenames': (
-            'styles/fellowship.scss',
-        ),
-        'output_filename': 'build/styles/fellowship.css',
-    },
     'editor-content': {
         'source_filenames': (
             'styles/main.scss',
@@ -1104,15 +1098,6 @@ PIPELINE_JS = {
             'js/newsletter.js',
         ),
         'output_filename': 'build/js/newsletter.js',
-        'extra_context': {
-            'async': True,
-        },
-    },
-    'fellowship': {
-        'source_filenames': (
-            'js/fellowship.js',
-        ),
-        'output_filename': 'build/js/fellowship.js',
         'extra_context': {
             'async': True,
         },

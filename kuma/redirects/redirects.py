@@ -38,7 +38,7 @@ def locale_redirect(pattern, to, prepend_locale=True, **kwargs):
 
 
 # Redirects/rewrites/aliases migrated from SCL3 httpd config
-redirectpatterns = [
+scl3_redirectpatterns = [
     # RewriteRule ^/media/(redesign/)?css/(.*)-min.css$
     # /static/build/styles/$2.css [L,R=301]
     redirect(r'^media/(?:redesign/)?css/(?P<doc>.*)-min.css$',
@@ -760,4 +760,11 @@ redirectpatterns = [
     # RewriteRule ^es4 http://www.ecma-international.org/memento/TC39.htm [R=302,L]
     redirect(r'^es4', 'http://www.ecma-international.org/memento/TC39.htm',
              permanent=False),
+]
+
+redirectpatterns = scl3_redirectpatterns + [
+    locale_redirect(
+        r'^fellowship',
+        '/docs/Archive/2015_MDN_Fellowship_Program',
+        permanent=True),
 ]
