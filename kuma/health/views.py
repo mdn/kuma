@@ -1,8 +1,16 @@
+from django.conf import settings
 from django.db import DatabaseError
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_safe
+from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
+                                      NotFoundError)
 
+from requests.exceptions import ConnectionError as Requests_ConnectionError
+
+from kuma.users.models import User
+from kuma.wiki.kumascript import request_revision_hash
 from kuma.wiki.models import Document
+from kuma.wiki.search import WikiDocumentType
 
 
 @require_safe
@@ -37,3 +45,111 @@ def readiness(request):
     else:
         status, reason = 204, None
     return HttpResponse(status=status, reason=reason)
+
+
+@require_safe
+def status(request):
+    """
+    Return summary information about this Kuma instance.
+
+    Functional tests can use this to customize the test process.
+    """
+    data = {
+        'version': 1,
+        'request': {
+            'url': request.build_absolute_uri(''),
+            'host': request.get_host(),
+            'is_secure': request.is_secure(),
+            'scheme': request.scheme,
+        },
+        'services': {
+            'database': {},
+            'kumascript': {},
+            'search': {},
+            'test_accounts': {},
+        },
+        'settings': {
+            'ALLOWED_HOSTS': settings.ALLOWED_HOSTS,
+            'ATTACHMENT_HOST': settings.ATTACHMENT_HOST,
+            'ATTACHMENT_ORIGIN': settings.ATTACHMENT_ORIGIN,
+            'DEBUG': settings.DEBUG,
+            'INTERACTIVE_EXAMPLES_BASE': settings.INTERACTIVE_EXAMPLES_BASE,
+            'LEGACY_HOSTS': settings.LEGACY_HOSTS,
+            'MAINTENANCE_MODE': settings.MAINTENANCE_MODE,
+            'PROTOCOL': settings.PROTOCOL,
+            'REVISION_HASH': settings.REVISION_HASH,
+            'SITE_URL': settings.SITE_URL,
+            'STATIC_URL': settings.STATIC_URL,
+        },
+    }
+
+    # Check that database is reachable, populated
+    doc_data = {
+        'available': True,
+        'populated': False,
+        'document_count': 0
+    }
+    try:
+        doc_count = Document.objects.count()
+    except DatabaseError:
+        doc_data['available'] = False
+    else:
+        if doc_count:
+            doc_data['populated'] = True
+            doc_data['document_count'] = doc_count
+    data['services']['database'] = doc_data
+
+    # Check that KumaScript is reachable
+    ks_data = {
+        'available': True,
+        'revision': None,
+    }
+    try:
+        ks_response = request_revision_hash()
+    except Requests_ConnectionError:
+        ks_response = None
+    if not ks_response or ks_response.status_code != 200:
+        ks_data['available'] = False
+    else:
+        ks_data['revision'] = ks_response.text
+    data['services']['kumascript'] = ks_data
+
+    # Check that ElasticSearch is reachable, populated
+    search_data = {
+        'available': True,
+        'populated': False,
+        'count': 0
+    }
+    try:
+        search_count = WikiDocumentType.search().count()
+    except ES_ConnectionError:
+        search_data['available'] = False
+    except NotFoundError:
+        pass  # available but unpopulated (and maybe uncreated)
+    else:
+        if search_count:
+            search_data['populated'] = True
+            search_data['count'] = search_count
+    data['services']['search'] = search_data
+
+    # Check if the testing accounts are available
+    test_account_data = {
+        'available': False
+    }
+    test_account_names = ['test-super', 'test-moderator', 'test-new',
+                          'test-banned', 'viagra-test-123']
+    try:
+        users = list(User.objects.only('id', 'username', 'password')
+                                 .filter(username__in=test_account_names))
+    except DatabaseError:
+        users = []
+    if len(users) == len(test_account_names):
+        for user in users:
+            if not user.check_password('test-password'):
+                break
+        else:
+            # All users have the testing password
+            test_account_data['available'] = True
+    data['services']['test_accounts'] = test_account_data
+
+    return JsonResponse(data)

@@ -94,6 +94,9 @@ def test_search_layout(base_url, selenium):
     search_results_links = page.search_results_link_list
     for link in search_results_links:
         this_link = link.get_attribute('href')
+        # When running scripts/run_functional_tests.sh,
+        # base_url's hostname is web, but links are localhost
+        this_link = this_link.replace('http://localhost:8000', base_url)
         assert_valid_url(this_link, follow_redirects=True)
 
 
@@ -109,12 +112,17 @@ def test_search_zero_results(base_url, selenium):
 @pytest.mark.smoke
 @pytest.mark.search
 @pytest.mark.nondestructive
-def test_search_filters(base_url, selenium):
+def test_search_filters(base_url, selenium, kuma_status):
     page = SearchPage(selenium, base_url, term=SEARCH_TERM).open()
     documents_found_initial = page.documents_found
     page.search_all_topics()
     documents_found_after = page.documents_found
-    assert documents_found_after > documents_found_initial
+    if kuma_status['services']['search']['count'] > 10000:
+        # Full production search index
+        assert documents_found_after > documents_found_initial
+    else:
+        # Sample database
+        assert documents_found_after >= documents_found_initial
 
 
 @pytest.mark.nondestructive
