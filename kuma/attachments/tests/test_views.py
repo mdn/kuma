@@ -273,4 +273,3 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
-    assert 'Vary' not in response

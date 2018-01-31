@@ -114,9 +114,9 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
 
     headers = {}
     if if_none_match == 'match':
-        headers['HTTP_IF_NONE_MATCH'] = calculate_etag(
+        headers['HTTP_IF_NONE_MATCH'] = '"{}"'.format(calculate_etag(
             section_doc.get_html(section_id)
-        )
+        ))
     elif if_none_match == 'mismatch':
         headers['HTTP_IF_NONE_MATCH'] = 'ABC'
 
@@ -223,9 +223,9 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
 
     headers = dict(HTTP_AUTHORIZATION=authkey.header)
     if if_match == 'match':
-        headers['HTTP_IF_MATCH'] = calculate_etag(
+        headers['HTTP_IF_MATCH'] = '"{}"'.format(calculate_etag(
             section_doc.get_html(section_id)
-        )
+        ))
     elif if_match == 'mismatch':
         headers['HTTP_IF_MATCH'] = 'ABC'
 
@@ -364,8 +364,6 @@ def test_conditional_get(client, root_doc):
     response = client.get(url, HTTP_IF_NONE_MATCH=response['etag'])
 
     assert response.status_code == 304
-    assert 'etag' in response
-    assert 'last-modified' not in response
 
 
 def test_apply_content_experiment_no_experiment(ce_settings, rf):
