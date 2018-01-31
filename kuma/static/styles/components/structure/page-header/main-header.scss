@@ -6,13 +6,28 @@ Main header, wraps all components of logo, main, and secondary navigation
     @include clearfix();
     position: relative;
     z-index: $main-header-z;
-    padding-top: $mobile-center-spacing;
     border: 5px solid $accent-light;
     border-width: 5px 0 0;
     background-color: #fff;
+}
 
-    > .center {
-        @include clearfix();
+.header-main {
+    display: flex;
+    flex-direction: column;
+    padding: 15px $mobile-center-spacing 0;
+
+    @media #{$mq-tablet-and-up} {
+        display: block;
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        display: flex;
+        flex-direction: row;
+        padding-top: 0;
+        @include bidi((
+            (padding-left, 15px, 0),
+            (padding-right, 0, 15px),
+        ));
     }
 }
 
@@ -27,28 +42,17 @@ Main header, wraps all components of logo, main, and secondary navigation
     direction: ltr; // ltr should be set with negative text indent
     text-indent: -9999px;
     overflow: hidden;
-}
+    flex-shrink: 1;
 
-@media #{$mq-tablet-and-up} {
-    #main-header {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .logo {
+    @media #{$mq-tablet-and-up} {
+        display: block;
         position: relative;
-        top: $grid-spacing;
         height: 48px;
-        @include bidi((
-            (float, left, right),
-            (margin-right, $grid-spacing, margin-left, 0)
-        ));
     }
-}
 
-@media #{$mq-small-desktop-and-up} {
-    .logo {
-        width: 219px;
+    @media #{$mq-small-desktop-and-up} {
         background-size: 100% auto;
+        margin-top: 15px;
+        width: 219px;
     }
 }

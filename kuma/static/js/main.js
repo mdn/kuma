@@ -46,67 +46,6 @@
     })();
 
     /*
-        Search animation
-    */
-
-    (function() {
-        var $nav = $('#main-nav');
-        var $navItems = $nav.find('ul > li:not(.nav-main-search)');
-        var $mainNavSearch = $nav.find('.nav-main-search');
-        var $searchWrap = $nav.find('.search-wrap');
-        var $input = $searchWrap.find('input');
-        var $searchTrigger = $searchWrap.find('.search-trigger');
-
-        $searchTrigger.on('click', function() {
-            $input.get(0).focus();
-        });
-
-        var timeout;
-        var createExpander = function(isAdd) {
-            return function(e) {
-
-                if(isAdd) {
-                    $input.select();
-                }
-
-                // If we're on mobile, just let everything be
-                if($mainNavSearch.css('display') === 'block') {
-                    return;
-                }
-
-                if(e) {
-                    e.preventDefault();
-                }
-
-                if(timeout) {
-                    clearTimeout(timeout);
-                }
-
-                timeout = setTimeout(function() {
-                    if(isAdd) {
-                        $navItems.fadeOut(100, function() {
-                            $navItems.css('display', 'none');
-                            $searchWrap.addClass('expanded');
-                            $nav.addClass('expand');
-                        });
-                    }
-                    else {
-                        $nav.removeClass('expand');
-                        timeout = setTimeout(function() {
-                            $searchWrap.removeClass('expanded');
-                            $navItems.fadeIn(400);
-                        }, 250); // corresponds to length of CSS animation
-                    }
-                });
-            };
-        };
-
-        $input.
-            on('focus', createExpander(true)).
-            on('blur', createExpander());
-    })();
-
-    /*
         Account for the footer language change dropdown and other dropdowns marked as autosubmit
     */
     $('select.autosubmit').on('change', function(){

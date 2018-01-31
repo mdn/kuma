@@ -13,12 +13,9 @@
 }
 
 @mixin inline-nav-item() {
-    position: relative;
     display: inline-block;
-
-    > #{$selector-icon} {
-        display: none;
-    }
+    position: relative;
+    border: 0;
 
     > a {
         display: inline-block;
@@ -30,6 +27,7 @@
 
             #{$selector-icon} {
                 display: inline-block;
+                float: none;
                 margin-left: 5px;
             }
         }
@@ -50,6 +48,6 @@
 
 @mixin large-inline-nav-item() {
     > a {
-        padding: 0 $grid-spacing;
+        padding: 0 10px;
     }
 }

@@ -23,18 +23,24 @@ Pre-header
 Header
 ====================================================================== */
 
-@import 'structure/main-header';
-@import 'structure/submenu';
+@import 'structure/page-header/main-header';
+@import 'structure/page-header/submenu';
 
 
 /*
-Secondary Navigation
+Man navigation and toolbox wrapper
+====================================================================== */
+@import 'structure/page-header/nav-toolbox-wrapper';
+
+
+/*
+Toolbox
 - login widget
 - profile (logged in) links
 -------------------------------------------------------------- */
 
-@import 'structure/nav-sec';
-@import 'structure/login';
+@import 'structure/page-header/toolbox';
+@import 'structure/page-header/login';
 
 
 /*
@@ -43,9 +49,14 @@ Main Navigation
 - search bar
 -------------------------------------------------------------- */
 
-@import 'structure/nav-main';
-@import 'structure/nav-main-search';
-@import 'structure/search-wrap';
+@import 'structure/page-header/nav-main';
+@import 'structure/page-header/nav-main-search';
+
+
+/*
+Search form
+- in page search form
+-------------------------------------------------------------- */
 @import 'structure/search-form';
 
 
