@@ -54,9 +54,7 @@ def promote_buttons(request):
 
 ROBOTS_ALLOWED_TXT = '''\
 User-agent: *
-Crawl-delay: 5
 Sitemap: https://developer.mozilla.org/sitemap.xml
-Request-rate: 1/5
 
 Disallow: /admin/
 Disallow: /*/dashboards/*
