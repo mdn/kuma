@@ -1,18 +1,26 @@
-from urlparse import urljoin, urlsplit
+from urlparse import urlsplit
 
 import pytest
 import requests
+
+INDEXED_WEB_DOMAINS = set((
+    'developer.mozilla.org',    # Main website, CDN origin
+    'cdn.mdn.mozilla.net',      # Assets CDN
+))
 
 
 @pytest.mark.smoke
 @pytest.mark.nodata
 @pytest.mark.nondestructive
-def test_robots(base_url):
-    urlbits = urlsplit(base_url)
-    url = urljoin(base_url, 'robots.txt')
+def test_robots(any_host_url):
+    url = any_host_url + '/robots.txt'
     response = requests.get(url)
     assert response.status_code == 200
-    if urlbits.hostname == 'developer.mozila.org':
+
+    urlbits = urlsplit(any_host_url)
+    hostname = urlbits.netloc
+    if hostname in INDEXED_WEB_DOMAINS:
         assert 'Sitemap: ' in response.content
+        assert 'Disallow: /admin/\n' in response.content
     else:
-        assert 'Disallow: /' in response.content
+        assert 'Disallow: /\n' in response.content
