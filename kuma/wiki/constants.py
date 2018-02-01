@@ -253,8 +253,6 @@ DOCUMENT_PATH_RE = re.compile(r'[^\$]+')
 REDIRECT_HTML = 'REDIRECT <a '
 REDIRECT_CONTENT = 'REDIRECT <a class="redirect" href="%(href)s">%(title)s</a>'
 
-DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
-
 DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'%s%s/files/(?P<file_id>\d+)/' %
                            (re.escape(settings.PROTOCOL),

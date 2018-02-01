@@ -1,4 +1,3 @@
-import hashlib
 import json
 import sys
 import traceback
@@ -22,7 +21,6 @@ from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
 from tidings.models import NotificationsMixin
 
-from kuma.core.cache import memcache
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
@@ -30,8 +28,7 @@ from kuma.search.decorators import register_live_index
 from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript
-from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
-                        EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
+from .constants import (DEKI_FILE_URL, EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
                         REDIRECT_CONTENT, REDIRECT_HTML)
 from .content import parse as parse_content
 from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
@@ -731,15 +728,6 @@ class Document(NotificationsMixin, models.Model):
     def natural_key(self):
         return (self.locale, self.slug)
 
-    @staticmethod
-    def natural_key_hash(keys):
-        natural_key = u'/'.join(keys)
-        return hashlib.md5(natural_key.encode('utf8')).hexdigest()
-
-    @cached_property
-    def natural_cache_key(self):
-        return self.natural_key_hash(self.natural_key())
-
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
         equal to mine."""
@@ -880,20 +868,6 @@ class Document(NotificationsMixin, models.Model):
         new_rev.review_tags.set(*parse_tags(review_tags))
         return new_rev
 
-    @cached_property
-    def last_modified_cache_key(self):
-        return DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % self.natural_cache_key
-
-    def fill_last_modified_cache(self):
-        """
-        Convert python datetime to Unix epoch seconds. This is more
-        easily digested by the cache, and is more compatible with other
-        services that might spy on Kuma's cache entries (eg. KumaScript)
-        """
-        modified_epoch = self.modified.strftime('%s')
-        memcache.set(self.last_modified_cache_key, modified_epoch)
-        return modified_epoch
-
     def save(self, *args, **kwargs):
         self.is_redirect = bool(self.get_redirect_url())
 
@@ -917,9 +891,6 @@ class Document(NotificationsMixin, models.Model):
 
         super(Document, self).save(*args, **kwargs)
 
-        # Delete any cached last-modified timestamp.
-        self.fill_last_modified_cache()
-
     def delete(self, *args, **kwargs):
         if self.is_redirect or 'purge' in kwargs:
             if 'purge' in kwargs:
@@ -929,7 +900,6 @@ class Document(NotificationsMixin, models.Model):
                                 instance=self)
         if not self.deleted:
             Document.objects.filter(pk=self.pk).update(deleted=True)
-            memcache.delete(self.last_modified_cache_key)
 
         signals.post_delete.send(sender=self.__class__, instance=self)
 
