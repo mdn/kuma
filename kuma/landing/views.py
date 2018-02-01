@@ -8,7 +8,6 @@ from ratelimit.decorators import ratelimit
 
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
-from kuma.core.utils import is_untrusted
 from kuma.feeder.models import Bundle
 from kuma.search.models import Filter
 
@@ -120,9 +119,10 @@ def robots_txt(request):
 
     TODO: After AWS move, try different strategy (WhiteNoise, template)
     """
-    if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
-        robots = ROBOTS_GO_AWAY_TXT
-    elif settings.ALLOW_ROBOTS:
+    host = request.get_host()
+    if host in settings.ALLOW_ROBOTS_DOMAINS:
+        robots = ""
+    elif host in settings.ALLOW_ROBOTS_WEB_DOMAINS:
         robots = ROBOTS_ALLOWED_TXT
     else:
         robots = ROBOTS_GO_AWAY_TXT

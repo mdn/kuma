@@ -1,5 +1,3 @@
-import pytest
-
 from kuma.core.urlresolvers import reverse
 
 
@@ -19,27 +17,39 @@ def test_promote_buttons(client, db):
     assert response.status_code == 200
 
 
-@pytest.mark.parametrize('allowed', [True, False])
-@pytest.mark.parametrize(
-    'host', [None, 'ATTACHMENT_HOST', 'ATTACHMENT_ORIGIN'])
-def test_robots(client, db, settings, host, allowed):
-    settings.ALLOW_ROBOTS = allowed
-    settings.ATTACHMENT_HOST = 'demos'
-    settings.ATTACHMENT_ORIGIN = 'demos-origin'
-    settings.ENABLE_RESTRICTIONS_BY_HOST = True
-    headers = {'HTTP_HOST': getattr(settings, host)} if host else {}
-    response = client.get(reverse('robots_txt'), **headers)
+def test_robots_not_allowed(client):
+    """By default, robots.txt shows that robots are not allowed."""
+    response = client.get(reverse('robots_txt'))
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain'
     content = response.content
-    if host or not allowed:
-        assert 'Sitemap: ' not in content
-        assert 'Disallow: /\n' in content
-        assert 'Disallow: /admin/\n' not in content
-    else:
-        assert 'Sitemap: ' in content
-        assert 'Disallow: /\n' not in content
-        assert 'Disallow: /admin/\n' in content
+    assert 'Sitemap: ' not in content
+    assert 'Disallow: /\n' in content
+    assert 'Disallow: /admin/\n' not in content
+
+
+def test_robots_allowed_main_website(client, settings):
+    """On the main website, allow robots with restrictions."""
+    host = 'main.mdn.moz.works'
+    settings.ALLOW_ROBOTS_WEB_DOMAINS = [host]
+    response = client.get(reverse('robots_txt'), HTTP_HOST=host)
+    assert response.status_code == 200
+    assert response['Content-Type'] == 'text/plain'
+    content = response.content
+    assert 'Sitemap: ' in content
+    assert 'Disallow: /\n' not in content
+    assert 'Disallow: /admin/\n' in content
+
+
+def test_robots_allowed_main_attachment_host(client, settings):
+    """On the main attachment host, allow robots without restrictions."""
+    host = 'samples.mdn.moz.works'
+    settings.ALLOW_ROBOTS_DOMAINS = [host]
+    response = client.get(reverse('robots_txt'), HTTP_HOST=host)
+    assert response.status_code == 200
+    assert response['Content-Type'] == 'text/plain'
+    content = response.content
+    assert content == ''
 
 
 def test_favicon_ico(client):
