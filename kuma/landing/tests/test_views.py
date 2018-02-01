@@ -31,11 +31,15 @@ def test_robots(client, db, settings, host, allowed):
     response = client.get(reverse('robots_txt'), **headers)
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain'
-    content = ''.join(response.streaming_content)
+    content = response.content
     if host or not allowed:
-        assert 'Disallow: /' in content
+        assert 'Sitemap: ' not in content
+        assert 'Disallow: /\n' in content
+        assert 'Disallow: /admin/\n' not in content
     else:
         assert 'Sitemap: ' in content
+        assert 'Disallow: /\n' not in content
+        assert 'Disallow: /admin/\n' in content
 
 
 def test_favicon_ico(client):
