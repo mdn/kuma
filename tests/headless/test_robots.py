@@ -3,14 +3,7 @@ from urlparse import urlsplit
 import pytest
 import requests
 
-INDEXED_ATTACHMENT_DOMAINS = set((
-    'mdn.mozillademos.org',         # Main attachments domain
-    'mdn-demos-origin.moz.works',   # Attachments origin
-))
-INDEXED_WEB_DOMAINS = set((
-    'developer.mozilla.org',    # Main website, CDN origin
-    'cdn.mdn.mozilla.net',      # Assets CDN
-))
+from . import INDEXED_ATTACHMENT_DOMAINS, INDEXED_WEB_DOMAINS
 
 
 @pytest.mark.smoke
