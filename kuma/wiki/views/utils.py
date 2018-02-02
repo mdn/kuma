@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import hashlib
-
-import newrelic.agent
-
-from kuma.core.cache import memcache
-
-from ..constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
-from ..models import Document
 
 
 def split_slug(slug):
@@ -43,29 +35,6 @@ def split_slug(slug):
         'root': root,                # 'some'
         'seo_root': seo_root,        # 'some'
     }
-
-
-@newrelic.agent.function_trace()
-def document_last_modified(request, document_slug, document_locale):
-    """
-    Utility function to derive the last modified timestamp of a document.
-    Mainly for the @condition decorator.
-    """
-    # build an adhoc natural cache key to not have to do DB query
-    adhoc_natural_key = (document_locale, document_slug)
-    natural_key_hash = Document.natural_key_hash(adhoc_natural_key)
-    cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % natural_key_hash
-    try:
-        last_mod = memcache.get(cache_key)
-        if last_mod is None:
-            doc = Document.objects.only('slug', 'locale', 'modified').get(locale=document_locale, slug=document_slug)
-            last_mod = doc.fill_last_modified_cache()
-
-        # Convert the cached Unix epoch seconds back to Python datetime
-        return datetime.fromtimestamp(float(last_mod))
-
-    except Document.DoesNotExist:
-        return None
 
 
 def document_form_initial(document):
