@@ -66,12 +66,12 @@
   <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" as="script" />
   <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/editor-js.js" as="script" />
 
-  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) }}">
+  <link rel="alternate" type="application/json" href="{{ request.build_absolute_uri(url('wiki.json_slug', document.slug)) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
   {% if other_translations %}
     {% for translation in other_translations %}
-      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() }}" title="{{ translation.title }}">
+      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ request.build_absolute_uri(translation.get_absolute_url()) }}" title="{{ translation.title }}">
     {% endfor %}
   {% endif %}
 
