@@ -2,9 +2,14 @@ import contextlib
 import urllib
 from urlparse import urljoin
 
+import django.middleware.gzip
 from django.conf import settings
 from django.core import urlresolvers
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.http import (
+    HttpResponseRedirect,
+    HttpResponseForbidden,
+    HttpResponsePermanentRedirect,
+)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -205,3 +210,23 @@ class LegacyDomainRedirectsMiddleware(object):
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
         return None
+
+
+class GZipMiddleware(django.middleware.gzip.GZipMiddleware):
+    """
+    This is identical to Django's GZipMiddleware, except that it will not
+    modify the ETag header.
+
+    TODO: When moving to Django 1.11, this code and its tests can be deleted,
+          and django.middleware.gzip.GZipMiddleware should be used instead.
+    """
+
+    def process_response(self, request, response):
+        original_etag = response.get('etag')
+        response_out = super(GZipMiddleware, self).process_response(
+            request,
+            response
+        )
+        if (original_etag is not None) and response_out.has_header('etag'):
+            response_out['etag'] = original_etag
+        return response_out

@@ -19,17 +19,18 @@ from kuma.wiki.models import Document, Revision
 from kuma.wiki.views.utils import calculate_etag
 from kuma.wiki.views.document import _apply_content_experiment
 
+from django.utils.text import compress_string
 from django.utils.six.moves.urllib.parse import urlparse
 from django.test.client import BOUNDARY, MULTIPART_CONTENT, encode_multipart
 
 
 AuthKey = namedtuple('AuthKey', 'key header')
 
-
 SECTION1 = '<h3 id="S1">Section 1</h3><p>This is a page. Deal with it.</p>'
 SECTION2 = '<h3 id="S2">Section 2</h3><p>This is a page. Deal with it.</p>'
 SECTION3 = '<h3 id="S3">Section 3</h3><p>This is a page. Deal with it.</p>'
-SECTIONS = SECTION1 + SECTION2 + SECTION3
+SECTION4 = '<h3 id="S4">Section 4</h3><p>This is a page. Deal with it.</p>'
+SECTIONS = SECTION1 + SECTION2 + SECTION3 + SECTION4
 SECTION_CASE_TO_DETAILS = {
     'no-section': (None, SECTIONS),
     'section': ('S1', SECTION1),
@@ -63,6 +64,12 @@ def get_content(content_case, data):
 
 @pytest.fixture
 def section_doc(root_doc, wiki_user):
+    """
+    The content in this document's current revision contains multiple HTML
+    elements with an "id" attribute (or "sections"), and also has a length
+    greater than or equal to 200, which meets the compression threshold of
+    the GZipMiddleware.
+    """
     root_doc.current_revision = Revision.objects.create(
         document=root_doc, creator=wiki_user, content=SECTIONS)
     root_doc.save()
@@ -112,11 +119,12 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
     if section_id:
         url += '?section={}'.format(section_id)
 
-    headers = {}
+    headers = dict(HTTP_ACCEPT_ENCODING='gzip')
+
     if if_none_match == 'match':
-        headers['HTTP_IF_NONE_MATCH'] = '"{}"'.format(calculate_etag(
-            section_doc.get_html(section_id)
-        ))
+        response = getattr(client, method.lower())(url, **headers)
+        assert 'etag' in response
+        headers['HTTP_IF_NONE_MATCH'] = response['etag']
     elif if_none_match == 'mismatch':
         headers['HTTP_IF_NONE_MATCH'] = 'ABC'
 
@@ -130,11 +138,13 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
         assert 'etag' in response
         assert 'x-kuma-revision' in response
         assert 'last-modified' not in response
-        assert response['etag'] == '"{}"'.format(calculate_etag(exp_content))
+        assert '"{}"'.format(calculate_etag(exp_content)) in response['etag']
         assert (response['x-kuma-revision'] ==
                 str(section_doc.current_revision_id))
 
     if method == 'GET':
+        if response.get('content-encoding') == 'gzip':
+            exp_content = compress_string(exp_content)
         assert response.content == exp_content
 
 
@@ -222,10 +232,11 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
         url += '?section={}'.format(section_id)
 
     headers = dict(HTTP_AUTHORIZATION=authkey.header)
+
     if if_match == 'match':
-        headers['HTTP_IF_MATCH'] = '"{}"'.format(calculate_etag(
-            section_doc.get_html(section_id)
-        ))
+        response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
+        assert 'etag' in response
+        headers['HTTP_IF_MATCH'] = response['etag']
     elif if_match == 'mismatch':
         headers['HTTP_IF_MATCH'] = 'ABC'
 
@@ -346,22 +357,31 @@ def test_api_put_new(settings, client, root_doc, authkey, section_case,
                     set(data['review_tags'].split(',')))
 
 
-def test_conditional_get(client, root_doc):
+def test_conditional_get(client, section_doc):
     """
     Test conditional GET to document view (ETag only currently).
     """
-    url = root_doc.get_absolute_url() + '$api'
+    url = section_doc.get_absolute_url() + '$api'
 
+    # Ensure the ETag value is based on the entire content of the response.
     response = client.get(url)
-
     assert response.status_code == 200
     assert 'etag' in response
     assert 'last-modified' not in response
-    # Ensure the ETag value is strong. It should be
-    # based on the entire content of the response.
-    assert response['etag'] == '"{}"'.format(calculate_etag(response.content))
+    assert '"{}"'.format(calculate_etag(response.content)) in response['etag']
 
-    response = client.get(url, HTTP_IF_NONE_MATCH=response['etag'])
+    # Get the ETag header value when using gzip to test that GZipMiddleware
+    # plays nicely with ConditionalGetMiddleware when making the following
+    # conditional request.
+    response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
+    assert response.status_code == 200
+    assert 'etag' in response
+
+    response = client.get(
+        url,
+        HTTP_ACCEPT_ENCODING='gzip',
+        HTTP_IF_NONE_MATCH=response['etag']
+    )
 
     assert response.status_code == 304
 

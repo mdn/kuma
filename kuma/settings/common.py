@@ -394,10 +394,10 @@ LOCALE_PATHS = (
 # Last-Modified header). Django's ConditionalGetMiddleware, uses both the ETag
 # and Last-Modified headers to handle conditional GET requests.
 #
-# IMPORTANT NOTE: When we move to Django 1.11, the USE_ETAGS setting is no
-# longer needed, and should be deleted. Django's ConditionalGetMiddleware
-# will take care of both computing/adding the ETag header and handling
-# conditional requests (both only for GET requests).
+# TODO: When moving to Django 1.11, the USE_ETAGS setting is no longer
+#       needed, and should be deleted. Django's ConditionalGetMiddleware
+#       will take care of both computing/adding the ETag header and handling
+#       conditional requests (both only for GET requests).
 USE_ETAGS = True
 
 # Absolute path to the directory that holds media.
@@ -485,7 +485,8 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
-    'django.middleware.gzip.GZipMiddleware',
+    # TODO: When moving to Django 1.11, replace with Django's GZipMiddleware.
+    'kuma.core.middleware.GZipMiddleware',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
      'django.contrib.sessions.middleware.SessionMiddleware'),

@@ -85,6 +85,15 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
         % settings.STATIC_URL)
     assert normalized == expected
 
+    # Get the ETag header value when using gzip to test that GZipMiddleware
+    # plays nicely with ConditionalGetMiddleware when making the following
+    # conditional request.
+    response = client.get(
+        url,
+        HTTP_HOST='testserver',
+        HTTP_ACCEPT_ENCODING='gzip',
+    )
+    assert 'ETag' in response
     current_etag = response['ETag']
 
     response = client.get(
