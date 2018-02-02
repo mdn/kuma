@@ -36,7 +36,7 @@
 {% endif %}
 
 {% block robots_value %}
-  {%- if document.is_experiment -%}
+  {%- if document.is_experiment or fallback_reason or not document_html -%}
     noindex, nofollow
   {%- else -%}
     {{ super() }}
