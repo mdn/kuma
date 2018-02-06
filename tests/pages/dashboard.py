@@ -1,5 +1,7 @@
 from pypom import Region
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import (ElementNotInteractableException,
+                                        NoSuchElementException,
+                                        TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import pytest
@@ -51,7 +53,13 @@ class DashboardPage(BasePage):
 
     def open_first_details(self):
         first_row = self.find_element(*self._first_row_locator)
-        first_row.click()
+        try:
+            first_row.click()
+        except ElementNotInteractableException as e:
+            if self.selenium._is_remote and self.selenium.name == 'firefox':
+                pytest.xfail("Known issue with AJAX refresh"
+                             " (Selenium 3.8.1 w/ Remote Firefox):" +
+                             str(e))
         self.wait.until(lambda s: len(self.find_elements(*self._details_locator)) > 0)
 
     @property
