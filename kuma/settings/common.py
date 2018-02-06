@@ -44,7 +44,7 @@ ADMINS = zip(
 PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
 SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
-PRODUCTION_URL = SITE_URL
+PRODUCTION_DOMAIN = 'developer.mozilla.org'
 STAGING_DOMAIN = 'stage.mdn.moz.works'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
