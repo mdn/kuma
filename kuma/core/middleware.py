@@ -5,11 +5,8 @@ from urlparse import urljoin
 import django.middleware.gzip
 from django.conf import settings
 from django.core import urlresolvers
-from django.http import (
-    HttpResponseRedirect,
-    HttpResponseForbidden,
-    HttpResponsePermanentRedirect,
-)
+from django.http import (HttpResponseRedirect, HttpResponseForbidden,
+                         HttpResponsePermanentRedirect)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
