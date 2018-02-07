@@ -1,10 +1,12 @@
 from mock import patch, MagicMock
 
 import pytest
+from django.http import HttpResponse
 from django.test import RequestFactory
 
 from kuma.core.tests import KumaTestCase, eq_
 from kuma.core.middleware import (
+    GZipMiddleware,
     WhiteNoiseMiddleware,
     SetRemoteAddrFromForwardedFor,
     ForceAnonymousSessionMiddleware,
@@ -119,3 +121,31 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
         assert response['Location'] == site_url + path
     else:
         assert response is None
+
+
+@pytest.mark.parametrize(
+    'etag_header',
+    (None, '"7ac66c0f148de9519b8bd264312c4d64"')
+)
+def test_gzip_middleware(rf, etag_header):
+    """
+    Test that GZipMiddleware does not modify the ETag header unlike
+    Django's GZipMiddleware.
+
+    TODO: When moving to Django 1.11, this test code and the GZipMiddleware
+          code in kuma.core.middleware can be deleted, and Django's
+          GZipMiddleware should be used instead.
+    """
+    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='gzip')
+    response = HttpResponse(50 * 'yada ')
+    if etag_header:
+        response['etag'] = etag_header
+
+    response_out = GZipMiddleware().process_response(request, response)
+
+    if etag_header:
+        # The ETag header is still there and hasn't been modified.
+        assert 'etag' in response_out
+        assert response_out['etag'] == etag_header
+    else:
+        assert 'etag' not in response

@@ -19,8 +19,8 @@ from django.utils.http import parse_etags
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import (etag, require_GET,
-                                          require_http_methods, require_POST)
+from django.views.decorators.http import (require_GET, require_http_methods,
+                                          require_POST)
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
 from ratelimit.decorators import ratelimit
@@ -762,17 +762,7 @@ def document(request, document_slug, document_locale):
         }
         response = render(request, 'wiki/document.html', context)
 
-    def get_etag(*args):
-        return calculate_etag(response.content)
-
-    # The etag decorator not only adds the ETag header to the response,
-    # but also handles conditional responses based on the incoming and
-    # outgoing ETag headers.
-    @etag(get_etag)
-    def get_response(request, *args):
-        return _add_kuma_revision_header(doc, response)
-
-    return get_response(request)
+    return _add_kuma_revision_header(doc, response)
 
 
 @csrf_exempt
@@ -800,15 +790,7 @@ def document_api(request, document_slug, document_locale):
 
     section_id = request.GET.get('section', None)
     response = HttpResponse(doc.get_html(section_id))
-
-    def get_etag(*args):
-        return calculate_etag(response.content)
-
-    @etag(get_etag)
-    def get_response(request, *args):
-        return _add_kuma_revision_header(doc, response)
-
-    return get_response(request)
+    return _add_kuma_revision_header(doc, response)
 
 
 def _document_api_PUT(request, document_slug, document_locale):

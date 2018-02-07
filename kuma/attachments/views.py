@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from django.views.decorators.http import last_modified
 from django.views.decorators.cache import cache_control
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
@@ -15,7 +14,7 @@ from kuma.wiki.decorators import process_document_path
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import allow_add_attachment_by, convert_to_utc
+from .utils import allow_add_attachment_by, convert_to_http_date
 
 
 # Mime types used on MDN
@@ -43,11 +42,7 @@ def raw_file(request, attachment_id, filename):
     if is_untrusted(request):
         rev = attachment.current_revision
 
-        def get_last_modified(*args):
-            return convert_to_utc(rev.created)
-
         @cache_control(public=True, max_age=60 * 15)
-        @last_modified(get_last_modified)
         def stream_raw_file(*args):
             if settings.DEBUG:
                 # to work around an issue of the localdevstorage with streamed
@@ -59,6 +54,7 @@ def raw_file(request, attachment_id, filename):
                 response['Content-Length'] = rev.file.size
             except OSError:
                 pass
+            response['Last-Modified'] = convert_to_http_date(rev.created)
             response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
             return response
 

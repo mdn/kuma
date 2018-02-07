@@ -388,6 +388,18 @@ LOCALE_PATHS = (
     path('locale'),
 )
 
+# When true, Django's CommonMiddleware will compute and add an ETag header
+# to ALL responses, as well as handle conditional GET requests but based soley
+# on the ETag header (it won't handle conditional GET requests based on the
+# Last-Modified header). Django's ConditionalGetMiddleware, uses both the ETag
+# and Last-Modified headers to handle conditional GET requests.
+#
+# TODO: When moving to Django 1.11, the USE_ETAGS setting is no longer
+#       needed, and should be deleted. Django's ConditionalGetMiddleware
+#       will take care of both computing/adding the ETag header and handling
+#       conditional requests (both only for GET requests).
+USE_ETAGS = True
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = config('MEDIA_ROOT', default=path('media'))
@@ -473,7 +485,8 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
-    'django.middleware.gzip.GZipMiddleware',
+    # TODO: When moving to Django 1.11, replace with Django's GZipMiddleware.
+    'kuma.core.middleware.GZipMiddleware',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
      'django.contrib.sessions.middleware.SessionMiddleware'),
@@ -482,6 +495,7 @@ MIDDLEWARE_CLASSES = (
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
     'ratelimit.middleware.RatelimitMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.common.CommonMiddleware',
     'kuma.core.middleware.RemoveSlashMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
