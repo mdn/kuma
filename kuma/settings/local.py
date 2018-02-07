@@ -5,7 +5,7 @@ from .common import *  # noqa
 # TODO: Use environment to override, not settings picker
 
 DEFAULT_FILE_STORAGE = 'kuma.core.storage.KumaHttpStorage'
-LOCALDEVSTORAGE_HTTP_FALLBACK_DOMAIN = PRODUCTION_URL + '/media/'
+LOCALDEVSTORAGE_HTTP_FALLBACK_DOMAIN = SITE_URL + '/media/'
 
 ATTACHMENT_HOST = config('ATTACHMENT_HOST',
                          default='mdn-local.mozillademos.org')
