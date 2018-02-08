@@ -53,9 +53,7 @@ INTERACTIVE_EXAMPLES_BASE = config(
     default='https://interactive-examples.mdn.mozilla.net')
 
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
-ALLOW_ROBOTS = config('ALLOW_ROBOTS', default=False, cast=bool)
 REVISION_HASH = config('REVISION_HASH', default='undefined')
-
 MANAGERS = ADMINS
 
 
@@ -1239,6 +1237,20 @@ ENABLE_RESTRICTIONS_BY_HOST = config(
     default=True,
     cast=bool
 )
+
+# Allow robots, but restrict some paths
+# If the domain is a CDN, the CDN origin should be included.
+ALLOW_ROBOTS_WEB_DOMAINS = set(
+    config('ALLOW_ROBOTS_WEB_DOMAINS',
+           default='developer.mozilla.org',
+           cast=Csv()))
+
+# Allow robots, no path restrictions
+# If the domain is a CDN, the CDN origin should be included.
+ALLOW_ROBOTS_DOMAINS = set(
+    config('ALLOW_ROBOTS_DOMAINS',
+           default='mdn.mozillademos.org,mdn-demos-origin.moz.works',
+           cast=Csv()))
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
