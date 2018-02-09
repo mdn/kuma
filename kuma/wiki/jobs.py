@@ -136,7 +136,10 @@ class DocumentTagsJob(KumaJob):
     We invalidate this when a document is saved only.
     Longer lifetime as tags are rarely modified
     """
-    refresh_timeout = 180
+
+    # A wiki document can be updated with a short interval
+    # So task for refreshing tags should be created always
+    refresh_timeout = 0
 
     @property
     def lifetime(self):
@@ -149,5 +152,6 @@ class DocumentTagsJob(KumaJob):
     def fetch(self, pk):
         from .models import Document
 
-        tags = Document.objects.filter(id=pk).values_list('tags__name', flat=True).order_by('tags__name')
+        tags = (Document.objects.filter(id=pk).exclude(tags__name=None)
+                                .values_list('tags__name', flat=True).order_by('tags__name'))
         return list(tags)

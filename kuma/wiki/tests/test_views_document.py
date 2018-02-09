@@ -577,3 +577,17 @@ def test_tags_show_in_document(root_doc, client, wiki_user):
     assert len(response_tags) == len(tags)
     # The response tags should be sorted
     assert response_tags == sorted(tags)
+
+
+@pytest.mark.tags
+def test_tags_not_show_while_empty(root_doc, client, wiki_user):
+    # Create a revision with no tags
+    Revision.objects.create(document=root_doc, tags=','.join([]), creator=wiki_user)
+
+    response = client.get(root_doc.get_absolute_url())
+    assert response.status_code == 200
+
+    page = pq(response.content)
+    response_tags = page.find('.tags li a').contents()
+    # There should be no tag
+    assert len(response_tags) == 0
