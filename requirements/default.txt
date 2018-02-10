@@ -139,9 +139,12 @@ django-taggit==0.21.6 \
     --hash=sha256:80e22fdf41fba66a3c6f4807e283f38c4557838e35766a942370fb90f21d7435
 
 # Send async emails in response to events
-django-tidings==1.1 \
-    --hash=sha256:d5047c39bf2e1d1d4dcdfd28371e3ab354ba6c26168ff11baac9d20409a804d9 \
-    --hash=sha256:8bf9f1684568095cc0719c2eadd652bd3030f45e98ac0720f70c5a38a459125e
+# Code: https://github.com/mozilla/django-tidings
+# Changes: http://django-tidings.readthedocs.io/en/latest/changes.html
+# Docs: http://django-tidings.readthedocs.io/en/latest/
+django-tidings==2.0 \
+    --hash=sha256:2f1eb0b0e8de80489ffd24f5f70769c8cbfb9144a704d7c987287563cd53312a \
+    --hash=sha256:53da182690636a4521bd5c946e882d03d0abfc86b921f63e0139f99d9fd78def
 
 # Support segmented user experiences
 django-waffle==0.11 \
