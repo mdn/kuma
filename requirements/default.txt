@@ -32,6 +32,9 @@ django-allauth==0.33.0 \
     --hash=sha256:ae64a80b49707c3d4d6aff52424f8e75fd636cebfdce0e88ffdcbf306f9f0a3d
 
 # Refresh stale cache items asynchronously
+# Code: https://github.com/codeinthehole/django-cacheback
+# Changes: https://github.com/codeinthehole/django-cacheback/blob/master/CHANGELOG.rst
+# Docs: http://django-cacheback.readthedocs.io/en/latest/
 django-cacheback==1.0 \
     --hash=sha256:8feaa8df6cbe23e1fca5d858f518a235442a8ddc4aefb5be0846692c69d65a8e \
     --hash=sha256:2fc21e0ed78ee8e4cc07ac2c5936b27f956c99c81fc4f965e96fb27171180819
