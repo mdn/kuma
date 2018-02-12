@@ -32,6 +32,9 @@ django-allauth==0.33.0 \
     --hash=sha256:ae64a80b49707c3d4d6aff52424f8e75fd636cebfdce0e88ffdcbf306f9f0a3d
 
 # Refresh stale cache items asynchronously
+# Code: https://github.com/codeinthehole/django-cacheback
+# Changes: https://github.com/codeinthehole/django-cacheback/blob/master/CHANGELOG.rst
+# Docs: http://django-cacheback.readthedocs.io/en/latest/
 django-cacheback==1.0 \
     --hash=sha256:8feaa8df6cbe23e1fca5d858f518a235442a8ddc4aefb5be0846692c69d65a8e \
     --hash=sha256:2fc21e0ed78ee8e4cc07ac2c5936b27f956c99c81fc4f965e96fb27171180819
@@ -136,9 +139,12 @@ django-taggit==0.21.6 \
     --hash=sha256:80e22fdf41fba66a3c6f4807e283f38c4557838e35766a942370fb90f21d7435
 
 # Send async emails in response to events
-django-tidings==1.1 \
-    --hash=sha256:d5047c39bf2e1d1d4dcdfd28371e3ab354ba6c26168ff11baac9d20409a804d9 \
-    --hash=sha256:8bf9f1684568095cc0719c2eadd652bd3030f45e98ac0720f70c5a38a459125e
+# Code: https://github.com/mozilla/django-tidings
+# Changes: http://django-tidings.readthedocs.io/en/latest/changes.html
+# Docs: http://django-tidings.readthedocs.io/en/latest/
+django-tidings==2.0 \
+    --hash=sha256:2f1eb0b0e8de80489ffd24f5f70769c8cbfb9144a704d7c987287563cd53312a \
+    --hash=sha256:53da182690636a4521bd5c946e882d03d0abfc86b921f63e0139f99d9fd78def
 
 # Support segmented user experiences
 django-waffle==0.11 \
