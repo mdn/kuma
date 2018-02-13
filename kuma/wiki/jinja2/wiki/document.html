@@ -13,7 +13,7 @@
 
 {% set is_logged_in = request.user.is_authenticated() %}
 {% set doc_abs_url = document.get_absolute_url() %}
-{% set canonical = request.build_absolute_uri(doc_abs_url) %}
+{% set canonical = doc_abs_url | absolutify %}
 
 {% set current_revision = document.current_revision %}
 {% if (is_logged_in and current_revision) and (current_revision.needs_technical_review or current_revision.needs_editorial_review) %}
@@ -66,12 +66,12 @@
   <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" as="script" />
   <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/editor-js.js" as="script" />
 
-  <link rel="alternate" type="application/json" href="{{ request.build_absolute_uri(url('wiki.json_slug', document.slug)) }}">
+  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) | absolutify }}">
   <link rel="canonical" href="{{ canonical }}" >
 
   {% if other_translations %}
     {% for translation in other_translations %}
-      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ request.build_absolute_uri(translation.get_absolute_url()) }}" title="{{ translation.title }}">
+      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() | absolutify }}" title="{{ translation.title }}">
     {% endfor %}
   {% endif %}
 
