@@ -5,45 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from elasticsearch_dsl.connections import connections as es_connections
 
-from .models import Document, DocumentZone
 from .jobs import (DocumentContributorsJob, DocumentNearestZoneJob,
                    DocumentZoneURLRemapsJob, DocumentCodeSampleJob, DocumentTagsJob)
 from .signals import render_done
-
-
-def invalidate_nearest_zone_cache(document_pk, async=False):
-    """
-    Reset the nearest-zone cache for this document and its descendants.
-    """
-    job = DocumentNearestZoneJob()
-    do_invalidate = job.invalidate if async else job.refresh
-
-    def invalidate(pk):
-        do_invalidate(pk)
-        # Since the descendants of this document search upwards for their
-        # nearest zone, recursively invalidate their caches. Note that the
-        # branches of this tree of decendants can stop at (and exclude) any
-        # descendants that have their own zones.
-        children = (Document.objects
-                            .filter(parent_topic=pk)
-                            .values_list('pk', 'zone__id'))
-        for child_pk, child_zone_pk in children:
-            if child_zone_pk is None:
-                invalidate(child_pk)
-
-    invalidate(document_pk)
-
-
-def invalidate_zone_urls_cache(locale, async=False):
-    """
-    Reset the URL remap list cache for the given document, assuming it
-    even has a zone.
-    """
-    job = DocumentZoneURLRemapsJob()
-    if async:
-        job.invalidate(locale)
-    else:
-        job.refresh(locale)
 
 
 class WikiConfig(AppConfig):
@@ -110,8 +74,8 @@ class WikiConfig(AppConfig):
         async = kwargs.get('async', True)
 
         if hasattr(instance, 'zone'):
-            invalidate_zone_urls_cache(instance.locale, async=async)
-        invalidate_nearest_zone_cache(instance.pk, async=async)
+            self._invalidate_zone_urls_cache(instance.locale, async=async)
+        self._invalidate_nearest_zone_cache(instance.pk, async=async)
 
         DocumentContributorsJob().invalidate(instance.pk)
         DocumentTagsJob().invalidate(instance.pk)
@@ -119,11 +83,46 @@ class WikiConfig(AppConfig):
         code_sample_job = DocumentCodeSampleJob(generation_args=[instance.pk])
         code_sample_job.invalidate_generation()
 
+    def _invalidate_zone_urls_cache(self, locale, async=False):
+        """
+        Reset the URL remap list cache for the given document, assuming it
+        even has a zone.
+        """
+        job = DocumentZoneURLRemapsJob()
+        if async:
+            job.invalidate(locale)
+        else:
+            job.refresh(locale)
+
+    def _invalidate_nearest_zone_cache(self, document_pk, async=False):
+        """
+        Reset the nearest-zone cache for this document and its descendants.
+        """
+        Document = self.get_model('Document')
+        job = DocumentNearestZoneJob()
+        do_invalidate = job.invalidate if async else job.refresh
+
+        def invalidate(pk):
+            do_invalidate(pk)
+            # Since the descendants of this document search upwards for their
+            # nearest zone, recursively invalidate their caches. Note that the
+            # branches of this tree of decendants can stop at (and exclude) any
+            # descendants that have their own zones.
+            children = (Document.objects
+                                .filter(parent_topic=pk)
+                                .values_list('pk', 'zone__id'))
+            for child_pk, child_zone_pk in children:
+                if child_zone_pk is None:
+                    invalidate(child_pk)
+
+        invalidate(document_pk)
+
     def on_zone_pre_save(self, sender, instance, **kwargs):
         """
         A signal handler to capture the previous state of the zone
         (from the DB) before it is lost.
         """
+        DocumentZone = self.get_model('DocumentZone')
         # Temporarily save the previous state on the instance itself.
         try:
             instance.previous = (DocumentZone.objects
@@ -140,24 +139,24 @@ class WikiConfig(AppConfig):
         """
         if instance.previous:
             if instance.document.pk != instance.previous['document_id']:
-                invalidate_nearest_zone_cache(
+                self._invalidate_nearest_zone_cache(
                     instance.previous['document_id']
                 )
-                invalidate_zone_urls_cache(
+                self._invalidate_zone_urls_cache(
                     instance.previous['document__locale']
                 )
             # Now that we've used the previous state of the zone, clear it.
             instance.previous = None
 
-        invalidate_nearest_zone_cache(instance.document.pk)
-        invalidate_zone_urls_cache(instance.document.locale)
+        self._invalidate_nearest_zone_cache(instance.document.pk)
+        self._invalidate_zone_urls_cache(instance.document.locale)
 
     def on_zone_delete(self, sender, instance, **kwargs):
         """
         A signal handler to trigger cache invalidation for this zone.
         """
-        invalidate_nearest_zone_cache(instance.document.pk)
-        invalidate_zone_urls_cache(instance.document.locale)
+        self._invalidate_nearest_zone_cache(instance.document.pk)
+        self._invalidate_zone_urls_cache(instance.document.locale)
 
     def on_render_done(self, sender, instance, **kwargs):
         """
