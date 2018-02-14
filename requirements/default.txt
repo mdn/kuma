@@ -116,9 +116,9 @@ django-recaptcha==1.0.5 \
     --hash=sha256:d4d896dd399a1a0810af8e59a646bb5a1586b2cc8b8f32d16766ade5fba79475
 
 # RESTful API framework
-djangorestframework==3.3.2 \
-    --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b \
-    --hash=sha256:4962418a57804f8323282728a4f9b9496e78caec1adda352170697752eff01bf
+djangorestframework==3.5.4 \
+    --hash=sha256:110afa12784ceadfb50808882689302d266785b51e3d13286744333ff6d78e60 \
+    --hash=sha256:f995a35ae22f354d2a9a42ee6d2c059c101f826b1485ed46781677895ad25ee5
 
 # Add site-wide announcements in the database
 django-soapbox==1.3 \
