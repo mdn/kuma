@@ -114,7 +114,7 @@ class WikiConfig(AppConfig):
         invalidate_nearest_zone_cache(instance.pk, async=async)
 
         DocumentContributorsJob().invalidate(instance.pk)
-        DocumentTagsJob().invalidate(instance.pk)
+        DocumentTagsJob().invalidate(pk=instance.pk)
 
         code_sample_job = DocumentCodeSampleJob(generation_args=[instance.pk])
         code_sample_job.invalidate_generation()
