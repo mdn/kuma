@@ -1,6 +1,7 @@
 from functools import wraps
 import pytest
 import re
+import time
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -33,6 +34,7 @@ class BasePage(Page):
     URL_TEMPLATE = '/{locale}'
     MM_BANNER_TEXT = 'MDN is currently in read-only maintenance mode.'
     MM_BANNER_SELECTOR = 'div.maintenance-mode-notice bdi'
+    DEFAULT_ANIMATION_DURATION = 0.5  # defined in styles/includes/_vars.scss
 
     def __init__(self, selenium, base_url, locale='en-US', **url_kwargs):
         super(BasePage, self).__init__(selenium, base_url, locale=locale, **url_kwargs)
@@ -76,29 +78,33 @@ class BasePage(Page):
         # locators
         SIGNIN_SELECTOR = '#toolbox .login-link'
 
-        _root_locator = (By.ID, 'main-header')
-        _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
-        _logo_locator = (By.CSS_SELECTOR, 'a.logo')
-        _tech_submenu_trigger_locator = (By.XPATH,
-                                         'id(\'nav-tech-submenu\')/..')
-        _tech_submenu_locator = (By.ID, 'nav-tech-submenu')
-        _tech_submenu_link_locator = (By.CSS_SELECTOR, '#nav-tech-submenu a')
         _feedback_link_locator = (By.XPATH, 'id(\'nav-contact-submenu\')/../a')
+        _feedback_submenu_locator = (By.ID, 'nav-contact-submenu')
         _feedback_submenu_trigger_locator = (By.XPATH,
                                              'id(\'nav-contact-submenu\')/..')
-        _feedback_submenu_locator = (By.ID, 'nav-contact-submenu')
-        _report_content_locator = (By.CSS_SELECTOR,
-                                   'a[href^="' + report_content_form_url + '"]')
+        _logo_locator = (By.CSS_SELECTOR, 'a.logo')
+        _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
         _report_bug_locator = (By.CSS_SELECTOR,
                                'a[href^="' + report_bug_form_url + '"]')
+        _report_content_locator = (By.CSS_SELECTOR,
+                                   'a[href^="' + report_content_form_url + '"]')
+        _root_locator = (By.ID, 'main-header')  # Used by Region.root
         _search_field_locator = (By.ID, 'main-q')
+        _search_wrapper_locator = (By.CSS_SELECTOR,
+                                   '#nav-main-search div.search-wrap')
         _search_trigger_locator = (By.CSS_SELECTOR, 'span.search-trigger')
+        _tech_submenu_link_locator = (By.CSS_SELECTOR, '#nav-tech-submenu a')
+        _tech_submenu_locator = (By.ID, 'nav-tech-submenu')
+        _tech_submenu_trigger_locator = (By.XPATH,
+                                         'id(\'nav-tech-submenu\')/..')
+        _toolbox_locator = (By.ID, 'toolbox')
 
         # is displayed?
         @property
         def is_displayed(self):
             return self.root.is_displayed()
 
+        # Toolbox (Sign in, logged-in user's actions)
         @property
         def signin_link(self):
             return self.find_element(By.CSS_SELECTOR, self.SIGNIN_SELECTOR)
@@ -106,7 +112,6 @@ class BasePage(Page):
         def trigger_signin(self):
             self.signin_link.click()
 
-        # is the sign-in button displayed?
         @property
         def is_signin_displayed(self):
             return self.signin_link.is_displayed()
@@ -223,18 +228,26 @@ class BasePage(Page):
         def open_report_bug(self):
             self.find_element(*self._report_bug_locator).click()
 
+        # Header search box
         @property
-        def search_field_width(self):
-            search_field = self.find_element(*self._search_field_locator)
-            return search_field.size['width']
+        def search_wrapper_width(self):
+            search_wrapper = self.find_element(*self._search_wrapper_locator)
+            return search_wrapper.size['width']
 
         def search_field_focus(self):
-            plaform_submenu_trigger = self.find_element(*self._tech_submenu_trigger_locator)
+            main_header = self.root
+            toolbox = self.find_element(*self._toolbox_locator)
+            assert 'expanded' not in main_header.get_attribute('class').split()
+            assert toolbox.is_displayed()
             search_field = self.find_element(*self._search_trigger_locator)
             focus = ActionChains(self.selenium).move_to_element(search_field).click()
             focus.perform()
-            # this can be a bit flaky sometimes
-            self.wait.until(lambda s: not plaform_submenu_trigger.is_displayed())
+            self.wait.until(lambda s: not toolbox.is_displayed())
+            self.wait.until(lambda s:
+                            ('expanded' in
+                             main_header.get_attribute('class').split()))
+            # Wait transition-duration for search to be visible (Firefox)
+            time.sleep(BasePage.DEFAULT_ANIMATION_DURATION)
 
         def search_for_term(self, term):
             search_field = self.find_element(*self._search_field_locator)
