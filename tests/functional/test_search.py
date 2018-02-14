@@ -33,9 +33,9 @@ def test_search_home_header(base_url, selenium):
     # open homepage
     page = HomePage(selenium, base_url).open()
     # focus on search in nav menu
-    width_before = page.header.search_field_width
+    width_before = page.header.search_wrapper_width
     page.header.search_field_focus()
-    width_after = page.header.search_field_width
+    width_after = page.header.search_wrapper_width
     assert width_before < width_after
     # search for CSS
     search = page.header.search_for_term(SEARCH_TERM)
@@ -55,9 +55,9 @@ def test_search_article_header(base_url, selenium):
     # avoid the task completion popup
     page.disable_survey_popup()
     # focus on search in nav menu
-    width_before = page.header.search_field_width
+    width_before = page.header.search_wrapper_width
     page.header.search_field_focus()
-    width_after = page.header.search_field_width
+    width_after = page.header.search_wrapper_width
     assert width_before < width_after
     # search for CSS
     search = page.header.search_for_term(SEARCH_TERM)
