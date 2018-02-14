@@ -142,9 +142,9 @@ django-taggit==0.21.6 \
 # Code: https://github.com/mozilla/django-tidings
 # Changes: http://django-tidings.readthedocs.io/en/latest/changes.html
 # Docs: http://django-tidings.readthedocs.io/en/latest/
-django-tidings==2.0 \
-    --hash=sha256:2f1eb0b0e8de80489ffd24f5f70769c8cbfb9144a704d7c987287563cd53312a \
-    --hash=sha256:53da182690636a4521bd5c946e882d03d0abfc86b921f63e0139f99d9fd78def
+django-tidings==2.0.1 \
+    --hash=sha256:0900f28c332f30fd7b2d4f92578c8504601584762524876786dd0a266cf06cd6 \
+    --hash=sha256:a144628acdd9ddafdc921cdb70fb8ee297886b1dc38b00fab8fffbbf46163012
 
 # Support segmented user experiences
 django-waffle==0.11 \
