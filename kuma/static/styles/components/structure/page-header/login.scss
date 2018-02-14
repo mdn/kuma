@@ -3,9 +3,27 @@
 Header login link
 ********************************************************************** */
 
+@media #{$mq-tablet-and-up} {
+    .nav-login {
+        display: inline-block;
+    }
+}
+
 @media #{$mq-mobile-and-down} {
     .login {
         @include nav-item();
+
+        .submenu {
+            position: relative;
+            width: 100%;
+            padding: 0;
+            border-top: 0;
+            box-shadow: none;
+
+            a {
+                display: block;
+            }
+        }
     }
 
     .login-form {
@@ -31,19 +49,21 @@ Header login link
         @include inline-nav-item();
 
         > a {
-            color: #fff;
+            color: $text-color;
 
             &:hover,
             &:focus {
-                background-color: #000;
-                color: #fff;
                 text-decoration: underline;
             }
         }
     }
 
     .login-photo {
+        border-radius: 50%;
+        max-width: 50px;
+        max-height: 50px;
         vertical-align: middle;
+        overflow: hidden;
     }
 }
 

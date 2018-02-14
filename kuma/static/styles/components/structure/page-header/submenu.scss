@@ -3,12 +3,15 @@
     position: absolute;
     z-index: $submenu-z;
     top: 100%;
-    @include bidi(((left, 0, right, auto),));
     width: 250px; // fallback, IE & Edge
     padding: 15px;
     border-top: 5px solid $grey-light;
     box-shadow: 0 4px 4px rgba(0, 0, 0, .15);
     background-color: #fff;
+    @include bidi((
+        (right, 0, left, auto),
+        (text-align, left, right),
+    ));
 
     &.submenu-cols-2 {
         width: (250px * 2);
@@ -52,14 +55,6 @@
         margin-bottom: 5px;
     }
 
-    #nav-sec & {
-        border-top-color: $bg-dark;
-        @include bidi((
-            (left, auto, right, auto),
-            (right, 0, left, auto),
-        ));
-    }
-
     .page-buttons & {
         @include bidi((
             (left, auto, right, auto),
@@ -80,7 +75,6 @@
 easier to strip off the style for the exeption than to add them only for
 everything else */
 @media #{$mq-mobile-and-down} {
-    #nav-sec,
     .nav-main {
         .submenu {
             position: relative;

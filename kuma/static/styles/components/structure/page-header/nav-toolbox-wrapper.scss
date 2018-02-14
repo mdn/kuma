@@ -1,0 +1,27 @@
+.nav-toolbox-wrapper {
+    display: block;
+
+    @media #{$mq-tablet-and-up} {
+        display: flex;
+        flex-direction: row;
+        margin-top: $gutter-width;
+        border-top: 5px solid $grey-light;
+
+        .toolbox {
+            @include bidi((
+                (text-align, right, left),
+            ));
+        }
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        margin-top: 0;
+        border-top: 0;
+        flex-grow: 2;
+        flex-shrink: 2;
+    }
+}
+
+.nav-toolbox-wrapper.hidden {
+    display: none;
+}

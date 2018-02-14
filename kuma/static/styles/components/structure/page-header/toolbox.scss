@@ -1,0 +1,44 @@
+@import '_mixin_nav';
+
+/*
+Site tools and login info
+********************************************************************** */
+.toolbox {
+    display: block;
+    position: relative;
+    z-index: $toolbox-z;
+
+    @media #{$mq-tablet-and-up} {
+        flex-grow: 2;
+        flex-shrink: 2;
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        text-align: right;
+
+        > ul > li {
+            @include large-inline-nav-item();
+
+            > a {
+                color: $text-color;
+
+                &:hover,
+                &:focus {
+                    color: $text-color;
+                }
+            }
+        }
+    }
+}
+
+.toolbox.hidden {
+    display: none;
+}
+
+.nav-tools {
+    display: none;
+
+    @media #{$mq-small-desktop-and-up} {
+        @include inline-nav-item();
+    }
+}

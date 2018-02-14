@@ -74,7 +74,7 @@ class BasePage(Page):
         report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
         report_bug_form_url = 'https://bugzilla.mozilla.org/form.mdn'
         # locators
-        SIGNIN_SELECTOR = '#nav-sec .login-link'
+        SIGNIN_SELECTOR = '#toolbox .login-link'
 
         _root_locator = (By.ID, 'main-header')
         _menu_top_links = (By.CSS_SELECTOR, '#main-nav > ul > li > a[href]')
