@@ -35,9 +35,8 @@ class SiteURLField(serializers.ReadOnlyField):
     def to_representation(self, value):
         if not value:
             return None
-        args = [serializers.get_attribute(value, [arg]) for arg in self.args]
-        kwargs = {arg: serializers.get_attribute(value, [arg])
-                  for arg in self.kwargs}
+        args = [getattr(value, arg) for arg in self.args]
+        kwargs = {arg: getattr(value, arg) for arg in self.kwargs}
         locale = getattr(value, 'locale', settings.LANGUAGE_CODE)
         path = reverse(self.url_name, locale=locale, args=args, kwargs=kwargs)
         return '%s%s' % (settings.SITE_URL, path)
