@@ -4,7 +4,7 @@ from kuma.wiki.models import Revision, Document
 
 
 @pytest.mark.tags
-def test_document_tags_cache_invalidated_correctly(root_doc, wiki_user):
+def test_on_document_save_signal_invalidated_tags_cache(root_doc, wiki_user):
 
     tags1 = ('JavaScript', 'AJAX', 'DOM')
     Revision.objects.create(document=root_doc, tags=','.join(tags1), creator=wiki_user)

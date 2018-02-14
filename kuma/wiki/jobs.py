@@ -137,9 +137,7 @@ class DocumentTagsJob(KumaJob):
     Longer lifetime as tags are rarely modified
     """
 
-    # A wiki document can be updated with a short interval
-    # So task for refreshing tags should be created always
-    refresh_timeout = 0
+    refresh_timeout = 180
 
     @property
     def lifetime(self):
