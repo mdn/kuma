@@ -6,7 +6,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from kuma.core.jobs import KumaJob, GenerationJob
-from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
 class DocumentNearestZoneJob(KumaJob):
@@ -83,6 +82,7 @@ class DocumentContributorsJob(KumaJob):
 
     def fetch(self, pk):
         from .models import Document
+        from kuma.users.templatetags.jinja_helpers import gravatar_url
         User = get_user_model()
 
         # first get a list of user ID recently authoring revisions

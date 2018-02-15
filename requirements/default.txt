@@ -53,6 +53,8 @@ django-constance==1.1.2 \
     --hash=sha256:8edba68cf47befa2d2e6d9eba98ff74dc9881e086bfcac0337fe8198d5edffbf
 
 # Translate database content, used in filters
+# Code: https://bitbucket.org/drmeers/django-dbgettext
+# Docs: http://django-dbgettext.readthedocs.io/en/latest/
 django-dbgettext==0.1.2 \
     --hash=sha256:f5a115b2338a9d71a333a4b89cec14afbd8fd0180f98ff35a9c7f5d96ee969a8
 
