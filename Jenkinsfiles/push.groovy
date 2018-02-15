@@ -14,12 +14,18 @@ stage("Prepare Infra") {
 }
 
 stage('Push') {
+    def kubectl = "kubectl"
+    if (config.env && config.env.kubectl) {
+        kubectl = config.env.kubectl
+    }
     dir('infra/apps/mdn/mdn-aws/k8s') {
-        // Run the database migrations.
-        utils.migrate_db()
-        // Start a rolling update of the Kuma-based deployments.
-        utils.rollout()
-        // Monitor the rollout until it has completed.
-        utils.monitor_rollout()
+        withEnv(["KUBECTL=${kubectl}"]) {
+            // Run the database migrations.
+            utils.migrate_db()
+            // Start a rolling update of the Kuma-based deployments.
+            utils.rollout()
+            // Monitor the rollout until it has completed.
+            utils.monitor_rollout()
+        }
     }
 }
