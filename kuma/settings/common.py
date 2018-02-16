@@ -593,7 +593,6 @@ INSTALLED_APPS = (
     'tidings',
     'djcelery',
     'taggit',
-    'dbgettext',
     'honeypot',
     'cacheback',
     'django_extensions',
@@ -1626,9 +1625,6 @@ LOGGING = {
 
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
-
-DBGETTEXT_PATH = 'kuma/core/'
-DBGETTEXT_ROOT = 'translations'
 
 
 def get_user_url(user):
