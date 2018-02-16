@@ -74,3 +74,24 @@ Inside the ``web`` Docker container::
 
 This will populate and activate the fallback index "main_index". It will be
 overwritten when the search tests run.
+
+Search Filters
+==============
+The search interface uses Filters and Filter Groups to determine what results
+are shown. Currently, the only active Filter Group is "Topics". The Filters
+collect documents by tag. For example, the Filter "Add-ons & Extensions"
+collects all documents tagged with "Add-ons", "Extensions", "Plugins", or
+"Themes". Most filters have a single associated tag. For example, the "CSS"
+filter collects the documents with the "CSS" tag.
+
+Filter and Filter Groups are defined in the database, but the names are
+shown to users. The names of these objects (enabled and disabled) are
+listed in ``kuma/search/names.py``, and marked for translation. To generate
+this file, run this command against the production database, and copy the
+output to ``names.py``::
+
+    ./manage.py generate_search_names
+
+The sample database contains the active subset of Filters and Filter Groups.
+This won't match the production database, and so the development environment
+should not be used to generate ``kuma/search/names.py``.
