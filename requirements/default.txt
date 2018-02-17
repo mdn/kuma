@@ -112,10 +112,13 @@ django-recaptcha==1.0.5 \
     --hash=sha256:dc370fa0f7bd77378f8be5f03e88906bf0b62b8478b35af05846f7d640f1ec32 \
     --hash=sha256:d4d896dd399a1a0810af8e59a646bb5a1586b2cc8b8f32d16766ade5fba79475
 
-# RESTful API framework
-djangorestframework==3.5.4 \
-    --hash=sha256:110afa12784ceadfb50808882689302d266785b51e3d13286744333ff6d78e60 \
-    --hash=sha256:f995a35ae22f354d2a9a42ee6d2c059c101f826b1485ed46781677895ad25ee5
+# RESTful API framework, used by search
+# Code: https://github.com/encode/django-rest-framework
+# Changes: http://www.django-rest-framework.org/topics/release-notes/
+# Docs: http://www.django-rest-framework.org
+djangorestframework==3.6.4 \
+    --hash=sha256:0f9bfbac702f3376dfb2db4971ad8af4e066bfa35393b1b85e085f7e8b91189a \
+    --hash=sha256:de8ac68b3cf6dd41b98e01dcc92dc0022a5958f096eafc181a17fa975d18ca42
 
 # Add site-wide announcements in the database
 django-soapbox==1.3 \
