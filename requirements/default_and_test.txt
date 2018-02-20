@@ -1,0 +1,19 @@
+# Requirements shared between default (runtime) and test environments
+
+-c constraints.txt
+
+# Parse HTML with CSS selectors like jquery
+# Code: https://github.com/gawel/pyquery
+# Changes: https://github.com/gawel/pyquery/blob/master/CHANGES.rst
+pyquery==1.2.11 \
+    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
+    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
+
+# Better HTTP requests. Used to talk to GitHub, KumaScript, Akismet.
+# Used by the scraper and headless tests.
+# Code: https://github.com/requests/requests
+# Changes: https://github.com/requests/requests/blob/master/HISTORY.rst
+# Docs: http://docs.python-requests.org/en/master/
+requests==2.11.1 \
+    --hash=sha256:545c4855cd9d7c12671444326337013766f4eea6068c3f0307fb2dc2696d580e \
+    --hash=sha256:5acf980358283faba0b897c73959cecf8b841205bb4b2ad3ef545f46eae1a133

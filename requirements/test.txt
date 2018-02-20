@@ -1,6 +1,7 @@
 # Requirements to run functional tests
 
 -c constraints.txt
+-r default_and_test.txt
 
 # Implement bash brace expansion
 braceexpand==0.1.1 \
@@ -11,11 +12,6 @@ PyPOM==1.0 \
     --hash=sha256:a8728981970404c3c9a14efeb23da92191749a4a4ad489130fd855e4cf8f154e \
     --hash=sha256:5c98e3d8ef2c7f96c3365a3b8295560446f2447eecdcfe393a30abf2fcc16d96
 
-# Parse HTML with CSS selectors like jquery
-# TODO: Sync version with default.txt
-pyquery==1.2.11 \
-    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
-    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
 
 # Test plugin: Re-run flaky tests
 pytest-rerunfailures==2.1.0 \
@@ -24,8 +20,8 @@ pytest-rerunfailures==2.1.0 \
 
 # Test plugin: Run tests with selenium
 # Code: https://github.com/pytest-dev/pytest-selenium
+# Changes: http://pytest-selenium.readthedocs.io/en/latest/news.html
 # Docs: http://pytest-selenium.readthedocs.io/en/latest/index.html
-# Release Notes: http://pytest-selenium.readthedocs.io/en/latest/news.html
 pytest-selenium==1.11.4 \
     --hash=sha256:b66651fe7cbeee02b511f7b59f250ca77fcdb6024f193ca10da27d1d91240688 \
     --hash=sha256:9a0c48c434b538387ed6fa9d0c2f0b2e32f4fb71a4c41754df49be0aa4c64ae1
@@ -34,8 +30,3 @@ pytest-selenium==1.11.4 \
 pytest-xdist==1.16.0 \
     --hash=sha256:42e5a1e5da9d7cff3e74b07f8692598382f95624f234ff7e00a3b1237e0feba2
 
-# Better HTTP requests
-# TODO: Sync with default.txt
-requests==2.11.1 \
-    --hash=sha256:545c4855cd9d7c12671444326337013766f4eea6068c3f0307fb2dc2696d580e \
-    --hash=sha256:5acf980358283faba0b897c73959cecf8b841205bb4b2ad3ef545f46eae1a133

@@ -6,6 +6,7 @@ Kuma.  The files are:
 
 * ``constraints.txt`` - Requirements for our requirements.
 * ``default.txt`` - Requirements for production and deployment.
+* ``default_and_test.txt`` - Requirements production, deployment, and test.
 * ``docs.txt`` - Requirements for building docs in `Read the Docs`_.
 * ``dev.txt`` - Requirements for Docker or native development.
 * ``test.txt`` - Requirements to run functional tests.
