@@ -660,13 +660,14 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2018.04',
+    'VERSION': '2018.05',
     'BASE_DIR': ROOT,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
     # handles the extraction.
     'DOMAIN_METHODS': {
         'django': [
+            ('kumascript/node_modules/**', 'ignore'),
             ('kuma/**.py', 'python'),
             ('**/templates/**.html', 'django_babel.extract.extract_django'),
             ('**/jinja2/**.html', 'jinja2'),
@@ -675,6 +676,7 @@ PUENTE = {
         'javascript': [
             # We can't say **.js because that would dive into any libraries.
             ('kuma/static/js/*.js', 'javascript'),
+            ('kuma/static/js/components/**.js', 'javascript'),
             ('kuma/static/js/libs/ckeditor/source/plugins/mdn-**/*.js',
              'javascript'),
         ],
