@@ -24,7 +24,6 @@ from tidings.models import NotificationsMixin
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
-from kuma.search.decorators import register_live_index
 from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript
@@ -176,7 +175,6 @@ class DocumentAttachment(models.Model):
             )
 
 
-@register_live_index
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
     TOC_FILTERS = {

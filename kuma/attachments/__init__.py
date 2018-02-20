@@ -1,1 +1,1 @@
-default_app_config = 'kuma.attachments.apps.AttachmentsConfig'
+"""kuma.attachments handles user-uploaded page attachments."""

@@ -1,21 +1,26 @@
 import logging
 
 from django.conf import settings
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
+from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
+from kuma.wiki.signals import render_done
+from kuma.wiki.tasks import index_documents, unindex_documents
 
+from .models import Index
 
 log = logging.getLogger('kuma.search.signals')
 
 
-def render_done_handler(**kwargs):
-    if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
+@receiver(render_done, sender=Document,
+          dispatch_uid='search.render_done.live_indexing')
+def render_done_handler(instance, **kwargs):
+    if not settings.ES_LIVE_INDEX:
         return
 
-    from kuma.wiki.tasks import index_documents
-    from .models import Index
-
-    doc = kwargs['instance']
+    doc = instance
     if WikiDocumentType.should_update(doc):
         current_index = Index.objects.get_current()
         outdated = current_index.record_outdated(doc)
@@ -33,14 +38,13 @@ def render_done_handler(**kwargs):
                  doc.id, exc_info=True)
 
 
-def pre_delete_handler(**kwargs):
-    if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
+@receiver(pre_delete, sender=Document,
+          dispatch_uid='seach.pre_delete.live_indexing')
+def pre_delete_handler(instance, **kwargs):
+    if not settings.ES_LIVE_INDEX:
         return
 
-    from kuma.wiki.tasks import unindex_documents
-    from .models import Index
-
-    doc = kwargs['instance']
+    doc = instance
     current_index = Index.objects.get_current()
 
     if WikiDocumentType.should_update(doc):

@@ -27,7 +27,6 @@ from ..models import (Document, DocumentTag, Revision, RevisionIP,
                       TaggedDocument)
 from ..templatetags.jinja_helpers import absolutify
 from ..utils import tidy_content
-from ..signals import render_done
 
 
 class DocumentTests(UserTestCase):
@@ -676,17 +675,6 @@ class DeferredRenderingTests(UserTestCase):
 
         self.d1.render()
         ok_(mock_render_done.send.called)
-
-    @mock.patch('kuma.wiki.tasks.build_json_data_for_document')
-    def test_render_signal(self, build_json_task):
-        render_done.send(sender=Document, instance=self.d1)
-        ok_(build_json_task.delay.called)
-
-    @mock.patch('kuma.wiki.tasks.build_json_data_for_document')
-    def test_render_signal_doc_deleted(self, build_json_task):
-        self.d1.deleted = True
-        render_done.send(sender=Document, instance=self.d1)
-        ok_(not build_json_task.delay.called)
 
     @mock.patch('kuma.wiki.kumascript.get')
     @override_config(KUMASCRIPT_TIMEOUT=1.0)

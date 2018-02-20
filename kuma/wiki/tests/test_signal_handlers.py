@@ -1,6 +1,8 @@
+import mock
 import pytest
 
 from kuma.wiki.models import Revision, Document
+from kuma.wiki.signals import render_done
 
 
 @pytest.mark.tags
@@ -19,3 +21,18 @@ def test_on_document_save_signal_invalidated_tags_cache(root_doc, wiki_user):
     doc = Document.objects.get(id=root_doc.id)
 
     assert sorted(tags2) == doc.all_tags_name
+
+
+@mock.patch('kuma.wiki.signal_handlers.build_json_data_for_document')
+def test_render_signal(build_json_task, root_doc):
+    """The JSON is rebuilt when a Document is done rendering."""
+    render_done.send(sender=Document, instance=root_doc)
+    assert build_json_task.delay.called
+
+
+@mock.patch('kuma.wiki.signal_handlers.build_json_data_for_document')
+def test_render_signal_doc_deleted(build_json_task, root_doc):
+    """The JSON is not rebuilt when a deleted Document is done rendering."""
+    root_doc.deleted = True
+    render_done.send(sender=Document, instance=root_doc)
+    assert not build_json_task.delay.called
