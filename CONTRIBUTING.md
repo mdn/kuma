@@ -4,8 +4,8 @@ Things to know when contributing code
 * You agreed to follow the [Code of Conduct][coc].
 * Discuss large changes in [Discourse][discourse] or on a
   [bugzilla bug][mdn-backlog] before coding.
-* We don't accept pull requests for translated strings (i.e. Anything under
-  locale/). Please use [Pontoon][pontoon] instead.
+* We don't accept pull requests for translated strings (anything under
+  ``locale/``). Please use [Pontoon][pontoon] instead.
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
 [coc]: https://github.com/mozilla/kuma/blob/master/CODE_OF_CONDUCT.md
@@ -17,15 +17,17 @@ What to work on
 ===============
 The MDN platform is a mature product, which means there aren't always bugs that
 are suitable for new contributors. We keep a list of starting mentored bugs on
-the [MDN "Getting Involved" page](get-involved). There are interesting MDN
-projects outside of writing Python for the platform, but they may be harder
-to find. If you have questions about what to work on, you can ask:
+the [MDN "Getting Involved" page](get-involved). There are interesting
+[MDN projects][mdn-projects] outside of writing Python for the platform, but
+they may be harder to find. If you have questions about what to work on, you
+can ask:
 
 * In the #mdndev [IRC channel on irc.mozilla.org][irc-howto].
 * In the [MDN Topic][discourse] in Discourse.
 
 [get-involved]: https://wiki.mozilla.org/Webdev/GetInvolved/developer.mozilla.org#Mentored_Bugs
 [irc-howto]: https://wiki.mozilla.org/Irc
+[MDN projects]: https://github.com/mdn
 
 How to submit code
 ==================
@@ -65,12 +67,12 @@ of PEP8 is checked by ``flake8`` (``make lint``). Other PEP8
 and [PEP257][pep257] (docstring) conventions are encouraged but not yet
 enforced.
 
-In Python code, we prefer 'single quotes' for code strings and
-"""triple double-quotes""" for docstrings. There are other style conventions
-(such as import statement order and indenting) which can be determined by
-reading existing code.
+In Python code, we prefer ``'single quotes'`` for code strings and
+``"""triple double-quotes"""`` for docstrings. There are other style
+conventions (such as import statement order and indenting) which can be
+determined by reading existing code.
 
-Similar standards are enforced for front-end assets like CSS (in Stylus) and
+Similar standards are enforced for front-end assets like CSS and
 JavaScript. Some are checked by tools, and other by code review.
 
 [pep8]: http://www.python.org/dev/peps/pep-0008/
@@ -97,7 +99,7 @@ Some bad branch names:
 
 Exceptions are branches used in the deployment process, such as
 ``stage-push`` and ``prod-push``, and submodule update branches, such as
-``pre-push-2018-02-21``, which have the date in the branch name.
+``pre-push-2018-02-21``.
 
 In general, we prefer branches are stored on a fork, rather than the origin
 repository. There are exceptions, such as the ``stage-push`` and
@@ -124,9 +126,9 @@ be kept separate.
 All commit messages must start with ``bug NNNNNNN``. This format makes it
 easier to consume the commit log and get back to the Bugzilla bug.  Bugzilla
 is where proposed changes are discussed, where one or more related changes are
-linked, and where regressions are tracked.  We do make exceptions for non-code
-commits such as merge commits, submodule updates, and updating translatable
-strings.
+linked, and where regressions are tracked.  We sometimes omit a bug or bug
+number for non-code commits such as merge commits, submodule updates, and
+updating translatable strings.
 
 ``fix bug NNNNNNN`` can also be used. When these commits are merged, the bug is
 marked RESOLVED: FIXED. ``fix bug`` can be used when merging will fix the
@@ -184,16 +186,16 @@ style.  MDN staff is updating tests as we add or update functionality, so
 seldom-updated code is more likely to have old-style tests. We expect a full
 conversion to take a few more years.
 
-We avoid old-style tests that use Django's
+We **avoid** old-style tests that use Django's
 [TestCase testing classes][testcase], [fixture files][fixture_files],
 test functions [``eq_``][eq] and [``ok_``][ok], and general-purpose factory
 functions like [get_user][get_user], [document][document], and
 [revision][revision].
 
-We prefer test functions, a small number of global
+We **prefer** test functions, a small number of global
 [pytest fixtures][pytest-fixtures] like [root_doc][root_doc] and
 [wiki_user][wiki_user], adding application- and file-local fixtures
-that extend the global fixtures, and using [assert][assert] for test
+that customize the global fixtures, and using [assert][assert] for test
 assertions.
 
 [travisci]: https://travis-ci.org/mozilla/kuma/pull_requests
@@ -214,7 +216,7 @@ assertions.
 We have a functional test suite that runs against a running MDN instance.
 It can be challenging to run or alter these tests. A reviewer can determine if
 changes are needed to functional tests, and if they need to be included in the
-pull request or can be done (usually by staff) in a new PR.
+pull request or can be written (usually by staff) in a new PR.
 
 Pull Requests
 -------------
@@ -246,6 +248,8 @@ often know when a change will have a wider than expected impact. In an
 emergency, code may be merged without review, but a bug should be filed for a
 follow-up review. There may also be exceptions for changes that don't impact
 production.
+
+[peers]: https://wiki.mozilla.org/Modules/All#MDN
 
 Pull requests that modify the database must be reviewed by a module owner.
 Changes to database tables are critical and may lead to loss of data. They are
