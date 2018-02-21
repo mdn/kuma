@@ -27,7 +27,11 @@ Development
 ===========
 
 :Code:          https://github.com/mozilla/kuma
-:Issues:        http://mzl.la/mdn_backlog (Product)
+:Issues:        `P1 Bugs`_ (to be fixed in 90 days)
+
+                `P2 Bugs`_ (to be fixed in 180 days)
+
+                `All developer.mozilla.org bugs`_
 
                 `Pull Request Queues`_
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
@@ -42,6 +46,9 @@ Development
 
                 https://developer.mozilla.org/ (prod)
 
+.. _`P1 Bugs`: https://mzl.la/2BGZy44
+.. _`P2 Bugs`: https://mzl.la/2oniZa3
+.. _`All developer.mozilla.org bugs`: https://mzl.la/2onLvZ8
 .. _`Pull Request Queues`: http://prs.mozilla.io/mozilla:kuma,kuma-lib,kumascript,mozhacks
 .. _`What's Deployed on MDN?`: https://whatsdeployed.io/s-NyD
 
