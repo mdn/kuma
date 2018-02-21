@@ -2,6 +2,7 @@
 # environments
 
 -c constraints.txt
+-r default_and_test.txt
 
 # Sanitize HTML with a whitelist
 bleach==2.1.1 \
@@ -220,12 +221,6 @@ puente==0.4.1 \
     --hash=sha256:bc5ee85521127577d23430832e2f827686efdb7ce95b232f54fbeb5b9166397c \
     --hash=sha256:84f769c0ea607829c77bd8b3d6d6fbc16589cd7a5d4e5023f717cd3d5de54473
 
-# Parse HTML with CSS selectors like jquery, in prod and in tests
-# TODO: Sync version with test.txt
-pyquery==1.2.11 \
-    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
-    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
-
 # Translate environment variables into native Python types
 python-decouple==3.0 \
     --hash=sha256:99834c9ff7ce5c5b2f4a18bc0880753e54ea3aaabc3cfb16961a92d5046665df
@@ -248,12 +243,6 @@ raven==6.2.1 \
 redis==2.10.5 \
     --hash=sha256:97156b37d7cda4e7d8658be1148c983984e1a975090ba458cc7e244025191dbd \
     --hash=sha256:5dfbae6acfc54edf0a7a415b99e0b21c0a3c27a7f787b292eea727b1facc5533
-
-# Better HTTP requests
-# TODO: Sync version with test.txt
-requests==2.9.1 \
-    --hash=sha256:113fbba5531a9e34945b7d36b33a084e8ba5d0664b703c81a7c572d91919a5b8 \
-    --hash=sha256:c577815dd00f1394203fc44eb979724b098f88264a9ef898ee45b8e5e9cf587f
 
 # Mock HTTP requests for tests
 requests-mock==0.7.0 \
