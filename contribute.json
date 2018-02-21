@@ -20,10 +20,10 @@
         ]
     },
     "bugs": {
-        "list": "https://bugzilla.mozilla.org/buglist.cgi?list_id=11220394&query_format=advanced&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=REOPENED&product=Mozilla%20Developer%20Network",
+        "list": "https://mzl.la/2onLvZ8",
         "report": "https://bugzilla.mozilla.org/form.mdn",
-        "mentored": "https://bugzilla.mozilla.org/buglist.cgi?o1=isnotempty&f1=bug_mentor&resolution=---&product=Mozilla%20Developer%20Network",
-        "goodfirstbug": "https://bugzilla.mozilla.org/buglist.cgi?resolution=---&product=Mozilla%20Developer%20Network&status_whiteboard=[good%20first%20bug]&status_whiteboard_type=allwordssubstr"
+        "mentored": "https://mzl.la/2BFx4Ie",
+        "goodfirstbug": "https://mzl.la/2ojEGaW"
     },
     "urls": {
         "prod": "https://developer.mozilla.org/",

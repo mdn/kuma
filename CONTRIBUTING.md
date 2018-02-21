@@ -13,7 +13,7 @@ Things to know when contributing code
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
 [discourse]: https://discourse.mozilla.org/c/mdn
-[mdn-backlog]: http://mzl.la/mdn_backlog
+[mdn-backlog]: https://mzl.la/2onLvZ8
 [pep8]: http://www.python.org/dev/peps/pep-0008/
 [pontoon]: https://pontoon.mozilla.org/projects/mdn/
 
