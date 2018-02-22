@@ -1,42 +1,40 @@
 # -*- coding: utf-8 -*-
+from urllib import urlencode
+from urlparse import parse_qs
 import datetime
 import HTMLParser
 import json
-from urllib import urlencode
-from urlparse import parse_qs
 
-import mock
-import pytest
-import requests_mock
 from constance.test import override_config
 from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
+import mock
+import pytest
+import requests_mock
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
-from kuma.spam.akismet import Akismet
 from kuma.spam.constants import (
-    SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL)
+    SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase, user
 
-from . import (WikiTestCase, create_document_editor_user, create_document_tree,
+from . import (create_document_editor_user, create_document_tree,
                document, make_translation, new_document_data, normalize_html,
-               revision)
+               revision, WikiTestCase)
+from .conftest import ks_toolbox
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, DocumentDeletionLog, DocumentZone,
-                      Revision, RevisionAkismetSubmission, RevisionIP)
+                      Revision, RevisionIP)
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
-from .conftest import ks_toolbox
 
 
 class RedirectTests(UserTestCase, WikiTestCase):
@@ -3323,140 +3321,3 @@ def test_zone_styles(client, doc_hierarchy_with_zones):
     )
     response = client.get(url, follow=True)
     assert response.status_code == 404
-
-
-@pytest.mark.spam
-class AkismetRevisionTests(UserTestCase, WikiTestCase):
-    """ Test the Akismet Submission view"""
-
-    def setUp(self):
-        super(AkismetRevisionTests, self).setUp()
-        self.user = user(save=True)
-        self.revision = revision(save=True)
-
-    def test_submit_akismet_spam_post_required(self):
-        url = reverse('wiki.submit_akismet_spam', locale='en-US')
-        response = self.client.get(url)
-        eq_(response.status_code, 405, "GET should not be allowed.")
-
-    @override_config(AKISMET_KEY='dashboard')
-    @requests_mock.mock()
-    def test_submit_akismet_spam_valid_response(self, mock_requests):
-        r = self.revision
-        data = {
-            'revision': r.id,
-        }
-
-        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-        p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
-        testuser = self.user
-        testuser.user_permissions.add(p1)
-
-        self.client.login(username=testuser.username, password='password')
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
-
-        # Response should be a json object with status code http 201
-        urlpost = reverse('wiki.submit_akismet_spam', locale='en-US')
-        response = self.client.post(urlpost, data=data)
-        eq_(response.status_code, 201)
-
-        # 1 RevisionAkismetSubmission record should exist for this revision
-        ras = RevisionAkismetSubmission.objects.get(revision=r)
-        eq_(ras.type, u'spam')
-
-        # Akismet endpoints were called
-        ok_(mock_requests.called)
-        eq_(mock_requests.call_count, 2)
-
-        # Check response json object
-        res_data = json.loads(response.content)
-        eq_(len(res_data), 1)
-        # Check the sender username and type are correct
-        obj = res_data[0]
-        eq_(testuser.username, obj['sender'])
-        eq_(u'spam', obj['type'])
-
-    def test_submit_akismet_spam_with_many_response(self):
-        bulk_obj = []
-        rev = self.revision
-        p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
-        # Create 10 Akismet Revisions
-        for i in range(10):
-            testuser = user(save=True)
-            r = RevisionAkismetSubmission(sender=testuser, type="spam", revision=rev)
-            bulk_obj.append(r)
-        RevisionAkismetSubmission.objects.bulk_create(bulk_obj)
-
-        # Check 10 Akismet revision is present there
-        ras = RevisionAkismetSubmission.objects.filter(revision=rev)
-        eq_(ras.count(), 10)
-
-        testuser = self.user
-        testuser.user_permissions.add(p1)
-        self.client.login(username=testuser.username, password='password')
-        data = {
-            'revision': rev.id,
-        }
-        # Create another Akismet revision from the views
-        urlpost = reverse('wiki.submit_akismet_spam', locale='en-US')
-        response = self.client.post(urlpost, data=data)
-        eq_(response.status_code, 201)
-
-        # Make a list of dictionaries containg the akismet revision data
-        dict_list = [{"sender": obj.sender.username, "type": obj.type} for obj in bulk_obj]
-        dict_list.append({"sender": testuser.username, "type": "spam"})
-
-        response_dict = json.loads(response.content)
-        # There should be 11 dictionaries present in the response object.
-        # 10 from Modelmakers, one from views request
-        eq_(len(response_dict), 11)
-        # Remove the *sent* keys from the dictionaries of response
-        for dict in response_dict:
-            del dict["sent"]
-
-        # Check the response json object is ordered according to id.
-        for i in range(len(dict_list)):
-            eq_(response_dict[i], dict_list[i])
-
-    def test_submit_akismet_spam_no_permission(self):
-        r = self.revision
-        data = {
-            'revision': r.id,
-        }
-
-        testuser = self.user
-        self.client.login(username=testuser.username, password='password')
-
-        # Response should retrun http 405 if permission is not present
-        urlpost = reverse('wiki.submit_akismet_spam', locale='en-US')
-        response = self.client.post(urlpost, data=data, follow=True)
-        eq_(response.status_code, 405)
-
-        # No RevisionAkismetSubmission record should exist, user does not have permission
-        ras = RevisionAkismetSubmission.objects.filter(revision=r)
-        eq_(ras.count(), 0)
-
-    def test_submit_akismet_spam_revision_dne(self):
-        r = self.revision
-        revision_dne = r.id
-        # Delete the revision so it does not exist anymore
-        r.delete()
-        data = {
-            'revision': revision_dne,
-        }
-
-        p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
-        testuser = self.user
-        testuser.user_permissions.add(p1)
-
-        self.client.login(username=testuser.username, password='password')
-
-        # Response should return http 400 as its a bad object
-        urlpost = reverse('wiki.submit_akismet_spam', locale='en-US')
-        response = self.client.post(urlpost, data=data)
-        eq_(response.status_code, 400)
-
-        # Zero RevisionAkismetSubmission records should exist for this nonexistent revision
-        ras = RevisionAkismetSubmission.objects.filter(revision_id=revision_dne)
-        eq_(ras.count(), 0)

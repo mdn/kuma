@@ -43,7 +43,6 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     assert response['Vary'] == 'Accept-Encoding'
     assert 'Last-Modified' not in response
     assert 'ETag' in response
-    assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
     assert response.content.startswith('<!DOCTYPE html>')
@@ -86,9 +85,10 @@ def test_code_sample_host_restriction(code_sample_doc, constance_config,
     response = client.get(url, HTTP_HOST='testserver')
     assert response.status_code == 403
     assert 'Last-Modified' not in response
-    assert 'Cache-Control' not in response
     response = client.get(url, HTTP_HOST='sampleserver')
     assert response.status_code == 200
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=86400' in response['Cache-Control']
 
 
 def test_raw_code_sample_file(code_sample_doc, constance_config,
@@ -132,6 +132,8 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     response = admin_client.get(sample_url)
     assert response.status_code == 200
     assert url_css in response.content
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=86400' in response['Cache-Control']
 
     # Getting the URL redirects to the attachment
     file_url = reverse('wiki.raw_code_sample_file', locale='en-US',

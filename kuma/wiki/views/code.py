@@ -15,11 +15,11 @@ from ..decorators import process_document_path, allow_CORS_GET
 from ..models import Document
 
 
+@cache_control(public=True, max_age=60 * 60 * 24)
 @require_GET
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
-@cache_control(public=True, max_age=60 * 60 * 24)
 def code_sample(request, document_slug, document_locale, sample_name):
     """
     Extract a code sample from a document and render it as a standalone
@@ -38,11 +38,11 @@ def code_sample(request, document_slug, document_locale, sample_name):
     return render(request, 'wiki/code_sample.html', data)
 
 
+@cache_control(public=True, max_age=60 * 60 * 24 * 5)
 @require_GET
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
-@cache_control(public=True, max_age=60 * 60 * 24 * 5)
 def raw_code_sample_file(request, document_slug, document_locale,
                          sample_name, attachment_id, filename):
     """
