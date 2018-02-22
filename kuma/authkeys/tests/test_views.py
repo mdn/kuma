@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 
-from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import user
 
@@ -59,47 +58,59 @@ class KeyViewsTest(RefetchingUserTestCase):
 
         # Check out the creation page, look for the form.
         resp = self.client.get(url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
-        eq_(1, page.find('form.key').length)
+        assert page.find('form.key').length == 1
 
         # We don't have this key yet, right?
         keys = Key.objects.filter(description=data['description'])
-        eq_(0, keys.count())
+        assert keys.count() == 0
 
         # Okay, create it.
         resp = self.client.post(url, data, follow=False)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # We have the key now, right?
         keys = Key.objects.filter(description=data['description'])
-        eq_(1, keys.count())
+        assert keys.count() == 1
 
         # Okay, and it should belong to the logged-in user
         key = keys[0]
-        eq_(key.user, self.user)
+        assert key.user == self.user
 
         # Take a look at the description and key shown on the result page.
         page = pq(resp.content)
-        ok_(data['description'], page.find('.key .description').text())
-        ok_(key.key, page.find('.key .key').text())
+        assert page.find('.key .description').text() == data['description']
+        assert page.find('.key .key').text() == key.key
 
         # Ensure the secret on the page checks out.
         secret = page.find('.key .secret').text()
-        ok_(key.check_secret(secret))
+        assert key.check_secret(secret)
 
     def test_list_key(self):
         """The current user's keys should be shown, but only that user's"""
         url = reverse('authkeys.list', locale='en-US')
         resp = self.client.get(url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         for ct, key in ((1, self.key1), (1, self.key2), (0, self.key3)):
             key_row = page.find('.option-list #key-%s' % key.pk)
-            eq_(ct, key_row.length)
+            assert key_row.length == ct
             if ct > 0:
-                eq_(key.description, key_row.find('.description').text())
+                assert key_row.find('.description').text() == key.description
 
     def test_key_history(self):
         # Assemble some sample log lines
@@ -119,7 +130,11 @@ class KeyViewsTest(RefetchingUserTestCase):
             url = '%s%s' % (reverse('authkeys.history', args=(self.key1.pk,),
                                     locale='en-US'), qs)
             resp = self.client.get(url)
-            eq_(200, resp.status_code)
+            assert resp.status_code == 200
+            assert 'max-age=0' in resp['Cache-Control']
+            assert 'no-cache' in resp['Cache-Control']
+            assert 'no-store' in resp['Cache-Control']
+            assert 'must-revalidate' in resp['Cache-Control']
             page = pq(resp.content)
 
             rows = page.find('.item')
@@ -129,32 +144,48 @@ class KeyViewsTest(RefetchingUserTestCase):
                 line = (row.find('.action').text(),
                         row.find('.object').text(),
                         row.find('.notes').text())
-                eq_(expected[0], line[0])
-                ok_('%s' % expected[1] in line[1])
-                eq_(expected[2], line[2])
+                assert line[0] == expected[0]
+                assert ('%s' % expected[1]) in line[1]
+                assert line[2] == expected[2]
 
     def test_delete_key(self):
         """User should be able to delete own keys, but no one else's"""
         url = reverse('authkeys.delete', args=(self.key3.pk,),
                       locale='en-US')
-        resp = self.client.get(url, follow=True)
-        eq_(403, resp.status_code)
+        resp = self.client.get(url)
+        assert resp.status_code == 403
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         resp = self.client.post(url, follow=False)
-        ok_(403, resp.status_code)
+        assert resp.status_code == 403
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         url = reverse('authkeys.delete', args=(self.key1.pk,),
                       locale='en-US')
-        resp = self.client.get(url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         page = pq(resp.content)
-        eq_(self.key1.description, page.find('.description').text())
+        assert page.find('.description').text() == self.key1.description
 
         resp = self.client.post(url, follow=False)
-        ok_(302, resp.status_code)
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
-        eq_(0, Key.objects.filter(pk=self.key1.pk).count())
+        assert Key.objects.filter(pk=self.key1.pk).count() == 0
 
 
 class KeyViewsPermissionTest(RefetchingUserTestCase):
@@ -171,14 +202,22 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
     def test_new_key_requires_permission(self):
         url = reverse('authkeys.new', locale='en-US')
         resp = self.client.get(url)
-        eq_(403, resp.status_code)
+        assert resp.status_code == 403
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         perm = Permission.objects.get(codename='add_key')
         self.user.user_permissions.add(perm)
         self._cache_bust_user_perms()
 
         resp = self.client.get(url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
     def test_delete_key_requires_separate_permission(self):
         self.key1 = Key(user=self.user, description='Test Key 1')
@@ -186,15 +225,27 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
 
         url = reverse('authkeys.delete', locale='en-US', args=(self.key1.pk,))
         resp = self.client.get(url)
-        eq_(403, resp.status_code)
+        assert resp.status_code == 403
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         self._cache_bust_user_perms()
 
         resp = self.client.get(url)
-        eq_(403, resp.status_code)
+        assert resp.status_code == 403
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         perm = Permission.objects.get(codename='delete_key')
         self.user.user_permissions.add(perm)
         self._cache_bust_user_perms()
 
         resp = self.client.get(url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']

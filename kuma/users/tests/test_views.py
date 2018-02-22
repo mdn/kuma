@@ -8,6 +8,7 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.core import mail
 from django.db import IntegrityError
 from django.http import Http404
@@ -16,7 +17,6 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag
 from pytz import timezone, utc
 
-from kuma.core.tests import eq_, ok_, KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
@@ -31,15 +31,26 @@ from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
 
-TESTUSER_PASSWORD = 'testpass'
+@pytest.fixture
+def wiki_user_github_account(wiki_user):
+    return SocialAccount.objects.create(
+        user=wiki_user,
+        provider='github',
+        extra_data=dict(
+            email=wiki_user.email,
+            html_url="https://github.com/{}".format(wiki_user.username)
+        )
+    )
 
 
-class OldProfileTestCase(UserTestCase):
-    localizing_client = True
+@pytest.fixture
+def beta_testers_group(db):
+    return Group.objects.create(name='Beta Testers')
 
-    def test_old_profile_url_gone(self):
-        response = self.client.get('/users/edit', follow=True)
-        eq_(404, response.status_code)
+
+def test_old_profile_url_gone(db, client):
+    response = client.get('/users/edit', follow=True)
+    assert response.status_code == 404
 
 
 @pytest.mark.bans
@@ -54,20 +65,28 @@ class BanTestCase(UserTestCase):
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
                           password='testpass')
-        ban_url = reverse('users.ban_user',
+        ban_url = reverse('users.ban_user', locale='en-US',
                           kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
-        eq_(302, resp.status_code)
-        ok_(str(settings.LOGIN_URL) in resp['Location'])
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        assert str(settings.LOGIN_URL) in resp['Location']
         self.client.logout()
 
         # admin has ban permission, can ban.
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_user',
+        ban_url = reverse('users.ban_user', locale='en-US',
                           kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
     def test_ban_view(self):
         testuser = self.user_model.objects.get(username='testuser')
@@ -80,16 +99,20 @@ class BanTestCase(UserTestCase):
                           kwargs={'username': testuser.username})
 
         resp = self.client.post(ban_url, data)
-        eq_(302, resp.status_code)
-        ok_(testuser.get_absolute_url() in resp['Location'])
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        assert testuser.get_absolute_url() in resp['Location']
 
         testuser_banned = self.user_model.objects.get(username='testuser')
-        ok_(not testuser_banned.is_active)
+        assert not testuser_banned.is_active
 
         bans = UserBan.objects.filter(user=testuser,
                                       by=admin,
                                       reason='Banned by unit test.')
-        ok_(bans.count())
+        assert bans.count()
 
     def test_ban_nonexistent_user(self):
         # Attempting to ban a non-existent user should 404
@@ -103,12 +126,16 @@ class BanTestCase(UserTestCase):
                           kwargs={'username': nonexistent_username})
 
         resp = self.client.post(ban_url, data)
-        eq_(404, resp.status_code)
+        assert resp.status_code == 404
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         bans = UserBan.objects.filter(user__username=nonexistent_username,
                                       by=admin,
                                       reason='Banned by unit test.')
-        eq_(bans.count(), 0)
+        assert bans.count() == 0
 
     def test_ban_without_reason(self):
         # Attempting to ban without a reason should return the form
@@ -117,38 +144,49 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        ban_url = reverse('users.ban_user',
+        ban_url = reverse('users.ban_user', locale='en-US',
                           kwargs={'username': testuser.username})
 
         # POST without data kwargs
         resp = self.client.post(ban_url)
-
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         bans = UserBan.objects.filter(user=testuser,
                                       by=admin,
                                       reason='Banned by unit test.')
-        eq_(bans.count(), 0)
+        assert bans.count() == 0
 
         # POST with a blank reason
         data = {'reason': ''}
         resp = self.client.post(ban_url, data)
-
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         bans = UserBan.objects.filter(user=testuser,
                                       by=admin,
                                       reason='Banned by unit test.')
-        eq_(bans.count(), 0)
+        assert bans.count() == 0
 
     def test_bug_811751_banned_user(self):
         """A banned user should not be viewable"""
         testuser = self.user_model.objects.get(username='testuser')
-        url = reverse('users.user_detail', args=(testuser.username,))
+        url = reverse('users.user_detail', locale='en-US',
+                      args=(testuser.username,))
 
         # User viewable if not banned
-        response = self.client.get(url, follow=True)
-        self.assertNotEqual(response.status_code, 403)
+        response = self.client.get(url)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
         # Ban User
         admin = self.user_model.objects.get(username='admin')
@@ -158,13 +196,21 @@ class BanTestCase(UserTestCase):
                                is_active=True)
 
         # User not viewable if banned
-        response = self.client.get(url, follow=True)
-        self.assertEqual(response.status_code, 404)
+        response = self.client.get(url)
+        assert response.status_code == 404
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
         # Admin can view banned user
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(url, follow=True)
-        self.assertNotEqual(response.status_code, 404)
+        response = self.client.get(url)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
     def test_get_ban_user_view(self):
         # For an unbanned user get the ban_user view
@@ -176,15 +222,23 @@ class BanTestCase(UserTestCase):
                           kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # For a banned user redirect to user detail page
         UserBan.objects.create(user=testuser, by=admin,
                                reason='Banned by unit test.',
                                is_active=True)
         resp = self.client.get(ban_url)
-        eq_(302, resp.status_code)
-        ok_(testuser.get_absolute_url() in resp['Location'])
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        assert testuser.get_absolute_url() in resp['Location']
 
 
 @pytest.mark.bans
@@ -199,20 +253,28 @@ class BanAndCleanupTestCase(UserTestCase):
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
                           password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
-        eq_(302, resp.status_code)
-        ok_(str(settings.LOGIN_URL) in resp['Location'])
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        assert str(settings.LOGIN_URL) in resp['Location']
         self.client.logout()
 
         # admin has ban permission, can ban.
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
     def test_ban_nonexistent_user(self):
         """GETs to ban_user_and_cleanup for nonexistent user return 404."""
@@ -225,7 +287,11 @@ class BanAndCleanupTestCase(UserTestCase):
                           kwargs={'username': testuser.username})
         testuser.delete()
         resp = self.client.get(ban_url)
-        eq_(404, resp.status_code)
+        assert resp.status_code == 404
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
 
 @pytest.mark.bans
@@ -258,14 +324,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # Trying to delete a document that is None will fail without error.
         success = delete_document(request, None)
-        self.assertFalse(success)
+        assert not success
 
         # Calling on a real document deletes the document and creates the log object
-        self.assertFalse(DocumentDeletionLog.objects.exists())
+        assert not DocumentDeletionLog.objects.exists()
         success = delete_document(request, self.document)
-        self.assertTrue(success)
-        self.assertFalse(Document.objects.filter(id=self.document.id).exists())
-        self.assertTrue(DocumentDeletionLog.objects.exists())
+        assert success
+        assert not Document.objects.filter(id=self.document.id).exists()
+        assert DocumentDeletionLog.objects.exists()
 
     def test_revert_document(self):
         factory = RequestFactory()
@@ -280,14 +346,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revision_id = revisions_created[0].id
 
         # Reverting a non-existent rev raises a 404
-        with self.assertRaises(Http404):
+        with pytest.raises(Http404):
             revert_document(request, revision_id + 1)
 
         # Reverting an existing rev succeeds
         success = revert_document(request, revision_id)
-        self.assertTrue(success)
+        assert success
         self.document.refresh_from_db(fields=['current_revision'])
-        self.assertNotEqual(revision_id, self.document.current_revision.id)
+        assert self.document.current_revision.id != revision_id
 
         # If an IntegrityError is raised when we try to revert, it fails without error.
         revision_id = self.document.current_revision.id
@@ -296,33 +362,45 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             datetime_mock.now.side_effect = IntegrityError()
 
             success = revert_document(request, revision_id)
-        self.assertFalse(success)
+        assert not success
         self.document.refresh_from_db(fields=['current_revision'])
-        self.assertEqual(revision_id, self.document.current_revision.id)
+        assert self.document.current_revision.id == revision_id
 
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
         self.testuser.delete()
         resp = self.client.post(self.ban_testuser_url)
-        eq_(404, resp.status_code)
+        assert resp.status_code == 404
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
     def test_post_returns_summary_page(self):
         """POSTing to ban_user_and_cleanup returns the summary page."""
         resp = self.client.post(self.ban_testuser_url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
     def test_post_bans_user(self):
         """POSTing to the ban_user_and_cleanup bans user for "spam" reason."""
         resp = self.client.post(self.ban_testuser_url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         testuser_banned = self.user_model.objects.get(username='testuser')
-        ok_(not testuser_banned.is_active)
+        assert not testuser_banned.is_active
 
         bans = UserBan.objects.filter(user=self.testuser,
                                       by=self.admin,
                                       reason='Spam')
-        ok_(bans.count())
+        assert bans.count()
 
     def test_post_banned_user(self):
         """POSTing to ban_user_and_cleanup for a banned user updates UserBan."""
@@ -331,17 +409,21 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                                is_active=True)
 
         resp = self.client.post(self.ban_testuser_url)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
-        ok_(not self.testuser.is_active)
+        assert not self.testuser.is_active
 
         bans = UserBan.objects.filter(user=self.testuser)
 
         # Assert that the ban exists, and 'by' and 'reason' fields are updated
-        ok_(bans.count())
-        eq_(bans.first().is_active, True)
-        eq_(bans.first().by, self.admin)
-        eq_(bans.first().reason, 'Spam')
+        assert bans.count()
+        assert bans.first().is_active
+        assert bans.first().by == self.admin
+        assert bans.first().reason == 'Spam'
 
     @override_config(AKISMET_KEY='dashboard')
     @requests_mock.mock()
@@ -360,16 +442,20 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # The request
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # All of self.testuser's revisions have been submitted
         testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
-        eq_(testuser_submissions.count(), num_revisions)
+        assert testuser_submissions.count() == num_revisions
         for submission in testuser_submissions:
-            ok_(submission.revision in revisions_created)
+            assert submission.revision in revisions_created
         # Akismet endpoints were called twice for each revision
-        ok_(mock_requests.called)
-        eq_(mock_requests.call_count, 2 * num_revisions)
+        assert mock_requests.called
+        assert mock_requests.call_count == 2 * num_revisions
 
     @override_config(AKISMET_KEY='dashboard')
     @requests_mock.mock()
@@ -382,10 +468,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': []}
 
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # Akismet endpoints were not called
-        eq_(mock_requests.call_count, 0)
+        assert mock_requests.call_count == 0
 
     @override_config(AKISMET_KEY='dashboard')
     @requests_mock.mock()
@@ -405,14 +495,18 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': []}
 
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # No revisions submitted for self.testuser, since no revisions were selected
         testuser_submissions = RevisionAkismetSubmission.objects.filter(
             revision__creator=self.testuser.id)
-        eq_(testuser_submissions.count(), 0)
+        assert testuser_submissions.count() == 0
         # Akismet endpoints were not called
-        eq_(mock_requests.call_count, 0)
+        assert mock_requests.call_count == 0
 
     @override_config(AKISMET_KEY='dashboard')
     @requests_mock.mock()
@@ -432,15 +526,19 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in revisions_created]}
 
         resp = self.client.post(self.ban_testuser2_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # No revisions submitted for self.testuser2, since revisions in the POST
         # were made by self.testuser
         testuser2_submissions = RevisionAkismetSubmission.objects.filter(
             revision__creator=self.testuser2.id)
-        eq_(testuser2_submissions.count(), 0)
+        assert testuser2_submissions.count() == 0
         # Akismet endpoints were not called
-        eq_(mock_requests.call_count, 0)
+        assert mock_requests.call_count == 0
 
     def test_post_deletes_new_page(self):
         """POSTing to ban_user_and_cleanup url with a new document."""
@@ -458,11 +556,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # Test that the document was deleted successfully
         deleted_doc = Document.admin_objects.filter(pk=new_document.pk).first()
-        eq_(deleted_doc.deleted, True)
+        assert deleted_doc.deleted
 
     def test_post_reverts_page(self):
         """POSTing to ban_user_and_cleanup url with revisions to a document."""
@@ -482,9 +584,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # Before we send in the spam,
         # last spam_revisions[] should be the current revision
-        eq_(new_document.current_revision.id, spam_revisions[2].id)
+        assert new_document.current_revision.id == spam_revisions[2].id
         # and testuser is the creator of this current revision
-        eq_(new_document.current_revision.creator, self.testuser)
+        assert new_document.current_revision.creator == self.testuser
 
         # Pass in all spam revisions, each should be reverted then the
         # document should return to the original revision
@@ -492,19 +594,23 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         new_document = Document.objects.filter(id=new_document.id).first()
         # Make sure that the current revision is not the spam revision
         for revision in spam_revisions:
-            ok_(revision.id != new_document.current_revision.id)
+            assert revision.id != new_document.current_revision.id
         # The most recent Revision object should be the document's current revision
         latest_revision = Revision.objects.order_by('-id').first()
-        eq_(new_document.current_revision.id, latest_revision.id)
+        assert new_document.current_revision.id == latest_revision.id
         # Admin is the creator of this current revision
-        eq_(new_document.current_revision.creator, self.admin)
+        assert new_document.current_revision.creator == self.admin
         # The new revision's content is the same as the original's
-        eq_(new_document.current_revision.content, original_content)
+        assert new_document.current_revision.content == original_content
 
     def test_post_one_reverts_one_does_not_revert(self):
         """POSTing to ban_user_and_cleanup url with revisions to 2 documents."""
@@ -538,28 +644,32 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # Document A: No changes should have been made
         new_document_a = Document.objects.filter(id=new_document_a.id).first()
-        eq_(new_document_a.current_revision.id, safe_revision_a[0].id)
+        assert new_document_a.current_revision.id == safe_revision_a[0].id
         revisions_a = Revision.objects.filter(document=new_document_a)
-        eq_(revisions_a.count(), 5)  # Total of 5 revisions, no new revisions were made
+        assert revisions_a.count() == 5  # Total of 5 revisions, no new revisions were made
 
         # Document B: Make sure that the current revision is not the spam revision
         new_document_b = Document.objects.filter(id=new_document_b.id).first()
         for revision in spam_revisions_b:
-            ok_(revision.id != new_document_b.current_revision.id)
+            assert revision.id != new_document_b.current_revision.id
         # The most recent Revision for this document
         # should be the document's current revision
         latest_revision_b = Revision.objects.filter(
             document=new_document_b).order_by('-id').first()
-        eq_(new_document_b.current_revision.id, latest_revision_b.id)
+        assert new_document_b.current_revision.id == latest_revision_b.id
         # Admin is the creator of this current revision
-        eq_(new_document_b.current_revision.creator, self.admin)
+        assert new_document_b.current_revision.creator == self.admin
         revisions_b = Revision.objects.filter(document=new_document_b)
         # 5 total revisions on B = 1 initial + 3 spam revisions + 1 new reverted revision
-        eq_(revisions_b.count(), 5)
+        assert revisions_b.count() == 5
 
     def test_current_rev_is_non_spam(self):
         new_document = create_document(save=True)
@@ -579,13 +689,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # No changes should have been made to the document
         new_document = Document.objects.get(id=new_document.id)
-        eq_(new_document.current_revision.id, safe_revision[0].id)
+        assert new_document.current_revision.id == safe_revision[0].id
         revisions = Revision.objects.filter(document=new_document)
-        eq_(revisions.count(), 5)  # Total of 5 revisions, no new revisions were made
+        assert revisions.count() == 5  # Total of 5 revisions, no new revisions were made
 
     def test_intermediate_non_spam_rev(self):
         new_document = create_document(save=True)
@@ -613,22 +727,25 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # The document should be reverted to the last good revision
         new_document = Document.objects.get(id=new_document.id)
 
         # Make sure that the current revision is not either of the spam revisions
         for revision in spam_revision1 + spam_revision2:
-            ok_(revision.id != new_document.current_revision.id)
+            assert revision.id != new_document.current_revision.id
 
         # And that it did actually revert
-        ok_(new_document.current_revision.id != safe_revision[0].id)
+        assert new_document.current_revision.id != safe_revision[0].id
 
         revisions = Revision.objects.filter(document=new_document)
-        eq_(revisions.count(), 5)  # Total of 5 revisions, a new revision was made
-
-        eq_(new_document.current_revision.content, "Safe")
+        assert revisions.count() == 5  # Total of 5 revisions, a new revision was made
+        assert new_document.current_revision.content == "Safe"
 
     def test_post_sends_email(self):
         # Add an existing good document with a spam rev
@@ -658,7 +775,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.create_revisions(
             num=1, document=new_document3, creator=self.admin)
 
-        eq_(len(mail.outbox), 0)
+        assert len(mail.outbox) == 0
 
         # Pass in spam revisions:
         data = {'revision-id':
@@ -666,406 +783,441 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         tz = timezone(settings.TIME_ZONE)
 
-        eq_(len(mail.outbox), 1)
-        eq_(
-            mail.outbox[0].body,
-            dedent(
-                """
-                * ACTIONS TAKEN *
+        assert len(mail.outbox) == 1
+        assert (mail.outbox[0].body == dedent(
+            """
+            * ACTIONS TAKEN *
 
-                Banned:
+            Banned:
 
-                  Name: {user.username}
-                  ID: {user.pk}
-                  Joined at: {date_joined}
-                  Profile link: https://example.com/en-US/profiles/{user.username}
+              Name: {user.username}
+              ID: {user.pk}
+              Joined at: {date_joined}
+              Profile link: https://example.com/en-US/profiles/{user.username}
 
-                Submitted to Akismet as spam:
+            Submitted to Akismet as spam:
 
-                  - {rev1.title} [https://example.com{rev1_url}]
-                  - {rev2.title} [https://example.com{rev2_url}]
-                  - {rev3.title} [https://example.com{rev3_url}]
+              - {rev1.title} [https://example.com{rev1_url}]
+              - {rev2.title} [https://example.com{rev2_url}]
+              - {rev3.title} [https://example.com{rev3_url}]
 
-                Deleted:
+            Deleted:
 
-                  - {rev2.document.title} [https://example.com{rev2_doc_url}]
+              - {rev2.document.title} [https://example.com{rev2_doc_url}]
 
-                Reverted:
+            Reverted:
 
-                  - {rev1.title} [https://example.com{rev1_url}]
+              - {rev1.title} [https://example.com{rev1_url}]
 
-                * NEEDS FOLLOW UP *
+            * NEEDS FOLLOW UP *
 
-                Revisions skipped due to newer non-spam revision:
+            Revisions skipped due to newer non-spam revision:
 
-                  - {rev3.title} [https://example.com{rev3_url}]
+              - {rev3.title} [https://example.com{rev3_url}]
 
-                * NO ACTION TAKEN *
+            * NO ACTION TAKEN *
 
-                Latest revision is non-spam:
+            Latest revision is non-spam:
 
-                  - {rev3.title} [https://example.com{rev3_url}]
-                """.format(
-                    user=self.testuser,
-                    date_joined=tz.localize(self.testuser.date_joined).astimezone(utc),
-                    rev1=spam_revision1[0],
-                    rev2=spam_revision2[0],
-                    rev3=spam_revision3[0],
-                    rev1_url=spam_revision1[0].get_absolute_url(),
-                    rev2_url=spam_revision2[0].get_absolute_url(),
-                    rev3_url=spam_revision3[0].get_absolute_url(),
-                    rev2_doc_url=spam_revision2[0].document.get_absolute_url()
-                )
-            )
+              - {rev3.title} [https://example.com{rev3_url}]
+            """.format(
+                user=self.testuser,
+                date_joined=tz.localize(self.testuser.date_joined).astimezone(utc),
+                rev1=spam_revision1[0],
+                rev2=spam_revision2[0],
+                rev3=spam_revision3[0],
+                rev1_url=spam_revision1[0].get_absolute_url(),
+                rev2_url=spam_revision2[0].get_absolute_url(),
+                rev3_url=spam_revision3[0].get_absolute_url(),
+                rev2_doc_url=spam_revision2[0].document.get_absolute_url()
+            ))
         )
 
 
-class UserViewsTest(UserTestCase):
-    localizing_client = True
-
-    def _get_current_form_field_values(self, doc):
-        # Scrape out the existing significant form field values.
-        fields = ('username', 'fullname', 'title', 'organization',
-                  'location', 'irc_nickname', 'interests',
-                  'is_github_url_public')
-        form = dict()
-        lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
-        prefix = 'user-'
-        for field in fields:
-            lookup = lookup_pattern.format(prefix=prefix, field=field)
-            elements = doc.find(lookup)
-            assert len(elements) == 1
-            element = elements[0]
-            if element.type == 'text':
-                form[prefix + field] = element.value
-            else:
-                assert element.type == 'checkbox'
-                form[prefix + field] = element.checked
-
-        form[prefix + 'country'] = 'us'
-        form[prefix + 'format'] = 'html'
-        return form
-
-    def test_user_detail_view(self):
-        """A user can be viewed"""
-        testuser = self.user_model.objects.get(username='testuser')
-        url = reverse('users.user_detail', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-
-        eq_(testuser.username,
-            doc.find('#user-head.vcard .nickname').text())
-        eq_(testuser.fullname,
-            doc.find('#user-head.vcard .fn').text())
-        eq_(testuser.title,
-            doc.find('#user-head.vcard .title').text())
-        eq_(testuser.organization,
-            doc.find('#user-head.vcard .org').text())
-        eq_(testuser.location,
-            doc.find('#user-head.vcard .loc').text())
-        eq_('IRC: ' + testuser.irc_nickname,
-            doc.find('#user-head.vcard .irc').text())
-
-    def test_my_user_page(self):
-        u = self.user_model.objects.get(username='testuser')
-        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        resp = self.client.get(reverse('users.my_detail_page'))
-        eq_(302, resp.status_code)
-        ok_(reverse('users.user_detail', args=(u.username,)) in
-            resp['Location'])
-
-    def test_bug_698971(self):
-        """A non-numeric page number should not cause an error"""
-        testuser = self.user_model.objects.get(username='testuser')
-
-        url = '%s?page=asdf' % reverse('users.user_detail',
-                                       args=(testuser.username,))
-
-        self.client.get(url, follow=True)  # Does not raise PageNotAnInteger
-
-    def test_user_edit(self):
-        testuser = self.user_model.objects.get(username='testuser')
-        url = reverse('users.user_detail', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-        eq_(0, doc.find('#user-head .edit .button').length)
-
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_detail', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-
-        edit_button = doc.find('#user-head .user-buttons #edit-user')
-        eq_(1, edit_button.length)
-
-        url = edit_button.attr('href')
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-
-        eq_(testuser.fullname,
-            doc.find('#user-edit input[name="user-fullname"]').val())
-        eq_(testuser.title,
-            doc.find('#user-edit input[name="user-title"]').val())
-        eq_(testuser.organization,
-            doc.find('#user-edit input[name="user-organization"]').val())
-        eq_(testuser.location,
-            doc.find('#user-edit input[name="user-location"]').val())
-        eq_(testuser.irc_nickname,
-            doc.find('#user-edit input[name="user-irc_nickname"]').val())
-
-        new_attrs = {
-            'user-username': testuser.username,
-            'user-fullname': "Another Name",
-            'user-title': "Another title",
-            'user-organization': "Another org",
-        }
-
-        response = self.client.post(url, new_attrs, follow=True)
-        doc = pq(response.content)
-
-        eq_(1, doc.find('#user-head').length)
-        eq_(new_attrs['user-fullname'],
-            doc.find('#user-head .fn').text())
-        eq_(new_attrs['user-title'],
-            doc.find('#user-head .user-info .title').text())
-        eq_(new_attrs['user-organization'],
-            doc.find('#user-head .user-info .org').text())
-
-        testuser = self.user_model.objects.get(username=testuser.username)
-        eq_(new_attrs['user-fullname'], testuser.fullname)
-        eq_(new_attrs['user-title'], testuser.title)
-        eq_(new_attrs['user-organization'], testuser.organization)
-
-    def test_my_user_edit(self):
-        u = self.user_model.objects.get(username='testuser')
-        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        resp = self.client.get(reverse('users.my_edit_page'))
-        eq_(302, resp.status_code)
-        ok_(reverse('users.user_edit', args=(u.username,)) in
-            resp['Location'])
-
-    def test_user_edit_beta(self):
-        testuser = self.user_model.objects.get(username='testuser')
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-        eq_(None, doc.find('input#id_user-beta').attr('checked'))
-
-        form = self._get_current_form_field_values(doc)
-        form['user-beta'] = True
-
-        self.client.post(url, form, follow=True)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-        eq_('checked', doc.find('input#id_user-beta').attr('checked'))
-
-    def test_user_edit_websites(self):
-        testuser = self.user_model.objects.get(username='testuser')
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-
-        test_sites = {
-            'twitter': 'http://twitter.com/lmorchard',
-            'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
-            'linkedin': 'https://www.linkedin.com/in/testuser',
-            'mozillians': 'https://mozillians.org/u/testuser',
-            'facebook': 'https://www.facebook.com/test.user'
-        }
-
-        form = self._get_current_form_field_values(doc)
-
-        # Fill out the form with websites.
-        form.update(dict(('user-%s_url' % k, v)
-                         for k, v in test_sites.items()))
-
-        # Submit the form, verify redirect to user detail
-        response = self.client.post(url, form, follow=True)
-        doc = pq(response.content)
-        eq_(1, doc.find('#user-head').length)
-
-        testuser = self.user_model.objects.get(pk=testuser.pk)
-
-        # Verify the websites are saved in the user.
-        for site, url in test_sites.items():
-            url_attr_name = '%s_url' % site
-            eq_(getattr(testuser, url_attr_name), url)
-
-        # Verify the saved websites appear in the editing form
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-        for k, v in test_sites.items():
-            eq_(v, doc.find('#user-edit *[name="user-%s_url"]' % k).val())
-
-        # Github is not an editable field
-        github_div = doc.find("#field_github_url div.field-account")
-        github_acct = testuser.socialaccount_set.get()
-        assert github_div.html().strip() == github_acct.get_profile_url()
-
-        # Come up with some bad sites, either invalid URL or bad URL prefix
-        bad_sites = {
-            'linkedin': 'HAHAHA WHAT IS A WEBSITE',
-            'twitter': 'http://facebook.com/lmorchard',
-            'stackoverflow': 'http://overqueueblah.com/users/lmorchard',
-        }
-        form.update(dict(('user-%s_url' % k, v)
-                         for k, v in bad_sites.items()))
-
-        # Submit the form, verify errors for all of the bad sites
-        response = self.client.post(url, form, follow=True)
-        doc = pq(response.content)
-        eq_(1, doc.find('#user-edit').length)
-        tmpl = '#user-edit #users .%s .errorlist'
-        for n in ('linkedin', 'twitter', 'stackoverflow'):
-            eq_(1, doc.find(tmpl % n).length)
-
-    def test_user_edit_interests(self):
-        testuser = self.user_model.objects.get(username='testuser')
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-
-        test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
-
-        form = self._get_current_form_field_values(doc)
-
-        form['user-interests'] = ', '.join(test_tags)
-
-        response = self.client.post(url, form, follow=True)
-        doc = pq(response.content)
-        eq_(1, doc.find('#user-head').length)
-
-        result_tags = [t.name.replace('profile:interest:', '')
-                       for t in testuser.tags.all_ns('profile:interest:')]
-        result_tags.sort()
-        test_tags.sort()
-        eq_(test_tags, result_tags)
-
-        test_expertise = ['css', 'canvas']
-        form['user-expertise'] = ', '.join(test_expertise)
-        response = self.client.post(url, form, follow=True)
-        doc = pq(response.content)
-
-        eq_(1, doc.find('#user-head').length)
-
-        result_tags = [t.name.replace('profile:expertise:', '')
-                       for t in testuser.tags.all_ns('profile:expertise')]
-        result_tags.sort()
-        test_expertise.sort()
-        eq_(test_expertise, result_tags)
-
-        # Now, try some expertise tags not covered in interests
-        test_expertise = ['css', 'canvas', 'mobile', 'movies']
-        form['user-expertise'] = ', '.join(test_expertise)
-        response = self.client.post(url, form, follow=True)
-        doc = pq(response.content)
-
-        eq_(1, doc.find('.error #id_user-expertise').length)
-
-    def test_bug_709938_interests(self):
-        testuser = self.user_model.objects.get(username='testuser')
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-
-        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
-                     u'vector,meme,heuristics,harmony,mathesis universalis,'
-                     u'symmetry,mathematics,computer graphics,field,chemistry,'
-                     u'religion,astronomy,physics,biology,literature,'
-                     u'spirituality,Art,Philosophy,Psychology,Business,Music,'
-                     u'Computer Science']
-
-        form = self._get_current_form_field_values(doc)
-
-        form['user-interests'] = test_tags
-
-        response = self.client.post(url, form, follow=True)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(1, doc.find('ul.errorlist li').length)
-        assert ('Ensure this value has at most 255 characters'
-                in doc.find('ul.errorlist li').text())
-
-    def test_bug_698126_l10n(self):
-        """Test that the form field names are localized"""
-        testuser = self.user_model.objects.get(username='testuser')
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        for field in response.context['user_form'].fields:
-            # if label is localized it's a lazy proxy object
-            ok_(not isinstance(
-                response.context['user_form'].fields[field].label, basestring),
-                'Field %s is a string!' % field)
-
-    def test_user_edit_github_is_public(self):
-        """A user can set that they want their GitHub to be public."""
-        testuser = self.user_model.objects.get(username='testuser')
-        assert not testuser.is_github_url_public
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', locale='en-US',
-                      args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-        form = self._get_current_form_field_values(doc)
-        assert not form['user-is_github_url_public']
-        form['user-is_github_url_public'] = True
-        self.client.post(url, form, follow=True)
-        testuser.refresh_from_db()
-        assert testuser.is_github_url_public
-
-
-class Test404Case(UserTestCase):
-
-    def test_404_logins(self):
-        """The login buttons should display on the 404 page"""
-        response = self.client.get('/something-doesnt-exist', follow=True)
-        doc = pq(response.content)
-
-        login_block = doc.find('.socialaccount-providers')
-        ok_(len(login_block) > 0)
-        eq_(404, response.status_code)
-
-    def test_404_already_logged_in(self):
-        """
-        The login buttons should not display on the 404 page when the
-        user is logged in
-        """
-        # View page as a logged in user
-        self.client.login(username='testuser',
-                          password='testpass')
-        response = self.client.get('/something-doesnt-exist', follow=True)
-        doc = pq(response.content)
-
-        login_block = doc.find('.socialaccount-providers')
-        eq_(len(login_block), 0)
-        eq_(404, response.status_code)
-        self.client.logout()
+def _get_current_form_field_values(doc):
+    # Scrape out the existing significant form field values.
+    fields = ('username', 'fullname', 'title', 'organization',
+              'location', 'irc_nickname', 'interests',
+              'is_github_url_public')
+    form = dict()
+    lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
+    prefix = 'user-'
+    for field in fields:
+        lookup = lookup_pattern.format(prefix=prefix, field=field)
+        elements = doc.find(lookup)
+        assert len(elements) == 1, 'field = {}'.format(field)
+        element = elements[0]
+        if element.type == 'text':
+            form[prefix + field] = element.value
+        else:
+            assert element.type == 'checkbox'
+            form[prefix + field] = element.checked
+
+    form[prefix + 'country'] = 'us'
+    form[prefix + 'format'] = 'html'
+    return form
+
+
+def test_user_detail_view(wiki_user, client):
+    """A user can be viewed."""
+    wiki_user.irc_nickname = 'wooki'
+    wiki_user.save()
+    url = reverse('users.user_detail', locale='en-US',
+                  args=(wiki_user.username,))
+    response = client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+    assert doc.find('#user-head.vcard .nickname').text() == wiki_user.username
+    assert doc.find('#user-head.vcard .fn').text() == wiki_user.fullname
+    assert doc.find('#user-head.vcard .title').text() == wiki_user.title
+    assert doc.find('#user-head.vcard .org').text() == wiki_user.organization
+    assert doc.find('#user-head.vcard .loc').text() == wiki_user.location
+    assert (doc.find('#user-head.vcard .irc').text() ==
+            ('IRC: ' + wiki_user.irc_nickname))
+
+
+def test_my_user_page(wiki_user, user_client):
+    resp = user_client.get(reverse('users.my_detail_page', locale='en-US'))
+    assert resp.status_code == 302
+    assert 'max-age=0' in resp['Cache-Control']
+    assert 'no-cache' in resp['Cache-Control']
+    assert 'no-store' in resp['Cache-Control']
+    assert 'must-revalidate' in resp['Cache-Control']
+    assert resp['Location'].endswith(reverse('users.user_detail',
+                                             args=(wiki_user.username,)))
+
+
+def test_bug_698971(wiki_user, client):
+    """A non-numeric page number should not raise an error."""
+    url = reverse('users.user_detail', locale='en-US',
+                  args=(wiki_user.username,))
+
+    response = client.get(url, dict(page='asdf'))
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+
+
+def test_user_edit(wiki_user, client, user_client):
+    url = reverse('users.user_detail', locale='en-US',
+                  args=(wiki_user.username,))
+    response = client.get(url, follow=True)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+    assert doc.find('#user-head .edit .button').length == 0
+
+    url = reverse('users.user_detail', locale='en-US',
+                  args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+    edit_button = doc.find('#user-head .user-buttons #edit-user')
+    assert edit_button.length == 1
+
+    url = edit_button.attr('href')
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+
+    assert (doc.find('#user-edit input[name="user-fullname"]').val() ==
+            wiki_user.fullname)
+    assert (doc.find('#user-edit input[name="user-title"]').val() ==
+            wiki_user.title)
+    assert (doc.find('#user-edit input[name="user-organization"]').val() ==
+            wiki_user.organization)
+    assert (doc.find('#user-edit input[name="user-location"]').val() ==
+            wiki_user.location)
+    assert (doc.find('#user-edit input[name="user-irc_nickname"]').val() ==
+            wiki_user.irc_nickname)
+
+    new_attrs = {
+        'user-username': wiki_user.username,
+        'user-fullname': "Another Name",
+        'user-title': "Another title",
+        'user-organization': "Another org",
+    }
+
+    response = user_client.post(url, new_attrs, follow=True)
+    doc = pq(response.content)
+
+    assert doc.find('#user-head').length == 1
+    assert doc.find('#user-head .fn').text() == new_attrs['user-fullname']
+    assert (doc.find('#user-head .user-info .title').text() ==
+            new_attrs['user-title'])
+    assert (doc.find('#user-head .user-info .org').text() ==
+            new_attrs['user-organization'])
+
+    wiki_user.refresh_from_db()
+
+    assert wiki_user.fullname == new_attrs['user-fullname']
+    assert wiki_user.title == new_attrs['user-title']
+    assert wiki_user.organization == new_attrs['user-organization']
+
+
+def test_my_user_edit(wiki_user, user_client):
+    response = user_client.get(reverse('users.my_edit_page', locale='en-US'))
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(
+        reverse('users.user_edit', args=(wiki_user.username,)))
+
+
+def test_user_edit_beta(wiki_user, wiki_user_github_account,
+                        beta_testers_group, user_client):
+    url = reverse('users.user_edit', locale='en-US',
+                  args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+    assert doc.find('input#id_user-beta').attr('checked') is None
+
+    form = _get_current_form_field_values(doc)
+    form['user-beta'] = True
+
+    response = user_client.post(url, form)
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(
+        reverse('users.user_detail', args=(wiki_user.username,)))
+
+    response = user_client.get(url)
+    assert response.status_code == 200
+    doc = pq(response.content)
+    assert doc.find('input#id_user-beta').attr('checked') == 'checked'
+
+
+def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
+    url = reverse('users.user_edit', locale='en-US',
+                  args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+
+    test_sites = {
+        'twitter': 'http://twitter.com/lmorchard',
+        'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
+        'linkedin': 'https://www.linkedin.com/in/testuser',
+        'mozillians': 'https://mozillians.org/u/testuser',
+        'facebook': 'https://www.facebook.com/test.user'
+    }
+
+    form = _get_current_form_field_values(doc)
+
+    # Fill out the form with websites.
+    form.update(dict(('user-%s_url' % k, v)
+                     for k, v in test_sites.items()))
+
+    # Submit the form, verify redirect to user detail
+    response = user_client.post(url, form, follow=True)
+    assert response.status_code == 200
+    doc = pq(response.content)
+    assert doc.find('#user-head').length == 1
+
+    wiki_user.refresh_from_db()
+
+    # Verify the websites are saved in the user.
+    for site, site_url in test_sites.items():
+        url_attr_name = '%s_url' % site
+        assert getattr(wiki_user, url_attr_name) == site_url
+
+    # Verify the saved websites appear in the editing form
+    response = user_client.get(url)
+    assert response.status_code == 200
+    doc = pq(response.content)
+    for k, v in test_sites.items():
+        assert doc.find('#user-edit *[name="user-%s_url"]' % k).val() == v
+
+    # Github is not an editable field
+    github_div = doc.find("#field_github_url div.field-account")
+    github_acct = wiki_user.socialaccount_set.get()
+    assert github_div.html().strip() == github_acct.get_profile_url()
+
+    # Come up with some bad sites, either invalid URL or bad URL prefix
+    bad_sites = {
+        'linkedin': 'HAHAHA WHAT IS A WEBSITE',
+        'twitter': 'http://facebook.com/lmorchard',
+        'stackoverflow': 'http://overqueueblah.com/users/lmorchard',
+    }
+    form.update(dict(('user-%s_url' % k, v)
+                     for k, v in bad_sites.items()))
+
+    # Submit the form, verify errors for all of the bad sites
+    response = user_client.post(url, form, follow=True)
+    doc = pq(response.content)
+    assert doc.find('#user-edit').length == 1
+    tmpl = '#user-edit #users .%s .errorlist'
+    for n in ('linkedin', 'twitter', 'stackoverflow'):
+        assert doc.find(tmpl % n).length == 1
+
+
+def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
+    url = reverse('users.user_edit', locale='en-US',
+                  args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    doc = pq(response.content)
+
+    test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
+
+    form = _get_current_form_field_values(doc)
+
+    form['user-interests'] = ', '.join(test_tags)
+
+    response = user_client.post(url, form, follow=True)
+    doc = pq(response.content)
+    assert doc.find('#user-head').length == 1
+
+    result_tags = [t.name.replace('profile:interest:', '')
+                   for t in wiki_user.tags.all_ns('profile:interest:')]
+    result_tags.sort()
+    test_tags.sort()
+    assert result_tags == test_tags
+
+    test_expertise = ['css', 'canvas']
+    form['user-expertise'] = ', '.join(test_expertise)
+    response = user_client.post(url, form, follow=True)
+    doc = pq(response.content)
+
+    assert doc.find('#user-head').length == 1
+
+    result_tags = [t.name.replace('profile:expertise:', '')
+                   for t in wiki_user.tags.all_ns('profile:expertise')]
+    result_tags.sort()
+    test_expertise.sort()
+    assert result_tags == test_expertise
+
+    # Now, try some expertise tags not covered in interests
+    test_expertise = ['css', 'canvas', 'mobile', 'movies']
+    form['user-expertise'] = ', '.join(test_expertise)
+    response = user_client.post(url, form, follow=True)
+    doc = pq(response.content)
+
+    assert doc.find('.error #id_user-expertise').length == 1
+
+
+def test_bug_709938_interests(wiki_user, wiki_user_github_account,
+                              user_client):
+    url = reverse('users.user_edit', locale='en-US',
+                  args=(wiki_user.username,))
+    response = user_client.get(url)
+    doc = pq(response.content)
+
+    test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
+                 u'vector,meme,heuristics,harmony,mathesis universalis,'
+                 u'symmetry,mathematics,computer graphics,field,chemistry,'
+                 u'religion,astronomy,physics,biology,literature,'
+                 u'spirituality,Art,Philosophy,Psychology,Business,Music,'
+                 u'Computer Science']
+
+    form = _get_current_form_field_values(doc)
+
+    form['user-interests'] = test_tags
+
+    response = user_client.post(url, form)
+    assert response.status_code == 200
+    doc = pq(response.content)
+    assert doc.find('ul.errorlist li').length == 1
+    assert ('Ensure this value has at most 255 characters'
+            in doc.find('ul.errorlist li').text())
+
+
+def test_bug_698126_l10n(wiki_user, user_client):
+    """Test that the form field names are localized"""
+    url = reverse('users.user_edit', args=(wiki_user.username,))
+    response = user_client.get(url, follow=True)
+    for field in response.context['user_form'].fields:
+        # if label is localized it's a lazy proxy object
+        lbl = response.context['user_form'].fields[field].label
+        assert not isinstance(lbl, basestring), 'Field %s is a string!' % field
+
+
+def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,
+                                    user_client):
+    """A user can set that they want their GitHub to be public."""
+    assert not wiki_user.is_github_url_public
+    url = reverse('users.user_edit', locale='en-US',
+                  args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    form = _get_current_form_field_values(pq(response.content))
+    assert not form['user-is_github_url_public']
+    form['user-is_github_url_public'] = True
+    response = user_client.post(url, form)
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(
+        reverse('users.user_detail', args=(wiki_user.username,)))
+    wiki_user.refresh_from_db()
+    assert wiki_user.is_github_url_public
+
+
+def test_404_logins(db, client):
+    """The login buttons should display on the 404 page."""
+    response = client.get('/something-doesnt-exist', follow=True)
+    assert response.status_code == 404
+    assert len(pq(response.content).find('.socialaccount-providers')) > 0
+
+
+def test_404_already_logged_in(user_client):
+    """
+    The login buttons should not display on the 404 page when the
+    user is logged-in.
+    """
+    # View page as a logged in user
+    response = user_client.get('/something-doesnt-exist', follow=True)
+    assert response.status_code == 404
+    assert len(pq(response.content).find('.socialaccount-providers')) == 0
 
 
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
@@ -1094,18 +1246,28 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         with mock.patch('captcha.client.request') as request_mock:
             request_mock.return_value.read.return_value = '{"success": null}'
             response = self.client.post(self.signup_url, data=data, follow=True)
-        eq_(response.status_code, 200)
-        eq_(response.context['form'].errors,
-            {'captcha': [u'Incorrect, please try again.']})
+        assert response.status_code == 200
+        assert (response.context['form'].errors ==
+                {'captcha': [u'Incorrect, please try again.']})
 
     def test_matching_user(self):
         self.github_login()
         response = self.client.get(self.signup_url)
-        self.assertTrue('matching_user' in response.context)
-        self.assertEqual(response.context['matching_user'], None)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert 'matching_user' in response.context
+        assert response.context['matching_user'] is None
         octocat = user(username='octocat', save=True)
         response = self.client.get(self.signup_url)
-        self.assertEqual(response.context['matching_user'], octocat)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert response.context['matching_user'] == octocat
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_email_addresses(self):
@@ -1132,28 +1294,28 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         ]
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert private_email not in response.context
         email_address = response.context['email_addresses']
 
         # first check if the public email address has been found
-        self.assertTrue(public_email in email_address)
-        self.assertEqual(email_address[public_email],
-                         {'verified': False,
-                          'email': public_email,
-                          'primary': False})
+        assert public_email in email_address
+        assert (email_address[public_email] ==
+                {'verified': False, 'email': public_email, 'primary': False})
         # then check if the private and verified-at-GitHub email address
         # has been found
-        self.assertTrue(private_email in email_address)
-        self.assertEqual(email_address[private_email],
-                         {'verified': True,
-                          'email': private_email,
-                          'primary': True})
+        assert private_email in email_address
+        assert (email_address[private_email] ==
+                {'verified': True, 'email': private_email, 'primary': True})
         # then check that the invalid email is not present
         assert invalid_email not in email_address
         # then check if the radio button's default value is the public email
         # address
-        self.assertEqual(response.context['form'].initial['email'],
-                         public_email)
+        assert response.context['form'].initial['email'] == public_email
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
@@ -1164,15 +1326,19 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
             'terms': True,
             'g-recaptcha-response': 'PASSED',
         }
-        self.assertFalse((EmailAddress.objects.filter(email=unverified_email)
-                                              .exists()))
-        response = self.client.post(self.signup_url, data=data, follow=True)
+        assert not EmailAddress.objects.filter(email=unverified_email).exists()
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         unverified_email_addresses = EmailAddress.objects.filter(
             email=unverified_email)
-        self.assertTrue(unverified_email_addresses.exists())
-        self.assertEquals(unverified_email_addresses.count(), 1)
-        self.assertTrue(unverified_email_addresses[0].primary)
-        self.assertFalse(unverified_email_addresses[0].verified)
+        assert unverified_email_addresses.exists()
+        assert unverified_email_addresses.count() == 1
+        assert unverified_email_addresses[0].primary
+        assert not unverified_email_addresses[0].verified
 
     def test_email_addresses_with_no_public(self):
         profile_data = self.github_profile_data.copy()
@@ -1182,15 +1348,23 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         email_data[0]['email'] = private_email
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
-        self.assertEqual(response.context["form"].initial["email"],
-                         private_email)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert response.context["form"].initial["email"] == private_email
 
     def test_email_addresses_with_no_alternatives(self):
         private_email = self.github_profile_data['email']
         self.github_login(email_data=[])
         response = self.client.get(self.signup_url)
-        self.assertEqual(response.context["form"].initial["email"],
-                         private_email)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert response.context["form"].initial["email"] == private_email
 
     def test_no_email_addresses(self):
         """Note: this does not seem to currently happen."""
@@ -1198,7 +1372,12 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         profile_data['email'] = None
         self.github_login(profile_data=profile_data, email_data=[])
         response = self.client.get(self.signup_url)
-        self.assertEqual(response.context["form"].initial["email"], '')
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert response.context["form"].initial["email"] == ''
 
     def test_signup_public_github(self, is_public=True):
         resp = self.github_login()
@@ -1209,8 +1388,12 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 'email': 'octo.cat@github-inc.com',
                 'terms': True,
                 'is_github_url_public': is_public}
-        response = self.client.post(self.signup_url, data=data, follow=True)
-        assert response.status_code == 200
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         user = User.objects.get(username='octocat')
         assert user.is_github_url_public == is_public
 
@@ -1232,7 +1415,12 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         email_data[0]['email'] = testemail
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
-        self.assertFalse(response.context['matching_accounts'])
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert not response.context['matching_accounts']
 
         # Create a legacy Persona account with the given email address
         octocat3 = user(username='octocat3', is_active=True,
@@ -1241,8 +1429,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                                                       provider='persona',
                                                       user=octocat3)
         response = self.client.get(self.signup_url)
-        self.assertEqual(list(response.context['matching_accounts']),
-                         [social_account])
+        assert list(response.context['matching_accounts']) == [social_account]
 
     def test_account_tokens(self):
         testemail = 'account_token@acme.com'
@@ -1262,8 +1449,8 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         social_account = SocialAccount.objects.get(user=testuser,
                                                    provider='github')
         social_token = social_account.socialtoken_set.get()
-        self.assertEqual(token, social_token.token)
-        self.assertEqual(refresh_token, social_token.token_secret)
+        assert token == social_token.token
+        assert refresh_token == social_token.token_secret
 
     def test_account_refresh_token_saved_next_login(self):
         """
@@ -1291,71 +1478,86 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # Refresh token is still in database
         sa.refresh_from_db()
         social_token = sa.socialtoken_set.get()
-        self.assertEqual(token, social_token.token)
-        self.assertEqual(refresh_token, social_token.token_secret)
+        assert token == social_token.token
+        assert refresh_token == social_token.token_secret
 
 
-class UserDeleteTests(KumaTestCase):
-    def test_missing_user_is_missing(self):
-        assert not User.objects.filter(username='missing').exists()
-        url = reverse('users.user_delete', kwargs={'username': 'missing'})
-        response = self.client.get(url, follow=True)
-        assert response.status_code == 404
-
-    def test_wrong_user_is_forbidden(self):
-        assert user(username='right', save=True)
-        assert user(username='wrong', password='wrong', save=True)
-        self.client.login(username='wrong', password='wrong')
-        url = reverse('users.user_delete', kwargs={'username': 'right'})
-        response = self.client.get(url, follow=True)
-        assert response.status_code == 403
-
-    def test_right_user_is_ok(self):
-        assert user(username='user', password='password', save=True)
-        self.client.login(username='user', password='password')
-        url = reverse('users.user_delete', kwargs={'username': 'user'})
-        response = self.client.get(url, follow=True)
-        assert response.status_code == 200
+def test_missing_user_is_missing(db, client):
+    assert not User.objects.filter(username='missing').exists()
+    url = reverse('users.user_delete', locale='en-US',
+                  kwargs={'username': 'missing'})
+    response = client.get(url)
+    assert response.status_code == 404
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
 
-class SendRecoveryEmailTests(KumaTestCase):
-    def test_send_email(self):
-        url = reverse('users.send_recovery_email', force_locale=True)
-        response = self.client.post(url, {'email': 'test@example.com'},
-                                    follow=True)
-        next_url = reverse('users.recovery_email_sent', force_locale=True)
-        self.assertRedirects(response, next_url)
+@pytest.mark.parametrize('user_case', ['wrong_user', 'right_user'])
+def test_user_can_delete(wiki_user, wiki_user_2, user_client, user_case):
+    if user_case == 'wrong_user':
+        user = wiki_user_2
+        expected_status = 403
+    else:
+        user = wiki_user
+        expected_status = 200
+    url = reverse('users.user_delete', locale='en-US',
+                  kwargs={'username': user.username})
+    response = user_client.get(url)
+    assert response.status_code == expected_status
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
-    def test_bad_email(self):
-        url = reverse('users.send_recovery_email', force_locale=True)
-        response = self.client.post(url, {'email': 'not an email'})
-        assert response.status_code == 400
+
+@pytest.mark.parametrize(
+    'email, expected_status',
+    [('test@example.com', 302), ('not an email', 400)],
+    ids=('good_email', 'bad_email'))
+def test_send_recovery_email(db, client, email, expected_status):
+    url = reverse('users.send_recovery_email', locale='en-US')
+    response = client.post(url, {'email': email})
+    assert response.status_code == expected_status
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    if expected_status == 302:
+        assert response['Location'].endswith(
+            reverse('users.recovery_email_sent'))
 
 
-class RecoverTests(KumaTestCase):
+def test_recover_valid(wiki_user, client):
+    recover_url = wiki_user.get_recovery_url()
+    response = client.get(recover_url)
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(reverse('users.recover_done'))
+    wiki_user.refresh_from_db()
+    assert not wiki_user.has_usable_password()
 
-    def setUp(self):
-        self.user = user(username='legacy', password='password', save=True)
 
-    def test_recover_valid(self):
-        recover_url = self.user.get_recovery_url()
-        response = self.client.get(recover_url, follow=True)
-        next_url = reverse('users.recover_done', force_locale=True)
-        self.assertRedirects(response, next_url)
-        self.user.refresh_from_db()
-        assert not self.user.has_usable_password()
+def test_invalid_token_fails(wiki_user, client):
+    recover_url = wiki_user.get_recovery_url()
+    bad_last_char = '2' if recover_url[-1] == '3' else '3'
+    bad_recover_url = recover_url[:-1] + bad_last_char
+    response = client.get(bad_recover_url)
+    assert 'This link is no longer valid.' in response.content
 
-    def test_invalid_token_fails(self):
-        recover_url = self.user.get_recovery_url()
-        last_char = recover_url[-1]
-        bad_last_char = '2' if last_char == '3' else '3'
-        bad_recover_url = recover_url[:-1] + bad_last_char
-        response = self.client.get(bad_recover_url)
-        assert 'This link is no longer valid.' in response.content
 
-    def test_invalid_uid_fails(self):
-        assert not User.objects.filter(id=666).exists()
-        self.user.id = 666
-        bad_recover_url = self.user.get_recovery_url()
-        response = self.client.get(bad_recover_url)
-        assert 'This link is no longer valid.' in response.content
+def test_invalid_uid_fails(wiki_user, client):
+    # Make a recovery URL for a user that no longer exists.
+    bad_recover_url = wiki_user.get_recovery_url()
+    wiki_user.delete()
+    response = client.get(bad_recover_url)
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert 'This link is no longer valid.' in response.content
