@@ -18,7 +18,6 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
 
-from kuma.core.cache import memcache as cache
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
@@ -33,7 +32,7 @@ from . import (WikiTestCase, create_document_editor_user, create_document_tree,
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
-from ..models import (Document, DocumentDeletionLog, DocumentTag, DocumentZone,
+from ..models import (Document, DocumentDeletionLog, DocumentZone,
                       Revision, RevisionAkismetSubmission, RevisionIP)
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
@@ -1683,13 +1682,18 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data.update({'review_tags': ['technical']})
         response = self.client.post(reverse('wiki.create'), data)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
         # Ensure there's now a doc with that expected tag in its newest
         # revision
         doc = Document.objects.get(slug="a-test-article")
         rev = doc.revisions.order_by('-id').all()[0]
         review_tags = [x.name for x in rev.review_tags.all()]
-        eq_(['technical'], review_tags)
+        assert review_tags == ['technical']
 
         # Now, post an update with two tags
         data.update({
@@ -1698,6 +1702,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         })
         response = self.client.post(reverse('wiki.edit',
                                             args=[doc.slug]), data)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
         # Ensure the doc's newest revision has both tags.
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -1705,40 +1714,49 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev = doc.revisions.order_by('-id').all()[0]
         review_tags = [x.name for x in rev.review_tags.all()]
         review_tags.sort()
-        eq_(['editorial', 'technical'], review_tags)
+        assert review_tags == ['editorial', 'technical']
 
         # Now, ensure that review form appears for the review tags.
         response = self.client.get(reverse('wiki.document',
                                            args=[doc.slug]), data)
         page = pq(response.content)
-        eq_(1, page.find('.page-meta.reviews').length)
-        eq_(1, page.find('#id_request_technical').length)
-        eq_(1, page.find('#id_request_editorial').length)
+        assert page.find('.page-meta.reviews').length == 1
+        assert page.find('#id_request_technical').length == 1
+        assert page.find('#id_request_editorial').length == 1
+
+        doc_entry = '<entry><title>{}</title>'.format(doc.title)
+        doc_selector = "ul.document-list li a:contains('{}')".format(doc.title)
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
-        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
-                                         doc.title).length)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert pq(response.content).find(doc_selector).length == 1
         response = self.client.get(reverse('wiki.list_review_tag',
                                            args=('technical',)))
-        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
-                                         doc.title).length)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert pq(response.content).find(doc_selector).length == 1
         response = self.client.get(reverse('wiki.list_review_tag',
                                            args=('editorial',)))
-        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
-                                         doc.title).length)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert pq(response.content).find(doc_selector).length == 1
 
         # Also, ensure that the page appears in the proper feeds
         # HACK: Too lazy to parse the XML. Lazy lazy.
         response = self.client.get(reverse('wiki.feeds.list_review',
                                            args=('atom',)))
-        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        assert doc_entry in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'technical', )))
-        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        assert doc_entry in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'editorial', )))
-        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        assert doc_entry in response.content
 
         # Post an edit that removes the technical review tag.
         data.update({
@@ -1752,34 +1770,40 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.document',
                                            args=[doc.slug]), data)
         page = pq(response.content)
-        eq_(1, page.find('.page-meta.reviews').length)
-        eq_(0, page.find('#id_request_technical').length)
-        eq_(1, page.find('#id_request_editorial').length)
+        assert page.find('.page-meta.reviews').length == 1
+        assert page.find('#id_request_technical').length == 0
+        assert page.find('#id_request_editorial').length == 1
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
-        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
-                                         doc.title).length)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert pq(response.content).find(doc_selector).length == 1
         response = self.client.get(reverse('wiki.list_review_tag',
                                            args=('technical',)))
-        eq_(0, pq(response.content).find("ul.document-list li a:contains('%s')" %
-                                         doc.title).length)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert pq(response.content).find(doc_selector).length == 0
         response = self.client.get(reverse('wiki.list_review_tag',
                                            args=('editorial',)))
-        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
-                                         doc.title).length)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert pq(response.content).find(doc_selector).length == 1
 
         # Also, ensure that the page appears in the proper feeds
         # HACK: Too lazy to parse the XML. Lazy lazy.
         response = self.client.get(reverse('wiki.feeds.list_review',
                                            args=('atom',)))
-        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        assert doc_entry in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'technical', )))
-        ok_('<entry><title>%s</title>' % doc.title not in response.content)
+        assert doc_entry not in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'editorial', )))
-        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        assert doc_entry in response.content
 
     @pytest.mark.review_tags
     def test_quick_review(self):
@@ -3109,81 +3133,6 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         eq_(expected_url, resp['Location'])
 
 
-class AutosuggestDocumentsTests(WikiTestCase):
-    """
-    Test the we're properly filtering out the Redirects from the document list
-    """
-    localizing_client = True
-
-    def test_autosuggest_no_term(self):
-        url = reverse('wiki.autosuggest_documents',
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        resp = self.client.get(url)
-        eq_(400, resp.status_code)
-
-    def test_document_redirects(self):
-
-        # All contain "e", so that will be the search term
-        invalid_documents = (
-            {
-                'title': 'Something Redirect 8',
-                'html': 'REDIRECT <a class="redirect" href="/blah">Something Redirect</a>',
-                'is_redirect': 1
-            },
-        )
-        valid_documents = (
-            {'title': 'e 6', 'html': '<p>Blah text Redirect'},
-            {'title': 'e 7', 'html': 'AppleTalk'},
-            {'title': 'Response.Redirect'},
-        )
-
-        for doc in invalid_documents + valid_documents:
-            d = document()
-            d.title = doc['title']
-            if 'html' in doc:
-                d.html = doc['html']
-            if 'is_redirect' in doc:
-                d.is_redirect = 1
-            d.save()
-
-        url = reverse('wiki.autosuggest_documents',
-                      locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
-        Switch.objects.create(name='application_ACAO', active=True)
-        resp = self.client.get(url)
-        ok_('Access-Control-Allow-Origin' in resp)
-        eq_('*', resp['Access-Control-Allow-Origin'])
-
-        eq_(200, resp.status_code)
-        data = json.loads(resp.content)
-        eq_(len(data), len(valid_documents))
-
-        # Ensure that the valid docs found are all in the valid list
-        titles_returned = sorted(item['title'] for item in data)
-        valid_titles = sorted(item['title'] for item in valid_documents)
-        assert titles_returned == valid_titles
-
-    def test_list_no_redirects(self):
-        Document.objects.all().delete()
-
-        invalid_documents = [
-            {
-                'title': 'Something Redirect 8',
-                'slug': 'xx',
-                'html': 'REDIRECT <a class="redirect" href="%s">yo</a>' % settings.SITE_URL
-            }
-        ]
-        valid_documents = [
-            {'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'}
-        ]
-        for doc in invalid_documents + valid_documents:
-            document(save=True, slug=doc['slug'],
-                     title=doc['title'], html=doc['html'])
-
-        resp = self.client.get(reverse('wiki.all_documents',
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(len(valid_documents), len(pq(resp.content).find('.document-list li')))
-
-
 @override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)
 class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
     """Tests for the deferred rendering system and interaction with views"""
@@ -3374,70 +3323,6 @@ def test_zone_styles(client, doc_hierarchy_with_zones):
     )
     response = client.get(url, follow=True)
     assert response.status_code == 404
-
-
-class ListDocumentTests(UserTestCase, WikiTestCase):
-    """Tests for list_documents view"""
-    localizing_client = True
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-
-    def _get_documents_from_list(self, tag):
-        response = self.client.get(reverse('wiki.tag', args=[tag]))
-        page = pq(response.content)
-        cache.clear()
-        return page.find('.document-list li a').contents()
-
-    def test_document_list_by_tag(self):
-        tags = ['foo', 'bar', 'web']
-        rev = revision(save=True, tags=','.join(tags))
-        doc = rev.document
-
-        for t in tags:
-            docs = self._get_documents_from_list(tag=t)
-            assert len(docs) == 1
-            assert doc.slug in docs
-
-    @pytest.mark.tags
-    def test_doc_list_by_tag_after_update(self):
-        """After updating tag of a document, the list should also be updated"""
-        tags1 = ['foo', 'bar', 'js']
-        tags2 = ['lorem', 'ipsum']
-        # Create a document with some tags
-        rev1 = revision(save=True, tags=','.join(tags1))
-        doc = rev1.document
-
-        # Create another revision of the document with other tags
-        revision(save=True, document=doc, tags=','.join(tags2))
-
-        # Check document slug is present in the document list
-        for t in tags2:
-            docs = self._get_documents_from_list(tag=t)
-            assert len(docs) == 1
-            assert doc.slug in docs
-
-        # As the new tag has been added to the document
-        # The document should not be listed in previous tags list
-        for t in tags1:
-            docs = self._get_documents_from_list(tag=t)
-            assert len(docs) == 0
-            assert doc.slug not in docs
-
-    def test_case_insensitive_tags(self):
-        """
-        Bug 976071 - Tags should be case insensitive
-        https://bugzil.la/976071
-        """
-        lower_tag = DocumentTag.objects.create(name='foo', slug='foo')
-        lower_tag.save()
-
-        doc = Document.objects.get(pk=1)
-        doc.tags.set(lower_tag)
-
-        response = self.client.get(reverse('wiki.tag', args=['foo']))
-        ok_(doc.slug in response.content.decode('utf-8'))
-
-        response = self.client.get(reverse('wiki.tag', args=['Foo']))
-        ok_(doc.slug in response.content.decode('utf-8'))
 
 
 @pytest.mark.spam

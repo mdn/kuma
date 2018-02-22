@@ -1,8 +1,28 @@
 from pyquery import PyQuery as pq
+import pytest
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from ..models import Document
+
+
+@pytest.mark.parametrize(
+    'http_method', ['put', 'post', 'delete', 'options', 'head'])
+@pytest.mark.parametrize(
+    'endpoint',
+    ['tag', 'list_tags', 'all_documents', 'errors',
+     'without_parent', 'top_level', 'list_review_tag', 'list_review',
+     'list_with_localization_tag', 'list_with_localization_tags'])
+def test_disallowed_methods(db, client, http_method, endpoint):
+    """HTTP methods other than GET & HEAD are not allowed."""
+    kwargs = None
+    if endpoint in ('tag', 'list_review_tag', 'list_with_localization_tag'):
+        kwargs = dict(tag='tag')
+    url = reverse('wiki.{}'.format(endpoint), locale='en-US', kwargs=kwargs)
+    resp = getattr(client, http_method)(url)
+    assert resp.status_code == 405
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
 
 
 def test_revisions(root_doc, client):
@@ -11,6 +31,8 @@ def test_revisions(root_doc, client):
                   locale=root_doc.locale)
     resp = client.get(url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
 
 
 def test_revisions_of_translated_document(trans_doc, client):
@@ -75,6 +97,8 @@ def test_revisions_all_params_as_anon_user_is_forbidden(root_doc, client):
     all_url = urlparams(url, limit='all')
     resp = client.get(all_url)
     assert resp.status_code == 403
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
 
 
 def test_revisions_all_params_as_user_is_allowed(root_doc, wiki_user, client):
@@ -121,3 +145,201 @@ def test_revisions_request_invalid_pages(root_doc, client):
     limit_url = urlparams(url, limit='nonsense')
     resp = client.get(limit_url)
     assert resp.status_code == 200
+
+
+def test_list_no_redirects(redirect_doc, doc_hierarchy_with_zones, client):
+    url = reverse('wiki.all_documents', locale='en-US')
+    resp = client.get(url)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    assert 'text/html' in resp['Content-Type']
+    # There should be 4 documents in the English locale.
+    assert len(pq(resp.content).find('.document-list li')) == 4
+    assert redirect_doc.slug not in resp.content
+
+
+def test_tags(root_doc, client):
+    """Test list of all tags."""
+    root_doc.tags.set('foobar', 'blast')
+    url = reverse('wiki.list_tags', locale=root_doc.locale)
+    resp = client.get(url)
+    assert resp.status_code == 200
+    assert 'foobar' in resp.content
+    assert 'blast' in resp.content
+    assert 'wiki/list/tags.html' in [t.name for t in resp.templates]
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+
+
+@pytest.mark.tags
+@pytest.mark.parametrize('tag', ['foo', 'bar'])
+@pytest.mark.parametrize('tag_case', ['lower', 'upper'])
+@pytest.mark.parametrize('locale_case', ['root', 'trans'])
+def test_tag_list(root_doc, trans_doc, client, locale_case, tag_case, tag):
+    """
+    Verify the tagged documents list view. Tags should be case
+    insensitive (https://bugzil.la/976071).
+    """
+    tag_query = getattr(tag, tag_case)()
+    root_doc.tags.set('foo', 'bar')
+    trans_doc.tags.set('foo', 'bar')
+    exp_doc = root_doc if (locale_case == 'root') else trans_doc
+    url = reverse('wiki.tag', locale=exp_doc.locale, kwargs={'tag': tag_query})
+    resp = client.get(url)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    dom = pq(resp.content)
+    selector = 'ul.document-list li a[href="/{}/docs/{}"]'
+    assert len(dom('#document-list ul.document-list li')) == 1
+    assert len(dom.find(selector.format(exp_doc.locale, exp_doc.slug))) == 1
+
+    # Changing the tags to something other than what we're
+    # searching for should take the results to zero.
+    root_doc.tags.set('foobar')
+    trans_doc.tags.set('foobar')
+
+    resp = client.get(url)
+    assert resp.status_code == 200
+    dom = pq(resp.content)
+    assert len(dom('#document-list ul.document-list li')) == 0
+    assert root_doc.slug not in resp.content
+    assert trans_doc.slug not in resp.content
+
+
+@pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
+def test_list_with_errors(redirect_doc, doc_hierarchy_with_zones, client,
+                          locale):
+    top_doc = doc_hierarchy_with_zones.top
+    bottom_doc = doc_hierarchy_with_zones.bottom
+    de_doc = top_doc.translated_to('de')
+    for doc in (top_doc, bottom_doc, de_doc, redirect_doc):
+        doc.rendered_errors = 'bad render'
+        doc.save()
+
+    if locale == 'en-US':
+        exp_docs = (top_doc, bottom_doc)
+    elif locale == 'de':
+        exp_docs = (de_doc,)
+    else:  # fr
+        exp_docs = ()
+
+    url = reverse('wiki.errors', locale=locale)
+    resp = client.get(url)
+    dom = pq(resp.content)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    assert 'text/html' in resp['Content-Type']
+    assert len(dom.find('.document-list li')) == len(exp_docs)
+    selector = 'ul.document-list li a[href="/{}/docs/{}"]'
+    for doc in exp_docs:
+        assert len(dom.find(selector.format(doc.locale, doc.slug))) == 1
+
+
+@pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
+def test_list_without_parent(redirect_doc, doc_hierarchy_with_zones, client,
+                             locale):
+    if locale == 'en-US':
+        exp_docs = (doc_hierarchy_with_zones.top,
+                    doc_hierarchy_with_zones.middle_top,
+                    doc_hierarchy_with_zones.middle_bottom,
+                    doc_hierarchy_with_zones.bottom)
+    else:  # All translations have a parent.
+        exp_docs = ()
+
+    url = reverse('wiki.without_parent', locale=locale)
+    resp = client.get(url)
+    dom = pq(resp.content)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    assert 'text/html' in resp['Content-Type']
+    assert len(dom.find('.document-list li')) == len(exp_docs)
+    selector = 'ul.document-list li a[href="/{}/docs/{}"]'
+    for doc in exp_docs:
+        assert len(dom.find(selector.format(doc.locale, doc.slug))) == 1
+
+
+@pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
+def test_list_top_level(redirect_doc, doc_hierarchy_with_zones, client,
+                        locale):
+    if locale == 'en-US':
+        exp_docs = (doc_hierarchy_with_zones.top,)
+    else:
+        exp_docs = (doc_hierarchy_with_zones.top.translated_to(locale),)
+
+    url = reverse('wiki.top_level', locale=locale)
+    resp = client.get(url)
+    dom = pq(resp.content)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    assert 'text/html' in resp['Content-Type']
+    assert len(dom.find('.document-list li')) == len(exp_docs)
+    selector = 'ul.document-list li a[href="/{}/docs/{}"]'
+    for doc in exp_docs:
+        assert len(dom.find(selector.format(doc.locale, doc.slug))) == 1
+
+
+@pytest.mark.parametrize('tag', ['foo', 'bar'])
+@pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
+def test_list_with_localization_tag(redirect_doc, doc_hierarchy_with_zones,
+                                    client, locale, tag):
+    top_doc = doc_hierarchy_with_zones.top
+    bottom_doc = doc_hierarchy_with_zones.bottom
+    de_doc = top_doc.translated_to('de')
+    for doc in (top_doc, bottom_doc, de_doc, redirect_doc):
+        doc.current_revision.localization_tags.set('foo', 'bar')
+    middle_bottom_doc = doc_hierarchy_with_zones.middle_bottom
+    middle_bottom_doc.current_revision.localization_tags.set('foobar')
+
+    if locale == 'en-US':
+        exp_docs = (top_doc, bottom_doc)
+    elif locale == 'de':
+        exp_docs = (de_doc,)
+    else:  # fr
+        exp_docs = ()
+
+    url = reverse('wiki.list_with_localization_tag', locale=locale,
+                  kwargs={'tag': tag})
+    resp = client.get(url)
+    dom = pq(resp.content)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    assert 'text/html' in resp['Content-Type']
+    assert len(dom.find('.document-list li')) == len(exp_docs)
+    selector = 'ul.document-list li a[href="/{}/docs/{}"]'
+    for doc in exp_docs:
+        assert len(dom.find(selector.format(doc.locale, doc.slug))) == 1
+
+
+@pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
+def test_list_with_localization_tags(redirect_doc, doc_hierarchy_with_zones,
+                                     client, locale):
+    top_doc = doc_hierarchy_with_zones.top
+    bottom_doc = doc_hierarchy_with_zones.bottom
+    de_doc = top_doc.translated_to('de')
+    for doc in (top_doc, bottom_doc, de_doc, redirect_doc):
+        doc.current_revision.localization_tags.set('foo', 'bar')
+
+    if locale == 'en-US':
+        exp_docs = (top_doc, bottom_doc)
+    elif locale == 'de':
+        exp_docs = (de_doc,)
+    else:  # fr
+        exp_docs = ()
+
+    url = reverse('wiki.list_with_localization_tags', locale=locale)
+    resp = client.get(url)
+    dom = pq(resp.content)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
+    assert 'text/html' in resp['Content-Type']
+    assert len(dom.find('.document-list li')) == len(exp_docs)
+    selector = 'ul.document-list li a[href="/{}/docs/{}"]'
+    for doc in exp_docs:
+        assert len(dom.find(selector.format(doc.locale, doc.slug))) == 1

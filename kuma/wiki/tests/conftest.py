@@ -99,6 +99,20 @@ def trans_edit_revision(trans_doc, edit_revision, wiki_user):
 
 
 @pytest.fixture
+def redirect_doc(wiki_user):
+    """A newly-created top-level English redirect document."""
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='Redirection', title='Redirect Document')
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content='REDIRECT <a class="redirect" href="/blah">Some Redirect</a>',
+        title='Redirect Document',
+        created=datetime(2017, 4, 17, 12, 15))
+    return redirect_doc
+
+
+@pytest.fixture
 def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
     top_doc = Document.objects.create(
         locale='en-US',
