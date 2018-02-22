@@ -940,19 +940,28 @@ class TranslateTests(UserTestCase, WikiTestCase):
         self.client.logout()
         translate_uri = self._translate_uri()
         response = self.client.get(translate_uri)
-        eq_(302, response.status_code)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         expected_url = '%s?next=%s' % (reverse('account_login', locale='en-US'),
                                        urlquote(translate_uri))
-        ok_(expected_url in response['Location'])
+        assert expected_url in response['Location']
 
     def test_translate_GET_with_perm(self):
         """HTTP GET to translate URL renders the form."""
         response = self.client.get(self._translate_uri())
-        eq_(200, response.status_code)
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(1, len(doc('form textarea[name="content"]')))
+        assert len(doc('form textarea[name="content"]')) == 1
         # initial translation should include slug input
-        eq_(1, len(doc('form input[name="slug"]')))
+        assert len(doc('form input[name="slug"]')) == 1
         assert (u'Espa' in doc('div.title-locale').text())
 
     def test_translate_disallow(self):
@@ -960,7 +969,12 @@ class TranslateTests(UserTestCase, WikiTestCase):
         self.d.is_localizable = False
         self.d.save()
         response = self.client.get(self._translate_uri())
-        eq_(400, response.status_code)
+        assert response.status_code == 400
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
     def test_invalid_document_form(self):
         """Make sure we handle invalid document form without a 500."""
@@ -968,7 +982,12 @@ class TranslateTests(UserTestCase, WikiTestCase):
         data = _translation_data()
         data['slug'] = ''  # Invalid slug
         response = self.client.post(translate_uri, data)
-        eq_(200, response.status_code)
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
     def test_invalid_revision_form(self):
         """When creating a new translation, an invalid revision form shouldn't
@@ -977,8 +996,13 @@ class TranslateTests(UserTestCase, WikiTestCase):
         data = _translation_data()
         data['content'] = ''  # Content is required
         response = self.client.post(translate_uri, data)
-        eq_(200, response.status_code)
-        eq_(0, self.d.translations.count())
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert self.d.translations.count() == 0
 
     @mock.patch.object(EditDocumentEvent, 'fire')
     @mock.patch.object(Site.objects, 'get_current')
@@ -989,16 +1013,21 @@ class TranslateTests(UserTestCase, WikiTestCase):
         translate_uri = self._translate_uri()
         data = _translation_data()
         response = self.client.post(translate_uri, data)
-        eq_(302, response.status_code)
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         new_doc = Document.objects.get(slug=data['slug'])
-        eq_('es', new_doc.locale)
-        eq_(data['title'], new_doc.title)
-        eq_(self.d, new_doc.parent)
+        assert new_doc.locale == 'es'
+        assert new_doc.title == data['title']
+        assert new_doc.parent == self.d
         rev = new_doc.revisions.all()[0]
-        eq_(data['keywords'], rev.keywords)
-        eq_(data['summary'], rev.summary)
-        eq_(data['content'], rev.content)
-        ok_(edited_fire.called)
+        assert rev.keywords == data['keywords']
+        assert rev.summary == data['summary']
+        assert rev.content == data['content']
+        assert edited_fire.called
 
     def _create_and_approve_first_translation(self):
         """Returns the revision."""
@@ -1028,30 +1057,48 @@ class TranslateTests(UserTestCase, WikiTestCase):
         # Verify the form renders with correct content
         translate_uri = self._translate_uri()
         response = self.client.get(translate_uri)
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(rev_es.content, doc('#id_content').text())
-        eq_(rev_enUS.content, doc('article.approved .translate-rendered').text())
+        assert doc('#id_content').text() == rev_es.content
+        assert (doc('article.approved .translate-rendered').text() ==
+                rev_enUS.content)
 
         # Post the translation and verify
         data = _translation_data()
         data['content'] = 'loremo ipsumo doloro sito ameto nuevo'
         response = self.client.post(translate_uri, data)
-        eq_(302, response.status_code)
-        eq_('http://testserver/es/docs/un-test-articulo?rev_saved=',
-            response['location'])
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert (response['location'] ==
+                'http://testserver/es/docs/un-test-articulo?rev_saved=')
         doc = Document.objects.get(slug=data['slug'])
         rev = doc.revisions.filter(content=data['content'])[0]
-        eq_(data['keywords'], rev.keywords)
-        eq_(data['summary'], rev.summary)
-        eq_(data['content'], rev.content)
-        ok_(edited_fire.called)
+        assert rev.keywords == data['keywords']
+        assert rev.summary == data['summary']
+        assert rev.content == data['content']
+        assert edited_fire.called
 
         # subsequent translations should NOT include slug input
         self.client.logout()
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(translate_uri)
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(0, len(doc('form input[name="slug"]')))
+        assert len(doc('form input[name="slug"]')) == 0
 
     @pytest.mark.xfail(reason='Figure out wtf is going on with this test')
     def test_translate_form_maintains_based_on_rev(self):
@@ -1079,14 +1126,18 @@ class TranslateTests(UserTestCase, WikiTestCase):
         data['title'] = new_title
         data['form-type'] = 'doc'
         response = self.client.post(translate_uri, data)
-        eq_(302, response.status_code)
-        eq_('http://testserver/es/docs/un-test-articulo$edit'
-            '?opendescription=1',
-            response['location'])
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert response['location'].endswith(
+            '/es/docs/un-test-articulo$edit?opendescription=1')
         revisions = rev_es.document.revisions.all()
-        eq_(1, revisions.count())  # No new revisions
+        assert revisions.count() == 1  # No new revisions
         d = Document.objects.get(id=rev_es.document.id)
-        eq_(new_title, d.title)  # Title is updated
+        assert d.title == new_title  # Title is updated
 
     def test_translate_update_rev_and_doc(self):
         """
@@ -1100,13 +1151,18 @@ class TranslateTests(UserTestCase, WikiTestCase):
         data['title'] = new_title
         data['form'] = 'rev'
         response = self.client.post(translate_uri, data)
-        eq_(302, response.status_code)
-        eq_('http://testserver/es/docs/un-test-articulo?rev_saved=',
-            response['location'])
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert response['location'].endswith(
+            '/es/docs/un-test-articulo?rev_saved=')
         revisions = rev_es.document.revisions.all()
-        eq_(2, revisions.count())  # New revision is created
+        assert revisions.count() == 2  # New revision is created
         d = Document.objects.get(id=rev_es.document.id)
-        eq_(data['title'], d.title)  # Title isn't updated
+        assert d.title == data['title']  # Title isn't updated
 
     def test_translate_form_content_fallback(self):
         """
@@ -1116,10 +1172,16 @@ class TranslateTests(UserTestCase, WikiTestCase):
         self.test_first_translation_to_locale()
         translate_uri = self._translate_uri()
         response = self.client.get(translate_uri)
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
         document = Document.objects.filter(locale='es')[0]
         existing_rev = document.revisions.all()[0]
-        eq_(existing_rev.content, doc('#id_content').text())
+        assert doc('#id_content').text() == existing_rev.content
 
     @pytest.mark.xfail(reason='Figure out wtf is going on with this test.')
     def test_translate_based_on(self):
@@ -1130,15 +1192,15 @@ class TranslateTests(UserTestCase, WikiTestCase):
         r = revision(document=base_rev.document, is_approved=True)
         r.save()
         d = Document.objects.get(pk=base_rev.document.id)
-        eq_(r, base_rev.document.current_revision)
+        assert base_rev.document.current_revision == r
 
         uri = reverse('wiki.new_revision_based_on',
                       locale=d.locale,
                       args=[d.slug, base_rev.id])
         response = self.client.get(uri)
-        eq_(200, response.status_code)
+        assert response.status_code == 200
         doc = pq(response.content)
-        eq_(doc('#id_content')[0].value, base_rev.content)
+        assert doc('#id_content')[0].value == base_rev.content
 
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,
@@ -1155,9 +1217,14 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     else:
         uri = reverse(view, locale=locale, args=[doc.slug])
     response = client.get(uri)
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
     orig_rev = doc.current_revision
-    eq_(orig_rev.id,
-        int(pq(response.content)('input[name=based_on]').attr('value')))
+    assert (int(pq(response.content)('input[name=based_on]').attr('value')) ==
+            orig_rev.id)
 
     # While Fred is editing the above, Martha approves a new rev:
     martha_rev = revision(document=doc)
@@ -1169,9 +1236,14 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     post_data_copy.update(post_data)  # Don't mutate arg.
     response = client.post(uri,
                            data=post_data_copy)
-    ok_(response.status_code in (200, 302))
+    assert response.status_code in (200, 302)
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
     fred_rev = Revision.objects.all().order_by('-id')[0]
-    eq_(orig_rev, fred_rev.based_on)
+    assert fred_rev.based_on == orig_rev
 
 
 class ArticlePreviewTests(UserTestCase, WikiTestCase):
@@ -1223,13 +1295,16 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
         response = self.client.get(reverse('wiki.select_locale',
-                                           args=[self.d.slug]),
-                                   follow=True)
-
-        eq_(200, response.status_code)
+                                           locale='en-US',
+                                           args=[self.d.slug]))
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(len(settings.LANGUAGES) - 1,  # All except for 1 (en-US)
-            len(doc('#select-locale ul.locales li')))
+        assert (len(doc('#select-locale ul.locales li')) ==
+                len(settings.LANGUAGES) - 1)  # All except for 1 (en-US)
 
 
 def _create_document(title='Test Document', parent=None,
