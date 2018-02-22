@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from kuma.core.decorators import shared_cache_control
 
 
 urlpatterns = [
@@ -23,6 +24,7 @@ urlpatterns = [
         views.robots_txt,
         name='robots_txt'),
     url(r'^favicon.ico$',
-        views.FaviconRedirect.as_view(icon='favicon.ico'),
+        shared_cache_control(
+            views.FaviconRedirect.as_view(icon='favicon.ico')),
         name='favicon_ico'),
 ]
