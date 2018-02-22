@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import DatabaseError
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_safe
 from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
                                       NotFoundError)
-
 from requests.exceptions import ConnectionError as Requests_ConnectionError
 
 from kuma.users.models import User
@@ -13,6 +13,7 @@ from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 
 
+@never_cache
 @require_safe
 def liveness(request):
     """
@@ -24,6 +25,7 @@ def liveness(request):
     return HttpResponse(status=204)
 
 
+@never_cache
 @require_safe
 def readiness(request):
     """
@@ -47,6 +49,7 @@ def readiness(request):
     return HttpResponse(status=status, reason=reason)
 
 
+@never_cache
 @require_safe
 def status(request):
     """
