@@ -21,6 +21,9 @@ def test_compare_revisions(edit_revision, client, raw):
 
     response = client.get(url)
     assert response.status_code == 200
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
 
 
 @pytest.mark.parametrize('raw', [True, False])
@@ -38,6 +41,9 @@ def test_compare_translation(trans_revision, client, raw):
 
     response = client.get(url)
     assert response.status_code == 200
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
 
 
 @pytest.mark.parametrize('raw', [True, False])
