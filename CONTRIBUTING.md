@@ -17,7 +17,7 @@ What to work on
 ===============
 The MDN platform is a mature product, which means there aren't always bugs that
 are suitable for new contributors. We keep a list of starting mentored bugs on
-the [MDN "Getting Involved" page](get-involved). There are interesting
+the [MDN "Getting Involved" page][get-involved]. There are interesting
 [MDN projects][mdn-projects] outside of writing Python for the platform, but
 they may be harder to find. If you have questions about what to work on, you
 can ask:
@@ -47,7 +47,7 @@ MDN staff will take a look at your PR in 1 to 2 business days, either to review
 and give feedback, or to tell you when we plan to review it.
 
 [gh-flow]: https://guides.github.com/introduction/flow/
-[install]: https://kuma.readthedocs.io/en/latest/installation.html.
+[install]: https://kuma.readthedocs.io/en/latest/installation.html
 [travisci]: https://travis-ci.org/mozilla/kuma/pull_requests
 
 Conventions
@@ -239,7 +239,7 @@ stressful to have your work criticized. Code reviewers should point out
 good code as well as bad, be clear when changes are needed, and offer
 suggestions for fixing code. Code authors should ask questions when a
 suggestion is unclear, and ask for help if needed. On both sides, the review
-should be about the code, not the person, and the [code of conduct](coc) must
+should be about the code, not the person, and the [code of conduct][coc] must
 be followed.
 
 An MDN module [owner or peer][peers] must review and merge all pull requests.
