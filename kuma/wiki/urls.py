@@ -92,7 +92,7 @@ document_patterns = [
 
 ]
 
-urlpatterns = [
+non_document_patterns = [
     url(r'^/ckeditor_config.js$',
         views.misc.ckeditor_config,
         name='wiki.ckeditor_config'),
@@ -176,7 +176,9 @@ urlpatterns = [
     url(r'^/feeds/(?P<format>[^/]+)/files/?',
         AttachmentsFeed(),
         name="attachments.feeds.recent_files"),
+]
 
+urlpatterns = non_document_patterns + [
     url(r'^/(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
         include(document_patterns)),
 ]

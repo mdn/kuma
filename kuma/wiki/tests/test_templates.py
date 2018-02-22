@@ -637,16 +637,21 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.client.logout()
         response = self.client.get(reverse('wiki.edit',
                                            args=[self.d.slug]))
-        eq_(302, response.status_code)
+        assert response.status_code == 302
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
         response = self.client.get(reverse('wiki.edit',
                                            args=[self.d.slug]))
-        eq_(200, response.status_code)
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(1, len(doc('article#edit-document '
-                       'form#wiki-page-edit textarea[name="content"]')))
+        assert len(doc('article#edit-document '
+                       'form#wiki-page-edit textarea[name="content"]')) == 1
 
     def test_new_revision_GET_based_on(self):
         """HTTP GET to new revision URL based on another revision.
@@ -655,16 +660,21 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         with the based-on revision info.
 
         """
-        r = Revision(document=self.d, keywords='ky1, kw2',
-                     summary='the summary',
-                     content='<div>The content here</div>', creator_id=7)
-        r.save()
+        rev = Revision(document=self.d, keywords='ky1, kw2',
+                       summary='the summary',
+                       content='<div>The content here</div>', creator_id=7)
+        rev.save()
         response = self.client.get(reverse('wiki.new_revision_based_on',
-                                           args=[self.d.slug, r.id]))
-        eq_(200, response.status_code)
+                                           locale='en-US',
+                                           args=[self.d.slug, rev.id]))
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
-                             r.content.strip())
+        assert doc('#id_content')[0].value.strip() == rev.content.strip()
 
     @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
     @mock.patch.object(Site.objects, 'get_current')
@@ -691,12 +701,17 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
             'based_on': self.d.current_revision.id,
             'form-type': 'rev',
         }
-        edit_url = reverse('wiki.edit', args=[self.d.slug])
+        edit_url = reverse('wiki.edit', locale='en-US', args=[self.d.slug])
         response = self.client.post(edit_url, data)
-        ok_(response.status_code in (200, 302))
-        eq_(2, self.d.revisions.count())
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert self.d.revisions.count() == 2
         new_rev = self.d.revisions.order_by('-id')[0]
-        eq_(self.d.current_revision, new_rev.based_on)
+        assert self.d.current_revision == new_rev.based_on
 
         # Assert notifications fired and have the expected content:
         # 1 email for the first time edit notification
@@ -747,15 +762,20 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         tags = ['tag1', 'tag2', 'tag3']
         data = new_document_data(tags)
         data['form-type'] = 'rev'
-        response = self.client.post(reverse('wiki.edit',
+        response = self.client.post(reverse('wiki.edit', locale='en-US',
                                     args=[self.d.slug]), data)
-        eq_(302, response.status_code)
-        eq_(2, self.d.revisions.count())
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert self.d.revisions.count() == 2
 
         new_rev = self.d.revisions.order_by('-id')[0]
         # There are no approved revisions, so it's based_on nothing:
-        eq_(None, new_rev.based_on)
-        ok_(edited_fire.called)
+        assert new_rev.based_on is None
+        assert edited_fire.called
 
     def test_new_revision_POST_removes_old_tags(self):
         """Changing the tags on a document removes the old tags from
@@ -770,12 +790,18 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
         data['form-type'] = 'rev'
-        self.client.post(reverse('wiki.edit',
-                                 args=[self.d.slug]),
-                         data)
+        response = self.client.post(reverse('wiki.edit', locale='en-US',
+                                            args=[self.d.slug]),
+                                    data)
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         result_tags = list(self.d.tags.names())
         result_tags.sort()
-        eq_(tags, result_tags)
+        assert tags == result_tags
 
     def test_new_form_maintains_based_on_rev(self):
         """Revision.based_on should be the rev that was current when the Edit
@@ -803,20 +829,30 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         _create_document(title='Document Prueba', parent=self.d,
                          locale='es')
         # Make sure is_localizable hidden field is rendered
-        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]),
-                                   follow=True)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
+        response = self.client.get(reverse('wiki.edit', locale='en-US',
+                                           args=[self.d.slug]))
+        assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+
         data = new_document_data()
         new_title = 'A brand new title'
         data.update(title=new_title)
         data['form-type'] = 'doc'
         data.update(is_localizable='True')
-        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data, follow=True)
-        eq_(200, response.status_code)
-        doc = Document.objects.get(pk=self.d.pk)
-        eq_(new_title, doc.title)
+        response = self.client.post(reverse('wiki.edit', locale='en-US',
+                                            args=[self.d.slug]),
+                                    data)
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert Document.objects.get(pk=self.d.pk).title == new_title
 
     def test_change_slug_case(self):
         """Changing the case of some letters in the slug should work."""
@@ -824,11 +860,16 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_slug = 'Test-Document'
         data.update(slug=new_slug)
         data['form-type'] = 'doc'
-        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data, follow=True)
-        eq_(200, response.status_code)
-        doc = Document.objects.get(pk=self.d.pk)
-        eq_(new_slug, doc.slug)
+        response = self.client.post(reverse('wiki.edit', locale='en-US',
+                                            args=[self.d.slug]),
+                                    data)
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert Document.objects.get(pk=self.d.pk).slug == new_slug
 
     def test_change_title_case(self):
         """Changing the case of some letters in the title should work."""
@@ -836,11 +877,16 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_title = 'TeST DoCuMent'
         data.update(title=new_title)
         data['form-type'] = 'doc'
-        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data, follow=True)
-        eq_(200, response.status_code)
-        doc = Document.objects.get(pk=self.d.pk)
-        eq_(new_title, doc.title)
+        response = self.client.post(reverse('wiki.edit', locale='en-US',
+                                            args=[self.d.slug]),
+                                    data)
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert Document.objects.get(pk=self.d.pk).title == new_title
 
 
 def test_compare_revisions(edit_revision, client):
@@ -1188,16 +1234,21 @@ class TranslateTests(UserTestCase, WikiTestCase):
         # Create the base revision
         base_rev = self._create_and_approve_first_translation()
         # Create a new current revision
-        r = revision(document=base_rev.document, is_approved=True)
-        r.save()
+        rev = revision(document=base_rev.document, is_approved=True)
+        rev.save()
         d = Document.objects.get(pk=base_rev.document.id)
-        assert base_rev.document.current_revision == r
+        assert base_rev.document.current_revision == rev
 
         uri = reverse('wiki.new_revision_based_on',
                       locale=d.locale,
                       args=[d.slug, base_rev.id])
         response = self.client.get(uri)
         assert response.status_code == 200
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
         assert doc('#id_content')[0].value == base_rev.content
 

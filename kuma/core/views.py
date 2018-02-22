@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 
+@never_cache
 def _error_page(request, status):
     """Render error pages with jinja2."""
     return render(request, '%d.html' % status, status=status)

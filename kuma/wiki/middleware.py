@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.shortcuts import render
+from django.views.decorators.cache import never_cache
 
 from kuma.core.utils import urlparams
 
@@ -15,7 +16,13 @@ class ReadOnlyMiddleware(object):
     def process_exception(self, request, exception):
         if isinstance(exception, ReadOnlyException):
             context = {'reason': exception.args[0]}
-            return render(request, '403.html', context, status=403)
+
+            @never_cache
+            def render403(request):
+                return render(request, '403.html', context, status=403)
+
+            return render403(request)
+
         return None
 
 

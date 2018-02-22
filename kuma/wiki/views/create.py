@@ -16,11 +16,11 @@ from ..models import Document, Revision
 
 
 @newrelic.agent.function_trace()
+@never_cache
 @block_user_agents
 @login_required
 @check_readonly
 @prevent_indexing
-@never_cache
 def create(request):
     """
     Create a new wiki page, which is a document and a revision.

@@ -2,6 +2,7 @@
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext
+from django.views.decorators.cache import never_cache
 
 from kuma.core.decorators import (block_user_agents, login_required,
                                   permission_required)
@@ -13,6 +14,7 @@ from ..models import Document, DocumentDeletionLog, Revision
 from ..utils import locale_and_slug_from_path
 
 
+@never_cache
 @block_user_agents
 @login_required
 @check_readonly
@@ -56,6 +58,7 @@ def revert_document(request, document_path, revision_id):
         return redirect('wiki.document_revisions', revision.document.slug)
 
 
+@never_cache
 @block_user_agents
 @login_required
 @permission_required('wiki.delete_document')
@@ -99,6 +102,7 @@ def delete_document(request, document_slug, document_locale):
     return render(request, 'wiki/confirm_document_delete.html', context)
 
 
+@never_cache
 @block_user_agents
 @login_required
 @permission_required('wiki.restore_document')
@@ -115,6 +119,7 @@ def restore_document(request, document_slug, document_locale):
     return redirect(document)
 
 
+@never_cache
 @block_user_agents
 @login_required
 @permission_required('wiki.purge_document')

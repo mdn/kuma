@@ -84,7 +84,6 @@ def test_code_sample_host_restriction(code_sample_doc, constance_config,
     constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
     response = client.get(url, HTTP_HOST='testserver')
     assert response.status_code == 403
-    assert 'Last-Modified' not in response
     response = client.get(url, HTTP_HOST='sampleserver')
     assert response.status_code == 200
     assert 'public' in response['Cache-Control']
