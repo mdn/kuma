@@ -6,6 +6,7 @@ import json
 from django.contrib import admin
 from django.contrib import messages
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -46,6 +47,7 @@ def purge_documents(self, request, queryset):
 purge_documents.short_description = "Permanently purge deleted documents"
 
 
+@never_cache
 @login_required
 @staff_member_required
 @permission_required('wiki.purge_document')
