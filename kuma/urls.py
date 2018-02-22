@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.static import serve
-from django.views.generic import RedirectView
 from django.views.decorators.http import require_safe
+from django.views.generic import RedirectView
+from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
+from kuma.core.decorators import shared_cache_control
 from kuma.wiki.admin import purge_view
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
@@ -31,10 +32,10 @@ urlpatterns = [
     url('', include('kuma.landing.urls')),
     url(
         r'^events',
-        RedirectView.as_view(
+        shared_cache_control(RedirectView.as_view(
             url='https://mozilla.org/contribute/events',
             permanent=False
-        ),
+        )),
         name='events'
     ),
 ]

@@ -13,7 +13,5 @@
 <Url type="application/opensearchdescription+xml"
      rel="self"
      template="{{ url('search.plugin', locale=locale)|absolutify }}"/>
-<Url type="application/x-suggestions+json"
-     template="{{ url('search.suggestions', locale=locale)|absolutify }}?q={searchTerms}"/>
 <moz:SearchForm>{{ url('search', locale=locale)|absolutify }}</moz:SearchForm>
 </OpenSearchDescription>

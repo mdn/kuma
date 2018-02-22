@@ -1,16 +1,12 @@
-import json
 from collections import OrderedDict
 from operator import attrgetter
 
-from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.translation import ugettext
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import never_cache
 from ratelimit.decorators import ratelimit
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
-
-from kuma.wiki.search import WikiDocumentType
 
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
                       HighlightFilterBackend, LanguageFilterBackend,
@@ -22,6 +18,8 @@ from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import (DocumentSerializer, FacetedFilterSerializer,
                           FilterWithGroupSerializer, SearchQuerySerializer)
 from .utils import QueryURLObject
+from kuma.wiki.search import WikiDocumentType
+from kuma.core.decorators import shared_cache_control
 
 
 class SearchView(ListAPIView):
@@ -133,26 +131,12 @@ class SearchView(ListAPIView):
 # (see http://breachattack.com/). It still needs to allow a user to click
 # the filter switches (bug 1426968).
 # Alternate: forbid gzip by setting Content-Encoding: identity
-search = ratelimit(key='user_or_ip', rate='25/m', block=True)(
+search = never_cache(ratelimit(key='user_or_ip', rate='25/m', block=True)(
     SearchView.as_view()
-)
+))
 
 
-@cache_page(60 * 15)  # 15 minutes.
-def suggestions(request):
-    """Return empty array until we restore internal search system."""
-
-    content_type = 'application/x-suggestions+json'
-
-    term = request.GET.get('q')
-    if not term:
-        return HttpResponseBadRequest(content_type=content_type)
-
-    results = []
-    return HttpResponse(json.dumps(results), content_type=content_type)
-
-
-@cache_page(60 * 60 * 168)  # 1 week.
+@shared_cache_control(s_maxage=60 * 60 * 24 * 7)
 def plugin(request):
     """Render an OpenSearch Plugin."""
     return render(request, 'search/plugin.html', {
