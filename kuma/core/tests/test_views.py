@@ -130,27 +130,44 @@ class EventsRedirectTest(KumaTestCase):
         eq_('https://mozilla.org/contribute/events', response['Location'])
 
 
-class LanguageCookieTest(KumaTestCase):
+@pytest.mark.parametrize(
+    'http_method', ['get', 'put', 'delete', 'options', 'head'])
+def test_setting_language_cookie_disallowed_methods(client, http_method):
+    url = reverse('set-language-cookie')
+    response = getattr(client, http_method)(url, {'language': 'bn-BD'})
+    assert response.status_code == 405
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
-    def test_setting_language_cookie_working(self):
-        url = reverse('set-language-cookie')
-        response = self.client.post(url, {'language': 'bn-BD'})
-        assert response.status_code == 204
 
-        language_cookie = response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
+def test_setting_language_cookie_working(client):
+    url = reverse('set-language-cookie')
+    response = client.post(url, {'language': 'bn-BD'})
+    assert response.status_code == 204
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
-        # Check language cookie is set
-        assert language_cookie
-        assert language_cookie.value == 'bn-BD'
+    lang_cookie = response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
 
-    def test_not_possible_to_set_non_locale_cookie(self):
-        url = reverse('set-language-cookie')
-        response = self.client.post(url, {'language': 'foo'})
-        assert response.status_code == 204
+    # Check language cookie is set
+    assert lang_cookie
+    assert lang_cookie.value == 'bn-BD'
 
-        language_cookie = response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
-        # No language cookie should be saved as `foo` is not a supported locale
-        assert not language_cookie
+
+def test_not_possible_to_set_non_locale_cookie(client):
+    url = reverse('set-language-cookie')
+    response = client.post(url, {'language': 'foo'})
+    assert response.status_code == 204
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    # No language cookie should be saved as `foo` is not a supported locale
+    assert not response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
 
 
 @pytest.mark.parametrize('method', ['get', 'head'])
