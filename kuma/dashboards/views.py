@@ -8,19 +8,24 @@ from django.db.models import Prefetch
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
+from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
+from django.views.decorators.vary import vary_on_headers
 import waffle
 
 from kuma.core.decorators import login_required
+from kuma.core.decorators import shared_cache_control
 from kuma.core.utils import paginate
-from kuma.wiki.models import Document, Revision
 from kuma.wiki.kumascript import macro_usage
+from kuma.wiki.models import Document, Revision
 
+from . import PAGE_SIZE
 from .forms import RevisionDashboardForm
 from .jobs import SpamDashboardHistoricalStats
-from . import PAGE_SIZE
 
 
+@shared_cache_control
+@vary_on_headers('X-Requested-With')
 @require_GET
 def revisions(request):
     """Dashboard for reviewing revisions"""
@@ -128,6 +133,8 @@ def revisions(request):
     return render(request, template, context)
 
 
+@shared_cache_control
+@vary_on_headers('X-Requested-With')
 @require_GET
 def user_lookup(request):
     """Returns partial username matches"""
@@ -146,6 +153,8 @@ def user_lookup(request):
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 
 
+@shared_cache_control
+@vary_on_headers('X-Requested-With')
 @require_GET
 def topic_lookup(request):
     """Returns partial topic matches"""
@@ -163,6 +172,7 @@ def topic_lookup(request):
                         content_type='application/json; charset=utf-8')
 
 
+@never_cache
 @require_GET
 @login_required
 @permission_required((
@@ -182,6 +192,7 @@ def spam(request):
     return render(request, 'dashboards/spam.html', data)
 
 
+@shared_cache_control
 @require_GET
 def macros(request):
     """Returns table of active macros and their page counts."""

@@ -3,9 +3,10 @@ import newrelic.agent
 
 from constance import config
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import never_cache, login_required, block_user_agents
+from kuma.core.decorators import block_user_agents, login_required
 from kuma.core.urlresolvers import reverse
 
 from ..constants import DEV_DOC_REQUEST_FORM, REVIEW_FLAG_TAGS_DEFAULT

@@ -1,17 +1,39 @@
-import re
 from functools import wraps, partial
+import re
 
 from django.conf import settings
-from django.shortcuts import redirect, render
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.utils.decorators import available_attrs
+from django.shortcuts import redirect, render
 from django.utils.http import urlquote
+from django.utils.decorators import available_attrs
+from django.views.decorators.cache import cache_control
 
 from .jobs import BannedIPsJob
 from .urlresolvers import reverse
+
+
+def shared_cache_control(func=None, **kwargs):
+    """
+    Decorator for view functions that defines the "Cache-Control" header
+    for shared caches like CDN's. It's simply a thin wrapper around
+    Django's cache-control that sets some defaults. By default, it does not
+    permit use of the browser's cache without validation ("max-age=0"), and
+    sets the caching period for shared caches ("s-maxage") based on the
+    CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE setting. All of the defaults can be
+    overridden or extended via keyword arguments.
+    """
+    # Set the default values.
+    cc_kwargs = dict(public=True, max_age=0,
+                     s_maxage=settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE)
+    # Override the default values and/or add new ones.
+    cc_kwargs.update(kwargs)
+    decorator = cache_control(**cc_kwargs)
+    if not func:
+        return decorator
+    return decorator(func)
 
 
 def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,
@@ -89,25 +111,6 @@ def permission_required(perm, login_url=None, redirect=REDIRECT_FIELD_NAME,
     return user_access_decorator(redirect_func, redirect_field=redirect,
                                  redirect_url_func=redirect_url_func,
                                  deny_func=deny_func)
-
-
-# django never_cache isn't as thorough as we might like
-# http://stackoverflow.com/a/2095648/571420
-# http://stackoverflow.com/a/2068407/571420
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching_FAQ
-# Fixed in Django 1.9:
-# https://docs.djangoproject.com/en/1.9/topics/http/decorators/#caching
-def never_cache(view_func):
-    def _wrapped_view_func(request, *args, **kwargs):
-        resp = view_func(request, *args, **kwargs)
-
-        resp['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-        resp['Pragma'] = 'no-cache'
-        resp['Expires'] = '0'
-
-        return resp
-
-    return _wrapped_view_func
 
 
 def is_superuser(u):

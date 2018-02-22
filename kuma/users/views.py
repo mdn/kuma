@@ -1,8 +1,8 @@
+from datetime import datetime, timedelta
 import collections
 import json
 import operator
 import uuid
-from datetime import datetime, timedelta
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -24,19 +24,19 @@ from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_POST
-from django.views.generic import TemplateView
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.utils.http import urlsafe_base64_decode
+from django.views.decorators.cache import never_cache
+from django.views.decorators.http import require_POST
+from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
-
-from kuma.core.decorators import (
-    login_required, never_cache, redirect_in_maintenance_mode)
+from kuma.core.decorators import login_required, redirect_in_maintenance_mode
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import Document, DocumentDeletionLog, Revision, RevisionAkismetSubmission
+from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
+                              RevisionAkismetSubmission)
 
 from .forms import UserBanForm, UserEditForm, UserRecoveryEmailForm
 from .models import User, UserBan
