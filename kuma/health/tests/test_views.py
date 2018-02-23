@@ -18,7 +18,6 @@ def test_disallowed_methods(client, http_method, endpoint):
     url = reverse('health.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'Cache-Control' in response
     assert 'max-age=0' in response['Cache-Control']
     assert 'no-cache' in response['Cache-Control']
     assert 'no-store' in response['Cache-Control']
@@ -31,7 +30,6 @@ def test_liveness_and_readiness(db, client, http_method, endpoint):
     url = reverse('health.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 204
-    assert 'Cache-Control' in response
     assert 'max-age=0' in response['Cache-Control']
     assert 'no-cache' in response['Cache-Control']
     assert 'no-store' in response['Cache-Control']
@@ -44,7 +42,6 @@ def test_readiness_with_db_error(mock_manager, db, client):
     response = client.get(reverse('health.readiness'))
     assert response.status_code == 503
     assert 'fubar' in response.reason_phrase
-    assert 'Cache-Control' in response
     assert 'max-age=0' in response['Cache-Control']
     assert 'no-cache' in response['Cache-Control']
     assert 'no-store' in response['Cache-Control']
@@ -129,7 +126,6 @@ def test_status(client, settings, mock_status_externals):
     url = reverse('health.status')
     response = client.get(url)
     assert response.status_code == 200
-    assert 'Cache-Control' in response
     assert 'max-age=0' in response['Cache-Control']
     assert 'no-cache' in response['Cache-Control']
     assert 'no-store' in response['Cache-Control']
