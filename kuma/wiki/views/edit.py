@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
+from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
 from ratelimit.decorators import ratelimit
@@ -15,7 +16,7 @@ from ratelimit.decorators import ratelimit
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.core.decorators import (block_banned_ips, block_user_agents,
-                                  login_required, never_cache)
+                                  login_required)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 

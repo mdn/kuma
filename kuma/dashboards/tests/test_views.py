@@ -25,10 +25,15 @@ class RevisionsDashTest(UserTestCase):
     def test_main_view(self):
         response = self.client.get(reverse('dashboards.revisions',
                                            locale='en-US'))
-        eq_(200, response.status_code)
-        ok_('text/html' in response['Content-Type'])
-        ok_('dashboards/revisions.html' in
-            [template.name for template in response.templates])
+        assert response.status_code == 200
+        assert 'Vary' in response
+        assert 'X-Requested-With' in response['Vary']
+        assert 'Cache-Control' in response
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert 'text/html' in response['Content-Type']
+        assert ('dashboards/revisions.html' in
+                (template.name for template in response.templates))
 
     def test_main_view_with_banned_user(self):
         testuser = User.objects.get(username='testuser')
@@ -113,18 +118,6 @@ class RevisionsDashTest(UserTestCase):
 
         ok_('fr' in pq(revisions[0]).find('.locale').html())
 
-    def test_user_lookup(self):
-        url = urlparams(reverse('dashboards.user_lookup', locale='en-US'),
-                        user='test')
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        assert response.status_code == 200
-        assert response['CONTENT-TYPE'] == 'application/json; charset=utf-8'
-        data = json.loads(response.content)
-        expected = [{"label": "testuser"},
-                    {"label": "testuser01"},
-                    {"label": "testuser2"}]
-        assert data == expected
-
     def test_creator_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='en-US'),
                         user='testuser01')
@@ -140,16 +133,6 @@ class RevisionsDashTest(UserTestCase):
             author = pq(revision).find('.dashboard-author').text()
             ok_('testuser01' in author)
             ok_('testuser2' not in author)
-
-    def test_topic_lookup(self):
-        url = urlparams(reverse('dashboards.topic_lookup', locale='en-US'),
-                        topic='lorem')
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        assert response.status_code == 200
-        assert response['CONTENT-TYPE'] == 'application/json; charset=utf-8'
-        data = json.loads(response.content)
-        expected = [{u'label': u'lorem-ipsum'}]
-        assert data == expected
 
     def test_topic_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='en-US'),
@@ -237,7 +220,12 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         """A user who is not logged in is not able to see the dashboard."""
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
-        eq_(302, response.status_code)
+        assert response.status_code == 302
+        assert 'Cache-Control' in response
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
     def test_permissions(self, mock_analytics_upageviews):
         """A user with correct permissions is able to see the dashboard."""
@@ -245,21 +233,21 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         # Attempt to see spam dashboard as a logged-in user without permissions
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
-        eq_(403, response.status_code)
+        assert response.status_code == 403
 
         # Give testuser wiki.add_revisionakismetsubmission permission
         perm_akismet = Permission.objects.get(codename='add_revisionakismetsubmission')
         self.testuser.user_permissions.add(perm_akismet)
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
-        eq_(403, response.status_code)
+        assert response.status_code == 403
 
         # Give testuser wiki.add_documentspamattempt permission
         perm_spam = Permission.objects.get(codename='add_documentspamattempt')
         self.testuser.user_permissions.add(perm_spam)
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
-        eq_(403, response.status_code)
+        assert response.status_code == 403
 
         # Give testuser wiki.add_userban permission
         perm_ban = Permission.objects.get(codename='add_userban')
@@ -267,10 +255,14 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
         # With all correct permissions testuser is able to see the dashboard
-        eq_(200, response.status_code)
-        ok_('text/html' in response['Content-Type'])
-        ok_('dashboards/spam.html' in
-            [template.name for template in response.templates])
+        assert response.status_code == 200
+        assert 'Cache-Control' in response
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert 'text/html' in response['Content-Type']
+        assert 'dashboards/spam.html' in (template.name for template in response.templates)
 
     def test_misconfigured_google_analytics_does_not_block(self, mock_analytics_upageviews):
         """If the constance setting for the Google Analytics API credentials is not
@@ -572,6 +564,57 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         eq_(row_quarterly[true_negative_rate], tnr_quarterly)
 
 
+@pytest.mark.parametrize(
+    'http_method', ['put', 'post', 'delete', 'options', 'head'])
+@pytest.mark.parametrize(
+    'endpoint', ['revisions', 'user_lookup', 'topic_lookup', 'spam', 'macros'])
+def test_disallowed_methods(db, client, http_method, endpoint):
+    """HTTP methods other than GET & HEAD are not allowed."""
+    url = reverse('dashboards.{}'.format(endpoint), locale='en-US')
+    response = getattr(client, http_method)(url)
+    assert response.status_code == 405
+    assert 'Cache-Control' in response
+    if endpoint == 'spam':
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+    else:
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        if endpoint in ('revisions', 'user_lookup', 'topic_lookup'):
+            assert 'Vary' in response
+            assert 'X-Requested-With' in response['Vary']
+
+
+@pytest.mark.parametrize('mode', ['ajax', 'non-ajax'])
+@pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
+def test_lookup(root_doc, wiki_user_2, wiki_user_3, client, mode, endpoint):
+    qs, headers = '', {}
+    if mode == 'ajax':
+        if endpoint == 'topic_lookup':
+            qs = '?topic=root'
+            expected_content = [{u'label': u'Root'}]
+        else:
+            qs = '?user=wiki'
+            expected_content = [{u'label': u'wiki_user'},
+                                {u'label': u'wiki_user_2'},
+                                {u'label': u'wiki_user_3'}]
+        headers.update(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    else:
+        expected_content = []
+    url = reverse('dashboards.{}'.format(endpoint), locale='en-US') + qs
+    response = client.get(url, **headers)
+    assert response.status_code == 200
+    assert 'Vary' in response
+    assert 'X-Requested-With' in response['Vary']
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+    assert response['Content-Type'] == 'application/json; charset=utf-8'
+    assert json.loads(response.content) == expected_content
+
+
 @mock.patch('kuma.dashboards.views.macro_usage')
 def test_macros(mock_usage, client, db):
     """The normal macro page is a three-column table."""
@@ -585,6 +628,11 @@ def test_macros(mock_usage, client, db):
 
     response = client.get(reverse('dashboards.macros'), follow=True)
     assert response.status_code == 200
+    assert 'Vary' in response
+    assert 'Cookie' in response['Vary']
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     assert "Found 1 active macro." in response.content
     page = pq(response.content)
     assert len(page("table.macros-table")) == 1

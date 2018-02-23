@@ -24,6 +24,24 @@ def wiki_user(db, django_user_model):
 
 
 @pytest.fixture
+def wiki_user_2(db, django_user_model):
+    """A second test user."""
+    return django_user_model.objects.create(
+        username='wiki_user_2',
+        email='wiki_user_2@example.com',
+        date_joined=datetime(2017, 4, 17, 10, 30))
+
+
+@pytest.fixture
+def wiki_user_3(db, django_user_model):
+    """A third test user."""
+    return django_user_model.objects.create(
+        username='wiki_user_3',
+        email='wiki_user_3@example.com',
+        date_joined=datetime(2017, 4, 23, 11, 45))
+
+
+@pytest.fixture
 def user_client(client, wiki_user):
     wiki_user.set_password('password')
     wiki_user.save()

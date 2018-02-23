@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
+from urllib import urlencode
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from urllib import urlencode
+from django.views.decorators.cache import never_cache
 
-import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import block_user_agents, login_required, never_cache
+from kuma.core.decorators import block_user_agents, login_required
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import get_object_or_none, smart_int, urlparams
+import kuma.wiki.content
 
 from ..decorators import (check_readonly, prevent_indexing,
                           process_document_path)

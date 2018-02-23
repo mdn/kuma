@@ -5,13 +5,13 @@ from django.http import HttpResponse
 
 from django.test import RequestFactory
 
-from kuma.core.decorators import (block_user_agents, logout_required,
-                                  login_required, never_cache,
-                                  skip_in_maintenance_mode,
+from kuma.core.decorators import (block_user_agents, login_required,
+                                  logout_required, permission_required,
                                   redirect_in_maintenance_mode,
-                                  permission_required)
+                                  shared_cache_control,
+                                  skip_in_maintenance_mode)
 
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from kuma.core.tests import eq_, KumaTestCase
 from kuma.users.tests import UserTestCase
 
 
@@ -119,19 +119,6 @@ class PermissionRequiredTestCase(UserTestCase):
         eq_(200, response.status_code)
 
 
-class TestNeverCache(KumaTestCase):
-
-    def test_never_cache(self):
-        request = RequestFactory().get('/foo')
-        view = never_cache(simple_view)
-        response = view(request)
-        eq_(200, response.status_code)
-        [ok_(value in response['Cache-Control'])
-         for value in ['no-cache', 'no-store', 'must-revalidate']]
-        ok_('no-cache' in response['Pragma'])
-        eq_('0', response['Expires'])
-
-
 class TestBlockUserAgents(KumaTestCase):
 
     def setUp(self):
@@ -199,3 +186,26 @@ def test_redirect_in_maintenance_mode_decorator(rf, settings, maintenance_mode,
         deco = redirect_in_maintenance_mode(methods=methods)
     resp = deco(simple_view)(request)
     assert resp.status_code == expected_status_code
+
+
+def test_shared_cache_control_decorator_with_defaults(rf, settings):
+    settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = 777
+    request = rf.get('/foo')
+    response = shared_cache_control(simple_view)(request)
+    assert response.status_code == 200
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=0' in response['Cache-Control']
+    assert 's-maxage=777' in response['Cache-Control']
+
+
+def test_shared_cache_control_decorator_with_overrides(rf, settings):
+    settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = 777
+    request = rf.get('/foo')
+    deco = shared_cache_control(max_age=999, s_maxage=0)
+    response = deco(simple_view)(request)
+    assert response.status_code == 200
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=999' in response['Cache-Control']
+    assert 's-maxage=0' in response['Cache-Control']

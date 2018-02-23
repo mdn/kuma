@@ -211,4 +211,7 @@ def test_ratelimit_429(client, db):
     assert response.status_code == 429
     assert '429.html' in [t.name for t in response.templates]
     assert response['Retry-After'] == '60'
-    assert response['Cache-Control'] == 'no-cache, no-store, must-revalidate'
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
