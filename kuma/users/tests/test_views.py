@@ -729,7 +729,7 @@ class UserViewsTest(UserTestCase):
 
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
-        fields = ('username', 'email', 'fullname', 'title', 'organization',
+        fields = ('username', 'fullname', 'title', 'organization',
                   'location', 'irc_nickname', 'interests',
                   'is_github_url_public')
         form = dict()
@@ -737,7 +737,15 @@ class UserViewsTest(UserTestCase):
         prefix = 'user-'
         for field in fields:
             lookup = lookup_pattern.format(prefix=prefix, field=field)
-            form[prefix + field] = doc.find(lookup).val()
+            elements = doc.find(lookup)
+            assert len(elements) == 1
+            element = elements[0]
+            if element.type == 'text':
+                form[prefix + field] = element.value
+            else:
+                assert element.type == 'checkbox'
+                form[prefix + field] = element.checked
+
         form[prefix + 'country'] = 'us'
         form[prefix + 'format'] = 'html'
         return form
@@ -813,7 +821,6 @@ class UserViewsTest(UserTestCase):
 
         new_attrs = {
             'user-username': testuser.username,
-            'user-email': 'testuser@test.com',
             'user-fullname': "Another Name",
             'user-title': "Another title",
             'user-organization': "Another org",
