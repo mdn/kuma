@@ -12,35 +12,40 @@ from kuma.users.models import User
 
 
 @pytest.mark.parametrize('http_method', ['put', 'post', 'delete', 'options'])
-@pytest.mark.parametrize('endpoint', ['health.liveness', 'health.readiness'])
+@pytest.mark.parametrize('endpoint', ['liveness', 'readiness', 'status'])
 def test_disallowed_methods(client, http_method, endpoint):
     """Alternate HTTP methods are not allowed."""
-    url = reverse(endpoint)
+    url = reverse('health.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
 
 @pytest.mark.parametrize('http_method', ['get', 'head'])
-def test_liveness(client, http_method):
-    url = reverse('health.liveness')
+@pytest.mark.parametrize('endpoint', ['liveness', 'readiness'])
+def test_liveness_and_readiness(db, client, http_method, endpoint):
+    url = reverse('health.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 204
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
 
-@pytest.mark.parametrize('http_method', ['get', 'head'])
-def test_readiness(db, client, http_method):
-    url = reverse('health.readiness')
-    response = getattr(client, http_method)(url)
-    assert response.status_code == 204
-
-
-def test_readiness_with_db_error(db, client):
-    url = reverse('health.readiness')
-    with mock.patch('kuma.wiki.models.Document.objects') as mock_manager:
-        mock_manager.filter.side_effect = DatabaseError('fubar')
-        response = client.get(url)
+@mock.patch('kuma.wiki.models.Document.objects')
+def test_readiness_with_db_error(mock_manager, db, client):
+    mock_manager.filter.side_effect = DatabaseError('fubar')
+    response = client.get(reverse('health.readiness'))
     assert response.status_code == 503
     assert 'fubar' in response.reason_phrase
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
 
 @pytest.fixture
@@ -121,6 +126,10 @@ def test_status(client, settings, mock_status_externals):
     url = reverse('health.status')
     response = client.get(url)
     assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
     assert response['Content-Type'] == 'application/json'
     data = json.loads(response.content)
     assert sorted(data.keys()) == ['request', 'services', 'settings',
