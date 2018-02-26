@@ -51,7 +51,8 @@
       <fieldset class="section notitle" id="personal">
         <ul>
           <li id="field-beta" class="field">
-            <label for="{{ user_form.beta.id_for_label }}">{{ user_form.beta.label }}</label> {{ user_form.beta }}
+            {{ user_form.beta }}
+            <label for="{{ user_form.beta.id_for_label }}">{{ user_form.beta.label }}</label>
             <p class="field-note">{{ _("We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things.") }}</p>
           </li>
           <li id="field_email" class="field type_email required">
@@ -95,9 +96,10 @@
             </div>
 
             <div id="field_is_github_url_public">
+              {{ user_form.is_github_url_public }}
               <label for="{{ user_form.is_github_url_public.id_for_label }}">
                 {{ user_form.is_github_url_public.label }}
-              </label> {{ user_form.is_github_url_public }}
+              </label>
             </div>
             {% else %}
             <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
