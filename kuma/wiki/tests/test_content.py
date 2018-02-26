@@ -1037,6 +1037,19 @@ def test_extractor_macro_names(root_doc, wiki_user):
     assert sorted(result) == sorted(macros)
 
 
+@pytest.mark.parametrize('is_rendered', (True, False))
+@pytest.mark.parametrize('method', ('macro_names', 'css_classnames',
+                                    'html_attributes'))
+def test_extractor_no_content(method, is_rendered, root_doc, wiki_user):
+    """The Extractor returns empty lists when the document has no content."""
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content='', creator=wiki_user)
+    if is_rendered:
+        root_doc.render()
+    result = getattr(root_doc.extract, method)()
+    assert result == []
+
+
 def test_extractor_code_sample(root_doc, wiki_user):
     """The Extractor can return the sections of a code sample."""
     code_sample = {

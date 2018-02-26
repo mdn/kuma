@@ -86,6 +86,8 @@ class Extractor(object):
         """
         Extract the unique set of class names used in the content
         """
+        if not self.document.rendered_html:
+            return []
         classnames = set()
         for element in pq(self.document.rendered_html).find('*'):
             css_classes = element.attrib.get('class')
