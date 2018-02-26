@@ -13,7 +13,4 @@ urlpatterns += [
     url(r'^/xml$',
         views.plugin,
         name='search.plugin'),
-    url(r'^/suggestions$',
-        views.suggestions,
-        name='search.suggestions'),
 ]
