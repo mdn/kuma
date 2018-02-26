@@ -1,15 +1,8 @@
 '''Tests for kuma/wiki/views/edit.py'''
 import pytest
-from waffle.models import Flag
 
 from kuma.core.models import IPBan
 from kuma.core.urlresolvers import reverse
-
-
-@pytest.fixture
-def editor_client(user_client):
-    Flag.objects.create(name='kumaediting', everyone=True)
-    return user_client
 
 
 def test_edit_get(editor_client, root_doc):

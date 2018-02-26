@@ -27,33 +27,6 @@ def code_sample_doc(root_doc, wiki_user):
     return root_doc
 
 
-class ConstanceConfigWrapper(object):
-    """A Constance configuration wrapper to allow overriding the config."""
-    _original_values = []
-
-    def __setattr__(self, attr, value):
-        from constance import config
-        self._original_values.append((attr, getattr(config, attr)))
-        setattr(config, attr, value)
-        # This can fail if Constance uses a cached database backend
-        # CONSTANCE_DATABASE_CACHE_BACKEND = False to disable
-        assert getattr(config, attr) == value
-
-    def finalize(self):
-        from constance import config
-        for attr, value in reversed(self._original_values):
-            setattr(config, attr, value)
-        del self._original_values[:]
-
-
-@pytest.fixture
-def constance_config(db, settings):
-    """A Constance config object which restores changes after the testrun."""
-    wrapper = ConstanceConfigWrapper()
-    yield wrapper
-    wrapper.finalize()
-
-
 def test_code_sample(code_sample_doc, constance_config, client, settings):
     """The raw source for a document can be requested."""
     Switch.objects.create(name='application_ACAO', active=True)
