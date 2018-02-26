@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pytest
+import requests_mock
 from django.conf import settings
 from django.core.cache import caches
 from waffle.models import Flag
@@ -95,3 +96,9 @@ def root_doc(wiki_user):
         title='Root Document',
         created=datetime(2017, 4, 14, 12, 15))
     return root_doc
+
+
+@pytest.fixture
+def mock_requests():
+    with requests_mock.Mocker() as mocker:
+        yield mocker

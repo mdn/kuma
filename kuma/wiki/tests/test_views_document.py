@@ -506,7 +506,7 @@ def test_document_banned_ip_can_read(client, root_doc):
 
 @pytest.mark.parametrize('endpoint', ['document', 'preview'])
 def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
-                                    endpoint):
+                                    endpoint, mock_requests):
     """
     Kumascript reports errors in HTTP headers. Kuma should display the errors
     with appropriate links for both the "wiki.preview" and "wiki.document"
@@ -518,9 +518,8 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
         KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT=10.0,
         KUMA_DOCUMENT_RENDER_TIMEOUT=180.0
     )
-    mock_requests = requests_mock.Mocker()
     mock_ks_config = mock.patch('kuma.wiki.kumascript.config', **ks_settings)
-    with mock_ks_config, mock_requests:
+    with mock_ks_config:
         if endpoint == 'preview':
             mock_requests.post(
                 requests_mock.ANY,
