@@ -39,7 +39,7 @@ def test_xss_file_attachment_title(admin_client, constance_config, root_doc,
     assert response.status_code == 200
     doc = pq(response.content)
     text = doc('.page-attachments-table .attachment-name-cell').text()
-    assert text == ('%s xss' % title)
+    assert text == ('%s\nxss' % title)
     html = doc('.page-attachments-table .attachment-name-cell').html()
     assert '&gt;&lt;img src=x onerror=prompt(navigator.userAgent);&gt;' in html
     # security bug 1272791

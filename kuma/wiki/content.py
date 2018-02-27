@@ -156,7 +156,7 @@ class Extractor(object):
         for part in parts:
             selector = ','.join(selector_template % part
                                 for selector_template in selector_templates)
-            src = sample.find(selector).text()
+            src = sample.find(selector).text(squash_space=False)
             if src is not None:
                 # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
                 src = src.replace(u'\xa0', u' ')
