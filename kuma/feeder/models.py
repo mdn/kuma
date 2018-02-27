@@ -3,21 +3,13 @@ from django.utils.functional import cached_property
 
 import jsonpickle
 
-from .sections import SECTIONS_TWITTER, SECTIONS_UPDATES
-
 
 class BundleManager(models.Manager):
     """Custom manager for bundles."""
 
-    def recent_entries(self, bundles):
+    def recent_entries(self, bundle):
         """Most recent entries."""
-        if isinstance(bundles, basestring):
-            # Single bundle.
-            return Entry.objects.filter(feed__bundles__shortname=bundles)
-        else:
-            # Sequence of bundles.
-            return Entry.objects.filter(
-                feed__bundles__shortname__in=bundles)
+        return Entry.objects.filter(feed__bundles__shortname=bundle)
 
 
 class Bundle(models.Model):
@@ -106,13 +98,3 @@ class Entry(models.Model):
     def parsed(self):
         """Unpickled feed data."""
         return jsonpickle.decode(self.raw)
-
-    @cached_property
-    def section(self):
-        """The section this entry is associated with."""
-        try:
-            bundle = self.feed.bundles.all()[0].shortname
-        except IndexError:
-            return None
-        return SECTIONS_TWITTER.get(bundle, SECTIONS_UPDATES.get(
-            bundle, None))
