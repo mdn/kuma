@@ -9,8 +9,8 @@ from ratelimit.decorators import ratelimit
 
 from kuma.core.cache import memcache
 from kuma.core.decorators import shared_cache_control
-from kuma.core.sections import SECTION_USAGE
 from kuma.feeder.models import Bundle
+from kuma.feeder.sections import SECTION_USAGE
 from kuma.search.models import Filter
 
 

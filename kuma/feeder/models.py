@@ -3,7 +3,7 @@ from django.utils.functional import cached_property
 
 import jsonpickle
 
-from kuma.core.sections import SECTIONS_TWITTER, SECTIONS_UPDATES
+from .sections import SECTIONS_TWITTER, SECTIONS_UPDATES
 
 
 class BundleManager(models.Manager):
