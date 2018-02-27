@@ -115,8 +115,11 @@ def tags_for(cls, model, instance=None, **extra_filters):
 
 class TaggedDocument(ItemBase):
     """Through model, for tags on Documents"""
-    content_object = models.ForeignKey('Document')
-    tag = models.ForeignKey(DocumentTag, related_name="%(app_label)s_%(class)s_items")
+    content_object = models.ForeignKey('Document', on_delete=models.CASCADE)
+    tag = models.ForeignKey(
+        DocumentTag,
+        related_name="%(app_label)s_%(class)s_items",
+        on_delete=models.CASCADE)
 
     objects = TaggedDocumentManager()
 
@@ -134,12 +137,15 @@ class DocumentAttachment(models.Model):
     file = models.ForeignKey(
         'attachments.Attachment',
         related_name='document_attachments',
+        on_delete=models.PROTECT
     )
     document = models.ForeignKey(
         'wiki.Document',
         related_name='attached_files',
+        on_delete=models.CASCADE
     )
-    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
+                                    on_delete=models.SET_NULL)
     name = models.TextField()
 
     # whether or not this attachment was uploaded for the document
@@ -215,6 +221,7 @@ class Document(NotificationsMixin, models.Model):
         'Revision',
         null=True,
         related_name='current_for+',
+        on_delete=models.SET_NULL
     )
 
     # The Document I was translated from. NULL if this doc is in the default
@@ -225,6 +232,7 @@ class Document(NotificationsMixin, models.Model):
         related_name='translations',
         null=True,
         blank=True,
+        on_delete=models.PROTECT
     )
 
     parent_topic = models.ForeignKey(
@@ -232,6 +240,7 @@ class Document(NotificationsMixin, models.Model):
         related_name='children',
         null=True,
         blank=True,
+        on_delete=models.PROTECT
     )
 
     # The files attached to the document, represented by a custom intermediate
@@ -1471,7 +1480,8 @@ class DocumentDeletionLog(models.Model):
 
     slug = models.CharField(max_length=255, db_index=True)
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.PROTECT)
     timestamp = models.DateTimeField(auto_now=True)
     reason = models.TextField()
 
@@ -1488,7 +1498,8 @@ class DocumentZone(models.Model):
     Model object declaring a content zone root at a given Document, provides
     attributes inherited by the topic hierarchy beneath it.
     """
-    document = models.OneToOneField(Document, related_name='zone')
+    document = models.OneToOneField(Document, related_name='zone',
+                                    on_delete=models.PROTECT)
     css_slug = models.CharField(
         max_length=100, blank=True,
         help_text='name of an alternative pipeline CSS group for documents '
@@ -1518,8 +1529,11 @@ class LocalizationTag(TagBase):
 
 class ReviewTaggedRevision(ItemBase):
     """Through model, just for review tags on revisions"""
-    content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(ReviewTag, related_name="%(app_label)s_%(class)s_items")
+    content_object = models.ForeignKey('Revision', on_delete=models.CASCADE)
+    tag = models.ForeignKey(
+        ReviewTag,
+        related_name="%(app_label)s_%(class)s_items",
+        on_delete=models.CASCADE)
 
     @classmethod
     def tags_for(cls, *args, **kwargs):
@@ -1528,8 +1542,11 @@ class ReviewTaggedRevision(ItemBase):
 
 class LocalizationTaggedRevision(ItemBase):
     """Through model, just for localization tags on revisions"""
-    content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(LocalizationTag, related_name="%(app_label)s_%(class)s_items")
+    content_object = models.ForeignKey('Revision', on_delete=models.CASCADE)
+    tag = models.ForeignKey(
+        LocalizationTag,
+        related_name="%(app_label)s_%(class)s_items",
+        on_delete=models.CASCADE)
 
     @classmethod
     def tags_for(cls, *args, **kwargs):
@@ -1553,7 +1570,8 @@ class Revision(models.Model):
         (TOC_DEPTH_H4, _('H4 and higher')),
     )
 
-    document = models.ForeignKey(Document, related_name='revisions')
+    document = models.ForeignKey(Document, related_name='revisions',
+                                 on_delete=models.CASCADE)
 
     # Title and slug in document are primary, but they're kept here for
     # revision history.
@@ -1588,13 +1606,15 @@ class Revision(models.Model):
     created = models.DateTimeField(default=datetime.now, db_index=True)
     comment = models.CharField(max_length=255)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                related_name='created_revisions')
+                                related_name='created_revisions',
+                                on_delete=models.PROTECT)
     is_approved = models.BooleanField(default=True, db_index=True)
 
     # The default locale's rev that was current when the Edit button was hit to
     # create this revision. Used to determine whether localizations are out of
     # date.
-    based_on = models.ForeignKey('self', null=True, blank=True)
+    based_on = models.ForeignKey('self', null=True, blank=True,
+                                 on_delete=models.SET_NULL)
     # TODO: limit_choices_to={'document__locale':
     # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
 
@@ -1779,7 +1799,8 @@ class RevisionIP(models.Model):
     IP Address for a Revision including User-Agent string and Referrer URL.
     """
     revision = models.ForeignKey(
-        Revision
+        Revision,
+        on_delete=models.CASCADE
     )
     ip = models.CharField(
         _('IP address'),
@@ -1851,7 +1872,8 @@ class RevisionAkismetSubmission(AkismetSubmission):
 
 class EditorToolbar(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                related_name='created_toolbars')
+                                related_name='created_toolbars',
+                                on_delete=models.CASCADE)
     default = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     code = models.TextField(max_length=2000)
@@ -1919,6 +1941,7 @@ class DocumentSpamAttempt(SpamAttempt):
         blank=True,
         null=True,
         verbose_name=_('Staff reviewer'),
+        on_delete=models.SET_NULL
     )
 
     def __unicode__(self):

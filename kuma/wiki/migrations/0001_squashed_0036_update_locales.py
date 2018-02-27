@@ -62,9 +62,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.TextField()),
-                ('attached_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
-                ('document', models.ForeignKey(related_name='attached_files', to='wiki.Document')),
-                ('file', models.ForeignKey(related_name='document_attachments', to='attachments.Attachment')),
+                ('attached_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)),
+                ('document', models.ForeignKey(related_name='attached_files', to='wiki.Document', on_delete=models.CASCADE)),
+                ('file', models.ForeignKey(related_name='document_attachments', to='attachments.Attachment', on_delete=models.PROTECT)),
                 ('is_linked', models.BooleanField(default=False, verbose_name='linked in the document content')),
                 ('is_original', models.BooleanField(default=False, verbose_name='uploaded to the document')),
             ],
@@ -80,7 +80,7 @@ class Migration(migrations.Migration):
                 ('slug', models.CharField(max_length=255, db_index=True)),
                 ('timestamp', models.DateTimeField(auto_now=True)),
                 ('reason', models.TextField()),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
             ],
         ),
         migrations.CreateModel(
@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('url_root', models.CharField(help_text=b'alternative URL path root for documents under this zone', max_length=255, null=True, db_index=True, blank=True)),
-                ('document', models.OneToOneField(related_name='zone', to='wiki.Document')),
+                ('document', models.OneToOneField(related_name='zone', to='wiki.Document', on_delete=models.PROTECT)),
                 ('css_slug', models.CharField(help_text=b'name of an alternative pipeline CSS group for documents under this zone (note that "zone-" will be prepended)', max_length=100, blank=True)),
             ],
         ),
@@ -111,7 +111,7 @@ class Migration(migrations.Migration):
                 ('default', models.BooleanField(default=False)),
                 ('name', models.CharField(max_length=100)),
                 ('code', models.TextField(max_length=2000)),
-                ('creator', models.ForeignKey(related_name='created_toolbars', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(related_name='created_toolbars', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -172,9 +172,9 @@ class Migration(migrations.Migration):
                 ('comment', models.CharField(max_length=255)),
                 ('is_approved', models.BooleanField(default=True, db_index=True)),
                 ('is_mindtouch_migration', models.BooleanField(default=False, help_text=b'Did this revision come from MindTouch?', db_index=True)),
-                ('based_on', models.ForeignKey(blank=True, to='wiki.Revision', null=True)),
-                ('creator', models.ForeignKey(related_name='created_revisions', to=settings.AUTH_USER_MODEL)),
-                ('document', models.ForeignKey(related_name='revisions', to='wiki.Document')),
+                ('based_on', models.ForeignKey(blank=True, to='wiki.Revision', null=True, on_delete=models.SET_NULL)),
+                ('creator', models.ForeignKey(related_name='created_revisions', to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
+                ('document', models.ForeignKey(related_name='revisions', to='wiki.Document', on_delete=models.CASCADE)),
                 ('localization_tags', taggit.managers.TaggableManager(to='wiki.LocalizationTag', through='wiki.LocalizationTaggedRevision', help_text='A comma-separated list of tags.', verbose_name='Tags')),
                 ('review_tags', taggit.managers.TaggableManager(to='wiki.ReviewTag', through='wiki.ReviewTaggedRevision', help_text='A comma-separated list of tags.', verbose_name='Tags')),
             ],
@@ -184,7 +184,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('ip', models.CharField(editable=False, max_length=40, blank=True, null=True, verbose_name=b'IP address', db_index=True)),
-                ('revision', models.ForeignKey(to='wiki.Revision')),
+                ('revision', models.ForeignKey(to='wiki.Revision', on_delete=models.CASCADE)),
                 ('referrer', models.TextField(verbose_name=b'HTTP Referrer', editable=False, blank=True)),
                 ('user_agent', models.TextField(verbose_name=b'User-Agent', editable=False, blank=True)),
                 ('data', models.TextField(verbose_name='Data submitted to Akismet', null=True, editable=False, blank=True)),
@@ -194,8 +194,8 @@ class Migration(migrations.Migration):
             name='TaggedDocument',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('content_object', models.ForeignKey(to='wiki.Document')),
-                ('tag', models.ForeignKey(related_name='wiki_taggeddocument_items', to='wiki.DocumentTag')),
+                ('content_object', models.ForeignKey(to='wiki.Document', on_delete=models.CASCADE)),
+                ('tag', models.ForeignKey(related_name='wiki_taggeddocument_items', to='wiki.DocumentTag', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -204,27 +204,27 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='reviewtaggedrevision',
             name='content_object',
-            field=models.ForeignKey(to='wiki.Revision'),
+            field=models.ForeignKey(to='wiki.Revision', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='reviewtaggedrevision',
             name='tag',
-            field=models.ForeignKey(related_name='wiki_reviewtaggedrevision_items', to='wiki.ReviewTag'),
+            field=models.ForeignKey(related_name='wiki_reviewtaggedrevision_items', to='wiki.ReviewTag', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='localizationtaggedrevision',
             name='content_object',
-            field=models.ForeignKey(to='wiki.Revision'),
+            field=models.ForeignKey(to='wiki.Revision', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='localizationtaggedrevision',
             name='tag',
-            field=models.ForeignKey(related_name='wiki_localizationtaggedrevision_items', to='wiki.LocalizationTag'),
+            field=models.ForeignKey(related_name='wiki_localizationtaggedrevision_items', to='wiki.LocalizationTag', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='document',
             name='current_revision',
-            field=models.ForeignKey(related_name='current_for+', to='wiki.Revision', null=True),
+            field=models.ForeignKey(related_name='current_for+', to='wiki.Revision', null=True, on_delete=models.SET_NULL),
         ),
         migrations.AddField(
             model_name='document',
@@ -234,12 +234,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='document',
             name='parent',
-            field=models.ForeignKey(related_name='translations', blank=True, to='wiki.Document', null=True),
+            field=models.ForeignKey(related_name='translations', blank=True, to='wiki.Document', null=True, on_delete=models.PROTECT),
         ),
         migrations.AddField(
             model_name='document',
             name='parent_topic',
-            field=models.ForeignKey(related_name='children', blank=True, to='wiki.Document', null=True),
+            field=models.ForeignKey(related_name='children', blank=True, to='wiki.Document', null=True, on_delete=models.PROTECT),
         ),
         migrations.AddField(
             model_name='document',
@@ -273,7 +273,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255, verbose_name=b'Title')),
                 ('slug', models.CharField(max_length=255, verbose_name=b'Slug')),
                 ('document', models.ForeignKey(related_name='spam_attempts', on_delete=django.db.models.deletion.SET_NULL, verbose_name=b'Document (optional)', blank=True, to='wiki.Document', null=True)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
                 ('data', models.TextField(verbose_name='Data submitted to Akismet', null=True, editable=False, blank=True)),
                 ('review', models.IntegerField(default=0, verbose_name="Review of Akismet's classification as spam", choices=[(0, 'Needs Review'), (1, 'Ham / False Positive'), (2, 'Confirmed as Spam'), (3, 'Review Unavailable')])),
                 ('reviewed', models.DateTimeField(null=True, verbose_name='reviewed', blank=True)),
@@ -291,7 +291,7 @@ class Migration(migrations.Migration):
                 ('sent', django_extensions.db.fields.CreationDateTimeField(default=django.utils.timezone.now, auto_now_add=True, verbose_name='sent at', db_index=True)),
                 ('type', models.CharField(db_index=True, max_length=4, verbose_name='submission type', choices=[(b'spam', 'Spam'), (b'ham', 'Ham')])),
                 ('revision', models.ForeignKey(related_name='akismet_submissions', on_delete=django.db.models.deletion.SET_NULL, verbose_name=b'Revision', blank=True, to='wiki.Revision', null=True)),
-                ('sender', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('sender', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
             ],
             options={
                 'ordering': ('-sent',),
@@ -326,7 +326,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='documentspamattempt',
             name='reviewer',
-            field=models.ForeignKey(related_name='documentspam_reviewed', verbose_name='Staff reviewer', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name='documentspam_reviewed', verbose_name='Staff reviewer', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL),
         ),
         migrations.AlterField(
             model_name='documentspamattempt',

@@ -98,7 +98,8 @@ class AttachmentRevision(models.Model):
     """
     DEFAULT_MIME_TYPE = 'application/octet-stream'
 
-    attachment = models.ForeignKey(Attachment, related_name='revisions')
+    attachment = models.ForeignKey(Attachment, related_name='revisions',
+                                   on_delete=models.CASCADE)
 
     file = models.FileField(upload_to=attachment_upload_to, max_length=500)
 
@@ -121,6 +122,7 @@ class AttachmentRevision(models.Model):
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='created_attachment_revisions',
+        on_delete=models.PROTECT,
     )
     is_approved = models.BooleanField(default=True, db_index=True)
 

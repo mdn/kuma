@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='entry',
             name='feed',
-            field=models.ForeignKey(related_name='entries', to='feeder.Feed'),
+            field=models.ForeignKey(related_name='entries', to='feeder.Feed', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

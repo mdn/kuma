@@ -40,8 +40,8 @@ class Migration(migrations.Migration):
                 ('is_approved', models.BooleanField(default=True, db_index=True)),
                 ('mindtouch_old_id', models.IntegerField(help_text=b'ID for migrated MindTouch resource revision', unique=True, null=True, db_index=True)),
                 ('is_mindtouch_migration', models.BooleanField(default=False, help_text=b'Did this revision come from MindTouch?', db_index=True)),
-                ('attachment', models.ForeignKey(related_name='revisions', to='attachments.Attachment')),
-                ('creator', models.ForeignKey(related_name='created_attachment_revisions', to=settings.AUTH_USER_MODEL)),
+                ('attachment', models.ForeignKey(related_name='revisions', to='attachments.Attachment', on_delete=models.CASCADE)),
+                ('creator', models.ForeignKey(related_name='created_attachment_revisions', to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
             ],
         ),
         migrations.AddField(

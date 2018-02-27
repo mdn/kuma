@@ -59,8 +59,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('object_id', models.PositiveIntegerField()),
-                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
-                ('index', models.ForeignKey(related_name='outdated_objects', to='search.Index')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.CASCADE)),
+                ('index', models.ForeignKey(related_name='outdated_objects', to='search.Index', on_delete=models.CASCADE)),
             ],
         ),
         migrations.AlterUniqueTogether(
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='filter',
             name='group',
-            field=models.ForeignKey(related_name='filters', to='search.FilterGroup', help_text=b'E.g. "Topic", "Skill level" etc'),
+            field=models.ForeignKey(related_name='filters', to='search.FilterGroup', help_text=b'E.g. "Topic", "Skill level" etc', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='filter',

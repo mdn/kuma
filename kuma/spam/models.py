@@ -6,7 +6,8 @@ from django_extensions.db.fields import CreationDateTimeField
 
 
 class SpamAttempt(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.PROTECT)
     created = CreationDateTimeField(_('created'), db_index=True)
 
     class Meta:
@@ -27,7 +28,8 @@ class AkismetSubmission(models.Model):
         (SPAM_TYPE, _('Spam')),
         (HAM_TYPE, _('Ham')),
     )
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL)
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.PROTECT)
     sent = CreationDateTimeField(
         _('sent at'),
         db_index=True,

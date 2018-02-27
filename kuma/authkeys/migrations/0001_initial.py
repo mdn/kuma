@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('hashed_secret', models.CharField(verbose_name='Hashed secret', max_length=128, editable=False)),
                 ('description', models.TextField(verbose_name='Description of intended use')),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(editable=False, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(editable=False, to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
             ],
             options={
             },
@@ -35,8 +35,8 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(null=True)),
                 ('object_id', models.PositiveIntegerField()),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
-                ('key', models.ForeignKey(related_name='history', to='authkeys.Key')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.CASCADE)),
+                ('key', models.ForeignKey(related_name='history', to='authkeys.Key', on_delete=models.CASCADE)),
             ],
             options={
             },
