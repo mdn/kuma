@@ -1,5 +1,6 @@
+{% macro newsfeed(entries) -%}
 <ul class="hfeed">
-  {% for entry in updates %}
+  {% for entry in entries %}
     {% with e = entry.parsed %}
     <li class="hentry">
       <h2 class="entry-title"><a href="{{ e.link }}" rel="bookmark">{{ e.title|entity_decode }}</a></h2>
@@ -10,11 +11,9 @@
       {% trans authorlink=author_link|safe, entrydate=entry_date|safe %}
         Posted {{ entrydate }} by {{ authorlink }}
       {% endtrans %}
-      {% if section_headers and entry.section %}
-      under <a href="{{ url(entry.section.short) }}" rel="tag">{{ entry.section.pretty }}</a>
-      {% endif %}
       </p>
     </li>
     {% endwith %}
   {% endfor %}
 </ul>
+{%- endmacro %}
