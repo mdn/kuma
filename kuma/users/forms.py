@@ -54,7 +54,7 @@ class UserEditForm(forms.ModelForm):
         regex=USERNAME_REGEX,
         max_length=30,
         required=False,
-        error_message=USERNAME_CHARACTERS,
+        error_messages={'invalid': USERNAME_CHARACTERS},
     )
     twitter_url = forms.CharField(
         label=_('Twitter'),
