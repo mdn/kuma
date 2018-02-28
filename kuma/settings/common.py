@@ -593,7 +593,6 @@ INSTALLED_APPS = (
     'tidings',
     'djcelery',
     'taggit',
-    'dbgettext',
     'honeypot',
     'cacheback',
     'django_extensions',
@@ -614,6 +613,7 @@ FEEDER_TIMEOUT = 6  # in seconds
 
 TEMPLATES = [
     {
+        'NAME': 'jinja2',
         'BACKEND': 'django_jinja.backend.Jinja2',
         'DIRS': [path('jinja2')],
         'APP_DIRS': True,
@@ -645,6 +645,7 @@ TEMPLATES = [
         }
     },
     {
+        'NAME': 'django',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [path('templates')],
         'APP_DIRS': False,
@@ -1626,9 +1627,6 @@ LOGGING = {
 
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
-
-DBGETTEXT_PATH = 'kuma/core/'
-DBGETTEXT_ROOT = 'translations'
 
 
 def get_user_url(user):
