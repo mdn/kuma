@@ -5,9 +5,9 @@
 # Parse HTML with CSS selectors like jquery
 # Code: https://github.com/gawel/pyquery
 # Changes: https://github.com/gawel/pyquery/blob/master/CHANGES.rst
-pyquery==1.2.11 \
-    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
-    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
+pyquery==1.4.0 \
+    --hash=sha256:07987c2ed2aed5cba29ff18af95e56e9eb04a2249f42ce47bddfb37f487229a3 \
+    --hash=sha256:4771db76bd14352eba006463656aef990a0147a0eeaf094725097acfa90442bf
 
 # Better HTTP requests. Used to talk to GitHub, KumaScript, Akismet.
 # Used by the scraper and headless tests.

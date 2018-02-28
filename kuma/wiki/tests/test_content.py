@@ -10,9 +10,8 @@ import pytest
 
 import kuma.wiki.content
 from kuma.core.tests import KumaTestCase, eq_, ok_
-from kuma.users.tests import UserTestCase
 
-from . import document, normalize_html, revision
+from . import document, normalize_html
 
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
@@ -587,146 +586,6 @@ class FilterOutNoIncludeTests(TestCase):
         assert result == ''
 
 
-class ExtractCodeSampleTests(UserTestCase):
-    def test_sample_code_extraction(self):
-        sample_html = u"""
-            <div class="foo">
-                <p>Hello world!</p>
-                <p>Unicode fun: Przykłady 例 예제 示例</p>
-            </div>
-        """
-        sample_css = u"""
-            .foo p { color: red; }
-        """
-        sample_js = u"""
-            window.alert("Hi there!");
-        """
-        rev = revision(is_approved=True, save=True, content=u"""
-            <p>This is a page. Deal with it.</p>
-
-            <h3 id="sample0">This is a section</h3>
-            <pre class="brush:html; highlight: [5, 15]; html-script: true">section html</pre>
-            <pre class="brush:css;">section css</pre>
-            <pre class="brush: js">section js</pre>
-
-            <h3>The following is a new section</h3>
-
-            <div id="sample1" class="code-sample">
-                <pre class="brush: html;">Ignore me</pre>
-                <pre class="brush:css;">Ignore me</pre>
-                <pre class="brush: js">Ignore me</pre>
-            </div>
-
-            <ul id="sample2" class="code-sample">
-                <li><span>HTML</span>
-                    <pre class="brush: html">%s</pre>
-                </li>
-                <li><span>CSS</span>
-                    <pre class="brush:css;random:crap;in:the;classname">%s</pre>
-                </li>
-                <li><span>JS</span>
-                    <pre class="brush: js">%s</pre>
-                </li>
-            </ul>
-
-            <p>More content shows up here.</p>
-            <p id="not-a-sample">This isn't a sample, but it
-                shouldn't cause an error</p>
-
-            <h4 id="sample3">Another section</h4>
-            <pre class="brush: html">Ignore me</pre>
-            <pre class="brush: js">Ignore me</pre>
-
-            <h4>Yay a header</h4>
-            <p>Yadda yadda</p>
-
-            <div id="sample4" class="code-sample">
-                <pre class="brush: js">Ignore me</pre>
-            </div>
-
-            <p>Yadda yadda</p>
-        """ % (escape(sample_html), escape(sample_css), escape(sample_js)))
-
-        # live sample using the section logic
-        result = rev.document.extract.code_sample('sample0')
-        eq_('section html', result['html'].strip())
-        eq_('section css', result['css'].strip())
-        eq_('section js', result['js'].strip())
-
-        # pull out a complete sample.
-        result = rev.document.extract.code_sample('sample2')
-        eq_(sample_html.strip(), result['html'].strip())
-        eq_(sample_css.strip(), result['css'].strip())
-        eq_(sample_js.strip(), result['js'].strip())
-
-        # a sample missing one part.
-        result = rev.document.extract.code_sample('sample3')
-        eq_('Ignore me', result['html'].strip())
-        eq_(None, result['css'])
-        eq_('Ignore me', result['js'].strip())
-
-        # a sample with only one part.
-        result = rev.document.extract.code_sample('sample4')
-        eq_(None, result['html'])
-        eq_(None, result['css'])
-        eq_('Ignore me', result['js'].strip())
-
-        # a "sample" with no code listings.
-        result = rev.document.extract.code_sample('not-a-sample')
-        eq_(None, result['html'])
-        eq_(None, result['css'])
-        eq_(None, result['js'])
-
-    def test_bug819999(self):
-        """
-        Non-breaking spaces are turned to normal spaces in code sample
-        extraction.
-        """
-        rev = revision(is_approved=True, save=True, content="""
-            <h2 id="bug819999">Bug 819999</h2>
-            <pre class="brush: css">
-            .widget select,
-            .no-widget .select {
-            &nbsp; position : absolute;
-            &nbsp; left&nbsp;&nbsp;&nbsp;&nbsp; : -5000em;
-            &nbsp; height&nbsp;&nbsp; : 0;
-            &nbsp; overflow : hidden;
-            }
-            </pre>
-        """)
-        result = rev.document.extract.code_sample('bug819999')
-        ok_(result['css'].find(u'\xa0') == -1)
-
-    def test_bug1284781(self):
-        """
-        Non-breaking spaces are turned to normal spaces in code sample
-        extraction.
-        """
-        rev = revision(is_approved=True, save=True, content="""
-            <h2 id="bug1284781">Bug 1284781</h2>
-            <pre class="brush: css">
-            .widget select,
-            .no-widget .select {
-            &nbsp; position : absolute;
-            &nbsp; left&nbsp;&nbsp;&nbsp;&nbsp; : -5000em;
-            &nbsp; height&nbsp;&nbsp; : 0;
-            &nbsp; overflow : hidden;
-            }
-            </pre>
-        """)
-        result = rev.document.extract.code_sample('bug1284781')
-        ok_(result['css'].find(u'&nbsp;') == -1)
-
-    def test_bug1173170(self):
-        """
-        Make sure the colons in sample ids doesn't trip up the code
-        extraction due to their ambiguity with pseudo selectors
-        """
-        rev = revision(is_approved=True, save=True,
-                       content="""<pre id="Bug:1173170">Bug 1173170</pre>""")
-        rev.document.extract.code_sample('Bug:1173170')  # No SelectorSyntaxError
-
-
 class BugizeTests(TestCase):
     def test_bugize_text(self):
         bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
@@ -1178,6 +1037,19 @@ def test_extractor_macro_names(root_doc, wiki_user):
     assert sorted(result) == sorted(macros)
 
 
+@pytest.mark.parametrize('is_rendered', (True, False))
+@pytest.mark.parametrize('method', ('macro_names', 'css_classnames',
+                                    'html_attributes'))
+def test_extractor_no_content(method, is_rendered, root_doc, wiki_user):
+    """The Extractor returns empty lists when the document has no content."""
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content='', creator=wiki_user)
+    if is_rendered:
+        root_doc.render()
+    result = getattr(root_doc.extract, method)()
+    assert result == []
+
+
 def test_extractor_code_sample(root_doc, wiki_user):
     """The Extractor can return the sections of a code sample."""
     code_sample = {
@@ -1199,8 +1071,97 @@ def test_extractor_code_sample(root_doc, wiki_user):
     assert result == code_sample
 
 
-@pytest.mark.parametrize('sample_id', (u'sam\x00ple', u"""sam<'&">ple"""))
-def test_extractor_code_sample_garbage_in_id(root_doc, wiki_user, sample_id):
+def test_extractor_code_sample_unescape(root_doc, wiki_user):
+    '''The Extractor unescapes content in <pre> blocks.'''
+    sample_html = u"""
+        <div class="foo">
+            <p>Hello world!</p>
+            <p>Unicode fun: Przykłady 例 예제 示例</p>
+        </div>
+    """
+    sample_css = ".foo p:before { content: '> '; }"
+    sample_js = 'window.alert("Hi there!");'
+    assert sample_html != escape(sample_html)
+    assert sample_css != escape(sample_css)
+    assert sample_js != escape(sample_js)
+    content = """
+        <h3>Sample Code Section Heade</h3>
+        <ul id="sample" class="code-sample">
+            <li><span>HTML</span>
+                <pre class="brush: html">%s</pre>
+            </li>
+            <li><span>CSS</span>
+                <pre class="brush:css;random:crap;in:the;classname">%s</pre>
+            </li>
+            <li><span>JS</span>
+                <pre class="brush: js">%s</pre>
+            </li>
+        </ul>
+    """ % (escape(sample_html), escape(sample_css), escape(sample_js))
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample('sample')
+    assert sample_html.strip() == result['html'].strip()
+    assert sample_css == result['css']
+    assert sample_js == result['js']
+
+
+def test_extractor_code_sample_nbsp_is_converted(root_doc, wiki_user):
+    """
+    Non-breaking spaces are turned to normal spaces in code sample
+    extraction.
+
+    Reported in bug 819999 and 1284781
+    """
+    content = """
+        <h2 id="with_nbsp">With &amp;nbsp;</h2>
+        <pre class="brush: css">
+        .widget select,
+        .no-widget .select {
+        &nbsp; position : absolute;
+        &nbsp; left&nbsp;&nbsp;&nbsp;&nbsp; : -5000em;
+        &nbsp; height&nbsp;&nbsp; : 0;
+        &nbsp; overflow : hidden;
+        }
+        </pre>
+    """
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample('with_nbsp')
+    assert u'\xa0' not in result['css']
+    assert '&nbsp;' not in result['css']
+
+
+@pytest.mark.parametrize('skip_part', ('html', 'css', 'js', 'all'))
+def test_extractor_code_sample_missing_parts(root_doc, wiki_user, skip_part):
+    """The Extractor returns None if a code sample section is missing."""
+    parts = {}
+    expected = {}
+    for part in ('html', 'css', 'js'):
+        if skip_part in (part, 'all'):
+            parts[part] = ''
+            expected[part] = None
+        else:
+            parts[part] = '<pre class="brush: %s">included</pre>' % part
+            expected[part] = 'included'
+    content = """
+    <h3 id='sample'>Code Sample</h3>
+    %(html)s
+    %(css)s
+    %(js)s
+    """ % parts
+
+    root_doc.current_revision = Revision.objects.create(
+        document=root_doc, content=content, creator=wiki_user)
+    result = root_doc.extract.code_sample('sample')
+    assert result == expected
+
+
+@pytest.mark.parametrize('sample_id', ('Bug:1173170',       # bug 1173170
+                                       u'sam\x00ple',       # bug 1269143
+                                       u"""sam<'&">ple""",  # bug 1269143
+                                       ))
+def test_extractor_code_sample_with_problem_id(root_doc, wiki_user, sample_id):
     """The Extractor does not error if the code sample ID is bad."""
     content = """
         <div id="sample" class="code-sample">

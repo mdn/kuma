@@ -89,7 +89,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == d2.title
-        crumbs = "%s %s" % (d1.title, d2.title)
+        crumbs = "%s\n%s" % (d1.title, d2.title)
         assert doc('nav.crumbs').text() == crumbs
 
     def test_english_document_no_approved_content(self):

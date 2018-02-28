@@ -5,7 +5,6 @@ from urlparse import urljoin
 
 import mock
 import pytest
-import requests_mock
 from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
 
@@ -56,7 +55,6 @@ class KumascriptClientTests(WikiTestCase):
         eq_(sorted([u'foo', u'bar', u'baz']), sorted(result_vars['tags']))
 
 
-@requests_mock.mock()
 def test_macro_sources(mock_requests):
     """When KumaScript returns macros, the sources are populated."""
     macros_url = urljoin(KUMASCRIPT_BASE_URL, 'macros/')
@@ -83,7 +81,6 @@ def test_macro_sources(mock_requests):
     assert macros == expected
 
 
-@requests_mock.mock()
 def test_macro_sources_empty_macro_list(mock_requests):
     """When KumaScript can't return macros, the sources are empty."""
     macros_url = urljoin(KUMASCRIPT_BASE_URL, 'macros/')
@@ -97,7 +94,6 @@ def test_macro_sources_empty_macro_list(mock_requests):
     assert macros == {}
 
 
-@requests_mock.mock()
 def test_macro_sources_error(mock_requests):
     """When KumaScript raises an error, the sources are empty."""
     macros_url = urljoin(KUMASCRIPT_BASE_URL, 'macros/')
