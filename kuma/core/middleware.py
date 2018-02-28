@@ -1,5 +1,7 @@
 import contextlib
 import urllib
+import brotli
+import re
 from urlparse import urljoin
 
 import django.middleware.gzip
@@ -10,6 +12,7 @@ from django.http import (HttpResponseRedirect, HttpResponseForbidden,
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.utils.cache import patch_vary_headers
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
@@ -86,6 +89,7 @@ class Forbidden403Middleware(object):
     """
     Renders a 403.html page if response.status_code == 403.
     """
+
     def process_response(self, request, response):
         if isinstance(response, HttpResponseForbidden):
             return handler403(request)
@@ -146,6 +150,7 @@ class SetRemoteAddrFromForwardedFor(object):
     latter is set. This is useful if you're sitting behind a reverse proxy that
     causes each request's REMOTE_ADDR to be set to 127.0.0.1.
     """
+
     def process_request(self, request):
         try:
             forwarded_for = request.META['HTTP_X_FORWARDED_FOR']
@@ -227,3 +232,41 @@ class GZipMiddleware(django.middleware.gzip.GZipMiddleware):
         if (original_etag is not None) and response_out.has_header('etag'):
             response_out['etag'] = original_etag
         return response_out
+
+
+class BrotliMiddleware(object):
+    """
+    This code is inspired by https://github.com/illagrenan/django-brotli/blob/master/django_brotli/middleware.py
+    This middleware enable Brotli compression
+    """
+
+    MIN_LEN_RESPONSE_TO_PROCESS = 200
+    RE_ACCEPT_ENCODING_BROTLI = re.compile(r'\bbr\b')
+
+    def _accepts_brotli_encoding(self, request):
+        return bool(self.RE_ACCEPT_ENCODING_BROTLI.search(request.META.get('HTTP_ACCEPT_ENCODING', '')))
+
+    def process_response(self, request, response):
+        if response.streaming or response.has_header('Content-Encoding') or not self._accepts_brotli_encoding(request) \
+                or len(response.content) < self.MIN_LEN_RESPONSE_TO_PROCESS:
+            # ---------
+            # 1) brotlipy doesn't support streaming compression, see: https://github.com/google/brotli/issues/191
+            # 2) Avoid brotli if we've already got a content-encoding.
+            # 3) Client doesn't support brotli
+            # 4) It's not worth attempting to compress really short responses.
+            #    This was taken from django GZipMiddleware.
+            # ---------
+            return response
+
+        patch_vary_headers(response, ('Accept-Encoding',))
+        compressed_content = brotli.compress(response.content)
+
+        # Return the compressed content if it's any shorter
+        if len(compressed_content) >= len(response.content):
+            return response
+
+        response.content = compressed_content
+        response['Content-Length'] = str(len(compressed_content))
+        response['Content-Encoding'] = 'br'
+
+        return response

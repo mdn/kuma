@@ -13,6 +13,7 @@ from kuma.core.middleware import (
     RestrictedEndpointsMiddleware,
     RestrictedWhiteNoiseMiddleware,
     LegacyDomainRedirectsMiddleware,
+    BrotliMiddleware,
 )
 
 
@@ -149,3 +150,15 @@ def test_gzip_middleware(rf, etag_header):
         assert response_out['etag'] == etag_header
     else:
         assert 'etag' not in response
+
+
+def test_brotli_middleware(rf):
+    """
+    Test that our brotli middleware returns a brotli encoded response
+    """
+    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='br')
+    response = HttpResponse(50 * 'yada ')
+
+    response_out = BrotliMiddleware().process_response(request, response)
+
+    assert response_out['Content-Encoding'] is 'br'
