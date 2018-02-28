@@ -106,9 +106,9 @@ def delete_index(**kwargs):
 
 
 class OutdatedObject(models.Model):
-    index = models.ForeignKey(Index, related_name='outdated_objects')
+    index = models.ForeignKey(Index, related_name='outdated_objects', on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
@@ -168,7 +168,8 @@ class Filter(models.Model):
                                           'show in the command and query UI. '
                                           'e.g. fxos')
     group = models.ForeignKey(FilterGroup, related_name='filters',
-                              help_text='E.g. "Topic", "Skill level" etc')
+                              help_text='E.g. "Topic", "Skill level" etc',
+                              on_delete=models.CASCADE)
     tags = TaggableManager(help_text='A comma-separated list of tags. '
                                      'If more than one tag given the operator '
                                      'specified is used')

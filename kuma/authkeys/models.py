@@ -27,7 +27,8 @@ def hash_secret(secret):
 class Key(models.Model):
     """Authentication key"""
     user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
-                             db_index=True, blank=False, null=False)
+                             db_index=True, blank=False, null=False,
+                             on_delete=models.PROTECT)
     key = models.CharField(_("Lookup key"), max_length=64,
                            editable=False, db_index=True)
     hashed_secret = models.CharField(_("Hashed secret"), max_length=128,
@@ -59,10 +60,11 @@ class Key(models.Model):
 
 class KeyAction(models.Model):
     """Record of an action taken while using a key"""
-    key = models.ForeignKey(Key, related_name='history', db_index=True)
+    key = models.ForeignKey(Key, related_name='history', db_index=True,
+                            on_delete=models.CASCADE)
     action = models.CharField(max_length=128, blank=False)
     notes = models.TextField(null=True)
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     created = models.DateTimeField(auto_now_add=True)

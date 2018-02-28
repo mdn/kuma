@@ -79,7 +79,7 @@ class Feed(models.Model):
 class Entry(models.Model):
     """An entry is an item representing feed content."""
 
-    feed = models.ForeignKey(Feed, related_name='entries')
+    feed = models.ForeignKey(Feed, related_name='entries', on_delete=models.CASCADE)
     guid = models.CharField(max_length=255)
 
     raw = models.TextField()

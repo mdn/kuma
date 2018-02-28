@@ -22,10 +22,12 @@ from .constants import USERNAME_REGEX
 class UserBan(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name="bans",
-                             verbose_name="Banned user")
+                             verbose_name="Banned user",
+                             on_delete=models.CASCADE)
     by = models.ForeignKey(settings.AUTH_USER_MODEL,
                            related_name="bans_issued",
-                           verbose_name="Banned by")
+                           verbose_name="Banned by",
+                           on_delete=models.PROTECT)
     reason = models.TextField()
     date = models.DateField(default=datetime.date.today)
     is_active = models.BooleanField(default=True, help_text="(Is ban active)")

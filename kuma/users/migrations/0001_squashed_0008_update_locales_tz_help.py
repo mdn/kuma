@@ -64,8 +64,8 @@ class Migration(migrations.Migration):
                 ('reason', models.TextField()),
                 ('date', models.DateField(default=datetime.date.today)),
                 ('is_active', models.BooleanField(default=True, help_text=b'(Is ban active)')),
-                ('by', models.ForeignKey(related_name='bans_issued', verbose_name=b'Banned by', to=settings.AUTH_USER_MODEL)),
-                ('user', models.ForeignKey(related_name='bans', verbose_name=b'Banned user', to=settings.AUTH_USER_MODEL)),
+                ('by', models.ForeignKey(related_name='bans_issued', verbose_name=b'Banned by', to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)),
+                ('user', models.ForeignKey(related_name='bans', verbose_name=b'Banned user', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
         ),
         migrations.AlterModelManagers(
