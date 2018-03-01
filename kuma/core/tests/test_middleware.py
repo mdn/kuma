@@ -152,6 +152,23 @@ def test_gzip_middleware(rf, etag_header):
         assert 'etag' not in response
 
 
+def test_gzip_middleware_content_encoding_set(rf):
+    """
+    Test that our GZip middleware doesn't encode already encoded response
+
+    TODO: When moving to Django 1.11, this test code and the GZipMiddleware
+          code in kuma.core.middleware can be deleted, and Django's
+          GZipMiddleware should be used instead.
+    """
+    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='gzip')
+    response = HttpResponse(50 * 'yada ')
+    response['Content-Encoding'] = 'br'
+
+    response_out = GZipMiddleware().process_response(request, response)
+
+    eq_(response, response_out)
+
+
 def test_brotli_middleware(rf):
     """
     Test that our brotli middleware returns a brotli encoded response
@@ -162,3 +179,16 @@ def test_brotli_middleware(rf):
     response_out = BrotliMiddleware().process_response(request, response)
 
     assert response_out['Content-Encoding'] is 'br'
+
+
+def test_brotli_middleware_content_encoding_set(rf):
+    """
+    Test that our brotli middleware doesn't encode already encoded response
+    """
+    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='br')
+    response = HttpResponse(50 * 'yada ')
+    response['Content-Encoding'] = 'gzip'
+
+    response_out = BrotliMiddleware().process_response(request, response)
+
+    eq_(response, response_out)
