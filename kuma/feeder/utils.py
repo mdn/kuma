@@ -2,7 +2,8 @@ import logging
 import socket
 from datetime import datetime
 from hashlib import md5
-from time import strftime
+from time import mktime
+from urllib2 import URLError
 
 import feedparser
 import jsonpickle
@@ -96,68 +97,63 @@ def fetch_feed(feed):
     Fetch a feed from its URL and update its metadata if necessary.
 
     Returns stream if feed had updates, None otherwise.
+
+    A long, long time ago, this code was borrowed from
+    "planet/planet/.__init__.py channel update", which may not be
+    https://github.com/mozilla/planet-source/blob/master/trunk/planet/spider.py
     """
     dirty_feed = False
     has_updates = False
 
-    if feed.etag is None:
-        feed.etag = ''
     if feed.last_modified is None:
         feed.last_modified = datetime(1975, 1, 10)
     log.debug("feed id=%s feed url=%s etag=%s last_modified=%s" % (
         feed.shortname, feed.url, feed.etag, str(feed.last_modified)))
-    try:
-        stream = feedparser.parse(feed.url, etag=feed.etag,
-                                  modified=feed.last_modified.timetuple())
-    except UnicodeDecodeError:
-        print(feed.url)
+    stream = feedparser.parse(feed.url, etag=feed.etag or '',
+                              modified=feed.last_modified.timetuple())
 
-    # Next 70 lines of code from planet/planet/.__init__.py channel update
-    url_status = '500'
-
+    url_status = 500
     if 'status' in stream:
-        url_status = str(stream.status)
-
-    elif 'entries' in stream and len(stream.entries) > 0:
-        url_status = '200'
+        url_status = stream.status
 
     elif (stream.bozo and
-            stream.bozo_exception.__class__.__name__ == 'Timeout'):
-        url_status = '408'
+          'bozo_exception' in stream and
+          isinstance(stream.bozo_exception, URLError) and
+          isinstance(stream.bozo_exception.reason, socket.timeout)):
+        url_status = 408
 
-    if url_status == '301' and ('entries' in stream and
-                                len(stream.entries) > 0):
+    if url_status == 301 and ('entries' in stream and
+                              len(stream.entries) > 0):
+        # TODO: Should the feed be processed this round as well?
         log.info("Feed has moved from <%s> to <%s>", feed.url, stream.url)
         feed.url = stream.url
         dirty_feed = True
 
-    elif url_status == '304':
+    elif url_status == 304:
         log.debug("Feed unchanged")
         if not feed.enabled:
             feed.enabled = True
             dirty_feed = True
 
-    elif url_status == '404':
+    elif url_status == 404:
         log.info("Not a Feed or Feed %s is gone", feed.url)
         feed.enabled = False
-        feed.disabled_reason = ("This is not a feed or it's "
-                                "been removed removed!")
+        feed.disabled_reason = "This is not a feed or it has been removed!"
         dirty_feed = True
 
-    elif url_status == '410':
+    elif url_status == 410:
         log.info("Feed %s gone", feed.url)
         feed.enabled = False
         feed.disabled_reason = "This feed has been removed!"
         dirty_feed = True
 
-    elif url_status == '408':
+    elif url_status == 408:
         feed.enabled = False
-        feed.disabled_reason = ("This feed didn't respond "
-                                "after %d seconds" %
+        feed.disabled_reason = ("This feed didn't respond after %d seconds" %
                                 settings.FEEDER_TIMEOUT)
         dirty_feed = True
 
-    elif int(url_status) >= 400:
+    elif url_status >= 400:
         feed.enabled = False
         bozo_msg = ""
         if 1 == stream.bozo and 'bozo_exception' in stream.keys():
@@ -182,23 +178,17 @@ def fetch_feed(feed):
         feed.etag = stream.etag
         dirty_feed = True
 
-    if ('modified' in stream and
-            stream.modified_parsed != feed.last_modified):
-        feed.last_modified = strftime("%Y-%m-%d %H:%M:%S",
-                                      stream.modified_parsed)
-        log.info("New last_modified %s" % feed.last_modified)
-        dirty_feed = True
+    if 'modified_parsed' in stream:
+        stream_mod = datetime.fromtimestamp(mktime(stream.modified_parsed))
+        if stream_mod != feed.last_modified:
+            log.info("New last_modified %s" % stream_mod)
+            feed.last_modified = stream_mod
+            dirty_feed = True
 
     if dirty_feed:
-        try:
-            dirty_feed = False
-            log.debug("Feed %s changed, updating db" % feed)
-            feed.save()
-        except KeyboardInterrupt:
-            raise
-        except Exception, x:
-            log.error("Unable to update feed")
-            log.exception(x)
+        dirty_feed = False
+        log.debug("Feed %s changed, updating db" % feed)
+        feed.save()
 
     return has_updates and stream or None
 
