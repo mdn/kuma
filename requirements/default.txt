@@ -289,7 +289,9 @@ django-redirect-urls==0.1 \
     --hash=sha256:cd8499424e4920dc929bf1d64c5563349471353143af8e631033336570c42445 \
     --hash=sha256:267f20cc44de96fc574b5b02e9efcd80f4aab4146539dea1f4228f62f34bb4f5
 
-# Brotli python bindings used by whitenoise to provide Brotli compression
+# Provide Brotli compression
+# Code: https://github.com/google/brotli/tree/master/python
+# Docs: The code is pretty straightforward and document as part of the code
 Brotli==1.0.1 \
     --hash=sha256:0d880ed398aa8e8499ec501188db474b7fd3045fb2d4e82b2afbb42972478e54 \
     --hash=sha256:6e2e169e25ba5118b718f186a203b3362fcd3a4604c7374483814d4115dfad75 \

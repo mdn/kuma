@@ -1,18 +1,18 @@
-import contextlib
-import urllib
 import brotli
+import contextlib
 import re
+import urllib
 from urlparse import urljoin
 
-import django.middleware.gzip
 from django.conf import settings
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.core import urlresolvers
 from django.http import (HttpResponseRedirect, HttpResponseForbidden,
                          HttpResponsePermanentRedirect)
+import django.middleware.gzip
 from django.utils import translation
-from django.utils.encoding import iri_to_uri, smart_str
-from django.contrib.sessions.middleware import SessionMiddleware
 from django.utils.cache import patch_vary_headers
+from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
@@ -236,8 +236,9 @@ class GZipMiddleware(django.middleware.gzip.GZipMiddleware):
 
 class BrotliMiddleware(object):
     """
-    This code is inspired by https://github.com/illagrenan/django-brotli/blob/master/django_brotli/middleware.py
     This middleware enable Brotli compression
+
+    This code is inspired by https://github.com/illagrenan/django-brotli/blob/master/django_brotli/middleware.py
     """
 
     MIN_LEN_RESPONSE_TO_PROCESS = 200

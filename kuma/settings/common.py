@@ -484,8 +484,8 @@ MIDDLEWARE_CLASSES = (
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     # TODO: When moving to Django 1.11, replace with Django's GZipMiddleware.
-    'kuma.core.middleware.BrotliMiddleware',
     'kuma.core.middleware.GZipMiddleware',
+    'kuma.core.middleware.BrotliMiddleware',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
      'django.contrib.sessions.middleware.SessionMiddleware'),
