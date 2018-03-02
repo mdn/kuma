@@ -10,7 +10,7 @@ import pytest
 from feedparser import FeedParserDict
 
 from ..models import Entry, Feed
-from ..utils import fetch_feed, save_entry
+from ..utils import fetch_feed, save_entry, update_feed, update_feeds
 
 # URL of the Hacks blog RSS 2.0 feed
 HACKS_URL = 'https://hacks.mozilla.org/feed/'
@@ -246,3 +246,62 @@ def test_save_entry_no_change(hacks_feed):
                          visible=True,
                          last_published=datetime(2018, 2, 26, 15, 5, 8))
     assert not save_entry(hacks_feed, entry_raw)
+
+
+def test_update_feed(hacks_feed, mocked_parse):
+    """update_feed adds new entries."""
+    count = update_feed(hacks_feed)
+    assert count == 2
+    assert Entry.objects.count() == 2
+
+
+def test_update_feed_delete_old_entries(hacks_feed, mocked_parse):
+    """update_feed deletes entries that exceed the maxiumum."""
+    hacks_feed.keep = 1
+    count = update_feed(hacks_feed)
+    assert count == 2
+    entry = Entry.objects.get()  # Just one entry
+    assert entry.last_published == datetime(2018, 2, 26, 15, 5, 8)  # Is latest
+
+
+@mock.patch('kuma.feeder.utils.fetch_feed')
+def test_update_feed_no_feed_changes(mocked_fetch, hacks_feed):
+    """if feed is stale, no entries are processed."""
+    mocked_fetch.return_value = None
+    count = update_feed(hacks_feed)
+    assert count == 0
+
+
+@mock.patch('kuma.feeder.utils.save_entry')
+def test_update_feed_no_entry_changes(mocked_save, hacks_feed, mocked_parse):
+    """if entries are stale, count is 0."""
+    mocked_save.return_value = False
+    count = update_feed(hacks_feed)
+    assert count == 0
+
+
+def test_update_feeds(hacks_feed, mocked_parse):
+    """update_feeds adds new entries, resets timeout."""
+    assert socket.getdefaulttimeout() is None
+    count = update_feeds()
+    assert count == 2
+    assert Entry.objects.count() == 2
+    assert socket.getdefaulttimeout() is None
+
+
+def test_update_feeds_skip_disabled(hacks_feed):
+    """update_feeds can skip updating disabled feeds."""
+    hacks_feed.enabled = False
+    hacks_feed.save()
+    count = update_feeds(include_disabled=False)
+    assert count == 0
+
+
+@mock.patch('kuma.feeder.utils.update_feed')
+def test_update_feeds_resets_timeout_on_exception(mock_update, hacks_feed):
+    """update_feeds resets the socket timeout even on an exception."""
+    assert socket.getdefaulttimeout() is None
+    mock_update.side_effect = Exception('Failure')
+    with pytest.raises(Exception):
+        update_feeds()
+    assert socket.getdefaulttimeout() is None

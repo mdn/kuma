@@ -47,24 +47,17 @@ def update_feed(feed):
     """
     new_entry_count = 0
 
-    try:
-        stream = fetch_feed(feed)
+    stream = fetch_feed(feed)
 
-        if stream:
-            log.debug(u'Processing %s (%s): %s' % (feed.title, feed.shortname,
-                                                   feed.url))
-            for entry in stream.entries:
-                if save_entry(feed, entry):
-                    new_entry_count += 1
+    if stream:
+        log.debug(u'Processing %s (%s): %s' % (feed.title, feed.shortname,
+                                               feed.url))
+        for entry in stream.entries:
+            if save_entry(feed, entry):
+                new_entry_count += 1
 
-            # Remove old entries if applicable.
-            feed.delete_old_entries()
-
-    except KeyboardInterrupt:
-        raise
-    except Exception as e:
-        log.error("General Error starting loop: %s", e)
-        log.exception(e)
+        # Remove old entries if applicable.
+        feed.delete_old_entries()
 
     return new_entry_count
 
