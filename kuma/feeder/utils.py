@@ -51,30 +51,8 @@ def update_feed(feed):
         stream = fetch_feed(feed)
 
         if stream:
-            log.debug('Processing %s: %s' % (feed.shortname, feed.url))
-
-            if 'feed' in stream and 'title' in stream.feed:
-                log.debug('Processing title: %s', stream.feed.title)
-
-            dirty_feed = False
-            if ('feed' in stream and 'title' in stream.feed and
-                    feed.title != stream.feed.title):
-                feed.title = stream.feed.title
-                dirty_feed = True
-            else:
-                if ('feed' not in stream) or ('title' not in stream.feed):
-                    log.warn("Feed doesn't have a title property")
-                    log.info(stream)
-
-            if dirty_feed:
-                try:
-                    feed.save()
-                except KeyboardInterrupt:
-                    raise
-                except Exception, x:
-                    log.error("Unable to update feed")
-                    log.exception(x)
-
+            log.debug(u'Processing %s (%s): %s' % (feed.title, feed.shortname,
+                                                   feed.url))
             for entry in stream.entries:
                 if save_entry(feed, entry):
                     new_entry_count += 1
@@ -182,6 +160,11 @@ def fetch_feed(feed):
         if stream_mod != feed.last_modified:
             log.info("New last_modified %s" % stream_mod)
             feed.last_modified = stream_mod
+            dirty_feed = True
+
+    if 'feed' in stream and 'title' in stream.feed:
+        if feed.title != stream.feed.title:
+            feed.title = stream.feed.title
             dirty_feed = True
 
     if dirty_feed:

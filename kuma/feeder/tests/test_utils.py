@@ -115,6 +115,15 @@ def test_fetch_feed_sets_enabled(hacks_feed, mocked_parse):
     assert feed.enabled
 
 
+def test_fetch_feed_sets_title(hacks_feed, mocked_parse):
+    """A feed can update the title."""
+    hacks_feed.title = 'Old Title'
+    stream = fetch_feed(hacks_feed)
+    assert stream
+    feed = Feed.objects.get()
+    assert feed.title == u'Mozilla Hacks \u2013 the Web developer blog'
+
+
 def test_fetch_feed_redirect(hacks_feed, mocked_parse):
     """If redirected, the URL is updated but the feed is not processed."""
     new_url = 'https://hacks.example.com/feed'
@@ -132,6 +141,7 @@ def test_fetch_feed_unchanged(hacks_feed, mocked_parse, enabled):
     """If the ETag matches, the feed is enabled but not processed."""
     hacks_feed.last_modified = datetime(2018, 2, 26, 21, 23, 38)
     hacks_feed.etag = 'W/"1da1fc6a456fd49c32a9291b38ec31ee-gzip"'
+    hacks_feed.title = u'Mozilla Hacks \u2013 the Web developer blog'
     hacks_feed.enabled = (enabled == 'enabled')
     hacks_feed.save()  # Won't be saved in enabled case
     mocked_parse.return_value = modify_fpd(HACKS_PARSED, status=304)
