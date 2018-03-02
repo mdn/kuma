@@ -8,7 +8,6 @@ from urllib2 import URLError
 import feedparser
 import jsonpickle
 from django.conf import settings
-from django.db import IntegrityError
 from django.utils.encoding import smart_str
 
 from .models import Entry, Feed
@@ -194,36 +193,30 @@ def fetch_feed(feed):
 
 
 def save_entry(feed, entry):
-    """Save a new entry to the database."""
-    try:
-        json_entry = jsonpickle.encode(entry)
-        entry_guid = ''
+    """Save a new entry or update an existing one."""
+    json_entry = jsonpickle.encode(entry)
 
-        if ('guid' in entry and
-            (len(entry.guid) <=
-                Entry._meta.get_field_by_name('guid')[0].max_length)):
-            entry_guid = entry.guid
-        else:
-            entry_guid = md5(smart_str(json_entry)).hexdigest()
+    max_guid_length = Entry._meta.get_field_by_name('guid')[0].max_length
+    if len(entry.guid) <= max_guid_length:
+        entry_guid = entry.guid
+    else:
+        entry_guid = md5(smart_str(entry.guid)).hexdigest()
 
-        if 'updated_parsed' in entry:
-            yr, mon, d, hr, min, sec = entry.updated_parsed[:-3]
-            last_publication = datetime.datetime(yr, mon, d, hr, min, sec)
-        else:
-            log.warn("Entry has no updated field, faking it")
-            last_publication = datetime.now()
+    last_published = datetime.fromtimestamp(mktime(entry.published_parsed))
 
-        new_entry = Entry(feed=feed, guid=entry_guid, raw=json_entry,
-                          visible=True, last_published=last_publication)
-
-        try:
-            new_entry.save()
+    entry, created = Entry.objects.get_or_create(
+        feed=feed, guid=entry_guid,
+        defaults={'raw': json_entry, 'visible': True,
+                  'last_published': last_published})
+    if not created:
+        # Did the entry change?
+        changed = (entry.raw != json_entry or
+                   not entry.visible or
+                   entry.last_published != last_published)
+        if changed:
+            entry.raw = json_entry
+            entry.visible = True
+            entry.last_published = last_published
+            entry.save()
             return True
-        except IntegrityError, e:
-            pass
-
-    except KeyboardInterrupt:
-        raise
-    except Exception as e:
-        log.error('General Error on %s: %s', feed.url, e)
-        log.exception(e)
+    return created

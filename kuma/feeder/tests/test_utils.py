@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import socket
 from datetime import datetime
-from time import struct_time
+from time import mktime, struct_time
 from urllib2 import URLError
 
+import jsonpickle
 import mock
 import pytest
 from feedparser import FeedParserDict
 
-from ..models import Feed
-from ..utils import fetch_feed
+from ..models import Entry, Feed
+from ..utils import fetch_feed, save_entry
 
 # URL of the Hacks blog RSS 2.0 feed
 HACKS_URL = 'https://hacks.mozilla.org/feed/'
@@ -192,3 +193,46 @@ def test_fetch_feed_unknown_issue(mocked_parse, hacks_feed):
     assert not feed.enabled
     expected_reason = "Error while reading the feed: 500 __ "
     assert feed.disabled_reason == expected_reason
+
+
+@pytest.mark.parametrize('entry_num', (0, 1))
+def test_save_entry_new_items(hacks_feed, entry_num):
+    """save_entry saves new entries to the database."""
+    entry_raw = HACKS_PARSED.entries[entry_num]
+    assert save_entry(hacks_feed, entry_raw)
+    entry = Entry.objects.get()
+    assert entry.guid == entry_raw.guid
+    published = datetime.fromtimestamp(mktime(entry_raw.published_parsed))
+    assert entry.last_published == published
+    assert entry.raw
+
+
+def test_save_entry_long_guid(hacks_feed):
+    """A entry with a long GUID (usually an URL) is converted to a hash."""
+    long_guid = 'https://example.com/a_%s_long_url' % '_'.join(['very'] * 100)
+    entry_raw = modify_fpd(HACKS_PARSED.entries[0], guid=long_guid)
+    assert save_entry(hacks_feed, entry_raw)
+    entry = Entry.objects.get()
+    assert entry.guid == '36d5f76416dcdf6beb8a01a937858d5a'
+
+
+def test_save_entry_update_existing(hacks_feed):
+    """save_entry updates an existing entry by GUID."""
+    entry_raw = HACKS_PARSED.entries[0]
+    Entry.objects.create(feed=hacks_feed, guid=entry_raw.guid, raw='old',
+                         visible=False, last_published=datetime(2010, 1, 1))
+    assert save_entry(hacks_feed, entry_raw)
+    entry = Entry.objects.get()
+    assert entry.raw != 'old'
+    assert entry.visible
+    assert entry.last_published == datetime(2018, 2, 26, 15, 5, 8)
+
+
+def test_save_entry_no_change(hacks_feed):
+    """save_entry returns False if no changes."""
+    entry_raw = HACKS_PARSED.entries[0]
+    Entry.objects.create(feed=hacks_feed, guid=entry_raw.guid,
+                         raw=jsonpickle.encode(entry_raw),
+                         visible=True,
+                         last_published=datetime(2018, 2, 26, 15, 5, 8))
+    assert not save_entry(hacks_feed, entry_raw)
