@@ -154,8 +154,10 @@ def test_list_no_redirects(redirect_doc, doc_hierarchy_with_zones, client):
     assert 'public' in resp['Cache-Control']
     assert 's-maxage' in resp['Cache-Control']
     assert 'text/html' in resp['Content-Type']
-    # There should be 4 documents in the English locale.
-    assert len(pq(resp.content).find('.document-list li')) == 4
+    # There should be 4 documents in the 'en-US' locale from
+    # doc_hierarchy_with_zones, plus the root_doc (which is pulled-in by
+    # the redirect_doc), but the redirect_doc should not be one of them.
+    assert len(pq(resp.content).find('.document-list li')) == 5
     assert redirect_doc.slug not in resp.content
 
 
@@ -239,10 +241,11 @@ def test_list_with_errors(redirect_doc, doc_hierarchy_with_zones, client,
 
 
 @pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
-def test_list_without_parent(redirect_doc, doc_hierarchy_with_zones, client,
-                             locale):
+def test_list_without_parent(redirect_doc, root_doc, doc_hierarchy_with_zones,
+                             client, locale):
     if locale == 'en-US':
-        exp_docs = (doc_hierarchy_with_zones.top,
+        exp_docs = (root_doc,
+                    doc_hierarchy_with_zones.top,
                     doc_hierarchy_with_zones.middle_top,
                     doc_hierarchy_with_zones.middle_bottom,
                     doc_hierarchy_with_zones.bottom)
@@ -263,10 +266,10 @@ def test_list_without_parent(redirect_doc, doc_hierarchy_with_zones, client,
 
 
 @pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
-def test_list_top_level(redirect_doc, doc_hierarchy_with_zones, client,
-                        locale):
+def test_list_top_level(redirect_doc, root_doc, doc_hierarchy_with_zones,
+                        client, locale):
     if locale == 'en-US':
-        exp_docs = (doc_hierarchy_with_zones.top,)
+        exp_docs = (root_doc, doc_hierarchy_with_zones.top)
     else:
         exp_docs = (doc_hierarchy_with_zones.top.translated_to(locale),)
 
@@ -283,17 +286,14 @@ def test_list_top_level(redirect_doc, doc_hierarchy_with_zones, client,
         assert len(dom.find(selector.format(doc.locale, doc.slug))) == 1
 
 
-@pytest.mark.parametrize('tag', ['foo', 'bar'])
 @pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])
 def test_list_with_localization_tag(redirect_doc, doc_hierarchy_with_zones,
-                                    client, locale, tag):
+                                    client, locale):
     top_doc = doc_hierarchy_with_zones.top
     bottom_doc = doc_hierarchy_with_zones.bottom
     de_doc = top_doc.translated_to('de')
     for doc in (top_doc, bottom_doc, de_doc, redirect_doc):
-        doc.current_revision.localization_tags.set('foo', 'bar')
-    middle_bottom_doc = doc_hierarchy_with_zones.middle_bottom
-    middle_bottom_doc.current_revision.localization_tags.set('foobar')
+        doc.current_revision.localization_tags.set('inprogress')
 
     if locale == 'en-US':
         exp_docs = (top_doc, bottom_doc)
@@ -303,7 +303,7 @@ def test_list_with_localization_tag(redirect_doc, doc_hierarchy_with_zones,
         exp_docs = ()
 
     url = reverse('wiki.list_with_localization_tag', locale=locale,
-                  kwargs={'tag': tag})
+                  kwargs={'tag': 'inprogress'})
     resp = client.get(url)
     dom = pq(resp.content)
     assert resp.status_code == 200
@@ -323,7 +323,7 @@ def test_list_with_localization_tags(redirect_doc, doc_hierarchy_with_zones,
     bottom_doc = doc_hierarchy_with_zones.bottom
     de_doc = top_doc.translated_to('de')
     for doc in (top_doc, bottom_doc, de_doc, redirect_doc):
-        doc.current_revision.localization_tags.set('foo', 'bar')
+        doc.current_revision.localization_tags.set('inprogress')
 
     if locale == 'en-US':
         exp_docs = (top_doc, bottom_doc)

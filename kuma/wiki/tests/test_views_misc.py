@@ -52,15 +52,19 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
         expected_titles = set(('Superiore Documento',))
     elif locale_case == 'current-locale':
         params.update(current_locale='true')
-        expected_titles = set(('Top Document', 'Middle-Top Document',
-                               'Middle-Bottom Document', 'Bottom Document'))
+        # The root document is pulled-in by the redirect_doc fixture.
+        expected_titles = set(('Root Document', 'Top Document',
+                               'Middle-Top Document', 'Middle-Bottom Document',
+                               'Bottom Document'))
     elif locale_case == 'exclude-current-locale':
         params.update(exclude_current_locale='true')
         expected_titles = set(('Haut Document', 'Superiore Documento'))
     else:  # All locales
-        expected_titles = set(('Top Document', 'Haut Document',
-                               'Superiore Documento', 'Middle-Top Document',
-                               'Middle-Bottom Document', 'Bottom Document'))
+        # The root document is pulled-in by the redirect_doc fixture.
+        expected_titles = set(('Root Document', 'Top Document',
+                               'Haut Document', 'Superiore Documento',
+                               'Middle-Top Document', 'Middle-Bottom Document',
+                               'Bottom Document'))
 
     url = reverse('wiki.autosuggest_documents', locale='en-US')
     if params:
