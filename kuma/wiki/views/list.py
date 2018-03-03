@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.views.decorators.http import require_GET
 from ratelimit.decorators import ratelimit
 
-from kuma.core.decorators import block_user_agents
+from kuma.core.decorators import block_user_agents, shared_cache_control
 from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
@@ -12,6 +12,7 @@ from ..models import (Document, DocumentTag, ReviewTag, Revision,
                       LocalizationTag)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='40/m', block=True)
@@ -38,6 +39,7 @@ def documents(request, tag=None):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='40/m', block=True)
@@ -50,6 +52,7 @@ def tags(request):
     return render(request, 'wiki/list/tags.html', {'tags': tags})
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='40/m', block=True)
@@ -70,6 +73,7 @@ def needs_review(request, tag=None):
     return render(request, 'wiki/list/needs_review.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='40/m', block=True)
@@ -90,6 +94,7 @@ def with_localization_tag(request, tag=None):
     return render(request, 'wiki/list/with_localization_tags.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='40/m', block=True)
@@ -107,6 +112,7 @@ def with_errors(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='40/m', block=True)
@@ -122,6 +128,7 @@ def without_parent(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @ratelimit(key='user_or_ip', rate='400/m', block=True)
@@ -137,6 +144,7 @@ def top_level(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @process_document_path

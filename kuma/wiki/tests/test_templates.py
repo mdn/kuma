@@ -26,7 +26,7 @@ from . import (WikiTestCase, create_topical_parents_docs, document,
                new_document_data, revision)
 from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT)
 from ..events import EditDocumentEvent
-from ..models import Document, DocumentTag, Revision
+from ..models import Document, Revision
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
@@ -841,38 +841,6 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
-
-
-class DocumentListTests(UserTestCase, WikiTestCase):
-    localizing_client = True
-
-    def setUp(self):
-        super(DocumentListTests, self).setUp()
-        self.locale = settings.WIKI_DEFAULT_LANGUAGE
-        self.doc = _create_document(locale=self.locale)
-        _create_document(locale=self.locale, title='Another one')
-
-        # Create a document in different locale to make sure it doesn't show
-        _create_document(parent=self.doc, locale='es')
-
-    def test_all_list(self):
-        """Verify the all documents list view."""
-        response = self.client.get(reverse('wiki.all_documents'))
-        doc = pq(response.content)
-        eq_(Document.objects.filter(locale=self.locale).count(),
-            len(doc('#document-list ul.document-list li')))
-
-    @pytest.mark.tags
-    def test_tag_list(self):
-        """Verify the tagged documents list view."""
-        tag = DocumentTag(name='Test Tag', slug='test-tag')
-        tag.save()
-        self.doc.tags.add(tag)
-        response = self.client.get(reverse('wiki.tag',
-                                   args=[tag.name]))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(1, len(doc('#document-list ul.document-list li')))
 
 
 def test_compare_revisions(edit_revision, client):

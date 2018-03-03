@@ -8,6 +8,8 @@ from collections import namedtuple
 import pytest
 
 from ..models import Document, DocumentZone, Revision
+from kuma.core.urlresolvers import reverse
+from kuma.wiki.constants import REDIRECT_CONTENT
 
 
 BannedUser = namedtuple('BannedUser', 'user ban')
@@ -96,6 +98,25 @@ def trans_edit_revision(trans_doc, edit_revision, wiki_user):
         created=datetime(2017, 4, 14, 20, 25))
     trans_doc.save()
     return trans_doc.current_revision
+
+
+@pytest.fixture
+def redirect_doc(wiki_user, root_doc):
+    """A newly-created top-level English redirect document."""
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='Redirection', title='Redirect Document')
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content=REDIRECT_CONTENT % {
+            'href': reverse('wiki.document',
+                            args=(root_doc.slug,),
+                            locale=root_doc.locale),
+            'title': root_doc.title,
+        },
+        title='Redirect Document',
+        created=datetime(2017, 4, 17, 12, 15))
+    return redirect_doc
 
 
 @pytest.fixture

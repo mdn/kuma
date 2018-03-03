@@ -1,0 +1,83 @@
+import json
+from urllib import urlencode
+
+import pytest
+from waffle.models import Switch
+
+from kuma.core.urlresolvers import reverse
+
+
+@pytest.mark.parametrize(
+    'http_method', ['put', 'post', 'delete', 'options', 'head'])
+@pytest.mark.parametrize(
+    'endpoint', ['ckeditor_config', 'autosuggest_documents'])
+def test_disallowed_methods(db, client, http_method, endpoint):
+    """HTTP methods other than GET & HEAD are not allowed."""
+    url = reverse('wiki.{}'.format(endpoint), locale='en-US')
+    response = getattr(client, http_method)(url)
+    assert response.status_code == 405
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+
+
+def test_ckeditor_config(db, client):
+    response = client.get(reverse('wiki.ckeditor_config', locale='en-US'))
+    assert response.status_code == 200
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+    assert 'Content-Type' in response
+    assert response['Content-Type'] == 'application/x-javascript'
+    assert 'wiki/ckeditor_config.js' in [t.name for t in response.templates]
+
+
+@pytest.mark.parametrize('term', [None, 'doc'])
+@pytest.mark.parametrize(
+    'locale_case',
+    ['all-locales', 'current-locale',
+     'non-english-locale', 'exclude-current-locale'])
+def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
+                     locale_case, term):
+    Switch.objects.create(name='application_ACAO', active=True)
+
+    params = {}
+    expected_status_code = 200
+    if term:
+        params.update(term=term)
+    else:
+        expected_status_code = 400
+    if locale_case == 'non-english-locale':
+        params.update(locale='it')
+        expected_titles = set(('Superiore Documento',))
+    elif locale_case == 'current-locale':
+        params.update(current_locale='true')
+        # The root document is pulled-in by the redirect_doc fixture.
+        expected_titles = set(('Root Document', 'Top Document',
+                               'Middle-Top Document', 'Middle-Bottom Document',
+                               'Bottom Document'))
+    elif locale_case == 'exclude-current-locale':
+        params.update(exclude_current_locale='true')
+        expected_titles = set(('Haut Document', 'Superiore Documento'))
+    else:  # All locales
+        # The root document is pulled-in by the redirect_doc fixture.
+        expected_titles = set(('Root Document', 'Top Document',
+                               'Haut Document', 'Superiore Documento',
+                               'Middle-Top Document', 'Middle-Bottom Document',
+                               'Bottom Document'))
+
+    url = reverse('wiki.autosuggest_documents', locale='en-US')
+    if params:
+        url += '?{}'.format(urlencode(params))
+    response = client.get(url)
+    assert response.status_code == expected_status_code
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+    assert 'Access-Control-Allow-Origin' in response
+    assert response['Access-Control-Allow-Origin'] == '*'
+    if expected_status_code == 200:
+        assert 'Content-Type' in response
+        assert response['Content-Type'] == 'application/json'
+        data = json.loads(response.content)
+        assert set(item['title'] for item in data) == expected_titles
