@@ -584,26 +584,6 @@ Placeholders
     }
 }
 
-/* When an element contains a label and a checkbox in order (as on the edit
-   user page and elsewhere) make them appear on the same line, with the
-   checkbox to the left of the label. */
-%checkbox-label-container {
-    @include clearfix();
-
-    input[type='checkbox'] {
-        @include bidi(((float, left, right),));
-    }
-
-    label {
-        position: absolute;
-        @include bidi(((margin-left, 25px, margin-right, 0),));
-    }
-
-    > p {
-        @include bidi(((clear, left, right),));
-    }
-}
-
 /* Styles for code blocks - used for wiki document and WYSIWYG editor */
 %code-block {
     @include example-box($code-block-background-color, $code-block-border-color);
