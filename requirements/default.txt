@@ -49,9 +49,12 @@ django-celery-transactions==0.3.6 \
     --hash=sha256:cdf966ec461e9ec736a7bedcf47cb219fc79ea86f2b39191cb258082dd4f4b33
 
 # Store dynamic settings in the database
-django-constance==1.1.2 \
-    --hash=sha256:7b7efca7776132728e91ed017fb4081136926c800331b6028f6d7079ae6b0872 \
-    --hash=sha256:8edba68cf47befa2d2e6d9eba98ff74dc9881e086bfcac0337fe8198d5edffbf
+# Code: https://github.com/jazzband/django-constance
+# Changes: https://github.com/jazzband/django-constance/blob/master/docs/changes.rst
+# Docs: https://django-constance.readthedocs.io/en/latest/
+django-constance==2.1.0 \
+    --hash=sha256:19f926c40996506fca045f490334c02da92aa98dc24b3bb1033407126e7f9b53 \
+    --hash=sha256:6cad1b5feae6f1f5d0ae89edcae05a2afd605d10a148f01d081656bffb1e309a
 
 # Basic/extra mitigation against the BREACH attack
 django-debreach==1.4.0 \
@@ -93,9 +96,10 @@ django-mysql==1.0.4 \
 
 # Serialize objects with Python's pickle
 # Required by django-constance with database backend
-django-picklefield==0.3.2 \
-    --hash=sha256:fab48a427c6310740755b242128f9300283bef159ffee42d3231a274c65d9ae2 \
-    --hash=sha256:5489fef164de43725242d56e65e016137d3df0d1a00672bda72d807f5b2b0d99
+# Code: https://github.com/gintas/django-picklefield
+django-picklefield==1.0.0 \
+    --hash=sha256:61e3ba7f6df82d8df9e6be3a8c55ef589eb3bf926c3d25d2b7949b07eae78354 \
+    --hash=sha256:57e4349c7f75eab08fe7ceb11e7135644fdf771e2777a754db4f07e5c63c191f
 
 # Asset packaging (CSS, JS concatenation and compression, etc.)
 django-pipeline==1.6.8 \
