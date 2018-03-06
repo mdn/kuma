@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from .models import AttachmentRevision, TrashedAttachment
 
 
-@receiver(pre_delete, sender=AttachmentRevision,
+@receiver(post_delete, sender=AttachmentRevision,
           dispatch_uid='attachments.revision.delete')
 def after_revision_delete(instance, **kwargs):
     """
@@ -17,7 +17,7 @@ def after_revision_delete(instance, **kwargs):
         previous.make_current()
 
 
-@receiver(post_delete, sender=TrashedAttachment,
+@receiver(pre_delete, sender=TrashedAttachment,
           dispatch_uid='attachments.trash.delete')
 def on_trash_delete(instance, **kwargs):
     """
