@@ -5,9 +5,12 @@
 -r default_and_test.txt
 
 # Sanitize HTML with a whitelist
-bleach==2.1.1 \
-    --hash=sha256:7a316eac1eef1e98b9813636ebe05878aab1a658d2708047fb00fe2bcbc49f84 \
-    --hash=sha256:760a9368002180fb8a0f4ea48dc6275378e6f311c39d0236d7b904fca1f5ea0d
+# Code: https://github.com/mozilla/bleach
+# Changes: https://bleach.readthedocs.io/en/latest/changes.html
+# Docs: https://bleach.readthedocs.io/en/latest/
+bleach==2.1.3 \
+    --hash=sha256:eb7386f632349d10d9ce9d4a838b134d4731571851149f9cc2c05a9a837a9a44 \
+    --hash=sha256:b8fa79e91f96c2c2cd9fd1f9eda906efb1b88b483048978ba62fef680e962b34
 
 # Process tasks in the background
 celery==3.1.20 \

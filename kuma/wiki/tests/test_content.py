@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from base64 import b64encode
 from urlparse import urljoin
 
 from django.conf import settings
@@ -694,25 +695,48 @@ def test_filteriframe_default_rejected(url):
     assert page('#test').attr('src') == ''
 
 
-class BleachTests(TestCase):
-    def test_bleach_filter_invalid_protocol(self):
-        doc_src = """
-            <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
-            <p><a id="xss2" class="no-track" href=" data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
-            <p><a id="xss3" class="no-track" href="
-                data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+">click me</a>
-            <p><a id="ok" href="/docs/ok/test">OK link</a></p>
-        """
-        result_src = bleach.clean(doc_src,
-                                  tags=ALLOWED_TAGS,
-                                  attributes=ALLOWED_ATTRIBUTES,
-                                  protocols=ALLOWED_PROTOCOLS)
-        page = pq(result_src)
+BLEACH_INVALID_HREFS = {
+    'b64_script1': ('data:text/html;base64,' +
+                    b64encode('<script>alert("document.cookie:" +'
+                              ' document.cookie);')),
+    'b64_script2': ('data:text/html;base64,' +
+                    b64encode('<script>alert(document.domain)</script>')),
+    'javascript': 'javascript:alert(1)',
+    'js_htmlref1': 'javas&#x09;cript:alert(1)',
+    'js_htmlref2': '&#14;javascript:alert(1)',
+}
 
-        eq_(page.find('#xss').attr('href'), None)
-        eq_(page.find('#xss2').attr('href'), None)
-        eq_(page.find('#xss3').attr('href'), None)
-        eq_(page.find('#ok').attr('href'), '/docs/ok/test')
+BLEACH_VALID_HREFS = {
+    'relative': '/docs/ok/test',
+    'http': 'http://example.com/docs/ok/test',
+    'https': 'https://example.com/docs/ok/test',
+}
+
+
+@pytest.mark.parametrize('href', BLEACH_INVALID_HREFS.values(),
+                         ids=BLEACH_INVALID_HREFS.keys())
+def test_bleach_clean_removes_invalid_hrefs(href):
+    """Bleach removes invalid hrefs."""
+    html = '<p><a id="test" href="%s">click me</a></p>' % href
+    result = bleach.clean(html,
+                          tags=ALLOWED_TAGS,
+                          attributes=ALLOWED_ATTRIBUTES,
+                          protocols=ALLOWED_PROTOCOLS)
+    link = pq(result).find('#test')
+    assert link.attr('href') is None
+
+
+@pytest.mark.parametrize('href', BLEACH_VALID_HREFS.values(),
+                         ids=BLEACH_VALID_HREFS.keys())
+def test_bleach_clean_hrefs(href):
+    """Bleach retains valid hrefs."""
+    html = '<p><a id="test" href="%s">click me</a></p>' % href
+    result = bleach.clean(html,
+                          tags=ALLOWED_TAGS,
+                          attributes=ALLOWED_ATTRIBUTES,
+                          protocols=ALLOWED_PROTOCOLS)
+    link = pq(result).find('#test')
+    assert link.attr('href') == href
 
 
 def test_annotate_links_encoded_utf8(db):
