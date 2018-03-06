@@ -5,7 +5,7 @@ from .models import AttachmentRevision, TrashedAttachment
 
 
 @receiver(pre_delete, sender=AttachmentRevision,
-          dispatch_uid='attachments.trash.delete')
+          dispatch_uid='attachments.revision.delete')
 def after_revision_delete(instance, **kwargs):
     """
     Signal handler to be called when an attachment revision is deleted
@@ -18,7 +18,7 @@ def after_revision_delete(instance, **kwargs):
 
 
 @receiver(post_delete, sender=TrashedAttachment,
-          dispatch_uid='attachments.revision.delete')
+          dispatch_uid='attachments.trash.delete')
 def on_trash_delete(instance, **kwargs):
     """
     Signal handler to be called when a trash item is deleted.
