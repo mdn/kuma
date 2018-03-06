@@ -41,8 +41,6 @@ class BasePage(Page):
 
     def wait_for_page_to_load(self):
         self.wait.until(lambda s: self.seed_url in s.current_url)
-        el = self.find_element(By.TAG_NAME, 'html')
-        self.wait.until(lambda s: el.get_attribute('data-ffo-opensans'))
         return self
 
     @property

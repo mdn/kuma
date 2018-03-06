@@ -10,32 +10,36 @@ Styles for Romaniaian
 
 @font-face {
     font-family: x-locale-body;
+    font-display: 'fallback';
     font-weight: normal;
     font-style: normal;
-    src: url('#{$path-to-locale-fonts}#{'ro/opensans-regular-ro-subset.woff2'}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{'ro/opensans-regular-ro-subset.woff'}') format('woff');
+    src: url('#{$path-to-locale-fonts}#{"ro/opensans-regular-ro-subset.woff2"}') format('woff2'),
+         url('#{$path-to-locale-fonts}#{"ro/opensans-regular-ro-subset.woff"}') format('woff');
 }
 
 @font-face {
     font-family: x-locale-body;
+    font-display: 'optional';
     font-weight: bold;
     font-style: normal;
-    src: url('#{$path-to-locale-fonts}#{'ro/opensans-bold-ro-subset.woff2'}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{'ro/opensans-bold-ro-subset.woff'}') format('woff');
+    src: url('#{$path-to-locale-fonts}#{"ro/opensans-bold-ro-subset.woff2"}') format('woff2'),
+         url('#{$path-to-locale-fonts}#{"ro/opensans-bold-ro-subset.woff"}') format('woff');
 }
 
 @font-face {
     font-family: x-locale-body;
+    font-display: 'fallback';
     font-weight: normal;
     font-style: italic;
-    src: url('#{$path-to-locale-fonts}#{'ro/opensans-italic-ro-subset.woff2'}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{'ro/opensans-italic-ro-subset.woff'}') format('woff');
+    src: url('#{$path-to-locale-fonts}#{"ro/opensans-italic-ro-subset.woff2"}') format('woff2'),
+         url('#{$path-to-locale-fonts}#{"ro/opensans-italic-ro-subset.woff"}') format('woff');
 }
 
 @font-face {
     font-family: x-locale-body;
+    font-display: 'optional';
     font-weight: bold;
     font-style: italic;
-    src: url('#{$path-to-locale-fonts}#{'ro/opensans-bolditalic-ro-subset.woff2'}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{'ro/opensans-bolditalic-ro-subset.woff'}') format('woff');
+    src: url('#{$path-to-locale-fonts}#{"ro/opensans-bolditalic-ro-subset.woff2"}') format('woff2'),
+         url('#{$path-to-locale-fonts}#{"ro/opensans-bolditalic-ro-subset.woff"}') format('woff');
 }

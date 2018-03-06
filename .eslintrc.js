@@ -55,7 +55,6 @@ module.exports = {
     },
     'globals': {
         'CKEDITOR': true,
-        'FontFaceObserver': true,
         'ga': true,
         'gettext': true,
         'interpolate': true,

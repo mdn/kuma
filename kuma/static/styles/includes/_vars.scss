@@ -261,8 +261,6 @@ $input-padding: $content-vertical-spacing $content-horizontal-spacing;
 selectors
 ====================================================================== */
 $selector-icon: 'i[class^="icon-"]';
-$selector-site-font-fallback: 'html[data-ffo-opensans="false"]:not(.no-js) &';
-$selector-heading-font-fallback: 'html[data-ffo-zillaslab="false"]:not(.no-js) &';
 $selector-prism: 'pre[class*="language-"]';
 
 /*

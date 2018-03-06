@@ -1,7 +1,6 @@
 {
     "name": "Kuma",
     "dependencies": {
-        "fontfaceobserver": "https://github.com/bramstein/fontfaceobserver.git#v1.4.17",
         "html5shiv": "3.6.2",
         "jquery": "2.2.0",
         "prism": "1.2.0",
@@ -13,7 +12,6 @@
             "js": "kuma/static/js/libs"
         },
         "sources": {
-            "fontfaceobserver": "bower_components/fontfaceobserver/fontfaceobserver.js",
             "html5shiv": "bower_components/html5shiv/dist/html5shiv.js",
             "prism": [
                 "bower_components/prism/components/prism-core.js",
