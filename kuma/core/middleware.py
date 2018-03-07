@@ -236,38 +236,41 @@ class GZipMiddleware(django.middleware.gzip.GZipMiddleware):
 
 class BrotliMiddleware(object):
     """
-    This middleware enable Brotli compression
+    This middleware enables Brotli compression
 
-    This code is inspired by https://github.com/illagrenan/django-brotli/blob/master/django_brotli/middleware.py
+    This code is inspired by https://github.com/illagrenan/django-brotli
     """
 
     MIN_LEN_RESPONSE_TO_PROCESS = 200
     RE_ACCEPT_ENCODING_BROTLI = re.compile(r'\bbr\b')
 
     def _accepts_brotli_encoding(self, request):
-        return bool(self.RE_ACCEPT_ENCODING_BROTLI.search(request.META.get('HTTP_ACCEPT_ENCODING', '')))
+        return bool(self.RE_ACCEPT_ENCODING_BROTLI.search(
+            request.META.get('HTTP_ACCEPT_ENCODING', '')))
 
     def process_response(self, request, response):
-        if response.streaming or response.has_header('Content-Encoding') or not self._accepts_brotli_encoding(request) \
-                or len(response.content) < self.MIN_LEN_RESPONSE_TO_PROCESS:
+        if (response.streaming or
+                response.has_header('Content-Encoding') or
+                not self._accepts_brotli_encoding(request) or
+                len(response.content) < self.MIN_LEN_RESPONSE_TO_PROCESS):
             # ---------
-            # 1) brotlipy doesn't support streaming compression, see: https://github.com/google/brotli/issues/191
-            # 2) Avoid brotli if we've already got a content-encoding.
-            # 3) Client doesn't support brotli
-            # 4) It's not worth attempting to compress really short responses.
-            #    This was taken from django GZipMiddleware.
+            # 1) Skip streaming content, GZipMiddleware will compress it
+            #    (supported, see https://github.com/google/brotli/issues/191).
+            # 2) Skip if the content is already encoded.
+            # 3) Skip if client didn't request brotli.
+            # 4) Skip if the content is short, compressing isn't worth it
+            #    (same logic as Django's GZipMiddleware).
             # ---------
             return response
 
-        patch_vary_headers(response, ('Accept-Encoding',))
         compressed_content = brotli.compress(response.content)
 
-        # Return the compressed content if it's any shorter
+        # Return the uncompressed content if compression didn't help
         if len(compressed_content) >= len(response.content):
             return response
 
         response.content = compressed_content
+        patch_vary_headers(response, ('Accept-Encoding',))
         response['Content-Length'] = str(len(compressed_content))
         response['Content-Encoding'] = 'br'
-
         return response
