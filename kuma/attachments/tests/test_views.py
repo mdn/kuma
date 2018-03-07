@@ -46,14 +46,18 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
 
     def test_edit_attachment(self):
         response = self._post_attachment()
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         self.assertRedirects(response, self.document.get_edit_url())
 
         attachment = Attachment.objects.get(title='Test uploaded file')
         rev = attachment.current_revision
-        self.assertEqual(rev.creator.username, 'admin')
-        self.assertEqual(rev.description, 'A test file uploaded into kuma.')
-        self.assertEqual(rev.comment, 'Initial upload')
-        self.assertTrue(rev.is_approved)
+        assert rev.creator.username == 'admin'
+        assert rev.description == 'A test file uploaded into kuma.'
+        assert rev.comment == 'Initial upload'
+        assert rev.is_approved
 
     def test_get_previous(self):
         """
@@ -90,7 +94,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         revision2.save()
         revision2.make_current()
 
-        self.assertEqual(revision1, revision2.get_previous())
+        assert revision1 == revision2.get_previous()
 
     @override_config(WIKI_ATTACHMENT_ALLOWED_TYPES='application/x-super-weird')
     def test_mime_type_filtering(self):
@@ -106,7 +110,11 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             'file': _file,
         }
         response = self.client.post(self.files_url, data=post_data)
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         self.assertContains(response, 'Files of this type are not permitted.')
         _file.close()
 
@@ -134,16 +142,19 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
                             kwargs={'document_path': doc.slug},
                             locale='en-US')
         response = self.client.post(files_url, data=post_data)
-        self.assertEqual(response.status_code, 302)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
-        self.assertEqual(doc.files.count(), 1)
+        assert doc.files.count() == 1
         intermediates = DocumentAttachment.objects.filter(document__pk=doc.id)
-        self.assertEqual(intermediates.count(), 1)
+        assert intermediates.count() == 1
 
         intermediate = intermediates[0]
-        self.assertEqual(intermediate.attached_by.username, 'admin')
-        self.assertEqual(intermediate.name,
-                         file_for_upload.name.split('/')[-1])
+        assert intermediate.attached_by.username == 'admin'
+        assert intermediate.name == file_for_upload.name.split('/')[-1]
 
     def test_feed(self):
         test_user = self.user_model.objects.get(username='testuser2')
@@ -167,10 +178,10 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
                            args=(), kwargs={'format': 'json'})
         response = self.client.get(feed_url)
         data = json.loads(response.content)
-        self.assertEqual(len(data), 1)
-        self.assertEqual(data[0]['title'], revision.title)
-        self.assertEqual(data[0]['link'], revision.attachment.get_file_url())
-        self.assertEqual(data[0]['author_name'], test_user.username)
+        assert len(data) == 1
+        assert data[0]['title'] == revision.title
+        assert data[0]['link'] == revision.attachment.get_file_url()
+        assert data[0]['author_name'] == test_user.username
 
 
 def test_legacy_redirect(client, file_attachment):
@@ -184,7 +195,8 @@ def test_legacy_redirect(client, file_attachment):
     )
     response = client.get(mindtouch_url)
     assert response.status_code == 301
-    assert 'Location' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     assert response['Location'] == file_attachment['attachment'].get_file_url()
     assert not response.has_header('Vary')
 
@@ -197,7 +209,10 @@ def test_edit_attachment_get(admin_client, root_doc):
     )
     response = admin_client.get(url)
     assert response.status_code == 302
-    assert 'Location' in response
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
     assert urlparse(response['Location']).path == root_doc.get_edit_url()
 
 
@@ -236,6 +251,8 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     # Force the HOST header to look like something other than "demos".
     response = client.get(url, HTTP_HOST='localhost')
     assert response.status_code == 301
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=900' in response['Cache-Control']
     assert response['Location'] == url
     assert 'Vary' not in response
 
@@ -268,8 +285,6 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
         HTTP_IF_MODIFIED_SINCE=convert_to_http_date(created)
     )
     assert response.status_code == 304
-    assert 'Last-Modified' in response
     assert response['Last-Modified'] == convert_to_http_date(created)
-    assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']

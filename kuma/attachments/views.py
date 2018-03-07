@@ -3,18 +3,17 @@ import mimetypes
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, StreamingHttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
-from django.views.decorators.cache import cache_control
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.cache import cache_control, never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-
-from kuma.core.utils import is_untrusted
-from kuma.core.decorators import login_required
-from kuma.wiki.models import Document
-from kuma.wiki.decorators import process_document_path
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
 from .utils import allow_add_attachment_by, convert_to_http_date
+from kuma.core.decorators import login_required, shared_cache_control
+from kuma.core.utils import is_untrusted
+from kuma.wiki.decorators import process_document_path
+from kuma.wiki.models import Document
 
 
 # Mime types used on MDN
@@ -30,6 +29,7 @@ def guess_extension(_type):
     return OVERRIDE_MIMETYPES.get(_type, mimetypes.guess_extension(_type))
 
 
+@cache_control(public=True, max_age=60 * 15)
 def raw_file(request, attachment_id, filename):
     """
     Serve up an attachment's file.
@@ -41,34 +41,30 @@ def raw_file(request, attachment_id, filename):
 
     if is_untrusted(request):
         rev = attachment.current_revision
+        if settings.DEBUG:
+            # to work around an issue of the localdevstorage with streamed
+            # files we'll have to read some of the file here first
+            rev.file.read(rev.file.DEFAULT_CHUNK_SIZE)
+        response = StreamingHttpResponse(rev.file, content_type=rev.mime_type)
+        try:
+            response['Content-Length'] = rev.file.size
+        except OSError:
+            pass
+        response['Last-Modified'] = convert_to_http_date(rev.created)
+        response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
+        return response
 
-        @cache_control(public=True, max_age=60 * 15)
-        def stream_raw_file(*args):
-            if settings.DEBUG:
-                # to work around an issue of the localdevstorage with streamed
-                # files we'll have to read some of the file here first
-                rev.file.read(rev.file.DEFAULT_CHUNK_SIZE)
-            response = StreamingHttpResponse(rev.file,
-                                             content_type=rev.mime_type)
-            try:
-                response['Content-Length'] = rev.file.size
-            except OSError:
-                pass
-            response['Last-Modified'] = convert_to_http_date(rev.created)
-            response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
-            return response
-
-        return stream_raw_file(request)
-    else:
-        return redirect(attachment.get_file_url(), permanent=True)
+    return redirect(attachment.get_file_url(), permanent=True)
 
 
+@shared_cache_control(s_maxage=60 * 60 * 24 * 30)
 def mindtouch_file_redirect(request, file_id, filename):
     """Redirect an old MindTouch file URL to a new kuma file URL."""
     attachment = get_object_or_404(Attachment, mindtouch_attachment_id=file_id)
     return redirect(attachment.get_file_url(), permanent=True)
 
 
+@never_cache
 @xframe_options_sameorigin
 @login_required
 @process_document_path
@@ -87,6 +83,7 @@ def edit_attachment(request, document_slug, document_locale):
     )
     if request.method != 'POST':
         return redirect(document.get_edit_url())
+
     # No access if no permissions to upload
     if not allow_add_attachment_by(request.user):
         raise PermissionDenied
