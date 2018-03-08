@@ -1,4 +1,4 @@
-FROM node:6.12-slim
+FROM node:8.10.0-slim
 
 RUN set -ex && \
     apt-get update && \
