@@ -41,15 +41,8 @@ def raw_file(request, attachment_id, filename):
 
     if is_untrusted(request):
         rev = attachment.current_revision
-        if settings.DEBUG:
-            # to work around an issue of the localdevstorage with streamed
-            # files we'll have to read some of the file here first
-            rev.file.read(rev.file.DEFAULT_CHUNK_SIZE)
         response = StreamingHttpResponse(rev.file, content_type=rev.mime_type)
-        try:
-            response['Content-Length'] = rev.file.size
-        except OSError:
-            pass
+        response['Content-Length'] = rev.file.size
         response['Last-Modified'] = convert_to_http_date(rev.created)
         response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
         return response

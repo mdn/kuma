@@ -4,9 +4,6 @@ from .common import *  # noqa
 # Settings for Docker Development
 # TODO: Use environment to override, not settings picker
 
-DEFAULT_FILE_STORAGE = 'kuma.core.storage.KumaHttpStorage'
-LOCALDEVSTORAGE_HTTP_FALLBACK_DOMAIN = SITE_URL + '/media/'
-
 ATTACHMENT_HOST = config('ATTACHMENT_HOST',
                          default='mdn-local.mozillademos.org')
 
@@ -15,7 +12,6 @@ INTERNAL_IPS = ('127.0.0.1', '192.168.10.1', '172.18.0.1')
 # Default DEBUG to True, and recompute derived settings
 DEBUG = config('DEBUG', default=True, cast=bool)
 DEBUG_TOOLBAR = config('DEBUG_TOOLBAR', default=False, cast=bool)
-SERVE_MEDIA = DEBUG
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 PIPELINE['PIPELINE_ENABLED'] = config('PIPELINE_ENABLED', not DEBUG, cast=bool)
 PIPELINE['PIPELINE_COLLECTOR_ENABLED'] = config('PIPELINE_COLLECTOR_ENABLED',
