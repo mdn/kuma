@@ -998,12 +998,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/mozilla-dnthelper.js',
     },
-    'font-check': {
-        'source_filenames': (
-            'js/font-check.js',
-        ),
-        'output_filename': 'build/js/font-check.js',
-    },
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
@@ -1014,9 +1008,6 @@ PIPELINE_JS = {
             'js/auth.js',
             'js/highlight.js',
             'js/wiki-compat-trigger.js',
-            # FFO lib contains Promise polyfill
-            'js/libs/fontfaceobserver/fontfaceobserver.2.0.7.js',
-            'js/fonts.js',
             'js/lang-switcher.js'
         ),
         'output_filename': 'build/js/main.js',
