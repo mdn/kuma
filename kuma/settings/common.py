@@ -1481,7 +1481,6 @@ CONSTANCE_CONFIG = dict(
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         ('^https?\:\/\/'
          '(stage-files.mdn.moz.works'               # Staging demos
-         '|developer.allizom.org'                   # Staging demos (SCL3)
          '|mdn.mozillademos.org'                    # Production demos
          '|testserver'                              # Unit test demos
          '|localhost\:8000'                         # Docker development demos
