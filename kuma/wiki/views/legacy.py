@@ -4,6 +4,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 
 from ..models import Document, Revision
+from kuma.core.decorators import shared_cache_control
 
 
 # Legacy MindTouch redirects.
@@ -56,6 +57,7 @@ def mindtouch_namespace_redirect(request, namespace, slug):
     return redirect(new_url, permanent=True)
 
 
+@shared_cache_control(s_maxage=60 * 60 * 24 * 30)
 def mindtouch_to_kuma_redirect(request, path):
     """
     Given a request to a Mindtouch-generated URL, generate a redirect

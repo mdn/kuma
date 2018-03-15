@@ -861,6 +861,14 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
         akismet_data = AkismetHistoricalData(revision, self.request)
         return akismet_data.parameters
 
+    def clean(self):
+        if 'revision' not in self.cleaned_data:
+            raise forms.ValidationError(
+                _('Unable to make the Akismet submission (invalid revision).'),
+                code='invalid'
+            )
+        return super(RevisionAkismetSubmissionAdminForm, self).clean()
+
 
 class RevisionAkismetSubmissionSpamForm(RevisionAkismetSubmissionAdminForm):
     """
