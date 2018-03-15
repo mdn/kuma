@@ -52,11 +52,11 @@ Icons in mobile view
     }
 
     .bc-browser-ie:before {
-        content: '\e956\0020\eae7';
+        content: '\e956\0020\eae6';
     }
 
     .bc-browser-ie_mobile:before {
-        content: '\f108\0020\eae7';
+        content: '\f108\0020\eae6';
     }
 
     .bc-browser-nodejs:before {
@@ -78,5 +78,9 @@ Icons in mobile view
     }
     .bc-browser-safari_ios:before {
         content: '\f108\0020\e94a';
+    }
+
+    .bc-browser-samsunginternet_android:before {
+        content: '\f17b\0020\e902';
     }
 }
