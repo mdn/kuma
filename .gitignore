@@ -74,15 +74,6 @@ node_modules/
 /static/
 /tmp/emails/*.log
 
-# SCL3-specific files
-# TODO: Remove when AWS move is complete
-kumascript_settings_local.json
-kumascript_settings_local.json*
-!kumascript_settings_local.json-dist
-settings_local.py
-settings_local.py*
-webroot/.htaccess
-
 # Selenium
 geckodriver.log
 

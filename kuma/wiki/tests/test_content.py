@@ -641,8 +641,6 @@ def test_filteriframe_empty_contents():
 FILTERIFRAME_ACCEPTED = {
     'stage': ('https://stage-files.mdn.moz.works/'
               'fr/docs/Test$samples/sample2?revision=234'),
-    'scl3-stage': ('https://developer.allizom.org/'
-                   'fr/docs/Test$samples/sample2?revision=234'),
     'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
     'docker': 'http://localhost:8000/de/docs/Test$samples/test?revision=678',
     'youtube_http': ('http://www.youtube.com/embed/'
