@@ -263,7 +263,7 @@ class BrotliMiddleware(object):
             # ---------
             return response
 
-        compressed_content = brotli.compress(response.content)
+        compressed_content = brotli.compress(response.content, quality=5)
 
         # Return the uncompressed content if compression didn't help
         if len(compressed_content) >= len(response.content):
