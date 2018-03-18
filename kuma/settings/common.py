@@ -245,7 +245,6 @@ ENABLED_LOCALES = [FIRST_LOCALE] + sorted(ENABLED_LOCALES_TO_SORT)
 RTL_LANGUAGES = (
     'ar',
     'fa',
-    'fa-IR',
     'he'
 )
 
@@ -260,21 +259,12 @@ LOCALE_ALIASES = {
     'cn': 'zh-CN',
     'fy': 'fy-NL',
     'ga': 'ga-IE',
-    'gu': 'gu-IN',
     'hi': 'hi-IN',
-    'hy': 'hy-AM',
-    'pa': 'pa-IN',
     'sv': 'sv-SE',
-    'ta': 'ta-LK',
 
     # Map a prefix to one of its multiple specific locales.
     'pt': 'pt-PT',
-    'sr': 'sr-Cyrl',
     'zh': 'zh-CN',
-
-    # Create aliases for locales which do not share a prefix.
-    'nb-NO': 'no',
-    'nn-NO': 'no',
 
     # Create aliases for locales which use region subtags to assume scripts.
     'zh-Hans': 'zh-CN',

@@ -1,5 +1,7 @@
 import pytest
 
+from django.conf import settings
+
 from kuma.core.tests import KumaTestCase, eq_
 from ..urlresolvers import get_best_language
 
@@ -35,12 +37,6 @@ class BestLanguageTests(KumaTestCase):
         best = get_best_language('pt, fr;q=0.5')
         eq_('pt-PT', best)
 
-    @pytest.mark.xfail(reason='no clue what is up with norwegian locales')
-    def test_nonprefix_alias(self):
-        """We only have a single Norwegian locale."""
-        best = get_best_language('nn-NO, nb-NO;q=0.7, fr;q=0.3')
-        eq_('no', best)
-
     def test_script_alias(self):
         """Our traditional Chinese locale is 'zh-TW'."""
         best = get_best_language('zh-Hant, fr;q=0.5')
@@ -70,3 +66,16 @@ class BestLanguageTests(KumaTestCase):
         """Respect user's preferences as much as possible."""
         best = get_best_language('qaz-ZZ, fr-FR;q=0.5')
         eq_('fr', best)
+
+
+@pytest.mark.parametrize("locale", settings.RTL_LANGUAGES)
+def test_rtl_languages(locale):
+    """Check that each RTL language is also a supported locale."""
+    assert locale in settings.ENABLED_LOCALES
+
+
+@pytest.mark.parametrize("alias,locale", settings.LOCALE_ALIASES.items())
+def test_locale_aliases(alias, locale):
+    """Check that each locale alias matches a supported locale."""
+    assert alias not in settings.ENABLED_LOCALES
+    assert locale in settings.ENABLED_LOCALES
