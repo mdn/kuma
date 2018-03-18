@@ -1053,7 +1053,6 @@ class TranslateTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(0, len(doc('form input[name="slug"]')))
 
-    @pytest.mark.xfail(reason='Figure out wtf is going on with this test')
     def test_translate_form_maintains_based_on_rev(self):
         """
         Revision.based_on should be the rev that was current when the
