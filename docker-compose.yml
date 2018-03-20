@@ -74,6 +74,7 @@ services:
       - --character-set-server=utf8
       - --collation-server=utf8_general_ci
       - --innodb-flush-log-at-trx-commit=0
+      - --innodb_log_file_size=100M
       - --max-allowed-packet=100M
     volumes:
       - mysqlvolume:/var/lib/mysql
