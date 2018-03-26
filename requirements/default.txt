@@ -109,11 +109,6 @@ django-honeypot==0.5.0 \
 django-jinja==2.2.1 \
     --hash=sha256:04c53ba90cbede97e6543b98291f1eec259e57dfa4e014a5fbf0291afcdae6a9
 
-# Download media from production when developing locally
-django-localdevstorage==0.5 \
-    --hash=sha256:db1b2719dff305b91a117c9391887c5c391600acba6f2e41ecea5efee47d8e76 \
-    --hash=sha256:181939624a9dca244b0a72837a84baa1c4045ba47f3cd56632c21eb87298498d
-
 # Use consistent hashes despite adding or removing servers
 django-memcached-hashring==0.1.2 \
     --hash=sha256:f71f99d60e704cc239bddbbe336dcdc5bb8a487b65a1b0b6c7ce0f4af5848442 \
