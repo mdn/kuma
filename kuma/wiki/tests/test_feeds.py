@@ -21,6 +21,8 @@ def test_l10n_updates_no_updates(trans_doc, client):
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 0  # No entries, translation is up to date
 
@@ -31,6 +33,8 @@ def test_l10n_updates_parent_updated(trans_doc, edit_revision, client):
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 1
     assert trans_doc.get_absolute_url() in data[0]['link']
@@ -43,6 +47,8 @@ def test_l10n_updates_include_campaign(trans_doc, create_revision,
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 1
@@ -167,6 +173,8 @@ def test_recent_revisions(create_revision, edit_revision, client):
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 2
@@ -187,6 +195,8 @@ def test_recent_revisions_pages(create_revision, edit_revision, client):
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url, {'limit': 1})
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 1
@@ -198,6 +208,8 @@ def test_recent_revisions_pages(create_revision, edit_revision, client):
 
     resp = client.get(feed_url, {'limit': 1, 'page': 2})
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 1
@@ -216,6 +228,8 @@ def test_recent_revisions_limit_0(edit_revision, client):
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url, {'limit': 0})
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 0
@@ -229,6 +243,8 @@ def test_recent_revisions_all_locales(trans_edit_revision, client):
                       HTTP_HOST='example.com',
                       HTTP_X_FORWARDED_PROTO='https')
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 4
@@ -264,6 +280,8 @@ def test_recent_revisions_diff_includes_tags(create_revision, client):
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 2
@@ -283,11 +301,15 @@ def test_recent_revisions_feed_ignores_render(edit_revision, client):
     feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
                        args=(), kwargs={'format': 'rss'})
     resp = client.get(feed_url)
+    assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     start_content = resp.content
 
     # Re-render document, RSS feed doesn't change
     edit_revision.document.render(cache_control="no-cache")
     resp = client.get(feed_url)
+    assert resp.status_code == 200
     assert resp.content == start_content
 
     # Create a new edit, RSS feed changes
@@ -305,6 +327,8 @@ def test_recent_revisions_feed_omits_docs_without_rev(edit_revision, client):
                        args=(), kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     feed = pq(resp.content)
     items = feed.find('item')
     assert len(items) == 1
@@ -326,6 +350,8 @@ def test_recent_revisions_feed_filter_by_locale(locale, trans_edit_revision,
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 2
     for item in data:
@@ -341,6 +367,8 @@ def test_recent_documents_feed_filter_by_locale(locale, trans_edit_revision,
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 1
     path = urlparse(data[0]['link']).path
@@ -353,6 +381,8 @@ def test_recent_documents_atom_feed(root_doc, client):
                        kwargs={'format': 'atom'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     assert resp['Content-Type'] == 'application/atom+xml; charset=utf-8'
 
 
@@ -362,16 +392,22 @@ def test_recent_documents_as_jsonp(root_doc, client):
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     raw_json = resp.content
 
     resp = client.get(feed_url, {'callback': 'jsonp_callback'})
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     wrapped = resp.content
     assert wrapped == 'jsonp_callback(%s)' % raw_json
 
     # Invalid callback names are rejected
     resp = client.get(feed_url, {'callback': 'try'})
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     assert resp.content == raw_json
 
 
@@ -381,6 +417,8 @@ def test_recent_documents_optional_items(create_revision, client):
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 1
     assert data[0]['author_avatar'].startswith(
@@ -408,6 +446,8 @@ def test_recent_documents_feed_filter_by_tag(edit_revision, client):
                        kwargs={'format': 'json', 'tag': 'TheTag'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 0
 
@@ -435,13 +475,15 @@ def test_feeds_update_after_doc_tag_change(client, wiki_user, root_doc):
 
     # Check document is latest tags feed
     for tag in tags2:
-        response = client.get(reverse('wiki.feeds.recent_documents', args=['atom', tag]), follow=True)
+        response = client.get(reverse('wiki.feeds.recent_documents',
+                                      args=['atom', tag]), follow=True)
         assert response.status_code == 200
         assert root_doc.title in response.content
 
     # Check document is not in the previous tags feed
     for tag in tags1:
-        response = client.get(reverse('wiki.feeds.recent_documents', args=['atom', tag]), follow=True)
+        response = client.get(reverse('wiki.feeds.recent_documents',
+                                      args=['atom', tag]), follow=True)
         assert response.status_code == 200
         assert root_doc.title not in response.content
 
@@ -461,6 +503,8 @@ def test_recent_documents_handles_ambiguous_time(root_doc, client):
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 1
 
@@ -471,6 +515,8 @@ def test_list_review(edit_revision, client):
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 0
 
@@ -487,6 +533,8 @@ def test_list_review_tag(edit_revision, client):
                        kwargs={'format': 'json', 'tag': 'editorial'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
+    assert 'public' in resp['Cache-Control']
+    assert 's-maxage' in resp['Cache-Control']
     data = json.loads(resp.content)
     assert len(data) == 0
 

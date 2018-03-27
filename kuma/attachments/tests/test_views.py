@@ -177,6 +177,8 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         feed_url = reverse('attachments.feeds.recent_files', locale='en-US',
                            args=(), kwargs={'format': 'json'})
         response = self.client.get(feed_url)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         data = json.loads(response.content)
         assert len(data) == 1
         assert data[0]['title'] == revision.title
