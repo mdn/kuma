@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-import newrelic.agent
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.cache import never_cache
 from ratelimit.decorators import ratelimit
+import newrelic.agent
 
-from kuma.core.decorators import block_user_agents, login_required
+from kuma.core.decorators import (block_user_agents, login_required,
+                                  shared_cache_control)
 from kuma.core.utils import smart_int
 
 from .. import kumascript
@@ -18,6 +20,7 @@ from ..templatetags.jinja_helpers import format_comment
 
 
 @newrelic.agent.function_trace()
+@shared_cache_control
 @block_user_agents
 @prevent_indexing
 @process_document_path
@@ -37,6 +40,7 @@ def revision(request, document_slug, document_locale, revision_id):
     return render(request, 'wiki/revision.html', context)
 
 
+@never_cache
 @login_required
 @require_POST
 def preview(request):
@@ -74,6 +78,7 @@ def preview(request):
     return render(request, 'wiki/preview.html', context)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @xframe_options_sameorigin
@@ -120,6 +125,7 @@ def compare(request, document_slug, document_locale):
     return render(request, template, context)
 
 
+@never_cache
 @login_required
 @require_POST
 @process_document_path

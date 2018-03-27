@@ -468,6 +468,9 @@ def test_revision_template(root_doc, client):
     url = reverse('wiki.revision', args=[root_doc.slug, rev.id], locale=root_doc.locale)
     response = client.get(url)
     assert response.status_code == 200
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     page = pq(response.content)
     assert page('h1').text() == 'Revision %s of %s' % (rev.id, root_doc.title)
     assert page('#doc-source pre').text() == rev.content
@@ -853,6 +856,9 @@ def test_compare_revisions(edit_revision, client):
 
     response = client.get(url)
     assert response.status_code == 200
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     page = pq(response.content)
     assert page('span.diff_sub').text() == u'Getting\xa0started...'
     assert page('span.diff_add').text() == u'The\xa0root\xa0document.'
@@ -893,6 +899,9 @@ def test_compare_first_translation(trans_revision, client):
 
     response = client.get(url)
     assert response.status_code == 200
+    assert response['X-Robots-Tag'] == 'noindex'
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     page = pq(response.content)
     assert page('span.diff_sub').text() == u'Getting\xa0started...'
     assert page('span.diff_add').text() == u'Mise\xa0en\xa0route...'
@@ -1255,17 +1264,24 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
 
     def test_preview_GET_405(self):
         """Preview with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.preview'), follow=True)
-        eq_(405, response.status_code)
+        response = self.client.get(reverse('wiki.preview', locale='en-US'))
+        assert response.status_code == 405
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
 
     def test_preview(self):
         """Preview the wiki syntax content."""
-        response = self.client.post(reverse('wiki.preview'),
-                                    {'content': '<h1>Test Content</h1>'},
-                                    follow=True)
-        eq_(200, response.status_code)
+        response = self.client.post(reverse('wiki.preview', locale='en-US'),
+                                    {'content': '<h1>Test Content</h1>'})
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
-        eq_('Test Content', doc('article#wikiArticle h1').text())
+        assert doc('article#wikiArticle h1').text() == 'Test Content'
 
     @pytest.mark.xfail(reason='broken test')
     def test_preview_locale(self):
@@ -1276,10 +1292,14 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         # Preview content that links to it and verify link is in locale.
         url = reverse('wiki.preview', locale='es')
         response = self.client.post(url, {'content': '[[Test Document]]'})
-        eq_(200, response.status_code)
+        assert response.status_code == 200
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         doc = pq(response.content)
         link = doc('#doc-content a')
-        eq_('Prueba', link.text())
+        assert link.text() == 'Prueba'
         eq_('/es/docs/prueba', link[0].attrib['href'])
 
 

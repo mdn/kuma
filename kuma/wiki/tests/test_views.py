@@ -612,7 +612,12 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         mock_requests.post(requests_mock.ANY, content=content.encode('utf8'))
 
         self.client.login(username='admin', password='testpass')
-        self.client.post(reverse('wiki.preview'), {'content': content})
+        resp = self.client.post(reverse('wiki.preview', locale='en-US'),
+                                {'content': content})
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         # No UnicodeDecodeError
         mock_requests.request_history[0].body.decode('utf8')
 
@@ -631,7 +636,12 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         mock_post.side_effect = Exception("Should not be called")
 
         self.client.login(username='admin', password='testpass')
-        self.client.post(reverse('wiki.preview'), {'doc_id': self.doc.id})
+        resp = self.client.post(reverse('wiki.preview', locale='en-US'),
+                                {'doc_id': self.doc.id})
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
 
 class DocumentSEOTests(UserTestCase, WikiTestCase):
@@ -1849,17 +1859,20 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
             params = dict(data_dict['params'], revision_id=rev.id)
             resp = self.client.post(review_url, params)
-            eq_(302, resp.status_code)
-
+            assert resp.status_code == 302
+            assert 'max-age=0' in resp['Cache-Control']
+            assert 'no-cache' in resp['Cache-Control']
+            assert 'no-store' in resp['Cache-Control']
+            assert 'must-revalidate' in resp['Cache-Control']
             doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                        slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
             review_tags = [x.name for x in rev.review_tags.all()]
             review_tags.sort()
             for expected_str in data_dict['message_contains']:
-                ok_(expected_str in rev.summary)
-                ok_(expected_str in rev.comment)
-            eq_(data_dict['expected_tags'], review_tags)
+                assert expected_str in rev.summary
+                assert expected_str in rev.comment
+            assert review_tags == data_dict['expected_tags']
 
     @pytest.mark.midair
     def test_edit_midair_collisions(self, is_ajax=False, translate_locale=None):
