@@ -23,9 +23,8 @@ from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
 
 from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
-                        RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
-                        SLUG_CLEANSING_RE, SPAM_OTHER_HEADERS,
-                        SPAM_SUBMISSION_REVISION_FIELDS,
+                        REVIEW_FLAG_TAGS, SLUG_CLEANSING_RE,
+                        SPAM_OTHER_HEADERS, SPAM_SUBMISSION_REVISION_FIELDS,
                         SPAM_TRAINING_SWITCH)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
@@ -368,6 +367,7 @@ class DocumentForm(forms.ModelForm):
         super(DocumentForm, self).__init__(*args, **kwargs)
 
     def clean_slug(self):
+        from kuma.wiki.urls import non_document_patterns
         slug = self.cleaned_data['slug']
         if slug == '':
             # Default to the title, if missing.
@@ -379,9 +379,9 @@ class DocumentForm(forms.ModelForm):
         if (INVALID_DOC_SLUG_CHARS_RE.search(slug) or
                 not DOCUMENT_PATH_RE.search(slug)):
             raise forms.ValidationError(SLUG_INVALID)
-        # Guard against slugs that match urlpatterns
-        for pattern in RESERVED_SLUGS_RES:
-            if pattern.match(slug):
+        # Guard against slugs that match reserved URL patterns.
+        for url_pattern in non_document_patterns:
+            if url_pattern.resolve('/' + slug):
                 raise forms.ValidationError(SLUG_INVALID)
         return slug
 

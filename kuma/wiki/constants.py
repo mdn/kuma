@@ -222,27 +222,6 @@ LOCALIZATION_FLAG_TAGS = (
     ('inprogress', _('Localization in progress - not completely translated yet.')),
 )
 
-# TODO: This is info derived from urls.py, but unsure how to DRY it
-RESERVED_SLUGS = (
-    r'ckeditor_config\.js$',
-    r'watch-ready-for-review$',
-    r'unwatch-ready-for-review$',
-    r'watch-approved$',
-    r'unwatch-approved$',
-    r'\.json$',
-    r'new$',
-    r'all$',
-    r'templates$',
-    r'preview-wiki-content$',
-    r'category/\d+$',
-    r'needs-review/?[^/]+$',
-    r'needs-review/?',
-    r'feeds/[^/]+/all/?',
-    r'feeds/[^/]+/needs-review/[^/]+$',
-    r'feeds/[^/]+/needs-review/?',
-    r'tag/[^/]+'
-)
-RESERVED_SLUGS_RES = [re.compile(pattern) for pattern in RESERVED_SLUGS]
 SLUG_CLEANSING_RE = re.compile(r'^\/?(([A-z-]+)?\/?docs\/)?')
 # ?, whitespace, percentage, quote disallowed in slugs altogether
 INVALID_DOC_SLUG_CHARS_RE = re.compile(r"""[\s'"%%\?\$]+""")
