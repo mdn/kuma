@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-import json
-
 try:
     from cStringIO import cStringIO as StringIO
 except ImportError:
     from StringIO import StringIO
+import json
 
-import newrelic.agent
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.exceptions import PermissionDenied
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect, HttpResponsePermanentRedirect,
@@ -18,21 +17,24 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import parse_etags
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
+from django.utils.cache import patch_vary_headers
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import never_cache
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from pyquery import PyQuery as pq
 from ratelimit.decorators import ratelimit
+import newrelic.agent
 
-import kuma.wiki.content
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (block_user_agents, login_required,
                                   permission_required, superuser_required,
-                                  redirect_in_maintenance_mode)
+                                  redirect_in_maintenance_mode,
+                                  shared_cache_control)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.search.store import get_search_url_from_referer
+import kuma.wiki.content
 
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
@@ -314,6 +316,7 @@ def _apply_content_experiment(request, doc):
     return doc, None  # Not a content experiment
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @allow_CORS_GET
@@ -341,6 +344,7 @@ def children(request, document_slug, document_locale):
     return JsonResponse(result)
 
 
+@never_cache
 @block_user_agents
 @require_http_methods(['GET', 'POST'])
 @permission_required('wiki.move_tree')
@@ -391,6 +395,7 @@ def move(request, document_slug, document_locale):
     })
 
 
+@never_cache
 @block_user_agents
 @process_document_path
 @superuser_required
@@ -403,6 +408,7 @@ def repair_breadcrumbs(request, document_slug, document_locale):
     return redirect(doc.get_absolute_url())
 
 
+@shared_cache_control
 @require_GET
 @allow_CORS_GET
 @process_document_path
@@ -434,6 +440,7 @@ def toc(request, document_slug=None, document_locale=None):
     return HttpResponse(toc_html)
 
 
+@shared_cache_control
 @block_user_agents
 @require_GET
 @allow_CORS_GET
@@ -474,6 +481,7 @@ def as_json(request, document_slug=None, document_locale=None):
     return JsonResponse(data)
 
 
+@shared_cache_control(s_maxage=60 * 60 * 24)
 @block_user_agents
 @require_GET
 @allow_CORS_GET
@@ -496,6 +504,7 @@ def styles(request, document_slug=None, document_locale=None):
     return HttpResponseRedirect(static('build/styles/zones.css'))
 
 
+@never_cache
 @block_user_agents
 @require_POST
 @login_required
@@ -520,6 +529,7 @@ def subscribe(request, document_slug, document_locale):
         return redirect(document)
 
 
+@never_cache
 @block_user_agents
 @require_POST
 @login_required
@@ -593,6 +603,7 @@ def _document_raw(doc_html):
     return response
 
 
+@shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD'])
 @allow_CORS_GET
@@ -762,9 +773,16 @@ def document(request, document_slug, document_locale):
         }
         response = render(request, 'wiki/document.html', context)
 
+    # We're doing this to prevent any unknown intermediate public HTTP caches
+    # from erroneously caching without considering cookies, since cookies do
+    # affect the content of the response. The primary CDN is configured to
+    # cache based on a whitelist of cookies.
+    patch_vary_headers(response, ('Cookie',))
+
     return _add_kuma_revision_header(doc, response)
 
 
+@shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD', 'PUT'])
 @redirect_in_maintenance_mode(methods=['PUT'])

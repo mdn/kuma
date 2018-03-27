@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from urllib import urlencode
-from urlparse import parse_qs
-import datetime
 import HTMLParser
+import datetime
 import json
 
 from constance.test import override_config
@@ -10,6 +8,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
@@ -84,45 +83,6 @@ class RedirectTests(UserTestCase, WikiTestCase):
         self.assertHTMLEqual(html, article_body)
 
 
-class LocaleRedirectTests(UserTestCase, WikiTestCase):
-    """Tests for fallbacks to en-US and such for slug lookups."""
-    # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
-    localizing_client = True
-
-    def test_fallback_to_translation(self):
-        """If a slug isn't found in the requested locale but is in the default
-        locale and if there is a translation of that default-locale document to
-        the requested locale, the translation should be served."""
-        en_doc, de_doc = self._create_en_and_de_docs()
-        response = self.client.get(reverse('wiki.document',
-                                           args=(en_doc.slug,),
-                                           locale='de'),
-                                   follow=True)
-        self.assertRedirects(response, de_doc.get_absolute_url())
-
-    def test_fallback_with_query_params(self):
-        """The query parameters should be passed along to the redirect."""
-
-        en_doc, de_doc = self._create_en_and_de_docs()
-        url = reverse('wiki.document', args=[en_doc.slug], locale='de')
-        response = self.client.get(url + '?x=y&x=z', follow=True)
-        self.assertRedirects(response, de_doc.get_absolute_url() + '?x=y&x=z')
-
-    def test_redirect_with_no_slug(self):
-        """Bug 775241: Fix exception in redirect for URL with ui-locale"""
-        loc = settings.WIKI_DEFAULT_LANGUAGE
-        url = '/%s/docs/%s/' % (loc, loc)
-        response = self.client.get(url, follow=True)
-        assert response.status_code == 404
-
-    def _create_en_and_de_docs(self):
-        en = settings.WIKI_DEFAULT_LANGUAGE
-        en_doc = document(locale=en, slug='english-slug', save=True)
-        de_doc = document(locale='de', parent=en_doc, save=True)
-        revision(document=de_doc, is_approved=True, save=True)
-        return en_doc, de_doc
-
-
 class ViewTests(UserTestCase, WikiTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
     localizing_client = True
@@ -139,32 +99,35 @@ class ViewTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.json', locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         resp = self.client.get(url, {'title': 'an article title'})
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
         data = json.loads(resp.content)
-        eq_('article-title', data['slug'])
+        assert data['slug'] == 'article-title'
 
         result_tags = sorted([str(x) for x in data['tags']])
-        eq_(expected_tags, result_tags)
+        assert result_tags == expected_tags
 
         result_review_tags = sorted([str(x) for x in data['review_tags']])
-        eq_(expected_review_tags, result_review_tags)
+        assert result_review_tags == expected_review_tags
 
         url = reverse('wiki.json_slug', args=('article-title',),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
         Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
-        ok_('Access-Control-Allow-Origin' in resp)
-        eq_('*', resp['Access-Control-Allow-Origin'])
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert resp['Access-Control-Allow-Origin'] == '*'
         data = json.loads(resp.content)
-        eq_('an article title', data['title'])
-        ok_('translations' in data)
+        assert data['title'] == 'an article title'
+        assert 'translations' in data
 
         result_tags = sorted([str(x) for x in data['tags']])
-        eq_(expected_tags, result_tags)
+        assert result_tags == expected_tags
 
         result_review_tags = sorted([str(x) for x in data['review_tags']])
-        eq_(expected_review_tags, result_review_tags)
+        assert result_review_tags == expected_review_tags
 
     def test_toc_view(self):
         slug = 'toc_test_doc'
@@ -179,12 +142,13 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
-        ok_('Access-Control-Allow-Origin' in resp)
-        eq_('*', resp['Access-Control-Allow-Origin'])
-        self.assertHTMLEqual(
-            resp.content, '<ol><li>'
-            '<a href="#Head_2" rel="internal">Head 2</a>'
-            '</ol>')
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert resp['Access-Control-Allow-Origin'] == '*'
+        assert normalize_html(resp.content) == normalize_html(
+            '<ol><li><a href="#Head_2" rel="internal">Head 2</a></ol>'
+        )
 
     def test_children_view(self):
         """bug 875349"""
@@ -230,31 +194,38 @@ class ViewTests(UserTestCase, WikiTestCase):
             if expand:
                 url = '%s?expand' % url
             resp = self.client.get(url)
-            ok_('Access-Control-Allow-Origin' in resp)
-            eq_('*', resp['Access-Control-Allow-Origin'])
+            assert resp.status_code == 200
+            assert 'public' in resp['Cache-Control']
+            assert 's-maxage' in resp['Cache-Control']
+            assert resp['Access-Control-Allow-Origin'] == '*'
             json_obj = json.loads(resp.content)
 
             # Basic structure creation testing
-            eq_(json_obj['slug'], 'Root')
+            assert json_obj['slug'] == 'Root'
             if not expand:
-                ok_('summary' not in json_obj)
+                assert 'summary' not in json_obj
             else:
-                eq_(json_obj['summary'],
-                    'Test <a href="http://example.com">Summary</a>')
-                ok_('tags' in json_obj)
-                ok_('review_tags' in json_obj)
-            eq_(len(json_obj['subpages']), 2)
-            eq_(len(json_obj['subpages'][0]['subpages']), 2)
-            eq_(json_obj['subpages'][0]['subpages'][1]['title'],
-                'Grandchild 2')
+                assert (json_obj['summary'] ==
+                        'Test <a href="http://example.com">Summary</a>')
+                assert 'tags' in json_obj
+                assert 'review_tags' in json_obj
+            assert len(json_obj['subpages']) == 2
+            assert len(json_obj['subpages'][0]['subpages']) == 2
+            assert (json_obj['subpages'][0]['subpages'][1]['title'] ==
+                    'Grandchild 2')
 
         # Depth parameter testing
         def _depth_test(depth, aught):
             url = reverse('wiki.children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
             resp = self.client.get(url)
+            assert resp.status_code == 200
+            assert 'public' in resp['Cache-Control']
+            assert 's-maxage' in resp['Cache-Control']
+            assert resp['Access-Control-Allow-Origin'] == '*'
             json_obj = json.loads(resp.content)
-            eq_(len(json_obj['subpages'][0]['subpages'][1]['subpages']), aught)
+            assert (len(json_obj['subpages'][0]['subpages'][1]['subpages']) ==
+                    aught)
 
         _depth_test(2, 0)
         _depth_test(3, 1)
@@ -266,23 +237,34 @@ class ViewTests(UserTestCase, WikiTestCase):
         _make_doc('A Child', 'Sort_Root/A_Child', sort_root_doc)
         resp = self.client.get(reverse('wiki.children', args=['Sort_Root'],
                                        locale=settings.WIKI_DEFAULT_LANGUAGE))
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert resp['Access-Control-Allow-Origin'] == '*'
         json_obj = json.loads(resp.content)
-        eq_(json_obj['subpages'][0]['title'], 'A Child')
+        assert json_obj['subpages'][0]['title'] == 'A Child'
 
         # Test if we are serving an error json if document does not exist
         no_doc_url = reverse('wiki.children', args=['nonexistentDocument'],
                              locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(no_doc_url)
-        result = json.loads(resp.content)
-        eq_(result, {'error': 'Document does not exist.'})
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert resp['Access-Control-Allow-Origin'] == '*'
+        assert (json.loads(resp.content) ==
+                {'error': 'Document does not exist.'})
 
         # Test error json if document is a redirect
         _make_doc('Old Name', 'Old Name', is_redir=True)
         redirect_doc_url = reverse('wiki.children', args=['Old Name'],
                                    locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(redirect_doc_url)
-        result = json.loads(resp.content)
-        eq_(result, {'error': 'Document has moved.'})
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert resp['Access-Control-Allow-Origin'] == '*'
+        assert json.loads(resp.content) == {'error': 'Document has moved.'}
 
     def test_summary_view(self):
         """The ?summary option should restrict document view to summary"""
@@ -292,7 +274,10 @@ class ViewTests(UserTestCase, WikiTestCase):
         """)
         resp = self.client.get('%s?raw&summary' %
                                rev.document.get_absolute_url())
-        eq_(resp.content, 'Foo bar <a href="http://example.com">baz</a>')
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert resp.content == 'Foo bar <a href="http://example.com">baz</a>'
 
     @mock.patch('waffle.flag_is_active', return_value=True)
     @mock.patch('kuma.wiki.jobs.DocumentContributorsJob.get', return_value=[
@@ -307,11 +292,14 @@ class ViewTests(UserTestCase, WikiTestCase):
         flag_is_active.return_value = True
         rev = revision(is_approved=True, save=True, content='some content')
         resp = self.client.get(rev.document.get_absolute_url())
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
         page = pq(resp.content)
         contributors = (page.find(":contains('Contributors to this page')")
                             .parents('.contributors-sub'))
         # just checking if the contributor link is rendered
-        eq_(len(contributors.find('a')), 2)
+        assert len(contributors.find('a')) == 2
 
     def test_revision_view_bleached_content(self):
         """Bug 821988: Revision content should be cleaned with bleach"""
@@ -790,30 +778,38 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Ensure redirect to create new page on attempt to visit non-existent
         # child page.
         resp = self.client.get(url)
-        eq_(302, resp.status_code)
-        ok_('docs/new' in resp['Location'])
-        ok_('?slug=%s' % local_slug in resp['Location'])
+        assert resp.status_code == 302
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert 'docs/new' in resp['Location']
+        assert ('?slug=%s' % local_slug) in resp['Location']
 
         # Ensure real 404 for visit to non-existent page with params common to
         # kumascript and raw content API.
         for p_name in ('raw', 'include', 'nocreate'):
             sub_url = '%s?%s=1' % (url, p_name)
             resp = self.client.get(sub_url)
-            eq_(404, resp.status_code)
+            assert resp.status_code == 404
 
         # Ensure root level documents work, not just children
         response = self.client.get(reverse('wiki.document',
                                            args=['noExist'], locale=locale))
-        eq_(302, response.status_code)
+        assert response.status_code == 302
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
         response = self.client.get(reverse('wiki.document',
                                            args=['Template:NoExist'],
                                            locale=locale))
-        eq_(302, response.status_code)
+        assert response.status_code == 302
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
     def test_creating_child_of_redirect(self):
-        """While try to create a child of a redirect,
-        the parent of the child should be redirect's parent"""
+        """
+        While try to create a child of a redirect,
+        the parent of the child should be redirect's parent.
+        """
         self.client.login(username='admin', password='testpass')
         rev = revision(is_approved=True, save=True)
         doc = rev.document
@@ -823,17 +819,22 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Try to create a child with the old slug
         child_full_slug = doc_first_slug + "/" + "children_document"
-        url = reverse('wiki.document', args=[child_full_slug])
-        response = self.client.get(url, follow=True)
-
-        # The parent id of the query should be same because while moving, a new document is created with old slug
-        # and make redirect to the old document
-        parameters = parse_qs(response.request['QUERY_STRING'])
+        url = reverse('wiki.document', locale='en-US', args=[child_full_slug])
+        response = self.client.get(url)
+        assert response.status_code == 302
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        # The parent id of the query should be same because while moving,
+        # a new document is created with old slug and make redirect to the
+        # old document
+        parameters = parse_qs(urlparse(response['Location']).query)
         assert parameters['parent'][0] == str(doc.id)
 
     def test_creating_child_of_redirect_zoned_document(self):
-        """While try to create a child of a redirected zone document,
-           the parent of the child should be redirect's parent"""
+        """
+        While try to create a child of a redirected zone document,
+        the parent of the child should be redirect's parent.
+        """
         self.client.login(username='admin', password='testpass')
         rev = revision(is_approved=True, save=True)
         root_doc = rev.document
@@ -845,17 +846,22 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         root_doc._move_tree(new_slug="moved_doc")
 
         zoned_child_full_slug = zoned_doc.url_root + "/" + "children_document"
-        response = self.client.get(zoned_child_full_slug, follow=True)
-        assert response.status_code == 200
-
-        # The parent id of the query should be same because while moving, a new document is created with old slug
-        # and make redirect to the old document
-        parameters = parse_qs(response.request['QUERY_STRING'])
+        response = self.client.get(zoned_child_full_slug)
+        assert response.status_code == 302
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        # The parent id of the query should be same because while moving,
+        # a new document is created with old slug and make redirect to the
+        # old document
+        parameters = parse_qs(urlparse(response['Location']).query)
         assert parameters['parent'][0] == str(root_doc.id)
 
     def test_creating_child_of_redirect_zoned_doc_with_unzoned_doc_slug(self):
-        """While try to create a child of a redirected zone document with its unzoned document slug,
-           the parent of the child should be redirect's parent"""
+        """
+        While trying to create a child of a redirected zone document with its
+        unzoned document slug, the parent of the child should be redirect's
+        parent.
+        """
         self.client.login(username='admin', password='testpass')
         rev = revision(is_approved=True, save=True)
         root_doc = rev.document
@@ -867,14 +873,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         root_doc._move_tree(new_slug="moved_doc")
 
         # Try to create a child doc with root document slug
-        unzoned_doc_child_full_slug = root_doc.slug + "/" + "children_document"
+        unzoned_doc_child_full_slug = root_doc.slug + "/children_document"
         url = reverse('wiki.document', args=[unzoned_doc_child_full_slug])
         response = self.client.get(url, follow=True)
-
         assert response.status_code == 200
-
-        # The parent id of the query should be same because while moving, a new document is created with old slug
-        # and make redirect to the old document
+        # The parent id of the query should be same because while moving,
+        # a new document is created with old slug and make redirect to the
+        # old document
         parameters = parse_qs(response.request['QUERY_STRING'])
         assert parameters['parent'][0] == str(root_doc.id)
 
@@ -1507,8 +1512,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert review_tags == ['editorial', 'technical']
 
         # Now, ensure that review form appears for the review tags.
-        response = self.client.get(reverse('wiki.document',
+        response = self.client.get(reverse('wiki.document', locale=doc.locale,
                                            args=[doc.slug]), data)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         page = pq(response.content)
         assert page.find('.page-meta.reviews').length == 1
         assert page.find('#id_request_technical').length == 1
@@ -2040,13 +2048,18 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         resp = self.client.get(reverse('wiki.repair_breadcrumbs',
                                        args=[french_bottom.slug],
                                        locale='fr'))
-        eq_(302, resp.status_code)
-        ok_(french_bottom.get_absolute_url() in resp['Location'])
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        assert french_bottom.get_absolute_url() in resp['Location']
 
         french_bottom_fixed = Document.objects.get(locale='fr',
                                                    title=french_bottom.title)
-        eq_(french_mid.id, french_bottom_fixed.parent_topic.id)
-        eq_(french_top.id, french_bottom_fixed.parent_topic.parent_topic.id)
+        assert french_mid.id == french_bottom_fixed.parent_topic.id
+        assert (french_top.id ==
+                french_bottom_fixed.parent_topic.parent_topic.id)
 
     def test_translate_on_edit(self):
         d1 = document(title="Doc1", locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -2420,57 +2433,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
 
 
-class DocumentWatchTests(UserTestCase, WikiTestCase):
-    """Tests for un/subscribing to document edit notifications."""
-    localizing_client = True
-
-    def setUp(self):
-        super(DocumentWatchTests, self).setUp()
-        self.subscribe_views = [
-            ('wiki.subscribe', EditDocumentEvent),
-            ('wiki.subscribe_to_tree', EditDocumentInTreeEvent)
-        ]
-        self.rev = revision(is_approved=True, save=True)
-        self.doc = self.rev.document
-        self.client.login(username='testuser', password='testpass')
-
-    def test_watch_GET_405(self):
-        """Watch document with HTTP GET results in 405."""
-        for view, Event in self.subscribe_views:
-            response = self.client.get(reverse(view, args=[self.doc.slug]),
-                                       follow=True)
-            eq_(405, response.status_code)
-
-    def test_unwatch_GET_405(self):
-        """Unwatch document with HTTP GET results in 405."""
-        for view, Event in self.subscribe_views:
-            response = self.client.get(reverse(view, args=[self.doc.slug]),
-                                       follow=True)
-            eq_(405, response.status_code)
-
-    def test_watch_unwatch(self):
-        """Watch and unwatch a document."""
-        user = self.user_model.objects.get(username='testuser')
-
-        for view, Event in self.subscribe_views:
-            # Subscribe
-            response = self.client.post(reverse(view,
-                                                args=[self.doc.slug]),
-                                        follow=True)
-
-            eq_(200, response.status_code)
-            assert Event.is_notifying(user, self.doc), \
-                'Watch was not created'
-
-            # Unsubscribe
-            response = self.client.post(reverse(view,
-                                                args=[self.doc.slug]),
-                                        follow=True)
-            eq_(200, response.status_code)
-            assert not Event.is_notifying(user, self.doc), \
-                'Watch was not destroyed'
-
-
 class SectionEditingResourceTests(UserTestCase, WikiTestCase):
     localizing_client = True
 
@@ -2505,13 +2467,14 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document',
+                                   reverse('wiki.document', locale='en-US',
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        ok_('Access-Control-Allow-Origin' in response)
-        eq_('*', response['Access-Control-Allow-Origin'])
-        eq_(normalize_html(expected),
-            normalize_html(response.content))
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert response['Access-Control-Allow-Origin'] == '*'
+        assert normalize_html(expected) == normalize_html(response.content)
 
     def test_raw_editor_safety_filter(self):
         """Safety filter should be applied before rendering editor
@@ -2524,11 +2487,14 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <svg><circle onload=confirm(3)>HI THERE</circle></svg>
         """)
         response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document',
+                                   reverse('wiki.document', locale='en-US',
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        ok_('<p onload=' not in response.content)
-        ok_('<circle onload=' not in response.content)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert '<p onload=' not in response.content
+        assert '<circle onload=' not in response.content
 
     def test_raw_with_editing_links_source(self):
         """The raw source for a document can be requested, with section editing
@@ -2559,11 +2525,13 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
         """ % {'slug': rev.document.slug}
         response = self.client.get('%s?raw=true&edit_links=true' %
-                                   reverse('wiki.document',
+                                   reverse('wiki.document', locale='en-US',
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(normalize_html(expected),
-            normalize_html(response.content))
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert normalize_html(expected) == normalize_html(response.content)
 
     def test_raw_section_source(self):
         """The raw source for a document section can be requested"""
@@ -2587,11 +2555,13 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
         """
         response = self.client.get('%s?section=s2&raw=true' %
-                                   reverse('wiki.document',
+                                   reverse('wiki.document', locale='en-US',
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(normalize_html(expected),
-            normalize_html(response.content))
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert normalize_html(expected) == normalize_html(response.content)
 
     @pytest.mark.midair
     def test_raw_section_edit_ajax(self):
@@ -2644,9 +2614,12 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
         """
         response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document',
+                                   reverse('wiki.document', locale='en-US',
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         assert normalize_html(expected) == normalize_html(response.content)
 
     @pytest.mark.midair
@@ -2754,9 +2727,12 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
 
         # Finally, make sure that all the edits landed
         response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document',
+                                   reverse('wiki.document', locale='en-US',
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         assert normalize_html(expected) == normalize_html(response.content)
 
         # Also, ensure that the revision is slipped into the headers
@@ -2862,11 +2838,14 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             </dl>
         """
         resp = self.client.get('%s?raw&include' %
-                               reverse('wiki.document',
+                               reverse('wiki.document', locale='en-US',
                                        args=[rev.document.slug]),
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(normalize_html(expected),
-            normalize_html(resp.content.decode('utf-8')))
+        assert resp.status_code == 200
+        assert 'public' in resp['Cache-Control']
+        assert 's-maxage' in resp['Cache-Control']
+        assert (normalize_html(expected) ==
+                normalize_html(resp.content.decode('utf-8')))
 
     def test_section_edit_toc(self):
         """show_toc is preserved in section editing."""
@@ -3167,38 +3146,8 @@ class PageMoveTests(UserTestCase, WikiTestCase):
                                         locale=parent_doc.locale),
                                 data=data)
 
-        eq_(200, resp.status_code)
-
-
-def test_zone_styles(client, doc_hierarchy_with_zones):
-    """Ensure CSS styles for a zone can be fetched."""
-    top_doc = doc_hierarchy_with_zones.top
-    bottom_doc = doc_hierarchy_with_zones.bottom
-
-    url = reverse(
-        'wiki.styles',
-        args=(top_doc.slug,),
-        locale=settings.WIKI_DEFAULT_LANGUAGE
-    )
-    response = client.get(url, follow=True)
-
-    assert response.redirect_chain
-    redirect_location, redirect_code = response.redirect_chain[-1]
-    assert redirect_location.endswith('build/styles/zones.css')
-    assert redirect_code == 302
-
-    url = reverse(
-        'wiki.styles',
-        args=(bottom_doc.slug,),
-        locale=settings.WIKI_DEFAULT_LANGUAGE
-    )
-    response = client.get(url, follow=True)
-    assert response.status_code == 404
-
-    url = reverse(
-        'wiki.styles',
-        args=('some-unknown-document-slug',),
-        locale=settings.WIKI_DEFAULT_LANGUAGE
-    )
-    response = client.get(url, follow=True)
-    assert response.status_code == 404
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']

@@ -128,17 +128,20 @@ class DocumentTests(UserTestCase, WikiTestCase):
         revision(document=d2, is_approved=False, save=True)
         url = reverse('wiki.document', args=[d2.slug], locale='fr')
         response = self.client.get(url)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(d2.title, doc('main#content div.document-head h1').text())
+        assert doc('main#content div.document-head h1').text() == d2.title
 
         # Fallback message is shown.
-        eq_(1, len(doc('#doc-pending-fallback')))
-        ok_('$translate' in doc('#edit-button').attr('href'))
+        assert len(doc('#doc-pending-fallback')) == 1
+        assert '$translate' in doc('#edit-button').attr('href')
         # Removing this as it shows up in text(), and we don't want to depend
         # on its localization.
         doc('#doc-pending-fallback').remove()
         # Included content is English.
-        eq_(pq(r.document.html).text(), doc('article#wikiArticle').text())
+        assert pq(r.document.html).text() == doc('article#wikiArticle').text()
 
     def test_document_fallback_no_translation(self):
         """The document template falls back to English if no translation
@@ -146,17 +149,21 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content='Some text.', is_approved=True)
         url = reverse('wiki.document', args=[r.document.slug], locale='fr')
         response = self.client.get(url)
+        assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         doc = pq(response.content)
-        eq_(r.document.title, doc('main#content div.document-head h1').text())
+        assert (doc('main#content div.document-head h1').text() ==
+                r.document.title)
 
         # Fallback message is shown.
-        eq_(1, len(doc('#doc-pending-fallback')))
-        ok_('$translate' in doc('#edit-button').attr('href'))
+        assert len(doc('#doc-pending-fallback')) == 1
+        assert '$translate' in doc('#edit-button').attr('href')
         # Removing this as it shows up in text(), and we don't want to depend
         # on its localization.
         doc('#doc-pending-fallback').remove()
         # Included content is English.
-        eq_(pq(r.document.html).text(), doc('article#wikiArticle').text())
+        assert pq(r.document.html).text() == doc('article#wikiArticle').text()
 
     def test_redirect(self):
         """Make sure documents with REDIRECT directives redirect properly.
@@ -1422,6 +1429,7 @@ def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
 
     url = reverse('wiki.document', args=(doc.slug,), locale=doc.locale)
     response = client.get(url, follow=True)
+    assert response.status_code == 200
     response_html = pq(response.content)
 
     def count(selector):

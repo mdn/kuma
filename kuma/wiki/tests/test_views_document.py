@@ -3,25 +3,28 @@ Tests for kuma/wiki/views/document.py
 
 Legacy tests are in test_views.py.
 """
-import json
-import base64
 from collections import namedtuple
+from urllib import quote
+import base64
+import json
 
+from pyquery import PyQuery as pq
+from waffle.models import Switch
 import mock
 import pytest
 import requests_mock
-from pyquery import PyQuery as pq
 
 from kuma.core.models import IPBan
 from kuma.core.urlresolvers import reverse
 from kuma.authkeys.models import Key
+from kuma.wiki.events import EditDocumentEvent, EditDocumentInTreeEvent
 from kuma.wiki.models import Document, Revision
 from kuma.wiki.views.utils import calculate_etag
 from kuma.wiki.views.document import _apply_content_experiment
 
-from django.utils.text import compress_string
-from django.utils.six.moves.urllib.parse import urlparse
 from django.test.client import BOUNDARY, MULTIPART_CONTENT, encode_multipart
+from django.utils.six.moves.urllib.parse import urlparse
+from django.utils.text import compress_string
 
 
 AuthKey = namedtuple('AuthKey', 'key header')
@@ -102,6 +105,23 @@ def authkey(wiki_user):
     return AuthKey(key=key, header=header)
 
 
+@pytest.mark.parametrize(
+    'http_method', ['put', 'post', 'delete', 'options', 'head'])
+@pytest.mark.parametrize(
+    'endpoint', ['children', 'toc', 'json', 'json_slug', 'styles'])
+def test_disallowed_methods(client, http_method, endpoint):
+    """HTTP methods other than GET & HEAD are not allowed."""
+    kwargs = None
+    if endpoint != 'json':
+        kwargs = dict(document_path='Web/CSS')
+    url = reverse('wiki.{}'.format(endpoint), locale='en-US', kwargs=kwargs)
+    response = getattr(client, http_method)(url)
+    assert response.status_code == 405
+    assert 'Cache-Control' in response
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+
+
 @pytest.mark.parametrize('method', ('GET', 'HEAD'))
 @pytest.mark.parametrize('if_none_match', (None, 'match', 'mismatch'))
 @pytest.mark.parametrize(
@@ -135,6 +155,8 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
         assert response.status_code == 304
     else:
         assert response.status_code == 200
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         assert 'etag' in response
         assert 'x-kuma-revision' in response
         assert 'last-modified' not in response
@@ -158,6 +180,10 @@ def test_api_put_forbidden_when_no_authkey(client, user_client, root_doc,
     url = root_doc.get_absolute_url() + '$api'
     response = (client if user_case == 'anonymous' else user_client).put(url)
     assert response.status_code == 403
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
 
 def test_api_put_unsupported_content_type(client, authkey):
@@ -173,6 +199,8 @@ def test_api_put_unsupported_content_type(client, authkey):
         HTTP_AUTHORIZATION=authkey.header
     )
     assert response.status_code == 400
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
 
 
 def test_api_put_authkey_tracking(client, authkey):
@@ -192,6 +220,8 @@ def test_api_put_authkey_tracking(client, authkey):
         HTTP_AUTHORIZATION=authkey.header
     )
     assert response.status_code == 201
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     last_log = authkey.key.history.order_by('-pk').all()[0]
     assert last_log.action == 'created'
 
@@ -204,6 +234,8 @@ def test_api_put_authkey_tracking(client, authkey):
         HTTP_AUTHORIZATION=authkey.header
     )
     assert response.status_code == 205
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     last_log = authkey.key.history.order_by('-pk').all()[0]
     assert last_log.action == 'updated'
 
@@ -267,6 +299,9 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
         expected_content = SECTIONS.replace(section_content, data['content'])
     else:
         expected_content = SECTIONS
+
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
 
     if if_match == 'mismatch':
         assert response.status_code == 412
@@ -340,8 +375,14 @@ def test_api_put_new(settings, client, root_doc, authkey, section_case,
 
     if slug_case == 'nonexistent-parent':
         assert response.status_code == 404
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
     else:
         assert response.status_code == 201
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
         assert 'location' in response
         assert urlparse(response['location']).path == url_path
         # Confirm that the PUT worked.
@@ -366,6 +407,8 @@ def test_conditional_get(client, section_doc):
     # Ensure the ETag value is based on the entire content of the response.
     response = client.get(url)
     assert response.status_code == 200
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     assert 'etag' in response
     assert 'last-modified' not in response
     assert '"{}"'.format(calculate_etag(response.content)) in response['etag']
@@ -375,6 +418,8 @@ def test_conditional_get(client, section_doc):
     # conditional request.
     response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
     assert response.status_code == 200
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     assert 'etag' in response
 
     response = client.get(
@@ -590,3 +635,177 @@ def test_tags_not_show_while_empty(root_doc, client, wiki_user):
     response_tags = page.find('.tags li a').contents()
     # There should be no tag
     assert len(response_tags) == 0
+
+
+@pytest.mark.parametrize(
+    'params_case',
+    ['nothing', 'title-only', 'slug-only', 'title-and-slug', 'missing-title'])
+def test_json(doc_hierarchy_with_zones, client, params_case):
+    """Test the wiki.json endpoint."""
+    Switch.objects.create(name='application_ACAO', active=True)
+
+    top_doc = doc_hierarchy_with_zones.top
+    bottom_doc = doc_hierarchy_with_zones.bottom
+
+    expected_tags = sorted(['foo', 'bar', 'baz'])
+    expected_review_tags = sorted(['tech', 'editorial'])
+
+    for doc in (top_doc, bottom_doc):
+        doc.tags.set(*expected_tags)
+        doc.current_revision.review_tags.set(*expected_review_tags)
+
+    params = None
+    expected_slug = None
+    expected_status_code = 200
+    if params_case == 'nothing':
+        expected_status_code = 400
+    elif params_case == 'title-only':
+        expected_slug = top_doc.slug
+        params = dict(title=top_doc.title)
+    elif params_case == 'slug-only':
+        expected_slug = bottom_doc.slug
+        params = dict(slug=bottom_doc.slug)
+    elif params_case == 'title-and-slug':
+        expected_slug = top_doc.slug
+        params = dict(title=top_doc.title, slug=bottom_doc.slug)
+    else:  # missing title
+        expected_status_code = 404
+        params = dict(title='nonexistent document title')
+
+    url = reverse('wiki.json', locale='en-US')
+    response = client.get(url, params)
+
+    assert response.status_code == expected_status_code
+    if response.status_code == 404:
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+    else:
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+        assert response['Access-Control-Allow-Origin'] == '*'
+    if response.status_code == 200:
+        data = json.loads(response.content)
+        assert data['slug'] == expected_slug
+        assert sorted(data['tags']) == expected_tags
+        assert sorted(data['review_tags']) == expected_review_tags
+
+
+@pytest.mark.parametrize('params_case', ['with-params', 'without-params'])
+def test_fallback_to_translation(root_doc, trans_doc, client, params_case):
+    """
+    If a slug isn't found in the requested locale but is in the default
+    locale and if there is a translation of that default-locale document to
+    the requested locale, the translation should be served.
+    """
+    params = '?x=y&x=z' if (params_case == 'with-params') else ''
+    url = reverse('wiki.document', args=[root_doc.slug], locale='fr')
+    response = client.get(url + params)
+    assert response.status_code == 302
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+    assert response['Location'].endswith(trans_doc.get_absolute_url() + params)
+
+
+def test_redirect_with_no_slug(db, client):
+    """Bug 775241: Fix exception in redirect for URL with ui-locale"""
+    url = '/en-US/docs/en-US/'
+    response = client.get(url)
+    assert response.status_code == 404
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+
+
+@pytest.mark.parametrize(
+    'http_method', ['get', 'put', 'delete', 'options', 'head'])
+@pytest.mark.parametrize(
+    'endpoint', ['wiki.subscribe', 'wiki.subscribe_to_tree'])
+def test_watch_405(client, root_doc, endpoint, http_method):
+    """Watch document with HTTP non-POST request results in 405."""
+    url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
+    response = getattr(client, http_method)(url)
+    assert response.status_code == 405
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+
+
+@pytest.mark.parametrize(
+    'endpoint', ['wiki.subscribe', 'wiki.subscribe_to_tree'])
+def test_watch_login_required(client, root_doc, endpoint):
+    """User must be logged-in to subscribe to a document."""
+    url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
+    response = client.post(url)
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(
+        reverse('account_login') + '?next=' + quote(url))
+
+
+@pytest.mark.parametrize(
+    'endpoint,event', [('wiki.subscribe', EditDocumentEvent),
+                       ('wiki.subscribe_to_tree', EditDocumentInTreeEvent)],
+    ids=['subscribe', 'subscribe_to_tree'])
+def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
+    """Watch and unwatch a document."""
+    url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
+    # Subscribe
+    response = user_client.post(url)
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(
+        reverse('wiki.document', locale=root_doc.locale, args=[root_doc.slug]))
+    assert event.is_notifying(wiki_user, root_doc), 'Watch was not created'
+
+    # Unsubscribe
+    response = user_client.post(url)
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert response['Location'].endswith(
+        reverse('wiki.document', locale=root_doc.locale, args=[root_doc.slug]))
+    assert not event.is_notifying(wiki_user, root_doc), \
+        'Watch was not destroyed'
+
+
+def test_zone_styles(client, doc_hierarchy_with_zones):
+    """Ensure CSS styles for a zone can be fetched."""
+    top_doc = doc_hierarchy_with_zones.top
+    bottom_doc = doc_hierarchy_with_zones.bottom
+
+    url = reverse('wiki.styles', locale=top_doc.locale, args=(top_doc.slug,))
+    response = client.get(url, follow=False)
+    assert response.status_code == 302
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+    assert response['Location'].endswith('build/styles/zones.css')
+
+    url = reverse('wiki.styles', locale=bottom_doc.locale,
+                  args=(bottom_doc.slug,))
+    response = client.get(url, follow=True)
+    assert response.status_code == 404
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+
+    url = reverse('wiki.styles', locale='en-US',
+                  args=('some-unknown-document-slug',))
+    response = client.get(url, follow=True)
+    assert response.status_code == 404
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
