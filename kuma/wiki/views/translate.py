@@ -23,6 +23,7 @@ from ..models import Document, Revision
 from .utils import document_form_initial, split_slug
 
 
+@never_cache
 @block_user_agents
 @login_required
 @process_document_path
@@ -36,12 +37,12 @@ def select_locale(request, document_slug, document_locale):
     return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
+@never_cache
 @block_user_agents
 @login_required
 @process_document_path
 @check_readonly
 @prevent_indexing
-@never_cache
 def translate(request, document_slug, document_locale, revision_id=None):
     """
     Create a new translation of a wiki document.

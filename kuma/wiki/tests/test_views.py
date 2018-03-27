@@ -3244,8 +3244,13 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
                                  locale=settings.WIKI_DEFAULT_LANGUAGE) +
                          '?tolocale=fr')
         response = self.client.post(translate_url, data)
-        eq_(302, response.status_code)
-        ok_(mock_document_schedule_rendering.called)
+        assert response.status_code == 302
+        assert response['X-Robots-Tag'] == 'noindex'
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        assert mock_document_schedule_rendering.called
 
 
 class PageMoveTests(UserTestCase, WikiTestCase):
