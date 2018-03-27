@@ -1390,6 +1390,9 @@ CELERY_ROUTES = {
     'kuma.wiki.tasks.build_json_data_for_document': {
         'queue': 'mdn_wiki'
     },
+    'kuma.feeder.tasks.update_feeds': {
+        'queue': 'mdn_purgeable'
+    },
 }
 
 # Wiki rebuild settings

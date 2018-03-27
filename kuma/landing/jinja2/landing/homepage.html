@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% from "landing/includes/newsfeed.html" import newsfeed %}
+
 {% block body_attributes %}id="home"{% endblock %}
 
 {% block site_css %}
@@ -92,7 +94,7 @@
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
   <div class="column-hacks" dir="ltr">
-    <h2><i aria-hidden="true" class="icon-star"></i> Hacks Blog<span class="heading-link">{{ _('<a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="icon-arrow-right"></i></a></span>') }}</h2>
+    <h2><i aria-hidden="true" class="icon-star"></i> Hacks Blog<span class="heading-link"><a href="http://hacks.mozilla.org">{{ _('read more at hacks.mozilla.org') }}<i aria-hidden="true" class="icon-arrow-right"></i></a></span></h2>
     {{ newsfeed(updates) }}
   </div>
   <div class="column-involved">

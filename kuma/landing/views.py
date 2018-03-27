@@ -9,8 +9,8 @@ from ratelimit.decorators import ratelimit
 
 from kuma.core.cache import memcache
 from kuma.core.decorators import shared_cache_control
-from kuma.core.sections import SECTION_USAGE
 from kuma.feeder.models import Bundle
+from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
 
 
@@ -24,9 +24,7 @@ def contribute_json(request):
 @ratelimit(key='user_or_ip', rate='400/m', block=True)
 def home(request):
     """Home page."""
-    updates = []
-    for s in SECTION_USAGE:
-        updates += Bundle.objects.recent_entries(s.updates)[:5]
+    updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
 
     community_stats = memcache.get('community_stats')
 
