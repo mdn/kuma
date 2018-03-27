@@ -12,6 +12,7 @@ def _error_page(request, status):
     return render(request, '%d.html' % status, status=status)
 
 
+@never_cache
 @csrf_exempt
 @require_POST
 def set_language(request):

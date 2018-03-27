@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
+from django.views.decorators.cache import never_cache
 
 from kuma.wiki import kumascript
 
 
+@never_cache
 @require_safe
 def revision_hash(request):
     """
@@ -16,6 +18,7 @@ def revision_hash(request):
     )
 
 
+@never_cache
 @require_safe
 def kumascript_revision_hash(request):
     """

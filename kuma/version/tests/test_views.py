@@ -12,6 +12,10 @@ def test_revision_hash(client, db, method, settings):
     response = getattr(client, method)(reverse('version.kuma'))
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
     if method == 'get':
         assert response.content == 'the_revision_hash'
 
@@ -23,6 +27,10 @@ def test_revision_hash(client, db, method, settings):
 def test_revision_hash_405s(client, db, method):
     response = getattr(client, method)(reverse('version.kuma'))
     assert response.status_code == 405
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
 
 
 @pytest.mark.parametrize('method', ['get', 'head'])
@@ -37,6 +45,10 @@ def test_kumascript_revision_hash(client, db, method, mock_requests):
     response = client.get(reverse('version.kumascript'))
     assert response.status_code == 200
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
     if method == 'get':
         assert response.content == hash
 
@@ -48,3 +60,7 @@ def test_kumascript_revision_hash(client, db, method, mock_requests):
 def test_kumascript_revision_hash_405s(client, db, method):
     response = getattr(client, method)(reverse('version.kumascript'))
     assert response.status_code == 405
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
