@@ -1,21 +1,22 @@
-import json
-import pytest
+from allauth.account.models import EmailAddress
 from constance import config as constance_config
 from constance.test.utils import override_config
 from django.conf import settings
+from django.db import IntegrityError
 from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Switch
-from django.db import IntegrityError
+import json
+import pytest
 
-from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.wiki.models import RevisionAkismetSubmission, DocumentDeletionLog, Document
-from kuma.wiki.tests import document as create_document, revision as create_revision
+from kuma.wiki.models import (Document, DocumentDeletionLog,
+                              RevisionAkismetSubmission)
+from kuma.wiki.tests import (document as create_document,
+                             revision as create_revision)
 
 from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase
-from .test_views import TESTUSER_PASSWORD
 from ..models import User, UserBan
 
 
@@ -65,37 +66,45 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertEqual(session['sociallogin_provider'], 'github')
 
 
-class AccountEmailTests(UserTestCase):
-    localizing_client = True
+def test_account_email_page_requires_signin(db, client):
+    response = client.get(reverse('account_email', locale='en-US'))
+    assert response.status_code == 302
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    response = client.get(response['Location'], follow=True)
+    assert response.status_code == 200
+    assert 'Please sign in' in response.content
 
-    def test_account_email_page_requires_signin(self):
-        url = reverse('account_email')
-        response = self.client.get(url, follow=True)
-        self.assertContains(response, 'Please sign in')
-        ok_(len(response.redirect_chain) > 0)
 
-    def test_account_email_page_single_email(self):
-        u = self.user_model.objects.get(username='testuser')
-        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        url = reverse('account_email')
-        response = self.client.get(url)
-        self.assertContains(response, 'is your <em>primary</em> email address')
-        for test_string in ['Make Primary',
-                            'Re-send Confirmation',
-                            'Remove']:
-            self.assertNotContains(response, test_string)
+def test_account_email_page_single_email(user_client):
+    response = user_client.get(reverse('account_email', locale='en-US'))
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert 'is your <em>primary</em> email address' in response.content
+    assert 'Make Primary' not in response.content
+    assert 'Re-send Confirmation' not in response.content
+    assert 'Remove' not in response.content
 
-    def test_account_email_page_multiple_emails(self):
-        u = self.user_model.objects.get(username='testuser2')
-        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        url = reverse('account_email')
-        response = self.client.get(url)
-        for test_string in ['Make Primary',
-                            'Re-send Confirmation',
-                            'Remove',
-                            'Add Email',
-                            'Edit profile']:
-            self.assertContains(response, test_string)
+
+def test_account_email_page_multiple_emails(wiki_user, user_client):
+    EmailAddress.objects.create(user=wiki_user, email='wiki_user@backup.com',
+                                verified=True, primary=False)
+    response = user_client.get(reverse('account_email', locale='en-US'))
+    assert response.status_code == 200
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+    assert 'Make Primary' in response.content
+    assert 'Re-send Confirmation' in response.content
+    assert 'Remove' in response.content
+    assert 'Add Email' in response.content
+    assert 'Edit profile' in response.content
 
 
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
@@ -200,7 +209,13 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
                 'terms': True}
         locale = settings.WIKI_DEFAULT_LANGUAGE
         signup_url = reverse('socialaccount_signup', locale=locale)
-        response = self.client.post(signup_url, data=data, follow=True)
+        response = self.client.post(signup_url, data=data)
+        assert response.status_code == 302
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
+        response = self.client.get(response['Location'], follow=True)
         assert response.status_code == 200
 
         user_url = reverse('users.user_detail',
@@ -237,11 +252,15 @@ class BanTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user',
+        ban_url = reverse('users.ban_user', locale='en-US',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find('.ban-common-reason')
@@ -249,9 +268,9 @@ class BanTestCase(UserTestCase):
             constance_config.COMMON_REASONS_TO_BAN_USERS
         )
 
-        eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
+        assert len(reasons_to_ban_found) == len(reasons_to_ban_expected)
         for reason in reasons_to_ban_found:
-            ok_(reason.text in reasons_to_ban_expected)
+            assert reason.text in reasons_to_ban_expected
 
     @override_config(COMMON_REASONS_TO_BAN_USERS='Not valid JSON')
     def test_common_reasons_error(self):
@@ -260,19 +279,23 @@ class BanTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user',
+        ban_url = reverse('users.ban_user', locale='en-US',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find('.ban-common-reason')
         reasons_to_ban_expected = ['Spam']
 
-        eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
+        assert len(reasons_to_ban_found) == len(reasons_to_ban_expected)
         for reason in reasons_to_ban_found:
-            ok_(reason.text in reasons_to_ban_expected)
+            assert reason.text in reasons_to_ban_expected
 
     @override_config(COMMON_REASONS_TO_BAN_USERS='[]')
     def test_common_reasons_empty(self):
@@ -281,19 +304,23 @@ class BanTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user',
+        ban_url = reverse('users.ban_user', locale='en-US',
                           kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find('.ban-common-reason')
         reasons_to_ban_expected = ['Spam']
 
-        eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
+        assert len(reasons_to_ban_found) == len(reasons_to_ban_expected)
         for reason in reasons_to_ban_found:
-            ok_(reason.text in reasons_to_ban_expected)
+            assert reason.text in reasons_to_ban_expected
 
 
 @pytest.mark.bans
@@ -307,11 +334,15 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             document=self.document)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -319,28 +350,33 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         for rev in revisions_found:
             revisions_found_text += rev.text_content()
 
-        eq_(len(revisions_found), len(revisions_expected))
+        assert len(revisions_found) == len(revisions_expected)
         # The title for each of the created revisions shows up in the template
         for revision in revisions_expected:
-            ok_(revision.title in revisions_found_text)
+            assert revision.title in revisions_found_text
         # The original revision created by the admin user is not in the template
-        ok_(self.original_revision.title not in revisions_found_text)
+        assert self.original_revision.title not in revisions_found_text
 
     def test_no_user_revisions_in_one_click_page_template(self):
         """If the user has no revisions, it should be stated in the template."""
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         no_revisions = page.find('#ban-and-cleanup-form')
 
-        eq_(len(revisions_found), 0)
-        ok_("This user has not created any revisions in the past three days." in no_revisions.text())
+        assert len(revisions_found) == 0
+        assert ("This user has not created any revisions "
+                "in the past three days." in no_revisions.text())
 
     def test_not_banned_user_no_revisions_ban_button(self):
         """Test ban button text for a non-banned user who has revisions not submitted as spam."""
@@ -356,20 +392,24 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser (not banned, and revisions need to be reverted) the
         # button on the form should read "Ban User for Spam & Submit Spam"
         # and there should be a link to ban a user for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), num_revisions)
-        eq_(ban_button.text(), "Ban User for Spam & Submit Spam")
-        eq_(len(ban_other_reasons), 1)
+        assert len(revisions_found) == num_revisions
+        assert ban_button.text() == "Ban User for Spam & Submit Spam"
+        assert len(ban_other_reasons) == 1
 
     def test_not_banned_user_no_revisions_or_already_spam_ban_button(self):
         """
@@ -382,19 +422,23 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser (not banned, no revisions needing to be reverted)
         # the button on the form should read "Ban User for Spam". There should
         # be no link to ban for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), 0)
-        eq_(ban_button.text(), "Ban User for Spam")
-        eq_(len(ban_other_reasons), 0)
+        assert len(revisions_found) == 0
+        assert ban_button.text() == "Ban User for Spam"
+        assert len(ban_other_reasons) == 0
 
         # For self.testuser2 (not banned, revisions already marked as spam)
         # the button on the form should read "Ban User for Spam". There should
@@ -410,19 +454,23 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                 sender=self.testuser2, type="spam")
             )
 
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser2.username})
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), 3)
-        eq_(ban_button.text(), "Ban User for Spam")
-        eq_(len(ban_other_reasons), 0)
+        assert len(revisions_found) == 3
+        assert ban_button.text() == "Ban User for Spam"
+        assert len(ban_other_reasons) == 0
 
     def test_banned_user_revisions_ban_button(self):
         """Test the template for a banned user with revisions that can be marked as spam."""
@@ -443,20 +491,24 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser (banned, but revisions need to be reverted) the
         # button on the form should read "Submit Spam". There should
         # be no link to ban for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), num_revisions)
-        eq_(ban_button.text(), "Submit Spam")
-        eq_(len(ban_other_reasons), 0)
+        assert len(revisions_found) == num_revisions
+        assert ban_button.text() == "Submit Spam"
+        assert len(ban_other_reasons) == 0
 
     def test_banned_user_no_revisions_or_already_spam_ban_button(self):
         """
@@ -473,20 +525,24 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser2 (banned, has no revisions needing to be reverted)
         # there should be no button on the form and no link to
         # ban for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser2.username})
 
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), 0)
-        eq_(len(ban_button), 0)
-        eq_(len(ban_other_reasons), 0)
+        assert len(revisions_found) == 0
+        assert len(ban_button) == 0
+        assert len(ban_other_reasons) == 0
 
         # For self.testuser2 (banned, revisions already marked as spam)
         # there should be no button on the form and no link to
@@ -502,19 +558,23 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                 sender=self.testuser2, type="spam")
             )
 
-        ban_url = reverse('users.ban_user_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
                           kwargs={'username': self.testuser2.username})
-        resp = self.client.get(ban_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), 3)
-        eq_(len(ban_button), 0)
-        eq_(len(ban_other_reasons), 0)
+        assert len(revisions_found) == 3
+        assert len(ban_button) == 0
+        assert len(ban_other_reasons) == 0
 
 
 @pytest.mark.bans
@@ -523,12 +583,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_no_revisions_posted(self):
         """If user has no revisions, it should be stated in summary template."""
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
-        resp = self.client.post(full_ban_url)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -539,17 +601,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted_section = page.find('#revisions-reverted')
         revisions_deleted_section = page.find('#revisions-deleted')
         revisions_submitted_as_spam_section = page.find('#revisions-followup')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reverted), 0)
-        eq_(len(revisions_deleted), 0)
-        eq_(len(revisions_submitted_as_spam), 0)
+        assert banned_user == self.testuser.username
+        assert len(revisions_reverted) == 0
+        assert len(revisions_deleted) == 0
+        assert len(revisions_submitted_as_spam) == 0
 
         expected_text = 'The user did not have any revisions that were reverted.'
-        ok_(expected_text in revisions_reverted_section.text())
+        assert expected_text in revisions_reverted_section.text()
         expected_text = 'The user did not have any revisions that were deleted.'
-        ok_(expected_text in revisions_deleted_section.text())
+        assert expected_text in revisions_deleted_section.text()
         expected_text = 'None.'
-        ok_(expected_text in revisions_submitted_as_spam_section.text())
+        assert expected_text in revisions_submitted_as_spam_section.text()
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -557,17 +619,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        eq_(len(not_submitted_to_akismet), 0)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 0
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        eq_(len(already_spam), 0)
-        eq_(len(not_spam), 0)
+        assert len(already_spam) == 0
+        assert len(not_spam) == 0
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_revisions_posted_different_docs(self, mock_form):
@@ -581,13 +643,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -598,15 +662,16 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             revisions_reported_as_spam_text += rev.text_content()
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reported_as_spam), len(revisions_created))
-        eq_(len(revisions_reverted), 0)
-        eq_(len(revisions_deleted), len(revisions_created))
+        assert banned_user == self.testuser.username
+        assert len(revisions_reported_as_spam) == len(revisions_created)
+        assert len(revisions_reverted) == 0
+        assert len(revisions_deleted) == len(revisions_created)
         # The title for each of the created revisions shows up in the template
         for revision in revisions_created:
-            ok_(revision.title in revisions_reported_as_spam_text)
+            assert revision.title in revisions_reported_as_spam_text
         # The title for the original revision is not in the template
-        ok_(self.original_revision.title not in revisions_reported_as_spam_text)
+        assert (self.original_revision.title not in
+                revisions_reported_as_spam_text)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -614,17 +679,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        eq_(len(not_submitted_to_akismet), 0)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 0
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        eq_(len(already_spam), 0)
-        eq_(len(not_spam), 0)
+        assert len(already_spam) == 0
+        assert len(not_spam) == 0
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_revisions_posted_same_doc(self, mock_form):
@@ -642,13 +707,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -656,10 +723,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reported_as_spam), 1)
-        eq_(len(revisions_reverted), 1)
-        eq_(len(revisions_deleted), 0)
+        assert banned_user == self.testuser.username
+        assert len(revisions_reported_as_spam) == 1
+        assert len(revisions_reverted) == 1
+        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -668,17 +735,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        eq_(len(not_submitted_to_akismet), 0)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 0
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        eq_(len(already_spam), 0)
-        eq_(len(not_spam), 0)
+        assert len(already_spam) == 0
+        assert len(not_spam) == 0
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_revisions_not_submitted_to_akismet(self, mock_form):
@@ -693,13 +760,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -707,10 +776,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reported_as_spam), 0)
-        eq_(len(revisions_reverted), 1)
-        eq_(len(revisions_deleted), 0)
+        assert banned_user == self.testuser.username
+        assert len(revisions_reported_as_spam) == 0
+        assert len(revisions_reverted) == 1
+        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -718,17 +787,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        eq_(len(not_submitted_to_akismet), 1)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 1
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        eq_(len(already_spam), 0)
-        eq_(len(not_spam), 0)
+        assert len(already_spam) == 0
+        assert len(not_spam) == 0
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_no_revision_ids_posted(self, mock_form):
@@ -747,13 +816,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': []}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -761,10 +832,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reported_as_spam), 0)
-        eq_(len(revisions_reverted), 0)
-        eq_(len(revisions_deleted), 0)
+        assert banned_user == self.testuser.username
+        assert len(revisions_reported_as_spam) == 0
+        assert len(revisions_reverted) == 0
+        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -773,18 +844,18 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
         # Since no ids were posted nothing should have been submitted to Akismet
-        eq_(len(not_submitted_to_akismet), 0)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 0
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        eq_(len(already_spam), 0)
+        assert len(already_spam) == 0
         # The latest revision from each of the two documents should show up as 'not spam'
-        eq_(len(not_spam), 2)
+        assert len(not_spam) == 2
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_all_revisions_already_spam(self, mock_form):
@@ -803,18 +874,20 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         revisions_created_ids = [
             rev.id for rev in revisions_created_self_document
         ] + [
             rev.id for rev in revisions_created_new_document
         ]
         data = {'revision-already-spam': revisions_created_ids}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -822,10 +895,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reported_as_spam), 0)
-        eq_(len(revisions_reverted), 0)
-        eq_(len(revisions_deleted), 0)
+        assert banned_user == self.testuser.username
+        assert len(revisions_reported_as_spam) == 0
+        assert len(revisions_reverted) == 0
+        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -834,18 +907,18 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
         # There were no errors submitting to Akismet, so no follow up is needed
-        eq_(len(not_submitted_to_akismet), 0)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 0
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
         # One revision should show up for each of the documents
-        eq_(len(already_spam), 2)
-        eq_(len(not_spam), 0)
+        assert len(already_spam) == 2
+        assert len(not_spam) == 0
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_some_revision_ids_posted(self, mock_form):
@@ -879,10 +952,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         # POST no revisions from self.document, the 1st from doc1,
         # the 1st and 2nd revisions from doc2, and all revisions from doc 3
         # doc 1 and doc 2 should have no action (newest revision is unchecked)
@@ -893,8 +964,12 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             revs_doc_3[0].id, revs_doc_3[1].id, revs_doc_3[2].id
         ]
         data = {'revision-id': posted_ids}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -902,14 +977,16 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        eq_(banned_user, self.testuser.username)
-        eq_(len(revisions_reported_as_spam), 3)
+        assert banned_user == self.testuser.username
+        assert len(revisions_reported_as_spam) == 3
         # The revisions shown are revs_doc_1[0], revs_doc_2[1], and revs_doc_3[2]
         for item in revisions_reported_as_spam:
             # Verify that the revision title matches what we're looking for
-            ok_(item.text_content().strip() in [revs_doc_1[0].title, revs_doc_2[1].title, revs_doc_3[2].title])
-        eq_(len(revisions_reverted), 0)
-        eq_(len(revisions_deleted), 1)
+            assert (item.text_content().strip() in
+                    [revs_doc_1[0].title, revs_doc_2[1].title,
+                     revs_doc_3[2].title])
+        assert len(revisions_reverted) == 0
+        assert len(revisions_deleted) == 1
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -917,18 +994,18 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        eq_(len(not_submitted_to_akismet), 0)
-        eq_(len(could_not_delete), 0)
-        eq_(len(could_not_revert), 0)
+        assert len(not_submitted_to_akismet) == 0
+        assert len(could_not_delete) == 0
+        assert len(could_not_revert) == 0
         # TODO: Add in Phase V
-        # eq_(len(new_actions), 0)
+        # assert len(new_actions) == 0
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        eq_(len(already_spam), 0)
+        assert len(already_spam) == 0
         # Revisions from self.document, doc1, and doc2 should be considered 'not spam'
-        eq_(len(not_spam), 3)
+        assert len(not_spam) == 3
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_delete_link_appears_summary_page(self, mock_form):
@@ -962,13 +1039,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             save=True)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev_doc1.id], 'revision-already-spam': [rev_doc2.id]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # TODO: Phase V: The revision done after the reviewing has begun should
@@ -985,8 +1064,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # There should be 1 delete link found in each section
         # TODO: Phase V
-        # eq_(len(doc1_delete_link), 1)
-        eq_(len(doc2_delete_link), 1)
+        # assert len(doc1_delete_link) == 1
+        assert len(doc2_delete_link) == 1
 
     def test_delete_link_does_not_appear_summary_page_no_create_doc(self):
         """
@@ -1010,13 +1089,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # begun so it shows up in the "New action by user" section
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-already-spam': [revisions_already_spam[0].id]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         delete_url = reverse(
@@ -1031,8 +1112,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # There should not be a delete link in any of these sections
         # TODO: PhaseV
-        # eq_(len(delete_link_new_action_section), 0)
-        eq_(len(delete_link_already_spam_section), 0)
+        # assert len(delete_link_new_action_section) == 0
+        assert len(delete_link_already_spam_section) == 0
 
     def test_delete_link_does_not_appear_summary_page_other_revisions(self):
         """
@@ -1070,13 +1151,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             save=True)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-already-spam': [testuser_revisions[0].id]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         delete_url_already_spam = reverse(
@@ -1099,10 +1182,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             url=delete_url_already_spam))
 
         # There should not be a delete link in any of these sections
-        eq_(len(delete_link_reverted_section), 0)
+        assert len(delete_link_reverted_section) == 0
         # TODO: PhaseV
-        # eq_(len(delete_link_new_action_section), 0)
-        eq_(len(delete_link_already_spam_section), 0)
+        # assert len(delete_link_new_action_section) == 0
+        assert len(delete_link_already_spam_section) == 0
 
     def test_newest_revision_is_not_spam(self):
         """
@@ -1122,13 +1205,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.admin)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev.id for rev in spam_revisions]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1137,9 +1222,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted = page.find('#revisions-reverted li')
 
         # No new documents by the spammer, so none deleted
-        eq_(len(revisions_deleted), 0)
+        assert len(revisions_deleted) == 0
         # Document was not reverted, since there was a newer non-spam rev
-        eq_(len(revisions_reverted), 0)
+        assert len(revisions_reverted) == 0
 
         # 'Needs follow-up' section
 
@@ -1148,11 +1233,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
 
         # No new revs were added by the user while we were working
-        eq_(len(revisions_added_afterwards), 0)
+        assert len(revisions_added_afterwards) == 0
         # One document had revisions that were ignored, because there was a newer good rev
-        eq_(len(revisions_skipped), 1)
+        assert len(revisions_skipped) == 1
         # Only one document is listed on the reported as spam list (distinct document)
-        eq_(len(revisions_reported_as_spam), 1)
+        assert len(revisions_reported_as_spam) == 1
 
         # 'No action' section
 
@@ -1161,11 +1246,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_not_spam = page.find('#not-spam li')
 
         # The only document was left unreverted due to having a good rev for its latest
-        eq_(len(revisions_not_reverted), 1)
+        assert len(revisions_not_reverted) == 1
         # No documents had revs that were already marked as spam
-        eq_(len(revisions_already_spam), 0)
+        assert len(revisions_already_spam) == 0
         # No documents had revs that were unchecked in the spam form
-        eq_(len(revisions_not_spam), 0)
+        assert len(revisions_not_spam) == 0
 
     def test_intermediate_non_spam_rev(self):
         """
@@ -1188,13 +1273,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         spam_revisions = bottom_spam + top_spam
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev.id for rev in spam_revisions]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1203,9 +1290,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted = page.find('#revisions-reverted li')
 
         # No new documents by the spammer, so none deleted
-        eq_(len(revisions_deleted), 0)
+        assert len(revisions_deleted) == 0
         # Only one set of reverted revisions
-        eq_(len(revisions_reverted), 1)
+        assert len(revisions_reverted) == 1
 
         # 'Needs follow-up' section
 
@@ -1214,11 +1301,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
 
         # No new revs were added by the user while we were working
-        eq_(len(revisions_added_afterwards), 0)
+        assert len(revisions_added_afterwards) == 0
         # One document had revisions that were ignored, because there was a newer good rev
-        eq_(len(revisions_skipped), 1)
+        assert len(revisions_skipped) == 1
         # Only one document is listed on the reported as spam list (distinct document)
-        eq_(len(revisions_reported_as_spam), 1)
+        assert len(revisions_reported_as_spam) == 1
 
         # 'No action' section
 
@@ -1227,11 +1314,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_not_spam = page.find('#not-spam li')
 
         # No documents were left unreverted due to having a good rev for its latest
-        eq_(len(revisions_not_reverted), 0)
+        assert len(revisions_not_reverted) == 0
         # No documents had revs that were already marked as spam
-        eq_(len(revisions_already_spam), 0)
+        assert len(revisions_already_spam) == 0
         # No documents had revs that were unchecked in the spam form
-        eq_(len(revisions_not_spam), 0)
+        assert len(revisions_not_spam) == 0
 
     def test_multiple_revisions_are_spam(self):
         """
@@ -1255,13 +1342,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         data = {'revision-id': [rev.id for rev in spam_revisions]}
-        resp = self.client.post(full_ban_url, data=data)
-        eq_(200, resp.status_code)
+        resp = self.client.post(ban_url, data=data)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1270,9 +1359,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted = page.find('#revisions-reverted li')
 
         # No new documents by the spammer, so none deleted
-        eq_(len(revisions_deleted), 0)
+        assert len(revisions_deleted) == 0
         # Only one set of reverted revisions
-        eq_(len(revisions_reverted), 1)
+        assert len(revisions_reverted) == 1
 
         # 'Needs follow-up' section
 
@@ -1281,11 +1370,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
 
         # To be implemented in Phase V
-        eq_(len(revisions_added_afterwards), 0)
+        assert len(revisions_added_afterwards) == 0
         # All of the spam revisions were covered by the reversion
-        eq_(len(revisions_skipped), 0)
+        assert len(revisions_skipped) == 0
         # Only one document is listed on the reported as spam list (distinct document)
-        eq_(len(revisions_reported_as_spam), 1)
+        assert len(revisions_reported_as_spam) == 1
 
         # 'No action' section
 
@@ -1294,11 +1383,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_not_spam = page.find('#not-spam li')
 
         # No documents were left unreverted due to having a good rev for its latest
-        eq_(len(revisions_not_reverted), 0)
+        assert len(revisions_not_reverted) == 0
         # No documents had revs that were already marked as spam
-        eq_(len(revisions_already_spam), 0)
+        assert len(revisions_already_spam) == 0
         # No documents had revs that were unchecked in the spam form
-        eq_(len(revisions_not_spam), 0)
+        assert len(revisions_not_spam) == 0
 
     def test_delete_document_failure(self):
         # Create a new spam document with a single revision
@@ -1307,21 +1396,23 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         with patch.object(DocumentDeletionLog.objects, 'create') as dl_mock:
             # Just raise an IntegrityError to get delete_document to fail
             dl_mock.side_effect = IntegrityError()
 
             data = {'revision-id': [rev.id for rev in spam_revision]}
-            resp = self.client.post(full_ban_url, data=data)
+            resp = self.client.post(ban_url, data=data)
 
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
-        eq_(DocumentDeletionLog.objects.count(), 0)
+        assert DocumentDeletionLog.objects.count() == 0
 
         # 'Actions taken' section
 
@@ -1329,9 +1420,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted = page.find('#revisions-reverted li')
 
         # The document failed to be deleted
-        eq_(len(revisions_deleted), 0)
+        assert len(revisions_deleted) == 0
         # It wouldn't have been reverted anyway
-        eq_(len(revisions_reverted), 0)
+        assert len(revisions_reverted) == 0
 
         # 'Needs follow-up' section
 
@@ -1342,14 +1433,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
 
         # To be implemented in Phase V
-        eq_(len(revisions_added_afterwards), 0)
+        assert len(revisions_added_afterwards) == 0
         # Nothing happened
-        eq_(len(revisions_skipped), 0)
+        assert len(revisions_skipped) == 0
         # Akismet reporting happens first
-        eq_(len(revisions_reported_as_spam), 1)
+        assert len(revisions_reported_as_spam) == 1
         # The deletion failed, so it goes here
-        eq_(len(could_not_delete), 1)
-        eq_(len(could_not_revert), 0)
+        assert len(could_not_delete) == 1
+        assert len(could_not_revert) == 0
 
         # 'No action' section
 
@@ -1358,11 +1449,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_not_spam = page.find('#not-spam li')
 
         # No good revisions superceding bad ones
-        eq_(len(revisions_not_reverted), 0)
+        assert len(revisions_not_reverted) == 0
         # No documents had revs that were already marked as spam
-        eq_(len(revisions_already_spam), 0)
+        assert len(revisions_already_spam) == 0
         # No documents had revs that were unchecked in the spam form
-        eq_(len(revisions_not_spam), 0)
+        assert len(revisions_not_spam) == 0
 
     def test_revert_document_failure(self):
         # Create some spam revisions on a previously good document.
@@ -1372,18 +1463,20 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
+        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
                           kwargs={'username': self.testuser.username})
-        full_ban_url = self.client.get(ban_url)['Location']
-
         with patch.object(Document, 'revert') as revert_mock:
             # Just raise an IntegrityError to get revert_document to fail
             revert_mock.side_effect = IntegrityError()
 
             data = {'revision-id': [rev.id for rev in spam_revisions]}
-            resp = self.client.post(full_ban_url, data=data)
+            resp = self.client.post(ban_url, data=data)
 
-        eq_(200, resp.status_code)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1392,9 +1485,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted = page.find('#revisions-reverted li')
 
         # The document wouldn't have been deleted
-        eq_(len(revisions_deleted), 0)
+        assert len(revisions_deleted) == 0
         # It failed to be reverted
-        eq_(len(revisions_reverted), 0)
+        assert len(revisions_reverted) == 0
 
         # 'Needs follow-up' section
 
@@ -1405,14 +1498,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
 
         # To be implemented in Phase V
-        eq_(len(revisions_added_afterwards), 0)
+        assert len(revisions_added_afterwards) == 0
         # Nothing happened
-        eq_(len(revisions_skipped), 0)
+        assert len(revisions_skipped) == 0
         # Akismet reporting happens first
-        eq_(len(revisions_reported_as_spam), 1)
-        eq_(len(could_not_delete), 0)
+        assert len(revisions_reported_as_spam) == 1
+        assert len(could_not_delete) == 0
         # The revert failed, so it goes here
-        eq_(len(could_not_revert), 1)
+        assert len(could_not_revert) == 1
 
         # 'No action' section
 
@@ -1421,11 +1514,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_not_spam = page.find('#not-spam li')
 
         # No good revisions superceding bad ones
-        eq_(len(revisions_not_reverted), 0)
+        assert len(revisions_not_reverted) == 0
         # No documents had revs that were already marked as spam
-        eq_(len(revisions_already_spam), 0)
+        assert len(revisions_already_spam) == 0
         # No documents had revs that were unchecked in the spam form
-        eq_(len(revisions_not_spam), 0)
+        assert len(revisions_not_spam) == 0
 
 
 class ProfileDetailTestCase(UserTestCase):
@@ -1441,31 +1534,39 @@ class ProfileDetailTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        profile_url = reverse('users.user_detail',
+        profile_url = reverse('users.user_detail', locale='en-US',
                               kwargs={'username': testuser.username})
 
         # The user is not banned, display appropriate links
-        resp = self.client.get(profile_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(profile_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         ban_link = page.find('#ban_link')
         ban_cleanup_link = page.find('#cleanup_link')
-        eq_("Ban User", ban_link.text())
-        eq_("Ban User & Clean Up", ban_cleanup_link.text())
+        assert ban_link.text() == "Ban User"
+        assert ban_cleanup_link.text() == "Ban User & Clean Up"
 
         # The user is banned, display appropriate links
         UserBan.objects.create(user=testuser, by=admin,
                                reason='Banned by unit test.',
                                is_active=True)
-        resp = self.client.get(profile_url, follow=True)
-        eq_(200, resp.status_code)
+        resp = self.client.get(profile_url)
+        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
 
         ban_link = page.find('#ban_link')
         ban_cleanup_link = page.find('#cleanup_link')
-        eq_("Banned", ban_link.text())
-        eq_("Clean Up Revisions", ban_cleanup_link.text())
+        assert ban_link.text() == "Banned"
+        assert ban_cleanup_link.text() == "Clean Up Revisions"
 
     def test_user_github_link(self):
         testuser = self.user_model.objects.get(username='testuser')
@@ -1475,6 +1576,10 @@ class ProfileDetailTestCase(UserTestCase):
                               kwargs={'username': testuser.username})
         resp = self.client.get(profile_url)
         assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
         page = pq(resp.content)
         assert len(page.find('ul.user-links li.github')) == 0
 

@@ -127,11 +127,20 @@ class TestWelcomeEmails(UserTestCase):
         self.assertTrue('Confirm' in confirm_email.subject)
 
         # Click on a similar confirm link (HMAC has timestamp, changes)
-        link = reverse('account_confirm_email', locale='en-US', args=[confirmation.key])
+        link = reverse('account_confirm_email', locale='en-US',
+                       args=[confirmation.key])
         resp = self.client.get(link)
         assert resp.status_code == 200
-        resp = self.client.post(link, follow=True)
-        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        resp = self.client.post(link)
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # a second email, the welcome email, is sent
         self.assertEqual(len(mail.outbox), 2)
@@ -158,8 +167,16 @@ class TestWelcomeEmails(UserTestCase):
                         args=[confirmation2.key])
         resp = self.client.get(link2)
         assert resp.status_code == 200
-        resp = self.client.post(link2, follow=True)
-        assert resp.status_code == 200
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        resp = self.client.post(link2)
+        assert resp.status_code == 302
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
 
         # no increase in number of emails (no 2nd welcome email)
         self.assertEqual(len(mail.outbox), 3)

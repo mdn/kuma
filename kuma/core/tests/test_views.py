@@ -175,6 +175,8 @@ def test_sitemap(client, settings, sitemaps, db, method):
     settings.MEDIA_ROOT = sitemaps['tmpdir'].realpath()
     response = getattr(client, method)(reverse('sitemap'))
     assert response.status_code == 200
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
         assert ''.join(response.streaming_content) == sitemaps['index']
@@ -187,6 +189,8 @@ def test_sitemap(client, settings, sitemaps, db, method):
 def test_sitemap_405s(client, db, method):
     response = getattr(client, method)(reverse('sitemap'))
     assert response.status_code == 405
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
 
 
 @pytest.mark.parametrize('method', ['get', 'head'])
@@ -199,6 +203,8 @@ def test_sitemaps(client, settings, sitemaps, db, method):
         )
     )
     assert response.status_code == 200
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
         assert (''.join(response.streaming_content) ==
@@ -217,6 +223,8 @@ def test_sitemaps_405s(client, db, method):
         )
     )
     assert response.status_code == 405
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
 
 
 def test_ratelimit_429(client, db):
