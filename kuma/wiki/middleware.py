@@ -16,13 +16,8 @@ class ReadOnlyMiddleware(object):
     def process_exception(self, request, exception):
         if isinstance(exception, ReadOnlyException):
             context = {'reason': exception.args[0]}
-
-            @never_cache
-            def render403(request):
-                return render(request, '403.html', context, status=403)
-
-            return render403(request)
-
+            return never_cache(render)(request, '403.html', context,
+                                       status=403)
         return None
 
 

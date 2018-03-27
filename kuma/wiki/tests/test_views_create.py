@@ -7,46 +7,45 @@ from kuma.wiki.models import Document, Revision
 
 
 # dict of case-name --> tuple of slug and expected status code
-SLUG_SIMPLE_CASES = dict(
-    valid=('Foobar', 302),
-    invalid_slash=('Foo/bar', 200),
-    invalid_dollar_sign=('Foo$bar', 200),
-    invalid_question_mark=('Foo?bar', 200),
-    invalid_percent_sign=('Foo%bar', 200),
-    invalid_double_quote=('Foo"bar', 200),
-    invalid_single_quote=("Foo'bar", 200),
-    invalid_whitespace=('Foo bar', 200),
-)
-SLUG_RESERVED_CASES = dict(
-    invalid_reserved_01=('ckeditor_config.js', 200),
-    invalid_reserved_02=('preview-wiki-content', 200),
-    invalid_reserved_03=('get-documents', 200),
-    invalid_reserved_04=('tags', 200),
-    invalid_reserved_05=('tag/editorial', 200),
-    invalid_reserved_06=('new', 200),
-    invalid_reserved_07=('all', 200),
-    invalid_reserved_08=('with-errors', 200),
-    invalid_reserved_09=('without-parent', 200),
-    invalid_reserved_10=('top-level', 200),
-    invalid_reserved_11=('needs-review', 200),
-    invalid_reserved_12=('needs-review/technical', 200),
-    invalid_reserved_13=('localization-tag', 200),
-    invalid_reserved_14=('localization-tag/inprogress', 200),
-    invalid_reserved_15=('templates', 200),
-    invalid_reserved_16=('submit_akismet_spam', 200),
-    invalid_reserved_17=('feeds/atom/all', 200),
-    invalid_reserved_18=('feeds/rss/all', 200),
-    invalid_reserved_19=('feeds/atom/l10n-updates', 200),
-    invalid_reserved_20=('feeds/rss/l10n-updates', 200),
-    invalid_reserved_21=('feeds/atom/tag/editorial', 200),
-    invalid_reserved_22=('feeds/atom/needs-review', 200),
-    invalid_reserved_23=('feeds/rss/needs-review', 200),
-    invalid_reserved_24=('feeds/atom/needs-review/technical', 200),
-    invalid_reserved_25=('feeds/atom/revisions', 200),
-    invalid_reserved_26=('feeds/rss/revisions', 200),
-    invalid_reserved_27=('feeds/atom/files', 200),
-    invalid_reserved_28=('feeds/rss/files', 200),
-)
+SLUG_SIMPLE_CASES = {
+    'invalid_slash': 'Foo/bar',
+    'invalid_dollar_sign': 'Foo$bar',
+    'invalid_question_mark': 'Foo?bar',
+    'invalid_percent_sign': 'Foo%bar',
+    'invalid_double_quote': 'Foo"bar',
+    'invalid_single_quote': "Foo'bar",
+    'invalid_whitespace': 'Foo bar',
+}
+SLUG_RESERVED_CASES = {
+    'invalid_reserved_01': 'ckeditor_config.js',
+    'invalid_reserved_02': 'preview-wiki-content',
+    'invalid_reserved_03': 'get-documents',
+    'invalid_reserved_04': 'tags',
+    'invalid_reserved_05': 'tag/editorial',
+    'invalid_reserved_06': 'new',
+    'invalid_reserved_07': 'all',
+    'invalid_reserved_08': 'with-errors',
+    'invalid_reserved_09': 'without-parent',
+    'invalid_reserved_10': 'top-level',
+    'invalid_reserved_11': 'needs-review',
+    'invalid_reserved_12': 'needs-review/technical',
+    'invalid_reserved_13': 'localization-tag',
+    'invalid_reserved_14': 'localization-tag/inprogress',
+    'invalid_reserved_15': 'templates',
+    'invalid_reserved_16': 'submit_akismet_spam',
+    'invalid_reserved_17': 'feeds/atom/all',
+    'invalid_reserved_18': 'feeds/rss/all',
+    'invalid_reserved_19': 'feeds/atom/l10n-updates',
+    'invalid_reserved_20': 'feeds/rss/l10n-updates',
+    'invalid_reserved_21': 'feeds/atom/tag/editorial',
+    'invalid_reserved_22': 'feeds/atom/needs-review',
+    'invalid_reserved_23': 'feeds/rss/needs-review',
+    'invalid_reserved_24': 'feeds/atom/needs-review/technical',
+    'invalid_reserved_25': 'feeds/atom/revisions',
+    'invalid_reserved_26': 'feeds/rss/revisions',
+    'invalid_reserved_27': 'feeds/atom/files',
+    'invalid_reserved_28': 'feeds/rss/files',
+}
 
 
 @pytest.fixture
@@ -105,11 +104,47 @@ def test_get(add_doc_client):
 
 @pytest.mark.tags
 @pytest.mark.review_tags
+def test_create_valid(add_doc_client):
+    """Test creating a new document with valid and invalid slugs."""
+    slug = 'Foobar'
+    data = dict(
+        title='A Foobar Document',
+        slug=slug,
+        tags='tag1, tag2',
+        review_tags=['editorial', 'technical'],
+        keywords='key1, key2',
+        summary='lipsum',
+        content='lorem ipsum dolor sit amet',
+        comment='This is foobar.',
+        toc_depth=1,
+    )
+    url = reverse('wiki.create', locale='en-US')
+    resp = add_doc_client.post(url, data)
+    assert resp.status_code == 302
+    assert resp['X-Robots-Tag'] == 'noindex'
+    assert 'max-age=0' in resp['Cache-Control']
+    assert 'no-cache' in resp['Cache-Control']
+    assert 'no-store' in resp['Cache-Control']
+    assert 'must-revalidate' in resp['Cache-Control']
+    assert resp['Location'].endswith(
+        reverse('wiki.document', locale='en-US', args=(slug,)))
+    doc = Document.objects.get(slug=slug, locale='en-US')
+    for name in (set(data.keys()) - set(('tags', 'review_tags'))):
+        assert getattr(doc.current_revision, name) == data[name]
+    assert (sorted(doc.tags.all().values_list('name', flat=True)) ==
+            ['tag1', 'tag2'])
+    review_tags = doc.current_revision.review_tags
+    assert (sorted(review_tags.all().values_list('name', flat=True)) ==
+            ['editorial', 'technical'])
+
+
+@pytest.mark.tags
+@pytest.mark.review_tags
 @pytest.mark.parametrize(
-    'slug, expected_status_code',
+    'slug',
     SLUG_SIMPLE_CASES.values() + SLUG_RESERVED_CASES.values(),
     ids=SLUG_SIMPLE_CASES.keys() + SLUG_RESERVED_CASES.keys())
-def test_create(add_doc_client, slug, expected_status_code):
+def test_create_invalid(add_doc_client, slug):
     """Test creating a new document with valid and invalid slugs."""
     data = dict(
         title='A Foobar Document',
@@ -124,37 +159,22 @@ def test_create(add_doc_client, slug, expected_status_code):
     )
     url = reverse('wiki.create', locale='en-US')
     resp = add_doc_client.post(url, data)
-    assert resp.status_code == expected_status_code
+    assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
     assert 'max-age=0' in resp['Cache-Control']
     assert 'no-cache' in resp['Cache-Control']
     assert 'no-store' in resp['Cache-Control']
     assert 'must-revalidate' in resp['Cache-Control']
-    if expected_status_code == 302:
-        assert resp['Location'].endswith(
-            reverse('wiki.document', locale='en-US', args=(slug,)))
-        doc = Document.objects.get(slug=slug, locale='en-US')
-        for name in (set(data.keys()) - set(('tags', 'review_tags'))):
-            assert getattr(doc.current_revision, name) == data[name]
-        assert (sorted(doc.tags.all().values_list('name', flat=True)) ==
-                ['tag1', 'tag2'])
-        review_tags = doc.current_revision.review_tags
-        assert (sorted(review_tags.all().values_list('name', flat=True)) ==
-                ['editorial', 'technical'])
-    else:
-        assert 'The slug provided is not valid.' in resp.content
-        with pytest.raises(Document.DoesNotExist):
-            Document.objects.get(slug=slug, locale='en-US')
-        assert pq(resp.content).find('input[name=slug]')[0].value == slug
+    assert 'The slug provided is not valid.' in resp.content
+    with pytest.raises(Document.DoesNotExist):
+        Document.objects.get(slug=slug, locale='en-US')
+    assert pq(resp.content).find('input[name=slug]')[0].value == slug
 
 
 @pytest.mark.tags
 @pytest.mark.review_tags
-@pytest.mark.parametrize(
-    'slug, expected_status_code',
-    SLUG_SIMPLE_CASES.values() + [('Root', 302)],
-    ids=SLUG_SIMPLE_CASES.keys() + ['valid_same_slug'])
-def test_create_child(root_doc, add_doc_client, slug, expected_status_code):
+@pytest.mark.parametrize('slug', ['Foobar', 'Root'])
+def test_create_child_valid(root_doc, add_doc_client, slug):
     """Test creating a new child document with valid and invalid slugs."""
     data = dict(
         title='A Child of the Root Document',
@@ -171,32 +191,61 @@ def test_create_child(root_doc, add_doc_client, slug, expected_status_code):
     url += '?parent={}'.format(root_doc.id)
     full_slug = '{}/{}'.format(root_doc.slug, slug)
     resp = add_doc_client.post(url, data)
-    assert resp.status_code == expected_status_code
+    assert resp.status_code == 302
     assert resp['X-Robots-Tag'] == 'noindex'
     assert 'max-age=0' in resp['Cache-Control']
     assert 'no-cache' in resp['Cache-Control']
     assert 'no-store' in resp['Cache-Control']
     assert 'must-revalidate' in resp['Cache-Control']
-    if expected_status_code == 302:
-        assert resp['Location'].endswith(
-            reverse('wiki.document', locale='en-US', args=(full_slug,)))
-        assert root_doc.children.count() == 1
-        doc = Document.objects.get(slug=full_slug, locale='en-US')
-        skip_keys = set(('tags', 'review_tags', 'parent_topic'))
-        for name in (set(data.keys()) - skip_keys):
-            expected = full_slug if name == 'slug' else data[name]
-            assert getattr(doc.current_revision, name) == expected
-        assert (sorted(doc.tags.all().values_list('name', flat=True)) ==
-                ['tag1', 'tag2'])
-        review_tags = doc.current_revision.review_tags
-        assert (sorted(review_tags.all().values_list('name', flat=True)) ==
-                ['editorial', 'technical'])
-    else:
-        assert 'The slug provided is not valid.' in resp.content
-        with pytest.raises(Document.DoesNotExist):
-            Document.objects.get(slug=full_slug, locale='en-US')
-        page = pq(resp.content)
-        assert page.find('input[name=slug]')[0].value == slug
+    assert resp['Location'].endswith(
+        reverse('wiki.document', locale='en-US', args=(full_slug,)))
+    assert root_doc.children.count() == 1
+    doc = Document.objects.get(slug=full_slug, locale='en-US')
+    skip_keys = set(('tags', 'review_tags', 'parent_topic'))
+    for name in (set(data.keys()) - skip_keys):
+        expected = full_slug if name == 'slug' else data[name]
+        assert getattr(doc.current_revision, name) == expected
+    assert (sorted(doc.tags.all().values_list('name', flat=True)) ==
+            ['tag1', 'tag2'])
+    review_tags = doc.current_revision.review_tags
+    assert (sorted(review_tags.all().values_list('name', flat=True)) ==
+            ['editorial', 'technical'])
+
+
+@pytest.mark.tags
+@pytest.mark.review_tags
+@pytest.mark.parametrize(
+    'slug',
+    SLUG_SIMPLE_CASES.values(),
+    ids=SLUG_SIMPLE_CASES.keys())
+def test_create_child_invalid(root_doc, add_doc_client, slug):
+    """Test creating a new child document with valid and invalid slugs."""
+    data = dict(
+        title='A Child of the Root Document',
+        slug=slug,
+        tags='tag1, tag2',
+        review_tags=['editorial', 'technical'],
+        keywords='key1, key2',
+        summary='lipsum',
+        content='lorem ipsum dolor sit amet',
+        comment='This is foobar.',
+        toc_depth=1,
+    )
+    url = reverse('wiki.create', locale='en-US')
+    url += '?parent={}'.format(root_doc.id)
+    full_slug = '{}/{}'.format(root_doc.slug, slug)
+    resp = add_doc_client.post(url, data)
+    assert resp.status_code == 200
+    assert resp['X-Robots-Tag'] == 'noindex'
+    assert 'max-age=0' in resp['Cache-Control']
+    assert 'no-cache' in resp['Cache-Control']
+    assert 'no-store' in resp['Cache-Control']
+    assert 'must-revalidate' in resp['Cache-Control']
+    assert 'The slug provided is not valid.' in resp.content
+    with pytest.raises(Document.DoesNotExist):
+        Document.objects.get(slug=full_slug, locale='en-US')
+    page = pq(resp.content)
+    assert page.find('input[name=slug]')[0].value == slug
 
 
 def test_clone_get(root_doc, add_doc_client):
