@@ -8,10 +8,6 @@ from kuma.core.utils import memcache_lock
 from kuma.feeder.utils import update_feeds
 
 
-log_name = 'kuma.feeder'
-log = logging.getLogger(log_name)
-
-
 class Command(NoArgsCommand):
     """Update all registered RSS/Atom feeds."""
 
@@ -38,9 +34,9 @@ class Command(NoArgsCommand):
         formatter = logging.Formatter('%(levelname)s: %(message)s')
         console.setLevel(level)
         console.setFormatter(formatter)
-        logger = logging.getLogger(log_name)
-        logger.setLevel(level)
-        logger.addHandler(console)
+        log = logging.getLogger('kuma.feeder')
+        log.setLevel(level)
+        log.addHandler(console)
 
         # Setup fetch
         log.info("Starting to fetch updated feeds")
