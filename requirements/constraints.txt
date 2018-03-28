@@ -34,6 +34,10 @@ setuptools==26.1.1 \
     --hash=sha256:475ce28993d7cb75335942525b9fac79f7431a7f6e8a0079c0f2680641379481 \
     --hash=sha256:02a06e1a547b16c25143d2bb898008286a3cbd600a7dbe47234ce57dc51abbf6
 # bleach, django-cacheback, django-extensions, mock, etc.
+# Python 2 and 3 compatibility utilities
+# Code: https://github.com/benjaminp/six
+# Changes: https://github.com/benjaminp/six/blob/master/CHANGES
+# Docs: http://six.readthedocs.io
 six==1.11.0 \
     --hash=sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb \
     --hash=sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9
@@ -107,6 +111,16 @@ python-openid==2.2.5 \
 requests-oauthlib==0.8.0 \
     --hash=sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468 \
     --hash=sha256:50a8ae2ce8273e384895972b56193c7409601a66d4975774c60c2aed869639ca
+
+# django-extensions
+#
+# Backport of Python 3.5's type hints
+# Changes: https://pypi.python.org/pypi/typing
+# Docs: https://docs.python.org/3/library/typing.html
+typing==3.6.4 \
+    --hash=sha256:b2c689d54e1144bbcfd191b0832980a21c2dbcf7b5ff7a66248a60c90e951eb8 \
+    --hash=sha256:3a887b021a77b292e151afb75323dea88a7bc1b3dfa92176cff8e44c8b68bddf \
+    --hash=sha256:d400a9344254803a2368533e4533a4200d21eb7b6b729c173bc38201a74db3f2
 
 
 # django-statici18n
