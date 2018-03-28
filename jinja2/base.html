@@ -17,6 +17,9 @@
         "noindex, nofollow"
     {%- endif -%}
   >
+
+  {% include "includes/preload.html" %}
+
   {%- if not untrusted %}
     <link rel="home" href="{{ url('home') }}">
     <link rel="license" href="#license">
