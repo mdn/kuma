@@ -106,7 +106,7 @@
       {% set class='hidden' if not request.user.is_authenticated() %}
 
       if($next.length) {
-      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}" rel="nofollow">' + gettext('View All') + '</a></li>');
+        $pagination.append('<li title="{{ _('Sign in to view all history') }}"><a href="?limit=all" id="pagination-all" class="{{ class }}" rel="nofollow">{{ _('View All') }}</a></li>');
       }
     });
   </script>
