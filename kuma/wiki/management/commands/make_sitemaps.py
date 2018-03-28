@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
 from kuma.wiki.tasks import build_locale_sitemap, build_index_sitemap
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = ("Create sitemap files for every MDN language, "
             "as well as a sitemap index file.")
 

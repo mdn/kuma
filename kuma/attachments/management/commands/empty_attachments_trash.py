@@ -1,12 +1,12 @@
 from datetime import date, timedelta
 
 from constance import config
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
 from ...models import TrashedAttachment
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = "Empty the attachments trash"
 
     def add_arguments(self, parser):
