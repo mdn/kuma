@@ -100,9 +100,12 @@ django-decorator-include==1.3 \
     --hash=sha256:fd172a88de1dd38e19ddb0d91525ab7240139a3b11687bf1ea2eb775549fd073
 
 # Add CreationDateTimeField, management commands
-django-extensions==1.6.1 \
-    --hash=sha256:4799534f35eba1c07cb6f9859aa5bb719886769f5d35d2a38e7490ce90c0ce69 \
-    --hash=sha256:f98f991d2b039033ac5faa638c0d1afb2720abf4d9d781573c3592d6899480a1
+# Code: https://github.com/django-extensions/django-extensions
+# Changes: https://github.com/django-extensions/django-extensions/blob/master/CHANGELOG.md
+# Docs: http://django-extensions.readthedocs.io/en/latest/
+django-extensions==2.0.6 \
+    --hash=sha256:bc9f2946c117bb2f49e5e0633eba783787790ae810ea112fe7fd82fa64de2ff1 \
+    --hash=sha256:37a543af370ee3b0721ff50442d33c357dd083e6ea06c5b94a199283b6f9e361
 
 # Modern flat theme for Django admin
 django-flat-theme==1.1.3 \
@@ -167,8 +170,12 @@ django-soapbox==1.3 \
     --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
 
 # Generate localization catalogs for JavaScript
-django-statici18n==1.1.5 \
-    --hash=sha256:f8d7b523da8fa635de8c359f6dbde9821e2e8e1a092d915786455ffd2533808b
+# Code: https://github.com/zyegfryed/django-statici18n
+# Changes: https://github.com/zyegfryed/django-statici18n/blob/master/docs/changelog.rst
+# Docs: https://django-statici18n.readthedocs.io/en/latest/
+django-statici18n==1.7.0 \
+    --hash=sha256:2c5214d520a25e2d226cae099947778cde593ba7b1b03924f70215ce9ec9e6ce \
+    --hash=sha256:e84fc081166433886220a814356a66760f50196a4d00a3e25327427160e5ccd1
 
 # Better timezone picker for user profiles
 django-sundial==1.0.2 \

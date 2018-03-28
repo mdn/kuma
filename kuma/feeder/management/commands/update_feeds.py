@@ -2,22 +2,22 @@ from optparse import make_option
 import logging
 import time
 
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
 from kuma.core.utils import memcache_lock
 from kuma.feeder.utils import update_feeds
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     """Update all registered RSS/Atom feeds."""
 
-    option_list = NoArgsCommand.option_list + (
+    option_list = BaseCommand.option_list + (
         make_option('--force', '-f', dest='force', action='store_true',
                     default=False, help='Fetch even disabled feeds.'),
     )
 
     @memcache_lock('kuma_feeder')
-    def handle_noargs(self, **options):
+    def handle(self, *args, **options):
         """
         Locked command handler to avoid running this command more than once
         simultaneously.

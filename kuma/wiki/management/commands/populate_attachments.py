@@ -1,5 +1,5 @@
 from collections import defaultdict
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 from django.db import models
 from django.utils.text import get_text_list
 
@@ -8,7 +8,7 @@ from ...constants import DEKI_FILE_URL, KUMA_FILE_URL
 from ...models import Document, DocumentAttachment
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = "Populate m2m relations for documents and their attachments"
 
     def add_arguments(self, parser):
