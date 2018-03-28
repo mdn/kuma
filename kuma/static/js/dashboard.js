@@ -124,6 +124,9 @@
             notification.success(gettext('Updated filters.'), 2000);
             // Reset the page count to 0 in case of new filter
             $pageInput.val(1);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            notification.error(gettext('Error loading content, please refresh the page'), 5000);
+            console.error('Error thrown while loading content: ' + textStatus, errorThrown);
         });
     });
 
