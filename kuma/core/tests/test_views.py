@@ -156,6 +156,8 @@ def test_setting_language_cookie_working(client):
     # Check language cookie is set
     assert lang_cookie
     assert lang_cookie.value == 'bn-BD'
+    # Check that the max-age from the cookie is the same as our settings
+    assert lang_cookie['max-age'] == settings.LANGUAGE_COOKIE_AGE
 
 
 def test_not_possible_to_set_non_locale_cookie(client):
