@@ -82,9 +82,9 @@ django-celery-transactions==0.3.6 \
 # Code: https://github.com/jazzband/django-constance
 # Changes: https://github.com/jazzband/django-constance/blob/master/docs/changes.rst
 # Docs: https://django-constance.readthedocs.io/en/latest/
-django-constance==2.1.0 \
-    --hash=sha256:19f926c40996506fca045f490334c02da92aa98dc24b3bb1033407126e7f9b53 \
-    --hash=sha256:6cad1b5feae6f1f5d0ae89edcae05a2afd605d10a148f01d081656bffb1e309a
+django-constance==2.2.0 \
+    --hash=sha256:fe601fe384d1629f6f0460175e4ce3d66e8177654525bddd4bdb68025c816adc \
+    --hash=sha256:1d74fa615ee6c69512faa214ec7b4962aa039dfe802e967972c3fbdad7852977
 
 # Basic/extra mitigation against the BREACH attack
 django-debreach==1.4.0 \
