@@ -33,7 +33,7 @@ def pytest_configure(config):
     # The pytest-base-url plugin adds --base-url, and sets the default from
     # environment variable PYTEST_BASE_URL. If still unset, force to staging.
     if config.option.base_url is None:
-        config.option.base_url = 'https://stage.mdn.moz.works'
+        config.option.base_url = 'https://developer.allizom.org'
     base_url = config.getoption('base_url')
 
     # Process the server status from _kuma_status.json

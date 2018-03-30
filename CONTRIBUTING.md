@@ -277,6 +277,6 @@ Deployment and Closing Bugs
 ---------------------------
 MDN staff deploy new code one to three times a week. Deployments are announced
 in the #mdndev IRC channel. Currently deployed code can be seen on the
-[What's Deployed?](https://whatsdeployed.io/s-NyD) page.
+[What's Deployed?](https://whatsdeployed.io/s-HC0) page.
 
 Once a bug fix is in production, the bug can be marked as RESOLVED:FIXED.

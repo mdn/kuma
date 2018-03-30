@@ -95,7 +95,7 @@ Before deploying, a staff member should:
 
 Deploy to Staging
 -----------------
-The staging site is located at https://stage.mdn.moz.works.  It runs on the
+The staging site is located at https://developer.allizom.org.  It runs on the
 same Kuma code as production, but against a different database, other backing
 services, and with less resources. It is used for verifying code changes before
 pushing to production.
@@ -134,15 +134,15 @@ pushing to production.
   This will kick off `functional tests`_ in Jenkins_, which will also report
   to ``#mdndev``.
 
-* Manually test changes on https://stage.mdn.moz.works. Look for server errors
+* Manually test changes on https://developer.allizom.org. Look for server errors
   on homepage and article pages. Try to verify features in the newly pushed
   code. Check the `functional tests`_.
 
 * Announce in IRC that staging looks good, and you are pushing to production.
 
 .. _Jenkins: https://ci.us-west.moz.works
-.. _`What's Deployed on KumaScript`: https://whatsdeployed.io/s-4kW
-.. _`What's Deployed on Kuma`: https://whatsdeployed.io/s-NyD
+.. _`What's Deployed on KumaScript`: https://whatsdeployed.io/s-SWJ
+.. _`What's Deployed on Kuma`: https://whatsdeployed.io/s-HC0
 .. _`functional tests`: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/branches/
 
 

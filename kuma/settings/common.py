@@ -45,7 +45,7 @@ PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
 SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
 PRODUCTION_DOMAIN = 'developer.mozilla.org'
-STAGING_DOMAIN = 'stage.mdn.moz.works'
+STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 INTERACTIVE_EXAMPLES_BASE = config(

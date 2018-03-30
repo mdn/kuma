@@ -7,8 +7,8 @@
 #   scripts/run_functional_tests.sh tests/functional/test_home.py::test_footer_displays
 # Run just in Chrome
 #   BROWSERS=chrome scripts/run_functional_tests.sh
-# Run against stage.mdn.moz.works
-#   BASE_URL=https://stage.mdn.moz.works scripts/run_functional_tests.sh
+# Run against developer.allizom.org
+#   BASE_URL=https://developer.allizom.org scripts/run_functional_tests.sh
 
 #
 # Configuration
@@ -22,7 +22,7 @@ if [[ "$DEBUG_SCRIPT" != "0" ]]; then
     set -x
 fi
 
-# BASE_URL: Protocol + domain to test against, such as https://stage.mdn.moz.works
+# BASE_URL: Protocol + domain to test against, such as https://developer.allizom.org
 BASE_URL=${BASE_URL:-http://web:8000}
 
 # PYTEST_ARGS: Arguments to pytest, i.e. what to run

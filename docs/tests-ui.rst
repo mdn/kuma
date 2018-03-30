@@ -151,7 +151,7 @@ Run tests on MDN's Continuous Integration (CI) infrastructure
 If you have commit rights on the `mozilla/kuma GitHub repository`_
 you can run the UI tests using the `MDN CI Infrastructure`_. Just force push
 to `mozilla/kuma@stage-integration-tests`_ to run the tests
-against https://stage.mdn.moz.works.
+against https://developer.allizom.org.
 
 You can check the status, progress, and logs of the
 test runs at `MDN's Jenkins-based multi-branch pipeline`_.
@@ -191,11 +191,11 @@ You can replace the default ``pytest`` options by passing arguments::
 
 You can test staging by setting a new base URL as a ``pytest`` argument::
 
-    $ scripts/run_functional_tests.sh --base-url https://stage.mdn.moz.works -m "not login" tests/functional/test_article_edit.py
+    $ scripts/run_functional_tests.sh --base-url https://developer.allizom.org -m "not login" tests/functional/test_article_edit.py
 
 You can also use an environment variable and get the default ``pytest`` arguments::
 
-    $ BASE_URL=https://stage.mdn.moz.works scripts/run_functional_tests.sh
+    $ BASE_URL=https://developer.allizom.org scripts/run_functional_tests.sh
 
 See ``scripts/run_functional_tests.sh`` for the all the configuration options.
 
