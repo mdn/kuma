@@ -187,7 +187,7 @@ Add a new locale to Pontoon
 The process for getting a new locale on MDN is documented at
 `Starting a new MDN localization`_. One step is to enable translation of the
 UI strings. This will also enable the locale in development environments and
-on https://stage.mdn.moz.works.
+on https://developer.allizom.org.
 
 .. Note::
 

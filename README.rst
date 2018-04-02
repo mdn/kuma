@@ -42,7 +42,7 @@ Development
                 http://logs.glob.uno/?c=mozilla%23mdndev (logs)
 :Servers:       `What's Deployed on MDN?`_
 
-                https://stage.mdn.moz.works/ (stage)
+                https://developer.allizom.org/ (stage)
 
                 https://developer.mozilla.org/ (prod)
 
@@ -50,7 +50,7 @@ Development
 .. _`P2 Bugs`: https://mzl.la/2oniZa3
 .. _`All developer.mozilla.org bugs`: https://mzl.la/2onLvZ8
 .. _`Pull Request Queues`: http://prs.mozilla.io/mozilla:kuma,kuma-lib,kumascript,mozhacks
-.. _`What's Deployed on MDN?`: https://whatsdeployed.io/s-NyD
+.. _`What's Deployed on MDN?`: https://whatsdeployed.io/s-HC0
 
 
 Getting started

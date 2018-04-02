@@ -114,7 +114,7 @@ html_theme_options = {
     'codecov_button': False,
     'extra_nav_links': OrderedDict((
         ('MDN', 'https://developer.mozilla.org'),
-        ('MDN Staging', 'https://stage.mdn.moz.works'),
+        ('MDN Staging', 'https://developer.allizom.org'),
         ('Kuma on GitHub', 'https://github.com/mozilla/kuma'),
         ('KumaScript on GitHub', 'https://github.com/mdn/kumascript'),
     )),
