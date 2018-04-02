@@ -14,14 +14,20 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint kuma/",
+    "test:sonarwhal": "sonarwhal https://developer.mozilla.org/en-US/",
     "precommit": "npm run lint"
   },
   "devDependencies": {
+    "@sonarwhal/configuration-web-recommended": "^4.0.0",
     "eslint": "^3.19.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "gulp-stylelint": "^3.9.0",
     "gulp-watch": "^4.3.6",
-    "husky": "^0.13.3"
+    "husky": "^0.13.3",
+    "sonarwhal": "^1.4.0"
+  },
+  "dependencies": {
+    "npm": "^5.6.0"
   }
 }
