@@ -1,15 +1,14 @@
-from functools import wraps
-import pytest
 import re
 import time
+from functools import wraps
 
+import pytest
+from pypom import Page, Region
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
-from selenium.webdriver.common.action_chains import ActionChains
-
-from pypom import Page, Region
 
 
 def wait_for_window(fn):

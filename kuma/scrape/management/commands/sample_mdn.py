@@ -3,6 +3,7 @@ import json
 from django.core.management.base import CommandError
 
 from kuma.scrape.fixture import FixtureLoader
+
 from . import ScrapeCommand
 
 

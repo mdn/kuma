@@ -1,21 +1,21 @@
-import json
 import datetime
+import json
 
 import pytest
-from pyquery import PyQuery as pq
 from constance.test import override_config
 from django.core.files.base import ContentFile
 from django.db import transaction
 from django.utils.six.moves.urllib.parse import urlparse
+from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentAttachment
-from kuma.wiki.tests import WikiTestCase, document, revision
-from kuma.attachments.utils import convert_to_http_date
+from kuma.wiki.tests import document, revision, WikiTestCase
 
-from ..models import Attachment, AttachmentRevision
 from . import make_test_file
+from ..models import Attachment, AttachmentRevision
+from ..utils import convert_to_http_date
 
 
 @override_config(WIKI_ATTACHMENT_ALLOWED_TYPES='text/plain')

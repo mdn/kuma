@@ -1,11 +1,11 @@
-import time
-import random
 import collections
+import random
+import time
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-from kuma.core.jobs import KumaJob, GenerationJob
+from kuma.core.jobs import GenerationJob, KumaJob
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 

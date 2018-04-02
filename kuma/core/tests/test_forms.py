@@ -1,9 +1,7 @@
 from django import forms
-
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import KumaTestCase, eq_
-
+from . import eq_, KumaTestCase
 from ..form_fields import StrippedCharField
 
 

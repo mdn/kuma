@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from pages.base import BasePage
-from pages.regions.column_container import ColumnContainer
+from .base import BasePage
+from .regions.column_container import ColumnContainer
 
 
 class HomePage(BasePage):

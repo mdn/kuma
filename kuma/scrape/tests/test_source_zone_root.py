@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 
 import pytest
 
-from kuma.scrape.sources import ZoneRootSource
 from . import mock_requester, mock_storage
+from ..sources import ZoneRootSource
 
 
 def test_escaped_url():

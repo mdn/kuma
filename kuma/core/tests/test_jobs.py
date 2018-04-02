@@ -1,6 +1,7 @@
-from django.utils import six
-from kuma.core.tests import KumaTestCase
 import mock
+from django.utils import six
+
+from kuma.core.tests import KumaTestCase
 
 
 from ..jobs import GenerationJob, GenerationKeyJob, KumaJob

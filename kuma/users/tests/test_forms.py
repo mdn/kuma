@@ -1,8 +1,9 @@
-from django import forms
-from django.test import RequestFactory
 import mock
 
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from django import forms
+from django.test import RequestFactory
+
+from kuma.core.tests import eq_, KumaTestCase, ok_
 
 from . import user
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,

@@ -1,7 +1,6 @@
 from django.utils import translation
 
-from kuma.core.tests import KumaTestCase, eq_
-
+from . import eq_, KumaTestCase
 from ..form_fields import _format_decimal
 
 

@@ -1,20 +1,19 @@
 import datetime
 import json
+from urlparse import urlparse
 
+import tidylib
+from apiclient.discovery import build
+from constance import config
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import resolve, Resolver404
-import tidylib
-
-from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
-from urlparse import urlparse
-
-from constance import config
 
 from kuma.core.urlresolvers import split_path
-from kuma.wiki.exceptions import NotDocumentView
+
+from .exceptions import NotDocumentView
 
 
 def locale_and_slug_from_path(path, request=None, path_locale=None):

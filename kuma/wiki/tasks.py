@@ -6,6 +6,7 @@ import os
 import textwrap
 from datetime import datetime, timedelta
 
+from celery import chord, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
@@ -13,14 +14,12 @@ from django.core.mail import mail_admins, send_mail
 from django.db import connection, transaction
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
-
-from celery import chord, task
 from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.cache import memcache
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import MemcacheLock, chord_flow, chunked
+from kuma.core.utils import chord_flow, chunked, MemcacheLock
 from kuma.search.models import Index
 
 from .events import first_edit_email

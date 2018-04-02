@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """Tests for the RevisionSource class ($revision/ID API)."""
 from __future__ import unicode_literals
+
 from datetime import datetime
 
 import mock
 import pytest
 
-from kuma.scrape.sources import RevisionSource
 from kuma.wiki.models import Document, Revision
+
 from . import mock_requester, mock_storage
+from ..sources import RevisionSource
 
 
 @pytest.fixture

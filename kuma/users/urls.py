@@ -1,9 +1,8 @@
 import importlib
 
-from django.conf.urls import include, url
-
 from allauth.account import views as account_views
 from allauth.socialaccount import providers, views as socialaccount_views
+from django.conf.urls import include, url
 
 from kuma.core.decorators import redirect_in_maintenance_mode
 

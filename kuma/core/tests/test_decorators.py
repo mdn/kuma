@@ -2,17 +2,16 @@ import pytest
 
 from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
-
 from django.test import RequestFactory
 
-from kuma.core.decorators import (block_user_agents, login_required,
-                                  logout_required, permission_required,
-                                  redirect_in_maintenance_mode,
-                                  shared_cache_control,
-                                  skip_in_maintenance_mode)
-
-from kuma.core.tests import eq_, KumaTestCase
 from kuma.users.tests import UserTestCase
+
+from . import eq_, KumaTestCase
+from ..decorators import (block_user_agents, login_required,
+                          logout_required, permission_required,
+                          redirect_in_maintenance_mode,
+                          shared_cache_control,
+                          skip_in_maintenance_mode)
 
 
 def simple_view(request):

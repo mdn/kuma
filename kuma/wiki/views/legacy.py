@@ -3,8 +3,9 @@ from django.conf import settings
 from django.http import Http404
 from django.shortcuts import redirect
 
-from ..models import Document, Revision
 from kuma.core.decorators import shared_cache_control
+
+from ..models import Document, Revision
 
 
 # Legacy MindTouch redirects.

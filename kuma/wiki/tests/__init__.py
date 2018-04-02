@@ -3,13 +3,13 @@ from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.utils.text import slugify
-
 from html5lib.filters.base import Filter as html5lib_Filter
 from waffle.models import Flag
 
-from kuma.core.tests import get_user, KumaTestCase
-from kuma.wiki.models import Document, Revision
 import kuma.wiki.content
+from kuma.core.tests import get_user, KumaTestCase
+
+from ..models import Document, Revision
 
 
 class WikiTestCase(KumaTestCase):

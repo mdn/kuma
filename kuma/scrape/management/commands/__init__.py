@@ -1,6 +1,6 @@
 """Common methods for scraping management commands."""
-from argparse import ArgumentTypeError
 import logging
+from argparse import ArgumentTypeError
 
 from django.core.management.base import BaseCommand
 from django.utils.six.moves.urllib.parse import urlparse

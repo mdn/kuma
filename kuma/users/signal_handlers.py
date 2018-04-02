@@ -1,19 +1,18 @@
+from allauth.account.signals import email_confirmed, user_signed_up
+from allauth.socialaccount.signals import social_account_removed
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.dispatch import receiver
 from django.db.models.signals import post_delete, post_save
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-
-from allauth.account.signals import user_signed_up, email_confirmed
-from allauth.socialaccount.signals import social_account_removed
 from waffle import switch_is_active
 
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.jobs import DocumentContributorsJob
 
-from .models import User, UserBan
 from .jobs import UserGravatarURLJob
+from .models import User, UserBan
 from .tasks import send_welcome_email
 
 

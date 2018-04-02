@@ -1,8 +1,8 @@
 import threading
 
 from django.conf import settings
-from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse as django_reverse
+from django.test.client import RequestFactory
 from django.utils.translation.trans_real import parse_accept_lang_header
 
 

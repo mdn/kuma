@@ -2,22 +2,21 @@
 from base64 import b64encode
 from urlparse import urljoin
 
+import bleach
+import pytest
 from django.conf import settings
 from django.test import TestCase
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
-import bleach
-import pytest
 
 import kuma.wiki.content
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from kuma.core.tests import eq_, KumaTestCase, ok_
 
 from . import document, normalize_html
-
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
-from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
-                       H3TOCFilter, SectionIDFilter, SectionTOCFilter,
-                       get_content_sections, get_seo_description, parse)
+from ..content import (CodeSyntaxFilter, get_content_sections,
+                       get_seo_description, H2TOCFilter, H3TOCFilter, parse,
+                       SECTION_TAGS, SectionIDFilter, SectionTOCFilter)
 from ..models import Document, Revision
 from ..templatetags.jinja_helpers import bugize_text
 

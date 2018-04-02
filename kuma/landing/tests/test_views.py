@@ -1,7 +1,7 @@
-from django.utils.six.moves.urllib.parse import urlparse
-from ratelimit.exceptions import Ratelimited
 import mock
 import pytest
+from django.utils.six.moves.urllib.parse import urlparse
+from ratelimit.exceptions import Ratelimited
 
 from kuma.core.urlresolvers import reverse
 

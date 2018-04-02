@@ -1,10 +1,10 @@
-from django.test import RequestFactory
 import pyquery
+from django.test import RequestFactory
 
-from kuma.core.tests import eq_
+from . import eq_
+from ..templatetags.jinja_helpers import paginator
 from ..urlresolvers import reverse
 from ..utils import paginate, urlparams
-from ..templatetags.jinja_helpers import paginator
 
 
 def test_paginated_url():

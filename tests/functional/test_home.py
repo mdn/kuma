@@ -1,11 +1,11 @@
 import pytest
 
 from pages.home import HomePage
-from utils.urls import assert_valid_url
 from utils.decorators import (
     skip_if_maintenance_mode,
     skip_if_not_maintenance_mode,
 )
+from utils.urls import assert_valid_url
 
 
 # homepage tests

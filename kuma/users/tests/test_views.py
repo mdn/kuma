@@ -14,18 +14,18 @@ from django.db import IntegrityError
 from django.http import Http404
 from django.test import RequestFactory
 from pyquery import PyQuery as pq
-from waffle.models import Flag
 from pytz import timezone, utc
+from waffle.models import Flag
 
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import (Document, Revision, RevisionAkismetSubmission,
-                              DocumentDeletionLog)
+from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
+                              RevisionAkismetSubmission)
 from kuma.wiki.tests import document as create_document
 
 
-from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, user
+from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
 from ..models import User, UserBan
 from ..signup import SignupForm
 from ..views import delete_document, revert_document

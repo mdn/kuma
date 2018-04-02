@@ -1,8 +1,9 @@
 import datetime
 import time
+
 from selenium.webdriver.common.by import By
 
-from pages.article_edit import EditPage
+from .article_edit import EditPage
 
 
 class NewPage(EditPage):

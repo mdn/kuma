@@ -9,11 +9,10 @@ TODO:
 """
 from datetime import date, timedelta
 
+from django.contrib.auth.models import AnonymousUser
 from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
-from django.contrib.auth.models import AnonymousUser
-
-from taggit.managers import TaggableManager, _TaggableManager
+from taggit.managers import _TaggableManager, TaggableManager
 from taggit.models import Tag
 from taggit.utils import edit_string_for_tags, require_instance_manager
 

@@ -18,7 +18,7 @@ from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
-from ..utils import urlparams, format_date_time
+from ..utils import format_date_time, urlparams
 
 
 htmlparser = HTMLParser.HTMLParser()

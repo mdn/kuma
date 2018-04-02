@@ -1,10 +1,11 @@
 from datetime import datetime
 
-from waffle.models import Flag
 import pytest
+from waffle.models import Flag
 
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.models import Document, Revision
+
+from ..models import Document, Revision
 
 
 @pytest.fixture

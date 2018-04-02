@@ -9,9 +9,10 @@ from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
 
 from kuma.core.tests import eq_
-from kuma.wiki import kumascript
-from kuma.wiki.constants import KUMASCRIPT_BASE_URL
+
 from . import WikiTestCase
+from .. import kumascript
+from .. constants import KUMASCRIPT_BASE_URL
 
 
 @pytest.yield_fixture

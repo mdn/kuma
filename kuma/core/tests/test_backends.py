@@ -1,7 +1,8 @@
 import pytest
-from mock import patch
-from django.db import models
 from constance.backends.database import DatabaseBackend
+from django.db import models
+from mock import patch
+
 from kuma.core.backends import ReadOnlyConstanceDatabaseBackend
 
 

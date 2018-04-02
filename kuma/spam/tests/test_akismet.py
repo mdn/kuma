@@ -1,11 +1,10 @@
-from constance.test import override_config
-from waffle.models import Flag
 import mock
 import pytest
 import requests
 import requests_mock
-
+from constance.test import override_config
 from django.test import SimpleTestCase
+from waffle.models import Flag
 
 from ..akismet import Akismet, AkismetError
 from ..constants import (CHECK_URL, HAM_URL, SPAM_CHECKS_FLAG,

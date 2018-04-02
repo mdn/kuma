@@ -1,7 +1,7 @@
+import pytest
+
 from ..auth_backends import KumaAuthBackend
 from ..models import User, UserBan
-
-import pytest
 
 
 @pytest.fixture()

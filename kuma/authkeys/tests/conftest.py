@@ -1,7 +1,8 @@
 import pytest
 
 from kuma.users.tests import user
-from kuma.authkeys.models import Key
+
+from ..models import Key
 
 
 class Object(object):

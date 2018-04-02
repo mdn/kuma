@@ -1,8 +1,9 @@
-import pytest
-from urlparse import urlparse, parse_qs
+from urlparse import parse_qs, urlparse
 
-from pages.dashboard import DashboardPage, MacroDashboardPage
+import pytest
+
 from pages.admin import AdminLogin
+from pages.dashboard import DashboardPage, MacroDashboardPage
 from utils.decorators import (
     skip_if_maintenance_mode,
     skip_if_not_maintenance_mode,

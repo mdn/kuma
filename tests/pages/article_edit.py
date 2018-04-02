@@ -1,8 +1,9 @@
 import time
+
 from selenium.webdriver.common.by import By
 
-from pages.base import BasePage
-from pages.regions.ckeditor import Ckeditor
+from .base import BasePage
+from .regions.ckeditor import Ckeditor
 
 
 class EditPage(BasePage):

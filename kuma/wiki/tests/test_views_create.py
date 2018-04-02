@@ -1,9 +1,10 @@
+import pytest
 from django.contrib.auth.models import Permission
 from pyquery import PyQuery as pq
-import pytest
 
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.models import Document, Revision
+
+from ..models import Document, Revision
 
 
 # dict of case-name --> tuple of slug and expected status code

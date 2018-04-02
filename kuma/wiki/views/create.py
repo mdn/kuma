@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
-
 from constance import config
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 
 from kuma.attachments.forms import AttachmentRevisionForm

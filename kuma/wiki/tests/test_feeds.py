@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import json
+from datetime import datetime
 
-from django.utils.six.moves.urllib_parse import urlparse, parse_qs
+import pytest
+from django.utils.six.moves.urllib_parse import parse_qs, urlparse
 from django.utils.timezone import make_aware
 from pyquery import PyQuery as pq
 from pytz import AmbiguousTimeError
-import pytest
 
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.feeds import DocumentJSONFeedGenerator
-from kuma.wiki.models import Document, Revision
 
 from . import normalize_html
+from ..feeds import DocumentJSONFeedGenerator
+from ..models import Document, Revision
 
 
 def test_l10n_updates_no_updates(trans_doc, client):

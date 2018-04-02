@@ -1,10 +1,9 @@
 import hashlib
 
-from urlobject import URLObject as URL
-
 from django.contrib.sites.models import Site
 from django.utils import translation
 from django.utils.encoding import smart_str
+from urlobject import URLObject as URL
 
 from kuma.core.urlresolvers import reverse
 

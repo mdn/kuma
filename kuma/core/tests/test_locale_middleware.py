@@ -1,5 +1,6 @@
 from django.conf import settings
-from kuma.core.tests import KumaTestCase
+
+from . import KumaTestCase
 
 
 class TestLocaleMiddleware(KumaTestCase):

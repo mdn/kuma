@@ -12,9 +12,19 @@ django-debug-toolbar==1.8 \
     --hash=sha256:0b4d2b1ac49a8bc5604518e8e20f56c1c08c0c4873336107e7c773c42537876b
 
 # Code quality checker
+# Code: https://github.com/PyCQA/flake8
+# Docs: http://flake8.readthedocs.io/en/latest/
+# Changes: http://flake8.readthedocs.io/en/latest/release-notes/index.html
 flake8==3.5.0 \
     --hash=sha256:c7841163e2b576d435799169b78703ad6ac1bbb0f199994fc05f700b2a90ea37 \
     --hash=sha256:7253265f7abd8b313e3892944044a365e3f4ac3fcdcfb4298f55ee9ddf188ba0
+
+# Standardize Python import order
+# Code: https://github.com/PyCQA/flake8-import-order
+# Change: https://github.com/PyCQA/flake8-import-order/blob/master/CHANGELOG.rst
+flake8-import-order==0.17.1 \
+    --hash=sha256:40d2a39ed91e080f3285f4c16256b252d7c31070e7f11b7854415bb9f924ea81 \
+    --hash=sha256:68d430781a9ef15c85a0121500cf8462f1a4bc7672acb2a32bfdbcab044ae0b7
 
 # Calculate hashes for pip 8.x+
 # Code: https://github.com/peterbe/hashin

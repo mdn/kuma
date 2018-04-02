@@ -1,9 +1,9 @@
 """Content scraper for MDN."""
 from __future__ import unicode_literals
 
-from collections import OrderedDict
 import logging
 import time
+from collections import OrderedDict
 
 import requests
 

@@ -1,13 +1,13 @@
 import datetime
 import os.path
 
-from django.core.exceptions import ImproperlyConfigured
 
-from constance.test import override_config
 import mock
 import pytest
-from googleapiclient.http import HttpMockSequence
+from constance.test import override_config
+from django.core.exceptions import ImproperlyConfigured
 from googleapiclient.errors import HttpError
+from googleapiclient.http import HttpMockSequence
 
 from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase

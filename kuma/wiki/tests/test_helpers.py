@@ -8,7 +8,7 @@ from kuma.core.cache import memcache
 from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 
-from . import WikiTestCase, document, revision
+from . import document, revision, WikiTestCase
 from ..models import DocumentZone
 from ..templatetags.jinja_helpers import (absolutify,
                                           document_zone_management_links,

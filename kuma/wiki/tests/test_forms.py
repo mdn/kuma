@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 import json
 
-from django.contrib.auth.models import Permission
-from django.core import mail
-from django.test import RequestFactory
-
 import pytest
 import requests_mock
 from constance.test import override_config
+from django.contrib.auth.models import Permission
+from django.core import mail
+from django.test import RequestFactory
 from waffle.models import Flag, Switch
 
 from kuma.core.urlresolvers import reverse
-from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
+from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG, SPAM_CHECKS_FLAG,
                                  SPAM_SPAMMER_FLAG, SPAM_TESTING_FLAG,
-                                 SPAM_CHECKS_FLAG, VERIFY_URL)
+                                 VERIFY_URL)
 from kuma.users.tests import UserTestCase
 
 from ..constants import SPAM_TRAINING_SWITCH

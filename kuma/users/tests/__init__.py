@@ -1,15 +1,17 @@
 import requests_mock
+from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-from allauth.socialaccount.models import SocialApp
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
-from django.utils.six.moves.urllib_parse import urlparse, parse_qs
+from django.utils.six.moves.urllib_parse import parse_qs, urlparse
 
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.tests import revision as create_revision, document as create_document
+from kuma.wiki.tests import document as create_document
+from kuma.wiki.tests import revision as create_revision
+
 from ..providers.github.provider import KumaGitHubProvider
 
 

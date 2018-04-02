@@ -1,7 +1,6 @@
 from django.test import RequestFactory
 
-from kuma.core.tests import KumaTestCase, eq_
-
+from . import eq_, KumaTestCase
 from ..context_processors import next_url
 
 

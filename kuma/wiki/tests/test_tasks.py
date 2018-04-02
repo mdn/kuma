@@ -1,14 +1,14 @@
 from __future__ import with_statement
 
-from datetime import datetime
 import os
+from datetime import datetime
 
 from django.conf import settings
 
 from kuma.core.cache import memcache
 from kuma.core.tests import ok_
 from kuma.users.models import User
-from kuma.users.tests import UserTestCase, user
+from kuma.users.tests import user, UserTestCase
 
 from . import document, revision
 from ..models import Document, DocumentSpamAttempt

@@ -6,11 +6,9 @@ from kuma.core.cache import memcache
 from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 
-from . import revision, document
+from . import document, revision, WikiTestCase
 from ..middleware import DocumentZoneMiddleware
 from ..models import DocumentZone
-
-from . import WikiTestCase
 
 
 class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):

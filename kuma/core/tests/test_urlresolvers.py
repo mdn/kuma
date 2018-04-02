@@ -2,7 +2,8 @@ import pytest
 
 from django.conf import settings
 
-from kuma.core.tests import KumaTestCase, eq_
+from kuma.core.tests import eq_, KumaTestCase
+
 from ..urlresolvers import get_best_language
 
 

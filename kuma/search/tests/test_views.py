@@ -2,11 +2,12 @@
 import elasticsearch
 import pytest
 
+from kuma.core.urlresolvers import reverse
+
 from . import ElasticTestCase
 from ..models import Filter, FilterGroup, Index
 from ..pagination import SearchPagination
 from ..views import SearchView
-from kuma.core.urlresolvers import reverse
 
 
 class ViewTests(ElasticTestCase):

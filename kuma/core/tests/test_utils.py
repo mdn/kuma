@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from kuma.core.tests import eq_
+from . import eq_
 from ..utils import smart_int
 
 

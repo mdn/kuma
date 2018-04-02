@@ -1,12 +1,12 @@
-from waffle.models import Switch
 import pytest
+from waffle.models import Switch
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.models import Revision
 
 from . import normalize_html
+from ..models import Revision
 
 
 @pytest.fixture

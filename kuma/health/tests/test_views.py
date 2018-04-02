@@ -1,12 +1,12 @@
 import json
 
-from django.db import DatabaseError
+import mock
+import pytest
 from django.core.urlresolvers import reverse
+from django.db import DatabaseError
 from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
                                       NotFoundError)
 from requests.exceptions import ConnectionError as Requests_ConnectionError
-import mock
-import pytest
 
 from kuma.users.models import User
 

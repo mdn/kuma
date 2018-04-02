@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from elasticsearch_dsl.connections import connections
 
 from kuma.core.tests import eq_, ok_

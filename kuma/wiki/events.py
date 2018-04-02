@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Send notification emails for editing events."""
 from __future__ import unicode_literals
+
 import logging
 
 from constance import config

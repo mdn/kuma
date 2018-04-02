@@ -11,8 +11,8 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
 from django.utils.six import string_types
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from taggit.utils import parse_tags
 
 import kuma.wiki.content
@@ -28,7 +28,7 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         SPAM_TRAINING_SWITCH)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
-                     RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
+                     RevisionAkismetSubmission, RevisionIP, valid_slug_parent)
 from .tasks import send_first_edit_email
 
 

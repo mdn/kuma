@@ -1,5 +1,6 @@
 """DocumentHistorySource scrapes the wiki history page."""
 from __future__ import absolute_import, unicode_literals
+
 import logging
 
 from pyquery import PyQuery as pq

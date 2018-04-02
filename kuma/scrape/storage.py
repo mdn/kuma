@@ -1,14 +1,14 @@
 """Store temporary data and interact with the database."""
-from collections import OrderedDict
 import logging
+from collections import OrderedDict
 
 from django.db import IntegrityError
 from taggit.models import Tag
 
 from kuma.users.models import User, UserBan
 from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.models import (Document, DocumentTag, DocumentZone, Revision,
-                              ReviewTag, LocalizationTag)
+from kuma.wiki.models import (Document, DocumentTag, DocumentZone,
+                              LocalizationTag, ReviewTag, Revision)
 
 logger = logging.getLogger('kuma.scraper')
 

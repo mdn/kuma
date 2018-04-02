@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 import pytest
-from pyquery import PyQuery as pq
-
+import requests_mock
 from constance.test import override_config
 from django.contrib.admin import AdminSite
 from django.test import RequestFactory
 from django.utils.six.moves.urllib.parse import parse_qsl
-import requests_mock
+from pyquery import PyQuery as pq
 from waffle.models import Flag
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.spam.akismet import Akismet
-from kuma.spam.constants import HAM_URL, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.users.tests import UserTestCase
+from kuma.spam.constants import (HAM_URL, SPAM_SUBMISSIONS_FLAG, SPAM_URL,
+                                 VERIFY_URL)
 from kuma.users.models import User
-from kuma.wiki.admin import DocumentSpamAttemptAdmin, SUBMISSION_NOT_AVAILABLE
-from kuma.wiki.models import (DocumentSpamAttempt, RevisionAkismetSubmission,
-                              RevisionIP)
-from kuma.wiki.tests import document, revision
+from kuma.users.tests import UserTestCase
+
+from . import document, revision
+from ..admin import DocumentSpamAttemptAdmin, SUBMISSION_NOT_AVAILABLE
+from ..models import (DocumentSpamAttempt, RevisionAkismetSubmission,
+                      RevisionIP)
 
 
 @pytest.mark.spam

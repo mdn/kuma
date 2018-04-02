@@ -1,9 +1,10 @@
 from datetime import datetime
+
 import pytest
 
-from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.models import (Document, DocumentTag, LocalizationTag,
-                              ReviewTag, Revision)
+from ..constants import REDIRECT_CONTENT
+from ..models import (Document, DocumentTag, LocalizationTag, ReviewTag,
+                      Revision)
 
 
 @pytest.fixture

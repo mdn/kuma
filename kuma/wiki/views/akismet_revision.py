@@ -2,13 +2,14 @@ import json
 
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.views.decorators.cache import never_cache
 
 from kuma.core.utils import format_date_time
-from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import RevisionAkismetSubmission
+
+from ..forms import RevisionAkismetSubmissionSpamForm
+from ..models import RevisionAkismetSubmission
 
 
 @never_cache

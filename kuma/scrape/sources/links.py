@@ -1,6 +1,7 @@
 """LinksSource gathers wiki document links from a rendered page."""
 
 from __future__ import absolute_import, unicode_literals
+
 import logging
 
 from django.conf import settings

@@ -1,6 +1,6 @@
 from allauth.account.models import EmailAddress
-from allauth.socialaccount.providers.github.provider import (GitHubProvider,
-                                                             GitHubAccount)
+from allauth.socialaccount.providers.github.provider import (GitHubAccount,
+                                                             GitHubProvider)
 
 
 class KumaGitHubAccount(GitHubAccount):

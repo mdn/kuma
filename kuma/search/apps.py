@@ -1,7 +1,6 @@
 from django.apps import AppConfig
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-
 from elasticsearch_dsl.connections import connections as es_connections
 
 

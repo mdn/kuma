@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import waffle
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
@@ -11,7 +12,6 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.decorators.vary import vary_on_headers
-import waffle
 
 from kuma.core.decorators import login_required
 from kuma.core.decorators import shared_cache_control

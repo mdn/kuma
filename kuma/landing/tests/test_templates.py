@@ -1,7 +1,7 @@
 from constance.test import override_config
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from kuma.core.tests import eq_, KumaTestCase, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.search.models import Filter, FilterGroup
 

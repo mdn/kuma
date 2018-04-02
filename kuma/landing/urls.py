@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
-from . import views
 from kuma.core.decorators import shared_cache_control
 
+from . import views
 
 urlpatterns = [
     url(r'^$',

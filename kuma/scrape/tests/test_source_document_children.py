@@ -2,8 +2,8 @@
 """Tests for the DocumentChildrenSource class ($children API)."""
 from __future__ import unicode_literals
 
-from kuma.scrape.sources import DocumentChildrenSource
 from . import mock_requester, mock_storage
+from ..sources import DocumentChildrenSource
 
 # Partial data from
 # https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5$children

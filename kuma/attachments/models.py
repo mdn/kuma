@@ -6,7 +6,6 @@ from django.db import models
 from django.db.utils import IntegrityError
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
-
 from django_mysql.models import Model as MySQLModel
 
 from .utils import attachment_upload_to, full_attachment_url

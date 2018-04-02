@@ -2,8 +2,8 @@
 """Tests for the DocumentMetaSource class ($json API)."""
 from __future__ import unicode_literals
 
-from kuma.scrape.sources import DocumentMetaSource
 from . import mock_requester, mock_storage
+from ..sources import DocumentMetaSource
 
 
 # Partial meta from

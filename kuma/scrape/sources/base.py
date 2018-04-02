@@ -1,8 +1,11 @@
 """Shared interface for data sources."""
 from __future__ import absolute_import, unicode_literals
+
 import re
 
-from django.utils.six import binary_type, text_type, python_2_unicode_compatible
+from django.utils.six import (binary_type,
+                              python_2_unicode_compatible,
+                              text_type)
 from django.utils.six.moves.urllib.parse import unquote
 
 

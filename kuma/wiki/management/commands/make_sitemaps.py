@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from kuma.wiki.tasks import build_locale_sitemap, build_index_sitemap
+from kuma.wiki.tasks import build_index_sitemap, build_locale_sitemap
 
 
 class Command(BaseCommand):

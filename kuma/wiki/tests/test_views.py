@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-import HTMLParser
 import datetime
+import HTMLParser
 import json
 
+import mock
+import pytest
+import requests_mock
 from constance.test import override_config
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -12,9 +15,6 @@ from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
-import mock
-import pytest
-import requests_mock
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_

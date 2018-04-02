@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import get_object_or_404, get_list_or_404, render
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.decorators.http import require_GET
 from ratelimit.decorators import ratelimit
 
@@ -7,9 +7,9 @@ from kuma.core.decorators import block_user_agents, shared_cache_control
 from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
-from ..decorators import process_document_path, prevent_indexing
-from ..models import (Document, DocumentTag, ReviewTag, Revision,
-                      LocalizationTag)
+from ..decorators import prevent_indexing, process_document_path
+from ..models import (Document, DocumentTag, LocalizationTag, ReviewTag,
+                      Revision)
 
 
 @shared_cache_control

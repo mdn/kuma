@@ -1,13 +1,13 @@
+from django.http import QueryDict
+
 from kuma.core.tests import eq_, ok_
 from kuma.wiki.models import Document
 from kuma.wiki.signals import render_done
 
-from django.http import QueryDict
-
 from . import ElasticTestCase
 from ..filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                       HighlightFilterBackend, LanguageFilterBackend,
-                       SearchQueryBackend, get_filters)
+                       get_filters, HighlightFilterBackend,
+                       LanguageFilterBackend, SearchQueryBackend)
 from ..models import FilterGroup
 from ..views import SearchView
 
