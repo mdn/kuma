@@ -5,37 +5,40 @@ except ImportError:
     from StringIO import StringIO
 import json
 
+import newrelic.agent
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.exceptions import PermissionDenied
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         HttpResponseRedirect, HttpResponsePermanentRedirect,
+                         HttpResponsePermanentRedirect, HttpResponseRedirect,
                          JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.cache import patch_vary_headers
 from django.utils.http import parse_etags
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
-from django.utils.cache import patch_vary_headers
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from pyquery import PyQuery as pq
 from ratelimit.decorators import ratelimit
-import newrelic.agent
 
+import kuma.wiki.content
 from kuma.authkeys.decorators import accepts_auth_key
-from kuma.core.decorators import (block_user_agents, login_required,
-                                  permission_required, superuser_required,
+from kuma.core.decorators import (block_user_agents,
+                                  login_required,
+                                  permission_required,
                                   redirect_in_maintenance_mode,
-                                  shared_cache_control)
+                                  shared_cache_control,
+                                  superuser_required)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.search.store import get_search_url_from_referer
-import kuma.wiki.content
 
+from .utils import calculate_etag, split_slug
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
 from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
@@ -45,7 +48,6 @@ from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
                       DocumentRenderedContentNotAvailable, DocumentZone)
 from ..tasks import move_page
-from .utils import calculate_etag, split_slug
 
 
 def _get_html_and_errors(request, doc, rendering_params):

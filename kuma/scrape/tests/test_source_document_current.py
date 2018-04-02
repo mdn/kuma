@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 
 import mock
 
-from kuma.scrape.sources import DocumentCurrentSource
 from . import mock_storage
+from ..sources import DocumentCurrentSource
 
 
 def test_gather_has_current(root_doc):

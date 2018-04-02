@@ -7,13 +7,14 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_control, never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
-from .forms import AttachmentRevisionForm
-from .models import Attachment
-from .utils import allow_add_attachment_by, convert_to_http_date
 from kuma.core.decorators import login_required, shared_cache_control
 from kuma.core.utils import is_untrusted
 from kuma.wiki.decorators import process_document_path
 from kuma.wiki.models import Document
+
+from .forms import AttachmentRevisionForm
+from .models import Attachment
+from .utils import allow_add_attachment_by, convert_to_http_date
 
 
 # Mime types used on MDN

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """Tests for the DocumentSource class."""
 from __future__ import unicode_literals
+
 from datetime import datetime
 
-from kuma.scrape.sources import DocumentSource
 from . import mock_storage
+from ..sources import DocumentSource
 
 
 # Basic metadata for a Document

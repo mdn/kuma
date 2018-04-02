@@ -1,13 +1,14 @@
 import json
 
+import pytest
 from django.contrib.auth.models import Permission
 from waffle.models import Flag
-import pytest
 
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import RevisionAkismetSubmission
+
+from ..models import RevisionAkismetSubmission
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 import re
-import requests
+from urlparse import parse_qs, urlparse
 
-from urlparse import urlparse, parse_qs
+import requests
 from braceexpand import braceexpand
 
 

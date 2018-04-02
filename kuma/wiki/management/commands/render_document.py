@@ -10,7 +10,6 @@ from math import ceil
 from optparse import make_option
 
 from celery import chain
-
 from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
 

@@ -13,7 +13,7 @@ from django.core import mail
 from django.test.utils import override_settings
 from django.utils import translation
 from django.utils.http import urlquote
-from django.utils.six.moves.urllib.parse import urlparse, parse_qs
+from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import eq_, ok_
@@ -22,8 +22,8 @@ from kuma.core.utils import urlparams
 from kuma.users.models import User
 from kuma.users.tests import UserTestCase
 
-from . import (WikiTestCase, create_topical_parents_docs, document,
-               new_document_data, revision)
+from . import (create_topical_parents_docs, document,
+               new_document_data, revision, WikiTestCase)
 from ..constants import (EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT)
 from ..events import EditDocumentEvent
 from ..models import Document, Revision

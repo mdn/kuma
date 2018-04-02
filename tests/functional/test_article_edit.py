@@ -1,9 +1,10 @@
-import pytest
 import time
 
+import pytest
+
+from pages.admin import AdminLogin
 from pages.article import ArticlePage
 from pages.article_new import NewPage
-from pages.admin import AdminLogin
 from utils.decorators import skip_if_maintenance_mode
 
 

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """Tests for the UserSource class (/profiles/USERNAME)."""
 from __future__ import unicode_literals
+
 from datetime import datetime
 
 import pytest
 
-from kuma.scrape.sources import UserSource
 from kuma.users.models import UserBan
+
 from . import mock_requester, mock_storage
+from ..sources import UserSource
 
 
 @pytest.fixture

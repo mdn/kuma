@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import re
 
+from constance import config
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.cache import cache_control
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.http import require_GET
-from django.views.decorators.cache import cache_control
-
-from constance import config
 
 from kuma.attachments.utils import full_attachment_url
+
+from ..decorators import allow_CORS_GET, process_document_path
 from ..jobs import DocumentCodeSampleJob
-from ..decorators import process_document_path, allow_CORS_GET
 from ..models import Document
 
 

@@ -20,12 +20,12 @@ from kuma.core.decorators import (block_banned_ips, block_user_agents,
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
+from .translate import translate
+from .utils import document_form_initial, split_slug
 from ..decorators import (check_readonly, prevent_indexing,
                           process_document_path)
 from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
-from .translate import translate
-from .utils import document_form_initial, split_slug
 
 
 @xframe_options_sameorigin

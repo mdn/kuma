@@ -1,8 +1,9 @@
-from django.contrib.auth.models import Permission
 import pytest
+from django.contrib.auth.models import Permission
 
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.models import Document, DocumentDeletionLog
+
+from ..models import Document, DocumentDeletionLog
 
 
 @pytest.fixture

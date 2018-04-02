@@ -6,6 +6,7 @@ import mock
 import pytest
 
 from kuma.scrape.sources import Source
+
 from . import mock_requester, mock_storage
 
 

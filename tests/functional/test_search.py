@@ -1,10 +1,10 @@
 import pytest
 
-from utils.urls import assert_valid_url
-from pages.home import HomePage
 from pages.article import ArticlePage
+from pages.home import HomePage
 from pages.search import SearchPage
 from utils.decorators import skip_if_not_maintenance_mode
+from utils.urls import assert_valid_url
 
 SEARCH_TERM = 'css'
 SEARCH_TERM_ZERO = 'skwiz'

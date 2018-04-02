@@ -1,6 +1,6 @@
 import os
 
-from locust import HttpLocust, TaskSet, task
+from locust import HttpLocust, task, TaskSet
 
 
 class SmokeBehavior(TaskSet):

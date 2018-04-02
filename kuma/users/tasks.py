@@ -8,9 +8,9 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from djcelery_transactions import task as transaction_task
 
+from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
 from kuma.core.utils import strings_are_translated
-from kuma.core.decorators import skip_in_maintenance_mode
 
 
 log = logging.getLogger('kuma.users.tasks')

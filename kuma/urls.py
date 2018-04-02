@@ -1,3 +1,4 @@
+from decorator_include import decorator_include
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -5,7 +6,6 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_safe
 from django.views.generic import RedirectView
 from django.views.static import serve
-from decorator_include import decorator_include
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views

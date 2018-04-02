@@ -1,11 +1,12 @@
 import pytest
 
+from constance import config
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
-from kuma.scrape.fixture import FixtureLoader
 from kuma.users.models import User, UserBan
-from constance import config
+
+from ..fixture import FixtureLoader
 
 
 def test_empty_fixtures():

@@ -10,7 +10,7 @@ from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
 
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from . import eq_, KumaTestCase, ok_
 from ..urlresolvers import reverse
 
 

@@ -1,10 +1,10 @@
 from __future__ import absolute_import
 
+import mock
 from django.contrib.sites.models import Site
 
-import mock
-
 from kuma.core.tests import KumaTestCase
+
 from ..store import get_search_url_from_referer
 
 

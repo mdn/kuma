@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """Tests for the DocumentRenderedSource class (GET document)."""
 from __future__ import unicode_literals
+
 from datetime import datetime
 
 import pytest
 
-from kuma.scrape.sources import DocumentRenderedSource
 from kuma.wiki.models import Document, DocumentZone, Revision
+
 from . import mock_requester, mock_storage
+from ..sources import DocumentRenderedSource
 
 
 @pytest.fixture

@@ -8,9 +8,12 @@ from ratelimit.decorators import ratelimit
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 
+from kuma.core.decorators import shared_cache_control
+from kuma.wiki.search import WikiDocumentType
+
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                      HighlightFilterBackend, LanguageFilterBackend,
-                      SearchQueryBackend, get_filters)
+                      get_filters, HighlightFilterBackend,
+                      LanguageFilterBackend, SearchQueryBackend)
 from .jobs import AvailableFiltersJob
 from .pagination import SearchPagination
 from .queries import Filter, FilterGroup
@@ -18,8 +21,6 @@ from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import (DocumentSerializer, FacetedFilterSerializer,
                           FilterWithGroupSerializer, SearchQuerySerializer)
 from .utils import QueryURLObject
-from kuma.wiki.search import WikiDocumentType
-from kuma.core.decorators import shared_cache_control
 
 
 class SearchView(ListAPIView):

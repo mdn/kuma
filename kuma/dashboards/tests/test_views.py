@@ -1,11 +1,11 @@
 import datetime
 import json
+
 import mock
 import pytest
-from pyquery import PyQuery as pq
-
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ImproperlyConfigured
+from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
 from kuma.core.tests import eq_, ok_
@@ -13,8 +13,8 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
-from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
 from kuma.users.models import User, UserBan
+from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
 from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
 
 

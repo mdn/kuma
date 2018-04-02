@@ -1,9 +1,11 @@
 from collections import defaultdict
+
 from django.core.management.base import BaseCommand
 from django.db import models
 from django.utils.text import get_text_list
 
 from kuma.attachments.models import Attachment
+
 from ...constants import DEKI_FILE_URL, KUMA_FILE_URL
 from ...models import Document, DocumentAttachment
 

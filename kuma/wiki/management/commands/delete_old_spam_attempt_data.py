@@ -4,6 +4,7 @@ Delete old DocumentSpamAttempt data
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
+
 from kuma.wiki.tasks import delete_old_documentspamattempt_data
 
 

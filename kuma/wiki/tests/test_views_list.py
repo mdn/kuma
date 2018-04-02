@@ -1,8 +1,9 @@
-from pyquery import PyQuery as pq
 import pytest
+from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+
 from ..models import Document
 
 

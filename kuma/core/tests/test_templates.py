@@ -8,7 +8,7 @@ from django.test import RequestFactory
 from django.utils import translation
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from . import eq_, KumaTestCase, ok_
 
 
 class MockRequestTests(KumaTestCase):

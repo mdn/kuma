@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 """py.test fixtures for kuma.wiki.tests."""
-import json
 import base64
-from datetime import datetime
+import json
 from collections import namedtuple
+from datetime import datetime
 
 import pytest
 
-from ..models import Document, DocumentZone, Revision
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.constants import REDIRECT_CONTENT
+
+from ..constants import REDIRECT_CONTENT
+from ..models import Document, DocumentZone, Revision
 
 
 BannedUser = namedtuple('BannedUser', 'user ban')

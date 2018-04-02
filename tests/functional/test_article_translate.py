@@ -1,7 +1,7 @@
 import pytest
 
-from pages.article_edit import EditPage
 from pages.admin import AdminLogin
+from pages.article_edit import EditPage
 from utils.decorators import skip_if_maintenance_mode
 
 

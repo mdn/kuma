@@ -5,13 +5,12 @@ import logging
 import operator
 from math import ceil
 
+from celery import chain
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
-
-from celery import chain
 from elasticsearch.helpers import bulk
 from elasticsearch_dsl import document, field
 from elasticsearch_dsl.connections import connections
@@ -19,6 +18,7 @@ from elasticsearch_dsl.mapping import Mapping
 from elasticsearch_dsl.search import Search
 
 from kuma.core.utils import chord_flow, chunked
+
 from .constants import EXPERIMENT_TITLE_PREFIX
 
 

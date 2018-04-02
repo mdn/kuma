@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-
-from string import ascii_lowercase
 import json
+from string import ascii_lowercase
 
-from django.contrib import admin
-from django.contrib import messages
 from django.conf import settings
-from django.views.decorators.cache import never_cache
+from django.contrib import admin, messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseRedirect
-from django.template.response import TemplateResponse
 from django.template.defaultfilters import truncatechars
+from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.html import escape, format_html, format_html_join
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
+from django.views.decorators.cache import never_cache
 from waffle import flag_is_active
 
 from kuma.core.admin import DisabledDeletionMixin

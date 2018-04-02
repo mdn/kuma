@@ -3,28 +3,28 @@ Tests for kuma/wiki/views/document.py
 
 Legacy tests are in test_views.py.
 """
-from collections import namedtuple
-from urllib import quote
 import base64
 import json
+from collections import namedtuple
+from urllib import quote
 
-from pyquery import PyQuery as pq
-from waffle.models import Switch
 import mock
 import pytest
 import requests_mock
-
-from kuma.core.models import IPBan
-from kuma.core.urlresolvers import reverse
-from kuma.authkeys.models import Key
-from kuma.wiki.events import EditDocumentEvent, EditDocumentInTreeEvent
-from kuma.wiki.models import Document, Revision
-from kuma.wiki.views.utils import calculate_etag
-from kuma.wiki.views.document import _apply_content_experiment
-
-from django.test.client import BOUNDARY, MULTIPART_CONTENT, encode_multipart
+from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.six.moves.urllib.parse import urlparse
 from django.utils.text import compress_string
+from pyquery import PyQuery as pq
+from waffle.models import Switch
+
+from kuma.authkeys.models import Key
+from kuma.core.models import IPBan
+from kuma.core.urlresolvers import reverse
+
+from ..events import EditDocumentEvent, EditDocumentInTreeEvent
+from ..models import Document, Revision
+from ..views.document import _apply_content_experiment
+from ..views.utils import calculate_etag
 
 
 AuthKey = namedtuple('AuthKey', 'key header')

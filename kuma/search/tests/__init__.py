@@ -1,9 +1,8 @@
 from __future__ import absolute_import
 
 from django.conf import settings
-
-from elasticsearch_dsl.connections import connections
 from elasticsearch.exceptions import ConnectionError
+from elasticsearch_dsl.connections import connections
 from rest_framework.test import APIRequestFactory
 
 from kuma.core.middleware import LocaleURLMiddleware

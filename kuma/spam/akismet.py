@@ -5,9 +5,9 @@ import newrelic.agent
 from constance import config
 from django.conf import settings
 from requests import Session
-from requests.packages.urllib3.util import Retry
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
+from requests.packages.urllib3.util import Retry
 
 
 class AkismetError(Exception):

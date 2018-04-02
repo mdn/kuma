@@ -1,11 +1,11 @@
-from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404, redirect, render
 
 from kuma.core.utils import paginate
 
-from .models import Key
 from .forms import KeyForm
+from .models import Key
 
 
 ITEMS_PER_PAGE = 15

@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 from uuid import uuid4
 
-import pytest
 import jsonpickle
+import pytest
 
-from ..models import Bundle, Feed, Entry
+from ..models import Bundle, Entry, Feed
 
 
 @pytest.fixture

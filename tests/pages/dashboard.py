@@ -1,12 +1,12 @@
+import pytest
 from pypom import Region
 from selenium.common.exceptions import (ElementNotInteractableException,
                                         NoSuchElementException,
                                         TimeoutException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-import pytest
 
-from pages.base import BasePage
+from .base import BasePage
 
 
 class DashboardPage(BasePage):

@@ -1,9 +1,9 @@
 import re
+from urlparse import urlparse, urlunparse
 
 import bleach
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from urlparse import urlparse, urlunparse
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [

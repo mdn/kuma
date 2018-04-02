@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from django.test import TestCase
 
-from kuma.core.tests import eq_
+from . import eq_
 from ..models import IPBan
 
 

@@ -2,8 +2,8 @@
 """Tests for the DocumentHistorySource class ($history API)."""
 from __future__ import unicode_literals
 
-from kuma.scrape.sources import DocumentHistorySource
 from . import mock_requester, mock_storage
+from ..sources import DocumentHistorySource
 
 
 def test_gather_revisions_default(root_doc, client):

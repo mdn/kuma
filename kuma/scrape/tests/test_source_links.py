@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """Tests for the LinksSource class (Links from a page)."""
 from __future__ import unicode_literals
+
 from datetime import datetime
 
-from kuma.scrape.sources import LinksSource
 from kuma.wiki.models import Revision
+
 from . import mock_requester, mock_storage
+from ..sources import LinksSource
 
 
 def test_init_blank():

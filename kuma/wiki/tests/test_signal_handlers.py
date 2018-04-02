@@ -1,8 +1,8 @@
 import mock
 import pytest
 
-from kuma.wiki.models import Revision, Document
-from kuma.wiki.signals import render_done
+from ..models import Document, Revision
+from ..signals import render_done
 
 
 @pytest.mark.tags

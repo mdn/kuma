@@ -1,9 +1,8 @@
 import logging
 
+from celery.task import task
 from django.conf import settings
 from django.core.mail import mail_admins
-
-from celery.task import task
 
 from kuma.core.decorators import skip_in_maintenance_mode
 

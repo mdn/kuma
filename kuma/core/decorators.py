@@ -1,5 +1,5 @@
-from functools import wraps, partial
 import re
+from functools import partial, wraps
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.utils.http import urlquote
 from django.utils.decorators import available_attrs
+from django.utils.http import urlquote
 from django.views.decorators.cache import cache_control
 
 from .jobs import BannedIPsJob

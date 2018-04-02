@@ -1,13 +1,12 @@
 from datetime import date, datetime, timedelta
 
-from django.db import models
-
 import bleach
 from constance import config
+from django.db import models
 from django_mysql.models import QuerySet
 
-from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
-                        ALLOWED_STYLES)
+from .constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
+                        ALLOWED_STYLES, ALLOWED_TAGS)
 from .content import parse as parse_content
 
 

@@ -6,14 +6,13 @@ import mock
 import pytest
 from constance import config
 from constance.test import override_config
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
-from kuma.core.exceptions import ProgrammingError
-from kuma.core.urlresolvers import reverse
-from kuma.core.tests import eq_, get_user, ok_
 from kuma.attachments.models import Attachment, AttachmentRevision
+from kuma.core.exceptions import ProgrammingError
+from kuma.core.tests import eq_, get_user, ok_
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from . import (create_document_tree, create_topical_parents_docs, document,

@@ -1,9 +1,9 @@
 """Load test fixtures from a specification."""
+import logging
 
 from django.apps import apps
 from django.contrib.auth.hashers import make_password
 
-import logging
 logger = logging.getLogger('kuma.scraper')
 
 

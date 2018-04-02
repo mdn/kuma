@@ -1,5 +1,6 @@
 """DocumentRenderedSource requests MDN wiki documents."""
 from __future__ import absolute_import, unicode_literals
+
 import re
 
 from django.utils.six.moves.urllib.parse import urlparse

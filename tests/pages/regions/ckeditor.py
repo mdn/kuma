@@ -2,8 +2,8 @@ import time
 from urlparse import urlparse
 
 from pypom import Region
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 
 
 class Ckeditor(Region):

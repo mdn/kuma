@@ -1,12 +1,14 @@
 import datetime
+
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.db.utils import IntegrityError
 
+from kuma.users.tests import user, UserTestCase
 from kuma.wiki.models import DocumentAttachment
 from kuma.wiki.tests import document
-from kuma.users.tests import user, UserTestCase
+
 from ..models import Attachment, AttachmentRevision, TrashedAttachment
 from ..utils import allow_add_attachment_by
 

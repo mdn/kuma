@@ -1,19 +1,18 @@
 import base64
-from collections import defaultdict
-import json
 import hashlib
+import json
 import time
 import unicodedata
-from urlparse import urljoin
+from collections import defaultdict
 from functools import partial
+from urlparse import urljoin
 
+import requests
+from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
-
-from constance import config
 from elasticsearch import TransportError
 from elasticsearch_dsl import Search
-import requests
 
 from kuma.core.cache import memcache
 

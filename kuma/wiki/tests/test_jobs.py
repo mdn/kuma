@@ -3,8 +3,8 @@ from datetime import datetime
 import mock
 import pytest
 
+from ..jobs import DocumentContributorsJob, DocumentNearestZoneJob
 from ..models import Revision
-from ..jobs import DocumentNearestZoneJob, DocumentContributorsJob
 
 
 def test_document_zone_unicode(doc_hierarchy_with_zones):

@@ -1,6 +1,7 @@
+import requests
+
 from utils.urls import flatten, url_test
 
-import requests
 
 # Converted from SCL3 Apache files
 SCL3_REDIRECT_URLS = list(flatten((

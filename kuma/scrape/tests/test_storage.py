@@ -1,14 +1,16 @@
 from __future__ import unicode_literals
+
 from datetime import datetime
 
-from django.db import IntegrityError
-from taggit.models import Tag
 import mock
 import pytest
+from django.db import IntegrityError
+from taggit.models import Tag
 
-from kuma.scrape.storage import Storage
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, DocumentTag, DocumentZone, Revision
+
+from ..storage import Storage
 
 
 @pytest.mark.parametrize(

@@ -1,5 +1,5 @@
-from urlparse import urlsplit
 import re
+from urlparse import urlsplit
 
 import pytest
 import requests

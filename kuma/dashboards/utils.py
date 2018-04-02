@@ -1,12 +1,13 @@
 from __future__ import division
-from collections import defaultdict, Counter
+
 import datetime
+from collections import Counter, defaultdict
 
 from dateutil import parser
 from django.core.exceptions import ImproperlyConfigured
 
-from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
-                              Revision, DocumentSpamAttempt)
+from kuma.wiki.models import (DocumentDeletionLog, DocumentSpamAttempt,
+                              Revision, RevisionAkismetSubmission)
 from kuma.wiki.utils import analytics_upageviews
 
 

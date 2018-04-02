@@ -1,3 +1,6 @@
+import json
+
+import pytest
 from allauth.account.models import EmailAddress
 from constance import config as constance_config
 from constance.test.utils import override_config
@@ -6,8 +9,6 @@ from django.db import IntegrityError
 from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Switch
-import json
-import pytest
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams

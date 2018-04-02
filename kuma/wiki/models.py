@@ -29,19 +29,19 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 from . import kumascript
 from .constants import (DEKI_FILE_URL, EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
                         REDIRECT_CONTENT, REDIRECT_HTML)
+from .content import (Extractor, get_content_sections, get_seo_description,
+                      H2TOCFilter, H3TOCFilter, SectionTOCFilter)
 from .content import parse as parse_content
-from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
-                      get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
-                         DocumentRenderingInProgress, PageMoveError,
-                         SlugCollision, UniqueCollision, NotDocumentView)
+                         DocumentRenderingInProgress, NotDocumentView,
+                         PageMoveError, SlugCollision, UniqueCollision)
 from .jobs import DocumentContributorsJob, DocumentNearestZoneJob, DocumentTagsJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager)
 from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
-from .utils import tidy_content, get_doc_components_from_url
+from .utils import get_doc_components_from_url, tidy_content
 
 
 def cache_with_field(field_name):

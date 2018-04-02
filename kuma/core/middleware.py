@@ -1,22 +1,23 @@
-import brotli
 import contextlib
 import re
 import urllib
 from urlparse import urljoin
 
+import brotli
+import django.middleware.gzip
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core import urlresolvers
-from django.http import (HttpResponseRedirect, HttpResponseForbidden,
-                         HttpResponsePermanentRedirect)
-import django.middleware.gzip
+from django.http import (HttpResponseForbidden,
+                         HttpResponsePermanentRedirect,
+                         HttpResponseRedirect)
 from django.utils import translation
 from django.utils.cache import patch_vary_headers
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .utils import urlparams, is_untrusted
+from .utils import is_untrusted, urlparams
 from .views import handler403
 
 

@@ -1,16 +1,15 @@
 # Django settings for kuma project.
-from collections import namedtuple
 import json
 import logging
 import os
-from os.path import dirname
 import platform
+from collections import namedtuple
+from os.path import dirname
 
-from decouple import config, Csv
-import djcelery
 import dj_database_url
 import dj_email_url
-
+import djcelery
+from decouple import config, Csv
 from django.core.urlresolvers import reverse_lazy
 
 _Language = namedtuple(u'Language', u'english native')

@@ -1,14 +1,13 @@
+import pytest
+from allauth.exceptions import ImmediateHttpResponse
+from allauth.socialaccount.models import SocialAccount, SocialLogin
 from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
-import pytest
-
-from allauth.exceptions import ImmediateHttpResponse
-from allauth.socialaccount.models import SocialLogin, SocialAccount
 
 from kuma.core.tests import eq_
 from kuma.core.urlresolvers import reverse
-from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
+from kuma.users.adapters import KumaAccountAdapter, KumaSocialAccountAdapter
 from kuma.users.models import User, UserBan
 
 from . import UserTestCase

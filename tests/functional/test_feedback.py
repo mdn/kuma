@@ -1,7 +1,9 @@
 import re
+
 import pytest
-from utils.urls import assert_valid_url
+
 from pages.article import ArticlePage
+from utils.urls import assert_valid_url
 
 ARTICLE_NAME = 'Send feedback (about|on) MDN'
 

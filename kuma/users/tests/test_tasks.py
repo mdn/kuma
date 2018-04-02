@@ -1,18 +1,17 @@
 import mock
-from waffle.models import Switch
-
-from django.conf import settings
-from django.contrib import messages as django_messages
-from django.core import mail
-from kuma.core.urlresolvers import reverse
-from django.test import RequestFactory, TestCase
 
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from allauth.account.signals import user_signed_up
+from django.conf import settings
+from django.contrib import messages as django_messages
+from django.core import mail
+from django.test import RequestFactory, TestCase
+from waffle.models import Switch
 
+from kuma.core.urlresolvers import reverse
 from kuma.users.tasks import send_recovery_email, send_welcome_email
 
-from . import UserTestCase, user
+from . import user, UserTestCase
 
 
 class SendRecoveryEmailTests(TestCase):

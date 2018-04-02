@@ -1,8 +1,7 @@
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand, CommandError
 
 
 class Command(BaseCommand):

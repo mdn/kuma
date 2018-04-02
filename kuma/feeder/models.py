@@ -1,7 +1,6 @@
+import jsonpickle
 from django.db import models
 from django.utils.functional import cached_property
-
-import jsonpickle
 
 
 class BundleManager(models.Manager):

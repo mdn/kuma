@@ -6,10 +6,10 @@ import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import override_settings, RequestFactory, TestCase
 from soapbox.models import Message
 
-from kuma.core.tests import KumaTestCase, eq_, ok_
+from kuma.core.tests import eq_, KumaTestCase, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 

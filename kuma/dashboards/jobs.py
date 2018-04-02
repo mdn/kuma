@@ -1,7 +1,8 @@
 from kuma.core.jobs import KumaJob
-from .utils import (spam_day_stats,
-                    spam_dashboard_historical_stats,
-                    spam_dashboard_recent_events)
+
+from .utils import (spam_dashboard_historical_stats,
+                    spam_dashboard_recent_events,
+                    spam_day_stats)
 
 
 class SpamDayStats(KumaJob):

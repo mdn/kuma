@@ -4,8 +4,8 @@ from pyquery import PyQuery as pq
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.models import Revision
 
-from ..models import Attachment
 from . import make_test_file
+from ..models import Attachment
 
 
 @pytest.mark.security

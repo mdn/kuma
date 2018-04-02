@@ -1,19 +1,18 @@
-from mock import patch, MagicMock
-
 import pytest
 from django.http import HttpResponse
 from django.test import RequestFactory
+from mock import MagicMock, patch
 
-from kuma.core.tests import KumaTestCase, eq_
-from kuma.core.middleware import (
-    GZipMiddleware,
-    WhiteNoiseMiddleware,
-    SetRemoteAddrFromForwardedFor,
+from . import eq_, KumaTestCase
+from ..middleware import (
+    BrotliMiddleware,
     ForceAnonymousSessionMiddleware,
+    GZipMiddleware,
+    LegacyDomainRedirectsMiddleware,
     RestrictedEndpointsMiddleware,
     RestrictedWhiteNoiseMiddleware,
-    LegacyDomainRedirectsMiddleware,
-    BrotliMiddleware,
+    SetRemoteAddrFromForwardedFor,
+    WhiteNoiseMiddleware,
 )
 
 

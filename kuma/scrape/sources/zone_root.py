@@ -1,7 +1,8 @@
 """ZoneRootSource determine zone URL redirects."""
 from __future__ import absolute_import, unicode_literals
-import re
+
 import logging
+import re
 
 from django.utils.six.moves.urllib.parse import unquote
 

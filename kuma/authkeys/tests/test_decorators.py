@@ -1,9 +1,8 @@
 import base64
 
 import pytest
-
-from django.http import HttpRequest
 from django.contrib.auth.models import AnonymousUser
+from django.http import HttpRequest
 
 from kuma.authkeys.decorators import accepts_auth_key
 

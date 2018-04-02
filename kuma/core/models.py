@@ -2,8 +2,8 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
 
-from .managers import IPBanManager
 from .jobs import BannedIPsJob
+from .managers import IPBanManager
 
 
 class IPBan(models.Model):

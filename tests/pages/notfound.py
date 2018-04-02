@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from pages.base import BasePage
+from .base import BasePage
 
 
 class NotFoundPage(BasePage):

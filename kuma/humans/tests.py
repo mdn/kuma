@@ -4,7 +4,7 @@ from os.path import dirname
 from django.test import TestCase
 from django.utils.six import StringIO
 
-from .models import HumansTXT, Human
+from .models import Human, HumansTXT
 
 APP_DIR = dirname(__file__)
 CONTRIBUTORS_JSON = "%s/fixtures/contributors.json" % APP_DIR

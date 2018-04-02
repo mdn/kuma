@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from pages.article import ArticlePage
+from .article import ArticlePage
 
 
 class VariantPage(ArticlePage):

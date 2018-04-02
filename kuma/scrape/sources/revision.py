@@ -1,12 +1,13 @@
 """RevisionSource scrapes historical wiki revisions."""
 from __future__ import absolute_import, unicode_literals
-import re
+
 import logging
+import re
 
-from pyquery import PyQuery as pq
 import dateutil
+from pyquery import PyQuery as pq
 
-from .base import Source, DocumentBaseSource
+from .base import DocumentBaseSource, Source
 
 logger = logging.getLogger('kuma.scraper')
 

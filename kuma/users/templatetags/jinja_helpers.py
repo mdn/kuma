@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext
 from django_jinja import library
 from honeypot.templatetags.honeypot import render_honeypot_field
-from jinja2 import Markup, contextfunction, escape
+from jinja2 import contextfunction, escape, Markup
 
 from kuma.core.templatetags.jinja_helpers import datetimeformat
 from kuma.core.urlresolvers import reverse

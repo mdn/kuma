@@ -1,14 +1,12 @@
 from celery.task import task
-
-from django.db import connection
+from constance import config
 from django.contrib.sessions.models import Session
+from django.db import connection
 from django.utils import timezone
 
-from constance import config
-
 from .cache import memcache
+from .decorators import skip_in_maintenance_mode
 from .models import IPBan
-from kuma.core.decorators import skip_in_maintenance_mode
 
 
 LOCK_ID = 'clean-sessions-lock'
