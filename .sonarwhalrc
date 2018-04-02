@@ -1,0 +1,32 @@
+{
+    "browserslist": [],
+    "connector": {
+        "name": "jsdom",
+        "options": {
+            "waitFor": 1000
+        }
+    },
+    "extends": [],
+    "formatters": [
+        "stylish",
+        "summary"
+    ],
+    "ignoredUrls": [],
+    "rules": {
+        "apple-touch-icons": "error",
+        "axe": "error",
+        "disown-opener": "error",
+        "highest-available-document-mode": "error",
+        "html-checker": "error",
+        "http-cache": "error",
+        "http-compression": "error",
+        "meta-charset-utf-8": "error",
+        "meta-viewport": "error",
+        "no-protocol-relative-urls": "error",
+        "no-vulnerable-javascript-libraries": "error",
+        "sri": "error",
+        "strict-transport-security": "error",
+        "x-content-type-options": "error"
+    },
+    "rulesTimeout": 120000
+}
