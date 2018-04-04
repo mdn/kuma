@@ -48,6 +48,7 @@ def pytest_configure(config):
                            headers={'Accept': 'application/json'})
     response.raise_for_status()
     _KUMA_STATUS = response.json()
+    _KUMA_STATUS['response'] = {'headers': response.headers}
     config._metadata['kuma'] = _KUMA_STATUS
 
     # Process the settings for this Kuma instance
@@ -110,3 +111,13 @@ def kuma_status(base_url):
 @pytest.fixture(scope='session')
 def is_debug(kuma_status):
     return kuma_status['settings']['DEBUG']
+
+
+@pytest.fixture(scope='session')
+def is_maintenance_mode(kuma_status):
+    return kuma_status['settings']['MAINTENANCE_MODE']
+
+
+@pytest.fixture(scope='session')
+def is_behind_cdn(kuma_status):
+    return 'x-amz-cf-id' in kuma_status['response']['headers']
