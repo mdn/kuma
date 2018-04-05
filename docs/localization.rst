@@ -118,69 +118,8 @@ differences in ``locale/templates/LC_MESSAGES/django.pot``, but only when a
 
 When this happens, the strings need to be exported to the mdn-l10n_ repository
 so that they are available in Pontoon. If done incorrectly, then the work of
-localizers can be lost.
-
-.. Note::
-
-   This task is done by MDN staff or by automated tools, usually during the
-   push to production. You should not do this as part of a code-based Pull
-   Request.
-
-To update the localizations, on the host system.:
-
-#. Start a new branch from Kuma master.
-
-#. Update the locale submodule to master::
-
-    cd locale
-    git fetch
-    git checkout origin/master
-
-#. Update ``kuma/settings/common.py``, and bump the version in
-   ``PUENTE['VERSION']``.
-
-#. Inside the development environment, extract and rebuild the translations::
-
-    make localerefresh
-
-#. On the host system, review the changes to source English strings::
-
-    cd locale
-    git diff templates/LC_MESSAGES
-
-#. Commit the files in the locale submodule::
-
-    git add --all .
-    git commit
-
-   For the commit message, use the ``PUENTE['VERSION']`` in the commit
-   subject, and summarize the string changes in the commit body, like::
-
-    Update strings 2017.14
-
-    * Updated survey on homepage
-
-#. Attempt to push to the mdn-l10n_ repository::
-
-    git push
-
-   If this fails, **do not force with --force**, or attempt to pull and
-   create a merge commit.  Someone has added a translation while you were
-   working, and you need to start over to preserve their work::
-
-    git fetch
-    git reset --hard @{u}
-
-   This resets your locale submodule to the new master. Start over on step 4
-   (``make localerefresh``).
-
-#. If the push to mdn-l10n_ is a success, commit your Kuma changes::
-
-    cd ..
-    git commit kuma/settings/common.py locale
-
-   Push to GitHub (your fork or main repository), and open a Pull Request.
-
+localizers can be lost. This task is done by staff when
+:ref:`preparing for deployment <Pre-Deployment>`.
 
 Add a new locale to Pontoon
 ===========================

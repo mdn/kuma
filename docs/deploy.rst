@@ -27,6 +27,8 @@ Pacific, Monday through Thursday.
    additional setup and permissions not described here. Deployments will
    not work for non-staff developers, and should not be attempted.
 
+.. _Pre-Deployment:
+
 Pre-Deployment
 --------------
 
@@ -53,11 +55,73 @@ Before deploying, a staff member should:
         git submodule update --remote
         git commit -m "Updating submodules" kumascript locale
 
-    - If there are new localizable strings,
-      :ref:`update the mdn-l10n repository with the new strings <Updating the localizable strings in Pontoon>`.
-      Instead of creating a new ``kuma`` branch, use the pre-push branch, and
-      add a new commit to update ``kuma/settings/common.py`` and the ``locale``
-      submodule with the new localizable strings.
+    - Push new localizable strings. This step is only necessary when there
+      are new strings. The TravisCI job ``TOXENV=locales`` checks for new
+      strings, and you can examine the output of the recent
+      `master build`_ to see if there are differences. At the same time, it's
+      not too hard to run locally and then revert if there are no useful
+      changes.
+
+      #. On the host system, checkout the master ``locale`` branch::
+
+          cd locale
+          git checkout master
+          git pull
+
+      #. Update ``kuma/settings/common.py``, and bump the version in
+         ``PUENTE['VERSION']``.
+
+      #. Inside the development environment, extract and rebuild the
+         translations::
+
+          make localerefresh
+
+      #. On the host system (still in the ``locale`` subfolder), review the
+         changes to source English strings::
+
+          git diff templates/LC_MESSAGES
+
+      #. If there are useful changes (ignore comment lines and look for
+         ``msgid`` as the changed line), commit the files in the locale
+         submodule::
+
+          git add --all .
+          git commit
+
+         For the commit message, use the ``PUENTE['VERSION']`` in the commit
+         subject, and summarize the string changes in the commit body, like::
+
+          Update strings 2018.08
+
+          * Add "View All" text for document history pagination
+
+         Attempt to push to the mdn-l10n_ repository::
+
+          git push
+
+         If this fails, **do not force with --force**, or attempt to pull and
+         create a merge commit.  Someone has added a translation while you were
+         working, and you need to start over to preserve their work::
+
+          git fetch
+          git reset --hard @{u}
+
+         This resets your locale submodule to the new master. Start over on
+         step 3 (``make localerefresh``).
+
+         If the push to mdn-l10n_ is a success, commit your Kuma changes::
+
+          cd ..
+          git commit kuma/settings/common.py locale
+
+         You can use the same commit message used for the ``locale`` commit.
+
+      #. If there are no new strings, throw the changes away, starting in the
+         ``locale`` folder::
+
+          git checkout -- .
+          cd ..
+          git checkout -- kuma/settings/common.py
 
     - Push the branch and `open a pull request`_::
 
@@ -87,6 +151,7 @@ Before deploying, a staff member should:
 .. _`Kuma master build`: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/activity?branch=master
 .. _`KumaScript images`: https://quay.io/repository/mozmar/kumascript?tab=tags
 .. _`KumaScript master build`: https://ci.us-west.moz.works/blue/organizations/jenkins/kumascript_multibranch_pipeline/activity?branch=master
+.. _`master build`: https://travis-ci.org/mozilla/kuma
 .. _`mdn-browser-compat-data`: https://www.npmjs.com/package/mdn-browser-compat-data
 .. _`open a pull request`: https://github.com/mozilla/kuma
 .. _mdn-l10n: https://github.com/mozilla-l10n/mdn-l10n
