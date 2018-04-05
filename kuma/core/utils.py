@@ -393,7 +393,7 @@ def format_date_time(request, value, format='shortdatetime'):
     except AttributeError:
         pass
 
-    locale = _babel_locale(_get_request_locale(request))
+    locale = _get_request_locale(request)
 
     try:
         formatted = format_date_value(value, tzvalue, locale, format)
@@ -401,9 +401,8 @@ def format_date_time(request, value, format='shortdatetime'):
         # Babel sometimes stumbles over missing formatters in some locales
         # e.g. bug #1247086
         # we fall back formatting the value with the default language code
-        formatted = format_date_value(value, tzvalue,
-                                      _babel_locale(settings.LANGUAGE_CODE),
-                                      format)
+        formatted = format_date_value(
+            value, tzvalue, language_to_locale(settings.LANGUAGE_CODE), format)
 
     return formatted, tzvalue
 
@@ -413,7 +412,7 @@ def _get_request_locale(request):
     locale = request.LANGUAGE_CODE
     if not localedata.exists(locale):
         locale = settings.LANGUAGE_CODE
-    return locale
+    return language_to_locale(locale)
 
 
 def format_date_value(value, tzvalue, locale, format):
@@ -439,7 +438,14 @@ def format_date_value(value, tzvalue, locale, format):
         raise DateTimeFormatError
 
 
-def _babel_locale(locale):
-    """Return the Babel locale code, given a normal one."""
-    # Babel uses underscore as separator.
-    return locale.replace('-', '_')
+def language_to_locale(language_code):
+    """
+    Convert language codes to locale names used by Babel, Django
+
+    Kuma uses a dash for regions, like en-US, zh-CN.
+    Babel and Django use underscore, like en_US, zh_CN.
+    The codes are identical when there is no region, like fr, es.
+
+    https://docs.djangoproject.com/en/1.11/topics/i18n/#definitions
+    """
+    return language_code.replace('-', '_')
