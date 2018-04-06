@@ -15,7 +15,7 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.cache import patch_vary_headers
+from django.utils.cache import add_never_cache_headers, patch_vary_headers
 from django.utils.http import parse_etags
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
@@ -659,7 +659,9 @@ def document(request, document_slug, document_locale):
             create_url = _document_redirect_to_create(document_slug,
                                                       document_locale,
                                                       slug_dict)
-            return redirect(create_url)
+            response = redirect(create_url)
+            add_never_cache_headers(response)
+            return response
 
     # We found a Document. Now we need to figure out how we're going
     # to display it.

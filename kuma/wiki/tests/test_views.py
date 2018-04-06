@@ -779,8 +779,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # child page.
         resp = self.client.get(url)
         assert resp.status_code == 302
-        assert 'public' in resp['Cache-Control']
-        assert 's-maxage' in resp['Cache-Control']
+        assert 'max-age=0' in resp['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'no-store' in resp['Cache-Control']
+        assert 'must-revalidate' in resp['Cache-Control']
+        assert 'public' not in resp['Cache-Control']
+        assert 's-maxage' not in resp['Cache-Control']
         assert 'docs/new' in resp['Location']
         assert ('?slug=%s' % local_slug) in resp['Location']
 
@@ -795,15 +799,17 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.document',
                                            args=['noExist'], locale=locale))
         assert response.status_code == 302
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert 'public' not in response['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'docs/new' in response['Location']
 
         response = self.client.get(reverse('wiki.document',
                                            args=['Template:NoExist'],
                                            locale=locale))
         assert response.status_code == 302
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert 'public' not in response['Cache-Control']
+        assert 'no-cache' in resp['Cache-Control']
+        assert 'docs/new' in response['Location']
 
     def test_creating_child_of_redirect(self):
         """
@@ -822,8 +828,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.document', locale='en-US', args=[child_full_slug])
         response = self.client.get(url)
         assert response.status_code == 302
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert 'public' not in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'docs/new' in response['Location']
         # The parent id of the query should be same because while moving,
         # a new document is created with old slug and make redirect to the
         # old document
@@ -848,8 +855,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         zoned_child_full_slug = zoned_doc.url_root + "/" + "children_document"
         response = self.client.get(zoned_child_full_slug)
         assert response.status_code == 302
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert 'public' not in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'docs/new' in response['Location']
         # The parent id of the query should be same because while moving,
         # a new document is created with old slug and make redirect to the
         # old document
