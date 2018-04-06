@@ -9,42 +9,58 @@ class TestLocaleMiddleware(KumaTestCase):
         response = self.client.get('/', follow=True,
                                    HTTP_ACCEPT_LANGUAGE='en-us')
         self.assertRedirects(response, '/en-US/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
         # User wants fr-FR, we send fr
         response = self.client.get('/', follow=True,
                                    HTTP_ACCEPT_LANGUAGE='fr-fr')
         self.assertRedirects(response, '/fr/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
         # User wants xx, we send en-US
         response = self.client.get('/', follow=True,
                                    HTTP_ACCEPT_LANGUAGE='xx')
         self.assertRedirects(response, '/en-US/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
         # User doesn't know what they want, we send en-US
         response = self.client.get('/', follow=True,
                                    HTTP_ACCEPT_LANGUAGE='')
         self.assertRedirects(response, '/en-US/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
     def test_mixed_case_header(self):
         """Accept-Language is case insensitive."""
         response = self.client.get('/', follow=True,
                                    HTTP_ACCEPT_LANGUAGE='en-US')
         self.assertRedirects(response, '/en-US/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
     def test_specificity(self):
         """Requests for /fr-FR/ should end up on /fr/"""
-        reponse = self.client.get('/fr-FR/', follow=True)
-        self.assertRedirects(reponse, '/fr/', status_code=302)
+        response = self.client.get('/fr-FR/', follow=True)
+        self.assertRedirects(response, '/fr/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
     def test_partial_redirect(self):
         """Ensure that /en/ gets directed to /en-US/."""
         response = self.client.get('/en/', follow=True)
         self.assertRedirects(response, '/en-US/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
     def test_lower_to_upper(self):
         """/en-us should redirect to /en-US."""
         response = self.client.get('/en-us/', follow=True)
         self.assertRedirects(response, '/en-US/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
 
     def test_language_cookie_support(self):
         """Request with language cookie should redirect to the cookie locale"""
@@ -52,3 +68,15 @@ class TestLocaleMiddleware(KumaTestCase):
         self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
         response = self.client.get('/')
         self.assertRedirects(response, '/bn-BD/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']
+
+    def test_lang_query_param(self):
+        """Request with lang query param should redirect to that locale"""
+        # Add language cookie and accept-language header as red herrings.
+        self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+        response = self.client.get('/?lang=fr',
+                                   HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
+        self.assertRedirects(response, '/fr/', status_code=302)
+        assert 'public' in response['Cache-Control']
+        assert 's-maxage' in response['Cache-Control']

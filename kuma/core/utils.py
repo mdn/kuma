@@ -17,6 +17,7 @@ from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset
+from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_unicode, smart_str
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
@@ -449,3 +450,32 @@ def language_to_locale(language_code):
     https://docs.djangoproject.com/en/1.11/topics/i18n/#definitions
     """
     return language_code.replace('-', '_')
+
+
+def add_shared_cache_control(response, **kwargs):
+    """
+    Adds a Cache-Control header for shared caches, like CDNs, to the
+    provided response.
+
+    Default settings (which can be overridden or extended):
+    - max-age=0 - Don't use browser cache without asking if still valid
+    - s-maxage=CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE - Cache in the shared
+      cache for the default perioid of time
+    - public - Allow intermediate proxies to cache response
+    """
+    nocache = (response.has_header('Cache-Control') and
+               ('no-cache' in response['Cache-Control'] or
+                'no-store' in response['Cache-Control']))
+    if nocache:
+        return
+
+    # Set the default values.
+    cc_kwargs = {
+        'public': True,
+        'max_age': 0,
+        's_maxage': settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE
+    }
+    # Override the default values and/or add new ones.
+    cc_kwargs.update(kwargs)
+
+    patch_cache_control(response, **cc_kwargs)

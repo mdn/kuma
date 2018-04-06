@@ -16,6 +16,7 @@ from django.utils.cache import patch_vary_headers
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
+from .decorators import add_shared_cache_control
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .utils import is_untrusted, urlparams
 from .views import handler403
@@ -47,7 +48,9 @@ class LocaleURLMiddleware(object):
 
             # Never use HttpResponsePermanentRedirect here.
             # Its a temporary redirect and should return with http 302, not 301
-            return HttpResponseRedirect(urlparams(new_path, **query))
+            response = HttpResponseRedirect(urlparams(new_path, **query))
+            add_shared_cache_control(response)
+            return response
 
         if full_path != request.path:
             query_string = request.META.get('QUERY_STRING', '')
@@ -64,6 +67,7 @@ class LocaleURLMiddleware(object):
             if old_locale != new_locale:
                 response['Vary'] = 'Accept-Language'
 
+            add_shared_cache_control(response)
             return response
 
         request.path_info = '/' + prefixer.shortened_path
