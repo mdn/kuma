@@ -7,9 +7,9 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.utils.cache import patch_cache_control
 from django.utils.decorators import available_attrs
 from django.utils.http import urlquote
-from django.views.decorators.cache import cache_control
 
 from .jobs import BannedIPsJob
 from .urlresolvers import reverse
@@ -17,23 +17,39 @@ from .urlresolvers import reverse
 
 def shared_cache_control(func=None, **kwargs):
     """
-    Decorator for view functions that defines the "Cache-Control" header
-    for shared caches like CDN's. It's simply a thin wrapper around
-    Django's cache-control that sets some defaults. By default, it does not
-    permit use of the browser's cache without validation ("max-age=0"), and
-    sets the caching period for shared caches ("s-maxage") based on the
-    CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE setting. All of the defaults can be
-    overridden or extended via keyword arguments.
+    Decorator to set Cache-Control header for shared caches like CDNs.
+
+    This duplicates Django's cache-control decorators, but avoids changing the
+    header if a "no-cache" header has already been applied. The cache-control
+    decorator changes in Django 2.0 to remove Python 2 workarounds.
+
+    Default settings (which can be overridden or extended):
+    - max-age=0 - Don't use browser cache without asking if still valid
+    - s-maxage=CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE - Cache in the shared
+      cache for the default perioid of time
+    - public - Allow intermediate proxies to cache response
     """
     # Set the default values.
     cc_kwargs = dict(public=True, max_age=0,
                      s_maxage=settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE)
     # Override the default values and/or add new ones.
     cc_kwargs.update(kwargs)
-    decorator = cache_control(**cc_kwargs)
-    if not func:
-        return decorator
-    return decorator(func)
+
+    def _shared_cache_controller(viewfunc):
+        @wraps(viewfunc, assigned=available_attrs(viewfunc))
+        def _cache_controlled(request, *args, **kw):
+            response = viewfunc(request, *args, **kw)
+            nocache = (response.has_header('Cache-Control') and
+                       'no-cache' in response['Cache-Control'] and
+                       'no-store' in response['Cache-Control'])
+            if not nocache:
+                patch_cache_control(response, **cc_kwargs)
+            return response
+        return _cache_controlled
+
+    if func:
+        return _shared_cache_controller(func)
+    return _shared_cache_controller
 
 
 def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,

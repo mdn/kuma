@@ -3,6 +3,7 @@ import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 from django.test import RequestFactory
+from django.views.decorators.cache import never_cache
 
 from kuma.users.tests import UserTestCase
 
@@ -208,3 +209,16 @@ def test_shared_cache_control_decorator_with_overrides(rf, settings):
     assert 'public' in response['Cache-Control']
     assert 'max-age=999' in response['Cache-Control']
     assert 's-maxage=0' in response['Cache-Control']
+
+
+def test_shared_cache_control_decorator_keeps_no_cache(rf, settings):
+    request = rf.get('/foo')
+    response = shared_cache_control(never_cache(simple_view))(request)
+    assert response.status_code == 200
+    assert 'Cache-Control' in response
+    assert 'public' not in response['Cache-Control']
+    assert 's-maxage' not in response['Cache-Control']
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
