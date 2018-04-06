@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.utils.cache import patch_cache_control
 from django.utils.decorators import available_attrs
 from django.utils.http import urlquote
 
 from .jobs import BannedIPsJob
 from .urlresolvers import reverse
+from .utils import add_shared_cache_control
 
 
 def shared_cache_control(func=None, **kwargs):
@@ -29,21 +29,11 @@ def shared_cache_control(func=None, **kwargs):
       cache for the default perioid of time
     - public - Allow intermediate proxies to cache response
     """
-    # Set the default values.
-    cc_kwargs = dict(public=True, max_age=0,
-                     s_maxage=settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE)
-    # Override the default values and/or add new ones.
-    cc_kwargs.update(kwargs)
-
     def _shared_cache_controller(viewfunc):
         @wraps(viewfunc, assigned=available_attrs(viewfunc))
         def _cache_controlled(request, *args, **kw):
             response = viewfunc(request, *args, **kw)
-            nocache = (response.has_header('Cache-Control') and
-                       'no-cache' in response['Cache-Control'] and
-                       'no-store' in response['Cache-Control'])
-            if not nocache:
-                patch_cache_control(response, **cc_kwargs)
+            add_shared_cache_control(response, **kwargs)
             return response
         return _cache_controlled
 
