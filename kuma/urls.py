@@ -2,6 +2,7 @@ from decorator_include import decorator_include
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_safe
 from django.views.generic import RedirectView
@@ -107,7 +108,8 @@ urlpatterns += [
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
 
     url(r'^miel$',
-        shared_cache_control(handler500),
+        shared_cache_control(s_maxage=60 * 60 * 24 * 7)(render),
+        {'template_name': '500.html', 'status': 500},
         name='users.honeypot'),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     url(r'^i18n/setlang/', core_views.set_language, name='set-language-cookie'),
