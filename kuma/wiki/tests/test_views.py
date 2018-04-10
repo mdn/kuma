@@ -1523,8 +1523,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.document', locale=doc.locale,
                                            args=[doc.slug]), data)
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         page = pq(response.content)
         assert page.find('.page-meta.reviews').length == 1
         assert page.find('#id_request_technical').length == 1
@@ -2479,8 +2482,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert response['Access-Control-Allow-Origin'] == '*'
         assert normalize_html(expected) == normalize_html(response.content)
 
@@ -2499,8 +2505,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert '<p onload=' not in response.content
         assert '<circle onload=' not in response.content
 
@@ -2537,8 +2546,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert normalize_html(expected) == normalize_html(response.content)
 
     def test_raw_section_source(self):
@@ -2567,8 +2579,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert normalize_html(expected) == normalize_html(response.content)
 
     @pytest.mark.midair
@@ -2626,8 +2641,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert normalize_html(expected) == normalize_html(response.content)
 
     @pytest.mark.midair
@@ -2739,8 +2757,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                            args=[rev.document.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        # Since the client is logged-in, the response should not be cached.
+        assert 'max-age=0' in response['Cache-Control']
+        assert 'no-cache' in response['Cache-Control']
+        assert 'no-store' in response['Cache-Control']
+        assert 'must-revalidate' in response['Cache-Control']
         assert normalize_html(expected) == normalize_html(response.content)
 
         # Also, ensure that the revision is slipped into the headers

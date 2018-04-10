@@ -589,7 +589,10 @@ def _document_deleted(request, deletion_logs):
     if request.user and request.user.has_perm('wiki.restore_document'):
         deletion_log = deletion_logs.order_by('-pk')[0]
         context = {'deletion_log': deletion_log}
-        return render(request, 'wiki/deletion_log.html', context, status=404)
+        response = render(request, 'wiki/deletion_log.html', context,
+                          status=404)
+        add_never_cache_headers(response)
+        return response
 
     raise Http404
 
@@ -776,6 +779,9 @@ def document(request, document_slug, document_locale):
             'other_translations': other_translations,
         }
         response = render(request, 'wiki/document.html', context)
+
+    if ks_errors or request.user.is_authenticated():
+        add_never_cache_headers(response)
 
     # We're doing this to prevent any unknown intermediate public HTTP caches
     # from erroneously caching without considering cookies, since cookies do
